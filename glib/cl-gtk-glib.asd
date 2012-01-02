@@ -47,7 +47,6 @@
                :trivial-garbage
                :iterate
                :bordeaux-threads
-               :iterate
                :closer-mop))
 
 ;;; --- End of file cl-gtk-glib.asd --------------------------------------------
