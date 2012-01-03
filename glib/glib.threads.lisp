@@ -62,6 +62,10 @@
 ;;;    G_THREADS_IMPL
 ;;;    G_THREAD_ERROR
 ;;; 
+;;; Only the following symbol is implemented for mutex:
+;;;
+;;;    g-mutex
+;;; 
 ;;; Description
 ;;; 
 ;;; Threads act almost like processes, but unlike processes all threads of one
@@ -757,5 +761,103 @@
 ;;; 
 ;;; The error domain of the GLib thread subsystem.
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GMutex
+;;; 
+;;; typedef struct _GMutex GMutex;
+;;; 
+;;; The GMutex struct is an opaque data structure to represent a mutex (mutual
+;;; exclusion). It can be used to protect data against shared access. Take for
+;;; example the following function:
+;;; 
+;;; Example 2. A function which will not work in a threaded environment
+;;; 
+;;;  1 int
+;;;  2 give_me_next_number (void)
+;;;  3 {
+;;;  4   static int current_number = 0;
+;;;  5 
+;;;  6   /* now do a very complicated calculation to calculate the new
+;;;  7    * number, this might for example be a random number generator
+;;;  8    */
+;;;  9   current_number = calc_next_number (current_number);
+;;; 10 
+;;; 11   return current_number;
+;;; 12 }
+;;; 
+;;; 
+;;; It is easy to see that this won't work in a multi-threaded application.
+;;; There current_number must be protected against shared access. A first naive
+;;; implementation would be:
+;;; 
+;;; Example 3. The wrong way to write a thread-safe function
+;;; 
+;;;  1 int
+;;;  2 give_me_next_number (void)
+;;;  3 {
+;;;  4   static int current_number = 0;
+;;;  5   int ret_val;
+;;;  6   static GMutex * mutex = NULL;
+;;;  7 
+;;;  8   if (!mutex) mutex = g_mutex_new ();
+;;;  9
+;;; 10   g_mutex_lock (mutex);
+;;; 11   ret_val = current_number = calc_next_number (current_number);
+;;; 12   g_mutex_unlock (mutex);
+;;; 13 
+;;; 14   return ret_val;
+;;; 15 }
+;;; 
+;;; This looks like it would work, but there is a race condition while
+;;; constructing the mutex and this code cannot work reliable. Please do not
+;;; use such constructs in your own programs! One working solution is:
+;;; 
+;;; Example 4. A correct thread-safe function
+;;;  
+;;;  1 static GMutex *give_me_next_number_mutex = NULL;
+;;;  2 
+;;;  3 /* this function must be called before any call to
+;;;  4  * give_me_next_number()
+;;;  5  *
+;;;  6  * it must be called exactly once.
+;;;  7  */
+;;;  8 void
+;;;  9 init_give_me_next_number (void)
+;;; 10 {
+;;; 11   g_assert (give_me_next_number_mutex == NULL);
+;;; 12   give_me_next_number_mutex = g_mutex_new ();
+;;; 13 }
+;;; 14
+;;; 15 int
+;;; 16 give_me_next_number (void)
+;;; 17 {
+;;; 18   static int current_number = 0;
+;;; 19   int ret_val;
+;;; 20 
+;;; 21   g_mutex_lock (give_me_next_number_mutex);
+;;; 22   ret_val = current_number = calc_next_number (current_number);
+;;; 23   g_mutex_unlock (give_me_next_number_mutex);
+;;; 24
+;;; 25   return ret_val;
+;;; 26 }
+;;; 
+;;; GStaticMutex provides a simpler and safer way of doing this.
+;;; 
+;;; If you want to use a mutex, and your code should also work without calling
+;;; g_thread_init() first, then you cannot use a GMutex, as g_mutex_new()
+;;; requires that the thread system be initialized. Use a GStaticMutex instead.
+;;; 
+;;; A GMutex should only be accessed via the following functions.
+;;; 
+;;; Note
+;;; 
+;;; All of the g_mutex_* functions are actually macros. Apart from taking their
+;;; addresses, you can however use them as if they were functions.
+;;; ----------------------------------------------------------------------------
+
+(defcstruct g-mutex)
+
+(export 'g-mutex)
 
 ;;; --- End of file glib.threads.lisp ------------------------------------------
