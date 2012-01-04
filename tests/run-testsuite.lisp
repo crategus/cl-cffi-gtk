@@ -29,4 +29,8 @@
 (in-package :glib-tests)
 (run-all-tests :glib-tests)
 
+(load "rtest-gobject.lisp")
+(in-package :gobject-tests)
+(run-all-tests :gobject-tests)
+
 ;;; --- End of file run-testsuite.lisp -----------------------------------------
