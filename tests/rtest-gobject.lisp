@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; run-testsuite.lisp
+;;; rtest-gobject.lisp
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
