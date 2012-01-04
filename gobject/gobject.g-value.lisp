@@ -39,7 +39,7 @@
 ;;;     g-value-data
 ;;;     g-value
 ;;;          
-;;;     G_VALUE_INIT *NOT IMPLEMENTED*
+;;;     G_VALUE_INIT                    *NOT IMPLEMENTED*
 ;;;          
 ;;;     g-value-holds
 ;;;     g-value-type
