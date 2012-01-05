@@ -192,4 +192,27 @@
               (cffi:foreign-bitfield-value 'g-type-flags
                                            '(:abstract :value-abstract))))
 
+(define-test g-param-spec-int
+  (with-foreign-object (value 'g-value)
+    (let ((prop (g-param-spec-int "PropertyInteger"
+                                  "PSpecInt"
+                                  "Integer Property"
+                                  0
+                                  100
+                                  50
+                                  '(:readable :writable))))
+    (assert-equal "PropertyInteger"  (g-param-spec-get-name prop))
+    (assert-equal "PSpecInt"         (g-param-spec-get-nick prop))
+    (assert-equal "Integer Property" (g-param-spec-get-blurb prop))
+    (g-value-init value +g-type-int+)
+    (g-param-value-set-default prop value)
+    (assert-eql 50 (g-value-get-int value))
+    (assert-true (g-param-value-defaults prop value))
+    (assert-false (g-param-value-validate prop value))
+    (g-value-set-int value 199)
+    (assert-eql 199 (g-value-get-int value))
+    (assert-true (g-param-value-validate prop value))
+    (assert-eql 100 (g-value-get-int value))
+    )))
+
 ;;; --- End of file rtest-gobject.lisp -----------------------------------------
