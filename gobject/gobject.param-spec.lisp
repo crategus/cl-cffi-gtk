@@ -325,20 +325,18 @@
 ;;; struct GParamSpecClass
 ;;; 
 ;;; struct GParamSpecClass {
-;;;   GTypeClass      g_type_class;
-;;; 
-;;;   GType		  value_type;
-;;; 
-;;;   void	        (*finalize)		(GParamSpec   *pspec);
-;;; 
+;;;   GTypeClass g_type_class;
+;;;   GType      value_type;
+;;;
+;;;   void       (*finalize)           (GParamSpec   *pspec);
 ;;;   /* GParam methods */
-;;;   void          (*value_set_default)    (GParamSpec   *pspec,
-;;; 					 GValue       *value);
-;;;   gboolean      (*value_validate)       (GParamSpec   *pspec,
-;;; 					 GValue       *value);
-;;;   gint          (*values_cmp)           (GParamSpec   *pspec,
-;;; 					 const GValue *value1,
-;;; 					 const GValue *value2);
+;;;   void       (*value_set_default)  (GParamSpec   *pspec,
+;;; 					GValue       *value);
+;;;   gboolean   (*value_validate)     (GParamSpec   *pspec,
+;;; 					GValue       *value);
+;;;   gint       (*values_cmp)         (GParamSpec   *pspec,
+;;; 					const GValue *value1,
+;;; 					const GValue *value2);
 ;;; };
 ;;; 
 ;;; The class structure for the GParamSpec type. Normally, GParamSpec classes
