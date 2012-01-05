@@ -37,15 +37,15 @@
 ;;; Synopsis
 ;;; 
 ;;;     g-quark
-;;;     g-quark-from-string (string)
-;;;     g-quark-to-string (quark)
+;;;     g-quark-from-string
+;;;     g-quark-to-string
 ;;;
 ;;; The following symbols are not implemented:
 ;;;
-;;;     g_quark_from_static_string (string)
-;;;     g_quark_try_string (string)
-;;;     g_intern_string (string)
-;;;     g_intern_static_string (string)
+;;;     g_quark_from_static_string
+;;;     g_quark_try_string
+;;;     g_intern_string
+;;;     g_intern_static_string
 ;;; 
 ;;; Description
 ;;; 

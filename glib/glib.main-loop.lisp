@@ -49,115 +49,95 @@
 ;;;     g-source-funcs
 ;;;     g-source-callback-funcs
 ;;;
-;;;     g-main-loop-new (context is-running)
-;;;     g-main-loop-ref (loop)
-;;;     g-main-loop-unref (loop)
-;;;     g-main-loop-run (loop)
-;;;     g-main-loop-quit (loop)
-;;;     g-main-loop-is-running (loop)
-;;;     g-main-loop-get-context (loop)
-;;;     g-main-context-new ()
-;;;     g-main-context-ref (context)
-;;;     g-main-context-unref (context)
-;;;     g-main-context-default ()
-;;;     g-main-context-iteration (context may_block)
-;;;     g_main_context_pending (context)
-;;;     g_main_context_find_source_by_id (context source_id)
-;;;     g_main_context_find_source_by_user_data (context user_data)
-;;;     g_main_context_find_source_by_funcs_user_data (context funcs user_data)
-;;;     g_main_context_wakeup (context)
-;;;     g_main_context_acquire (context)
-;;;     g_main_context_release (context)
-;;;     g_main_context_is_owner (context)
-;;;     g_main_context_wait (context cond mutex)
-;;;     g_main_context_prepare (context priority)
-;;;     g_main_context_query (context max_priority timeout_ fds n_fds)
-;;;     g_main_context_check (context max_priority fds n_fds)
-;;;     g_main_context_dispatch (context)
-;;;     g_main_context_set_poll_func (context func)
-;;;     g_main_context_get_poll_func (context)
-;;;     g_main_context_add_poll (context fd priority)
-;;;     g_main_context_remove_poll (context fd)
-;;;     g_main_depth ()
-;;;     g_main_current_source ()
+;;;     g-main-loop-new
+;;;     g-main-loop-ref
+;;;     g-main-loop-unref
+;;;     g-main-loop-run
+;;;     g-main-loop-quit
+;;;     g-main-loop-is-running
+;;;     g-main-loop-get-context
+;;;     g-main-context-new
+;;;     g-main-context-ref
+;;;     g-main-context-unref
+;;;     g-main-context-default
+;;;     g-main-context-iteration
+;;;     g_main_context_pending
+;;;     g_main_context_find_source_by_id
+;;;     g_main_context_find_source_by_user_data
+;;;     g_main_context_find_source_by_funcs_user_data
+;;;     g_main_context_wakeup
+;;;     g_main_context_acquire
+;;;     g_main_context_release
+;;;     g_main_context_is_owner
+;;;     g_main_context_wait
+;;;     g_main_context_prepare
+;;;     g_main_context_query
+;;;     g_main_context_check
+;;;     g_main_context_dispatch
+;;;     g_main_context_set_poll_func
+;;;     g_main_context_get_poll_func
+;;;     g_main_context_add_poll
+;;;     g_main_context_remove_poll
+;;;     g_main_depth
+;;;     g_main_current_source
 ;;;
-;;; The following symbols are not implemented:
+;;;     g_main_context_invoke               *Not implemented*
+;;;     g_main_context_invoke_full          *Not implemented*
+;;;     g_main_context_get_thread_default   *Not implemented*
+;;;     g_main_context_push_thread_default  *Not implemented*
+;;;     g_main_context_pop_thread_default   *Not implemented*
 ;;;
-;;;     g_main_context_invoke (context function data)
-;;;     g_main_context_invoke_full (context priority function data notify)
-;;;     g_main_context_get_thread_default ()
-;;;     g_main_context_push_thread_default (context)
-;;;     g_main_context_pop_thread_default (context)
+;;;     g-timeout-source-new
+;;;     g-timeout-source-new-seconds
+;;;     g-timeout-add
+;;;     g-timeout-add-full
+;;;     g-timeout-add-seconds
+;;;     g-timeout-add-seconds-full
+;;;     g-idle-source-new
+;;;     g-idle-add
+;;;     g-idle-add-full
+;;;     g-idle-remove-by-data
+;;;
+;;;      GPid;                              *Not implemented*
+;;;      g_child_watch_source_new           *Not implemented*
+;;;      g_child_watch_add                  *Not implemented*
+;;;      g_child_watch_add_full             *Not implemented*
+;;;      g_poll                             *Not implemented*
+;;;      G_POLLFD_FORMAT                    *Not implemented*
 ;;; 
-;;; The following symbols are implemented again:
+;;;     g-source-new
+;;;     g-source-ref
+;;;     g-source-unref
+;;;     g-source-set-funcs
+;;;     g-source-attach
+;;;     g-source-destroy
+;;;     g-source-is-destroyed
+;;;     g-source-set-priority
+;;;     g-source-get-priority
+;;;     g-source-set-can-recurse
+;;;     g-source-get-can-recurse
+;;;     g-source-get-id
 ;;;
-;;;     g-timeout-source-new (interval)
-;;;     g-timeout-source-new-seconds (interval)
-;;;     g-timeout-add (interval function data)
-;;;     g-timeout-add-full (priority interval function data notify)
-;;;     g-timeout-add-seconds (interval function data)
-;;;     g-timeout-add-seconds-full (priority interval function data notify)
-;;;     g-idle-source-new ()
-;;;     g-idle-add (function data)
-;;;     g-idle-add-full (priority function data notify)
-;;;     g-idle-remove-by-data (data)
-;;; 
-;;; Not implemented is:
+;;;     g_source_get_name                   *Not implemented*
+;;;     g_source_set_name                   *Not implemented*
+;;;     g_source_set_name_by_id             *Not implemented*
 ;;;
-;;;      GPid;
-;;;      g_child_watch_source_new (pid)
-;;;      g_child_watch_add (pid function data)
-;;;      g_child_watch_add_full (priority pid function data notify)
-;;;      g_poll (fds nfds timeout)
-;;;      G_POLLFD_FORMAT
-;;; 
-;;; Implemented is:
+;;;     g-source-get-context
+;;;     g-source-set-callback
 ;;;
-;;;     g-source-new (source-funcs struct-size)
-;;;     g-source-ref (source)
-;;;     g-source-unref (source)
-;;;     g-source-set-funcs (source funcs)
-;;;     g-source-attach (source context)
-;;;     g-source-destroy (source)
-;;;     g-source-is-destroyed (source)
-;;;     g-source-set-priority (source priority)
-;;;     g-source-get-priority (source)
-;;;     g-source-set-can-recurse (source can-recurse)
-;;;     g-source-get-can-recurse (source)
-;;;     g-source-get-id (source)
+;;;     g_source_set_callback_indirect      *Not implemented*
 ;;;
-;;; Not implemented:
+;;;     g-source-add-poll
+;;;     g-source-remove-poll
 ;;;
-;;;     g_source_get_name (source)
-;;;     g_source_set_name (source name)
-;;;     g_source_set_name_by_id (tag name)
+;;;     g_source_add-child_source           *Not implemented*
+;;;     g_source_remove_child_source        *Not implemented*
+;;;     g_source_get_time                   *Not implemented*
 ;;;
-;;; Implemented:
-;;;
-;;;     g-source-get-context (source)
-;;;     g-source-set-callback (source func data notify)
-;;;
-;;; Not implemented:
-;;;
-;;;     g_source_set_callback_indirect (source callback_data callback_funcs)
-;;;
-;;; Implemented:
-;;;
-;;;     g-source-add-poll (source fd)
-;;;     g-source-remove-poll (source fd)
-;;;
-;;; Not implemented:
-;;;
-;;;     g_source_add-child_source (source child_source)
-;;;     g_source_remove_child_source (source child_source)
-;;;     g_source_get_time (source)
-;;;
-;;; Implemented is:
-;;;
-;;;     g-source-get-current-time (source timeval)
-;;;     g-source-remove (tag)
-;;;     g-source-remove-by-funcs-user-data (funcs user_data)
-;;;     g-source-remove_by_user_data (user-data)
+;;;     g-source-get-current-time
+;;;     g-source-remove
+;;;     g-source-remove-by-funcs-user-data
+;;;     g-source-remove_by_user_data
 ;;; 
 ;;; Description
 ;;; 

@@ -38,21 +38,21 @@
 ;;; 
 ;;;     g-error
 ;;;
-;;;     g-error-new-literal (message)
-;;;     g-error-free (error)
-;;;     g-error-copy (error)
-;;;     g-error-matches (error domain code)
-;;;     g-set-error-literal (err domain code message)
-;;;     g-propagate-error (dest src)
-;;;     g-clear-error (err)
+;;;     g-error-new-literal
+;;;     g-error-free
+;;;     g-error-copy
+;;;     g-error-matches
+;;;     g-set-error-literal
+;;;     g-propagate-error
+;;;     g-clear-error
 ;;;
 ;;; The following symbols are not implemented:
 ;;;
-;;;     g_error_new (domain code format ...)
-;;;     g_error_new_valist (domain code format args)
-;;;     g_set_error (err domain code format ...)
-;;;     g_prefix_error (err format ...)
-;;;     g_propagate_prefixed_error (dest src format ...)
+;;;     g_error_new
+;;;     g_error_new_valist
+;;;     g_set_error
+;;;     g_prefix_error
+;;;     g_propagate_prefixed_error
 ;;; 
 ;;; Description
 ;;; 

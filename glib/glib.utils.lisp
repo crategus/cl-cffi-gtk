@@ -36,63 +36,63 @@
 ;;; 	
 ;;; Synopsis
 ;;; 
-;;;     g-get-application-name ()
-;;;     g-set-application-name (application-name)
-;;;     g-get-prgname ()
-;;;     g-set-prgname (prgname)
+;;;     g-get-application-name
+;;;     g-set-application-name
+;;;     g-get-prgname
+;;;     g-set-prgname
 ;;;
-;;;     g_getenv (variable)
-;;;     g_setenv (variable value overwrite)
+;;;     g_getenv
+;;;     g_setenv
 ;;;
-;;;     g-listenv ()
-;;;     g-get-user-name ()
-;;;     g-get-real-name ()
-;;;     g-get-user-cache-dir ()
-;;;     g-get-user-data-dir ()
-;;;     g-get-user-config-dir ()
+;;;     g-listenv
+;;;     g-get-user-name
+;;;     g-get-real-name
+;;;     g-get-user-cache-dir
+;;;     g-get-user-data-dir
+;;;     g-get-user-config-dir
 ;;;
 ;;;     g-user-directory
-;;;     g-get-user-special-dir (directory)
-;;;     g-get-system-data-dirs ()
-;;;     g-get-system-config-dirs ()
+;;;     g-get-user-special-dir
+;;;     g-get-system-data-dirs
+;;;     g-get-system-config-dirs
 ;;;
-;;;     g_get_host_name ()
-;;;     g_get_home_dir ()
-;;;     g_get_tmp_dir ()
-;;;     g_get_current_dir ()
+;;;     g_get_host_name
+;;;     g_get_home_dir
+;;;     g_get_tmp_dir
+;;;     g_get_current_dir
 ;;;
-;;;     g-path-is-absolute (file-name)
+;;;     g-path-is-absolute
 ;;;
-;;;     g-build-filename (first-element ...)
-;;;     g-build-filenamev (args)
+;;;     g-build-filename
+;;;     g-build-filenamev
 ;;;
 ;;; The following symbols are not implemented:
 ;;;
-;;;     g_get_environ ()
-;;;     g_unsetenv (variable)
-;;;     g_get_user_runtime_dir()
-;;;     g_reload_user_special_dirs_cache ()
-;;;     g_basename (file_name)
+;;;     g_get_environ
+;;;     g_unsetenv
+;;;     g_get_user_runtime_dir
+;;;     g_reload_user_special_dirs_cache
+;;;     g_basename
 ;;;     g_dirname
-;;;     g_path_skip_root (file_name)
-;;;     g_path_get_basename (file_name)
-;;;     g_path_get_dirname (file_name)
-;;;     g_build_path (separator first_element ...)
-;;;     g_build_pathv (separator args)
-;;;     g_format_size (size)
+;;;     g_path_skip_root
+;;;     g_path_get_basename
+;;;     g_path_get_dirname
+;;;     g_build_path
+;;;     g_build_pathv
+;;;     g_format_size
 ;;;     GFormatSizeFlags
-;;;     g_format_size_full (size flags)
-;;;     g_format_size_for_display (size)
-;;;     g_find_program_in_path (program)
-;;;     g_bit_nth_lsf (mask nth_bit)
-;;;     g_bit_nth_msf (mask nth_bit)
-;;;     g_bit_storage (number)
-;;;     g_spaced_primes_closest (num)
-;;;     g_atexit (func)
-;;;     g_parse_debug_string (string keys nkeys)
+;;;     g_format_size_full
+;;;     g_format_size_for_display
+;;;     g_find_program_in_path
+;;;     g_bit_nth_lsf
+;;;     g_bit_nth_msf
+;;;     g_bit_storage
+;;;     g_spaced_primes_closest
+;;;     g_atexit
+;;;     g_parse_debug_string
 ;;;     GDebugKey
-;;;     g_qsort_with_data (pbase total_elems size compare_func user_data)
-;;;     g_nullify_pointer (nullify_location)
+;;;     g_qsort_with_data
+;;;     g_nullify_pointer
 ;;; 
 ;;; Description
 ;;; 

@@ -42,22 +42,22 @@
 ;;;    g-thread-prior
 ;;;    g-thread
 ;;;
-;;;    g-thread-init (vtable)
+;;;    g-thread-init
 ;;;         
-;;;    g-thread-get-initialized (data)
-;;;    g-thread-self ()
-;;;    g-thread-join (thread)
-;;;    g-thread-set-priority (thread priority)
+;;;    g-thread-get-initialized
+;;;    g-thread-self
+;;;    g-thread-join
+;;;    g-thread-set-priority
 ;;;         
 ;;; The following symbols related to threads are not implemented:
 ;;;
 ;;;    GThreadFunctions
-;;;    g_thread_supported ()
-;;;    g_thread_create (func data joinable error)
-;;;    g_thread_create_full (func data stack_size joinable bound priority error)
-;;;    g_thread_yield ()
-;;;    g_thread_exit (retval)
-;;;    g_thread_foreach (thread_func user_data)
+;;;    g_thread_supported
+;;;    g_thread_create
+;;;    g_thread_create_full
+;;;    g_thread_yield
+;;;    g_thread_exit
+;;;    g_thread_foreach
 ;;; 
 ;;;    G_THREADS_ENABLED
 ;;;    G_THREADS_IMPL_POSIX
