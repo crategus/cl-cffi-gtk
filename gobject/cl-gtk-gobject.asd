@@ -35,10 +35,14 @@
   :serial t
   :components ((:file "gobject.package")
                (:file "gobject.init")
+               (:file "gobject.stable-pointer")
+               (:file "gobject.object-function")
+               (:file "gobject.cffi-callbacks")
                
                (:file "gobject.type-info")   ; Type Information
                (:file "gobject.g-value")     ; Generic Values
                (:file "gobject.enumeration") ; Enumeration and flag types
+               (:file "gobject.boxed-lisp")
                (:file "gobject.boxed")       ; Boxed Types
                (:file "gobject.param-spec")  ; GParamSpec
                (:file "gobject.param")       ; Paramenters and Values
@@ -47,14 +51,9 @@
                (:file "gobject.signals")     ; Signals
                
                (:file "gobject.type-info.object")
-               (:file "gobject.type-info.enum")
-               (:file "gobject.type-info.signals")
-               (:file "gobject.stable-pointer")
                (:file "gobject.generating")
-               (:file "gobject.cffi-callbacks")
+               
                (:file "gobject.foreign-gobject-subclassing")
-               (:file "gobject.object-function")
-               (:file "gobject.ffi")
                )
   :depends-on (:cl-gtk-glib
                :cffi
