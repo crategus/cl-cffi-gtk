@@ -3186,6 +3186,9 @@
 ;;; The type of the window.
 ;;; 
 ;;; Default value: GTK_WINDOW_TOPLEVEL
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; The "type-hint" property
 ;;; 
 ;;;   "type-hint"                GdkWindowTypeHint     : Read / Write
