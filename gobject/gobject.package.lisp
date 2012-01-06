@@ -36,6 +36,7 @@
     #:get-stable-pointer-value
     #:stable-pointer-value
     #:with-stable-pointer
+    
     #:connect-signal
     #:emit-signal
     #:parse-g-value
@@ -68,6 +69,7 @@
     #:define-g-object-class
     #:define-boxed-opaque-accessor
     #:define-vtable
+    #:get-g-enum-definition
     #:register-object-type-implementation
     #:registered-object-type-by-name 
     #:with-foreign-boxed-array
