@@ -170,7 +170,8 @@
     `(,value-name ,numeric-value)))
 
 (defun get-g-enum-definition (type &optional lisp-name-package)
-  (when (and (stringp type) (null (gtype type)))
+  (when (and (stringp type)
+             (null (gtype type)))
     (let ((type-init-name (probable-type-init-name type)))
       (when (foreign-symbol-pointer type-init-name)
         (foreign-funcall-pointer (foreign-symbol-pointer type-init-name)
@@ -283,18 +284,15 @@
   (assert (g-type-is-a type +g-type-enum+))
   (let ((g-class (g-type-class-ref type)))
     (unwind-protect
-         (loop
-            with n = (foreign-slot-value g-class 'g-enum-class :n-values)
-            with values = (foreign-slot-value g-class 'g-enum-class :values)
-            for i from 0 below n
-            for enum-value = (mem-aref values 'g-enum-value i)
-            collect (make-enum-item
-                     :name (foreign-slot-value enum-value 'g-enum-value
-                                               :name)
-                     :value (foreign-slot-value enum-value 'g-enum-value
-                                                :value)
-                     :nick (foreign-slot-value enum-value 'g-enum-value
-                                               :nick)))
+      (loop
+        with n = (foreign-slot-value g-class 'g-enum-class :n-values)
+        with values = (foreign-slot-value g-class 'g-enum-class :values)
+        for i from 0 below n
+        for enum-value = (mem-aref values 'g-enum-value i)
+        collect (make-enum-item
+                  :name (foreign-slot-value enum-value 'g-enum-value :name)
+                  :value (foreign-slot-value enum-value 'g-enum-value :value)
+                 :nick (foreign-slot-value enum-value 'g-enum-value :nick)))
       (g-type-class-unref g-class))))
 
 ;;; ----------------------------------------------------------------------------
@@ -446,6 +444,35 @@
   (:values (:pointer g-flags-value)))
 
 (export 'g-flags-class)
+
+;; A structure describing a single flags item.
+
+(defstruct flags-item
+  name
+  value
+  nick)
+
+;; Gets the list of flags items that belong to GFlags type type
+;; type is a string or an integer specifying GFlags type.
+;; Returns a list of flags-item objects
+
+(defun get-flags-items (type)
+  (assert (g-type-is-a type +g-type-flags+))
+  (let ((g-class (g-type-class-ref type)))
+    (unwind-protect
+         (loop
+            with n = (foreign-slot-value g-class 'g-flags-class :n-values)
+            with values = (foreign-slot-value g-class 'g-flags-class :values)
+            for i from 0 below n
+            for flags-value = (mem-aref values 'g-flags-value i)
+            collect (make-flags-item
+                     :name (foreign-slot-value flags-value 'g-flags-value
+                                               :name)
+                     :value (foreign-slot-value flags-value 'g-flags-value
+                                                :value)
+                     :nick (foreign-slot-value flags-value 'g-flags-value
+                                               :nick)))
+      (g-type-class-unref g-class))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_ENUM_CLASS_TYPE()
