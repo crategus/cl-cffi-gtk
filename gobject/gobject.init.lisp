@@ -79,6 +79,11 @@
                     `(t ,@forms)
                     `((equalp ,key ,value) ,@forms)))))))
 
+(defmacro with-unwind ((var expr unwind-function) &body body)
+  `(let ((,var ,expr))
+     (unwind-protect (progn ,@body)
+       (,unwind-function ,var))))
+
 ;;; ----------------------------------------------------------------------------
 
 ;; Manually frees the Lisp reference to the object. Probably should not be
