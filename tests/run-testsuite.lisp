@@ -25,6 +25,8 @@
 
 (load "../lisp-utils/lisp-unit.lisp")
 
+(asdf:operate 'asdf:load-op :cl-gtk-gtk)
+
 (load "rtest-glib.lisp")
 (in-package :glib-tests)
 (run-all-tests :glib-tests)
@@ -32,5 +34,9 @@
 (load "rtest-gobject.lisp")
 (in-package :gobject-tests)
 (run-all-tests :gobject-tests)
+
+(load "rtest-gtk-window.lisp")
+(in-package :gtk-tests)
+(run-all-tests :gtk-tests)
 
 ;;; --- End of file run-testsuite.lisp -----------------------------------------
