@@ -86,10 +86,10 @@
 (define-test glib-utils
   (when (not *started*)
     (setq *started* t)
-    (g-set-application-name "glib-AppName")
-    (g-set-prgname "glib-Prgname"))
-  (assert-equal "glib-AppName" (g-get-application-name))
-  (assert-equal "glib-Prgname" (g-get-prgname)))
+    (g-set-application-name "GTK Application")
+    (g-set-prgname "GTK Program"))
+  (assert-equal "GTK Application" (g-get-application-name))
+  (assert-equal "GTK Program" (g-get-prgname)))
 
 (define-test glib-main-loop
   (ensure-main-thread)
