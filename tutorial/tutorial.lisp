@@ -30,11 +30,11 @@
 (defpackage :gtk-tutorial
   (:use :gtk :gobject :common-lisp)
   (:export 
-    #:example-1
-    #:example-1-1
+    #:example-1 #:example-1-1
     #:example-2
     #:example-3
     #:example-4
+    #:example-5 #:example-5-1
     ))
 
 (in-package :gtk-tutorial)
@@ -236,4 +236,78 @@
                           (declare (ignore button))
                           (gtk-widget-destroy window)))
       (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; Table Packing Example
+
+(defun example-5 ()
+  (within-main-loop
+    (let ((window  (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Table Packing Example"
+                                  :border-width 20
+                                  :default-width 300
+                                  :default-heigt 200))
+          (table   (make-instance 'gtk-table
+                                  :n-columns 2
+                                  :n-rows 2
+                                  :homogeneous t))
+          (button1 (make-instance 'gtk-button
+                                  :label "Button 1"))
+          (button2 (make-instance 'gtk-button
+                                  :label "Button 2"))
+          (quit    (make-instance 'gtk-button
+                                  :label "Quit")))
+      
+      (g-signal-connect quit "clicked"
+                        (lambda (button)
+                          (declare (ignore button))
+                          (gtk-widget-destroy window)))
+      
+      (gtk-container-add window table)
+      
+      (gtk-table-attach-defaults table button1 0 1 0 1)
+      (gtk-table-attach-defaults table button2 1 2 0 1)
+      (gtk-table-attach-defaults table quit    0 2 1 2)
+      
+      (gtk-widget-show window))))
+
+(defun example-5-1 ()
+  (within-main-loop
+    (let ((window  (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Table Packing Example"
+                                  :border-width 20
+                                  :default-width 300
+                                  :default-heigt 200))
+          (table   (make-instance 'gtk-table
+                                  :n-columns 2
+                                  :n-rows 2
+                                  :homogeneous t))
+          (button1 (make-instance 'gtk-button
+                                  :label "More Row Spacing"))
+          (button2 (make-instance 'gtk-button
+                                  :label "More Col Spacing"))
+          (quit    (make-instance 'gtk-button
+                                  :label "Quit")))
+      
+      (g-signal-connect button1 "clicked"
+                        (lambda (button1)
+                          (declare (ignore button1))
+                          (gtk-table-set-row-spacings table 15)))
+      (g-signal-connect button2 "clicked"
+                        (lambda (button2)
+                          (declare (ignore button2))
+                          (gtk-table-set-col-spacings table 15)))
+      (g-signal-connect quit "clicked"
+                        (lambda (button)
+                          (declare (ignore button))
+                          (gtk-widget-destroy window)))
+            
+      (gtk-container-add window table)
+      
+      (gtk-table-attach-defaults table button1 0 1 0 1)
+      (gtk-table-attach-defaults table button2 1 2 0 1)
+      (gtk-table-attach-defaults table quit    0 2 1 2)
+      
       (gtk-widget-show window))))
