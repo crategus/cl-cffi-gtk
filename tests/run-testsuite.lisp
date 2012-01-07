@@ -36,6 +36,7 @@
 (run-all-tests :gobject-tests)
 
 (load "rtest-gtk-window.lisp")
+(load "rtest-gtk-box.lisp")
 (in-package :gtk-tests)
 (run-all-tests :gtk-tests)
 
