@@ -70,8 +70,9 @@
     #:define-boxed-opaque-accessor
     #:define-vtable
     #:get-g-enum-definition
+    #:register-object-type
     #:register-object-type-implementation
-    #:registered-object-type-by-name 
+    #:registered-object-type-by-name
     #:with-foreign-boxed-array
         ))
 
