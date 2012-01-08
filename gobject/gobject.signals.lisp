@@ -155,30 +155,49 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun finalize-lisp-signal-handler-closure (closure)
-  (let* ((function-id (foreign-slot-value closure
-                                          'lisp-signal-handler-closure
-                                          :function-id))
-         (addr (pointer-address (foreign-slot-value closure
-                                                    'lisp-signal-handler-closure
-                                                    :object)))
-         (object (or (gethash addr *foreign-gobjects-strong*)
-                     (gethash addr *foreign-gobjects-weak*))))
-    (when object
-      (delete-handler-from-object object function-id))))
+;; Called from g-signal-connect to create the callback function
 
-(defcallback lisp-signal-handler-closure-finalize :void
-    ((data :pointer) (closure (:pointer lisp-signal-handler-closure)))
-  (declare (ignore data))
-  (finalize-lisp-signal-handler-closure closure))
+(defun create-signal-handler-closure (object fn)
+  (let ((function-id (save-handler-to-object object fn))
+        (closure (g-closure-new-simple
+                   (foreign-type-size 'lisp-signal-handler-closure)
+                   (null-pointer))))
+    (setf (foreign-slot-value closure 'lisp-signal-handler-closure :function-id)
+          function-id
+          (foreign-slot-value closure 'lisp-signal-handler-closure :object)
+          (pointer object))
+    (g-closure-add-finalize-notifier
+                                closure
+                                (null-pointer)
+                                (callback lisp-signal-handler-closure-finalize))
+    (g-closure-set-marshal closure
+                           (callback lisp-signal-handler-closure-marshal))
+    closure))
 
 ;;; ----------------------------------------------------------------------------
 
-(defun call-with-restarts (fn args)
-  (restart-case
-      (apply fn args)
-    (return-from-g-closure (&optional v)
-                           :report "Return value from closure" v)))
+;; Helper functions for create-signal-handler-closure
+
+(defun save-handler-to-object (object handler)
+  (assert handler)
+  (let ((id (find-free-signal-handler-id object))
+        (handlers (g-object-signal-handlers object)))
+    (if id
+        (progn
+          (setf (aref handlers id) handler)
+          id)
+        (progn
+          (vector-push-extend handler handlers)
+          (1- (length handlers))))))
+
+(defun find-free-signal-handler-id (object)
+  (iter (with handlers = (g-object-signal-handlers object))
+        (for i from 0 below (length handlers))
+        (finding i such-that (null (aref handlers i)))))
+
+;;; ----------------------------------------------------------------------------
+
+;; A GClosureMarshal function used when creating a signal handler
 
 (defcallback lisp-signal-handler-closure-marshal :void
     ((closure (:pointer lisp-signal-handler-closure))
@@ -204,42 +223,48 @@
     (when return-type
       (set-g-value return-value fn-result return-type :g-value-init nil))))
 
+;;; ----------------------------------------------------------------------------
+
+;; Helper functions for lisp-signal-handler-closure-marshal
+
 (defun parse-closure-arguments (count-of-args args)
   (loop
      for i from 0 below count-of-args
      collect (parse-g-value (mem-aref args 'g-value i))))
 
-(defun create-signal-handler-closure (object fn)
-  (let ((function-id (save-handler-to-object object fn))
-        (closure (g-closure-new-simple
-                   (foreign-type-size 'lisp-signal-handler-closure)
-                   (null-pointer))))
-    (setf (foreign-slot-value closure 'lisp-signal-handler-closure :function-id)
-          function-id
-          (foreign-slot-value closure 'lisp-signal-handler-closure :object)
-          (pointer object))
-    (g-closure-add-finalize-notifier closure
-                                     (null-pointer)
-                                     (callback lisp-signal-handler-closure-finalize))
-    (g-closure-set-marshal closure
-                           (callback lisp-signal-handler-closure-marshal))
-    closure))
-
-(defun find-free-signal-handler-id (object)
-  (iter (with handlers = (g-object-signal-handlers object))
-        (for i from 0 below (length handlers))
-        (finding i such-that (null (aref handlers i)))))
-
-(defun save-handler-to-object (object handler)
-  (assert handler)
-  (let ((id (find-free-signal-handler-id object))
-        (handlers (g-object-signal-handlers object)))
-    (if id
-        (progn (setf (aref handlers id) handler) id)
-        (progn (vector-push-extend handler handlers) (1- (length handlers))))))
-
 (defun retrieve-handler-from-object (object handler-id)
   (aref (g-object-signal-handlers object) handler-id))
+
+(defun call-with-restarts (fn args)
+  (restart-case
+      (apply fn args)
+    (return-from-g-closure (&optional v)
+                           :report "Return value from closure" v)))
+
+;;; ----------------------------------------------------------------------------
+
+;; A finalization notifier function used when creating a signal handler
+
+(defcallback lisp-signal-handler-closure-finalize :void
+    ((data :pointer) (closure (:pointer lisp-signal-handler-closure)))
+  (declare (ignore data))
+  (finalize-lisp-signal-handler-closure closure))
+
+;;; ----------------------------------------------------------------------------
+
+;; Helper functions for lisp-signal-handler-closure-finalize
+
+(defun finalize-lisp-signal-handler-closure (closure)
+  (let* ((function-id (foreign-slot-value closure
+                                          'lisp-signal-handler-closure
+                                          :function-id))
+         (addr (pointer-address (foreign-slot-value closure
+                                                    'lisp-signal-handler-closure
+                                                    :object)))
+         (object (or (gethash addr *foreign-gobjects-strong*)
+                     (gethash addr *foreign-gobjects-weak*))))
+    (when object
+      (delete-handler-from-object object function-id))))
 
 (defun delete-handler-from-object (object handler-id)
   (let ((handlers (g-object-signal-handlers object)))
@@ -944,8 +969,10 @@
         (prog1
             (if (eq (signal-info-return-type signal-info)
                     (gtype +g-type-void+))
-                (g-signal-emitv params (signal-info-id signal-info)
-                                signal-name (null-pointer))
+                (g-signal-emitv params
+                                (signal-info-id signal-info)
+                                signal-name
+                                (null-pointer))
                 (with-foreign-object (return-value 'g-value)
                   (g-value-zero return-value)
                   (g-value-init return-value
