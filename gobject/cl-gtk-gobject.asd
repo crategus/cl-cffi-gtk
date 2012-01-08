@@ -37,7 +37,8 @@
                (:file "gobject.init")
                (:file "gobject.stable-pointer")
                (:file "gobject.object-function")
-               (:file "gobject.cffi-callbacks")
+               (:file "gobject.glib-defcallback")
+               (:file "gobject.generating")
                
                (:file "gobject.type-info")   ; Type Information
                (:file "gobject.g-value")     ; Generic Values
@@ -51,8 +52,6 @@
                (:file "gobject.signals")     ; Signals
                
                (:file "gobject.type-info.object")
-               (:file "gobject.generating")
-               
                (:file "gobject.foreign-gobject-subclassing")
                )
   :depends-on (:cl-gtk-glib
