@@ -311,3 +311,30 @@
       (gtk-table-attach-defaults table quit    0 2 1 2)
       
       (gtk-widget-show window))))
+
+;;; Chapter 7. The Button Widget
+
+(defun xpm-label-box (filename text)
+  (let ((box (make-instance 'gtk-h-box
+                            :homogeneous nil
+                            :spacing 0
+                            :border-width 2))
+        (label (make-instance 'gtk-label
+                              :label text))
+        (image (make-instance 'gtk-image)))
+    (setq image (gtk-image-new-from-file filename))
+    (gtk-box-pack-start box image :expand nil :fill nil :padding 2)
+    (gtk-box-pack-start box label :expand nil :fill nil :padding 2)
+    box))
+
+(defun example-6 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Cool Button"
+                                 :type :toplevel
+                                 :border-width 10))
+          (button (make-instance 'gtk-button))
+          (box (xpm-label-box "save.png" "Save to File")))
+      (gtk-container-add button box)
+      (gtk-container-add window button)
+      (gtk-widget-show window))))
