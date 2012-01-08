@@ -32,6 +32,7 @@
 
 (define-test gtk-box
   (assert-equal "GtkBox" (gtype-name (gtype "GtkBox")))
+  (assert-eql 'gtk-box (registered-object-type-by-name "GtkBox"))
   (assert-equal "GtkContainer" (gtype-name (g-type-parent (gtype "GtkBox"))))
   (assert-equal '("GtkButtonBox" "GtkHBox" "GtkVBox")
                 (mapcar #'gtype-name (g-type-children (gtype "GtkBox"))))
@@ -72,6 +73,7 @@
                               :spacing 0))
          (hbox-type (g-type-from-instance (pointer hbox))))
     (assert-equal "GtkHBox" (gtype-name hbox-type))
+    (assert-eql 'gtk-h-box (registered-object-type-by-name "GtkHBox"))
     (assert-equal "GtkBox" (gtype-name (g-type-parent hbox-type)))
     (assert-equal '("GtkFileChooserButton" "GtkStatusbar")
                   (mapcar #'gtype-name (g-type-children hbox-type)))
@@ -109,6 +111,7 @@
                               :spacing 0))
          (vbox-type (g-type-from-instance (pointer vbox))))
     (assert-equal "GtkVBox" (gtype-name vbox-type))
+    (assert-eql 'gtk-v-box (registered-object-type-by-name "GtkVBox"))
     (assert-equal "GtkBox" (gtype-name (g-type-parent vbox-type)))
     (assert-equal '("GtkColorSelection"
                     "GtkFileChooserWidget"
