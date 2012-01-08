@@ -51,7 +51,6 @@
                (:file "gobject.closures")    ; Closures
                (:file "gobject.signals")     ; Signals
                
-               (:file "gobject.type-info.object")
                (:file "gobject.foreign-gobject-subclassing")
                (:file "gobject.utils")
                )
