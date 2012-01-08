@@ -163,36 +163,6 @@
                        ,type-initializer)))
     (symbol `(funcall ',type-initializer))))
 
-(defun enum-value->definition (enum-value)
-  (let ((value-name (intern (lispify-name (enum-item-nick enum-value))
-                            (find-package :keyword)))
-        (numeric-value (enum-item-value enum-value)))
-    `(,value-name ,numeric-value)))
-
-(defun get-g-enum-definition (type &optional lisp-name-package)
-  (when (and (stringp type)
-             (null (gtype type)))
-    (let ((type-init-name (probable-type-init-name type)))
-      (when (foreign-symbol-pointer type-init-name)
-        (foreign-funcall-pointer (foreign-symbol-pointer type-init-name)
-                                 ()
-                                 :int))))
-  (when *generated-types*
-    (setf (gethash (gtype-name (gtype type)) *generated-types*) t))
-  (let* ((*lisp-name-package* (or lisp-name-package
-                                  *lisp-name-package* *package*))
-         (g-type (gtype type))
-         (g-name (gtype-name g-type))
-         (name (g-name->name g-name))
-         (items (get-enum-items g-type))
-         (probable-type-initializer (probable-type-init-name g-name)))
-    `(define-g-enum ,g-name ,name
-         (:export t
-                  ,@(when (foreign-symbol-pointer probable-type-initializer)
-                          (list :type-initializer
-                                probable-type-initializer)))
-       ,@(mapcar #'enum-value->definition items))))
-
 ;;; ----------------------------------------------------------------------------
 ;;; struct GEnumValue
 ;;; 
@@ -353,35 +323,6 @@
                         (find-package ,(package-name (symbol-package name))))))
      ,@(when type-initializer
          (list `(at-init () ,(type-initializer-call type-initializer))))))
-
-(defun flags-value->definition (flags-value)
-  (let ((value-name (intern (lispify-name (flags-item-nick flags-value))
-                            (find-package :keyword)))
-        (numeric-value (flags-item-value flags-value)))
-    `(,value-name ,numeric-value)))
-
-(defun get-g-flags-definition (type &optional lisp-name-package)
-  (when (and (stringp type) (null (gtype type)))
-    (let ((type-init-name (probable-type-init-name type)))
-      (when (foreign-symbol-pointer type-init-name)
-        (foreign-funcall-pointer (foreign-symbol-pointer type-init-name)
-                                 ()
-                                 :int))))
-  (when *generated-types*
-    (setf (gethash (gtype-name (gtype type)) *generated-types*) t))
-  (let* ((*lisp-name-package* (or lisp-name-package
-                                  *lisp-name-package* *package*))
-         (g-type (gtype type))
-         (g-name (gtype-name g-type))
-         (name (g-name->name g-name))
-         (items (get-flags-items g-type))
-         (probable-type-initializer (probable-type-init-name g-name)))
-    `(define-g-flags ,g-name ,name
-         (:export t
-                  ,@(when (foreign-symbol-pointer probable-type-initializer)
-                          (list :type-initializer
-                                probable-type-initializer)))
-       ,@(mapcar #'flags-value->definition items))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GFlagsValue
