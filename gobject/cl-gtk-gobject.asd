@@ -53,6 +53,7 @@
                
                (:file "gobject.type-info.object")
                (:file "gobject.foreign-gobject-subclassing")
+               (:file "gobject.utils")
                )
   :depends-on (:cl-gtk-glib
                :cffi
