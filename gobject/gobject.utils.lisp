@@ -213,6 +213,23 @@
                                     :key 'car
                                     :test 'string=)))))))
 
+;; Returns a list of properties of GObject interface g-type. Each property is
+;; described by an object of type g-class-property-definition. g-type is an
+;; integer or a string specifying the GType
+
+(defun interface-properties (g-type)
+  (assert (g-type-is-a g-type +g-type-interface+))
+  (with-unwind (g-iface (g-type-default-interface-ref g-type)
+                        g-type-default-interface-unref)
+    (with-foreign-object (n-properties :uint)
+      (with-unwind (params (g-object-interface-list-properties
+                            g-iface n-properties)
+                           g-free)
+        (loop
+           for i from 0 below (mem-ref n-properties :uint)
+           for param = (mem-aref params :pointer i)
+           collect (parse-g-param-spec param))))))
+
 ;;; ----------------------------------------------------------------------------
 
 ;; Get the defintion of a GClass type
@@ -264,6 +281,21 @@
                           (list property-definition)))
                     (cdr (find g-name *additional-properties*
                                :key 'car :test 'string=)))))))
+
+;; Returns a list of properties of GObject class @code{g-type}. Each property
+;; is described by an object of type g-class-property-definition. g-type is an
+;; integer or a string specifying the GType
+
+(defun class-properties (g-type)
+  (assert (g-type-is-a g-type +g-type-object+))
+  (with-unwind (g-class (g-type-class-ref g-type) g-type-class-unref)
+    (with-foreign-object (n-properties :uint)
+      (with-unwind (params (g-object-class-list-properties g-class n-properties)
+                           g-free)
+        (loop
+           for i from 0 below (mem-ref n-properties :uint)
+           for param = (mem-aref params :pointer i)
+           collect (parse-g-param-spec param))))))
 
 ;;; ----------------------------------------------------------------------------
 
