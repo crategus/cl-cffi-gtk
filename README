@@ -1,2 +1,1 @@
-cl-gtk is a Lisp bindint to the GTK+ library.
-
+cl-cffi-gtk is a Lisp binding to the GTK+ library based on cl-gtk2.
