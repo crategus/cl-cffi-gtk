@@ -273,6 +273,9 @@
 ;;; struct GtkLabel;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkLabel" 'gtk-label))
+
 (define-g-object-class "GtkLabel" gtk-label
                        (:superclass misc
                         :export t

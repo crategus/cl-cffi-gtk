@@ -120,6 +120,9 @@
 ;;; struct GtkTable;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkTable" 'gtk-table))
+
 (define-g-object-class "GtkTable" gtk-table
                        (:superclass container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")

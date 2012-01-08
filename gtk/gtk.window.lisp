@@ -254,6 +254,9 @@
 ;;; typedef struct _GtkWindow GtkWindow;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkWindow" 'gtk-window))
+
 (define-g-object-class "GtkWindow" gtk-window
                        (:superclass bin
                         :export t

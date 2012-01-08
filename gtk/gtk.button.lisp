@@ -132,6 +132,9 @@
 ;;; struct GtkButton;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkButton" 'gtk-button))
+
 (define-g-object-class "GtkButton" gtk-button
                        (:superclass bin
                         :export t

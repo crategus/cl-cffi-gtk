@@ -139,6 +139,12 @@
 ;;; struct GtkBox;
 ;;; ----------------------------------------------------------------------------
 
+;; There is a problem, if the Lisp name of the class corresponds to the
+;; name of the C class. For this case the name is not registered. That causes
+;; further problems.
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkBox" 'gtk-box))
+
 (define-g-object-class "GtkBox" gtk-box
                        (:superclass container
                         :export t
@@ -150,9 +156,9 @@
                         (spacing gtk-box-spacing "spacing" "gint" t t)))
 
 ;; These symbols are not exported by default? Why?
-(export 'gtk-box)
-(export 'gtk-box-homogeneous)
-(export 'gtk-box-spacing)
+;(export 'gtk-box)
+;(export 'gtk-box-homogeneous)
+;(export 'gtk-box-spacing)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -611,6 +617,9 @@
 ;;; GtkHBox is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkHBox" 'gtk-h-box))
+
 (define-g-object-class "GtkHBox" gtk-h-box
                        (:superclass gtk-box
                         :export t
@@ -726,6 +735,9 @@
 ;;; 
 ;;; GtkVBox is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkVBox" 'gtk-v-box))
 
 (define-g-object-class "GtkVBox" gtk-v-box
                        (:superclass gtk-box

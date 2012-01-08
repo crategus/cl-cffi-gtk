@@ -68,6 +68,9 @@
 ;;; struct GtkSeparator;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkSeparator" 'gtk-separator))
+
 (define-g-object-class "GtkSeparator" gtk-separator
                        (:superclass widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -141,6 +144,9 @@
 ;;; GtkHSeparator is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkHSeparator" 'gtk-h-separator))
+
 (define-g-object-class "GtkHSeparator" gtk-h-separator
                        (:superclass gtk-separator :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -212,6 +218,9 @@
 ;;; The GtkVSeparator struct contains private data only, and should be accessed
 ;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkVSeparator" 'gtk-v-separator))
 
 (define-g-object-class "GtkVSeparator" gtk-v-separator
                        (:superclass gtk-separator :export t :interfaces
