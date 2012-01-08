@@ -624,7 +624,7 @@
 ;;; 	the callback function to register
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_closure_add_finalizer_notifier" g-closure-add-finalize-notifier)
+(defcfun ("g_closure_add_finalize_notifier" g-closure-add-finalize-notifier)
     :void
   (closure (:pointer g-closure))
   (notify-data :pointer)
@@ -780,7 +780,7 @@
 ;;; 	a GClosureMarshal function
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_closue_set_marshal" g-closure-set-marshal) :void
+(defcfun ("g_closure_set_marshal" g-closure-set-marshal) :void
   (closure (:pointer g-closure))
   (marshal :pointer))
 
