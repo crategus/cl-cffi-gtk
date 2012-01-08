@@ -324,7 +324,7 @@
                          "gtk_window_get_mnemonic_modifier"
                          "gtk_window_set_mnemonic_modifier")
                         (:cffi icon-list gtk-window-icon-list
-                         (g-list pixbuf :free-from-foreign t :free-to-foreign t)
+                         (g-list gdk-pixbuf :free-from-foreign t :free-to-foreign t)
                          "gtk_window_get_icon_list" "gtk_window_set_icon_list")
                         (:cffi group gtk-window-group (g-object window-group)
                          "gtk_window_get_group" nil)
@@ -1721,7 +1721,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_get_default_icon_list" gtk-window-get-default-icon-list)
-  (g-list (g-object pixbuf)))
+  (g-list (g-object gdk-pixbuf)))
 
 (export 'gtk-window-get-default-icon-list)
 
@@ -2417,7 +2417,7 @@
 
 (defcfun ("gtk_window_set_default_icon_list" gtk-window-set-default-icon-list)
     :boolean
-  (icon-list (g-list (g-object pixbuf))))
+  (icon-list (g-list (g-object gdk-pixbuf))))
 
 (export 'gtk-window-set-default-icon-list)
 
@@ -2436,7 +2436,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_set_default_icon" gtk-window-set-default-icon) :void
-  (icon (g-object pixbuf)))
+  (icon (g-object gdk-pixbuf)))
 
 (export 'gtk-window-set-default-icon)
 
