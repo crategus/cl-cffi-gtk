@@ -452,7 +452,7 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_threads_add_idle_full" %gdk_threads_add_idle_full) :uint
+(defcfun ("gdk_threads_add_idle_full" %gdk-threads-add-idle-full) :uint
   (priority :int)
   (function :pointer)
   (data :pointer)
