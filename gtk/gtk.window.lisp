@@ -951,7 +951,7 @@
 
 (defcfun ("gtk_window_activate_key" gtk-window-activate-key) :boolean
   (window (g-object gtk-window))
-  (event (g-boxed-foreign event)))
+  (event (g-boxed-foreign gdk-event)))
 
 (export 'gtk-window-activate-key)
 
@@ -982,7 +982,7 @@
 (defcfun ("gtk_window_propagate_key_event" gtk-window-propagate-key-event)
     :boolean
   (window (g-object gtk-window))
-  (event (g-boxed-foreign event)))
+  (event (g-boxed-foreign gdk-event)))
 
 (export 'gtk-window-propagate-key-event)
 
