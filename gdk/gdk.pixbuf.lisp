@@ -188,7 +188,7 @@
 
 (defcfun ("gdk_pixbuf_render_to_drawable" gdk-pixbuf-render-to-drawable) :void
   (pixbuf (g-object gdk-pixbuf))
-  (drawable (g-object drawable))
+  (drawable (g-object gdk-drawable))
   (gc (g-object graphics-context))
   (src-x :int)
   (src-y :int)
@@ -277,7 +277,7 @@
 (defcfun ("gdk_pixbuf_render_to_drawable_alpha"
           gdk-pixbuf-render-to-drawable-alpha) :void
   (pixbuf (g-object gdk-pixbuf))
-  (drawable (g-object drawable))
+  (drawable (g-object gdk-drawable))
   (src-x :int)
   (src-y :int)
   (dest-x :int)
@@ -515,7 +515,7 @@
 (defcfun ("gdk_pixbuf_get_from_drawable" %gdk-pixbuf-get-from-drawable)
     (g-object gdk-pixbuf :already-referenced)
   (dest (g-object gdk-pixbuf))
-  (src (g-object drawable))
+  (src (g-object gdk-drawable))
   (colormap :pointer)
   (src-x :int)
   (src-y :int)
