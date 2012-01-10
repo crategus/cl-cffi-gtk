@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.drawable.lisp
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -118,11 +116,11 @@
   (:type-initializer "gdk_drawable_get_type")
   ((:cffi display gdk-drawable-display (g-object display)
           "gdk_drawable_get_display" nil)
-   (:cffi screen gdk-drawable-screen (g-object screen)
+   (:cffi screen gdk-drawable-screen (g-object gdk-screen)
           "gdk_drawable_get_screen" nil)
-   (:cffi visual gdk-drawable-visual (g-object visual)
+   (:cffi visual gdk-drawable-visual (g-object gdk-visual)
           "gdk_drawable_get_visual" nil)
-   (:cffi colormap gdk-drawable-colormap (g-object colormap)
+   (:cffi colormap gdk-drawable-colormap (g-object gdk-colormap)
           "gdk_drawable_get_colormap" "gdk_drawable_set_colormap")
    (:cffi depth gdk-drawable-depth :int
           "gdk_drawable_get_depth" nil)
@@ -1218,8 +1216,8 @@
   (x :int)
   (y :int)
   (line (g-boxed-foreign pango-layout-line))
-  (foreground (g-boxed-foreign color))
-  (background (g-boxed-foreign color)))
+  (foreground (g-boxed-foreign gdk-color))
+  (background (g-boxed-foreign gdk-color)))
 
 (export 'gdk-draw-layout-line-with-colors)
 
@@ -1325,8 +1323,8 @@
   (x :int)
   (y :int)
   (layout (g-object pango-layout))
-  (foreground (g-boxed-foreign color))
-  (background (g-boxed-foreign color)))
+  (foreground (g-boxed-foreign gdk-color))
+  (background (g-boxed-foreign gdk-color)))
 
 (export 'gdk-draw-layout-with-colors)
 
