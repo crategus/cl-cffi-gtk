@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.general.lisp
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -398,6 +396,13 @@
 ;;;	the width of the default screen in pixels.
 ;;; ----------------------------------------------------------------------------
 
+;; Do not use the name gdk-screen-width.
+;; It is an accessor for the class gdk-screen.
+
+(defcfun ("gdk_screen_width" %gdk-screen-width) :int)
+
+(export '%gdk-screen-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_height ()
 ;;;
@@ -408,6 +413,13 @@
 ;;; Returns :
 ;;;	the height of the default screen in pixels.
 ;;; ----------------------------------------------------------------------------
+
+;; Do not use the name gdk-screen-height.
+;; It is an accessor for the class gdk-screen.
+
+(defcfun ("gdk_screen_height" %gdk-screen-height) :int)
+
+(export '%gdk-screen-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_width_mm ()
@@ -422,6 +434,13 @@
 ;;;     always correct.
 ;;; ----------------------------------------------------------------------------
 
+;; Do not use the name gdk-screen-width-mm.
+;; It is an accessor for the class gdk-screen.
+
+(defcfun ("gdk_screen_width_mm" %gdk-screen-width-mm) :int)
+
+(export '%gdk-screen-width-mm)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_height_mm ()
 ;;;
@@ -434,6 +453,13 @@
 ;;;	the height of the default screen in millimeters, though it is not
 ;;;     always correct.
 ;;; ----------------------------------------------------------------------------
+
+;; Do not use the name gdk-screen-height-mm.
+;; It is an accessor for the class gdk-screen.
+
+(defcfun ("gdk_screen_height_mm" %gdk-screen-height-mm) :int)
+
+(export '%gdk-screen-heigth-mm)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkGrabStatus
