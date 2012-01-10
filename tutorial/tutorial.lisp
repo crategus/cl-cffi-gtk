@@ -5,8 +5,6 @@
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
-;;; ----------------------------------------------------------------------------
-;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
@@ -321,8 +319,7 @@
                             :border-width 2))
         (label (make-instance 'gtk-label
                               :label text))
-        (image (make-instance 'gtk-image)))
-    (setq image (gtk-image-new-from-file filename))
+        (image (gtk-image-new-from-file filename)))
     (gtk-box-pack-start box image :expand nil :fill nil :padding 2)
     (gtk-box-pack-start box label :expand nil :fill nil :padding 2)
     box))
