@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; run-testsuite.lisp
+;;; rtest-gdk-screen.lisp
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
@@ -21,26 +21,21 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(load "../lisp-utils/lisp-unit.lisp")
+(asdf:operate 'asdf:load-op :cl-gtk-gdk)
 
-(asdf:operate 'asdf:load-op :cl-gtk-gtk)
+(defpackage :gdk-tests
+  (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
-(load "rtest-glib.lisp")
-(in-package :glib-tests)
-(run-all-tests :glib-tests)
-
-(load "rtest-gobject.lisp")
-(in-package :gobject-tests)
-(run-all-tests :gobject-tests)
-
-(load "rtest-gdk-screen.lisp")
-(load "rtest-gdk-visual.lisp")
 (in-package :gdk-tests)
-(run-all-tests :gdk-tests)
 
-(load "rtest-gtk-window.lisp")
-(load "rtest-gtk-box.lisp")
-(in-package :gtk-tests)
-(run-all-tests :gtk-tests)
+(define-test gdk-visual
+  (let* ((visual (gdk-visual-get-system))
+         (type (g-type-from-instance (pointer visual))))
+    (assert-equal "GdkVisual" (gtype-name type))
+    (assert-eql 'gdk-visual (registered-object-type-by-name "GdkVisual"))
+    (assert-equal "GObject" (gtype-name (g-type-parent type)))
+    (assert-equal '() (mapcar #'gtype-name (g-type-children type)))
+    ))
 
-;;; --- End of file run-testsuite.lisp -----------------------------------------
+;;; --- End of file rtest-gdk-visual.lisp --------------------------------------
+      
