@@ -1,17 +1,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.events.lisp
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
 ;;;
-;;; ----------------------------------------------------------------------------
-;;;
+;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
@@ -697,9 +695,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_send_client_message_for_display"
-          gdk-event-send-client-message-for-display)
-    :boolean
-  (display (g-object display))
+          gdk-event-send-client-message-for-display) :boolean
+  (display (g-object gdk-display))
   (event (g-boxed-foreign gdk-event))
   (winid gdk-native-window))
 
