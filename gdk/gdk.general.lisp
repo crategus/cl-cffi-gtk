@@ -71,8 +71,8 @@
 ;;;     gdk_get_use_xshm              *deprecated*
 ;;;     gdk_set_use_xshm              *deprecated*
 ;;;
-;;;     gdk-error-trap-push ()
-;;;     gdk-error-trap-pop ()
+;;;     gdk-error-trap-push
+;;;     gdk-error-trap-pop
 ;;;
 ;;;     GDK_WINDOWING_X11
 ;;;     GDK_WINDOWING_WIN32
@@ -275,7 +275,7 @@
 ;; See the next function which combines the functions
 ;; gdk_notifiy_startup_complete and gdk_notifiy_startup_complete_with_id
 
-(defcfun ("gdk_notifiy_startup_complete" %gdk-notify-startup-complete) :void)
+(defcfun ("gdk_notify_startup_complete" %gdk-notify-startup-complete) :void)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_notify_startup_complete_with_id ()
@@ -339,7 +339,7 @@
 ;;;	a string.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_set_program-class" gdk-set-program-class) :void
+(defcfun ("gdk_set_program_class" gdk-set-program-class) :void
   (program-class (:string :free-to-foreign t)))
 
 (export 'gdk-set-program-class)
