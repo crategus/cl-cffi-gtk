@@ -114,7 +114,7 @@
 
 (define-g-object-class "GdkDrawable" gdk-drawable
   (:type-initializer "gdk_drawable_get_type")
-  ((:cffi display gdk-drawable-display (g-object display)
+  ((:cffi display gdk-drawable-display (g-object gdk-display)
           "gdk_drawable_get_display" nil)
    (:cffi screen gdk-drawable-screen (g-object gdk-screen)
           "gdk_drawable_get_screen" nil)
@@ -124,10 +124,10 @@
           "gdk_drawable_get_colormap" "gdk_drawable_set_colormap")
    (:cffi depth gdk-drawable-depth :int
           "gdk_drawable_get_depth" nil)
-   (:cffi clip-region gdk-drawable-clip-region (g-boxed-foreign region :return)
+   (:cffi clip-region gdk-drawable-clip-region (g-boxed-foreign gdk-region :return)
           "gdk_drawable_get_clip_region" nil)
    (:cffi visible-region gdk-drawable-visible-region
-          (g-boxed-foreign region :return)
+          (g-boxed-foreign gdk-region :return)
           "gdk_drawable_get_visible_region" nil)))
 
 ;;; ----------------------------------------------------------------------------
@@ -483,7 +483,7 @@
   (n :int))
 
 (defun gdk-draw-points (drawable gc points)
-  (with-foreign-boxed-array (n points-ptr point points)
+  (with-foreign-boxed-array (n points-ptr gdk-point points)
     (%gdk-draw-points drawable gc points-ptr n)))
 
 (export 'gdk-draw-points)
@@ -584,7 +584,7 @@
   (n :int))
 
 (defun gdk-draw-lines (drawable gc points)
-  (with-foreign-boxed-array (n points-ptr point points)
+  (with-foreign-boxed-array (n points-ptr gdk-point points)
     (%gdk-draw-lines drawable gc points-ptr n)))
 
 (export 'gdk-draw-lines)
@@ -923,7 +923,7 @@
   (n-points :int))
 
 (defun gdk-draw-polygon (drawable gc filled points)
-  (with-foreign-boxed-array (n points-ptr point points)
+  (with-foreign-boxed-array (n points-ptr gdk-point points)
     (%gdk-draw-polygon drawable gc filled points-ptr n)))
 
 (export 'gdk-draw-polygon)
