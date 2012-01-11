@@ -159,7 +159,7 @@
           "gdk_screen_is_composited" nil)
    (:cffi root-window gdk-screen-root-window (g-object gdk-window)
           "gdk_screen_get_root_window" nil)
-   (:cffi display gdk-screen-display (g-object display)
+   (:cffi display gdk-screen-display (g-object gdk-display)
           "gdk_screen_get_display" nil)
    (:cffi number gdk-screen-number :int
           "gdk_screen_get_number" nil)
@@ -645,10 +645,10 @@
     :void
   (screen (g-object gdk-screen))
   (monitor-num :int)
-  (dest (g-boxed-foreign rectangle)))
+  (dest (g-boxed-foreign gdk-rectangle)))
 
 (defun gdk-screen-get-monitor-geometry (screen monitor-num)
-  (let ((dest (make-rectangle)))
+  (let ((dest (make-gdk-rectangle)))
     (%gdk-screen-get-monitor-geometry screen monitor-num dest)
     dest))
 
