@@ -572,7 +572,7 @@
   (owner-events :boolean)
   (event-mask gdk-event-mask)
   (confine-to (g-object gdk-window))
-  (cursor (g-boxed-foreign cursor))
+  (cursor (g-boxed-foreign gdk-cursor))
   (time :uint32))
 
 (export 'gdk-pointer-grab)
