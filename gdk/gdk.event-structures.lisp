@@ -738,7 +738,7 @@
               :drag-status
               :drop-start
               :drop-finished) event-dnd
-             (drag-context (g-object drag-context))
+             (drag-context (g-object gdk-drag-context))
              (time :uint32)
              (x-root :short)
              (y-root :short))
