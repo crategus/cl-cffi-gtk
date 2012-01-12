@@ -681,6 +681,40 @@
 (export 'gdk-draw-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
+;;; struct GdkSegment
+;;; 
+;;; struct GdkSegment {
+;;;   gint x1;
+;;;   gint y1;
+;;;   gint x2;
+;;;   gint y2;
+;;; };
+;;; 
+;;; Specifies the start and end point of a line for use by the
+;;; gdk_draw_segments() function.
+;;; 
+;;; gint x1;
+;;; 	the x coordinate of the start point.
+;;; 
+;;; gint y1;
+;;; 	the y coordinate of the start point.
+;;; 
+;;; gint x2;
+;;; 	the x coordinate of the end point.
+;;; 
+;;; gint y2;
+;;; 	the y coordinate of the end point.
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-cstruct gdk-segment nil
+  (x1 :int :initform 0)
+  (y1 :int :initform 0)
+  (x2 :int :initform 0)
+  (y2 :int :initform 0))
+
+(export (boxed-related-symbols 'gdk-segment))
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_draw_segments ()
 ;;; 
 ;;; void gdk_draw_segments (GdkDrawable *drawable,
@@ -718,36 +752,10 @@
   (n-segments :int))
 
 (defun gdk-draw-segments (drawable gc segments)
-  (with-foreign-boxed-array (n segments-ptr segment segments)
+  (with-foreign-boxed-array (n segments-ptr gdk-segment segments)
     (%gdk-draw-segments drawable gc segments-ptr n)))
 
 (export 'gdk-draw-segments)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GdkSegment
-;;; 
-;;; struct GdkSegment {
-;;;   gint x1;
-;;;   gint y1;
-;;;   gint x2;
-;;;   gint y2;
-;;; };
-;;; 
-;;; Specifies the start and end point of a line for use by the
-;;; gdk_draw_segments() function.
-;;; 
-;;; gint x1;
-;;; 	the x coordinate of the start point.
-;;; 
-;;; gint y1;
-;;; 	the y coordinate of the start point.
-;;; 
-;;; gint x2;
-;;; 	the x coordinate of the end point.
-;;; 
-;;; gint y2;
-;;; 	the y coordinate of the end point.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_draw_rectangle ()
