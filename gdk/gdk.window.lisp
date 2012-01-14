@@ -502,6 +502,103 @@
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkWMDecoration
+;;; 
+;;; typedef enum
+;;; {
+;;;   GDK_DECOR_ALL      = 1 << 0,
+;;;   GDK_DECOR_BORDER   = 1 << 1,
+;;;   GDK_DECOR_RESIZEH  = 1 << 2,
+;;;   GDK_DECOR_TITLE    = 1 << 3,
+;;;   GDK_DECOR_MENU     = 1 << 4,
+;;;   GDK_DECOR_MINIMIZE = 1 << 5,
+;;;   GDK_DECOR_MAXIMIZE = 1 << 6
+;;; } GdkWMDecoration;
+;;; 
+;;; These are hints originally defined by the Motif toolkit. The window manager
+;;; can use them when determining how to decorate the window. The hint must be
+;;; set before mapping the window.
+;;; 
+;;; GDK_DECOR_ALL
+;;;     all decorations should be applied.
+;;; 
+;;; GDK_DECOR_BORDER
+;;;     a frame should be drawn around the window.
+;;; 
+;;; GDK_DECOR_RESIZEH
+;;;     the frame should have resize handles.
+;;; 
+;;; GDK_DECOR_TITLE
+;;;     a titlebar should be placed above the window.
+;;; 
+;;; GDK_DECOR_MENU
+;;;     a button for opening a menu should be included.
+;;; 
+;;; GDK_DECOR_MINIMIZE
+;;;     a minimize button should be included.
+;;; 
+;;; GDK_DECOR_MAXIMIZE
+;;;     a maximize button should be included.
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GdkWMDecoration" gdk-wm-decoration
+  (:export t
+   :type-initializer "gdk_wm_decoration_get_type")
+  (:all 1)
+  (:border 2)
+  (:resizeh 4)
+  (:title 8)
+  (:menu 16)
+  (:minimize 32)
+  (:maximize 64))
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkWMFunction
+;;; 
+;;; typedef enum
+;;; {
+;;;   GDK_FUNC_ALL      = 1 << 0,
+;;;   GDK_FUNC_RESIZE   = 1 << 1,
+;;;   GDK_FUNC_MOVE     = 1 << 2,
+;;;   GDK_FUNC_MINIMIZE = 1 << 3,
+;;;   GDK_FUNC_MAXIMIZE = 1 << 4,
+;;;   GDK_FUNC_CLOSE    = 1 << 5
+;;; } GdkWMFunction;
+;;; 
+;;; These are hints originally defined by the Motif toolkit. The window manager
+;;; can use them when determining the functions to offer for the window. The
+;;; hint must be set before mapping the window.
+;;; 
+;;; GDK_FUNC_ALL
+;;;     all functions should be offered.
+;;; 
+;;; GDK_FUNC_RESIZE
+;;;     the window should be resizable.
+;;; 
+;;; GDK_FUNC_MOVE
+;;;     the window should be movable.
+;;; 
+;;; GDK_FUNC_MINIMIZE
+;;;     the window should be minimizable.
+;;; 
+;;; GDK_FUNC_MAXIMIZE
+;;;     the window should be maximizable.
+;;; 
+;;; GDK_FUNC_CLOSE
+;;;     the window should be closable.
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GdkWMFunction" gdk-wm-function
+  (:export t
+   :type-initializer "gdk_wm_function_get_type")
+  (:all 1)
+  (:resize 2)
+  (:move 4)
+  (:minimize 8)
+  (:maximize 16)
+  (:close 32))
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GdkWindow
 ;;; 
 ;;; struct GdkWindow;
@@ -581,9 +678,9 @@
            nil "gdk_window_set_startup_id")
     (:cffi group gdk-window-group (g-object gdk-window)
            "gdk_window_get_group" "gdk_window_set_group")
-    (:cffi decorations gdk-window-decorations gdk-w-m-decoration
+    (:cffi decorations gdk-window-decorations gdk-wm-decoration
            gdk-window-get-decorations "gdk_window_set_decorations")
-    (:cffi functions gdk-window-functions gdk-w-m-function
+    (:cffi functions gdk-window-functions gdk-wm-function
            nil "gdk_window_set_functions")))
 
 ;;; ----------------------------------------------------------------------------
@@ -3222,6 +3319,13 @@
 ;;;     a GdkFilterReturn value.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "GdkFilterReturn" gdk-filter-return
+  (:export t
+   :type-initializer "gdk_filter_return_get_type")
+  (:continue 0)
+  (:translate 1)
+  (:remove 2))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkFilterReturn
 ;;; 
@@ -4399,122 +4503,17 @@
   (window (g-object gdk-window))
   (x (:pointer :int))
   (y (:pointer :int))
-  (mask (:pointer modifier-type)))
+  (mask (:pointer gdk-modifier-type)))
 
 (defun gdk-window-get-pointer (window)
-  (with-foreign-objects ((x :int) (y :int) (mask 'modifier-type))
+  (with-foreign-objects ((x :int) (y :int) (mask 'gdk-modifier-type))
     (let ((w (gdk_window_get_pointer window x y mask)))
       (values w
               (mem-ref x :int)
               (mem-ref y :int)
-              (mem-ref mask 'modifier-type)))))
+              (mem-ref mask 'gdk-modifier-type)))))
 
 (export 'gdk-window-get-pointer)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GdkModifierType
-;;; 
-;;; typedef enum
-;;; {
-;;;   GDK_SHIFT_MASK    = 1 << 0,
-;;;   GDK_LOCK_MASK     = 1 << 1,
-;;;   GDK_CONTROL_MASK  = 1 << 2,
-;;;   GDK_MOD1_MASK     = 1 << 3,
-;;;   GDK_MOD2_MASK     = 1 << 4,
-;;;   GDK_MOD3_MASK     = 1 << 5,
-;;;   GDK_MOD4_MASK     = 1 << 6,
-;;;   GDK_MOD5_MASK     = 1 << 7,
-;;;   GDK_BUTTON1_MASK  = 1 << 8,
-;;;   GDK_BUTTON2_MASK  = 1 << 9,
-;;;   GDK_BUTTON3_MASK  = 1 << 10,
-;;;   GDK_BUTTON4_MASK  = 1 << 11,
-;;;   GDK_BUTTON5_MASK  = 1 << 12,
-;;; 
-;;;   /* The next few modifiers are used by XKB, so we skip to the end.
-;;;    * Bits 15 - 25 are currently unused. Bit 29 is used internally.
-;;;    */
-;;;   
-;;;   GDK_SUPER_MASK    = 1 << 26,
-;;;   GDK_HYPER_MASK    = 1 << 27,
-;;;   GDK_META_MASK     = 1 << 28,
-;;;   
-;;;   GDK_RELEASE_MASK  = 1 << 30,
-;;; 
-;;;   GDK_MODIFIER_MASK = 0x5c001fff
-;;; } GdkModifierType;
-;;; 
-;;; A set of bit-flags to indicate the state of modifier keys and mouse buttons
-;;; in various event types. Typical modifier keys are Shift, Control, Meta,
-;;; Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.
-;;; 
-;;; Like the X Window System, GDK supports 8 modifier keys and 5 mouse buttons.
-;;; 
-;;; Since 2.10, GDK recognizes which of the Meta, Super or Hyper keys are mapped
-;;; to Mod2 - Mod5, and indicates this by setting GDK_SUPER_MASK,
-;;; GDK_HYPER_MASK or GDK_META_MASK in the state field of key events.
-;;; 
-;;; GDK_SHIFT_MASK
-;;;     the Shift key.
-;;; 
-;;; GDK_LOCK_MASK
-;;;     a Lock key (depending on the modifier mapping of the X server this may
-;;;     either be CapsLock or ShiftLock).
-;;; 
-;;; GDK_CONTROL_MASK
-;;;     the Control key.
-;;; 
-;;; GDK_MOD1_MASK
-;;;     the fourth modifier key (it depends on the modifier mapping of the
-;;;     X server which key is interpreted as this modifier, but normally it is
-;;;     the Alt key).
-;;; 
-;;; GDK_MOD2_MASK
-;;;     the fifth modifier key (it depends on the modifier mapping of the
-;;;     X server which key is interpreted as this modifier).
-;;; 
-;;; GDK_MOD3_MASK
-;;;     the sixth modifier key (it depends on the modifier mapping of the
-;;;     X server which key is interpreted as this modifier).
-;;; 
-;;; GDK_MOD4_MASK
-;;;     the seventh modifier key (it depends on the modifier mapping of the
-;;;     X server which key is interpreted as this modifier).
-;;; 
-;;; GDK_MOD5_MASK
-;;;     the eighth modifier key (it depends on the modifier mapping of the
-;;;     X server which key is interpreted as this modifier).
-;;; 
-;;; GDK_BUTTON1_MASK
-;;;     the first mouse button.
-;;; 
-;;; GDK_BUTTON2_MASK
-;;;     the second mouse button.
-;;; 
-;;; GDK_BUTTON3_MASK
-;;;     the third mouse button.
-;;; 
-;;; GDK_BUTTON4_MASK
-;;;     the fourth mouse button.
-;;; 
-;;; GDK_BUTTON5_MASK
-;;;     the fifth mouse button.
-;;; 
-;;; GDK_SUPER_MASK
-;;;     the Super modifier. Since 2.10
-;;; 
-;;; GDK_HYPER_MASK
-;;;     the Hyper modifier. Since 2.10
-;;; 
-;;; GDK_META_MASK
-;;;     the Meta modifier. Since 2.10
-;;; 
-;;; GDK_RELEASE_MASK
-;;;     not used in GDK itself. GTK+ uses it to differentiate between
-;;;     (keyval, modifiers) pairs from key press and release events.
-;;; 
-;;; GDK_MODIFIER_MASK
-;;;     a mask covering all modifier types.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_parent ()
@@ -4870,52 +4869,12 @@
 
 (defcfun gdk_window_get_decorations :boolean
   (window (g-object gdk-window))
-  (decorations (:pointer gdk-w-m-decoration)))
+  (decorations (:pointer gdk-wm-decoration)))
 
 (defun gdk-window-get-decorations (window)
-  (with-foreign-object (decorations 'gdk-w-m-decoration)
+  (with-foreign-object (decorations 'gdk-wm-decoration)
     (gdk_window_get_decorations window decorations)
-    (mem-ref decorations 'gdk-w-m-decoration)))
-
-;;; ----------------------------------------------------------------------------
-;;; enum GdkWMDecoration
-;;; 
-;;; typedef enum
-;;; {
-;;;   GDK_DECOR_ALL      = 1 << 0,
-;;;   GDK_DECOR_BORDER   = 1 << 1,
-;;;   GDK_DECOR_RESIZEH  = 1 << 2,
-;;;   GDK_DECOR_TITLE    = 1 << 3,
-;;;   GDK_DECOR_MENU     = 1 << 4,
-;;;   GDK_DECOR_MINIMIZE = 1 << 5,
-;;;   GDK_DECOR_MAXIMIZE = 1 << 6
-;;; } GdkWMDecoration;
-;;; 
-;;; These are hints originally defined by the Motif toolkit. The window manager
-;;; can use them when determining how to decorate the window. The hint must be
-;;; set before mapping the window.
-;;; 
-;;; GDK_DECOR_ALL
-;;;     all decorations should be applied.
-;;; 
-;;; GDK_DECOR_BORDER
-;;;     a frame should be drawn around the window.
-;;; 
-;;; GDK_DECOR_RESIZEH
-;;;     the frame should have resize handles.
-;;; 
-;;; GDK_DECOR_TITLE
-;;;     a titlebar should be placed above the window.
-;;; 
-;;; GDK_DECOR_MENU
-;;;     a button for opening a menu should be included.
-;;; 
-;;; GDK_DECOR_MINIMIZE
-;;;     a minimize button should be included.
-;;; 
-;;; GDK_DECOR_MAXIMIZE
-;;;     a maximize button should be included.
-;;; ----------------------------------------------------------------------------
+    (mem-ref decorations 'gdk-wm-decoration)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_functions ()
@@ -4939,42 +4898,6 @@
 ;;; 
 ;;; functions :
 ;;;     bitmask of operations to allow on window
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GdkWMFunction
-;;; 
-;;; typedef enum
-;;; {
-;;;   GDK_FUNC_ALL      = 1 << 0,
-;;;   GDK_FUNC_RESIZE   = 1 << 1,
-;;;   GDK_FUNC_MOVE     = 1 << 2,
-;;;   GDK_FUNC_MINIMIZE = 1 << 3,
-;;;   GDK_FUNC_MAXIMIZE = 1 << 4,
-;;;   GDK_FUNC_CLOSE    = 1 << 5
-;;; } GdkWMFunction;
-;;; 
-;;; These are hints originally defined by the Motif toolkit. The window manager
-;;; can use them when determining the functions to offer for the window. The
-;;; hint must be set before mapping the window.
-;;; 
-;;; GDK_FUNC_ALL
-;;;     all functions should be offered.
-;;; 
-;;; GDK_FUNC_RESIZE
-;;;     the window should be resizable.
-;;; 
-;;; GDK_FUNC_MOVE
-;;;     the window should be movable.
-;;; 
-;;; GDK_FUNC_MINIMIZE
-;;;     the window should be minimizable.
-;;; 
-;;; GDK_FUNC_MAXIMIZE
-;;;     the window should be maximizable.
-;;; 
-;;; GDK_FUNC_CLOSE
-;;;     the window should be closable.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
