@@ -279,7 +279,7 @@
           nil "gdk_gc_set_rgb_fg_color")
    (:cffi rgb-bg-color graphics-context-rgb-bg-color (g-boxed-foreign gdk-color)
           nil "gdk_gc_set_rgb_bg_color")
-   (:cffi font graphics-context-font (g-boxed-foreign font)
+   (:cffi font graphics-context-font (g-boxed-foreign gdk-font)
           nil "gdk_gc_set_font")
    (:cffi function graphics-context-function gdk-function
           nil "gdk_gc_set_function")
@@ -296,7 +296,7 @@
           nil "gdk_gc_set_clip_rectangle")
    (:cffi clip-region graphics-context-clip-region (g-boxed-foreign gdk-region)
           nil "gdk_gc_set_clip_region")
-   (:cffi subwindow graphics-context-subwindow subwindow-mode
+   (:cffi subwindow graphics-context-subwindow gdk-subwindow-mode
           nil "gdk_gc_set_subwindow")
    (:cffi exposures graphics-context-exposures :boolean
           nil "gdk_gc_set_exposures")
