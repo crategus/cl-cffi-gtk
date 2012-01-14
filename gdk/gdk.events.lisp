@@ -83,140 +83,6 @@
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GdkEventMask
-;;; 
-;;; typedef enum
-;;; {
-;;;   GDK_EXPOSURE_MASK                 = 1 << 1,
-;;;   GDK_POINTER_MOTION_MASK           = 1 << 2,
-;;;   GDK_POINTER_MOTION_HINT_MASK      = 1 << 3,
-;;;   GDK_BUTTON_MOTION_MASK            = 1 << 4,
-;;;   GDK_BUTTON1_MOTION_MASK           = 1 << 5,
-;;;   GDK_BUTTON2_MOTION_MASK           = 1 << 6,
-;;;   GDK_BUTTON3_MOTION_MASK           = 1 << 7,
-;;;   GDK_BUTTON_PRESS_MASK             = 1 << 8,
-;;;   GDK_BUTTON_RELEASE_MASK           = 1 << 9,
-;;;   GDK_KEY_PRESS_MASK                = 1 << 10,
-;;;   GDK_KEY_RELEASE_MASK              = 1 << 11,
-;;;   GDK_ENTER_NOTIFY_MASK             = 1 << 12,
-;;;   GDK_LEAVE_NOTIFY_MASK             = 1 << 13,
-;;;   GDK_FOCUS_CHANGE_MASK             = 1 << 14,
-;;;   GDK_STRUCTURE_MASK                = 1 << 15,
-;;;   GDK_PROPERTY_CHANGE_MASK          = 1 << 16,
-;;;   GDK_VISIBILITY_NOTIFY_MASK        = 1 << 17,
-;;;   GDK_PROXIMITY_IN_MASK             = 1 << 18,
-;;;   GDK_PROXIMITY_OUT_MASK            = 1 << 19,
-;;;   GDK_SUBSTRUCTURE_MASK             = 1 << 20,
-;;;   GDK_SCROLL_MASK                   = 1 << 21,
-;;;   GDK_ALL_EVENTS_MASK               = 0x3FFFFE
-;;; } GdkEventMask;
-;;; 
-;;; A set of bit-flags to indicate which events a window is to receive. Most
-;;; of these masks map onto one or more of the GdkEventType event types above.
-;;; 
-;;; GDK_POINTER_MOTION_HINT_MASK is a special mask which is used to reduce the
-;;; number of GDK_MOTION_NOTIFY events received. Normally a GDK_MOTION_NOTIFY
-;;; event is received each time the mouse moves. However, if the application
-;;; spends a lot of time processing the event (updating the display, for
-;;; example), it can lag behind the position of the mouse. When using
-;;; GDK_POINTER_MOTION_HINT_MASK, fewer GDK_MOTION_NOTIFY events will be sent,
-;;; some of which are marked as a hint (the is_hint member is TRUE). To receive
-;;; more motion events after a motion hint event, the application needs to asks
-;;; for more, by calling gdk_event_request_motions().
-;;; 
-;;; GDK_EXPOSURE_MASK
-;;; 	receive expose events
-;;; 
-;;; GDK_POINTER_MOTION_MASK
-;;; 	receive all pointer motion events
-;;; 
-;;; GDK_POINTER_MOTION_HINT_MASK
-;;; 	see the explanation above
-;;; 
-;;; GDK_BUTTON_MOTION_MASK
-;;; 	receive pointer motion events while any button is pressed
-;;; 
-;;; GDK_BUTTON1_MOTION_MASK
-;;; 	receive pointer motion events while 1 button is pressed
-;;; 
-;;; GDK_BUTTON2_MOTION_MASK
-;;; 	receive pointer motion events while 2 button is pressed
-;;; 
-;;; GDK_BUTTON3_MOTION_MASK
-;;; 	receive pointer motion events while 3 button is pressed
-;;; 
-;;; GDK_BUTTON_PRESS_MASK
-;;; 	receive button press events
-;;; 
-;;; GDK_BUTTON_RELEASE_MASK
-;;; 	receive button release events
-;;; 
-;;; GDK_KEY_PRESS_MASK
-;;; 	receive key press events
-;;; 
-;;; GDK_KEY_RELEASE_MASK
-;;; 	receive key release events
-;;; 
-;;; GDK_ENTER_NOTIFY_MASK
-;;; 	receive window enter events
-;;; 
-;;; GDK_LEAVE_NOTIFY_MASK
-;;; 	receive window leave events
-;;; 
-;;; GDK_FOCUS_CHANGE_MASK
-;;; 	receive focus change events
-;;; 
-;;; GDK_STRUCTURE_MASK
-;;; 	receive events about window configuration change
-;;; 
-;;; GDK_PROPERTY_CHANGE_MASK
-;;; 	receive property change events
-;;; 
-;;; GDK_VISIBILITY_NOTIFY_MASK
-;;; 	receive visibility change events
-;;; 
-;;; GDK_PROXIMITY_IN_MASK
-;;; 	receive proximity in events
-;;; 
-;;; GDK_PROXIMITY_OUT_MASK
-;;; 	receive proximity out events
-;;; 
-;;; GDK_SUBSTRUCTURE_MASK
-;;; 	receive events about window configuration changes of child windows
-;;; 
-;;; GDK_SCROLL_MASK
-;;; 	receive scroll events
-;;; 
-;;; GDK_ALL_EVENTS_MASK
-;;; 	the combination of all the above event masks.
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GdkEventMask" gdk-event-mask
-  ()
-  (:exposure-mask 2)
-  (:pointer-motion-mask 4)
-  (:pointer-motion-hint-mask 8)
-  (:button-motion-mask 16)
-  (:button1-motion-mask 32)
-  (:button2-motion-mask 64)
-  (:button3-motion-mask 128)
-  (:button-press-mask 256)
-  (:button-release-mask 512)
-  (:key-press-mask 1024)
-  (:key-release-mask 2048)
-  (:enter-notify-mask 4096)
-  (:leave-notify-mask 8192)
-  (:focus-change-mask 16384)
-  (:structure-mask 32768)
-  (:property-change-mask 65536)
-  (:visibility-notify-mask 131072)
-  (:proximity-in-mask 262144)
-  (:proximity-out-mask 524288)
-  (:substructure-mask 1048576)
-  (:scroll-mask 2097152)
-  (:all-events-mask 4194302))
-
-;;; ----------------------------------------------------------------------------
 ;;; GDK_CURRENT_TIME
 ;;;
 ;;; #define GDK_CURRENT_TIME     0L
@@ -431,15 +297,15 @@
 
 (defcfun ("gdk_event_get_state" %gdk_event_get_state) :boolean
   (event (g-boxed-foreign gdk-event))
-  (state (:pointer modifier-type)))
+  (state (:pointer gdk-modifier-type)))
 
 ;; The Lisp implementation does not take an argument state.
 ;; The value of state is returned.
 
 (defun gdk-event-get-state (event)
-  (with-foreign-object (state 'modifier-type)
+  (with-foreign-object (state 'gdk-modifier-type)
     (when (%gdk_event_get_state event state)
-      (mem-ref state 'modifier-type))))
+      (mem-ref state 'gdk-modifier-type))))
 
 (export 'gdk-event-get-state)
 
@@ -465,16 +331,16 @@
 ;;; 	TRUE if the specified axis was found, otherwise FALSE
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_get_axis" %gdk_event_get_axis) :boolean
+(defcfun ("gdk_event_get_axis" %gdk-event-get-axis) :boolean
   (event (g-boxed-foreign gdk-event))
-  (axis-use axis-use)
+  (axis-use gdk-axis-use)
   (value (:pointer :double)))
 
 ;; The Lisp implementation returns the value.
 
 (defun gdk-event-get-axis (event axis)
   (with-foreign-object (value :double)
-    (when (%gdk_event_get_axis event axis value)
+    (when (%gdk-event-get-axis event axis value)
       (mem-ref value :double))))
 
 (export 'gdk-event-get-axis)
