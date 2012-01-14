@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.window.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -320,7 +318,7 @@
                         (:cffi has-frame gtk-window-has-frame :boolean
                          "gtk_window_get_has_frame" "gtk_window_set_has_frame")
                         (:cffi mnemonic-modifier gtk-window-mnemonic-modifier
-                         (g-object modifier-type)
+                         (g-object gdk-modifier-type)
                          "gtk_window_get_mnemonic_modifier"
                          "gtk_window_set_mnemonic_modifier")
                         (:cffi icon-list gtk-window-icon-list
@@ -923,7 +921,7 @@
 (defcfun ("gtk_window_mnemonic_activate" gtk-window-mnemonic-activate) :boolean
   (window (g-object gtk-window))
   (keyval :uint)
-  (modifier modifier-type))
+  (modifier gdk-modifier-type))
 
 (export 'gtk-window-mnemonic-activate)
 

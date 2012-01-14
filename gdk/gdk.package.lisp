@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gdk.pixbuf.lisp
+;;; gdk.package.lisp
 ;;;
 ;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
