@@ -651,7 +651,7 @@
   (with-foreign-objects ((screen :pointer)
                          (x :int)
                          (y :int)
-                         (mask 'modifier-type))
+                         (mask 'gdk-modifier-type))
     (%gdk-display-get-pointer display screen x y mask)
     (values (mem-ref screen '(g-object gdk-screen))
             (mem-ref x :int)
