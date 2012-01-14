@@ -440,7 +440,7 @@
 
 (defcfun ("gdk_draw_point" gdk-draw-point) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (x :int)
   (y :int))
 
@@ -478,7 +478,7 @@
 
 (defcfun ("gdk_draw_points" %gdk-draw-points) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (points :pointer)
   (n :int))
 
@@ -537,7 +537,7 @@
 
 (defcfun ("gdk_draw_line" gdk-draw-line) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (x1 :int)
   (y1 :int)
   (x2 :int)
@@ -579,7 +579,7 @@
 
 (defcfun ("gdk_draw_lines" %gdk-draw-lines) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (points :pointer)
   (n :int))
 
@@ -666,7 +666,7 @@
 
 (defcfun ("gdk_draw_pixbuf" gdk-draw-pixbuf) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (pixbuf (g-object gdk-pixbuf))
   (src-x :int)
   (src-y :int)
@@ -674,7 +674,7 @@
   (dest-y :int)
   (width :int)
   (height :int)
-  (dither rgb-dither)
+  (dither gdk-rgb-dither)
   (x-dither :int)
   (y-dither :int))
 
@@ -747,7 +747,7 @@
 
 (defcfun ("gdk_draw_segments" %gdk-draw-segments) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (segments :pointer)
   (n-segments :int))
 
@@ -812,7 +812,7 @@
 
 (defcfun ("gdk_draw_rectangle" gdk-draw-rectangle) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (filled :boolean)
   (x :int)
   (y :int)
@@ -876,7 +876,7 @@
 
 (defcfun ("gdk_draw_arc" gdk-draw-arc) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (filled :boolean)
   (x :int)
   (y :int)
@@ -925,7 +925,7 @@
 
 (defcfun ("gdk_draw_polygon" %gdk-draw-polygon) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (filled :boolean)
   (points :pointer)
   (n-points :int))
@@ -935,6 +935,45 @@
     (%gdk-draw-polygon drawable gc filled points-ptr n)))
 
 (export 'gdk-draw-polygon)
+
+;;; ----------------------------------------------------------------------------
+;;; struct GdkTrapezoid
+;;; 
+;;; struct GdkTrapezoid {
+;;;   double y1, x11, x21, y2, x12, x22;
+;;; };
+;;; 
+;;; Specifies a trapezpoid for use by the gdk_draw_trapezoids(). The trapezoids
+;;; used here have parallel, horizontal top and bottom edges.
+;;; 
+;;; double y1;
+;;; 	the y coordinate of the start point.
+;;; 
+;;; double x11;
+;;; 	the x coordinate of the top left corner
+;;; 
+;;; double x21;
+;;; 	the x coordinate of the top right corner
+;;; 
+;;; double y2;
+;;; 	the y coordinate of the end point.
+;;; 
+;;; double x12;
+;;; 	the x coordinate of the bottom left corner
+;;; 
+;;; double x22;
+;;; 	the x coordinate of the bottom right corner
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-cstruct trapezoid nil
+  (y1 :double :initform 0d0)
+  (x11 :double :initform 0d0)
+  (x21 :double :initform 0d0)
+  (y2 :double :initform 0d0)
+  (x12 :double :initform 0d0)
+  (x22 :double :initform 0d0))
+
+(export (boxed-related-symbols 'trapezoid))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_draw_trapezoids ()
@@ -973,7 +1012,7 @@
 
 (defcfun ("gdk_draw_trapezoids" %gdk-draw-trapezoids) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (trapezoids :pointer)
   (n :int))
 
@@ -982,35 +1021,6 @@
     (%gdk-draw-trapezoids drawable gc trapezoids-ptr n)))
 
 (export 'gdk-draw-trapezoids)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GdkTrapezoid
-;;; 
-;;; struct GdkTrapezoid {
-;;;   double y1, x11, x21, y2, x12, x22;
-;;; };
-;;; 
-;;; Specifies a trapezpoid for use by the gdk_draw_trapezoids(). The trapezoids
-;;; used here have parallel, horizontal top and bottom edges.
-;;; 
-;;; double y1;
-;;; 	the y coordinate of the start point.
-;;; 
-;;; double x11;
-;;; 	the x coordinate of the top left corner
-;;; 
-;;; double x21;
-;;; 	the x coordinate of the top right corner
-;;; 
-;;; double y2;
-;;; 	the y coordinate of the end point.
-;;; 
-;;; double x12;
-;;; 	the x coordinate of the bottom left corner
-;;; 
-;;; double x22;
-;;; 	the x coordinate of the bottom right corner
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_draw_glyphs ()
@@ -1057,7 +1067,7 @@
 
 (defcfun ("gdk_draw_glyphs" gdk-draw-glyphs) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (font (g-object pango-font))
   (x :int)
   (y :int)
@@ -1118,7 +1128,7 @@
 
 (defcfun ("gdk_draw_glyphs_transformed" gdk-draw-glyphs-transformed) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (matrix (g-boxed-foreign pango-matrix))
   (font (g-object pango-font))
   (x :int)
@@ -1164,7 +1174,7 @@
 
 (defcfun ("gdk_draw_layout_line" gdk-draw-layout-line) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (x :int)
   (y :int)
   (line (g-boxed-foreign pango-layout-line)))
@@ -1220,7 +1230,7 @@
 (defcfun ("gdk_draw_layout_line_with_colors" gdk-draw-layout-line-with-colors)
     :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (x :int)
   (y :int)
   (line (g-boxed-foreign pango-layout-line))
@@ -1269,7 +1279,7 @@
 
 (defcfun ("gdk_draw_layout" gdk-draw-layout) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (x :int)
   (y :int)
   (layout (g-object pango-layout)))
@@ -1327,7 +1337,7 @@
 
 (defcfun ("gdk_draw_layout_with_colors" gdk-draw-layout-with-colors) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (x :int)
   (y :int)
   (layout (g-object pango-layout))
@@ -1532,7 +1542,7 @@
 
 (defcfun ("gdk_draw_drawable" gdk-draw-drawable) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (src (g-object gdk-drawable))
   (x-src :int)
   (y-src :int)
@@ -1597,7 +1607,7 @@
 
 (defcfun ("gdk_draw_image" gdk-draw-image) :void
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (image (g-object gdk-image))
   (x-src :int)
   (y-src :int)
