@@ -1,8 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gdk.pixbuf-structure.lisp
-;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; gdk.pixbuf.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -10,7 +7,8 @@
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -52,6 +50,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
+
+;; An opaque struct representing an animation. 
+
+(define-g-object-class "GdkPixbufAnimation" gdk-pixbuf-animation
+  (:type-initializer "gdk_pixbuf_animation_get_type")
+    nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_render_threshold_alpha ()
@@ -189,14 +193,14 @@
 (defcfun ("gdk_pixbuf_render_to_drawable" gdk-pixbuf-render-to-drawable) :void
   (pixbuf (g-object gdk-pixbuf))
   (drawable (g-object gdk-drawable))
-  (gc (g-object graphics-context))
+  (gc (g-object gdk-gc))
   (src-x :int)
   (src-y :int)
   (dest-x :int)
   (dest-y :int)
   (width :int)
   (height :int)
-  (dither rgb-dither)
+  (dither gdk-rgb-dither)
   (x-dither :int)
   (y-dither :int))
 
@@ -286,7 +290,7 @@
   (height :int)
   (alpha-mode gdk-pixbuf-alpha-mode)
   (alpha-threshold :int)
-  (dither rgb-dither)
+  (dither gdk-rgb-dither)
   (x-dither :int)
   (y-dither :int))
 
