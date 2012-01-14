@@ -46,6 +46,8 @@
 ;;; enum                GdkSettingAction;
 ;;; enum                GdkOwnerChange;
 ;;;
+;;; flags               GdkModifierType
+;;;
 ;;; union               GdkEvent;
 ;;; 
 ;;; struct              GdkEventAny;
@@ -80,6 +82,47 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
+
+;; "CFFI foreign type for an array of a fixed length. Slot element-type
+;; specifies the type of elements and array-size specifies the size of array
+;; (in elements).
+
+(define-foreign-type fixed-array ()
+  ((element-type :reader fixed-array-element-type
+                 :initarg :element-type
+                 :initform (error "Element type must be specified"))
+   (array-size :reader fixed-array-array-size
+               :initarg :array-size
+               :initform (error "Array size must be specified")))
+  (:actual-type :pointer)
+  (:documentation ""))
+   
+
+(define-parse-method fixed-array (element-type array-size)
+  (make-instance 'fixed-array
+                 :element-type element-type
+                 :array-size array-size))
+
+(defmethod translate-from-foreign (ptr (type fixed-array))
+  (when (not (null-pointer-p ptr))
+    (let ((result (make-array (fixed-array-array-size type)))
+          (el-type (fixed-array-element-type type)))
+      (loop
+         for i from 0 below (fixed-array-array-size type)
+         do (setf (aref result i) (mem-aref ptr el-type i)))
+      result)))
+
+(defmethod translate-to-foreign (value (type fixed-array))
+  (if (null value)
+      (null-pointer)
+      (foreign-alloc (fixed-array-element-type type)
+                     :count (length value)
+                     :initial-contents value)))
+
+(defmethod free-translated-object (value (type fixed-array) param)
+  (declare (ignore param))
+  (unless (null-pointer-p value)
+    (foreign-free value)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkNativeWindow
@@ -412,6 +455,16 @@
 ;;; 	crossing because a GTK+ widget changed state (e.g. sensitivity).
 ;;; ----------------------------------------------------------------------------
 
+(defcenum gdk-crossing-mode
+  :normal
+  :grab
+  :ungrab
+  :gtk-grab
+  :gtk-ungrab
+  :state-changed)
+
+(export 'gdk-crossing-mode)
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkNotifyType
 ;;; 
@@ -452,6 +505,16 @@
 ;;; 	an unknown type of enter/leave event occurred.
 ;;; ----------------------------------------------------------------------------
 
+(defcenum gdk-notify-type
+  (:ancestor 0)
+  :virtual
+  :inferior
+  :nonlinear
+  :nonlinear-virtual
+  :unknown)
+
+(export 'gdk-notify-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkPropertyState
 ;;; 
@@ -474,6 +537,256 @@
   ()
   :new-value
   :delete)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkModifierType
+;;; 
+;;; typedef enum
+;;; {
+;;;   GDK_SHIFT_MASK    = 1 << 0,
+;;;   GDK_LOCK_MASK     = 1 << 1,
+;;;   GDK_CONTROL_MASK  = 1 << 2,
+;;;   GDK_MOD1_MASK     = 1 << 3,
+;;;   GDK_MOD2_MASK     = 1 << 4,
+;;;   GDK_MOD3_MASK     = 1 << 5,
+;;;   GDK_MOD4_MASK     = 1 << 6,
+;;;   GDK_MOD5_MASK     = 1 << 7,
+;;;   GDK_BUTTON1_MASK  = 1 << 8,
+;;;   GDK_BUTTON2_MASK  = 1 << 9,
+;;;   GDK_BUTTON3_MASK  = 1 << 10,
+;;;   GDK_BUTTON4_MASK  = 1 << 11,
+;;;   GDK_BUTTON5_MASK  = 1 << 12,
+;;; 
+;;;   /* The next few modifiers are used by XKB, so we skip to the end.
+;;;    * Bits 15 - 25 are currently unused. Bit 29 is used internally.
+;;;    */
+;;;   
+;;;   GDK_SUPER_MASK    = 1 << 26,
+;;;   GDK_HYPER_MASK    = 1 << 27,
+;;;   GDK_META_MASK     = 1 << 28,
+;;;   
+;;;   GDK_RELEASE_MASK  = 1 << 30,
+;;; 
+;;;   GDK_MODIFIER_MASK = 0x5c001fff
+;;; } GdkModifierType;
+;;; 
+;;; A set of bit-flags to indicate the state of modifier keys and mouse buttons
+;;; in various event types. Typical modifier keys are Shift, Control, Meta,
+;;; Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.
+;;; 
+;;; Like the X Window System, GDK supports 8 modifier keys and 5 mouse buttons.
+;;; 
+;;; Since 2.10, GDK recognizes which of the Meta, Super or Hyper keys are mapped
+;;; to Mod2 - Mod5, and indicates this by setting GDK_SUPER_MASK,
+;;; GDK_HYPER_MASK or GDK_META_MASK in the state field of key events.
+;;; 
+;;; GDK_SHIFT_MASK
+;;;     the Shift key.
+;;; 
+;;; GDK_LOCK_MASK
+;;;     a Lock key (depending on the modifier mapping of the X server this may
+;;;     either be CapsLock or ShiftLock).
+;;; 
+;;; GDK_CONTROL_MASK
+;;;     the Control key.
+;;; 
+;;; GDK_MOD1_MASK
+;;;     the fourth modifier key (it depends on the modifier mapping of the
+;;;     X server which key is interpreted as this modifier, but normally it is
+;;;     the Alt key).
+;;; 
+;;; GDK_MOD2_MASK
+;;;     the fifth modifier key (it depends on the modifier mapping of the
+;;;     X server which key is interpreted as this modifier).
+;;; 
+;;; GDK_MOD3_MASK
+;;;     the sixth modifier key (it depends on the modifier mapping of the
+;;;     X server which key is interpreted as this modifier).
+;;; 
+;;; GDK_MOD4_MASK
+;;;     the seventh modifier key (it depends on the modifier mapping of the
+;;;     X server which key is interpreted as this modifier).
+;;; 
+;;; GDK_MOD5_MASK
+;;;     the eighth modifier key (it depends on the modifier mapping of the
+;;;     X server which key is interpreted as this modifier).
+;;; 
+;;; GDK_BUTTON1_MASK
+;;;     the first mouse button.
+;;; 
+;;; GDK_BUTTON2_MASK
+;;;     the second mouse button.
+;;; 
+;;; GDK_BUTTON3_MASK
+;;;     the third mouse button.
+;;; 
+;;; GDK_BUTTON4_MASK
+;;;     the fourth mouse button.
+;;; 
+;;; GDK_BUTTON5_MASK
+;;;     the fifth mouse button.
+;;; 
+;;; GDK_SUPER_MASK
+;;;     the Super modifier. Since 2.10
+;;; 
+;;; GDK_HYPER_MASK
+;;;     the Hyper modifier. Since 2.10
+;;; 
+;;; GDK_META_MASK
+;;;     the Meta modifier. Since 2.10
+;;; 
+;;; GDK_RELEASE_MASK
+;;;     not used in GDK itself. GTK+ uses it to differentiate between
+;;;     (keyval, modifiers) pairs from key press and release events.
+;;; 
+;;; GDK_MODIFIER_MASK
+;;;     a mask covering all modifier types.
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GdkModifierType" gdk-modifier-type ()
+  (:shift-mask 1) (:lock-mask 2) (:control-mask 4)
+  (:mod1-mask 8) (:mod2-mask 16) (:mod3-mask 32)
+  (:mod4-mask 64) (:mod5-mask 128)
+  (:button1-mask 256) (:button2-mask 512)
+  (:button3-mask 1024) (:button4-mask 2048)
+  (:button5-mask 4096) (:super-mask 67108864)
+  (:hyper-mask 134217728) (:meta-mask 268435456)
+  (:release-mask 1073741824)
+  (:modifier-mask 1543512063))
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkEventMask
+;;; 
+;;; typedef enum
+;;; {
+;;;   GDK_EXPOSURE_MASK                 = 1 << 1,
+;;;   GDK_POINTER_MOTION_MASK           = 1 << 2,
+;;;   GDK_POINTER_MOTION_HINT_MASK      = 1 << 3,
+;;;   GDK_BUTTON_MOTION_MASK            = 1 << 4,
+;;;   GDK_BUTTON1_MOTION_MASK           = 1 << 5,
+;;;   GDK_BUTTON2_MOTION_MASK           = 1 << 6,
+;;;   GDK_BUTTON3_MOTION_MASK           = 1 << 7,
+;;;   GDK_BUTTON_PRESS_MASK             = 1 << 8,
+;;;   GDK_BUTTON_RELEASE_MASK           = 1 << 9,
+;;;   GDK_KEY_PRESS_MASK                = 1 << 10,
+;;;   GDK_KEY_RELEASE_MASK              = 1 << 11,
+;;;   GDK_ENTER_NOTIFY_MASK             = 1 << 12,
+;;;   GDK_LEAVE_NOTIFY_MASK             = 1 << 13,
+;;;   GDK_FOCUS_CHANGE_MASK             = 1 << 14,
+;;;   GDK_STRUCTURE_MASK                = 1 << 15,
+;;;   GDK_PROPERTY_CHANGE_MASK          = 1 << 16,
+;;;   GDK_VISIBILITY_NOTIFY_MASK        = 1 << 17,
+;;;   GDK_PROXIMITY_IN_MASK             = 1 << 18,
+;;;   GDK_PROXIMITY_OUT_MASK            = 1 << 19,
+;;;   GDK_SUBSTRUCTURE_MASK             = 1 << 20,
+;;;   GDK_SCROLL_MASK                   = 1 << 21,
+;;;   GDK_ALL_EVENTS_MASK               = 0x3FFFFE
+;;; } GdkEventMask;
+;;; 
+;;; A set of bit-flags to indicate which events a window is to receive. Most
+;;; of these masks map onto one or more of the GdkEventType event types above.
+;;; 
+;;; GDK_POINTER_MOTION_HINT_MASK is a special mask which is used to reduce the
+;;; number of GDK_MOTION_NOTIFY events received. Normally a GDK_MOTION_NOTIFY
+;;; event is received each time the mouse moves. However, if the application
+;;; spends a lot of time processing the event (updating the display, for
+;;; example), it can lag behind the position of the mouse. When using
+;;; GDK_POINTER_MOTION_HINT_MASK, fewer GDK_MOTION_NOTIFY events will be sent,
+;;; some of which are marked as a hint (the is_hint member is TRUE). To receive
+;;; more motion events after a motion hint event, the application needs to asks
+;;; for more, by calling gdk_event_request_motions().
+;;; 
+;;; GDK_EXPOSURE_MASK
+;;; 	receive expose events
+;;; 
+;;; GDK_POINTER_MOTION_MASK
+;;; 	receive all pointer motion events
+;;; 
+;;; GDK_POINTER_MOTION_HINT_MASK
+;;; 	see the explanation above
+;;; 
+;;; GDK_BUTTON_MOTION_MASK
+;;; 	receive pointer motion events while any button is pressed
+;;; 
+;;; GDK_BUTTON1_MOTION_MASK
+;;; 	receive pointer motion events while 1 button is pressed
+;;; 
+;;; GDK_BUTTON2_MOTION_MASK
+;;; 	receive pointer motion events while 2 button is pressed
+;;; 
+;;; GDK_BUTTON3_MOTION_MASK
+;;; 	receive pointer motion events while 3 button is pressed
+;;; 
+;;; GDK_BUTTON_PRESS_MASK
+;;; 	receive button press events
+;;; 
+;;; GDK_BUTTON_RELEASE_MASK
+;;; 	receive button release events
+;;; 
+;;; GDK_KEY_PRESS_MASK
+;;; 	receive key press events
+;;; 
+;;; GDK_KEY_RELEASE_MASK
+;;; 	receive key release events
+;;; 
+;;; GDK_ENTER_NOTIFY_MASK
+;;; 	receive window enter events
+;;; 
+;;; GDK_LEAVE_NOTIFY_MASK
+;;; 	receive window leave events
+;;; 
+;;; GDK_FOCUS_CHANGE_MASK
+;;; 	receive focus change events
+;;; 
+;;; GDK_STRUCTURE_MASK
+;;; 	receive events about window configuration change
+;;; 
+;;; GDK_PROPERTY_CHANGE_MASK
+;;; 	receive property change events
+;;; 
+;;; GDK_VISIBILITY_NOTIFY_MASK
+;;; 	receive visibility change events
+;;; 
+;;; GDK_PROXIMITY_IN_MASK
+;;; 	receive proximity in events
+;;; 
+;;; GDK_PROXIMITY_OUT_MASK
+;;; 	receive proximity out events
+;;; 
+;;; GDK_SUBSTRUCTURE_MASK
+;;; 	receive events about window configuration changes of child windows
+;;; 
+;;; GDK_SCROLL_MASK
+;;; 	receive scroll events
+;;; 
+;;; GDK_ALL_EVENTS_MASK
+;;; 	the combination of all the above event masks.
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GdkEventMask" gdk-event-mask
+  ()
+  (:exposure-mask 2)
+  (:pointer-motion-mask 4)
+  (:pointer-motion-hint-mask 8)
+  (:button-motion-mask 16)
+  (:button1-motion-mask 32)
+  (:button2-motion-mask 64)
+  (:button3-motion-mask 128)
+  (:button-press-mask 256)
+  (:button-release-mask 512)
+  (:key-press-mask 1024)
+  (:key-release-mask 2048)
+  (:enter-notify-mask 4096)
+  (:leave-notify-mask 8192)
+  (:focus-change-mask 16384)
+  (:structure-mask 32768)
+  (:property-change-mask 65536)
+  (:visibility-notify-mask 131072)
+  (:proximity-in-mask 262144)
+  (:proximity-out-mask 524288)
+  (:substructure-mask 1048576)
+  (:scroll-mask 2097152)
+  (:all-events-mask 4194302))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowState
@@ -656,7 +969,7 @@
   (:variant type
             ((:key-press :key-release) event-key
              (time :uint32)
-             (state modifier-type)
+             (state gdk-modifier-type)
              (keyval :uint)
              (length :int)
              (string (:string :free-from-foreign nil
@@ -681,7 +994,7 @@
              (time :uint32)
              (x :double)
              (y :double)
-             (state modifier-type)
+             (state gdk-modifier-type)
              (direction gdk-scroll-direction)
              (device (g-object device))
              (x-root :double)
@@ -691,7 +1004,7 @@
              (x :double)
              (y :double)
              (axes (fixed-array :double 2))
-             (state modifier-type)
+             (state gdk-modifier-type)
              (is-hint :int16)
              (device (g-object gdk-device))
              (x-root :double)
@@ -709,8 +1022,8 @@
              (y :double)
              (x-root :double)
              (y-root :double)
-             (mode crossing-mode)
-             (detail notify-type)
+             (mode gdk-crossing-mode)
+             (detail gdk-notify-type)
              (focus :boolean)
              (state :uint))
             ((:focus-change) event-focus
