@@ -335,3 +335,285 @@
       (gtk-container-add button box)
       (gtk-container-add window button)
       (gtk-widget-show window))))
+
+;;; Radio Buttons
+
+(defun example-7 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Radio Buttons"
+                                 :type :toplevel
+                                 :border-width 0))
+          (vbox1  (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 0))
+          (vbox2  (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+          (vbox3  (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+          (separator (make-instance 'gtk-h-separator))
+          (button nil)
+          (group nil))
+      (gtk-container-add window vbox1)
+      (gtk-box-pack-start vbox1 vbox2 :expand t :fill t :padding 0)
+      
+      (setq button (gtk-radio-button-new-with-label group "Button 1"))
+      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
+      
+      (setq group (gtk-radio-button-get-group button))
+      (setq button (gtk-radio-button-new-with-label group "Button 2"))
+      (gtk-toggle-button-set-active button t)
+      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
+      
+      (setq group (gtk-radio-button-get-group button))
+      (setq button (gtk-radio-button-new-with-label group "Button 3"))
+      (setq group (gtk-radio-button-get-group button))
+      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
+      
+      (gtk-box-pack-start vbox1 separator :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start vbox1 vbox3 :expand nil :fill t :padding 0)
+      
+      (setq button (make-instance 'gtk-button :label "Close"))
+      (gtk-box-pack-start vbox3 button)
+      
+      (g-signal-connect button "clicked"
+                        (lambda (button)
+                          (declare (ignore button))
+                          (gtk-widget-destroy window)))
+      
+      (gtk-widget-show window))))
+
+;; The same with the function gtk-radio-button-new-with-label-from-widget.
+;; For this example it is not necessary to have the list group.
+
+(defun example-7-1 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Radio Buttons"
+                                 :type :toplevel
+                                 :border-width 0))
+          (vbox1  (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 0))
+          (vbox2  (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+          (vbox3  (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+          (separator (make-instance 'gtk-h-separator))
+          (button nil))
+      (gtk-container-add window vbox1)
+      (gtk-box-pack-start vbox1 vbox2 :expand t :fill t :padding 0)
+      
+      (setq button (gtk-radio-button-new-with-label nil "Button 1"))
+      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
+      
+      (setq button
+            (gtk-radio-button-new-with-label-from-widget button "Button 2"))
+      (gtk-toggle-button-set-active button t)
+      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
+      
+      (setq button
+            (gtk-radio-button-new-with-label-from-widget button "Button 3"))
+      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
+      
+      (gtk-box-pack-start vbox1 separator :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start vbox1 vbox3 :expand nil :fill t :padding 0)
+      
+      (setq button (make-instance 'gtk-button :label "Close"))
+      (gtk-box-pack-start vbox3 button)
+      
+      (g-signal-connect button "clicked"
+                        (lambda (button)
+                          (declare (ignore button))
+                          (gtk-widget-destroy window)))
+      
+      (gtk-widget-show window))))
+
+;;; Chapter 9. Range Widgets
+
+(defun example-8 ()
+  (within-main-loop
+    (let* ((window   (make-instance 'gtk-window
+                                    :type :toplevel
+                                    :title "Range Controls"))
+           (vbox1    (make-instance 'gtk-v-box
+                                    :homogeneous nil
+                                    :spacing 0))
+           (hbox2    (make-instance 'gtk-h-box
+                                    :homogeneous nil
+                                    :spacing 10
+                                    :border-width 10))
+           (vbox3    (make-instance 'gtk-v-box
+                                    :homogeneous nil
+                                    :spacing 10))
+           (adj      (make-instance 'adjustment
+                                    :value 0.0
+                                    :lower 0.0
+                                    :upper 101.0
+                                    :step-increment 0.1
+                                    :page-increment 1.0
+                                    :page-size 1.0
+                                    ))
+           (adj2     (make-instance 'adjustment
+                                    :value 1.0
+                                    :lower 0.0
+                                    :upper 5.0
+                                    :step-increment 1.0
+                                    :page-increment 1.0
+                                    :page-size 0.0))
+           (vscale   (make-instance 'v-scale
+                                    :update-policy :continuous
+                                    :digits 1
+                                    :value-pos :top
+                                    :draw-value t
+                                    :adjustement adj))
+           (hscale   (make-instance 'h-scale
+                                    :update-policy :continuous
+                                    :digits 1
+                                    :value-pos :top
+                                    :draw-value t
+                                    :width-request 200
+                                    :height-request -1
+                                    :adjustement adj))
+           (scale    (make-instance 'h-scale
+                                    :digits 0
+                                    :adjustement adj2))
+           (scrollbar (make-instance 'h-scrollbar
+                                     :update-policy :continuous
+                                     :adjustement adj))
+           (button    (make-instance 'check-button
+                                     :label "Display value on scale widget"
+                                     :active t))
+           (label     (make-instance 'gtk-label
+                                     :label "Scale value position"))
+; TODO: GtkOptionMenu is not implemented           
+;           (opt       (make-instance 'gtk-option-menu))
+                                     
+           )
+      (gtk-container-add window vbox1)
+      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      (gtk-box-pack-start hbox2 vscale :expand t :fill t :padding 0)
+      (gtk-box-pack-start hbox2 vbox3 :expand t :fill t :padding 0)
+      (gtk-box-pack-start vbox3 hscale :expand t :fill t :padding 0)
+      (gtk-box-pack-start vbox3 scrollbar :expand t :fill t :padding 0)
+      
+      (setq hbox2 (make-instance 'gtk-h-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+      
+      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      
+      (g-signal-connect button "toggled"
+                        (lambda (button)
+                          (setf (scale-draw-value hscale)
+                                (gtk-toggle-button-active button))
+                          (setf (scale-draw-value vscale)
+                                (gtk-toggle-button-active button))))
+      
+      (gtk-box-pack-start hbox2 button :expand t :fill t :padding 0)
+      
+      (setq hbox2 (make-instance 'gtk-h-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+      
+      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      
+      ;; At this place the code for a GtkOptionMenu is missing
+      
+      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      
+      (setq hbox2 (make-instance 'gtk-h-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+      
+      (setq label (make-instance 'gtk-label :label "Scale Update Policy"))
+      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      
+      ;; At this place the code for a GtkOptionMenu is missing
+      
+      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      
+      (setq hbox2 (make-instance 'gtk-h-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+      
+      (setq label (make-instance 'gtk-label :label "Scale Digits:"))
+      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      
+      (g-signal-connect adj2 "value_changed"
+                        (lambda (adjustment)
+                          (setf (scale-digits hscale)
+                                (adjustment-value adjustment))
+                          (setf (scale-digits vscale)
+                                (adjustment-value adjustment))))
+      
+      (gtk-box-pack-start hbox2 scale :expand t :fill t :padding 0)
+      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      
+      (setq hbox2 (make-instance 'gtk-h-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+      
+      (setq label (make-instance 'gtk-label :label "Scrollbar Page Size:"))
+      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      
+      (setq adj2 (make-instance 'adjustment
+                                :value 1.0
+                                :lower 1.0
+                                :upper 101.0
+                                :step-increment 1.0
+                                :page-increment 1.0
+                                :page-size 0.0))
+      
+      (g-signal-connect adj2 "value_changed"
+                        (lambda (adjustment)
+                          (setf (adjustment-page-size adj)
+                                (adjustment-page-size adjustment))
+                          (setf (adjustment-page-increment adj)
+                                (adjustment-page-increment adjustment))))
+      
+      (setq scale (make-instance 'h-scale
+                                 :digits 0
+                                 :adjustement adj2))
+      (gtk-box-pack-start hbox2 scale :expand t :fill t :padding 0)
+      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-h-separator)
+                          :expand nil :fill t :padding 0)
+      
+      (setq hbox2 (make-instance 'gtk-v-box
+                                 :homogeneous nil
+                                 :spacing 10
+                                 :border-width 10))
+      
+      (gtk-box-pack-start vbox1 hbox2 :expand nil :fill t :padding 0)
+      
+      (setq button (make-instance 'gtk-button :label "Quit"))
+      
+      (g-signal-connect button "clicked"
+                        (lambda (button)
+                          (declare (ignore button))
+                          (gtk-widget-destroy window)))
+      
+      (gtk-box-pack-start hbox2 button :expand t :fill t :padding 0)
+      
+      ; GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT)
+      ; gtk_widget_grab_default (button)
+      
+      (gtk-widget-show window)
+      )))
+  
