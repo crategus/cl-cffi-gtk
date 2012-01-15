@@ -40,6 +40,7 @@
 
 (load "rtest-gtk-window.lisp")
 (load "rtest-gtk-box.lisp")
+(load "rtest-gtk-button.lisp")
 (in-package :gtk-tests)
 (run-all-tests :gtk-tests)
 
