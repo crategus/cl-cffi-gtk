@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.image.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,6 +73,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkImage implements AtkImplementorIface and GtkBuildable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "file"                     gchar*                : Read / Write
@@ -154,7 +153,6 @@
 ;;;   return image;
 ;;; }
 ;;; 
-;;; 
 ;;; When handling events on the event box, keep in mind that coordinates in the
 ;;; image may be different from event box coordinates due to the alignment and
 ;;; padding settings on the image (see GtkMisc). The simplest way to solve this
@@ -166,6 +164,118 @@
 ;;; gdk-pixbuf-csource. This program allows you to convert an image into a C
 ;;; variable declaration, which can then be loaded into a GdkPixbuf using
 ;;; gdk_pixbuf_new_from_inline().
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "file" property
+;;; 
+;;;   "file"                     gchar*                : Read / Write
+;;; 
+;;; Filename to load and display.
+;;; 
+;;; Default value: NULL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "gicon" property
+;;; 
+;;;   "gicon"                    GIcon*                : Read / Write
+;;; 
+;;; The GIcon displayed in the GtkImage. For themed icons, If the icon theme
+;;; is changed, the image will be updated automatically.
+;;; 
+;;; Since 2.14
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "icon-name" property
+;;; 
+;;;   "icon-name"                gchar*                : Read / Write
+;;; 
+;;; The name of the icon in the icon theme. If the icon theme is changed, the
+;;; image will be updated automatically.
+;;; 
+;;; Default value: NULL
+;;; 
+;;; Since 2.6
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "icon-set" property
+;;; 
+;;;   "icon-set"                 GtkIconSet*           : Read / Write
+;;; 
+;;; Icon set to display.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "icon-size" property
+;;; 
+;;;   "icon-size"                gint                  : Read / Write
+;;; 
+;;; Symbolic size to use for stock icon, icon set or named icon.
+;;; 
+;;; Allowed values: >= 0
+;;; 
+;;; Default value: 4
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "pixbuf" property
+;;; 
+;;;   "pixbuf"                   GdkPixbuf*            : Read / Write
+;;; 
+;;; A GdkPixbuf to display.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "pixbuf-animation" property
+;;; 
+;;;   "pixbuf-animation"         GdkPixbufAnimation*   : Read / Write
+;;; 
+;;; GdkPixbufAnimation to display.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "pixel-size" property
+;;; 
+;;;   "pixel-size"               gint                  : Read / Write
+;;; 
+;;; The "pixel-size" property can be used to specify a fixed size overriding
+;;; the "icon-size" property for images of type GTK_IMAGE_ICON_NAME.
+;;; 
+;;; Allowed values: >= G_MAXULONG
+;;; 
+;;; Default value: -1
+;;; 
+;;; Since 2.6
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "stock" property
+;;; 
+;;;   "stock"                    gchar*                : Read / Write
+;;; 
+;;; Stock ID for a stock image to display.
+;;; 
+;;; Default value: NULL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "storage-type" property
+;;; 
+;;;   "storage-type"             GtkImageType          : Read
+;;; 
+;;; The representation being used for image data.
+;;; 
+;;; Default value: GTK_IMAGE_EMPTY
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "use-fallback" property
+;;; 
+;;;   "use-fallback"             gboolean              : Read / Write
+;;; 
+;;; Whether the icon displayed in the GtkImage will use standard icon names
+;;; fallback. The value of this property is only relevant for images of type
+;;; GTK_IMAGE_ICON_NAME and GTK_IMAGE_GICON.
+;;; 
+;;; Default value: FALSE
+;;; 
+;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -757,127 +867,5 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "file" property
-;;; 
-;;;   "file"                     gchar*                : Read / Write
-;;; 
-;;; Filename to load and display.
-;;; 
-;;; Default value: NULL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "gicon" property
-;;; 
-;;;   "gicon"                    GIcon*                : Read / Write
-;;; 
-;;; The GIcon displayed in the GtkImage. For themed icons, If the icon theme
-;;; is changed, the image will be updated automatically.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "icon-name" property
-;;; 
-;;;   "icon-name"                gchar*                : Read / Write
-;;; 
-;;; The name of the icon in the icon theme. If the icon theme is changed, the
-;;; image will be updated automatically.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "icon-set" property
-;;; 
-;;;   "icon-set"                 GtkIconSet*           : Read / Write
-;;; 
-;;; Icon set to display.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "icon-size" property
-;;; 
-;;;   "icon-size"                gint                  : Read / Write
-;;; 
-;;; Symbolic size to use for stock icon, icon set or named icon.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "pixbuf" property
-;;; 
-;;;   "pixbuf"                   GdkPixbuf*            : Read / Write
-;;; 
-;;; A GdkPixbuf to display.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "pixbuf-animation" property
-;;; 
-;;;   "pixbuf-animation"         GdkPixbufAnimation*   : Read / Write
-;;; 
-;;; GdkPixbufAnimation to display.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "pixel-size" property
-;;; 
-;;;   "pixel-size"               gint                  : Read / Write
-;;; 
-;;; The "pixel-size" property can be used to specify a fixed size overriding
-;;; the "icon-size" property for images of type GTK_IMAGE_ICON_NAME.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "stock" property
-;;; 
-;;;   "stock"                    gchar*                : Read / Write
-;;; 
-;;; Stock ID for a stock image to display.
-;;; 
-;;; Default value: NULL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "storage-type" property
-;;; 
-;;;   "storage-type"             GtkImageType          : Read
-;;; 
-;;; The representation being used for image data.
-;;; 
-;;; Default value: GTK_IMAGE_EMPTY
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "use-fallback" property
-;;; 
-;;;   "use-fallback"             gboolean              : Read / Write
-;;; 
-;;; Whether the icon displayed in the GtkImage will use standard icon names
-;;; fallback. The value of this property is only relevant for images of type
-;;; GTK_IMAGE_ICON_NAME and GTK_IMAGE_GICON.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.image.lisp ---------------------------------------------
