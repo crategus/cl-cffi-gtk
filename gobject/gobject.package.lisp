@@ -74,6 +74,8 @@
     #:register-object-type-implementation
     #:registered-object-type-by-name
     #:with-foreign-boxed-array
+    
+    #:get-g-class-definition
         ))
 
 ;;; --- End of file gobject.package.lisp ---------------------------------------
