@@ -129,7 +129,7 @@
            "gboolean" T T)
           (WINDOW-POSITION GTK-WINDOW-WINDOW-POSITION
                            "window-position" "GtkWindowPosition" T T)))
-                  (gobject::get-g-class-definition type))
+     (get-g-class-definition type))
     
     ;; Check the expansion of the class definition
     (assert-equal
@@ -253,5 +253,5 @@
          (EXPORT 'GTK-WINDOW-URGENCY-HINT (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-WINDOW-POSITION (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
-     (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkWindow"))))
+     (macroexpand-1 (get-g-class-definition (gtype "GtkWindow"))))
       ))
