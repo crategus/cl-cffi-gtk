@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.button.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -82,6 +80,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkButton implements AtkImplementorIface, GtkBuildable and GtkActivatable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "focus-on-click"           gboolean             : Read / Write
@@ -122,6 +121,284 @@
 ;;; The GtkButton widget can hold any valid child widget. That is it can hold
 ;;; most any other standard GtkWidget. The most commonly used child is the
 ;;; GtkLabel.
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "focus-on-click" property
+;;; 
+;;;   "focus-on-click" gboolean              : Read / Write
+;;; 
+;;; Whether the button grabs focus when it is clicked with the mouse.
+;;; 
+;;; Default value: TRUE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "image" property
+;;; 
+;;;   "image" GtkWidget*            : Read / Write
+;;; 
+;;; The child widget to appear next to the button text.
+;;; 
+;;; Since 2.6
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "image-position" property
+;;; 
+;;;   "image-position" GtkPositionType       : Read / Write
+;;; 
+;;; The position of the image relative to the text inside the button.
+;;; 
+;;; Default value: GTK_POS_LEFT
+;;; 
+;;; Since 2.10
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "label" property
+;;; 
+;;;   "label" gchar*               : Read / Write / Construct
+;;; 
+;;; Text of the label widget inside the button, if the button contains a label
+;;; widget.
+;;; 
+;;; Default value: NULL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "relief" property
+;;; 
+;;;   "relief" GtkReliefStyle        : Read / Write
+;;; 
+;;; The border relief style.
+;;; 
+;;; Default value: GTK_RELIEF_NORMAL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "use-stock" property
+;;; 
+;;;   "use-stock" gboolean             : Read / Write / Construct
+;;; 
+;;; If set, the label is used to pick a stock item instead of being displayed.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "use-underline" property
+;;; 
+;;;   "use-underline" gboolean             : Read / Write / Construct
+;;; 
+;;; If set, an underline in the text indicates the next character should be
+;;; used for the mnemonic accelerator key.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "xalign" property
+;;; 
+;;;   "xalign" gfloat                : Read / Write
+;;; 
+;;; If the child of the button is a GtkMisc or GtkAlignment, this property can
+;;; be used to control its horizontal alignment. 0.0 is left aligned, 1.0 is
+;;; right aligned.
+;;; 
+;;; Allowed values: [0,1]
+;;; 
+;;; Default value: 0.5
+;;; 
+;;; Since 2.4
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "yalign" property
+;;; 
+;;;   "yalign" gfloat                : Read / Write
+;;; 
+;;; If the child of the button is a GtkMisc or GtkAlignment, this property can
+;;; be used to control its vertical alignment. 0.0 is top aligned, 1.0 is
+;;; bottom aligned.
+;;; 
+;;; Allowed values: [0,1]
+;;; 
+;;; Default value: 0.5
+;;; 
+;;; Since 2.4
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Style Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "child-displacement-x" style property
+;;; 
+;;;   "child-displacement-x"     gint                  : Read
+;;; 
+;;; How far in the x direction to move the child when the button is depressed.
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "child-displacement-y" style property
+;;; 
+;;;   "child-displacement-y"     gint                  : Read
+;;; 
+;;; How far in the y direction to move the child when the button is depressed.
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "default-border" style property
+;;; 
+;;;   "default-border"           GtkBorder*            : Read
+;;; 
+;;; The "default-border" style property defines the extra space to add around a
+;;; button that can become the default widget of its window. For more
+;;; information about default widgets, see gtk_widget_grab_default().
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "default-outside-border" style property
+;;; 
+;;;   "default-outside-border"   GtkBorder*            : Read
+;;; 
+;;; The "default-outside-border" style property defines the extra outside space
+;;; to add around a button that can become the default widget of its window.
+;;; Extra outside space is always drawn outside the button border. For more
+;;; information about default widgets, see gtk_widget_grab_default().
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "displace-focus" style property
+;;; 
+;;;   "displace-focus"           gboolean              : Read
+;;; 
+;;; Whether the child_displacement_x/child_displacement_y properties should
+;;; also affect the focus rectangle.
+;;; 
+;;; Default value: FALSE
+;;; 
+;;; Since 2.6
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "image-spacing" style property
+;;; 
+;;;   "image-spacing"            gint                  : Read
+;;; 
+;;; Spacing in pixels between the image and label.
+;;; 
+;;; Allowed values: >= 0
+;;; 
+;;; Default value: 2
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "inner-border" style property
+;;; 
+;;;   "inner-border"             GtkBorder*            : Read
+;;; 
+;;; Sets the border between the button edges and child.
+;;; 
+;;; Since 2.10
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Signal Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "activate" signal
+;;; 
+;;; void user_function (GtkButton *widget, gpointer user_data)      : Action
+;;; 
+;;; The ::activate signal on GtkButton is an action signal and emitting it
+;;; causes the button to animate press then release. Applications should never
+;;; connect to this signal, but use the "clicked" signal.
+;;; 
+;;; widget :
+;;; 	the object which received the signal.
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "clicked" signal
+;;; 
+;;; void user_function (GtkButton *button, gpointer user_data)      : Action
+;;; 
+;;; Emitted when the button has been activated (pressed and released).
+;;; 
+;;; button :
+;;; 	the object that received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "enter" signal
+;;; 
+;;; void user_function (GtkButton *button, gpointer user_data)     : Run First
+;;; 
+;;; Warning
+;;; 
+;;; GtkButton::enter has been deprecated since version 2.8 and should not be
+;;; used in newly-written code. Use the "enter-notify-event" signal.
+;;; 
+;;; Emitted when the pointer enters the button.
+;;; 
+;;; button :
+;;; 	the object that received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "leave" signal
+;;; 
+;;; void user_function (GtkButton *button, gpointer user_data)    : Run First
+;;; 
+;;; Warning
+;;; 
+;;; GtkButton::leave has been deprecated since version 2.8 and should not be
+;;; used in newly-written code. Use the "leave-notify-event" signal.
+;;; 
+;;; Emitted when the pointer leaves the button.
+;;; 
+;;; button :
+;;; 	the object that received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "pressed" signal
+;;; 
+;;; void user_function (GtkButton *button, gpointer user_data)      : Run First
+;;; 
+;;; Warning
+;;; 
+;;; GtkButton::pressed has been deprecated since version 2.8 and should not be
+;;; used in newly-written code. Use the "button-press-event" signal.
+;;; 
+;;; Emitted when the button is pressed.
+;;; 
+;;; button :
+;;; 	the object that received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "released" signal
+;;; 
+;;; void user_function (GtkButton *button, gpointer user_data)      : Run First
+;;; 
+;;; Warning
+;;; 
+;;; GtkButton::released has been deprecated since version 2.8 and should not be
+;;; used in newly-written code. Use the "button-release-event" signal.
+;;; 
+;;; Emitted when the button is released.
+;;; 
+;;; button :
+;;; 	the object that received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -608,306 +885,6 @@
 ;;; 	button's event window.
 ;;; 
 ;;; Since 2.22
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "focus-on-click" property
-;;; 
-;;;   "focus-on-click" gboolean              : Read / Write
-;;; 
-;;; Whether the button grabs focus when it is clicked with the mouse.
-;;; 
-;;; Default value: TRUE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "image" property
-;;; 
-;;;   "image" GtkWidget*            : Read / Write
-;;; 
-;;; The child widget to appear next to the button text.
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "image-position" property
-;;; 
-;;;   "image-position" GtkPositionType       : Read / Write
-;;; 
-;;; The position of the image relative to the text inside the button.
-;;; 
-;;; Default value: GTK_POS_LEFT
-;;; 
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "label" property
-;;; 
-;;;   "label" gchar*               : Read / Write / Construct
-;;; 
-;;; Text of the label widget inside the button, if the button contains a label
-;;; widget.
-;;; 
-;;; Default value: NULL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "relief" property
-;;; 
-;;;   "relief" GtkReliefStyle        : Read / Write
-;;; 
-;;; The border relief style.
-;;; 
-;;; Default value: GTK_RELIEF_NORMAL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "use-stock" property
-;;; 
-;;;   "use-stock" gboolean             : Read / Write / Construct
-;;; 
-;;; If set, the label is used to pick a stock item instead of being displayed.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "use-underline" property
-;;; 
-;;;   "use-underline" gboolean             : Read / Write / Construct
-;;; 
-;;; If set, an underline in the text indicates the next character should be
-;;; used for the mnemonic accelerator key.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "xalign" property
-;;; 
-;;;   "xalign" gfloat                : Read / Write
-;;; 
-;;; If the child of the button is a GtkMisc or GtkAlignment, this property can
-;;; be used to control its horizontal alignment. 0.0 is left aligned, 1.0 is
-;;; right aligned.
-;;; 
-;;; Allowed values: [0,1]
-;;; 
-;;; Default value: 0.5
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "yalign" property
-;;; 
-;;;   "yalign" gfloat                : Read / Write
-;;; 
-;;; If the child of the button is a GtkMisc or GtkAlignment, this property can
-;;; be used to control its vertical alignment. 0.0 is top aligned, 1.0 is
-;;; bottom aligned.
-;;; 
-;;; Allowed values: [0,1]
-;;; 
-;;; Default value: 0.5
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "child-displacement-x" style property
-;;; 
-;;;   "child-displacement-x"     gint                  : Read
-;;; 
-;;; How far in the x direction to move the child when the button is depressed.
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "child-displacement-y" style property
-;;; 
-;;;   "child-displacement-y"     gint                  : Read
-;;; 
-;;; How far in the y direction to move the child when the button is depressed.
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "default-border" style property
-;;; 
-;;;   "default-border"           GtkBorder*            : Read
-;;; 
-;;; The "default-border" style property defines the extra space to add around a
-;;; button that can become the default widget of its window. For more
-;;; information about default widgets, see gtk_widget_grab_default().
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "default-outside-border" style property
-;;; 
-;;;   "default-outside-border"   GtkBorder*            : Read
-;;; 
-;;; The "default-outside-border" style property defines the extra outside space
-;;; to add around a button that can become the default widget of its window.
-;;; Extra outside space is always drawn outside the button border. For more
-;;; information about default widgets, see gtk_widget_grab_default().
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "displace-focus" style property
-;;; 
-;;;   "displace-focus"           gboolean              : Read
-;;; 
-;;; Whether the child_displacement_x/child_displacement_y properties should
-;;; also affect the focus rectangle.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "image-spacing" style property
-;;; 
-;;;   "image-spacing"            gint                  : Read
-;;; 
-;;; Spacing in pixels between the image and label.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 2
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "inner-border" style property
-;;; 
-;;;   "inner-border"             GtkBorder*            : Read
-;;; 
-;;; Sets the border between the button edges and child.
-;;; 
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "activate" signal
-;;; 
-;;; void user_function (GtkButton *widget, gpointer user_data)      : Action
-;;; 
-;;; The ::activate signal on GtkButton is an action signal and emitting it
-;;; causes the button to animate press then release. Applications should never
-;;; connect to this signal, but use the "clicked" signal.
-;;; 
-;;; widget :
-;;; 	the object which received the signal.
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "clicked" signal
-;;; 
-;;; void user_function (GtkButton *button, gpointer user_data)      : Action
-;;; 
-;;; Emitted when the button has been activated (pressed and released).
-;;; 
-;;; button :
-;;; 	the object that received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "enter" signal
-;;; 
-;;; void user_function (GtkButton *button, gpointer user_data)     : Run First
-;;; 
-;;; Warning
-;;; 
-;;; GtkButton::enter has been deprecated since version 2.8 and should not be
-;;; used in newly-written code. Use the "enter-notify-event" signal.
-;;; 
-;;; Emitted when the pointer enters the button.
-;;; 
-;;; button :
-;;; 	the object that received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "leave" signal
-;;; 
-;;; void user_function (GtkButton *button, gpointer user_data)    : Run First
-;;; 
-;;; Warning
-;;; 
-;;; GtkButton::leave has been deprecated since version 2.8 and should not be
-;;; used in newly-written code. Use the "leave-notify-event" signal.
-;;; 
-;;; Emitted when the pointer leaves the button.
-;;; 
-;;; button :
-;;; 	the object that received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "pressed" signal
-;;; 
-;;; void user_function (GtkButton *button, gpointer user_data)      : Run First
-;;; 
-;;; Warning
-;;; 
-;;; GtkButton::pressed has been deprecated since version 2.8 and should not be
-;;; used in newly-written code. Use the "button-press-event" signal.
-;;; 
-;;; Emitted when the button is pressed.
-;;; 
-;;; button :
-;;; 	the object that received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "released" signal
-;;; 
-;;; void user_function (GtkButton *button, gpointer user_data)      : Run First
-;;; 
-;;; Warning
-;;; 
-;;; GtkButton::released has been deprecated since version 2.8 and should not be
-;;; used in newly-written code. Use the "button-release-event" signal.
-;;; 
-;;; Emitted when the button is released.
-;;; 
-;;; button :
-;;; 	the object that received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.button.lisp --------------------------------------------
