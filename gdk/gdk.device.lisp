@@ -526,7 +526,7 @@
 ;;; 	the modifiers to set.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk-device-set-key" gdk-device-set-key) :void
+(defcfun ("gdk_device_set_key" gdk-device-set-key) :void
   (device (g-object gdk-device))
   (index :uint)
   (keyval :uint)
@@ -894,4 +894,3 @@
 (export 'gdk-input-set-extension-events)
 
 ;;; --- End of file gdk.device.lisp --------------------------------------------
-
