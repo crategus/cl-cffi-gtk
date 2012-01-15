@@ -274,7 +274,7 @@
 ;;; 	the selection atom.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_drag_get_selction_" gdk-drag-get-selection) gdk-atom-as-string
+(defcfun ("gdk_drag_get_selection" gdk-drag-get-selection) gdk-atom-as-string
   (context (g-object gdk-drag-context)))
 
 (export 'gdk-drag-get-selection)
@@ -762,7 +762,7 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_drag_get_protokol_for_display"
+(defcfun ("gdk_drag_get_protocol_for_display"
           %gdk_drag_get_protocol_for_display)
     gdk-native-window
   (display (g-object gdk-display))
