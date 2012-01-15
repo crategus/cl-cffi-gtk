@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.table.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -110,6 +108,153 @@
 ;;; Note that GtkGrid provides the same capabilities as GtkTable for arranging
 ;;; widgets in a rectangular grid, and additionally supports height-for-width
 ;;; geometry management.
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "column-spacing" property
+;;; 
+;;;   "column-spacing"           guint                 : Read / Write
+;;; 
+;;; The amount of space between two consecutive columns.
+;;; 
+;;; Allowed values: <= 65535
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "homogeneous" property
+;;; 
+;;;   "homogeneous"              gboolean              : Read / Write
+;;; 
+;;; If TRUE, the table cells are all the same width/height.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "n-columns" property
+;;; 
+;;;   "n-columns"                guint                 : Read / Write
+;;; 
+;;; The number of columns in the table.
+;;; 
+;;; Allowed values: [1,65535]
+;;; 
+;;; Default value: 1
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "n-rows" property
+;;; 
+;;;   "n-rows"                   guint                 : Read / Write
+;;; 
+;;; The number of rows in the table.
+;;; 
+;;; Allowed values: [1,65535]
+;;; 
+;;; Default value: 1
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "row-spacing" property
+;;; 
+;;;   "row-spacing"              guint                 : Read / Write
+;;; 
+;;; The amount of space between two consecutive rows.
+;;; 
+;;; Allowed values: <= 65535
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Child Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "bottom-attach" child property
+;;; 
+;;;   "bottom-attach"            guint                 : Read / Write
+;;; 
+;;; The row number to attach the bottom of the child to.
+;;; 
+;;; Allowed values: [1,65535]
+;;; 
+;;; Default value: 1
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "left-attach" child property
+;;; 
+;;;   "left-attach"              guint                 : Read / Write
+;;; 
+;;; The column number to attach the left side of the child to.
+;;; 
+;;; Allowed values: <= 65535
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "right-attach" child property
+;;; 
+;;;   "right-attach"             guint                 : Read / Write
+;;; 
+;;; The column number to attach the right side of a child widget to.
+;;; 
+;;; Allowed values: [1,65535]
+;;; 
+;;; Default value: 1
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "top-attach" child property
+;;; 
+;;;   "top-attach"               guint                 : Read / Write
+;;; 
+;;; The row number to attach the top of a child widget to.
+;;; 
+;;; Allowed values: <= 65535
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "x-options" child property
+;;; 
+;;;   "x-options"                GtkAttachOptions      : Read / Write
+;;; 
+;;; Options specifying the horizontal behaviour of the child.
+;;; 
+;;; Default value: GTK_EXPAND|GTK_FILL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "x-padding" child property
+;;; 
+;;;   "x-padding"                guint                 : Read / Write
+;;; 
+;;; Extra space to put between the child and its left and right neighbors,
+;;; in pixels.
+;;; 
+;;; Allowed values: <= 65535
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "y-options" child property
+;;; 
+;;;   "y-options"                GtkAttachOptions      : Read / Write
+;;; 
+;;; Options specifying the vertical behaviour of the child.
+;;; 
+;;; Default value: GTK_EXPAND|GTK_FILL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "y-padding" child property
+;;; 
+;;;   "y-padding"                guint                 : Read / Write
+;;; 
+;;; Extra space to put between the child and its upper and lower neighbors,
+;;; in pixels.
+;;; 
+;;; Allowed values: <= 65535
+;;; 
+;;; Default value: 0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -305,14 +450,14 @@
   (y-padding :uint))
 
 (defun gtk-table-attach (table widget left right top bottom
-                           &key (x-options '(:expand :fill))
-                                (y-options '(:expand :fill))
-                                (x-padding 0)
-                                (y-padding 0))
-  (gtk-table-attach table widget
-                    left right top bottom
-                    x-options y-options
-                    x-padding y-padding))
+                                      &key (x-options '(:expand :fill))
+                                           (y-options '(:expand :fill))
+                                           (x-padding 0)
+                                           (y-padding 0))
+  (%gtk-table-attach table widget
+                     left right top bottom
+                     x-options y-options
+                     x-padding y-padding))
 
 (export 'gtk-table-attach)
 
@@ -575,166 +720,6 @@
 ;;; 
 ;;; Returns :
 ;;; 	the default column spacing
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "column-spacing" property
-;;; 
-;;;   "column-spacing"           guint                 : Read / Write
-;;; 
-;;; The amount of space between two consecutive columns.
-;;; 
-;;; Allowed values: <= 65535
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "homogeneous" property
-;;; 
-;;;   "homogeneous"              gboolean              : Read / Write
-;;; 
-;;; If TRUE, the table cells are all the same width/height.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "n-columns" property
-;;; 
-;;;   "n-columns"                guint                 : Read / Write
-;;; 
-;;; The number of columns in the table.
-;;; 
-;;; Allowed values: [1,65535]
-;;; 
-;;; Default value: 1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "n-rows" property
-;;; 
-;;;   "n-rows"                   guint                 : Read / Write
-;;; 
-;;; The number of rows in the table.
-;;; 
-;;; Allowed values: [1,65535]
-;;; 
-;;; Default value: 1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "row-spacing" property
-;;; 
-;;;   "row-spacing"              guint                 : Read / Write
-;;; 
-;;; The amount of space between two consecutive rows.
-;;; 
-;;; Allowed values: <= 65535
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "bottom-attach" child property
-;;; 
-;;;   "bottom-attach"            guint                 : Read / Write
-;;; 
-;;; The row number to attach the bottom of the child to.
-;;; 
-;;; Allowed values: [1,65535]
-;;; 
-;;; Default value: 1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "left-attach" child property
-;;; 
-;;;   "left-attach"              guint                 : Read / Write
-;;; 
-;;; The column number to attach the left side of the child to.
-;;; 
-;;; Allowed values: <= 65535
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "right-attach" child property
-;;; 
-;;;   "right-attach"             guint                 : Read / Write
-;;; 
-;;; The column number to attach the right side of a child widget to.
-;;; 
-;;; Allowed values: [1,65535]
-;;; 
-;;; Default value: 1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "top-attach" child property
-;;; 
-;;;   "top-attach"               guint                 : Read / Write
-;;; 
-;;; The row number to attach the top of a child widget to.
-;;; 
-;;; Allowed values: <= 65535
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "x-options" child property
-;;; 
-;;;   "x-options"                GtkAttachOptions      : Read / Write
-;;; 
-;;; Options specifying the horizontal behaviour of the child.
-;;; 
-;;; Default value: GTK_EXPAND|GTK_FILL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "x-padding" child property
-;;; 
-;;;   "x-padding"                guint                 : Read / Write
-;;; 
-;;; Extra space to put between the child and its left and right neighbors,
-;;; in pixels.
-;;; 
-;;; Allowed values: <= 65535
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "y-options" child property
-;;; 
-;;;   "y-options"                GtkAttachOptions      : Read / Write
-;;; 
-;;; Options specifying the vertical behaviour of the child.
-;;; 
-;;; Default value: GTK_EXPAND|GTK_FILL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "y-padding" child property
-;;; 
-;;;   "y-padding"                guint                 : Read / Write
-;;; 
-;;; Extra space to put between the child and its upper and lower neighbors,
-;;; in pixels.
-;;; 
-;;; Allowed values: <= 65535
-;;; 
-;;; Default value: 0
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.table.lisp ---------------------------------------------
