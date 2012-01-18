@@ -291,6 +291,9 @@
 
 ;;; ----------------------------------------------------------------------------
 
+(defvar *gobject-gc-hooks-lock* (make-recursive-lock "gobject-gc-hooks-lock"))
+(defvar *gobject-gc-hooks* nil) ; pointers to objects to be freed
+
 (defun g-object-dispose-carefully (pointer)
   (handler-case
       (register-gobject-for-gc pointer)
@@ -312,9 +315,6 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
-
-(defvar *gobject-gc-hooks-lock* (make-recursive-lock "gobject-gc-hooks-lock"))
-(defvar *gobject-gc-hooks* nil) ; pointers to objects to be freed
 
 (defun activate-gc-hooks ()
   (with-recursive-lock-held (*gobject-gc-hooks-lock*)
