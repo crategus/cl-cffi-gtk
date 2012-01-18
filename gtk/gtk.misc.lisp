@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.misc.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; GtkMisc
 ;;; 
 ;;; Base class for widgets with alignments and padding
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkMisc;
@@ -55,6 +53,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkMisc implements AtkImplementorIface and GtkBuildable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "xalign"                   gfloat                : Read / Write
@@ -80,6 +79,55 @@
 ;;; Note that the desired effect can in most cases be achieved by using the
 ;;; "halign", "valign" and "margin" properties on the child widget, so GtkMisc
 ;;; should not be used in new code.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; 
+;;; Property Details
+;;; 
+;;; ----------------------------------------------------------------------------
+;;; The "xalign" property
+;;; 
+;;;   "xalign" gfloat                : Read / Write
+;;; 
+;;; The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL
+;;; layouts.
+;;; 
+;;; Allowed values: [0,1]
+;;; 
+;;; Default value: 0.5
+;;; 
+;;; ----------------------------------------------------------------------------
+;;; The "xpad" property
+;;; 
+;;;   "xpad" gint                  : Read / Write
+;;; 
+;;; The amount of space to add on the left and right of the widget, in pixels.
+;;; 
+;;; Allowed values: >= 0
+;;; 
+;;; Default value: 0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "yalign" property
+;;; 
+;;;   "yalign" gfloat                : Read / Write
+;;; 
+;;; The vertical alignment, from 0 (top) to 1 (bottom).
+;;; 
+;;; Allowed values: [0,1]
+;;; 
+;;; Default value: 0.5
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "ypad" property
+;;; 
+;;;   "ypad" gint                  : Read / Write
+;;; 
+;;; The amount of space to add on the top and bottom of the widget, in pixels.
+;;; 
+;;; Allowed values: >= 0
+;;; 
+;;; Default value: 0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -107,13 +155,13 @@
 ;;; Sets the alignment of the widget.
 ;;; 
 ;;; misc :
-;;; 	a GtkMisc.
+;;;     a GtkMisc.
 ;;; 
 ;;; xalign :
-;;; 	the horizontal alignment, from 0 (left) to 1 (right).
+;;;     the horizontal alignment, from 0 (left) to 1 (right).
 ;;; 
 ;;; yalign :
-;;; 	the vertical alignment, from 0 (top) to 1 (bottom).
+;;;     the vertical alignment, from 0 (top) to 1 (bottom).
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-misc-set-alignment (misc xalign yalign)
@@ -130,14 +178,14 @@
 ;;; Sets the amount of space to add around the widget.
 ;;; 
 ;;; misc :
-;;; 	a GtkMisc.
+;;;     a GtkMisc.
 ;;; 
 ;;; xpad :
-;;; 	the amount of space to add on the left and right of the widget,
+;;;     the amount of space to add on the left and right of the widget,
 ;;;     in pixels.
 ;;; 
 ;;; ypad :
-;;; 	the amount of space to add on the top and bottom of the widget,
+;;;     the amount of space to add on the top and bottom of the widget,
 ;;      in pixels.
 ;;; ----------------------------------------------------------------------------
 
@@ -150,13 +198,13 @@
 ;;; See gtk_misc_set_alignment().
 ;;; 
 ;;; misc :
-;;; 	a GtkMisc
+;;;     a GtkMisc
 ;;; 
 ;;; xalign :
-;;; 	location to store X alignment of misc, or NULL.
+;;;     location to store X alignment of misc, or NULL.
 ;;; 
 ;;; yalign :
-;;; 	location to store Y alignment of misc, or NULL.
+;;;     location to store Y alignment of misc, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -168,66 +216,13 @@
 ;;; See gtk_misc_set_padding().
 ;;; 
 ;;; misc :
-;;; 	a GtkMisc
+;;;     a GtkMisc
 ;;; 
 ;;; xpad :
-;;; 	location to store padding in the X direction, or NULL.
+;;;     location to store padding in the X direction, or NULL.
 ;;; 
 ;;; ypad :
-;;; 	location to store padding in the Y direction, or NULL.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "xalign" property
-;;; 
-;;;   "xalign" gfloat                : Read / Write
-;;; 
-;;; The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL
-;;; layouts.
-;;; 
-;;; Allowed values: [0,1]
-;;; 
-;;; Default value: 0.5
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "xpad" property
-;;; 
-;;;   "xpad" gint                  : Read / Write
-;;; 
-;;; The amount of space to add on the left and right of the widget, in pixels.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "yalign" property
-;;; 
-;;;   "yalign" gfloat                : Read / Write
-;;; 
-;;; The vertical alignment, from 0 (top) to 1 (bottom).
-;;; 
-;;; Allowed values: [0,1]
-;;; 
-;;; Default value: 0.5
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "ypad" property
-;;; 
-;;;   "ypad" gint                  : Read / Write
-;;; 
-;;; The amount of space to add on the top and bottom of the widget, in pixels.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
+;;;     location to store padding in the Y direction, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.misc.lisp ----------------------------------------------

@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.separator.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; GtkSeparator
 ;;; 
 ;;; A separator widget
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkSeparator;
@@ -85,10 +83,10 @@
 ;;; Creates a new GtkSeparator with the given orientation.
 ;;; 
 ;;; orientation :
-;;; 	the separator's orientation.
+;;;     the separator's orientation.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkSeparator.
+;;;     a new GtkSeparator.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -99,7 +97,7 @@
 ;;; GtkHSeparator
 ;;; 
 ;;; GtkHSeparator — A horizontal separator
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkHSeparator;
@@ -167,7 +165,7 @@
 ;;; Creates a new GtkHSeparator.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkHSeparator.
+;;;     a new GtkHSeparator.
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-hseparator-new ()
@@ -179,7 +177,7 @@
 ;;; GtkVSeparator
 ;;; 
 ;;; A vertical separator
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkVSeparator;
@@ -242,7 +240,7 @@
 ;;; Creates a new GtkVSeparator.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkVSeparator.
+;;;     a new GtkVSeparator.
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-vseparator-new ()

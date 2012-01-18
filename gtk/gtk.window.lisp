@@ -469,7 +469,7 @@
 
 (defcfun ("gtk_window_add_accel_group" gtk-window-add-accel-group) :void
   (window (g-object gtk-window))
-  (accel-group (g-object accel-group)))
+  (accel-group (g-object gtk-accel-group)))
 
 (export 'gtk-window-add-accel-group)
 
@@ -490,7 +490,7 @@
 
 (defcfun ("gtk_window_remove_accel_group" gtk-window-remove-accel-group) :void
   (window (g-object gtk-window))
-  (accel-group (g-object accel-group)))
+  (accel-group (g-object gtk-accel-group)))
 
 (export 'gtk-window-remove-accel-group)
 

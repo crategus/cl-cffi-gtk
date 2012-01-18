@@ -31,7 +31,7 @@
 ;;; GtkTable
 ;;; 
 ;;; Pack widgets in regular patterns
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkTable
@@ -63,6 +63,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkTable implements AtkImplementorIface and GtkBuildable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "column-spacing"           guint                 : Read / Write
@@ -323,17 +324,17 @@
 ;;; is silently interpreted as 1.
 ;;; 
 ;;; rows :
-;;; 	The number of rows the new table should have.
+;;;     The number of rows the new table should have.
 ;;; 
 ;;; columns :
-;;; 	The number of columns the new table should have.
+;;;     The number of columns the new table should have.
 ;;; 
 ;;; homogeneous :
-;;; 	If set to TRUE, all table cells are resized to the size of the cell
+;;;     If set to TRUE, all table cells are resized to the size of the cell
 ;;;     containing the largest widget.
 ;;; 
 ;;; Returns :
-;;; 	A pointer to the the newly created table widget.
+;;;     A pointer to the the newly created table widget.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -345,13 +346,13 @@
 ;;; function allows you to do so.
 ;;; 
 ;;; table :
-;;; 	The GtkTable you wish to change the size of.
+;;;     The GtkTable you wish to change the size of.
 ;;; 
 ;;; rows :
-;;; 	The new number of rows.
+;;;     The new number of rows.
 ;;; 
 ;;; columns :
-;;; 	The new number of columns.
+;;;     The new number of columns.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -362,13 +363,13 @@
 ;;; Gets the number of rows and columns in the table.
 ;;; 
 ;;; table :
-;;; 	a GtkTable
+;;;     a GtkTable
 ;;; 
 ;;; rows :
-;;; 	return location for the number of rows, or NULL.
+;;;     return location for the number of rows, or NULL.
 ;;; 
 ;;; columns :
-;;; 	return location for the number of columns, or NULL.
+;;;     return location for the number of columns, or NULL.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -394,47 +395,47 @@
 ;;; 
 ;;; To make a button occupy the lower right cell of a 2x2 table, use
 ;;; 
-;;;  1 gtk_table_attach (table, button,
-;;;  2                   1, 2, // left, right attach
-;;;  3                   1, 2, // top, bottom attach
-;;;  4                   xoptions, yoptions,
-;;;  5                   xpadding, ypadding);
+;;;  gtk_table_attach (table, button,
+;;;                    1, 2, // left, right attach
+;;;                    1, 2, // top, bottom attach
+;;;                    xoptions, yoptions,
+;;;                    xpadding, ypadding);
 ;;; 
 ;;; If you want to make the button span the entire bottom row, use
 ;;; left_attach == 0 and right_attach = 2 instead.
 ;;; 
 ;;; table :
-;;; 	The GtkTable to add a new widget to.
+;;;     The GtkTable to add a new widget to.
 ;;; 
 ;;; child :
-;;; 	The widget to add.
+;;;     The widget to add.
 ;;; 
 ;;; left_attach :
-;;; 	the column number to attach the left side of a child widget to.
+;;;     the column number to attach the left side of a child widget to.
 ;;; 
 ;;; right_attach :
-;;; 	the column number to attach the right side of a child widget to.
+;;;     the column number to attach the right side of a child widget to.
 ;;; 
 ;;; top_attach :
-;;; 	the row number to attach the top of a child widget to.
+;;;     the row number to attach the top of a child widget to.
 ;;; 
 ;;; bottom_attach :
-;;; 	the row number to attach the bottom of a child widget to.
+;;;     the row number to attach the bottom of a child widget to.
 ;;; 
 ;;; xoptions :
-;;; 	Used to specify the properties of the child widget when the table is
+;;;     Used to specify the properties of the child widget when the table is
 ;;;     resized.
 ;;; 
 ;;; yoptions :
-;;; 	The same as xoptions, except this field determines behaviour of
+;;;     The same as xoptions, except this field determines behaviour of
 ;;;     vertical resizing.
 ;;; 
 ;;; xpadding :
-;;; 	An integer value specifying the padding on the left and right of the
+;;;     An integer value specifying the padding on the left and right of the
 ;;;     widget being added to the table.
 ;;; 
 ;;; ypadding :
-;;; 	The amount of padding above and below the child widget.
+;;;     The amount of padding above and below the child widget.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_attach" %gtk-table-attach) :void
@@ -444,8 +445,8 @@
   (right-attach :uint)
   (top-attach :uint)
   (bottom-attach :uint)
-  (x-options attach-options)
-  (y-options attach-options)
+  (x-options gtk-attach-options)
+  (y-options gtk-attach-options)
   (x-padding :uint)
   (y-padding :uint))
 
@@ -478,22 +479,22 @@
 ;;; to 0.
 ;;; 
 ;;; table :
-;;; 	The table to add a new child widget to.
+;;;     The table to add a new child widget to.
 ;;; 
 ;;; widget :
-;;; 	The child widget to add.
+;;;     The child widget to add.
 ;;; 
 ;;; left_attach :
-;;; 	The column number to attach the left side of the child widget to.
+;;;     The column number to attach the left side of the child widget to.
 ;;; 
 ;;; right_attach :
-;;; 	The column number to attach the right side of the child widget to.
+;;;     The column number to attach the right side of the child widget to.
 ;;; 
 ;;; top_attach :
-;;; 	The row number to attach the top of the child widget to.
+;;;     The row number to attach the top of the child widget to.
 ;;; 
 ;;; bottom_attach :
-;;; 	The row number to attach the bottom of the child widget to.
+;;;     The row number to attach the bottom of the child widget to.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_attach_defaults" gtk-table-attach-defaults) :void
@@ -514,13 +515,13 @@
 ;;; Changes the space between a given table row and the subsequent row.
 ;;; 
 ;;; table :
-;;; 	a GtkTable containing the row whose properties you wish to change.
+;;;     a GtkTable containing the row whose properties you wish to change.
 ;;; 
 ;;; row :
-;;; 	row number whose spacing will be changed.
+;;;     row number whose spacing will be changed.
 ;;; 
 ;;; spacing :
-;;; 	number of pixels that the spacing should take up.
+;;;     number of pixels that the spacing should take up.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_set_row_spacing" gtk-table-set-row-spacing) :void
@@ -541,13 +542,13 @@
 ;;; column.
 ;;; 
 ;;; table :
-;;; 	a GtkTable.
+;;;     a GtkTable.
 ;;; 
 ;;; column :
-;;; 	the column whose spacing should be changed.
+;;;     the column whose spacing should be changed.
 ;;; 
 ;;; spacing :
-;;; 	number of pixels that the spacing should take up.
+;;;     number of pixels that the spacing should take up.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_set_col_spacing" gtk-table-set-col-spacing) :void
@@ -565,10 +566,10 @@
 ;;; Sets the space between every row in table equal to spacing.
 ;;; 
 ;;; table :
-;;; 	a GtkTable.
+;;;     a GtkTable.
 ;;; 
 ;;; spacing :
-;;; 	the number of pixels of space to place between every row in the table.
+;;;     the number of pixels of space to place between every row in the table.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_set_row_spacings" gtk-table-set-row-spacings) :void
@@ -585,10 +586,10 @@
 ;;; Sets the space between every column in table equal to spacing.
 ;;; 
 ;;; table :
-;;; 	a GtkTable.
+;;;     a GtkTable.
 ;;; 
 ;;; spacing :
-;;; 	the number of pixels of space to place between every column in
+;;;     the number of pixels of space to place between every column in
 ;;;     the table.
 ;;; ----------------------------------------------------------------------------
 
@@ -607,10 +608,10 @@
 ;;; an equal size or not.
 ;;; 
 ;;; table :
-;;; 	The GtkTable you wish to set the homogeneous properties of.
+;;;     The GtkTable you wish to set the homogeneous properties of.
 ;;; 
 ;;; homogeneous :
-;;; 	Set to TRUE to ensure all table cells are the same size. Set to FALSE
+;;;     Set to TRUE to ensure all table cells are the same size. Set to FALSE
 ;;;     if this is not your desired behaviour.
 ;;; ----------------------------------------------------------------------------
 
@@ -628,10 +629,10 @@
 ;;; be used for newly added rows. (See gtk_table_set_row_spacings())
 ;;; 
 ;;; table :
-;;; 	a GtkTable
+;;;     a GtkTable
 ;;; 
 ;;; Returns :
-;;; 	the default row spacing
+;;;     the default row spacing
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -643,10 +644,10 @@
 ;;; height. (See gtk_table_set_homogenous())
 ;;; 
 ;;; table :
-;;; 	a GtkTable
+;;;     a GtkTable
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the cells are all constrained to the same size
+;;;     TRUE if the cells are all constrained to the same size
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -658,13 +659,13 @@
 ;;; See gtk_table_set_row_spacing().
 ;;; 
 ;;; table :
-;;; 	a GtkTable
+;;;     a GtkTable
 ;;; 
 ;;; row :
-;;; 	a row in the table, 0 indicates the first row
+;;;     a row in the table, 0 indicates the first row
 ;;; 
 ;;; Returns :
-;;; 	the row spacing
+;;;     the row spacing
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Rework this implementation
@@ -687,13 +688,13 @@
 ;;; See gtk_table_set_col_spacing().
 ;;; 
 ;;; table :
-;;; 	a GtkTable
+;;;     a GtkTable
 ;;; 
 ;;; column :
-;;; 	a column in the table, 0 indicates the first column
+;;;     a column in the table, 0 indicates the first column
 ;;; 
 ;;; Returns :
-;;; 	the column spacing
+;;;     the column spacing
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Rework this implementation
@@ -716,10 +717,10 @@
 ;;; will be used for newly added columns. (See gtk_table_set_col_spacings())
 ;;; 
 ;;; table :
-;;; 	a GtkTable
+;;;     a GtkTable
 ;;; 
 ;;; Returns :
-;;; 	the default column spacing
+;;;     the default column spacing
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.table.lisp ---------------------------------------------
