@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.type-info.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GObject 2.30.2 Reference Manual. See http://www.gtk.org
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1548,9 +1546,11 @@
 ;;; Increments the reference count of the class structure belonging to type.
 ;;; This function will demand-create the class if it doesn't exist already.
 ;;;
-;;; type    : Type ID of a classed type.
-;;; Returns : The GTypeClass structure for the given type ID.
-;;;           [type GObject.TypeClass][transfer none]
+;;; type :
+;;;     Type ID of a classed type.
+;;;
+;;; Returns :
+;;;     The GTypeClass structure for the given type ID.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_ref" g-type-class-ref) (:pointer g-type-class)
@@ -1568,10 +1568,18 @@
 ;;; function may return NULL if the class of the type passed in does not
 ;;; currently exist (hasn't been referenced before).
 ;;;
-;;; type    : Type ID of a classed type.
-;;; Returns : The GTypeClass structure for the given type ID or NULL if the
-;;;           class does not currently exist.
+;;; type :
+;;;     Type ID of a classed type.
+;;;
+;;; Returns :
+;;;     The GTypeClass structure for the given type ID or NULL if the class
+;;;     does not currently exist.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_class_peek" g-type-class-peek) (:pointer g-type-class)
+  (type g-type-designator))
+
+(export 'g-type-class-peek)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_peek_static ()
@@ -1581,12 +1589,21 @@
 ;;; A more efficient version of g_type_class_peek() which works only for static
 ;;; types.
 ;;;
-;;; type    : Type ID of a classed type.
-;;; Returns : The GTypeClass structure for the given type ID or NULL if the
-;;;           class does not currently exist or is dynamically loaded.
+;;; type :
+;;;     Type ID of a classed type.
+;;;
+;;; Returns :
+;;;     The GTypeClass structure for the given type ID or NULL if the class
+;;;     does not currently exist or is dynamically loaded.
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_class_peek_static" g-type-class-peek-static)
+    (:pointer g-type-class)
+  (type g-type-designator))
+
+(export 'g-type-class-peek-static)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_unref ()
