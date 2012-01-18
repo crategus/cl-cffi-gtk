@@ -23,14 +23,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk-glib)
-
-(defpackage :glib-tests
-  (:use :glib :cffi :common-lisp :lisp-unit))
-
 (in-package :glib-tests)
-
-;;; ----------------------------------------------------------------------------
 
 (defvar *main-thread* nil)
 (defvar *main-thread-level* nil)

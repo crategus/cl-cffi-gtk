@@ -23,11 +23,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk-gobject)
-
-(defpackage :gobject-tests
-  (:use :gobject :glib :cffi :common-lisp :lisp-unit))
-
 (in-package :gobject-tests)
 
 (define-test gtype-id
@@ -213,6 +208,47 @@
     (assert-eql 199 (g-value-get-int value))
     (assert-true (g-param-value-validate prop value))
     (assert-eql 100 (g-value-get-int value))
-    )))
+      )))
+
+(define-test %g-object
+  (let* (;; Create a label as an example for an instance of an object
+         (label (make-instance 'gtk-label))
+         ;; Get the pointer to the instance of the object
+         (ptr (pointer label)))
+    ;; Access the slot values of the structure %g-object
+    (assert-true (pointerp (foreign-slot-value ptr '%g-object :type-instance)))
+    (assert-eql 1 (foreign-slot-value ptr '%g-object :ref-count))
+    (assert-true (pointerp (foreign-slot-value ptr '%g-object :data)))
+    
+    ;; Increase and decrease the ref-count with the functions
+    ;; g-object-ref and g-object-unref
+    (assert-true (pointerp (g-object-ref ptr)))
+    (assert-eql 2 (foreign-slot-value ptr '%g-object :ref-count)) 
+    (g-object-unref ptr)
+    (assert-eql 1 (foreign-slot-value ptr '%g-object :ref-count))
+    
+    ;; ref-count takes an object or an pointer as an argument and
+    ;; access the slot value of the structure %g-object to get the ref-count
+    (assert-eql 1 (gobject::ref-count ptr))
+    (assert-eql 1 (gobject::ref-count label))
+))
+
+(define-test g-object-class
+  (let ((class nil))
+    (setq class (find-class 'g-object))
+    (assert-eq 'g-object (class-name class))
+    (assert-eq 'standard-class (type-of class))
+    (assert-eq (find-class 'standard-class) (class-of class))
+    
+    (setq class (find-class 'gobject-class))
+    (assert-eq 'gobject-class (class-name class))
+    (assert-eq 'standard-class (type-of class))
+    (assert-eq (find-class 'standard-class) (class-of class))
+    
+    (setq class (find-class 'g-initially-unowned))
+    (assert-eq 'g-initially-unowned (class-name class))
+    (assert-eq 'gobject-class (type-of class))
+    (assert-eq (find-class 'gobject-class) (class-of class))
+  ))
 
 ;;; --- End of file rtest-gobject.lisp -----------------------------------------

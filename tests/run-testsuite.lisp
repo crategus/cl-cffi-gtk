@@ -25,19 +25,40 @@
 
 (asdf:operate 'asdf:load-op :cl-gtk-gtk)
 
+;;; ----------------------------------------------------------------------------
+
+(defpackage :glib-tests
+  (:use :glib :cffi :common-lisp :lisp-unit))
+
 (load "rtest-glib.lisp")
 (in-package :glib-tests)
 (run-all-tests :glib-tests)
 
+;;; ----------------------------------------------------------------------------
+
+(defpackage :gobject-tests
+  (:use :gtk :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
+
 (load "rtest-gobject.lisp")
 (in-package :gobject-tests)
 (run-all-tests :gobject-tests)
+
+;;; ----------------------------------------------------------------------------
+
+(defpackage :gdk-tests
+  (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
 (in-package :gdk-tests)
 (run-all-tests :gdk-tests)
 
+;;; ----------------------------------------------------------------------------
+
+(defpackage :gtk-tests
+  (:use :gtk :gobject :glib :cffi :common-lisp :lisp-unit))
+
+(load "rtest-gtk-border.lisp")
 (load "rtest-gtk-window.lisp")
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")

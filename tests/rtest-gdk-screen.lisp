@@ -21,11 +21,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk-gdk)
-
-(defpackage :gdk-tests
-  (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
-
 (in-package :gdk-tests)
 
 (define-test gdk-screen
