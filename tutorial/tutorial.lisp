@@ -454,28 +454,27 @@
            (vbox3    (make-instance 'gtk-v-box
                                     :homogeneous nil
                                     :spacing 10))
-           (adj      (make-instance 'adjustment
+           (adj      (make-instance 'gtk-adjustment
                                     :value 0.0
                                     :lower 0.0
                                     :upper 101.0
                                     :step-increment 0.1
                                     :page-increment 1.0
-                                    :page-size 1.0
-                                    ))
-           (adj2     (make-instance 'adjustment
+                                    :page-size 1.0))
+           (adj2     (make-instance 'gtk-adjustment
                                     :value 1.0
                                     :lower 0.0
                                     :upper 5.0
                                     :step-increment 1.0
                                     :page-increment 1.0
                                     :page-size 0.0))
-           (vscale   (make-instance 'v-scale
+           (vscale   (make-instance 'gtk-v-scale
                                     :update-policy :continuous
                                     :digits 1
                                     :value-pos :top
                                     :draw-value t
                                     :adjustement adj))
-           (hscale   (make-instance 'h-scale
+           (hscale   (make-instance 'gtk-h-scale
                                     :update-policy :continuous
                                     :digits 1
                                     :value-pos :top
@@ -483,7 +482,7 @@
                                     :width-request 200
                                     :height-request -1
                                     :adjustement adj))
-           (scale    (make-instance 'h-scale
+           (scale    (make-instance 'gtk-h-scale
                                     :digits 0
                                     :adjustement adj2))
            (scrollbar (make-instance 'h-scrollbar
@@ -514,9 +513,9 @@
       
       (g-signal-connect button "toggled"
                         (lambda (button)
-                          (setf (scale-draw-value hscale)
+                          (setf (gtk-scale-draw-value hscale)
                                 (gtk-toggle-button-active button))
-                          (setf (scale-draw-value vscale)
+                          (setf (gtk-scale-draw-value vscale)
                                 (gtk-toggle-button-active button))))
       
       (gtk-box-pack-start hbox2 button :expand t :fill t :padding 0)
@@ -554,10 +553,10 @@
       
       (g-signal-connect adj2 "value_changed"
                         (lambda (adjustment)
-                          (setf (scale-digits hscale)
-                                (adjustment-value adjustment))
-                          (setf (scale-digits vscale)
-                                (adjustment-value adjustment))))
+                          (setf (gtk-scale-digits hscale)
+                                (gtk-adjustment-value adjustment))
+                          (setf (gtk-scale-digits vscale)
+                                (gtk-adjustment-value adjustment))))
       
       (gtk-box-pack-start hbox2 scale :expand t :fill t :padding 0)
       (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
@@ -570,7 +569,7 @@
       (setq label (make-instance 'gtk-label :label "Scrollbar Page Size:"))
       (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
       
-      (setq adj2 (make-instance 'adjustment
+      (setq adj2 (make-instance 'gtk-adjustment
                                 :value 1.0
                                 :lower 1.0
                                 :upper 101.0
@@ -580,12 +579,12 @@
       
       (g-signal-connect adj2 "value_changed"
                         (lambda (adjustment)
-                          (setf (adjustment-page-size adj)
-                                (adjustment-page-size adjustment))
-                          (setf (adjustment-page-increment adj)
-                                (adjustment-page-increment adjustment))))
+                          (setf (gtk-adjustment-page-size adj)
+                                (gtk-adjustment-page-size adjustment))
+                          (setf (gtk-adjustment-page-increment adj)
+                                (gtk-adjustment-page-increment adjustment))))
       
-      (setq scale (make-instance 'h-scale
+      (setq scale (make-instance 'gtk-h-scale
                                  :digits 0
                                  :adjustement adj2))
       (gtk-box-pack-start hbox2 scale :expand t :fill t :padding 0)
