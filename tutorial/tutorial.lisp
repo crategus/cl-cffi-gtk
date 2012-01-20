@@ -485,10 +485,10 @@
            (scale    (make-instance 'gtk-h-scale
                                     :digits 0
                                     :adjustement adj2))
-           (scrollbar (make-instance 'h-scrollbar
+           (scrollbar (make-instance 'gtk-h-scrollbar
                                      :update-policy :continuous
                                      :adjustement adj))
-           (button    (make-instance 'check-button
+           (button    (make-instance 'gtk-check-button
                                      :label "Display value on scale widget"
                                      :active t))
            (label     (make-instance 'gtk-label
@@ -615,4 +615,3 @@
       
       (gtk-widget-show window)
       )))
-  
