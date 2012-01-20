@@ -42,6 +42,7 @@
 ;;;     GtkSelectionData
 ;;;     GtkWidgetAuxInfo
 ;;;     GtkWidgetHelpType
+;;;
 ;;;     gtk_widget_new
 ;;;     gtk_widget_destroy
 ;;;     gtk_widget_in_destruction
@@ -103,6 +104,7 @@
 ;;;     gtk_widget_reset_rc_styles
 ;;;     gtk_widget_get_default_style
 ;;;     gtk_widget_set_direction
+;;;
 ;;;     GtkTextDirection
 ;;;     gtk_widget_get_direction
 ;;;     gtk_widget_set_default_direction
@@ -3047,6 +3049,23 @@
 (export (boxed-related-symbols 'gtk-allocation))
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GtkTextDirection
+;;; 
+;;; typedef enum {
+;;;   GTK_TEXT_DIR_NONE,
+;;;   GTK_TEXT_DIR_LTR,
+;;;   GTK_TEXT_DIR_RTL
+;;; } GtkTextDirection;
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkTextDirection" gtk-text-direction
+  (:export t
+   :type-initializer "gtk_text_direction_get_type")
+  (:none 0)
+  (:ltr 1)
+  (:rtl 2))
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
 ;;; 
 ;;; typedef struct _GtkWidget GtkWidget;
@@ -3076,6 +3095,7 @@
    (can-focus gtk-widget-can-focus "can-focus" "gboolean" t t)
    (composite-child gtk-widget-composite-child
                     "composite-child" "gboolean" t nil)
+   (double-buffered gtk-widget-double-buffered "double-buffered" "gboolean" t t)
    (events gtk-widget-events "events" "GdkEventMask" t t)
    (extension-events gtk-widget-extension-events
                      "extension-events" "GdkExtensionMode" t t)
@@ -3094,8 +3114,10 @@
    (tooltip-markup gtk-widget-tooltip-markup "tooltip-markup" "gchararray" t t)
    (tooltip-text gtk-widget-tooltip-text "tooltip-text" "gchararray" t t)
    (visible gtk-widget-visible "visible" "gboolean" t t)
-   (width-request gtk-widget-width-request "width-request" "gint" t t)
-   (window gtk-widget-window "window" "GdkWindow" t nil)
+   (width-request gtk-widget-width-request
+          "width-request" "gint" t t)
+   (window gtk-widget-window
+          "window" "GdkWindow" t nil)
    (:cffi parent-window gtk-widget-parent-window (g-object gdk-window)
           "gtk_widget_get_parent_window" "gtk_widget_set_parent_window")
    (:cffi toplevel gtk-widget-toplevel (g-object widget)
@@ -3110,7 +3132,7 @@
           "gtk_widget_get_pango_context" nil)
    (:cffi child-visible gtk-widget-child-visible :boolean
           "gtk_widget_get_child_visible" "gtk_widget_set_child_visible")
-   (:cffi direction gtk-widget-direction text-direction
+   (:cffi direction gtk-widget-direction gtk-text-direction
           "gtk_widget_get_direction" "gtk_widget_set_direction")
    (:cffi composite-name gtk-widget-composite-name
           (g-string :free-from-foreign t :free-to-foreign t)
@@ -4400,10 +4422,12 @@
 ;;;     TRUE if the widget is the focus widget.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_is_focus" gtk-widget-is-focus) :boolean
-  (widget g-object))
+;; This function is already defined as the accessor of the slot is-focus
 
-(export 'gtk-widget-is-focus)
+;(defcfun ("gtk_widget_is_focus" gtk-widget-is-focus) :boolean
+;  (widget g-object))
+
+;(export 'gtk-widget-is-focus)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_grab_focus ()
@@ -4882,7 +4906,7 @@
 ;;;     return location for the Y coordinate, or NULL.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get-pointer" gtk-widget-get-pointer) :void
+(defcfun ("gtk_widget_get_pointer" gtk-widget-get-pointer) :void
   (widget g-object)
   (x (:pointer :int))
   (y (:pointer :int)))
@@ -4957,7 +4981,8 @@
 ;;;     Otherwise TRUE.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun %gtk-widget-translate-coordinates :boolean
+(defcfun ("gtk_widget_translate_coordinates" %gtk-widget-translate-coordinates)
+    :boolean
   (src-widget g-object)
   (dst-widget g-object)
   (src-x :int)
@@ -5134,22 +5159,6 @@
 ;;;     the new direction
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkTextDirection
-;;; 
-;;; typedef enum {
-;;;   GTK_TEXT_DIR_NONE,
-;;;   GTK_TEXT_DIR_LTR,
-;;;   GTK_TEXT_DIR_RTL
-;;; } GtkTextDirection;
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkTextDirection" gtk-text-direction
-  (:export t
-   :type-initializer "gtk_text_direction_get_type")
-  (:none 0)
-  (:ltr 1)
-  (:rtl 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_direction ()
@@ -6284,7 +6293,7 @@
   (class :pointer)
   (n-properties (:pointer :int)))
 
-(defun gtk-widget-get-style-properties (type)
+(defun gtk-widget-class-list-style-properties (type)
   (setf type (gtype type))
   (let ((class (g-type-class-ref type)))
     (unwind-protect
@@ -6299,7 +6308,7 @@
                (g-free specs))))
       (g-type-class-unref class))))
 
-(export 'widget-get-style-properties)
+(export 'gtk-widget-class-list-style-properties)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_region_intersect ()
