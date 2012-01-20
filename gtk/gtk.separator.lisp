@@ -70,7 +70,7 @@
   (register-object-type "GtkSeparator" 'gtk-separator))
 
 (define-g-object-class "GtkSeparator" gtk-separator
-                       (:superclass widget :export t :interfaces
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_separator_get_type")
                        nil)
