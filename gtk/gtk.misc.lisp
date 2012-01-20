@@ -138,14 +138,14 @@
 ;;; struct GtkMisc;
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkMisc" misc
-                       (:superclass widget :export t :interfaces
+(define-g-object-class "GtkMisc" gtk-misc
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_misc_get_type")
-                       ((xalign misc-xalign "xalign" "gfloat" t t)
-                        (xpad misc-xpad "xpad" "gint" t t)
-                        (yalign misc-yalign "yalign" "gfloat" t t)
-                        (ypad misc-ypad "ypad" "gint" t t)))
+                       ((xalign gtk-misc-xalign "xalign" "gfloat" t t)
+                        (xpad gtk-misc-xpad "xpad" "gint" t t)
+                        (yalign gtk-misc-yalign "yalign" "gfloat" t t)
+                        (ypad gtk-misc-ypad "ypad" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_misc_set_alignment ()
@@ -165,8 +165,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-misc-set-alignment (misc xalign yalign)
-  (setf (misc-xalign misc) xalign
-        (misc-yalign misc) yalign))
+  (setf (gtk-misc-xalign misc) xalign
+        (gtk-misc-yalign misc) yalign))
 
 (export 'gtk-misc-set-alignment)
 
