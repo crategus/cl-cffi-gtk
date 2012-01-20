@@ -28,7 +28,7 @@
 (define-test gtk-border
     (let* ((border (make-gtk-border :left 1 :right 2 :top 3 :bottom 4))
            ;; entry has the property inner-border of type gtk-border.
-           (entry (make-instance 'entry :inner-border border)))
+           (entry (make-instance 'gtk-entry :inner-border border)))
       (assert-eql 1 (gtk-border-left border))
       (assert-eql 2 (gtk-border-right border))
       (assert-eql 3 (gtk-border-top border))
