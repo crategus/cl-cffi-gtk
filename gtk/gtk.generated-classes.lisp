@@ -1,7 +1,5 @@
 (in-package :gtk)
 
-
-
 (define-g-enum "GtkSizeGroupMode"
     size-group-mode
     (:export t :type-initializer "gtk_size_group_mode_get_type")
@@ -108,14 +106,6 @@
   (:spline 1)
   (:free 2))
 
-
-
-
-
-
-
-
-
 (define-g-enum "GtkWrapMode"
     wrap-mode
     (:export t :type-initializer "gtk_wrap_mode_get_type")
@@ -123,12 +113,6 @@
   (:char 1)
   (:word 2)
   (:word-char 3))
-
-
-
-
-
-
 
 (define-g-enum "GtkTreeViewGridLines"
     tree-view-grid-lines
@@ -146,18 +130,12 @@
   (:ttb 2)
   (:btt 3))
 
-
-
-
-
 (define-g-enum "GtkSensitivityType"
     sensitivity-type
     (:export t :type-initializer "gtk_sensitivity_type_get_type")
   (:auto 0)
   (:on 1)
   (:off 2))
-
-
 
 (define-g-enum "GtkIconSize"
     icon-size
@@ -169,12 +147,6 @@
   (:button 4)
   (:dnd 5)
   (:dialog 6))
-
-
-
-
-
-
 
 (define-g-enum "GtkMessageType"
     message-type
@@ -195,12 +167,6 @@
   (:yes-no 4)
   (:ok-cancel 5))
 
-
-
-
-
-
-
 (define-g-enum "GtkTextBufferTargetInfo"
     text-buffer-target-info
     (:export t :type-initializer "gtk_text_buffer_target_info_get_type")
@@ -208,23 +174,11 @@
   (:rich-text -2)
   (:text -3))
 
-
-
-
-
-
-
-
-
-
-
 (define-g-enum "GtkNotebookTab"
     notebook-tab
     (:export t :type-initializer "gtk_notebook_tab_get_type")
   (:first 0)
   (:last 1))
-
-
 
 (define-g-enum "GtkAnchorType"
     anchor-type
@@ -246,8 +200,6 @@
   (:se 6)
   (:w 7)
   (:e 8))
-
-
 
 (define-g-enum "GtkBuilderError"
     builder-error
@@ -312,10 +264,6 @@
   (:as-child 1)
   (:after 2))
 
-
-
-
-
 (define-g-enum "GtkFileChooserConfirmation"
     file-chooser-confirmation
     (:export t :type-initializer "gtk_file_chooser_confirmation_get_type")
@@ -346,10 +294,6 @@
   (:drop-right 3)
   (:drop-above 4)
   (:drop-below 5))
-
-
-
-
 
 (define-g-enum "GtkMatchType"
     match-type
@@ -395,10 +339,6 @@
   (:all 0)
   (:even 1)
   (:odd 2))
-
-
-
-
 
 (define-g-enum "GtkPreviewType"
     preview-type
@@ -513,25 +453,6 @@
   (:write 5)
   (:unknown 6))
 
-;(define-g-enum "GtkResponseType"
-;    response-type
-;    (:export t :type-initializer "gtk_response_type_get_type")
-;  (:none -1)
-;  (:reject -2)
-;  (:accept -3)
-;  (:delete-event -4)
-;  (:ok -5)
-;  (:cancel -6)
-;  (:close -7)
-;  (:yes -8)
-;  (:no -9)
-;  (:apply -10)
-;  (:help -11))
-
-
-
-
-
 (define-g-enum "GtkSideType"
     side-type
     (:export t :type-initializer "gtk_side_type_get_type")
@@ -623,7 +544,6 @@
   (:text-only 2))
 
 
-
 (define-g-flags "GtkArgFlags"
     arg-flags
     (:export t :type-initializer "gtk_arg_flags_get_type")
@@ -632,8 +552,6 @@
   (:construct 4)
   (:construct-only 8)
   (:child-arg 16))
-
-
 
 (define-g-flags "GtkButtonAction"
     button-action
@@ -685,13 +603,6 @@
   (:highlight 2)
   (:drop 4)
   (:all 7))
-
-;(define-g-flags "GtkDialogFlags"
-;    dialog-flags
-;    (:export t :type-initializer "gtk_dialog_flags_get_type")
-;  (:modal 1)
-;  (:destroy-with-parent 2)
-;  (:no-separator 4))
 
 (define-g-flags "GtkFileFilterFlags"
     file-filter-flags
@@ -1228,7 +1139,7 @@
 
 
 (define-g-object-class "GtkCalendar" calendar
-                       (:superclass widget :export t :interfaces
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_calendar_get_type")
                        ((day calendar-day "day" "gint" t t)
@@ -1256,7 +1167,7 @@
                          "gtk_calendar_set_display_options")))
 
 (define-g-object-class "GtkCellView" cell-view
-                       (:superclass widget :export t :interfaces
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellLayout")
                         :type-initializer "gtk_cell_view_get_type")
                        ((background cell-view-background "background"
@@ -1277,7 +1188,7 @@
 
 
 (define-g-object-class "GtkAlignment" alignment
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_alignment_get_type")
                        ((bottom-padding alignment-bottom-padding
@@ -1347,17 +1258,8 @@
 
 
 
-(define-g-object-class "GtkCheckButton" check-button
-  (:superclass gtk-toggle-button
-   :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-   :type-initializer "gtk_check_button_get_type")
-  nil)
-
-
-
 (define-g-object-class "GtkComboBox" combo-box
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
                          "GtkCellLayout")
                         :type-initializer "gtk_combo_box_get_type")
@@ -1399,7 +1301,7 @@
                          "gint" t t)))
 
 (define-g-object-class "GtkEventBox" event-box
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_event_box_get_type")
                        ((above-child event-box-above-child "above-child"
@@ -1408,7 +1310,7 @@
                          "visible-window" "gboolean" t t)))
 
 (define-g-object-class "GtkExpander" expander
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_expander_get_type")
                        ((expanded expander-expanded "expanded" "gboolean" t t)
@@ -1422,7 +1324,7 @@
                          "gboolean" t t)))
 
 (define-g-object-class "GtkFrame" frame
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_frame_get_type")
                        ((label frame-label "label" "gchararray" t t)
@@ -1447,7 +1349,7 @@
                         (yalign aspect-frame-yalign "yalign" "gfloat" t t)))
 
 (define-g-object-class "GtkHandleBox" handle-box
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_handle_box_get_type")
                        ((child-detached handle-box-child-detached
@@ -1463,7 +1365,7 @@
                          "gboolean" t t)))
 
 (define-g-object-class "GtkItem" item
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_item_get_type")
                        nil)
@@ -1523,7 +1425,7 @@
                        nil)
 
 (define-g-object-class "GtkScrolledWindow" scrolled-window
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_scrolled_window_get_type")
                        ((hadjustment scrolled-window-hadjustment "hadjustment"
@@ -1549,7 +1451,7 @@
                          nil)))
 
 (define-g-object-class "GtkToolItem" tool-item
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_tool_item_get_type")
                        ((is-important tool-item-is-important "is-important"
@@ -1621,7 +1523,7 @@
                          "GtkRadioToolButton" nil t)))
 
 (define-g-object-class "GtkViewport" viewport
-                       (:superclass bin :export t :interfaces
+                       (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_viewport_get_type")
                        ((hadjustment viewport-hadjustment "hadjustment"
@@ -1635,7 +1537,7 @@
 
 
 (define-g-object-class "GtkColorSelectionDialog" color-selection-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer
                         "gtk_color_selection_dialog_get_type")
@@ -1649,13 +1551,13 @@
                          "GtkWidget" t nil)))
 
 (define-g-object-class "GtkFileChooserDialog" file-chooser-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser")
                         :type-initializer "gtk_file_chooser_dialog_get_type")
                        nil)
 
 (define-g-object-class "GtkFontSelectionDialog" font-selection-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_font_selection_dialog_get_type")
                        ((:cffi font-name font-selection-dialog-font-name
@@ -1676,14 +1578,14 @@
                          nil)))
 
 (define-g-object-class "GtkInputDialog" input-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_input_dialog_get_type")
                        nil)
 
 
 (define-g-object-class "GtkPageSetupUnixDialog" page-setup-unix-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer
                         "gtk_page_setup_unix_dialog_get_type")
@@ -1698,7 +1600,7 @@
                          "gtk_page_setup_unix_dialog_set_print_settings")))
 
 (define-g-object-class "GtkPrintUnixDialog" print-unix-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_print_unix_dialog_get_type")
                        ((current-page print-unix-dialog-current-page
@@ -1711,7 +1613,7 @@
                          "selected-printer" "GtkPrinter" t nil)))
 
 (define-g-object-class "GtkRecentChooserDialog" recent-chooser-dialog
-                       (:superclass dialog :export t :interfaces
+                       (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable"
                          "GtkRecentChooser")
                         :type-initializer "gtk_recent_chooser_dialog_get_type")
@@ -1823,7 +1725,7 @@
                        nil)
 
 (define-g-object-class "GtkFixed" fixed
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_fixed_get_type")
                        ((:cffi has-window fixed-has-window :boolean
@@ -1831,7 +1733,7 @@
                          "gtk_fixed_set_has_window")))
 
 (define-g-object-class "GtkIconView" icon-view
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellLayout")
                         :type-initializer "gtk_icon_view_get_type")
                        ((column-spacing icon-view-column-spacing
@@ -1860,7 +1762,7 @@
                          "tooltip-column" "gint" t t)))
 
 (define-g-object-class "GtkLayout" layout
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_layout_get_type")
                        ((hadjustment layout-hadjustment "hadjustment"
@@ -1873,7 +1775,7 @@
                          "gtk_layout_get_bin_window" nil)))
 
 (define-g-object-class "GtkMenuShell" menu-shell
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_menu_shell_get_type")
                        ((take-focus menu-shell-take-focus "take-focus"
@@ -1919,7 +1821,7 @@
                          "pack-direction" "GtkPackDirection" t t)))
 
 (define-g-object-class "GtkNotebook" notebook
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_notebook_get_type")
                        ((enable-popup notebook-enable-popup "enable-popup"
@@ -1945,7 +1847,7 @@
                          t t)))
 
 (define-g-object-class "GtkPaned" paned
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_paned_get_type")
                        ((max-position paned-max-position "max-position" "gint"
@@ -1969,7 +1871,7 @@
                        nil)
 
 (define-g-object-class "GtkSocket" socket
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_socket_get_type")
                        nil)
@@ -1977,7 +1879,7 @@
 
 
 (define-g-object-class "GtkTextView" text-view
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_text_view_get_type")
                        ((accepts-tab text-view-accepts-tab "accepts-tab"
@@ -2008,7 +1910,7 @@
                          "GtkWrapMode" t t)))
 
 (define-g-object-class "GtkToolbar" toolbar
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
                          "GtkToolShell")
                         :type-initializer "gtk_toolbar_get_type")
@@ -2022,7 +1924,7 @@
                         (tooltips toolbar-tooltips "tooltips" "gboolean" t t)))
 
 (define-g-object-class "GtkTreeView" tree-view
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_tree_view_get_type")
                        ((enable-grid-lines tree-view-enable-grid-lines
@@ -2081,7 +1983,7 @@
                          nil nil tree-view-set-row-separartor-func)))
 
 (define-g-object-class "GtkDrawingArea" drawing-area
-                       (:superclass widget :export t :interfaces
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_drawing_area_get_type")
                        nil)
@@ -2100,7 +2002,7 @@
 
 
 (define-g-object-class "GtkSpinButton" spin-button
-                       (:superclass entry :export t :interfaces
+                       (:superclass gtk-entry :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
                          "GtkEditable")
                         :type-initializer "gtk_spin_button_get_type")
@@ -2119,7 +2021,7 @@
 
 
 (define-g-object-class "GtkArrow" arrow
-                       (:superclass misc :export t :interfaces
+                       (:superclass gtk-misc :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_arrow_get_type")
                        ((arrow-type arrow-arrow-type "arrow-type"
@@ -2134,7 +2036,7 @@
 
 
 (define-g-object-class "GtkProgress" progress
-                       (:superclass widget :export t :interfaces
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_progress_get_type")
                        ((activity-mode progress-activity-mode "activity-mode"
@@ -2170,54 +2072,8 @@
                          "gdouble" t t)
                         (text progress-bar-text "text" "gchararray" t t)))
 
-(define-g-object-class "GtkRange" range
-                       (:superclass widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_range_get_type")
-                       ((adjustment range-adjustment "adjustment"
-                         "GtkAdjustment" t t)
-                        (fill-level range-fill-level "fill-level" "gdouble" t
-                         t)
-                        (inverted range-inverted "inverted" "gboolean" t t)
-                        (lower-stepper-sensitivity
-                         range-lower-stepper-sensitivity
-                         "lower-stepper-sensitivity" "GtkSensitivityType" t t)
-                        (restrict-to-fill-level range-restrict-to-fill-level
-                         "restrict-to-fill-level" "gboolean" t t)
-                        (show-fill-level range-show-fill-level
-                         "show-fill-level" "gboolean" t t)
-                        (update-policy range-update-policy "update-policy"
-                         "GtkUpdateType" t t)
-                        (upper-stepper-sensitivity
-                         range-upper-stepper-sensitivity
-                         "upper-stepper-sensitivity" "GtkSensitivityType" t t)))
-
-
-
-
-
-
-
-(define-g-object-class "GtkScrollbar" scrollbar
-                       (:superclass range :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_scrollbar_get_type")
-                       nil)
-
-(define-g-object-class "GtkHScrollbar" h-scrollbar
-                       (:superclass scrollbar :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_hscrollbar_get_type")
-                       nil)
-
-(define-g-object-class "GtkVScrollbar" v-scrollbar
-                       (:superclass scrollbar :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vscrollbar_get_type")
-                       nil)
-
 (define-g-object-class "GtkRuler" ruler
-                       (:superclass widget :export t :interfaces
+                       (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_ruler_get_type")
                        ((lower ruler-lower "lower" "gdouble" t t)
@@ -2237,8 +2093,6 @@
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_vruler_get_type")
                        nil)
-
-
 
 (define-g-object-class "GtkSettings" settings
                        (:superclass g-object :export t :interfaces nil
