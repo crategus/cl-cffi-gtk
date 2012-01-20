@@ -633,6 +633,10 @@
   (:documentation "Metaclass for GObject-based classes."))
 
 (export 'gobject-class)
+(export 'gobject-class-g-type-name)
+(export 'gobject-class-direct-g-type-name)
+(export 'gobject-class-g-type-initializer)
+(export 'gobject-class-interface-p)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1372,6 +1376,11 @@
 ;;; 	Type id of class.
 ;;; ----------------------------------------------------------------------------
 
+(defun g-object-class-type (class)
+  (g-type-from-class class))
+
+(export 'g-object-class-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_CLASS_NAME()
 ;;; 
@@ -1387,6 +1396,11 @@
 ;;; 	Type name of class. The string is owned by the type system and should
 ;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-object-class-name (class)
+  (gtype-name (g-type-from-class class)))
+
+(export 'g-object-class-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_class_install_property ()
@@ -1536,10 +1550,23 @@
 ;;;     an array of GParamSpec* which should be freed after use.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_object_class_list_properties" g-object-class-list-properties)
+(defcfun ("g_object_class_list_properties" %g-object-class-list-properties)
     (:pointer (:pointer g-param-spec))
   (class (:pointer g-object-class))
   (n-properties (:pointer :uint)))
+
+(export 'g-object-class-list-properties)
+
+(defun g-object-class-list-properties (type)
+  (assert (g-type-is-a type +g-type-object+))
+  (with-unwind (class (g-type-class-ref type) g-type-class-unref)
+    (with-foreign-object (n-properties :uint)
+      (with-unwind (params (%g-object-class-list-properties class n-properties)
+                           g-free)
+        (loop
+           for i from 0 below (mem-ref n-properties :uint)
+           for param = (mem-aref params :pointer i)
+         collect (parse-g-param-spec param))))))
 
 (export 'g-object-class-list-properties)
 
