@@ -290,7 +290,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkImage" gtk-image
-                       (:superclass misc
+                       (:superclass gtk-misc
                         :export t
                         :interfaces ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_image_get_type")
