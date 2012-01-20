@@ -242,6 +242,417 @@
 ;;;  7 ...
 ;;;  8 <!-- -->
 ;;;  9 <object class="GtkAccelGroup" id="accelgroup1"/>
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "accept-focus" property
+;;; 
+;;;   "accept-focus" gboolean              : Read / Write
+;;; 
+;;; Whether the window should receive the input focus.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 2.4
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "application" property
+;;; 
+;;;   "application" GtkApplication*       : Read / Write
+;;; 
+;;; The GtkApplication associated with the window.
+;;; 
+;;; The application will be kept alive for at least as long as it has any
+;;; windows associated with it (see g_application_hold() for a way to keep it
+;;; alive without windows).
+;;; 
+;;; Normally, the connection between the application and the window will remain
+;;; until the window is destroyed, but you can explicitly remove it by setting
+;;; the ::application property to NULL.
+;;; 
+;;; Since 3.0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "decorated" property
+;;; 
+;;;   "decorated" gboolean              : Read / Write
+;;; 
+;;; Whether the window should be decorated by the window manager.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 2.4
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "default-height" property
+;;; 
+;;;   "default-height"           gint                  : Read / Write
+;;; 
+;;; The default height of the window, used when initially showing the window.
+;;; 
+;;; Allowed values: >= G_MAXULONG
+;;; 
+;;; Default value: -1
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "default-width" property
+;;; 
+;;;   "default-width"            gint                  : Read / Write
+;;; 
+;;; The default width of the window, used when initially showing the window.
+;;; 
+;;; Allowed values: >= G_MAXULONG
+;;; 
+;;; Default value: -1
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "deletable" property
+;;; 
+;;;   "deletable"                gboolean              : Read / Write
+;;; 
+;;; Whether the window frame should have a close button.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 2.10
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "destroy-with-parent" property
+;;; 
+;;;   "destroy-with-parent"      gboolean              : Read / Write
+;;; 
+;;; If this window should be destroyed when the parent is destroyed.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "focus-on-map" property
+;;; 
+;;;   "focus-on-map"             gboolean              : Read / Write
+;;; 
+;;; Whether the window should receive the input focus when mapped.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 2.6
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "focus-visible" property
+;;; 
+;;;   "focus-visible"            gboolean              : Read / Write
+;;; 
+;;; Whether 'focus rectangles' are currently visible in this window.
+;;; 
+;;; This property is maintained by GTK+ based on the "gtk-visible-focus" setting
+;;; and user input and should not be set by applications.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 2.20
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "gravity" property
+;;; 
+;;;   "gravity"                  GdkGravity            : Read / Write
+;;; 
+;;; The window gravity of the window. See gtk_window_move() and GdkGravity for
+;;; more details about window gravity.
+;;; 
+;;; Default value: GDK_GRAVITY_NORTH_WEST
+;;; 
+;;; Since 2.4
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "has-resize-grip" property
+;;; 
+;;;   "has-resize-grip"          gboolean              : Read / Write
+;;; 
+;;; Whether the window has a corner resize grip.
+;;; 
+;;; Note that the resize grip is only shown if the window is actually resizable
+;;; and not maximized. Use "resize-grip-visible" to find out if the resize grip
+;;; is currently shown.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 3.0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "has-toplevel-focus" property
+;;; 
+;;;   "has-toplevel-focus"       gboolean              : Read
+;;; 
+;;; Whether the input focus is within this GtkWindow.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "icon" property
+;;; 
+;;;   "icon"                     GdkPixbuf*            : Read / Write
+;;; 
+;;; Icon for this window.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "icon-name" property
+;;; 
+;;;   "icon-name"                gchar*                : Read / Write
+;;; 
+;;; The :icon-name property specifies the name of the themed icon to use as
+;;; the window icon. See GtkIconTheme for more details.
+;;; 
+;;; Default value: NULL
+;;; 
+;;; Since 2.6
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "is-active" property
+;;; 
+;;;   "is-active"                gboolean              : Read
+;;; 
+;;; Whether the toplevel is the current active window.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "mnemonics-visible" property
+;;; 
+;;;   "mnemonics-visible"        gboolean              : Read / Write
+;;; 
+;;; Whether mnemonics are currently visible in this window.
+;;; 
+;;; This property is maintained by GTK+ based on the "gtk-auto-mnemonics"
+;;; setting and user input, and should not be set by applications.
+;;; 
+;;; Default value: TRUE
+;;; 
+;;; Since 2.20
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "modal" property
+;;; 
+;;;   "modal"                    gboolean              : Read / Write
+;;; 
+;;; If TRUE, the window is modal (other windows are not usable while this one
+;;; is up).
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "opacity" property
+;;; 
+;;;   "opacity"                  gdouble               : Read / Write
+;;; 
+;;; The requested opacity of the window. See gtk_window_set_opacity() for more
+;;; details about window opacity.
+;;; 
+;;; Allowed values: [0,1]
+;;; 
+;;; Default value: 1
+;;; 
+;;; Since 2.12
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "resizable" property
+;;; 
+;;;   "resizable"                gboolean              : Read / Write
+;;; 
+;;; If TRUE, users can resize the window.
+;;; 
+;;; Default value: TRUE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "resize-grip-visible" property
+;;; 
+;;;   "resize-grip-visible"      gboolean              : Read
+;;; 
+;;; Whether a corner resize grip is currently shown.
+;;; 
+;;; Default value: FALSE
+;;; 
+;;; Since 3.0
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "role" property
+;;; 
+;;;   "role"                     gchar*                : Read / Write
+;;; 
+;;; Unique identifier for the window to be used when restoring a session.
+;;; 
+;;; Default value: NULL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "screen" property
+;;; 
+;;;   "screen"                   GdkScreen*            : Read / Write
+;;; 
+;;; The screen where this window will be displayed.
+;;; The "skip-pager-hint" property
+;;; 
+;;;   "skip-pager-hint"          gboolean              : Read / Write
+;;; 
+;;; TRUE if the window should not be in the pager.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "skip-taskbar-hint" property
+;;; 
+;;;   "skip-taskbar-hint"        gboolean              : Read / Write
+;;; 
+;;; TRUE if the window should not be in the task bar.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "startup-id" property
+;;; 
+;;;   "startup-id"               gchar*                : Write
+;;; 
+;;; The :startup-id is a write-only property for setting window's startup
+;;; notification identifier. See gtk_window_set_startup_id() for more details.
+;;; 
+;;; Default value: NULL
+;;; 
+;;; Since 2.12
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "title" property
+;;; 
+;;;   "title"                    gchar*                : Read / Write
+;;; 
+;;; The title of the window.
+;;; 
+;;; Default value: NULL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "transient-for" property
+;;; 
+;;;   "transient-for"            GtkWindow*           : Read / Write / Construct
+;;; 
+;;; The transient parent of the window. See gtk_window_set_transient_for() for
+;;; more details about transient windows.
+;;; 
+;;; Since 2.10
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "type" property
+;;; 
+;;;   "type"                     GtkWindowType   : Read / Write / Construct Only
+;;; 
+;;; The type of the window.
+;;; 
+;;; Default value: GTK_WINDOW_TOPLEVEL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "type-hint" property
+;;; 
+;;;   "type-hint"                GdkWindowTypeHint     : Read / Write
+;;; 
+;;; Hint to help the desktop environment understand what kind of window this is
+;;; and how to treat it.
+;;; 
+;;; Default value: GDK_WINDOW_TYPE_HINT_NORMAL
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "urgency-hint" property
+;;; 
+;;;   "urgency-hint" gboolean              : Read / Write
+;;; 
+;;; TRUE if the window should be brought to the user's attention.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "window-position" property
+;;; 
+;;;   "window-position" GtkWindowPosition     : Read / Write
+;;; 
+;;; The initial position of the window.
+;;; 
+;;; Default value: GTK_WIN_POS_NONE
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Style Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "resize-grip-height" style property
+;;; 
+;;;   "resize-grip-height"       gint                  : Read / Write
+;;; 
+;;; Height of resize grip.
+;;; 
+;;; Allowed values: >= 0
+;;; 
+;;; Default value: 16
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "resize-grip-width" style property
+;;; 
+;;;   "resize-grip-width" gint                  : Read / Write
+;;; 
+;;; Width of resize grip.
+;;; 
+;;; Allowed values: >= 0
+;;; 
+;;; Default value: 16
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Signal Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "activate-default" signal
+;;; 
+;;; void user_function (GtkWindow *window, gpointer user_data)      : Action
+;;; 
+;;; The ::activate-default signal is a keybinding signal which gets emitted
+;;; when the user activates the default widget of window.
+;;; 
+;;; window :
+;;; 	the window which received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "activate-focus" signal
+;;; 
+;;; void user_function (GtkWindow *window, gpointer user_data)      : Action
+;;; 
+;;; The ::activate-focus signal is a keybinding signal which gets emitted when
+;;; the user activates the currently focused widget of window.
+;;; 
+;;; window :
+;;; 	the window which received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "keys-changed" signal
+;;; 
+;;; void user_function (GtkWindow *window, gpointer user_data)      : Run First
+;;; 
+;;; The ::keys-changed signal gets emitted when the set of accelerators or
+;;; mnemonics that are associated with window changes.
+;;; 
+;;; window :
+;;; 	the window which received the signal
+;;; 
+;;; user_data :
+;;; 	user data set when the signal handler was connected.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "set-focus" signal
+;;; 
+;;; void user_function (GtkWindow *window,
+;;;                     GtkWidget *widget,
+;;;                     gpointer  user_data)      : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -256,80 +667,72 @@
   (register-object-type "GtkWindow" 'gtk-window))
 
 (define-g-object-class "GtkWindow" gtk-window
-                       (:superclass bin
-                        :export t
-                        :interfaces ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_window_get_type")
-                       ((accept-focus gtk-window-accept-focus
-                                      "accept-focus" "gboolean" t t)
-                        (allow-grow gtk-window-allow-grow
-                                    "allow-grow" "gboolean" t t)
-                        (allow-shrink gtk-window-allow-shrink "allow-shrink"
-                         "gboolean" t t)
-                        (decorated gtk-window-decorated "decorated" "gboolean"
-                         t t)
-                        (default-height gtk-window-default-height
-                         "default-height" "gint" t t)
-                        (default-width gtk-window-default-width "default-width"
-                         "gint" t t)
-                        (deletable gtk-window-deletable "deletable" "gboolean"
-                         t t)
-                        (destroy-with-parent gtk-window-destroy-with-parent
-                         "destroy-with-parent" "gboolean" t t)
-                        (focus-on-map gtk-window-focus-on-map "focus-on-map"
-                         "gboolean" t t)
-                        (gravity gtk-window-gravity "gravity" "GdkGravity" t t)
-                        (has-toplevel-focus gtk-window-has-toplevel-focus
-                         "has-toplevel-focus" "gboolean" t nil)
-                        (icon gtk-window-icon "icon" "GdkPixbuf" t t)
-                        (icon-name gtk-window-icon-name "icon-name"
-                                   "gchararray" t t)
-                        (is-active gtk-window-is-active "is-active" "gboolean"
-                                   t nil)
-                        (mnemonics-visible gtk-window-mnemonics-visible
-                                           "mnemonis-visible" "gboolean" t t)
-                        (modal gtk-window-modal "modal" "gboolean" t t)
-                        (opacity gtk-window-opacity "opacity" "gdouble" t t)
-                        (resizable gtk-window-resizable
-                                   "resizable" "gboolean" t t)
-                        (role gtk-window-role "role" "gchararray" t t)
-                        (screen gtk-window-screen "screen" "GdkScreen" t t)
-                        (skip-pager-hint gtk-window-skip-pager-hint
-                         "skip-pager-hint" "gboolean" t t)
-                        (skip-taskbar-hint gtk-window-skip-taskbar-hint
-                         "skip-taskbar-hint" "gboolean" t t)
-                        (startup-id gtk-window-startup-id "startup-id"
-                         "gchararray" nil t)
-                        (title gtk-window-title "title" :string  t t)
-                        (transient-for gtk-window-transient-for "transient-for"
-                         "GtkWindow" t t)
-                        (type gtk-window-type "type" "GtkWindowType" t nil)
-                        (type-hint gtk-window-type-hint "type-hint"
-                         "GdkWindowTypeHint" t t)
-                        (urgency-hint gtk-window-urgency-hint "urgency-hint"
-                         "gboolean" t t)
-                        (window-position gtk-window-window-position
-                         "window-position" "GtkWindowPosition" t t)
-                        (:cffi focus gtk-window-focus (g-object widget)
-                         "gtk_window_get_focus" "gtk_window_set_focus")
-                        (:cffi default-widget gtk-window-default-widget
-                         (g-object widget) "gtk_window_get_default_widget"
-                         "gtk_window_set_default")
-                        (:cffi has-frame gtk-window-has-frame :boolean
-                         "gtk_window_get_has_frame" "gtk_window_set_has_frame")
-                        (:cffi mnemonic-modifier gtk-window-mnemonic-modifier
-                         (g-object gdk-modifier-type)
-                         "gtk_window_get_mnemonic_modifier"
-                         "gtk_window_set_mnemonic_modifier")
-                        (:cffi icon-list gtk-window-icon-list
-                         (g-list gdk-pixbuf :free-from-foreign t :free-to-foreign t)
-                         "gtk_window_get_icon_list" "gtk_window_set_icon_list")
-                        (:cffi group gtk-window-group (g-object window-group)
-                         "gtk_window_get_group" nil)
-                        (:cffi keep-above gtk-window-keep-above :boolean nil
-                         "gtk_window_set_keep_above")
-                        (:cffi keep-below gtk-window-keep-below :boolean nil
-                         "gtk_window_set_keep_below")))
+  (:superclass gtk-bin
+    :export t
+    :interfaces ("AtkImplementorIface" "GtkBuildable")
+    :type-initializer "gtk_window_get_type")
+  ((accept-focus        gtk-window-accept-focus "accept-focus" "gboolean" t t)
+   (allow-grow          gtk-window-allow-grow "allow-grow" "gboolean" t t)
+   (allow-shrink        gtk-window-allow-shrink "allow-shrink" "gboolean" t t)
+   (decorated           gtk-window-decorated "decorated" "gboolean" t t)
+   (default-height      gtk-window-default-height "default-height" "gint" t t)
+   (default-width       gtk-window-default-width "default-width" "gint" t t)
+   (deletable           gtk-window-deletable "deletable" "gboolean" t t)
+   (destroy-with-parent gtk-window-destroy-with-parent
+                        "destroy-with-parent" "gboolean" t t)
+   (focus-on-map        gtk-window-focus-on-map "focus-on-map" "gboolean" t t)
+   (gravity             gtk-window-gravity "gravity" "GdkGravity" t t)
+   (has-toplevel-focus  gtk-window-has-toplevel-focus
+                        "has-toplevel-focus" "gboolean" t nil)
+   (icon                gtk-window-icon "icon" "GdkPixbuf" t t)
+   (icon-name           gtk-window-icon-name "icon-name" "gchararray" t t)
+   (is-active           gtk-window-is-active "is-active" "gboolean" t nil)
+   (mnemonics-visible   gtk-window-mnemonics-visible
+                        "mnemonis-visible" "gboolean" t t)
+   (modal               gtk-window-modal "modal" "gboolean" t t)
+   (opacity             gtk-window-opacity "opacity" "gdouble" t t)
+   (resizable           gtk-window-resizable "resizable" "gboolean" t t)
+   (role                gtk-window-role "role" "gchararray" t t)
+   (screen              gtk-window-screen "screen" "GdkScreen" t t)
+   (skip-pager-hint     gtk-window-skip-pager-hint
+                        "skip-pager-hint" "gboolean" t t)
+   (skip-taskbar-hint   gtk-window-skip-taskbar-hint
+                        "skip-taskbar-hint" "gboolean" t t)
+   (startup-id          gtk-window-startup-id "startup-id" "gchararray" nil t)
+   (title               gtk-window-title "title" :string  t t)
+   (transient-for       gtk-window-transient-for
+                        "transient-for" "GtkWindow" t t)
+   (type                gtk-window-type "type" "GtkWindowType" t nil)
+   (type-hint           gtk-window-type-hint
+                        "type-hint" "GdkWindowTypeHint" t t)
+   (urgency-hint        gtk-window-urgency-hint "urgency-hint" "gboolean" t t)
+   (window-position     gtk-window-window-position
+                        "window-position" "GtkWindowPosition" t t)
+   (:cffi focus
+          gtk-window-focus (g-object gtk-widget)
+          "gtk_window_get_focus" "gtk_window_set_focus")
+   (:cffi default-widget
+          gtk-window-default-widget (g-object gtk-widget)
+          "gtk_window_get_default_widget" "gtk_window_set_default")
+   (:cffi has-frame
+          gtk-window-has-frame :boolean
+          "gtk_window_get_has_frame" "gtk_window_set_has_frame")
+   (:cffi mnemonic-modifier
+          gtk-window-mnemonic-modifier (g-object gdk-modifier-type)
+          "gtk_window_get_mnemonic_modifier" "gtk_window_set_mnemonic_modifier")
+   (:cffi icon-list
+          gtk-window-icon-list
+          (g-list gdk-pixbuf :free-from-foreign t :free-to-foreign t)
+          "gtk_window_get_icon_list" "gtk_window_set_icon_list")
+   (:cffi group gtk-window-group
+          (g-object window-group)
+          "gtk_window_get_group" nil)
+   (:cffi keep-above
+          gtk-window-keep-above :boolean
+          nil "gtk_window_set_keep_above")
+   (:cffi keep-below
+          gtk-window-keep-below :boolean
+          nil "gtk_window_set_keep_below")))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_new ()
@@ -657,7 +1060,7 @@
 
 (defcfun ("gtk_window_set_geometry_hints" gtk-window-set-geometry-hints) :void
   (window (g-object gtk-window))
-  (geometry-widget (g-object widget))
+  (geometry-widget (g-object gtk-widget))
   (geometry (g-boxed-foreign geometry))
   (geometry-mask gdk-window-hints))
 
@@ -866,7 +1269,7 @@
 (defcfun ("gtk_window_add_mnemonic" gtk-window-add-mnemonic) :void
   (window (g-object gtk-window))
   (keyval :uint)
-  (target (g-object widget)))
+  (target (g-object gtk-widget)))
 
 (export 'gtk-window-add-mnemonic)
 
@@ -892,7 +1295,7 @@
 (defcfun ("gtk_window_remove_mnemonic" gtk-window-remove-mnemonic) :void
   (window (g-object gtk-window))
   (keyval :uint)
-  (target (g-object widget)))
+  (target (g-object gtk-widget)))
 
 (export 'gtk-window-remove-mnemonic)
 
@@ -2856,453 +3259,6 @@
 ;;; 	the new value
 ;;; 
 ;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "accept-focus" property
-;;; 
-;;;   "accept-focus" gboolean              : Read / Write
-;;; 
-;;; Whether the window should receive the input focus.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "application" property
-;;; 
-;;;   "application" GtkApplication*       : Read / Write
-;;; 
-;;; The GtkApplication associated with the window.
-;;; 
-;;; The application will be kept alive for at least as long as it has any
-;;; windows associated with it (see g_application_hold() for a way to keep it
-;;; alive without windows).
-;;; 
-;;; Normally, the connection between the application and the window will remain
-;;; until the window is destroyed, but you can explicitly remove it by setting
-;;; the ::application property to NULL.
-;;; 
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "decorated" property
-;;; 
-;;;   "decorated" gboolean              : Read / Write
-;;; 
-;;; Whether the window should be decorated by the window manager.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "default-height" property
-;;; 
-;;;   "default-height"           gint                  : Read / Write
-;;; 
-;;; The default height of the window, used when initially showing the window.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "default-width" property
-;;; 
-;;;   "default-width"            gint                  : Read / Write
-;;; 
-;;; The default width of the window, used when initially showing the window.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "deletable" property
-;;; 
-;;;   "deletable"                gboolean              : Read / Write
-;;; 
-;;; Whether the window frame should have a close button.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "destroy-with-parent" property
-;;; 
-;;;   "destroy-with-parent"      gboolean              : Read / Write
-;;; 
-;;; If this window should be destroyed when the parent is destroyed.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "focus-on-map" property
-;;; 
-;;;   "focus-on-map"             gboolean              : Read / Write
-;;; 
-;;; Whether the window should receive the input focus when mapped.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "focus-visible" property
-;;; 
-;;;   "focus-visible"            gboolean              : Read / Write
-;;; 
-;;; Whether 'focus rectangles' are currently visible in this window.
-;;; 
-;;; This property is maintained by GTK+ based on the "gtk-visible-focus" setting
-;;; and user input and should not be set by applications.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.20
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "gravity" property
-;;; 
-;;;   "gravity"                  GdkGravity            : Read / Write
-;;; 
-;;; The window gravity of the window. See gtk_window_move() and GdkGravity for
-;;; more details about window gravity.
-;;; 
-;;; Default value: GDK_GRAVITY_NORTH_WEST
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "has-resize-grip" property
-;;; 
-;;;   "has-resize-grip"          gboolean              : Read / Write
-;;; 
-;;; Whether the window has a corner resize grip.
-;;; 
-;;; Note that the resize grip is only shown if the window is actually resizable
-;;; and not maximized. Use "resize-grip-visible" to find out if the resize grip
-;;; is currently shown.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "has-toplevel-focus" property
-;;; 
-;;;   "has-toplevel-focus"       gboolean              : Read
-;;; 
-;;; Whether the input focus is within this GtkWindow.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "icon" property
-;;; 
-;;;   "icon"                     GdkPixbuf*            : Read / Write
-;;; 
-;;; Icon for this window.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "icon-name" property
-;;; 
-;;;   "icon-name"                gchar*                : Read / Write
-;;; 
-;;; The :icon-name property specifies the name of the themed icon to use as
-;;; the window icon. See GtkIconTheme for more details.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "is-active" property
-;;; 
-;;;   "is-active"                gboolean              : Read
-;;; 
-;;; Whether the toplevel is the current active window.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "mnemonics-visible" property
-;;; 
-;;;   "mnemonics-visible"        gboolean              : Read / Write
-;;; 
-;;; Whether mnemonics are currently visible in this window.
-;;; 
-;;; This property is maintained by GTK+ based on the "gtk-auto-mnemonics"
-;;; setting and user input, and should not be set by applications.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.20
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "modal" property
-;;; 
-;;;   "modal"                    gboolean              : Read / Write
-;;; 
-;;; If TRUE, the window is modal (other windows are not usable while this one
-;;; is up).
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "opacity" property
-;;; 
-;;;   "opacity"                  gdouble               : Read / Write
-;;; 
-;;; The requested opacity of the window. See gtk_window_set_opacity() for more
-;;; details about window opacity.
-;;; 
-;;; Allowed values: [0,1]
-;;; 
-;;; Default value: 1
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "resizable" property
-;;; 
-;;;   "resizable"                gboolean              : Read / Write
-;;; 
-;;; If TRUE, users can resize the window.
-;;; 
-;;; Default value: TRUE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "resize-grip-visible" property
-;;; 
-;;;   "resize-grip-visible"      gboolean              : Read
-;;; 
-;;; Whether a corner resize grip is currently shown.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 3.0
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "role" property
-;;; 
-;;;   "role"                     gchar*                : Read / Write
-;;; 
-;;; Unique identifier for the window to be used when restoring a session.
-;;; 
-;;; Default value: NULL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "screen" property
-;;; 
-;;;   "screen"                   GdkScreen*            : Read / Write
-;;; 
-;;; The screen where this window will be displayed.
-;;; The "skip-pager-hint" property
-;;; 
-;;;   "skip-pager-hint"          gboolean              : Read / Write
-;;; 
-;;; TRUE if the window should not be in the pager.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "skip-taskbar-hint" property
-;;; 
-;;;   "skip-taskbar-hint"        gboolean              : Read / Write
-;;; 
-;;; TRUE if the window should not be in the task bar.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "startup-id" property
-;;; 
-;;;   "startup-id"               gchar*                : Write
-;;; 
-;;; The :startup-id is a write-only property for setting window's startup
-;;; notification identifier. See gtk_window_set_startup_id() for more details.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "title" property
-;;; 
-;;;   "title"                    gchar*                : Read / Write
-;;; 
-;;; The title of the window.
-;;; 
-;;; Default value: NULL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "transient-for" property
-;;; 
-;;;   "transient-for"            GtkWindow*           : Read / Write / Construct
-;;; 
-;;; The transient parent of the window. See gtk_window_set_transient_for() for
-;;; more details about transient windows.
-;;; 
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "type" property
-;;; 
-;;;   "type"                     GtkWindowType   : Read / Write / Construct Only
-;;; 
-;;; The type of the window.
-;;; 
-;;; Default value: GTK_WINDOW_TOPLEVEL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "type-hint" property
-;;; 
-;;;   "type-hint"                GdkWindowTypeHint     : Read / Write
-;;; 
-;;; Hint to help the desktop environment understand what kind of window this is
-;;; and how to treat it.
-;;; 
-;;; Default value: GDK_WINDOW_TYPE_HINT_NORMAL
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "urgency-hint" property
-;;; 
-;;;   "urgency-hint" gboolean              : Read / Write
-;;; 
-;;; TRUE if the window should be brought to the user's attention.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "window-position" property
-;;; 
-;;;   "window-position" GtkWindowPosition     : Read / Write
-;;; 
-;;; The initial position of the window.
-;;; 
-;;; Default value: GTK_WIN_POS_NONE
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "resize-grip-height" style property
-;;; 
-;;;   "resize-grip-height"       gint                  : Read / Write
-;;; 
-;;; Height of resize grip.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "resize-grip-width" style property
-;;; 
-;;;   "resize-grip-width" gint                  : Read / Write
-;;; 
-;;; Width of resize grip.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "activate-default" signal
-;;; 
-;;; void user_function (GtkWindow *window, gpointer user_data)      : Action
-;;; 
-;;; The ::activate-default signal is a keybinding signal which gets emitted
-;;; when the user activates the default widget of window.
-;;; 
-;;; window :
-;;; 	the window which received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "activate-focus" signal
-;;; 
-;;; void user_function (GtkWindow *window, gpointer user_data)      : Action
-;;; 
-;;; The ::activate-focus signal is a keybinding signal which gets emitted when
-;;; the user activates the currently focused widget of window.
-;;; 
-;;; window :
-;;; 	the window which received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "keys-changed" signal
-;;; 
-;;; void user_function (GtkWindow *window, gpointer user_data)      : Run First
-;;; 
-;;; The ::keys-changed signal gets emitted when the set of accelerators or
-;;; mnemonics that are associated with window changes.
-;;; 
-;;; window :
-;;; 	the window which received the signal
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "set-focus" signal
-;;; 
-;;; void user_function (GtkWindow *window,
-;;;                     GtkWidget *widget,
-;;;                     gpointer  user_data)      : Run Last
 ;;; ----------------------------------------------------------------------------
 
 
