@@ -1,11 +1,6 @@
 (in-package :gtk)
 
-(define-g-enum "GtkTextDirection"
-    text-direction
-    (:export t :type-initializer "gtk_text_direction_get_type")
-  (:none 0)
-  (:ltr 1)
-  (:rtl 2))
+
 
 (define-g-enum "GtkSizeGroupMode"
     size-group-mode
@@ -797,9 +792,9 @@
   (:accelerator 256)
   (:popup-with-accels 512))
 
-(define-g-flags "GtkWidgetFlags"
-    widget-flags
-    (:export t :type-initializer "gtk_widget_flags_get_type")
+(define-g-flags "GtkWidgetFlags" gtk-widget-flags
+  (:export t
+   :type-initializer "gtk_widget_flags_get_type")
   (:toplevel 16)
   (:no-window 32)
   (:realized 64)
@@ -1230,74 +1225,7 @@
                          (g-list g-object :free-from-foreign t)
                          "gtk_tree_view_column_get_cell_renderers" nil)))
 
-(define-g-object-class "GtkWidget" widget
-                       (:superclass gtk-object :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_widget_get_type")
-                       ((app-paintable widget-app-paintable "app-paintable"
-                         "gboolean" t t)
-                        (can-default widget-can-default "can-default"
-                         "gboolean" t t)
-                        (can-focus widget-can-focus "can-focus" "gboolean" t t)
-                        (composite-child widget-composite-child
-                         "composite-child" "gboolean" t nil)
-                        (events widget-events "events" "GdkEventMask" t t)
-                        (extension-events widget-extension-events
-                         "extension-events" "GdkExtensionMode" t t)
-                        (has-default widget-has-default "has-default"
-                         "gboolean" t t)
-                        (has-focus widget-has-focus "has-focus" "gboolean" t t)
-                        (has-tooltip widget-has-tooltip "has-tooltip"
-                         "gboolean" t t)
-                        (height-request widget-height-request "height-request"
-                         "gint" t t)
-                        (is-focus widget-is-focus "is-focus" "gboolean" t t)
-                        (name widget-name "name" "gchararray" t t)
-                        (no-show-all widget-no-show-all "no-show-all"
-                         "gboolean" t t)
-                        (parent widget-parent "parent" "GtkContainer" t t)
-                        (receives-default widget-receives-default
-                         "receives-default" "gboolean" t t)
-                        (sensitive widget-sensitive "sensitive" "gboolean" t t)
-                        (style widget-style "style" "GtkStyle" t t)
-                        (tooltip-markup widget-tooltip-markup "tooltip-markup"
-                         "gchararray" t t)
-                        (tooltip-text widget-tooltip-text "tooltip-text"
-                         "gchararray" t t)
-                        (visible widget-visible "visible" "gboolean" t t)
-                        (width-request widget-width-request "width-request"
-                         "gint" t t)
-                        (window widget-window "window" "GdkWindow" t nil)
-                        (:cffi parent-window widget-parent-window
-                         (g-object gdk-window) "gtk_widget_get_parent_window"
-                         "gtk_widget_set_parent_window")
-                        (:cffi toplevel widget-toplevel (g-object widget)
-                         "gtk_widget_get_toplevel" nil)
-                        (:cffi colormap widget-colormap (g-object gdk-colormap)
-                         "gtk_widget_get_colormap" "gtk_widget_set_colormap")
-                        (:cffi visual widget-visual (g-object gdk-visual)
-                         "gtk_widget_get_visual" nil)
-                        (:cffi modifier-style widget-modifier-style
-                         (g-object rc-style) "gtk_widget_get_modifier_style"
-                         "gtk_widget_modify_style")
-                        (:cffi pango-context widget-pango-context g-object
-                         "gtk_widget_get_pango_context" nil)
-                        (:cffi child-visible widget-child-visible :boolean
-                         "gtk_widget_get_child_visible"
-                         "gtk_widget_set_child_visible")
-                        (:cffi direction widget-direction text-direction
-                         "gtk_widget_get_direction" "gtk_widget_set_direction")
-                        (:cffi composite-name widget-composite-name
-                         (g-string :free-from-foreign t :free-to-foreign t)
-                         "gtk_widget_get_composite_name"
-                         "gtk_widget_set_composite_name")
-                        (:cffi redraw-on-allocate widget-redraw-on-allocate
-                         :boolean nil "gtk_widget_set_redraw_on_allocate")
-                        (:cffi accessible widget-accessible g-object
-                         "gtk_widget_get_accessible" nil)
-                        (:cffi tooltip-window widget-tooltip-window g-object
-                         "gtk_widget_get_tooltip_window"
-                         "gtk_widget_set_tooltip_window")))
+
 
 (define-g-object-class "GtkCalendar" calendar
                        (:superclass widget :export t :interfaces
@@ -1346,33 +1274,7 @@
                          (g-list (g-object cell-renderer) :free-from-foreign t)
                          "gtk_cell_view_get_cell_renderers" nil)))
 
-(define-g-object-class "GtkContainer" container
-                       (:superclass widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_container_get_type")
-                       ((border-width container-border-width "border-width"
-                         "guint" t t)
-                        (child container-child "child" "GtkWidget" nil t)
-                        (resize-mode container-resize-mode "resize-mode"
-                         "GtkResizeMode" t t)
-                        (:cffi focus-child container-focus-child g-object
-                         "gtk_container_get_focus_child"
-                         "gtk_container_set_focus_child")
-                        (:cffi focus-vadjustment container-focus-vadjustment
-                         g-object "gtk_container_get_focus_vadjustment"
-                         "gtk_container_set_focus_vadjustment")
-                        (:cffi focus-hadjustment container-focus-hadjustment
-                         g-object "gtk_container_get_focus_hadjustment"
-                         "gtk_container_set_focus_hadjustment")
-                        (:cffi reallocate-redraws container-reallocate-redraws
-                         :boolean nil "gtk_container_set_reallocate_redraws")))
 
-(define-g-object-class "GtkBin" bin
-                       (:superclass container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_bin_get_type")
-                       ((:cffi child bin-child (g-object widget)
-                         "gtk_bin_get_child" nil)))
 
 (define-g-object-class "GtkAlignment" alignment
                        (:superclass bin :export t :interfaces
