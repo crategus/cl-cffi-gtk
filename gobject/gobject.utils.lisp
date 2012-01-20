@@ -284,12 +284,13 @@
 ;; is described by an object of type g-class-property-definition. g-type is an
 ;; integer or a string specifying the GType
 
-(defun class-properties (g-type)
-  (assert (g-type-is-a g-type +g-type-object+))
-  (with-unwind (g-class (g-type-class-ref g-type) g-type-class-unref)
+(defun class-properties (type)
+  (assert (g-type-is-a type +g-type-object+))
+  (with-unwind (class (g-type-class-ref type) g-type-class-unref)
     (with-foreign-object (n-properties :uint)
-      (with-unwind (params (g-object-class-list-properties g-class n-properties)
-                           g-free)
+      (with-unwind
+        (params (%g-object-class-list-properties class n-properties)
+                g-free)
         (loop
            for i from 0 below (mem-ref n-properties :uint)
            for param = (mem-aref params :pointer i)
