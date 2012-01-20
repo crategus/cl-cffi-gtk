@@ -413,7 +413,7 @@
   (register-object-type "GtkButton" 'gtk-button))
 
 (define-g-object-class "GtkButton" gtk-button
-                       (:superclass bin
+                       (:superclass gtk-bin
                         :export t
                         :interfaces ("AtkImplementorIface"
                                      "GtkActivatable"
