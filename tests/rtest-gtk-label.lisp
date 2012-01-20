@@ -24,12 +24,21 @@
 (in-package :gtk-tests)
 
 (define-test gtk-label
-  (let ((class nil)
+  (let ((class (find-class 'gtk-label))
         (label (make-instance 'gtk-label)))
-    (setq class (find-class 'gtk-label))
+    ;; Check the class name and type of the class
     (assert-eq 'gtk-label (class-name class))
     (assert-eq 'gobject-class (type-of class))
     (assert-eq (find-class 'gobject-class) (class-of class))
+    
+    ;; Properties of the metaclass gobject-class
+    (assert-equal "GtkLabel" (gobject-class-g-type-name class))
+    (assert-equal "GtkLabel" (gobject-class-direct-g-type-name class))
+    (assert-equal "gtk_label_get_type" (gobject-class-g-type-initializer class))
+    (assert-false (gobject-class-interface-p class))
+    
+    (assert-equal "GtkLabel"
+                  (g-object-class-name (g-type-class-ref (gtype "GtkLabel"))))
     
     ;; Get the names of the class properties
     (assert-equal
@@ -44,7 +53,7 @@
        "selection-bound" "ellipsize" "width-chars" "single-line-mode" "angle"
        "max-width-chars" "track-visited-links")
       (mapcar #'g-class-property-definition-name
-              (gobject::class-properties (gtype "GtkLabel"))))
+              (g-object-class-list-properties (gtype "GtkLabel"))))
     
     ;; Get the names of the style properties.
     (assert-equal
@@ -92,7 +101,7 @@
     
     ;; Properties from gtk-label
     (assert-equal ""     (gtk-label-label label))
-    (assert-error 'error (gtk-label-attributes label))
+    (assert-error 'error (gtk-label-attributes label)) ; Missing PangoAttrList
     (assert-false        (gtk-label-use-markup label))
     (assert-false        (gtk-label-use-underline label))
     (assert-eq :left     (gtk-label-justify label))

@@ -24,11 +24,21 @@
 (in-package :gtk-tests)
 
 (define-test gtk-widget
-  (let ((class nil))
-    (setq class (find-class 'gtk-widget))
+  (let ((class (find-class 'gtk-widget)))
+    ;; Check the class name and type of the class
     (assert-eq 'gtk-widget (class-name class))
     (assert-eq 'gobject-class (type-of class))
     (assert-eq (find-class 'gobject-class) (class-of class))
+    
+    ;; Properties of the metaclass gobject-class
+    (assert-equal "GtkWidget" (gobject-class-g-type-name class))
+    (assert-equal "GtkWidget" (gobject-class-direct-g-type-name class))
+    (assert-equal "gtk_widget_get_type"
+                  (gobject-class-g-type-initializer class))
+    (assert-false (gobject-class-interface-p class))
+    
+    (assert-equal "GtkWidget"
+                  (g-object-class-name (g-type-class-ref (gtype "GtkWidget"))))
     
     ;; Get the names of the class properties
     (assert-equal
@@ -37,8 +47,8 @@
         "can-default" "has-default" "receives-default" "composite-child" "style"
         "events" "extension-events" "no-show-all" "has-tooltip" "tooltip-markup"
         "tooltip-text" "window" "double-buffered")
-      (mapcar #'g-class-property-definition-name
-              (gobject::class-properties (gtype "GtkWidget"))))
+     (mapcar #'g-class-property-definition-name
+             (g-object-class-list-properties (gtype "GtkWidget"))))
     
     ;; Get the names of the style properties.
     (assert-equal
