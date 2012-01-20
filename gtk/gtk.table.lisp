@@ -106,6 +106,7 @@
 ;;; table will resize themselves to the size of the largest widget in the table.
 ;;; 
 ;;; Note
+;;;
 ;;; Note that GtkGrid provides the same capabilities as GtkTable for arranging
 ;;; widgets in a rectangular grid, and additionally supports height-for-width
 ;;; geometry management.
@@ -270,7 +271,7 @@
   (register-object-type "GtkTable" 'gtk-table))
 
 (define-g-object-class "GtkTable" gtk-table
-                       (:superclass container :export t :interfaces
+                       (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_table_get_type")
                        ((column-spacing gtk-table-column-spacing
@@ -440,7 +441,7 @@
 
 (defcfun ("gtk_table_attach" %gtk-table-attach) :void
   (table (g-object gtk-table))
-  (child (g-object widget))
+  (child (g-object gtk-widget))
   (left-attach :uint)
   (right-attach :uint)
   (top-attach :uint)
@@ -499,7 +500,7 @@
 
 (defcfun ("gtk_table_attach_defaults" gtk-table-attach-defaults) :void
   (table (g-object gtk-table))
-  (child (g-object widget))
+  (child (g-object gtk-widget))
   (left-attach :uint)
   (right-attach :uint)
   (top-attach :uint)
