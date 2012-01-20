@@ -231,7 +231,7 @@
   (register-object-type "GtkBox" 'gtk-box))
 
 (define-g-object-class "GtkBox" gtk-box
-                       (:superclass container
+                       (:superclass gtk-container
                         :export t
                         :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -239,11 +239,6 @@
                        ((homogeneous gtk-box-homogeneous "homogeneous"
                                      "gboolean" t t)
                         (spacing gtk-box-spacing "spacing" "gint" t t)))
-
-;; These symbols are not exported by default? Why?
-;(export 'gtk-box)
-;(export 'gtk-box-homogeneous)
-;(export 'gtk-box-spacing)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -318,7 +313,7 @@
 
 (defcfun ("gtk_box_pack_start" %gtk-box-pack-start) :void
   (box (g-object gtk-box))
-  (child (g-object widget))
+  (child (g-object gtk-widget))
   (expand :boolean)
   (fill :boolean)
   (padding :uint))
@@ -368,7 +363,7 @@
 
 (defcfun ("gtk_box_pack_end" %gtk-box-pack-end) :void
   (box (g-object gtk-box))
-  (child (g-object widget))
+  (child (g-object gtk-widget))
   (expand :boolean)
   (fill :boolean)
   (padding :uint))
