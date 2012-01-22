@@ -444,14 +444,14 @@
     (let* ((window   (make-instance 'gtk-window
                                     :type :toplevel
                                     :title "Range Controls"))
-           (vbox1    (make-instance 'gtk-v-box
+           (box1     (make-instance 'gtk-v-box
                                     :homogeneous nil
                                     :spacing 0))
-           (hbox2    (make-instance 'gtk-h-box
+           (box2     (make-instance 'gtk-h-box
                                     :homogeneous nil
                                     :spacing 10
                                     :border-width 10))
-           (vbox3    (make-instance 'gtk-v-box
+           (box3     (make-instance 'gtk-v-box
                                     :homogeneous nil
                                     :spacing 10))
            (adj      (make-instance 'gtk-adjustment
@@ -497,19 +497,22 @@
 ;           (opt       (make-instance 'gtk-option-menu))
                                      
            )
-      (gtk-container-add window vbox1)
-      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
-      (gtk-box-pack-start hbox2 vscale :expand t :fill t :padding 0)
-      (gtk-box-pack-start hbox2 vbox3 :expand t :fill t :padding 0)
-      (gtk-box-pack-start vbox3 hscale :expand t :fill t :padding 0)
-      (gtk-box-pack-start vbox3 scrollbar :expand t :fill t :padding 0)
+      (gtk-box-pack-start box2 vscale :expand t :fill t :padding 0)
+
+      (gtk-box-pack-start box3 hscale :expand t :fill t :padding 0)
+      (gtk-box-pack-start box3 scrollbar :expand t :fill t :padding 0)
       
-      (setq hbox2 (make-instance 'gtk-h-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
+      (gtk-box-pack-start box2 box3 :expand t :fill t :padding 0)
+      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
+            
+      (gtk-container-add window box1)
       
-      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      (setq box2 (make-instance 'gtk-h-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
+      
+      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
       (g-signal-connect button "toggled"
                         (lambda (button)
@@ -518,38 +521,38 @@
                           (setf (gtk-scale-draw-value vscale)
                                 (gtk-toggle-button-active button))))
       
-      (gtk-box-pack-start hbox2 button :expand t :fill t :padding 0)
+      (gtk-box-pack-start box2 button :expand t :fill t :padding 0)
       
-      (setq hbox2 (make-instance 'gtk-h-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
+      (setq box2 (make-instance 'gtk-h-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
       
-      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start box2 label :expand nil :fill nil :padding 0)
       
       ;; At this place the code for a GtkOptionMenu is missing
       
-      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (setq hbox2 (make-instance 'gtk-h-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
+      (setq box2 (make-instance 'gtk-h-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
       
       (setq label (make-instance 'gtk-label :label "Scale Update Policy"))
-      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start box2 label :expand nil :fill nil :padding 0)
       
       ;; At this place the code for a GtkOptionMenu is missing
       
-      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (setq hbox2 (make-instance 'gtk-h-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
+      (setq box2 (make-instance 'gtk-h-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
       
       (setq label (make-instance 'gtk-label :label "Scale Digits:"))
-      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start box2 label :expand nil :fill nil :padding 0)
       
       (g-signal-connect adj2 "value_changed"
                         (lambda (adjustment)
@@ -558,16 +561,16 @@
                           (setf (gtk-scale-digits vscale)
                                 (gtk-adjustment-value adjustment))))
       
-      (gtk-box-pack-start hbox2 scale :expand t :fill t :padding 0)
-      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      (gtk-box-pack-start box2 scale :expand t :fill t :padding 0)
+      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (setq hbox2 (make-instance 'gtk-h-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
+      (setq box2 (make-instance 'gtk-h-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
       
       (setq label (make-instance 'gtk-label :label "Scrollbar Page Size:"))
-      (gtk-box-pack-start hbox2 label :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start box2 label :expand nil :fill nil :padding 0)
       
       (setq adj2 (make-instance 'gtk-adjustment
                                 :value 1.0
@@ -587,19 +590,19 @@
       (setq scale (make-instance 'gtk-h-scale
                                  :digits 0
                                  :adjustement adj2))
-      (gtk-box-pack-start hbox2 scale :expand t :fill t :padding 0)
-      (gtk-box-pack-start vbox1 hbox2 :expand t :fill t :padding 0)
+      (gtk-box-pack-start box2 scale :expand t :fill t :padding 0)
+      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (gtk-box-pack-start vbox1
+      (gtk-box-pack-start box1
                           (make-instance 'gtk-h-separator)
                           :expand nil :fill t :padding 0)
       
-      (setq hbox2 (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
+      (setq box2 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
       
-      (gtk-box-pack-start vbox1 hbox2 :expand nil :fill t :padding 0)
+      (gtk-box-pack-start box1 box2 :expand nil :fill t :padding 0)
       
       (setq button (make-instance 'gtk-button :label "Quit"))
       
@@ -608,7 +611,7 @@
                           (declare (ignore button))
                           (gtk-widget-destroy window)))
       
-      (gtk-box-pack-start hbox2 button :expand t :fill t :padding 0)
+      (gtk-box-pack-start box2 button :expand t :fill t :padding 0)
       
       ; GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT)
       ; gtk_widget_grab_default (button)
