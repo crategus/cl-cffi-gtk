@@ -558,22 +558,24 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkTextBuffer" gtk-text-buffer
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_text_buffer_get_type")
-                       ((copy-target-list gtk-text-buffer-copy-target-list
-                         "copy-target-list" "GtkTargetList" t nil)
-                        (cursor-position gtk-text-buffer-cursor-position
-                         "cursor-position" "gint" t nil)
-                        (has-selection gtk-text-buffer-has-selection
-                         "has-selection" "gboolean" t nil)
-                        (paste-target-list gtk-text-buffer-paste-target-list
-                         "paste-target-list" "GtkTargetList" t nil)
-                        (tag-table gtk-text-buffer-tag-table "tag-table"
-                         "GtkTextTagTable" t nil)
-                        (text gtk-text-buffer-text "text" "gchararray" t t)
-                        (:cffi modified gtk-text-buffer-modified :boolean
-                         "gtk_text_buffer_get_modified"
-                          "gtk_text_buffer_set_modified")))
+  (:superclass g-object
+    :export t
+    :interfaces nil
+    :type-initializer "gtk_text_buffer_get_type")
+  ((copy-target-list gtk-text-buffer-copy-target-list
+    "copy-target-list" "GtkTargetList" t nil)
+   (cursor-position gtk-text-buffer-cursor-position
+    "cursor-position" "gint" t nil)
+   (has-selection gtk-text-buffer-has-selection
+    "has-selection" "gboolean" t nil)
+   (paste-target-list gtk-text-buffer-paste-target-list
+    "paste-target-list" "GtkTargetList" t nil)
+   (tag-table gtk-text-buffer-tag-table
+    "tag-table" "GtkTextTagTable" t nil)
+   (text gtk-text-buffer-text
+    "text" "gchararray" t t)
+   (:cffi modified gtk-text-buffer-modified :boolean
+          "gtk_text_buffer_get_modified" "gtk_text_buffer_set_modified")))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_new ()
@@ -604,6 +606,11 @@
 ;;; 	number of lines in the buffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_line_count" gtk-text-buffer-get-line-count) :int
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-text-buffer-get-line-count)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_char_count ()
 ;;; 
@@ -620,6 +627,11 @@
 ;;; Returns :
 ;;; 	number of characters in the buffer
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_char_count" gtk-text-buffer-get-char-count) :int
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-text-buffer-get-char-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_tag_table ()
@@ -663,6 +675,38 @@
 ;;; 	length of text in bytes, or -1
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_insert" %gtk-text-buffer-insert) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (text (:string :free-to-foreign t))
+  (len :int))
+
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-text-buffer-insert (buffer text &key
+                                      (position :cursor)
+                                      (interactive nil)
+                                      (default-editable t))
+  (assert (typep position '(or text-iter (member :cursor))))
+  (if interactive
+      (if (eq position :cursor)
+          (gtk-text-buffer-insert-interactive-at-cursor buffer
+                                                        text
+                                                        -1
+                                                        default-editable)
+          (gtk-text-buffer-insert-interactive buffer
+                                              position
+                                              text
+                                              -1
+                                              default-editable))
+      (progn
+        (if (eq position :cursor)
+            (gtk-text-buffer-insert-at-cursor buffer text -1)
+            (%gtk-text-buffer-insert buffer position text -1))
+        t)))
+
+(export 'gtk-text-buffer-insert)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_at_cursor ()
 ;;; 
@@ -682,6 +726,14 @@
 ;;; len :
 ;;; 	length of text, in bytes
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_insert_at_cursor" gtk-text-buffer-insert-at-cursor)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (text (:string :free-to-foreign t))
+  (len :int))
+
+(export 'gtk-text-buffer-insert-at-cursor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_interactive ()
@@ -720,6 +772,16 @@
 ;;; 	whether text was actually inserted
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_insert_interactive"
+          gtk-text-buffer-insert-interactive) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (text (:string :free-to-foreign t))
+  (len :int)
+  (default-editable :boolean))
+
+(export 'gtk-text-buffer-insert-interactive)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_interactive_at_cursor ()
 ;;; 
@@ -751,6 +813,15 @@
 ;;; 	whether text was actually inserted
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_insert_interactive_at_cursor"
+          gtk-text-buffer-insert-interactive-at-cursor) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (text (:string :free-to-foreign t))
+  (len :int)
+  (default-editable :boolean))
+
+(export 'gtk-text-buffer-insert-interactive-at-cursor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_range ()
 ;;; 
@@ -780,6 +851,28 @@
 ;;; end :
 ;;; 	another position in the same buffer as start
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_insert_range" %gtk-text-buffer-insert-range) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (range-start (g-boxed-foreign gtk-text-iter))
+  (range-end (g-boxed-foreign gtk-text-iter)))
+
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-text-buffer-insert-range (buffer position range-start range-end &key
+                                            interactive default-editable)
+  (if interactive
+      (gtk-text-buffer-insert-range-interactive buffer
+                                                position
+                                                range-start
+                                                range-end
+                                                default-editable)
+      (progn
+        (%gtk-text-buffer-insert-range buffer position range-start range-end)
+        t)))
+
+(export 'gtk-text-buffer-insert-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_range_interactive ()
@@ -813,6 +906,16 @@
 ;;; Returns :
 ;;; 	whether an insertion was possible at iter
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_insert_range_interactive"
+          gtk-text-buffer-insert-range-interactive) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (range-start (g-boxed-foreign gtk-text-iter))
+  (range-end (g-boxed-foreign gtk-text-iter))
+  (default-editable :boolean))
+
+(export 'gtk-text-buffer-insert-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_with_tags ()
@@ -905,6 +1008,24 @@
 ;;; 	another position in buffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_delete" %gtk-text-buffer-delete) :void
+  (buffer (g-object gtk-text-buffer))
+  (range-start (g-boxed-foreign gtk-text-iter))
+  (range-end (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-delete (buffer range-start range-end &key
+                                      interactive default-editable)
+  (if interactive
+      (gtk-text-buffer-delete-interactive buffer
+                                          range-start
+                                          range-end
+                                          default-editable)
+      (progn
+        (%gtk-text-buffer-delete buffer range-start range-end)
+        t)))
+
+(export 'gtk-text-buffer-delete)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_delete_interactive ()
 ;;; 
@@ -933,6 +1054,15 @@
 ;;; Returns :
 ;;; 	whether some text was actually deleted
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_delete_interactive"
+          gtk-text-buffer-delete-interactive) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (range-start (g-boxed-foreign gtk-text-iter))
+  (range-end (g-boxed-foreign gtk-text-iter))
+  (default-editable :boolean))
+
+(export 'gtk-text-buffer-delete-interactive)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_backspace ()
@@ -969,6 +1099,18 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_backspace" %gtk-text-buffer-backspace) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (interactive :boolean)
+  (default-editable :boolean))
+
+(defun gtk-text-buffer-backspace (buffer position &key
+                                         interactive default-editable)
+  (%gtk-text-buffer-backspace buffer position interactive default-editable))
+
+(export 'gtk-text-buffer-backspace)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_set_text ()
@@ -1054,6 +1196,22 @@
 ;;; 	an allocated UTF-8 string
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_slice" %gtk-text-buffer-get-slice)
+    (:string :free-from-foreign t)
+  (buffer (g-object gtk-text-buffer))
+  (range-start (g-boxed-foreign gtk-text-iter))
+  (range-end (g-boxed-foreign gtk-text-iter))
+  (include-hidden-chars :boolean))
+
+(defun gtk-text-buffer-slice (buffer range-start range-end &key
+                                     include-hidden-chars)
+  (%gtk-text-buffer-get-slice buffer
+                              range-start
+                              range-end
+                              include-hidden-chars))
+
+(export 'gtk-text-buffer-slice)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_pixbuf ()
 ;;; 
@@ -1078,6 +1236,13 @@
 ;;; pixbuf :
 ;;; 	a GdkPixbuf
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_insert_pixbuf" gtk-text-buffer-insert-pixbuf) :void
+  (buffer (g-object gtk-text-buffer))
+  (position (g-boxed-foreign gtk-text-iter))
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-text-buffer-insert-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_child_anchor ()
@@ -1106,6 +1271,21 @@
 ;;; 	a GtkTextChildAnchor
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_insert_child_anchor"
+          %gtk-text-buffer-insert-child-anchor) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (anchor (g-object gtk-text-child-anchor)))
+
+(defun gtk-text-buffer-insert-child-anchor (buffer position &optional anchor)
+  (if anchor
+      (progn
+        (%gtk-text-buffer-insert-child-anchor buffer position anchor)
+        anchor)
+      (gtk-text-buffer-create-child-anchor buffer position)))
+
+(export 'gtk-text-buffer-insert-child-anchor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_create_child_anchor ()
 ;;; 
@@ -1128,6 +1308,13 @@
 ;;; Returns :
 ;;; 	the created child anchor.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_create_child_anchor"
+          gtk-text-buffer-create-child-anchor) (g-object gtk-text-child-anchor)
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-create-child-anchor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_create_mark ()
@@ -1168,6 +1355,19 @@
 ;;; 	the new GtkTextMark object.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_create_mark" %gtk-text-buffer-create-mark)
+    (g-object gtk-text-mark)
+  (buffer (g-object gtk-text-buffer))
+  (name (:string :free-to-foreign t))
+  (position (g-boxed-foreign gtk-text-iter))
+  (left-gravity :boolean))
+
+(defun gtk-text-buffer-create-mark (buffer name position &optional
+                                           (left-gravity t))
+  (%gtk-text-buffer-create-mark buffer name position left-gravity))
+
+(export 'gtk-text-buffer-create-mark)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_move_mark ()
 ;;; 
@@ -1188,6 +1388,18 @@
 ;;; 	new location for mark in buffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_move_mark" %gtk-text-buffer-move-mark) :void
+  (buffer (g-object gtk-text-buffer))
+  (mark (g-object gtk-text-mark))
+  (position (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-move-mark (buffer mark position)
+  (etypecase mark
+    (string (gtk-text-buffer-move-mark-by-name buffer mark position))
+    (text-mark (%gtk-text-buffer-move-mark buffer mark position))))
+
+(export 'gtk-text-buffer-move-mark)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_move_mark_by_name ()
 ;;; 
@@ -1207,6 +1419,14 @@
 ;;; where :
 ;;; 	new location for mark
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_move_mark_by_name" gtk-text-buffer-move-mark-by-name)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (name (:string :free-to-foreign t))
+  (position (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-move-mark-by-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_add_mark ()
@@ -1233,6 +1453,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_add_mark" gtk-text-buffer-add-mark) :void
+  (buffer (g-object gtk-text-buffer))
+  (mark (g-object gtk-text-mark))
+  (position (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-add-mark)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_delete_mark ()
 ;;; 
@@ -1254,6 +1481,17 @@
 ;;; 	a GtkTextMark in buffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_delete_mark" %gtk-text-buffer-delete-mark) :void
+  (buffer (g-object gtk-text-buffer))
+  (mark (g-object gtk-text-mark)))
+
+(defun gtk-text-buffer-delete-mark (buffer mark)
+  (etypecase mark
+    (string (gtk-text-buffer-delete-mark-by-name buffer mark))
+    (text-mark (%gtk-text-buffer-delete-mark buffer mark))))
+
+(export 'gtk-text-buffer-delete-mark)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_delete_mark_by_name ()
 ;;; 
@@ -1269,6 +1507,13 @@
 ;;; name :
 ;;; 	name of a mark in buffer
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_delete_mark_by_name"
+          gtk-text-buffer-delete-mark-by-name) :void
+  (buffer (g-object gtk-text-buffer))
+  (name (:string :free-to-foreign t)))
+
+(export 'gtk-delete-mark-by-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_mark ()
@@ -1289,6 +1534,13 @@
 ;;; 	a GtkTextMark, or NULL.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_mark" gtk-text-buffer-get-mark)
+    (g-object gtk-text-mark)
+  (buffer (g-object gtk-text-buffer))
+  (name (:string :free-to-foreign t)))
+
+(export 'gtk-text-buffer-get-mark)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_insert ()
 ;;; 
@@ -1304,6 +1556,12 @@
 ;;; Returns :
 ;;; 	insertion point mark.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_insert" gtk-text-buffer-get-insert)
+    (g-object gtk-text-mark)
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-text-buffer-get-insert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_selection_bound ()
@@ -1327,6 +1585,12 @@
 ;;; Returns :
 ;;; 	selection bound mark.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun (gtk-text-buffer-selection-bound "gtk_text_buffer_get_selection_bound")
+    (g-object gtk-text-mark)
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-text-buffer-selection-bound)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_has_selection ()
@@ -1364,6 +1628,12 @@
 ;;; 	where to put the cursor
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_place_cursor" gtk-text-buffer-place-cursor) :void
+  (buffer (g-object gtk-text-buffer))
+  (position (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-place-cursor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_select_range ()
 ;;; 
@@ -1390,6 +1660,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_select_range" gtk-text-buffer-select-range) :void
+  (buffer (g-object gtk-text-buffer))
+  (insertion-point (g-boxed-foreign gtk-text-iter))
+  (selection-bound (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-select-range)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_apply_tag ()
 ;;; 
@@ -1413,6 +1690,19 @@
 ;;; end :
 ;;; 	other bound of range to be tagged
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_apply_tag" %gtk-text-buffer-apply-tag) :void
+  (buffer (g-object gtk-text-buffer))
+  (tag (g-object gtk-text-tag))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-apply-tag (buffer tag start end)
+  (etypecase tag
+    (string (gtk-text-buffer-apply-tag-by-name buffer tag start end))
+    (text-tag (%gtk-text-buffer-apply-tag buffer tag start end))))
+
+(export 'gtk-text-buffer-apply-tag)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_remove_tag ()
@@ -1439,6 +1729,19 @@
 ;;; 	other bound of range to be untagged
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_remove_tag" %gtk-text-buffer-remove-tag) :void
+  (buffer (g-object gtk-text-buffer))
+  (tag (g-object gtk-text-tag))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-remove-tag (buffer tag start end)
+  (etypecase tag
+    (string (gtk-text-buffer-remove-tag-by-name buffer tag start end))
+    (text-tag (%gtk-text-buffer-remove-tag buffer tag start end))))
+
+(export 'gtk-text-buffer-remove-tag)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_apply_tag_by_name ()
 ;;; 
@@ -1462,6 +1765,15 @@
 ;;; end :
 ;;; 	other bound of range to be tagged
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_apply_tag_by_name"
+          gtk-text-buffer-apply-tag-by-name) :void
+  (buffer (g-object gtk-text-buffer))
+  (name (:string :free-to-foreign t))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-apply-tag-by-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_remove_tag_by_name ()
@@ -1487,6 +1799,15 @@
 ;;; 	other bound of range to be untagged
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_remove_tag_by_name"
+          gtk-text-buffer-remove-tag-by-name) :void
+  (buffer (g-object gtk-text-buffer))
+  (name (:string :free-to-foreign t))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-remove-tag-by-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_remove_all_tags ()
 ;;; 
@@ -1508,6 +1829,14 @@
 ;;; end :
 ;;; 	other bound of range to be untagged
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_remove_all_tags" gtk-text-buffer-remove-all-tags)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-remove-all-tags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_create_tag ()
@@ -1572,6 +1901,23 @@
 ;;; 	char offset from start of line
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_iter_at_line_offset"
+          %gtk-text-buffer-get-iter-at-line-offset) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (line-number :int)
+  (char-offset :int))
+
+(defun gtk-text-buffer-get-iter-at-line-offset (buffer line-number char-offset)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-iter-at-line-offset buffer
+                                              iter
+                                              line-number
+                                              char-offset)
+    iter))
+
+(export 'gtk-text-buffer-get-iter-at-line-offset)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_iter_at_offset ()
 ;;; 
@@ -1594,6 +1940,19 @@
 ;;; 	char offset from start of buffer, counting from 0, or -1
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_iter_at_offset"
+          %gtk-text-buffer-get-iter-at-offset) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (char-offset :int))
+
+(defun gtk-text-buffer-get-iter-at-offset (buffer offset)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-iter-at-offset buffer iter offset)
+    iter))
+
+(export 'gtk-text-buffer-get-iter-at-offset)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_iter_at_line ()
 ;;; 
@@ -1612,6 +1971,19 @@
 ;;; line_number :
 ;;; 	line number counting from 0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_iter_at_line" %gtk-text-buffer-get-iter-at-line)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (line-number :int))
+
+(defun gtk-text-buffer-get-iter-at-line (buffer line-number)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-iter-at-line buffer iter line-number)
+    iter))
+
+(export 'gtk-text-buffet-get-iter-at-line)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_iter_at_line_index ()
@@ -1658,6 +2030,21 @@
 ;;; 	a GtkTextMark in buffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_iter_at_mark" %gtk-text-buffer-get-iter-at-mark)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (mark (g-object gtk-text-mark)))
+
+(defun gtk-text-buffer-get-iter-at-mark (buffer mark)
+  (when (stringp mark)
+    (setf mark (gtk-text-buffer-get-mark buffer mark)))
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-iter-at-mark buffer iter mark)
+    iter))
+
+(export 'gtk-text-buffer-get-iter-at-mark)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_iter_at_child_anchor ()
 ;;; 
@@ -1677,6 +2064,19 @@
 ;;; 	a child anchor that appears in buffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_iter_at_child_anchor"
+          %gtk-text-buffer-get-iter-at-child-anchor) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (anchor (g-object gtk-text-child-anchor)))
+
+(defun gtk-text-buffer-get-iter-at-child-anchor (buffer anchor)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-iter-at-child-anchor buffer iter anchor)
+    iter))
+
+(export 'gtk-text-buffer-get-iter-at-child-anchor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_start_iter ()
 ;;; 
@@ -1691,8 +2091,20 @@
 ;;; 	a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;; 	iterator to initialize
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_start_iter" %gtk-text-buffer-get-start-iter)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-get-start-iter (buffer)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-start-iter buffer iter)
+    iter))
+
+(export 'gtk-text-buffer-get-start-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_end_iter ()
@@ -1711,6 +2123,17 @@
 ;;; iter :
 ;;; 	iterator to initialize.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_end_iter" %gtk-text-buffer-get-end-iter) :void
+  (buffer (g-object gtk-text-buffer))
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-get-end-iter (buffer)
+  (let ((iter (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-end-iter buffer iter)
+    iter))
+
+(export 'gtk-text-buffer-get-end-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_bounds ()
@@ -1731,6 +2154,19 @@
 ;;; end :
 ;;; 	iterator to initialize with the end iterator.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_bounds" %gtk-text-buffer-get-bounds) :void
+  (buffer (g-object gtk-text-buffer))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(defun text-buffer-get-bounds (buffer)
+  (let ((start (make-instance 'gtk-text-iter))
+        (end (make-instance 'gtk-text-iter)))
+    (%gtk-text-buffer-get-bounds buffer start end)
+    (values start end)))
+
+(export 'gtk-text-buffer-get-bounds)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_modified ()
@@ -1790,6 +2226,18 @@
 ;;; 	whether there was a non-empty selection to delete
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_delete_selection" %gtk-text-buffer-delete-selection)
+    :boolean
+  (bufer (g-object gtk-text-buffer))
+  (interactive :boolean)
+  (default-editable :boolean))
+
+(defun gtk-text-buffer-delete-selection (buffer &key
+                                                interactive default-editable)
+  (%gtk-text-buffer-delete-selection buffer interactive default-editable))
+
+(export 'gtk-text-buffer-delete-selection)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_paste_clipboard ()
 ;;; 
@@ -1816,6 +2264,19 @@
 ;;; 	whether the buffer is editable by default
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_paste_clipboard" %gtk-text-buffer-paste-clipboard)
+    :void
+  (buffer (g-object gtk-text-buffer))
+  (clipboard (g-object gtk-clipboard))
+  (override-location (g-boxed-foreign gtk-text-iter))
+  (default-editable :boolean))
+
+(defun gtk-text-buffer-paste-clipboard (buffer clipboard &key
+                                               position default-editable)
+  (%gtk-text-buffer-paste-clipboard buffer clipboard position default-editable))
+
+(export 'gtk-text-buffer-paste-clipboard)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_copy_clipboard ()
 ;;; 
@@ -1830,6 +2291,12 @@
 ;;; clipboard :
 ;;; 	the GtkClipboard object to copy to
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_copy_clipboard" gtk-text-buffer-copy-clipboard) :void
+  (buffer (g-object gtk-text-buffer))
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-text-buffer-copy-clipboard)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_cut_clipboard ()
@@ -1850,6 +2317,13 @@
 ;;; default_editable :
 ;;; 	default editability of the buffer
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_cut_clipboard" gtk-text-buffer-cut-clipboard) :void
+  (buffer (g-object gtk-text-buffer))
+  (clipboard (g-object gtk-clipboard))
+  (default-editable :boolean))
+
+(export 'gtk-text-buffer-cut-clipboard)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_selection_bounds ()
@@ -1877,6 +2351,21 @@
 ;;; 	whether the selection has nonzero length
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_selections_bounds"
+          %gtk-text-buffer-get-selection-bounds) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-buffer-get-selection-bounds (buffer)
+  (let ((i1 (make-instance 'gtk-text-iter))
+        (i2 (make-instance 'gtk-text-iter)))
+    (if (%gtk-text-buffer-get-selection-bounds buffer i1 i2)
+        (values i1 i2)
+        (values nil nil))))
+
+(export 'gtk-text-buffer-get-selection-bounds)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_begin_user_action ()
 ;;; 
@@ -1902,6 +2391,24 @@
 ;;; 	a GtkTextBuffer
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_begin_user_action" gtk-text-buffer-begin-user-action)
+    :void
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-text-buffer-begin-user-action)
+
+;;; ----------------------------------------------------------------------------
+
+(defmacro with-text-buffer-user-action ((buffer) &body body)
+  (let ((g (gensym)))
+    `(let ((,g ,buffer))
+       (text-buffer-begin-user-action ,g)
+       (unwind-protect
+            (progn ,@body)
+         (text-buffer-end-user-action ,g)))))
+
+(export 'with-text-buffer-user-action)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_end_user_action ()
 ;;; 
@@ -1913,6 +2420,12 @@
 ;;; buffer :
 ;;; 	a GtkTextBuffer
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_end_user_action" gtk-text-buffer-end-user-action)
+    :void
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-text-buffer-end-user-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_add_selection_clipboard ()
@@ -1931,6 +2444,13 @@
 ;;; 	a GtkClipboard
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_add_selection_clipboard"
+          gtk-text-buffer-add-selection-clipboard) :void
+  (buffer (g-object gtk-text-buffer))
+  (clipboard (g-object gtkclipboard)))
+
+(export 'gtk-text-buffer-add-selection-clippboard)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_remove_selection_clipboard ()
 ;;; 
@@ -1946,6 +2466,13 @@
 ;;; 	a GtkClipboard added to buffer by
 ;;;     gtk_text_buffer_add_selection_clipboard()
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_remove_selection_clipboard"
+          gtk-text-buffer-remove-selection-clipboard) :void
+  (buffer (g-object gtk-text-buffer))
+  (clipboard (g-object gtk-clipboard)))
+
+(export 'gtk-text-buffer-remove-selection-clipboard)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTextBufferTargetInfo
@@ -2038,7 +2565,7 @@
 ;;; 	insertion point for the deserialized text
 ;;; 
 ;;; data :
-;;; 	data to deserialize. [array length=length]
+;;; 	data to deserialize
 ;;; 
 ;;; length :
 ;;; 	length of data
@@ -2051,6 +2578,28 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_deserialize" %gtk-text-buffer-deserialize) :boolean
+  (register-buffer (g-object gtk-text-buffer))
+  (content-buffer (g-object gtk-text-buffer))
+  (format gdk-atom-as-string)
+  (iter (g-boxed-foreign gtk-text-iter))
+  (data :pointer)
+  (length g-size)
+  (error :pointer))
+
+(defun gtk-text-buffer-deserialize (register-buffer content-buffer
+                                                    format iter data)
+  (let ((bytes (foreign-alloc :uint8 :count (length data))))
+    (iter (for i from 0 below (length data))
+          (setf (mem-aref bytes :uint8 i) (aref data i)))
+    (unwind-protect
+         (with-g-error (err)
+           (%gtk-text-buffer-deserialize register-buffer content-buffer
+                                         format iter bytes (length data) err))
+      (foreign-free bytes))))
+
+(export 'gtk-text-buffer-deserialize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_deserialize_get_can_create_tags ()
@@ -2073,6 +2622,13 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_deserialize_get_can_create_tags"
+          gtk-text-buffer-deserialize-can-create-tags) :boolean
+  (buffer (g-object gtk-text-buffer))
+  (format gdk-atom-as-string))
+
+(export 'gtk-text-buffer-deserialize-can-create-tags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_deserialize_set_can_create_tags ()
@@ -2110,6 +2666,16 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_deserialize_set_can_create_tags"
+          %gtk-text-buffer-deserialize-set-can-create-tags) :void
+  (buffer (g-object gtk-text-buffer))
+  (format gdk-atom-as-string)
+  (can-create-tags :boolean))
+
+(defun (setf gtk-text-buffer-deserialize-can-create-tags)
+       (new-value buffer format)
+  (%gtk-text-buffer-deserialize-set-can-create-tags buffer format new-value))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_copy_target_list ()
@@ -2153,6 +2719,22 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_deserialze_formats"
+          %gtk-text-buffer-get-deserialize-formats)
+    (:pointer gdk-atom-as-string)
+  (text-buffer (g-object gtk-text-buffer))
+  (n-formats (:pointer :int)))
+
+(defun gtk-text-buffer-get-deserialize-formats (text-buffer)
+  (with-foreign-object (n-formats :int)
+    (let ((atoms-ptr (%gtk-text-buffer-get-deserialize-formats text-buffer
+                                                               n-formats)))
+      (iter (for i from 0 below (mem-ref n-formats :int))
+            (for atom = (mem-aref atoms-ptr 'gdk-atom-as-string i))
+            (collect atom)))))
+
+(export 'gtk-text-buffer-get-deserialize-formats)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_paste_target_list ()
 ;;; 
@@ -2195,6 +2777,21 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_get_serialize_formats"
+          %gtk-text-buffer-get-serialize-formats) (:pointer gdk-atom-as-string)
+  (text-buffer (g-object gtk-text-buffer))
+  (n-formats (:pointer :int)))
+
+(defun gtk-text-buffer-get-serialize-formats (text-buffer)
+  (with-foreign-object (n-formats :int)
+    (let ((atoms-ptr (%gtk-text-buffer-get-serialize-formats text-buffer
+                                                             n-formats)))
+      (iter (for i from 0 below (mem-ref n-formats :int))
+            (for atom = (mem-aref atoms-ptr 'gdk-atom-as-string i))
+            (collect atom)))))
+
+(export 'gtk-text-buffer-get-serialize-formats)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_register_deserialize_format ()
 ;;; 
@@ -2229,6 +2826,55 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_register_desirialize_format"
+          %gtk-text-buffer-register-deserialize-format) gdk-atom-as-string
+  (buffer (g-object gtk-text-buffer))
+  (mime-type :string)
+  (function :pointer)
+  (user-data :pointer)
+  (destroy-notify :pointer))
+
+(defun gtk-text-buffer-register-deserialize-format (buffer mime-type function)
+  (%gtk-text-buffer-register-deserialize-format
+                        buffer
+                        mime-type
+                        (callback gtk-text-buffer-deserialize-cb)
+                        (allocate-stable-pointer function)
+                        (callback stable-pointer-free-destroy-notify-callback)))
+
+(export 'gtk-text-buffer-register-deserialize-format)
+
+;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-text-buffer-deserialize-cb :boolean
+    ((register-buffer (g-object gtk-text-buffer))
+     (content-buffer (g-object gtk-text-buffer))
+     (iter (g-boxed-foreign gtk-text-iter))
+     (data :pointer)
+     (length g-size)
+     (create-tags :boolean)
+     (user-data :pointer)
+     (error :pointer))
+  (with-catching-to-g-error (error)
+    (let ((fn (stable-pointer-value user-data)))
+      (restart-case
+       (let ((bytes (iter (with bytes = (make-array length
+                                                    :element-type
+                                                    '(unsigned-byte 8)))
+                           (for i from 0 below length)
+                           (setf (aref bytes i) (mem-ref data :uint8 i))
+                           (finally (return bytes)))))
+         (progn
+           (funcall fn register-buffer content-buffer iter bytes create-tags)
+           t))
+        (return-from-gtk-text-buffer-deserialize-cb ()
+          (error 'g-error-condition
+                 :domain "cl-gtk2"
+                 :code 0
+                 :message
+               "'return-from-gtk-text-buffer-deserialize-cb' restart was called"
+                 ))))))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_register_deserialize_tagset ()
 ;;; 
@@ -2251,6 +2897,13 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_register_deserialize_tagset"
+          gtk-text-buffer-register-deserialize-tagset) gdk-atom-as-string
+  (buffer (g-object gtk-text-buffer))
+  (tagset-name :string))
+
+(export 'gtk-text-buffer-register-deserialize-tagset)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_register_serialize_format ()
@@ -2285,6 +2938,23 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_register_serialize_format"
+          %gtk-text-buffer-register-serialize-format) gdk-atom-as-string
+  (buffer (g-object gtk-text-buffer))
+  (mime-type :string)
+  (function :pointer)
+  (user-data :pointer)
+  (destroy-notify :pointer))
+
+(defun gtk-text-buffer-register-serialize-format (buffer mime-type function)
+  (%gtk-text-buffer-register-serialize-format buffer
+                        mime-type
+                        (callback gtk-text-buffer-serialize-cb)
+                        (allocate-stable-pointer function)
+                        (callback stable-pointer-free-destroy-notify-callback)))
+
+(export 'gtk-text-buffer-register-serialize-format)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_register_serialize_tagset ()
@@ -2321,6 +2991,13 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_register_serialize_tagset"
+          gtk-text-buffer-register-serialize-tagset) gdk-atom-as-string
+  (buffer (g-object gtk-text-buffer))
+  (tagset-name :string))
+
+(export 'gtk-text-buffer-register-serialize-tagset)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTextBufferSerializeFunc ()
 ;;; 
@@ -2356,6 +3033,27 @@
 ;;; 	a newly-allocated array of guint8 which contains the serialized data,
 ;;;     or NULL if an error occurred
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-text-buffer-serialize-cb :pointer
+    ((register-buffer (g-object gtk-text-buffer))
+     (content-buffer (g-object gtk-text-buffer))
+     (start-iter (g-boxed-foreign gtk-text-iter))
+     (end-iter (g-boxed-foreign gtk-text-iter))
+     (length (:pointer g-size))
+     (user-data :pointer))
+  (let ((fn (stable-pointer-value user-data)))
+    (restart-case
+     (let* ((bytes (funcall fn
+                            register-buffer
+                            content-buffer
+                            start-iter
+                            end-iter))
+               (bytes-ptr (g-malloc (length bytes))))
+          (setf (mem-ref length 'g-size) (length bytes))
+          (iter (for i from 0 below (length bytes))
+                (setf (mem-aref bytes-ptr :uint8 i) (aref bytes i)))
+          bytes-ptr)
+     (return-from-gtk-text-buffer-serialize-cb () nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_serialize ()
@@ -2398,6 +3096,30 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_serialize" %gtk-text-buffer-serialize) :pointer
+  (register-buffer (g-object gtk-text-buffer))
+  (content-buffer (g-object gtk-text-buffer))
+  (format gdk-atom-as-string)
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter))
+  (length (:pointer g-size)))
+
+(defun gtk-text-buffer-serialize (register-buffer content-buffer
+                                                  format start end)
+  (with-foreign-object (length 'g-size)
+    (let ((bytes (%gtk-text-buffer-serialize register-buffer
+                                             content-buffer
+                                             format
+                                             start
+                                             end
+                                             length)))
+      (iter (for i from 0 to (mem-ref length 'g-size))
+            (for byte = (mem-aref bytes :uint8 i))
+            (collect byte result-type vector)
+            (finally (g-free bytes))))))
+
+(export 'gtk-text-buffer-serialize)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_unregister_deserialize_format ()
 ;;; 
@@ -2416,6 +3138,13 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_unregister_deserialize_format"
+          gtk-text-buffer-unregister-deserialize-format) :void
+  (buffer (g-object gtk-text-buffer))
+  (format gdk-atom-as-string))
+
+(export 'gtk-text-buffer-unregister-deserialize-format)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_unregister_serialize_format ()
@@ -2436,5 +3165,11 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_buffer_unregister_serialize_format"
+          gtk-text-buffer-unregister-serialize-format) :void
+  (buffer (g-object gtk-text-buffer))
+  (format gdk-atom-as-string))
+
+(export 'gtk-text-buffer-unregister-serialize-format)
 
 ;;; --- End of file gtk.text-buffer.lisp ---------------------------------------
