@@ -90,13 +90,7 @@
   (:spline 1)
   (:free 2))
 
-(define-g-enum "GtkWrapMode"
-    wrap-mode
-    (:export t :type-initializer "gtk_wrap_mode_get_type")
-  (:none 0)
-  (:char 1)
-  (:word 2)
-  (:word-char 3))
+
 
 (define-g-enum "GtkTreeViewGridLines"
     tree-view-grid-lines
@@ -507,11 +501,7 @@
   (:primary 0)
   (:secondary 1))
 
-(define-g-flags "GtkTextSearchFlags"
-    text-search-flags
-    (:export t :type-initializer "gtk_text_search_flags_get_type")
-  (:visible-only 1)
-  (:text-only 2))
+
 
 
 (define-g-flags "GtkArgFlags"
@@ -2285,22 +2275,6 @@
                          "gboolean" t t)
                         (mode size-group-mode "mode" "GtkSizeGroupMode" t t)))
 
-
-
-(define-g-object-class "GtkTextMark" text-mark
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_text_mark_get_type")
-                       ((left-gravity text-mark-left-gravity "left-gravity"
-                         "gboolean" t nil)
-                        (name text-mark-name "name" "gchararray" t nil)
-                        (:cffi visible text-mark-visible :boolean
-                         "gtk_text_mark_get_visible"
-                         "gtk_text_mark_set_visible")
-                        (:cffi deleted text-mark-deleted :boolean
-                         "gtk_text_mark_get_deleted" nil)
-                        (:cffi buffer text-mark-buffer (g-object gtk-text-buffer)
-                         "gtk_text_mark_get_buffer" nil)))
-
 (define-g-object-class "GtkTextTag" text-tag
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_text_tag_get_type")
@@ -2425,10 +2399,7 @@
                          "gtk_text_tag_get_priority"
                          "gtk_text_tag_set_priority")))
 
-(define-g-object-class "GtkTextTagTable" text-tag-table
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_text_tag_table_get_type")
-                       nil)
+
 
 (define-g-object-class "GtkTreeModelFilter" tree-model-filter
                        (:superclass g-object :export t :interfaces
