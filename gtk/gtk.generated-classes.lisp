@@ -65,19 +65,7 @@
   (:autosize 1)
   (:fixed 2))
 
-(define-g-enum "GtkProgressBarOrientation"
-    progress-bar-orientation
-    (:export t :type-initializer "gtk_progress_bar_orientation_get_type")
-  (:left-to-right 0)
-  (:right-to-left 1)
-  (:bottom-to-top 2)
-  (:top-to-bottom 3))
 
-(define-g-enum "GtkProgressBarStyle"
-    progress-bar-style
-    (:export t :type-initializer "gtk_progress_bar_style_get_type")
-  (:continuous 0)
-  (:discrete 1))
 
 (define-g-enum "GtkUpdateType"
     update-type
@@ -93,11 +81,7 @@
   (:inches 1)
   (:centimeters 2))
 
-(define-g-enum "GtkSpinButtonUpdatePolicy"
-    spin-button-update-policy
-    (:export t :type-initializer "gtk_spin_button_update_policy_get_type")
-  (:always 0)
-  (:if-valid 1))
+
 
 (define-g-enum "GtkCurveType"
     curve-type
@@ -167,12 +151,7 @@
   (:yes-no 4)
   (:ok-cancel 5))
 
-(define-g-enum "GtkTextBufferTargetInfo"
-    text-buffer-target-info
-    (:export t :type-initializer "gtk_text_buffer_target_info_get_type")
-  (:buffer-contents -1)
-  (:rich-text -2)
-  (:text -3))
+
 
 (define-g-enum "GtkNotebookTab"
     notebook-tab
@@ -484,16 +463,7 @@
   (:top-bottom 0)
   (:left-right 1))
 
-(define-g-enum "GtkTextWindowType"
-    text-window-type
-    (:export t :type-initializer "gtk_text_window_type_get_type")
-  (:private 0)
-  (:widget 1)
-  (:text 2)
-  (:left 3)
-  (:right 4)
-  (:top 5)
-  (:bottom 6))
+
 
 (define-g-enum "GtkToolbarChildType"
     toolbar-child-type
@@ -738,13 +708,6 @@
     cell-layout
     (:export t :type-initializer "gtk_cell_layout_get_type"))
 
-(define-g-interface "GtkEditable"
-    editable
-    (:export t :type-initializer "gtk_editable_get_type")
-  (:cffi position editable-position :int "gtk_editable_get_position"
-   "gtk_editable_set_position")
-  (:cffi editable editable-editable :boolean "gtk_editable_get_editable"
-   "gtk_editable_set_editable"))
 
 (define-g-interface "GtkFileChooser"
     file-chooser
@@ -1178,7 +1141,7 @@
                          "background-set" "gboolean" t t)
                         (model cell-view-model "model" "GtkTreeModel" t t)
                         (:cffi displayed-row cell-view-displayed-row
-                         (g-boxed-foreign tree-path)
+                         (g-boxed-foreign gtk-tree-path)
                          "gtk_cell_view_get_displayed_row"
                          "gtk_cell_view_set_displayed_row")
                         (:cffi cell-renderers cell-view-cell-renderers
@@ -1424,31 +1387,6 @@
                         :type-initializer "gtk_tearoff_menu_item_get_type")
                        nil)
 
-(define-g-object-class "GtkScrolledWindow" scrolled-window
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_scrolled_window_get_type")
-                       ((hadjustment scrolled-window-hadjustment "hadjustment"
-                         "GtkAdjustment" t t)
-                        (hscrollbar-policy scrolled-window-hscrollbar-policy
-                         "hscrollbar-policy" "GtkPolicyType" t t)
-                        (shadow-type scrolled-window-shadow-type "shadow-type"
-                         "GtkShadowType" t t)
-                        (vadjustment scrolled-window-vadjustment "vadjustment"
-                         "GtkAdjustment" t t)
-                        (vscrollbar-policy scrolled-window-vscrollbar-policy
-                         "vscrollbar-policy" "GtkPolicyType" t t)
-                        (window-placement scrolled-window-window-placement
-                         "window-placement" "GtkCornerType" t t)
-                        (window-placement-set
-                         scrolled-window-window-placement-set
-                         "window-placement-set" "gboolean" t t)
-                        (:cffi hscrollbar scrolled-window-hscrollbar
-                         (g-object widget) "gtk_scrolled_window_get_hscrollbar"
-                         nil)
-                        (:cffi vscrollbar scrolled-window-vscrollbar
-                         (g-object widget) "gtk_scrolled_window_get_vscrollbar"
-                         nil)))
 
 (define-g-object-class "GtkToolItem" tool-item
                        (:superclass gtk-bin :export t :interfaces
@@ -1664,13 +1602,6 @@
                         (width-chars file-chooser-button-width-chars
                          "width-chars" "gint" t t)))
 
-(define-g-object-class "GtkStatusbar" statusbar
-                       (:superclass gtk-h-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_statusbar_get_type")
-                       ((has-resize-grip statusbar-has-resize-grip
-                         "has-resize-grip" "gboolean" t t)))
-
 
 
 (define-g-object-class "GtkColorSelection" color-selection
@@ -1878,36 +1809,7 @@
 
 
 
-(define-g-object-class "GtkTextView" text-view
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_text_view_get_type")
-                       ((accepts-tab text-view-accepts-tab "accepts-tab"
-                         "gboolean" t t)
-                        (buffer text-view-buffer "buffer" "GtkTextBuffer" t t)
-                        (cursor-visible text-view-cursor-visible
-                         "cursor-visible" "gboolean" t t)
-                        (editable text-view-editable "editable" "gboolean" t t)
-                        (im-module text-view-im-module "im-module" "gchararray"
-                         t t)
-                        (indent text-view-indent "indent" "gint" t t)
-                        (justification text-view-justification "justification"
-                         "GtkJustification" t t)
-                        (left-margin text-view-left-margin "left-margin" "gint"
-                         t t)
-                        (overwrite text-view-overwrite "overwrite" "gboolean" t
-                         t)
-                        (pixels-above-lines text-view-pixels-above-lines
-                         "pixels-above-lines" "gint" t t)
-                        (pixels-below-lines text-view-pixels-below-lines
-                         "pixels-below-lines" "gint" t t)
-                        (pixels-inside-wrap text-view-pixels-inside-wrap
-                         "pixels-inside-wrap" "gint" t t)
-                        (right-margin text-view-right-margin "right-margin"
-                         "gint" t t)
-                        (tabs text-view-tabs "tabs" "PangoTabArray" t t)
-                        (wrap-mode text-view-wrap-mode "wrap-mode"
-                         "GtkWrapMode" t t)))
+
 
 (define-g-object-class "GtkToolbar" toolbar
                        (:superclass gtk-container :export t :interfaces
@@ -1982,14 +1884,9 @@
                         (:cffi row-separator-func tree-view-row-separator-func
                          nil nil tree-view-set-row-separartor-func)))
 
-(define-g-object-class "GtkDrawingArea" drawing-area
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_drawing_area_get_type")
-                       nil)
 
 (define-g-object-class "GtkCurve" curve
-                       (:superclass drawing-area :export t :interfaces
+                       (:superclass gtk-drawing-area :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_curve_get_type")
                        ((curve-type curve-curve-type "curve-type"
@@ -2001,23 +1898,7 @@
 
 
 
-(define-g-object-class "GtkSpinButton" spin-button
-                       (:superclass gtk-entry :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
-                         "GtkEditable")
-                        :type-initializer "gtk_spin_button_get_type")
-                       ((adjustment spin-button-adjustment "adjustment"
-                         "GtkAdjustment" t t)
-                        (climb-rate spin-button-climb-rate "climb-rate"
-                         "gdouble" t t)
-                        (digits spin-button-digits "digits" "guint" t t)
-                        (numeric spin-button-numeric "numeric" "gboolean" t t)
-                        (snap-to-ticks spin-button-snap-to-ticks
-                         "snap-to-ticks" "gboolean" t t)
-                        (update-policy spin-button-update-policy
-                         "update-policy" "GtkSpinButtonUpdatePolicy" t t)
-                        (value spin-button-value "value" "gdouble" t t)
-                        (wrap spin-button-wrap "wrap" "gboolean" t t)))
+
 
 
 (define-g-object-class "GtkArrow" arrow
@@ -2035,42 +1916,9 @@
 
 
 
-(define-g-object-class "GtkProgress" progress
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_progress_get_type")
-                       ((activity-mode progress-activity-mode "activity-mode"
-                         "gboolean" t t)
-                        (show-text progress-show-text "show-text" "gboolean" t
-                         t)
-                        (text-xalign progress-text-xalign "text-xalign"
-                         "gfloat" t t)
-                        (text-yalign progress-text-yalign "text-yalign"
-                         "gfloat" t t)))
 
-(define-g-object-class "GtkProgressBar" progress-bar
-                       (:superclass progress :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_progress_bar_get_type")
-                       ((activity-blocks progress-bar-activity-blocks
-                         "activity-blocks" "guint" t t)
-                        (activity-step progress-bar-activity-step
-                         "activity-step" "guint" t t)
-                        (adjustment progress-bar-adjustment "adjustment"
-                         "GtkAdjustment" t t)
-                        (bar-style progress-bar-bar-style "bar-style"
-                         "GtkProgressBarStyle" t t)
-                        (discrete-blocks progress-bar-discrete-blocks
-                         "discrete-blocks" "guint" t t)
-                        (ellipsize progress-bar-ellipsize "ellipsize"
-                         "PangoEllipsizeMode" t t)
-                        (fraction progress-bar-fraction "fraction" "gdouble" t
-                         t)
-                        (orientation progress-bar-orientation "orientation"
-                         "GtkProgressBarOrientation" t t)
-                        (pulse-step progress-bar-pulse-step "pulse-step"
-                         "gdouble" t t)
-                        (text progress-bar-text "text" "gchararray" t t)))
+
+
 
 (define-g-object-class "GtkRuler" ruler
                        (:superclass gtk-widget :export t :interfaces
@@ -2437,56 +2285,7 @@
                          "gboolean" t t)
                         (mode size-group-mode "mode" "GtkSizeGroupMode" t t)))
 
-(define-g-object-class "GtkStatusIcon" status-icon
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_status_icon_get_type")
-                       ((blinking status-icon-blinking "blinking" "gboolean" t
-                         t)
-                        (embedded status-icon-embedded "embedded" "gboolean" t
-                         nil)
-                        (file status-icon-file "file" "gchararray" nil t)
-                        (gicon status-icon-gicon "gicon" "GIcon" t t)
-                        (has-tooltip status-icon-has-tooltip "has-tooltip"
-                         "gboolean" t t)
-                        (icon-name status-icon-icon-name "icon-name"
-                         "gchararray" t t)
-                        (orientation status-icon-orientation "orientation"
-                         "GtkOrientation" t nil)
-                        (pixbuf status-icon-pixbuf "pixbuf" "GdkPixbuf" t t)
-                        (screen status-icon-screen "screen" "GdkScreen" t t)
-                        (size status-icon-size "size" "gint" t nil)
-                        (stock status-icon-stock "stock" "gchararray" t t)
-                        (storage-type status-icon-storage-type "storage-type"
-                         "GtkImageType" t nil)
-                        (tooltip-markup status-icon-tooltip-markup
-                         "tooltip-markup" "gchararray" t t)
-                        (tooltip-text status-icon-tooltip-text "tooltip-text"
-                         "gchararray" t t)
-                        (visible status-icon-visible "visible" "gboolean" t t)))
 
-(define-g-object-class "GtkTextBuffer" text-buffer
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_text_buffer_get_type")
-                       ((copy-target-list text-buffer-copy-target-list
-                         "copy-target-list" "GtkTargetList" t nil)
-                        (cursor-position text-buffer-cursor-position
-                         "cursor-position" "gint" t nil)
-                        (has-selection text-buffer-has-selection
-                         "has-selection" "gboolean" t nil)
-                        (paste-target-list text-buffer-paste-target-list
-                         "paste-target-list" "GtkTargetList" t nil)
-                        (tag-table text-buffer-tag-table "tag-table"
-                         "GtkTextTagTable" t nil)
-                        (text text-buffer-text "text" "gchararray" t t)
-                        (:cffi modified text-buffer-modified :boolean
-                         "gtk_text_buffer_get_modified"
-                         "gtk_text_buffer_set_modified")))
-
-(define-g-object-class "GtkTextChildAnchor" text-child-anchor
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_text_child_anchor_get_type")
-                       ((:cffi deleted-p text-child-anchor-deleted-p :boolean
-                         "gtk_text_child_anchor_get_deleted" nil)))
 
 (define-g-object-class "GtkTextMark" text-mark
                        (:superclass g-object :export t :interfaces nil
@@ -2499,7 +2298,7 @@
                          "gtk_text_mark_set_visible")
                         (:cffi deleted text-mark-deleted :boolean
                          "gtk_text_mark_get_deleted" nil)
-                        (:cffi buffer text-mark-buffer (g-object text-buffer)
+                        (:cffi buffer text-mark-buffer (g-object gtk-text-buffer)
                          "gtk_text_mark_get_buffer" nil)))
 
 (define-g-object-class "GtkTextTag" text-tag
