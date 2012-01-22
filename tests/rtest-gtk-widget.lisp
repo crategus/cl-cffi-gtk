@@ -42,21 +42,32 @@
     
     ;; Get the names of the class properties
     (assert-equal
-      '("user-data" "name" "parent" "width-request" "height-request" "visible"
+     (sort
+      (copy-list
+        '("user-data" "name" "parent" "width-request" "height-request" "visible"
         "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
         "can-default" "has-default" "receives-default" "composite-child" "style"
         "events" "extension-events" "no-show-all" "has-tooltip" "tooltip-markup"
-        "tooltip-text" "window" "double-buffered")
-     (mapcar #'g-class-property-definition-name
-             (g-object-class-list-properties (gtype "GtkWidget"))))
+        "tooltip-text" "window" "double-buffered"))
+      #'string< )
+     (sort
+       (mapcar #'g-class-property-definition-name
+               (g-object-class-list-properties (gtype "GtkWidget")))
+       #'string<))
+       
     
     ;; Get the names of the style properties.
     (assert-equal
-     '("link-color" "separator-height" "focus-line-width" "separator-width"
-       "draw-border" "focus-line-pattern" "wide-separators" "visited-link-color"
-       "cursor-aspect-ratio" "new-tooltip-style" "focus-padding"
-       "secondary-cursor-color" "scroll-arrow-hlength" "cursor-color"
-       "scroll-arrow-vlength" "interior-focus")     
+     (sort
+      (copy-list
+        '("draw-border" "focus-line-pattern" "secondary-cursor-color"
+         "separator-width" "visited-link-color" "cursor-aspect-ratio"
+         "scroll-arrow-hlength" "wide-separators" "scroll-arrow-vlength"
+         "cursor-color" "interior-focus" "link-color" "separator-height"
+        "focus-line-width" "focus-padding" "new-tooltip-style"))
+      #'string< )
+     (sort
       (mapcar #'g-class-property-definition-name
-              (gtk-widget-class-list-style-properties (gtype "GtkWidget"))))
+              (gtk-widget-class-list-style-properties (gtype "GtkWidget")))
+      #'string<))
     ))
