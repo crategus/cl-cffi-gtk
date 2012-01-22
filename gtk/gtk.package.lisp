@@ -8,9 +8,7 @@
            #:check-version
            
            #:gtk-main
-           #:dialog-run
            #:object-destroy
-           #:text-buffer-insert
            #:define-child-property
            #:container-class-child-properties
            #:generate-child-properties
