@@ -363,7 +363,7 @@
 
 (defcfun (container-propagate-expose "gtk_container_propagate_expose") :void
   (container (g-object container))
-  (child (g-object widget))
+  (child (g-object gtk-widget))
   (event (g-boxed-foreign gdk-event)))
 
 (export 'container-propagate-expose)

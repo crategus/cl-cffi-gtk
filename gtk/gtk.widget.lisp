@@ -3120,7 +3120,7 @@
           "window" "GdkWindow" t nil)
    (:cffi parent-window gtk-widget-parent-window (g-object gdk-window)
           "gtk_widget_get_parent_window" "gtk_widget_set_parent_window")
-   (:cffi toplevel gtk-widget-toplevel (g-object widget)
+   (:cffi toplevel gtk-widget-toplevel (g-object gtk-widget)
           "gtk_widget_get_toplevel" nil)
    (:cffi colormap gtk-widget-colormap (g-object gdk-colormap)
           "gtk_widget_get_colormap" "gtk_widget_set_colormap")
@@ -3979,7 +3979,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_draw" gtk-widget-queue-draw) :void
-  (widget (g-object widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-draw)
 
@@ -4005,7 +4005,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_resize" gtk-widget-queue-resize) :void
-  (widget (g-object widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize)
 
@@ -4025,7 +4025,7 @@
 
 (defcfun ("gtk_widget_queue_resize_no_redraw" gtk-widget-queue-resize-no-redraw)
     :void
-  (widget (g-object widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize-no-redraw)
 
