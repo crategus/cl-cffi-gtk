@@ -754,6 +754,11 @@
 ;;; 	a GtkTextBuffer.
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-text-view-set-buffer (text-view buffer)
+  (setf (gtk-text-view-buffer text-view) buffer))
+
+(export 'gtk-text-view-set-buffer)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_buffer ()
 ;;; 
@@ -769,6 +774,11 @@
 ;;; Returns :
 ;;; 	a GtkTextBuffer.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-text-view-get-buffer (text-view)
+  (gtk-text-view-buffer text-view))
+
+(export 'gtk-text-view-get-buffer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_hadjustment ()
