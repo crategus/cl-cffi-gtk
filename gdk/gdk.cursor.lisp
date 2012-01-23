@@ -36,6 +36,7 @@
 ;;; 
 ;;;     GdkCursor
 ;;;     GdkCursorType
+;;;
 ;;;     gdk_cursor_new
 ;;;     gdk_cursor_new_from_pixmap
 ;;;     gdk_cursor_new_from_pixbuf
@@ -549,7 +550,7 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gdk-cursor cursor-image
+(define-boxed-opaque-accessor gdk-cursor gdk-cursor-image
   :type (g-object gdk-pixbuf)
   :reader "gdk_cursor_get_image")
 
