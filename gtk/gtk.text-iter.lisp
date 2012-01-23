@@ -366,7 +366,7 @@
   :writer "gtk_text_iter_set_line_offset"
   :type :int)
 
-(export 'gtk-text-iter-line-offest)
+(export 'gtk-text-iter-line-offset)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_line_index ()
@@ -1369,7 +1369,7 @@
 ;;; 	TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_iter_forward_words_ends" gtk-text-iter-forward-word-ends)
+(defcfun ("gtk_text_iter_forward_word_ends" gtk-text-iter-forward-word-ends)
     :boolean
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
@@ -2308,7 +2308,7 @@
 ;;; 	whether a match was found
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-text-iter-backward-search" gtk-text-iter-backward-search)
+(defcfun ("gtk_text_iter_backward_search" gtk-text-iter-backward-search)
     :boolean
   (iter (g-boxed-foreign gtk-text-iter))
   (str (:string :free-to-foreign t))
