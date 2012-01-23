@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkStatusbar
+;;;
 ;;;     gtk_statusbar_new
 ;;;     gtk_statusbar_get_context_id
 ;;;     gtk_statusbar_push
@@ -167,7 +168,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkBox" 'gtk-box))
+  (register-object-type "GtkStatusbar" 'gtk-statusbar))
 
 (define-g-object-class "GtkStatusbar" gtk-statusbar
   (:superclass gtk-h-box
@@ -175,7 +176,7 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_statusbar_get_type")
   ((has-resize-grip gtk-statusbar-has-resize-grip
-         "has-resize-grip" "gboolean" t t)))
+    "has-resize-grip" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
 
