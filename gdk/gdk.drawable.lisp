@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GdkDrawable
+;;;
 ;;;     gdk_drawable_ref
 ;;;     gdk_drawable_unref
 ;;;     gdk_drawable_set_data
@@ -54,12 +55,16 @@
 ;;;     gdk_draw_lines
 ;;;     gdk_draw_pixbuf
 ;;;     gdk_draw_segments
+;;;
 ;;;     GdkSegment
+;;;
 ;;;     gdk_draw_rectangle
 ;;;     gdk_draw_arc
 ;;;     gdk_draw_polygon
 ;;;     gdk_draw_trapezoids
+;;;
 ;;;     GdkTrapezoid
+;;;
 ;;;     gdk_draw_glyphs
 ;;;     gdk_draw_glyphs_transformed
 ;;;     gdk_draw_layout_line
@@ -965,7 +970,7 @@
 ;;; 	the x coordinate of the bottom right corner
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-cstruct trapezoid nil
+(define-g-boxed-cstruct gdk-trapezoid nil
   (y1 :double :initform 0d0)
   (x11 :double :initform 0d0)
   (x21 :double :initform 0d0)
@@ -973,7 +978,7 @@
   (x12 :double :initform 0d0)
   (x22 :double :initform 0d0))
 
-(export (boxed-related-symbols 'trapezoid))
+(export (boxed-related-symbols 'gdk-trapezoid))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_draw_trapezoids ()
@@ -1017,7 +1022,7 @@
   (n :int))
 
 (defun gdk-draw-trapezoids (drawable gc trapezoids)
-  (with-foreign-boxed-array (n trapezoids-ptr trapezoid trapezoids)
+  (with-foreign-boxed-array (n trapezoids-ptr gdk-trapezoid trapezoids)
     (%gdk-draw-trapezoids drawable gc trapezoids-ptr n)))
 
 (export 'gdk-draw-trapezoids)
