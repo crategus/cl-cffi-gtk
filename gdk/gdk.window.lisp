@@ -34,18 +34,16 @@
 ;;; 
 ;;; Synopsis
 ;;;
-;;;     GdkWindowType;
-;;;     GdkWindowClass;
-;;;     GdkWindowHints; 
-;;;     GdkWindow;
-;;;
-;;;     GdkGravity;
-;;;     GdkWindowEdge;
-;;;     GdkWindowTypeHint;
-;;;     GdkGeometry;
-;;;
-;;;     GdkWindowAttributesType;
-;;;     GdkWindowAttr;
+;;;     GdkWindowType
+;;;     GdkWindowClass
+;;;     GdkWindowHints
+;;;     GdkWindow
+;;;     GdkGravity
+;;;     GdkWindowEdge
+;;;     GdkWindowTypeHint
+;;;     GdkGeometry
+;;;     GdkWindowAttributesType
+;;;     GdkWindowAttr
 ;;;     
 ;;;     gdk_window_new
 ;;;     gdk_window_destroy
@@ -127,8 +125,10 @@
 ;;;     gdk_window_get_focus_on_map
 ;;;     gdk_window_add_filter
 ;;;     gdk_window_remove_filter
+;;;
 ;;;     GdkFilterReturn
 ;;;     GdkXEvent
+;;;
 ;;;     gdk_window_shape_combine_mask
 ;;;     gdk_window_shape_combine_region
 ;;;     gdk_window_set_child_shapes
@@ -170,12 +170,14 @@
 ;;;     gdk_window_coords_from_parent
 ;;;     gdk_window_coords_to_parent
 ;;;     gdk_window_get_pointer
+;;;
 ;;;     GdkModifierType
+;;;
 ;;;     gdk_window_get_parent
 ;;;     gdk_window_get_effective_parent
 ;;;     gdk_window_get_toplevel
 ;;;     gdk_window_get_effective_toplevel
-;;;     window_get_children
+;;;     gdk_window_get_children
 ;;;     gdk_window_peek_children
 ;;;     gdk_window_get_events
 ;;;     gdk_window_set_events
@@ -188,15 +190,19 @@
 ;;;     gdk_window_get_group
 ;;;     gdk_window_set_decorations
 ;;;     gdk_window_get_decorations
+;;;
 ;;;     GdkWMDecoration
+;;;
 ;;;     gdk_window_set_functions
+;;;
 ;;;     GdkWMFunction
+;;;
 ;;;     gdk_window_get_toplevels
 ;;;     gdk_get_default_root_window
 ;;;     
 ;;;     GdkPointerHooks
-;;;     gdk_set_pointer_hooks
-;;;     
+;;;
+;;;     gdk_set_pointer_hooks     
 ;;;     gdk_offscreen_window_get_pixmap
 ;;;     gdk_offscreen_window_set_embedder
 ;;;     gdk_offscreen_window_get_embedder
@@ -2666,7 +2672,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun gdk-window-beep :void
-  (window (g-object gkd-window)))
+  (window (g-object gdk-window)))
 
 (export 'gdk-window-beep)
 
@@ -3819,8 +3825,14 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; cursor :
-;;;     a cursor. [allow-none]
+;;;     a cursor
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_set_cursor" gdk-window-set-cursor) :void
+  (window (g-object gdk-window))
+  (cursor (g-boxed-foreign gdk-cursor)))
+
+(export 'gdk-window-set-cursor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_cursor ()
