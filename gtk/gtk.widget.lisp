@@ -34,9 +34,8 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     requisition
-;;;     allocation
-;;;
+;;;     GtkRequisition
+;;;     GtkAllocation
 ;;;     GtkWidget
 ;;;     GtkWidgetClass
 ;;;     GtkSelectionData
@@ -106,6 +105,7 @@
 ;;;     gtk_widget_set_direction
 ;;;
 ;;;     GtkTextDirection
+;;;
 ;;;     gtk_widget_get_direction
 ;;;     gtk_widget_set_default_direction
 ;;;     gtk_widget_get_default_direction
@@ -238,6 +238,7 @@
 ;;;     
 ;;;     GtkSizeRequestMode
 ;;;     GtkRequestedSize
+;;;
 ;;;     gtk_widget_get_preferred_height
 ;;;     gtk_widget_get_preferred_width
 ;;;     gtk_widget_get_preferred_height_for_width
@@ -246,7 +247,8 @@
 ;;;     gtk_widget_get_preferred_size
 ;;;     gtk_distribute_natural_allocation
 ;;;     
-;;;     GtkAlign;
+;;;     GtkAlign
+;;;
 ;;;     gtk_widget_get_halign
 ;;;     gtk_widget_set_halign
 ;;;     gtk_widget_get_valign
@@ -4058,8 +4060,14 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; requisition :
-;;;     a GtkRequisition to be filled in. [out]
+;;;     a GtkRequisition to be filled in.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_size_request" gtk-widget-size-request) :void
+  (widget g-object)
+  (requisition (g-boxed-foreign gtk-requisition)))
+
+(export 'gtk-widget-size-request)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_child_requisition ()
@@ -4634,6 +4642,12 @@
 ;;; events :
 ;;;     event mask
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_set_events" gtk-widget-set-events) :void
+  (widget g-object)
+  (events :int))
+
+(export 'gtk-widget-set-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_events ()
@@ -8515,10 +8529,10 @@
 ;;;     a GtkWidget instance
 ;;; 
 ;;; minimum_size :
-;;;     location for storing the minimum size, or NULL. [out][allow-none]
+;;;     location for storing the minimum size, or NULL
 ;;; 
 ;;; natural_size :
-;;;     location for storing the natural size, or NULL. [out][allow-none]
+;;;     location for storing the natural size, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
