@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkTextBuffer
+;;;
 ;;;     gtk_text_buffer_new
 ;;;     gtk_text_buffer_get_line_count
 ;;;     gtk_text_buffer_get_char_count
@@ -95,7 +96,8 @@
 ;;;     gtk_text_buffer_add_selection_clipboard
 ;;;     gtk_text_buffer_remove_selection_clipboard
 ;;;
-;;;     GtkTextBufferTargetInfo;
+;;;     GtkTextBufferTargetInfo
+;;;
 ;;;     gtk_text_buffer_deserialize
 ;;;     gtk_text_buffer_deserialize_get_can_create_tags
 ;;;     gtk_text_buffer_deserialize_set_can_create_tags
@@ -1132,6 +1134,11 @@
 ;;; 	length of text in bytes
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-text-buffer-set-text (buffer text)
+  (setf (gtk-text-buffer-text buffer) text))
+
+(export 'gtk-text-buffer-set-text)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_text ()
 ;;; 
@@ -1162,6 +1169,13 @@
 ;;; Returns :
 ;;; 	an allocated UTF-8 string
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_buffer_get_text" gtk-text-buffer-get-text) :string
+  (buffer (g-object gtk-text-buffer))
+  (start (g-boxed-foreign gtk-text-iter))
+  (end (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-buffer-get-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_slice ()
@@ -1700,7 +1714,7 @@
 (defun gtk-text-buffer-apply-tag (buffer tag start end)
   (etypecase tag
     (string (gtk-text-buffer-apply-tag-by-name buffer tag start end))
-    (text-tag (%gtk-text-buffer-apply-tag buffer tag start end))))
+    (gtk-text-tag (%gtk-text-buffer-apply-tag buffer tag start end))))
 
 (export 'gtk-text-buffer-apply-tag)
 
@@ -1738,7 +1752,7 @@
 (defun gtk-text-buffer-remove-tag (buffer tag start end)
   (etypecase tag
     (string (gtk-text-buffer-remove-tag-by-name buffer tag start end))
-    (text-tag (%gtk-text-buffer-remove-tag buffer tag start end))))
+    (gtk-text-tag (%gtk-text-buffer-remove-tag buffer tag start end))))
 
 (export 'gtk-text-buffer-remove-tag)
 
@@ -2342,16 +2356,16 @@
 ;;; 	a GtkTextBuffer a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	iterator to initialize with selection start. [out]
+;;; 	iterator to initialize with selection start
 ;;; 
 ;;; end :
-;;; 	iterator to initialize with selection end. [out]
+;;; 	iterator to initialize with selection end
 ;;; 
 ;;; Returns :
 ;;; 	whether the selection has nonzero length
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_buffer_get_selections_bounds"
+(defcfun ("gtk_text_buffer_get_selection_bounds"
           %gtk-text-buffer-get-selection-bounds) :boolean
   (buffer (g-object gtk-text-buffer))
   (start (g-boxed-foreign gtk-text-iter))
@@ -2719,7 +2733,7 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_buffer_get_deserialze_formats"
+(defcfun ("gtk_text_buffer_get_deserialize_formats"
           %gtk-text-buffer-get-deserialize-formats)
     (:pointer gdk-atom-as-string)
   (text-buffer (g-object gtk-text-buffer))
@@ -2826,7 +2840,7 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_buffer_register_desirialize_format"
+(defcfun ("gtk_text_buffer_register_deserialize_format"
           %gtk-text-buffer-register-deserialize-format) gdk-atom-as-string
   (buffer (g-object gtk-text-buffer))
   (mime-type :string)
