@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkAdjustment
+;;;
 ;;;     gtk_adjustment_new
 ;;;     gtk_adjustment_get_value
 ;;;     gtk_adjustment_set_value
@@ -209,15 +210,21 @@
 
 (define-g-object-class "GtkAdjustment" gtk-adjustment
   (:superclass gtk-object
-    :export t
-    :interfaces nil
-    :type-initializer "gtk_adjustment_get_type")
-  ((lower gtk-adjustment-lower "lower" "gdouble" t t)
-   (page-increment gtk-adjustment-page-increment "page-increment" "gdouble" t t)
-   (page-size gtk-adjustment-page-size "page-size" "gdouble" t t)
-   (step-increment gtk-adjustment-step-increment "step-increment" "gdouble" t t)
-   (upper gtk-adjustment-upper "upper" "gdouble" t t)
-   (value gtk-adjustment-value "value" "gdouble" t t)))
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_adjustment_get_type")
+  ((lower gtk-adjustment-lower
+    "lower" "gdouble" t t)
+   (page-increment gtk-adjustment-page-increment
+    "page-increment" "gdouble" t t)
+   (page-size gtk-adjustment-page-size
+    "page-size" "gdouble" t t)
+   (step-increment gtk-adjustment-step-increment
+    "step-increment" "gdouble" t t)
+   (upper gtk-adjustment-upper
+    "upper" "gdouble" t t)
+   (value gtk-adjustment-value
+    "value" "gdouble" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_new ()
