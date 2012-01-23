@@ -26,7 +26,7 @@
 (asdf:operate 'asdf:load-op :cl-gtk-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gobject :common-lisp)
+  (:use :gtk :gdk :gobject :common-lisp)
   (:export 
     #:example-1 #:example-1-1
     #:example-2
@@ -618,3 +618,42 @@
       
       (gtk-widget-show window)
       )))
+
+;;; [...]
+
+;;; Chapter 11. Container Widgets
+
+;; The Event Box
+
+(defun example-event-box ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Event Box"
+                                 :border-width 10))
+          (eventbox (make-instance 'gtk-event-box))
+          (label    (make-instance 'gtk-label
+                                   :label
+                                   "Click here to quit, and more text, more")))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      
+      (gtk-container-add window eventbox)
+      (gtk-container-add eventbox label)
+      
+      (gtk-widget-size-request label
+                               (make-gtk-requisition :width 60 :height 20))
+      (gtk-widget-set-events eventbox 256)
+      
+      (g-signal-connect eventbox "button-press-event"
+                        (lambda (eventbox event)
+                          (declare (ignore eventbox event))
+                          (gtk-widget-destroy window)))
+      
+      (gtk-widget-realize eventbox)
+      (gdk-window-set-cursor (gtk-widget-window eventbox)
+                             (gdk-cursor-new :hand1))
+      
+      (gtk-widget-show window))))
