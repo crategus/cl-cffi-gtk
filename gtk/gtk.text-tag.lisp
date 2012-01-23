@@ -795,6 +795,125 @@
 ;;; struct GtkTextTag;
 ;;; ----------------------------------------------------------------------------
 
+(define-g-object-class "GtkTextTag" gtk-text-tag
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_text_tag_get_type")
+  ((accumulative-margin gtk-text-tag-accumulative-margin
+    "accumulative-margin" "gboolean" t t)
+   (background gtk-text-tag-background
+    "background" "gchararray" nil t)
+   (background-full-height gtk-text-tag-background-full-height
+    "background-full-height" "gboolean" t t)
+   (background-full-height-set gtk-text-tag-background-full-height-set
+    "background-full-height-set" "gboolean" t t)
+   (background-gdk gtk-text-tag-background-gdk
+    "background-gdk" "GdkColor" t t)
+   (background-set gtk-text-tag-background-set
+    "background-set" "gboolean" t t)
+   (background-stipple gtk-text-tag-background-stipple
+    "background-stipple" "GdkPixmap" t t)
+   (background-stipple-set gtk-text-tag-background-stipple-set
+    "background-stipple-set" "gboolean" t t)
+   (direction gtk-text-tag-direction
+    "direction" "GtkTextDirection" t t)
+   (editable gtk-text-tag-editable
+    "editable" "gboolean" t t)
+   (editable-set gtk-text-tag-editable-set
+    "editable-set" "gboolean" t t)
+   (family gtk-text-tag-family
+    "family" "gchararray" t t)
+   (family-set gtk-text-tag-family-set
+    "family-set" "gboolean" t t)
+   (font gtk-text-tag-font
+    "font" "gchararray" t t)
+   (font-desc gtk-text-tag-font-desc
+    "font-desc" "PangoFontDescription" t t)
+   (foreground gtk-text-tag-foreground
+    "foreground" "gchararray" nil t)
+   (foreground-gdk gtk-text-tag-foreground-gdk
+    "foreground-gdk" "GdkColor" t t)
+   (foreground-set gtk-text-tag-foreground-set
+    "foreground-set" "gboolean" t t)
+   (foreground-stipple gtk-text-tag-foreground-stipple
+    "foreground-stipple" "GdkPixmap" t t)
+   (foreground-stipple-set gtk-text-tag-foreground-stipple-set
+    "foreground-stipple-set" "gboolean" t t)
+   (indent gtk-text-tag-indent
+    "indent" "gint" t t)
+   (indent-set gtk-text-tag-indent-set
+    "indent-set" "gboolean" t t)
+   (invisible gtk-text-tag-invisible
+    "invisible" "gboolean" t t)
+   (invisible-set gtk-text-tag-invisible-set
+    "invisible-set" "gboolean" t t)
+   (justification gtk-text-tag-justification
+    "justification" "GtkJustification" t t)
+   (justification-set gtk-text-tag-justification-set
+    "justification-set" "gboolean" t t)
+   (language gtk-text-tag-language
+    "language" "gchararray" t t)
+   (language-set gtk-text-tag-language-set
+    "language-set" "gboolean" t t)
+   (left-margin gtk-text-tag-left-margin
+    "left-margin" "gint" t t)
+   (left-margin-set gtk-text-tag-left-margin-set
+    "left-margin-set" "gboolean" t t)
+   (name gtk-text-tag-name "name" "gchararray" t nil)
+   (paragraph-background gtk-text-tag-paragraph-background
+    "paragraph-background" "gchararray" nil t)
+   (paragraph-background-gdk gtk-text-tag-paragraph-background-gdk
+    "paragraph-background-gdk" "GdkColor" t t)
+   (paragraph-background-set gtk-text-tag-paragraph-background-set
+    "paragraph-background-set" "gboolean" t t)
+   (pixels-above-lines gtk-text-tag-pixels-above-lines
+    "pixels-above-lines" "gint" t t)
+   (pixels-above-lines-set gtk-text-tag-pixels-above-lines-set
+    "pixels-above-lines-set" "gboolean" t t)
+   (pixels-below-lines gtk-text-tag-pixels-below-lines
+    "pixels-below-lines" "gint" t t)
+   (pixels-below-lines-set gtk-text-tag-pixels-below-lines-set
+    "pixels-below-lines-set" "gboolean" t t)
+   (pixels-inside-wrap gtk-text-tag-pixels-inside-wrap
+    "pixels-inside-wrap" "gint" t t)
+   (pixels-inside-wrap-set gtk-text-tag-pixels-inside-wrap-set
+    "pixels-inside-wrap-set" "gboolean" t t)
+   (right-margin gtk-text-tag-right-margin
+    "right-margin" "gint" t t)
+   (right-margin-set gtk-text-tag-right-margin-set
+    "right-margin-set" "gboolean" t t)
+   (rise gtk-text-tag-rise "rise" "gint" t t)
+   (rise-set gtk-text-tag-rise-set "rise-set" "gboolean" t t)
+   (scale gtk-text-tag-scale "scale" "gdouble" t t)
+   (scale-set gtk-text-tag-scale-set "scale-set" "gboolean" t t)
+   (size gtk-text-tag-size "size" "gint" t t)
+   (size-points gtk-text-tag-size-points "size-points" "gdouble" t t)
+   (size-set gtk-text-tag-size-set "size-set" "gboolean" t t)
+   (stretch gtk-text-tag-stretch "stretch" "PangoStretch" t t)
+   (stretch-set gtk-text-tag-stretch-set "stretch-set" "gboolean" t t)
+   (strikethrough gtk-text-tag-strikethrough "strikethrough" "gboolean" t t)
+   (strikethrough-set gtk-text-tag-strikethrough-set
+    "strikethrough-set" "gboolean" t t)
+   (style gtk-text-tag-style "style" "PangoStyle" t t)
+   (style-set gtk-text-tag-style-set "style-set" "gboolean" t t)
+   (tabs gtk-text-tag-tabs "tabs" "PangoTabArray" t t)
+   (tabs-set gtk-text-tag-tabs-set "tabs-set" "gboolean" t t)
+   (underline gtk-text-tag-underline
+    "underline" "PangoUnderline" t t)
+   (underline-set gtk-text-tag-underline-set
+    "underline-set" "gboolean" t t)
+   (variant gtk-text-tag-variant "variant" "PangoVariant" t t)
+   (variant-set gtk-text-tag-variant-set
+    "variant-set" "gboolean" t t)
+   (weight gtk-text-tag-weight "weight" "gint" t t)
+   (weight-set gtk-text-tag-weight-set "weight-set" "gboolean" t t)
+   (wrap-mode gtk-text-tag-wrap-mode "wrap-mode" "GtkWrapMode" t t)
+   (wrap-mode-set gtk-text-tag-wrap-mode-set
+    "wrap-mode-set" "gboolean" t t)
+   (:cffi priority gtk-text-tag-priority :int
+          "gtk_text_tag_get_priority" "gtk_text_tag_set_priority")))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWrapMode
 ;;; 
