@@ -929,27 +929,4 @@
 
 (export 'gtk-dialog-set-alternative-button-order-from-array)
 
-;;; ----------------------------------------------------------------------------
-
-(defmacro with-gtk-message-error-handler (&body body)
-  (let ((dialog (gensym))
-        (e (gensym)))
-    `(handler-case
-         (progn ,@body)
-       (error (,e)
-              (using* ((,dialog (make-instance
-                                  'gtk-message-dialog
-                                  :message-type :error
-                                  :buttons :ok
-                                  :text
-                                  (format nil
-                                          "Error~%~A~%during execution of~%~A"
-                                          ,e
-                                          '(progn ,@body)))))
-                      (gtk-dialog-run ,dialog)
-                      (gtk-widget-destroy ,dialog)
-                      nil)))))
-
-(export 'with-gtk-message-error-handler)
-
 ;;; --- End of file gtk.dialog.lisp---------------------------------------------
