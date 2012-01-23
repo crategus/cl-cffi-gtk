@@ -34,10 +34,11 @@
 ;;; 	
 ;;; Synopsis
 ;;; 
-;;;     GdkGC;
-;;;     GdkGCValues;
-;;;     GdkGCValuesMask;
-;;;     GdkFunction;
+;;;     GdkGC
+;;;     GdkGCValues
+;;;     GdkGCValuesMask
+;;;     GdkFunction
+;;;
 ;;;     gdk_gc_new
 ;;;     gdk_gc_new_with_values
 ;;;     gdk_gc_get_screen
@@ -53,7 +54,9 @@
 ;;;     gdk_gc_set_font
 ;;;     gdk_gc_set_function
 ;;;     gdk_gc_set_fill
-;;;     GdkFill                     
+;;;
+;;;     GdkFill
+;;;                     
 ;;;     gdk_gc_set_tile
 ;;;     gdk_gc_set_stipple
 ;;;     gdk_gc_set_ts_origin
@@ -62,12 +65,16 @@
 ;;;     gdk_gc_set_clip_rectangle
 ;;;     gdk_gc_set_clip_region
 ;;;     gdk_gc_set_subwindow
-;;;     GdkSubwindowMode;            
+;;;
+;;;     GdkSubwindowMode
+;;;            
 ;;;     gdk_gc_set_exposures
 ;;;     gdk_gc_set_line_attributes
-;;;     GdkLineStyle;                 
-;;;     GdkCapStyle;                  
-;;;     GdkJoinStyle;                 
+;;;
+;;;     GdkLineStyle                 
+;;;     GdkCapStyle                  
+;;;     GdkJoinStyle
+;;;                 
 ;;;     gdk_gc_set_dashes
 ;;;     gdk_gc_copy
 ;;;     gdk_gc_set_colormap
@@ -269,38 +276,38 @@
 
 (define-g-object-class "GdkGC" gdk-gc
   (:type-initializer "gdk_gc_get_type")
-  ((:cffi screen graphics-context-screen (g-object gdk-screen)
+  ((:cffi screen gdk-gc-screen (g-object gdk-screen)
           "gdk_gc_get_screen" nil)
-   (:cffi foreground graphics-context-foreground (g-boxed-foreign gdk-color)
+   (:cffi foreground gdk-gc-foreground (g-boxed-foreign gdk-color)
           nil "gdk_gc_set_foreground")
-   (:cffi background graphics-context-background (g-boxed-foreign gdk-color)
+   (:cffi background gdk-gc-background (g-boxed-foreign gdk-color)
           nil "gdk_gc_set_background")
-   (:cffi rgb-fg-color graphics-context-rgb-fg-color (g-boxed-foreign gdk-color)
+   (:cffi rgb-fg-color gdk-gc-rgb-fg-color (g-boxed-foreign gdk-color)
           nil "gdk_gc_set_rgb_fg_color")
-   (:cffi rgb-bg-color graphics-context-rgb-bg-color (g-boxed-foreign gdk-color)
+   (:cffi rgb-bg-color gdk-gc-rgb-bg-color (g-boxed-foreign gdk-color)
           nil "gdk_gc_set_rgb_bg_color")
-   (:cffi font graphics-context-font (g-boxed-foreign gdk-font)
+   (:cffi font gdk-gc-font (g-boxed-foreign gdk-font)
           nil "gdk_gc_set_font")
-   (:cffi function graphics-context-function gdk-function
+   (:cffi function gdk-gc-function gdk-function
           nil "gdk_gc_set_function")
-   (:cffi fill graphics-context-fill gdk-fill
+   (:cffi fill gdk-gc-fill gdk-fill
           nil "gdk_gc_set_fill")
-   (:cffi tile graphics-context-tile (g-object gdk-pixmap)
+   (:cffi tile gdk-gc-tile (g-object gdk-pixmap)
           nil "gdk_gc_set_tile")
-   (:cffi stipple graphics-context-stipple (g-object gdk-pixmap)
+   (:cffi stipple gdk-gc-stipple (g-object gdk-pixmap)
           nil "gdk_gc_set_stipple")
-   (:cffi clip-mask graphics-context-clip-mask (g-object gdk-pixmap)
+   (:cffi clip-mask gdk-gc-clip-mask (g-object gdk-pixmap)
           nil "gdk_gc_set_clip_mask")
-   (:cffi clip-rectangle graphics-context-clip-rectangle
+   (:cffi clip-rectangle gdk-gc-clip-rectangle
           (g-boxed-foreign gdk-rectangle)
           nil "gdk_gc_set_clip_rectangle")
-   (:cffi clip-region graphics-context-clip-region (g-boxed-foreign gdk-region)
+   (:cffi clip-region gdk-gc-clip-region (g-boxed-foreign gdk-region)
           nil "gdk_gc_set_clip_region")
-   (:cffi subwindow graphics-context-subwindow gdk-subwindow-mode
+   (:cffi subwindow gdk-gc-subwindow gdk-subwindow-mode
           nil "gdk_gc_set_subwindow")
-   (:cffi exposures graphics-context-exposures :boolean
+   (:cffi exposures gdk-gc-exposures :boolean
           nil "gdk_gc_set_exposures")
-   (:cffi colormap graphics-context-colormap (g-object gdk-colormap)
+   (:cffi colormap gdk-gc-colormap (g-object gdk-colormap)
           "gdk_gc_get_colormap" "gdk_gc_set_colormap")))
 
 ;;; ----------------------------------------------------------------------------
@@ -828,11 +835,16 @@
 ;;; color as red, green, blue components.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;; 	a GdkGC
 ;;; 
 ;;; color :
-;;; 	the new foreground color.
+;;; 	the new foreground color
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-gc-set-foreground (gc color)
+  (setf (gdk-gc-foreground gc) color))
+
+(export 'gdk-gc-set-foreground) 
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gc_set_background ()
@@ -857,6 +869,11 @@
 ;;; color :
 ;;; 	the new background color.
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-gc-set-background (gc color)
+  (setf (gdk-gc-background gc) color))
+
+(export 'gdk-gc-set-background)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gc_set_rgb_fg_color ()
@@ -883,6 +900,11 @@
 ;;; 	an unallocated GdkColor.
 ;;; ----------------------------------------------------------------------------
 
+(defun gdk-gc-set-rgb-fg-color (gc color)
+  (setf (gdk-gc-rgb-fg-color gc) color))
+
+(export 'gdk-gc-set-rgb-fg-color)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gc_set_rgb_bg_color ()
 ;;; 
@@ -908,6 +930,11 @@
 ;;; 	an unallocated GdkColor.
 ;;; ----------------------------------------------------------------------------
 
+(defun gdk-gc-set-rgb-bg-color (gc color)
+  (setf (gdk-gc-rgb-bg-color gc) color))
+
+(export 'gdk-gc-set-rgb-bg-color)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gc_set_font ()
 ;;; 
@@ -922,10 +949,10 @@
 ;;; is NULL.)
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;; 	a GdkGC
 ;;; 
 ;;; font :
-;;; 	the new font.
+;;; 	the new font
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -942,7 +969,7 @@
 ;;; are combined to produce the final pixel values.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;; 	a GdkGC
 ;;; 
 ;;; function :
 ;;; 	the GdkFunction to use
@@ -963,10 +990,10 @@
 ;;; Set the fill mode for a graphics context.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;; 	a GdkGC
 ;;; 
 ;;; fill :
-;;; 	the new fill mode.
+;;; 	the new fill mode
 ;;; ----------------------------------------------------------------------------
 
 
