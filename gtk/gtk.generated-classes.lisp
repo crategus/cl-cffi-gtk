@@ -126,14 +126,7 @@
   (:dnd 5)
   (:dialog 6))
 
-(define-g-enum "GtkMessageType"
-    message-type
-    (:export t :type-initializer "gtk_message_type_get_type")
-  (:info 0)
-  (:warning 1)
-  (:question 2)
-  (:error 3)
-  (:other 4))
+
 
 (define-g-enum "GtkButtonsType"
     buttons-type
@@ -1191,25 +1184,12 @@
                        ((uri link-button-uri "uri" "gchararray" t t)
                         (visited link-button-visited "visited" "gboolean" t t)))
 
-(define-g-object-class "GtkScaleButton" scale-button
-                       (:superclass gtk-button :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
-                         "GtkOrientable")
-                        :type-initializer "gtk_scale_button_get_type")
-                       ((adjustment scale-button-adjustment "adjustment"
-                         "GtkAdjustment" t t)
-                        (icons scale-button-icons "icons" "GStrv" t t)
-                        (size scale-button-size "size" "GtkIconSize" t t)
-                        (value scale-button-value "value" "gdouble" t t)))
-
 (define-g-object-class "GtkVolumeButton" volume-button
-                       (:superclass scale-button :export t :interfaces
+                       (:superclass gtk-scale-button :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
                          "GtkOrientable")
                         :type-initializer "gtk_volume_button_get_type")
                        nil)
-
-
 
 (define-g-object-class "GtkComboBox" combo-box
                        (:superclass gtk-bin :export t :interfaces
@@ -1253,14 +1233,7 @@
                        ((text-column combo-box-entry-text-column "text-column"
                          "gint" t t)))
 
-(define-g-object-class "GtkEventBox" event-box
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_event_box_get_type")
-                       ((above-child event-box-above-child "above-child"
-                         "gboolean" t t)
-                        (visible-window event-box-visible-window
-                         "visible-window" "gboolean" t t)))
+
 
 (define-g-object-class "GtkExpander" expander
                        (:superclass gtk-bin :export t :interfaces
@@ -2274,132 +2247,6 @@
                        ((ignore-hidden size-group-ignore-hidden "ignore-hidden"
                          "gboolean" t t)
                         (mode size-group-mode "mode" "GtkSizeGroupMode" t t)))
-
-(define-g-object-class "GtkTextTag" text-tag
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_text_tag_get_type")
-                       ((accumulative-margin text-tag-accumulative-margin
-                         "accumulative-margin" "gboolean" t t)
-                        (background text-tag-background "background"
-                         "gchararray" nil t)
-                        (background-full-height text-tag-background-full-height
-                         "background-full-height" "gboolean" t t)
-                        (background-full-height-set
-                         text-tag-background-full-height-set
-                         "background-full-height-set" "gboolean" t t)
-                        (background-gdk text-tag-background-gdk
-                         "background-gdk" "GdkColor" t t)
-                        (background-set text-tag-background-set
-                         "background-set" "gboolean" t t)
-                        (background-stipple text-tag-background-stipple
-                         "background-stipple" "GdkPixmap" t t)
-                        (background-stipple-set text-tag-background-stipple-set
-                         "background-stipple-set" "gboolean" t t)
-                        (direction text-tag-direction "direction"
-                         "GtkTextDirection" t t)
-                        (editable text-tag-editable "editable" "gboolean" t t)
-                        (editable-set text-tag-editable-set "editable-set"
-                         "gboolean" t t)
-                        (family text-tag-family "family" "gchararray" t t)
-                        (family-set text-tag-family-set "family-set" "gboolean"
-                         t t)
-                        (font text-tag-font "font" "gchararray" t t)
-                        (font-desc text-tag-font-desc "font-desc"
-                         "PangoFontDescription" t t)
-                        (foreground text-tag-foreground "foreground"
-                         "gchararray" nil t)
-                        (foreground-gdk text-tag-foreground-gdk
-                         "foreground-gdk" "GdkColor" t t)
-                        (foreground-set text-tag-foreground-set
-                         "foreground-set" "gboolean" t t)
-                        (foreground-stipple text-tag-foreground-stipple
-                         "foreground-stipple" "GdkPixmap" t t)
-                        (foreground-stipple-set text-tag-foreground-stipple-set
-                         "foreground-stipple-set" "gboolean" t t)
-                        (indent text-tag-indent "indent" "gint" t t)
-                        (indent-set text-tag-indent-set "indent-set" "gboolean"
-                         t t)
-                        (invisible text-tag-invisible "invisible" "gboolean" t
-                         t)
-                        (invisible-set text-tag-invisible-set "invisible-set"
-                         "gboolean" t t)
-                        (justification text-tag-justification "justification"
-                         "GtkJustification" t t)
-                        (justification-set text-tag-justification-set
-                         "justification-set" "gboolean" t t)
-                        (language text-tag-language "language" "gchararray" t
-                         t)
-                        (language-set text-tag-language-set "language-set"
-                         "gboolean" t t)
-                        (left-margin text-tag-left-margin "left-margin" "gint"
-                         t t)
-                        (left-margin-set text-tag-left-margin-set
-                         "left-margin-set" "gboolean" t t)
-                        (name text-tag-name "name" "gchararray" t nil)
-                        (paragraph-background text-tag-paragraph-background
-                         "paragraph-background" "gchararray" nil t)
-                        (paragraph-background-gdk
-                         text-tag-paragraph-background-gdk
-                         "paragraph-background-gdk" "GdkColor" t t)
-                        (paragraph-background-set
-                         text-tag-paragraph-background-set
-                         "paragraph-background-set" "gboolean" t t)
-                        (pixels-above-lines text-tag-pixels-above-lines
-                         "pixels-above-lines" "gint" t t)
-                        (pixels-above-lines-set text-tag-pixels-above-lines-set
-                         "pixels-above-lines-set" "gboolean" t t)
-                        (pixels-below-lines text-tag-pixels-below-lines
-                         "pixels-below-lines" "gint" t t)
-                        (pixels-below-lines-set text-tag-pixels-below-lines-set
-                         "pixels-below-lines-set" "gboolean" t t)
-                        (pixels-inside-wrap text-tag-pixels-inside-wrap
-                         "pixels-inside-wrap" "gint" t t)
-                        (pixels-inside-wrap-set text-tag-pixels-inside-wrap-set
-                         "pixels-inside-wrap-set" "gboolean" t t)
-                        (right-margin text-tag-right-margin "right-margin"
-                         "gint" t t)
-                        (right-margin-set text-tag-right-margin-set
-                         "right-margin-set" "gboolean" t t)
-                        (rise text-tag-rise "rise" "gint" t t)
-                        (rise-set text-tag-rise-set "rise-set" "gboolean" t t)
-                        (scale text-tag-scale "scale" "gdouble" t t)
-                        (scale-set text-tag-scale-set "scale-set" "gboolean" t
-                         t)
-                        (size text-tag-size "size" "gint" t t)
-                        (size-points text-tag-size-points "size-points"
-                         "gdouble" t t)
-                        (size-set text-tag-size-set "size-set" "gboolean" t t)
-                        (stretch text-tag-stretch "stretch" "PangoStretch" t t)
-                        (stretch-set text-tag-stretch-set "stretch-set"
-                         "gboolean" t t)
-                        (strikethrough text-tag-strikethrough "strikethrough"
-                         "gboolean" t t)
-                        (strikethrough-set text-tag-strikethrough-set
-                         "strikethrough-set" "gboolean" t t)
-                        (style text-tag-style "style" "PangoStyle" t t)
-                        (style-set text-tag-style-set "style-set" "gboolean" t
-                         t)
-                        (tabs text-tag-tabs "tabs" "PangoTabArray" t t)
-                        (tabs-set text-tag-tabs-set "tabs-set" "gboolean" t t)
-                        (underline text-tag-underline "underline"
-                         "PangoUnderline" t t)
-                        (underline-set text-tag-underline-set "underline-set"
-                         "gboolean" t t)
-                        (variant text-tag-variant "variant" "PangoVariant" t t)
-                        (variant-set text-tag-variant-set "variant-set"
-                         "gboolean" t t)
-                        (weight text-tag-weight "weight" "gint" t t)
-                        (weight-set text-tag-weight-set "weight-set" "gboolean"
-                         t t)
-                        (wrap-mode text-tag-wrap-mode "wrap-mode" "GtkWrapMode"
-                         t t)
-                        (wrap-mode-set text-tag-wrap-mode-set "wrap-mode-set"
-                         "gboolean" t t)
-                        (:cffi priority text-tag-priority :int
-                         "gtk_text_tag_get_priority"
-                         "gtk_text_tag_set_priority")))
-
-
 
 (define-g-object-class "GtkTreeModelFilter" tree-model-filter
                        (:superclass g-object :export t :interfaces
