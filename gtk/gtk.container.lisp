@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkContainer
+;;;
 ;;;     GTK_IS_RESIZE_CONTAINER
 ;;;     GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID
 ;;;     gtk_container_add
@@ -330,6 +331,7 @@
 ;;; Default value: GTK_RESIZE_PARENT
 ;;;
 ;;; ----------------------------------------------------------------------------
+;;;
 ;;; Signal Details
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -361,12 +363,12 @@
 
 (in-package :gtk)
 
-(defcfun (container-propagate-expose "gtk_container_propagate_expose") :void
-  (container (g-object container))
+(defcfun ("gtk_container_propagate_expose" gtk-container-propagate-expose) :void
+  (container (g-object gtk-container))
   (child (g-object gtk-widget))
   (event (g-boxed-foreign gdk-event)))
 
-(export 'container-propagate-expose)
+(export 'gtk-container-propagate-expose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkContainer
@@ -375,26 +377,26 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkContainer" gtk-container
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_container_get_type")
-                       ((border-width gtk-container-border-width "border-width"
-                         "guint" t t)
-                        (child gtkcontainer-child "child" "GtkWidget" nil t)
-                        (resize-mode gtk-container-resize-mode "resize-mode"
-                         "GtkResizeMode" t t)
-                        (:cffi focus-child gtk-container-focus-child g-object
-                          "gtk_container_get_focus_child"
-                          "gtk_container_set_focus_child")
-                        (:cffi focus-vadjustment gtk-container-focus-vadjustment
-                          g-object "gtk_container_get_focus_vadjustment"
-                          "gtk_container_set_focus_vadjustment")
-                        (:cffi focus-hadjustment gtk-container-focus-hadjustment
-                          g-object "gtk_container_get_focus_hadjustment"
-                          "gtk_container_set_focus_hadjustment")
-                        (:cffi reallocate-redraws
-                          gtk-container-reallocate-redraws
-                          :boolean nil "gtk_container_set_reallocate_redraws")))
+  (:superclass gtk-widget
+    :export t
+    :interfaces ("AtkImplementorIface" "GtkBuildable")
+    :type-initializer "gtk_container_get_type")
+  ((border-width gtk-container-border-width
+    "border-width" "guint" t t)
+   (child gtkcontainer-child
+    "child" "GtkWidget" nil t)
+   (resize-mode gtk-container-resize-mode
+    "resize-mode" "GtkResizeMode" t t)
+   (:cffi focus-child gtk-container-focus-child g-object
+          "gtk_container_get_focus_child" "gtk_container_set_focus_child")
+   (:cffi focus-vadjustment gtk-container-focus-vadjustment g-object
+          "gtk_container_get_focus_vadjustment"
+          "gtk_container_set_focus_vadjustment")
+   (:cffi focus-hadjustment gtk-container-focus-hadjustment g-object
+          "gtk_container_get_focus_hadjustment"
+          "gtk_container_set_focus_hadjustment")
+   (:cffi reallocate-redraws gtk-container-reallocate-redraws :boolean
+          nil "gtk_container_set_reallocate_redraws")))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_IS_RESIZE_CONTAINER()
@@ -470,7 +472,7 @@
 ;;;     a current child of container
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (container-remove "gtk_container_remove") :void
+(defcfun ("gtk_container_remove" gtk-container-remove) :void
   (container (g-object gtk-container))
   (widget (g-object gtk-widget)))
 
@@ -583,7 +585,7 @@
 
 (defun map-container-children (container function)
   (with-stable-pointer (ptr function)
-    (gtk-container-foreach container (callback gtk-container-foreach-callback)
+    (%gtk-container-foreach container (callback gtk-container-foreach-callback)
                            ptr)))
 
 (export 'map-container-children)
@@ -995,7 +997,7 @@
 ;;;     a GtkContainer
 ;;; 
 ;;; callback :
-;;;     a callback. [scope call][closure callback_data]
+;;;     a callback
 ;;; 
 ;;; callback_data :
 ;;;     callback user data
