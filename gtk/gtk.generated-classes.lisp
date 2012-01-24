@@ -549,13 +549,7 @@
   (:printing 1024)
   (:builder 2048))
 
-(define-g-flags "GtkDestDefaults"
-    dest-defaults
-    (:export t :type-initializer "gtk_dest_defaults_get_type")
-  (:motion 1)
-  (:highlight 2)
-  (:drop 4)
-  (:all 7))
+
 
 (define-g-flags "GtkFileFilterFlags"
     file-filter-flags
@@ -627,13 +621,7 @@
   (:action 32)
   (:no-hooks 64))
 
-(define-g-flags "GtkTargetFlags"
-    target-flags
-    (:export t :type-initializer "gtk_target_flags_get_type")
-  (:same-app 1)
-  (:same-widget 2)
-  (:other-app 4)
-  (:other-widget 8))
+
 
 (define-g-flags "GtkTreeModelFlags"
     tree-model-flags
@@ -1249,23 +1237,8 @@
                         (use-underline expander-use-underline "use-underline"
                          "gboolean" t t)))
 
-(define-g-object-class "GtkFrame" frame
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_frame_get_type")
-                       ((label frame-label "label" "gchararray" t t)
-                        (label-widget frame-label-widget "label-widget"
-                         "GtkWidget" t t)
-                        (label-xalign frame-label-xalign "label-xalign"
-                         "gfloat" t t)
-                        (label-yalign frame-label-yalign "label-yalign"
-                         "gfloat" t t)
-                        (shadow frame-shadow "shadow" "GtkShadowType" t t)
-                        (shadow-type frame-shadow-type "shadow-type"
-                         "GtkShadowType" t t)))
-
 (define-g-object-class "GtkAspectFrame" aspect-frame
-                       (:superclass frame :export t :interfaces
+                       (:superclass gtk-frame :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_aspect_frame_get_type")
                        ((obey-child aspect-frame-obey-child "obey-child"
@@ -1905,158 +1878,7 @@
                         :type-initializer "gtk_vruler_get_type")
                        nil)
 
-(define-g-object-class "GtkSettings" settings
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_settings_get_type")
-                       ((color-hash settings-color-hash "color-hash"
-                         "GHashTable" t nil)
-                        (gtk-alternative-button-order
-                         settings-gtk-alternative-button-order
-                         "gtk-alternative-button-order" "gboolean" t t)
-                        (gtk-alternative-sort-arrows
-                         settings-gtk-alternative-sort-arrows
-                         "gtk-alternative-sort-arrows" "gboolean" t t)
-                        (gtk-button-images settings-gtk-button-images
-                         "gtk-button-images" "gboolean" t t)
-                        (gtk-can-change-accels settings-gtk-can-change-accels
-                         "gtk-can-change-accels" "gboolean" t t)
-                        (gtk-color-palette settings-gtk-color-palette
-                         "gtk-color-palette" "gchararray" t t)
-                        (gtk-color-scheme settings-gtk-color-scheme
-                         "gtk-color-scheme" "gchararray" t t)
-                        (gtk-cursor-blink settings-gtk-cursor-blink
-                         "gtk-cursor-blink" "gboolean" t t)
-                        (gtk-cursor-blink-time settings-gtk-cursor-blink-time
-                         "gtk-cursor-blink-time" "gint" t t)
-                        (gtk-cursor-blink-timeout
-                         settings-gtk-cursor-blink-timeout
-                         "gtk-cursor-blink-timeout" "gint" t t)
-                        (gtk-cursor-theme-name settings-gtk-cursor-theme-name
-                         "gtk-cursor-theme-name" "gchararray" t t)
-                        (gtk-cursor-theme-size settings-gtk-cursor-theme-size
-                         "gtk-cursor-theme-size" "gint" t t)
-                        (gtk-dnd-drag-threshold settings-gtk-dnd-drag-threshold
-                         "gtk-dnd-drag-threshold" "gint" t t)
-                        (gtk-double-click-distance
-                         settings-gtk-double-click-distance
-                         "gtk-double-click-distance" "gint" t t)
-                        (gtk-double-click-time settings-gtk-double-click-time
-                         "gtk-double-click-time" "gint" t t)
-                        (gtk-enable-accels settings-gtk-enable-accels
-                         "gtk-enable-accels" "gboolean" t t)
-                        (gtk-enable-animations settings-gtk-enable-animations
-                         "gtk-enable-animations" "gboolean" t t)
-                        (gtk-enable-event-sounds
-                         settings-gtk-enable-event-sounds
-                         "gtk-enable-event-sounds" "gboolean" t t)
-                        (gtk-enable-input-feedback-sounds
-                         settings-gtk-enable-input-feedback-sounds
-                         "gtk-enable-input-feedback-sounds" "gboolean" t t)
-                        (gtk-enable-mnemonics settings-gtk-enable-mnemonics
-                         "gtk-enable-mnemonics" "gboolean" t t)
-                        (gtk-enable-tooltips settings-gtk-enable-tooltips
-                         "gtk-enable-tooltips" "gboolean" t t)
-                        (gtk-entry-password-hint-timeout
-                         settings-gtk-entry-password-hint-timeout
-                         "gtk-entry-password-hint-timeout" "guint" t t)
-                        (gtk-entry-select-on-focus
-                         settings-gtk-entry-select-on-focus
-                         "gtk-entry-select-on-focus" "gboolean" t t)
-                        (gtk-error-bell settings-gtk-error-bell
-                         "gtk-error-bell" "gboolean" t t)
-                        (gtk-fallback-icon-theme
-                         settings-gtk-fallback-icon-theme
-                         "gtk-fallback-icon-theme" "gchararray" t t)
-                        (gtk-file-chooser-backend
-                         settings-gtk-file-chooser-backend
-                         "gtk-file-chooser-backend" "gchararray" t t)
-                        (gtk-font-name settings-gtk-font-name "gtk-font-name"
-                         "gchararray" t t)
-                        (gtk-fontconfig-timestamp
-                         settings-gtk-fontconfig-timestamp
-                         "gtk-fontconfig-timestamp" "guint" t t)
-                        (gtk-icon-sizes settings-gtk-icon-sizes
-                         "gtk-icon-sizes" "gchararray" t t)
-                        (gtk-icon-theme-name settings-gtk-icon-theme-name
-                         "gtk-icon-theme-name" "gchararray" t t)
-                        (gtk-im-module settings-gtk-im-module "gtk-im-module"
-                         "gchararray" t t)
-                        (gtk-key-theme-name settings-gtk-key-theme-name
-                         "gtk-key-theme-name" "gchararray" t t)
-                        (gtk-keynav-cursor-only settings-gtk-keynav-cursor-only
-                         "gtk-keynav-cursor-only" "gboolean" t t)
-                        (gtk-keynav-wrap-around settings-gtk-keynav-wrap-around
-                         "gtk-keynav-wrap-around" "gboolean" t t)
-                        (gtk-label-select-on-focus
-                         settings-gtk-label-select-on-focus
-                         "gtk-label-select-on-focus" "gboolean" t t)
-                        (gtk-menu-bar-accel settings-gtk-menu-bar-accel
-                         "gtk-menu-bar-accel" "gchararray" t t)
-                        (gtk-menu-bar-popup-delay
-                         settings-gtk-menu-bar-popup-delay
-                         "gtk-menu-bar-popup-delay" "gint" t t)
-                        (gtk-menu-images settings-gtk-menu-images
-                         "gtk-menu-images" "gboolean" t t)
-                        (gtk-menu-popdown-delay settings-gtk-menu-popdown-delay
-                         "gtk-menu-popdown-delay" "gint" t t)
-                        (gtk-menu-popup-delay settings-gtk-menu-popup-delay
-                         "gtk-menu-popup-delay" "gint" t t)
-                        (gtk-modules settings-gtk-modules "gtk-modules"
-                         "gchararray" t t)
-                        (gtk-print-backends settings-gtk-print-backends
-                         "gtk-print-backends" "gchararray" t t)
-                        (gtk-print-preview-command
-                         settings-gtk-print-preview-command
-                         "gtk-print-preview-command" "gchararray" t t)
-                        (gtk-recent-files-limit settings-gtk-recent-files-limit
-                         "gtk-recent-files-limit" "gint" t t)
-                        (gtk-recent-files-max-age
-                         settings-gtk-recent-files-max-age
-                         "gtk-recent-files-max-age" "gint" t t)
-                        (gtk-scrolled-window-placement
-                         settings-gtk-scrolled-window-placement
-                         "gtk-scrolled-window-placement" "GtkCornerType" t t)
-                        (gtk-show-input-method-menu
-                         settings-gtk-show-input-method-menu
-                         "gtk-show-input-method-menu" "gboolean" t t)
-                        (gtk-show-unicode-menu settings-gtk-show-unicode-menu
-                         "gtk-show-unicode-menu" "gboolean" t t)
-                        (gtk-sound-theme-name settings-gtk-sound-theme-name
-                         "gtk-sound-theme-name" "gchararray" t t)
-                        (gtk-split-cursor settings-gtk-split-cursor
-                         "gtk-split-cursor" "gboolean" t t)
-                        (gtk-theme-name settings-gtk-theme-name
-                         "gtk-theme-name" "gchararray" t t)
-                        (gtk-timeout-expand settings-gtk-timeout-expand
-                         "gtk-timeout-expand" "gint" t t)
-                        (gtk-timeout-initial settings-gtk-timeout-initial
-                         "gtk-timeout-initial" "gint" t t)
-                        (gtk-timeout-repeat settings-gtk-timeout-repeat
-                         "gtk-timeout-repeat" "gint" t t)
-                        (gtk-toolbar-icon-size settings-gtk-toolbar-icon-size
-                         "gtk-toolbar-icon-size" "GtkIconSize" t t)
-                        (gtk-toolbar-style settings-gtk-toolbar-style
-                         "gtk-toolbar-style" "GtkToolbarStyle" t t)
-                        (gtk-tooltip-browse-mode-timeout
-                         settings-gtk-tooltip-browse-mode-timeout
-                         "gtk-tooltip-browse-mode-timeout" "gint" t t)
-                        (gtk-tooltip-browse-timeout
-                         settings-gtk-tooltip-browse-timeout
-                         "gtk-tooltip-browse-timeout" "gint" t t)
-                        (gtk-tooltip-timeout settings-gtk-tooltip-timeout
-                         "gtk-tooltip-timeout" "gint" t t)
-                        (gtk-touchscreen-mode settings-gtk-touchscreen-mode
-                         "gtk-touchscreen-mode" "gboolean" t t)
-                        (gtk-xft-antialias settings-gtk-xft-antialias
-                         "gtk-xft-antialias" "gint" t t)
-                        (gtk-xft-dpi settings-gtk-xft-dpi "gtk-xft-dpi" "gint"
-                         t t)
-                        (gtk-xft-hinting settings-gtk-xft-hinting
-                         "gtk-xft-hinting" "gint" t t)
-                        (gtk-xft-hintstyle settings-gtk-xft-hintstyle
-                         "gtk-xft-hintstyle" "gchararray" t t)
-                        (gtk-xft-rgba settings-gtk-xft-rgba "gtk-xft-rgba"
-                         "gchararray" t t)))
+
 
 (define-g-object-class "GtkRcStyle" rc-style
                        (:superclass g-object :export t :interfaces nil
@@ -2074,10 +1896,7 @@
                        nil)
 
 
-(define-g-object-class "GtkAccelMap" accel-map
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_accel_map_get_type")
-                       nil)
+
 
 (define-g-object-class "GtkAction" action
                        (:superclass g-object :export t :interfaces
@@ -2134,10 +1953,7 @@
                        ((translation-domain builder-translation-domain
                          "translation-domain" "gchararray" t t)))
 
-(define-g-object-class "GtkClipboard" clipboard
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_clipboard_get_type")
-                       nil)
+
 
 (define-g-object-class "GtkEntryCompletion" entry-completion
                        (:superclass g-object :export t :interfaces
