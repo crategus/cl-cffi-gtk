@@ -1165,20 +1165,6 @@
                         (use-size font-button-use-size "use-size" "gboolean" t
                          t)))
 
-(define-g-object-class "GtkLinkButton" link-button
-                       (:superclass gtk-button :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_link_button_get_type")
-                       ((uri link-button-uri "uri" "gchararray" t t)
-                        (visited link-button-visited "visited" "gboolean" t t)))
-
-(define-g-object-class "GtkVolumeButton" volume-button
-                       (:superclass gtk-scale-button :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
-                         "GtkOrientable")
-                        :type-initializer "gtk_volume_button_get_type")
-                       nil)
-
 (define-g-object-class "GtkComboBox" combo-box
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
@@ -2109,12 +2095,7 @@
                         (:cffi accel-group ui-manager-accel-group g-object
                          "gtk_ui_manager_get_accel_group" nil)))
 
-(define-g-object-class "GtkWindowGroup" window-group
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_window_group_get_type")
-                       ((:cffi windows window-group-windows
-                         (g-list (g-object gtk-window))
-                         "gtk_window_group_list_windows" nil)))
+
 
 (define-g-object-class "GtkToggleAction" toggle-action
                        (:superclass action :export t :interfaces
