@@ -177,7 +177,7 @@
 
 (defun gtk-hsv-get-color (hsv)
   (with-foreign-objects ((h :double) (s :double) (v :double))
-    (gtk-hsv-get-color hsv h s v)
+    (%gtk-hsv-get-color hsv h s v)
     (values (mem-ref h :double) (mem-ref s :double) (mem-ref v :double))))
 
 (export 'gtk-hsv-get-color)
