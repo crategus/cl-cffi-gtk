@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -725,7 +725,7 @@
           (g-list gdk-pixbuf :free-from-foreign t :free-to-foreign t)
           "gtk_window_get_icon_list" "gtk_window_set_icon_list")
    (:cffi group gtk-window-group
-          (g-object window-group)
+          (g-object gtk-window-group)
           "gtk_window_get_group" nil)
    (:cffi keep-above
           gtk-window-keep-above :boolean
