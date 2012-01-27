@@ -524,7 +524,7 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_builder-add_objects_from_file" 
+(defcfun ("gtk_builder_add_objects_from_file"
           %gtk-builder-add-objects-from-file):uint
   (builder g-object)
   (filename :string)
