@@ -368,6 +368,31 @@
 ;;; struct GtkEntryCompletion;
 ;;; ----------------------------------------------------------------------------
 
+(define-g-object-class "GtkEntryCompletion" gtk-entry-completion
+                       (:superclass g-object :export t :interfaces
+                        ("GtkBuildable" "GtkCellLayout") :type-initializer
+                        "gtk_entry_completion_get_type")
+                       ((inline-completion entry-completion-inline-completion
+                         "inline-completion" "gboolean" t t)
+                        (inline-selection entry-completion-inline-selection
+                         "inline-selection" "gboolean" t t)
+                        (minimum-key-length entry-completion-minimum-key-length
+                         "minimum-key-length" "gint" t t)
+                        (model entry-completion-model "model" "GtkTreeModel" t
+                         t)
+                        (popup-completion entry-completion-popup-completion
+                         "popup-completion" "gboolean" t t)
+                        (popup-set-width entry-completion-popup-set-width
+                         "popup-set-width" "gboolean" t t)
+                        (popup-single-match entry-completion-popup-single-match
+                         "popup-single-match" "gboolean" t t)
+                        (text-column entry-completion-text-column "text-column"
+                         "gint" t t)
+                        (:cffi entry entry-completion-entry (g-object entry)
+                         "gtk_entry_completion_get_entry" nil)
+                        (:cffi match-function entry-completion-match-function
+                          nil nil gtk-entry-completion-set-match-function)))
+
 ;;; ---------------------------------------------------------------------------- 
 ;;; GtkEntryCompletionMatchFunc ()
 ;;; 
@@ -510,7 +535,7 @@
 (define-cb-methods entry-completion-match-func :boolean
   ((completion (g-object gtk-entry-completion))
    (key :string)
-   (iter (g-boxed-foreign tree-iter))))
+   (iter (g-boxed-foreign gtk-tree-iter))))
 
 (defcfun ("gtk_entry_completion_set_match_func"
           %gtk-entry-completion-set-match-func) :void
