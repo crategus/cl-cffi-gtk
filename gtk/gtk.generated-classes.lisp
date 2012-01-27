@@ -1,3 +1,30 @@
+;;; ----------------------------------------------------------------------------
+;;; gtk.generated-classes.lisp
+;;;
+;;; This file contains code from a fork of cl-gtk2.
+;;; See http://common-lisp.net/project/cl-gtk2/
+;;;
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;;
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU Lesser General Public License for Lisp
+;;; as published by the Free Software Foundation, either version 3 of the
+;;; License, or (at your option) any later version and with a preamble to
+;;; the GNU Lesser General Public License that clarifies the terms for use
+;;; with Lisp programs and is referred as the LLGPL.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU Lesser General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU Lesser General Public
+;;; License along with this program and the preamble to the Gnu Lesser
+;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
+;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+
 (in-package :gtk)
 
 (define-g-enum "GtkSizeGroupMode"
@@ -65,8 +92,6 @@
   (:autosize 1)
   (:fixed 2))
 
-
-
 (define-g-enum "GtkUpdateType"
     update-type
     (:export t :type-initializer "gtk_update_type_get_type")
@@ -81,16 +106,12 @@
   (:inches 1)
   (:centimeters 2))
 
-
-
 (define-g-enum "GtkCurveType"
     curve-type
     (:export t :type-initializer "gtk_curve_type_get_type")
   (:linear 0)
   (:spline 1)
   (:free 2))
-
-
 
 (define-g-enum "GtkTreeViewGridLines"
     tree-view-grid-lines
@@ -115,19 +136,6 @@
   (:on 1)
   (:off 2))
 
-(define-g-enum "GtkIconSize"
-    icon-size
-    (:export t :type-initializer "gtk_icon_size_get_type")
-  (:invalid 0)
-  (:menu 1)
-  (:small-toolbar 2)
-  (:large-toolbar 3)
-  (:button 4)
-  (:dnd 5)
-  (:dialog 6))
-
-
-
 (define-g-enum "GtkButtonsType"
     buttons-type
     (:export t :type-initializer "gtk_buttons_type_get_type")
@@ -137,8 +145,6 @@
   (:cancel 3)
   (:yes-no 4)
   (:ok-cancel 5))
-
-
 
 (define-g-enum "GtkNotebookTab"
     notebook-tab
@@ -166,19 +172,6 @@
   (:se 6)
   (:w 7)
   (:e 8))
-
-(define-g-enum "GtkBuilderError"
-    builder-error
-    (:export t :type-initializer "gtk_builder_error_get_type")
-  (:invalid-type-function 0)
-  (:unhandled-tag 1)
-  (:missing-attribute 2)
-  (:invalid-attribute 3)
-  (:invalid-tag 4)
-  (:missing-property-value 5)
-  (:invalid-value 6)
-  (:version-mismatch 7)
-  (:duplicate-id 8))
 
 (define-g-enum "GtkCellType"
     cell-type
@@ -250,16 +243,6 @@
     (:export t :type-initializer "gtk_icon_theme_error_get_type")
   (:not-found 0)
   (:failed 1))
-
-(define-g-enum "GtkIconViewDropPosition"
-    icon-view-drop-position
-    (:export t :type-initializer "gtk_icon_view_drop_position_get_type")
-  (:no-drop 0)
-  (:drop-into 1)
-  (:drop-left 2)
-  (:drop-right 3)
-  (:drop-above 4)
-  (:drop-below 5))
 
 (define-g-enum "GtkMatchType"
     match-type
@@ -450,8 +433,6 @@
   (:top-bottom 0)
   (:left-right 1))
 
-
-
 (define-g-enum "GtkToolbarChildType"
     toolbar-child-type
     (:export t :type-initializer "gtk_toolbar_child_type_get_type")
@@ -494,18 +475,6 @@
   (:primary 0)
   (:secondary 1))
 
-
-
-
-(define-g-flags "GtkArgFlags"
-    arg-flags
-    (:export t :type-initializer "gtk_arg_flags_get_type")
-  (:readable 1)
-  (:writable 2)
-  (:construct 4)
-  (:construct-only 8)
-  (:child-arg 16))
-
 (define-g-flags "GtkButtonAction"
     button-action
     (:export t :type-initializer "gtk_button_action_get_type")
@@ -513,25 +482,6 @@
   (:selects 1)
   (:drags 2)
   (:expands 4))
-
-(define-g-flags "GtkCalendarDisplayOptions"
-    calendar-display-options
-    (:export t :type-initializer "gtk_calendar_display_options_get_type")
-  (:show-heading 1)
-  (:show-day-names 2)
-  (:no-month-change 4)
-  (:show-week-numbers 8)
-  (:week-start-monday 16)
-  (:show-details 32))
-
-(define-g-flags "GtkCellRendererState"
-    cell-renderer-state
-    (:export t :type-initializer "gtk_cell_renderer_state_get_type")
-  (:selected 1)
-  (:prelit 2)
-  (:insensitive 4)
-  (:sorted 8)
-  (:focused 16))
 
 (define-g-flags "GtkDebugFlag"
     debug-flag
@@ -549,8 +499,6 @@
   (:printing 1024)
   (:builder 2048))
 
-
-
 (define-g-flags "GtkFileFilterFlags"
     file-filter-flags
     (:export t :type-initializer "gtk_file_filter_flags_get_type")
@@ -567,14 +515,6 @@
   (:use-builtin 4)
   (:generic-fallback 8)
   (:force-size 16))
-
-(define-g-flags "GtkObjectFlags"
-    object-flags
-    (:export t :type-initializer "gtk_object_flags_get_type")
-  (:in-destruction 1)
-  (:floating 2)
-  (:reserved-1 4)
-  (:reserved-2 8))
 
 (define-g-flags "GtkPrivateFlags"
     private-flags
@@ -621,14 +561,6 @@
   (:action 32)
   (:no-hooks 64))
 
-
-
-(define-g-flags "GtkTreeModelFlags"
-    tree-model-flags
-    (:export t :type-initializer "gtk_tree_model_flags_get_type")
-  (:iters-persist 1)
-  (:list-only 2))
-
 (define-g-flags "GtkUIManagerItemType"
     ui-manager-item-type
     (:export t)
@@ -643,42 +575,6 @@
   (:separator 128)
   (:accelerator 256)
   (:popup-with-accels 512))
-
-(define-g-flags "GtkWidgetFlags" gtk-widget-flags
-  (:export t
-   :type-initializer "gtk_widget_flags_get_type")
-  (:toplevel 16)
-  (:no-window 32)
-  (:realized 64)
-  (:mapped 128)
-  (:visible 256)
-  (:sensitive 512)
-  (:parent-sensitive 1024)
-  (:can-focus 2048)
-  (:has-focus 4096)
-  (:can-default 8192)
-  (:has-default 16384)
-  (:has-grab 32768)
-  (:rc-style 65536)
-  (:composite-child 131072)
-  (:no-reparent 262144)
-  (:app-paintable 524288)
-  (:receives-default 1048576)
-  (:double-buffered 2097152)
-  (:no-show-all 4194304))
-
-(define-g-interface "GtkBuildable"
-    buildable
-    (:export t :type-initializer "gtk_buildable_get_type"))
-
-(define-g-interface "GtkCellEditable"
-    cell-editable
-    (:export t :type-initializer "gtk_cell_editable_get_type"))
-
-(define-g-interface "GtkCellLayout"
-    cell-layout
-    (:export t :type-initializer "gtk_cell_layout_get_type"))
-
 
 (define-g-interface "GtkFileChooser"
     file-chooser
@@ -742,22 +638,6 @@
     file-chooser-embed
     (:export t))
 
-(define-g-interface "GtkTreeModel"
-    tree-model
-    (:export t :type-initializer "gtk_tree_model_get_type"))
-
-(define-g-interface "GtkTreeDragSource"
-    tree-drag-source
-    (:export t :type-initializer "gtk_tree_drag_source_get_type"))
-
-(define-g-interface "GtkTreeDragDest"
-    tree-drag-dest
-    (:export t :type-initializer "gtk_tree_drag_dest_get_type"))
-
-(define-g-interface "GtkTreeSortable"
-    tree-sortable
-    (:export t :type-initializer "gtk_tree_sortable_get_type"))
-
 (define-g-interface "GtkPrintOperationPreview"
     print-operation-preview
     (:export t :type-initializer "gtk_print_operation_preview_get_type"))
@@ -788,58 +668,6 @@
   (:cffi relief-style tool-shell-relief-style gtk-relief-style
    "gtk_tool_shell_get_relief_style" nil)
   (:cffi style tool-shell-style gtk-toolbar-style "gtk_tool_shell_get_style" nil))
-
-(define-g-interface "GtkOrientable"
-    orientable
-    (:export t :type-initializer "gtk_orientable_get_type")
-  (orientation orientable-orientation "orientation" "GtkOrientation" t t))
-
-(define-g-interface "GtkActivatable"
-    activatable
-    (:export t :type-initializer "gtk_activatable_get_type")
-  (related-action activatable-related-action "related-action" "GtkAction" t t)
-  (use-action-appearance activatable-use-action-appearance
-   "use-action-appearance" "gboolean" t t))
-
-(define-g-interface "AtkImplementorIface"
-    atk-implementor-iface
-    (:export t))
-
-(define-g-object-class "GtkObject" gtk-object
-                       (:superclass g-initially-unowned :export t :interfaces
-                        nil :type-initializer "gtk_object_get_type")
-                       ((user-data gtk-object-user-data "user-data" "gpointer"
-                         t t)))
-
-
-
-(define-g-object-class "GtkCellRenderer" cell-renderer
-                       (:superclass gtk-object :export t :interfaces nil
-                        :type-initializer "gtk_cell_renderer_get_type")
-                       ((cell-background cell-renderer-cell-background
-                         "cell-background" "gchararray" nil t)
-                        (cell-background-gdk cell-renderer-cell-background-gdk
-                         "cell-background-gdk" "GdkColor" t t)
-                        (cell-background-set cell-renderer-cell-background-set
-                         "cell-background-set" "gboolean" t t)
-                        (editing cell-renderer-editing "editing" "gboolean" t
-                         nil)
-                        (height cell-renderer-height "height" "gint" t t)
-                        (is-expanded cell-renderer-is-expanded "is-expanded"
-                         "gboolean" t t)
-                        (is-expander cell-renderer-is-expander "is-expander"
-                         "gboolean" t t)
-                        (mode cell-renderer-mode "mode" "GtkCellRendererMode" t
-                         t)
-                        (sensitive cell-renderer-sensitive "sensitive"
-                         "gboolean" t t)
-                        (visible cell-renderer-visible "visible" "gboolean" t
-                         t)
-                        (width cell-renderer-width "width" "gint" t t)
-                        (xalign cell-renderer-xalign "xalign" "gfloat" t t)
-                        (xpad cell-renderer-xpad "xpad" "guint" t t)
-                        (yalign cell-renderer-yalign "yalign" "gfloat" t t)
-                        (ypad cell-renderer-ypad "ypad" "guint" t t)))
 
 (define-g-object-class "GtkCellRendererPixbuf" cell-renderer-pixbuf
                        (:superclass cell-renderer :export t :interfaces nil
@@ -879,93 +707,6 @@
                          "text-yalign" "gfloat" t t)
                         (value cell-renderer-progress-value "value" "gint" t
                          t)))
-
-(define-g-object-class "GtkCellRendererText" cell-renderer-text
-                       (:superclass cell-renderer :export t :interfaces nil
-                        :type-initializer "gtk_cell_renderer_text_get_type")
-                       ((align-set cell-renderer-text-align-set "align-set"
-                         "gboolean" t t)
-                        (alignment cell-renderer-text-alignment "alignment"
-                         "PangoAlignment" t t)
-                        (attributes cell-renderer-text-attributes "attributes"
-                         "PangoAttrList" t t)
-                        (background cell-renderer-text-background "background"
-                         "gchararray" nil t)
-                        (background-gdk cell-renderer-text-background-gdk
-                         "background-gdk" "GdkColor" t t)
-                        (background-set cell-renderer-text-background-set
-                         "background-set" "gboolean" t t)
-                        (editable cell-renderer-text-editable "editable"
-                         "gboolean" t t)
-                        (editable-set cell-renderer-text-editable-set
-                         "editable-set" "gboolean" t t)
-                        (ellipsize cell-renderer-text-ellipsize "ellipsize"
-                         "PangoEllipsizeMode" t t)
-                        (ellipsize-set cell-renderer-text-ellipsize-set
-                         "ellipsize-set" "gboolean" t t)
-                        (family cell-renderer-text-family "family" "gchararray"
-                         t t)
-                        (family-set cell-renderer-text-family-set "family-set"
-                         "gboolean" t t)
-                        (font cell-renderer-text-font "font" "gchararray" t t)
-                        (font-desc cell-renderer-text-font-desc "font-desc"
-                         "PangoFontDescription" t t)
-                        (foreground cell-renderer-text-foreground "foreground"
-                         "gchararray" nil t)
-                        (foreground-gdk cell-renderer-text-foreground-gdk
-                         "foreground-gdk" "GdkColor" t t)
-                        (foreground-set cell-renderer-text-foreground-set
-                         "foreground-set" "gboolean" t t)
-                        (language cell-renderer-text-language "language"
-                         "gchararray" t t)
-                        (language-set cell-renderer-text-language-set
-                         "language-set" "gboolean" t t)
-                        (markup cell-renderer-text-markup "markup" "gchararray"
-                         nil t)
-                        (rise cell-renderer-text-rise "rise" "gint" t t)
-                        (rise-set cell-renderer-text-rise-set "rise-set"
-                         "gboolean" t t)
-                        (scale cell-renderer-text-scale "scale" "gdouble" t t)
-                        (scale-set cell-renderer-text-scale-set "scale-set"
-                         "gboolean" t t)
-                        (single-paragraph-mode
-                         cell-renderer-text-single-paragraph-mode
-                         "single-paragraph-mode" "gboolean" t t)
-                        (size cell-renderer-text-size "size" "gint" t t)
-                        (size-points cell-renderer-text-size-points
-                         "size-points" "gdouble" t t)
-                        (size-set cell-renderer-text-size-set "size-set"
-                         "gboolean" t t)
-                        (stretch cell-renderer-text-stretch "stretch"
-                         "PangoStretch" t t)
-                        (stretch-set cell-renderer-text-stretch-set
-                         "stretch-set" "gboolean" t t)
-                        (strikethrough cell-renderer-text-strikethrough
-                         "strikethrough" "gboolean" t t)
-                        (strikethrough-set cell-renderer-text-strikethrough-set
-                         "strikethrough-set" "gboolean" t t)
-                        (style cell-renderer-text-style "style" "PangoStyle" t
-                         t)
-                        (style-set cell-renderer-text-style-set "style-set"
-                         "gboolean" t t)
-                        (text cell-renderer-text-text "text" "gchararray" t t)
-                        (underline cell-renderer-text-underline "underline"
-                         "PangoUnderline" t t)
-                        (underline-set cell-renderer-text-underline-set
-                         "underline-set" "gboolean" t t)
-                        (variant cell-renderer-text-variant "variant"
-                         "PangoVariant" t t)
-                        (variant-set cell-renderer-text-variant-set
-                         "variant-set" "gboolean" t t)
-                        (weight cell-renderer-text-weight "weight" "gint" t t)
-                        (weight-set cell-renderer-text-weight-set "weight-set"
-                         "gboolean" t t)
-                        (width-chars cell-renderer-text-width-chars
-                         "width-chars" "gint" t t)
-                        (wrap-mode cell-renderer-text-wrap-mode "wrap-mode"
-                         "PangoWrapMode" t t)
-                        (wrap-width cell-renderer-text-wrap-width "wrap-width"
-                         "gint" t t)))
 
 (define-g-object-class "GtkCellRendererAccel" cell-renderer-accel
                        (:superclass cell-renderer-text :export t :interfaces
@@ -1070,36 +811,6 @@
                          (g-list g-object :free-from-foreign t)
                          "gtk_tree_view_column_get_cell_renderers" nil)))
 
-
-
-(define-g-object-class "GtkCalendar" calendar
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_calendar_get_type")
-                       ((day calendar-day "day" "gint" t t)
-                        (detail-height-rows calendar-detail-height-rows
-                         "detail-height-rows" "gint" t t)
-                        (detail-width-chars calendar-detail-width-chars
-                         "detail-width-chars" "gint" t t)
-                        (month calendar-month "month" "gint" t t)
-                        (no-month-change calendar-no-month-change
-                         "no-month-change" "gboolean" t t)
-                        (show-day-names calendar-show-day-names
-                         "show-day-names" "gboolean" t t)
-                        (show-details calendar-show-details "show-details"
-                         "gboolean" t t)
-                        (show-heading calendar-show-heading "show-heading"
-                         "gboolean" t t)
-                        (show-week-numbers calendar-show-week-numbers
-                         "show-week-numbers" "gboolean" t t)
-                        (year calendar-year "year" "gint" t t)
-                        (:cffi detail-function calendar-detail-function nil nil
-                         calendar-set-detail-function)
-                        (:cffi display-options calendar-display-options
-                         calendar-display-options
-                         "gtk_calendar_get_display_options"
-                         "gtk_calendar_set_display_options")))
-
 (define-g-object-class "GtkCellView" cell-view
                        (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellLayout")
@@ -1118,8 +829,6 @@
                         (:cffi cell-renderers cell-view-cell-renderers
                          (g-list (g-object cell-renderer) :free-from-foreign t)
                          "gtk_cell_view_get_cell_renderers" nil)))
-
-
 
 (define-g-object-class "GtkAlignment" alignment
                        (:superclass gtk-bin :export t :interfaces
@@ -1165,40 +874,6 @@
                         (use-size font-button-use-size "use-size" "gboolean" t
                          t)))
 
-(define-g-object-class "GtkComboBox" combo-box
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
-                         "GtkCellLayout")
-                        :type-initializer "gtk_combo_box_get_type")
-                       ((active combo-box-active "active" "gint" t t)
-                        (add-tearoffs combo-box-add-tearoffs "add-tearoffs"
-                         "gboolean" t t)
-                        (button-sensitivity combo-box-button-sensitivity
-                         "button-sensitivity" "GtkSensitivityType" t t)
-                        (column-span-column combo-box-column-span-column
-                         "column-span-column" "gint" t t)
-                        (focus-on-click combo-box-focus-on-click
-                         "focus-on-click" "gboolean" t t)
-                        (has-frame combo-box-has-frame "has-frame" "gboolean" t
-                         t)
-                        (model combo-box-model "model" "GtkTreeModel" t t)
-                        (popup-shown combo-box-popup-shown "popup-shown"
-                         "gboolean" t nil)
-                        (row-span-column combo-box-row-span-column
-                         "row-span-column" "gint" t t)
-                        (tearoff-title combo-box-tearoff-title "tearoff-title"
-                         "gchararray" t t)
-                        (wrap-width combo-box-wrap-width "wrap-width" "gint" t
-                         t)
-                        (:cffi active-iter combo-box-active-iter
-                         (g-boxed-foreign tree-iter) combo-box-get-active-iter
-                         "gtk_combo_box_set_active_iter")
-                        (:cffi row-separator-func combo-box-separator-func nil
-                         nil combo-box-set-separator-func)
-                        (:cffi title combo-box-title
-                         (:string :free-from-foreign nil :free-to-foreign t)
-                         "gtk_combo_box_get_title" "gtk_combo_box_set_title")))
-
 (define-g-object-class "GtkComboBoxEntry" combo-box-entry
                        (:superclass combo-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
@@ -1206,8 +881,6 @@
                         :type-initializer "gtk_combo_box_entry_get_type")
                        ((text-column combo-box-entry-text-column "text-column"
                          "gint" t t)))
-
-
 
 (define-g-object-class "GtkExpander" expander
                        (:superclass gtk-bin :export t :interfaces
@@ -1309,7 +982,6 @@
                         :type-initializer "gtk_tearoff_menu_item_get_type")
                        nil)
 
-
 (define-g-object-class "GtkToolItem" tool-item
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
@@ -1393,9 +1065,6 @@
                         (vadjustment viewport-vadjustment "vadjustment"
                          "GtkAdjustment" t t)))
 
-
-
-
 (define-g-object-class "GtkColorSelectionDialog" color-selection-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1443,7 +1112,6 @@
                         :type-initializer "gtk_input_dialog_get_type")
                        nil)
 
-
 (define-g-object-class "GtkPageSetupUnixDialog" page-setup-unix-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1487,8 +1155,6 @@
                         (socket-window plug-socket-window "socket-window"
                          "GdkWindow" t nil)))
 
-
-
 (define-g-object-class "GtkButtonBox" button-box
                        (:superclass gtk-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -1508,8 +1174,6 @@
                         :type-initializer "gtk_vbutton_box_get_type")
                        nil)
 
-
-
 (define-g-object-class "GtkFileChooserButton" file-chooser-button
                        (:superclass gtk-h-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
@@ -1523,8 +1187,6 @@
                          t)
                         (width-chars file-chooser-button-width-chars
                          "width-chars" "gint" t t)))
-
-
 
 (define-g-object-class "GtkColorSelection" color-selection
                        (:superclass gtk-v-box :export t :interfaces
@@ -1577,56 +1239,6 @@
                         :type-initializer "gtk_recent_chooser_widget_get_type")
                        nil)
 
-(define-g-object-class "GtkFixed" fixed
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_fixed_get_type")
-                       ((:cffi has-window fixed-has-window :boolean
-                         "gtk_fixed_get_has_window"
-                         "gtk_fixed_set_has_window")))
-
-(define-g-object-class "GtkIconView" icon-view
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkCellLayout")
-                        :type-initializer "gtk_icon_view_get_type")
-                       ((column-spacing icon-view-column-spacing
-                         "column-spacing" "gint" t t)
-                        (columns icon-view-columns "columns" "gint" t t)
-                        (item-width icon-view-item-width "item-width" "gint" t
-                         t)
-                        (margin icon-view-margin "margin" "gint" t t)
-                        (markup-column icon-view-markup-column "markup-column"
-                         "gint" t t)
-                        (model icon-view-model "model" "GtkTreeModel" t t)
-                        (orientation icon-view-orientation "orientation"
-                         "GtkOrientation" t t)
-                        (pixbuf-column icon-view-pixbuf-column "pixbuf-column"
-                         "gint" t t)
-                        (reorderable icon-view-reorderable "reorderable"
-                         "gboolean" t t)
-                        (row-spacing icon-view-row-spacing "row-spacing" "gint"
-                         t t)
-                        (selection-mode icon-view-selection-mode
-                         "selection-mode" "GtkSelectionMode" t t)
-                        (spacing icon-view-spacing "spacing" "gint" t t)
-                        (text-column icon-view-text-column "text-column" "gint"
-                         t t)
-                        (tooltip-column icon-view-tooltip-column
-                         "tooltip-column" "gint" t t)))
-
-(define-g-object-class "GtkLayout" layout
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_layout_get_type")
-                       ((hadjustment layout-hadjustment "hadjustment"
-                         "GtkAdjustment" t t)
-                        (height layout-height "height" "guint" t t)
-                        (vadjustment layout-vadjustment "vadjustment"
-                         "GtkAdjustment" t t)
-                        (width layout-width "width" "guint" t t)
-                        (:cffi bin-window layout-bin-window g-object
-                         "gtk_layout_get_bin_window" nil)))
-
 (define-g-object-class "GtkMenuShell" menu-shell
                        (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1673,32 +1285,6 @@
                         (pack-direction menu-bar-pack-direction
                          "pack-direction" "GtkPackDirection" t t)))
 
-(define-g-object-class "GtkNotebook" notebook
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_notebook_get_type")
-                       ((enable-popup notebook-enable-popup "enable-popup"
-                         "gboolean" t t)
-                        (group notebook-group "group" "gpointer" t t)
-                        (group-id notebook-group-id "group-id" "gint" t t)
-                        (homogeneous notebook-homogeneous "homogeneous"
-                         "gboolean" t t)
-                        (page notebook-page "page" "gint" t t)
-                        (scrollable notebook-scrollable "scrollable" "gboolean"
-                         t t)
-                        (show-border notebook-show-border "show-border"
-                         "gboolean" t t)
-                        (show-tabs notebook-show-tabs "show-tabs" "gboolean" t
-                         t)
-                        (tab-border notebook-tab-border "tab-border" "guint"
-                         nil t)
-                        (tab-hborder notebook-tab-hborder "tab-hborder" "guint"
-                         t t)
-                        (tab-pos notebook-tab-pos "tab-pos" "GtkPositionType" t
-                         t)
-                        (tab-vborder notebook-tab-vborder "tab-vborder" "guint"
-                         t t)))
-
 (define-g-object-class "GtkPaned" paned
                        (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -1728,10 +1314,6 @@
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_socket_get_type")
                        nil)
-
-
-
-
 
 (define-g-object-class "GtkToolbar" toolbar
                        (:superclass gtk-container :export t :interfaces
@@ -1806,7 +1388,6 @@
                         (:cffi row-separator-func tree-view-row-separator-func
                          nil nil tree-view-set-row-separartor-func)))
 
-
 (define-g-object-class "GtkCurve" curve
                        (:superclass gtk-drawing-area :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1818,11 +1399,6 @@
                         (min-x curve-min-x "min-x" "gfloat" t t)
                         (min-y curve-min-y "min-y" "gfloat" t t)))
 
-
-
-
-
-
 (define-g-object-class "GtkArrow" arrow
                        (:superclass gtk-misc :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1831,16 +1407,6 @@
                          "GtkArrowType" t t)
                         (shadow-type arrow-shadow-type "shadow-type"
                          "GtkShadowType" t t)))
-
-
-
-
-
-
-
-
-
-
 
 (define-g-object-class "GtkRuler" ruler
                        (:superclass gtk-widget :export t :interfaces
@@ -1864,8 +1430,6 @@
                         :type-initializer "gtk_vruler_get_type")
                        nil)
 
-
-
 (define-g-object-class "GtkRcStyle" rc-style
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_rc_style_get_type")
@@ -1880,9 +1444,6 @@
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_tooltip_get_type")
                        nil)
-
-
-
 
 (define-g-object-class "GtkAction" action
                        (:superclass g-object :export t :interfaces
@@ -1933,53 +1494,10 @@
                          action-group-translation-domain nil nil
                          gtk-action-group-set-translation-domain)))
 
-(define-g-object-class "GtkBuilder" builder
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_builder_get_type")
-                       ((translation-domain builder-translation-domain
-                         "translation-domain" "gchararray" t t)))
-
-
-
-(define-g-object-class "GtkEntryCompletion" entry-completion
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable" "GtkCellLayout") :type-initializer
-                        "gtk_entry_completion_get_type")
-                       ((inline-completion entry-completion-inline-completion
-                         "inline-completion" "gboolean" t t)
-                        (inline-selection entry-completion-inline-selection
-                         "inline-selection" "gboolean" t t)
-                        (minimum-key-length entry-completion-minimum-key-length
-                         "minimum-key-length" "gint" t t)
-                        (model entry-completion-model "model" "GtkTreeModel" t
-                         t)
-                        (popup-completion entry-completion-popup-completion
-                         "popup-completion" "gboolean" t t)
-                        (popup-set-width entry-completion-popup-set-width
-                         "popup-set-width" "gboolean" t t)
-                        (popup-single-match entry-completion-popup-single-match
-                         "popup-single-match" "gboolean" t t)
-                        (text-column entry-completion-text-column "text-column"
-                         "gint" t t)
-                        (:cffi entry entry-completion-entry (g-object entry)
-                         "gtk_entry_completion_get_entry" nil)
-                        (:cffi match-function entry-completion-match-function
-                         nil nil gtk-entry-completion-set-match-function)))
-
-(define-g-object-class "GtkIconFactory" icon-factory
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable") :type-initializer
-                        "gtk_icon_factory_get_type")
-                       nil)
-
 (define-g-object-class "GtkIconTheme" icon-theme
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_icon_theme_get_type")
                        nil)
-
-(define-g-object-class "GtkIMContext" i-m-context
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_im_context_get_type") nil)
 
 (define-g-object-class "GtkListStore" list-store
                        (:superclass g-object :export t :interfaces
@@ -2059,13 +1577,6 @@
                         (virtual-root tree-model-filter-virtual-root
                          "virtual-root" "GtkTreePath" t nil)))
 
-(define-g-object-class "GtkTreeModelSort" tree-model-sort
-                       (:superclass g-object :export t :interfaces
-                        ("GtkTreeDragSource" "GtkTreeModel" "GtkTreeSortable")
-                        :type-initializer "gtk_tree_model_sort_get_type")
-                       ((model tree-model-sort-model "model" "GtkTreeModel" t
-                         nil)))
-
 (define-g-object-class "GtkTreeSelection" tree-selection
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_tree_selection_get_type")
@@ -2094,8 +1605,6 @@
                         (ui ui-manager-ui "ui" "gchararray" t nil)
                         (:cffi accel-group ui-manager-accel-group g-object
                          "gtk_ui_manager_get_accel_group" nil)))
-
-
 
 (define-g-object-class "GtkToggleAction" toggle-action
                        (:superclass action :export t :interfaces
@@ -2126,4 +1635,3 @@
                        (:superclass gtk-object :export t :interfaces nil
                         :type-initializer "gtk_item_factory_get_type")
                        nil)
-
