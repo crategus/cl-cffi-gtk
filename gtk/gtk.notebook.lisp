@@ -766,7 +766,7 @@
 ;;;     or -1 if function fails
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-notebook-append-page-menu" gtk-notebook-append-page-menu) :int
+(defcfun ("gtk_notebook_append_page_menu" gtk-notebook-append-page-menu) :int
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
