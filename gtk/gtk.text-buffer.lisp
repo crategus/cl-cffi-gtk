@@ -689,7 +689,7 @@
                                       (position :cursor)
                                       (interactive nil)
                                       (default-editable t))
-  (assert (typep position '(or text-iter (member :cursor))))
+  (assert (typep position '(or gtk-text-iter (member :cursor))))
   (if interactive
       (if (eq position :cursor)
           (gtk-text-buffer-insert-interactive-at-cursor buffer
@@ -1410,7 +1410,7 @@
 (defun gtk-text-buffer-move-mark (buffer mark position)
   (etypecase mark
     (string (gtk-text-buffer-move-mark-by-name buffer mark position))
-    (text-mark (%gtk-text-buffer-move-mark buffer mark position))))
+    (gtk-text-mark (%gtk-text-buffer-move-mark buffer mark position))))
 
 (export 'gtk-text-buffer-move-mark)
 
@@ -1502,7 +1502,7 @@
 (defun gtk-text-buffer-delete-mark (buffer mark)
   (etypecase mark
     (string (gtk-text-buffer-delete-mark-by-name buffer mark))
-    (text-mark (%gtk-text-buffer-delete-mark buffer mark))))
+    (gtk-text-mark (%gtk-text-buffer-delete-mark buffer mark))))
 
 (export 'gtk-text-buffer-delete-mark)
 
