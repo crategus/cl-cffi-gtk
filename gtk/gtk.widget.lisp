@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -36,6 +36,7 @@
 ;;; 
 ;;;     GtkRequisition
 ;;;     GtkAllocation
+;;;     GtkWidgetFlags  from Gtk+ 2 Reference Manual
 ;;;     GtkWidget
 ;;;     GtkWidgetClass
 ;;;     GtkSelectionData
@@ -272,6 +273,8 @@
 ;;;     gtk_widget_set_vexpand_set
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
+;;;
+;;;     GTK_WIDGET_SET_FLAGS()       from GTK+ 2 Reference Manual
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -563,8 +566,8 @@
 ;;; 
 ;;; Example 101. Widget calling its own size request method.
 ;;; 
-;;;  1 GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget),
-;;;  2                                  &min, &natural);
+;;;  GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget),
+;;;                                   &min, &natural);
 ;;; 
 ;;; It will not work to use the wrapper functions, such as
 ;;; gtk_widget_get_preferred_width() inside your own size request
@@ -601,9 +604,9 @@
 ;;; 
 ;;; Example 102. A UI definition fragment specifying an accelerator
 ;;; 
-;;;  1 <object class="GtkButton">
-;;;  2   <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
-;;;  3 </object>
+;;;  <object class="GtkButton">
+;;;    <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
+;;;  </object>
 ;;; 
 ;;; In addition to accelerators, GtkWidget also support a custom <accessible>
 ;;; element, which supports actions and relations. Properties on the accessible
@@ -612,32 +615,32 @@
 ;;; 
 ;;; Example 103. A UI definition fragment specifying an accessible
 ;;; 
-;;;  1 <object class="GtkButton" id="label1"/>
-;;;  2   <property name="label">I am a Label for a Button</property>
-;;;  3 </object>
-;;;  4 <object class="GtkButton" id="button1">
-;;;  5   <accessibility>
-;;;  6     <action action_name="click" translatable="yes">Click the button.</action>
-;;;  7     <relation target="label1" type="labelled-by"/>
-;;;  8   </accessibility>
-;;;  9   <child internal-child="accessible">
-;;; 10     <object class="AtkObject" id="a11y-button1">
-;;; 11       <property name="AtkObject::name">Clickable Button</property>
-;;; 12     </object>
-;;; 13   </child>
-;;; 14 </object>
+;;;  <object class="GtkButton" id="label1"/>
+;;;    <property name="label">I am a Label for a Button</property>
+;;;  </object>
+;;;  <object class="GtkButton" id="button1">
+;;;    <accessibility>
+;;;      <action action_name="click" translatable="yes">Click the button.</action>
+;;;      <relation target="label1" type="labelled-by"/>
+;;;    </accessibility>
+;;;    <child internal-child="accessible">
+;;;      <object class="AtkObject" id="a11y-button1">
+;;;        <property name="AtkObject::name">Clickable Button</property>
+;;;      </object>
+;;;    </child>
+;;;  </object>
 ;;;  
 ;;; Finally, GtkWidget allows style information such as style classes to be
 ;;; associated with widgets, using the custom <style> element:
 ;;; 
 ;;; Example 104. A UI definition fragment specifying an style class
 ;;; 
-;;;  1 <object class="GtkButton" id="button1">
-;;;  2   <style>
-;;;  3     <class name="my-special-button-class"/>
-;;;  4     <class name="dark-button"/>
-;;;  5   </style>
-;;;  6 </object>
+;;;  <object class="GtkButton" id="button1">
+;;;    <style>
+;;;      <class name="my-special-button-class"/>
+;;;      <class name="dark-button"/>
+;;;    </style>
+;;;  </object>
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -2895,18 +2898,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-widget-flags (widget)
-  (convert-from-foreign (gtk-object-flags-as-integer widget) 'gtk-widget-flags))
-
-(defun (setf gtk-widget-flags) (new-value widget)
-  (setf (gtk-object-flags-as-integer widget)
-        (convert-to-foreign new-value 'gtk-widget-flags))
-  new-value)
-
-(export 'gtk-widget-flags)
-
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("gtk_widget_push_colormap" gtk-widget-push-colormap) :void
   (colormap (g-object gdk-colormap)))
 
@@ -3066,6 +3057,146 @@
   (:none 0)
   (:ltr 1)
   (:rtl 2))
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkWidgetFlags
+;;; 
+;;; typedef enum {
+;;;   GTK_TOPLEVEL             = 1 << 4,
+;;;   GTK_NO_WINDOW            = 1 << 5,
+;;;   GTK_REALIZED             = 1 << 6,
+;;;   GTK_MAPPED               = 1 << 7,
+;;;   GTK_VISIBLE              = 1 << 8,
+;;;   GTK_SENSITIVE            = 1 << 9,
+;;;   GTK_PARENT_SENSITIVE     = 1 << 10,
+;;;   GTK_CAN_FOCUS            = 1 << 11,
+;;;   GTK_HAS_FOCUS            = 1 << 12,
+;;;   GTK_CAN_DEFAULT          = 1 << 13,
+;;;   GTK_HAS_DEFAULT          = 1 << 14,
+;;;   GTK_HAS_GRAB	       = 1 << 15,
+;;;   GTK_RC_STYLE	       = 1 << 16,
+;;;   GTK_COMPOSITE_CHILD      = 1 << 17,
+;;; #ifndef GTK_DISABLE_DEPRECATED
+;;;   GTK_NO_REPARENT          = 1 << 18,
+;;; #endif
+;;;   GTK_APP_PAINTABLE        = 1 << 19,
+;;;   GTK_RECEIVES_DEFAULT     = 1 << 20,
+;;;   GTK_DOUBLE_BUFFERED      = 1 << 21,
+;;;   GTK_NO_SHOW_ALL          = 1 << 22
+;;; } GtkWidgetFlags;
+;;; 
+;;; Tells about certain properties of the widget.
+;;; 
+;;; GTK_TOPLEVEL
+;;; 	widgets without a real parent, as there are GtkWindows and GtkMenus have
+;;;     this flag set throughout their lifetime. Toplevel widgets always contain
+;;;     their own GdkWindow.
+;;; 
+;;; GTK_NO_WINDOW
+;;; 	Indicative for a widget that does not provide its own GdkWindow. Visible
+;;;     action (e.g. drawing) is performed on the parent's GdkWindow.
+;;; 
+;;; GTK_REALIZED
+;;; 	Set by gtk_widget_realize(), unset by gtk_widget_unrealize(). A realized
+;;;     widget has an associated GdkWindow.
+;;; 
+;;; GTK_MAPPED
+;;; 	Set by gtk_widget_map(), unset by gtk_widget_unmap(). Only realized
+;;;     widgets can be mapped. It means that gdk_window_show() has been called
+;;;     on the widgets window(s).
+;;; 
+;;; GTK_VISIBLE
+;;; 	Set by gtk_widget_show(), unset by gtk_widget_hide(). Implies that a
+;;;     widget will be mapped as soon as its parent is mapped.
+;;; 
+;;; GTK_SENSITIVE
+;;; 	Set and unset by gtk_widget_set_sensitive(). The sensitivity of a widget
+;;;     determines whether it will receive certain events (e.g. button or key
+;;;     presses). One premise for the widget's sensitivity is to have this flag
+;;;     set.
+;;; 
+;;; GTK_PARENT_SENSITIVE
+;;; 	Set and unset by gtk_widget_set_sensitive() operations on the parents of
+;;;     the widget. This is the second premise for the widget's sensitivity.
+;;;     Once it has GTK_SENSITIVE and GTK_PARENT_SENSITIVE set, its state is
+;;;     effectively sensitive. This is expressed (and can be examined) by the
+;;;     GTK_WIDGET_IS_SENSITIVE macro.
+;;; 
+;;; GTK_CAN_FOCUS
+;;; 	Determines whether a widget is able to handle focus grabs.
+;;; 
+;;; GTK_HAS_FOCUS
+;;; 	Set by gtk_widget_grab_focus() for widgets that also have GTK_CAN_FOCUS
+;;;     set. The flag will be unset once another widget grabs the focus.
+;;; 
+;;; GTK_CAN_DEFAULT
+;;; 	The widget is allowed to receive the default action via
+;;;     gtk_widget_grab_default() and will reserve space to draw the default if
+;;;     possible
+;;; 
+;;; GTK_HAS_DEFAULT
+;;; 	The widget currently is receiving the default action and should be drawn
+;;;     appropriately if possible
+;;; 
+;;; GTK_HAS_GRAB
+;;; 	Set by gtk_grab_add(), unset by gtk_grab_remove(). It means that the
+;;;     widget is in the grab_widgets stack, and will be the preferred one for
+;;;     receiving events other than ones of cosmetic value.
+;;; 
+;;; GTK_RC_STYLE
+;;; 	Indicates that the widget's style has been looked up through the rc
+;;;     mechanism. It does not imply that the widget actually had a style
+;;;     defined through the rc mechanism.
+;;; 
+;;; GTK_COMPOSITE_CHILD
+;;; 	Indicates that the widget is a composite child of its parent;
+;;;     see gtk_widget_push_composite_child(), gtk_widget_pop_composite_child().
+;;; 
+;;; GTK_NO_REPARENT
+;;; 	Unused since before GTK+ 1.2, will be removed in a future version.
+;;; 
+;;; GTK_APP_PAINTABLE
+;;; 	Set and unset by gtk_widget_set_app_paintable(). Must be set on widgets
+;;;     whose window the application directly draws on, in order to keep GTK+
+;;;     from overwriting the drawn stuff. See the section called “App-paintable
+;;;     widgets” for a detailed description of this flag.
+;;; 
+;;; GTK_RECEIVES_DEFAULT
+;;; 	The widget when focused will receive the default action and have
+;;;     GTK_HAS_DEFAULT set even if there is a different widget set as default.
+;;; 
+;;; GTK_DOUBLE_BUFFERED
+;;; 	Set and unset by gtk_widget_set_double_buffered(). Indicates that
+;;;     exposes done on the widget should be double-buffered. See the section
+;;;     called “Double buffering” for a detailed discussion of how
+;;;     double-buffering works in GTK+ and why you may want to disable it for
+;;;     special cases.
+;;; 
+;;; GTK_NO_SHOW_ALL
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkWidgetFlags" gtk-widget-flags
+  (:export t
+   :type-initializer "gtk_widget_flags_get_type")
+  (:toplevel 16)
+  (:no-window 32)
+  (:realized 64)
+  (:mapped 128)
+  (:visible 256)
+  (:sensitive 512)
+  (:parent-sensitive 1024)
+  (:can-focus 2048)
+  (:has-focus 4096)
+  (:can-default 8192)
+  (:has-default 16384)
+  (:has-grab 32768)
+  (:rc-style 65536)
+  (:composite-child 131072)
+  (:no-reparent 262144)
+  (:app-paintable 524288)
+  (:receives-default 1048576)
+  (:double-buffered 2097152)
+  (:no-show-all 4194304))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
@@ -5934,7 +6065,7 @@
 (defcfun ("gtk_widget_render_icon" gtk-widget-render-icon) g-object
   (widget g-object)
   (stock-id :string)
-  (size icon-size)
+  (size gtk-icon-size)
   (detail :string))
 
 (export 'gtk-widget-render-icon)
@@ -9000,5 +9131,40 @@
 ;;;     whether widget tree rooted here should be expanded
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; GTK_WIDGET_SET_FLAGS()
+;;;
+;;; #define GTK_WIDGET_SET_FLAGS(wid,flag)
+;;;                G_STMT_START{ (GTK_WIDGET_FLAGS (wid) |= (flag)); }G_STMT_END
+;;;
+;;; Warning
+;;; 
+;;; GTK_WIDGET_SET_FLAGS has been deprecated since version 2.22 and should not
+;;; be used in newly-written code. Use the proper function instead:
+;;; gtk_widget_set_app_paintable(), gtk_widget_set_can_default(),
+;;; gtk_widget_set_can_focus(), gtk_widget_set_double_buffered(),
+;;; gtk_widget_set_has_window(), gtk_widget_set_mapped(),
+;;; gtk_widget_set_no_show_all(), gtk_widget_set_realized(),
+;;; gtk_widget_set_receives_default(), gtk_widget_set_sensitive() or
+;;; gtk_widget_set_visible().
+;;; 
+;;; Turns on certain widget flags.
+;;; 
+;;; wid :
+;;; 	a GtkWidget.
+;;; 
+;;; flag :
+;;; 	the flags to set.
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-widget-flags (widget)
+  (convert-from-foreign (gtk-object-flags-as-integer widget) 'gtk-widget-flags))
+
+(defun (setf gtk-widget-flags) (new-value widget)
+  (setf (gtk-object-flags-as-integer widget)
+        (convert-to-foreign new-value 'gtk-widget-flags))
+  new-value)
+
+(export 'gtk-widget-flags)
 
 ;;; --- End of file gtk.widget.lisp --------------------------------------------
