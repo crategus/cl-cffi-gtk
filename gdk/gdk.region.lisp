@@ -1,27 +1,27 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.region.lisp
-;;;
+;;; 
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
+;;; 
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
-;;;
+;;; 
 ;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
+;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;;
+;;; 
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;;
+;;; 
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -31,17 +31,22 @@
 ;;; Points, Rectangles and Regions
 ;;; 
 ;;; Simple graphical data types
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkPoint
 ;;;     GdkRectangle
+;;;
 ;;;     gdk_rectangle_intersect
 ;;;     gdk_rectangle_union
+;;;
 ;;;     GdkRegion
+;;;
 ;;;     gdk_region_new
 ;;;     gdk_region_polygon
+;;;
 ;;;     GdkFillRule
+;;;
 ;;;     gdk_region_copy
 ;;;     gdk_region_rectangle
 ;;;     gdk_region_destroy
@@ -52,7 +57,9 @@
 ;;;     gdk_region_rect_equal
 ;;;     gdk_region_point_in
 ;;;     gdk_region_rect_in
+;;;
 ;;;     GdkOverlapType
+;;;
 ;;;     gdk_region_offset
 ;;;     gdk_region_shrink
 ;;;     gdk_region_union_with_rect
@@ -60,7 +67,9 @@
 ;;;     gdk_region_union
 ;;;     gdk_region_subtract
 ;;;     gdk_region_xor
+;;;     
 ;;;     GdkSpan
+;;;     
 ;;;     gdk_region_spans_intersect_foreach
 ;;; 
 ;;; Description
@@ -98,10 +107,10 @@
 ;;; Defines the x and y coordinates of a point.
 ;;; 
 ;;; gint x;
-;;; 	the x coordinate of the point.
+;;;     the x coordinate of the point.
 ;;; 
 ;;; gint y;
-;;; 	the y coordinate of the point.
+;;;     the y coordinate of the point.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-point "GdkPoint"
@@ -123,16 +132,16 @@
 ;;; Defines the position and size of a rectangle.
 ;;; 
 ;;; gint x;
-;;; 	the x coordinate of the left edge of the rectangle.
+;;;     the x coordinate of the left edge of the rectangle.
 ;;; 
 ;;; gint y;
-;;; 	the y coordinate of the top of the rectangle.
+;;;     the y coordinate of the top of the rectangle.
 ;;; 
 ;;; gint width;
-;;; 	the width of the rectangle.
+;;;     the width of the rectangle.
 ;;; 
 ;;; gint height;
-;;; 	the height of the rectangle.
+;;;     the height of the rectangle.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-rectangle "GdkRectangle"
@@ -157,26 +166,26 @@
 ;;; intersecting area itself, pass NULL for dest.
 ;;; 
 ;;; src1 :
-;;; 	a GdkRectangle
+;;;     a GdkRectangle
 ;;; 
 ;;; src2 :
-;;; 	a GdkRectangle
+;;;     a GdkRectangle
 ;;; 
 ;;; dest :
-;;; 	return location for the intersection of src1 and src2, or NULL.
+;;;     return location for the intersection of src1 and src2, or NULL.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the rectangles intersect.
+;;;     TRUE if the rectangles intersect.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rectangle_intersect" %gdk-rectangle-intersect) :boolean
   (src-1 (g-boxed-foreign gdk-rectangle))
   (src-2 (g-boxed-foreign gdk-rectangle))
-  (dest (g-boxed-foreign gdk-rectangle)))
+  (dest  (g-boxed-foreign gdk-rectangle)))
 
-(defun gdk-rectangle-intersect (rectangle-1 rectangle-2)
+(defun gdk-rectangle-intersect (src-1 src-2)
   (let ((dest (make-gdk-rectangle)))
-    (when (%gdk-rectangle-intersect rectangle-1 rectangle-2 dest)
+    (when (%gdk-rectangle-intersect src-1 src-2 dest)
       dest)))
 
 (export 'gdk-rectangle-intersect)
@@ -193,24 +202,24 @@
 ;;; It is allowed for dest to be the same as either src1 or src2.
 ;;; 
 ;;; src1 :
-;;; 	a GdkRectangle
+;;;     a GdkRectangle
 ;;; 
 ;;; src2 :
-;;; 	a GdkRectangle
+;;;     a GdkRectangle
 ;;; 
 ;;; dest :
-;;; 	return location for the union of src1 and src2.
+;;;     return location for the union of src1 and src2.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_rectangle_union" %gdk-rectangle-union) :boolean
+(defcfun ("gdk_rectangle_union" %gdk-rectangle-union) :void
   (src-1 (g-boxed-foreign gdk-rectangle))
   (src-2 (g-boxed-foreign gdk-rectangle))
-  (dest (g-boxed-foreign gdk-rectangle)))
+  (dest  (g-boxed-foreign gdk-rectangle)))
 
-(defun gdk-rectangle-union (rectangle-1 rectangle-2)
+(defun gdk-rectangle-union (src-1 src-2)
   (let ((dest (make-gdk-rectangle)))
-    (when (%gdk-rectangle-union rectangle-1 rectangle-2 dest)
-      dest)))
+    (%gdk-rectangle-union src-1 src-2 dest)
+    dest))
 
 (export 'gdk-rectangle-union)
 
@@ -223,13 +232,18 @@
 ;;; 
 ;;; In GTK3, GdkRegion will be replaced by cairo_region_t. All the functions
 ;;; listed in this section will go away and you will have to use the relevant
-;;; Cairo functions. The conversion can be done using simple serch and replace.
+;;; Cairo functions. The conversion can be done using simple search and replace.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque gdk-region "GdkRegion"
-  :alloc (gdk-region-new))
+  :alloc (%gdk-region-new))
 
 (export (boxed-related-symbols 'gdk-region))
+
+;; Internal for allocating a region. See the variant gdk-region-new which
+;; does not return a pointer but a gdk-region.
+
+(defcfun ("gdk_region_new" %gdk-region-new) :pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_new ()
@@ -239,10 +253,10 @@
 ;;; Creates a new empty GdkRegion.
 ;;; 
 ;;; Returns :
-;;; 	a new empty GdkRegion
+;;;     a new empty GdkRegion
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_new" gdk-region-new) :pointer)
+(defcfun ("gdk_region_new" gdk-region-new) (g-boxed-foreign gdk-region :return))
 
 (export 'gdk-region-new)
 
@@ -264,11 +278,11 @@
 ;;; polygons which overlap themselves.
 ;;; 
 ;;; GDK_EVEN_ODD_RULE
-;;; 	areas which are overlapped an odd number of times are included in the
+;;;     areas which are overlapped an odd number of times are included in the
 ;;;     region, while areas overlapped an even number of times are not.
 ;;; 
 ;;; GDK_WINDING_RULE
-;;; 	overlapping areas are always included.
+;;;     overlapping areas are always included.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkFillRule" gdk-fill-rule
@@ -293,17 +307,17 @@
 ;;; Creates a new GdkRegion using the polygon defined by a number of points.
 ;;; 
 ;;; points :
-;;; 	an array of GdkPoint structs
+;;;     an array of GdkPoint structs
 ;;; 
 ;;; n_points :
-;;; 	the number of elements in the points array
+;;;     the number of elements in the points array
 ;;; 
 ;;; fill_rule :
-;;; 	specifies which pixels are included in the region when the polygon
+;;;     specifies which pixels are included in the region when the polygon
 ;;;     overlaps itself.
 ;;; 
 ;;; Returns :
-;;; 	a new GdkRegion based on the given polygon
+;;;     a new GdkRegion based on the given polygon
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_polygon" %gdk-region-polygon)
@@ -312,11 +326,11 @@
   (n-points :int)
   (fill-rule gdk-fill-rule))
 
-(defun gdk-region-from-polygon (points fill-rule)
+(defun gdk-region-polygon (points fill-rule)
   (with-foreign-boxed-array (n pts gdk-point points)
     (%gdk-region-polygon pts n fill-rule)))
 
-(export 'gdk-region-from-polygon)
+(export 'gdk-region-polygon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_copy ()
@@ -326,10 +340,10 @@
 ;;; Copies region, creating an identical new region.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; Returns :
-;;; 	a new region identical to region
+;;;     a new region identical to region
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -340,10 +354,10 @@
 ;;; Creates a new region containing the area rectangle.
 ;;; 
 ;;; rectangle :
-;;; 	a GdkRectangle
+;;;     a GdkRectangle
 ;;; 
 ;;; Returns :
-;;; 	a new region
+;;;     a new region
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_rectangle" gdk-region-rectangle)
@@ -360,7 +374,7 @@
 ;;; Destroys a GdkRegion.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -372,17 +386,17 @@
 ;;; Obtains the smallest rectangle which includes the entire GdkRegion.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; rectangle :
-;;; 	return location for the clipbox
+;;;     return location for the clipbox
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_get_clipbox" %gdk-region-get-clipbox) :void
   (region (g-boxed-foreign gdk-region))
   (rectangle (g-boxed-foreign gdk-rectangle)))
 
-(defun region-get-clipbox (region)
+(defun gdk-region-get-clipbox (region)
   (let ((clipbox (make-gdk-rectangle)))
     (%gdk-region-get-clipbox region clipbox)
     clipbox))
@@ -400,13 +414,13 @@
 ;;; returned in rectangles must be freed with g_free().
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; rectangles :
-;;; 	return location for an array of rectangles.
+;;;     return location for an array of rectangles.
 ;;; 
 ;;; n_rectangles :
-;;; 	length of returned array
+;;;     length of returned array
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_get_rectangles" %gdk-region-get-rectangles) :void
@@ -423,8 +437,8 @@
         (iter (for i from 0 below n)
               (for rect = (convert-from-foreign
                             (inc-pointer rectangles
-                                         (* i
-                                            (foreign-type-size 'rectangle-cstruct)))
+                                         (* (foreign-type-size 'gdk-rectangle-cstruct)
+                                            i))
                             '(g-boxed-foreign gdk-rectangle)))
               (collect rect))
         (g-free rectangles)))))
@@ -439,10 +453,10 @@
 ;;; Finds out if the GdkRegion is empty.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; Returns :
-;;; 	TRUE if region is empty.
+;;;     TRUE if region is empty.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_empty" gdk-region-is-empty) :boolean
@@ -459,13 +473,13 @@
 ;;; Finds out if the two regions are the same.
 ;;; 
 ;;; region1 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; region2 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; Returns :
-;;; 	TRUE if region1 and region2 are equal.
+;;;     TRUE if region1 and region2 are equal.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_equal" gdk-region-equal) :boolean
@@ -489,13 +503,13 @@
 ;;; Finds out if a regions is the same as a rectangle.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; rectangle :
-;;; 	a GdkRectangle
+;;;     a GdkRectangle
 ;;; 
 ;;; Returns :
-;;; 	TRUE if region and rectangle are equal.
+;;;     TRUE if region and rectangle are equal.
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -508,16 +522,16 @@
 ;;; Finds out if a point is in a region.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; x :
-;;; 	the x coordinate of a point
+;;;     the x coordinate of a point
 ;;; 
 ;;; y :
-;;; 	the y coordinate of a point
+;;;     the y coordinate of a point
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the point is in region.
+;;;     TRUE if the point is in region.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_point_in" gdk-region-point-in) :boolean
@@ -540,13 +554,13 @@
 ;;; Specifies the possible values returned by gdk_region_rect_in().
 ;;; 
 ;;; GDK_OVERLAP_RECTANGLE_IN
-;;; 	if the rectangle is inside the GdkRegion.
+;;;     if the rectangle is inside the GdkRegion.
 ;;; 
 ;;; GDK_OVERLAP_RECTANGLE_OUT
-;;; 	if the rectangle is outside the GdkRegion.
+;;;     if the rectangle is outside the GdkRegion.
 ;;; 
 ;;; GDK_OVERLAP_RECTANGLE_PART
-;;; 	if the rectangle is partly inside the GdkRegion.
+;;;     if the rectangle is partly inside the GdkRegion.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkOverlapType" gdk-overlap-type
@@ -565,13 +579,13 @@
 ;;; Tests whether a rectangle is within a region.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion.
+;;;     a GdkRegion.
 ;;; 
 ;;; rectangle :
-;;; 	a GdkRectangle.
+;;;     a GdkRectangle.
 ;;; 
 ;;; Returns :
-;;; 	GDK_OVERLAP_RECTANGLE_IN, GDK_OVERLAP_RECTANGLE_OUT, or
+;;;     GDK_OVERLAP_RECTANGLE_IN, GDK_OVERLAP_RECTANGLE_OUT, or
 ;;;     GDK_OVERLAP_RECTANGLE_PART, depending on whether the rectangle is
 ;;;     inside, outside, or partly inside the GdkRegion, respectively.
 ;;; ----------------------------------------------------------------------------
@@ -580,7 +594,7 @@
   (region (g-boxed-foreign gdk-region))
   (rectangle (g-boxed-foreign gdk-rectangle)))
 
-(export 'region-rect-in)
+(export 'gdk-region-rect-in)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_offset ()
@@ -590,13 +604,13 @@
 ;;; Moves a region the specified distance.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; dx :
-;;; 	the distance to move the region horizontally
+;;;     the distance to move the region horizontally
 ;;; 
 ;;; dy :
-;;; 	the distance to move the region vertically
+;;;     the distance to move the region vertically
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_offset" gdk-region-offset) :void
@@ -620,13 +634,13 @@
 ;;; Negative values expand it.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; dx :
-;;; 	the number of pixels to shrink the region horizontally
+;;;     the number of pixels to shrink the region horizontally
 ;;; 
 ;;; dy :
-;;; 	the number of pixels to shrink the region vertically
+;;;     the number of pixels to shrink the region vertically
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_shrink" gdk-region-shrink) :void
@@ -646,10 +660,10 @@
 ;;; resulting area is the set of pixels contained in either region or rect.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion.
+;;;     a GdkRegion.
 ;;; 
 ;;; rect :
-;;; 	a GdkRectangle.
+;;;     a GdkRectangle.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_union_with_rect" gdk-region-union-with-rect) :void
@@ -668,10 +682,10 @@
 ;;; and source2.
 ;;; 
 ;;; source1 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; source2 :
-;;; 	another GdkRegion
+;;;     another GdkRegion
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_intersect" gdk-region-intersect) :void
@@ -690,10 +704,10 @@
 ;;; source2.
 ;;; 
 ;;; source1 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; source2 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_union" gdk-region-union) :void
@@ -711,15 +725,15 @@
 ;;; the set of pixels contained in source1 but not in source2.
 ;;; 
 ;;; source1 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; source2 :
-;;; 	another GdkRegion
+;;;     another GdkRegion
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_subtract" gdk-region-subtract) :void
-  (target (g-boxed-foreign gdk-region))
-  (source (g-boxed-foreign gdk-region)))
+  (source-1 (g-boxed-foreign gdk-region))
+  (source-2 (g-boxed-foreign gdk-region)))
 
 (export 'gdk-region-subtract)
 
@@ -733,10 +747,10 @@
 ;;; other of the two sources but not in both.
 ;;; 
 ;;; source1 :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; source2 :
-;;; 	another GdkRegion
+;;;     another GdkRegion
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_region_xor" gdk-region-xor) :void
@@ -758,13 +772,13 @@
 ;;; with coordinates x, y and ending before x + width, y.
 ;;; 
 ;;; gint x;
-;;; 	x coordinate of the first pixel.
+;;;     x coordinate of the first pixel.
 ;;; 
 ;;; gint y;
-;;; 	y coordinate of the first pixel.
+;;;     y coordinate of the first pixel.
 ;;; 
 ;;; gint width;
-;;; 	number of pixels in the span.
+;;;     number of pixels in the span.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-span "GdkSpan"
@@ -787,11 +801,16 @@
 ;;; gdk_region_spans_intersect_foreach().
 ;;; 
 ;;; span :
-;;; 	a GdkSpan.
+;;;     a GdkSpan.
 ;;; 
 ;;; data :
-;;; 	the user data passed to gdk_region_spans_intersect_foreach().
+;;;     the user data passed to gdk_region_spans_intersect_foreach().
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gdk-span-func-callback :void
+    ((span (g-boxed-foreign gdk-span)) (data :pointer))
+  (let ((fn (stable-pointer-value data)))
+    (funcall fn span)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_spans_intersect_foreach ()
@@ -811,28 +830,23 @@
 ;;; Calls a function on each span in the intersection of region and spans.
 ;;; 
 ;;; region :
-;;; 	a GdkRegion
+;;;     a GdkRegion
 ;;; 
 ;;; spans :
-;;; 	an array of GdkSpans
+;;;     an array of GdkSpans
 ;;; 
 ;;; n_spans :
-;;; 	the length of spans
+;;;     the length of spans
 ;;; 
 ;;; sorted :
-;;; 	TRUE if spans is sorted wrt. the y coordinate
+;;;     TRUE if spans is sorted wrt. the y coordinate
 ;;; 
 ;;; function :
-;;; 	function to call on each span in the intersection
+;;;     function to call on each span in the intersection
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; ----------------------------------------------------------------------------
-
-(defcallback gdk-span-func-callback :void
-    ((span (g-boxed-foreign gdk-span)) (data :pointer))
-  (let ((fn (stable-pointer-value data)))
-    (funcall fn span)))
 
 (defcfun ("gdk_region_spans_intersect_foreach"
           %gdk-region-spans-intersect-foreach) :void
@@ -840,18 +854,19 @@
   (spans :pointer)
   (n-spans :int)
   (sorted :boolean)
-  (function :pointer)
+  (func :pointer)
   (data :pointer))
 
 (defun gdk-region-spans-intersect-foreach (region spans sorted fn)
   (with-stable-pointer (ptr fn)
     (with-foreign-boxed-array (n spans-ptr gdk-span spans)
-      (%gdk-region-spans-intersect-foreach region
-                                           spans-ptr
-                                           n
-                                           sorted
-                                           (callback gdk-region-spans-intersect-foreach)
-                                           ptr))))
+      (%gdk-region-spans-intersect-foreach
+                                  region
+                                  spans-ptr
+                                  n
+                                  sorted
+                                  (callback %gdk-region-spans-intersect-foreach)
+                                  ptr))))
 
 (export 'gdk-region-spans-intersect-foreach)
 

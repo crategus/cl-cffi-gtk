@@ -1,47 +1,43 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.threads.lisp
-;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
+;;; 
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
+;;; 
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
+;;; 
+;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;;
+;;; 
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;;
+;;; 
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;; 
 ;;; Threads
 ;;; 
 ;;; Functions for using GDK in multi-threaded programs
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
-;;;     GDK_THREADS_ENTER
-;;;     GDK_THREADS_LEAVE
 ;;;     gdk_threads_init
 ;;;     gdk_threads_enter
 ;;;     gdk_threads_leave
-;;;     GMutex *gdk_threads_mutex
+;;;     gdk_threads_mutex
 ;;;     gdk_threads_set_lock_functions
 ;;;     gdk_threads_add_idle
 ;;;     gdk_threads_add_idle_full
@@ -245,32 +241,17 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defcallback source-func-callback :boolean
+;; Callback functions for:
+;;     gdk-threads-add-idle-full
+;;     gdk-threads-add-timeout-full
+;;     gdk-threads-add-timeout-seconds-full
+
+(defcallback source-func-cb :boolean
     ((data :pointer))
   (funcall (stable-pointer-value data)))
 
-(defcallback stable-pointer-free-destroy-notify-callback :void ((data :pointer))
+(defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
   (free-stable-pointer data))
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_THREADS_ENTER
-;;; 
-;;; #define GDK_THREADS_ENTER()
-;;; 
-;;; This macro marks the beginning of a critical section in which GDK and GTK+
-;;; functions can be called safely and without causing race conditions. Only
-;;; one thread at a time can be in such a critial section. The macro expands to
-;;; a no-op if G_THREADS_ENABLED has not been defined. Typically
-;;; gdk_threads_enter() should be used instead of this macro.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_THREADS_LEAVE
-;;; 
-;;; #define GDK_THREADS_LEAVE()
-;;; 
-;;; This macro marks the end of a critical section begun with GDK_THREADS_ENTER.
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_init ()
@@ -287,7 +268,7 @@
 
 (defcfun ("gdk_threads_init" gdk-threads-init) :void)
 
-(glib:at-init () (gdk-threads-init))
+(at-init () (gdk-threads-init))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_enter ()
@@ -356,10 +337,10 @@
 ;;; multiple times.
 ;;; 
 ;;; enter_fn :
-;;; 	function called to guard GDK
+;;;     function called to guard GDK
 ;;; 
 ;;; leave_fn :
-;;; 	function called to release the guard
+;;;     function called to release the guard
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -375,16 +356,26 @@
 ;;; See gdk_threads_add_idle_full().
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+;; The Lisp implementation does not support the argument data.
+
+(defun gdk-threads-add-idle (func)
+  (%gdk-threads-add-idle-full +g-priority-default+
+                              (callback source-func-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
+
+(export 'gdk-threads-add-idle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_idle_full ()
@@ -434,35 +425,41 @@
 ;;; }
 ;;; 
 ;;; priority :
-;;; 	the priority of the idle source. Typically this will be in the range
+;;;     the priority of the idle source. Typically this will be in the range
 ;;;     btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the idle is removed, or NULL. [allow-none]
+;;;     function to call when the idle is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_idle_full" %gdk-threads-add-idle-full) :uint
   (priority :int)
-  (function :pointer)
+  (func :pointer)
   (data :pointer)
   (notify :pointer))
 
-(defun gdk-threads-add-idle-full (priority function)
+;; The Lisp implementation does not support the arguments data and notify.
+;; The argument data is used in %gdk-threads-idle-full to pass the Lisp
+;; function func and the argument notify is used to pass the function
+;; stable-pointer-free-destroy-notify-cb which frees the allocated pointer
+;; to the Lisp function func.
+
+(defun gdk-threads-add-idle-full (priority func)
   (%gdk-threads-add-idle-full priority
-                              (callback source-func-callback)
-                              (allocate-stable-pointer function)
-                              (callback stable-pointer-free-destroy-notify-callback)))
+                              (callback source-func-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gdk-threads-add-idle-full)
 
@@ -479,20 +476,32 @@
 ;;; See gdk_threads_add_timeout_full().
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in milliseconds (1/1000ths of
+;;;     the time between calls to the function, in milliseconds (1/1000ths of
 ;;;     a second)
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+;; The Lisp implementation does not support the argument data.
+
+(defun gdk-threads-add-timeout (interval func)
+  (%gdk-threads-add-timeout-full
+                              +g-priority-default+
+                              interval
+                              (callback source-func-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
+
+(export 'gdk-threads-add-timeout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_full ()
@@ -546,24 +555,24 @@
 ;;; }
 ;;; 
 ;;; priority :
-;;; 	the priority of the timeout source. Typically this will be in the
+;;;     the priority of the timeout source. Typically this will be in the
 ;;;     range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in milliseconds
+;;;     the time between calls to the function, in milliseconds
 ;;;     (1/1000ths of a second)
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the timeout is removed, or NULL. [allow-none]
+;;;     function to call when the timeout is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -571,16 +580,19 @@
 (defcfun ("gdk_threads_add_timeout_full" %gdk-threads-add-timeout-full) :uint
   (priority :int)
   (interval :uint)
-  (function :pointer)
+  (func :pointer)
   (data :pointer)
   (notify :pointer))
 
-(defun gdk-threads-add-timeout-full (priority interval function)
-  (%gdk-threads-add-timeout-full priority
-                                 interval
-                                 (callback source-func-callback)
-                                 (allocate-stable-pointer function)
-                                 (callback stable-pointer-free-destroy-notify-callback)))
+;; The Lisp implementation does not support the arguments data and notify.
+
+(defun gdk-threads-add-timeout-full (priority interval func)
+  (%gdk-threads-add-timeout-full
+                              priority
+                              interval
+                              (callback source-func-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-full)
 
@@ -597,19 +609,31 @@
 ;;; For details, see gdk_threads_add_timeout_full().
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in seconds
+;;;     the time between calls to the function, in seconds
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+;; The Lisp implementation does not support the argument data.
+
+(defun gdk-threads-add-timeout-seconds (interval func)
+  (%gdk-threads-add-timeout-seconds-full
+                              +g-priority-default+
+                              interval
+                              (callback source-func-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
+
+(export 'gdk-threads-add-timeout-seconds)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_seconds_full ()
@@ -625,23 +649,23 @@
 ;;; use this function if you don't need finer granularity.
 ;;; 
 ;;; priority :
-;;; 	the priority of the timeout source. Typically this will be in the range
+;;;     the priority of the timeout source. Typically this will be in the range
 ;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in seconds
+;;;     the time between calls to the function, in seconds
 ;;; 
-;;; function :
-;;; 	function to call
+;;; func :
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the timeout is removed, or NULL. [allow-none]
+;;;     function to call when the timeout is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -650,16 +674,19 @@
           %gdk-threads-add-timeout-seconds-full) :uint
   (priority :int)
   (interval :uint)
-  (function :pointer)
+  (func :pointer)
   (data :pointer)
   (notify :pointer))
 
-(defun gdk-threads-add-timeout-seconds-full (priority interval function)
-  (%gdk-threads-add-timeout-seconds-full priority
-                                         interval
-                                         (callback source-func-callback)
-                                         (allocate-stable-pointer function)
-                                         (callback stable-pointer-free-destroy-notify-callback)))
+;; The Lisp implementation does not support the arguments data and notify.
+
+(defun gdk-threads-add-timeout-seconds-full (priority interval func)
+  (%gdk-threads-add-timeout-seconds-full
+                              priority
+                              interval
+                              (callback source-func-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds-full)
 

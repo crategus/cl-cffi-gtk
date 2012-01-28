@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.events.lisp
-;;;
+;;; 
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
+;;; 
 ;;; The documentation has been copied from the GDK 2 Reference Manual
 ;;; See http://www.gtk.org
-;;;
+;;; 
 ;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
 ;;; 
@@ -16,12 +16,12 @@
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;;
+;;; 
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;;
+;;; 
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -31,16 +31,15 @@
 ;;; Events
 ;;; 
 ;;; Functions for handling events from the window system
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
-;;;     GdkEventType; --> gdk.event-structures.lisp
 ;;;     GdkEventMask;
-;;;
+;;;     
 ;;;     GDK_CURRENT_TIME
 ;;;     GDK_PRIORITY_EVENTS
 ;;;     GDK_PRIORITY_REDRAW
-;;; 
+;;;     
 ;;;     gdk_events_pending
 ;;;     gdk_event_peek
 ;;;     gdk_event_get
@@ -55,7 +54,6 @@
 ;;;     gdk_event_get_coords
 ;;;     gdk_event_get_root_coords
 ;;;     gdk_event_request_motions
-;;;     
 ;;;     gdk_event_handler_set
 ;;;     
 ;;;     gdk_event_send_client_message
@@ -124,7 +122,7 @@
 ;;; Checks if any events are ready to be processed for any display.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if any events are pending.
+;;;     TRUE if any events are pending.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_events_pending" gdk-events-pending) :boolean)
@@ -140,7 +138,7 @@
 ;;; returns a copy of it. See gdk_display_peek_event().
 ;;; 
 ;;; Returns :
-;;; 	a copy of the first GdkEvent on some event queue, or NULL if no events
+;;;     a copy of the first GdkEvent on some event queue, or NULL if no events
 ;;;     are in any queues. The returned GdkEvent should be freed with
 ;;;     gdk_event_free().
 ;;; ----------------------------------------------------------------------------
@@ -159,7 +157,7 @@
 ;;; See gdk_display_get_event().
 ;;; 
 ;;; Returns :
-;;; 	the next GdkEvent to be processed, or NULL if no events are pending.
+;;;     the next GdkEvent to be processed, or NULL if no events are pending.
 ;;;     The returned GdkEvent should be freed with gdk_event_free().
 ;;; ----------------------------------------------------------------------------
 
@@ -182,10 +180,10 @@
 ;;; GraphicsExpose events are handled before the widget is scrolled.
 ;;; 
 ;;; window :
-;;; 	the GdkWindow to wait for the events for.
+;;;     the GdkWindow to wait for the events for.
 ;;; 
 ;;; Returns :
-;;; 	a GdkEventExpose if a GraphicsExpose was received, or NULL if a
+;;;     a GdkEventExpose if a GraphicsExpose was received, or NULL if a
 ;;;     NoExpose event was received.
 ;;; ----------------------------------------------------------------------------
 
@@ -199,7 +197,7 @@
 ;;; is NULL. See gdk_display_put_event().
 ;;; 
 ;;; event :
-;;; 	a GdkEvent.
+;;;     a GdkEvent.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_put" gdk-event-put) :void
@@ -215,10 +213,10 @@
 ;;; Creates a new event of the given type. All fields are set to 0.
 ;;; 
 ;;; type :
-;;; 	a GdkEventType
+;;;     a GdkEventType
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated GdkEvent. The returned GdkEvent should be freed with
+;;;     a newly-allocated GdkEvent. The returned GdkEvent should be freed with
 ;;;     gdk_event_free().
 ;;; 
 ;;; Since 2.2
@@ -233,10 +231,10 @@
 ;;; resources associated with it (e.g. GdkWindow's and strings).
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; Returns :
-;;; 	a copy of event. The returned GdkEvent should be freed with
+;;;     a copy of event. The returned GdkEvent should be freed with
 ;;;     gdk_event_free().
 ;;; ----------------------------------------------------------------------------
 
@@ -251,7 +249,7 @@
 ;;; gdk_event_get_graphics_expose() and gdk_event_copy() and gdk_event_new().
 ;;; 
 ;;; event :
-;;; 	a GdkEvent.
+;;;     a GdkEvent.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -263,10 +261,10 @@
 ;;; GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; Returns :
-;;; 	time stamp field from event
+;;;     time stamp field from event
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_time" gdk-event-get-time) :uint32
@@ -286,13 +284,13 @@
 ;;; state field.
 ;;; 
 ;;; event :
-;;; 	a GdkEvent or NULL
+;;;     a GdkEvent or NULL
 ;;; 
 ;;; state :
-;;; 	return location for state. [out]
+;;;     return location for state. [out]
 ;;; 
 ;;; Returns :
-;;; 	TRUE if there was a state field in the event
+;;;     TRUE if there was a state field in the event
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_state" %gdk_event_get_state) :boolean
@@ -319,16 +317,16 @@
 ;;; Extract the axis value for a particular axis use from an event structure.
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; axis_use :
-;;; 	the axis use to look for
+;;;     the axis use to look for
 ;;; 
 ;;; value :
-;;; 	location to store the value found.
+;;;     location to store the value found.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the specified axis was found, otherwise FALSE
+;;;     TRUE if the specified axis was found, otherwise FALSE
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_axis" %gdk-event-get-axis) :boolean
@@ -355,16 +353,16 @@
 ;;; Extract the event window relative x/y coordinates from an event.
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; x_win :
-;;; 	location to put event window x coordinate. [out]
+;;;     location to put event window x coordinate. [out]
 ;;; 
 ;;; y_win :
-;;; 	location to put event window y coordinate. [out]
+;;;     location to put event window y coordinate. [out]
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the event delivered event window coordinates
+;;;     TRUE if the event delivered event window coordinates
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_coords" %gdk-event-get-coords) :boolean
@@ -391,16 +389,16 @@
 ;;; Extract the root window relative x/y coordinates from an event.
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; x_root :
-;;; 	location to put root window x coordinate. [out]
+;;;     location to put root window x coordinate. [out]
 ;;; 
 ;;; y_root :
-;;; 	location to put root window y coordinate. [out]
+;;;     location to put root window y coordinate. [out]
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the event delivered root window coordinates
+;;;     TRUE if the event delivered root window coordinates
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_root_coords" %gdk-event-get-root-coords) :boolean
@@ -436,7 +434,7 @@
 ;;;  7 }
 ;;; 
 ;;; event :
-;;; 	a valid GdkEvent
+;;;     a valid GdkEvent
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -460,13 +458,13 @@
 ;;; function then call gtk_main_do_event() to pass events to GTK+.)
 ;;; 
 ;;; func :
-;;; 	the function to call to handle events from GDK.
+;;;     the function to call to handle events from GDK.
 ;;; 
 ;;; data :
-;;; 	user data to pass to the function.
+;;;     user data to pass to the function.
 ;;; 
 ;;; notify :
-;;; 	the function to call when the handler function is removed, i.e. when
+;;;     the function to call when the handler function is removed, i.e. when
 ;;;     gdk_event_handler_set() is called with another event handler.
 ;;; ----------------------------------------------------------------------------
 
@@ -484,7 +482,7 @@
 (defun gdk-event-handler-set (fn)
   (%gdk-event-handler-set (callback gdk-event-func-callback)
                           (allocate-stable-pointer fn)
-                          (callback stable-pointer-free-destroy-notify-callback)))
+                          (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gdk-event-handler-set)
 
@@ -497,10 +495,10 @@
 ;;; all GDK events.
 ;;; 
 ;;; event :
-;;; 	the GdkEvent to process.
+;;;     the GdkEvent to process.
 ;;; 
 ;;; data :
-;;; 	user data set when the event handler was installed with
+;;;     user data set when the event handler was installed with
 ;;;     gdk_event_handler_set().
 ;;; ----------------------------------------------------------------------------
 
@@ -515,13 +513,13 @@
 ;;; applications, though the amount of data is limited to 20 bytes.
 ;;; 
 ;;; event :
-;;; 	the GdkEvent to send, which should be a GdkEventClient.
+;;;     the GdkEvent to send, which should be a GdkEventClient.
 ;;; 
 ;;; winid :
-;;; 	the window to send the X ClientMessage event to.
+;;;     the window to send the X ClientMessage event to.
 ;;; 
 ;;; Returns :
-;;; 	non-zero on success.
+;;;     non-zero on success.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_send_client_message" gdk-event-send-client-message)
@@ -546,16 +544,16 @@
 ;;; Windows.
 ;;; 
 ;;; display :
-;;; 	the GdkDisplay for the window where the message is to be sent.
+;;;     the GdkDisplay for the window where the message is to be sent.
 ;;; 
 ;;; event :
-;;; 	the GdkEvent to send, which should be a GdkEventClient.
+;;;     the GdkEvent to send, which should be a GdkEventClient.
 ;;; 
 ;;; winid :
-;;; 	the window to send the client message to.
+;;;     the window to send the client message to.
 ;;; 
 ;;; Returns :
-;;; 	non-zero on success.
+;;;     non-zero on success.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -582,7 +580,7 @@
 ;;; all children of the root window.
 ;;; 
 ;;; event :
-;;; 	the GdkEvent to send, which should be a GdkEventClient.
+;;;     the GdkEvent to send, which should be a GdkEventClient.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_send_clientmessage_toall"
@@ -603,14 +601,14 @@
 ;;; events are received. See gdk_display_add_client_message_filter().
 ;;; 
 ;;; message_type :
-;;; 	the type of ClientMessage events to receive. This will be checked
+;;;     the type of ClientMessage events to receive. This will be checked
 ;;;     against the message_type field of the XClientMessage event struct.
 ;;; 
 ;;; func :
-;;; 	the function to call to process the event.
+;;;     the function to call to process the event.
 ;;; 
 ;;; data :
-;;; 	user data to pass to func.
+;;;     user data to pass to func.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_add_client_message_filter" %gdk-add-client-message-filter) :void
@@ -641,7 +639,7 @@
 ;;; Gets whether event debugging output is enabled.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if event debugging output is enabled.
+;;;     TRUE if event debugging output is enabled.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_get_show_events" gdk-get-show-events) :boolean)
@@ -658,7 +656,7 @@
 ;;; option) to use this option.
 ;;; 
 ;;; show_events :
-;;; 	TRUE to output event debugging information.
+;;;     TRUE to output event debugging information.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_set_show_events" gdk-set-show-events) :void
@@ -675,10 +673,10 @@
 ;;; GTK+, for instance, by gdk_event_copy().
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -695,10 +693,10 @@
 ;;; relative.
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; Returns :
-;;; 	the screen for the event
+;;;     the screen for the event
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -712,13 +710,13 @@
 ;;; default screen. See gdk_screen_get_setting().
 ;;; 
 ;;; name :
-;;; 	the name of the setting.
+;;;     the name of the setting.
 ;;; 
 ;;; value :
-;;; 	location to store the value of the setting.
+;;;     location to store the value of the setting.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the setting existed and a value was stored in value, FALSE
+;;;     TRUE if the setting existed and a value was stored in value, FALSE
 ;;;     otherwise.
 ;;; ----------------------------------------------------------------------------
 
