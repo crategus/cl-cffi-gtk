@@ -37,6 +37,7 @@
 ;;;     GtkMessageDialog
 ;;;     GtkMessageType
 ;;;     GtkButtonsType
+;;;     
 ;;;     gtk_message_dialog_new
 ;;;     gtk_message_dialog_new_with_markup
 ;;;     gtk_message_dialog_set_markup
@@ -306,6 +307,18 @@
 ;;; 
 ;;; GTK_MESSAGE_OTHER
 ;;; 	None of the above, doesn't get an icon
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkMessageType" gtk-message-type
+  (:export t
+   :type-initializer "gtk_message_type_get_type")
+  (:info 0)
+  (:warning 1)
+  (:question 2)
+  (:error 3)
+  (:other 4))
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkButtonsType
 ;;; 
 ;;; typedef enum {
@@ -344,14 +357,15 @@
 ;;; 	OK and Cancel buttons
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GtkMessageType" gtk-message-type
+(define-g-enum "GtkButtonsType" gtk-buttons-type
   (:export t
-   :type-initializer "gtk_message_type_get_type")
-  (:info 0)
-  (:warning 1)
-  (:question 2)
-  (:error 3)
-  (:other 4))
+   :type-initializer "gtk_buttons_type_get_type")
+  (:none 0)
+  (:ok 1)
+  (:close 2)
+  (:cancel 3)
+  (:yes-no 4)
+  (:ok-cancel 5))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_new ()
