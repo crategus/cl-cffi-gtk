@@ -657,3 +657,55 @@
                              (gdk-cursor-new :hand1))
       
       (gtk-widget-show window))))
+
+
+(defvar x 50)
+(defvar y 50)
+
+(defun move-button (button fixed)
+  (setq x (+ x 30))
+  (setq y (+ y 50))
+  (gtk-fixed-move fixed button x y))
+
+(defun example-fixed ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Fixed Container"
+                                 :default-width 400
+                                 :default-height 300
+                                 :border-width 10))
+          (fixed  (make-instance 'gtk-fixed))
+          (button nil))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      (gtk-container-add window fixed)
+      (dotimes (i 3)
+        (setq button (gtk-button-new-with-label "Press me"))
+        (g-signal-connect button "clicked"
+                          (lambda (button)
+                            (move-button button fixed)))
+        (gtk-fixed-put fixed button (+ 50 (* i 50)) (+ 50 (* i 50))))
+      (gtk-widget-show window))))
+
+(defun example-frame ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Frame"
+                                 :default-width 300
+                                 :default-height 300
+                                 :border-width 10))
+          (frame  (make-instance 'gtk-frame
+                                 :label "Gtk Frame Widget"
+                                 :label-xalign 1.0
+                                 :label-yalign 0.5
+                                 :shadow-type :etched-in)))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      (gtk-container-add window frame)
+      (gtk-widget-show window))))
