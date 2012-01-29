@@ -31,7 +31,7 @@
 ;;; GtkCellLayout
 ;;; 
 ;;; An interface for packing cells
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkCellLayout
@@ -219,19 +219,19 @@
 ;;; appropriate.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	the cell renderer whose value is to be set
+;;;     the cell renderer whose value is to be set
 ;;; 
 ;;; tree_model :
-;;; 	the model
+;;;     the model
 ;;; 
 ;;; iter :
-;;; 	a GtkTreeIter indicating the row to set the value for
+;;;     a GtkTreeIter indicating the row to set the value for
 ;;; 
 ;;; data :
-;;; 	user data passed to gtk_cell_layout_set_cell_data_func()
+;;;     user data passed to gtk_cell_layout_set_cell_data_func()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -248,13 +248,13 @@
 ;;; Note that reusing the same cell renderer is not supported.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; expand :
-;;; 	TRUE if cell is to be given extra space allocated to cell_layout
+;;;     TRUE if cell is to be given extra space allocated to cell_layout
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -283,13 +283,13 @@
 ;;; Note that reusing the same cell renderer is not supported.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; expand :
-;;; 	TRUE if cell is to be given extra space allocated to cell_layout
+;;;     TRUE if cell is to be given extra space allocated to cell_layout
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -313,10 +313,10 @@
 ;;; a GtkCellArea or might be NULL if no GtkCellArea is used by cell_layout.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; Returns :
-;;; 	the cell area used by cell_layout. [transfer none]
+;;;     the cell area used by cell_layout. [transfer none]
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -329,10 +329,10 @@
 ;;; Returns the cell renderers which have been added to cell_layout.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; Returns :
-;;; 	a list of cell renderers. The list, but not the renderers has been
+;;;     a list of cell renderers. The list, but not the renderers has been
 ;;;     newly allocated and should be freed with g_list_free() when no longer
 ;;;     needed.
 ;;; 
@@ -358,13 +358,13 @@
 ;;; function properly.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer to reorder
+;;;     a GtkCellRenderer to reorder
 ;;; 
 ;;; position :
-;;; 	new position to insert cell at
+;;;     new position to insert cell at
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -385,7 +385,7 @@
 ;;; renderers from cell_layout.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -409,13 +409,13 @@
 ;;; replaced with the new attributes.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; ... :
-;;; 	a NULL-terminated list of attributes
+;;;     a NULL-terminated list of attributes
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -436,16 +436,16 @@
 ;;; GtkCellRendererText get its values from column 2.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; attribute :
-;;; 	an attribute on the renderer
+;;;     an attribute on the renderer
 ;;; 
 ;;; column :
-;;; 	the column position on the model to get the attribute from
+;;;     the column position on the model to get the attribute from
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -476,19 +476,19 @@
 ;;; func may be NULL to remove a previously set function.
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; func :
-;;; 	the GtkCellLayoutDataFunc to use, or NULL. [allow-none]
+;;;     the GtkCellLayoutDataFunc to use, or NULL. [allow-none]
 ;;; 
 ;;; func_data :
-;;; 	user data for func
+;;;     user data for func
 ;;; 
 ;;; destroy :
-;;; 	destroy notify for func_data
+;;;     destroy notify for func_data
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -514,11 +514,11 @@
 
 (defun gtk-cell-layout-set-cell-data-func (cell-layout cell func)
   (%gtk-cell-layout-set-cell-data-func
-                        cell-layout
-                        cell
-                        (callback gtk-cell-layout-cell-data-func-callback)
-                        (allocate-stable-pointer func)
-                        (callback stable-pointer-free-destroy-notify-callback)))
+                              cell-layout
+                              cell
+                              (callback gtk-cell-layout-cell-data-func-callback)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-cell-layout-set-cell-data-func)
 
@@ -532,10 +532,10 @@
 ;;; gtk_cell_layout_set_attributes().
 ;;; 
 ;;; cell_layout :
-;;; 	a GtkCellLayout
+;;;     a GtkCellLayout
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer to clear the attribute mapping on
+;;;     a GtkCellRenderer to clear the attribute mapping on
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

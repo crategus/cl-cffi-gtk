@@ -31,11 +31,11 @@
 ;;; GtkNotebook
 ;;; 
 ;;; A tabbed notebook container
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkNotebook
-;;;
+;;;     
 ;;;     gtk_notebook_new
 ;;;     gtk_notebook_append_page
 ;;;     gtk_notebook_append_page_menu
@@ -449,22 +449,22 @@
 ;;; (e.g. the "group").
 ;;; 
 ;;; notebook :
-;;; 	the GtkNotebook emitting the signal
+;;;     the GtkNotebook emitting the signal
 ;;; 
 ;;; page :
-;;; 	the tab of notebook that is being detached
+;;;     the tab of notebook that is being detached
 ;;; 
 ;;; x :
-;;; 	the X coordinate where the drop happens
+;;;     the X coordinate where the drop happens
 ;;; 
 ;;; y :
-;;; 	the Y coordinate where the drop happens
+;;;     the Y coordinate where the drop happens
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	a GtkNotebook that page should be added to, or NULL
+;;;     a GtkNotebook that page should be added to, or NULL
 ;;; 
 ;;; Since 2.12
 ;;;
@@ -494,16 +494,16 @@
 ;;; added to the notebook.
 ;;; 
 ;;; notebook :
-;;; 	the GtkNotebook
+;;;     the GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child GtkWidget affected
+;;;     the child GtkWidget affected
 ;;; 
 ;;; page_num :
-;;; 	the new page number for child
+;;;     the new page number for child
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.10
 ;;;
@@ -519,16 +519,16 @@
 ;;; is removed from the notebook.
 ;;; 
 ;;; notebook :
-;;; 	the GtkNotebook
+;;;     the GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child GtkWidget affected
+;;;     the child GtkWidget affected
 ;;; 
 ;;; page_num :
-;;; 	the child page number
+;;;     the child page number
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.10
 ;;;
@@ -544,16 +544,16 @@
 ;;; has been reordered.
 ;;; 
 ;;; notebook :
-;;; 	the GtkNotebook
+;;;     the GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child GtkWidget affected
+;;;     the child GtkWidget affected
 ;;; 
 ;;; page_num :
-;;; 	the new page number for child
+;;;     the new page number for child
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.10
 ;;;
@@ -583,16 +583,16 @@
 ;;; Emitted when the user or a function changes the current page.
 ;;; 
 ;;; notebook :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; page :
-;;; 	the new current page
+;;;     the new current page
 ;;; 
 ;;; page_num :
-;;; 	the index of the page
+;;;     the index of the page
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -651,7 +651,7 @@
   (gtk-notebook-set-window-creation-hook
                         (callback gtk-notebook-window-creation-func-callback)
                         (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-callback)))
+                        (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'notebook-set-window-creation-hook)
 
@@ -699,7 +699,7 @@
 ;;; Creates a new GtkNotebook widget with no pages.
 ;;; 
 ;;; Returns :
-;;; 	the newly created GtkNotebook
+;;;     the newly created GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -712,17 +712,17 @@
 ;;; Appends a page to notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the GtkWidget to use as the contents of the page
+;;;     the GtkWidget to use as the contents of the page
 ;;; 
 ;;; tab_label :
-;;; 	the GtkWidget to be used as the label for the page, or NULL to use the
+;;;     the GtkWidget to be used as the label for the page, or NULL to use the
 ;;;     default label, 'page N'. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the appended page in the notebook,
+;;;     the index (starting from 0) of the appended page in the notebook,
 ;;;     or -1 if function fails
 ;;; ----------------------------------------------------------------------------
 
@@ -745,24 +745,24 @@
 ;;; the popup menu.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the GtkWidget to use as the contents of the page
+;;;     the GtkWidget to use as the contents of the page
 ;;; 
 ;;; tab_label :
-;;; 	the GtkWidget to be used as the label for the page, or NULL to use the
+;;;     the GtkWidget to be used as the label for the page, or NULL to use the
 ;;;     default label, 'page N'. [allow-none]
 ;;; 
 ;;; menu_label :
-;;; 	the widget to use as a label for the page-switch menu, if that is
+;;;     the widget to use as a label for the page-switch menu, if that is
 ;;;     enabled. If NULL, and tab_label is a GtkLabel or NULL, then the menu
 ;;;     label will be a newly created label with the same text as tab_label; if
 ;;;     tab_label is not a GtkLabel, menu_label must be specified if the
 ;;;     page-switch menu is to be used. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the appended page in the notebook,
+;;;     the index (starting from 0) of the appended page in the notebook,
 ;;;     or -1 if function fails
 ;;; ----------------------------------------------------------------------------
 
@@ -784,17 +784,17 @@
 ;;; Prepends a page to notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the GtkWidget to use as the contents of the page
+;;;     the GtkWidget to use as the contents of the page
 ;;; 
 ;;; tab_label :
-;;; 	the GtkWidget to be used as the label for the page, or NULL to use the
+;;;     the GtkWidget to be used as the label for the page, or NULL to use the
 ;;;     default label, 'page N'. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the prepended page in the notebook,
+;;;     the index (starting from 0) of the prepended page in the notebook,
 ;;;     or -1 if function fails
 ;;; ----------------------------------------------------------------------------
 
@@ -817,24 +817,24 @@
 ;;; the popup menu.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the GtkWidget to use as the contents of the page
+;;;     the GtkWidget to use as the contents of the page
 ;;; 
 ;;; tab_label :
-;;; 	the GtkWidget to be used as the label for the page, or NULL to use the
+;;;     the GtkWidget to be used as the label for the page, or NULL to use the
 ;;;     default label, 'page N'. [allow-none]
 ;;; 
 ;;; menu_label :
-;;; 	the widget to use as a label for the page-switch menu, if that is
+;;;     the widget to use as a label for the page-switch menu, if that is
 ;;;     enabled. If NULL, and tab_label is a GtkLabel or NULL, then the menu
 ;;;     label will be a newly created label with the same text as tab_label;
 ;;;     if tab_label is not a GtkLabel, menu_label must be specified if the
 ;;;     page-switch menu is to be used. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the prepended page in the notebook,
+;;;     the index (starting from 0) of the prepended page in the notebook,
 ;;;     or -1 if function fails
 ;;; ----------------------------------------------------------------------------
 
@@ -857,21 +857,21 @@
 ;;; Insert a page into notebook at the given position.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the GtkWidget to use as the contents of the page
+;;;     the GtkWidget to use as the contents of the page
 ;;; 
 ;;; tab_label :
-;;; 	the GtkWidget to be used as the label for the page, or NULL to use the
+;;;     the GtkWidget to be used as the label for the page, or NULL to use the
 ;;;     default label, 'page N'.
 ;;; 
 ;;; position :
-;;; 	the index (starting at 0) at which to insert the page, or -1 to append
+;;;     the index (starting at 0) at which to insert the page, or -1 to append
 ;;;     the page after all other pages
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the inserted page in the notebook,
+;;;     the index (starting from 0) of the inserted page in the notebook,
 ;;;     or -1 if function fails
 ;;; ----------------------------------------------------------------------------
 
@@ -896,28 +896,28 @@
 ;;; to use as the label in the popup menu.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the GtkWidget to use as the contents of the page
+;;;     the GtkWidget to use as the contents of the page
 ;;; 
 ;;; tab_label :
-;;; 	the GtkWidget to be used as the label for the page, or NULL to use the
+;;;     the GtkWidget to be used as the label for the page, or NULL to use the
 ;;;     default label, 'page N'. [allow-none]
 ;;; 
 ;;; menu_label :
-;;; 	the widget to use as a label for the page-switch menu, if that is
+;;;     the widget to use as a label for the page-switch menu, if that is
 ;;;     enabled. If NULL, and tab_label is a GtkLabel or NULL, then the menu
 ;;;     label will be a newly created label with the same text as tab_label;
 ;;;     if tab_label is not a GtkLabel, menu_label must be specified if the
 ;;;     page-switch menu is to be used. [allow-none]
 ;;; 
 ;;; position :
-;;; 	the index (starting at 0) at which to insert the page, or -1 to append
+;;;     the index (starting at 0) at which to insert the page, or -1 to append
 ;;;     the page after all other pages.
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the inserted page in the notebook
+;;;     the index (starting from 0) of the inserted page in the notebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_insert_page_menu" gtk-notebook-insert-page-menu) :int
@@ -937,10 +937,10 @@
 ;;; Removes a page from the notebook given its index in the notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; page_num :
-;;; 	the index of a notebook page, starting from 0. If -1, the last page
+;;;     the index of a notebook page, starting from 0. If -1, the last page
 ;;;     will be removed.
 ;;; ----------------------------------------------------------------------------
 
@@ -964,13 +964,13 @@
 ;;; Finds the index of the page which contains the given child widget.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;; 	the index of the page containing child, or -1 if child is not in the
+;;;     the index of the page containing child, or -1 if child is not in the
 ;;;     notebook
 ;;; ----------------------------------------------------------------------------
 
@@ -989,7 +989,7 @@
 ;;; last page.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_next_page" gtk-notebook-next-page) :void
@@ -1006,7 +1006,7 @@
 ;;; first page.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_prev_page" gtk-notebook-prev-page) :void
@@ -1026,13 +1026,13 @@
 ;;; or negative, child will be moved to the end of the list.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child to move
+;;;     the child to move
 ;;; 
 ;;; position :
-;;; 	the new position, or -1 to move to the end
+;;;     the new position, or -1 to move to the end
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_reorder_child" gtk-notebook-reorder-child) :void
@@ -1051,10 +1051,10 @@
 ;;; drawn.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook.
+;;;     a GtkNotebook.
 ;;; 
 ;;; pos :
-;;; 	the edge to draw the tabs at
+;;;     the edge to draw the tabs at
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1065,10 +1065,10 @@
 ;;; Sets whether to show the tabs for the notebook or not.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; show_tabs :
-;;; 	TRUE if the tabs should be shown
+;;;     TRUE if the tabs should be shown
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1082,10 +1082,10 @@
 ;;; See gtk_notebook_set_show_tabs().
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; show_border :
-;;; 	TRUE if a bevel should be drawn around the notebook
+;;;     TRUE if a bevel should be drawn around the notebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1098,10 +1098,10 @@
 ;;; too many tabs to fit in the area.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; scrollable :
-;;; 	TRUE if scroll arrows should be added
+;;;     TRUE if scroll arrows should be added
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1113,7 +1113,7 @@
 ;;; the tab labels, a menu with all the pages will be popped up.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1124,7 +1124,7 @@
 ;;; Disables the popup menu.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1135,10 +1135,10 @@
 ;;; Returns the page number of the current page.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	the index (starting from 0) of the current page in the notebook. If
+;;;     the index (starting from 0) of the current page in the notebook. If
 ;;;     the notebook has no pages, then -1 will be returned.
 ;;; ----------------------------------------------------------------------------
 
@@ -1151,13 +1151,13 @@
 ;;; Retrieves the menu label widget of the page containing child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a widget contained in a page of notebook
+;;;     a widget contained in a page of notebook
 ;;; 
 ;;; Returns :
-;;; 	the menu label, or NULL if the notebook page does not have a menu label
+;;;     the menu label, or NULL if the notebook page does not have a menu label
 ;;;     other than the default (the tab label).
 ;;; ----------------------------------------------------------------------------
 
@@ -1176,13 +1176,13 @@
 ;;; Returns the child widget contained in page number page_num.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; page_num :
-;;; 	the index of a page in the notebook, or -1 to get the last page
+;;;     the index of a page in the notebook, or -1 to get the last page
 ;;; 
 ;;; Returns :
-;;; 	the child widget, or NULL if page_num is out of bounds.
+;;;     the child widget, or NULL if page_num is out of bounds.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_nth_page" gtk-notebook-nth-page) g-object
@@ -1199,10 +1199,10 @@
 ;;; Gets the number of pages in a notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	the number of pages in the notebook
+;;;     the number of pages in the notebook
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -1222,13 +1222,13 @@
 ;;; is not in notebook or if no tab label has specifically been set for child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the page
+;;;     the page
 ;;; 
 ;;; Returns :
-;;; 	the tab label
+;;;     the tab label
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_tab_label" gtk-notebook-tab-label-widget) g-object
@@ -1247,13 +1247,13 @@
 ;;; Changes the menu label for the page containing child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child widget
+;;;     the child widget
 ;;; 
 ;;; menu_label :
-;;; 	the menu label, or NULL for default.
+;;;     the menu label, or NULL for default.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_set_menu_label" gtk-notebook-set-menu-label-widget)
@@ -1276,13 +1276,13 @@
 ;;; Creates a new label and sets it as the menu label of child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child widget
+;;;     the child widget
 ;;; 
 ;;; menu_text :
-;;; 	the label text
+;;;     the label text
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1296,13 +1296,13 @@
 ;;; the page will have the label 'page N'.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the page
+;;;     the page
 ;;; 
 ;;; tab_label :
-;;; 	the tab label widget to use, or NULL for default tab label.
+;;;     the tab label widget to use, or NULL for default tab label.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_set_tab_label" gtk-notebook-set-tab-label-widget) :void
@@ -1325,13 +1325,13 @@
 ;;; child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the page
+;;;     the page
 ;;; 
 ;;; tab_text :
-;;; 	the label text
+;;;     the label text
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1344,13 +1344,13 @@
 ;;; Sets whether the notebook tab can be reordered via drag and drop or not.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a child GtkWidget
+;;;     a child GtkWidget
 ;;; 
 ;;; reorderable :
-;;; 	whether the tab is reorderable or not
+;;;     whether the tab is reorderable or not
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1399,13 +1399,13 @@
 ;;; to set your own DnD code to do it.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a child GtkWidget
+;;;     a child GtkWidget
 ;;; 
 ;;; detachable :
-;;; 	whether the tab is detachable or not
+;;;     whether the tab is detachable or not
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1419,13 +1419,13 @@
 ;;; Retrieves the text of the menu label for the page containing child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	the child widget of a page of the notebook.
+;;;     the child widget of a page of the notebook.
 ;;; 
 ;;; Returns :
-;;; 	the text of the tab label, or NULL if the widget does not have a menu
+;;;     the text of the tab label, or NULL if the widget does not have a menu
 ;;;     label other than the default menu label, or the menu label widget is
 ;;;     not a GtkLabel. The string is owned by the widget and must not be freed.
 ;;; ----------------------------------------------------------------------------
@@ -1439,10 +1439,10 @@
 ;;; See gtk_notebook_set_scrollable().
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	TRUE if arrows for scrolling are present
+;;;     TRUE if arrows for scrolling are present
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1454,10 +1454,10 @@
 ;;; See gtk_notebook_set_show_border().
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the bevel is drawn
+;;;     TRUE if the bevel is drawn
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1469,10 +1469,10 @@
 ;;; See gtk_notebook_set_show_tabs().
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the tabs are shown
+;;;     TRUE if the tabs are shown
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1484,13 +1484,13 @@
 ;;; Retrieves the text of the tab label for the page containing child.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a widget contained in a page of notebook
+;;;     a widget contained in a page of notebook
 ;;; 
 ;;; Returns :
-;;; 	the text of the tab label, or NULL if the tab label widget is not
+;;;     the text of the tab label, or NULL if the tab label widget is not
 ;;;     a GtkLabel. The string is owned by the widget and must not be freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -1503,10 +1503,10 @@
 ;;; are drawn.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	the edge at which the tabs are drawn
+;;;     the edge at which the tabs are drawn
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1518,13 +1518,13 @@
 ;;; Gets whether the tab can be reordered via drag and drop or not.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a child GtkWidget
+;;;     a child GtkWidget
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the tab is reorderable.
+;;;     TRUE if the tab is reorderable.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1538,13 +1538,13 @@
 ;;; Returns whether the tab contents can be detached from notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; child :
-;;; 	a child GtkWidget
+;;;     a child GtkWidget
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the tab is detachable.
+;;;     TRUE if the tab is detachable.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1557,10 +1557,10 @@
 ;;; Returns the horizontal width of a tab border.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	horizontal width of a tab border
+;;;     horizontal width of a tab border
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -1573,10 +1573,10 @@
 ;;; Returns the vertical width of a tab border.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	vertical width of a tab border
+;;;     vertical width of a tab border
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -1593,10 +1593,10 @@
 ;;; show child widgets before adding them to a notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; page_num :
-;;; 	index of the page to switch to, starting from 0. If negative, the last
+;;;     index of the page to switch to, starting from 0. If negative, the last
 ;;;     page will be used. If greater than the number of pages in the notebook,
 ;;;     nothing will be done.
 ;;; ----------------------------------------------------------------------------
@@ -1614,10 +1614,10 @@
 ;;; with any other notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; group_name :
-;;; 	the name of the notebook group, or NULL to unset it.
+;;;     the name of the notebook group, or NULL to unset it.
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -1630,10 +1630,10 @@
 ;;; Gets the current group name for notebook.
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; Returns :
-;;; 	the group name, or NULL if none is set. [transfer none]
+;;;     the group name, or NULL if none is set. [transfer none]
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -1653,13 +1653,13 @@
 ;;; not included in the list returned from gtk_container_foreach().
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; pack_type :
-;;; 	pack type of the action widget
+;;;     pack type of the action widget
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -1673,13 +1673,13 @@
 ;;; Gets one of the action widgets. See gtk_notebook_set_action_widget().
 ;;; 
 ;;; notebook :
-;;; 	a GtkNotebook
+;;;     a GtkNotebook
 ;;; 
 ;;; pack_type :
-;;; 	pack type of the action widget to receive
+;;;     pack type of the action widget to receive
 ;;; 
 ;;; Returns :
-;;; 	The action widget with the given pack_type or NULL when this action
+;;;     The action widget with the given pack_type or NULL when this action
 ;;;     widget has not been set.
 ;;; 
 ;;; Since 2.20

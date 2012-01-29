@@ -31,11 +31,11 @@
 ;;; GtkComboBox
 ;;; 
 ;;; A widget used to choose from a list of items
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkComboBox
-;;;
+;;;     
 ;;;     gtk_combo_box_new
 ;;;     gtk_combo_box_new_with_entry
 ;;;     gtk_combo_box_new_with_model
@@ -441,10 +441,10 @@
 ;;; into the entry of a combo box with an entry.
 ;;; 
 ;;; widget :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.4
 ;;;
@@ -459,13 +459,13 @@
 ;;; the active selection.
 ;;; 
 ;;; widget :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; scroll_type :
-;;; 	a GtkScrollType
+;;;     a GtkScrollType
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.12
 ;;;
@@ -481,10 +481,10 @@
 ;;; The default bindings for this signal are Alt+Up and Escape.
 ;;; 
 ;;; button :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.12
 ;;;
@@ -500,10 +500,10 @@
 ;;; The default binding for this signal is Alt+Down.
 ;;; 
 ;;; widget :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -566,7 +566,7 @@
 ;;; Creates a new empty GtkComboBox.
 ;;; 
 ;;; Returns :
-;;; 	A new GtkComboBox.
+;;;     A new GtkComboBox.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -579,7 +579,7 @@
 ;;; Creates a new empty GtkComboBox with an entry.
 ;;; 
 ;;; Returns :
-;;; 	A new GtkComboBox.
+;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -590,10 +590,10 @@
 ;;; Creates a new GtkComboBox with the model initialized to model.
 ;;; 
 ;;; model :
-;;; 	A GtkTreeModel.
+;;;     A GtkTreeModel.
 ;;; 
 ;;; Returns :
-;;; 	A new GtkComboBox.
+;;;     A new GtkComboBox.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -607,10 +607,10 @@
 ;;; initialized to model.
 ;;; 
 ;;; model :
-;;; 	A GtkTreeModel
+;;;     A GtkTreeModel
 ;;; 
 ;;; Returns :
-;;; 	A new GtkComboBox
+;;;     A new GtkComboBox
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -621,10 +621,10 @@
 ;;; Creates a new empty GtkComboBox using area to layout cells.
 ;;; 
 ;;; area :
-;;; 	the GtkCellArea to use to layout cell renderers
+;;;     the GtkCellArea to use to layout cell renderers
 ;;; 
 ;;; Returns :
-;;; 	A new GtkComboBox.
+;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -637,10 +637,10 @@
 ;;; The new combo box will use area to layout cells.
 ;;; 
 ;;; area :
-;;; 	the GtkCellArea to use to layout cell renderers
+;;;     the GtkCellArea to use to layout cell renderers
 ;;; 
 ;;; Returns :
-;;; 	A new GtkComboBox.
+;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -653,10 +653,10 @@
 ;;; table mode.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the wrap width.
+;;;     the wrap width.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -671,10 +671,10 @@
 ;;; a table.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; width :
-;;; 	Preferred number of columns
+;;;     Preferred number of columns
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -687,10 +687,10 @@
 ;;; Returns the column with row span information for combo_box.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the row span column.
+;;;     the row span column.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -706,10 +706,10 @@
 ;;; should span.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox.
+;;;     A GtkComboBox.
 ;;; 
 ;;; row_span :
-;;; 	A column in the model passed during construction.
+;;;     A column in the model passed during construction.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -722,10 +722,10 @@
 ;;; Returns the column with column span information for combo_box.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the column span column.
+;;;     the column span column.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -741,10 +741,10 @@
 ;;; many columns an item should span.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; column_span :
-;;; 	A column in the model passed during construction
+;;;     A column in the model passed during construction
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -761,10 +761,10 @@
 ;;; active item.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	An integer which is the index of the currently active item, or -1 if
+;;;     An integer which is the index of the currently active item, or -1 if
 ;;;     there's no active item.
 ;;; 
 ;;; Since 2.4
@@ -778,10 +778,10 @@
 ;;; Sets the active item of combo_box to be the item at index.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; index_ :
-;;; 	An index in the model passed during construction, or -1 to have no
+;;;     An index in the model passed during construction, or -1 to have no
 ;;;     active item
 ;;; 
 ;;; Since 2.4
@@ -796,13 +796,13 @@
 ;;; Sets iter to point to the current active item, if it exists.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; iter :
-;;; 	The uninitialized GtkTreeIter.
+;;;     The uninitialized GtkTreeIter.
 ;;; 
 ;;; Returns :
-;;; 	TRUE, if iter was set
+;;;     TRUE, if iter was set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -829,10 +829,10 @@
 ;;; the active item if iter is NULL.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; iter :
-;;; 	The GtkTreeIter, or NULL.
+;;;     The GtkTreeIter, or NULL.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -846,10 +846,10 @@
 ;;; from.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	A column in the data source model of combo_box.
+;;;     A column in the data source model of combo_box.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -864,10 +864,10 @@
 ;;; G_TYPE_STRING.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; id_column :
-;;; 	A column in model to get string IDs for values from
+;;;     A column in model to get string IDs for values from
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -889,10 +889,10 @@
 ;;; or if the active row has a NULL ID value, then NULL is returned.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the ID of the active row, or NULL
+;;;     the ID of the active row, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -911,13 +911,13 @@
 ;;; given ID then the function does nothing and returns FALSE.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; active_id :
-;;; 	the ID of the row to select, or NULL. [allow-none]
+;;;     the ID of the row to select, or NULL. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a row with a matching ID was found. If a NULL active_id was
+;;;     TRUE if a row with a matching ID was found. If a NULL active_id was
 ;;;     given to unset the active row, the function always returns TRUE.
 ;;; 
 ;;; Since 3.0
@@ -931,10 +931,10 @@
 ;;; Returns the GtkTreeModel which is acting as data source for combo_box.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	A GtkTreeModel which was passed during construction.
+;;;     A GtkTreeModel which was passed during construction.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -953,10 +953,10 @@
 ;;; renderers for the new model.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; model :
-;;; 	A GtkTreeModel.
+;;;     A GtkTreeModel.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -972,10 +972,10 @@
 ;;; GdkDevices able to send events to it.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; device :
-;;; 	a GdkDevice
+;;;     a GdkDevice
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -991,7 +991,7 @@
 ;;; applications should have little use for it.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1012,7 +1012,7 @@
 ;;; applications should have little use for it.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1033,10 +1033,10 @@
 ;;; applications should have little use for it.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the accessible object corresponding to the combo box's popup
+;;;     the accessible object corresponding to the combo box's popup
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1056,10 +1056,10 @@
 ;;; Returns the current row separator function.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the current row separator function.
+;;;     the current row separator function.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1077,16 +1077,16 @@
 ;;; separators are drawn. This is the default value.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; func :
-;;; 	a GtkTreeViewRowSeparatorFunc
+;;;     a GtkTreeViewRowSeparatorFunc
 ;;; 
 ;;; data :
-;;; 	user data to pass to func, or NULL
+;;;     user data to pass to func, or NULL
 ;;; 
 ;;; destroy :
-;;; 	destroy notifier for data, or NULL
+;;;     destroy notifier for data, or NULL
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1100,10 +1100,10 @@
 
 (defun gtk-combo-box-set-row-separator-func (combo-box func)
   (%gtk-combo-box-set-row-separator-func
-                        combo-box
-                        (callback gtk-tree-view-row-separator-func-callback)
-                        (allocate-stable-pointer func)
-                        (callback stable-pointer-free-destroy-notify-callback)))
+                            combo-box
+                            (callback gtk-tree-view-row-separator-func-callback)
+                            (allocate-stable-pointer func)
+                            (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-combo-box-set-row-separator-func)
 
@@ -1116,10 +1116,10 @@
 ;;; Sets whether the popup menu should have a tearoff menu item.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; add_tearoffs :
-;;; 	TRUE to add tearoff menu items
+;;;     TRUE to add tearoff menu items
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1132,10 +1132,10 @@
 ;;; Gets the current value of the :add-tearoffs property.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the current value of the :add-tearoffs property
+;;;     the current value of the :add-tearoffs property
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1146,10 +1146,10 @@
 ;;; Sets the menu's title in tearoff mode.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; title :
-;;; 	a title for the menu in tearoff mode
+;;;     a title for the menu in tearoff mode
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1163,10 +1163,10 @@
 ;;; See gtk_combo_box_set_add_tearoffs().
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	the menu's title in tearoff mode. This is an internal copy of the
+;;;     the menu's title in tearoff mode. This is an internal copy of the
 ;;;     string which must not be freed.
 ;;; 
 ;;; Since 2.10
@@ -1184,10 +1184,10 @@
 ;;; application.
 ;;; 
 ;;; combo :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; focus_on_click :
-;;; 	whether the combo box grabs focus when clicked with the mouse
+;;;     whether the combo box grabs focus when clicked with the mouse
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1201,10 +1201,10 @@
 ;;; See gtk_combo_box_set_focus_on_click().
 ;;; 
 ;;; combo :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the combo box grabs focus when it is clicked with the mouse.
+;;;     TRUE if the combo box grabs focus when it is clicked with the mouse.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1220,10 +1220,10 @@
 ;;; is at least one item to display (GTK_SENSITIVITY_AUTO).
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; sensitivity :
-;;; 	specify the sensitivity of the dropdown button
+;;;     specify the sensitivity of the dropdown button
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -1238,10 +1238,10 @@
 ;;; there are no items in the model.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	GTK_SENSITIVITY_ON if the dropdown button is sensitive when the model is
+;;;     GTK_SENSITIVITY_ON if the dropdown button is sensitive when the model is
 ;;;     empty, GTK_SENSITIVITY_OFF if the button is always insensitive or
 ;;;     GTK_SENSITIVITY_AUTO if it is only sensitive as long as the model has
 ;;;     one item to be selected.
@@ -1257,10 +1257,10 @@
 ;;; Returns whether the combo box has an entry.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	whether there is an entry in combo_box.
+;;;     whether there is an entry in combo_box.
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -1279,10 +1279,10 @@
 ;;; TRUE.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox
+;;;     A GtkComboBox
 ;;; 
 ;;; text_column :
-;;; 	A column in model to get the strings from for the internal entry
+;;;     A column in model to get the strings from for the internal entry
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -1296,10 +1296,10 @@
 ;;; display in the internal entry.
 ;;; 
 ;;; combo_box :
-;;; 	A GtkComboBox.
+;;;     A GtkComboBox.
 ;;; 
 ;;; Returns :
-;;; 	A column in the data source model of combo_box.
+;;;     A column in the data source model of combo_box.
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -1314,10 +1314,10 @@
 ;;; allocated width of the combo box.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; fixed :
-;;; 	whether to use a fixed popup width
+;;;     whether to use a fixed popup width
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1331,10 +1331,10 @@
 ;;; the combo box.
 ;;; 
 ;;; combo_box :
-;;; 	a GtkComboBox
+;;;     a GtkComboBox
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the popup uses a fixed width
+;;;     TRUE if the popup uses a fixed width
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------

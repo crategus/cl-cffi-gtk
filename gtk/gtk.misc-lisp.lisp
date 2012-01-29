@@ -27,7 +27,7 @@
 
 (in-package :gtk)
 
-(defcallback stable-pointer-free-destroy-notify-callback :void ((data :pointer))
+(defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
   (free-stable-pointer data))
 
 (defcfun (get-clipboard "gtk_clipboard_get") g-object
@@ -42,11 +42,12 @@
              nil)
     (return-from-callback () nil)))
 
-(defun call-from-gtk-main-loop (function &key (priority +g-priority-default-idle+))
+(defun call-from-gtk-main-loop (function &key
+                                         (priority +g-priority-default-idle+))
   (g-idle-add-full priority
                    (callback call-from-main-loop-callback)
                    (allocate-stable-pointer function)
-                   (callback stable-pointer-free-destroy-notify-callback))
+                   (callback stable-pointer-free-destroy-notify-cb))
   (ensure-gtk-main))
 
 (export 'call-from-gtk-main-loop)
@@ -57,11 +58,12 @@
       (progn (funcall (get-stable-pointer-value data)))
     (return-from-callback () nil)))
 
-(defun gtk-main-add-timeout (milliseconds function &key (priority +g-priority-default+))
+(defun gtk-main-add-timeout (milliseconds function &key
+                                          (priority +g-priority-default+))
   (g-timeout-add-full priority milliseconds
                       (callback call-timeout-from-main-loop-callback)
                       (allocate-stable-pointer function)
-                      (callback stable-pointer-free-destroy-notify-callback)))
+                      (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-main-add-timeout)
 
@@ -83,3 +85,5 @@
      (ensure-gtk-main)))
 
 (export 'with-main-loop)
+
+;;; --- End of file gtk.misc-lisp.lisp -----------------------------------------

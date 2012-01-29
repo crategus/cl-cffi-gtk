@@ -31,12 +31,12 @@
 ;;; GtkCalendar
 ;;; 
 ;;; Displays a calendar and allows the user to select a date
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkCalendar
 ;;;     GtkCalendarDisplayOptions
-;;;
+;;;     
 ;;;     gtk_calendar_new
 ;;;     gtk_calendar_select_month
 ;;;     gtk_calendar_select_day
@@ -290,10 +290,10 @@
 ;;; Emitted when the user selects a day.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "day-selected-double-click" signal
@@ -304,10 +304,10 @@
 ;;; Emitted when the user double-clicks a day.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "month-changed" signal
@@ -319,10 +319,10 @@
 ;;; calendar.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "next-month" signal
@@ -333,10 +333,10 @@
 ;;; Emitted when the user switched to the next month.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "next-year" signal
@@ -347,10 +347,10 @@
 ;;; Emitted when user switched to the next year.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "prev-month" signal
@@ -361,10 +361,10 @@
 ;;; Emitted when the user switched to the previous month.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "prev-year" signal
@@ -375,10 +375,10 @@
 ;;; Emitted when user switched to the previous year.
 ;;; 
 ;;; calendar :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -434,22 +434,22 @@
 ;;; function returns NULL when no information is available.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; year :
-;;; 	the year for which details are needed.
+;;;     the year for which details are needed.
 ;;; 
 ;;; month :
-;;; 	the month for which details are needed.
+;;;     the month for which details are needed.
 ;;; 
 ;;; day :
-;;; 	the day of month for which details are needed.
+;;;     the day of month for which details are needed.
 ;;; 
 ;;; user_data :
-;;; 	the data passed with gtk_calendar_set_detail_func().
+;;;     the data passed with gtk_calendar_set_detail_func().
 ;;; 
 ;;; Returns :
-;;; 	Newly allocated string with Pango markup with details for the specified
+;;;     Newly allocated string with Pango markup with details for the specified
 ;;;     day, or NULL.
 ;;; 
 ;;; Since 2.14
@@ -459,31 +459,31 @@
 ;;; enum GtkCalendarDisplayOptions
 ;;; 
 ;;; typedef enum {
-;;;   GTK_CALENDAR_SHOW_HEADING		= 1 << 0,
-;;;   GTK_CALENDAR_SHOW_DAY_NAMES	= 1 << 1,
-;;;   GTK_CALENDAR_NO_MONTH_CHANGE	= 1 << 2,
+;;;   GTK_CALENDAR_SHOW_HEADING         = 1 << 0,
+;;;   GTK_CALENDAR_SHOW_DAY_NAMES       = 1 << 1,
+;;;   GTK_CALENDAR_NO_MONTH_CHANGE      = 1 << 2,
 ;;;   GTK_CALENDAR_SHOW_WEEK_NUMBERS    = 1 << 3,
-;;;   GTK_CALENDAR_SHOW_DETAILS		= 1 << 5
+;;;   GTK_CALENDAR_SHOW_DETAILS         = 1 << 5
 ;;; } GtkCalendarDisplayOptions;
 ;;; 
 ;;; These options can be used to influence the display and behaviour of a
 ;;; GtkCalendar.
 ;;; 
 ;;; GTK_CALENDAR_SHOW_HEADING
-;;; 	Specifies that the month and year should be displayed.
+;;;     Specifies that the month and year should be displayed.
 ;;; 
 ;;; GTK_CALENDAR_SHOW_DAY_NAMES
-;;; 	Specifies that three letter day descriptions should be present.
+;;;     Specifies that three letter day descriptions should be present.
 ;;; 
 ;;; GTK_CALENDAR_NO_MONTH_CHANGE
-;;; 	Prevents the user from switching months with the calendar.
+;;;     Prevents the user from switching months with the calendar.
 ;;; 
 ;;; GTK_CALENDAR_SHOW_WEEK_NUMBERS
-;;; 	Displays each week numbers of the current year, down the left side of
+;;;     Displays each week numbers of the current year, down the left side of
 ;;;     the calendar.
 ;;; 
 ;;; GTK_CALENDAR_SHOW_DETAILS
-;;; 	Just show an indicator, not the full details text when details are
+;;;     Just show an indicator, not the full details text when details are
 ;;;     provided. See gtk_calendar_set_detail_func().
 ;;; ----------------------------------------------------------------------------
 
@@ -505,7 +505,7 @@
 ;;; Creates a new calendar, with the current date being selected.
 ;;; 
 ;;; Returns :
-;;; 	a newly GtkCalendar widget
+;;;     a newly GtkCalendar widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -518,13 +518,13 @@
 ;;; Shifts the calendar to a different month.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; 
 ;;; month :
-;;; 	a month number between 0 and 11.
+;;;     a month number between 0 and 11.
 ;;; 
 ;;; year :
-;;; 	the year the month is in.
+;;;     the year the month is in.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -535,10 +535,10 @@
 ;;; Selects a day from the current month.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; day :
-;;; 	the day number between 1 and 31, or 0 to unselect the currently
+;;;     the day number between 1 and 31, or 0 to unselect the currently
 ;;;     selected day.
 ;;; ----------------------------------------------------------------------------
 
@@ -550,10 +550,10 @@
 ;;; Places a visual marker on a particular day.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; 
 ;;; day :
-;;; 	the day number to mark between 1 and 31.
+;;;     the day number to mark between 1 and 31.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_mark_day" gtk-calendar-mark-day) :boolean
@@ -570,10 +570,10 @@
 ;;; Removes the visual marker from a particular day.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; day :
-;;; 	the day number to unmark between 1 and 31.
+;;;     the day number to unmark between 1 and 31.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_unmark_day" gtk-calendar-unmark-day) :boolean
@@ -590,13 +590,13 @@
 ;;; Returns if the day of the calendar is already marked.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; 
 ;;; day :
-;;; 	the day number between 1 and 31.
+;;;     the day number between 1 and 31.
 ;;; 
 ;;; Returns :
-;;; 	whether the day is marked.
+;;;     whether the day is marked.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -609,7 +609,7 @@
 ;;; Remove all visual markers.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_clear_marks" gtk-calendar-clear-marks) :void
@@ -626,10 +626,10 @@
 ;;; Returns the current display options of calendar.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; 
 ;;; Returns :
-;;; 	the display options.
+;;;     the display options.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -644,10 +644,10 @@
 ;;; headings).
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; 
 ;;; flags :
-;;; 	the display options to set
+;;;     the display options to set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -663,16 +663,16 @@
 ;;; Obtains the selected date from a GtkCalendar.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar
+;;;     a GtkCalendar
 ;;; 
 ;;; year :
-;;; 	location to store the year as a decimal number (e.g. 2011), or NULL.
+;;;     location to store the year as a decimal number (e.g. 2011), or NULL.
 ;;; 
 ;;; month :
-;;; 	location to store the month number (between 0 and 11), or NULL.
+;;;     location to store the month number (between 0 and 11), or NULL.
 ;;; 
 ;;; day :
-;;; 	location to store the day number (between 1 and 31), or NULL.
+;;;     location to store the day number (between 1 and 31), or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -693,16 +693,16 @@
 ;;; "detail-width-chars" and "detail-height-rows" properties.
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; func :
-;;; 	a function providing details for each day.
+;;;     a function providing details for each day.
 ;;; 
 ;;; data :
-;;; 	data to pass to func invokations.
+;;;     data to pass to func invokations.
 ;;; 
 ;;; destroy :
-;;; 	a function for releasing data.
+;;;     a function for releasing data.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -724,10 +724,10 @@
 
 (defun gtk-calendar-set-detail-function (calendar function)
   (%gtk-calendar-set-detail-func
-                        calendar
-                        (callback gtk-calendar-detail-func-callback)
-                        (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-callback)))
+                              calendar
+                              (callback gtk-calendar-detail-func-callback)
+                              (allocate-stable-pointer function)
+                              (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-calendar-set-detail-function)
 
@@ -739,10 +739,10 @@
 ;;; Queries the width of detail cells, in characters. See "detail-width-chars".
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; Returns :
-;;; 	The width of detail cells, in characters.
+;;;     The width of detail cells, in characters.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -755,10 +755,10 @@
 ;;; Updates the width of detail cells. See "detail-width-chars".
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; chars :
-;;; 	detail width in characters.
+;;;     detail width in characters.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -771,10 +771,10 @@
 ;;; Queries the height of detail cells, in rows. See "detail-width-chars".
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; Returns :
-;;; 	The height of detail cells, in rows.
+;;;     The height of detail cells, in rows.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -787,10 +787,10 @@
 ;;; Updates the height of detail cells. See "detail-height-rows".
 ;;; 
 ;;; calendar :
-;;; 	a GtkCalendar.
+;;;     a GtkCalendar.
 ;;; 
 ;;; rows :
-;;; 	detail height in rows.
+;;;     detail height in rows.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------

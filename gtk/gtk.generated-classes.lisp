@@ -448,14 +448,6 @@
   (:empty 0)
   (:line 1))
 
-(define-g-enum "GtkTreeViewDropPosition"
-    tree-view-drop-position
-    (:export t :type-initializer "gtk_tree_view_drop_position_get_type")
-  (:before 0)
-  (:after 1)
-  (:into-or-before 2)
-  (:into-or-after 3))
-
 (define-g-enum "GtkTreeViewMode"
     tree-view-mode
     (:export t :type-initializer "gtk_tree_view_mode_get_type")
@@ -560,21 +552,6 @@
   (:no-recurse 8)
   (:action 32)
   (:no-hooks 64))
-
-(define-g-flags "GtkUIManagerItemType"
-    ui-manager-item-type
-    (:export t)
-  (:auto 0)
-  (:menubar 1)
-  (:menu 2)
-  (:toolbar 4)
-  (:placeholder 8)
-  (:popup 16)
-  (:menuitem 32)
-  (:toolitem 64)
-  (:separator 128)
-  (:accelerator 256)
-  (:popup-with-accels 512))
 
 (define-g-interface "GtkFileChooser"
     file-chooser
@@ -810,25 +787,6 @@
                         (:cffi cell-renderers tree-view-column-cell-renderers
                          (g-list g-object :free-from-foreign t)
                          "gtk_tree_view_column_get_cell_renderers" nil)))
-
-(define-g-object-class "GtkCellView" cell-view
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkCellLayout")
-                        :type-initializer "gtk_cell_view_get_type")
-                       ((background cell-view-background "background"
-                         "gchararray" nil t)
-                        (background-gdk cell-view-background-gdk
-                         "background-gdk" "GdkColor" t t)
-                        (background-set cell-view-background-set
-                         "background-set" "gboolean" t t)
-                        (model cell-view-model "model" "GtkTreeModel" t t)
-                        (:cffi displayed-row cell-view-displayed-row
-                         (g-boxed-foreign gtk-tree-path)
-                         "gtk_cell_view_get_displayed_row"
-                         "gtk_cell_view_set_displayed_row")
-                        (:cffi cell-renderers cell-view-cell-renderers
-                         (g-list (g-object cell-renderer) :free-from-foreign t)
-                         "gtk_cell_view_get_cell_renderers" nil)))
 
 (define-g-object-class "GtkAlignment" alignment
                        (:superclass gtk-bin :export t :interfaces
@@ -1329,65 +1287,6 @@
                          "GtkToolbarStyle" t t)
                         (tooltips toolbar-tooltips "tooltips" "gboolean" t t)))
 
-(define-g-object-class "GtkTreeView" tree-view
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_tree_view_get_type")
-                       ((enable-grid-lines tree-view-enable-grid-lines
-                         "enable-grid-lines" "GtkTreeViewGridLines" t t)
-                        (enable-search tree-view-enable-search "enable-search"
-                         "gboolean" t t)
-                        (enable-tree-lines tree-view-enable-tree-lines
-                         "enable-tree-lines" "gboolean" t t)
-                        (expander-column tree-view-expander-column
-                         "expander-column" "GtkTreeViewColumn" t t)
-                        (fixed-height-mode tree-view-fixed-height-mode
-                         "fixed-height-mode" "gboolean" t t)
-                        (hadjustment tree-view-hadjustment "hadjustment"
-                         "GtkAdjustment" t t)
-                        (headers-clickable tree-view-headers-clickable
-                         "headers-clickable" "gboolean" t t)
-                        (headers-visible tree-view-headers-visible
-                         "headers-visible" "gboolean" t t)
-                        (hover-expand tree-view-hover-expand "hover-expand"
-                         "gboolean" t t)
-                        (hover-selection tree-view-hover-selection
-                         "hover-selection" "gboolean" t t)
-                        (level-indentation tree-view-level-indentation
-                         "level-indentation" "gint" t t)
-                        (model tree-view-model "model" "GtkTreeModel" t t)
-                        (reorderable tree-view-reorderable "reorderable"
-                         "gboolean" t t)
-                        (rubber-banding tree-view-rubber-banding
-                         "rubber-banding" "gboolean" t t)
-                        (rules-hint tree-view-rules-hint "rules-hint"
-                         "gboolean" t t)
-                        (search-column tree-view-search-column "search-column"
-                         "gint" t t)
-                        (show-expanders tree-view-show-expanders
-                         "show-expanders" "gboolean" t t)
-                        (tooltip-column tree-view-tooltip-column
-                         "tooltip-column" "gint" t t)
-                        (vadjustment tree-view-vadjustment "vadjustment"
-                         "GtkAdjustment" t t)
-                        (:cffi selection tree-view-selection g-object
-                         "gtk_tree_view_get_selection" nil)
-                        (:cffi column-drag-function
-                         tree-view-column-drag-function nil nil
-                         tree-view-set-column-drag-function)
-                        (:cffi bin-window tree-view-bin-window g-object
-                         "gtk_tree_view_get_bin_window" nil)
-                        (:cffi search-equal-func tree-view-search-equal-func
-                         nil nil tree-view-set-search-equal-func)
-                        (:cffi search-entry tree-view-search-entry g-object
-                         "gtk_tree_view_get_search_entry"
-                         "gtk_tree_view_set_search_entry")
-                        (:cffi search-position-func
-                         tree-view-search-position-func nil nil
-                         tree-view-set-search-position-func)
-                        (:cffi row-separator-func tree-view-row-separator-func
-                         nil nil tree-view-set-row-separartor-func)))
-
 (define-g-object-class "GtkCurve" curve
                        (:superclass gtk-drawing-area :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1444,55 +1343,6 @@
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_tooltip_get_type")
                        nil)
-
-(define-g-object-class "GtkAction" action
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable") :type-initializer
-                        "gtk_action_get_type")
-                       ((action-group action-action-group "action-group"
-                         "GtkActionGroup" t t)
-                        (gicon action-gicon "gicon" "GIcon" t t)
-                        (hide-if-empty action-hide-if-empty "hide-if-empty"
-                         "gboolean" t t)
-                        (icon-name action-icon-name "icon-name" "gchararray" t
-                         t)
-                        (is-important action-is-important "is-important"
-                         "gboolean" t t)
-                        (label action-label "label" "gchararray" t t)
-                        (name action-name "name" "gchararray" t nil)
-                        (sensitive action-sensitive "sensitive" "gboolean" t t)
-                        (short-label action-short-label "short-label"
-                         "gchararray" t t)
-                        (stock-id action-stock-id "stock-id" "gchararray" t t)
-                        (tooltip action-tooltip "tooltip" "gchararray" t t)
-                        (visible action-visible "visible" "gboolean" t t)
-                        (visible-horizontal action-visible-horizontal
-                         "visible-horizontal" "gboolean" t t)
-                        (visible-overflown action-visible-overflown
-                         "visible-overflown" "gboolean" t t)
-                        (visible-vertical action-visible-vertical
-                         "visible-vertical" "gboolean" t t)
-                        (:cffi accel-path action-accel-path
-                         (:string :free-from-foreign nil :free-to-foreign t)
-                         "gtk_action_get_accel_path"
-                         "gtk_action_set_accel_path")
-                        (:cffi accel-group action-accel-group g-object nil
-                         "gtk_action_set_accel_group")))
-
-(define-g-object-class "GtkActionGroup" action-group
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable") :type-initializer
-                        "gtk_action_group_get_type")
-                       ((name action-group-name "name" "gchararray" t nil)
-                        (sensitive action-group-sensitive "sensitive"
-                         "gboolean" t t)
-                        (visible action-group-visible "visible" "gboolean" t t)
-                        (:cffi translate-function
-                         action-group-translate-function nil nil
-                         action-group-set-translate-func)
-                        (:cffi translation-domain
-                         action-group-translation-domain nil nil
-                         gtk-action-group-set-translation-domain)))
 
 (define-g-object-class "GtkIconTheme" icon-theme
                        (:superclass g-object :export t :interfaces nil
@@ -1597,39 +1447,12 @@
                         :type-initializer "gtk_tree_store_get_type")
                        nil)
 
-(define-g-object-class "GtkUIManager" ui-manager
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable"))
-                       ((add-tearoffs ui-manager-add-tearoffs "add-tearoffs"
-                         "gboolean" t t)
-                        (ui ui-manager-ui "ui" "gchararray" t nil)
-                        (:cffi accel-group ui-manager-accel-group g-object
-                         "gtk_ui_manager_get_accel_group" nil)))
-
-(define-g-object-class "GtkToggleAction" toggle-action
-                       (:superclass action :export t :interfaces
-                        ("GtkBuildable") :type-initializer
-                        "gtk_toggle_action_get_type")
-                       ((active toggle-action-active "active" "gboolean" t t)
-                        (draw-as-radio toggle-action-draw-as-radio
-                         "draw-as-radio" "gboolean" t t)))
-
 (define-g-object-class "GtkRecentAction" recent-action
                        (:superclass action :export t :interfaces
                         ("GtkBuildable" "GtkRecentChooser") :type-initializer
                         "gtk_recent_action_get_type")
                        ((show-numbers recent-action-show-numbers "show-numbers"
                          "gboolean" t t)))
-
-(define-g-object-class "GtkRadioAction" radio-action
-                       (:superclass toggle-action :export t :interfaces
-                        ("GtkBuildable") :type-initializer
-                        "gtk_radio_action_get_type")
-                       ((current-value radio-action-current-value
-                         "current-value" "gint" t t)
-                        (group radio-action-group "group" "GtkRadioAction" nil
-                         t)
-                        (value radio-action-value "value" "gint" t t)))
 
 (define-g-object-class "GtkItemFactory" item-factory
                        (:superclass gtk-object :export t :interfaces nil

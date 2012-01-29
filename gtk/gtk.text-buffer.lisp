@@ -31,11 +31,11 @@
 ;;; GtkTextBuffer
 ;;; 
 ;;; Stores attributed text for display in a GtkTextView
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkTextBuffer
-;;;
+;;;     
 ;;;     gtk_text_buffer_new
 ;;;     gtk_text_buffer_get_line_count
 ;;;     gtk_text_buffer_get_char_count
@@ -95,9 +95,9 @@
 ;;;     gtk_text_buffer_end_user_action
 ;;;     gtk_text_buffer_add_selection_clipboard
 ;;;     gtk_text_buffer_remove_selection_clipboard
-;;;
+;;;     
 ;;;     GtkTextBufferTargetInfo
-;;;
+;;;     
 ;;;     gtk_text_buffer_deserialize
 ;;;     gtk_text_buffer_deserialize_get_can_create_tags
 ;;;     gtk_text_buffer_deserialize_set_can_create_tags
@@ -240,19 +240,19 @@
 ;;; gtk_text_buffer_insert_range().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; tag :
-;;; 	the applied tag
+;;;     the applied tag
 ;;; 
 ;;; start :
-;;; 	the start of the range the tag is applied to
+;;;     the start of the range the tag is applied to
 ;;; 
 ;;; end :
-;;; 	the end of the range the tag is applied to
+;;;     the end of the range the tag is applied to
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "begin-user-action" signal
@@ -271,10 +271,10 @@
 ;;; gtk_text_buffer_delete_selection().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "changed" signal
@@ -286,10 +286,10 @@
 ;;; changed.
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "delete-range" signal
@@ -311,16 +311,16 @@
 ;;; See also: gtk_text_buffer_delete().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; start :
-;;; 	the start of the range to be deleted
+;;;     the start of the range to be deleted
 ;;; 
 ;;; end :
-;;; 	the end of the range to be deleted
+;;;     the end of the range to be deleted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "end-user-action" signal
@@ -340,10 +340,10 @@
 ;;; gtk_text_buffer_backspace().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "insert-child-anchor" signal
@@ -363,16 +363,16 @@
 ;;; See also: gtk_text_buffer_insert_child_anchor().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; location :
-;;; 	position to insert anchor in textbuffer
+;;;     position to insert anchor in textbuffer
 ;;; 
 ;;; anchor :
-;;; 	the GtkTextChildAnchor to be inserted
+;;;     the GtkTextChildAnchor to be inserted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "insert-pixbuf" signal
@@ -392,16 +392,16 @@
 ;;; See also: gtk_text_buffer_insert_pixbuf().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; location :
-;;; 	position to insert pixbuf in textbuffer
+;;;     position to insert pixbuf in textbuffer
 ;;; 
 ;;; pixbuf :
-;;; 	the GdkPixbuf to be inserted
+;;;     the GdkPixbuf to be inserted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "insert-text" signal
@@ -422,19 +422,19 @@
 ;;; See also: gtk_text_buffer_insert(), gtk_text_buffer_insert_range().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; location :
-;;; 	position to insert text in textbuffer
+;;;     position to insert text in textbuffer
 ;;; 
 ;;; text :
-;;; 	the UTF-8 text to be inserted
+;;;     the UTF-8 text to be inserted
 ;;; 
 ;;; len :
-;;; 	length of the inserted text in bytes
+;;;     length of the inserted text in bytes
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "mark-deleted" signal
@@ -449,13 +449,13 @@
 ;;; See also: gtk_text_buffer_delete_mark().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; mark :
-;;; 	The mark that was deleted
+;;;     The mark that was deleted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "mark-set" signal
@@ -470,16 +470,16 @@
 ;;; See also: gtk_text_buffer_create_mark(), gtk_text_buffer_move_mark().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; location :
-;;; 	The location of mark in textbuffer
+;;;     The location of mark in textbuffer
 ;;; 
 ;;; mark :
-;;; 	The mark that is set
+;;;     The mark that is set
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "modified-changed" signal
@@ -493,10 +493,10 @@
 ;;; See also: gtk_text_buffer_set_modified().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "paste-done" signal
@@ -510,10 +510,10 @@
 ;;; See gtk_text_buffer_paste_clipboard() for more details.
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.16
 ;;;
@@ -536,19 +536,19 @@
 ;;; See also: gtk_text_buffer_remove_tag().
 ;;; 
 ;;; textbuffer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; tag :
-;;; 	the tag to be removed
+;;;     the tag to be removed
 ;;; 
 ;;; start :
-;;; 	the start of the range the tag is removed from
+;;;     the start of the range the tag is removed from
 ;;; 
 ;;; end :
-;;; 	the end of the range the tag is removed from
+;;;     the end of the range the tag is removed from
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -587,10 +587,10 @@
 ;;; Creates a new text buffer.
 ;;; 
 ;;; table :
-;;; 	a tag table, or NULL to create a new one. [allow-none]
+;;;     a tag table, or NULL to create a new one. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	a new text buffer
+;;;     a new text buffer
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -602,10 +602,10 @@
 ;;; function is very fast.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	number of lines in the buffer
+;;;     number of lines in the buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_line_count" gtk-text-buffer-get-line-count) :int
@@ -624,10 +624,10 @@
 ;;; this function is very fast.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	number of characters in the buffer
+;;;     number of characters in the buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_char_count" gtk-text-buffer-get-char-count) :int
@@ -643,10 +643,10 @@
 ;;; Get the GtkTextTagTable associated with this buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	the buffer's tag table. [transfer none]
+;;;     the buffer's tag table. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -665,16 +665,16 @@
 ;;; of the inserted text.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	a position in the buffer
+;;;     a position in the buffer
 ;;; 
 ;;; text :
-;;; 	text in UTF-8 format
+;;;     text in UTF-8 format
 ;;; 
 ;;; len :
-;;; 	length of text in bytes, or -1
+;;;     length of text in bytes, or -1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert" %gtk-text-buffer-insert) :void
@@ -720,13 +720,13 @@
 ;;; the insertion point.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; text :
-;;; 	text in UTF-8 format
+;;;     text in UTF-8 format
 ;;; 
 ;;; len :
-;;; 	length of text, in bytes
+;;;     length of text, in bytes
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_at_cursor" gtk-text-buffer-insert-at-cursor)
@@ -756,22 +756,22 @@
 ;;; gtk_text_view_get_editable() is appropriate here.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	a position in buffer
+;;;     a position in buffer
 ;;; 
 ;;; text :
-;;; 	some UTF-8 text
+;;;     some UTF-8 text
 ;;; 
 ;;; len :
-;;; 	length of text in bytes, or -1
+;;;     length of text in bytes, or -1
 ;;; 
 ;;; default_editable :
-;;; 	default editability of buffer
+;;;     default editability of buffer
 ;;; 
 ;;; Returns :
-;;; 	whether text was actually inserted
+;;;     whether text was actually inserted
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_interactive"
@@ -800,19 +800,19 @@
 ;;; gtk_text_view_get_editable() is appropriate here.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; text :
-;;; 	text in UTF-8 format
+;;;     text in UTF-8 format
 ;;; 
 ;;; len :
-;;; 	length of text in bytes, or -1
+;;;     length of text in bytes, or -1
 ;;; 
 ;;; default_editable :
-;;; 	default editability of buffer
+;;;     default editability of buffer
 ;;; 
 ;;; Returns :
-;;; 	whether text was actually inserted
+;;;     whether text was actually inserted
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_interactive_at_cursor"
@@ -842,16 +842,16 @@
 ;;; expect those.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	a position in buffer
+;;;     a position in buffer
 ;;; 
 ;;; start :
-;;; 	a position in a GtkTextBuffer
+;;;     a position in a GtkTextBuffer
 ;;; 
 ;;; end :
-;;; 	another position in the same buffer as start
+;;;     another position in the same buffer as start
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_range" %gtk-text-buffer-insert-range) :void
@@ -891,22 +891,22 @@
 ;;; Typically the result of gtk_text_view_get_editable() is appropriate here.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	a position in buffer
+;;;     a position in buffer
 ;;; 
 ;;; start :
-;;; 	a position in a GtkTextBuffer
+;;;     a position in a GtkTextBuffer
 ;;; 
 ;;; end :
-;;; 	another position in the same buffer as start
+;;;     another position in the same buffer as start
 ;;; 
 ;;; default_editable :
-;;; 	default editability of the buffer
+;;;     default editability of the buffer
 ;;; 
 ;;; Returns :
-;;; 	whether an insertion was possible at iter
+;;;     whether an insertion was possible at iter
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_range_interactive"
@@ -936,22 +936,22 @@
 ;;; gtk_text_buffer_insert_with_tags() is just a convenience function.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	an iterator in buffer
+;;;     an iterator in buffer
 ;;; 
 ;;; text :
-;;; 	UTF-8 text
+;;;     UTF-8 text
 ;;; 
 ;;; len :
-;;; 	length of text, or -1
+;;;     length of text, or -1
 ;;; 
 ;;; first_tag :
-;;; 	first tag to apply to text
+;;;     first tag to apply to text
 ;;; 
 ;;; ... :
-;;; 	NULL-terminated list of tags to apply
+;;;     NULL-terminated list of tags to apply
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -968,22 +968,22 @@
 ;;; names instead of tag objects.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	position in buffer
+;;;     position in buffer
 ;;; 
 ;;; text :
-;;; 	UTF-8 text
+;;;     UTF-8 text
 ;;; 
 ;;; len :
-;;; 	length of text, or -1
+;;;     length of text, or -1
 ;;; 
 ;;; first_tag_name :
-;;; 	name of a tag to apply to text
+;;;     name of a tag to apply to text
 ;;; 
 ;;; ... :
-;;; 	more tag names
+;;;     more tag names
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1001,13 +1001,13 @@
 ;;; end will be re-initialized to point to the location where text was deleted.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	a position in buffer
+;;;     a position in buffer
 ;;; 
 ;;; end :
-;;; 	another position in buffer
+;;;     another position in buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_delete" %gtk-text-buffer-delete) :void
@@ -1042,19 +1042,19 @@
 ;;; text was deleted.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; start_iter :
-;;; 	start of range to delete
+;;;     start of range to delete
 ;;; 
 ;;; end_iter :
-;;; 	end of range
+;;;     end of range
 ;;; 
 ;;; default_editable :
-;;; 	whether the buffer is editable by default
+;;;     whether the buffer is editable by default
 ;;; 
 ;;; Returns :
-;;; 	whether some text was actually deleted
+;;;     whether some text was actually deleted
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_delete_interactive"
@@ -1085,19 +1085,19 @@
 ;;; point to the location where text was deleted.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	a position in buffer
+;;;     a position in buffer
 ;;; 
 ;;; interactive :
-;;; 	whether the deletion is caused by user interaction
+;;;     whether the deletion is caused by user interaction
 ;;; 
 ;;; default_editable :
-;;; 	whether the buffer is editable by default
+;;;     whether the buffer is editable by default
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the buffer was modified
+;;;     TRUE if the buffer was modified
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1125,13 +1125,13 @@
 ;;; text must be nul-terminated. text must be valid UTF-8.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; text :
-;;; 	UTF-8 text to insert
+;;;     UTF-8 text to insert
 ;;; 
 ;;; len :
-;;; 	length of text in bytes
+;;;     length of text in bytes
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-text-buffer-set-text (buffer text)
@@ -1155,19 +1155,19 @@
 ;;; gtk_text_buffer_get_slice().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	start of a range
+;;;     start of a range
 ;;; 
 ;;; end :
-;;; 	end of a range
+;;;     end of a range
 ;;; 
 ;;; include_hidden_chars :
-;;; 	whether to include invisible text
+;;;     whether to include invisible text
 ;;; 
 ;;; Returns :
-;;; 	an allocated UTF-8 string
+;;;     an allocated UTF-8 string
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_text" gtk-text-buffer-get-text) :string
@@ -1195,19 +1195,19 @@
 ;;; indicator that a pixbuf or widget is in the buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	start of a range
+;;;     start of a range
 ;;; 
 ;;; end :
-;;; 	end of a range
+;;;     end of a range
 ;;; 
 ;;; include_hidden_chars :
-;;; 	whether to include invisible text
+;;;     whether to include invisible text
 ;;; 
 ;;; Returns :
-;;; 	an allocated UTF-8 string
+;;;     an allocated UTF-8 string
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_slice" %gtk-text-buffer-get-slice)
@@ -1242,13 +1242,13 @@
 ;;; gtk_text_buffer_get_text().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	location to insert the pixbuf
+;;;     location to insert the pixbuf
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf
+;;;     a GdkPixbuf
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_pixbuf" gtk-text-buffer-insert-pixbuf) :void
@@ -1276,13 +1276,13 @@
 ;;; reference to the anchor, so you can unref it after insertion.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	location to insert the anchor
+;;;     location to insert the anchor
 ;;; 
 ;;; anchor :
-;;; 	a GtkTextChildAnchor
+;;;     a GtkTextChildAnchor
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_insert_child_anchor"
@@ -1314,13 +1314,13 @@
 ;;; gtk_text_buffer_create_child_anchor().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	location in the buffer
+;;;     location in the buffer
 ;;; 
 ;;; Returns :
-;;; 	the created child anchor.
+;;;     the created child anchor.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_create_child_anchor"
@@ -1354,19 +1354,19 @@
 ;;; Emits the "mark-set" signal as notification of the mark's initial placement.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; mark_name :
-;;; 	name for mark, or NULL.
+;;;     name for mark, or NULL.
 ;;; 
 ;;; where :
-;;; 	location to place mark
+;;;     location to place mark
 ;;; 
 ;;; left_gravity :
-;;; 	whether the mark has left gravity
+;;;     whether the mark has left gravity
 ;;; 
 ;;; Returns :
-;;; 	the new GtkTextMark object.
+;;;     the new GtkTextMark object.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_create_mark" %gtk-text-buffer-create-mark)
@@ -1393,13 +1393,13 @@
 ;;; notification of the move.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; where :
-;;; 	new location for mark in buffer
+;;;     new location for mark in buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_move_mark" %gtk-text-buffer-move-mark) :void
@@ -1425,13 +1425,13 @@
 ;;; gtk_text_buffer_move_mark() for details.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; name :
-;;; 	name of a mark
+;;;     name of a mark
 ;;; 
 ;;; where :
-;;; 	new location for mark
+;;;     new location for mark
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_move_mark_by_name" gtk-text-buffer-move-mark-by-name)
@@ -1456,13 +1456,13 @@
 ;;; Emits the "mark-set" signal as notification of the mark's initial placement.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; mark :
-;;; 	the mark to add
+;;;     the mark to add
 ;;; 
 ;;; where :
-;;; 	location to place mark
+;;;     location to place mark
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -1489,10 +1489,10 @@
 ;;; mark is deleted.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark in buffer
+;;;     a GtkTextMark in buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_delete_mark" %gtk-text-buffer-delete-mark) :void
@@ -1516,10 +1516,10 @@
 ;;; gtk_text_buffer_delete_mark() for details.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; name :
-;;; 	name of a mark in buffer
+;;;     name of a mark in buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_delete_mark_by_name"
@@ -1539,13 +1539,13 @@
 ;;; exists in the buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; name :
-;;; 	a mark name
+;;;     a mark name
 ;;; 
 ;;; Returns :
-;;; 	a GtkTextMark, or NULL.
+;;;     a GtkTextMark, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_mark" gtk-text-buffer-get-mark)
@@ -1565,10 +1565,10 @@
 ;;; very slightly more efficient, and involves less typing.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	insertion point mark.
+;;;     insertion point mark.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_insert" gtk-text-buffer-get-insert)
@@ -1594,10 +1594,10 @@
 ;;; selection and what its bounds are.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	selection bound mark.
+;;;     selection bound mark.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun (gtk-text-buffer-selection-bound "gtk_text_buffer_get_selection_bound")
@@ -1614,10 +1614,10 @@
 ;;; Indicates whether the buffer has some text currently selected.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the there is text selected
+;;;     TRUE if the there is text selected
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1636,10 +1636,10 @@
 ;;; function moves them as a unit, which can be optimized.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; where :
-;;; 	where to put the cursor
+;;;     where to put the cursor
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_place_cursor" gtk-text-buffer-place-cursor) :void
@@ -1663,13 +1663,13 @@
 ;;; optimized.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; ins :
-;;; 	where to put the "insert" mark
+;;;     where to put the "insert" mark
 ;;; 
 ;;; bound :
-;;; 	where to put the "selection_bound" mark
+;;;     where to put the "selection_bound" mark
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1693,16 +1693,16 @@
 ;;; applies tag to the given range. start and end do not have to be in order.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; 
 ;;; start :
-;;; 	one bound of range to be tagged
+;;;     one bound of range to be tagged
 ;;; 
 ;;; end :
-;;; 	other bound of range to be tagged
+;;;     other bound of range to be tagged
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_apply_tag" %gtk-text-buffer-apply-tag) :void
@@ -1731,16 +1731,16 @@
 ;;; in order.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; 
 ;;; start :
-;;; 	one bound of range to be untagged
+;;;     one bound of range to be untagged
 ;;; 
 ;;; end :
-;;; 	other bound of range to be untagged
+;;;     other bound of range to be untagged
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_remove_tag" %gtk-text-buffer-remove-tag) :void
@@ -1768,16 +1768,16 @@
 ;;; GtkTextTag, then calls gtk_text_buffer_apply_tag().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; name :
-;;; 	name of a named GtkTextTag
+;;;     name of a named GtkTextTag
 ;;; 
 ;;; start :
-;;; 	one bound of range to be tagged
+;;;     one bound of range to be tagged
 ;;; 
 ;;; end :
-;;; 	other bound of range to be tagged
+;;;     other bound of range to be tagged
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_apply_tag_by_name"
@@ -1801,16 +1801,16 @@
 ;;; GtkTextTag, then calls gtk_text_buffer_remove_tag().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; name :
-;;; 	name of a GtkTextTag
+;;;     name of a GtkTextTag
 ;;; 
 ;;; start :
-;;; 	one bound of range to be untagged
+;;;     one bound of range to be untagged
 ;;; 
 ;;; end :
-;;; 	other bound of range to be untagged
+;;;     other bound of range to be untagged
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_remove_tag_by_name"
@@ -1835,13 +1835,13 @@
 ;;; you have two or more unrelated code sections that add tags.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	one bound of range to be untagged
+;;;     one bound of range to be untagged
 ;;; 
 ;;; end :
-;;; 	other bound of range to be untagged
+;;;     other bound of range to be untagged
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_remove_all_tags" gtk-text-buffer-remove-all-tags)
@@ -1874,19 +1874,19 @@
 ;;; properties to set on the tag, as with g_object_set().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; tag_name :
-;;; 	name of the new tag, or NULL.
+;;;     name of the new tag, or NULL.
 ;;; 
 ;;; first_property_name :
-;;; 	name of first property to set, or NULL.
+;;;     name of first property to set, or NULL.
 ;;; 
 ;;; ... :
-;;; 	NULL-terminated list of property names and values
+;;;     NULL-terminated list of property names and values
 ;;; 
 ;;; Returns :
-;;; 	a new tag.
+;;;     a new tag.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1903,16 +1903,16 @@
 ;;; bytes.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;;     iterator to initialize.
 ;;; 
 ;;; line_number :
-;;; 	line number counting from 0
+;;;     line number counting from 0
 ;;; 
 ;;; char_offset :
-;;; 	char offset from start of line
+;;;     char offset from start of line
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_iter_at_line_offset"
@@ -1945,13 +1945,13 @@
 ;;; iterator one past the last valid character in the buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;;     iterator to initialize.
 ;;; 
 ;;; char_offset :
-;;; 	char offset from start of buffer, counting from 0, or -1
+;;;     char offset from start of buffer, counting from 0, or -1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_iter_at_offset"
@@ -1977,13 +1977,13 @@
 ;;; Initializes iter to the start of the given line.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;;     iterator to initialize.
 ;;; 
 ;;; line_number :
-;;; 	line number counting from 0
+;;;     line number counting from 0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_iter_at_line" %gtk-text-buffer-get-iter-at-line)
@@ -2013,16 +2013,16 @@
 ;;; character as multiple bytes.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;;     iterator to initialize.
 ;;; 
 ;;; line_number :
-;;; 	line number counting from 0
+;;;     line number counting from 0
 ;;; 
 ;;; byte_index :
-;;; 	byte index from start of line
+;;;     byte index from start of line
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2035,13 +2035,13 @@
 ;;; Initializes iter with the current position of mark.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;;     iterator to initialize.
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark in buffer
+;;;     a GtkTextMark in buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_iter_at_mark" %gtk-text-buffer-get-iter-at-mark)
@@ -2069,13 +2069,13 @@
 ;;; Obtains the location of anchor within buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	an iterator to be initialized.
+;;;     an iterator to be initialized.
 ;;; 
 ;;; anchor :
-;;; 	a child anchor that appears in buffer
+;;;     a child anchor that appears in buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_iter_at_child_anchor"
@@ -2102,10 +2102,10 @@
 ;;; character offset 0.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize
+;;;     iterator to initialize
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_start_iter" %gtk-text-buffer-get-start-iter)
@@ -2132,10 +2132,10 @@
 ;;; to get character position 0) to the end iterator.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; iter :
-;;; 	iterator to initialize.
+;;;     iterator to initialize.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_end_iter" %gtk-text-buffer-get-end-iter) :void
@@ -2160,13 +2160,13 @@
 ;;; buffer lies within the range [start,end).
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	iterator to initialize with first position in the buffer.
+;;;     iterator to initialize with first position in the buffer.
 ;;; 
 ;;; end :
-;;; 	iterator to initialize with the end iterator.
+;;;     iterator to initialize with the end iterator.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_bounds" %gtk-text-buffer-get-bounds) :void
@@ -2192,10 +2192,10 @@
 ;;; example to enable a "save" function in a text editor.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the buffer has been modified
+;;;     TRUE if the buffer has been modified
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2210,10 +2210,10 @@
 ;;; bit flips, the buffer emits a "modified-changed" signal.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; setting :
-;;; 	modification flag setting
+;;;     modification flag setting
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2228,16 +2228,16 @@
 ;;; selection will be considered (users can't delete uneditable text).
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; interactive :
-;;; 	whether the deletion is caused by user interaction
+;;;     whether the deletion is caused by user interaction
 ;;; 
 ;;; default_editable :
-;;; 	whether the buffer is editable by default
+;;;     whether the buffer is editable by default
 ;;; 
 ;;; Returns :
-;;; 	whether there was a non-empty selection to delete
+;;;     whether there was a non-empty selection to delete
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_delete_selection" %gtk-text-buffer-delete-selection)
@@ -2266,16 +2266,16 @@
 ;;; the paste data will be inserted.)
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard to paste from
+;;;     the GtkClipboard to paste from
 ;;; 
 ;;; override_location :
-;;; 	location to insert pasted text, or NULL for at the cursor. [allow-none]
+;;;     location to insert pasted text, or NULL for at the cursor. [allow-none]
 ;;; 
 ;;; default_editable :
-;;; 	whether the buffer is editable by default
+;;;     whether the buffer is editable by default
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_paste_clipboard" %gtk-text-buffer-paste-clipboard)
@@ -2300,10 +2300,10 @@
 ;;; Copies the currently-selected text to a clipboard.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard object to copy to
+;;;     the GtkClipboard object to copy to
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_copy_clipboard" gtk-text-buffer-copy-clipboard) :void
@@ -2323,13 +2323,13 @@
 ;;; if it's editable.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard object to cut to
+;;;     the GtkClipboard object to cut to
 ;;; 
 ;;; default_editable :
-;;; 	default editability of the buffer
+;;;     default editability of the buffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_cut_clipboard" gtk-text-buffer-cut-clipboard) :void
@@ -2353,16 +2353,16 @@
 ;;; value still indicates whether text is selected.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer a GtkTextBuffer
+;;;     a GtkTextBuffer a GtkTextBuffer
 ;;; 
 ;;; start :
-;;; 	iterator to initialize with selection start
+;;;     iterator to initialize with selection start
 ;;; 
 ;;; end :
-;;; 	iterator to initialize with selection end
+;;;     iterator to initialize with selection end
 ;;; 
 ;;; Returns :
-;;; 	whether the selection has nonzero length
+;;;     whether the selection has nonzero length
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_get_selection_bounds"
@@ -2402,7 +2402,7 @@
 ;;; those functions.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_begin_user_action" gtk-text-buffer-begin-user-action)
@@ -2432,7 +2432,7 @@
 ;;; that function for a full explanation.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_end_user_action" gtk-text-buffer-end-user-action)
@@ -2452,10 +2452,10 @@
 ;;; type GDK_SELECTION_PRIMARY for a view of buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_add_selection_clipboard"
@@ -2474,10 +2474,10 @@
 ;;; Removes a GtkClipboard added with gtk_text_buffer_add_selection_clipboard().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard added to buffer by
+;;;     a GtkClipboard added to buffer by
 ;;;     gtk_text_buffer_add_selection_clipboard()
 ;;; ----------------------------------------------------------------------------
 
@@ -2521,31 +2521,31 @@
 ;;; with gtk_text_buffer_serialize(), and insert it at iter.
 ;;; 
 ;;; register_buffer :
-;;; 	the GtkTextBuffer the format is registered with
+;;;     the GtkTextBuffer the format is registered with
 ;;; 
 ;;; content_buffer :
-;;; 	the GtkTextBuffer to deserialize into
+;;;     the GtkTextBuffer to deserialize into
 ;;; 
 ;;; iter :
-;;; 	insertion point for the deserialized text
+;;;     insertion point for the deserialized text
 ;;; 
 ;;; data :
-;;; 	data to deserialize
+;;;     data to deserialize
 ;;; 
 ;;; length :
-;;; 	length of data
+;;;     length of data
 ;;; 
 ;;; create_tags :
-;;; 	TRUE if deserializing may create tags
+;;;     TRUE if deserializing may create tags
 ;;; 
 ;;; user_data :
-;;; 	user data that was specified when registering the format
+;;;     user data that was specified when registering the format
 ;;; 
 ;;; error :
-;;; 	return location for a GError
+;;;     return location for a GError
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success, FALSE otherwise
+;;;     TRUE on success, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2567,28 +2567,28 @@
 ;;; gtk_text_buffer_register_deserialize_tagset() beforehand.
 ;;; 
 ;;; register_buffer :
-;;; 	the GtkTextBuffer format is registered with
+;;;     the GtkTextBuffer format is registered with
 ;;; 
 ;;; content_buffer :
-;;; 	the GtkTextBuffer to deserialize into
+;;;     the GtkTextBuffer to deserialize into
 ;;; 
 ;;; format :
-;;; 	the rich text format to use for deserializing
+;;;     the rich text format to use for deserializing
 ;;; 
 ;;; iter :
-;;; 	insertion point for the deserialized text
+;;;     insertion point for the deserialized text
 ;;; 
 ;;; data :
-;;; 	data to deserialize
+;;;     data to deserialize
 ;;; 
 ;;; length :
-;;; 	length of data
+;;;     length of data
 ;;; 
 ;;; error :
-;;; 	return location for a GError
+;;;     return location for a GError
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success, FALSE otherwise.
+;;;     TRUE on success, FALSE otherwise.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2626,13 +2626,13 @@
 ;;; gtk_text_buffer_deserialize_set_can_create_tags()
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; format :
-;;; 	a GdkAtom representing a registered rich text format
+;;;     a GdkAtom representing a registered rich text format
 ;;; 
 ;;; Returns :
-;;; 	whether deserializing this format may create tags
+;;;     whether deserializing this format may create tags
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2670,13 +2670,13 @@
 ;;; know that your application can handle the newly created tags.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; format :
-;;; 	a GdkAtom representing a registered rich text format
+;;;     a GdkAtom representing a registered rich text format
 ;;; 
 ;;; can_create_tags :
-;;; 	whether deserializing this format may create tags
+;;;     whether deserializing this format may create tags
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2703,10 +2703,10 @@
 ;;; gtk_target_list_add_text_targets().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	the GtkTargetList. [transfer none]
+;;;     the GtkTargetList. [transfer none]
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2722,13 +2722,13 @@
 ;;; gtk_text_buffer_register_deserialize_tagset()
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; n_formats :
-;;; 	return location for the number of formats
+;;;     return location for the number of formats
 ;;; 
 ;;; Returns :
-;;; 	an array of GdkAtoms representing the registered formats.
+;;;     an array of GdkAtoms representing the registered formats.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2761,10 +2761,10 @@
 ;;; gtk_target_list_add_text_targets().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	the GtkTargetList. [transfer none]
+;;;     the GtkTargetList. [transfer none]
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2780,13 +2780,13 @@
 ;;; gtk_text_buffer_register_serialize_tagset()
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; n_formats :
-;;; 	return location for the number of formats
+;;;     return location for the number of formats
 ;;; 
 ;;; Returns :
-;;; 	an array of GdkAtoms representing the registered formats.
+;;;     an array of GdkAtoms representing the registered formats.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2820,22 +2820,22 @@
 ;;; mime_type with the passed buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; mime_type :
-;;; 	the format's mime-type
+;;;     the format's mime-type
 ;;; 
 ;;; function :
-;;; 	the deserialize function to register
+;;;     the deserialize function to register
 ;;; 
 ;;; user_data :
-;;; 	function's user_data
+;;;     function's user_data
 ;;; 
 ;;; user_data_destroy :
-;;; 	a function to call when user_data is no longer needed
+;;;     a function to call when user_data is no longer needed
 ;;; 
 ;;; Returns :
-;;; 	the GdkAtom that corresponds to the newly registered format's mime-type.
+;;;     the GdkAtom that corresponds to the newly registered format's mime-type.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2854,7 +2854,7 @@
                         mime-type
                         (callback gtk-text-buffer-deserialize-cb)
                         (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-callback)))
+                        (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-text-buffer-register-deserialize-format)
 
@@ -2901,13 +2901,13 @@
 ;;; details.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; tagset_name :
-;;; 	an optional tagset name, on NULL.
+;;;     an optional tagset name, on NULL.
 ;;; 
 ;;; Returns :
-;;; 	the GdkAtom that corresponds to the newly registered format's mime-type.
+;;;     the GdkAtom that corresponds to the newly registered format's mime-type.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2933,22 +2933,22 @@
 ;;; mime_type with the passed buffer.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; mime_type :
-;;; 	the format's mime-type
+;;;     the format's mime-type
 ;;; 
 ;;; function :
-;;; 	the serialize function to register
+;;;     the serialize function to register
 ;;; 
 ;;; user_data :
-;;; 	function's user_data
+;;;     function's user_data
 ;;; 
 ;;; user_data_destroy :
-;;; 	a function to call when user_data is no longer needed
+;;;     a function to call when user_data is no longer needed
 ;;; 
 ;;; Returns :
-;;; 	the GdkAtom that corresponds to the newly registered format's mime-type.
+;;;     the GdkAtom that corresponds to the newly registered format's mime-type.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2966,7 +2966,7 @@
                         mime-type
                         (callback gtk-text-buffer-serialize-cb)
                         (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-callback)))
+                        (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-text-buffer-register-serialize-format)
 
@@ -2994,13 +2994,13 @@
 ;;; pasting of arbitrary tags.
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; tagset_name :
-;;; 	an optional tagset name, on NULL. [allow-none]
+;;;     an optional tagset name, on NULL. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	the GdkAtom that corresponds to the newly registered format's mime-type.
+;;;     the GdkAtom that corresponds to the newly registered format's mime-type.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3026,25 +3026,25 @@
 ;;; must return the serialized form of the content.
 ;;; 
 ;;; register_buffer :
-;;; 	the GtkTextBuffer for which the format is registered
+;;;     the GtkTextBuffer for which the format is registered
 ;;; 
 ;;; content_buffer :
-;;; 	the GtkTextBuffer to serialize
+;;;     the GtkTextBuffer to serialize
 ;;; 
 ;;; start :
-;;; 	start of the block of text to serialize
+;;;     start of the block of text to serialize
 ;;; 
 ;;; end :
-;;; 	end of the block of text to serialize
+;;;     end of the block of text to serialize
 ;;; 
 ;;; length :
-;;; 	Return location for the length of the serialized data
+;;;     Return location for the length of the serialized data
 ;;; 
 ;;; user_data :
-;;; 	user data that was specified when registering the format
+;;;     user data that was specified when registering the format
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated array of guint8 which contains the serialized data,
+;;;     a newly-allocated array of guint8 which contains the serialized data,
 ;;;     or NULL if an error occurred
 ;;; ----------------------------------------------------------------------------
 
@@ -3087,25 +3087,25 @@
 ;;; gtk_text_buffer_register_serialize_tagset() beforehand.
 ;;; 
 ;;; register_buffer :
-;;; 	the GtkTextBuffer format is registered with
+;;;     the GtkTextBuffer format is registered with
 ;;; 
 ;;; content_buffer :
-;;; 	the GtkTextBuffer to serialize
+;;;     the GtkTextBuffer to serialize
 ;;; 
 ;;; format :
-;;; 	the rich text format to use for serializing
+;;;     the rich text format to use for serializing
 ;;; 
 ;;; start :
-;;; 	start of block of text to serialize
+;;;     start of block of text to serialize
 ;;; 
 ;;; end :
-;;; 	end of block of test to serialize
+;;;     end of block of test to serialize
 ;;; 
 ;;; length :
-;;; 	return location for the length of the serialized data
+;;;     return location for the length of the serialized data
 ;;; 
 ;;; Returns :
-;;; 	the serialized data, encoded as format.
+;;;     the serialized data, encoded as format.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3145,10 +3145,10 @@
 ;;; gtk_text_buffer_register_deserialize_tagset().
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; format :
-;;; 	a GdkAtom representing a registered rich text format.
+;;;     a GdkAtom representing a registered rich text format.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3171,10 +3171,10 @@
 ;;; gtk_text_buffer_register_serialize_tagset()
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; format :
-;;; 	a GdkAtom representing a registered rich text format.
+;;;     a GdkAtom representing a registered rich text format.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
