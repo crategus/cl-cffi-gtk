@@ -131,3 +131,5 @@
     (assert-true         (gtk-label-track-visited-links label))
     
     ))
+
+;;; --- End of file rtest-gtk-label.lisp ---------------------------------------

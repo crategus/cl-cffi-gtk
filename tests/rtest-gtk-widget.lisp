@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gobject.lisp
+;;; rtest-widget.lisp
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
@@ -71,3 +71,5 @@
               (gtk-widget-class-list-style-properties (gtype "GtkWidget")))
       #'string<))
     ))
+
+;;; --- End of file rtest-gtk-widget.lisp --------------------------------------

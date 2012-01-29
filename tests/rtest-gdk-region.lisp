@@ -122,7 +122,6 @@
     (assert-eq :part  (gdk-region-rect-in region1 rect2))
     (assert-eq :part (gdk-region-rect-in region2 rect1)) ; ???
     (assert-eq :in   (gdk-region-rect-in region2 rect2))
-    
-;    (assert-error 'error (gdk-region-get-rectangles region2))
-      ))
-      
+    ))
+
+;;; --- End of file rtest-gdk-region.lisp --------------------------------------

@@ -131,3 +131,5 @@
     (assert-eql  5    (gtk-progress-bar-activity-blocks pbar))
     (assert-eql 10    (gtk-progress-bar-discrete-blocks pbar))
     ))
+
+;;; --- End of file rtest-gtk-progress-bar.lisp --------------------------------

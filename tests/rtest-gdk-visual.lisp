@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gdk-screen.lisp
+;;; rtest-gdk-visual.lisp
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
@@ -33,4 +33,3 @@
     ))
 
 ;;; --- End of file rtest-gdk-visual.lisp --------------------------------------
-      
