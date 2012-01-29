@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -67,6 +67,8 @@
 ;;;     GtkJunctionSides
 ;;;     GtkBorderStyle
 ;;;     GtkRegionFlags
+;;;
+;;;     GtkUpdateType  from GTK+ 2 Reference Manual
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1190,5 +1192,33 @@
 ;;; GTK_REGION_SORTED
 ;;;     Region is part of a sorted area.
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkUpdateType
+;;;
+;;; typedef enum {
+;;;   GTK_UPDATE_CONTINUOUS,
+;;;   GTK_UPDATE_DISCONTINUOUS,
+;;;   GTK_UPDATE_DELAYED
+;;; } GtkUpdateType;
+;;; 
+;;; Used by GtkRange to control the policy for notifying value changes.
+;;; 
+;;; GTK_UPDATE_CONTINUOUS
+;;;     Notify updates whenever the value changed
+;;; 
+;;; GTK_UPDATE_DISCONTINUOUS
+;;;     Notify updates when the mouse button has been released
+;;; 
+;;; GTK_UPDATE_DELAYED
+;;;     Space out updates with a small timeout
+;;; ---------------------------------------------------------------------------- 
+
+(define-g-enum "GtkUpdateType" gtk-update-type
+  (:export t
+   :type-initializer "gtk_update_type_get_type")
+  (:continuous 0)
+  (:discontinuous 1)
+  (:delayed 2))
 
 ;;; --- End of file gtk.enumerations.lisp --------------------------------------
