@@ -3,8 +3,6 @@
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
-;;; ----------------------------------------------------------------------------
-;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
@@ -44,7 +42,8 @@
   
   (assert-equal
     '(PROGN
-       (DEFCLASS GTK-BOX (GTK-CONTAINER ATK-IMPLEMENTOR-IFACE BUILDABLE ORIENTABLE)
+       (DEFCLASS GTK-BOX (GTK-CONTAINER ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
+                                        GTK-ORIENTABLE)
          ((HOMOGENEOUS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
            "gboolean" :ACCESSOR GTK-BOX-HOMOGENEOUS :INITARG :HOMOGENEOUS
              :G-PROPERTY-NAME "homogeneous")
@@ -92,7 +91,8 @@
     
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-H-BOX (GTK-BOX ATK-IMPLEMENTOR-IFACE BUILDABLE ORIENTABLE) NIL
+         (DEFCLASS GTK-H-BOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
+                                      GTK-ORIENTABLE) NIL
            (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkHBox")
            (:G-TYPE-INITIALIZER . "gtk_hbox_get_type"))
          (EXPORT 'GTK-H-BOX (FIND-PACKAGE "GTK")))
@@ -134,9 +134,12 @@
     
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-V-BOX (GTK-BOX ATK-IMPLEMENTOR-IFACE BUILDABLE ORIENTABLE) NIL
+         (DEFCLASS GTK-V-BOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
+                                      GTK-ORIENTABLE) NIL
            (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkVBox")
            (:G-TYPE-INITIALIZER . "gtk_vbox_get_type"))
          (EXPORT 'GTK-V-BOX (FIND-PACKAGE "GTK")))
      (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkVBox"))))
     ))
+
+;;; --- End of the file rtest-gtk-box.lisp -------------------------------------

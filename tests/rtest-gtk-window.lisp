@@ -3,8 +3,6 @@
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
-;;; ----------------------------------------------------------------------------
-;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
@@ -69,7 +67,7 @@
     (assert-eq :none     (gtk-window-window-position window))
     
     ;; Check the defintion of the class gtk-window
-    (assert-equal 
+    (assert-equal
       '(DEFINE-G-OBJECT-CLASS "GtkWindow" GTK-WINDOW
          (:SUPERCLASS GTK-BIN :EXPORT T :INTERFACES
           ("AtkImplementorIface" "GtkBuildable")
@@ -129,7 +127,7 @@
     ;; Check the expansion of the class definition
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-WINDOW (GTK-BIN ATK-IMPLEMENTOR-IFACE BUILDABLE)
+         (DEFCLASS GTK-WINDOW (GTK-BIN ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE)
            ((ACCEPT-FOCUS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
              "gboolean" :ACCESSOR GTK-WINDOW-ACCEPT-FOCUS :INITARG
              :ACCEPT-FOCUS :G-PROPERTY-NAME "accept-focus")
@@ -250,3 +248,5 @@
      ;; macroexpand the class definition
      (macroexpand-1 (get-g-class-definition (gtype "GtkWindow"))))
       ))
+
+;;; --- End of the file rtest-gtk-window.lisp ----------------------------------

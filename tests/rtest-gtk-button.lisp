@@ -1,9 +1,7 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gtk-box.lisp
+;;; rtest-gtk-button.lisp
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
-;;; ----------------------------------------------------------------------------
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -70,7 +68,7 @@
     (assert-equal
      '(PROGN
         (DEFCLASS GTK-BUTTON
-                  (GTK-BIN ATK-IMPLEMENTOR-IFACE ACTIVATABLE BUILDABLE)
+                  (GTK-BIN ATK-IMPLEMENTOR-IFACE GTK-ACTIVATABLE GTK-BUILDABLE)
            ((FOCUS-ON-CLICK :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
              "gboolean" :ACCESSOR GTK-BUTTON-FOCUS-ON-CLICK :INITARG
              :FOCUS-ON-CLICK :G-PROPERTY-NAME "focus-on-click")
@@ -154,7 +152,7 @@
     (assert-equal
       '(PROGN
          (DEFCLASS GTK-TOGGLE-BUTTON
-           (GTK-BUTTON ATK-IMPLEMENTOR-IFACE ACTIVATABLE BUILDABLE)
+           (GTK-BUTTON ATK-IMPLEMENTOR-IFACE GTK-ACTIVATABLE GTK-BUILDABLE)
            ((ACTIVE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE "gboolean"
              :ACCESSOR GTK-TOGGLE-BUTTON-ACTIVE :INITARG :ACTIVE
              :G-PROPERTY-NAME "active")
@@ -217,7 +215,8 @@
     (assert-equal
       '(PROGN
          (DEFCLASS GTK-RADIO-BUTTON
-           (GTK-CHECK-BUTTON ATK-IMPLEMENTOR-IFACE ACTIVATABLE BUILDABLE)
+           (GTK-CHECK-BUTTON ATK-IMPLEMENTOR-IFACE GTK-ACTIVATABLE
+                             GTK-BUILDABLE)
            ((GROUP :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
              "GtkRadioButton" :ACCESSOR GTK-RADIO-BUTTON-GROUP :INITARG :GROUP
              :G-PROPERTY-NAME "group"))
@@ -227,3 +226,5 @@
          (EXPORT 'GTK-RADIO-BUTTON-GROUP (FIND-PACKAGE "GTK")))
      (macroexpand-1 (get-g-class-definition (gtype "GtkRadioButton"))))
   ))
+
+;;; --- End of the file rtest-gtk-button.lisp ----------------------------------

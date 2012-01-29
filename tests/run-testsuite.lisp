@@ -48,6 +48,7 @@
 (defpackage :gdk-tests
   (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
+(load "rtest-gdk-region.lisp")
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
 (in-package :gdk-tests)
