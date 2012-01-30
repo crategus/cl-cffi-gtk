@@ -82,7 +82,7 @@
 ;;; affect windows within the same GtkWindowGroup.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkWindowGroup.
+;;;     a new GtkWindowGroup.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -94,10 +94,10 @@
 ;;; Adds a window to a GtkWindowGroup.
 ;;; 
 ;;; window_group :
-;;; 	a GtkWindowGroup
+;;;     a GtkWindowGroup
 ;;; 
 ;;; window :
-;;; 	the GtkWindow to add
+;;;     the GtkWindow to add
 ;;; ----------------------------------------------------------------------------
 
 (defcfun (gtk-window-group-add-window "gtk_window_group_add_window") :void
@@ -115,10 +115,10 @@
 ;;; Removes a window from a GtkWindowGroup.
 ;;; 
 ;;; window_group :
-;;; 	a GtkWindowGroup
+;;;     a GtkWindowGroup
 ;;; 
 ;;; window :
-;;; 	the GtkWindow to remove
+;;;     the GtkWindow to remove
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_group_remove_window" gtk-window-group-remove-window) :void
@@ -135,10 +135,10 @@
 ;;; Returns a list of the GtkWindows that belong to window_group.
 ;;; 
 ;;; window_group :
-;;; 	a GtkWindowGroup
+;;;     a GtkWindowGroup
 ;;; 
 ;;; Returns :
-;;; 	A newly-allocated list of windows inside the group.
+;;;     A newly-allocated list of windows inside the group.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -157,10 +157,10 @@
 ;;; Gets the current grab widget of the given group, see gtk_grab_add().
 ;;; 
 ;;; window_group :
-;;; 	a GtkWindowGroup
+;;;     a GtkWindowGroup
 ;;; 
 ;;; Returns :
-;;; 	the current grab widget of the group. [transfer none]
+;;;     the current grab widget of the group. [transfer none]
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -175,13 +175,13 @@
 ;;; Returns the current grab widget for device, or NULL if none.
 ;;; 
 ;;; window_group :
-;;; 	a GtkWindowGroup
+;;;     a GtkWindowGroup
 ;;; 
 ;;; device :
-;;; 	a GdkDevice
+;;;     a GdkDevice
 ;;; 
 ;;; Returns :
-;;; 	The grab widget, or NULL. [transfer none]
+;;;     The grab widget, or NULL. [transfer none]
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------

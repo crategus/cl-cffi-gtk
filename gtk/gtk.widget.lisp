@@ -3073,8 +3073,8 @@
 ;;;   GTK_HAS_FOCUS            = 1 << 12,
 ;;;   GTK_CAN_DEFAULT          = 1 << 13,
 ;;;   GTK_HAS_DEFAULT          = 1 << 14,
-;;;   GTK_HAS_GRAB	       = 1 << 15,
-;;;   GTK_RC_STYLE	       = 1 << 16,
+;;;   GTK_HAS_GRAB             = 1 << 15,
+;;;   GTK_RC_STYLE             = 1 << 16,
 ;;;   GTK_COMPOSITE_CHILD      = 1 << 17,
 ;;; #ifndef GTK_DISABLE_DEPRECATED
 ;;;   GTK_NO_REPARENT          = 1 << 18,
@@ -3088,85 +3088,85 @@
 ;;; Tells about certain properties of the widget.
 ;;; 
 ;;; GTK_TOPLEVEL
-;;; 	widgets without a real parent, as there are GtkWindows and GtkMenus have
+;;;     widgets without a real parent, as there are GtkWindows and GtkMenus have
 ;;;     this flag set throughout their lifetime. Toplevel widgets always contain
 ;;;     their own GdkWindow.
 ;;; 
 ;;; GTK_NO_WINDOW
-;;; 	Indicative for a widget that does not provide its own GdkWindow. Visible
+;;;     Indicative for a widget that does not provide its own GdkWindow. Visible
 ;;;     action (e.g. drawing) is performed on the parent's GdkWindow.
 ;;; 
 ;;; GTK_REALIZED
-;;; 	Set by gtk_widget_realize(), unset by gtk_widget_unrealize(). A realized
+;;;     Set by gtk_widget_realize(), unset by gtk_widget_unrealize(). A realized
 ;;;     widget has an associated GdkWindow.
 ;;; 
 ;;; GTK_MAPPED
-;;; 	Set by gtk_widget_map(), unset by gtk_widget_unmap(). Only realized
+;;;     Set by gtk_widget_map(), unset by gtk_widget_unmap(). Only realized
 ;;;     widgets can be mapped. It means that gdk_window_show() has been called
 ;;;     on the widgets window(s).
 ;;; 
 ;;; GTK_VISIBLE
-;;; 	Set by gtk_widget_show(), unset by gtk_widget_hide(). Implies that a
+;;;     Set by gtk_widget_show(), unset by gtk_widget_hide(). Implies that a
 ;;;     widget will be mapped as soon as its parent is mapped.
 ;;; 
 ;;; GTK_SENSITIVE
-;;; 	Set and unset by gtk_widget_set_sensitive(). The sensitivity of a widget
+;;;     Set and unset by gtk_widget_set_sensitive(). The sensitivity of a widget
 ;;;     determines whether it will receive certain events (e.g. button or key
 ;;;     presses). One premise for the widget's sensitivity is to have this flag
 ;;;     set.
 ;;; 
 ;;; GTK_PARENT_SENSITIVE
-;;; 	Set and unset by gtk_widget_set_sensitive() operations on the parents of
+;;;     Set and unset by gtk_widget_set_sensitive() operations on the parents of
 ;;;     the widget. This is the second premise for the widget's sensitivity.
 ;;;     Once it has GTK_SENSITIVE and GTK_PARENT_SENSITIVE set, its state is
 ;;;     effectively sensitive. This is expressed (and can be examined) by the
 ;;;     GTK_WIDGET_IS_SENSITIVE macro.
 ;;; 
 ;;; GTK_CAN_FOCUS
-;;; 	Determines whether a widget is able to handle focus grabs.
+;;;     Determines whether a widget is able to handle focus grabs.
 ;;; 
 ;;; GTK_HAS_FOCUS
-;;; 	Set by gtk_widget_grab_focus() for widgets that also have GTK_CAN_FOCUS
+;;;     Set by gtk_widget_grab_focus() for widgets that also have GTK_CAN_FOCUS
 ;;;     set. The flag will be unset once another widget grabs the focus.
 ;;; 
 ;;; GTK_CAN_DEFAULT
-;;; 	The widget is allowed to receive the default action via
+;;;     The widget is allowed to receive the default action via
 ;;;     gtk_widget_grab_default() and will reserve space to draw the default if
 ;;;     possible
 ;;; 
 ;;; GTK_HAS_DEFAULT
-;;; 	The widget currently is receiving the default action and should be drawn
+;;;     The widget currently is receiving the default action and should be drawn
 ;;;     appropriately if possible
 ;;; 
 ;;; GTK_HAS_GRAB
-;;; 	Set by gtk_grab_add(), unset by gtk_grab_remove(). It means that the
+;;;     Set by gtk_grab_add(), unset by gtk_grab_remove(). It means that the
 ;;;     widget is in the grab_widgets stack, and will be the preferred one for
 ;;;     receiving events other than ones of cosmetic value.
 ;;; 
 ;;; GTK_RC_STYLE
-;;; 	Indicates that the widget's style has been looked up through the rc
+;;;     Indicates that the widget's style has been looked up through the rc
 ;;;     mechanism. It does not imply that the widget actually had a style
 ;;;     defined through the rc mechanism.
 ;;; 
 ;;; GTK_COMPOSITE_CHILD
-;;; 	Indicates that the widget is a composite child of its parent;
+;;;     Indicates that the widget is a composite child of its parent;
 ;;;     see gtk_widget_push_composite_child(), gtk_widget_pop_composite_child().
 ;;; 
 ;;; GTK_NO_REPARENT
-;;; 	Unused since before GTK+ 1.2, will be removed in a future version.
+;;;     Unused since before GTK+ 1.2, will be removed in a future version.
 ;;; 
 ;;; GTK_APP_PAINTABLE
-;;; 	Set and unset by gtk_widget_set_app_paintable(). Must be set on widgets
+;;;     Set and unset by gtk_widget_set_app_paintable(). Must be set on widgets
 ;;;     whose window the application directly draws on, in order to keep GTK+
 ;;;     from overwriting the drawn stuff. See the section called “App-paintable
 ;;;     widgets” for a detailed description of this flag.
 ;;; 
 ;;; GTK_RECEIVES_DEFAULT
-;;; 	The widget when focused will receive the default action and have
+;;;     The widget when focused will receive the default action and have
 ;;;     GTK_HAS_DEFAULT set even if there is a different widget set as default.
 ;;; 
 ;;; GTK_DOUBLE_BUFFERED
-;;; 	Set and unset by gtk_widget_set_double_buffered(). Indicates that
+;;;     Set and unset by gtk_widget_set_double_buffered(). Indicates that
 ;;;     exposes done on the widget should be double-buffered. See the section
 ;;;     called “Double buffering” for a detailed discussion of how
 ;;;     double-buffering works in GTK+ and why you may want to disable it for
@@ -9151,10 +9151,10 @@
 ;;; Turns on certain widget flags.
 ;;; 
 ;;; wid :
-;;; 	a GtkWidget.
+;;;     a GtkWidget.
 ;;; 
 ;;; flag :
-;;; 	the flags to set.
+;;;     the flags to set.
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-widget-flags (widget)

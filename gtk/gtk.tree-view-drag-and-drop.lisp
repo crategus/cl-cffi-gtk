@@ -31,7 +31,7 @@
 ;;; GtkTreeView drag-and-drop
 ;;; 
 ;;; Interfaces for drag-and-drop support in GtkTreeView
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkTreeDragSource
@@ -118,14 +118,14 @@
   (:skip parent-instance g-type-interface)
   ;;methods
   (row-draggable (:boolean
-		  (tree-drag-source g-object)
-		  (path (g-boxed-foreign gtk-tree-path))))
+          (tree-drag-source g-object)
+          (path (g-boxed-foreign gtk-tree-path))))
   (drag-data-get (:boolean
-		  (tree-drag-source g-object)
-		  (path (g-boxed-foreign gtk-tree-path))
-		  (selection-data (g-boxed-foreign gtk-selection-data))))
+          (tree-drag-source g-object)
+          (path (g-boxed-foreign gtk-tree-path))
+          (selection-data (g-boxed-foreign gtk-selection-data))))
   (drag-data-delete (:boolean
-		     (tree-drag-source g-object)
+             (tree-drag-source g-object)
                       (path (g-boxed-foreign gtk-tree-path)))))
 
 ;;; ----------------------------------------------------------------------------
@@ -141,13 +141,13 @@
 ;;; robustly handle a path no longer found in the model!
 ;;; 
 ;;; drag_source :
-;;; 	a GtkTreeDragSource
+;;;     a GtkTreeDragSource
 ;;; 
 ;;; path :
-;;; 	row that was being dragged
+;;;     row that was being dragged
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the row was successfully deleted
+;;;     TRUE if the row was successfully deleted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -163,16 +163,16 @@
 ;;; data. Should robustly handle a path no longer found in the model!
 ;;; 
 ;;; drag_source :
-;;; 	a GtkTreeDragSource
+;;;     a GtkTreeDragSource
 ;;; 
 ;;; path :
-;;; 	row that was dragged
+;;;     row that was dragged
 ;;; 
 ;;; selection_data :
-;;; 	a GtkSelectionData to fill with data from the dragged row. [out]
+;;;     a GtkSelectionData to fill with data from the dragged row. [out]
 ;;; 
 ;;; Returns :
-;;; 	TRUE if data of the required type was provided
+;;;     TRUE if data of the required type was provided
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -186,13 +186,13 @@
 ;;; the row is assumed draggable.
 ;;; 
 ;;; drag_source :
-;;; 	a GtkTreeDragSource
+;;;     a GtkTreeDragSource
 ;;; 
 ;;; path :
-;;; 	row on which user is initiating a drag
+;;;     row on which user is initiating a drag
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the row can be dragged
+;;;     TRUE if the row can be dragged
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -219,7 +219,7 @@
 ;;; 
 ;;;   gboolean (* row_drop_possible)  (GtkTreeDragDest   *drag_dest,
 ;;;                                    GtkTreePath       *dest_path,
-;;; 				       GtkSelectionData  *selection_data);
+;;;                                    GtkSelectionData  *selection_data);
 ;;; };
 ;;; ----------------------------------------------------------------------------
 
@@ -227,12 +227,12 @@
   (:skip parent-instance g-type-interface)
   ;;methods
   (drag-data-received (:boolean
-		       (tree-drag-dest g-object)
-		       (path (g-boxed-foreign gtk-tree-path))
-		       (selection-data (g-boxed-foreign gtk-selection-data))))
+               (tree-drag-dest g-object)
+               (path (g-boxed-foreign gtk-tree-path))
+               (selection-data (g-boxed-foreign gtk-selection-data))))
   (row-drop-possible (:boolean
-		      (tree-drag-dest g-object)
-		      (path (g-boxed-foreign gtk-tree-path))
+              (tree-drag-dest g-object)
+              (path (g-boxed-foreign gtk-tree-path))
                        (selection-data (g-boxed-foreign gtk-selection-data)))))
 
 ;;; ----------------------------------------------------------------------------
@@ -250,16 +250,16 @@
 ;;; Should robustly handle a dest no longer found in the model!
 ;;; 
 ;;; drag_dest :
-;;; 	a GtkTreeDragDest
+;;;     a GtkTreeDragDest
 ;;; 
 ;;; dest :
-;;; 	row to drop in front of
+;;;     row to drop in front of
 ;;; 
 ;;; selection_data :
-;;; 	data to drop
+;;;     data to drop
 ;;; 
 ;;; Returns :
-;;; 	whether a new row was created before position dest
+;;;     whether a new row was created before position dest
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -276,16 +276,16 @@
 ;;; almost certainly be FALSE if the parent of dest_path doesn't exist, though.
 ;;; 
 ;;; drag_dest :
-;;; 	a GtkTreeDragDest
+;;;     a GtkTreeDragDest
 ;;; 
 ;;; dest_path :
-;;; 	destination row
+;;;     destination row
 ;;; 
 ;;; selection_data :
-;;; 	the data being dragged
+;;;     the data being dragged
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a drop is possible before dest_path
+;;;     TRUE if a drop is possible before dest_path
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -299,16 +299,16 @@
 ;;; drag_data_get handler.
 ;;; 
 ;;; selection_data :
-;;; 	some GtkSelectionData
+;;;     some GtkSelectionData
 ;;; 
 ;;; tree_model :
-;;; 	a GtkTreeModel
+;;;     a GtkTreeModel
 ;;; 
 ;;; path :
-;;; 	a row in tree_model
+;;;     a row in tree_model
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the GtkSelectionData had the proper target type to allow us to
+;;;     TRUE if the GtkSelectionData had the proper target type to allow us to
 ;;;     set a tree row
 ;;; ----------------------------------------------------------------------------
 
@@ -329,16 +329,16 @@
 ;;; process. The returned path must be freed with gtk_tree_path_free().
 ;;; 
 ;;; selection_data :
-;;; 	a GtkSelectionData
+;;;     a GtkSelectionData
 ;;; 
 ;;; tree_model :
-;;; 	a GtkTreeModel
+;;;     a GtkTreeModel
 ;;; 
 ;;; path :
-;;; 	row in tree_model
+;;;     row in tree_model
 ;;; 
 ;;; Returns :
-;;; 	TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is
+;;;     TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is
 ;;;     otherwise valid
 ;;; ----------------------------------------------------------------------------
 

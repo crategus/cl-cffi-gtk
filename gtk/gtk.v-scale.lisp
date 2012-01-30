@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,7 +31,7 @@
 ;;; GtkVScale
 ;;; 
 ;;; A vertical slider widget for selecting a value from a range
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkVScale
@@ -98,10 +98,10 @@
 ;;; Creates a new GtkVScale.
 ;;; 
 ;;; adjustment :
-;;; 	the GtkAdjustment which sets the range of the scale.
+;;;     the GtkAdjustment which sets the range of the scale.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkVScale.
+;;;     a new GtkVScale.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -127,16 +127,16 @@
 ;;; use gtk_scale_set_digits() to correct it.
 ;;; 
 ;;; min :
-;;; 	minimum value
+;;;     minimum value
 ;;; 
 ;;; max :
-;;; 	maximum value
+;;;     maximum value
 ;;; 
 ;;; step :
-;;; 	step increment (tick size) used with keyboard shortcuts
+;;;     step increment (tick size) used with keyboard shortcuts
 ;;; 
 ;;; Returns :
-;;; 	a new GtkVScale
+;;;     a new GtkVScale
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.v-scale.lisp -------------------------------------------
