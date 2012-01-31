@@ -396,7 +396,7 @@
     (values)))
 
 (defun gtk-list-store-value (list-store iter column)
-  (tree-model-value list-store iter column))
+  (gtk-tree-model-value list-store iter column))
 
 (defun (setf gtk-list-store-value) (new-value list-store iter column)
   (gtk-list-store-set-value list-store iter column new-value)
