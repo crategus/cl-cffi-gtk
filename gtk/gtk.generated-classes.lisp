@@ -27,14 +27,6 @@
 
 (in-package :gtk)
 
-(define-g-enum "GtkSizeGroupMode"
-    size-group-mode
-    (:export t :type-initializer "gtk_size_group_mode_get_type")
-  (:none 0)
-  (:horizontal 1)
-  (:vertical 2)
-  (:both 3))
-
 (define-g-enum "GtkUnit"
     unit
     (:export t :type-initializer "gtk_unit_get_type")
@@ -84,13 +76,6 @@
   (:inert 0)
   (:activatable 1)
   (:editable 2))
-
-(define-g-enum "GtkTreeViewColumnSizing"
-    tree-view-column-sizing
-    (:export t :type-initializer "gtk_tree_view_column_sizing_get_type")
-  (:grow-only 0)
-  (:autosize 1)
-  (:fixed 2))
 
 (define-g-enum "GtkMetricType"
     metric-type
@@ -704,48 +689,6 @@
                         :type-initializer "gtk_recent_filter_get_type")
                        nil)
 
-(define-g-object-class "GtkTreeViewColumn" tree-view-column
-                       (:superclass gtk-object :export t :interfaces
-                        ("GtkBuildable" "GtkCellLayout") :type-initializer
-                        "gtk_tree_view_column_get_type")
-                       ((alignment tree-view-column-alignment "alignment"
-                         "gfloat" t t)
-                        (clickable tree-view-column-clickable "clickable"
-                         "gboolean" t t)
-                        (expand tree-view-column-expand "expand" "gboolean" t
-                         t)
-                        (fixed-width tree-view-column-fixed-width "fixed-width"
-                         "gint" t t)
-                        (max-width tree-view-column-max-width "max-width"
-                         "gint" t t)
-                        (min-width tree-view-column-min-width "min-width"
-                         "gint" t t)
-                        (reorderable tree-view-column-reorderable "reorderable"
-                         "gboolean" t t)
-                        (resizable tree-view-column-resizable "resizable"
-                         "gboolean" t t)
-                        (sizing tree-view-column-sizing "sizing"
-                         "GtkTreeViewColumnSizing" t t)
-                        (sort-indicator tree-view-column-sort-indicator
-                         "sort-indicator" "gboolean" t t)
-                        (sort-order tree-view-column-sort-order "sort-order"
-                         "GtkSortType" t t)
-                        (spacing tree-view-column-spacing "spacing" "gint" t t)
-                        (title tree-view-column-title "title" "gchararray" t t)
-                        (visible tree-view-column-visible "visible" "gboolean"
-                         t t)
-                        (widget tree-view-column-widget "widget" "GtkWidget" t
-                         t)
-                        (width tree-view-column-width "width" "gint" t nil)
-                        (:cffi tree-view tree-view-column-tree-view g-object
-                         "gtk_tree_view_column_get_tree_view" nil)
-                        (:cffi sort-column-id tree-view-column-sort-column-id
-                         :int "gtk_tree_view_column_get_sort_column_id"
-                         "gtk_tree_view_column_set_sort_column_id")
-                        (:cffi cell-renderers tree-view-column-cell-renderers
-                         (g-list g-object :free-from-foreign t)
-                         "gtk_tree_view_column_get_cell_renderers" nil)))
-
 (define-g-object-class "GtkAlignment" alignment
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1167,11 +1110,6 @@
                         :type-initializer "gtk_style_get_type")
                        nil)
 
-(define-g-object-class "GtkTooltip" tooltip
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_tooltip_get_type")
-                       nil)
-
 (define-g-object-class "GtkIconTheme" icon-theme
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_icon_theme_get_type")
@@ -1230,43 +1168,6 @@
                          "gchararray" t nil)
                         (limit recent-manager-limit "limit" "gint" t t)
                         (size recent-manager-size "size" "gint" t nil)))
-
-(define-g-object-class "GtkSizeGroup" size-group
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable") :type-initializer
-                        "gtk_size_group_get_type")
-                       ((ignore-hidden size-group-ignore-hidden "ignore-hidden"
-                         "gboolean" t t)
-                        (mode size-group-mode "mode" "GtkSizeGroupMode" t t)))
-
-(define-g-object-class "GtkTreeModelFilter" tree-model-filter
-                       (:superclass g-object :export t :interfaces
-                        ("GtkTreeDragSource" "GtkTreeModel") :type-initializer
-                        "gtk_tree_model_filter_get_type")
-                       ((child-model tree-model-filter-child-model
-                         "child-model" "GtkTreeModel" t nil)
-                        (virtual-root tree-model-filter-virtual-root
-                         "virtual-root" "GtkTreePath" t nil)))
-
-(define-g-object-class "GtkTreeSelection" tree-selection
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_tree_selection_get_type")
-                       ((:cffi mode tree-selection-mode gtk-selection-mode
-                         "gtk_tree_selection_get_mode"
-                         "gtk_tree_selection_set_mode")
-                        (:cffi select-function tree-selection-select-function
-                         nil tree-selection-get-selection-function
-                         tree-selection-set-select-function)
-                        (:cffi tree-view tree-selection-tree-view
-                         (g-object tree-view)
-                         "gtk_tree_selection_get_tree_view" nil)))
-
-(define-g-object-class "GtkTreeStore" tree-store
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable" "GtkTreeDragDest" "GtkTreeDragSource"
-                         "GtkTreeModel" "GtkTreeSortable")
-                        :type-initializer "gtk_tree_store_get_type")
-                       nil)
 
 (define-g-object-class "GtkRecentAction" recent-action
                        (:superclass action :export t :interfaces
