@@ -417,7 +417,7 @@
 ;;; struct GtkTreeViewColumn;
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkTreeViewColumn" tree-view-column
+(define-g-object-class "GtkTreeViewColumn" gtk-tree-view-column
   (:superclass gtk-object
     :export t
     :interfaces ("GtkBuildable" "GtkCellLayout")
