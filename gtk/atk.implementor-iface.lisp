@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gtk.interfaces.lisp
+;;; atk.implementor-iface.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -30,4 +30,4 @@
 (define-g-interface "AtkImplementorIface" atk-implementor-iface
   (:export t))
 
-;;; --- End of file gtk.interfaces.lisp ----------------------------------------
+;;; --- End of file atk.implementor-iface.lisp ---------------------------------
