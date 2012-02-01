@@ -464,7 +464,7 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-tree-model-filter-convert-iter-to-child-iter" 
+(defcfun ("gtk_tree_model_filter_convert_iter_to_child_iter" 
           %gtk-tree-model-filter-convert-iter-to-child-iter) :void
   (filter (g-object gtk-tree-model-filter))
   (child-iter (g-boxed-foreign gtk-tree-iter))

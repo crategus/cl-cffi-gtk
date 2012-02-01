@@ -425,7 +425,7 @@
 ;;;     A valid GtkTreeIter, or NULL.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_insert_before" %gtk-tree-store-insert-before) :void
+(defcfun ("gtk_tree_store_insert_before" %gtk-tree-store-insert-before) :void
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter))
