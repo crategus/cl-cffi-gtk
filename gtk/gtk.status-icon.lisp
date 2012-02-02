@@ -876,13 +876,18 @@
 ;;; mapped, it will be unmapped, and then remapped on the new screen.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-status-icon-set-screen (status-icon screen)
+  (setf (gtk-status-icon-screen status-icon) screen))
+
+(export 'gtk-status-icon-set-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_screen ()
@@ -892,13 +897,18 @@
 ;;; Returns the GdkScreen associated with status_icon.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	a GdkScreen.
+;;;     a GdkScreen.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-status-icon-get-screen (status-icon)
+  (gtk-status-icon-screen status-icon))
+
+(export 'gtk-status-icon-get-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_tooltip_text ()
@@ -1084,13 +1094,18 @@
 ;;; Shows or hides a status icon.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; visible :
-;;; 	TRUE to show the status icon, FALSE to hide it
+;;;     TRUE to show the status icon, FALSE to hide it
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-status-icon-set-visible (status-icon visible)
+  (setf (gtk-status-icon-visible status-icon) visible))
+
+(export 'gtk-status-icon-set-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_visible ()
@@ -1102,13 +1117,18 @@
 ;;; also gtk_status_icon_is_embedded().
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the status icon is visible
+;;;     TRUE if the status icon is visible
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-status-icon-get-visible (status-icon)
+  (gtk-status-icon-visible status-icon))
+
+(export 'gtk-status-icon-get-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_is_embedded ()
