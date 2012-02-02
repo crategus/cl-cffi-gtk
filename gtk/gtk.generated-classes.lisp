@@ -706,17 +706,6 @@
                         (yalign alignment-yalign "yalign" "gfloat" t t)
                         (yscale alignment-yscale "yscale" "gfloat" t t)))
 
-
-(define-g-object-class "GtkColorButton" color-button
-                       (:superclass gtk-button :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_color_button_get_type")
-                       ((alpha color-button-alpha "alpha" "guint" t t)
-                        (color color-button-color "color" "GdkColor" t t)
-                        (title color-button-title "title" "gchararray" t t)
-                        (use-alpha color-button-use-alpha "use-alpha"
-                         "gboolean" t t)))
-
 (define-g-object-class "GtkFontButton" font-button
                        (:superclass gtk-button :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
@@ -740,20 +729,6 @@
                         :type-initializer "gtk_combo_box_entry_get_type")
                        ((text-column combo-box-entry-text-column "text-column"
                          "gint" t t)))
-
-(define-g-object-class "GtkExpander" expander
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_expander_get_type")
-                       ((expanded expander-expanded "expanded" "gboolean" t t)
-                        (label expander-label "label" "gchararray" t t)
-                        (label-widget expander-label-widget "label-widget"
-                         "GtkWidget" t t)
-                        (spacing expander-spacing "spacing" "gint" t t)
-                        (use-markup expander-use-markup "use-markup" "gboolean"
-                         t t)
-                        (use-underline expander-use-underline "use-underline"
-                         "gboolean" t t)))
 
 (define-g-object-class "GtkAspectFrame" aspect-frame
                        (:superclass gtk-frame :export t :interfaces
@@ -1068,15 +1043,6 @@
                         (max-y curve-max-y "max-y" "gfloat" t t)
                         (min-x curve-min-x "min-x" "gfloat" t t)
                         (min-y curve-min-y "min-y" "gfloat" t t)))
-
-(define-g-object-class "GtkArrow" arrow
-                       (:superclass gtk-misc :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_arrow_get_type")
-                       ((arrow-type arrow-arrow-type "arrow-type"
-                         "GtkArrowType" t t)
-                        (shadow-type arrow-shadow-type "shadow-type"
-                         "GtkShadowType" t t)))
 
 (define-g-object-class "GtkRuler" ruler
                        (:superclass gtk-widget :export t :interfaces
