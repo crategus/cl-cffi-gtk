@@ -631,7 +631,7 @@
                                              tab-label
                                              position)))))
 
-(export 'notebook-add-page)
+(export 'gtk-notebook-add-page)
 
 ;;; ----------------------------------------------------------------------------
 
