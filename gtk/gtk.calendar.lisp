@@ -391,10 +391,10 @@
 
 (define-g-object-class "GtkCalendar" gtk-calendar
   (:superclass gtk-widget
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_calendar_get_type")
-  ((day calendar-day
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_calendar_get_type")
+  ((day gtk-calendar-day
     "day" "gint" t t)
    (detail-height-rows gtk-calendar-detail-height-rows
     "detail-height-rows" "gint" t t)
@@ -414,7 +414,7 @@
    (year gtk-calendar-year
     "year" "gint" t t)
    (:cffi detail-function gtk-calendar-detail-function
-          nil nil calendar-set-detail-function)
+          nil nil gtk-calendar-set-detail-func)
    (:cffi display-options gtk-calendar-display-options
           gtk-calendar-display-options
           "gtk_calendar_get_display_options"
@@ -629,7 +629,7 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; Returns :
-;;;     the display options.
+;;;     the display options
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -707,13 +707,12 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-calendar-detail-func-callback (g-string :free-to-foreign nil
-                                                         :free-from-foreign nil)
+(defcallback gtk-calendar-detail-func-cb (g-string :free-to-foreign nil
+                                                   :free-from-foreign nil)
     ((calendar g-object) (year :uint) (month :uint) (day :uint) (data :pointer))
   (restart-case
-      (or (funcall (get-stable-pointer-value data)
-                   calendar year month day)
-          (null-pointer))
+    (or (funcall (get-stable-pointer-value data) calendar year month day)
+        (null-pointer))
     (return-null () (null-pointer))))
 
 (defcfun ("gtk_calendar_set_detail_func" %gtk-calendar-set-detail-func) :void
@@ -722,14 +721,14 @@
   (data :pointer)
   (destroy-notify :pointer))
 
-(defun gtk-calendar-set-detail-function (calendar function)
+(defun gtk-calendar-set-detail-func (calendar func)
   (%gtk-calendar-set-detail-func
                               calendar
-                              (callback gtk-calendar-detail-func-callback)
-                              (allocate-stable-pointer function)
+                              (callback gtk-calendar-detail-func-cb)
+                              (allocate-stable-pointer func)
                               (callback stable-pointer-free-destroy-notify-cb)))
 
-(export 'gtk-calendar-set-detail-function)
+(export 'gtk-calendar-set-detail-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_detail_width_chars ()
@@ -739,7 +738,7 @@
 ;;; Queries the width of detail cells, in characters. See "detail-width-chars".
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; Returns :
 ;;;     The width of detail cells, in characters.
@@ -755,10 +754,10 @@
 ;;; Updates the width of detail cells. See "detail-width-chars".
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; chars :
-;;;     detail width in characters.
+;;;     detail width in characters
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -771,7 +770,7 @@
 ;;; Queries the height of detail cells, in rows. See "detail-width-chars".
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; Returns :
 ;;;     The height of detail cells, in rows.
@@ -790,7 +789,7 @@
 ;;;     a GtkCalendar.
 ;;; 
 ;;; rows :
-;;;     detail height in rows.
+;;;     detail height in rows
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
