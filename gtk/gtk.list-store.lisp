@@ -389,14 +389,14 @@
   (with-foreign-object (v 'g-value)
     (set-g-value v
                  value
-                 (gtk-tree-model-column-type list-store column)
+                 (gtk-tree-model-get-column-type list-store column)
                  :zero-g-value t)
     (%gtk-list-store-set-value list-store iter column v)
     (g-value-unset v)
     (values)))
 
 (defun gtk-list-store-value (list-store iter column)
-  (gtk-tree-model-value list-store iter column))
+  (gtk-tree-model-get-value list-store iter column))
 
 (defun (setf gtk-list-store-value) (new-value list-store iter column)
   (gtk-list-store-set-value list-store iter column new-value)
@@ -613,7 +613,7 @@
                            (columns-ar :int n))
       (iter (for i from 0 below n)
             (for value in values)
-            (for type = (gtk-tree-model-column-type list-store i))
+            (for type = (gtk-tree-model-get-column-type list-store i))
             (setf (mem-aref columns-ar :int i) i)
             (set-g-value (mem-aref v-ar 'g-value i)
                          value
