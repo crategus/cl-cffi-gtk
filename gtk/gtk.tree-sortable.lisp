@@ -135,7 +135,7 @@
   (:skip sort-columns-changed :pointer)
   ;; methods
   (get-sort-column-id
-   (:boolean (sortable (g-object tree-sortable))
+   (:boolean (sortable (g-object gtk-tree-sortable))
              (sort-column-id (:pointer :int))
              (order (:pointer gtk-sort-type)))
    :impl-call ((sortable)
