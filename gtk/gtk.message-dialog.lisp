@@ -233,6 +233,19 @@
 
 (in-package :gtk)
 
+(defun show-message (message &key (buttons :ok) (message-type :info)
+                                  (use-markup nil))
+  (let ((dialog (make-instance 'gtk-message-dialog
+                               :text message
+                               :buttons buttons
+                               :message-type message-type
+                               :use-markup use-markup)))
+    (prog1
+      (gtk-dialog-run dialog)
+      (gtk-widget-destroy dialog))))
+
+(export 'show-message)
+
 (defmacro with-gtk-message-error-handler (&body body)
   (let ((dialog (gensym))
         (e (gensym)))
