@@ -86,6 +86,7 @@
                (:file "gtk.fixed")            ; Widgets at fixed coordinates
                (:file "gtk.notebook")         ; Tabbed notebook container
                (:file "gtk.paned")            ; Two adjustable panes
+               (:file "gtk.expander")       ; Container which can hide its child
                
                ;; Ornaments
                (:file "gtk.separator")        ; Separator widget
@@ -180,6 +181,7 @@
                (:file "gtk.radio-action")     ; GtkRadioAction
                
                ;; Selectors
+               (:file "gtk.color-button")     ; Launch a color selection dialog
                (:file "gtk.color-selection")  ; A widget used to select a color
                (:file "gtk.hsv")              ; GtkHSV
                
@@ -190,6 +192,7 @@
                (:file "gtk.calendar")        ; Displays a calendar
                (:file "gtk.size-group")      ; GtkSizeGroup
                (:file "gtk.tooltip")         ; Add tips to your widgets
+               (:file "gtk.arrow")           ; Displays an arrow
                
                ;; Lisp
                (:file "gtk.init")
