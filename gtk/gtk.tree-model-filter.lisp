@@ -434,7 +434,7 @@
   (child-iter (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-model-filter-convert-child-iter-to-iter (filter iter)
-  (let ((filter-iter (make-instance 'tree-iter)))
+  (let ((filter-iter (make-instance 'gtk-tree-iter)))
     (when (%gtk-tree-model-filter-convert-child-iter-to-iter filter
                                                              filter-iter
                                                              iter)
