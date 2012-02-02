@@ -621,6 +621,150 @@
 
 ;;; [...]
 
+;;; Chapter 10. Miscellaneous Widgets
+
+;; Label
+
+(defun example-label ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Demo Label"
+                                 :border-width 5))
+          (vbox (make-instance 'gtk-v-box
+                               :homogeneous nil
+                               :spacing 5))
+          (hbox (make-instance 'gtk-h-box
+                               :homogeneous nil
+                               :spacing 5))
+          (frame (make-instance 'gtk-frame
+                                :title "Normal Label"))
+          (label (make-instance 'gtk-label
+                                :label "This is a Normal label")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window hbox)
+      (gtk-box-pack-start hbox vbox :expand nil :fill nil :padding 0)
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (setq frame (make-instance 'gtk-frame
+                                 :label "Multi-line Label"))
+      (setq label (make-instance 'gtk-label
+                                 :label
+"This is a Multi-line label.
+Second line.
+Third line"))
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (setq frame (make-instance 'gtk-frame
+                                 :label "Left Justified Label"))
+      (setq label (make-instance 'gtk-label
+                                 :justify :left
+                                 :label
+"This is a Left Justified
+Multi-line label.
+Third      line"))
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (setq frame (make-instance 'gtk-frame
+                                 :label "Right Justified Label"))
+      (setq label (make-instance 'gtk-label
+                                 :justify :right
+                                 :label
+"This is a Right Justified
+Multi-line label.
+Third      line"))
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (setq vbox (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 5))
+      (gtk-box-pack-start hbox vbox :expand nil :fill nil :padding 0)
+      (setq frame (make-instance 'gtk-frame
+                                 :label "Line wrapped label"))
+      (setq label (make-instance 'gtk-label
+                                 :wrap t
+                                 :label
+"This is an example of a line-wrapped label.  It should not be taking up the entire               width allocated to it, but automatically wraps the words to fit.  The time has come, for all good men, to come to the aid of their party. The sixth sheik's six sheep's sick.  It supports multiple paragraphs correctly, and  correctly   adds many          extra  spaces. "))
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (setq frame (make-instance 'gtk-frame
+                                 :label "Filled and wrapped label"))
+      (setq label (make-instance 'gtk-label
+                                 :wrap t
+                                 :justify :fill
+                                 :label
+"This is an example of a line-wrapped, filled label.  It should be taking up the entire             width allocated to it.  Here is a sentence to prove my point.  Here is another sentence.  Here comes the sun, do de do de do.    This is a new aragraph.    This is another newer, longer, better paragraph.  It is coming to an end, unfortunately."))
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (setq frame (make-instance 'gtk-frame
+                                 :label "Underlined label"))
+      (setq label (make-instance 'gtk-label
+                                 :justify :left
+                                 :use-underline t
+                                 :pattern
+"_________________________ _ _________ _ ______     __ _______ ___"
+                                 :label
+"This label is underlined!
+This one is underlined in quite a funky fashion"))
+      
+      (gtk-container-add frame label)
+      (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
+      
+      (gtk-widget-show window))))
+
+;; Arrows
+
+(defun create-button (arrow-type shadow-type)
+  (let ((button (make-instance 'gtk-button))
+        (arrow (make-instance 'gtk-arrow
+                              :arrow-type arrow-type
+                              :shadow-type shadow-type)))
+    (gtk-container-add button arrow)
+    button))
+
+(defun example-arrow ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Arrow Buttons"
+                                 :default-width 250
+                                 :border-width 10))
+          (button (make-instance 'gtk-button))
+          (box (make-instance 'gtk-h-box
+                              :homogeneous nil
+                              :spacing 0
+                              :border-width 2)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window box)
+      
+      (setq button (create-button :up :in))
+      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
+      
+      (setq button (create-button :down :out))
+      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
+      
+      (setq button (create-button :left :etched-in))
+      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
+      
+      (setq button (create-button :right :etched-out))
+      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
+      
+      (gtk-widget-show window))))
+
+;;; [...]
+
 ;;; Chapter 11. Container Widgets
 
 ;; The Event Box
