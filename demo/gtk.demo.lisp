@@ -595,3 +595,249 @@
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkComboBox
+
+(defun demo-combo-box ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Combo Box"))
+           (model (make-instance 'array-list-store))
+           (combo-box (make-instance 'gtk-combo-box :model model))
+           (h-box (make-instance 'gtk-h-box))
+           (v-box (make-instance 'gtk-v-box))
+           (title-entry (make-instance 'gtk-entry))
+           (value-entry (make-instance 'gtk-entry))
+           (button (make-instance 'gtk-button :label "Add")))
+      (store-add-column model "gchararray" #'tvi-title)
+      (store-add-column model "gint" #'tvi-value)
+      (store-add-item model (make-tvi :title "Monday" :value 1))
+      (store-add-item model (make-tvi :title "Tuesday" :value 2))
+      (store-add-item model (make-tvi :title "Wednesday" :value 3))
+      (store-add-item model (make-tvi :title "Thursday" :value 4))
+      (store-add-item model (make-tvi :title "Friday" :value 5))
+      (store-add-item model (make-tvi :title "Saturday" :value 6))
+      (store-add-item model (make-tvi :title "Sunday" :value 7))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (g-signal-connect button "clicked"
+                        (lambda (b)
+                          (declare (ignore b))
+                          (store-add-item model
+                                          (make-tvi :title
+                                                    (gtk-entry-text title-entry)
+                                                    :value
+                                                    (or (parse-integer
+                                                         (gtk-entry-text value-entry)
+                                                         :junk-allowed t)
+                                                        0)))))
+      (g-signal-connect combo-box "changed"
+                        (lambda (c)
+                          (declare (ignore c))
+                          (show-message (format nil "You clicked on row ~A~%"
+                                                (gtk-combo-box-active combo-box)))))
+      (gtk-container-add window v-box)
+      (gtk-box-pack-start v-box h-box :expand nil)
+      (gtk-box-pack-start h-box title-entry :expand nil)
+      (gtk-box-pack-start h-box value-entry :expand nil)
+      (gtk-box-pack-start h-box button :expand nil)
+      (gtk-box-pack-start v-box combo-box)
+      (let ((renderer (make-instance 'gtk-cell-renderer-text :text "A text")))
+        (gtk-cell-layout-pack-start combo-box renderer :expand t)
+        (gtk-cell-layout-add-attribute combo-box renderer "text" 0))
+      (let ((renderer (make-instance 'gtk-cell-renderer-text :text "A number")))
+        (gtk-cell-layout-pack-start combo-box renderer :expand nil)
+        (gtk-cell-layout-add-attribute combo-box renderer "text" 1))
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkUIManager
+
+(defun demo-ui-manager ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "UI Manager"
+                                  :default-width 200
+                                  :default-height 100
+                                  :window-position :center))
+           (ui-manager (make-instance 'gtk-ui-manager))
+           (print-confirmation t))
+      (gtk-ui-manager-add-ui-from-string ui-manager
+"<ui>
+  <toolbar action='toolbar1'>
+      <separator/>
+      <toolitem name='Left' action='justify-left'/>
+      <toolitem name='Center' action='justify-center'/>
+      <toolitem name='Right' action='justify-right'/>
+      <toolitem name='Zoom in' action='zoom-in' />
+      <toolitem name='print-confirm' action='print-confirm' />
+      <separator/>
+  </toolbar>
+</ui>")
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (iter (with fn = (lambda (action)
+                         (when print-confirmation
+                           (format t "Action ~A with name ~A activated~%"
+                                   action
+                                   (gtk-action-name action)))))
+            (with action-group = (make-instance 'gtk-action-group :name "Actions"))
+            (finally (let ((a (make-instance 'gtk-toggle-action
+                                             :name "print-confirm"
+                                             :label "Print"
+                                             :stock-id "gtk-print-report"
+                                             :active t)))
+                       (g-signal-connect a "toggled"
+                                         (lambda (action)
+                                           (setf print-confirmation
+                                                 (gtk-toggle-action-active action))))
+                       (gtk-action-group-add-action action-group a))
+                     (gtk-ui-manager-insert-action-group ui-manager action-group 0))
+            (for (name stock-id) in '(("justify-left" "gtk-justify-left")
+                                      ("justify-center" "gtk-justify-center")
+                                      ("justify-right" "gtk-justify-right")
+                                      ("zoom-in" "gtk-zoom-in")))
+            (for action = (make-instance 'gtk-action :name name :stock-id stock-id))
+            (g-signal-connect action "activate" fn)
+            (gtk-action-group-add-action action-group action))
+      (let ((widget (gtk-ui-manager-widget ui-manager "/toolbar1")))
+        (when widget
+          (gtk-container-add window widget)))
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkColorButton
+
+(defun demo-color-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Demo Color Button"
+                                 :type :toplevel
+                                 :window-position :center
+                                 :default-width 250
+                                 :default-height 200))
+          (button (make-instance 'gtk-color-button :title "Color button")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button "color-set"
+         (lambda (widget)
+           (declare (ignore widget))
+           (show-message (format nil "Chose color ~A"
+                                 (gtk-color-button-get-color button)))))
+      (gtk-container-add window button)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Test of GtkColorSelection
+
+(defun demo-color-selection ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Color selection"
+                                 :type :toplevel
+                                 :window-position :center))
+          (selection (make-instance 'gtk-color-selection
+                                    :has-opacity-control t)))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (g-signal-connect selection "color-changed"
+         (lambda (s)
+           (declare (ignore s))
+           (unless (gtk-color-selection-is-adjusting selection)
+             (format t "color: ~A~%"
+                     (gtk-color-selection-current-color selection)))))
+      (gtk-container-add window selection)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkNotebook
+
+(defun demo-notebook ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Notebook"
+                                 :type :toplevel
+                                 :window-position :center
+                                 :default-width 100
+                                 :default-height 100))
+          (expander (make-instance 'gtk-expander :expanded t :label "notebook"))
+          (notebook (make-instance 'gtk-notebook :enable-popup t)))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (iter (for i from 0 to 5)
+            (for page = (make-instance 'gtk-label
+                                       :label (format nil
+                                                      "Label for page ~A" i)))
+            (for tab-label = (make-instance 'gtk-label
+                                            :label (format nil "Tab ~A" i)))
+            (for tab-button = (make-instance 'gtk-button
+                                             :image
+                                             (make-instance 'gtk-image
+                                                            :stock "gtk-close"
+                                                            :icon-size 1)
+                                             :relief :none))
+            (g-signal-connect tab-button "clicked"
+                              (let ((page page))
+                                (lambda (button)
+                                  (declare (ignore button))
+                                  (format t "Removing page ~A~%" page)
+                                  (gtk-notebook-remove-page notebook page))))
+            (for tab-hbox = (make-instance 'gtk-h-box))
+            (gtk-box-pack-start tab-hbox tab-label)
+            (gtk-box-pack-start tab-hbox tab-button)
+            (gtk-widget-show tab-hbox)
+            (gtk-notebook-add-page notebook page tab-hbox))
+      (gtk-container-add window expander)
+      (gtk-container-add expander notebook)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkCalendar
+
+(defun calendar-detail (calendar year month day)
+  (declare (ignore calendar year month))
+  (when (= day 23)
+    "!"))
+
+(defun demo-calendar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Calendar"
+                                 :type :toplevel
+                                 :window-position :center
+                                 :default-width 100
+                                 :default-height 100))
+          (calendar (make-instance 'gtk-calendar
+                                   :detail-function #'calendar-detail)))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (g-signal-connect calendar "day-selected"
+                        (lambda (c)
+                          (declare (ignore c))
+                          (format t "selected: year ~A month ~A day ~A~%"
+                                  (gtk-calendar-year calendar)
+                                  (gtk-calendar-month calendar)
+                                  (gtk-calendar-day calendar))))
+      (gtk-container-add window calendar)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
