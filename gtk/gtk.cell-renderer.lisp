@@ -386,6 +386,18 @@
 ;;; 
 ;;; GTK_CELL_RENDERER_FOCUSED
 ;;;     The cell is in the focus row.
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkCellRendererState" gtk-cell-renderer-state
+  (:export t
+   :type-initializer "gtk_cell_renderer_state_get_type")
+  (:selected 1)
+  (:prelit 2)
+  (:insensitive 4)
+  (:sorted 8)
+  (:focused 16))
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkCellRendererMode
 ;;; 
 ;;; typedef enum {
@@ -408,14 +420,12 @@
 ;;;     The cell can be edited or otherwise modified.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-flags "GtkCellRendererState" gtk-cell-renderer-state
+(define-g-enum "GtkCellRendererMode" gtk-cell-renderer-mode
   (:export t
-   :type-initializer "gtk_cell_renderer_state_get_type")
-  (:selected 1)
-  (:prelit 2)
-  (:insensitive 4)
-  (:sorted 8)
-  (:focused 16))
+   :type-initializer "gtk_cell_renderer_mode_get_type")
+  (:inert 0)
+  (:activatable 1)
+  (:editable 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRenderer
@@ -425,38 +435,38 @@
 
 (define-g-object-class "GtkCellRenderer" gtk-cell-renderer
   (:superclass gtk-object
-    :export t
-    :interfaces nil
-    :type-initializer "gtk_cell_renderer_get_type")
-  ((cell-background cell-renderer-cell-background
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_cell_renderer_get_type")
+  ((cell-background gtk-cell-renderer-cell-background
     "cell-background" "gchararray" nil t)
-   (cell-background-gdk cell-renderer-cell-background-gdk
+   (cell-background-gdk gtk-cell-renderer-cell-background-gdk
     "cell-background-gdk" "GdkColor" t t)
-   (cell-background-set cell-renderer-cell-background-set
+   (cell-background-set gtk-cell-renderer-cell-background-set
     "cell-background-set" "gboolean" t t)
-   (editing cell-renderer-editing
+   (editing gtk-cell-renderer-editing
     "editing" "gboolean" t nil)
-   (height cell-renderer-height
+   (height gtk-cell-renderer-height
     "height" "gint" t t)
-   (is-expanded cell-renderer-is-expanded
+   (is-expanded gtk-cell-renderer-is-expanded
     "is-expanded" "gboolean" t t)
-   (is-expander cell-renderer-is-expander
+   (is-expander gtk-cell-renderer-is-expander
     "is-expander" "gboolean" t t)
-   (mode cell-renderer-mode
+   (mode gtk-cell-renderer-mode
     "mode" "GtkCellRendererMode" t t)
-   (sensitive cell-renderer-sensitive
+   (sensitive gtk-cell-renderer-sensitive
     "sensitive" "gboolean" t t)
-   (visible cell-renderer-visible
+   (visible gtk-cell-renderer-visible
     "visible" "gboolean" t t)
-   (width cell-renderer-width
+   (width gtk-cell-renderer-width
     "width" "gint" t t)
-   (xalign cell-renderer-xalign
+   (xalign gtk-cell-renderer-xalign
     "xalign" "gfloat" t t)
-   (xpad cell-renderer-xpad
+   (xpad gtk-cell-renderer-xpad
     "xpad" "guint" t t)
-   (yalign cell-renderer-yalign
+   (yalign gtk-cell-renderer-yalign
     "yalign" "gfloat" t t)
-   (ypad cell-renderer-ypad
+   (ypad gtk-cell-renderer-ypad
     "ypad" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -1111,12 +1121,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_preferred_width_for_height ()
 ;;; 
-;;; void                gtk_cell_renderer_get_preferred_width_for_height
-;;;                                                         (GtkCellRenderer *cell,
-;;;                                                          GtkWidget *widget,
-;;;                                                          gint height,
-;;;                                                          gint *minimum_width,
-;;;                                                          gint *natural_width);
+;;; void gtk_cell_renderer_get_preferred_width_for_height
+;;;                                                      (GtkCellRenderer *cell,
+;;;                                                       GtkWidget *widget,
+;;;                                                       gint height,
+;;;                                                       gint *minimum_width,
+;;;                                                       gint *natural_width);
 ;;; 
 ;;; Retreives a cell renderers's minimum and natural width if it were rendered
 ;;; to widget with the specified height.
