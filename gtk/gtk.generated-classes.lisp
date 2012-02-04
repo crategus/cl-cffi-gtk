@@ -70,13 +70,6 @@
   (:gtk 0)
   (:other 1))
 
-(define-g-enum "GtkCellRendererMode"
-    cell-renderer-mode
-    (:export t :type-initializer "gtk_cell_renderer_mode_get_type")
-  (:inert 0)
-  (:activatable 1)
-  (:editable 2))
-
 (define-g-enum "GtkMetricType"
     metric-type
     (:export t :type-initializer "gtk_metric_type_get_type")
@@ -589,60 +582,66 @@
   (show-tips recent-chooser-show-tips "show-tips" "gboolean" t t)
   (sort-type recent-chooser-sort-type "sort-type" "GtkRecentSortType" t t))
 
-(define-g-object-class "GtkCellRendererPixbuf" cell-renderer-pixbuf
-                       (:superclass cell-renderer :export t :interfaces nil
-                        :type-initializer "gtk_cell_renderer_pixbuf_get_type")
-                       ((follow-state cell-renderer-pixbuf-follow-state
-                         "follow-state" "gboolean" t t)
-                        (gicon cell-renderer-pixbuf-gicon "gicon" "GIcon" t t)
-                        (icon-name cell-renderer-pixbuf-icon-name "icon-name"
-                         "gchararray" t t)
-                        (pixbuf cell-renderer-pixbuf-pixbuf "pixbuf"
-                         "GdkPixbuf" t t)
-                        (pixbuf-expander-closed
-                         cell-renderer-pixbuf-pixbuf-expander-closed
-                         "pixbuf-expander-closed" "GdkPixbuf" t t)
-                        (pixbuf-expander-open
-                         cell-renderer-pixbuf-pixbuf-expander-open
-                         "pixbuf-expander-open" "GdkPixbuf" t t)
-                        (stock-detail cell-renderer-pixbuf-stock-detail
-                         "stock-detail" "gchararray" t t)
-                        (stock-id cell-renderer-pixbuf-stock-id "stock-id"
-                         "gchararray" t t)
-                        (stock-size cell-renderer-pixbuf-stock-size
-                         "stock-size" "guint" t t)))
+;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkCellRendererProgress" cell-renderer-progress
-                       (:superclass cell-renderer :export t :interfaces nil
-                        :type-initializer
-                        "gtk_cell_renderer_progress_get_type")
-                       ((orientation cell-renderer-progress-orientation
-                         "orientation" "GtkProgressBarOrientation" t t)
-                        (pulse cell-renderer-progress-pulse "pulse" "gint" t t)
-                        (text cell-renderer-progress-text "text" "gchararray" t
-                         t)
-                        (text-xalign cell-renderer-progress-text-xalign
-                         "text-xalign" "gfloat" t t)
-                        (text-yalign cell-renderer-progress-text-yalign
-                         "text-yalign" "gfloat" t t)
-                        (value cell-renderer-progress-value "value" "gint" t
-                         t)))
+(define-g-object-class "GtkCellRendererPixbuf" gtk-cell-renderer-pixbuf
+  (:superclass gtk-cell-renderer
+    :export t
+    :interfaces nil
+    :type-initializer "gtk_cell_renderer_pixbuf_get_type")
+  ((follow-state gtk-cell-renderer-pixbuf-follow-state
+    "follow-state" "gboolean" t t)
+   (gicon gtk-cell-renderer-pixbuf-gicon
+    "gicon" "GIcon" t t)
+   (icon-name gtk-cell-renderer-pixbuf-icon-name
+    "icon-name" "gchararray" t t)
+   (pixbuf gtk-cell-renderer-pixbuf-pixbuf
+    "pixbuf" "GdkPixbuf" t t)
+   (pixbuf-expander-closed gtk-cell-renderer-pixbuf-pixbuf-expander-closed
+    "pixbuf-expander-closed" "GdkPixbuf" t t)
+   (pixbuf-expander-open gtk-cell-renderer-pixbuf-pixbuf-expander-open
+    "pixbuf-expander-open" "GdkPixbuf" t t)
+   (stock-detail gtk-cell-renderer-pixbuf-stock-detail
+    "stock-detail" "gchararray" t t)
+   (stock-id gtk-cell-renderer-pixbuf-stock-id
+    "stock-id" "gchararray" t t)
+   (stock-size gtk-cell-renderer-pixbuf-stock-size
+    "stock-size" "guint" t t)))
 
-(define-g-object-class "GtkCellRendererAccel" cell-renderer-accel
-                       (:superclass cell-renderer-text :export t :interfaces
-                        nil :type-initializer
-                        "gtk_cell_renderer_accel_get_type")
-                       ((accel-key cell-renderer-accel-accel-key "accel-key"
-                         "guint" t t)
-                        (accel-mode cell-renderer-accel-accel-mode "accel-mode"
-                         "GtkCellRendererAccelMode" t t)
-                        (accel-mods cell-renderer-accel-accel-mods "accel-mods"
-                         "GdkModifierType" t t)
-                        (keycode cell-renderer-accel-keycode "keycode" "guint"
-                         t t)))
+(define-g-object-class "GtkCellRendererProgress" gtk-cell-renderer-progress
+  (:superclass gtk-cell-renderer
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_cell_renderer_progress_get_type")
+  ((orientation gtk-cell-renderer-progress-orientation
+    "orientation" "GtkProgressBarOrientation" t t)
+   (pulse gtk-cell-renderer-progress-pulse
+    "pulse" "gint" t t)
+   (text gtk-cell-renderer-progress-text
+    "text" "gchararray" t t)
+   (text-xalign gtk-cell-renderer-progress-text-xalign
+    "text-xalign" "gfloat" t t)
+   (text-yalign gtk-cell-renderer-progress-text-yalign
+    "text-yalign" "gfloat" t t)
+   (value gtk-cell-renderer-progress-value
+    "value" "gint" t t)))
 
-(define-g-object-class "GtkCellRendererCombo" cell-renderer-combo
-                       (:superclass cell-renderer-text :export t :interfaces
+(define-g-object-class "GtkCellRendererAccel" gtk-cell-renderer-accel
+  (:superclass gtk-cell-renderer-text
+    :export t
+    :interfaces nil
+    :type-initializer "gtk_cell_renderer_accel_get_type")
+  ((accel-key gtk-cell-renderer-accel-accel-key
+    "accel-key" "guint" t t)
+   (accel-mode gtk-cell-renderer-accel-accel-mode
+    "accel-mode" "GtkCellRendererAccelMode" t t)
+   (accel-mods gtk-cell-renderer-accel-accel-mods
+    "accel-mods" "GdkModifierType" t t)
+   (keycode gtk-cell-renderer-accel-keycode
+    "keycode" "guint" t t)))
+
+(define-g-object-class "GtkCellRendererCombo" gtk-cell-renderer-combo
+                       (:superclass gtk-cell-renderer-text :export t :interfaces
                         nil :type-initializer
                         "gtk_cell_renderer_combo_get_type")
                        ((has-entry cell-renderer-combo-has-entry "has-entry"
@@ -652,8 +651,8 @@
                         (text-column cell-renderer-combo-text-column
                          "text-column" "gint" t t)))
 
-(define-g-object-class "GtkCellRendererSpin" cell-renderer-spin
-                       (:superclass cell-renderer-text :export t :interfaces
+(define-g-object-class "GtkCellRendererSpin" gtk-cell-renderer-spin
+                       (:superclass gtk-cell-renderer-text :export t :interfaces
                         nil :type-initializer
                         "gtk_cell_renderer_spin_get_type")
                        ((adjustment cell-renderer-spin-adjustment "adjustment"
@@ -663,8 +662,8 @@
                         (digits cell-renderer-spin-digits "digits" "guint" t
                          t)))
 
-(define-g-object-class "GtkCellRendererToggle" cell-renderer-toggle
-                       (:superclass cell-renderer :export t :interfaces nil
+(define-g-object-class "GtkCellRendererToggle" gtk-cell-renderer-toggle
+                       (:superclass gtk-cell-renderer :export t :interfaces nil
                         :type-initializer "gtk_cell_renderer_toggle_get_type")
                        ((activatable cell-renderer-toggle-activatable
                          "activatable" "gboolean" t t)
@@ -677,19 +676,19 @@
                         (radio cell-renderer-toggle-radio "radio" "gboolean" t
                          t)))
 
-(define-g-object-class "GtkFileFilter" file-filter
+(define-g-object-class "GtkFileFilter" gtk-file-filter
                        (:superclass gtk-object :export t :interfaces nil
                         :type-initializer "gtk_file_filter_get_type")
                        ((:cffi name file-filter-name :string
                          "gtk_file_filter_get_name"
                          "gtk_file_filter_set_name")))
 
-(define-g-object-class "GtkRecentFilter" recent-filter
+(define-g-object-class "GtkRecentFilter" gtk-recent-filter
                        (:superclass gtk-object :export t :interfaces nil
                         :type-initializer "gtk_recent_filter_get_type")
                        nil)
 
-(define-g-object-class "GtkAlignment" alignment
+(define-g-object-class "GtkAlignment" gtk-alignment
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_alignment_get_type")
@@ -706,7 +705,7 @@
                         (yalign alignment-yalign "yalign" "gfloat" t t)
                         (yscale alignment-yscale "yscale" "gfloat" t t)))
 
-(define-g-object-class "GtkFontButton" font-button
+(define-g-object-class "GtkFontButton" gtk-font-button
                        (:superclass gtk-button :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_font_button_get_type")
@@ -722,15 +721,15 @@
                         (use-size font-button-use-size "use-size" "gboolean" t
                          t)))
 
-(define-g-object-class "GtkComboBoxEntry" combo-box-entry
-                       (:superclass combo-box :export t :interfaces
+(define-g-object-class "GtkComboBoxEntry" gtk-combo-box-entry
+                       (:superclass gtk-combo-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
                          "GtkCellLayout")
                         :type-initializer "gtk_combo_box_entry_get_type")
                        ((text-column combo-box-entry-text-column "text-column"
                          "gint" t t)))
 
-(define-g-object-class "GtkAspectFrame" aspect-frame
+(define-g-object-class "GtkAspectFrame" gtk-aspect-frame
                        (:superclass gtk-frame :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_aspect_frame_get_type")
@@ -740,7 +739,7 @@
                         (xalign aspect-frame-xalign "xalign" "gfloat" t t)
                         (yalign aspect-frame-yalign "yalign" "gfloat" t t)))
 
-(define-g-object-class "GtkHandleBox" handle-box
+(define-g-object-class "GtkHandleBox" gtk-handle-box
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_handle_box_get_type")
@@ -756,27 +755,30 @@
                         (snap-edge-set handle-box-snap-edge-set "snap-edge-set"
                          "gboolean" t t)))
 
-(define-g-object-class "GtkItem" item
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_item_get_type")
-                       nil)
+(define-g-object-class "GtkItem" gtk-item
+  (:superclass gtk-bin
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_item_get_type")
+  nil)
 
-(define-g-object-class "GtkMenuItem" menu-item
-                       (:superclass item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_menu_item_get_type")
-                       ((accel-path menu-item-accel-path "accel-path"
-                         "gchararray" t t)
-                        (label menu-item-label "label" "gchararray" t t)
-                        (right-justified menu-item-right-justified
-                         "right-justified" "gboolean" t t)
-                        (submenu menu-item-submenu "submenu" "GtkMenu" t t)
-                        (use-underline menu-item-use-underline "use-underline"
-                         "gboolean" t t)))
+(define-g-object-class "GtkMenuItem" gtk-menu-item
+  (:superclass gtk-item
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :type-initializer "gtk_menu_item_get_type")
+  ((accel-path gtk-menu-item-accel-path
+    "accel-path" "gchararray" t t)
+   (label gtk-menu-item-label "label" "gchararray" t t)
+   (right-justified gtk-menu-item-right-justified
+    "right-justified" "gboolean" t t)
+   (submenu gtk-menu-item-submenu
+    "submenu" "GtkMenu" t t)
+   (use-underline gtk-menu-item-use-underline
+    "use-underline" "gboolean" t t)))
 
-(define-g-object-class "GtkCheckMenuItem" check-menu-item
-                       (:superclass menu-item :export t :interfaces
+(define-g-object-class "GtkCheckMenuItem" gtk-check-menu-item
+                       (:superclass gtk-menu-item :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_check_menu_item_get_type")
                        ((active check-menu-item-active "active" "gboolean" t t)
@@ -785,15 +787,15 @@
                         (inconsistent check-menu-item-inconsistent
                          "inconsistent" "gboolean" t t)))
 
-(define-g-object-class "GtkRadioMenuItem" radio-menu-item
-                       (:superclass check-menu-item :export t :interfaces
+(define-g-object-class "GtkRadioMenuItem" gtk-radio-menu-item
+                       (:superclass gtk-check-menu-item :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_radio_menu_item_get_type")
                        ((group radio-menu-item-group "group" "GtkRadioMenuItem"
                          nil t)))
 
-(define-g-object-class "GtkImageMenuItem" image-menu-item
-                       (:superclass menu-item :export t :interfaces
+(define-g-object-class "GtkImageMenuItem" gtk-image-menu-item
+                       (:superclass gtk-menu-item :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_image_menu_item_get_type")
                        ((accel-group image-menu-item-accel-group "accel-group"
@@ -804,26 +806,26 @@
                         (use-stock image-menu-item-use-stock "use-stock"
                          "gboolean" t t)))
 
-(define-g-object-class "GtkSeparatorMenuItem" separator-menu-item
-                       (:superclass menu-item :export t :interfaces
+(define-g-object-class "GtkSeparatorMenuItem" gtk-separator-menu-item
+                       (:superclass gtk-menu-item :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_separator_menu_item_get_type")
                        nil)
 
-(define-g-object-class "GtkTearoffMenuItem" tearoff-menu-item
-                       (:superclass menu-item :export t :interfaces
+(define-g-object-class "GtkTearoffMenuItem" gtk-tearoff-menu-item
+                       (:superclass gtk-menu-item :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_tearoff_menu_item_get_type")
                        nil)
 
-(define-g-object-class "GtkSeparatorToolItem" separator-tool-item
-                       (:superclass tool-item :export t :interfaces
+(define-g-object-class "GtkSeparatorToolItem" gtk-separator-tool-item
+                       (:superclass gtk-tool-item :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_separator_tool_item_get_type")
                        ((draw separator-tool-item-draw "draw" "gboolean" t t)))
 
-(define-g-object-class "GtkMenuToolButton" menu-tool-button
-                       (:superclass tool-button :export t :interfaces
+(define-g-object-class "GtkMenuToolButton" gtk-menu-tool-button
+                       (:superclass gtk-tool-button :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
                         :type-initializer "gtk_menu_tool_button_get_type")
                        ((menu menu-tool-button-menu "menu" "GtkMenu" t t)
@@ -834,7 +836,7 @@
                          menu-tool-button-arrow-tooltip-markup :string nil
                          "gtk_menu_tool_button_set_arrow_tooltip_markup")))
 
-(define-g-object-class "GtkViewport" viewport
+(define-g-object-class "GtkViewport" gtk-viewport
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_viewport_get_type")
@@ -845,7 +847,7 @@
                         (vadjustment viewport-vadjustment "vadjustment"
                          "GtkAdjustment" t t)))
 
-(define-g-object-class "GtkColorSelectionDialog" color-selection-dialog
+(define-g-object-class "GtkColorSelectionDialog" gtk-color-selection-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer
@@ -859,13 +861,13 @@
                         (ok-button color-selection-dialog-ok-button "ok-button"
                          "GtkWidget" t nil)))
 
-(define-g-object-class "GtkFileChooserDialog" file-chooser-dialog
+(define-g-object-class "GtkFileChooserDialog" gtk-file-chooser-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser")
                         :type-initializer "gtk_file_chooser_dialog_get_type")
                        nil)
 
-(define-g-object-class "GtkFontSelectionDialog" font-selection-dialog
+(define-g-object-class "GtkFontSelectionDialog" gtk-font-selection-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_font_selection_dialog_get_type")
@@ -886,13 +888,13 @@
                          g-object "gtk_font_selection_dialog_get_ok_button"
                          nil)))
 
-(define-g-object-class "GtkInputDialog" input-dialog
+(define-g-object-class "GtkInputDialog" gtk-input-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_input_dialog_get_type")
                        nil)
 
-(define-g-object-class "GtkPageSetupUnixDialog" page-setup-unix-dialog
+(define-g-object-class "GtkPageSetupUnixDialog" gtk-page-setup-unix-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer
@@ -907,7 +909,7 @@
                          "gtk_page_setup_unix_dialog_get_print_settings"
                          "gtk_page_setup_unix_dialog_set_print_settings")))
 
-(define-g-object-class "GtkPrintUnixDialog" print-unix-dialog
+(define-g-object-class "GtkPrintUnixDialog" gtk-print-unix-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_print_unix_dialog_get_type")
@@ -920,14 +922,14 @@
                         (selected-printer print-unix-dialog-selected-printer
                          "selected-printer" "GtkPrinter" t nil)))
 
-(define-g-object-class "GtkRecentChooserDialog" recent-chooser-dialog
+(define-g-object-class "GtkRecentChooserDialog" gtk-recent-chooser-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable"
                          "GtkRecentChooser")
                         :type-initializer "gtk_recent_chooser_dialog_get_type")
                        nil)
 
-(define-g-object-class "GtkPlug" plug
+(define-g-object-class "GtkPlug" gtk-plug
                        (:superclass gtk-window :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_plug_get_type")
@@ -935,26 +937,26 @@
                         (socket-window plug-socket-window "socket-window"
                          "GdkWindow" t nil)))
 
-(define-g-object-class "GtkButtonBox" button-box
+(define-g-object-class "GtkButtonBox" gtk-button-box
                        (:superclass gtk-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_button_box_get_type")
                        ((layout-style button-box-layout-style "layout-style"
                          "GtkButtonBoxStyle" t t)))
 
-(define-g-object-class "GtkHButtonBox" h-button-box
-                       (:superclass button-box :export t :interfaces
+(define-g-object-class "GtkHButtonBox" gtk-h-button-box
+                       (:superclass gtk-button-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_hbutton_box_get_type")
                        nil)
 
-(define-g-object-class "GtkVButtonBox" v-button-box
-                       (:superclass button-box :export t :interfaces
+(define-g-object-class "GtkVButtonBox" gtk-v-button-box
+                       (:superclass gtk-button-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_vbutton_box_get_type")
                        nil)
 
-(define-g-object-class "GtkFileChooserButton" file-chooser-button
+(define-g-object-class "GtkFileChooserButton" gtk-file-chooser-button
                        (:superclass gtk-h-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
                          "GtkOrientable")
@@ -968,14 +970,14 @@
                         (width-chars file-chooser-button-width-chars
                          "width-chars" "gint" t t)))
 
-(define-g-object-class "GtkFileChooserWidget" file-chooser-widget
+(define-g-object-class "GtkFileChooserWidget" gtk-file-chooser-widget
                        (:superclass gtk-v-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
                          "GtkFileChooserEmbed" "GtkOrientable")
                         :type-initializer "gtk_file_chooser_widget_get_type")
                        nil)
 
-(define-g-object-class "GtkFontSelection" font-selection
+(define-g-object-class "GtkFontSelection" gtk-font-selection
                        (:superclass gtk-v-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_font_selection_get_type")
@@ -985,29 +987,29 @@
                         (preview-text font-selection-preview-text
                          "preview-text" "gchararray" t t)))
 
-(define-g-object-class "GtkGammaCurve" gamma-curve
+(define-g-object-class "GtkGammaCurve" gtk-gamma-curve
                        (:superclass gtk-v-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_gamma_curve_get_type")
                        nil)
 
-(define-g-object-class "GtkRecentChooserWidget" recent-chooser-widget
+(define-g-object-class "GtkRecentChooserWidget" gtk-recent-chooser-widget
                        (:superclass gtk-v-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
                          "GtkRecentChooser")
                         :type-initializer "gtk_recent_chooser_widget_get_type")
                        nil)
 
-(define-g-object-class "GtkRecentChooserMenu" recent-chooser-menu
-                       (:superclass menu :export t :interfaces
+(define-g-object-class "GtkRecentChooserMenu" gtk-recent-chooser-menu
+                       (:superclass gtk-menu :export t :interfaces
                         ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
                          "GtkRecentChooser")
                         :type-initializer "gtk_recent_chooser_menu_get_type")
                        ((show-numbers recent-chooser-menu-show-numbers
                          "show-numbers" "gboolean" t t)))
 
-(define-g-object-class "GtkMenuBar" menu-bar
-                       (:superclass menu-shell :export t :interfaces
+(define-g-object-class "GtkMenuBar" gtk-menu-bar
+                       (:superclass gtk-menu-shell :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_menu_bar_get_type")
                        ((child-pack-direction menu-bar-child-pack-direction
@@ -1015,25 +1017,27 @@
                         (pack-direction menu-bar-pack-direction
                          "pack-direction" "GtkPackDirection" t t)))
 
-(define-g-object-class "GtkHPaned" h-paned
-                       (:superclass paned :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_hpaned_get_type")
-                       nil)
+(define-g-object-class "GtkHPaned" gtk-h-paned
+  (:superclass gtk-paned
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_hpaned_get_type")
+  nil)
 
-(define-g-object-class "GtkVPaned" v-paned
-                       (:superclass paned :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vpaned_get_type")
-                       nil)
+(define-g-object-class "GtkVPaned" gtk-v-paned
+  (:superclass gtk-paned
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_vpaned_get_type")
+  nil)
 
-(define-g-object-class "GtkSocket" socket
+(define-g-object-class "GtkSocket" gtk-socket
                        (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_socket_get_type")
                        nil)
 
-(define-g-object-class "GtkCurve" curve
+(define-g-object-class "GtkCurve" gtk-curve
                        (:superclass gtk-drawing-area :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_curve_get_type")
@@ -1044,7 +1048,7 @@
                         (min-x curve-min-x "min-x" "gfloat" t t)
                         (min-y curve-min-y "min-y" "gfloat" t t)))
 
-(define-g-object-class "GtkRuler" ruler
+(define-g-object-class "GtkRuler" gtk-ruler
                        (:superclass gtk-widget :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_ruler_get_type")
@@ -1054,44 +1058,44 @@
                         (position ruler-position "position" "gdouble" t t)
                         (upper ruler-upper "upper" "gdouble" t t)))
 
-(define-g-object-class "GtkHRuler" h-ruler
-                       (:superclass ruler :export t :interfaces
+(define-g-object-class "GtkHRuler" gtk-h-ruler
+                       (:superclass gtk-ruler :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_hruler_get_type")
                        nil)
 
-(define-g-object-class "GtkVRuler" v-ruler
-                       (:superclass ruler :export t :interfaces
+(define-g-object-class "GtkVRuler" gtk-v-ruler
+                       (:superclass gtk-ruler :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :type-initializer "gtk_vruler_get_type")
                        nil)
 
-(define-g-object-class "GtkRcStyle" rc-style
+(define-g-object-class "GtkRcStyle" gtk-rc-style
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_rc_style_get_type")
                        nil)
 
-(define-g-object-class "GtkStyle" style
+(define-g-object-class "GtkStyle" gtk-style
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_style_get_type")
                        nil)
 
-(define-g-object-class "GtkIconTheme" icon-theme
+(define-g-object-class "GtkIconTheme" gtk-icon-theme
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_icon_theme_get_type")
                        nil)
 
-(define-g-object-class "GtkPageSetup" page-setup
+(define-g-object-class "GtkPageSetup" gtk-page-setup
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_page_setup_get_type")
                        nil)
 
-(define-g-object-class "GtkPrintContext" print-context
+(define-g-object-class "GtkPrintContext" gtk-print-context
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_print_context_get_type")
                        nil)
 
-(define-g-object-class "GtkPrintOperation" print-operation
+(define-g-object-class "GtkPrintOperation" gtk-print-operation
                        (:superclass g-object :export t :interfaces
                         ("GtkPrintOperationPreview") :type-initializer
                         "gtk_print_operation_get_type")
@@ -1122,27 +1126,36 @@
                         (use-full-page print-operation-use-full-page
                          "use-full-page" "gboolean" t t)))
 
-(define-g-object-class "GtkPrintSettings" print-settings
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_print_settings_get_type")
-                       nil)
+(define-g-object-class "GtkPrintSettings" gtk-print-settings
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_print_settings_get_type")
+  nil)
 
-(define-g-object-class "GtkRecentManager" recent-manager
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_recent_manager_get_type")
-                       ((filename recent-manager-filename "filename"
-                         "gchararray" t nil)
-                        (limit recent-manager-limit "limit" "gint" t t)
-                        (size recent-manager-size "size" "gint" t nil)))
+(define-g-object-class "GtkRecentManager" gtk-recent-manager
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_recent_manager_get_type")
+  ((filename gtk-recent-manager-filename
+    "filename" "gchararray" t nil)
+   (limit gtk-recent-manager-limit
+    "limit" "gint" t t)
+   (size gtk-recent-manager-size
+    "size" "gint" t nil)))
 
-(define-g-object-class "GtkRecentAction" recent-action
-                       (:superclass action :export t :interfaces
-                        ("GtkBuildable" "GtkRecentChooser") :type-initializer
-                        "gtk_recent_action_get_type")
-                       ((show-numbers recent-action-show-numbers "show-numbers"
-                         "gboolean" t t)))
+(define-g-object-class "GtkRecentAction" gtk-recent-action
+  (:superclass gtk-action
+    :export t
+    :interfaces ("GtkBuildable" "GtkRecentChooser")
+    :type-initializer "gtk_recent_action_get_type")
+  ((show-numbers gtk-recent-action-show-numbers
+    "show-numbers" "gboolean" t t)))
 
-(define-g-object-class "GtkItemFactory" item-factory
-                       (:superclass gtk-object :export t :interfaces nil
-                        :type-initializer "gtk_item_factory_get_type")
-                       nil)
+(define-g-object-class "GtkItemFactory" gtk-item-factory
+  (:superclass gtk-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_item_factory_get_type")
+  nil)
