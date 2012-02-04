@@ -31,7 +31,7 @@
 ;;; GtkCellRenderer
 ;;; 
 ;;; An object for rendering a single cell
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkCellRendererState
@@ -300,10 +300,10 @@
 ;;; See also: gtk_cell_renderer_stop_editing().
 ;;; 
 ;;; renderer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.4
 ;;;
@@ -341,16 +341,16 @@
 ;;; }
 ;;; 
 ;;; renderer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; editable :
-;;; 	the GtkCellEditable
+;;;     the GtkCellEditable
 ;;; 
 ;;; path :
-;;; 	the path identifying the edited cell
+;;;     the path identifying the edited cell
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -372,20 +372,20 @@
 ;;; Tells how a cell is to be rendererd.
 ;;; 
 ;;; GTK_CELL_RENDERER_SELECTED
-;;; 	The cell is currently selected, and probably has a selection colored
+;;;     The cell is currently selected, and probably has a selection colored
 ;;;     background to render to.
 ;;; 
 ;;; GTK_CELL_RENDERER_PRELIT
-;;; 	The mouse is hovering over the cell.
+;;;     The mouse is hovering over the cell.
 ;;; 
 ;;; GTK_CELL_RENDERER_INSENSITIVE
-;;; 	The cell is drawn in an insensitive manner
+;;;     The cell is drawn in an insensitive manner
 ;;; 
 ;;; GTK_CELL_RENDERER_SORTED
-;;; 	The cell is in a sorted row
+;;;     The cell is in a sorted row
 ;;; 
 ;;; GTK_CELL_RENDERER_FOCUSED
-;;; 	The cell is in the focus row.
+;;;     The cell is in the focus row.
 ;;; enum GtkCellRendererMode
 ;;; 
 ;;; typedef enum {
@@ -397,15 +397,15 @@
 ;;; Identifies how the user can interact with a particular cell.
 ;;; 
 ;;; GTK_CELL_RENDERER_MODE_INERT
-;;; 	The cell is just for display and cannot be interacted with. Note that
+;;;     The cell is just for display and cannot be interacted with. Note that
 ;;;     this doesn't mean that eg. the row being drawn can't be selected -- just
 ;;;     that a particular element of it cannot be individually modified.
 ;;; 
 ;;; GTK_CELL_RENDERER_MODE_ACTIVATABLE
-;;; 	The cell can be clicked.
+;;;     The cell can be clicked.
 ;;; 
 ;;; GTK_CELL_RENDERER_MODE_EDITABLE
-;;; 	The cell can be edited or otherwise modified.
+;;;     The cell can be edited or otherwise modified.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkCellRendererState" gtk-cell-renderer-state
@@ -522,8 +522,8 @@
 ;;;   /* Signals */
 ;;;   void (* editing_canceled) (GtkCellRenderer *cell);
 ;;;   void (* editing_started)  (GtkCellRenderer *cell,
-;;; 			         GtkCellEditable *editable,
-;;; 			         const gchar     *path);
+;;;                              GtkCellEditable *editable,
+;;;                              const gchar     *path);
 ;;; 
 ;;;   /* Padding for future expansion */
 ;;;   void (*_gtk_reserved1) (void);
@@ -546,19 +546,19 @@
 ;;; appropriate edit and focus rectangle.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; widget :
-;;; 	the GtkWidget this cell will be rendering to
+;;;     the GtkWidget this cell will be rendering to
 ;;; 
 ;;; flags :
-;;; 	render flags
+;;;     render flags
 ;;; 
 ;;; cell_area :
-;;; 	cell area which would be passed to gtk_cell_renderer_render()
+;;;     cell area which would be passed to gtk_cell_renderer_render()
 ;;; 
 ;;; aligned_area :
-;;; 	the return location for the space inside cell_area that would acually
+;;;     the return location for the space inside cell_area that would acually
 ;;;     be used to render.
 ;;; 
 ;;; Since 3.0
@@ -590,25 +590,25 @@
 ;;; x_offset and y_offset are inclusive of the xpad and ypad properties.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; widget :
-;;; 	the widget the renderer is rendering to
+;;;     the widget the renderer is rendering to
 ;;; 
 ;;; cell_area :
-;;; 	The area a cell will be allocated, or NULL.
+;;;     The area a cell will be allocated, or NULL.
 ;;; 
 ;;; x_offset :
-;;; 	location to return x offset of cell relative to cell_area, or NULL.
+;;;     location to return x offset of cell relative to cell_area, or NULL.
 ;;; 
 ;;; y_offset :
-;;; 	location to return y offset of cell relative to cell_area, or NULL.
+;;;     location to return y offset of cell relative to cell_area, or NULL.
 ;;; 
 ;;; width :
-;;; 	location to return width needed to render a cell, or NULL.
+;;;     location to return width needed to render a cell, or NULL.
 ;;; 
 ;;; height :
-;;; 	location to return height needed to render a cell, or NULL.
+;;;     location to return height needed to render a cell, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -630,23 +630,23 @@
 ;;; window.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; cr :
-;;; 	a cairo context to draw to
+;;;     a cairo context to draw to
 ;;; 
 ;;; widget :
-;;; 	the widget owning window
+;;;     the widget owning window
 ;;; 
 ;;; background_area :
-;;; 	entire cell area (including tree expanders and maybe padding on the
+;;;     entire cell area (including tree expanders and maybe padding on the
 ;;;     sides)
 ;;; 
 ;;; cell_area :
-;;; 	area normally rendered by a cell renderer
+;;;     area normally rendered by a cell renderer
 ;;; 
 ;;; flags :
-;;; 	flags that affect rendering
+;;;     flags that affect rendering
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -665,29 +665,29 @@
 ;;; when it gets a mouse click.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; widget :
-;;; 	widget that received the event
+;;;     widget that received the event
 ;;; 
 ;;; path :
-;;; 	widget-dependent string representation of the event location; e.g. for
+;;;     widget-dependent string representation of the event location; e.g. for
 ;;;     GtkTreeView, a string representation of GtkTreePath
 ;;; 
 ;;; background_area :
-;;; 	background area as passed to gtk_cell_renderer_render()
+;;;     background area as passed to gtk_cell_renderer_render()
 ;;; 
 ;;; cell_area :
-;;; 	cell area as passed to gtk_cell_renderer_render()
+;;;     cell area as passed to gtk_cell_renderer_render()
 ;;; 
 ;;; flags :
-;;; 	render flags
+;;;     render flags
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the event was consumed/handled
+;;;     TRUE if the event was consumed/handled
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -705,29 +705,29 @@
 ;;; Passes an activate event to the cell renderer for possible processing.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer
+;;;     a GtkCellRenderer
 ;;; 
 ;;; event :
-;;; 	a GdkEvent
+;;;     a GdkEvent
 ;;; 
 ;;; widget :
-;;; 	widget that received the event
+;;;     widget that received the event
 ;;; 
 ;;; path :
-;;; 	widget-dependent string representation of the event location; e.g. for
+;;;     widget-dependent string representation of the event location; e.g. for
 ;;;     GtkTreeView, a string representation of GtkTreePath
 ;;; 
 ;;; background_area :
-;;; 	background area as passed to gtk_cell_renderer_render()
+;;;     background area as passed to gtk_cell_renderer_render()
 ;;; 
 ;;; cell_area :
-;;; 	cell area as passed to gtk_cell_renderer_render()
+;;;     cell area as passed to gtk_cell_renderer_render()
 ;;; 
 ;;; flags :
-;;; 	render flags
+;;;     render flags
 ;;; 
 ;;; Returns :
-;;; 	A new GtkCellEditable, or NULL.
+;;;     A new GtkCellEditable, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -743,10 +743,10 @@
 ;;; to the "editing-done" signal of GtkCellEditable.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; canceled :
-;;; 	TRUE if the editing has been canceled
+;;;     TRUE if the editing has been canceled
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -761,13 +761,13 @@
 ;;; Fills in width and height with the appropriate size of cell.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; width :
-;;; 	location to fill in with the fixed width of the cell, or NULL.
+;;;     location to fill in with the fixed width of the cell, or NULL.
 ;;; 
 ;;; height :
-;;; 	location to fill in with the fixed height of the cell, or NULL.
+;;;     location to fill in with the fixed height of the cell, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_get_fixed_size" %gtk-cell-renderer-get-fixed-size)
@@ -794,13 +794,13 @@
 ;;; Sets the renderer size to be explicit, independent of the properties set.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; width :
-;;; 	the width of the cell renderer, or -1
+;;;     the width of the cell renderer, or -1
 ;;; 
 ;;; height :
-;;; 	the height of the cell renderer, or -1
+;;;     the height of the cell renderer, or -1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_set_fixed_size" gtk-cell-renderer-set-fixed-size)
@@ -819,10 +819,10 @@
 ;;; Returns the cell renderer's visibility.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the cell renderer is visible
+;;;     TRUE if the cell renderer is visible
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -835,10 +835,10 @@
 ;;; Sets the cell renderer's visibility.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; visible :
-;;; 	the visibility of the cell
+;;;     the visibility of the cell
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -851,10 +851,10 @@
 ;;; Returns the cell renderer's sensitivity.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the cell renderer is sensitive
+;;;     TRUE if the cell renderer is sensitive
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -868,10 +868,10 @@
 ;;; Sets the cell renderer's sensitivity.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; sensitive :
-;;; 	the sensitivity of the cell
+;;;     the sensitivity of the cell
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -886,13 +886,13 @@
 ;;; Fills in xalign and yalign with the appropriate values of cell.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; xalign :
-;;; 	location to fill in with the x alignment of the cell, or NULL.
+;;;     location to fill in with the x alignment of the cell, or NULL.
 ;;; 
 ;;; yalign :
-;;; 	location to fill in with the y alignment of the cell, or NULL.
+;;;     location to fill in with the y alignment of the cell, or NULL.
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -907,13 +907,13 @@
 ;;; Sets the renderer's alignment within its available space.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; xalign :
-;;; 	the x alignment of the cell renderer
+;;;     the x alignment of the cell renderer
 ;;; 
 ;;; yalign :
-;;; 	the y alignment of the cell renderer
+;;;     the y alignment of the cell renderer
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -928,13 +928,13 @@
 ;;; Fills in xpad and ypad with the appropriate values of cell.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; xpad :
-;;; 	location to fill in with the x padding of the cell, or NULL.
+;;;     location to fill in with the x padding of the cell, or NULL.
 ;;; 
 ;;; ypad :
-;;; 	location to fill in with the y padding of the cell, or NULL.
+;;;     location to fill in with the y padding of the cell, or NULL.
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -949,13 +949,13 @@
 ;;; Sets the renderer's padding.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; xpad :
-;;; 	the x padding of the cell renderer
+;;;     the x padding of the cell renderer
 ;;; 
 ;;; ypad :
-;;; 	the y padding of the cell renderer
+;;;     the y padding of the cell renderer
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -971,16 +971,16 @@
 ;;; renderer and widget sensitivity, and the given GtkCellRendererState.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer, or NULL
+;;;     a GtkCellRenderer, or NULL
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget, or NULL
+;;;     a GtkWidget, or NULL
 ;;; 
 ;;; cell_state :
-;;; 	cell renderer state
+;;;     cell renderer state
 ;;; 
 ;;; Returns :
-;;; 	the widget state flags applying to cell
+;;;     the widget state flags applying to cell
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -993,10 +993,10 @@
 ;;; Checks whether the cell renderer can do something when activated.
 ;;; 
 ;;; cell :
-;;; 	A GtkCellRenderer
+;;;     A GtkCellRenderer
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the cell renderer can do anything when activated
+;;;     TRUE if the cell renderer can do anything when activated
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1012,16 +1012,16 @@
 ;;; Retreives a renderer's natural size when rendered to widget.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; widget :
-;;; 	the GtkWidget this cell will be rendering to
+;;;     the GtkWidget this cell will be rendering to
 ;;; 
 ;;; minimum_size :
-;;; 	location to store the minimum size, or NULL
+;;;     location to store the minimum size, or NULL
 ;;; 
 ;;; natural_size :
-;;; 	location to store the natural size, or NULL
+;;;     location to store the natural size, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1040,19 +1040,19 @@
 ;;; to widget with the specified width.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; widget :
-;;; 	the GtkWidget this cell will be rendering to
+;;;     the GtkWidget this cell will be rendering to
 ;;; 
 ;;; width :
-;;; 	the size which is available for allocation
+;;;     the size which is available for allocation
 ;;; 
 ;;; minimum_height :
-;;; 	location for storing the minimum size, or NULL.
+;;;     location for storing the minimum size, or NULL.
 ;;; 
 ;;; natural_height :
-;;; 	location for storing the preferred size, or NULL.
+;;;     location for storing the preferred size, or NULL.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1069,16 +1069,16 @@
 ;;; widget's preference for height-for-width management.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; widget :
-;;; 	the GtkWidget this cell will be rendering to
+;;;     the GtkWidget this cell will be rendering to
 ;;; 
 ;;; minimum_size :
-;;; 	location for storing the minimum size, or NULL.
+;;;     location for storing the minimum size, or NULL.
 ;;; 
 ;;; natural_size :
-;;; 	location for storing the natural size, or NULL.
+;;;     location for storing the natural size, or NULL.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1094,16 +1094,16 @@
 ;;; Retreives a renderer's natural size when rendered to widget.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; widget :
-;;; 	the GtkWidget this cell will be rendering to
+;;;     the GtkWidget this cell will be rendering to
 ;;; 
 ;;; minimum_size :
-;;; 	location to store the minimum size, or NULL.
+;;;     location to store the minimum size, or NULL.
 ;;; 
 ;;; natural_size :
-;;; 	location to store the natural size, or NULL.
+;;;     location to store the natural size, or NULL.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1122,19 +1122,19 @@
 ;;; to widget with the specified height.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; widget :
-;;; 	the GtkWidget this cell will be rendering to
+;;;     the GtkWidget this cell will be rendering to
 ;;; 
 ;;; height :
-;;; 	the size which is available for allocation
+;;;     the size which is available for allocation
 ;;; 
 ;;; minimum_width :
-;;; 	location for storing the minimum size, or NULL.
+;;;     location for storing the minimum size, or NULL.
 ;;; 
 ;;; natural_width :
-;;; 	location for storing the preferred size, or NULL.
+;;;     location for storing the preferred size, or NULL.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1149,10 +1149,10 @@
 ;;; width-for-height layout.
 ;;; 
 ;;; cell :
-;;; 	a GtkCellRenderer instance
+;;;     a GtkCellRenderer instance
 ;;; 
 ;;; Returns :
-;;; 	The GtkSizeRequestMode preferred by this renderer.
+;;;     The GtkSizeRequestMode preferred by this renderer.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
