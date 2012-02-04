@@ -103,19 +103,19 @@
   (class (:pointer g-object-class))
   (n-properties (:pointer :int)))
 
-(defun container-class-child-properties (g-type)
-  (setf g-type (gtype g-type))
-  (let ((g-class (g-type-class-ref g-type)))
+(defun container-class-child-properties (type)
+  (setf type (gtype type))
+  (let ((class (g-type-class-ref type)))
     (unwind-protect
-         (with-foreign-object (n-properties :uint)
-           (let ((params (gtk-container-class-list-child-properties g-class n-properties)))
-             (unwind-protect
-                  (loop
-                     for i from 0 below (mem-ref n-properties :uint)
-                     for param = (mem-aref params :pointer i)
-                     collect (parse-g-param-spec param))
-               (g-free params))))
-      (g-type-class-unref g-class))))
+      (with-foreign-object (n-props :uint)
+        (let ((params (gtk-container-class-list-child-properties class n-props)))
+          (unwind-protect
+            (loop
+              for i from 0 below (mem-ref n-props :uint)
+              for param = (mem-aref params :pointer i)
+              collect (parse-g-param-spec param))
+            (g-free params))))
+      (g-type-class-unref class))))
 
 (defun child-property-name (type-name property-name package-name)
   (intern (format nil "~A-CHILD-~A" (symbol-name (registered-object-type-by-name type-name)) (string-upcase property-name)) (find-package package-name)))
