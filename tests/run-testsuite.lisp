@@ -40,6 +40,7 @@
   (:use :gtk :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
 (load "rtest-gobject.lisp")
+(load "rtest-gobject-type-info.lisp")
 (in-package :gobject-tests)
 (run-all-tests :gobject-tests)
 

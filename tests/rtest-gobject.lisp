@@ -214,9 +214,9 @@
          ;; Get the pointer to the instance of the object
          (ptr (pointer label)))
     ;; Access the slot values of the structure %g-object
-    (assert-true (pointerp (foreign-slot-value ptr '%g-object :type-instance)))
+    (assert-true  (pointerp (foreign-slot-value ptr '%g-object :type-instance)))
     (assert-eql 1 (foreign-slot-value ptr '%g-object :ref-count))
-    (assert-true (pointerp (foreign-slot-value ptr '%g-object :data)))
+    (assert-true  (pointerp (foreign-slot-value ptr '%g-object :data)))
     
     ;; Increase and decrease the ref-count with the functions
     ;; g-object-ref and g-object-unref
