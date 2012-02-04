@@ -30,9 +30,9 @@
     (assert-equal "GtkButton" (gtype-name (gtype "GtkButton")))
     (assert-eql 'gtk-button (registered-object-type-by-name "GtkButton"))
     (assert-equal "GtkBin" (gtype-name (g-type-parent type)))
-    (assert-equal '("GtkColorButton" "GtkFontButton" "GtkLinkButton"
-                    "GtkScaleButton" "GtkToggleButton")
-                  (mapcar #'gtype-name (g-type-children type)))
+    (unordered-equal '("GtkColorButton" "GtkFontButton" "GtkLinkButton"
+                       "GtkScaleButton" "GtkToggleButton")
+                     (mapcar #'gtype-name (g-type-children type)))
     
     (assert-true       (gtk-button-focus-on-click button))
     (assert-false      (gtk-button-image button))

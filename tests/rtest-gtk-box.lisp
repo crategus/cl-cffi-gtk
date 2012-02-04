@@ -27,8 +27,8 @@
   (assert-equal "GtkBox" (gtype-name (gtype "GtkBox")))
   (assert-eql 'gtk-box (registered-object-type-by-name "GtkBox"))
   (assert-equal "GtkContainer" (gtype-name (g-type-parent (gtype "GtkBox"))))
-  (assert-equal '("GtkButtonBox" "GtkHBox" "GtkVBox")
-                (mapcar #'gtype-name (g-type-children (gtype "GtkBox"))))
+  (unordered-equal '("GtkButtonBox" "GtkHBox" "GtkVBox")
+                   (mapcar #'gtype-name (g-type-children (gtype "GtkBox"))))
   
   (assert-equal
     '(DEFINE-G-OBJECT-CLASS "GtkBox" GTK-BOX
@@ -52,9 +52,6 @@
              "spacing"))
           (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkBox")
          (:G-TYPE-INITIALIZER . "gtk_box_get_type"))
-       ;; The following symbols are not exported by default! 
-       ;; Extra code has been added in gtk.box.lisp.
-       ;; What is the problem?
        (EXPORT 'GTK-BOX (FIND-PACKAGE "GTK"))
        (EXPORT 'GTK-BOX-HOMOGENEOUS (FIND-PACKAGE "GTK"))
        (EXPORT 'GTK-BOX-SPACING (FIND-PACKAGE "GTK")))
@@ -69,8 +66,8 @@
     (assert-equal "GtkHBox" (gtype-name hbox-type))
     (assert-eql 'gtk-h-box (registered-object-type-by-name "GtkHBox"))
     (assert-equal "GtkBox" (gtype-name (g-type-parent hbox-type)))
-    (assert-equal '("GtkFileChooserButton" "GtkStatusbar")
-                  (mapcar #'gtype-name (g-type-children hbox-type)))
+    (unordered-equal '("GtkFileChooserButton" "GtkStatusbar")
+                     (mapcar #'gtype-name (g-type-children hbox-type)))
     
     (assert-false (gtk-box-homogeneous hbox))
     (assert-eql 0 (gtk-box-spacing hbox))
@@ -108,11 +105,11 @@
     (assert-equal "GtkVBox" (gtype-name vbox-type))
     (assert-eql 'gtk-v-box (registered-object-type-by-name "GtkVBox"))
     (assert-equal "GtkBox" (gtype-name (g-type-parent vbox-type)))
-    (assert-equal '("GtkColorSelection"
-                    "GtkFileChooserWidget"
-                    "GtkFontSelection"
-                    "GtkGammaCurve"
-                    "GtkRecentChooserWidget")
+    (unordered-equal '("GtkColorSelection"
+                       "GtkFileChooserWidget"
+                       "GtkFontSelection"
+                       "GtkGammaCurve"
+                       "GtkRecentChooserWidget")
                   (mapcar #'gtype-name (g-type-children vbox-type)))
     
     (assert-false (gtk-box-homogeneous vbox))

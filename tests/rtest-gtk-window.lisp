@@ -29,8 +29,8 @@
     (assert-equal "GtkWindow" (gtype-name type))
     (assert-eql 'gtk-window (registered-object-type-by-name "GtkWindow"))
     (assert-equal "GtkBin" (gtype-name (g-type-parent type)))
-    (assert-equal '("GtkDialog" "GtkPlug" "GtkAssistant")
-                  (mapcar #'gtype-name (g-type-children type)))
+    (unordered-equal '("GtkDialog" "GtkPlug" "GtkAssistant")
+                     (mapcar #'gtype-name (g-type-children type)))
     
     ;; Access all available slots and lookup the default values.
     (assert-true         (gtk-window-accept-focus window))
