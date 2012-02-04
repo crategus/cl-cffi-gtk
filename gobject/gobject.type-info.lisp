@@ -31,14 +31,46 @@
 ;;; Type Information
 ;;;
 ;;; The GLib Runtime type identification and management system.
-;;;	
+;;; 
 ;;; Synopsis
+;;;
+;;;     +g-type-invalid+
+;;;     +g-type-void+
+;;;     +g-type-interface+
+;;;     +g-type-char+
+;;;     +g-type-uchar+
+;;;     +g-type-boolean+
+;;;     +g-type-int+
+;;;     +g-type-uint+
+;;;     +g-type-long+
+;;;     +g-type-ulong+
+;;;     +g-type-int64+
+;;;     +g-type-uint64+
+;;;     +g-type-enum+
+;;;     +g-type-flags+
+;;;     +g-type-float+
+;;;     +g-type-double+
+;;;     +g-type-string+
+;;;     +g-type-pointer+
+;;;     +g-type-boxed+
+;;;     +g-type-object+
+;;;
+;;;     G_TYPE_GTYPE
+;;;
+;;;     +g-type-variant+
+;;;     +g-type-reserved-glib-first+
+;;;     +g-type-reserved-glib-last+
+;;;     +g-type-reserved-bse-first+
+;;;     +g-type-reserved-bse-last+
+;;;     +g-type-reserved-user-first+
 ;;;
 ;;;     g-type
 ;;;     gtype
 ;;;     g-type-designator
 ;;;
-;;;     G_TYPE_FUNDAMENTAL
+;;;     GTypeFlags
+;;;     GTypeFundamentalFlags
+;;;
 ;;;     G_TYPE_FUNDAMENTAL_MAX
 ;;;
 ;;;     g-type-make-fundamental
@@ -55,9 +87,6 @@
 ;;;     G_TYPE_IS_DERIVABLE
 ;;;     G_TYPE_IS_DEEP_DERIVABLE
 ;;;     G_TYPE_IS_INTERFACE
-;;;
-;;;     g-type-flags
-;;;     g-type-fundamental-flags
 ;;;
 ;;;     g-type-interface
 ;;;     g-type-class
@@ -164,36 +193,6 @@
 ;;;     G_DEFINE_BOXED_TYPE_WITH_CODE
 ;;;     G_DEFINE_POINTER_TYPE
 ;;;     G_DEFINE_POINTER_TYPE_WITH_CODE
-;;;
-;;;     +g-type-invalid+
-;;;     +g-type-void+
-;;;     +g-type-interface+
-;;;     +g-type-char+
-;;;     +g-type-uchar+
-;;;     +g-type-boolean+
-;;;     +g-type-int+
-;;;     +g-type-uint+
-;;;     +g-type-long+
-;;;     +g-type-ulong+
-;;;     +g-type-int64+
-;;;     +g-type-uint64+
-;;;     +g-type-enum+
-;;;     +g-type-flags+
-;;;     +g-type-float+
-;;;     +g-type-double+
-;;;     +g-type-string+
-;;;     +g-type-pointer+
-;;;     +g-type-boxed+
-;;;     +g-type-object+
-;;;
-;;;     G_TYPE_GTYPE
-;;;
-;;;     +g-type-variant+
-;;;     +g-type-reserved-glib-first+
-;;;     +g-type-reserved-glib-last+
-;;;     +g-type-reserved-bse-first+
-;;;     +g-type-reserved-bse-last+
-;;;     +g-type-reserved-user-first+
 ;;; 
 ;;; Description
 ;;; 
@@ -233,6 +232,364 @@
 
 (in-package :gobject)
 
+;;; This constant is not exported.
+
+(defconstant +g-type-fundamental-shift+ 2)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_INVALID
+;;; 
+;;; #define G_TYPE_INVALID G_TYPE_MAKE_FUNDAMENTAL (0)
+;;; 
+;;; An invalid GType used as error return value in some functions which return
+;;; a GType.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-invalid+ (ash 0 +g-type-fundamental-shift+))
+
+(export '+g-type-invalid+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_NONE
+;;; 
+;;; #define G_TYPE_NONE G_TYPE_MAKE_FUNDAMENTAL (1)
+;;; 
+;;; A fundamental type which is used as a replacement for the C void return
+;;; type.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-void+ (ash 1 +g-type-fundamental-shift+))
+
+(export '+g-type-void+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_INTERFACE
+;;; 
+;;; #define G_TYPE_INTERFACE G_TYPE_MAKE_FUNDAMENTAL (2)
+;;; 
+;;; The fundamental type from which all interfaces are derived.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-interface+ (ash 2 +g-type-fundamental-shift+))
+
+(export '+g-type-interface+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_CHAR
+;;; 
+;;; #define G_TYPE_CHAR G_TYPE_MAKE_FUNDAMENTAL (3)
+;;; 
+;;; The fundamental type corresponding to gchar. The type designated by
+;;; G_TYPE_CHAR is unconditionally an 8-bit signed integer. This may or may not
+;;; be the same type a the C type "gchar".
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-char+ (ash 3 +g-type-fundamental-shift+))
+
+(export '+g-type-char+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_UCHAR
+;;; 
+;;; #define G_TYPE_UCHAR G_TYPE_MAKE_FUNDAMENTAL (4)
+;;; 
+;;; The fundamental type corresponding to guchar.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-uchar+ (ash 4 +g-type-fundamental-shift+))
+
+(export '+g-type-uchar+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_BOOLEAN
+;;; 
+;;; #define G_TYPE_BOOLEAN G_TYPE_MAKE_FUNDAMENTAL (5)
+;;; 
+;;; The fundamental type corresponding to gboolean.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-boolean+ (ash 5 +g-type-fundamental-shift+))
+
+(export '+g-type-boolean+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_INT
+;;; 
+;;; #define G_TYPE_INT G_TYPE_MAKE_FUNDAMENTAL (6)
+;;; 
+;;; The fundamental type corresponding to gint.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-int+ (ash 6 +g-type-fundamental-shift+))
+
+(export '+g-type-int+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_UINT
+;;; 
+;;; #define G_TYPE_UINT G_TYPE_MAKE_FUNDAMENTAL (7)
+;;; 
+;;; The fundamental type corresponding to guint.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-uint+ (ash 7 +g-type-fundamental-shift+))
+
+(export '+g-type-uint+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_LONG
+;;; 
+;;; #define G_TYPE_LONG G_TYPE_MAKE_FUNDAMENTAL (8)
+;;; 
+;;; The fundamental type corresponding to glong.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-long+ (ash 8 +g-type-fundamental-shift+))
+
+(export '+g-type-long+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_ULONG
+;;; 
+;;; #define G_TYPE_ULONG G_TYPE_MAKE_FUNDAMENTAL (9)
+;;; 
+;;; The fundamental type corresponding to gulong.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-ulong+ (ash 9 +g-type-fundamental-shift+))
+
+(export '+g-type-ulong+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_INT64
+;;; 
+;;; #define G_TYPE_INT64 G_TYPE_MAKE_FUNDAMENTAL (10)
+;;; 
+;;; The fundamental type corresponding to gint64.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-int64+ (ash 10 +g-type-fundamental-shift+))
+
+(export '+g-type-int64+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_UINT64
+;;; 
+;;; #define G_TYPE_UINT64 G_TYPE_MAKE_FUNDAMENTAL (11)
+;;; 
+;;; The fundamental type corresponding to guint64.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-uint64+ (ash 11 +g-type-fundamental-shift+))
+
+(export '+g-type-uint64+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_ENUM
+;;; 
+;;; #define G_TYPE_ENUM G_TYPE_MAKE_FUNDAMENTAL (12)
+;;; 
+;;; The fundamental type from which all enumeration types are derived.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-enum+ (ash 12 +g-type-fundamental-shift+))
+
+(export '+g-type-enum+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_FLAGS
+;;; 
+;;; #define G_TYPE_FLAGS G_TYPE_MAKE_FUNDAMENTAL (13)
+;;; 
+;;; The fundamental type from which all flags types are derived.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-flags+ (ash 13 +g-type-fundamental-shift+))
+
+(export '+g-type-flags+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_FLOAT
+;;; 
+;;; #define G_TYPE_FLOAT G_TYPE_MAKE_FUNDAMENTAL (14)
+;;; 
+;;; The fundamental type corresponding to gfloat.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-float+ (ash 14 +g-type-fundamental-shift+))
+
+(export '+g-type-float+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_DOUBLE
+;;; 
+;;; #define G_TYPE_DOUBLE G_TYPE_MAKE_FUNDAMENTAL (15)
+;;; 
+;;; The fundamental type corresponding to gdouble.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-double+ (ash 15 +g-type-fundamental-shift+))
+
+(export '+g-type-double+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_STRING
+;;; 
+;;; #define G_TYPE_STRING G_TYPE_MAKE_FUNDAMENTAL (16)
+;;; 
+;;; The fundamental type corresponding to nul-terminated C strings.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-string+ (ash 16 +g-type-fundamental-shift+))
+
+(export '+g-type-string+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_POINTER
+;;; 
+;;; #define G_TYPE_POINTER G_TYPE_MAKE_FUNDAMENTAL (17)
+;;; 
+;;; The fundamental type corresponding to gpointer.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-pointer+ (ash 17 +g-type-fundamental-shift+))
+
+(export '+g-type-pointer+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_BOXED
+;;; 
+;;; #define G_TYPE_BOXED G_TYPE_MAKE_FUNDAMENTAL (18)
+;;; 
+;;; The fundamental type from which all boxed types are derived.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-boxed+ (ash 18 +g-type-fundamental-shift+))
+
+(export '+g-type-boxed+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_PARAM
+;;; 
+;;; #define G_TYPE_PARAM G_TYPE_MAKE_FUNDAMENTAL (19)
+;;; 
+;;; The fundamental type from which all GParamSpec types are derived.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-param+ (ash 19 +g-type-fundamental-shift+))
+
+(export '+g-type-param+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_OBJECT
+;;; 
+;;; #define G_TYPE_OBJECT G_TYPE_MAKE_FUNDAMENTAL (20)
+;;; 
+;;; The fundamental type for GObject.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-object+ (ash 20 +g-type-fundamental-shift+))
+
+(export '+g-type-object+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_GTYPE
+;;; 
+;;; #define G_TYPE_GTYPE (g_gtype_get_type())
+;;; 
+;;; The type for GType.
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_gtype_get_type" g-type-gtype) g-size)
+
+(export 'g-type-gtype)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_VARIANT
+;;; 
+;;; #define G_TYPE_VARIANT G_TYPE_MAKE_FUNDAMENTAL (21)
+;;; 
+;;; The fundamental type corresponding to GVariant.
+;;; 
+;;; All floating GVariant instances passed through the GType system are
+;;; consumed.
+;;; 
+;;; Note that callbacks in closures, and signal handlers for signals of return
+;;; type G_TYPE_VARIANT, must never return floating variants.
+;;; 
+;;; Note: GLib 2.24 did include a boxed type with this name. It was replaced
+;;;       with this fundamental type in 2.26.
+;;; 
+;;; Since 2.26
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-variant+ (ash 21 +g-type-fundamental-shift+))
+
+(export '+g-type-variant+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_RESERVED_GLIB_FIRST
+;;; 
+;;; #define G_TYPE_RESERVED_GLIB_FIRST (22)
+;;; 
+;;; First fundamental type number to create a new fundamental type id with
+;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for GLib.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-reserved-glib-first+ (ash 22 +g-type-fundamental-shift+))
+
+(export '+g-type-reserved-glib-first+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_RESERVED_GLIB_LAST
+;;; 
+;;; #define G_TYPE_RESERVED_GLIB_LAST (31)
+;;; 
+;;; Last fundamental type number reserved for GLib.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-reserved-glib-last+ (ash 31 +g-type-fundamental-shift+))
+
+(export '+g-type-reserved-glib-last+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_RESERVED_BSE_FIRST
+;;; 
+;;; #define G_TYPE_RESERVED_BSE_FIRST (32)
+;;; 
+;;; First fundamental type number to create a new fundamental type id with
+;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for BSE.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-reserved-bse-first+ (ash 32 +g-type-fundamental-shift+))
+
+(export '+g-type-reserved-bse-first+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_RESERVED_BSE_LAST
+;;; 
+;;; #define G_TYPE_RESERVED_BSE_LAST (48)
+;;; 
+;;; Last fundamental type number reserved for BSE.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-reserved-bse-last+ (ash 48 +g-type-fundamental-shift+))
+
+(export '+g-type-reserved-bse-last+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_RESERVED_USER_FIRST
+;;; 
+;;; #define G_TYPE_RESERVED_USER_FIRST (49)
+;;; 
+;;; First available fundamental type number to create new fundamental type id
+;;; with G_TYPE_MAKE_FUNDAMENTAL().
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-reserved-user-first+ (ash 49 +g-type-fundamental-shift+))
+
+(export '+g-type-reserved-user-first+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GType
 ;;;
@@ -265,7 +622,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; The functions gtype converts an integer or a string to a Lisp gtype
+;; The function gtype converts an integer or a string to a Lisp gtype
 
 (defun %gtype (thing)
   (etypecase thing
@@ -327,215 +684,6 @@
 (export 'g-type-designator)
 
 ;;; ----------------------------------------------------------------------------
-;;; G_TYPE_FUNDAMENTAL()
-;;;
-;;; #define G_TYPE_FUNDAMENTAL(type) (g_type_fundamental (type))
-;;;
-;;; The fundamental type which is the ancestor of type. Fundamental types are
-;;; types that serve as ultimate bases for the derived types, thus they are the
-;;; roots of distinct inheritance hierarchies.
-;;;
-;;; type :
-;;;     A GType value.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_FUNDAMENTAL_MAX
-;;;
-;;; #define G_TYPE_FUNDAMENTAL_MAX (255 << G_TYPE_FUNDAMENTAL_SHIFT)
-;;;
-;;; An integer constant that represents the number of identifiers reserved for
-;;; types that are assigned at compile-time.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_MAKE_FUNDAMENTAL()
-;;;
-;;; #define G_TYPE_MAKE_FUNDAMENTAL(x)
-;;;         ((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
-;;;
-;;; Get the type ID for the fundamental type number x.
-;;; Use g_type_fundamental_next() instead of this macro to create new
-;;; fundamental types.
-;;;
-;;; x :
-;;;     the fundamental type number.
-;;;
-;;; Returns :
-;;;     the GType
-;;; ----------------------------------------------------------------------------
-
-(defun g-type-make-fundamental (x)
-  (ash x 2))
-
-(export 'g-type-make-fundamental)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_ABSTRACT()
-;;;
-;;; #define G_TYPE_IS_ABSTRACT(type)
-;;;         (g_type_test_flags ((type), G_TYPE_FLAG_ABSTRACT))
-;;;
-;;; Checks if type is an abstract type. An abstract type cannot be instantiated
-;;; and is normally used as an abstract base class for derived classes.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_DERIVED()
-;;;
-;;; #define G_TYPE_IS_DERIVED(type) ((type) > G_TYPE_FUNDAMENTAL_MAX)
-;;;
-;;; Checks if type is derived (or in object-oriented terminology: inherited)
-;;; from another type (this holds true for all non-fundamental types).
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_FUNDAMENTAL()
-;;;
-;;; #define G_TYPE_IS_FUNDAMENTAL(type) ((type) <= G_TYPE_FUNDAMENTAL_MAX)
-;;;
-;;; Checks if type is a fundamental type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_VALUE_TYPE()
-;;;
-;;; #define G_TYPE_IS_VALUE_TYPE(type) (g_type_check_is_value_type (type))
-;;;
-;;; Checks if type is a value type and can be used with g_value_init().
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_type_check_is_value_type" g-type-check-is-value-type) :boolean
-  (type g-type-designator))
-
-(defun g-type-is-value-type (type)
-  (g-type-check-is-value-type type))
-  
-(export 'g-type-is-value-type)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_HAS_VALUE_TABLE()
-;;;
-;;; #define G_TYPE_HAS_VALUE_TABLE(type)
-;;;         (g_type_value_table_peek (type) != NULL)
-;;;
-;;; Checks if type has a GTypeValueTable.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_CLASSED()
-;;;
-;;; #define G_TYPE_IS_CLASSED(type)
-;;;         (g_type_test_flags ((type), G_TYPE_FLAG_CLASSED))
-;;;
-;;; Checks if type is a classed type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_INSTANTIATABLE()
-;;;
-;;; #define G_TYPE_IS_INSTANTIATABLE(type)
-;;;         (g_type_test_flags ((type), G_TYPE_FLAG_INSTANTIATABLE))
-;;;
-;;; Checks if type can be instantiated. Instantiation is the process of
-;;; creating an instance (object) of this type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_DERIVABLE()
-;;;
-;;; #define G_TYPE_IS_DERIVABLE(type)
-;;;         (g_type_test_flags ((type), G_TYPE_FLAG_DERIVABLE))
-;;;
-;;; Checks if type is a derivable type. A derivable type can be used as the
-;;; base class of a flat (single-level) class hierarchy.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_DEEP_DERIVABLE()
-;;;
-;;; #define G_TYPE_IS_DEEP_DERIVABLE(type)
-;;;         (g_type_test_flags ((type), G_TYPE_FLAG_DEEP_DERIVABLE))
-;;;
-;;; Checks if type is a deep derivable type. A deep derivable type can be used
-;;; as the base class of a deep (multi-level) class hierarchy.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_IS_INTERFACE()
-;;;
-;;; #define G_TYPE_IS_INTERFACE(type)
-;;;         (G_TYPE_FUNDAMENTAL (type) == G_TYPE_INTERFACE)
-;;;
-;;; Checks if type is an interface type. An interface type provides a pure API,
-;;; the implementation of which is provided by another type (which is then said
-;;; to conform to the interface). GLib interfaces are somewhat analogous to
-;;; Java interfaces and C++ classes containing only pure virtual functions,
-;;; with the difference that GType interfaces are not derivable (but see
-;;; g_type_interface_add_prerequisite() for an alternative).
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GTypeFlags
 ;;;
 ;;; typedef enum {
@@ -593,6 +741,260 @@
   :deep-derivable)
 
 (export 'g-type-fundamental-flags)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_FUNDAMENTAL_MAX
+;;;
+;;; #define G_TYPE_FUNDAMENTAL_MAX (255 << G_TYPE_FUNDAMENTAL_SHIFT)
+;;;
+;;; An integer constant that represents the number of identifiers reserved for
+;;; types that are assigned at compile-time.
+;;; ----------------------------------------------------------------------------
+
+(defconstant +g-type-fundamental-max+
+             #.(ash 255 +g-type-fundamental-shift+))
+
+(export '+g-type-fundamental-max+)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_MAKE_FUNDAMENTAL()
+;;;
+;;; #define G_TYPE_MAKE_FUNDAMENTAL(x)
+;;;         ((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
+;;;
+;;; Get the type ID for the fundamental type number x.
+;;; Use g_type_fundamental_next() instead of this macro to create new
+;;; fundamental types.
+;;;
+;;; x :
+;;;     the fundamental type number
+;;;
+;;; Returns :
+;;;     the GType
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-make-fundamental (x)
+  (ash x +g-type-fundamental-shift+))
+
+(export 'g-type-make-fundamental)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_ABSTRACT()
+;;;
+;;; #define G_TYPE_IS_ABSTRACT(type)
+;;;         (g_type_test_flags ((type), G_TYPE_FLAG_ABSTRACT))
+;;;
+;;; Checks if type is an abstract type. An abstract type cannot be instantiated
+;;; and is normally used as an abstract base class for derived classes.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_test_flags" g-type-test-flags) :boolean
+  (type g-type-designator)
+  (flag g-type-flags))
+
+(defun g-type-is-abstract (type)
+  (g-type-test-flags type :abstract))
+
+(export 'g-type-is-abstract)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_DERIVED()
+;;;
+;;; #define G_TYPE_IS_DERIVED(type) ((type) > G_TYPE_FUNDAMENTAL_MAX)
+;;;
+;;; Checks if type is derived (or in object-oriented terminology: inherited)
+;;; from another type (this holds true for all non-fundamental types).
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-derived (type)
+  (> (gtype-id type) +g-type-fundamental-max+))
+
+(export 'g-type-is-derived)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_FUNDAMENTAL()
+;;;
+;;; #define G_TYPE_IS_FUNDAMENTAL(type) ((type) <= G_TYPE_FUNDAMENTAL_MAX)
+;;;
+;;; Checks if type is a fundamental type.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-fundamental (type)
+  (<= (gtype-id type) +g-type-fundamental-max+))
+
+(export 'g-type-is-fundamental)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_VALUE_TYPE()
+;;;
+;;; #define G_TYPE_IS_VALUE_TYPE(type) (g_type_check_is_value_type (type))
+;;;
+;;; Checks if type is a value type and can be used with g_value_init().
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_check_is_value_type" g-type-check-is-value-type) :boolean
+  (type g-type-designator))
+
+(defun g-type-is-value-type (type)
+  (g-type-check-is-value-type type))
+  
+(export 'g-type-is-value-type)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_HAS_VALUE_TABLE()
+;;;
+;;; #define G_TYPE_HAS_VALUE_TABLE(type)
+;;;         (g_type_value_table_peek (type) != NULL)
+;;;
+;;; Checks if type has a GTypeValueTable.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-has-value-table (type)
+  (not (null-pointer-p (g-type-value-table-peek type))))
+
+(export 'g-type-has-value-table)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_CLASSED()
+;;;
+;;; #define G_TYPE_IS_CLASSED(type)
+;;;         (g_type_test_flags ((type), G_TYPE_FLAG_CLASSED))
+;;;
+;;; Checks if type is a classed type.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_test_flags" g-type-test-fundamental-flags) :boolean
+  (type g-type-designator)
+  (flag g-type-fundamental-flags))
+
+(defun g-type-is-classed (type)
+  (g-type-test-fundamental-flags type :classed))
+
+(export 'g-type-is-classed)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_INSTANTIATABLE()
+;;;
+;;; #define G_TYPE_IS_INSTANTIATABLE(type)
+;;;         (g_type_test_flags ((type), G_TYPE_FLAG_INSTANTIATABLE))
+;;;
+;;; Checks if type can be instantiated. Instantiation is the process of
+;;; creating an instance (object) of this type.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-instantiatable (type)
+  (g-type-test-fundamental-flags type :instantiatable))
+
+(export 'g-type-is-instantiatable)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_DERIVABLE()
+;;;
+;;; #define G_TYPE_IS_DERIVABLE(type)
+;;;         (g_type_test_flags ((type), G_TYPE_FLAG_DERIVABLE))
+;;;
+;;; Checks if type is a derivable type. A derivable type can be used as the
+;;; base class of a flat (single-level) class hierarchy.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-derivable (type)
+  (g-type-test-fundamental-flags type :derivable))
+
+(export 'g-type-is-derivable)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_DEEP_DERIVABLE()
+;;;
+;;; #define G_TYPE_IS_DEEP_DERIVABLE(type)
+;;;         (g_type_test_flags ((type), G_TYPE_FLAG_DEEP_DERIVABLE))
+;;;
+;;; Checks if type is a deep derivable type. A deep derivable type can be used
+;;; as the base class of a deep (multi-level) class hierarchy.
+;;;
+;;; type :
+;;;     a GType value
+;;;
+;;; Returns :
+;;;     TRUE on success
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-deep-derivable (type)
+  (g-type-test-fundamental-flags type :deep-derivable))
+
+(export 'g-type-is-deep-derivable)
+
+;;; ----------------------------------------------------------------------------
+;;; G_TYPE_IS_INTERFACE()
+;;;
+;;; #define G_TYPE_IS_INTERFACE(type)
+;;;         (G_TYPE_FUNDAMENTAL (type) == G_TYPE_INTERFACE)
+;;;
+;;; Checks if type is an interface type. An interface type provides a pure API,
+;;; the implementation of which is provided by another type (which is then said
+;;; to conform to the interface). GLib interfaces are somewhat analogous to
+;;; Java interfaces and C++ classes containing only pure virtual functions,
+;;; with the difference that GType interfaces are not derivable (but see
+;;; g_type_interface_add_prerequisite() for an alternative).
+;;;
+;;; type :
+;;;     A GType value.
+;;;
+;;; Returns :
+;;;     TRUE on success.
+;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-interface (type)
+  (eql +g-type-interface+ (gtype-id type)))
+  
+(export 'g-type-is-interface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeInterface
@@ -808,16 +1210,16 @@
 ;;;     free any old contents. E.g. for the implementation of a string value
 ;;;     that may never be NULL, the implementation might look like:
 ;;;
-;;; 1 value->data[0].v_pointer = g_strdup ("");
+;;; value->data[0].v_pointer = g_strdup ("");
 ;;; 
 ;;; value_free ()
 ;;;     Free any old contents that might be left in the data array of the passed
 ;;;     in value. No resources may remain allocated through the GValue contents
 ;;;     after this function returns. E.g. for our above string type:
 ;;; 
-;;;  1 // only free strings without a specific flag for static storage
-;;;  2 if (!(value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS))
-;;;  3 g_free (value->data[0].v_pointer);
+;;;  // only free strings without a specific flag for static storage
+;;;  if (!(value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS))
+;;;  g_free (value->data[0].v_pointer);
 ;;; 
 ;;; value_copy ()
 ;;;     dest_value is a GValue with zero-filled data section and src_value is a
@@ -826,14 +1228,14 @@
 ;;;     that even after src_value has been freed, the contents of dest_value
 ;;;     remain valid. String type example:
 ;;; 
-;;;  1 dest_value->data[0].v_pointer = g_strdup (src_value->data[0].v_pointer);
+;;;  dest_value->data[0].v_pointer = g_strdup (src_value->data[0].v_pointer);
 ;;; 
 ;;; value_peek_pointer ()
 ;;;     If the value contents fit into a pointer, such as objects or strings,
 ;;;     return this pointer, so the caller can peek at the current contents.
 ;;;     To extend on our above string example:
 ;;; 
-;;;  1 return value->data[0].v_pointer;
+;;;  return value->data[0].v_pointer;
 ;;;
 ;;; gchar *collect_format;
 ;;;     A string format describing how to collect the contents of this value
@@ -870,17 +1272,17 @@
 ;;;     collect_values is not required for assignment to value. For our above
 ;;;     string example, we continue with:
 ;;;
-;;;  1 if (!collect_values[0].v_pointer)
-;;;  2 value->data[0].v_pointer = g_strdup ("");
-;;;  3 else if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
-;;;  4 {
-;;;  5 value->data[0].v_pointer = collect_values[0].v_pointer;
-;;;  6 // keep a flag for the value_free() implementation to not free this string
-;;;  7 value->data[1].v_uint = G_VALUE_NOCOPY_CONTENTS;
-;;;  8 }
-;;;  9 else
-;;; 10 value->data[0].v_pointer = g_strdup (collect_values[0].v_pointer);
-;;; 11 return NULL;
+;;;  if (!collect_values[0].v_pointer)
+;;;  value->data[0].v_pointer = g_strdup ("");
+;;;  else if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
+;;;  {
+;;;  value->data[0].v_pointer = collect_values[0].v_pointer;
+;;;  // keep a flag for the value_free() implementation to not free this string
+;;;  value->data[1].v_uint = G_VALUE_NOCOPY_CONTENTS;
+;;;  }
+;;;  else
+;;;  value->data[0].v_pointer = g_strdup (collect_values[0].v_pointer);
+;;;  return NULL;
 ;;; 
 ;;; It should be noted, that it is generally a bad idea to follow the
 ;;; G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to reentrancy
@@ -890,16 +1292,16 @@
 ;;; for a moment, and taking a look at an exemplary implementation for
 ;;; collect_value() of GObject:
 ;;; 
-;;;  1 if (collect_values[0].v_pointer)
-;;;  2 {
-;;;  3 GObject *object = G_OBJECT (collect_values[0].v_pointer);
-;;;  4 // never honour G_VALUE_NOCOPY_CONTENTS for ref-counted types
-;;;  5 value->data[0].v_pointer = g_object_ref (object);
-;;;  6 return NULL;
-;;;  7 }
-;;;  8 else
-;;;  9 return g_strdup_printf ("Object passed as invalid NULL pointer");
-;;; 10 }
+;;;  if (collect_values[0].v_pointer)
+;;;  {
+;;;  GObject *object = G_OBJECT (collect_values[0].v_pointer);
+;;;  // never honour G_VALUE_NOCOPY_CONTENTS for ref-counted types
+;;;  value->data[0].v_pointer = g_object_ref (object);
+;;;  return NULL;
+;;;  }
+;;;  else
+;;;  return g_strdup_printf ("Object passed as invalid NULL pointer");
+;;;  }
 ;;; 
 ;;; The reference count for valid objects is always incremented, regardless of
 ;;; collect_flags. For invalid objects, the example returns a newly allocated
@@ -930,26 +1332,26 @@
 ;;;     newly allocated string describing an error condition. To complete the
 ;;;     string example:
 ;;; 
-;;;  1 gchar **string_p = collect_values[0].v_pointer;
-;;;  2 if (!string_p)
-;;;  3 return g_strdup_printf ("string location passed as NULL");
-;;;  4 if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
-;;;  5 *string_p = value->data[0].v_pointer;
-;;;  6 else
-;;;  7 *string_p = g_strdup (value->data[0].v_pointer);
+;;;  gchar **string_p = collect_values[0].v_pointer;
+;;;  if (!string_p)
+;;;  return g_strdup_printf ("string location passed as NULL");
+;;;  if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
+;;;  *string_p = value->data[0].v_pointer;
+;;;  else
+;;;  *string_p = g_strdup (value->data[0].v_pointer);
 ;;; 
 ;;; And an illustrative version of lcopy_value() for reference-counted types:
 ;;; 
-;;;  1 GObject **object_p = collect_values[0].v_pointer;
-;;;  2 if (!object_p)
-;;;  3 return g_strdup_printf ("object location passed as NULL");
-;;;  4 if (!value->data[0].v_pointer)
-;;;  5 *object_p = NULL;
-;;;  6 else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) /* always honour */
-;;;  7 *object_p = value->data[0].v_pointer;
-;;;  8 else
-;;;  9 *object_p = g_object_ref (value->data[0].v_pointer);
-;;; 10 return NULL;
+;;;  GObject **object_p = collect_values[0].v_pointer;
+;;;  if (!object_p)
+;;;  return g_strdup_printf ("object location passed as NULL");
+;;;  if (!value->data[0].v_pointer)
+;;;  *object_p = NULL;
+;;;  else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) /* always honour */
+;;;  *object_p = value->data[0].v_pointer;
+;;;  else
+;;;  *object_p = g_object_ref (value->data[0].v_pointer);
+;;;  return NULL;
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-value-table
@@ -1302,10 +1704,10 @@
 ;;; enum GTypeDebugFlags
 ;;;
 ;;; typedef enum {
-;;;   G_TYPE_DEBUG_NONE = 0,
+;;;   G_TYPE_DEBUG_NONE    = 0,
 ;;;   G_TYPE_DEBUG_OBJECTS = 1 << 0,
 ;;;   G_TYPE_DEBUG_SIGNALS = 1 << 1,
-;;;   G_TYPE_DEBUG_MASK = 0x03
+;;;   G_TYPE_DEBUG_MASK    = 0x03
 ;;; } GTypeDebugFlags;
 ;;;
 ;;; The GTypeDebugFlags enumeration values can be passed to
@@ -1663,40 +2065,40 @@
 ;;; to an object MyObject defined in the standard GObject fashion. type's
 ;;; class_init() function.
 ;;;
-;;;  1 typedef struct _MyObject        MyObject;
-;;;  2 typedef struct _MyObjectPrivate MyObjectPrivate;
-;;;  3 
-;;;  4 struct _MyObject {
-;;;  5  GObject parent;
-;;;  6 
-;;;  7  MyObjectPrivate *priv;
-;;;  8 };
-;;;  9 
-;;; 10 struct _MyObjectPrivate {
-;;; 11  int some_field;
-;;; 12 };
-;;; 13
-;;; 14 static void
-;;; 15 my_object_class_init (MyObjectClass *klass)
-;;; 16 {
-;;; 17   g_type_class_add_private (klass, sizeof (MyObjectPrivate));
-;;; 18 }
-;;; 19
-;;; 20 static void
-;;; 21 my_object_init (MyObject *my_object)
-;;; 22 {
-;;; 23   my_object->priv = G_TYPE_INSTANCE_GET_PRIVATE (my_object,
-;;; 24                                                  MY_TYPE_OBJECT,
-;;; 25                                                  MyObjectPrivate);
-;;; 26 }
-;;; 27
-;;; 28 static int
-;;; 29 my_object_get_some_field (MyObject *my_object)
-;;; 30 {
-;;; 31   MyObjectPrivate *priv = my_object->priv;
-;;; 32
-;;; 33   return priv->some_field;
-;;; 34 }
+;;;  typedef struct _MyObject        MyObject;
+;;;  typedef struct _MyObjectPrivate MyObjectPrivate;
+;;;  
+;;;  struct _MyObject {
+;;;   GObject parent;
+;;;  
+;;;   MyObjectPrivate *priv;
+;;;  };
+;;;  
+;;;  struct _MyObjectPrivate {
+;;;   int some_field;
+;;;  };
+;;; 
+;;;  static void
+;;;  my_object_class_init (MyObjectClass *klass)
+;;;  {
+;;;    g_type_class_add_private (klass, sizeof (MyObjectPrivate));
+;;;  }
+;;; 
+;;;  static void
+;;;  my_object_init (MyObject *my_object)
+;;;  {
+;;;    my_object->priv = G_TYPE_INSTANCE_GET_PRIVATE (my_object,
+;;;                                                   MY_TYPE_OBJECT,
+;;;                                                   MyObjectPrivate);
+;;;  }
+;;; 
+;;;  static int
+;;;  my_object_get_some_field (MyObject *my_object)
+;;;  {
+;;;    MyObjectPrivate *priv = my_object->priv;
+;;; 
+;;;    return priv->some_field;
+;;;  }
 ;;;
 ;;; g_class :
 ;;;     class structure for an instantiatable type
@@ -1837,11 +2239,14 @@
 ;;; Return a newly allocated and 0-terminated array of type IDs, listing the
 ;;; child types of type. The return value has to be g_free()ed after use.
 ;;;
-;;; type       : The parent type.
-;;; n_children : Optional guint pointer to contain the number of child types.
-;;;              [out][allow-none]
-;;; Returns    : Newly allocated and 0-terminated array of child types.
-;;;              [array length=n_children][transfer full]
+;;; type :
+;;;     The parent type.
+;;;
+;;; n_children :
+;;;     Optional guint pointer to contain the number of child types.
+;;; 
+;;; Returns :
+;;;     Newly allocated and 0-terminated array of child types.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_children" %g-type-children) (:pointer g-type)
@@ -1868,10 +2273,14 @@
 ;;; interface types that type conforms to. The return value has to be g_free()ed
 ;;; after use.
 ;;;
-;;; type         : The type to list interface types for.
-;;; n_interfaces : Optional guint pointer to contain the number of interface
-;;;                types.
-;;; Returns      : Newly allocated and 0-terminated array of interface types.
+;;; type :
+;;;     The type to list interface types for.
+;;;
+;;; n_interfaces :
+;;;     Optional guint pointer to contain the number of interface types.
+;;;
+;;; Returns :
+;;;     Newly allocated and 0-terminated array of interface types.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interfaces" %g-type-interfaces) (:pointer g-type)
@@ -1897,10 +2306,15 @@
 ;;;
 ;;; Returns the prerequisites of an interfaces type.
 ;;;
-;;; interface_type  : an interface type
-;;; n_prerequisites : location to return the number of prerequisites, or NULL.
-;;; Returns         : a newly-allocated zero-terminated array of GType
-;;;                   containing the prerequisites of interface_type.
+;;; interface_type  :
+;;;     an interface type
+;;;
+;;; n_prerequisites :
+;;;     location to return the number of prerequisites, or NULL.
+;;;
+;;; Returns :
+;;;     a newly-allocated zero-terminated array of GType containing the
+;;;     prerequisites of interface_type.
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -1920,6 +2334,8 @@
              collect (mem-aref g-types-ptr 'g-type-designator i))
         (g-free g-types-ptr)))))
 
+(export 'g-type-interface-prerequisites)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_set_qdata ()
 ;;;
@@ -1927,9 +2343,14 @@
 ;;;
 ;;; Attaches arbitrary data to a type.
 ;;;
-;;; type  : a GType
-;;; quark : a GQuark id to identify the data
-;;; data  : the data
+;;; type :
+;;;     a GType
+;;;
+;;; quark :
+;;;     a GQuark id to identify the data
+;;;
+;;; data :
+;;;     the data
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1944,9 +2365,14 @@
 ;;; type with g_type_set_qdata() cannot be retrieved from a subtype using
 ;;; g_type_get_qdata().
 ;;;
-;;; type    : a GType
-;;; quark   : a GQuark id to identify the data
-;;; Returns : the data, or NULL if no data was found.
+;;; type :
+;;;     a GType
+;;;
+;;; quark :
+;;;     a GQuark id to identify the data
+;;;
+;;; Returns :
+;;;     the data, or NULL if no data was found.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2068,47 +2494,47 @@
 ;;; initialization of derived types as well. An example may help to correspond
 ;;; the intend of the different class initializers:
 ;;; 
-;;;  1 typedef struct {
-;;;  2   GObjectClass parent_class;
-;;;  3   gint         static_integer;
-;;;  4   gchar       *dynamic_string;
-;;;  5 } TypeAClass;
-;;;  6 static void
-;;;  7 type_a_base_class_init (TypeAClass *class)
-;;;  8 {
-;;;  9   class->dynamic_string = g_strdup ("some string");
-;;; 10 }
-;;; 11 static void
-;;; 12 type_a_base_class_finalize (TypeAClass *class)
-;;; 13 {
-;;; 14   g_free (class->dynamic_string);
-;;; 15 }
-;;; 16 static void
-;;; 17 type_a_class_init (TypeAClass *class)
-;;; 18 {
-;;; 19   class->static_integer = 42;
-;;; 20 }
-;;; 21 
-;;; 22 typedef struct {
-;;; 23   TypeAClass   parent_class;
-;;; 24   gfloat       static_float;
-;;; 25   GString     *dynamic_gstring;
-;;; 26 } TypeBClass;
-;;; 27 static void
-;;; 28 type_b_base_class_init (TypeBClass *class)
-;;; 29 {
-;;; 30   class->dynamic_gstring = g_string_new ("some other string");
-;;; 31 }
-;;; 32 static void
-;;; 33 type_b_base_class_finalize (TypeBClass *class)
-;;; 34 {
-;;; 35   g_string_free (class->dynamic_gstring);
-;;; 36 }
-;;; 37 static void
-;;; 38 type_b_class_init (TypeBClass *class)
-;;; 39 {
-;;; 40   class->static_float = 3.14159265358979323846;
-;;; 41 }
+;;;  typedef struct {
+;;;    GObjectClass parent_class;
+;;;    gint         static_integer;
+;;;    gchar       *dynamic_string;
+;;;  } TypeAClass;
+;;;  static void
+;;;  type_a_base_class_init (TypeAClass *class)
+;;;  {
+;;;    class->dynamic_string = g_strdup ("some string");
+;;;  }
+;;;  static void
+;;;  type_a_base_class_finalize (TypeAClass *class)
+;;;  {
+;;;    g_free (class->dynamic_string);
+;;;  }
+;;;  static void
+;;;  type_a_class_init (TypeAClass *class)
+;;;  {
+;;;    class->static_integer = 42;
+;;;  }
+;;;  
+;;;  typedef struct {
+;;;    TypeAClass   parent_class;
+;;;    gfloat       static_float;
+;;;    GString     *dynamic_gstring;
+;;;  } TypeBClass;
+;;;  static void
+;;;  type_b_base_class_init (TypeBClass *class)
+;;;  {
+;;;    class->dynamic_gstring = g_string_new ("some other string");
+;;;  }
+;;;  static void
+;;;  type_b_base_class_finalize (TypeBClass *class)
+;;;  {
+;;;    g_string_free (class->dynamic_gstring);
+;;;  }
+;;;  static void
+;;;  type_b_class_init (TypeBClass *class)
+;;;  {
+;;;    class->static_float = 3.14159265358979323846;
+;;;  }
 ;;; 
 ;;; Initialization of TypeBClass will first cause initialization of TypeAClass
 ;;; (derived classes reference their parent classes, see g_type_class_ref() on
@@ -2488,10 +2914,10 @@
 ;;; instead.
 ;;; 
 ;;; type :
-;;; 	An instantiatable type to create an instance for.
+;;;     An instantiatable type to create an instance for.
 ;;; 
 ;;; Returns :
-;;; 	An allocated and initialized instance, subject to further treatment by
+;;;     An allocated and initialized instance, subject to further treatment by
 ;;;     the fundamental type implementation.
 ;;; ----------------------------------------------------------------------------
 
@@ -2507,7 +2933,7 @@
 ;;; of fundamental types.
 ;;; 
 ;;; instance :
-;;; 	an instance of a type.
+;;;     an instance of a type.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2525,10 +2951,10 @@
 ;;; chain.
 ;;; 
 ;;; cache_data :
-;;; 	data to be passed to cache_func
+;;;     data to be passed to cache_func
 ;;; 
 ;;; cache_func :
-;;; 	a GTypeClassCacheFunc
+;;;     a GTypeClassCacheFunc
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2542,10 +2968,10 @@
 ;;; avoid leaks.
 ;;; 
 ;;; cache_data :
-;;; 	data that was given when adding cache_func
+;;;     data that was given when adding cache_func
 ;;; 
 ;;; cache_func :
-;;; 	a GTypeClassCacheFunc
+;;;     a GTypeClassCacheFunc
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2558,7 +2984,7 @@
 ;;; GTypeClassCacheFuncs, avoiding the recursion which would occur otherwise.
 ;;; 
 ;;; g_class :
-;;; 	The GTypeClass structure to unreference. [type GObject.TypeClass]
+;;;     The GTypeClass structure to unreference. [type GObject.TypeClass]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2577,10 +3003,10 @@
 ;;; are defined on its interfaces.
 ;;; 
 ;;; check_data :
-;;; 	data to pass to check_func
+;;;     data to pass to check_func
 ;;; 
 ;;; check_func :
-;;; 	function to be called after each interface is initialized.
+;;;     function to be called after each interface is initialized.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2594,10 +3020,10 @@
 ;;; Removes an interface check function added with g_type_add_interface_check().
 ;;; 
 ;;; check_data :
-;;; 	callback data passed to g_type_add_interface_check()
+;;;     callback data passed to g_type_add_interface_check()
 ;;; 
 ;;; check_func :
-;;; 	callback function passed to g_type_add_interface_check()
+;;;     callback function passed to g_type_add_interface_check()
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2611,10 +3037,10 @@
 ;;; See g_type_add_interface_check().
 ;;; 
 ;;; check_data :
-;;; 	data passed to g_type_add_interface_check().
+;;;     data passed to g_type_add_interface_check().
 ;;; 
 ;;; g_iface :
-;;; 	the interface that has been initialized
+;;;     the interface that has been initialized
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2629,12 +3055,18 @@
 ;;; internal knowledge of the implementation of type.
 ;;; 
 ;;; type :
-;;; 	A GType value.
+;;;     A GType value.
 ;;; 
 ;;; Returns :
-;;; 	Location of the GTypeValueTable associated with type or NULL if there
+;;;     Location of the GTypeValueTable associated with type or NULL if there
 ;;;     is no GTypeValueTable associated with type.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_value_table_peek" g-type-value-table-peek)
+    (:pointer g-type-value-table)
+  (type g-type-designator))
+
+(export 'g-type-value-table-peek)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_DEFINE_TYPE()
@@ -2649,13 +3081,13 @@
 ;;; function. See G_DEFINE_TYPE_EXTENDED() for an example.
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the parent type.
+;;;     The GType of the parent type.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2663,7 +3095,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; G_DEFINE_TYPE_WITH_CODE()
 ;;; 
-;;; #define G_DEFINE_TYPE_WITH_CODE(TN, t_n, T_P, _C_)	   
+;;; #define G_DEFINE_TYPE_WITH_CODE(TN, t_n, T_P, _C_)       
 ;;;        _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, 0) {_C_;} 
 ;;;        _G_DEFINE_TYPE_EXTENDED_END()
 ;;; 
@@ -2673,16 +3105,16 @@
 ;;; G_DEFINE_TYPE_EXTENDED() for an example.
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type in lowercase, with words separated by '_'.
+;;;     The name of the new type in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the parent type.
+;;;     The GType of the parent type.
 ;;; 
 ;;; _C_ :
-;;; 	Custom code that gets inserted in the *_get_type() function.
+;;;     Custom code that gets inserted in the *_get_type() function.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2690,20 +3122,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;; G_DEFINE_ABSTRACT_TYPE()
 ;;; 
-;;; #define G_DEFINE_ABSTRACT_TYPE(TN, t_n, T_P)		    
+;;; #define G_DEFINE_ABSTRACT_TYPE(TN, t_n, T_P)            
 ;;;         G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, {})
 ;;; 
 ;;; A convenience macro for type implementations. Similar to G_DEFINE_TYPE(),
 ;;; but defines an abstract type. See G_DEFINE_TYPE_EXTENDED() for an example.
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the parent type.
+;;;     The GType of the parent type.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2712,7 +3144,8 @@
 ;;; G_DEFINE_ABSTRACT_TYPE_WITH_CODE()
 ;;; 
 ;;; #define G_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) 
-;;;        _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT) {_C_;}
+;;;        _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT)
+;;;                                      {_C_;}
 ;;;        _G_DEFINE_TYPE_EXTENDED_END()
 ;;; 
 ;;; A convenience macro for type implementations. Similar to
@@ -2722,16 +3155,16 @@
 ;;; for an example.
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the parent type.
+;;;     The GType of the parent type.
 ;;; 
 ;;; _C_ :
-;;; 	Custom code that gets inserted in the type_name_get_type() function.
+;;;     Custom code that gets inserted in the type_name_get_type() function.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2739,7 +3172,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; G_DEFINE_INTERFACE()
 ;;; 
-;;; #define G_DEFINE_INTERFACE(TN, t_n, T_P)		    
+;;; #define G_DEFINE_INTERFACE(TN, t_n, T_P)            
 ;;;         G_DEFINE_INTERFACE_WITH_CODE(TN, t_n, T_P, ;)
 ;;; 
 ;;; A convenience macro for GTypeInterface definitions, which declares a default
@@ -2750,13 +3183,13 @@
 ;;; Interface.
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the prerequisite type for the interface, or 0
+;;;     The GType of the prerequisite type for the interface, or 0
 ;;;     (G_TYPE_INVALID) for no prerequisite type.
 ;;; 
 ;;; Since 2.24
@@ -2777,17 +3210,17 @@
 ;;; G_DEFINE_TYPE_WITH_CODE().
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the prerequisite type for the interface, or 0
+;;;     The GType of the prerequisite type for the interface, or 0
 ;;;     (G_TYPE_INVALID) for no prerequisite type.
 ;;; 
 ;;; _C_ :
-;;; 	Custom code that gets inserted in the *_get_type() function.
+;;;     Custom code that gets inserted in the *_get_type() function.
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -2806,10 +3239,10 @@
 ;;; macros.
 ;;; 
 ;;; TYPE_IFACE :
-;;; 	The GType of the interface to add
+;;;     The GType of the interface to add
 ;;; 
 ;;; iface_init :
-;;; 	The interface init function
+;;;     The interface init function
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2824,70 +3257,70 @@
 ;;; The most general convenience macro for type implementations, on which
 ;;; G_DEFINE_TYPE(), etc are based.
 ;;; 
-;;;  1 G_DEFINE_TYPE_EXTENDED (GtkGadget,
-;;;  2                         gtk_gadget,
-;;;  3                         GTK_TYPE_WIDGET,
-;;;  4                         0,
-;;;  5                         G_IMPLEMENT_INTERFACE (TYPE_GIZMO,
-;;;  6                                                gtk_gadget_gizmo_init));
+;;;  G_DEFINE_TYPE_EXTENDED (GtkGadget,
+;;;                          gtk_gadget,
+;;;                          GTK_TYPE_WIDGET,
+;;;                          0,
+;;;                          G_IMPLEMENT_INTERFACE (TYPE_GIZMO,
+;;;                                                 gtk_gadget_gizmo_init));
 ;;; 
 ;;; expands to
 ;;; 
-;;;  1 static void     gtk_gadget_init       (GtkGadget      *self);
-;;;  2 static void     gtk_gadget_class_init (GtkGadgetClass *klass);
-;;;  3 static gpointer gtk_gadget_parent_class = NULL;
-;;;  4 static void     gtk_gadget_class_intern_init (gpointer klass)
-;;;  5 {
-;;;  6   gtk_gadget_parent_class = g_type_class_peek_parent (klass);
-;;;  7   gtk_gadget_class_init ((GtkGadgetClass*) klass);
-;;;  8 }
-;;;  9 
-;;; 10 GType
-;;; 11 gtk_gadget_get_type (void)
-;;; 12 {
-;;; 13   static volatile gsize g_define_type_id__volatile = 0;
-;;; 14   if (g_once_init_enter (&g_define_type_id__volatile))
-;;; 15     {
-;;; 16       GType g_define_type_id =
-;;; 17         g_type_register_static_simple (
-;;; 18                            GTK_TYPE_WIDGET,
-;;; 19                            g_intern_static_string ("GtkGadget"),
-;;; 20                            sizeof (GtkGadgetClass),
-;;; 21                            (GClassInitFunc) gtk_gadget_class_intern_init,
-;;; 22                            sizeof (GtkGadget),
-;;; 23                            (GInstanceInitFunc) gtk_gadget_init,
-;;; 24                            (GTypeFlags) flags);
-;;; 25       {
-;;; 26         static const GInterfaceInfo g_implement_interface_info = {
-;;; 27           (GInterfaceInitFunc) gtk_gadget_gizmo_init
-;;; 28         };
-;;; 29         g_type_add_interface_static (g_define_type_id,
-;;; 30                                      TYPE_GIZMO,
-;;; 31                                      &g_implement_interface_info);
-;;; 32       }
-;;; 33       g_once_init_leave (&g_define_type_id__volatile, g_define_type_id);
-;;; 34     }
-;;; 35   return g_define_type_id__volatile;
-;;; 36 }
+;;;  static void     gtk_gadget_init       (GtkGadget      *self);
+;;;  static void     gtk_gadget_class_init (GtkGadgetClass *klass);
+;;;  static gpointer gtk_gadget_parent_class = NULL;
+;;;  static void     gtk_gadget_class_intern_init (gpointer klass)
+;;;  {
+;;;    gtk_gadget_parent_class = g_type_class_peek_parent (klass);
+;;;    gtk_gadget_class_init ((GtkGadgetClass*) klass);
+;;;  }
+;;;  
+;;;  GType
+;;;  gtk_gadget_get_type (void)
+;;;  {
+;;;    static volatile gsize g_define_type_id__volatile = 0;
+;;;    if (g_once_init_enter (&g_define_type_id__volatile))
+;;;      {
+;;;        GType g_define_type_id =
+;;;          g_type_register_static_simple (
+;;;                             GTK_TYPE_WIDGET,
+;;;                             g_intern_static_string ("GtkGadget"),
+;;;                             sizeof (GtkGadgetClass),
+;;;                             (GClassInitFunc) gtk_gadget_class_intern_init,
+;;;                             sizeof (GtkGadget),
+;;;                             (GInstanceInitFunc) gtk_gadget_init,
+;;;                             (GTypeFlags) flags);
+;;;        {
+;;;          static const GInterfaceInfo g_implement_interface_info = {
+;;;            (GInterfaceInitFunc) gtk_gadget_gizmo_init
+;;;          };
+;;;          g_type_add_interface_static (g_define_type_id,
+;;;                                       TYPE_GIZMO,
+;;;                                       &g_implement_interface_info);
+;;;        }
+;;;        g_once_init_leave (&g_define_type_id__volatile, g_define_type_id);
+;;;      }
+;;;    return g_define_type_id__volatile;
+;;;  }
 ;;; 
 ;;; The only pieces which have to be manually provided are the definitions of
 ;;; the instance and class structure and the definitions of the instance and
 ;;; class init functions.
 ;;; 
 ;;; TN :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; t_n :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; T_P :
-;;; 	The GType of the parent type.
+;;;     The GType of the parent type.
 ;;; 
 ;;; _f_ :
-;;; 	GTypeFlags to pass to g_type_register_static()
+;;;     GTypeFlags to pass to g_type_register_static()
 ;;; 
 ;;; _C_ :
-;;; 	Custom code that gets inserted in the *_get_type() function.
+;;;     Custom code that gets inserted in the *_get_type() function.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2896,22 +3329,26 @@
 ;;; G_DEFINE_BOXED_TYPE()
 ;;; 
 ;;; #define G_DEFINE_BOXED_TYPE(TypeName, type_name, copy_func, free_func)
-;;;         G_DEFINE_BOXED_TYPE_WITH_CODE (TypeName, type_name, copy_func, free_func, {})
+;;;         G_DEFINE_BOXED_TYPE_WITH_CODE (TypeName,
+;;;                                        type_name,
+;;;                                        copy_func,
+;;;                                        free_func,
+;;;                                        {})
 ;;; 
 ;;; A convenience macro for boxed type implementations, which defines a
 ;;; type_name_get_type() function registering the boxed type.
 ;;; 
 ;;; TypeName :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; type_name :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; copy_func :
-;;; 	the GBoxedCopyFunc for the new type
+;;;     the GBoxedCopyFunc for the new type
 ;;; 
 ;;; free_func :
-;;; 	the GBoxedFreeFunc for the new type
+;;;     the GBoxedFreeFunc for the new type
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2929,19 +3366,19 @@
 ;;; g_value_register_transform_func().
 ;;; 
 ;;; TypeName :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; type_name :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; copy_func :
-;;; 	the GBoxedCopyFunc for the new type
+;;;     the GBoxedCopyFunc for the new type
 ;;; 
 ;;; free_func :
-;;; 	the GBoxedFreeFunc for the new type
+;;;     the GBoxedFreeFunc for the new type
 ;;; 
 ;;; _C_ :
-;;; 	Custom code that gets inserted in the *_get_type() function.
+;;;     Custom code that gets inserted in the *_get_type() function.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2956,10 +3393,10 @@
 ;;; type_name_get_type() function registering the pointer type.
 ;;; 
 ;;; TypeName :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; type_name :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2976,365 +3413,16 @@
 ;;; type_name_get_type() function.
 ;;; 
 ;;; TypeName :
-;;; 	The name of the new type, in Camel case.
+;;;     The name of the new type, in Camel case.
 ;;; 
 ;;; type_name :
-;;; 	The name of the new type, in lowercase, with words separated by '_'.
+;;;     The name of the new type, in lowercase, with words separated by '_'.
 ;;; 
 ;;; _C_ :
-;;; 	Custom code that gets inserted in the *_get_type() function.
+;;;     Custom code that gets inserted in the *_get_type() function.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_INVALID
-;;; 
-;;; #define G_TYPE_INVALID G_TYPE_MAKE_FUNDAMENTAL (0)
-;;; 
-;;; An invalid GType used as error return value in some functions which return
-;;; a GType.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-invalid+ (ash 0 2))
-
-(export '+g-type-invalid+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_NONE
-;;; 
-;;; #define G_TYPE_NONE G_TYPE_MAKE_FUNDAMENTAL (1)
-;;; 
-;;; A fundamental type which is used as a replacement for the C void return
-;;; type.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-void+ (ash 1 2))
-
-(export '+g-type-void+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_INTERFACE
-;;; 
-;;; #define G_TYPE_INTERFACE G_TYPE_MAKE_FUNDAMENTAL (2)
-;;; 
-;;; The fundamental type from which all interfaces are derived.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-interface+ (ash 2 2))
-
-(export '+g-type-interface+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_CHAR
-;;; 
-;;; #define G_TYPE_CHAR G_TYPE_MAKE_FUNDAMENTAL (3)
-;;; 
-;;; The fundamental type corresponding to gchar. The type designated by
-;;; G_TYPE_CHAR is unconditionally an 8-bit signed integer. This may or may not
-;;; be the same type a the C type "gchar".
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-char+ (ash 3 2))
-
-(export '+g-type-char+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_UCHAR
-;;; 
-;;; #define G_TYPE_UCHAR G_TYPE_MAKE_FUNDAMENTAL (4)
-;;; 
-;;; The fundamental type corresponding to guchar.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-uchar+ (ash 4 2))
-
-(export '+g-type-uchar+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_BOOLEAN
-;;; 
-;;; #define G_TYPE_BOOLEAN G_TYPE_MAKE_FUNDAMENTAL (5)
-;;; 
-;;; The fundamental type corresponding to gboolean.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-boolean+ (ash 5 2))
-
-(export '+g-type-boolean+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_INT
-;;; 
-;;; #define G_TYPE_INT G_TYPE_MAKE_FUNDAMENTAL (6)
-;;; 
-;;; The fundamental type corresponding to gint.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-int+ (ash 6 2))
-
-(export '+g-type-int+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_UINT
-;;; 
-;;; #define G_TYPE_UINT G_TYPE_MAKE_FUNDAMENTAL (7)
-;;; 
-;;; The fundamental type corresponding to guint.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-uint+ (ash 7 2))
-
-(export '+g-type-uint+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_LONG
-;;; 
-;;; #define G_TYPE_LONG G_TYPE_MAKE_FUNDAMENTAL (8)
-;;; 
-;;; The fundamental type corresponding to glong.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-long+ (ash 8 2))
-
-(export '+g-type-long+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_ULONG
-;;; 
-;;; #define G_TYPE_ULONG G_TYPE_MAKE_FUNDAMENTAL (9)
-;;; 
-;;; The fundamental type corresponding to gulong.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-ulong+ (ash 9 2))
-
-(export '+g-type-ulong+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_INT64
-;;; 
-;;; #define G_TYPE_INT64 G_TYPE_MAKE_FUNDAMENTAL (10)
-;;; 
-;;; The fundamental type corresponding to gint64.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-int64+ (ash 10 2))
-
-(export '+g-type-int64+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_UINT64
-;;; 
-;;; #define G_TYPE_UINT64 G_TYPE_MAKE_FUNDAMENTAL (11)
-;;; 
-;;; The fundamental type corresponding to guint64.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-uint64+ (ash 11 2))
-
-(export '+g-type-uint64+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_ENUM
-;;; 
-;;; #define G_TYPE_ENUM G_TYPE_MAKE_FUNDAMENTAL (12)
-;;; 
-;;; The fundamental type from which all enumeration types are derived.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-enum+ (ash 12 2))
-
-(export '+g-type-enum+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_FLAGS
-;;; 
-;;; #define G_TYPE_FLAGS G_TYPE_MAKE_FUNDAMENTAL (13)
-;;; 
-;;; The fundamental type from which all flags types are derived.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-flags+ (ash 13 2))
-
-(export '+g-type-flags+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_FLOAT
-;;; 
-;;; #define G_TYPE_FLOAT G_TYPE_MAKE_FUNDAMENTAL (14)
-;;; 
-;;; The fundamental type corresponding to gfloat.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-float+ (ash 14 2))
-
-(export '+g-type-float+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_DOUBLE
-;;; 
-;;; #define G_TYPE_DOUBLE G_TYPE_MAKE_FUNDAMENTAL (15)
-;;; 
-;;; The fundamental type corresponding to gdouble.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-double+ (ash 15 2))
-
-(export '+g-type-double+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_STRING
-;;; 
-;;; #define G_TYPE_STRING G_TYPE_MAKE_FUNDAMENTAL (16)
-;;; 
-;;; The fundamental type corresponding to nul-terminated C strings.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-string+ (ash 16 2))
-
-(export '+g-type-string+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_POINTER
-;;; 
-;;; #define G_TYPE_POINTER G_TYPE_MAKE_FUNDAMENTAL (17)
-;;; 
-;;; The fundamental type corresponding to gpointer.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-pointer+ (ash 17 2))
-
-(export '+g-type-pointer+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_BOXED
-;;; 
-;;; #define G_TYPE_BOXED G_TYPE_MAKE_FUNDAMENTAL (18)
-;;; 
-;;; The fundamental type from which all boxed types are derived.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-boxed+ (ash 18 2))
-
-(export '+g-type-boxed+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_PARAM
-;;; 
-;;; #define G_TYPE_PARAM G_TYPE_MAKE_FUNDAMENTAL (19)
-;;; 
-;;; The fundamental type from which all GParamSpec types are derived.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-param+ (ash 19 2))
-
-(export '+g-type-param+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_OBJECT
-;;; 
-;;; #define G_TYPE_OBJECT G_TYPE_MAKE_FUNDAMENTAL (20)
-;;; 
-;;; The fundamental type for GObject.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-object+ (ash 20 2))
-
-(export '+g-type-object+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_GTYPE
-;;; 
-;;; #define G_TYPE_GTYPE (g_gtype_get_type())
-;;; 
-;;; The type for GType.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_VARIANT
-;;; 
-;;; #define G_TYPE_VARIANT G_TYPE_MAKE_FUNDAMENTAL (21)
-;;; 
-;;; The fundamental type corresponding to GVariant.
-;;; 
-;;; All floating GVariant instances passed through the GType system are
-;;; consumed.
-;;; 
-;;; Note that callbacks in closures, and signal handlers for signals of return
-;;; type G_TYPE_VARIANT, must never return floating variants.
-;;; 
-;;; Note: GLib 2.24 did include a boxed type with this name. It was replaced
-;;;       with this fundamental type in 2.26.
-;;; 
-;;; Since 2.26
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-variant+ (ash 21 2))
-
-(export '+g-type-variant+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_RESERVED_GLIB_FIRST
-;;; 
-;;; #define G_TYPE_RESERVED_GLIB_FIRST (22)
-;;; 
-;;; First fundamental type number to create a new fundamental type id with
-;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for GLib.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-reserved-glib-first+ (ash 22 2))
-
-(export '+g-type-reserved-glib-first+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_RESERVED_GLIB_LAST
-;;; 
-;;; #define G_TYPE_RESERVED_GLIB_LAST (31)
-;;; 
-;;; Last fundamental type number reserved for GLib.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-reserved-glib-last+ (ash 31 2))
-
-(export '+g-type-reserved-glib-last+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_RESERVED_BSE_FIRST
-;;; 
-;;; #define G_TYPE_RESERVED_BSE_FIRST (32)
-;;; 
-;;; First fundamental type number to create a new fundamental type id with
-;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for BSE.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-reserved-bse-first+ (ash 32 2))
-
-(export '+g-type-reserved-bse-first+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_RESERVED_BSE_LAST
-;;; 
-;;; #define G_TYPE_RESERVED_BSE_LAST (48)
-;;; 
-;;; Last fundamental type number reserved for BSE.
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-reserved-bse-last+ (ash 48 2))
-
-(export '+g-type-reserved-bse-last+)
-
-;;; ----------------------------------------------------------------------------
-;;; G_TYPE_RESERVED_USER_FIRST
-;;; 
-;;; #define G_TYPE_RESERVED_USER_FIRST (49)
-;;; 
-;;; First available fundamental type number to create new fundamental type id
-;;; with G_TYPE_MAKE_FUNDAMENTAL().
-;;; ----------------------------------------------------------------------------
-
-(defconstant +g-type-reserved-user-first+ (ash 49 2))
-
-(export '+g-type-reserved-user-first+)
 
 ;;; --- End of file gobject.type-info.lisp -------------------------------------

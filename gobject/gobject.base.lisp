@@ -32,10 +32,10 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     GObject;
-;;;     GObjectClass;
-;;;     GObjectConstructParam;
-;;;     GParameter;
+;;;     GObject
+;;;     GObjectClass
+;;;     GObjectConstructParam
+;;;     GParameter
 ;;;
 ;;;     G_TYPE_IS_OBJECT
 ;;;     G_OBJECT
@@ -47,6 +47,7 @@
 ;;;     G_OBJECT_TYPE_NAME
 ;;;     G_OBJECT_CLASS_TYPE
 ;;;     G_OBJECT_CLASS_NAME
+;;;
 ;;;     g_object_class_install_property
 ;;;     g_object_class_install_properties
 ;;;     g_object_class_find_property
@@ -61,8 +62,10 @@
 ;;;     g_object_unref
 ;;;     g_object_ref_sink
 ;;;     g_clear_object
+;;;
 ;;;     GInitiallyUnowned
 ;;;     GInitiallyUnownedClass
+;;;
 ;;;     G_TYPE_INITIALLY_UNOWNED
 ;;;     g_object_is_floating
 ;;;     g_object_force_floating
@@ -95,6 +98,7 @@
 ;;;     g_object_get_valist
 ;;;     g_object_watch_closure
 ;;;     g_object_run_dispose
+;;;
 ;;;     G_OBJECT_WARN_INVALID_PROPERTY_ID
 ;;; 
 ;;; Object Hierarchy
@@ -121,19 +125,19 @@
 ;;; "owned" by any code portion. The main motivation for providing floating
 ;;; references is C convenience. In particular, it allows code to be written as:
 ;;; 
-;;;  1 container = create_container ();
-;;;  2 container_add_child (container, create_child());
+;;;  container = create_container ();
+;;;  container_add_child (container, create_child());
 ;;; 
 ;;; If container_add_child() will g_object_ref_sink() the passed in child, no
 ;;; reference of the newly created child is leaked. Without floating references,
 ;;; container_add_child() can only g_object_ref() the new child, so to implement
 ;;; this code without reference leaks, it would have to be written as:
 ;;; 
-;;;  1 Child *child;
-;;;  2 container = create_container ();
-;;;  3 child = create_child ();
-;;;  4 container_add_child (container, child);
-;;;  5 g_object_unref (child);
+;;;  Child *child;
+;;;  container = create_container ();
+;;;  child = create_child ();
+;;;  container_add_child (container, child);
+;;;  g_object_unref (child);
 ;;; 
 ;;; The floating reference can be converted into an ordinary reference by
 ;;; calling g_object_ref_sink(). For already sunken objects (objects that don't
@@ -147,15 +151,15 @@
 ;;; across certain code portions (an example is GtkMenu), to achieve this, the
 ;;; following sequence can be used:
 ;;; 
-;;; /* save floating state */
-;;; gboolean was_floating = g_object_is_floating (object);
-;;; g_object_ref_sink (object);
-;;; /* protected code portion */
-;;; ...;
-;;; /* restore floating state */
-;;; if (was_floating)
-;;;   g_object_force_floating (object);
-;;; g_object_unref (object); /* release previously acquired reference */
+;;;  /* save floating state */
+;;;  gboolean was_floating = g_object_is_floating (object);
+;;;  g_object_ref_sink (object);
+;;;  /* protected code portion */
+;;;  ...;
+;;;  /* restore floating state */
+;;;  if (was_floating)
+;;;    g_object_force_floating (object);
+;;;  g_object_unref (object); /* release previously acquired reference */
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -175,21 +179,21 @@
 ;;; property, by specifying the property name as a detail in the
 ;;; g_signal_connect() call, like this:
 ;;; 
-;;;  1 g_signal_connect (text_view->buffer, "notify::paste-target-list",
-;;;  2                   G_CALLBACK (gtk_text_view_target_list_notify),
-;;;  3                   text_view)
+;;;  g_signal_connect (text_view->buffer, "notify::paste-target-list",
+;;;                    G_CALLBACK (gtk_text_view_target_list_notify),
+;;;                    text_view)
 ;;; 
 ;;; It is important to note that you must use canonical parameter names as
 ;;; detail strings for the notify signal.
 ;;; 
 ;;; gobject :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec of the property which changed.
+;;;     the GParamSpec of the property which changed.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -271,10 +275,10 @@
 ;;; name/value pairs to g_object_newv().
 ;;; 
 ;;; const gchar *name;
-;;; 	the parameter name
+;;;     the parameter name
 ;;; 
 ;;; GValue value;
-;;; 	the parameter value
+;;;     the parameter value
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-parameter
@@ -434,14 +438,14 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun get-g-object-lisp-type (g-type)
-  (setf g-type (gtype g-type))
-  (iter (while (not (null g-type)))
-        (for lisp-type = (gethash (gtype-name g-type)
+(defun get-g-object-lisp-type (type)
+  (setf type (gtype type))
+  (iter (while (not (null type)))
+        (for lisp-type = (gethash (gtype-name type)
                                   *registered-object-types*))
         (when lisp-type
           (return lisp-type))
-        (setf g-type (g-type-parent g-type))))
+        (setf type (g-type-parent type))))
 
 (defun should-ref-sink-at-creation (object)
 ;;If object was not created from lisp-side, we should ref it
@@ -462,11 +466,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun make-g-object-from-pointer (pointer)
-  (let* ((g-type (g-type-from-instance pointer))
-         (lisp-type (get-g-object-lisp-type g-type)))
+  (let* ((type (g-type-from-instance pointer))
+         (lisp-type (get-g-object-lisp-type type)))
     (unless lisp-type
       (error "Type ~A is not registered with REGISTER-OBJECT-TYPE"
-             (gtype-name g-type)))
+             (gtype-name type)))
     (let ((*current-object-from-pointer* pointer))
       (make-instance lisp-type :pointer pointer))))
 
@@ -716,9 +720,9 @@
              :class-name (gtype-name (gtype object-type))))
     (g-class-property-definition-type property)))
 
-(defun class-property-info (g-type property-name)
-  (with-unwind (g-class (g-type-class-ref g-type) g-type-class-unref)
-    (let* ((param-spec (g-object-class-find-property g-class property-name)))
+(defun class-property-info (type property-name)
+  (with-unwind (class (g-type-class-ref type) g-type-class-unref)
+    (let* ((param-spec (g-object-class-find-property class property-name)))
       (when param-spec (parse-g-param-spec param-spec)))))
 
 (defun parse-g-param-spec (param)
@@ -851,9 +855,9 @@
   (if (initargs-have-base-in-superclass initargs base-class)
       initargs
       (append (filter-from-initargs initargs :direct-superclasses)
-	      (list :direct-superclasses
-		    (append (getf initargs :direct-superclasses)
-			    (list (find-class base-class)))))))
+          (list :direct-superclasses
+            (append (getf initargs :direct-superclasses)
+                (list (find-class base-class)))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -950,12 +954,12 @@
 
 (defmethod compute-effective-slot-definition ((class gobject-class) name direct-slots)
   (let ((effective-slot (let ((*e-s-d* (loop
-					  for slot in direct-slots
-					  when (typep slot 'gobject-direct-slot-definition)
-					  return (etypecase slot
-						   (gobject-property-direct-slot-definition (find-class 'gobject-property-effective-slot-definition))
-						   (gobject-fn-direct-slot-definition (find-class 'gobject-fn-effective-slot-definition))))))
-			  (call-next-method))))
+                      for slot in direct-slots
+                      when (typep slot 'gobject-direct-slot-definition)
+                      return (etypecase slot
+                           (gobject-property-direct-slot-definition (find-class 'gobject-property-effective-slot-definition))
+                           (gobject-fn-direct-slot-definition (find-class 'gobject-fn-effective-slot-definition))))))
+              (call-next-method))))
     (when (typep effective-slot 'gobject-effective-slot-definition)
       (let ((allocation (loop
                               for direct-slot in direct-slots
@@ -999,27 +1003,27 @@
                              (and property-getter
                                   (if (stringp property-getter)
                                       (compile nil (if (foreign-symbol-pointer property-getter)
-						       `(lambda (object)
-							  (foreign-funcall ,property-getter
-									   g-object object
-									   ,property-type))
-						       `(lambda (object)
-							  (declare (ignore object))
-							  (error "Property getter ~A is not available" ,property-getter))
-						       ))
+                               `(lambda (object)
+                              (foreign-funcall ,property-getter
+                                       g-object object
+                                       ,property-type))
+                               `(lambda (object)
+                              (declare (ignore object))
+                              (error "Property getter ~A is not available" ,property-getter))
+                               ))
                                       property-getter))
                              (gobject-fn-effective-slot-definition-g-setter-fn effective-slot)
                              (and property-setter
                                   (if (stringp property-setter)
                                       (compile nil (if (foreign-symbol-pointer property-setter)
-						       `(lambda (object new-value)
-							  (foreign-funcall ,property-setter
-									   g-object object
-									   ,property-type new-value
-									   :void))
-						       `(lambda (object)
-							  (declare (ignore object))
-							  (error "Property setter ~A is not avaiable" ,property-setter))))
+                               `(lambda (object new-value)
+                              (foreign-funcall ,property-setter
+                                       g-object object
+                                       ,property-type new-value
+                                       :void))
+                               `(lambda (object)
+                              (declare (ignore object))
+                              (error "Property setter ~A is not avaiable" ,property-setter))))
                                       property-setter)))))))
     effective-slot))
 
@@ -1124,7 +1128,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTypeClass g_type_class;
-;;; 	the parent class
+;;;     the parent class
 ;;; 
 ;;; constructor ()
 ;;;     the constructor function is called by g_object_new() to complete the
@@ -1184,10 +1188,10 @@
 ;;; GParamSpec/GValue pairs to the constructor of a GObjectClass.
 ;;; 
 ;;; GParamSpec *pspec;
-;;; 	the GParamSpec of the construct parameter
+;;;     the GParamSpec of the construct parameter
 ;;; 
 ;;; GValue *value;
-;;; 	the value to set the parameter to
+;;;     the value to set the parameter to
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-object-construct-param
@@ -1208,14 +1212,14 @@
 ;;;     a GObject
 ;;; 
 ;;; property_id :
-;;; 	the numeric id under which the property was registered with
+;;;     the numeric id under which the property was registered with
 ;;;     g_object_class_install_property().
 ;;; 
 ;;; value :
-;;; 	a GValue to return the property value in
+;;;     a GValue to return the property value in
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec describing the property
+;;;     the GParamSpec describing the property
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1229,17 +1233,17 @@
 ;;; The type of the set_property function of GObjectClass.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; property_id :
-;;; 	the numeric id under which the property was registered with
+;;;     the numeric id under which the property was registered with
 ;;;     g_object_class_install_property().
 ;;; 
 ;;; value :
-;;; 	the new value for the property
+;;;     the new value for the property
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec describing the property
+;;;     the GParamSpec describing the property
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1250,7 +1254,7 @@
 ;;; The type of the finalize function of GObjectClass.
 ;;; 
 ;;; object :
-;;; 	the GObject being finalized
+;;;     the GObject being finalized
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1261,10 +1265,10 @@
 ;;; Check if the passed in type id is a G_TYPE_OBJECT or derived from it.
 ;;; 
 ;;; type :
-;;; 	Type id to check
+;;;     Type id to check
 ;;; 
 ;;; Returns :
-;;; 	FALSE or TRUE, indicating whether type is a G_TYPE_OBJECT.
+;;;     FALSE or TRUE, indicating whether type is a G_TYPE_OBJECT.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1278,7 +1282,7 @@
 ;;; checks to identify invalid casts.
 ;;; 
 ;;; object :
-;;; 	Object which is subject to casting.
+;;;     Object which is subject to casting.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1290,7 +1294,7 @@
 ;;; Checks whether a valid GTypeInstance pointer is of type G_TYPE_OBJECT.
 ;;; 
 ;;; object :
-;;; 	Instance to check for being a G_TYPE_OBJECT.
+;;;     Instance to check for being a G_TYPE_OBJECT.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1302,7 +1306,7 @@
 ;;; Casts a derived GObjectClass structure into a GObjectClass structure.
 ;;; 
 ;;; class :
-;;; 	a valid GObjectClass
+;;;     a valid GObjectClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1315,7 +1319,7 @@
 ;;; G_TYPE_OBJECT or derived.
 ;;; 
 ;;; class :
-;;; 	a GObjectClass
+;;;     a GObjectClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1327,10 +1331,10 @@
 ;;; Get the class structure associated to a GObject instance.
 ;;; 
 ;;; object :
-;;; 	a GObject instance.
+;;;     a GObject instance.
 ;;; 
 ;;; Returns :
-;;; 	pointer to object class structure.
+;;;     pointer to object class structure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1341,10 +1345,10 @@
 ;;; Get the type id of an object.
 ;;; 
 ;;; object :
-;;; 	Object to return the type id for.
+;;;     Object to return the type id for.
 ;;; 
 ;;; Returns :
-;;; 	Type id of object.
+;;;     Type id of object.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1355,10 +1359,10 @@
 ;;; Get the name of an object's type.
 ;;; 
 ;;; object :
-;;; 	Object to return the type name for.
+;;;     Object to return the type name for.
 ;;; 
 ;;; Returns :
-;;; 	Type name of object. The string is owned by the type system and should
+;;;     Type name of object. The string is owned by the type system and should
 ;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -1370,10 +1374,10 @@
 ;;; Get the type id of a class structure.
 ;;; 
 ;;; class :
-;;; 	a valid GObjectClass
+;;;     a valid GObjectClass
 ;;; 
 ;;; Returns :
-;;; 	Type id of class.
+;;;     Type id of class.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-class-type (class)
@@ -1390,10 +1394,10 @@
 ;;; Return the name of a class structure's type.
 ;;; 
 ;;; class :
-;;; 	a valid GObjectClass
+;;;     a valid GObjectClass
 ;;; 
 ;;; Returns :
-;;; 	Type name of class. The string is owned by the type system and should
+;;;     Type name of class. The string is owned by the type system and should
 ;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -1495,13 +1499,13 @@
 ;;;  9  }
 ;;; 
 ;;; oclass :
-;;; 	a GObjectClass
+;;;     a GObjectClass
 ;;; 
 ;;; n_pspecs :
-;;; 	the length of the GParamSpecs array
+;;;     the length of the GParamSpecs array
 ;;; 
 ;;; pspecs :
-;;; 	the GParamSpecs array defining the new properties.
+;;;     the GParamSpecs array defining the new properties.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -1950,10 +1954,10 @@
 ;;; the object, apart from e.g. using its address as hash-index or the like.
 ;;; 
 ;;; data :
-;;; 	data that was provided when the weak reference was established
+;;;     data that was provided when the weak reference was established
 ;;; 
 ;;; where_the_object_was :
-;;; 	the object being finalized
+;;;     the object being finalized
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2017,10 +2021,10 @@
 ;;; of object. When the object is finalized, weak_pointer will be set to NULL.
 ;;; 
 ;;; object :
-;;; 	The object that should be weak referenced.
+;;;     The object that should be weak referenced.
 ;;; 
 ;;; weak_pointer_location :
-;;; 	The memory address of a pointer. [inout]
+;;;     The memory address of a pointer. [inout]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2034,10 +2038,10 @@
 ;;; used with g_object_add_weak_pointer().
 ;;; 
 ;;; object :
-;;; 	The object that is weak referenced.
+;;;     The object that is weak referenced.
 ;;; 
 ;;; weak_pointer_location :
-;;; 	The memory address of a pointer. [inout]
+;;;     The memory address of a pointer. [inout]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2049,13 +2053,13 @@
 ;;; reference changes. See g_object_add_toggle_ref().
 ;;; 
 ;;; data :
-;;; 	Callback data passed to g_object_add_toggle_ref()
+;;;     Callback data passed to g_object_add_toggle_ref()
 ;;; 
 ;;; object :
-;;; 	The object on which g_object_add_toggle_ref() was called.
+;;;     The object on which g_object_add_toggle_ref() was called.
 ;;; 
 ;;; is_last_ref :
-;;; 	TRUE if the toggle reference is now the last reference to the object.
+;;;     TRUE if the toggle reference is now the last reference to the object.
 ;;;     FALSE if the toggle reference was the last reference and there are now
 ;;;     other references.
 ;;; ----------------------------------------------------------------------------
@@ -2094,14 +2098,14 @@
 ;;; ever use a toggle reference if there is important state in the proxy object.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; notify :
-;;; 	a function to call when this reference is the last reference to the
+;;;     a function to call when this reference is the last reference to the
 ;;;     object, or is no longer the last reference.
 ;;; 
 ;;; data :
-;;; 	data to pass to notify
+;;;     data to pass to notify
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -2122,14 +2126,14 @@
 ;;; count of the object is decreased by one.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; notify :
-;;; 	a function to call when this reference is the last reference to the
+;;;     a function to call when this reference is the last reference to the
 ;;;     object, or is no longer the last reference.
 ;;; 
 ;;; data :
-;;; 	data to pass to notify
+;;;     data to pass to notify
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -2156,7 +2160,7 @@
 ;;;    equivalent to g_signal_connect_data (..., NULL, 0)
 ;;; 
 ;;; object_signal, object-signal
-;;; 	 
+;;;      
 ;;;    equivalent to g_signal_connect_object (..., 0)
 ;;; 
 ;;; swapped_signal, swapped-signal
@@ -2195,18 +2199,18 @@
 ;;;  8                      NULL);
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; signal_spec :
-;;; 	the spec for the first signal
+;;;     the spec for the first signal
 ;;; 
 ;;; ... :
-;;; 	GCallback for the first signal, followed by data for the first signal,
+;;;     GCallback for the first signal, followed by data for the first signal,
 ;;;     followed optionally by more signal spec/callback/data triples, followed
 ;;;     by NULL
 ;;; 
 ;;; Returns :
-;;; 	object.
+;;;     object.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2222,13 +2226,13 @@
 ;;; "signal_name".
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; signal_spec :
-;;; 	the spec for the first signal
+;;;     the spec for the first signal
 ;;; 
 ;;; ... :
-;;; 	GCallback for the first signal, followed by data for the first signal,
+;;;     GCallback for the first signal, followed by data for the first signal,
 ;;;     followed optionally by more signal spec/callback/data triples, followed
 ;;;     by NULL
 ;;; ----------------------------------------------------------------------------
@@ -2241,13 +2245,13 @@
 ;;; Sets properties on an object.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; first_property_name :
-;;; 	name of the first property to set
+;;;     name of the first property to set
 ;;; 
 ;;; ... :
-;;; 	value for the first property, followed optionally by more name/value
+;;;     value for the first property, followed optionally by more name/value
 ;;;     pairs, followed by NULL
 ;;; ----------------------------------------------------------------------------
 
@@ -2285,13 +2289,13 @@
 ;;; 
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; first_property_name :
-;;; 	name of the first property to get
+;;;     name of the first property to get
 ;;; 
 ;;; ... :
-;;; 	return location for the first property, followed optionally by more
+;;;     return location for the first property, followed optionally by more
 ;;;     name/return location pairs, followed by NULL
 ;;; ----------------------------------------------------------------------------
 
@@ -2307,10 +2311,10 @@
 ;;; instead.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; property_name :
-;;; 	the name of a property installed on the class of object.
+;;;     the name of a property installed on the class of object.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-notify :void
@@ -2358,10 +2362,10 @@
 ;;;  1 g_object_notify_by_pspec (self, properties[PROP_FOO]);
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec of a property installed on the class of object.
+;;;     the GParamSpec of a property installed on the class of object.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2379,7 +2383,7 @@
 ;;; premature notification while the object is still being modified.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-freeze-notify :void
@@ -2397,7 +2401,7 @@
 ;;; It is an error to call this function when the freeze count is zero.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-thaw-notify :void
@@ -2412,13 +2416,13 @@
 ;;; g_object_set_data()).
 ;;; 
 ;;; object :
-;;; 	GObject containing the associations
+;;;     GObject containing the associations
 ;;; 
 ;;; key :
-;;; 	name of the key for that association
+;;;     name of the key for that association
 ;;; 
 ;;; Returns :
-;;; 	the data if found, or NULL if no such data exists.
+;;;     the data if found, or NULL if no such data exists.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-get-data :pointer
@@ -2439,13 +2443,13 @@
 ;;; will be destroyed.
 ;;; 
 ;;; object :
-;;; 	GObject containing the associations.
+;;;     GObject containing the associations.
 ;;; 
 ;;; key :
-;;; 	name of the key
+;;;     name of the key
 ;;; 
 ;;; data :
-;;; 	data to associate with that key
+;;;     data to associate with that key
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-set-data :void
@@ -2468,16 +2472,16 @@
 ;;; Note that the destroy callback is not called if data is NULL.
 ;;; 
 ;;; object :
-;;; 	GObject containing the associations
+;;;     GObject containing the associations
 ;;; 
 ;;; key :
-;;; 	name of the key
+;;;     name of the key
 ;;; 
 ;;; data :
-;;; 	data to associate with that key
+;;;     data to associate with that key
 ;;; 
 ;;; destroy :
-;;; 	function to call when the association is destroyed
+;;;     function to call when the association is destroyed
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-set-data-full :void
@@ -2495,13 +2499,13 @@
 ;;; invoking the association's destroy handler.
 ;;; 
 ;;; object :
-;;; 	GObject containing the associations
+;;;     GObject containing the associations
 ;;; 
 ;;; key :
-;;; 	name of the key
+;;;     name of the key
 ;;; 
 ;;; Returns :
-;;; 	the data if found, or NULL if no such data exists. [transfer full]
+;;;     the data if found, or NULL if no such data exists. [transfer full]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-steal-data :pointer
@@ -2516,13 +2520,13 @@
 ;;; This function gets back user data pointers stored via g_object_set_qdata().
 ;;; 
 ;;; object :
-;;; 	The GObject to get a stored user data pointer from
+;;;     The GObject to get a stored user data pointer from
 ;;; 
 ;;; quark :
-;;; 	A GQuark, naming the user data pointer
+;;;     A GQuark, naming the user data pointer
 ;;; 
 ;;; Returns :
-;;; 	The user data pointer set, or NULL. [transfer none]
+;;;     The user data pointer set, or NULL. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2538,13 +2542,13 @@
 ;;; removes the data stored.
 ;;; 
 ;;; object :
-;;; 	The GObject to set store a user data pointer
+;;;     The GObject to set store a user data pointer
 ;;; 
 ;;; quark :
-;;; 	A GQuark, naming the user data pointer
+;;;     A GQuark, naming the user data pointer
 ;;; 
 ;;; data :
-;;; 	An opaque user data pointer
+;;;     An opaque user data pointer
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2561,16 +2565,16 @@
 ;;; by a call to g_object_set_qdata() with the same quark.
 ;;; 
 ;;; object :
-;;; 	The GObject to set store a user data pointer
+;;;     The GObject to set store a user data pointer
 ;;; 
 ;;; quark :
-;;; 	A GQuark, naming the user data pointer
+;;;     A GQuark, naming the user data pointer
 ;;; 
 ;;; data :
-;;; 	An opaque user data pointer
+;;;     An opaque user data pointer
 ;;; 
 ;;; destroy :
-;;; 	Function to invoke with data as argument, when data needs to be freed
+;;;     Function to invoke with data as argument, when data needs to be freed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2613,13 +2617,13 @@
 ;;; g_object_set_qdata_full().
 ;;; 
 ;;; object :
-;;; 	The GObject to get a stored user data pointer from
+;;;     The GObject to get a stored user data pointer from
 ;;; 
 ;;; quark :
-;;; 	A GQuark, naming the user data pointer
+;;;     A GQuark, naming the user data pointer
 ;;; 
 ;;; Returns :
-;;; 	The user data pointer set, or NULL.
+;;;     The user data pointer set, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2632,13 +2636,13 @@
 ;;; Sets a property on an object.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; property_name :
-;;; 	the name of the property to set
+;;;     the name of the property to set
 ;;; 
 ;;; value :
-;;; 	the value
+;;;     the value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-set-property :void
@@ -2664,13 +2668,13 @@
 ;;; g_object_get() is much more convenient for C programming.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; property_name :
-;;; 	the name of the property to get
+;;;     the name of the property to get
 ;;; 
 ;;; value :
-;;; 	return location for the property value
+;;;     return location for the property value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-object-get-property :void
@@ -2691,17 +2695,17 @@
 ;;; which are not explicitly specified are set to their default values.
 ;;; 
 ;;; object_type :
-;;; 	the type id of the GObject subtype to instantiate
+;;;     the type id of the GObject subtype to instantiate
 ;;; 
 ;;; first_property_name :
-;;; 	the name of the first property
+;;;     the name of the first property
 ;;; 
 ;;; var_args :
-;;; 	the value of the first property, followed optionally by more name/value
+;;;     the value of the first property, followed optionally by more name/value
 ;;;     pairs, followed by NULL
 ;;; 
 ;;; Returns :
-;;; 	a new instance of object_type
+;;;     a new instance of object_type
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2714,13 +2718,13 @@
 ;;; Sets properties on an object.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; first_property_name :
-;;; 	name of the first property to set
+;;;     name of the first property to set
 ;;; 
 ;;; var_args :
-;;; 	value for the first property, followed optionally by more name/value
+;;;     value for the first property, followed optionally by more name/value
 ;;;     pairs, followed by NULL
 ;;; ----------------------------------------------------------------------------
 
@@ -2740,13 +2744,13 @@
 ;;; See g_object_get().
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; 
 ;;; first_property_name :
-;;; 	name of the first property to get
+;;;     name of the first property to get
 ;;; 
 ;;; var_args :
-;;; 	return location for the first property, followed optionally by more
+;;;     return location for the first property, followed optionally by more
 ;;;     name/return location pairs, followed by NULL
 ;;; ----------------------------------------------------------------------------
 
@@ -2765,10 +2769,10 @@
 ;;; closures that use this object as closure data.
 ;;; 
 ;;; object :
-;;; 	GObject restricting lifetime of closure
+;;;     GObject restricting lifetime of closure
 ;;; 
 ;;; closure :
-;;; 	GClosure to watch
+;;;     GClosure to watch
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2782,7 +2786,7 @@
 ;;; This functions should only be called from object system implementations.
 ;;; 
 ;;; object :
-;;; 	a GObject
+;;;     a GObject
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2794,13 +2798,13 @@
 ;;; properties in set_property() and get_property() implementations.
 ;;; 
 ;;; object :
-;;; 	the GObject on which set_property() or get_property() was called
+;;;     the GObject on which set_property() or get_property() was called
 ;;; 
 ;;; property_id :
-;;; 	the numeric id of the property
+;;;     the numeric id of the property
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec of the property
+;;;     the GParamSpec of the property
 ;;; ----------------------------------------------------------------------------
 
 

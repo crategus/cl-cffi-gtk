@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.param-spec.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GObject 2.30.2 Reference Manual. See http://www.gtk.org
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; GParamSpec
 ;;; 
 ;;; Metadata for parameter specifications
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     G_TYPE_IS_PARAM                     *Not implemented*
@@ -109,13 +107,13 @@
 ;;; Checks whether type "is a" G_TYPE_PARAM.
 ;;; 
 ;;; type :
-;;; 	a GType ID
+;;;     a GType ID
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PARAM_SPEC()
 ;;; 
-;;; #define G_PARAM_SPEC(pspec)	(G_TYPE_CHECK_INSTANCE_CAST ((pspec),
+;;; #define G_PARAM_SPEC(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec),
 ;;;                              G_TYPE_PARAM,
 ;;;                              GParamSpec))
 ;;; 
@@ -123,7 +121,7 @@
 ;;; GParamSpec object.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -136,7 +134,7 @@
 ;;; or derived.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -148,7 +146,7 @@
 ;;; Casts a derived GParamSpecClass structure into a GParamSpecClass structure.
 ;;; 
 ;;; pclass :
-;;; 	a valid GParamSpecClass
+;;;     a valid GParamSpecClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -161,7 +159,7 @@
 ;;; G_TYPE_PARAM or derived.
 ;;; 
 ;;; pclass :
-;;; 	a GParamSpecClass
+;;;     a GParamSpecClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -173,7 +171,7 @@
 ;;; Retrieves the GParamSpecClass of a GParamSpec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -184,7 +182,7 @@
 ;;; Retrieves the GType of this pspec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -196,7 +194,7 @@
 ;;; Retrieves the GType name of this pspec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; G_PARAM_SPEC_VALUE_TYPE()
 ;;; 
 ;;; #define G_PARAM_SPEC_VALUE_TYPE(pspec) (G_PARAM_SPEC (pspec)->value_type)
@@ -204,7 +202,7 @@
 ;;; Retrieves the GType to initialize a GValue for this parameter.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -230,41 +228,41 @@
 ;;; configured.
 ;;; 
 ;;; G_PARAM_READABLE
-;;; 	the parameter is readable
+;;;     the parameter is readable
 ;;; 
 ;;; G_PARAM_WRITABLE
-;;; 	the parameter is writable
+;;;     the parameter is writable
 ;;; 
 ;;; G_PARAM_CONSTRUCT
-;;; 	the parameter will be set upon object construction
+;;;     the parameter will be set upon object construction
 ;;; 
 ;;; G_PARAM_CONSTRUCT_ONLY
-;;; 	the parameter will only be set upon object construction
+;;;     the parameter will only be set upon object construction
 ;;; 
 ;;; G_PARAM_LAX_VALIDATION
-;;; 	upon parameter conversion (see g_param_value_convert()) strict
+;;;     upon parameter conversion (see g_param_value_convert()) strict
 ;;;     validation is not required
 ;;; 
 ;;; G_PARAM_STATIC_NAME
-;;; 	the string used as name when constructing the parameter is guaranteed
+;;;     the string used as name when constructing the parameter is guaranteed
 ;;;     to remain valid and unmodified for the lifetime of the parameter.
 ;;;     Since 2.8
 ;;; 
 ;;; G_PARAM_PRIVATE
-;;; 	internal
+;;;     internal
 ;;; 
 ;;; G_PARAM_STATIC_NICK
-;;; 	the string used as nick when constructing the parameter is guaranteed
+;;;     the string used as nick when constructing the parameter is guaranteed
 ;;;     to remain valid and unmmodified for the lifetime of the parameter.
 ;;;     Since 2.8
 ;;; 
 ;;; G_PARAM_STATIC_BLURB
-;;; 	the string used as blurb when constructing the parameter is guaranteed
+;;;     the string used as blurb when constructing the parameter is guaranteed
 ;;;     to remain valid and unmodified for the lifetime of the parameter.
 ;;;     Since 2.8
 ;;; 
 ;;; G_PARAM_DEPRECATED
-;;; 	the parameter is deprecated and will be removed in a future version.
+;;;     the parameter is deprecated and will be removed in a future version.
 ;;;     A warning will be generated if it is used while running with
 ;;;     G_ENABLE_DIAGNOSTIC=1. Since: 2.26
 ;;; ----------------------------------------------------------------------------
@@ -297,19 +295,19 @@
 ;;; used directly.
 ;;; 
 ;;; GTypeInstance g_type_instance;
-;;; 	private GTypeInstance portion
+;;;     private GTypeInstance portion
 ;;; 
 ;;; const gchar *name;
-;;; 	name of this parameter: always an interned string
+;;;     name of this parameter: always an interned string
 ;;; 
 ;;; GParamFlags flags;
-;;; 	GParamFlags flags for this parameter
+;;;     GParamFlags flags for this parameter
 ;;; 
 ;;; GType value_type;
-;;; 	the GValue type for this parameter
+;;;     the GValue type for this parameter
 ;;; 
 ;;; GType owner_type;
-;;; 	GType type that uses (introduces) this parameter
+;;;     GType type that uses (introduces) this parameter
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec
@@ -331,37 +329,37 @@
 ;;;   void       (*finalize)           (GParamSpec   *pspec);
 ;;;   /* GParam methods */
 ;;;   void       (*value_set_default)  (GParamSpec   *pspec,
-;;; 					GValue       *value);
+;;;                                     GValue       *value);
 ;;;   gboolean   (*value_validate)     (GParamSpec   *pspec,
-;;; 					GValue       *value);
+;;;                                     GValue       *value);
 ;;;   gint       (*values_cmp)         (GParamSpec   *pspec,
-;;; 					const GValue *value1,
-;;; 					const GValue *value2);
+;;;                                     const GValue *value1,
+;;;                                     const GValue *value2);
 ;;; };
 ;;; 
 ;;; The class structure for the GParamSpec type. Normally, GParamSpec classes
 ;;; are filled by g_param_type_register_static().
 ;;; 
 ;;; GTypeClass g_type_class;
-;;; 	the parent class
+;;;     the parent class
 ;;; 
 ;;; GType value_type;
-;;; 	the GValue type for this parameter
+;;;     the GValue type for this parameter
 ;;; 
 ;;; finalize ()
-;;; 	The instance finalization function (optional), should chain up to the
+;;;     The instance finalization function (optional), should chain up to the
 ;;;     finalize method of the parent class.
 ;;; 
 ;;; value_set_default ()
-;;; 	Resets a value to the default value for this type (recommended, the
+;;;     Resets a value to the default value for this type (recommended, the
 ;;;     default is g_value_reset()), see g_param_value_set_default().
 ;;; 
 ;;; value_validate ()
-;;; 	Ensures that the contents of value comply with the specifications set
+;;;     Ensures that the contents of value comply with the specifications set
 ;;;     out by this type (optional), see g_param_value_validate().
 ;;; 
 ;;; values_cmp ()
-;;; 	Compares value1 with value2 according to this type (recommended, the
+;;;     Compares value1 with value2 according to this type (recommended, the
 ;;;     default is memcmp()), see g_param_values_cmp().
 ;;; ----------------------------------------------------------------------------
 
@@ -420,10 +418,10 @@
 ;;; Increments the reference count of pspec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	the GParamSpec that was passed into this function
+;;;     the GParamSpec that was passed into this function
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -434,7 +432,7 @@
 ;;; Decrements the reference count of a pspec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_unref" g-param-spec-unref) :void
@@ -455,7 +453,7 @@
 ;;; has a reference count of 1 still, but is not flagged "floating" anymore).
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -466,10 +464,10 @@
 ;;; Convenience function to ref and sink a GParamSpec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	the GParamSpec that was passed into this function
+;;;     the GParamSpec that was passed into this function
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -487,10 +485,10 @@
 ;;; Sets value to its default value as specified in pspec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; value :
-;;; 	a GValue of correct type for pspec
+;;;     a GValue of correct type for pspec
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_value_set_default" g-param-value-set-default) :void
@@ -507,13 +505,13 @@
 ;;; Checks whether value contains the default value as specified in pspec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; value :
-;;; 	a GValue of correct type for pspec
+;;;     a GValue of correct type for pspec
 ;;; 
 ;;; Returns :
-;;; 	whether value contains the canonical default for this pspec
+;;;     whether value contains the canonical default for this pspec
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_value_defaults" g-param-value-defaults) :boolean
@@ -534,13 +532,13 @@
 ;;; the resulting value will fit into the range -42 .. +42.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; value :
-;;; 	a GValue of correct type for pspec
+;;;     a GValue of correct type for pspec
 ;;; 
 ;;; Returns :
-;;; 	whether modifying value was necessary to ensure validity
+;;;     whether modifying value was necessary to ensure validity
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_value_validate" g-param-value-validate) :boolean
@@ -566,19 +564,19 @@
 ;;; g_param_value_validate().
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; src_value :
-;;; 	souce GValue
+;;;     souce GValue
 ;;; 
 ;;; dest_value :
-;;; 	destination GValue of correct type for pspec
+;;;     destination GValue of correct type for pspec
 ;;; 
 ;;; strict_validation :
-;;; 	TRUE requires dest_value to conform to pspec without modifications
+;;;     TRUE requires dest_value to conform to pspec without modifications
 ;;; 
 ;;; Returns :
-;;; 	TRUE if transformation and validation were successful, FALSE otherwise
+;;;     TRUE if transformation and validation were successful, FALSE otherwise
 ;;;     and dest_value is left untouched.
 ;;; ----------------------------------------------------------------------------
 
@@ -594,16 +592,16 @@
 ;;; respectively.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; value1 :
-;;; 	a GValue of correct type for pspec
+;;;     a GValue of correct type for pspec
 ;;; 
 ;;; value2 :
-;;; 	a GValue of correct type for pspec
+;;;     a GValue of correct type for pspec
 ;;; 
 ;;; Returns :
-;;; 	-1, 0 or +1, for a less than, equal to or greater than result
+;;;     -1, 0 or +1, for a less than, equal to or greater than result
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -617,10 +615,10 @@
 ;;; allows for pointer-value comparisons.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	the name of pspec.
+;;;     the name of pspec.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_get_name" g-param-spec-get-name) :string
@@ -636,10 +634,10 @@
 ;;; Get the nickname of a GParamSpec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	the nickname of pspec.
+;;;     the nickname of pspec.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_get_nick" g-param-spec-get-nick) :string
@@ -655,10 +653,10 @@
 ;;; Get the short description of a GParamSpec.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	the short description of pspec.
+;;;     the short description of pspec.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_get_blurb" g-param-spec-get-blurb) :string
@@ -674,13 +672,13 @@
 ;;; Gets back user data pointers stored via g_param_spec_set_qdata().
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec
+;;;     a valid GParamSpec
 ;;; 
 ;;; quark :
-;;; 	a GQuark, naming the user data pointer
+;;;     a GQuark, naming the user data pointer
 ;;; 
 ;;; Returns :
-;;; 	the user data pointer set, or NULL. [transfer none]
+;;;     the user data pointer set, or NULL. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -697,13 +695,13 @@
 ;;; pointer set, using NULL as pointer essentially removes the data stored.
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec to set store a user data pointer
+;;;     the GParamSpec to set store a user data pointer
 ;;; 
 ;;; quark :
-;;; 	a GQuark, naming the user data pointer
+;;;     a GQuark, naming the user data pointer
 ;;; 
 ;;; data :
-;;; 	an opaque user data pointer
+;;;     an opaque user data pointer
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -720,16 +718,16 @@
 ;;; overwritten by a call to g_param_spec_set_qdata() with the same quark.
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec to set store a user data pointer
+;;;     the GParamSpec to set store a user data pointer
 ;;; 
 ;;; quark :
-;;; 	a GQuark, naming the user data pointer
+;;;     a GQuark, naming the user data pointer
 ;;; 
 ;;; data :
-;;; 	an opaque user data pointer
+;;;     an opaque user data pointer
 ;;; 
 ;;; destroy :
-;;; 	function to invoke with data as argument, when data needs to be freed
+;;;     function to invoke with data as argument, when data needs to be freed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -743,13 +741,13 @@
 ;;; data pointers with a destroy notifier.
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec to get a stored user data pointer from
+;;;     the GParamSpec to get a stored user data pointer from
 ;;; 
 ;;; quark :
-;;; 	a GQuark, naming the user data pointer
+;;;     a GQuark, naming the user data pointer
 ;;; 
 ;;; Returns :
-;;; 	the user data pointer set, or NULL. [transfer none]
+;;;     the user data pointer set, or NULL. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -765,10 +763,10 @@
 ;;; of the use of this capability.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	paramspec to which requests on this paramspec should be redirected, or
+;;;     paramspec to which requests on this paramspec should be redirected, or
 ;;;     NULL if none.
 ;;; 
 ;;; Since 2.4
@@ -801,22 +799,22 @@
 ;;; ideally be localized.
 ;;; 
 ;;; param_type :
-;;; 	the GType for the property; must be derived from G_TYPE_PARAM
+;;;     the GType for the property; must be derived from G_TYPE_PARAM
 ;;; 
 ;;; name :
-;;; 	the canonical name of the property
+;;;     the canonical name of the property
 ;;; 
 ;;; nick :
-;;; 	the nickname of the property
+;;;     the nickname of the property
 ;;; 
 ;;; blurb :
-;;; 	a short description of the property
+;;;     a short description of the property
 ;;; 
 ;;; flags :
-;;; 	a combination of GParamFlags
+;;;     a combination of GParamFlags
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated GParamSpec instance
+;;;     a newly allocated GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -824,20 +822,20 @@
 ;;; 
 ;;; struct GParamSpecTypeInfo {
 ;;;   /* type system portion */
-;;;   guint16         instance_size;                               /* obligatory */
-;;;   guint16         n_preallocs;                                 /* optional */
-;;;   void		(*instance_init) (GParamSpec   *pspec); /* optional */
+;;;   guint16     instance_size;                               /* obligatory */
+;;;   guint16     n_preallocs;                                 /* optional */
+;;;   void       (*instance_init)     (GParamSpec   *pspec);   /* optional */
 ;;; 
 ;;;   /* class portion */
-;;;   GType           value_type;				       /* obligatory */
-;;;   void          (*finalize)             (GParamSpec   *pspec); /* optional */
-;;;   void          (*value_set_default)    (GParamSpec   *pspec,  /* recommended */
-;;; 					 GValue       *value);
-;;;   gboolean      (*value_validate)       (GParamSpec   *pspec,  /* optional */
-;;; 					 GValue       *value);
-;;;   gint          (*values_cmp)           (GParamSpec   *pspec,  /* recommended */
-;;; 					 const GValue *value1,
-;;; 					 const GValue *value2);
+;;;   GType       value_type;                                  /* obligatory */
+;;;   void       (*finalize)          (GParamSpec   *pspec);   /* optional */
+;;;   void       (*value_set_default) (GParamSpec   *pspec,    /* recommended */
+;;;                                    GValue       *value);
+;;;   gboolean   (*value_validate)    (GParamSpec   *pspec,    /* optional */
+;;;                                    GValue       *value);
+;;;   gint       (*values_cmp)        (GParamSpec   *pspec,    /* recommended */
+;;;                                    const GValue *value1,
+;;;                                    const GValue *value2);
 ;;; };
 ;;; 
 ;;; This structure is used to provide the type system with the information
@@ -848,33 +846,33 @@
 ;;; invocation of g_param_type_register_static().
 ;;; 
 ;;; guint16 instance_size;
-;;; 	Size of the instance (object) structure.
+;;;     Size of the instance (object) structure.
 ;;; 
 ;;; guint16 n_preallocs;
-;;; 	Prior to GLib 2.10, it specified the number of pre-allocated (cached)
+;;;     Prior to GLib 2.10, it specified the number of pre-allocated (cached)
 ;;;     instances to reserve memory for (0 indicates no caching).
 ;;;     Since GLib 2.10, it is ignored, since instances are allocated with the
 ;;;     slice allocator now.
 ;;; 
 ;;; instance_init ()
-;;; 	Location of the instance initialization function (optional).
+;;;     Location of the instance initialization function (optional).
 ;;; 
 ;;; GType value_type;
-;;; 	The GType of values conforming to this GParamSpec
+;;;     The GType of values conforming to this GParamSpec
 ;;; 
 ;;; finalize ()
-;;; 	The instance finalization function (optional).
+;;;     The instance finalization function (optional).
 ;;; 
 ;;; value_set_default ()
-;;; 	Resets a value to the default value for pspec (recommended, the default
+;;;     Resets a value to the default value for pspec (recommended, the default
 ;;;     is g_value_reset()), see g_param_value_set_default().
 ;;; 
 ;;; value_validate ()
-;;; 	Ensures that the contents of value comply with the specifications set
+;;;     Ensures that the contents of value comply with the specifications set
 ;;;     out by pspec (optional), see g_param_value_validate().
 ;;; 
 ;;; values_cmp ()
-;;; 	Compares value1 with value2 according to pspec (recommended, the
+;;;     Compares value1 with value2 according to pspec (recommended, the
 ;;;     default is memcmp()), see g_param_values_cmp().
 ;;; ----------------------------------------------------------------------------
 
@@ -890,13 +888,13 @@
 ;;; instances.
 ;;; 
 ;;; name :
-;;; 	0-terminated string used as the name of the new GParamSpec type.
+;;;     0-terminated string used as the name of the new GParamSpec type.
 ;;; 
 ;;; pspec_info :
-;;; 	The GParamSpecTypeInfo for this GParamSpec type.
+;;;     The GParamSpecTypeInfo for this GParamSpec type.
 ;;; 
 ;;; Returns :
-;;; 	The new type identifier.
+;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -923,10 +921,10 @@
 ;;; always set type_prefixing to FALSE.
 ;;; 
 ;;; type_prefixing :
-;;; 	Whether the pool will support type-prefixed property names.
+;;;     Whether the pool will support type-prefixed property names.
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated GParamSpecPool. [transfer none]
+;;;     a newly allocated GParamSpecPool. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -939,13 +937,13 @@
 ;;; Inserts a GParamSpec in the pool.
 ;;; 
 ;;; pool :
-;;; 	a GParamSpecPool.
+;;;     a GParamSpecPool.
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec to insert
+;;;     the GParamSpec to insert
 ;;; 
 ;;; owner_type :
-;;; 	a GType identifying the owner of pspec
+;;;     a GType identifying the owner of pspec
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -956,10 +954,10 @@
 ;;; Removes a GParamSpec from the pool.
 ;;; 
 ;;; pool :
-;;; 	a GParamSpecPool
+;;;     a GParamSpecPool
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec to remove
+;;;     the GParamSpec to remove
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -973,20 +971,20 @@
 ;;; Looks up a GParamSpec in the pool.
 ;;; 
 ;;; pool :
-;;; 	a GParamSpecPool
+;;;     a GParamSpecPool
 ;;; 
 ;;; param_name :
-;;; 	the name to look for
+;;;     the name to look for
 ;;; 
 ;;; owner_type :
-;;; 	the owner to look for
+;;;     the owner to look for
 ;;; 
 ;;; walk_ancestors :
-;;; 	If TRUE, also try to find a GParamSpec with param_name owned by an
+;;;     If TRUE, also try to find a GParamSpec with param_name owned by an
 ;;;     ancestor of owner_type.
 ;;; 
 ;;; Returns :
-;;; 	The found GParamSpec, or NULL if no matching GParamSpec was found.
+;;;     The found GParamSpec, or NULL if no matching GParamSpec was found.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -999,16 +997,16 @@
 ;;; Gets an array of all GParamSpecs owned by owner_type in the pool.
 ;;; 
 ;;; pool :
-;;; 	a GParamSpecPool
+;;;     a GParamSpecPool
 ;;; 
 ;;; owner_type :
-;;; 	the owner to look for
+;;;     the owner to look for
 ;;; 
 ;;; n_pspecs_p :
-;;; 	return location for the length of the returned array.
+;;;     return location for the length of the returned array.
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated array containing pointers to all GParamSpecs owned
+;;;     a newly allocated array containing pointers to all GParamSpecs owned
 ;;;     by owner_type in the pool.
 ;;; ----------------------------------------------------------------------------
 
@@ -1021,13 +1019,13 @@
 ;;; Gets an GList of all GParamSpecs owned by owner_type in the pool.
 ;;; 
 ;;; pool :
-;;; 	a GParamSpecPool
+;;;     a GParamSpecPool
 ;;; 
 ;;; owner_type :
-;;; 	the owner to look for
+;;;     the owner to look for
 ;;; 
 ;;; Returns :
-;;; 	a GList of all GParamSpecs owned by owner_type in the poolGParamSpecs.
+;;;     a GList of all GParamSpecs owned by owner_type in the poolGParamSpecs.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gobject.paramspec.lisp -------------------------------------

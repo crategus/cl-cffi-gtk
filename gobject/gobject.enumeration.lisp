@@ -574,8 +574,8 @@
 ;; TODO: Should we implement g-enum-get-value to be more complete?
 
 (defun parse-g-value-enum (gvalue)
-  (let* ((g-type (g-value-type gvalue))
-         (type-name (gtype-name g-type))
+  (let* ((type (g-value-type gvalue))
+         (type-name (gtype-name type))
          (enum-type (registered-enum-type type-name)))
     (unless enum-type
       (error "Enum ~A is not registered" type-name))
@@ -584,8 +584,8 @@
 ;; This function is called from set-g-value to set a GEnum Value.
 
 (defun set-gvalue-enum (gvalue value)
-  (let* ((g-type (g-value-type gvalue))
-         (type-name (gtype-name g-type))
+  (let* ((type (g-value-type gvalue))
+         (type-name (gtype-name type))
          (enum-type (registered-enum-type type-name)))
     (unless enum-type
       (error "Enum ~A is not registered" type-name))
@@ -669,20 +669,20 @@
 ;;; This function is meant to be called from the complete_type_info() function
 ;;; of a GTypePlugin implementation, as in the following example:
 ;;; 
-;;;  1 static void
-;;;  2 my_enum_complete_type_info (GTypePlugin     *plugin,
-;;;  3                             GType            g_type,
-;;;  4                             GTypeInfo       *info,
-;;;  5                             GTypeValueTable *value_table)
-;;;  6 {
-;;;  7   static const GEnumValue values[] = {
-;;;  8     { MY_ENUM_FOO, "MY_ENUM_FOO", "foo" },
-;;;  9     { MY_ENUM_BAR, "MY_ENUM_BAR", "bar" },
-;;; 10     { 0, NULL, NULL }
-;;; 11   };
-;;; 12 
-;;; 13   g_enum_complete_type_info (type, info, values);
-;;; 14 }
+;;;  static void
+;;;  my_enum_complete_type_info (GTypePlugin     *plugin,
+;;;                              GType            g_type,
+;;;                              GTypeInfo       *info,
+;;;                              GTypeValueTable *value_table)
+;;;  {
+;;;    static const GEnumValue values[] = {
+;;;      { MY_ENUM_FOO, "MY_ENUM_FOO", "foo" },
+;;;      { MY_ENUM_BAR, "MY_ENUM_BAR", "bar" },
+;;;      { 0, NULL, NULL }
+;;;    };
+;;;  
+;;;    g_enum_complete_type_info (type, info, values);
+;;;  }
 ;;; 
 ;;; g_enum_type :
 ;;; 	the type identifier of the type being completed
@@ -718,8 +718,8 @@
 ;; TODO: Should we implement g-flags-get-first-value to be more complete?
 
 (defun parse-g-value-flags (gvalue)
-  (let* ((g-type (g-value-type gvalue))
-         (type-name (gtype-name g-type))
+  (let* ((type (g-value-type gvalue))
+         (type-name (gtype-name type))
          (flags-type (registered-flags-type type-name)))
     (unless flags-type
       (error "Flags ~A is not registered" type-name))
@@ -728,8 +728,8 @@
 ;; This function is called from set-g-value to set a GFlag value.
 
 (defun set-gvalue-flags (gvalue value)
-  (let* ((g-type (g-value-type gvalue))
-         (type-name (gtype-name g-type))
+  (let* ((type (g-value-type gvalue))
+         (type-name (gtype-name type))
          (flags-type (registered-flags-type type-name)))
     (unless flags-type
       (error "Flags ~A is not registered" type-name))

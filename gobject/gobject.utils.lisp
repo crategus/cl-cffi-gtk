@@ -85,10 +85,10 @@
     (setf (gethash (gtype-name (gtype type)) *generated-types*) t))
   (let* ((*lisp-name-package* (or lisp-name-package
                                   *lisp-name-package* *package*))
-         (g-type (gtype type))
-         (g-name (gtype-name g-type))
+         (type (gtype type))
+         (g-name (gtype-name type))
          (name (g-name->name g-name))
-         (items (get-enum-items g-type))
+         (items (get-enum-items type))
          (probable-type-initializer (probable-type-init-name g-name)))
     `(define-g-enum ,g-name ,name
          (:export t
@@ -118,10 +118,10 @@
     (setf (gethash (gtype-name (gtype type)) *generated-types*) t))
   (let* ((*lisp-name-package* (or lisp-name-package
                                   *lisp-name-package* *package*))
-         (g-type (gtype type))
-         (g-name (gtype-name g-type))
+         (type (gtype type))
+         (g-name (gtype-name type))
          (name (g-name->name g-name))
-         (items (get-flags-items g-type))
+         (items (get-flags-items type))
          (probable-type-initializer (probable-type-init-name g-name)))
     `(define-g-flags ,g-name ,name
          (:export t
@@ -212,19 +212,18 @@
                                     :test 'string=)))))))
 
 ;; Returns a list of properties of GObject interface g-type. Each property is
-;; described by an object of type g-class-property-definition. g-type is an
+;; described by an object of type g-class-property-definition. type is an
 ;; integer or a string specifying the GType
 
-(defun interface-properties (g-type)
-  (assert (g-type-is-a g-type +g-type-interface+))
-  (with-unwind (g-iface (g-type-default-interface-ref g-type)
+(defun interface-properties (type)
+  (assert (g-type-is-a type +g-type-interface+))
+  (with-unwind (g-iface (g-type-default-interface-ref type)
                         g-type-default-interface-unref)
-    (with-foreign-object (n-properties :uint)
-      (with-unwind (params (g-object-interface-list-properties
-                            g-iface n-properties)
+    (with-foreign-object (n-props :uint)
+      (with-unwind (params (g-object-interface-list-properties g-iface n-props)
                            g-free)
         (loop
-           for i from 0 below (mem-ref n-properties :uint)
+           for i from 0 below (mem-ref n-props :uint)
            for param = (mem-aref params :pointer i)
            collect (parse-g-param-spec param))))))
 
@@ -245,16 +244,16 @@
   (let* ((*lisp-name-package* (or lisp-name-package
                                   *lisp-name-package*
                                   *package*))
-         (g-type (gtype type))
-         (g-name (gtype-name g-type))
+         (type (gtype type))
+         (g-name (gtype-name type))
          (name (g-name->name g-name))
-         (superclass-g-type (g-type-parent g-type))
+         (superclass-g-type (g-type-parent type))
          (superclass-name (g-name->name (gtype-name superclass-g-type)))
-         (interfaces (g-type-interfaces g-type))
-         (properties (class-properties g-type))
+         (interfaces (g-type-interfaces type))
+         (properties (class-properties type))
          (type-init-name (probable-type-init-name g-name))
          (own-properties
-          (sort (copy-list (remove g-type
+          (sort (copy-list (remove type
                                    properties
                                    :key #'g-class-property-definition-owner-type
                                    :test-not #'g-type=))
@@ -281,7 +280,7 @@
                                :key 'car :test 'string=)))))))
 
 ;; Returns a list of properties of GObject class g-type. Each property
-;; is described by an object of type g-class-property-definition. g-type is an
+;; is described by an object of type g-class-property-definition. type is an
 ;; integer or a string specifying the GType
 
 (defun class-properties (type)
