@@ -35,7 +35,6 @@
            #:check-version
            
            #:gtk-main
-           #:object-destroy
            #:define-child-property
            #:container-class-child-properties
            #:generate-child-properties
