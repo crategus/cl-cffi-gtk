@@ -26,48 +26,40 @@
 (asdf:operate 'asdf:load-op :cl-gtk-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :common-lisp)
-  (:export 
-    #:example-1 #:example-1-1
-    #:example-2
-    #:example-3
-    #:example-4
-    #:example-5 #:example-5-1
-    ))
+  (:use :gtk :gdk :gobject :common-lisp))
 
 (in-package :gtk-tutorial)
 
 ;;; Chapter 3. Getting started
 
-(defun example-1 ()
+(defun example-simple-window ()
   (within-main-loop
     (let ((window (gtk-window-new :toplevel)))
       (gtk-widget-show window))))
 
-(defun example-1-1 ()
+(defun example-simple-window-2 ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
-                                 :title "Getting started"
                                  :type :toplevel
-                                 :window-position :center
-                                 :default-width 400
-                                 :default-height 300)))
+                                 :title "Getting started"
+                                 :default-width 250)))
       (gtk-widget-show window))))
 
 ;;; Hello World in GTK
 
-(defun example-2 ()
+(defun example-hello-world ()
   (within-main-loop
-    (let (;; Create a new window.
-          (window (make-instance 'gtk-window
-                                 :title "Hello World in GTK"
+    (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :window-position :center
-                                 :default-width  400
-                                 :default-height 300
-                                 :border-width    10))
-          ;; Create a new button with a text.
+                                 :title "Hello World"
+                                 :default-width 250
+                                 :border-width 10))
           (button (make-instance 'gtk-button :label "Hello World")))
+      (g-signal-connect button "clicked"
+                        (lambda (button)
+                          (declare (ignore button))
+                          (format t "Hello world.~%")
+                          (gtk-widget-destroy window)))
       (g-signal-connect window "delete-event"
                         (lambda (window event)
                           (declare (ignore window event))
@@ -77,13 +69,7 @@
                         (lambda (window event)
                           (declare (ignore window event))
                           (gtk-main-quit)))
-      (g-signal-connect button "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (format t "Hello world.~%")
-                          (gtk-widget-destroy window)))
       (gtk-container-add window button)
-      (gtk-widget-show button)
       (gtk-widget-show window))))
 
 ;;; An Upgraded Hello World
