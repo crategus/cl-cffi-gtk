@@ -42,11 +42,10 @@
              nil)
     (return-from-callback () nil)))
 
-(defun call-from-gtk-main-loop (function &key
-                                         (priority +g-priority-default-idle+))
+(defun call-from-gtk-main-loop (func &key (priority +g-priority-default-idle+))
   (g-idle-add-full priority
                    (callback call-from-main-loop-callback)
-                   (allocate-stable-pointer function)
+                   (allocate-stable-pointer func)
                    (callback stable-pointer-free-destroy-notify-cb))
   (ensure-gtk-main))
 
@@ -58,11 +57,11 @@
       (progn (funcall (get-stable-pointer-value data)))
     (return-from-callback () nil)))
 
-(defun gtk-main-add-timeout (milliseconds function &key
-                                          (priority +g-priority-default+))
-  (g-timeout-add-full priority milliseconds
+(defun gtk-main-add-timeout (millisec func &key (priority +g-priority-default+))
+  (g-timeout-add-full priority
+                      millisec
                       (callback call-timeout-from-main-loop-callback)
-                      (allocate-stable-pointer function)
+                      (allocate-stable-pointer func)
                       (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'gtk-main-add-timeout)
