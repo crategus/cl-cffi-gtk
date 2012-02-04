@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,7 +31,7 @@
 ;;; GtkProgressBar
 ;;; 
 ;;; A widget which indicates progress visually
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkProgressBar
@@ -279,10 +279,14 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_progress_get_type")
-  ((activity-mode gtk-progress-activity-mode "activity-mode" "gboolean" t t)
-   (show-text gtk-progress-show-text "show-text" "gboolean" t t)
-   (text-xalign gtk-progress-text-xalign "text-xalign" "gfloat" t t)
-   (text-yalign gtk-progress-text-yalign "text-yalign" "gfloat" t t)))
+  ((activity-mode gtk-progress-activity-mode
+    "activity-mode" "gboolean" t t)
+   (show-text gtk-progress-show-text
+    "show-text" "gboolean" t t)
+   (text-xalign gtk-progress-text-xalign
+    "text-xalign" "gfloat" t t)
+   (text-yalign gtk-progress-text-yalign
+    "text-yalign" "gfloat" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkProgressBar
@@ -296,18 +300,25 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_progress_bar_get_type")
   ((activity-blocks gtk-progress-bar-activity-blocks
-         "activity-blocks" "guint" t t)
-   (activity-step gtk-progress-bar-activity-step "activity-step" "guint" t t)
-   (adjustment gtk-progress-bar-adjustment "adjustment" "GtkAdjustment" t t)
-   (bar-style gtk-progress-bar-bar-style "bar-style" "GtkProgressBarStyle" t t)
+    "activity-blocks" "guint" t t)
+   (activity-step gtk-progress-bar-activity-step
+    "activity-step" "guint" t t)
+   (adjustment gtk-progress-bar-adjustment
+    "adjustment" "GtkAdjustment" t t)
+   (bar-style gtk-progress-bar-bar-style
+    "bar-style" "GtkProgressBarStyle" t t)
    (discrete-blocks gtk-progress-bar-discrete-blocks
-         "discrete-blocks" "guint" t t)
-   (ellipsize gtk-progress-bar-ellipsize "ellipsize" "PangoEllipsizeMode" t t)
-   (fraction gtk-progress-bar-fraction "fraction" "gdouble" t t)
+    "discrete-blocks" "guint" t t)
+   (ellipsize gtk-progress-bar-ellipsize
+    "ellipsize" "PangoEllipsizeMode" t t)
+   (fraction gtk-progress-bar-fraction
+    "fraction" "gdouble" t t)
    (orientation gtk-progress-bar-orientation
-         "orientation" "GtkProgressBarOrientation" t t)
-   (pulse-step gtk-progress-bar-pulse-step "pulse-step" "gdouble" t t)
-   (text progress-bar-text "text" "gchararray" t t)))
+    "orientation" "GtkProgressBarOrientation" t t)
+   (pulse-step gtk-progress-bar-pulse-step
+    "pulse-step" "gdouble" t t)
+   (text gtk-progress-bar-text
+    "text" "gchararray" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_new ()
@@ -317,7 +328,7 @@
 ;;; Creates a new GtkProgressBar.
 ;;; 
 ;;; Returns :
-;;; 	a GtkProgressBar.
+;;;     a GtkProgressBar.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -332,7 +343,7 @@
 ;;; gtk_progress_bar_set_pulse_step()).
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_progress_bar_pulse" gtk-progress-bar-pulse) :void
@@ -349,10 +360,10 @@
 ;;; fraction should be between 0.0 and 1.0, inclusive.
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; fraction :
-;;; 	fraction of the task that's been completed
+;;;     fraction of the task that's been completed
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-progress-bar-set-fraction (pbar fraction)
@@ -368,10 +379,10 @@
 ;;; Returns the current fraction of the task that's been completed.
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; Returns :
-;;; 	a fraction from 0.0 to 1.0
+;;;     a fraction from 0.0 to 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-progress-bar-get-fraction (pbar)
@@ -388,10 +399,10 @@
 ;;; progress bars grow in the opposite direction.
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; inverted :
-;;; 	TRUE to invert the progress bar
+;;;     TRUE to invert the progress bar
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -402,10 +413,10 @@
 ;;; Gets the value set by gtk_progress_bar_set_inverted()
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the progress bar is inverted
+;;;     TRUE if the progress bar is inverted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -423,10 +434,10 @@
 ;;; to the empty string (not NULL).
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; show_text :
-;;; 	whether to show superimposed text
+;;;     whether to show superimposed text
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -440,10 +451,10 @@
 ;;; See gtk_progress_bar_set_show_text().
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; Returns :
-;;; 	TRUE if text is shown in the progress bar
+;;;     TRUE if text is shown in the progress bar
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -464,10 +475,10 @@
 ;;; containing text, as long as "show-text" is TRUE.
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; text :
-;;; 	a UTF-8 string, or NULL. [allow-none]
+;;;     a UTF-8 string, or NULL. [allow-none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -480,10 +491,10 @@
 ;;; it, so will become invalid if you change the text in the progress bar.
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; Returns :
-;;; 	text, or NULL; this string is owned by the widget and should not be
+;;;     text, or NULL; this string is owned by the widget and should not be
 ;;;     modified or freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -497,10 +508,10 @@
 ;;; is not enough space to render the entire string.
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; mode :
-;;; 	a PangoEllipsizeMode
+;;;     a PangoEllipsizeMode
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -514,10 +525,10 @@
 ;;; See gtk_progress_bar_set_ellipsize().
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; Returns :
-;;; 	PangoEllipsizeMode
+;;;     PangoEllipsizeMode
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -532,10 +543,10 @@
 ;;; for each call to gtk_progress_bar_pulse().
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; fraction :
-;;; 	fraction between 0.0 and 1.0
+;;;     fraction between 0.0 and 1.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -546,10 +557,10 @@
 ;;; Retrieves the pulse step set with gtk_progress_bar_set_pulse_step()
 ;;; 
 ;;; pbar :
-;;; 	a GtkProgressBar
+;;;     a GtkProgressBar
 ;;; 
 ;;; Returns :
-;;; 	a fraction from 0.0 to 1.0
+;;;     a fraction from 0.0 to 1.0
 ;;; ----------------------------------------------------------------------------
 
 
