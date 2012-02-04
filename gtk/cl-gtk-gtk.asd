@@ -47,6 +47,7 @@
                (:file "gtk.child-properties")
                
                ;; Gtk+ Core
+               (:file "gtk.version")          ; Version Information
                (:file "gtk.enumerations")     ; Standard Enumerations
                (:file "gtk.main-loop")        ; Main event loop, and events
                (:file "gtk.accel-group")      ; Accelerator Groups
@@ -194,7 +195,14 @@
                (:file "gtk.tooltip")         ; Add tips to your widgets
                (:file "gtk.arrow")           ; Displays an arrow
                
+               ;; More definitions. The documentatin is not completed.
+               (:file "gtk.generated-classes")
+               (:file "gtk.generated-child-properties")
+               (:file "gtk.selectors")
+               (:file "gtk.timer")
+               
                ;; Lisp
+               (:file "gtk.high-level")
                (:file "gtk.init")
                )
   :depends-on (:cl-gtk-glib
