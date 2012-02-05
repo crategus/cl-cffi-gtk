@@ -27,20 +27,7 @@
 
 (in-package :gtk)
 
-(define-child-property "GtkAssistant" assistant-child-page-type "page-type"
-                       "GtkAssistantPageType" t t t)
 
-(define-child-property "GtkAssistant" assistant-child-title "title"
-                       "gchararray" t t t)
-
-(define-child-property "GtkAssistant" assistant-child-header-image
-                       "header-image" "GdkPixbuf" t t t)
-
-(define-child-property "GtkAssistant" assistant-child-sidebar-image
-                       "sidebar-image" "GdkPixbuf" t t t)
-
-(define-child-property "GtkAssistant" assistant-child-complete "complete"
-                       "gboolean" t t t)
 
 (define-child-property "GtkMenu" menu-child-left-attach "left-attach" "gint" t
                        t t)
