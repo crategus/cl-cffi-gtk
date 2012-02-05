@@ -28,13 +28,7 @@
 (asdf:operate 'asdf:load-op :cl-gtk-gtk)
 
 (defpackage :gtk-demo
-  (:use :cl :gtk :gdk :gobject :iter)
-  (:export
-    #:demo-gdk
-    #:demo-expose-event
-    #:demo-entry
-    #:demo-table-packing
-    ))
+  (:use :cl :gtk :gdk :gobject :iter))
 
 (in-package :gtk-demo)
 
@@ -596,6 +590,94 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;; Advanced demo: show s-expression tree structure
+
+(defun make-tree-from-sexp (l)
+  (setf l (if (listp l) l (list l)))
+  (let ((node (make-tree-node :item
+                              (make-tvi :title
+                                        (format nil "~S" (first l))
+                                        :value
+                                        (format nil "~S"
+                                                (class-of (first l)))))))
+    (iter (for child in (rest l))
+          (tree-node-insert-at node
+                               (make-tree-from-sexp child)
+                               (length (tree-node-children node))))
+    node))
+
+(defun demo-treeview-tree ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Treeview (tree)"))
+           (model (make-instance 'tree-lisp-store))
+           (scroll (make-instance 'gtk-scrolled-window
+                                  :hscrollbar-policy :automatic
+                                  :vscrollbar-policy :automatic))
+           (tree-view (make-instance 'gtk-tree-view
+                                     :headers-visible t
+                                     :width-request 300
+                                     :height-request 400
+                                     :rules-hint t))
+           (h-box (make-instance 'gtk-h-box))
+           (v-box (make-instance 'gtk-v-box))
+           (entry (make-instance 'gtk-entry))
+           (button (make-instance 'gtk-button :label "Display")))
+      (tree-lisp-store-add-column model "gchararray" #'tvi-title)
+      (tree-lisp-store-add-column model "gchararray" #'tvi-value)
+      (tree-node-insert-at
+        (tree-lisp-store-root model)
+        (make-tree-from-sexp
+          '(lambda (object &rest initargs &key &allow-other-keys)
+              (* 1 2)
+              (- 3 4)))
+        0)
+      (setf (gtk-tree-view-model tree-view) model
+            (gtk-tree-view-tooltip-column tree-view) 0)
+      (g-signal-connect tree-view "row-activated"
+         (lambda (tv path column)
+           (declare (ignore tv column))
+           (show-message (format nil "You clicked on row ~A"
+                                 (gtk-tree-path-get-indices path)))))
+      (g-signal-connect button "clicked"
+         (lambda (b)
+           (declare (ignore b))
+           (let ((object (read-from-string (gtk-entry-text entry))))
+             (tree-node-remove-at (tree-lisp-store-root model) 0)
+             (tree-node-insert-at (tree-lisp-store-root model)
+                                  (make-tree-from-sexp object)
+                                  0))))
+      (gtk-container-add window v-box)
+      (gtk-box-pack-start v-box h-box :expand nil)
+      (gtk-box-pack-start h-box entry)
+      (gtk-box-pack-start h-box button :expand nil)
+      (gtk-box-pack-start v-box scroll)
+      (gtk-container-add scroll tree-view)
+      (let ((column (make-instance 'gtk-tree-view-column
+                                   :title "Value"
+                                   :sort-column-id 0))
+            (renderer (make-instance 'gtk-cell-renderer-text :text "A text")))
+        (gtk-tree-view-column-pack-start column renderer)
+        (gtk-tree-view-column-add-attribute column renderer "text" 0)
+        (gtk-tree-view-append-column tree-view column)
+        (print (gtk-tree-view-column-tree-view column))
+        (print (gtk-tree-view-column-cell-renderers column)))
+      (let ((column (make-instance 'gtk-tree-view-column :title "Type"))
+            (renderer (make-instance 'gtk-cell-renderer-text :text "A text")))
+        (gtk-tree-view-column-pack-start column renderer)
+        (gtk-tree-view-column-add-attribute column renderer "text" 1)
+        (gtk-tree-view-append-column tree-view column)
+        (print (gtk-tree-view-column-tree-view column))
+        (print (gtk-tree-view-column-cell-renderers column)))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (leave-gtk-main)))
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
 ;; Demo of GtkComboBox
 
 (defun demo-combo-box ()
@@ -1125,5 +1207,442 @@
                             (gtk-text-buffer-insert (gtk-text-view-buffer tv)
                                                     (gtk-entry-text entry))))
               (gtk-widget-show w)))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkAssistant
+
+(defun demo-assistant ()
+  (within-main-loop
+    (let ((output *standard-output*)
+          (d (make-instance 'gtk-assistant :title "Username wizard"))
+          (p-1 (make-instance 'gtk-h-box))
+          (entry (make-instance 'gtk-entry))
+          (p-2 (make-instance 'gtk-label
+                              :label "Click Apply to close this wizard")))
+      (gtk-box-pack-start p-1 (make-instance 'gtk-label
+                                             :label "Enter your name:")
+                          :expand nil)
+      (gtk-box-pack-start p-1 entry)
+      (gtk-assistant-append-page d p-1)
+      (gtk-assistant-append-page d p-2)
+      (setf (gtk-assistant-child-title d p-1) "Username wizard"
+            (gtk-assistant-child-title d p-2) "Username wizard"
+            (gtk-assistant-child-complete d p-1) nil
+            (gtk-assistant-child-complete d p-2) t
+            (gtk-assistant-child-page-type d p-1) :intro
+            (gtk-assistant-child-page-type d p-2) :confirm)
+      (gtk-assistant-set-forward-page-func d
+           (lambda (i)
+             (format output "(assistant-forward-page-function ~A)~%" i)
+             (ecase i
+               (0 1)
+               (1 -1))))
+      (g-signal-connect entry "notify::text"
+         (lambda (object pspec)
+           (declare (ignore object pspec))
+           (setf (gtk-assistant-child-complete d p-1)
+                 (plusp (length (gtk-entry-text entry))))))
+      (let ((w (make-instance 'gtk-label :label "A label in action area")))
+        (gtk-widget-show w)
+        (gtk-assistant-add-action-widget d w))
+      (g-signal-connect d "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (leave-gtk-main)))
+      (g-signal-connect d "cancel"
+                        (lambda (assistant)
+                          (declare (ignore assistant))
+                          (gtk-widget-destroy d)
+                          (show-message "Canceled")))
+      (g-signal-connect d "close"
+                        (lambda (assistant)
+                          (declare (ignore assistant))
+                          (gtk-widget-destroy d)
+                          (show-message (format nil "Thank you, ~A!"
+                                                (gtk-entry-text entry)))))
+      (g-signal-connect d "prepare"
+         (lambda (assistant page-widget)
+           (declare (ignore assistant page-widget))
+           (format output
+                   "Assistant ~A has ~A pages and is on ~Ath page~%"
+                   d
+                   (gtk-assistant-n-pages d)
+                   (gtk-assistant-current-page d))))
+      (gtk-widget-show d))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo of GtkBuilder
+
+(defun demo-builder ()
+  (within-main-loop
+    (let ((builder (make-instance 'gtk-builder)))
+      (gtk-builder-add-from-file builder "demo-builder.ui")
+      (let ((text-view (gtk-builder-get-object builder "textview1"))
+            (c 0))
+        (gtk-builder-connect-signals-simple builder
+         `(("toolbutton1_clicked_cb"
+            ,(lambda (b)
+               (declare (ignore b))
+               (setf (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+                     (format nil
+                             "Clicked ~A times~%"
+                             (incf c)))
+               (gtk-statusbar-pop (gtk-builder-get-object builder "statusbar1")
+                                  "times")
+               (gtk-statusbar-push (gtk-builder-get-object builder "statusbar1")
+                                   "times"
+                                   (format nil "~A times" c))))
+           ("quit_cb" ,(lambda (&rest args)
+                         (print args)
+                         (gtk-widget-destroy
+                           (gtk-builder-get-object builder "window1"))))
+           ("about_cb" ,(lambda (&rest args)
+                          (print args)
+                          (let ((d (make-instance 'gtk-about-dialog
+                                                  :program-name
+                                                  "GtkBuilder text"
+                                                  :version "0.00001"
+                                                  :authors '("Dmitry Kalyanov")
+                                                  :logo-icon-name "gtk-apply")))
+                            (gtk-dialog-run d)
+                            (gtk-widget-destroy d)))))))
+      (g-signal-connect (gtk-builder-get-object builder "window1") "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (gtk-statusbar-push (gtk-builder-get-object builder "statusbar1")
+                          "times" "0 times")
+      (gtk-widget-show (gtk-builder-get-object builder "window1")))))
+
+;;; ----------------------------------------------------------------------------
+
+;; More advanced example: text editor with ability to evaluate lisp expressions
+
+(defun read-text-file (file-name)
+  (with-output-to-string (str)
+    (with-open-file (file file-name)
+      (loop
+         for line = (read-line file nil nil)
+         while line
+         do (fresh-line str)
+         do (write-string line str)))))
+
+(defun demo-text-editor ()
+  (within-main-loop
+    (let* ((builder (let ((builder (make-instance 'gtk-builder)))
+                      (gtk-builder-add-from-file builder "demo-text-editor.ui")
+                      builder))
+           (window (gtk-builder-get-object builder "window1"))
+           (text-view (gtk-builder-get-object builder "textview1"))
+           (statusbar (gtk-builder-get-object builder "statusbar1"))
+           (file-name nil)
+           (modified-p t))
+      (gtk-statusbar-push statusbar "filename" "Untitled *")
+      (labels ((set-properties ()
+                 (gtk-statusbar-pop statusbar "filename")
+                 (gtk-statusbar-push statusbar
+                                 "filename"
+                                 (format nil "~A~:[~; *~]"
+                                         (or file-name "Untitled")
+                                         modified-p)))
+               (new (&rest args)
+                 (declare (ignore args))
+                 (setf file-name nil
+                       modified-p t
+                       (gtk-text-buffer-text (gtk-text-view-buffer text-view))
+                       "")
+                 (set-properties))
+               (cb-open (&rest args)
+                 (declare (ignore args))
+                 (let ((d (make-instance 'gtk-file-chooser-dialog
+                                         :action :open
+                                         :title "Open file")))
+                   (when file-name
+                     (setf (gtk-file-chooser-filename d) file-name))
+                   (gtk-dialog-add-button d "gtk-open" :accept)
+                   (gtk-dialog-add-button d "gtk-cancel" :cancel)
+                   (when (eq :accept (gtk-dialog-run d))
+                     (setf file-name (gtk-file-chooser-filename d)
+                           (gtk-text-buffer-text
+                             (gtk-text-view-buffer text-view))
+                           (read-text-file file-name)
+                           modified-p nil)
+                     (set-properties))
+                   (gtk-widget-destroy d)))
+               (save (&rest args)
+                 (declare (ignore args))
+                 (if file-name
+                     (progn
+                       (with-open-file (file file-name :direction :output
+                                                       :if-exists :supersede)
+                         (write-string
+                           (gtk-text-buffer-text
+                             (gtk-text-view-buffer text-view))
+                           file))
+                       (setf modified-p nil)
+                       (set-properties))
+                       (save-as)))
+               (save-as (&rest args)
+                 (declare (ignore args))
+                 (let ((d (make-instance 'gtk-file-chooser-dialog
+                                         :action :save
+                                         :title "Save file")))
+                   (when file-name
+                     (setf (gtk-file-chooser-filename d) file-name))
+                   (gtk-dialog-add-button d "gtk-save" :accept)
+                   (gtk-dialog-add-button d "gtk-cancel" :cancel)
+                   (if (eq :accept (gtk-dialog-run d))
+                       (progn
+                         (setf file-name (gtk-file-chooser-filename d))
+                         (gtk-widget-destroy d)
+                         (save))
+                       (gtk-widget-destroy d))))
+               (cut (&rest args)
+                 (declare (ignore args))
+                    (gtk-text-buffer-cut-clipboard
+                                                (gtk-text-view-buffer text-view)
+                                                (gtk-clipboard-get "CLIPBOARD")
+                                                t))
+               (copy (&rest args)
+                 (declare (ignore args))
+                 (gtk-text-buffer-copy-clipboard
+                                               (gtk-text-view-buffer text-view)
+                                               (gtk-clipboard-get "CLIPBOARD")))
+               (paste (&rest args)
+                 (declare (ignore args))
+                 (gtk-text-buffer-paste-clipboard
+                                               (gtk-text-view-buffer text-view)
+                                               (gtk-clipboard-get "CLIPBOARD")))
+               (cb-delete (&rest args)
+                 (declare (ignore args))
+                 (let ((buffer (gtk-text-view-buffer text-view)))
+                   (multiple-value-bind (i1 i2)
+                       (gtk-text-buffer-get-selection-bounds buffer)
+                     (when (and i1 i2)
+                       (gtk-text-buffer-delete buffer i1 i2)))))
+               (about (&rest args)
+                 (declare (ignore args))
+                 (let ((d (make-instance 'gtk-about-dialog
+                                         :program-name
+                                         "Lisp Gtk+ Binding Demo Text Editor"
+                                         :version
+                                         (format nil "0.0.0.1 ~A"
+                                                 #\GREEK_SMALL_LETTER_ALPHA)
+                                         :authors '("Kalyanov Dmitry")
+                                         :license "Public Domain"
+                                         :logo-icon-name
+                                         "accessories-text-editor")))
+                   (gtk-dialog-run d)
+                   (gtk-widget-destroy d)))
+               (quit (&rest args)
+                 (declare (ignore args))
+                 (gtk-widget-destroy window))
+               (cb-eval (&rest args)
+                 (declare (ignore args))
+                 (let ((buffer (gtk-text-view-buffer text-view)))
+                   (multiple-value-bind (i1 i2)
+                       (gtk-text-buffer-get-selection-bounds buffer)
+                     (when (and i1 i2)
+                       (with-gtk-message-error-handler
+                         (let* ((text (gtk-text-buffer-slice buffer i1 i2))
+                                (value (eval (read-from-string text)))
+                                (value-str (format nil "~A" value))
+                                (pos (max (gtk-text-iter-offset i1)
+                                          (gtk-text-iter-offset i2))))
+                           (gtk-text-buffer-insert
+                                buffer
+                                " => "
+                                :position
+                                (gtk-text-buffer-get-iter-at-offset buffer pos))
+                           (incf pos (length " => "))
+                           (gtk-text-buffer-insert
+                                buffer
+                                value-str
+                                :position
+                                (gtk-text-buffer-get-iter-at-offset buffer
+                                                                    pos)))))))))
+        (gtk-builder-connect-signals-simple builder
+                                            `(("new" ,#'new)
+                                              ("open" ,#'cb-open)
+                                              ("save" ,#'save)
+                                              ("save-as" ,#'save-as)
+                                              ("cut" ,#'cut)
+                                              ("copy" ,#'copy)
+                                              ("paste" ,#'paste)
+                                              ("delete" ,#'cb-delete)
+                                              ("about" ,#'about)
+                                              ("quit" ,#'quit)
+                                              ("eval" ,#'cb-eval)))
+        (g-signal-connect window "destroy"
+                          (lambda (w)
+                            (declare (ignore w))
+                            (gtk-main-quit)))
+        (g-signal-connect (gtk-text-view-buffer text-view) "changed"
+                          (lambda (b)
+                            (declare (ignore b))
+                            (setf modified-p t)
+                            (set-properties)))
+        (gtk-widget-show window)))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Show slots of a class
+
+(defun demo-class-browser ()
+  (within-main-loop
+    (let* ((output *standard-output*)
+           (window (make-instance 'gtk-window
+                                  :window-position :center
+                                  :title "Class Browser"
+                                  :default-width 400
+                                  :default-height 600))
+           (search-entry (make-instance 'gtk-entry))
+           (search-button (make-instance 'gtk-button :label "Search"))
+           (scroll (make-instance 'gtk-scrolled-window
+                                  :hscrollbar-policy :automatic
+                                  :vscrollbar-policy :automatic))
+           (slots-model (make-instance 'array-list-store))
+           (slots-list (make-instance 'gtk-tree-view :model slots-model)))
+      (let ((v-box (make-instance 'gtk-v-box))
+            (search-box (make-instance 'gtk-h-box)))
+        (gtk-container-add window v-box)
+        (gtk-box-pack-start v-box search-box :expand nil)
+        (gtk-box-pack-start search-box search-entry)
+        (gtk-box-pack-start search-box search-button :expand nil)
+        (gtk-box-pack-start v-box scroll)
+        (gtk-container-add scroll slots-list))
+      (store-add-column slots-model "gchararray"
+                        (lambda (slot)
+                          (format nil "~S"
+                                  (closer-mop:slot-definition-name slot))))
+      (let ((col (make-instance 'gtk-tree-view-column :title "Slot name"))
+            (cr (make-instance 'gtk-cell-renderer-text)))
+        (gtk-tree-view-column-pack-start col cr)
+        (gtk-tree-view-column-add-attribute col cr "text" 0)
+        (gtk-tree-view-append-column slots-list col))
+      (labels ((display-class-slots (class)
+                 (format output "Displaying ~A~%" class)
+                 (loop
+                    repeat (store-items-count slots-model)
+                    do (store-remove-item slots-model (store-item slots-model 0)))
+                 (closer-mop:finalize-inheritance class)
+                 (loop
+                    for slot in (closer-mop:class-slots class)
+                    do (store-add-item slots-model slot)))
+               (on-search-clicked (button)
+                                  (declare (ignore button))
+                 (in-package :gtk)
+                 (with-gtk-message-error-handler
+                   (let* ((class-name (read-from-string
+                                        (gtk-entry-text search-entry)))
+                          (class (find-class class-name)))
+                     (display-class-slots class)))))
+        (g-signal-connect search-button "clicked" #'on-search-clicked))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Simple test of non-GObject subclass of GtkWindow
+
+(defclass custom-window (gtk-window)
+  ((label :initform (make-instance 'gtk-label
+                                   :label "A label text")
+          :reader custom-window-label)
+   (button :initform (make-instance 'gtk-button :label "Click me!")
+           :reader custom-window-button))
+  (:metaclass gobject-class)
+  (:default-initargs :title "Custom window with default initargs"
+                     :default-width 320
+                     :default-height 240))
+
+(defun custom-window-label-text (w)
+  (gtk-label-label (custom-window-label w)))
+
+(defun (setf custom-window-label-text) (new-value w)
+  (setf (gtk-label-label (custom-window-label w)) new-value))
+
+(defun custom-window-button-clicked (w)
+  (setf (custom-window-label-text w)
+        (format nil "Now is: ~A~%" (get-internal-run-time))))
+
+(defmethod initialize-instance :after ((w custom-window) &key &allow-other-keys)
+  (let ((box (make-instance 'gtk-v-box)))
+    (gtk-box-pack-start box (custom-window-label w))
+    (gtk-box-pack-start box (custom-window-button w) :expand nil)
+    (gtk-container-add w box))
+  (g-signal-connect (custom-window-button w) "clicked"
+                    (lambda (b)
+                      (declare (ignore b))
+                      (custom-window-button-clicked w))))
+ 
+(defun demo-custom-window ()
+  (within-main-loop
+    (let ((w (make-instance 'custom-window)))
+      (g-signal-connect w "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (gtk-widget-show w))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Demo Dialog
+
+(defun demo-dialog ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Testing dialogs"
+                                 :default-width 250))
+          (v-box (make-instance 'gtk-v-box)))
+      (g-signal-connect window
+                        "destroy"
+                        (lambda (w)
+                          (declare (ignore w)) 
+                          (gtk-main-quit)))
+      (gtk-container-add window v-box)
+      (let ((button (make-instance 'gtk-button :label "Dialog 1")))
+        (gtk-box-pack-start v-box button)
+        (g-signal-connect button "clicked"
+           (lambda (b)
+             (declare (ignore b))
+             (let ((dialog (make-instance 'gtk-dialog
+                                          :title "A Dialog Window")))
+               (gtk-dialog-add-button dialog "OK" :ok)
+               (gtk-dialog-add-button dialog "Yes" :yes)
+               (gtk-dialog-add-button dialog "Cancel" :cancel)
+               (setf (gtk-dialog-default-response dialog) :cancel)
+               (gtk-dialog-set-alternative-button-order dialog 
+                                                        (list :yes :cancel :ok))
+               (format t "Response was: ~S~%" (gtk-dialog-run dialog))
+               (gtk-widget-destroy dialog)))))
+      (let ((button (make-instance 'gtk-button :label "About")))
+        (gtk-box-pack-start v-box button)
+        (g-signal-connect button "clicked"
+           (lambda (b)
+             (declare (ignore b))
+             (let ((dialog (make-instance 'gtk-about-dialog
+                                          :program-name "Dialogs examples"
+                                          :version "0.01"
+                                          :copyright "(c) Kalyanov Dmitry"
+                                          :website
+                                          "http://common-lisp.net/project/cl-gtk+"
+                                          :website-label "Project web site"
+                                          :license "LLGPL"
+                                          :authors '("Kalyanov Dmitry")
+                                          :documenters '("Kalyanov Dmitry")
+                                          :artists '("None")
+                                          :logo-icon-name
+                                          "applications-development"
+                                          :wrap-license t)))
+               (format t "Response was: ~S~%" (gtk-dialog-run dialog))
+               (gtk-widget-destroy dialog)))))
+      (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
