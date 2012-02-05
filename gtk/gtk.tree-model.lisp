@@ -2337,13 +2337,13 @@
   (vector-push-extend column-getter (tree-lisp-store-getters store))
   (vector-push-extend column-type (tree-lisp-store-types store)))
 
-(defmethod tree-model-get-flags-impl ((store tree-lisp-store))
+(defmethod gtk-tree-model-get-flags-impl ((store tree-lisp-store))
   nil)
 
-(defmethod tree-model-get-n-columns-impl ((store tree-lisp-store))
+(defmethod gtk-tree-model-get-n-columns-impl ((store tree-lisp-store))
   (length (tree-lisp-store-getters store)))
 
-(defmethod tree-model-get-column-type-impl ((store tree-lisp-store) index)
+(defmethod gtk-tree-model-get-column-type-impl ((store tree-lisp-store) index)
   (aref (tree-lisp-store-types store) index))
 
 (defun get-node-by-indices (root indices)
