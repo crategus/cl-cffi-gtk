@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,7 +31,7 @@
 ;;; Clipboards
 ;;; 
 ;;; Storing data on clipboards
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkClipboard
@@ -144,13 +144,13 @@
 ;;; has changed.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard on which the signal is emitted
+;;;     the GtkClipboard on which the signal is emitted
 ;;; 
 ;;; event :
-;;; 	the GdkEventOwnerChange event. [type Gdk.EventOwnerChange]
+;;;     the GdkEventOwnerChange event
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -181,14 +181,14 @@
 ;;; are received, or when the request fails.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard
+;;;     the GtkClipboard
 ;;; 
 ;;; selection_data :
-;;; 	a GtkSelectionData containing the data was received. If retrieving the
+;;;     a GtkSelectionData containing the data was received. If retrieving the
 ;;;     data failed, then then length field of selection_data will be negative.
 ;;; 
 ;;; data :
-;;; 	the user_data supplied to gtk_clipboard_request_contents().
+;;;     the user_data supplied to gtk_clipboard_request_contents().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -202,14 +202,14 @@
 ;;; are received, or when the request fails.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard
+;;;     the GtkClipboard
 ;;; 
 ;;; text :
-;;; 	the text received, as a UTF-8 encoded string, or NULL if retrieving the
+;;;     the text received, as a UTF-8 encoded string, or NULL if retrieving the
 ;;;     data failed.
 ;;; 
 ;;; data :
-;;; 	the user_data supplied to gtk_clipboard_request_text().
+;;;     the user_data supplied to gtk_clipboard_request_text().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -223,13 +223,13 @@
 ;;; are received, or when the request fails.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard
+;;;     the GtkClipboard
 ;;; 
 ;;; pixbuf :
-;;; 	the received image
+;;;     the received image
 ;;; 
 ;;; data :
-;;; 	the user_data supplied to gtk_clipboard_request_image().
+;;;     the user_data supplied to gtk_clipboard_request_image().
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -246,17 +246,17 @@
 ;;; are received, or when the request fails.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard
+;;;     the GtkClipboard
 ;;; 
 ;;; atoms :
-;;; 	the supported targets, as array of GdkAtom, or NULL if retrieving the
+;;;     the supported targets, as array of GdkAtom, or NULL if retrieving the
 ;;;     data failed.
 ;;; 
 ;;; n_atoms :
-;;; 	the length of the atoms array.
+;;;     the length of the atoms array.
 ;;; 
 ;;; data :
-;;; 	the user_data supplied to gtk_clipboard_request_targets().
+;;;     the user_data supplied to gtk_clipboard_request_targets().
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -296,19 +296,19 @@
 ;;; the requestor will be informed that the attempt to get the data failed.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard
+;;;     the GtkClipboard
 ;;; 
 ;;; selection_data :
-;;; 	a GtkSelectionData argument in which the requested data should be
+;;;     a GtkSelectionData argument in which the requested data should be
 ;;;     stored.
 ;;; 
 ;;; info :
-;;; 	the info field corresponding to the requested target from the
+;;;     the info field corresponding to the requested target from the
 ;;;     GtkTargetEntry array passed to gtk_clipboard_set_with_data() or
 ;;;     gtk_clipboard_set_with_owner().
 ;;; 
 ;;; user_data_or_owner :
-;;; 	the user_data argument passed to gtk_clipboard_set_with_data(), or the
+;;;     the user_data argument passed to gtk_clipboard_set_with_data(), or the
 ;;;     owner argument passed to gtk_clipboard_set_with_owner()
 ;;; ----------------------------------------------------------------------------
 
@@ -323,10 +323,10 @@
 ;;; will not be used again.
 ;;; 
 ;;; clipboard :
-;;; 	the GtkClipboard
+;;;     the GtkClipboard
 ;;; 
 ;;; user_data_or_owner :
-;;; 	the user_data argument passed to gtk_clipboard_set_with_data(), or
+;;;     the user_data argument passed to gtk_clipboard_set_with_data(), or
 ;;;     the owner argument passed to gtk_clipboard_set_with_owner()
 ;;; ----------------------------------------------------------------------------
 
@@ -339,14 +339,19 @@
 ;;; See gtk_clipboard_get_for_display() for complete details.
 ;;; 
 ;;; selection :
-;;; 	a GdkAtom which identifies the clipboard to use
+;;;     a GdkAtom which identifies the clipboard to use
 ;;; 
 ;;; Returns :
-;;; 	the appropriate clipboard object. If no clipboard already exists, a
+;;;     the appropriate clipboard object. If no clipboard already exists, a
 ;;;     new one will be created. Once a clipboard object has been created, it
 ;;;     is persistent and, since it is owned by GTK+, must not be freed or
-;;;     unreffed. [transfer none]
+;;;     unreffed
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_get" gtk-clipboard-get) g-object
+  (selection gdk-atom-as-string))
+
+(export 'gtk-clipboard-get)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get_for_display ()
@@ -377,13 +382,13 @@
 ;;; a special-purpose clipboard, you might call it "_FOO_SPECIAL_CLIPBOARD".
 ;;; 
 ;;; display :
-;;; 	the display for which the clipboard is to be retrieved or created
+;;;     the display for which the clipboard is to be retrieved or created
 ;;; 
 ;;; selection :
-;;; 	a GdkAtom which identifies the clipboard to use.
+;;;     a GdkAtom which identifies the clipboard to use.
 ;;; 
 ;;; Returns :
-;;; 	the appropriate clipboard object. If no clipboard already exists, a new
+;;;     the appropriate clipboard object. If no clipboard already exists, a new
 ;;;     one will be created. Once a clipboard object has been created, it is
 ;;;     persistent and, since it is owned by GTK+, must not be freed or unrefd.
 ;;; 
@@ -398,10 +403,10 @@
 ;;; Gets the GdkDisplay associated with clipboard
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	the GdkDisplay associated with clipboard.
+;;;     the GdkDisplay associated with clipboard.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -421,27 +426,27 @@
 ;;; the actual data when it is requested.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; targets :
-;;; 	array containing information about the available forms for the
+;;;     array containing information about the available forms for the
 ;;;     clipboard data.
 ;;; 
 ;;; n_targets :
-;;; 	number of elements in targets
+;;;     number of elements in targets
 ;;; 
 ;;; get_func :
-;;; 	function to call to get the actual clipboard data.
+;;;     function to call to get the actual clipboard data.
 ;;; 
 ;;; clear_func :
-;;; 	when the clipboard contents are set again, this function will be called,
+;;;     when the clipboard contents are set again, this function will be called,
 ;;;     and get_func will not be subsequently called.
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to get_func and clear_func.
+;;;     user data to pass to get_func and clear_func.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if setting the clipboard data succeeded. If setting the clipboard
+;;;     TRUE if setting the clipboard data succeeded. If setting the clipboard
 ;;;     data failed the provided callback functions will be ignored.
 ;;; ----------------------------------------------------------------------------
 
@@ -463,28 +468,28 @@
 ;;; that instead of an generic user_data pointer, a GObject is passed in.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; targets :
-;;; 	array containing information about the available forms for the
+;;;     array containing information about the available forms for the
 ;;;     clipboard data.
 ;;; 
 ;;; n_targets :
-;;; 	number of elements in targets
+;;;     number of elements in targets
 ;;; 
 ;;; get_func :
-;;; 	function to call to get the actual clipboard data.
+;;;     function to call to get the actual clipboard data.
 ;;; 
 ;;; clear_func :
-;;; 	when the clipboard contents are set again, this function will be
+;;;     when the clipboard contents are set again, this function will be
 ;;;     called, and get_func will not be subsequently called.
 ;;; 
 ;;; owner :
-;;; 	an object that "owns" the data. This object will be passed to the
+;;;     an object that "owns" the data. This object will be passed to the
 ;;;     callbacks when called
 ;;; 
 ;;; Returns :
-;;; 	TRUE if setting the clipboard data succeeded. If setting the clipboard
+;;;     TRUE if setting the clipboard data succeeded. If setting the clipboard
 ;;;     data failed the provided callback functions will be ignored.
 ;;; ----------------------------------------------------------------------------
 
@@ -499,10 +504,10 @@
 ;;; gtk_clipboard_set_with_owner().
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	the owner of the clipboard, if any; otherwise NULL.
+;;;     the owner of the clipboard, if any; otherwise NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -516,7 +521,7 @@
 ;;; called. Otherwise, the clipboard may be owned by someone else.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_clipboard_clear" gtk-clipboard-clear) :void
@@ -536,13 +541,13 @@
 ;;; the text, and for converting the text into the requested format.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard object
+;;;     a GtkClipboard object
 ;;; 
 ;;; text :
-;;; 	a UTF-8 string.
+;;;     a UTF-8 string.
 ;;; 
 ;;; len :
-;;; 	length of text, in bytes, or -1, in which case the length will be
+;;;     length of text, in bytes, or -1, in which case the length will be
 ;;;     determined with strlen().
 ;;; ----------------------------------------------------------------------------
 
@@ -566,10 +571,10 @@
 ;;; the image into the requested format.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard object
+;;;     a GtkClipboard object
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf
+;;;     a GdkPixbuf
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -586,19 +591,19 @@
 ;;; the result are later received the supplied callback will be called.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; target :
-;;; 	an atom representing the form into which the clipboard owner should
+;;;     an atom representing the form into which the clipboard owner should
 ;;;     convert the selection.
 ;;; 
 ;;; callback :
-;;; 	A function to call when the results are received (or the retrieval
+;;;     A function to call when the results are received (or the retrieval
 ;;;     fails). If the retrieval fails the length field of selection_data will
 ;;;     be negative.
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback
+;;;     user data to pass to callback
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -618,14 +623,14 @@
 ;;; the clipboard could not be converted into text form.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; callback :
-;;; 	a function to call when the text is received, or the retrieval fails.
+;;;     a function to call when the text is received, or the retrieval fails.
 ;;;     (It will always be called one way or the other.).
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback.
+;;;     user data to pass to callback.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -644,14 +649,14 @@
 ;;; clipboard could not be converted into an image.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; callback :
-;;; 	a function to call when the image is received, or the retrieval fails.
+;;;     a function to call when the image is received, or the retrieval fails.
 ;;;     (It will always be called one way or the other.).
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback.
+;;;     user data to pass to callback.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -670,14 +675,14 @@
 ;;; request succeeded, or NULL if it failed.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; callback :
-;;; 	a function to call when the targets are received, or the retrieval
+;;;     a function to call when the targets are received, or the retrieval
 ;;;     fails. (It will always be called one way or the other.).
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback.
+;;;     user data to pass to callback.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -701,17 +706,17 @@
 ;;; converted into rich text form.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; callback :
-;;; 	a function to call when the text is received, or the retrieval fails.
+;;;     a function to call when the text is received, or the retrieval fails.
 ;;;     (It will always be called one way or the other.).
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback.
+;;;     user data to pass to callback.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -732,14 +737,14 @@
 ;;; clipboard could not be converted into URI form.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; callback :
-;;; 	a function to call when the URIs are received, or the retrieval fails.
+;;;     a function to call when the URIs are received, or the retrieval fails.
 ;;;     (It will always be called one way or the other.).
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback.
+;;;     user data to pass to callback.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -755,14 +760,14 @@
 ;;; etc, may be dispatched during the wait.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; target :
-;;; 	an atom representing the form into which the clipboard owner should
+;;;     an atom representing the form into which the clipboard owner should
 ;;;     convert the selection.
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated GtkSelectionData object or NULL if retrieving the
+;;;     a newly-allocated GtkSelectionData object or NULL if retrieving the
 ;;;     given target failed. If non-NULL, this value must be freed with
 ;;;     gtk_selection_data_free() when you are finished with it.
 ;;; ----------------------------------------------------------------------------
@@ -777,10 +782,10 @@
 ;;; the main loop, so events, timeouts, etc, may be dispatched during the wait.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated UTF-8 string which must be freed with g_free(), or
+;;;     a newly-allocated UTF-8 string which must be freed with g_free(), or
 ;;;     NULL if retrieving the selection data failed. (This could happen for
 ;;;     various reasons, in particular if the clipboard was empty or if the
 ;;;     contents of the clipboard could not be converted into text form.)
@@ -796,10 +801,10 @@
 ;;; loop, so events, timeouts, etc, may be dispatched during the wait.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated GdkPixbuf object which must be disposed with
+;;;     a newly-allocated GdkPixbuf object which must be disposed with
 ;;;     g_object_unref(), or NULL if retrieving the selection data failed.
 ;;;     (This could happen for various reasons, in particular if the clipboard
 ;;;     was empty or if the contents of the clipboard could not be converted
@@ -821,19 +826,19 @@
 ;;; may be dispatched during the wait.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; format :
-;;; 	return location for the format of the returned data. [out]
+;;;     return location for the format of the returned data
 ;;; 
 ;;; length :
-;;; 	return location for the length of the returned data
+;;;     return location for the length of the returned data
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated binary block of data which must be freed with
+;;;     a newly-allocated binary block of data which must be freed with
 ;;;     g_free(), or NULL if retrieving the selection data failed. (This could
 ;;;     happen for various reasons, in particular if the clipboard was empty or
 ;;;     if the contents of the clipboard could not be converted into text
@@ -852,10 +857,10 @@
 ;;; dispatched during the wait.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated NULL-terminated array of strings which must be freed
+;;;     a newly-allocated NULL-terminated array of strings which must be freed
 ;;;     with g_strfreev(), or NULL if retrieving the selection data failed.
 ;;;     (This could happen for various reasons, in particular if the clipboard
 ;;;     was empty or if the contents of the clipboard could not be converted
@@ -878,10 +883,10 @@
 ;;; since it doesn't need to retrieve the actual text.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	TRUE is there is text available, FALSE otherwise.
+;;;     TRUE is there is text available, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -898,10 +903,10 @@
 ;;; since it doesn't need to retrieve the actual image data.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	TRUE is there is an image available, FALSE otherwise.
+;;;     TRUE is there is an image available, FALSE otherwise.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -922,13 +927,13 @@
 ;;; actual text.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; buffer :
-;;; 	a GtkTextBuffer
+;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;; 	TRUE is there is rich text available, FALSE otherwise.
+;;;     TRUE is there is rich text available, FALSE otherwise.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -947,10 +952,10 @@
 ;;; since it doesn't need to retrieve the actual URI data.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Returns :
-;;; 	TRUE is there is an URI list available, FALSE otherwise.
+;;;     TRUE is there is an URI list available, FALSE otherwise.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -968,17 +973,17 @@
 ;;; loop, so events, timeouts, etc, may be dispatched during the wait.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; targets :
-;;; 	location to store an array of targets. The result stored here must be
+;;;     location to store an array of targets. The result stored here must be
 ;;;     freed with g_free().
 ;;; 
 ;;; n_targets :
-;;; 	location to store number of items in targets.
+;;;     location to store number of items in targets.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if any targets are present on the clipboard, otherwise FALSE.
+;;;     TRUE if any targets are present on the clipboard, otherwise FALSE.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -997,13 +1002,13 @@
 ;;; gtk_clipboard_wait_is_text_available() instead.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; target :
-;;; 	A GdkAtom indicating which target to look for.
+;;;     A GdkAtom indicating which target to look for.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the target is available, FALSE otherwise.
+;;;     TRUE if the target is available, FALSE otherwise.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1023,14 +1028,14 @@
 ;;; for more information.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; targets :
-;;; 	array containing information about which forms should be stored or
+;;;     array containing information about which forms should be stored or
 ;;;     NULL to indicate that all forms should be stored.
 ;;; 
 ;;; n_targets :
-;;; 	number of elements in targets
+;;;     number of elements in targets
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1044,7 +1049,7 @@
 ;;; after the application has quit.
 ;;; 
 ;;; clipboard :
-;;; 	a GtkClipboard
+;;;     a GtkClipboard
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
