@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<!--Generated with glade3 3.4.5 on Wed Mar 18 23:56:40 2009 -->
+<interface>
+  <object class="GtkUIManager" id="uimanager1">
+    <child>
+      <object class="GtkActionGroup" id="actiongroup1">
+        <child>
+          <object class="GtkAction" id="menuitem1">
+            <property name="name">menuitem1</property>
+            <property name="label" translatable="yes">_File</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem1">
+            <property name="stock_id" translatable="yes">gtk-new</property>
+            <property name="name">imagemenuitem1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem2">
+            <property name="stock_id" translatable="yes">gtk-open</property>
+            <property name="name">imagemenuitem2</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem3">
+            <property name="stock_id" translatable="yes">gtk-save</property>
+            <property name="name">imagemenuitem3</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem4">
+            <property name="stock_id" translatable="yes">gtk-save-as</property>
+            <property name="name">imagemenuitem4</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem5">
+            <property name="stock_id" translatable="yes">gtk-quit</property>
+            <property name="name">imagemenuitem5</property>
+            <signal handler="quit_cb" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem2">
+            <property name="name">menuitem2</property>
+            <property name="label" translatable="yes">_Edit</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem6">
+            <property name="stock_id" translatable="yes">gtk-cut</property>
+            <property name="name">imagemenuitem6</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem7">
+            <property name="stock_id" translatable="yes">gtk-copy</property>
+            <property name="name">imagemenuitem7</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem8">
+            <property name="stock_id" translatable="yes">gtk-paste</property>
+            <property name="name">imagemenuitem8</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem9">
+            <property name="stock_id" translatable="yes">gtk-delete</property>
+            <property name="name">imagemenuitem9</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem3">
+            <property name="name">menuitem3</property>
+            <property name="label" translatable="yes">_View</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem4">
+            <property name="name">menuitem4</property>
+            <property name="label" translatable="yes">_Help</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="imagemenuitem10">
+            <property name="stock_id" translatable="yes">gtk-about</property>
+            <property name="name">imagemenuitem10</property>
+            <signal handler="about_cb" name="activate"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <ui>
+      <menubar name="menubar1">
+        <menu action="menuitem1">
+          <menuitem action="imagemenuitem1"/>
+          <menuitem action="imagemenuitem2"/>
+          <menuitem action="imagemenuitem3"/>
+          <menuitem action="imagemenuitem4"/>
+          <separator/>
+          <menuitem action="imagemenuitem5"/>
+        </menu>
+        <menu action="menuitem2">
+          <menuitem action="imagemenuitem6"/>
+          <menuitem action="imagemenuitem7"/>
+          <menuitem action="imagemenuitem8"/>
+          <menuitem action="imagemenuitem9"/>
+        </menu>
+        <menuitem action="menuitem3"/>
+        <menu action="menuitem4">
+          <menuitem action="imagemenuitem10"/>
+        </menu>
+      </menubar>
+    </ui>
+  </object>
+  <object class="GtkWindow" id="window1">
+    <property name="title" translatable="yes">Gtk Builder Demo</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="icon_name">gtk-unindent</property>
+    <child>
+      <object class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkMenuBar" constructor="uimanager1" id="menubar1">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolbar" id="toolbar1">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkToolButton" id="toolbutton1">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Button1</property>
+                <property name="stock_id">gtk-about</property>
+                <signal handler="toolbutton1_clicked_cb" name="clicked"/>
+              </object>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToggleToolButton" id="Red">
+                <property name="visible">True</property>
+                <property name="stock_id">gtk-no</property>
+              </object>
+              <packing>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <child>
+              <object class="GtkTextView" id="textview1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStatusbar" id="statusbar1">
+            <property name="visible">True</property>
+            <property name="spacing">2</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
