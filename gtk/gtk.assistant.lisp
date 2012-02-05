@@ -308,17 +308,42 @@
 ;;; struct GtkAssistant;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkAssistant" 'gtk-assistant))
+
 (define-g-object-class "GtkAssistant" gtk-assistant
   (:superclass gtk-window
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_assistant_get_type")
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_assistant_get_type")
   ((:cffi current-page gtk-assistant-current-page :int
           "gtk_assistant_get_current_page" "gtk_assistant_set_current_page")
    (:cffi n-pages gtk-assistant-n-pages :int
           "gtk_assistant_get_n_pages" nil)
    (:cffi forward-page-function gtk-assistant-forward-page-function
           nil nil set-assistant-forward-page-function)))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-page-type
+  "page-type" "GtkAssistantPageType" t t t)
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-title
+  "title" "gchararray" t t t)
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-header-image
+  "header-image" "GdkPixbuf" t t t)
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-sidebar-image
+  "sidebar-image" "GdkPixbuf" t t t)
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-complete
+  "complete" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkAssistantPageType
@@ -635,24 +660,28 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gtk-assistant-set-forward-page-func :void
-  (assistant (g-object assistant))
+(defcfun ("gtk_assistant_set_forward_page_func"
+          %gtk-assistant-set-forward-page-func) :void
+  (assistant (g-object gtk-assistant))
   (page-func :pointer)
   (data :pointer)
-  (destroy-notify :pointer))
+  (destroy :pointer))
 
 (define-cb-methods assistant-page-func :int ((current-page :int)))
 
-(defun set-assistant-forward-page-function (assistant function)
-  (if function
-      (gtk-assistant-set-forward-page-func assistant
-                                           (callback assistant-page-func-cb)
-                                           (create-fn-ref assistant function)
-                                           (callback assistant-page-func-destroy-notify))
-      (gtk-assistant-set-forward-page-func assistant
-                                           (null-pointer)
-                                           (null-pointer)
-                                           (null-pointer))))
+(defun gtk-assistant-set-forward-page-func (assistant func)
+  (if func
+      (%gtk-assistant-set-forward-page-func
+                                  assistant
+                                  (callback assistant-page-func-cb)
+                                  (create-fn-ref assistant func)
+                                  (callback assistant-page-func-destroy-notify))
+      (%gtk-assistant-set-forward-page-func assistant
+                                            (null-pointer)
+                                            (null-pointer)
+                                            (null-pointer))))
+
+(export 'gtk-assistant-set-forward-page-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_type ()
@@ -915,7 +944,7 @@
 (defcfun ("gtk_assistant_add_action_widget" gtk-assistant-add-action-widget)
     :void
   (assistant (g-object gtk-assistant))
-  (widget (g-object widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-assistant-add-action-widget)
 
@@ -939,7 +968,7 @@
 (defcfun ("gtk_assistant_remove_action_widget" assistant-remove-action-widget)
     :void
   (assistant (g-object gtk-assistant))
-  (widget (g-object widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-assistant-remove-action-widget)
 
