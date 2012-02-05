@@ -500,63 +500,72 @@
   (:action 32)
   (:no-hooks 64))
 
-(define-g-interface "GtkFileChooser"
-    file-chooser
-    (:export t :type-initializer "gtk_file_chooser_get_type")
-  (action file-chooser-action "action" "GtkFileChooserAction" t t)
-  (do-overwrite-confirmation file-chooser-do-overwrite-confirmation
+(define-g-interface "GtkFileChooser" gtk-file-chooser
+  (:export t
+   :type-initializer "gtk_file_chooser_get_type")
+  (action gtk-file-chooser-action
+   "action" "GtkFileChooserAction" t t)
+  (do-overwrite-confirmation gtk-file-chooser-do-overwrite-confirmation
    "do-overwrite-confirmation" "gboolean" t t)
-  (extra-widget file-chooser-extra-widget "extra-widget" "GtkWidget" t t)
-  (file-system-backend file-chooser-file-system-backend "file-system-backend"
-   "gchararray" nil nil)
-  (filter file-chooser-filter "filter" "GtkFileFilter" t t)
-  (local-only file-chooser-local-only "local-only" "gboolean" t t)
-  (preview-widget file-chooser-preview-widget "preview-widget" "GtkWidget" t t)
-  (preview-widget-active file-chooser-preview-widget-active
+  (extra-widget gtk-file-chooser-extra-widget
+   "extra-widget" "GtkWidget" t t)
+  (file-system-backend gtk-file-chooser-file-system-backend
+   "file-system-backend" "gchararray" nil nil)
+  (filter gtk-file-chooser-filter
+   "filter" "GtkFileFilter" t t)
+  (local-only gtk-file-chooser-local-only
+   "local-only" "gboolean" t t)
+  (preview-widget gtk-file-chooser-preview-widget
+   "preview-widget" "GtkWidget" t t)
+  (preview-widget-active gtk-file-chooser-preview-widget-active
    "preview-widget-active" "gboolean" t t)
-  (select-multiple file-chooser-select-multiple "select-multiple" "gboolean" t
-   t)
-  (show-hidden file-chooser-show-hidden "show-hidden" "gboolean" t t)
-  (use-preview-label file-chooser-use-preview-label "use-preview-label"
-   "gboolean" t t)
-  (:cffi current-name file-chooser-current-name
-   (:string :free-to-foreign t :encoding :utf-8) nil
-   "gtk_file_chooser_set_current_name")
+  (select-multiple gtk-file-chooser-select-multiple
+   "select-multiple" "gboolean" t t)
+  (show-hidden gtk-file-chooser-show-hidden
+   "show-hidden" "gboolean" t t)
+  (use-preview-label gtk-file-chooser-use-preview-label
+   "use-preview-label" "gboolean" t t)
+  (:cffi current-name gtk-file-chooser-current-name
+         (:string :free-to-foreign t :encoding :utf-8) nil
+         "gtk_file_chooser_set_current_name")
   #+win32
-  (:cffi filename file-chooser-filename
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_filename_utf8" "gtk_file_chooser_set_filename_utf8")
+  (:cffi filename gtk-file-chooser-filename
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_filename_utf8"
+         "gtk_file_chooser_set_filename_utf8")
   #-win32
-  (:cffi filename file-chooser-filename
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_filename" "gtk_file_chooser_set_filename")
+  (:cffi filename gtk-file-chooser-filename
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_filename"
+         "gtk_file_chooser_set_filename")
   #+win32
-  (:cffi current-folder file-chooser-current-folder
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_current_folder_utf8"
-   "gtk_file_chooser_set_current_folder_utf8")
+  (:cffi current-folder gtk-file-chooser-current-folder
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_current_folder_utf8"
+         "gtk_file_chooser_set_current_folder_utf8")
   #-win32
-  (:cffi current-folder file-chooser-current-folder
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_current_folder" "gtk_file_chooser_set_current_folder")
-  (:cffi uri file-chooser-uri
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_uri" "gtk_file_chooser_set_uri")
-  (:cffi current-folder-uri file-chooser-current-folder-uri
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_current_folder_uri"
-   "gtk_file_chooser_set_current_folder_uri")
+  (:cffi current-folder gtk-file-chooser-current-folder
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_current_folder"
+         "gtk_file_chooser_set_current_folder")
+  (:cffi uri gtk-file-chooser-uri
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_uri" "gtk_file_chooser_set_uri")
+  (:cffi current-folder-uri gtk-file-chooser-current-folder-uri
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_current_folder_uri"
+         "gtk_file_chooser_set_current_folder_uri")
   #+win32
-  (:cffi preview-filename file-chooser-preview-filename
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_preview_filename_utf8" nil)
+  (:cffi preview-filename gtk-file-chooser-preview-filename
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_preview_filename_utf8" nil)
   #-win32
-  (:cffi preview-filename file-chooser-preview-filename
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_preview_filename" nil)
-  (:cffi preview-uri file-chooser-preview-uri
-   (g-string :free-from-foreign t :free-to-foreign t)
-   "gtk_file_chooser_get_preview_uri" nil))
+  (:cffi preview-filename gtk-file-chooser-preview-filename
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_preview_filename" nil)
+  (:cffi preview-uri gtk-file-chooser-preview-uri
+         (g-string :free-from-foreign t :free-to-foreign t)
+         "gtk_file_chooser_get_preview_uri" nil))
 
 (define-g-interface "GtkFileChooserEmbed"
     file-chooser-embed
