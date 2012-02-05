@@ -35,6 +35,8 @@
     #:stable-pointer-value
     #:with-stable-pointer
     
+    #:using*
+    
     #:connect-signal
     #:emit-signal
     #:parse-g-value
