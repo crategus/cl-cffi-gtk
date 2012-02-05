@@ -30,11 +30,6 @@
 (defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
   (free-stable-pointer data))
 
-(defcfun (get-clipboard "gtk_clipboard_get") g-object
-  (selection gdk-atom-as-string))
-
-(export 'get-clipboard)
-
 (defcallback call-from-main-loop-callback :boolean
     ((data :pointer))
   (restart-case
