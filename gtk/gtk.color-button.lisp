@@ -334,7 +334,7 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-color-button-get-alpha (button alpha)
+(defun gtk-color-button-get-alpha (button)
   (gtk-color-button-alpha button))
 
 (export 'gtk-color-button-get-alpha)
