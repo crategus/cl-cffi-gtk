@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.version.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; Version Information
 ;;; 
 ;;; Variables and functions to check the GLib version
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     *glib-major-version*
@@ -129,7 +127,7 @@
 ;;;     the required minor version.
 ;;; 
 ;;; required-micro :
-;;; 	the required micro version.
+;;;     the required micro version.
 ;;; 
 ;;; Returns :
 ;;;     NULL if the GLib library is compatible with the given version, or a

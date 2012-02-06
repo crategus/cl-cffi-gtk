@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.error.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; Error Reporting
 ;;; 
 ;;; A system for reporting errors
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     g-error
@@ -81,31 +79,31 @@
 ;;; Functions that can fail take a return location for a GError as their last
 ;;; argument. For example:
 ;;; 
-;;;  1 gboolean g_file_get_contents (const gchar  *filename,
-;;;  2                               gchar       **contents,
-;;;  3                               gsize        *length,
-;;;  4                               GError      **error);
+;;;  gboolean g_file_get_contents (const gchar  *filename,
+;;;                                gchar       **contents,
+;;;                                gsize        *length,
+;;;                                GError      **error);
 ;;; 
 ;;; If you pass a non-NULL value for the error argument, it should point to a
 ;;; location where an error can be placed. For example:
 ;;; 
-;;;  1 gchar *contents;
-;;;  2 GError *err = NULL;
-;;;  3 g_file_get_contents ("foo.txt", &contents, NULL, &err);
-;;;  4 g_assert ((contents == NULL && err != NULL) ||
-;;;              (contents != NULL && err == NULL));
-;;;  5 if (err != NULL)
-;;;  6   {
-;;;  7     /* Report error to user, and free error */
-;;;  8     g_assert (contents == NULL);
-;;;  9     fprintf (stderr, "Unable to read file: %s\n", err->message);
-;;; 10     g_error_free (err);
-;;; 11   }
-;;; 12 else
-;;; 13   {
-;;; 14     /* Use file contents */
-;;; 15     g_assert (contents != NULL);
-;;; 16   }
+;;;  gchar *contents;
+;;;  GError *err = NULL;
+;;;  g_file_get_contents ("foo.txt", &contents, NULL, &err);
+;;;  g_assert ((contents == NULL && err != NULL) ||
+;;;            (contents != NULL && err == NULL));
+;;;  if (err != NULL)
+;;;    {
+;;;      /* Report error to user, and free error */
+;;;      g_assert (contents == NULL);
+;;;      fprintf (stderr, "Unable to read file: %s\n", err->message);
+;;;      g_error_free (err);
+;;;    }
+;;;  else
+;;;    {
+;;;      /* Use file contents */
+;;;      g_assert (contents != NULL);
+;;;    }
 ;;; 
 ;;; Note that err != NULL in this example is a reliable indicator of whether
 ;;; g_file_get_contents() failed. Additionally, g_file_get_contents() returns
@@ -115,10 +113,10 @@
 ;;; interested in whether it failed and don't need to display an error message,
 ;;; you can pass NULL for the error argument:
 ;;; 
-;;;  1 if (g_file_get_contents ("foo.txt", &contents, NULL, NULL))
-;;;  2   /* no error occurred */ ;
-;;;  3 else
-;;;  4   /* error */ ;
+;;;  if (g_file_get_contents ("foo.txt", &contents, NULL, NULL))
+;;;    /* no error occurred */ ;
+;;;  else
+;;;    /* error */ ;
 ;;; 
 ;;; The GError object contains three fields: domain indicates the module the
 ;;; error-reporting function is located in, code indicates the specific error
@@ -138,92 +136,92 @@
 ;;; then return immediately. g_set_error() does nothing if the error location
 ;;; passed to it is NULL. Here's an example:
 ;;; 
-;;;  1 gint
-;;;  2 foo_open_file (GError **error)
-;;;  3 {
-;;;  4   gint fd;
-;;;  5 
-;;;  6   fd = open ("file.txt", O_RDONLY);
-;;;  7 
-;;;  8   if (fd < 0)
-;;;  9     {
-;;; 10       g_set_error (error,
-;;; 11                    FOO_ERROR,                 /* error domain */
-;;; 12                    FOO_ERROR_BLAH,            /* error code */
-;;; 13                    "Failed to open file: %s", /* error message string */
-;;; 14                    g_strerror (errno));
-;;; 15       return -1;
-;;; 16     }
-;;; 17   else
-;;; 18     return fd;
-;;; 19 }
+;;;  gint
+;;;  foo_open_file (GError **error)
+;;;  {
+;;;    gint fd;
+;;;  
+;;;    fd = open ("file.txt", O_RDONLY);
+;;;  
+;;;    if (fd < 0)
+;;;      {
+;;;        g_set_error (error,
+;;;                     FOO_ERROR,                 /* error domain */
+;;;                     FOO_ERROR_BLAH,            /* error code */
+;;;                     "Failed to open file: %s", /* error message string */
+;;;                     g_strerror (errno));
+;;;        return -1;
+;;;      }
+;;;    else
+;;;      return fd;
+;;;  }
 ;;; 
 ;;; Things are somewhat more complicated if you yourself call another function
 ;;; that can report a GError. If the sub-function indicates fatal errors in
 ;;; some way other than reporting a GError, such as by returning TRUE on
 ;;; success, you can simply do the following:
 ;;; 
-;;;  1 gboolean
-;;;  2 my_function_that_can_fail (GError **err)
-;;;  3 {
-;;;  4   g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-;;;  5 
-;;;  6   if (!sub_function_that_can_fail (err))
-;;;  7     {
-;;;  8       /* assert that error was set by the sub-function */
-;;;  9       g_assert (err == NULL || *err != NULL);
-;;; 10       return FALSE;
-;;; 11     }
-;;; 12 
-;;; 13   /* otherwise continue, no error occurred */
-;;; 14   g_assert (err == NULL || *err == NULL);
-;;; 15 }
+;;;  gboolean
+;;;  my_function_that_can_fail (GError **err)
+;;;  {
+;;;    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
+;;;  
+;;;    if (!sub_function_that_can_fail (err))
+;;;      {
+;;;        /* assert that error was set by the sub-function */
+;;;        g_assert (err == NULL || *err != NULL);
+;;;        return FALSE;
+;;;      }
+;;;  
+;;;    /* otherwise continue, no error occurred */
+;;;    g_assert (err == NULL || *err == NULL);
+;;;  }
 ;;; 
 ;;; If the sub-function does not indicate errors other than by reporting a
 ;;; GError, you need to create a temporary GError since the passed-in one may
 ;;; be NULL. g_propagate_error() is intended for use in this case. 	
 ;;; 
-;;;  1 gboolean
-;;;  2 my_function_that_can_fail (GError **err)
-;;;  3 {
-;;;  4   GError *tmp_error;
-;;;  5 
-;;;  6   g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-;;;  7 
-;;;  8   tmp_error = NULL;
-;;;  9   sub_function_that_can_fail (&tmp_error);
-;;; 10 
-;;; 11   if (tmp_error != NULL)
-;;; 12     {
-;;; 13       /* store tmp_error in err, if err != NULL,
-;;; 14        * otherwise call g_error_free() on tmp_error
-;;; 15        */
-;;; 16       g_propagate_error (err, tmp_error);
-;;; 17       return FALSE;
-;;; 18     }
-;;; 20 
-;;; 21   /* otherwise continue, no error occurred */
-;;; 22 }
+;;;  gboolean
+;;;  my_function_that_can_fail (GError **err)
+;;;  {
+;;;    GError *tmp_error;
+;;;  
+;;;    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
+;;;  
+;;;    tmp_error = NULL;
+;;;    sub_function_that_can_fail (&tmp_error);
+;;;  
+;;;    if (tmp_error != NULL)
+;;;      {
+;;;        /* store tmp_error in err, if err != NULL,
+;;;         * otherwise call g_error_free() on tmp_error
+;;;         */
+;;;        g_propagate_error (err, tmp_error);
+;;;        return FALSE;
+;;;      }
+;;;  
+;;;    /* otherwise continue, no error occurred */
+;;;  }
 ;;;  
 ;;; Error pileups are always a bug. For example, this code is incorrect:
 ;;; 
-;;;  1 gboolean
-;;;  2 my_function_that_can_fail (GError **err)
-;;;  3 {
-;;;  4   GError *tmp_error;
-;;;  5 
-;;;  6   g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-;;;  7 
-;;;  8   tmp_error = NULL;
-;;;  9   sub_function_that_can_fail (&tmp_error);
-;;; 10   other_function_that_can_fail (&tmp_error);
-;;; 11 
-;;; 12   if (tmp_error != NULL)
-;;; 13     {
-;;; 14       g_propagate_error (err, tmp_error);
-;;; 15       return FALSE;
-;;; 16     }
-;;; 17 }
+;;;  gboolean
+;;;  my_function_that_can_fail (GError **err)
+;;;  {
+;;;    GError *tmp_error;
+;;;  
+;;;    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
+;;;  
+;;;    tmp_error = NULL;
+;;;    sub_function_that_can_fail (&tmp_error);
+;;;    other_function_that_can_fail (&tmp_error);
+;;;  
+;;;    if (tmp_error != NULL)
+;;;      {
+;;;        g_propagate_error (err, tmp_error);
+;;;        return FALSE;
+;;;      }
+;;;  }
 ;;; 
 ;;; tmp_error should be checked immediately after sub_function_that_can_fail(),
 ;;; and either cleared or propagated upward. The rule is: after each error, you
@@ -233,24 +231,24 @@
 ;;; assuming errors in sub_function_that_can_fail() are not fatal to
 ;;; my_function_that_can_fail():
 ;;; 
-;;;  1 gboolean
-;;;  2 my_function_that_can_fail (GError **err)
-;;;  3 {
-;;;  4   GError *tmp_error;
-;;;  5 
-;;;  6   g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-;;;  7 
-;;;  8   sub_function_that_can_fail (NULL); /* ignore errors */
-;;;  9 
-;;; 10   tmp_error = NULL;
-;;; 11   other_function_that_can_fail (&tmp_error);
-;;; 12 
-;;; 13   if (tmp_error != NULL)
-;;; 14     {
-;;; 15       g_propagate_error (err, tmp_error);
-;;; 16       return FALSE;
-;;; 17     }
-;;; 18 }
+;;;  gboolean
+;;;  my_function_that_can_fail (GError **err)
+;;;  {
+;;;    GError *tmp_error;
+;;;  
+;;;    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
+;;;  
+;;;    sub_function_that_can_fail (NULL); /* ignore errors */
+;;;  
+;;;    tmp_error = NULL;
+;;;    other_function_that_can_fail (&tmp_error);
+;;;  
+;;;    if (tmp_error != NULL)
+;;;      {
+;;;        g_propagate_error (err, tmp_error);
+;;;        return FALSE;
+;;;      }
+;;;  }
 ;;; 
 ;;; Note that passing NULL for the error location ignores errors; it's
 ;;; equivalent to try { sub_function_that_can_fail(); } catch (...) {} in C++.
@@ -262,13 +260,13 @@
 ;;;     The error domain is called <NAMESPACE>_<MODULE>_ERROR, for example 
 ;;;     G_SPAWN_ERROR or G_THREAD_ERROR:    	
 ;;; 
-;;;      1 #define G_SPAWN_ERROR g_spawn_error_quark ()
-;;;      2
-;;;      3 GQuark
-;;;      4 g_spawn_error_quark (void)
-;;;      5 {
-;;;      6   return g_quark_from_static_string ("g-spawn-error-quark");
-;;;      7 }
+;;;      #define G_SPAWN_ERROR g_spawn_error_quark ()
+;;;     
+;;;      GQuark
+;;;      g_spawn_error_quark (void)
+;;;      {
+;;;        return g_quark_from_static_string ("g-spawn-error-quark");
+;;;      }
 ;;; 
 ;;;     The quark function for the error domain is called
 ;;;     <namespace>_<module>_error_quark, for example g_spawn_error_quark() or
@@ -349,13 +347,13 @@
 ;;; The GError structure contains information about an error that has occurred.
 ;;; 
 ;;; GQuark domain;
-;;; 	error domain, e.g. G_FILE_ERROR
+;;;     error domain, e.g. G_FILE_ERROR
 ;;; 
 ;;; gint code;
-;;; 	error code, e.g. G_FILE_ERROR_NOENT
+;;;     error code, e.g. G_FILE_ERROR_NOENT
 ;;; 
 ;;; gchar *message;
-;;; 	human-readable informative error message
+;;;     human-readable informative error message
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-error
@@ -374,19 +372,19 @@
 ;;; formatted with format.
 ;;; 
 ;;; domain :
-;;; 	error domain
+;;;     error domain
 ;;; 
 ;;; code :
-;;; 	error code
+;;;     error code
 ;;; 
 ;;; format :
-;;; 	printf()-style format for error message
+;;;     printf()-style format for error message
 ;;; 
 ;;; ... :
-;;; 	parameters for message format
+;;;     parameters for message format
 ;;; 
 ;;; Returns :
-;;; 	a new GError
+;;;     a new GError
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -401,16 +399,16 @@
 ;;; control over, that could include printf() escape sequences.
 ;;; 
 ;;; domain :
-;;; 	error domain
+;;;     error domain
 ;;; 
 ;;; code :
-;;; 	error code
+;;;     error code
 ;;; 
 ;;; message :
-;;; 	error message
+;;;     error message
 ;;; 
 ;;; Returns :
-;;; 	a new GError
+;;;     a new GError
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_error_new_literal" g-error-new-literal) :pointer
@@ -432,19 +430,19 @@
 ;;; formatted with format.
 ;;; 
 ;;; domain :
-;;; 	error domain
+;;;     error domain
 ;;; 
 ;;; code :
-;;; 	error code
+;;;     error code
 ;;; 
 ;;; format :
-;;; 	printf()-style format for error message
+;;;     printf()-style format for error message
 ;;; 
 ;;; args :
-;;; 	va_list of parameters for the message format
+;;;     va_list of parameters for the message format
 ;;; 
 ;;; Returns :
-;;; 	a new GError
+;;;     a new GError
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -459,7 +457,7 @@
 ;;; Frees a GError and associated resources.
 ;;; 
 ;;; error :
-;;; 	a GError
+;;;     a GError
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_error_free" g-error-free) :void
@@ -475,10 +473,10 @@
 ;;; Makes a copy of error.
 ;;; 
 ;;; error :
-;;; 	a GError
+;;;     a GError
 ;;; 
 ;;; Returns :
-;;; 	a new GError
+;;;     a new GError
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_error_copy" g-error-copy) :pointer
@@ -495,16 +493,16 @@
 ;;; particular, when error is NULL, FALSE will be returned.
 ;;; 
 ;;; error :
-;;; 	a GError or NULL
+;;;     a GError or NULL
 ;;; 
 ;;; domain :
-;;; 	an error domain
+;;;     an error domain
 ;;; 
 ;;; code :
-;;; 	an error code
+;;;     an error code
 ;;; 
 ;;; Returns :
-;;; 	whether error has domain and code
+;;;     whether error has domain and code
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_error_matches" g-error-matches) :boolean
@@ -527,19 +525,19 @@
 ;;; A new GError is created and assigned to *err.
 ;;; 
 ;;; err :
-;;; 	a return location for a GError, or NULL
+;;;     a return location for a GError, or NULL
 ;;; 
 ;;; domain :
-;;; 	error domain
+;;;     error domain
 ;;; 
 ;;; code :
-;;; 	error code
+;;;     error code
 ;;; 
 ;;; format :
-;;; 	printf()-style format
+;;;     printf()-style format
 ;;; 
 ;;; ... :
-;;; 	args for format
+;;;     args for format
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -559,16 +557,16 @@
 ;;; escape sequences.
 ;;; 
 ;;; err :
-;;; 	a return location for a GError, or NULL
+;;;     a return location for a GError, or NULL
 ;;; 
 ;;; domain :
-;;; 	error domain
+;;;     error domain
 ;;; 
 ;;; code :
-;;; 	error code
+;;;     error code
 ;;; 
 ;;; message :
-;;; 	error message
+;;;     error message
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -590,10 +588,10 @@
 ;;; variable dest points to must be NULL.
 ;;; 
 ;;; dest :
-;;; 	error return location
+;;;     error return location
 ;;; 
 ;;; src :
-;;; 	error to move into the return location
+;;;     error to move into the return location
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_propagate_error" g-propagate-error) :void
@@ -611,7 +609,7 @@
 ;;; *err and sets *err to NULL.
 ;;; 
 ;;; err :
-;;; 	a GError return location
+;;;     a GError return location
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -629,13 +627,13 @@
 ;;; advantage of this feature is up to you.
 ;;; 
 ;;; err :
-;;; 	a return location for a GError, or NULL
+;;;     a return location for a GError, or NULL
 ;;; 
 ;;; format :
-;;; 	printf()-style format string
+;;;     printf()-style format string
 ;;; 
 ;;; ... :
-;;; 	arguments to format
+;;;     arguments to format
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -657,16 +655,16 @@
 ;;; NULL. After the move, add a prefix as with g_prefix_error().
 ;;; 
 ;;; dest :
-;;; 	error return location
+;;;     error return location
 ;;; 
 ;;; src :
-;;; 	error to move into the return location
+;;;     error to move into the return location
 ;;; 
 ;;; format :
-;;; 	printf()-style format string
+;;;     printf()-style format string
 ;;; 
 ;;; ... :
-;;; 	arguments to format
+;;;     arguments to format
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------

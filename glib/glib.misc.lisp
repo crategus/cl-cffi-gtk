@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.misc.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -227,10 +225,10 @@
 ;;; future version of GLib.
 ;;; 
 ;;; glong tv_sec;
-;;; 	seconds
+;;;     seconds
 ;;; 
 ;;; glong tv_usec;
-;;; 	microseconds
+;;;     microseconds
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-time-val
@@ -258,32 +256,32 @@
 ;;; g_spawn_async_with_pipes().
 ;;; 
 ;;; G_SPAWN_LEAVE_DESCRIPTORS_OPEN
-;;; 	the parent's open file descriptors will be inherited by the child;
+;;;     the parent's open file descriptors will be inherited by the child;
 ;;;     otherwise all descriptors except stdin/stdout/stderr will be closed
 ;;;     before calling exec() in the child.
 ;;; 
 ;;; G_SPAWN_DO_NOT_REAP_CHILD
-;;; 	the child will not be automatically reaped; you must use
+;;;     the child will not be automatically reaped; you must use
 ;;;     g_child_watch_add() yourself (or call waitpid() or handle SIGCHLD
 ;;;     yourself), or the child will become a zombie.
 ;;; 
 ;;; G_SPAWN_SEARCH_PATH
-;;; 	argv[0] need not be an absolute path, it will be looked for in the
+;;;     argv[0] need not be an absolute path, it will be looked for in the
 ;;;     user's PATH.
 ;;; 
 ;;; G_SPAWN_STDOUT_TO_DEV_NULL
-;;; 	the child's standard output will be discarded, instead of going to the
+;;;     the child's standard output will be discarded, instead of going to the
 ;;;     same location as the parent's standard output.
 ;;; 
 ;;; G_SPAWN_STDERR_TO_DEV_NULL
-;;; 	the child's standard error will be discarded.
+;;;     the child's standard error will be discarded.
 ;;; 
 ;;; G_SPAWN_CHILD_INHERITS_STDIN
-;;; 	the child will inherit the parent's standard input (by default, the
+;;;     the child will inherit the parent's standard input (by default, the
 ;;;     child's standard input is attached to /dev/null).
 ;;; 
 ;;; G_SPAWN_FILE_AND_ARGV_ZERO
-;;; 	the first element of argv is the file to execute, while the remaining
+;;;     the first element of argv is the file to execute, while the remaining
 ;;;     elements are the actual argument vector to pass to the file. Normally
 ;;;     g_spawn_async_with_pipes() uses argv[0] as the file to execute, and
 ;;;     passes all of argv to the child.
@@ -313,15 +311,15 @@
 ;;; The GString struct contains the public fields of a GString.
 ;;; 
 ;;; gchar *str;
-;;; 	points to the character data. It may move as text is added. The str
+;;;     points to the character data. It may move as text is added. The str
 ;;;     field is null-terminated and so can be used as an ordinary C string.
 ;;; 
 ;;; gsize len;
-;;; 	contains the length of the string, not including the terminating nul
+;;;     contains the length of the string, not including the terminating nul
 ;;;     byte.
 ;;; 
 ;;; gsize allocated_len;
-;;; 	the number of bytes that can be stored in the string before it needs to
+;;;     the number of bytes that can be stored in the string before it needs to
 ;;;     be reallocated. May be larger than len.
 ;;; ----------------------------------------------------------------------------
 
@@ -408,10 +406,10 @@
 ;;; should be freed with g_free() when no longer needed.
 ;;; 
 ;;; str :
-;;; 	the string to duplicate
+;;;     the string to duplicate
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated copy of str
+;;;     a newly-allocated copy of str
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_strdup" g-strdup) :pointer
@@ -430,14 +428,14 @@
 ;;; The GList struct is used for each element in a doubly-linked list.
 ;;; 
 ;;; gpointer data;
-;;; 	holds the element's data, which can be a pointer to any kind of data,
+;;;     holds the element's data, which can be a pointer to any kind of data,
 ;;;     or any integer value using the Type Conversion Macros.
 ;;; 
 ;;; GList *next;
-;;; 	contains the link to the next element in the list.
+;;;     contains the link to the next element in the list.
 ;;; 
 ;;; GList *prev;
-;;; 	contains the link to the previous element in the list.
+;;;     contains the link to the previous element in the list.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %g-list
@@ -489,7 +487,7 @@
 ;;; use g_list_free_full() or free them manually first.
 ;;; 
 ;;; lst :
-;;; 	a GList
+;;;     a GList
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_free" g-list-free) :void
@@ -505,10 +503,10 @@
 ;;; A convenience macro to get the next element in a GList.
 ;;; 
 ;;; list :
-;;; 	an element in a GList.
+;;;     an element in a GList.
 ;;; 
 ;;; Returns :
-;;; 	the next element, or NULL if there are no more elements.
+;;;     the next element, or NULL if there are no more elements.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-list-next (lst)
@@ -530,11 +528,11 @@
 ;;; The GSList struct is used for each element in the singly-linked list.
 ;;; 
 ;;; gpointer data;
-;;; 	holds the element's data, which can be a pointer to any kind of data,
+;;;     holds the element's data, which can be a pointer to any kind of data,
 ;;;     or any integer value using the Type Conversion Macros.
 ;;; 
 ;;; GSList *next;
-;;; 	contains the link to the next element in the list.
+;;;     contains the link to the next element in the list.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %g-slist
@@ -594,7 +592,7 @@
 ;;; g_slist_insert_sorted() functions and so is rarely used on its own.
 ;;; 
 ;;; Returns :
-;;; 	a pointer to the newly-allocated GSList element.
+;;;     a pointer to the newly-allocated GSList element.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_slist_alloc" g-slist-alloc)
@@ -616,7 +614,7 @@
 ;;; use g_slist_free_full() or free them manually first.
 ;;; 
 ;;; lst :
-;;; 	a GSList
+;;;     a GSList
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_slist_free" g-slist-free) :void
@@ -632,10 +630,10 @@
 ;;; A convenience macro to get the next element in a GSList.
 ;;; 
 ;;; slist :
-;;; 	an element in a GSList.
+;;;     an element in a GSList.
 ;;; 
 ;;; Returns :
-;;; 	the next element, or NULL if there are no more elements.
+;;;     the next element, or NULL if there are no more elements.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-slist-next (lst)

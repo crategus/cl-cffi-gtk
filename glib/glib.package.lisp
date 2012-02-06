@@ -1,13 +1,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.package.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,7 +32,6 @@
            #:push-library-version-features
            #:require-library-version
            #:with-catching-to-g-error
-           #:with-g-error ))
+           #:with-g-error))
 
 ;;; --- End of file glib.package.lisp ------------------------------------------
-

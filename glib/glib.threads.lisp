@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.threads.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,7 +32,7 @@
 ;;; 
 ;;; Thread abstraction; including threads, different mutexes, conditions and
 ;;; thread private data
-;;; 	
+;;; 
 ;;; Synopsis
 ;;;
 ;;;    g-cond
@@ -200,7 +198,7 @@
 ;;; Possible errors of thread related functions.
 ;;; 
 ;;; G_THREAD_ERROR_AGAIN
-;;; 	a thread couldn't be created due to resource shortage. Try again later.
+;;;     a thread couldn't be created due to resource shortage. Try again later.
 ;;; ----------------------------------------------------------------------------
 
 (defcenum g-thread-error
@@ -229,16 +227,16 @@
 ;;; on priorities.
 ;;; 
 ;;; G_THREAD_PRIORITY_LOW
-;;; 	a priority lower than normal
+;;;     a priority lower than normal
 ;;; 
 ;;; G_THREAD_PRIORITY_NORMAL
-;;; 	the default priority
+;;;     the default priority
 ;;; 
 ;;; G_THREAD_PRIORITY_HIGH
-;;; 	a priority higher than normal
+;;;     a priority higher than normal
 ;;; 
 ;;; G_THREAD_PRIORITY_URGENT
-;;; 	the highest priority
+;;;     the highest priority
 ;;; ----------------------------------------------------------------------------
 
 (defcenum g-thread-priority
@@ -311,7 +309,7 @@
 ;;; without having to link with the thread libraries.
 ;;; 
 ;;; vtable :
-;;; 	a function table of type GThreadFunctions, that provides the entry
+;;;     a function table of type GThreadFunctions, that provides the entry
 ;;;     points to the thread system to be used.
 ;;; ----------------------------------------------------------------------------
 
@@ -328,7 +326,7 @@
 ;;; Indicates if g_thread_init() has been called.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if threads have been initialized.
+;;;     TRUE if threads have been initialized.
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -345,7 +343,7 @@
 ;;; This functions returns the GThread corresponding to the calling thread.
 ;;; 
 ;;; Returns :
-;;; 	the current thread.
+;;;     the current thread.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_thread_self" g-thread-self) (:pointer g-thread))
@@ -365,10 +363,10 @@
 ;;; function.
 ;;; 
 ;;; thread :
-;;; 	a GThread to be waited for.
+;;;     a GThread to be waited for.
 ;;; 
 ;;; Returns :
-;;; 	the return value of the thread.
+;;;     the return value of the thread.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_thread_join" g-thread-join) :pointer
@@ -392,10 +390,10 @@
 ;;; priorities.
 ;;; 
 ;;; thread :
-;;; 	a GThread.
+;;;     a GThread.
 ;;; 
 ;;; priority :
-;;; 	a new priority for thread.
+;;;     a new priority for thread.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_thread_set_priority" g-thread-set-priority) :void
@@ -441,7 +439,7 @@
 ;;;                                    GThreadPriority       priority);
 ;;;   void      (*thread_self)        (gpointer              thread);
 ;;;   gboolean  (*thread_equal)       (gpointer              thread1,
-;;; 				   gpointer              thread2);
+;;;                                    gpointer              thread2);
 ;;; };
 ;;; 
 ;;; This function table is used by g_thread_init() to initialize the thread
@@ -455,67 +453,67 @@
 ;;; Do not use this struct unless you know what you are doing.
 ;;; 
 ;;; mutex_new ()
-;;; 	virtual function pointer for g_mutex_new()
+;;;     virtual function pointer for g_mutex_new()
 ;;; 
 ;;; mutex_lock ()
-;;; 	virtual function pointer for g_mutex_lock()
+;;;     virtual function pointer for g_mutex_lock()
 ;;; 
 ;;; mutex_trylock ()
-;;; 	virtual function pointer for g_mutex_trylock()
+;;;     virtual function pointer for g_mutex_trylock()
 ;;; 
 ;;; mutex_unlock ()
-;;; 	virtual function pointer for g_mutex_unlock()
+;;;     virtual function pointer for g_mutex_unlock()
 ;;; 
 ;;; mutex_free ()
-;;; 	virtual function pointer for g_mutex_free()
+;;;     virtual function pointer for g_mutex_free()
 ;;; 
 ;;; cond_new ()
-;;; 	virtual function pointer for g_cond_new()
+;;;     virtual function pointer for g_cond_new()
 ;;; 
 ;;; cond_signal ()
-;;; 	virtual function pointer for g_cond_signal()
+;;;     virtual function pointer for g_cond_signal()
 ;;; 
 ;;; cond_broadcast ()
-;;; 	virtual function pointer for g_cond_broadcast()
+;;;     virtual function pointer for g_cond_broadcast()
 ;;; 
 ;;; cond_wait ()
-;;; 	virtual function pointer for g_cond_wait()
+;;;     virtual function pointer for g_cond_wait()
 ;;; 
 ;;; cond_timed_wait ()
-;;; 	virtual function pointer for g_cond_timed_wait()
+;;;     virtual function pointer for g_cond_timed_wait()
 ;;; 
 ;;; cond_free ()
-;;; 	virtual function pointer for g_cond_free()
+;;;     virtual function pointer for g_cond_free()
 ;;; 
 ;;; private_new ()
-;;; 	virtual function pointer for g_private_new()
+;;;     virtual function pointer for g_private_new()
 ;;; 
 ;;; private_get ()
-;;; 	virtual function pointer for g_private_get()
+;;;     virtual function pointer for g_private_get()
 ;;; 
 ;;; private_set ()
-;;; 	virtual function pointer for g_private_set()
+;;;     virtual function pointer for g_private_set()
 ;;; 
 ;;; thread_create ()
-;;; 	virtual function pointer for g_thread_create()
+;;;     virtual function pointer for g_thread_create()
 ;;; 
 ;;; thread_yield ()
-;;; 	virtual function pointer for g_thread_yield()
+;;;     virtual function pointer for g_thread_yield()
 ;;; 
 ;;; thread_join ()
-;;; 	virtual function pointer for g_thread_join()
+;;;     virtual function pointer for g_thread_join()
 ;;; 
 ;;; thread_exit ()
-;;; 	virtual function pointer for g_thread_exit()
+;;;     virtual function pointer for g_thread_exit()
 ;;; 
 ;;; thread_set_priority ()
-;;; 	virtual function pointer for g_thread_set_priority()
+;;;     virtual function pointer for g_thread_set_priority()
 ;;; 
 ;;; thread_self ()
-;;; 	virtual function pointer for g_thread_self()
+;;;     virtual function pointer for g_thread_self()
 ;;; 
 ;;; thread_equal ()
-;;; 	used internally by recursive mutex locks and by some assertion checks
+;;;     used internally by recursive mutex locks and by some assertion checks
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -532,7 +530,7 @@
 ;;; can however use it as if it was a function.
 ;;; 
 ;;; Returns :
-;;; 	TRUE, if the thread system is initialized.
+;;;     TRUE, if the thread system is initialized.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -546,10 +544,10 @@
 ;;; g_thread_create_full().
 ;;; 
 ;;; data :
-;;; 	data passed to the thread.
+;;;     data passed to the thread.
 ;;; 
 ;;; Returns :
-;;; 	the return value of the thread, which will be returned by
+;;;     the return value of the thread, which will be returned by
 ;;;     g_thread_join().
 ;;; ----------------------------------------------------------------------------
 
@@ -574,19 +572,19 @@
 ;;; is set, if and only if the function returns NULL.
 ;;; 
 ;;; func :
-;;; 	a function to execute in the new thread.
+;;;     a function to execute in the new thread.
 ;;; 
 ;;; data :
-;;; 	an argument to supply to the new thread.
+;;;     an argument to supply to the new thread.
 ;;; 
 ;;; joinable :
-;;; 	should this thread be joinable?
+;;;     should this thread be joinable?
 ;;; 
 ;;; error :
-;;; 	return location for error.
+;;;     return location for error.
 ;;; 
 ;;; Returns :
-;;; 	the new GThread on success.
+;;;     the new GThread on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -635,28 +633,28 @@
 ;;; arguments, as they should only be used in cases in which it is unavoidable.
 ;;; 
 ;;; func :
-;;; 	a function to execute in the new thread.
+;;;     a function to execute in the new thread.
 ;;; 
 ;;; data :
-;;; 	an argument to supply to the new thread.
+;;;     an argument to supply to the new thread.
 ;;; 
 ;;; stack_size :
-;;; 	a stack size for the new thread.
+;;;     a stack size for the new thread.
 ;;; 
 ;;; joinable :
-;;; 	should this thread be joinable?
+;;;     should this thread be joinable?
 ;;; 
 ;;; bound :
-;;; 	should this thread be bound to a system thread?
+;;;     should this thread be bound to a system thread?
 ;;; 
 ;;; priority :
-;;; 	a priority for the thread.
+;;;     a priority for the thread.
 ;;; 
 ;;; error :
-;;; 	return location for error.
+;;;     return location for error.
 ;;; 
 ;;; Returns :
-;;; 	the new GThread on success.
+;;;     the new GThread on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -696,7 +694,7 @@
 ;;; will mess up the bookkeeping and lead to funny and unwanted results.
 ;;; 
 ;;; retval :
-;;; 	the return value of this thread.
+;;;     the return value of this thread.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -716,10 +714,10 @@
 ;;; which is quadratic in the number of existing threads.
 ;;; 
 ;;; thread_func :
-;;; 	function to call for all GThread structures
+;;;     function to call for all GThread structures
 ;;; 
 ;;; user_data :
-;;; 	second argument to thread_func
+;;;     second argument to thread_func
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------

@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.main-loop.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; The Main Event Loop
 ;;; 
 ;;; Manages all available sources of events
-;;; 	
+;;; 
 ;;; Synopsis
 ;;;
 ;;;     +g-priority-high+
@@ -319,10 +317,10 @@
 ;;; #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
 ;;;   gint64 fd;
 ;;; #else
-;;;   gint		fd;
+;;;   gint    fd;
 ;;; #endif
-;;;   gushort 	events;
-;;;   gushort 	revents;
+;;;   gushort events;
+;;;   gushort revents;
 ;;; };
 ;;; 
 ;;; gint64 fd;
@@ -330,13 +328,13 @@
 ;;; gint fd;
 ;;; 
 ;;; gushort events;
-;;; 	a bitwise combination from GIOCondition, specifying which events should
+;;;     a bitwise combination from GIOCondition, specifying which events should
 ;;;     be polled for. Typically for reading from a file descriptor you would
 ;;;     use G_IO_IN | G_IO_HUP | G_IO_ERR, and for writing you would use
 ;;;     G_IO_OUT | G_IO_ERR.
 ;;; 
 ;;; gushort revents;
-;;; 	a bitwise combination of flags from GIOCondition, returned from the
+;;;     a bitwise combination of flags from GIOCondition, returned from the
 ;;;     poll() function to indicate which events occurred.
 ;;; ----------------------------------------------------------------------------
 
@@ -399,7 +397,7 @@
 ;;; been met, and returns TRUE if so.
 ;;; 
 ;;; prepare ()
-;;; 	Called before all the file descriptors are polled. If the source can
+;;;     Called before all the file descriptors are polled. If the source can
 ;;;     determine that it is ready here (without waiting for the results of the
 ;;;     poll() call) it should return TRUE. It can also return a timeout_ value
 ;;;     which should be the maximum timeout (in milliseconds) which should be
@@ -408,13 +406,13 @@
 ;;;     timeout_ values returned which were >= 0.
 ;;; 
 ;;; check ()
-;;; 	Called after all the file descriptors are polled. The source should
+;;;     Called after all the file descriptors are polled. The source should
 ;;;     return TRUE if it is ready to be dispatched. Note that some time may
 ;;;     have passed since the previous prepare function was called, so the
 ;;;     source should be checked again here.
 ;;; 
 ;;; dispatch ()
-;;; 	Called to dispatch the event source, after it has returned TRUE in
+;;;     Called to dispatch the event source, after it has returned TRUE in
 ;;;     either its prepare or its check function. The dispatch function is
 ;;;     passed in a callback function and data. The callback function may be
 ;;;     NULL if the source was never connected to a callback using
@@ -423,7 +421,7 @@
 ;;;     for this type of event source.
 ;;; 
 ;;; finalize ()
-;;; 	Called when the source is finalized.
+;;;     Called when the source is finalized.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-source-funcs
@@ -436,7 +434,7 @@
 
 (export 'g-source-funcs)
 
-;;; ---------------------------------------------------------------------------- 	
+;;; ----------------------------------------------------------------------------
 ;;; struct GSourceCallbackFuncs
 ;;; 
 ;;; struct GSourceCallbackFuncs {
@@ -452,13 +450,13 @@
 ;;; objects.
 ;;; 
 ;;; ref ()
-;;; 	Called when a reference is added to the callback object
+;;;     Called when a reference is added to the callback object
 ;;; 
 ;;; unref ()
-;;; 	Called when a reference to the callback object is dropped
+;;;     Called when a reference to the callback object is dropped
 ;;; 
 ;;; get ()
-;;; 	Called to extract the callback function and data from the callback
+;;;     Called to extract the callback function and data from the callback
 ;;;     object.
 ;;; ----------------------------------------------------------------------------
 
@@ -477,14 +475,14 @@
 ;;; Creates a new GMainLoop structure.
 ;;; 
 ;;; context :
-;;; 	a GMainContext (if NULL, the default context will be used).
+;;;     a GMainContext (if NULL, the default context will be used).
 ;;; 
 ;;; is_running :
-;;; 	set to TRUE to indicate that the loop is running. This is not very
+;;;     set to TRUE to indicate that the loop is running. This is not very
 ;;;     important since calling g_main_loop_run() will set this to TRUE anyway.
 ;;; 
 ;;; Returns :
-;;; 	a new GMainLoop.
+;;;     a new GMainLoop.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_new" g-main-loop-new) (:pointer g-main-loop)
@@ -501,10 +499,10 @@
 ;;; Increases the reference count on a GMainLoop object by one.
 ;;; 
 ;;; loop :
-;;; 	a GMainLoop
+;;;     a GMainLoop
 ;;; 
 ;;; Returns :
-;;; 	loop
+;;;     loop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_ref" g-main-loop-ref) (:pointer g-main-loop)
@@ -521,7 +519,7 @@
 ;;; is zero, free the loop and free all associated memory.
 ;;; 
 ;;; loop :
-;;; 	a GMainLoop
+;;;     a GMainLoop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_unref" g-main-loop-unref) (:pointer g-main-loop)
@@ -539,7 +537,7 @@
 ;;; from the loop, otherwise it will simply wait.
 ;;; 
 ;;; loop :
-;;; 	a GMainLoop
+;;;     a GMainLoop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_run" g-main-loop-run) :void
@@ -559,7 +557,7 @@
 ;;; is called will still be executed.
 ;;; 
 ;;; loop :
-;;; 	a GMainLoop
+;;;     a GMainLoop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_quit" g-main-loop-quit) :void
@@ -575,10 +573,10 @@
 ;;; Checks to see if the main loop is currently being run via g_main_loop_run().
 ;;; 
 ;;; loop :
-;;; 	a GMainLoop.
+;;;     a GMainLoop.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the mainloop is currently being run.
+;;;     TRUE if the mainloop is currently being run.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_is_running" g-main-loop-is-running) :boolean
@@ -594,10 +592,10 @@
 ;;; Returns the GMainContext of loop.
 ;;; 
 ;;; loop :
-;;; 	a GMainLoop.
+;;;     a GMainLoop.
 ;;; 
 ;;; Returns :
-;;; 	the GMainContext of loop.
+;;;     the GMainContext of loop.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_get_context" g-main-loop-get-context)
@@ -614,7 +612,7 @@
 ;;; Creates a new GMainContext structure.
 ;;; 
 ;;; Returns :
-;;; 	the new GMainContext
+;;;     the new GMainContext
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_new" g-main-context-new) (:pointer g-main-context))
@@ -629,10 +627,10 @@
 ;;; Increases the reference count on a GMainContext object by one.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; Returns :
-;;; 	the context that was passed in (since 2.6)
+;;;     the context that was passed in (since 2.6)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_ref" g-main-context-ref) (:pointer g-main-context)
@@ -649,7 +647,7 @@
 ;;; result is zero, free the context and free all associated memory.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_unref" g-main-context-unref) (:pointer g-main-context)
@@ -668,7 +666,7 @@
 ;;; g_main_context_get_thread_default().
 ;;; 
 ;;; Returns :
-;;; 	the global default main context.
+;;;     the global default main context.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_default" g-main-context-default)
@@ -695,13 +693,13 @@
 ;;; interrupted for other reasons than an event source becoming ready.
 ;;; 
 ;;; context :
-;;; 	a GMainContext (if NULL, the default context will be used)
+;;;     a GMainContext (if NULL, the default context will be used)
 ;;; 
 ;;; may_block :
-;;; 	whether the call may block.
+;;;     whether the call may block.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if events were dispatched.
+;;;     TRUE if events were dispatched.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_iteration" g-main-context-iteration) :boolean
@@ -718,10 +716,10 @@
 ;;; Checks if any sources have pending events for the given context.
 ;;; 
 ;;; context :
-;;; 	a GMainContext (if NULL, the default context will be used)
+;;;     a GMainContext (if NULL, the default context will be used)
 ;;; 
 ;;; Returns :
-;;; 	TRUE if events are pending.
+;;;     TRUE if events are pending.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_pending" g-main-context-pending) :boolean
@@ -738,13 +736,13 @@
 ;;; Finds a GSource given a pair of context and ID.
 ;;; 
 ;;; context :
-;;; 	a GMainContext (if NULL, the default context will be used)
+;;;     a GMainContext (if NULL, the default context will be used)
 ;;; 
 ;;; source_id :
-;;; 	the source ID, as returned by g_source_get_id().
+;;;     the source ID, as returned by g_source_get_id().
 ;;; 
 ;;; Returns :
-;;; 	the GSource if found, otherwise, NULL.
+;;;     the GSource if found, otherwise, NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_find_source_by_id" g-main-context-find-source-by-id)
@@ -764,13 +762,13 @@
 ;;; sources exist with the same user data, the first one found will be returned.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; user_data :
-;;; 	the user_data for the callback.
+;;;     the user_data for the callback.
 ;;; 
 ;;; Returns :
-;;; 	the source, if one was found, otherwise NULL.
+;;;     the source, if one was found, otherwise NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_find_source_by_user_data"
@@ -794,16 +792,16 @@
 ;;; found will be returned.
 ;;; 
 ;;; context :
-;;; 	a GMainContext (if NULL, the default context will be used).
+;;;     a GMainContext (if NULL, the default context will be used).
 ;;; 
 ;;; funcs :
-;;; 	the source_funcs passed to g_source_new().
+;;;     the source_funcs passed to g_source_new().
 ;;; 
 ;;; user_data :
-;;; 	the user data from the callback.
+;;;     the user data from the callback.
 ;;; 
 ;;; Returns :
-;;; 	the source, if one was found, otherwise NULL.
+;;;     the source, if one was found, otherwise NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_find_source_by_funcs_user_data"
@@ -824,7 +822,7 @@
 ;;; continue the iteration process.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_wakeup" g-main-context-wakeup) :void
@@ -848,10 +846,10 @@
 ;;; g_main_context_dispatch().
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the operation succeeded, and this thread is now the owner of
+;;;     TRUE if the operation succeeded, and this thread is now the owner of
 ;;;     context.
 ;;; ----------------------------------------------------------------------------
 
@@ -871,7 +869,7 @@
 ;;; many times as it was acquired.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_release" g-main-context-release) :void
@@ -889,10 +887,10 @@
 ;;; may be blocking to get ownership of context.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; Returns :
-;;; 	TRUE if current thread is owner of context.
+;;;     TRUE if current thread is owner of context.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -915,16 +913,16 @@
 ;;; cond is signaled, then try again (once) to become the owner.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; cond :
-;;; 	a condition variable
+;;;     a condition variable
 ;;; 
 ;;; mutex :
-;;; 	a mutex, currently held
+;;;     a mutex, currently held
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the operation succeeded, and this thread is now the owner of
+;;;     TRUE if the operation succeeded, and this thread is now the owner of
 ;;;     context.
 ;;; ----------------------------------------------------------------------------
 
@@ -945,13 +943,13 @@
 ;;; polling is determined by calling g_main_context_query().
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; priority :
-;;; 	location to store priority of highest priority source already ready.
+;;;     location to store priority of highest priority source already ready.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if some source is ready to be dispatched prior to polling.
+;;;     TRUE if some source is ready to be dispatched prior to polling.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_prepare" g-main-context-prepare) :boolean
@@ -972,22 +970,22 @@
 ;;; Determines information necessary to poll this main loop.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; max_priority :
-;;; 	maximum priority source to check
+;;;     maximum priority source to check
 ;;; 
 ;;; timeout_ :
-;;; 	location to store timeout to be used in polling.
+;;;     location to store timeout to be used in polling.
 ;;; 
 ;;; fds :
-;;; 	location to store GPollFD records that need to be polled.
+;;;     location to store GPollFD records that need to be polled.
 ;;; 
 ;;; n_fds :
-;;; 	length of fds.
+;;;     length of fds.
 ;;; 
 ;;; Returns :
-;;; 	the number of records actually stored in fds, or, if more than n_fds
+;;;     the number of records actually stored in fds, or, if more than n_fds
 ;;;     records need to be stored, the number of records that need to be stored.
 ;;; ----------------------------------------------------------------------------
 
@@ -1011,20 +1009,20 @@
 ;;; Passes the results of polling back to the main loop.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; max_priority :
-;;; 	the maximum numerical priority of sources to check
+;;;     the maximum numerical priority of sources to check
 ;;; 
 ;;; fds :
-;;; 	array of GPollFD's that was passed to the last call to
+;;;     array of GPollFD's that was passed to the last call to
 ;;;     g_main_context_query().
 ;;; 
 ;;; n_fds :
-;;; 	return value of g_main_context_query()
+;;;     return value of g_main_context_query()
 ;;; 
 ;;; Returns :
-;;; 	TRUE if some sources are ready to be dispatched.
+;;;     TRUE if some sources are ready to be dispatched.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_check" g-main-context-check) :int
@@ -1043,7 +1041,7 @@
 ;;; Dispatches all pending sources.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_dispatch" g-main-context-dispatch) :void
@@ -1065,10 +1063,10 @@
 ;;; an external event loop.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; func :
-;;; 	the function to call to poll all file descriptors
+;;;     the function to call to poll all file descriptors
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_set_poll_func" g-main-context-set-poll-func) :void
@@ -1085,10 +1083,10 @@
 ;;; Gets the poll function set by g_main_context_set_poll_func().
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; Returns :
-;;; 	the poll function
+;;;     the poll function
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_get_poll_func" g-main-context-get-poll-func) :pointer
@@ -1105,17 +1103,17 @@
 ;;; The semantics of the function should match those of the poll() system call.
 ;;; 
 ;;; ufds :
-;;; 	an array of GPollFD elements
+;;;     an array of GPollFD elements
 ;;; 
 ;;; nfsd :
-;;; 	the number of elements in ufds
+;;;     the number of elements in ufds
 ;;; 
 ;;; timeout_ :
-;;; 	the maximum time to wait for an event of the file descriptors. A
+;;;     the maximum time to wait for an event of the file descriptors. A
 ;;;     negative value indicates an infinite timeout.
 ;;; 
 ;;; Returns :
-;;; 	the number of GPollFD elements which have events or errors reported,
+;;;     the number of GPollFD elements which have events or errors reported,
 ;;;     or -1 if an error occurred.
 ;;; ----------------------------------------------------------------------------
 
@@ -1131,14 +1129,14 @@
 ;;; source will use g_source_add_poll() instead.
 ;;; 
 ;;; context :
-;;; 	a GMainContext (or NULL for the default context)
+;;;     a GMainContext (or NULL for the default context)
 ;;; 
 ;;; fd :
-;;; 	a GPollFD structure holding information about a file descriptor to
+;;;     a GPollFD structure holding information about a file descriptor to
 ;;;     watch.
 ;;; 
 ;;; priority :
-;;; 	the priority for this file descriptor which should be the same as the
+;;;     the priority for this file descriptor which should be the same as the
 ;;;     priority used for g_source_attach() to ensure that the file descriptor
 ;;;     is polled whenever the results may be needed.
 ;;; ----------------------------------------------------------------------------
@@ -1159,10 +1157,10 @@
 ;;; a particular context.
 ;;; 
 ;;; context :
-;;; 	a GMainContext
+;;;     a GMainContext
 ;;; 
 ;;; fd :
-;;; 	a GPollFD descriptor previously added with g_main_context_add_poll()
+;;;     a GPollFD descriptor previously added with g_main_context_add_poll()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_remove_poll" g-main-context-remove-poll) :void
@@ -1270,7 +1268,7 @@
 ;;;       work to do.
 ;;; 
 ;;; Returns :
-;;; 	The main loop recursion level in the current thread
+;;;     The main loop recursion level in the current thread
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_depth" g-main-depth) :int)
@@ -1285,7 +1283,7 @@
 ;;; Returns the currently firing source for this thread.
 ;;; 
 ;;; Returns :
-;;; 	The currently firing source or NULL.
+;;;     The currently firing source or NULL.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -1322,13 +1320,13 @@
 ;;; prevent this call from returning).
 ;;; 
 ;;; context :
-;;; 	a GMainContext, or NULL.
+;;;     a GMainContext, or NULL.
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -1355,19 +1353,19 @@
 ;;; with any particular context acquired.
 ;;; 
 ;;; context :
-;;; 	a GMainContext, or NULL. [allow-none]
+;;;     a GMainContext, or NULL. [allow-none]
 ;;; 
 ;;; priority :
-;;; 	the priority at which to run function
+;;;     the priority at which to run function
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	a function to call when data is no longer in use, or NULL.
+;;;     a function to call when data is no longer in use, or NULL.
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -1387,7 +1385,7 @@
 ;;; this will always return NULL if threads are not initialized.)
 ;;; 
 ;;; Returns :
-;;; 	the thread-default GMainContext, or NULL if the thread-default context
+;;;     the thread-default GMainContext, or NULL if the thread-default context
 ;;;     is the global default context. [transfer none]
 ;;; 
 ;;; Since 2.22
@@ -1426,7 +1424,7 @@
 ;;; g_file_supports_thread_contexts().
 ;;; 
 ;;; context :
-;;; 	a GMainContext, or NULL for the global default context
+;;;     a GMainContext, or NULL for the global default context
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -1442,7 +1440,7 @@
 ;;; on the top of the stack).
 ;;; 
 ;;; context :
-;;; 	a GMainContext object, or NULL
+;;;     a GMainContext object, or NULL
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -1463,10 +1461,10 @@
 ;;; See g_get_monotonic_time().
 ;;; 
 ;;; interval :
-;;; 	the timeout interval in milliseconds.
+;;;     the timeout interval in milliseconds.
 ;;; 
 ;;; Returns :
-;;; 	the newly-created timeout source
+;;;     the newly-created timeout source
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_timeout_source_new" g-timeout-source-new) (:pointer g-source)
@@ -1491,10 +1489,10 @@
 ;;; See g_get_monotonic_time().
 ;;; 
 ;;; interval :
-;;; 	the timeout interval in seconds
+;;;     the timeout interval in seconds
 ;;; 
 ;;; Returns :
-;;; 	the newly-created timeout source
+;;;     the newly-created timeout source
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -1535,17 +1533,17 @@
 ;;; See g_get_monotonic_time().
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in milliseconds (1/1000ths of
+;;;     the time between calls to the function, in milliseconds (1/1000ths of
 ;;;     a second)
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_timeout_add" g-timeout-add) :uint
@@ -1584,24 +1582,24 @@
 ;;; See g_get_monotonic_time().
 ;;; 
 ;;; priority :
-;;; 	the priority of the timeout source. Typically this will be in the range
+;;;     the priority of the timeout source. Typically this will be in the range
 ;;;     between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in milliseconds (1/1000ths of
+;;;     the time between calls to the function, in milliseconds (1/1000ths of
 ;;;     a second)
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the timeout is removed, or NULL
+;;;     function to call when the timeout is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source. Rename to: g_timeout_add
+;;;     the ID (greater than 0) of the event source. Rename to: g_timeout_add
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_timeout_add_full" g-timeout-add-full) :uint
@@ -1638,16 +1636,16 @@
 ;;; See g_get_monotonic_time().
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in seconds
+;;;     the time between calls to the function, in seconds
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -1703,23 +1701,23 @@
 ;;; See g_get_monotonic_time().
 ;;; 
 ;;; priority :
-;;; 	the priority of the timeout source. Typically this will be in the range
+;;;     the priority of the timeout source. Typically this will be in the range
 ;;;     between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
 ;;; 
 ;;; interval :
-;;; 	the time between calls to the function, in seconds
+;;;     the time between calls to the function, in seconds
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the timeout is removed, or NULL
+;;;     function to call when the timeout is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source.
 ;;;     Rename to: g_timeout_add_seconds
 ;;; 
 ;;; Since 2.14
@@ -1748,7 +1746,7 @@
 ;;; G_PRIORITY_DEFAULT.
 ;;; 
 ;;; Returns :
-;;; 	the newly-created idle source
+;;;     the newly-created idle source
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_idle_source_new" g-idle-source-new) (:pointer g-source))
@@ -1769,13 +1767,13 @@
 ;;; these steps manually if you need greater control.
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function.
+;;;     data to pass to function.
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_idle_add" g-idle-add) :uint
@@ -1801,20 +1799,20 @@
 ;;; these steps manually if you need greater control.
 ;;; 
 ;;; priority :
-;;; 	the priority of the idle source. Typically this will be in the range
+;;;     the priority of the idle source. Typically this will be in the range
 ;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the idle is removed, or NULL
+;;;     function to call when the idle is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source. Rename to: g_idle_add
+;;;     the ID (greater than 0) of the event source. Rename to: g_idle_add
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_idle_add_full" g-idle-add-full) :uint
@@ -1833,10 +1831,10 @@
 ;;; Removes the idle function with the given data.
 ;;; 
 ;;; data :
-;;; 	the data for the idle source's callback.
+;;;     the data for the idle source's callback.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if an idle source was found and removed.
+;;;     TRUE if an idle source was found and removed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_idle_remove_by_data" g-idle-remove-by-data) :boolean
@@ -1865,14 +1863,14 @@
 ;;; The type of functions to be called when a child exists.
 ;;; 
 ;;; pid :
-;;; 	the process id of the child process
+;;;     the process id of the child process
 ;;; 
 ;;; status :
-;;; 	Status information about the child process, see waitpid(2) for more
+;;;     Status information about the child process, see waitpid(2) for more
 ;;;     information about this field
 ;;; 
 ;;; user_data :
-;;; 	user data passed to g_child_watch_add()
+;;;     user data passed to g_child_watch_add()
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1900,11 +1898,11 @@
 ;;; pids will still work fine.
 ;;; 
 ;;; pid :
-;;; 	process to watch. On POSIX the pid of a child process. On Windows a
+;;;     process to watch. On POSIX the pid of a child process. On Windows a
 ;;;     handle for a process (which doesn't have to be a child).
 ;;; 
 ;;; Returns :
-;;; 	the newly-created child watch source
+;;;     the newly-created child watch source
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1937,17 +1935,17 @@
 ;;; these steps manually if you need greater control.
 ;;; 
 ;;; pid :
-;;; 	process id to watch. On POSIX the pid of a child process. On Windows a
+;;;     process id to watch. On POSIX the pid of a child process. On Windows a
 ;;;     handle for a process (which doesn't have to be a child).
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1982,24 +1980,24 @@
 ;;; do these steps manually if you need greater control.
 ;;; 
 ;;; priority :
-;;; 	the priority of the idle source. Typically this will be in the range
+;;;     the priority of the idle source. Typically this will be in the range
 ;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
 ;;; 
 ;;; pid :
-;;; 	process to watch. On POSIX the pid of a child process. On Windows a
+;;;     process to watch. On POSIX the pid of a child process. On Windows a
 ;;;     handle for a process (which doesn't have to be a child).
 ;;; 
 ;;; function :
-;;; 	function to call
+;;;     function to call
 ;;; 
 ;;; data :
-;;; 	data to pass to function
+;;;     data to pass to function
 ;;; 
 ;;; notify :
-;;; 	function to call when the idle is removed, or NULL
+;;;     function to call when the idle is removed, or NULL
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) of the event source.
+;;;     the ID (greater than 0) of the event source.
 ;;;     Rename to: g_child_watch_add
 ;;; 
 ;;; Since 2.4
@@ -2029,16 +2027,16 @@
 ;;; g_io_channel_win32_make_pollfd().
 ;;; 
 ;;; fds :
-;;; 	file descriptors to poll
+;;;     file descriptors to poll
 ;;; 
 ;;; nfds :
-;;; 	the number of file descriptors in fds
+;;;     the number of file descriptors in fds
 ;;; 
 ;;; timeout :
-;;; 	amount of time to wait, in milliseconds, or -1 to wait forever
+;;;     amount of time to wait, in milliseconds, or -1 to wait forever
 ;;; 
 ;;; Returns :
-;;; 	the number of entries in fds whose revents fields were filled in, or 0
+;;;     the number of entries in fds whose revents fields were filled in, or 0
 ;;;     if the operation timed out, or -1 on error or if the call was
 ;;;     interrupted.
 ;;; 
@@ -2079,13 +2077,13 @@
 ;;; be added to one with g_source_attach() before it will be executed.
 ;;; 
 ;;; source_funcs :
-;;; 	structure containing functions that implement the sources behavior.
+;;;     structure containing functions that implement the sources behavior.
 ;;; 
 ;;; struct_size :
-;;; 	size of the GSource structure to create.
+;;;     size of the GSource structure to create.
 ;;; 
 ;;; Returns :
-;;; 	the newly-created GSource.
+;;;     the newly-created GSource.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_new" g-source-new) (:pointer g-source)
@@ -2102,10 +2100,10 @@
 ;;; Increases the reference count on a source by one.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	source
+;;;     source
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_ref" g-source-ref) (:pointer g-source)
@@ -2122,7 +2120,7 @@
 ;;; reference count is zero the source and associated memory will be destroyed.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_unref" g-source-unref) :void
@@ -2139,10 +2137,10 @@
 ;;; of an unattached source.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; funcs :
-;;; 	the new GSourceFuncs
+;;;     the new GSourceFuncs
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -2162,13 +2160,13 @@
 ;;; Remove it by calling g_source_destroy().
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; context :
-;;; 	a GMainContext (if NULL, the default context will be used)
+;;;     a GMainContext (if NULL, the default context will be used)
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) for the source within the GMainContext.
+;;;     the ID (greater than 0) for the source within the GMainContext.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_attach" g-source-attach) :uint
@@ -2186,7 +2184,7 @@
 ;;; The source cannot be subsequently added to another context.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_destroy" g-source-destroy) :void
@@ -2256,10 +2254,10 @@
 ;;; 14 }
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the source has been destroyed
+;;;     TRUE if the source has been destroyed
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -2279,10 +2277,10 @@
 ;;; higher (numerically smaller) priority are ready to be dispatched.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; priority :
-;;; 	the new priority.
+;;;     the new priority.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_set_priority" g-source-set-priority) :void
@@ -2299,10 +2297,10 @@
 ;;; Gets the priority of a source.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	the priority of the source
+;;;     the priority of the source
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_get_priority" g-source-get-priority) :int
@@ -2321,10 +2319,10 @@
 ;;; dispatch function returns.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; can_recurse :
-;;; 	whether recursion is allowed for this source
+;;;     whether recursion is allowed for this source
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_set_can_recurse" g-source-set-can-recurse) :void
@@ -2342,10 +2340,10 @@
 ;;; See g_source_set_can_recurse().
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	whether recursion is allowed.
+;;;     whether recursion is allowed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_get_can_recurse" g-source-get-can-recurse) :boolean
@@ -2364,10 +2362,10 @@
 ;;; g_main_context_find_source_by_id().
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	the ID (greater than 0) for the source
+;;;     the ID (greater than 0) for the source
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_get_id" g-source-get-id) :uint
@@ -2384,10 +2382,10 @@
 ;;; be NULL if it has never been set with g_source_set_name().
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	the name of the source
+;;;     the name of the source
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2412,10 +2410,10 @@
 ;;; event type in the source name.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; name :
-;;; 	debug name for the source
+;;;     debug name for the source
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2433,10 +2431,10 @@
 ;;; g_idle_add(), g_timeout_add(), etc.
 ;;; 
 ;;; tag :
-;;; 	a GSource ID
+;;;     a GSource ID
 ;;; 
 ;;; name :
-;;; 	debug name for the source
+;;;     debug name for the source
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -2452,10 +2450,10 @@
 ;;; function on a destroyed source is an error.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	the GMainContext with which the source is associated, or NULL if the
+;;;     the GMainContext with which the source is associated, or NULL if the
 ;;;     context has not yet been added to a source. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
@@ -2482,16 +2480,16 @@
 ;;; the type of source you are using.
 ;;; 
 ;;; source :
-;;; 	the source
+;;;     the source
 ;;; 
 ;;; func :
-;;; 	a callback function
+;;;     a callback function
 ;;; 
 ;;; data :
-;;; 	the data to pass to callback function
+;;;     the data to pass to callback function
 ;;; 
 ;;; notify :
-;;; 	a function to call when data is no longer in use, or NULL.
+;;;     a function to call when data is no longer in use, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_set_callback" g-source-set-callback) :void
@@ -2511,11 +2509,11 @@
 ;;; g_timeout_add_full(), g_idle_add(), and g_idle_add_full().
 ;;; 
 ;;; user_data :
-;;; 	data passed to the function, set when the source was created with one
+;;;     data passed to the function, set when the source was created with one
 ;;;     of the above functions
 ;;; 
 ;;; Returns :
-;;; 	FALSE if the source should be removed
+;;;     FALSE if the source should be removed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2532,13 +2530,13 @@
 ;;; once more than callback_funcs->ref.
 ;;; 
 ;;; source :
-;;; 	the source
+;;;     the source
 ;;; 
 ;;; callback_data :
-;;; 	pointer to callback data "object"
+;;;     pointer to callback data "object"
 ;;; 
 ;;; callback_funcs :
-;;; 	functions for reference counting callback_data and getting the callback
+;;;     functions for reference counting callback_data and getting the callback
 ;;;     and data
 ;;; ----------------------------------------------------------------------------
 
@@ -2555,10 +2553,10 @@
 ;;; the GPollFD struct and return TRUE if events need to be processed.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; fd :
-;;; 	a GPollFD structure holding information about a file descriptor to
+;;;     a GPollFD structure holding information about a file descriptor to
 ;;;    watch.
 ;;; ----------------------------------------------------------------------------
 
@@ -2577,10 +2575,10 @@
 ;;; source.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; fd :
-;;; 	a GPollFD structure previously passed to g_source_add_poll().
+;;;     a GPollFD structure previously passed to g_source_add_poll().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_remove_poll" g-source-remove-poll) :void
@@ -2609,10 +2607,10 @@
 ;;; to it.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; child_source :
-;;; 	a second GSource that source should "poll"
+;;;     a second GSource that source should "poll"
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -2627,10 +2625,10 @@
 ;;; Detaches child_source from source and destroys it.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; child_source :
-;;; 	a GSource previously passed to g_source_add_child_source().
+;;;     a GSource previously passed to g_source_add_child_source().
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -2651,10 +2649,10 @@
 ;;; reasonable alternative otherwise. See g_get_monotonic_time().
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; Returns :
-;;; 	the monotonic time in microseconds
+;;;     the monotonic time in microseconds
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -2677,10 +2675,10 @@
 ;;; having to repeatedly get the system time.
 ;;; 
 ;;; source :
-;;; 	a GSource
+;;;     a GSource
 ;;; 
 ;;; timeval :
-;;; 	GTimeVal structure in which to store current time.
+;;;     GTimeVal structure in which to store current time.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_get_current_time" g-source-get-current-time) :void
@@ -2704,10 +2702,10 @@
 ;;; added to a non-default main context.
 ;;; 
 ;;; tag :
-;;; 	the ID of the source to remove.
+;;;     the ID of the source to remove.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the source was found and removed.
+;;;     TRUE if the source was found and removed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_remove" g-source-remove) :boolean
@@ -2726,13 +2724,13 @@
 ;;; functions and user data, only one will be destroyed.
 ;;; 
 ;;; funcs :
-;;; 	The source_funcs passed to g_source_new()
+;;;     The source_funcs passed to g_source_new()
 ;;; 
 ;;; user_data :
-;;; 	the user data for the callback
+;;;     the user data for the callback
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a source was found and removed.
+;;;     TRUE if a source was found and removed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_remove_by_funcs_user_data"
@@ -2753,10 +2751,10 @@
 ;;; will be destroyed.
 ;;; 
 ;;; user_data :
-;;; 	the user_data for the callback.
+;;;     the user_data for the callback.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a source was found and removed.
+;;;     TRUE if a source was found and removed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_remove_by_user_data" g-source-remove-by-user-data) :boolean

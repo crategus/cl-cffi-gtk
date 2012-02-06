@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.quark.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; Quarks
 ;;; 
 ;;; A 2-way association between a string and a unique integer identifier
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     g-quark
@@ -106,10 +104,10 @@
 ;;; of the string.
 ;;; 
 ;;; string :
-;;; 	a string. [allow-none]
+;;;     a string. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	the GQuark identifying the string, or 0 if string is NULL.
+;;;     the GQuark identifying the string, or 0 if string is NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_quark_from_string" g-quark-from-string) %g-quark
@@ -125,10 +123,10 @@
 ;;; Gets the string associated with the given GQuark.
 ;;; 
 ;;; quark :
-;;; 	a GQuark.
+;;;     a GQuark.
 ;;; 
 ;;; Returns :
-;;; 	the string associated with the GQuark.
+;;;     the string associated with the GQuark.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_quark_to_string" g-quark-to-string) :string
@@ -154,10 +152,10 @@
 ;;; GTK+ theme engines).
 ;;; 
 ;;; string :
-;;; 	a string.
+;;;     a string.
 ;;; 
 ;;; Returns :
-;;; 	the GQuark identifying the string, or 0 if string is NULL.
+;;;     the GQuark identifying the string, or 0 if string is NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -174,10 +172,10 @@
 ;;; g_quark_from_string() or g_quark_from_static_string().
 ;;; 
 ;;; string :
-;;; 	a string.
+;;;     a string.
 ;;; 
 ;;; Returns :
-;;; 	the GQuark associated with the string, or 0 if string is NULL or there
+;;;     the GQuark associated with the string, or 0 if string is NULL or there
 ;;;     is no GQuark associated with it.
 ;;; ----------------------------------------------------------------------------
 
@@ -192,10 +190,10 @@
 ;;; compared for equality by comparing the pointers, instead of using strcmp().
 ;;; 
 ;;; string :
-;;; 	a string.
+;;;     a string.
 ;;; 
 ;;; Returns :
-;;; 	a canonical representation for the string
+;;;     a canonical representation for the string
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -213,10 +211,10 @@
 ;;; not be freed or modified.
 ;;; 
 ;;; string :
-;;; 	a static string. [allow-none]
+;;;     a static string. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	a canonical representation for the string
+;;;     a canonical representation for the string
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------

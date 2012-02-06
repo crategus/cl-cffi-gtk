@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.utils.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; Miscellaneous Utility Functions
 ;;; 
 ;;; A selection of portable utility functions
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     g-get-application-name
@@ -114,7 +112,7 @@
 ;;; has also not been called).
 ;;; 
 ;;; Returns :
-;;; 	human-readable application name. may return NULL
+;;;     human-readable application name. may return NULL
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -140,7 +138,7 @@
 ;;; when displaying an application's name in the task list.
 ;;; 
 ;;; application_name :
-;;; 	localized name of the application
+;;;     localized name of the application
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -161,7 +159,7 @@
 ;;; is found by taking the last component of argv[0].)
 ;;; 
 ;;; Returns :
-;;; 	the name of the program. The returned string belongs to GLib and must
+;;;     the name of the program. The returned string belongs to GLib and must
 ;;;     not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -179,7 +177,7 @@
 ;;; function can only be called once.
 ;;; 
 ;;; prgname :
-;;; 	the name of the program.
+;;;     the name of the program.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_set_prgname" g-set-prgname) :void
@@ -202,7 +200,7 @@
 ;;; g_strfreev() when it is no longer needed.
 ;;; 
 ;;; Returns :
-;;; 	the list of environment variables.
+;;;     the list of environment variables.
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -221,10 +219,10 @@
 ;;; references to other environment variables, they are expanded.
 ;;; 
 ;;; variable :
-;;; 	the environment variable to get, in the GLib file name encoding.
+;;;     the environment variable to get, in the GLib file name encoding.
 ;;; 
 ;;; Returns :
-;;; 	the value of the environment variable, or NULL if the environment
+;;;     the value of the environment variable, or NULL if the environment
 ;;;     variable is not found. The returned string may be overwritten by the
 ;;;     next call to g_getenv(), g_setenv() or g_unsetenv().
 ;;; ----------------------------------------------------------------------------
@@ -249,16 +247,16 @@
 ;;; for the previous variables and its value isn't reclaimed.
 ;;; 
 ;;; variable :
-;;; 	the environment variable to set, must not contain '='.
+;;;     the environment variable to set, must not contain '='.
 ;;; 
 ;;; value :
-;;; 	the value for to set the variable to.
+;;;     the value for to set the variable to.
 ;;; 
 ;;; overwrite :
-;;; 	whether to change the variable if it already exists.
+;;;     whether to change the variable if it already exists.
 ;;; 
 ;;; Returns :
-;;; 	FALSE if the environment variable couldn't be set.
+;;;     FALSE if the environment variable couldn't be set.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -282,7 +280,7 @@
 ;;; function can't be guaranteed to operate in a threadsafe way.
 ;;; 
 ;;; variable :
-;;; 	the environment variable to remove, must not contain '='.
+;;;     the environment variable to remove, must not contain '='.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -297,7 +295,7 @@
 ;;; Gets the names of all variables set in the environment.
 ;;; 
 ;;; Returns :
-;;; 	a NULL-terminated list of strings which must be freed with g_strfreev().
+;;;     a NULL-terminated list of strings which must be freed with g_strfreev().
 ;;;     Programs that want to be portable to Windows should typically use this
 ;;;     function and g_getenv() instead of using the environ array from the C
 ;;;     library directly. On Windows, the strings in the environ array are in
@@ -323,7 +321,7 @@
 ;;; machine. On Windows, it is always UTF-8.
 ;;; 
 ;;; Returns :
-;;; 	the user name of the current user.
+;;;     the user name of the current user.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_user_name" g-get-user-name) :string)
@@ -341,7 +339,7 @@
 ;;; determined, the string "Unknown" is returned.
 ;;; 
 ;;; Returns :
-;;; 	the user's real name.
+;;;     the user's real name.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_real_name" g-get-real-name) :string)
@@ -366,7 +364,7 @@
 ;;; CSIDL_INTERNET_CACHE.
 ;;; 
 ;;; Returns :
-;;; 	a string owned by GLib that must not be modified or freed.
+;;;     a string owned by GLib that must not be modified or freed.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -392,7 +390,7 @@
 ;;; Windows it thus is the same as what g_get_user_config_dir() returns.
 ;;; 
 ;;; Returns :
-;;; 	a string owned by GLib that must not be modified or freed.
+;;;     a string owned by GLib that must not be modified or freed.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -418,7 +416,7 @@
 ;;; Windows it thus is the same as what g_get_user_data_dir() returns.
 ;;; 
 ;;; Returns :
-;;; 	a string owned by GLib that must not be modified or freed.
+;;;     a string owned by GLib that must not be modified or freed.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -445,7 +443,7 @@
 ;;; Windows it thus is the same as what g_get_user_config_dir() returns.
 ;;; 
 ;;; Returns :
-;;; 	a string owned by GLib that must not be modified or freed.
+;;;     a string owned by GLib that must not be modified or freed.
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -476,31 +474,31 @@
 ;;; platform has a directory for every logical id in this enumeration.
 ;;; 
 ;;; G_USER_DIRECTORY_DESKTOP
-;;; 	the user's Desktop directory
+;;;     the user's Desktop directory
 ;;; 
 ;;; G_USER_DIRECTORY_DOCUMENTS
-;;; 	the user's Documents directory
+;;;     the user's Documents directory
 ;;; 
 ;;; G_USER_DIRECTORY_DOWNLOAD
-;;; 	the user's Downloads directory
+;;;     the user's Downloads directory
 ;;; 
 ;;; G_USER_DIRECTORY_MUSIC
-;;; 	the user's Music directory
+;;;     the user's Music directory
 ;;; 
 ;;; G_USER_DIRECTORY_PICTURES
-;;; 	the user's Pictures directory
+;;;     the user's Pictures directory
 ;;; 
 ;;; G_USER_DIRECTORY_PUBLIC_SHARE
-;;; 	the user's shared directory
+;;;     the user's shared directory
 ;;; 
 ;;; G_USER_DIRECTORY_TEMPLATES
-;;; 	the user's Templates directory
+;;;     the user's Templates directory
 ;;; 
 ;;; G_USER_DIRECTORY_VIDEOS
-;;; 	the user's Movies directory
+;;;     the user's Movies directory
 ;;; 
 ;;; G_USER_N_DIRECTORIES
-;;; 	the number of enum values
+;;;     the number of enum values
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -534,10 +532,10 @@
 ;;; reflect any change once the special directories are loaded.
 ;;; 
 ;;; directory :
-;;; 	the logical id of special directory
+;;;     the logical id of special directory
 ;;; 
 ;;; Returns :
-;;; 	the path to the specified special directory, or NULL if the logical id
+;;;     the path to the specified special directory, or NULL if the logical id
 ;;;     was not found. The returned string is owned by GLib and should not be
 ;;;     modified or freed.
 ;;; 
@@ -582,7 +580,7 @@
 ;;; function is called.
 ;;; 
 ;;; Returns :
-;;; 	a NULL-terminated array of strings owned by GLib that must not be
+;;;     a NULL-terminated array of strings owned by GLib that must not be
 ;;;     modified or freed.
 ;;; 
 ;;; Since 2.6
@@ -612,7 +610,7 @@
 ;;; roam and is available to anyone using the computer.
 ;;; 
 ;;; Returns :
-;;; 	a NULL-terminated array of strings owned by GLib that must not be
+;;;     a NULL-terminated array of strings owned by GLib that must not be
 ;;;     modified or freed.
 ;;; 
 ;;; Since 2.6
@@ -658,7 +656,7 @@
 ;;; can be determined, a default fixed string "localhost" is returned.
 ;;; 
 ;;; Returns :
-;;; 	the host name of the machine.
+;;;     the host name of the machine.
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -694,7 +692,7 @@
 ;;;  3     homedir = g_get_home_dir ();
 ;;; 
 ;;; Returns :
-;;; 	the current user's home directory
+;;;     the current user's home directory
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_home_dir" g-get-home-dir) :string)
@@ -713,7 +711,7 @@
 ;;; UTF-8. The return value is never NULL or the empty string.
 ;;; 
 ;;; Returns :
-;;; 	the directory to use for temporary files.
+;;;     the directory to use for temporary files.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_tmp_dir" g-get-tmp-dir) :string)
@@ -730,7 +728,7 @@
 ;;; Windows, it is always UTF-8.
 ;;; 
 ;;; Returns :
-;;; 	the current directory.
+;;;     the current directory.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_current_dir" g-get-current-dir) :string)
@@ -753,10 +751,10 @@
 ;;; returns a pointer into the given file name string.
 ;;; 
 ;;; file_name :
-;;; 	the name of the file.
+;;;     the name of the file.
 ;;; 
 ;;; Returns :
-;;; 	the name of the file without any leading directory components.
+;;;     the name of the file without any leading directory components.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -776,10 +774,10 @@
 ;;; when no longer needed.
 ;;; 
 ;;; file_name :
-;;; 	the name of the file
+;;;     the name of the file
 ;;; 
 ;;; Returns :
-;;; 	the directory components of the file
+;;;     the directory components of the file
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -813,10 +811,10 @@
 ;;; need to be handled using Windows-specific code.
 ;;; 
 ;;; file_name :
-;;; 	a file name.
+;;;     a file name.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if file_name is absolute.
+;;;     TRUE if file_name is absolute.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_path_is_absolute" g-path-is-absolute) :boolean
@@ -834,10 +832,10 @@
 ;;; it returns NULL.
 ;;; 
 ;;; file_name :
-;;; 	a file name.
+;;;     a file name.
 ;;; 
 ;;; Returns :
-;;; 	a pointer into file_name after the root component.
+;;;     a pointer into file_name after the root component.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -853,10 +851,10 @@
 ;;; single separator is returned. If file_name is empty, it gets ".".
 ;;; 
 ;;; file_name :
-;;; 	the name of the file.
+;;;     the name of the file.
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated string containing the last component of the filename.
+;;;     a newly allocated string containing the last component of the filename.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -871,10 +869,10 @@
 ;;; when no longer needed.
 ;;; 
 ;;; file_name :
-;;; 	the name of the file.
+;;;     the name of the file.
 ;;; 
 ;;; Returns :
-;;; 	the directory components of the file.
+;;;     the directory components of the file.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -899,13 +897,13 @@
 ;;; If the first element is a relative path, the result will be a relative path.
 ;;; 
 ;;; first_element :
-;;; 	the first element in the path
+;;;     the first element in the path
 ;;; 
 ;;; ... :
-;;; 	remaining elements in path, terminated by NULL
+;;;     remaining elements in path, terminated by NULL
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated string that must be freed with g_free().
+;;;     a newly-allocated string that must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
 
 (defun g-build-filename (&rest args)
@@ -935,10 +933,10 @@
 ;;; language bindings.
 ;;; 
 ;;; args :
-;;; 	NULL-terminated array of strings containing the path elements.
+;;;     NULL-terminated array of strings containing the path elements.
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated string that must be freed with g_free().
+;;;     a newly-allocated string that must be freed with g_free().
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -982,16 +980,16 @@
 ;;; ignored.
 ;;; 
 ;;; separator :
-;;; 	a string used to separator the elements of the path.
+;;;     a string used to separator the elements of the path.
 ;;; 
 ;;; first_element :
-;;; 	the first element in the path
+;;;     the first element in the path
 ;;; 
 ;;; ... :
-;;; 	remaining elements in path, terminated by NULL
+;;;     remaining elements in path, terminated by NULL
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated string that must be freed with g_free().
+;;;     a newly-allocated string that must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1006,13 +1004,13 @@
 ;;; bindings.
 ;;; 
 ;;; separator :
-;;; 	a string used to separator the elements of the path.
+;;;     a string used to separator the elements of the path.
 ;;; 
 ;;; args :
-;;; 	NULL-terminated array of strings containing the path elements.
+;;;     NULL-terminated array of strings containing the path elements.
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated string that must be freed with g_free().
+;;;     a newly-allocated string that must be freed with g_free().
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -1037,10 +1035,10 @@
 ;;; formatted.
 ;;; 
 ;;; size :
-;;; 	a size in bytes
+;;;     a size in bytes
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated formatted string containing a human readable file
+;;;     a newly-allocated formatted string containing a human readable file
 ;;;     size.
 ;;; 
 ;;; Since 2.30
@@ -1060,14 +1058,14 @@
 ;;; Flags to modify the format of the string returned by g_format_size_full().
 ;;; 
 ;;; G_FORMAT_SIZE_DEFAULT
-;;; 	behave the same as g_format_size()
+;;;     behave the same as g_format_size()
 ;;; 
 ;;; G_FORMAT_SIZE_LONG_FORMAT
-;;; 	include the exact number of bytes as part of the returned string. For
+;;;     include the exact number of bytes as part of the returned string. For
 ;;;     example, "45.6 kB (45,612 bytes)".
 ;;; 
 ;;; G_FORMAT_SIZE_IEC_UNITS
-;;; 	use IEC (base 1024) units with "KiB"-style suffixes. IEC units should
+;;;     use IEC (base 1024) units with "KiB"-style suffixes. IEC units should
 ;;;     only be used for reporting things with a strong "power of 2" basis,
 ;;;     like RAM sizes or RAID stripe sizes. Network and storage sizes should
 ;;;     be reported in the normal SI units.
@@ -1086,13 +1084,13 @@
 ;;; modify the output. See GFormatSizeFlags.
 ;;; 
 ;;; size :
-;;; 	a size in bytes
+;;;     a size in bytes
 ;;; 
 ;;; flags :
-;;; 	GFormatSizeFlags to modify the output
+;;;     GFormatSizeFlags to modify the output
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated formatted string containing a human readable file
+;;;     a newly-allocated formatted string containing a human readable file
 ;;;     size.
 ;;; 
 ;;; Since 2.30
@@ -1121,10 +1119,10 @@
 ;;; This string should be freed with g_free() when not needed any longer.
 ;;; 
 ;;; size :
-;;; 	a size in bytes.
+;;;     a size in bytes.
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated formatted string containing a human readable file
+;;;     a newly-allocated formatted string containing a human readable file
 ;;;     size.
 ;;; 
 ;;; Since 2.16
@@ -1153,10 +1151,10 @@
 ;;; contains the full name including the type suffix.
 ;;; 
 ;;; program :
-;;; 	a program name in the GLib file name encoding
+;;;     a program name in the GLib file name encoding
 ;;; 
 ;;; Returns :
-;;; 	absolute path, or NULL
+;;;     absolute path, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1172,13 +1170,13 @@
 ;;; bit, set nth_bit to -1.
 ;;; 
 ;;; mask :
-;;; 	a gulong containing flags
+;;;     a gulong containing flags
 ;;; 
 ;;; nth_bit :
-;;; 	the index of the bit to start the search from
+;;;     the index of the bit to start the search from
 ;;; 
 ;;; Returns :
-;;; 	the index of the first bit set which is higher than nth_bit
+;;;     the index of the first bit set which is higher than nth_bit
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1194,13 +1192,13 @@
 ;;; last bit, set nth_bit to -1 or GLIB_SIZEOF_LONG * 8.
 ;;; 
 ;;; mask :
-;;; 	a gulong containing flags
+;;;     a gulong containing flags
 ;;; 
 ;;; nth_bit :
-;;; 	the index of the bit to start the search from
+;;;     the index of the bit to start the search from
 ;;; 
 ;;; Returns :
-;;; 	the index of the first bit set which is lower than nth_bit
+;;;     the index of the first bit set which is lower than nth_bit
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1214,10 +1212,10 @@
 ;;; are needed.
 ;;; 
 ;;; number :
-;;; 	a guint
+;;;     a guint
 ;;; 
 ;;; Returns :
-;;; 	the number of bits used to hold number
+;;;     the number of bits used to hold number
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1235,10 +1233,10 @@
 ;;; is approximately 1.5-2 times the previous prime.
 ;;; 
 ;;; num :
-;;; 	a guint
+;;;     a guint
 ;;; 
 ;;; Returns :
-;;; 	the smallest prime number from a built-in array of primes which is
+;;;     the smallest prime number from a built-in array of primes which is
 ;;;     larger than num
 ;;; ----------------------------------------------------------------------------
 
@@ -1279,7 +1277,7 @@
 ;;; g_atexit() (or atexit()) except in the main executable of a program.
 ;;; 
 ;;; func :
-;;; 	the function to call on normal program termination.
+;;;     the function to call on normal program termination.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1299,16 +1297,16 @@
 ;;; "help", all the available keys in keys are printed out to standard error.
 ;;; 
 ;;; string :
-;;; 	a list of debug options separated by colons, spaces, or commas, or NULL.
+;;;     a list of debug options separated by colons, spaces, or commas, or NULL.
 ;;; 
 ;;; keys :
-;;; 	pointer to an array of GDebugKey which associate strings with bit flags.
+;;;     pointer to an array of GDebugKey which associate strings with bit flags.
 ;;; 
 ;;; nkeys :
-;;; 	the number of GDebugKeys in the array.
+;;;     the number of GDebugKeys in the array.
 ;;; 
 ;;; Returns :
-;;; 	the combined set of bit flags.
+;;;     the combined set of bit flags.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1318,16 +1316,16 @@
 ;;; 
 ;;; struct GDebugKey {
 ;;;   const gchar *key;
-;;;   guint	       value;
+;;;   guint        value;
 ;;; };
 ;;; 
 ;;; Associates a string with a bit flag. Used in g_parse_debug_string().
 ;;; 
 ;;; const gchar *key;
-;;; 	the string
+;;;     the string
 ;;; 
 ;;; guint value;
-;;; 	the flag
+;;;     the flag
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1350,7 +1348,7 @@
 ;;; and has no return value. It is not currently used in GLib or GTK+.
 ;;; 
 ;;; data :
-;;; 	a data pointer
+;;;     a data pointer
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1366,19 +1364,19 @@
 ;;; routine accepts a user data argument.
 ;;; 
 ;;; pbase :
-;;; 	start of array to sort
+;;;     start of array to sort
 ;;; 
 ;;; total_elems :
-;;; 	elements in the array
+;;;     elements in the array
 ;;; 
 ;;; size :
-;;; 	size of each element
+;;;     size of each element
 ;;; 
 ;;; compare_func :
-;;; 	function to compare elements
+;;;     function to compare elements
 ;;; 
 ;;; user_data :
-;;; 	data to pass to compare_func
+;;;     data to pass to compare_func
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -1391,7 +1389,7 @@
 ;;; Set the pointer at the specified location to NULL.
 ;;; 
 ;;; nullify_location :
-;;; 	the memory address of the pointer.
+;;;     the memory address of the pointer.
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
