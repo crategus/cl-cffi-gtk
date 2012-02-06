@@ -228,28 +228,10 @@
 
 (define-child-property "GtkFixed" fixed-child-y "y" "gint" t t t)
 
-(define-child-property "GtkPaned" paned-child-resize "resize" "gboolean" t t t)
-
-(define-child-property "GtkPaned" paned-child-shrink "shrink" "gboolean" t t t)
-
-(define-child-property "GtkHPaned" h-paned-child-resize "resize" "gboolean" t t
-                       t)
-
-(define-child-property "GtkHPaned" h-paned-child-shrink "shrink" "gboolean" t t
-                       t)
-
-(define-child-property "GtkVPaned" v-paned-child-resize "resize" "gboolean" t t
-                       t)
-
-(define-child-property "GtkVPaned" v-paned-child-shrink "shrink" "gboolean" t t
-                       t)
 
 (define-child-property "GtkLayout" layout-child-x "x" "gint" t t t)
 
 (define-child-property "GtkLayout" layout-child-y "y" "gint" t t t)
-
-
-
 
 
 (define-child-property "GtkToolbar" toolbar-child-expand "expand" "gboolean" t
