@@ -529,16 +529,18 @@
     (setf (gtk-box-child-position b child) position)))
 
 (defmethod pack-child ((p gtk-paned) child &key (resize 'default) (shrink t))
-  (if (null (gtk-paned-child-1 p))
-      (gtk-paned-pack-1 p child
-		    :resize (if (eq resize 'default) nil resize)
-		    :shrink shrink)
-      (gtk-paned-pack-2 p child
-		    :resize (if (eq resize 'default) t resize)
-		    :shrink shrink)))
+  (if (null (gtk-paned-child1 p))
+      (gtk-paned-pack1 p
+                       child
+                       :resize (if (eq resize 'default) nil resize)
+                       :shrink shrink)
+      (gtk-paned-pack2 p
+                       child
+                       :resize (if (eq resize 'default) t resize)
+                       :shrink shrink)))
 
 (defmethod pack-child ((table gtk-table) child &key
-		       left right top bottom
+                       left right top bottom
                        (x-options '(:expand :fill))
                        (y-options '(:expand :fill))
                        (x-padding 0) (y-padding 0))
@@ -569,8 +571,8 @@
   (iter (for a on attributes by #'cddr)
         (gtk-tree-view-column-add-attribute w
                                             child
-					    (first a)
-					    (second a))))
+                                            (first a)
+                                            (second a))))
 
 (defmethod pack-child ((b gtk-toolbar) child &key (expand 'default)
                                               (homogeneous 'default))
@@ -608,15 +610,15 @@
                    (collect (list (ui-d-var item)
                                   (ui-d-initform item)))))
        ,@(iter (for item in items)
-	       (appending (iter (for child in (ui-d-children item))
-				(for child-var = (ui-d-var (ui-child-v child)))
-				(let ((props
-				       (iter (for p in (ui-child-props child))
-				             (appending (list (ui-prop-name p)
-				                              (ui-prop-value p))))))
-				  (collect (list* 'pack-child
-				                  (ui-d-var item)
-				                  child-var props))))))
+               (appending (iter (for child in (ui-d-children item))
+                                (for child-var = (ui-d-var (ui-child-v child)))
+                                (let ((props
+                                       (iter (for p in (ui-child-props child))
+                                             (appending (list (ui-prop-name p)
+                                                              (ui-prop-value p))))))
+                                  (collect (list* 'pack-child
+                                                  (ui-d-var item)
+                                                  child-var props))))))
        ,@body)))
 
 ;;; ----------------------------------------------------------------------------
