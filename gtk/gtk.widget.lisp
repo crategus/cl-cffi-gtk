@@ -7049,6 +7049,12 @@
 ;;;     return location for height, or NULL.
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-widget-get-size-request (widget)
+  (values (gtk-widget-width-request widget)
+          (gtk-widget-height-request widget)))
+
+(export 'gtk-widget-get-size-request)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_child_visible ()
 ;;; 
@@ -7125,6 +7131,12 @@
 ;;; height :
 ;;;     height widget should request, or -1 to unset
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-widget-set-size-request (widget width height)
+  (setf (gtk-widget-width-request widget) width)
+  (setf (gtk-widget-height-request widget) height))
+
+(export 'gtk-widget-set-size-request)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_thaw_child_notify ()
