@@ -60,6 +60,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "max-position"             gint                  : Read
@@ -116,19 +117,19 @@
 ;;; 
 ;;; Example 91. Creating a paned widget with minimum sizes.	
 ;;; 
-;;; GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-;;; GtkWidget *frame1 = gtk_frame_new (NULL);
-;;; GtkWidget *frame2 = gtk_frame_new (NULL);
-;;; gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
-;;; gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
+;;;  GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+;;;  GtkWidget *frame1 = gtk_frame_new (NULL);
+;;;  GtkWidget *frame2 = gtk_frame_new (NULL);
+;;;  gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
+;;;  gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
 ;;; 
-;;; gtk_widget_set_size_request (hpaned, 200, -1);
+;;;  gtk_widget_set_size_request (hpaned, 200, -1);
 ;;; 
-;;; gtk_paned_pack1 (GTK_PANED (hpaned), frame1, TRUE, FALSE);
-;;; gtk_widget_set_size_request (frame1, 50, -1);
+;;;  gtk_paned_pack1 (GTK_PANED (hpaned), frame1, TRUE, FALSE);
+;;;  gtk_widget_set_size_request (frame1, 50, -1);
 ;;; 
-;;; gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
-;;; gtk_widget_set_size_request (frame2, 50, -1);
+;;;  gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
+;;;  gtk_widget_set_size_request (frame2, 50, -1);
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -365,11 +366,14 @@
 ;;; struct GtkPaned;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkPaned" 'gtk-paned))
+
 (define-g-object-class "GtkPaned" gtk-paned
   (:superclass gtk-container
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-    :type-initializer "gtk_paned_get_type")
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_paned_get_type")
   ((max-position gtk-paned-max-position
     "max-position" "gint" t nil)
    (min-position gtk-paned-min-position
@@ -378,6 +382,12 @@
     "position" "gint" t t)
    (position-set gtk-paned-position-set
     "position-set" "gboolean" t t)))
+
+(define-child-property "GtkPaned"
+                       gtk-paned-child-resize "resize" "gboolean" t t t)
+
+(define-child-property "GtkPaned"
+                       gtk-paned-child-shrink "shrink" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_new ()
@@ -410,6 +420,11 @@
 ;;;     the child to add
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-paned-add1 (paned child)
+  (gtk-paned-pack1 paned child :resize nil :shrink t))
+
+(export 'gtk-paned-add1)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_add2 ()
 ;;; 
@@ -424,6 +439,11 @@
 ;;; child :
 ;;;     the child to add
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-paned-add2 (paned child)
+  (gtk-paned-pack2 paned child :resize t :shrink t))
+
+(export 'gtk-paned-add2)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_pack1 ()
@@ -454,10 +474,10 @@
   (resize :boolean)
   (shrink :boolean))
 
-(defun gtk-paned-pack-1 (paned child &key (resize nil) (shrink t))
+(defun gtk-paned-pack1 (paned child &key (resize nil) (shrink t))
   (%gtk-paned-pack1 paned child resize shrink))
 
-(export 'gtk-paned-pack-1)
+(export 'gtk-paned-pack1)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_pack2 ()
@@ -488,10 +508,10 @@
   (resize :boolean)
   (shrink :boolean))
 
-(defun gtk-paned-pack-2 (paned child &key (resize t) (shrink t))
+(defun gtk-paned-pack2 (paned child &key (resize t) (shrink t))
   (%gtk-paned-pack2 paned child resize shrink))
 
-(export 'gtk-paned-pack-2)
+(export 'gtk-paned-pack2)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_get_child1 ()
@@ -504,15 +524,15 @@
 ;;;     a GtkPaned widget
 ;;; 
 ;;; Returns :
-;;;     first child, or NULL if it is not set. [transfer none]
+;;;     first child, or NULL if it is not set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_paned_get_child1" gtk-paned-child-1) g-object
+(defcfun ("gtk_paned_get_child1" gtk-paned-child1) g-object
   (paned g-object))
 
-(export 'gtk-paned-child-1)
+(export 'gtk-paned-child1)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_get_child2 ()
@@ -530,10 +550,10 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_paned_get_child2" gtk-paned-child-2) g-object
+(defcfun ("gtk_paned_get_child2" gtk-paned-child2) g-object
   (paned g-object))
 
-(export 'gtk-paned-child-2)
+(export 'gtk-paned-child2)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_set_position ()
@@ -550,6 +570,11 @@
 ;;;     is unset.
 ;;; ----------------------------------------------------------------------------
 
+(defun gkt-paned-set-position (paned position)
+  (setf (gtk-paned-position paned) position))
+
+(export 'gtk-paned-set-position)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_get_position ()
 ;;; 
@@ -563,6 +588,11 @@
 ;;; Returns :
 ;;;     position of the divider
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-paned-get-position (paned)
+  (gtk-paned-position paned))
+
+(export 'gkt-paned-get-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_get_handle_window ()
@@ -582,5 +612,171 @@
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_paned_get_handle_window" gtk-paned-get-handle-window)
+    (g-object gdk-window)
+  (paned (g-object gtk-paned)))
+
+(export 'gtk-paned-get-handle-window)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkHPaned
+;;; 
+;;; GtkHPaned � A container with two panes arranged horizontally
+;;; 
+;;; Synopsis
+;;; 
+;;;     GtkHPaned
+;;;
+;;;     gtk_hpaned_new
+;;; 
+;;; Object Hierarchy
+;;; 
+;;;   GObject
+;;;    +----GInitiallyUnowned
+;;;          +----GtkWidget
+;;;                +----GtkContainer
+;;;                      +----GtkPaned
+;;;                            +----GtkHPaned
+;;; 
+;;; Implemented Interfaces
+;;; 
+;;; GtkHPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
+;;;
+;;; Description
+;;; 
+;;; The HPaned widget is a container widget with two children arranged
+;;; horizontally. The division between the two panes is adjustable by the user
+;;; by dragging a handle. See GtkPaned for details.
+;;; 
+;;; GtkHPaned has been deprecated, use GtkPaned instead.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkHPaned
+;;; 
+;;; struct GtkHPaned;
+;;; 
+;;; Warning
+;;; 
+;;; GtkHPaned is deprecated and should not be used in newly-written code.
+;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkHPaned" 'gtk-h-paned))
+
+(define-g-object-class "GtkHPaned" gtk-h-paned
+  (:superclass gtk-paned
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_hpaned_get_type")
+  nil)
+
+(define-child-property "GtkHPaned"
+                       gtk-h-paned-child-resize "resize" "gboolean" t t t)
+
+(define-child-property "GtkHPaned"
+                       gtk-h-paned-child-shrink "shrink" "gboolean" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_hpaned_new ()
+;;; 
+;;; GtkWidget * gtk_hpaned_new (void);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_hpaned_new has been deprecated since version 3.2 and should not be used
+;;; in newly-written code. Use gtk_paned_new() with GTK_ORIENTATION_HORIZONTAL
+;;; instead
+;;; 
+;;; Create a new GtkHPaned
+;;; 
+;;; Returns :
+;;;     the new GtkHPaned
+;;; ----------------------------------------------------------------------------
+
+(defun gkt-hpaned-new ()
+  (make-instance 'gtk-h-paned))
+  
+(export 'gtk-hpaned-new)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkVPaned
+;;; 
+;;; GtkVPaned � A container with two panes arranged vertically
+;;; 
+;;; Synopsis
+;;; 
+;;;     GtkVPaned
+;;;
+;;;     gtk_vpaned_new
+;;; 
+;;; Object Hierarchy
+;;; 
+;;;   GObject
+;;;    +----GInitiallyUnowned
+;;;          +----GtkWidget
+;;;                +----GtkContainer
+;;;                      +----GtkPaned
+;;;                            +----GtkVPaned
+;;; 
+;;; Implemented Interfaces
+;;; 
+;;; GtkVPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
+;;; Description
+;;; 
+;;; The VPaned widget is a container widget with two children arranged
+;;; vertically. The division between the two panes is adjustable by the user by
+;;; dragging a handle. See GtkPaned for details.
+;;; 
+;;; GtkVPaned has been deprecated, use GtkPaned instead.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkVPaned
+;;; 
+;;; struct GtkVPaned;
+;;; 
+;;; Warning
+;;; 
+;;; GtkVPaned is deprecated and should not be used in newly-written code.
+;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkVPaned" 'gtk-v-paned))
+
+(define-g-object-class "GtkVPaned" gtk-v-paned
+  (:superclass gtk-paned
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_vpaned_get_type")
+  nil)
+
+(define-child-property "GtkVPaned"
+                       gtk-v-paned-child-resize "resize" "gboolean" t t t)
+
+(define-child-property "GtkVPaned"
+                       gtk-v-paned-child-shrink "shrink" "gboolean" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_vpaned_new ()
+;;; 
+;;; GtkWidget * gtk_vpaned_new (void);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_vpaned_new has been deprecated since version 3.2 and should not be used
+;;; in newly-written code. Use gtk_paned_new() with GTK_ORIENTATION_VERTICAL
+;;; instead
+;;; 
+;;; Create a new GtkVPaned
+;;; 
+;;; Returns :
+;;;     the new GtkVPaned
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-vpaned-new ()
+  (make-instance 'gtk-v-paned))
+
+(export 'gtk-vpaned-new)
 
 ;;; --- End of file gtk.paned.lisp ---------------------------------------------
