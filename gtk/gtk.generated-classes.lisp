@@ -48,14 +48,6 @@
   (:finished 7)
   (:finished-aborted 8))
 
-(define-g-enum "GtkRecentSortType"
-    recent-sort-type
-    (:export t :type-initializer "gtk_recent_sort_type_get_type")
-  (:none 0)
-  (:mru 1)
-  (:lru 2)
-  (:custom 3))
-
 (define-g-enum "GtkFileChooserAction"
     file-chooser-action
     (:export t :type-initializer "gtk_file_chooser_action_get_type")
@@ -338,12 +330,6 @@
   (:unbind 308)
   (:last 309))
 
-(define-g-enum "GtkRecentChooserError"
-    recent-chooser-error
-    (:export t :type-initializer "gtk_recent_chooser_error_get_type")
-  (:not-found 0)
-  (:invalid-uri 1))
-
 (define-g-enum "GtkRecentManagerError"
     recent-manager-error
     (:export t :type-initializer "gtk_recent_manager_error_get_type")
@@ -575,22 +561,6 @@
     print-operation-preview
     (:export t :type-initializer "gtk_print_operation_preview_get_type"))
 
-(define-g-interface "GtkRecentChooser"
-    recent-chooser
-    (:export t :type-initializer "gtk_recent_chooser_get_type")
-  (filter recent-chooser-filter "filter" "GtkRecentFilter" t t)
-  (limit recent-chooser-limit "limit" "gint" t t)
-  (local-only recent-chooser-local-only "local-only" "gboolean" t t)
-  (recent-manager recent-chooser-recent-manager "recent-manager"
-   "GtkRecentManager" nil nil)
-  (select-multiple recent-chooser-select-multiple "select-multiple" "gboolean"
-   t t)
-  (show-icons recent-chooser-show-icons "show-icons" "gboolean" t t)
-  (show-not-found recent-chooser-show-not-found "show-not-found" "gboolean" t t)
-  (show-private recent-chooser-show-private "show-private" "gboolean" t t)
-  (show-tips recent-chooser-show-tips "show-tips" "gboolean" t t)
-  (sort-type recent-chooser-sort-type "sort-type" "GtkRecentSortType" t t))
-
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRendererPixbuf" gtk-cell-renderer-pixbuf
@@ -763,28 +733,6 @@
                          "GtkPositionType" t t)
                         (snap-edge-set handle-box-snap-edge-set "snap-edge-set"
                          "gboolean" t t)))
-
-(define-g-object-class "GtkItem" gtk-item
-  (:superclass gtk-bin
-   :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
-   :type-initializer "gtk_item_get_type")
-  nil)
-
-(define-g-object-class "GtkMenuItem" gtk-menu-item
-  (:superclass gtk-item
-   :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-   :type-initializer "gtk_menu_item_get_type")
-  ((accel-path gtk-menu-item-accel-path
-    "accel-path" "gchararray" t t)
-   (label gtk-menu-item-label "label" "gchararray" t t)
-   (right-justified gtk-menu-item-right-justified
-    "right-justified" "gboolean" t t)
-   (submenu gtk-menu-item-submenu
-    "submenu" "GtkMenu" t t)
-   (use-underline gtk-menu-item-use-underline
-    "use-underline" "gboolean" t t)))
 
 (define-g-object-class "GtkCheckMenuItem" gtk-check-menu-item
                        (:superclass gtk-menu-item :export t :interfaces
@@ -1026,20 +974,6 @@
                         (pack-direction menu-bar-pack-direction
                          "pack-direction" "GtkPackDirection" t t)))
 
-(define-g-object-class "GtkHPaned" gtk-h-paned
-  (:superclass gtk-paned
-   :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-   :type-initializer "gtk_hpaned_get_type")
-  nil)
-
-(define-g-object-class "GtkVPaned" gtk-v-paned
-  (:superclass gtk-paned
-   :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-   :type-initializer "gtk_vpaned_get_type")
-  nil)
-
 (define-g-object-class "GtkSocket" gtk-socket
                        (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -1153,14 +1087,6 @@
     "limit" "gint" t t)
    (size gtk-recent-manager-size
     "size" "gint" t nil)))
-
-(define-g-object-class "GtkRecentAction" gtk-recent-action
-  (:superclass gtk-action
-    :export t
-    :interfaces ("GtkBuildable" "GtkRecentChooser")
-    :type-initializer "gtk_recent_action_get_type")
-  ((show-numbers gtk-recent-action-show-numbers
-    "show-numbers" "gboolean" t t)))
 
 (define-g-object-class "GtkItemFactory" gtk-item-factory
   (:superclass gtk-object
