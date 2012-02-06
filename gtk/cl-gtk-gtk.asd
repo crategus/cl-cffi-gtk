@@ -65,6 +65,7 @@
                (:file "atk.implementor-iface") ; AtkImplementorIface
                (:file "gtk.orientable")      ; Interface for flippable widgets
                (:file "gtk.activatable")     ; Interface for activatable widgets
+               (:file "gtk.recent-chooser")  ; Displaying recently used files
                
                ;; Theming in Gtk+
                (:file "gtk.style-context")    ; Rendering UI elements
@@ -165,6 +166,8 @@
                (:file "gtk.spin-button")      ; GtkSpinButton
                
                ;; Menus, Combo Box, Toolbar
+               (:file "gtk.item")             ; Abstract base class GtkItem
+               (:file "gtk.menu-item")        ; Widget used for item in menus
                (:file "gtk.menu")             ; A menu widget
                (:file "gtk.combo-box")        ; GtkComboBox
                (:file "gtk.tool-shell")       ; Interface for GtkToolItem
@@ -180,6 +183,7 @@
                (:file "gtk.action")           ; GtkAction
                (:file "gtk.toggle-action")    ; GtkToggleAction
                (:file "gtk.radio-action")     ; GtkRadioAction
+               (:file "gtk.recent-action")    ; List of recently used files
                
                ;; Selectors
                (:file "gtk.color-button")     ; Launch a color selection dialog
