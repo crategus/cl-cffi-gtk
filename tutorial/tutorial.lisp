@@ -74,29 +74,69 @@
 
 ;;; An Upgraded Hello World
 
-(defun example-3 ()
+(defun example-upgraded-hello-world ()
   (within-main-loop
     (let ((window (gtk-window-new :toplevel))
-          (button (gtk-button-new-with-label "Button 1"))
-          (box    (gtk-h-box-new nil 0)))
-      (gtk-window-set-title window "Hello Buttons")
+          (box    (gtk-h-box-new nil 5))
+          (button  nil))
       (g-signal-connect window "delete_event"
-                        (lambda (window event)
-                          (declare (ignore window event))
+                        (lambda (widget event)
+                          (declare (ignore widget event))
                           (gtk-main-quit)))
+      (gtk-window-set-title window "Hello Buttons")
+      (gtk-window-set-default-size window 250 75)
       (gtk-container-set-border-width window 10)
       (gtk-container-add window box)
+      
+      (setq button (gtk-button-new-with-label "Button 1"))
       (g-signal-connect button "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (format t "Hello again - Button 1 was pressed.~%")))
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "Button 1 was pressed.~%")))
       (gtk-box-pack-start box button :expand t :fill t :padding 0)
       (gtk-widget-show button)
+      
       (setq button (gtk-button-new-with-label "Button 2"))
       (g-signal-connect button "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (format t "Hello again - Button 2 was pressed.~%")))
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "Button 2 was pressed.~%")))
+      (gtk-box-pack-start box button :expand t :fill t :padding 0)
+      (gtk-widget-show button)
+      (gtk-widget-show box)
+      (gtk-widget-show window))))
+
+(defun example-upgraded-hello-world-2 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window 
+                                 :type :toplevel
+                                 :title "Hello Buttons"
+                                 :default-width 250
+                                 :default-height 75
+                                 :border-width 10))
+          (box    (make-instance 'gtk-h-box
+                                 :homogeneous nil
+                                 :spacing 5))
+          (button  nil))
+      (g-signal-connect window "delete_event"
+                        (lambda (widget event)
+                          (declare (ignore widget event))
+                          (gtk-main-quit)))
+      (gtk-container-add window box)
+      
+      (setq button (gtk-button-new-with-label "Button 1"))
+      (g-signal-connect button "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "Button 1 was pressed.~%")))
+      (gtk-box-pack-start box button :expand t :fill t :padding 0)
+      (gtk-widget-show button)
+      
+      (setq button (gtk-button-new-with-label "Button 2"))
+      (g-signal-connect button "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "Button 2 was pressed.~%")))
       (gtk-box-pack-start box button :expand t :fill t :padding 0)
       (gtk-widget-show button)
       (gtk-widget-show box)
@@ -838,4 +878,32 @@ This one is underlined in quite a funky fashion"))
                           (declare (ignore window))
                           (gtk-main-quit)))
       (gtk-container-add window frame)
+      (gtk-widget-show window))))
+
+;;; Aspect Frames
+
+;;; [...]
+
+;;; Paned Window Widgets
+
+(defun example-paned-window ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Paned Window"
+                                 :border-width 10))
+          (vpaned (make-instance 'gtk-v-paned))
+          (frame1 (make-instance 'gtk-frame :label "Frame 1"))
+          (frame2 (make-instance 'gtk-frame :label "Frame 2")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      
+      (gtk-widget-set-size-request window 450 400)
+      (gtk-container-add window vpaned)
+      
+      (gtk-paned-add1 vpaned frame1)
+      (gtk-paned-add2 vpaned frame2)
+      
       (gtk-widget-show window))))
