@@ -57,6 +57,9 @@
   (assert-eql (ash 255 2) +g-type-fundamental-max+)
   (assert-eql (ash 256 2) (g-type-make-fundamental 256))
   
+  (assert-equal "GType"      (gtype-name (gtype (g-type-gtype))))
+  (assert-eql (g-type-gtype) (gtype-id (gtype (g-type-gtype))))
+  
   (assert-false (g-type-is-abstract (gtype "gboolean")))
   (assert-false (g-type-is-abstract (gtype "GObject")))
   (assert-true  (g-type-is-abstract (gtype "GtkWidget")))

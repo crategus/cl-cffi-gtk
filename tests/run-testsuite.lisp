@@ -60,6 +60,7 @@
 (defpackage :gtk-tests
   (:use :gtk :gobject :glib :cffi :common-lisp :lisp-unit))
 
+(load "rtest-gtk-object.lisp")
 (load "rtest-gtk-widget.lisp")
 (load "rtest-gtk-border.lisp")
 (load "rtest-gtk-window.lisp")
