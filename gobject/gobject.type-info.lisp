@@ -819,7 +819,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-derived (type)
-  (> (gtype-id type) +g-type-fundamental-max+))
+  (> (gtype-id (gtype type)) +g-type-fundamental-max+))
 
 (export 'g-type-is-derived)
 
@@ -838,7 +838,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-fundamental (type)
-  (<= (gtype-id type) +g-type-fundamental-max+))
+  (<= (gtype-id (gtype type)) +g-type-fundamental-max+))
 
 (export 'g-type-is-fundamental)
 
@@ -992,7 +992,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-interface (type)
-  (eql +g-type-interface+ (gtype-id type)))
+  (eql +g-type-interface+ (gtype-id (gtype type))))
   
 (export 'g-type-is-interface)
 
@@ -2039,8 +2039,11 @@
 ;;; 
 ;;; g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)));
 ;;;
-;;; g_class : The GTypeClass structure to retrieve the parent class for.
-;;; Returns : The parent class of g_class.
+;;; g_class :
+;;;     The GTypeClass structure to retrieve the parent class for.
+;;;
+;;; Returns :
+;;;     The parent class of g_class.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2127,8 +2130,11 @@
 ;;; after the type is registered. The private structure can be retrieved using
 ;;; the G_TYPE_CLASS_GET_PRIVATE() macro.
 ;;;
-;;; class_type   : GType of an classed type.
-;;; private_size : size of private structure.
+;;; class_type :
+;;;     GType of an classed type
+;;;
+;;; private_size :
+;;;     size of private structure
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -2141,10 +2147,15 @@
 ;;; Returns the GTypeInterface structure of an interface to which the passed in
 ;;; class conforms.
 ;;;
-;;; instance_class : A GTypeClass structure. [type GObject.TypeClass]
-;;; iface_type     : An interface ID which this class conforms to.
-;;; Returns        : The GTypeInterface structure of iface_type if implemented
-;;;                  by instance_class, NULL otherwise.
+;;; instance_class :
+;;;     A GTypeClass structure.
+;;;
+;;; iface_type :
+;;;     An interface ID which this class conforms to.
+;;;
+;;; Returns :
+;;;     The GTypeInterface structure of iface_type if implemented
+;;;     by instance_class, NULL otherwise.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2157,10 +2168,13 @@
 ;;; the implementation of an interface from the parent type and then possibly
 ;;; overriding some methods.
 ;;;
-;;; g_iface : A GTypeInterface structure. [type GObject.TypeInterface]
-;;; Returns : The corresponding GTypeInterface structure of the parent type of
-;;;           the instance type to which g_iface belongs, or NULL if the parent
-;;;           type doesn't conform to the interface.
+;;; g_iface :
+;;;     A GTypeInterface structure.
+;;;
+;;; Returns :
+;;;     The corresponding GTypeInterface structure of the parent type of
+;;;     the instance type to which g_iface belongs, or NULL if the parent
+;;;     type doesn't conform to the interface.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2201,9 +2215,12 @@
 ;;; If the interface type g_type is currently in use, returns its default
 ;;; interface vtable.
 ;;;
-;;; g_type  : an interface type
-;;; Returns : the default vtable for the interface, or NULL if the type is not
-;;;           currently in use.
+;;; g_type :
+;;;     an interface type
+;;;
+;;; Returns :
+;;;     the default vtable for the interface, or NULL if the type is not
+;;;     currently in use
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2448,7 +2465,8 @@
 ;;; be altered. See GClassInitFunc() for a discussion of the class intialization
 ;;; process.
 ;;;
-;;; g_class : The GTypeClass structure to initialize.
+;;; g_class :
+;;;     The GTypeClass structure to initialize.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2462,7 +2480,8 @@
 ;;; way in which class intialization is performed. See GClassInitFunc() for a
 ;;; discussion of the class intialization process.
 ;;;
-;;; g_class : The GTypeClass structure to finalize.
+;;; g_class :
+;;;     The GTypeClass structure to finalize.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2555,8 +2574,11 @@
 ;;; counter parts to the GBaseInitFunc() functions have to be provided to
 ;;; release allocated resources at class finalization time.
 ;;; 
-;;; g_class    : The GTypeClass structure to initialize.
-;;; class_data : The class_data member supplied via the GTypeInfo structure.
+;;; g_class :
+;;;     The GTypeClass structure to initialize.
+;;;
+;;; class_data :
+;;;     The class_data member supplied via the GTypeInfo structure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2571,8 +2593,11 @@
 ;;; invalid, because classes of static types will never be finalized (they are
 ;;; artificially kept alive when their reference count drops to zero).
 ;;;
-;;; g_class    : The GTypeClass structure to finalize.
-;;; class_data : The class_data member supplied via the GTypeInfo structure.
+;;; g_class :
+;;;     The GTypeClass structure to finalize.
+;;;
+;;; class_data :
+;;;     The class_data member supplied via the GTypeInfo structure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2587,8 +2612,11 @@
 ;;; the instance is altered during its initialization to always point to the
 ;;; class that belongs to the type the current initializer was introduced for.
 ;;;
-;;; instance : The instance to initialize.
-;;; g_class  : The class of the type the instance is created for.
+;;; instance :
+;;;     The instance to initialize.
+;;;
+;;; g_class :
+;;;     The class of the type the instance is created for.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2600,8 +2628,11 @@
 ;;; This function should initialize all internal data and allocate any resources
 ;;; required by the interface.
 ;;;
-;;; g_iface    : The interface structure to initialize.
-;;; iface_data : The interface_data supplied via the GInterfaceInfo structure.
+;;; g_iface :
+;;;     The interface structure to initialize.
+;;;
+;;; iface_data :
+;;;     The interface_data supplied via the GInterfaceInfo structure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2613,8 +2644,11 @@
 ;;; function should destroy any internal data and release any resources
 ;;; allocated by the corresponding GInterfaceInitFunc() function.
 ;;;
-;;; g_iface    : The interface structure to finalize.
-;;; iface_data : The interface_data supplied via the GInterfaceInfo structure.
+;;; g_iface :
+;;;     The interface structure to finalize.
+;;;
+;;; iface_data :
+;;;     The interface_data supplied via the GInterfaceInfo structure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2632,10 +2666,15 @@
 ;;; actually want to cache the class of this type, since all classes are routed
 ;;; through the same GTypeClassCacheFunc chain.
 ;;;
-;;; cache_data : data that was given to the g_type_add_class_cache_func() call
-;;; g_class    : The GTypeClass structure which is unreferenced
-;;; Returns    : TRUE to stop further GTypeClassCacheFuncs from being called,
-;;;              FALSE to continue.
+;;; cache_data :
+;;;     data that was given to the g_type_add_class_cache_func() call
+;;;
+;;; g_class :
+;;;     The GTypeClass structure which is unreferenced
+;;;
+;;; Returns :
+;;;     TRUE to stop further GTypeClassCacheFuncs from being called,
+;;;     FALSE to continue.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2652,11 +2691,20 @@
 ;;; abstract). The value of flags determines the nature (e.g. abstract or not)
 ;;; of the type.
 ;;;
-;;; parent_type : Type from which this type will be derived.
-;;; type_name   : 0-terminated string used as the name of the new type.
-;;; info        : The GTypeInfo structure for this type.
-;;; flags       : Bitwise combination of GTypeFlags values.
-;;; Returns     : The new type identifier.
+;;; parent_type :
+;;;     Type from which this type will be derived.
+;;;
+;;; type_name :
+;;;     0-terminated string used as the name of the new type.
+;;;
+;;; info :
+;;;     The GTypeInfo structure for this type.
+;;;
+;;; flags :
+;;;     Bitwise combination of GTypeFlags values.
+;;;
+;;; Returns :
+;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_register_static" g-type-register-static) g-type-designator
@@ -2683,16 +2731,29 @@
 ;;; of the type. It works by filling a GTypeInfo struct and calling
 ;;; g_type_register_static().
 ;;;
-;;; parent_type   : Type from which this type will be derived.
-;;; type_name     : 0-terminated string used as the name of the new type.
-;;; class_size    : Size of the class structure (see GTypeInfo)
-;;; class_init    : Location of the class initialization function
-;;;                 (see GTypeInfo)
-;;; instance_size : Size of the instance structure (see GTypeInfo)
-;;; instance_init : Location of the instance initialization function
-;;;                 (see GTypeInfo)
-;;; flags         : Bitwise combination of GTypeFlags values.
-;;; Returns       : The new type identifier.
+;;; parent_type :
+;;;     Type from which this type will be derived.
+;;;
+;;; type_name :
+;;;     0-terminated string used as the name of the new type.
+;;;
+;;; class_size :
+;;;     Size of the class structure (see GTypeInfo)
+;;;
+;;; class_init :
+;;;     Location of the class initialization function (see GTypeInfo)
+;;;
+;;; instance_size :
+;;;     Size of the instance structure (see GTypeInfo)
+;;;
+;;; instance_init :
+;;;     Location of the instance initialization function (see GTypeInfo)
+;;;
+;;; flags :
+;;;     Bitwise combination of GTypeFlags values.
+;;;
+;;; Returns :
+;;;     The new type identifier.
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -2723,12 +2784,20 @@
 ;;; instances (if not abstract). The value of flags determines the nature (e.g.
 ;;; abstract or not) of the type.
 ;;;
-;;; parent_type : Type from which this type will be derived.
-;;; type_name   : 0-terminated string used as the name of the new type.
-;;; plugin      : The GTypePlugin structure to retrieve the GTypeInfo from.
-;;; flags       : Bitwise combination of GTypeFlags values.
-;;; Returns     : The new type identifier or G_TYPE_INVALID if registration
-;;;               failed.
+;;; parent_type :
+;;;     Type from which this type will be derived.
+;;;
+;;; type_name :
+;;;     0-terminated string used as the name of the new type.
+;;;
+;;; plugin :
+;;;     The GTypePlugin structure to retrieve the GTypeInfo from.
+;;;
+;;; flags :
+;;;     Bitwise combination of GTypeFlags values.
+;;;
+;;; Returns :
+;;;     The new type identifier or G_TYPE_INVALID if registration failed.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2747,12 +2816,23 @@
 ;;; value of flags determines additional characteristics of the fundamental
 ;;; type.
 ;;;
-;;; type_id   : A predefined type identifier.
-;;; type_name : 0-terminated string used as the name of the new type.
-;;; info      : The GTypeInfo structure for this type.
-;;; finfo     : The GTypeFundamentalInfo structure for this type.
-;;; flags     : Bitwise combination of GTypeFlags values.
-;;; Returns   : The predefined type identifier.
+;;; type_id :
+;;;     A predefined type identifier.
+;;;
+;;; type_name :
+;;;     0-terminated string used as the name of the new type.
+;;;
+;;; info :
+;;;     The GTypeInfo structure for this type.
+;;;
+;;; finfo :
+;;;     The GTypeFundamentalInfo structure for this type.
+;;;
+;;; flags :
+;;;     Bitwise combination of GTypeFlags values.
+;;;
+;;; Returns :
+;;;     The predefined type identifier.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2795,10 +2875,14 @@
 ;;; contained in the GTypePlugin structure pointed to by plugin is used to
 ;;; manage the relationship.
 ;;;
-;;; instance_type  : the GType value of an instantiable type.
-;;; interface_type : the GType value of an interface type.
-;;; plugin         : the GTypePlugin structure to retrieve the GInterfaceInfo
-;;;                  from.
+;;; instance_type :
+;;;     the GType value of an instantiable type.
+;;;
+;;; interface_type :
+;;;     the GType value of an interface type.
+;;;
+;;; plugin :
+;;;     the GTypePlugin structure to retrieve the GInterfaceInfo from.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2835,9 +2919,11 @@
 ;;; Returns the GTypePlugin structure for type or NULL if type does not have a
 ;;; GTypePlugin structure.
 ;;;
-;;; type    : The GType to retrieve the plugin for.
-;;; Returns : The corresponding plugin if type is a dynamic type, NULL
-;;;           otherwise.
+;;; type :
+;;;     The GType to retrieve the plugin for.
+;;;
+;;; Returns :
+;;;     The corresponding plugin if type is a dynamic type, NULL otherwise.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2879,12 +2965,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_fundamental ()
 ;;;
-;;; GType g_type_fundamental (GType type_id)
+;;; GType g_type_fundamental (GType type)
 ;;;
 ;;; Internal function, used to extract the fundamental type ID portion.
 ;;; Use G_TYPE_FUNDAMENTAL() instead.
 ;;;
-;;; type_id :
+;;; type :
 ;;;     valid type ID
 ;;;
 ;;; Returns :
@@ -2892,7 +2978,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_fundamental" g-type-fundamental) g-type-designator
-  (type-id g-type-designator))
+  (type g-type-designator))
 
 (export 'g-type-fundamental)
 
