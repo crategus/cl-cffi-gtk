@@ -424,14 +424,6 @@
   (:printing 1024)
   (:builder 2048))
 
-(define-g-flags "GtkFileFilterFlags"
-    file-filter-flags
-    (:export t :type-initializer "gtk_file_filter_flags_get_type")
-  (:filename 1)
-  (:uri 2)
-  (:display-name 4)
-  (:mime-type 8))
-
 (define-g-flags "GtkIconLookupFlags"
     icon-lookup-flags
     (:export t :type-initializer "gtk_icon_lookup_flags_get_type")
@@ -465,16 +457,6 @@
   (:bg 2)
   (:text 4)
   (:base 8))
-
-(define-g-flags "GtkRecentFilterFlags"
-    recent-filter-flags
-    (:export t :type-initializer "gtk_recent_filter_flags_get_type")
-  (:uri 1)
-  (:display-name 2)
-  (:mime-type 4)
-  (:application 8)
-  (:group 16)
-  (:age 32))
 
 (define-g-flags "GtkSignalRunType"
     signal-run-type
@@ -654,35 +636,6 @@
                          "indicator-size" "gint" t t)
                         (radio cell-renderer-toggle-radio "radio" "gboolean" t
                          t)))
-
-(define-g-object-class "GtkFileFilter" gtk-file-filter
-                       (:superclass gtk-object :export t :interfaces nil
-                        :type-initializer "gtk_file_filter_get_type")
-                       ((:cffi name file-filter-name :string
-                         "gtk_file_filter_get_name"
-                         "gtk_file_filter_set_name")))
-
-(define-g-object-class "GtkRecentFilter" gtk-recent-filter
-                       (:superclass gtk-object :export t :interfaces nil
-                        :type-initializer "gtk_recent_filter_get_type")
-                       nil)
-
-(define-g-object-class "GtkAlignment" gtk-alignment
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_alignment_get_type")
-                       ((bottom-padding alignment-bottom-padding
-                         "bottom-padding" "guint" t t)
-                        (left-padding alignment-left-padding "left-padding"
-                         "guint" t t)
-                        (right-padding alignment-right-padding "right-padding"
-                         "guint" t t)
-                        (top-padding alignment-top-padding "top-padding"
-                         "guint" t t)
-                        (xalign alignment-xalign "xalign" "gfloat" t t)
-                        (xscale alignment-xscale "xscale" "gfloat" t t)
-                        (yalign alignment-yalign "yalign" "gfloat" t t)
-                        (yscale alignment-yscale "yscale" "gfloat" t t)))
 
 (define-g-object-class "GtkFontButton" gtk-font-button
                        (:superclass gtk-button :export t :interfaces
