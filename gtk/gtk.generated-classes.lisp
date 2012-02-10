@@ -661,16 +661,6 @@
                        ((text-column combo-box-entry-text-column "text-column"
                          "gint" t t)))
 
-(define-g-object-class "GtkAspectFrame" gtk-aspect-frame
-                       (:superclass gtk-frame :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_aspect_frame_get_type")
-                       ((obey-child aspect-frame-obey-child "obey-child"
-                         "gboolean" t t)
-                        (ratio aspect-frame-ratio "ratio" "gfloat" t t)
-                        (xalign aspect-frame-xalign "xalign" "gfloat" t t)
-                        (yalign aspect-frame-yalign "yalign" "gfloat" t t)))
-
 (define-g-object-class "GtkHandleBox" gtk-handle-box
                        (:superclass gtk-bin :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -745,17 +735,6 @@
                         (:cffi arrow-tooltip-markup
                          menu-tool-button-arrow-tooltip-markup :string nil
                          "gtk_menu_tool_button_set_arrow_tooltip_markup")))
-
-(define-g-object-class "GtkViewport" gtk-viewport
-                       (:superclass gtk-bin :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_viewport_get_type")
-                       ((hadjustment viewport-hadjustment "hadjustment"
-                         "GtkAdjustment" t t)
-                        (shadow-type viewport-shadow-type "shadow-type"
-                         "GtkShadowType" t t)
-                        (vadjustment viewport-vadjustment "vadjustment"
-                         "GtkAdjustment" t t)))
 
 (define-g-object-class "GtkColorSelectionDialog" gtk-color-selection-dialog
                        (:superclass gtk-dialog :export t :interfaces
