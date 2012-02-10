@@ -793,7 +793,9 @@ This one is underlined in quite a funky fashion"))
 
 ;;; Chapter 11. Container Widgets
 
-;; The Event Box
+;;; ----------------------------------------------------------------------------
+
+;;; The Event Box
 
 (defun example-event-box ()
   (within-main-loop
@@ -802,40 +804,63 @@ This one is underlined in quite a funky fashion"))
                                  :title "Example Event Box"
                                  :border-width 10))
           (eventbox (make-instance 'gtk-event-box))
-          (label    (make-instance 'gtk-label
-                                   :label
-                                   "Click here to quit, and more text, more")))
+          (label (make-instance 'gtk-label
+                                :width-request 120
+                                :height-request 20
+                                :label
+                                "Click here to quit, and more text, more")))
       (g-signal-connect window "destroy"
-                        (lambda (window)
-                          (declare (ignore window))
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-main-quit)))
-      
       (gtk-container-add window eventbox)
       (gtk-container-add eventbox label)
-      
-      (gtk-widget-size-request label
-                               (make-gtk-requisition :width 60 :height 20))
-      (gtk-widget-set-events eventbox 256)
-      
+      (gtk-widget-set-events eventbox :button-press-mask)
       (g-signal-connect eventbox "button-press-event"
-                        (lambda (eventbox event)
-                          (declare (ignore eventbox event))
+                        (lambda (widget event)
+                          (declare (ignore widget event))
                           (gtk-widget-destroy window)))
-      
       (gtk-widget-realize eventbox)
       (gdk-window-set-cursor (gtk-widget-window eventbox)
                              (gdk-cursor-new :hand1))
-      
       (gtk-widget-show window))))
 
+;;; ----------------------------------------------------------------------------
 
-(defvar x 50)
-(defvar y 50)
+;;; The Alignment widget
+
+(defun example-alignment ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Alignment"
+                                 :default-width 300
+                                 :default-height 200
+                                 :border-width 10))
+          (button (make-instance 'gtk-button
+                                 :label "Quit"))
+          (alignment (make-instance 'gtk-alignment
+                                    :xalign 0.25
+                                    :yalign 0.25
+                                    :xscale 0.75
+                                    :yscale 0.50)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-container-add alignment button)
+      (gtk-container-add window alignment)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Fixed Container
 
 (defun move-button (button fixed)
-  (setq x (+ x 30))
-  (setq y (+ y 50))
-  (gtk-fixed-move fixed button x y))
+  (let* ((allocation (gtk-widget-get-allocation fixed))
+         (width (- (gdk-rectangle-width allocation) 20))
+         (height (- (gdk-rectangle-height allocation) 10)))
+    (gtk-fixed-move fixed button (random width) (random height))))
 
 (defun example-fixed ()
   (within-main-loop
@@ -845,20 +870,21 @@ This one is underlined in quite a funky fashion"))
                                  :default-width 400
                                  :default-height 300
                                  :border-width 10))
-          (fixed  (make-instance 'gtk-fixed))
-          (button nil))
+          (fixed (make-instance 'gtk-fixed)))
       (g-signal-connect window "destroy"
                         (lambda (window)
                           (declare (ignore window))
                           (gtk-main-quit)))
       (gtk-container-add window fixed)
       (dotimes (i 3)
-        (setq button (gtk-button-new-with-label "Press me"))
-        (g-signal-connect button "clicked"
-                          (lambda (button)
-                            (move-button button fixed)))
-        (gtk-fixed-put fixed button (+ 50 (* i 50)) (+ 50 (* i 50))))
+        (let ((button (gtk-button-new-with-label "Press me")))
+          (g-signal-connect button "clicked"
+                            (lambda (widget)
+                              (move-button widget fixed)))
+          (gtk-fixed-put fixed button (random 300) (random 200))))
       (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
 
 (defun example-frame ()
   (within-main-loop
