@@ -31,7 +31,7 @@
 ;;; GtkLayout
 ;;; 
 ;;; Infinite scrollable area containing child widgets and/or custom drawing
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkLayout
@@ -140,9 +140,9 @@
 
 (define-g-object-class "GtkLayout" gtk-layout
   (:superclass gtk-container
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_layout_get_type")
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_layout_get_type")
   ((hadjustment gtk-layout-hadjustment
     "hadjustment" "GtkAdjustment" t t)
    (height gtk-layout-height
@@ -164,14 +164,21 @@
 ;;; the layout to use for scrolling, pass NULL for hadjustment and vadjustment.
 ;;; 
 ;;; hadjustment :
-;;; 	horizontal scroll adjustment, or NULL
+;;;     horizontal scroll adjustment, or NULL
 ;;; 
 ;;; vadjustment :
-;;; 	vertical scroll adjustment, or NULL
+;;;     vertical scroll adjustment, or NULL
 ;;; 
 ;;; Returns :
-;;; 	a new GtkLayout
+;;;     a new GtkLayout
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-new (&optional (hadjustment nil) (vadjustment nil))
+  (make-instance 'gtk-layout
+                 :hadjustment hadjustment
+                 :vadjustment vadjustment))
+
+(export 'gtk-layout-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_put ()
@@ -185,16 +192,16 @@
 ;;; parent container of child_widget.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; child_widget :
-;;; 	child widget
+;;;     child widget
 ;;; 
 ;;; x :
-;;; 	X position of child widget
+;;;     X position of child widget
 ;;; 
 ;;; y :
-;;; 	Y position of child widget
+;;;     Y position of child widget
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_layout_put" gtk-layout-put) :void
@@ -216,16 +223,16 @@
 ;;; Moves a current child of layout to a new position.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; child_widget :
-;;; 	a current child of layout
+;;;     a current child of layout
 ;;; 
 ;;; x :
-;;; 	X position to move to
+;;;     X position to move to
 ;;; 
 ;;; y :
-;;; 	Y position to move to
+;;;     Y position to move to
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_layout_move" gtk-layout-move) :void
@@ -244,14 +251,20 @@
 ;;; Sets the size of the scrollable area of the layout.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; width :
-;;; 	width of entire scrollable area
+;;;     width of entire scrollable area
 ;;; 
 ;;; height :
-;;; 	height of entire scrollable area
+;;;     height of entire scrollable area
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-set-size (layout width height)
+  (setf (gtk-layout-width layout) width
+        (gtk-layout-height layout) height))
+
+(export 'gtk-layout-set-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_size ()
@@ -262,14 +275,20 @@
 ;;; total extents of the layout's scrollbar area. See gtk_layout_set_size().
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; width :
-;;; 	location to store the width set on layout, or NULL
+;;;     location to store the width set on layout, or NULL
 ;;; 
 ;;; height :
-;;; 	location to store the height set on layout, or NULL
+;;;     location to store the height set on layout, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-get-size (layout)
+  (values (gtk-layout-width layout)
+          (gtk-layout-height layout)))
+
+(export 'gtk-layout-get-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_hadjustment ()
@@ -289,11 +308,16 @@
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; Returns :
-;;; 	horizontal scroll adjustment
+;;;     horizontal scroll adjustment
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-get-hadjustment (layout)
+  (gtk-layout-hadjustment layout))
+
+(export 'gtk-layout-get-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_vadjustment ()
@@ -313,11 +337,16 @@
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; Returns :
-;;; 	vertical scroll adjustment.
+;;;     vertical scroll adjustment.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-get-vadjustment (layout)
+  (gtk-layout-vadjustment layout))
+
+(export 'gtk-layout-get-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_set_hadjustment ()
@@ -335,11 +364,16 @@
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; adjustment :
-;;; 	new scroll adjustment
+;;;     new scroll adjustment
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-set-hadjustment (layout adjustment)
+  (setf (gtk-layout-hadjustment layout) adjustment))
+
+(export 'gtk-layout-set-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_set_vadjustment ()
@@ -357,11 +391,16 @@
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; adjustment :
-;;; 	new scroll adjustment
+;;;     new scroll adjustment
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-layout-set-vadjustment (layout adjustment)
+  (setf (gtk-layout-vadjustment layout) adjustment))
+
+(export 'gtk-layout-set-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_bin_window ()
@@ -371,13 +410,18 @@
 ;;; Retrieve the bin window of the layout used for drawing operations.
 ;;; 
 ;;; layout :
-;;; 	a GtkLayout
+;;;     a GtkLayout
 ;;; 
 ;;; Returns :
-;;; 	a GdkWindow
+;;;     a GdkWindow
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_layout_get_bin_window" gtk-layout-get-bin-window)
+    (g-object gdk-window)
+  (layout (g-object gtk-layout)))
+
+(export 'gtk-layout-get-bin-window)
 
 ;;; --- End of file gtk.layout.lisp --------------------------------------------
