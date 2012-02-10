@@ -952,7 +952,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun emit-signal (object signal-name &rest args)
-  (let* ((object-type (g-type-from-object (pointer object)))
+  (let* ((object-type (g-type-from-instance (pointer object)))
          (signal-info (parse-signal-name object-type signal-name)))
     (unless signal-info
       (error "Signal ~A not found on object ~A" signal-name object))
