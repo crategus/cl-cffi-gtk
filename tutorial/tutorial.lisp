@@ -867,8 +867,8 @@ This one is underlined in quite a funky fashion"))
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Fixed Container"
-                                 :default-width 400
-                                 :default-height 300
+                                 :default-width 300
+                                 :default-height 200
                                  :border-width 10))
           (fixed (make-instance 'gtk-fixed)))
       (g-signal-connect window "destroy"
@@ -886,27 +886,88 @@ This one is underlined in quite a funky fashion"))
 
 ;;; ----------------------------------------------------------------------------
 
+;;; Layout Container
+
+(defun move-button (button layout)
+  (let* ((allocation (gtk-widget-get-allocation layout))
+         (width (- (gdk-rectangle-width allocation) 20))
+         (height (- (gdk-rectangle-height allocation) 10)))
+    (gtk-layout-move layout button (random width) (random height))))
+
+(defun example-layout ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Layout Container"
+                                 :default-width 300
+                                 :default-height 200
+                                 :border-width 10))
+          (layout (make-instance 'gtk-layout)))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      (gtk-container-add window layout)
+      (dotimes (i 3)
+        (let ((button (gtk-button-new-with-label "Press me")))
+          (g-signal-connect button "clicked"
+                            (lambda (widget)
+                              (move-button widget layout)))
+          (gtk-layout-put layout button (random 300) (random 200))))
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Frames
+
 (defun example-frame ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Frame"
-                                 :default-width 300
-                                 :default-height 300
+                                 :default-width 250
+                                 :default-height 200
                                  :border-width 10))
-          (frame  (make-instance 'gtk-frame
-                                 :label "Gtk Frame Widget"
-                                 :label-xalign 1.0
-                                 :label-yalign 0.5
-                                 :shadow-type :etched-in)))
+          (frame (make-instance 'gtk-frame
+                                :label "Gtk Frame Widget"
+                                :label-xalign 1.0
+                                :label-yalign 0.5
+                                :shadow-type :etched-in)))
       (g-signal-connect window "destroy"
-                        (lambda (window)
-                          (declare (ignore window))
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-main-quit)))
       (gtk-container-add window frame)
       (gtk-widget-show window))))
 
+;;; ----------------------------------------------------------------------------
+
 ;;; Aspect Frames
+
+(defun example-aspect-frame ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Aspect Frame"
+                                 :default-width 300
+                                 :default-height 250
+                                 :border-width 10))
+          (frame (make-instance 'gtk-aspect-frame
+                                :label "2 x 1"
+                                :xalign 0.5
+                                :yalign 0.5
+                                :ratio 2
+                                :obey-child nil))
+          (area (make-instance 'gtk-drawing-area
+                               :width-request 200
+                               :hight-request 200)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window frame)
+      (gtk-container-add frame area)
+      (gtk-widget-show window))))
 
 ;;; [...]
 
