@@ -349,7 +349,7 @@
     (finalize obj
               (lambda ()
                 (log-for :gc "~A ~A is queued for GC (having ~A refs)~%"
-                         (g-type-from-object pointer)
+                         (g-type-from-instance pointer)
                          pointer
                          (ref-count pointer))
                 (handler-case
@@ -533,18 +533,22 @@
 (defun set-gvalue-object (gvalue value)
   (g-value-set-object gvalue (if value (pointer value) (null-pointer))))
 
-(defmethod parse-g-value-for-type (gvalue-ptr (type (eql (gtype +g-type-object+))) parse-kind)
+(defmethod parse-g-value-for-type (gvalue-ptr (type (eql (gtype +g-type-object+)))
+                                              parse-kind)
   (declare (ignore parse-kind))
   (parse-g-value-object gvalue-ptr))
 
-(defmethod parse-g-value-for-type (gvalue-ptr (type (eql (gtype +g-type-interface+))) parse-kind)
+(defmethod parse-g-value-for-type (gvalue-ptr (type (eql (gtype +g-type-interface+)))
+                                              parse-kind)
   (declare (ignore parse-kind))
   (parse-g-value-object gvalue-ptr))
 
-(defmethod set-gvalue-for-type (gvalue-ptr (type (eql (gtype +g-type-object+))) value)
+(defmethod set-gvalue-for-type (gvalue-ptr (type (eql (gtype +g-type-object+)))
+                                           value)
   (set-gvalue-object gvalue-ptr value))
 
-(defmethod set-gvalue-for-type (gvalue-ptr (type (eql (gtype +g-type-interface+))) value)
+(defmethod set-gvalue-for-type (gvalue-ptr (type (eql (gtype +g-type-interface+)))
+                                           value)
   (set-gvalue-object gvalue-ptr value))
 
 ;;; ----------------------------------------------------------------------------
@@ -595,9 +599,10 @@
 ;;;   
 ;;;   if (!the_singleton)
 ;;;     {
-;;;       object = G_OBJECT_CLASS (parent_class)->constructor (type,
-;;;                                                            n_construct_params,
-;;;                                                            construct_params);
+;;;       object = G_OBJECT_CLASS (parent_class)->constructor
+;;;                                                         (type,
+;;;                                                          n_construct_params,
+;;;                                                          construct_params);
 ;;;       the_singleton = MY_SINGLETON (object);
 ;;;     }
 ;;;   else
@@ -641,19 +646,6 @@
 (export 'gobject-class-direct-g-type-name)
 (export 'gobject-class-g-type-initializer)
 (export 'gobject-class-interface-p)
-
-;;; ----------------------------------------------------------------------------
-
-;; This funtion is not part of the C GObject Library.
-
-(defun g-type-from-object (object-ptr)
-  "Returns the GType of an @code{object-ptr}
-
-@arg[object-ptr]{C pointer to an object}
-@return{GType designator (see @class{g-type-designator})}"
-  (g-type-from-instance object-ptr))
-
-(export 'g-type-from-object)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -740,7 +732,7 @@
 
 (defun g-object-property-type (object-ptr property-name &key assert-readable
                                                              assert-writable)
-  (g-object-type-property-type (g-type-from-object object-ptr)
+  (g-object-type-property-type (g-type-from-instance object-ptr)
                                property-name
                                :assert-readable assert-readable
                                :assert-writable assert-writable))
@@ -750,7 +742,7 @@
   (restart-case
       (unless property-type
         (setf property-type
-              (g-object-type-property-type (g-type-from-object object-ptr)
+              (g-object-type-property-type (g-type-from-instance object-ptr)
                                            property-name :assert-readable t)))
     (return-nil () (return-from g-object-call-get-property nil)))
   (with-foreign-object (value 'g-value)
@@ -765,7 +757,7 @@
                                    &optional property-type)
   (unless property-type
     (setf property-type
-          (g-object-type-property-type (g-type-from-object object-ptr)
+          (g-object-type-property-type (g-type-from-instance object-ptr)
                                        property-name :assert-writable t)))
   (with-foreign-object (value 'g-value)
     (set-g-value value new-value property-type :zero-g-value t)
@@ -789,7 +781,8 @@
          for arg-type in args-types
          for arg-g-type = (if arg-type
                               arg-type
-                              (g-object-type-property-type object-type arg-name))
+                              (g-object-type-property-type object-type
+                                                           arg-name))
          for parameter = (mem-aref parameters 'g-parameter i)
          do (setf (foreign-slot-value parameter 'g-parameter :name) arg-name)
          do (set-g-value (foreign-slot-value parameter 'g-parameter :value)
@@ -811,7 +804,8 @@
 
 (defun initialize-gobject-class-g-type (class)
   (if (gobject-class-g-type-initializer class)
-      (let* ((initializer-fn-ptr (foreign-symbol-pointer (gobject-class-g-type-initializer class)))
+      (let* ((initializer-fn-ptr (foreign-symbol-pointer
+                                   (gobject-class-g-type-initializer class)))
              (type (when initializer-fn-ptr
                      (foreign-funcall-pointer initializer-fn-ptr nil
                                               g-type-designator))))
@@ -887,8 +881,10 @@
         (unless (class-finalized-p superclass) (finalize-inheritance superclass)))
   (setf (gobject-class-g-type-name class)
         (or (gobject-class-direct-g-type-name class)
-            (let ((gobject-superclass (iter (for superclass in (class-direct-superclasses class))
-                                            (finding superclass such-that (typep superclass 'gobject-class)))))
+            (let ((gobject-superclass
+                   (iter (for superclass in (class-direct-superclasses class))
+                         (finding superclass such-that (typep superclass
+                                                              'gobject-class)))))
               (assert gobject-superclass)
               (gobject-class-g-type-name gobject-superclass)))))
 
@@ -902,12 +898,14 @@
 (defclass gobject-effective-slot-definition (standard-effective-slot-definition)
   ((g-property-type :initform nil
                     :initarg :g-property-type
-                    :accessor gobject-effective-slot-definition-g-property-type)))
+                    :accessor
+                    gobject-effective-slot-definition-g-property-type)))
 
 (defclass gobject-property-direct-slot-definition (gobject-direct-slot-definition)
   ((g-property-name :initform nil
                     :initarg :g-property-name
-                    :reader gobject-property-direct-slot-definition-g-property-name)))
+                    :reader
+                    gobject-property-direct-slot-definition-g-property-name)))
 
 (defclass gobject-property-effective-slot-definition
           (gobject-effective-slot-definition)
@@ -939,7 +937,8 @@
 (defmethod validate-superclass ((class gobject-class) (superclass standard-class))
   t)
 
-(defmethod direct-slot-definition-class ((class gobject-class) &rest initargs &key allocation &allow-other-keys)
+(defmethod direct-slot-definition-class ((class gobject-class) &rest initargs
+                                         &key allocation &allow-other-keys)
   (declare (ignore initargs))
   (case allocation
     (:gobject-property (find-class 'gobject-property-direct-slot-definition))
@@ -956,9 +955,12 @@
   (let ((effective-slot (let ((*e-s-d* (loop
                       for slot in direct-slots
                       when (typep slot 'gobject-direct-slot-definition)
-                      return (etypecase slot
-                           (gobject-property-direct-slot-definition (find-class 'gobject-property-effective-slot-definition))
-                           (gobject-fn-direct-slot-definition (find-class 'gobject-fn-effective-slot-definition))))))
+                      return
+                        (etypecase slot
+                         (gobject-property-direct-slot-definition
+                          (find-class 'gobject-property-effective-slot-definition))
+                         (gobject-fn-direct-slot-definition
+                          (find-class 'gobject-fn-effective-slot-definition))))))
               (call-next-method))))
     (when (typep effective-slot 'gobject-effective-slot-definition)
       (let ((allocation (loop
@@ -1270,6 +1272,11 @@
 ;;; Returns :
 ;;;     FALSE or TRUE, indicating whether type is a G_TYPE_OBJECT.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-type-is-object (type)
+  (eql (gtype-id (gtype type)) +g-type-object+))
+
+(export 'g-type-is-object)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT()
