@@ -4431,7 +4431,7 @@
 
 (defun gtk-widget-can-activate-accel (widget signal)
   (when (stringp signal)
-    (setf signal (g-signal-lookup signal (g-type-from-object widget))))
+    (setf signal (g-signal-lookup signal (g-type-from-instance widget))))
   (%gtk-widget-can-activate-accel widget signal))
 
 (export 'gtk-widget-can-activate-accel)
@@ -4537,10 +4537,10 @@
   (area (g-boxed-foreign gdk-rectangle))
   (intersection (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-widget-intersect (widget rectangle)
-  (let ((result (make-gdk-rectangle)))
-    (when (%gtk-widget-intersect widget rectangle result)
-      result)))
+(defun gtk-widget-intersect (widget area)
+  (let ((intersection (make-gdk-rectangle)))
+    (when (%gtk-widget-intersect widget area intersection)
+      intersection)))
 
 (export 'gtk-widget-intersect)
 
@@ -4776,7 +4776,7 @@
 
 (defcfun ("gtk_widget_set_events" gtk-widget-set-events) :void
   (widget g-object)
-  (events :int))
+  (events gdk-event-mask))
 
 (export 'gtk-widget-set-events)
 
@@ -6608,8 +6608,9 @@
 (export 'gtk-widget-style-property-info)
 
 (defun gtk-widget-style-property-type (widget property-name)
-  (let ((property-info (gtk-widget-style-property-info (g-type-from-object widget)
-                                                       property-name)))
+  (let ((property-info (gtk-widget-style-property-info
+                                                   (g-type-from-instance widget)
+                                                   property-name)))
     (g-class-property-definition-type property-info)))
 
 (defun gtk-widget-style-property-value (widget property-name
@@ -7670,10 +7671,24 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; allocation :
-;;;     a pointer to a GtkAllocation to copy to. [out]
+;;;     a pointer to a GtkAllocation to copy to
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+;; With the type gtk-allocation we get an error. 
+;; It works with the type gdk-rectangle.
+
+(defcfun ("gtk_widget_get_allocation" %gtk-widget-get-allocation) :void
+  (widget g-object)
+  (allocation (g-boxed-foreign gdk-rectangle)))
+
+(defun gtk-widget-get-allocation (widget)
+  (let ((allocation (make-gdk-rectangle)))
+    (%gtk-widget-get-allocation widget allocation)
+    allocation))
+
+(export 'gtk-widget-get-allocation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_allocation ()
