@@ -119,6 +119,11 @@
 ;;; 	a new GtkEventBox
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-event-box-new ()
+  (make-instance 'gtk-event-box))
+
+(export 'gtk-event-box-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_event_box_set_above_child ()
 ;;; 
@@ -142,6 +147,11 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-event-box-set-above-child (event-box above-child)
+  (setf (gtk-event-box-above-child event-box) above-child))
+
+(export 'gtk-event-box-set-above-child)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_event_box_get_above_child ()
 ;;; 
@@ -158,6 +168,11 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-event-box-get-above-child (event-box)
+  (gtk-event-box-above-child event-box))
+
+(export 'gtk-event-box-get-above-child)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_event_box_set_visible_window ()
@@ -205,6 +220,11 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-event-box-set-visible-window (event-box visible-window)
+  (setf (gtk-event-box-visible-window event-box) visible-window))
+
+(export 'gtk-event-box-set-visible-window)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_event_box_get_visible_window ()
 ;;; 
@@ -222,5 +242,9 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-event-box-get-visible-window (event-box)
+  (gtk-event-box-visible-window event-box))
+
+(export 'gtk-event-box-get-visible-window)
 
 ;;; --- End of file gtk.event-box.lisp -----------------------------------------
