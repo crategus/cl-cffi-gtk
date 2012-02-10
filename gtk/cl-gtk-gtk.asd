@@ -88,7 +88,8 @@
                (:file "gtk.fixed")            ; Widgets at fixed coordinates
                (:file "gtk.notebook")         ; Tabbed notebook container
                (:file "gtk.paned")            ; Two adjustable panes
-               (:file "gtk.expander")       ; Container which can hide its child
+               (:file "gtk.expander")         ; Container which can hide childs
+               (:file "gtk.alignment")        ; GtkAlignment
                
                ;; Ornaments
                (:file "gtk.separator")        ; Separator widget
@@ -189,6 +190,7 @@
                (:file "gtk.color-button")     ; Launch a color selection dialog
                (:file "gtk.color-selection")  ; A widget used to select a color
                (:file "gtk.hsv")              ; GtkHSV
+               (:file "gtk.file-filter")      ; Selecting a file subset
                
                ;; Miscellaneous
                (:file "gtk.adjustment")      ; Representation of a bounded value
@@ -198,6 +200,9 @@
                (:file "gtk.size-group")      ; GtkSizeGroup
                (:file "gtk.tooltip")         ; Add tips to your widgets
                (:file "gtk.arrow")           ; Displays an arrow
+               
+               ;; Recently Used Documents
+               (:file "gtk.recent-filter")   ; Selecting recently used files
                
                ;; More definitions. The documentatin is not completed.
                (:file "gtk.generated-classes")
