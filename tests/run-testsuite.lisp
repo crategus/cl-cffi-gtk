@@ -68,6 +68,7 @@
 (load "rtest-gtk-button.lisp")
 (load "rtest-gtk-label.lisp")
 (load "rtest-gtk-progress-bar.lisp")
+(load "rtest-gtk-table.lisp")
 (in-package :gtk-tests)
 (run-all-tests :gtk-tests)
 
