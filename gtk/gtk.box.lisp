@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkBox
+;;;
 ;;;     gtk_box_new
 ;;;     gtk_box_pack_start
 ;;;     gtk_box_pack_end
@@ -231,28 +232,36 @@
   (register-object-type "GtkBox" 'gtk-box))
 
 (define-g-object-class "GtkBox" gtk-box
-                       (:superclass gtk-container
-                        :export t
-                        :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_box_get_type")
-                       ((homogeneous gtk-box-homogeneous "homogeneous"
-                                     "gboolean" t t)
-                        (spacing gtk-box-spacing "spacing" "gint" t t)))
+  (:superclass gtk-container
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_box_get_type")
+  ((homogeneous gtk-box-homogeneous
+    "homogeneous" "gboolean" t t)
+   (spacing gtk-box-spacing
+    "spacing" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
 
-(define-child-property "GtkBox" gtk-box-child-expand "expand" "gboolean" t t t)
+(define-child-property "GtkBox"
+                       gtk-box-child-expand
+                       "expand" "gboolean" t t t)
 
 (define-child-property "GtkBox"
-                       gtk-box-child-fill "fill" "gboolean" t t t)
+                       gtk-box-child-fill
+                       "fill" "gboolean" t t t)
 
-(define-child-property "GtkBox" gtk-box-child-padding "padding" "guint" t t t)
+(define-child-property "GtkBox"
+                       gtk-box-child-padding
+                       "padding" "guint" t t t)
 
-(define-child-property "GtkBox" gtk-box-child-pack-type
+(define-child-property "GtkBox"
+                       gtk-box-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
-(define-child-property "GtkBox" gtk-box-child-position "position" "gint" t t t)
+(define-child-property "GtkBox"
+                       gtk-box-child-position
+                       "position" "gint" t t t)
 
 ;;; ---------------------------------------------------------------------------- 
 ;;; gtk_box_new ()
@@ -606,31 +615,33 @@
   (register-object-type "GtkHBox" 'gtk-h-box))
 
 (define-g-object-class "GtkHBox" gtk-h-box
-                       (:superclass gtk-box
-                        :export t
-                        :interfaces ("AtkImplementorIface"
-                                     "GtkBuildable"
-                                     "GtkOrientable")
-                        :type-initializer "gtk_hbox_get_type")
-                       nil)
+  (:superclass gtk-box
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_hbox_get_type")
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-expand "expand" "gboolean" t t t)
+                       gtk-h-box-child-expand
+                       "expand" "gboolean" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-fill "fill" "gboolean" t t t)
+                       gtk-h-box-child-fill
+                       "fill" "gboolean" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-padding "padding" "guint" t t t)
+                       gtk-h-box-child-padding
+                       "padding" "guint" t t t)
 
 (define-child-property "GtkHBox"
                        gtk-h-box-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-position "position" "gint" t t t)
+                       gtk-h-box-child-position
+                       "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hbox_new ()
@@ -724,29 +735,33 @@
   (register-object-type "GtkVBox" 'gtk-v-box))
 
 (define-g-object-class "GtkVBox" gtk-v-box
-                       (:superclass gtk-box
-                        :export t
-                        :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vbox_get_type")
+  (:superclass gtk-box
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_vbox_get_type")
   nil)
 
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-expand "expand" "gboolean" t t t)
-
-(define-child-property "GtkVBox" gtk-v-box-child-fill "fill" "gboolean" t t t)
-
-(define-child-property "GtkVBox"
-                       gtk-v-box-child-padding "padding" "guint" t t t)
+                       gtk-v-box-child-expand
+                       "expand" "gboolean" t t t)
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-pack-type "pack-type"
-                       "GtkPackType" t t t)
+                       gtk-v-box-child-fill
+                       "fill" "gboolean" t t t)
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-position "position" "gint" t t t)
+                       gtk-v-box-child-padding
+                       "padding" "guint" t t t)
+
+(define-child-property "GtkVBox"
+                       gtk-v-box-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
+
+(define-child-property "GtkVBox"
+                       gtk-v-box-child-position
+                       "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vbox_new ()
