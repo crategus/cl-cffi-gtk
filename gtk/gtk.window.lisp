@@ -31,7 +31,7 @@
 ;;; GtkWindow
 ;;; 
 ;;; Toplevel which can contain other widgets
-;;;     
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     gtk-window
@@ -233,15 +233,15 @@
 ;;; 
 ;;; Example 48. A UI definition fragment with accel groups
 ;;; 
-;;;  1 <object class="GtkWindow">
-;;;  2   <accel-groups>
-;;;  3     <group name="accelgroup1"/>
-;;;  4   </accel-groups>
-;;;  5 </object>
-;;;  6 <!-- -->
-;;;  7 ...
-;;;  8 <!-- -->
-;;;  9 <object class="GtkAccelGroup" id="accelgroup1"/>
+;;;  <object class="GtkWindow">
+;;;    <accel-groups>
+;;;      <group name="accelgroup1"/>
+;;;    </accel-groups>
+;;;  </object>
+;;;  <!-- -->
+;;;  ...
+;;;  <!-- -->
+;;;  <object class="GtkAccelGroup" id="accelgroup1"/>
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -668,46 +668,96 @@
 
 (define-g-object-class "GtkWindow" gtk-window
   (:superclass gtk-bin
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_window_get_type")
-  ((accept-focus        gtk-window-accept-focus "accept-focus" "gboolean" t t)
-   (allow-grow          gtk-window-allow-grow "allow-grow" "gboolean" t t)
-   (allow-shrink        gtk-window-allow-shrink "allow-shrink" "gboolean" t t)
-   (decorated           gtk-window-decorated "decorated" "gboolean" t t)
-   (default-height      gtk-window-default-height "default-height" "gint" t t)
-   (default-width       gtk-window-default-width "default-width" "gint" t t)
-   (deletable           gtk-window-deletable "deletable" "gboolean" t t)
-   (destroy-with-parent gtk-window-destroy-with-parent
-                        "destroy-with-parent" "gboolean" t t)
-   (focus-on-map        gtk-window-focus-on-map "focus-on-map" "gboolean" t t)
-   (gravity             gtk-window-gravity "gravity" "GdkGravity" t t)
-   (has-toplevel-focus  gtk-window-has-toplevel-focus
-                        "has-toplevel-focus" "gboolean" t nil)
-   (icon                gtk-window-icon "icon" "GdkPixbuf" t t)
-   (icon-name           gtk-window-icon-name "icon-name" "gchararray" t t)
-   (is-active           gtk-window-is-active "is-active" "gboolean" t nil)
-   (mnemonics-visible   gtk-window-mnemonics-visible
-                        "mnemonis-visible" "gboolean" t t)
-   (modal               gtk-window-modal "modal" "gboolean" t t)
-   (opacity             gtk-window-opacity "opacity" "gdouble" t t)
-   (resizable           gtk-window-resizable "resizable" "gboolean" t t)
-   (role                gtk-window-role "role" "gchararray" t t)
-   (screen              gtk-window-screen "screen" "GdkScreen" t t)
-   (skip-pager-hint     gtk-window-skip-pager-hint
-                        "skip-pager-hint" "gboolean" t t)
-   (skip-taskbar-hint   gtk-window-skip-taskbar-hint
-                        "skip-taskbar-hint" "gboolean" t t)
-   (startup-id          gtk-window-startup-id "startup-id" "gchararray" nil t)
-   (title               gtk-window-title "title" :string  t t)
-   (transient-for       gtk-window-transient-for
-                        "transient-for" "GtkWindow" t t)
-   (type                gtk-window-type "type" "GtkWindowType" t nil)
-   (type-hint           gtk-window-type-hint
-                        "type-hint" "GdkWindowTypeHint" t t)
-   (urgency-hint        gtk-window-urgency-hint "urgency-hint" "gboolean" t t)
-   (window-position     gtk-window-window-position
-                        "window-position" "GtkWindowPosition" t t)
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_window_get_type")
+  ((accept-focus
+     gtk-window-accept-focus
+     "accept-focus" "gboolean" t t)
+   (allow-grow
+     gtk-window-allow-grow
+     "allow-grow" "gboolean" t t)
+   (allow-shrink
+     gtk-window-allow-shrink
+     "allow-shrink" "gboolean" t t)
+   (decorated
+     gtk-window-decorated
+     "decorated" "gboolean" t t)
+   (default-height
+     gtk-window-default-height
+     "default-height" "gint" t t)
+   (default-width
+     gtk-window-default-width
+     "default-width" "gint" t t)
+   (deletable
+     gtk-window-deletable
+     "deletable" "gboolean" t t)
+   (destroy-with-parent
+     gtk-window-destroy-with-parent
+     "destroy-with-parent" "gboolean" t t)
+   (focus-on-map
+     gtk-window-focus-on-map
+     "focus-on-map" "gboolean" t t)
+   (gravity
+     gtk-window-gravity
+     "gravity" "GdkGravity" t t)
+   (has-toplevel-focus
+     gtk-window-has-toplevel-focus
+     "has-toplevel-focus" "gboolean" t nil)
+   (icon
+     gtk-window-icon
+     "icon" "GdkPixbuf" t t)
+   (icon-name
+     gtk-window-icon-name
+     "icon-name" "gchararray" t t)
+   (is-active
+     gtk-window-is-active
+     "is-active" "gboolean" t nil)
+   (mnemonics-visible
+     gtk-window-mnemonics-visible
+     "mnemonis-visible" "gboolean" t t)
+   (modal
+     gtk-window-modal
+     "modal" "gboolean" t t)
+   (opacity
+     gtk-window-opacity
+     "opacity" "gdouble" t t)
+   (resizable
+     gtk-window-resizable
+     "resizable" "gboolean" t t)
+   (role
+     gtk-window-role
+     "role" "gchararray" t t)
+   (screen
+     gtk-window-screen
+     "screen" "GdkScreen" t t)
+   (skip-pager-hint
+     gtk-window-skip-pager-hint
+     "skip-pager-hint" "gboolean" t t)
+   (skip-taskbar-hint
+     gtk-window-skip-taskbar-hint
+     "skip-taskbar-hint" "gboolean" t t)
+   (startup-id
+     gtk-window-startup-id
+     "startup-id" "gchararray" nil t)
+   (title
+     gtk-window-title
+     "title" :string  t t)
+   (transient-for
+     gtk-window-transient-for
+     "transient-for" "GtkWindow" t t)
+   (type
+     gtk-window-type
+     "type" "GtkWindowType" t nil)
+   (type-hint
+     gtk-window-type-hint
+     "type-hint" "GdkWindowTypeHint" t t)
+   (urgency-hint
+     gtk-window-urgency-hint
+     "urgency-hint" "gboolean" t t)
+   (window-position
+     gtk-window-window-position
+     "window-position" "GtkWindowPosition" t t)
    (:cffi focus
           gtk-window-focus (g-object gtk-widget)
           "gtk_window_get_focus" "gtk_window_set_focus")
@@ -1006,8 +1056,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-window-set-default-size (window width height)
-  (setf (gtk-window-default-width window) width
-        (gtk-window-default-height window) height))
+  (values (setf (gtk-window-default-width window) width
+                (gtk-window-default-height window) height)))
 
 (export 'gtk-window-set-default-size)
 
@@ -2166,6 +2216,12 @@
 ;;; height :
 ;;;     location to store the default height, or NULL. [out][allow-none]
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-window-get-default-size (window)
+  (values (gtk-window-default-width window)
+          (gtk-window-default-height window)))
+
+(export 'gkt-window-get-default-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_destroy_with_parent ()
