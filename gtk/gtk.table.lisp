@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -271,29 +271,34 @@
   (register-object-type "GtkTable" 'gtk-table))
 
 (define-g-object-class "GtkTable" gtk-table
-                       (:superclass gtk-container :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_table_get_type")
-                       ((column-spacing gtk-table-column-spacing
-                                        "column-spacing" "guint" t t)
-                        (homogeneous gtk-table-homogeneous
-                                     "homogeneous" "gboolean" t t)
-                        (n-columns gtk-table-n-columns "n-columns" "guint" t t)
-                        (n-rows gtk-table-n-rows "n-rows" "guint" t t)
-                        (row-spacing gtk-table-row-spacing
-                                     "row-spacing" "guint" t t)))
+  (:superclass gtk-container
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_table_get_type")
+  ((column-spacing gtk-table-column-spacing
+    "column-spacing" "guint" t t)
+   (homogeneous gtk-table-homogeneous
+    "homogeneous" "gboolean" t t)
+   (n-columns gtk-table-n-columns
+    "n-columns" "guint" t t)
+   (n-rows gtk-table-n-rows
+    "n-rows" "guint" t t)
+   (row-spacing gtk-table-row-spacing
+    "row-spacing" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkTable"
-                       gtk-table-child-left-attach "left-attach" "guint" t t t)
+                       gtk-table-child-left-attach
+                       "left-attach" "guint" t t t)
 
 (define-child-property "GtkTable"
                        gtk-table-child-right-attach
                        "right-attach" "guint" t t t)
 
 (define-child-property "GtkTable"
-                       gtk-table-child-top-attach "top-attach" "guint" t t t)
+                       gtk-table-child-top-attach
+                       "top-attach" "guint" t t t)
 
 (define-child-property "GtkTable"
                        gtk-table-child-bottom-attach
@@ -308,10 +313,12 @@
                        "y-options" "GtkAttachOptions" t t t)
 
 (define-child-property "GtkTable"
-                       gtk-table-child-x-padding "x-padding" "guint" t t t)
+                       gtk-table-child-x-padding
+                       "x-padding" "guint" t t t)
 
 (define-child-property "GtkTable"
-                       gtk-table-child-y-padding "y-padding" "guint" t t t)
+                       gtk-table-child-y-padding
+                       "y-padding" "guint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_new ()
@@ -338,6 +345,14 @@
 ;;;     A pointer to the the newly created table widget.
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-table-new (rows columns homogeneous)
+  (make-instance 'gtk-table
+                 :rows rows
+                 :columns columns
+                 :homogeneous homogeneous))
+
+(export 'gtk-table-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_resize ()
 ;;; 
@@ -355,6 +370,12 @@
 ;;; columns :
 ;;;     The new number of columns.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-table-resize (table rows columns)
+  (values (setf (gtk-table-n-rows table) rows)
+          (setf (gtk-table-n-columns table) columns)))
+
+(export 'gtk-table-resize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_get_size ()
@@ -374,6 +395,12 @@
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-table-get-size (table)
+  (values (gtk-table-n-rows table)
+          (gtk-table-n-columns table)))
+
+(export 'gtk-table-get-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_attach ()
@@ -442,10 +469,10 @@
 (defcfun ("gtk_table_attach" %gtk-table-attach) :void
   (table (g-object gtk-table))
   (child (g-object gtk-widget))
-  (left-attach :uint)
-  (right-attach :uint)
-  (top-attach :uint)
-  (bottom-attach :uint)
+  (left :uint)
+  (right :uint)
+  (top :uint)
+  (bottom :uint)
   (x-options gtk-attach-options)
   (y-options gtk-attach-options)
   (x-padding :uint)
@@ -468,10 +495,10 @@
 ;;; 
 ;;; void gtk_table_attach_defaults (GtkTable *table,
 ;;;                                 GtkWidget *widget,
-;;;                                 guint left_attach,
-;;;                                 guint right_attach,
-;;;                                 guint top_attach,
-;;;                                 guint bottom_attach);
+;;;                                 guint left,
+;;;                                 guint right,
+;;;                                 guint top,
+;;;                                 guint bottom);
 ;;; 
 ;;; As there are many options associated with gtk_table_attach(), this
 ;;; convenience function provides the programmer with a means to add children
@@ -485,26 +512,21 @@
 ;;; widget :
 ;;;     The child widget to add.
 ;;; 
-;;; left_attach :
+;;; left :
 ;;;     The column number to attach the left side of the child widget to.
 ;;; 
-;;; right_attach :
+;;; right :
 ;;;     The column number to attach the right side of the child widget to.
 ;;; 
-;;; top_attach :
+;;; top :
 ;;;     The row number to attach the top of the child widget to.
 ;;; 
-;;; bottom_attach :
+;;; bottom :
 ;;;     The row number to attach the bottom of the child widget to.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_table_attach_defaults" gtk-table-attach-defaults) :void
-  (table (g-object gtk-table))
-  (child (g-object gtk-widget))
-  (left-attach :uint)
-  (right-attach :uint)
-  (top-attach :uint)
-  (bottom-attach :uint))
+(defun gtk-table-attach-defaults (table child left right top bottom)
+  (gtk-table-attach table child left right top bottom))
 
 (export 'gtk-table-attach-defaults)
 
@@ -526,7 +548,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_set_row_spacing" gtk-table-set-row-spacing) :void
-  (table g-object)
+  (table (g-object gtk-table))
   (row :uint)
   (spacing :uint))
 
@@ -553,7 +575,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_table_set_col_spacing" gtk-table-set-col-spacing) :void
-  (table g-object)
+  (table (g-object gtk-table))
   (column :uint)
   (spacing :uint))
 
@@ -573,9 +595,8 @@
 ;;;     the number of pixels of space to place between every row in the table.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_table_set_row_spacings" gtk-table-set-row-spacings) :void
-  (table g-object)
-  (spacing :uint))
+(defun gtk-table-set-row-spacings (table spacing)
+  (setf (gtk-table-row-spacing table) spacing))
 
 (export 'gtk-table-set-row-spacings)
 
@@ -594,9 +615,8 @@
 ;;;     the table.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_table_set_col_spacings" gtk-table-set-col-spacings) :void
-  (table g-object)
-  (spacing :uint))
+(defun gtk-table-set-col-spacings (table spacing)
+  (setf (gtk-table-column-spacing table) spacing))
 
 (export 'gtk-table-set-col-spacings)
 
@@ -636,6 +656,11 @@
 ;;;     the default row spacing
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-table-get-default-row-spacing (table)
+  (gtk-table-row-spacing table))
+
+(export 'gtk-table-get-default-row-spacing)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_get_homogeneous ()
 ;;; 
@@ -650,6 +675,11 @@
 ;;; Returns :
 ;;;     TRUE if the cells are all constrained to the same size
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-table-get-homogeneous (table)
+  (gtk-table-homogeneous table))
+
+(export 'gtk-table-get-homogeneous)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_get_row_spacing ()
@@ -669,16 +699,11 @@
 ;;;     the row spacing
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Rework this implementation
-
-(defcfun ("gtk_table_get_row_spacing" table-row-spacing-for-row) :uint
-  (table g-object)
+(defcfun ("gtk_table_get_row_spacing" gtk-table-get-row-spacing) :uint
+  (table (g-object gtk-table))
   (row :uint))
 
-(defun (setf table-row-spacing-for-row) (new-value table row)
-  (gtk-table-set-row-spacing table row new-value))
-
-(export 'table-row-spacing-for-row)
+(export 'gtk-table-get-row-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_get_col_spacing ()
@@ -698,16 +723,11 @@
 ;;;     the column spacing
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Rework this implementation
+(defcfun ("gtk_table_get_col_spacing" gtk-table-get-col-spacing) :uint
+  (table (g-object gtk-table))
+  (column :uint))
 
-(defcfun (table-col-spacing-for-col "gtk_table_get_col_spacing") :uint
-  (table g-object)
-  (col :uint))
-
-(defun (setf table-col-spacing-for-col) (new-value table col)
-  (gtk-table-set-col-spacing table col new-value))
-
-(export 'table-col-spacing-for-col)
+(export 'gtk-table-get-col-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_get_default_col_spacing ()
@@ -723,5 +743,10 @@
 ;;; Returns :
 ;;;     the default column spacing
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-table-get-default-col-spacing (table)
+  (gtk-table-column-spacing table))
+
+(export 'gtk-table-get-default-col-spacing)
 
 ;;; --- End of file gtk.table.lisp ---------------------------------------------
