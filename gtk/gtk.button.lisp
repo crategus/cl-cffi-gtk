@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,10 +31,11 @@
 ;;; GtkButton
 ;;; 
 ;;; A widget that creates a signal when clicked on
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkButton
+;;;     
 ;;;     gtk_button_new
 ;;;     gtk_button_new_with_label
 ;;;     gtk_button_new_with_mnemonic
@@ -310,10 +311,10 @@
 ;;; connect to this signal, but use the "clicked" signal.
 ;;; 
 ;;; widget :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "clicked" signal
@@ -323,10 +324,10 @@
 ;;; Emitted when the button has been activated (pressed and released).
 ;;; 
 ;;; button :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "enter" signal
@@ -341,10 +342,10 @@
 ;;; Emitted when the pointer enters the button.
 ;;; 
 ;;; button :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "leave" signal
@@ -359,10 +360,10 @@
 ;;; Emitted when the pointer leaves the button.
 ;;; 
 ;;; button :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "pressed" signal
@@ -377,10 +378,10 @@
 ;;; Emitted when the button is pressed.
 ;;; 
 ;;; button :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "released" signal
@@ -395,10 +396,10 @@
 ;;; Emitted when the button is released.
 ;;; 
 ;;; button :
-;;; 	the object that received the signal
+;;;     the object that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -413,25 +414,37 @@
   (register-object-type "GtkButton" 'gtk-button))
 
 (define-g-object-class "GtkButton" gtk-button
-                       (:superclass gtk-bin
-                        :export t
-                        :interfaces ("AtkImplementorIface"
-                                     "GtkActivatable"
-                                     "GtkBuildable")
-                        :type-initializer "gtk_button_get_type")
-                       ((focus-on-click gtk-button-focus-on-click
-                                        "focus-on-click" "gboolean" t t)
-                        (image gtk-button-image "image" "GtkWidget" t t)
-                        (image-position gtk-button-image-position
-                                        "image-position" "GtkPositionType" t t)
-                        (label gtk-button-label "label" "gchararray" t t)
-                        (relief gtk-button-relief "relief" "GtkReliefStyle" t t)
-                        (use-stock gtk-button-use-stock
-                                   "use-stock" "gboolean" t t)
-                        (use-underline gtk-button-use-underline
-                                       "use-underline" "gboolean" t t)
-                        (xalign gtk-button-xalign "xalign" "gfloat" t t)
-                        (yalign gtk-button-yalign "yalign" "gfloat" t t)))
+  (:superclass gtk-bin
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :type-initializer "gtk_button_get_type")
+  ((focus-on-click
+     gtk-button-focus-on-click
+     "focus-on-click" "gboolean" t t)
+   (image
+    gtk-button-image
+    "image" "GtkWidget" t t)
+   (image-position
+    gtk-button-image-position
+    "image-position" "GtkPositionType" t t)
+   (label
+    gtk-button-label
+    "label" "gchararray" t t)
+   (relief
+    gtk-button-relief
+    "relief" "GtkReliefStyle" t t)
+   (use-stock
+    gtk-button-use-stock
+    "use-stock" "gboolean" t t)
+   (use-underline
+    gtk-button-use-underline
+    "use-underline" "gboolean" t t)
+   (xalign
+    gtk-button-xalign
+    "xalign" "gfloat" t t)
+   (yalign
+    gtk-button-yalign
+    "yalign" "gfloat" t t)))
 
 ;;; ---------------------------------------------------------------------------- 
 ;;; gtk_button_new ()
@@ -442,7 +455,7 @@
 ;;; gtk_container_add().
 ;;; 
 ;;; Returns :
-;;; 	The newly created GtkButton widget.
+;;;     The newly created GtkButton widget.
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-button-new ()
@@ -458,10 +471,10 @@
 ;;; Creates a GtkButton widget with a GtkLabel child containing the given text.
 ;;; 
 ;;; label :
-;;; 	The text you want the GtkLabel to hold.
+;;;     The text you want the GtkLabel to hold.
 ;;; 
 ;;; Returns :
-;;; 	The newly created GtkButton widget.
+;;;     The newly created GtkButton widget.
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-button-new-with-label (label)
@@ -481,12 +494,18 @@
 ;;; Pressing Alt and that key activates the button.
 ;;; 
 ;;; label :
-;;; 	The text of the button, with an underscore in front of the mnemonic
-;;;     character
+;;;     The text of the button, with an underscore in front of the mnemonic
+;;;     character.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkButton
+;;;     a new GtkButton
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_button_new_with_mnemonic" gtk-button-new-with-mnemonic)
+    (g-object gtk-widget)
+  (label :string))
+
+(export 'gtk-button-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_new_from_stock ()
@@ -501,11 +520,17 @@
 ;;; gtk_button_new_with_mnemonic()).
 ;;; 
 ;;; stock_id :
-;;; 	the name of the stock item
+;;;     the name of the stock item
 ;;; 
 ;;; Returns :
-;;; 	a new GtkButton
+;;;     a new GtkButton
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_button_new_from_stock" gtk-button-new-from-stock)
+    (g-object gtk-widget)
+  (stock-id :string))
+
+(export 'gtk-button-new-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_pressed ()
@@ -520,7 +545,7 @@
 ;;; Emits a "pressed" signal to the given GtkButton.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want to send the signal to.
+;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -536,7 +561,7 @@
 ;;; Emits a "released" signal to the given GtkButton.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want to send the signal to.
+;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -547,7 +572,7 @@
 ;;; Emits a "clicked" signal to the given GtkButton.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want to send the signal to.
+;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -563,7 +588,7 @@
 ;;; Emits a "enter" signal to the given GtkButton.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want to send the signal to.
+;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -579,7 +604,7 @@
 ;;; Emits a "leave" signal to the given GtkButton.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want to send the signal to.
+;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -592,10 +617,10 @@
 ;;; default style is, as one can guess, GTK_RELIEF_NORMAL.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want to set relief styles of.
+;;;     The GtkButton you want to set relief styles of.
 ;;; 
 ;;; newstyle :
-;;; 	The GtkReliefStyle as described above.
+;;;     The GtkReliefStyle as described above.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -606,10 +631,10 @@
 ;;; Returns the current relief style of the given GtkButton.
 ;;; 
 ;;; button :
-;;; 	The GtkButton you want the GtkReliefStyle from.
+;;;     The GtkButton you want the GtkReliefStyle from.
 ;;; 
 ;;; Returns :
-;;; 	The current GtkReliefStyle
+;;;     The current GtkReliefStyle
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -623,10 +648,10 @@
 ;;; gtk_button_new() to use as a container.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	The text of the label widget. This string is owned by the widget and
+;;;     The text of the label widget. This string is owned by the widget and
 ;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -646,10 +671,10 @@
 ;;; This will also clear any previously set labels.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; label :
-;;; 	a string
+;;;     a string
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-button-set-label (button label)
@@ -665,10 +690,10 @@
 ;;; Returns whether the button label is a stock item.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the button label is used to select a stock item instead of
+;;;     TRUE if the button label is used to select a stock item instead of
 ;;;     being used directly as the label text.
 ;;; ----------------------------------------------------------------------------
 
@@ -681,10 +706,10 @@
 ;;; stock item for the button.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; use_stock :
-;;; 	TRUE if the button should use a stock item
+;;;     TRUE if the button should use a stock item
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -696,10 +721,10 @@
 ;;; mnemonic. See gtk_button_set_use_underline().
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	TRUE if an embedded underline in the button label indicates the
+;;;     TRUE if an embedded underline in the button label indicates the
 ;;;     mnemonic accelerator keys.
 ;;; ----------------------------------------------------------------------------
 
@@ -713,10 +738,10 @@
 ;;; character should be used for the mnemonic accelerator key.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; use_underline :
-;;; 	TRUE if underlines in the text indicate mnemonics
+;;;     TRUE if underlines in the text indicate mnemonics
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -731,10 +756,10 @@
 ;;; application.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; focus_on_click :
-;;; 	whether the button grabs focus when clicked with the mouse
+;;;     whether the button grabs focus when clicked with the mouse
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -748,10 +773,10 @@
 ;;; See gtk_button_set_focus_on_click().
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the button grabs focus when it is clicked with the mouse.
+;;;     TRUE if the button grabs focus when it is clicked with the mouse.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -767,14 +792,14 @@
 ;;; child is a GtkMisc or a GtkAlignment.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; xalign :
-;;; 	the horizontal position of the child, 0.0 is left aligned, 1.0 is
+;;;     the horizontal position of the child, 0.0 is left aligned, 1.0 is
 ;;;     right aligned
 ;;; 
 ;;; yalign :
-;;; 	the vertical position of the child, 0.0 is top aligned, 1.0 is
+;;;     the vertical position of the child, 0.0 is top aligned, 1.0 is
 ;;;     bottom aligned
 ;;; 
 ;;; Since 2.4
@@ -790,13 +815,13 @@
 ;;; Gets the alignment of the child in the button.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; xalign :
-;;; 	return location for horizontal alignment.
+;;;     return location for horizontal alignment.
 ;;; 
 ;;; yalign :
-;;; 	return location for vertical alignment.
+;;;     return location for vertical alignment.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -811,10 +836,10 @@
 ;;; don't have to call gtk_widget_show() on image yourself.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; image :
-;;; 	a widget to set as the image for the button
+;;;     a widget to set as the image for the button
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -829,10 +854,10 @@
 ;;; gtk_button_new_from_stock().
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	a GtkWidget or NULL in case there is no image.
+;;;     a GtkWidget or NULL in case there is no image.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -846,10 +871,10 @@
 ;;; Sets the position of the image relative to the text inside the button.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; position :
-;;; 	the position
+;;;     the position
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -862,10 +887,10 @@
 ;;; Gets the position of the image relative to the text inside the button.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	the position
+;;;     the position
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -879,10 +904,10 @@
 ;;; function should be rarely needed.
 ;;; 
 ;;; button :
-;;; 	a GtkButton
+;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;; 	button's event window.
+;;;     button's event window.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
