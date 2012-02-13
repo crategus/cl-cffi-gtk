@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,7 +31,7 @@
 ;;; Settings
 ;;; 
 ;;; Sharing settings between applications
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkSettings
@@ -59,6 +59,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkSettings implements GtkStyleProvider.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "color-hash"               GHashTable*           : Read
@@ -165,398 +166,7 @@
 ;;; gtk_settings_get_for_screen(), but in many cases, it is more convenient to
 ;;; use gtk_widget_get_settings(). gtk_settings_get_default() returns the
 ;;; GtkSettings instance for the default screen.
-;;; ----------------------------------------------------------------------------
-
-(in-package :gtk)
-
-;;; ----------------------------------------------------------------------------
-;;; GtkSettings
-;;; 
-;;; typedef struct _GtkSettings GtkSettings;
-;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkSettings" gtk-settings
-  (:superclass g-object
-    :export t
-    :interfaces nil
-    :type-initializer "gtk_settings_get_type")
-  ((color-hash gtk-settings-color-hash "color-hash"
-    "GHashTable" t nil)
-   (gtk-alternative-button-order gtk-settings-gtk-alternative-button-order
-    "gtk-alternative-button-order" "gboolean" t t)
-   (gtk-alternative-sort-arrows gtk-settings-gtk-alternative-sort-arrows
-    "gtk-alternative-sort-arrows" "gboolean" t t)
-   (gtk-button-images gtk-settings-gtk-button-images
-    "gtk-button-images" "gboolean" t t)
-   (gtk-can-change-accels gtk-settings-gtk-can-change-accels
-    "gtk-can-change-accels" "gboolean" t t)
-   (gtk-color-palette gtk-settings-gtk-color-palette
-    "gtk-color-palette" "gchararray" t t)
-   (gtk-color-scheme gtk-settings-gtk-color-scheme
-    "gtk-color-scheme" "gchararray" t t)
-   (gtk-cursor-blink gtk-settings-gtk-cursor-blink
-    "gtk-cursor-blink" "gboolean" t t)
-   (gtk-cursor-blink-time gtk-settings-gtk-cursor-blink-time
-    "gtk-cursor-blink-time" "gint" t t)
-   (gtk-cursor-blink-timeout
-    gtk-settings-gtk-cursor-blink-timeout
-    "gtk-cursor-blink-timeout" "gint" t t)
-   (gtk-cursor-theme-name gtk-settings-gtk-cursor-theme-name
-    "gtk-cursor-theme-name" "gchararray" t t)
-   (gtk-cursor-theme-size gtk-settings-gtk-cursor-theme-size
-    "gtk-cursor-theme-size" "gint" t t)
-   (gtk-dnd-drag-threshold gtk-settings-gtk-dnd-drag-threshold
-    "gtk-dnd-drag-threshold" "gint" t t)
-   (gtk-double-click-distance
-    gtk-settings-gtk-double-click-distance
-    "gtk-double-click-distance" "gint" t t)
-   (gtk-double-click-time gtk-settings-gtk-double-click-time
-    "gtk-double-click-time" "gint" t t)
-   (gtk-enable-accels gtk-settings-gtk-enable-accels
-    "gtk-enable-accels" "gboolean" t t)
-   (gtk-enable-animations gtk-settings-gtk-enable-animations
-    "gtk-enable-animations" "gboolean" t t)
-   (gtk-enable-event-sounds
-    gtk-settings-gtk-enable-event-sounds
-    "gtk-enable-event-sounds" "gboolean" t t)
-   (gtk-enable-input-feedback-sounds
-    gtk-settings-gtk-enable-input-feedback-sounds
-    "gtk-enable-input-feedback-sounds" "gboolean" t t)
-   (gtk-enable-mnemonics gtk-settings-gtk-enable-mnemonics
-    "gtk-enable-mnemonics" "gboolean" t t)
-   (gtk-enable-tooltips gtk-settings-gtk-enable-tooltips
-    "gtk-enable-tooltips" "gboolean" t t)
-   (gtk-entry-password-hint-timeout
-    gtk-settings-gtk-entry-password-hint-timeout
-    "gtk-entry-password-hint-timeout" "guint" t t)
-   (gtk-entry-select-on-focus
-    gtk-settings-gtk-entry-select-on-focus
-    "gtk-entry-select-on-focus" "gboolean" t t)
-   (gtk-error-bell gtk-settings-gtk-error-bell
-    "gtk-error-bell" "gboolean" t t)
-   (gtk-fallback-icon-theme
-    gtk-settings-gtk-fallback-icon-theme
-    "gtk-fallback-icon-theme" "gchararray" t t)
-   (gtk-file-chooser-backend
-    gtk-settings-gtk-file-chooser-backend
-    "gtk-file-chooser-backend" "gchararray" t t)
-   (gtk-font-name gtk-settings-gtk-font-name "gtk-font-name"
-    "gchararray" t t)
-   (gtk-fontconfig-timestamp
-    gtk-settings-gtk-fontconfig-timestamp
-    "gtk-fontconfig-timestamp" "guint" t t)
-   (gtk-icon-sizes gtk-settings-gtk-icon-sizes
-    "gtk-icon-sizes" "gchararray" t t)
-   (gtk-icon-theme-name gtk-settings-gtk-icon-theme-name
-    "gtk-icon-theme-name" "gchararray" t t)
-   (gtk-im-module gtk-settings-gtk-im-module "gtk-im-module"
-    "gchararray" t t)
-   (gtk-key-theme-name gtk-settings-gtk-key-theme-name
-    "gtk-key-theme-name" "gchararray" t t)
-   (gtk-keynav-cursor-only gtk-settings-gtk-keynav-cursor-only
-    "gtk-keynav-cursor-only" "gboolean" t t)
-   (gtk-keynav-wrap-around gtk-settings-gtk-keynav-wrap-around
-    "gtk-keynav-wrap-around" "gboolean" t t)
-   (gtk-label-select-on-focus
-    gtk-settings-gtk-label-select-on-focus
-    "gtk-label-select-on-focus" "gboolean" t t)
-   (gtk-menu-bar-accel gtk-settings-gtk-menu-bar-accel
-    "gtk-menu-bar-accel" "gchararray" t t)
-   (gtk-menu-bar-popup-delay
-    gtk-settings-gtk-menu-bar-popup-delay
-    "gtk-menu-bar-popup-delay" "gint" t t)
-   (gtk-menu-images gtk-settings-gtk-menu-images
-    "gtk-menu-images" "gboolean" t t)
-   (gtk-menu-popdown-delay gtk-settings-gtk-menu-popdown-delay
-    "gtk-menu-popdown-delay" "gint" t t)
-   (gtk-menu-popup-delay gtk-settings-gtk-menu-popup-delay
-    "gtk-menu-popup-delay" "gint" t t)
-   (gtk-modules gtk-settings-gtk-modules
-    "gtk-modules" "gchararray" t t)
-   (gtk-print-backends gtk-settings-gtk-print-backends
-    "gtk-print-backends" "gchararray" t t)
-   (gtk-print-preview-command
-    gtk-settings-gtk-print-preview-command
-    "gtk-print-preview-command" "gchararray" t t)
-   (gtk-recent-files-limit gtk-settings-gtk-recent-files-limit
-    "gtk-recent-files-limit" "gint" t t)
-   (gtk-recent-files-max-age
-    gtk-settings-gtk-recent-files-max-age
-    "gtk-recent-files-max-age" "gint" t t)
-   (gtk-scrolled-window-placement
-    gtk-settings-gtk-scrolled-window-placement
-    "gtk-scrolled-window-placement" "GtkCornerType" t t)
-   (gtk-show-input-method-menu
-    gtk-settings-gtk-show-input-method-menu
-    "gtk-show-input-method-menu" "gboolean" t t)
-   (gtk-show-unicode-menu gtk-settings-gtk-show-unicode-menu
-    "gtk-show-unicode-menu" "gboolean" t t)
-   (gtk-sound-theme-name gtk-settings-gtk-sound-theme-name
-    "gtk-sound-theme-name" "gchararray" t t)
-   (gtk-split-cursor gtk-settings-gtk-split-cursor
-    "gtk-split-cursor" "gboolean" t t)
-   (gtk-theme-name gtk-settings-gtk-theme-name
-    "gtk-theme-name" "gchararray" t t)
-   (gtk-timeout-expand gtk-settings-gtk-timeout-expand
-    "gtk-timeout-expand" "gint" t t)
-   (gtk-timeout-initial gtk-settings-gtk-timeout-initial
-    "gtk-timeout-initial" "gint" t t)
-   (gtk-timeout-repeat gtk-settings-gtk-timeout-repeat
-    "gtk-timeout-repeat" "gint" t t)
-   (gtk-toolbar-icon-size gtk-settings-gtk-toolbar-icon-size
-    "gtk-toolbar-icon-size" "GtkIconSize" t t)
-   (gtk-toolbar-style gtk-settings-gtk-toolbar-style
-    "gtk-toolbar-style" "GtkToolbarStyle" t t)
-   (gtk-tooltip-browse-mode-timeout
-    gtk-settings-gtk-tooltip-browse-mode-timeout
-    "gtk-tooltip-browse-mode-timeout" "gint" t t)
-   (gtk-tooltip-browse-timeout
-    gtk-settings-gtk-tooltip-browse-timeout
-    "gtk-tooltip-browse-timeout" "gint" t t)
-   (gtk-tooltip-timeout gtk-settings-gtk-tooltip-timeout
-    "gtk-tooltip-timeout" "gint" t t)
-   (gtk-touchscreen-mode gtk-settings-gtk-touchscreen-mode
-    "gtk-touchscreen-mode" "gboolean" t t)
-   (gtk-xft-antialias gtk-settings-gtk-xft-antialias
-    "gtk-xft-antialias" "gint" t t)
-   (gtk-xft-dpi gtk-settings-gtk-xft-dpi
-    "gtk-xft-dpi" "gint" t t)
-   (gtk-xft-hinting gtk-settings-gtk-xft-hinting
-    "gtk-xft-hinting" "gint" t t)
-   (gtk-xft-hintstyle gtk-settings-gtk-xft-hintstyle
-    "gtk-xft-hintstyle" "gchararray" t t)
-   (gtk-xft-rgba gtk-settings-gtk-xft-rgba
-    "gtk-xft-rgba" "gchararray" t t)))
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkSettingsValue
-;;; 
-;;; struct GtkSettingsValue {
-;;;   /* origin should be something like "filename:linenumber" for rc files,
-;;;    * or e.g. "XProperty" for other sources
-;;;    */
-;;;   gchar *origin;
-;;; 
-;;;   /* valid types are LONG, DOUBLE and STRING corresponding to the token
-;;;    * parsed, or a GSTRING holding an unparsed statement
-;;;    */
-;;;   GValue value;
-;;; };
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_get_default ()
-;;; 
-;;; GtkSettings * gtk_settings_get_default (void);
-;;; 
-;;; Gets the GtkSettings object for the default GDK screen, creating it if
-;;; necessary. See gtk_settings_get_for_screen().
-;;; 
-;;; Returns :
-;;; 	a GtkSettings object. If there is no default screen, then returns NULL.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_get_for_screen ()
-;;; 
-;;; GtkSettings * gtk_settings_get_for_screen (GdkScreen *screen);
-;;; 
-;;; Gets the GtkSettings object for screen, creating it if necessary.
-;;; 
-;;; screen :
-;;; 	a GdkScreen.
-;;; 
-;;; Returns :
-;;; 	a GtkSettings object.
-;;; 
-;;; Since 2.2
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_install_property ()
-;;; 
-;;; void gtk_settings_install_property (GParamSpec *pspec);
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_install_property_parser ()
-;;; 
-;;; void gtk_settings_install_property_parser (GParamSpec *pspec,
-;;;                                            GtkRcPropertyParser parser);
-;;; 
-;;; parser :
-;;; 	. [scope call]
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_rc_property_parse_color ()
-;;; 
-;;; gboolean gtk_rc_property_parse_color (const GParamSpec *pspec,
-;;;                                       const GString *gstring,
-;;;                                       GValue *property_value);
-;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses a color given
-;;; either by its name or in the form { red, green, blue } where red, green and
-;;; blue are integers between 0 and 65535 or floating-point numbers between
-;;; 0 and 1.
-;;; 
-;;; pspec :
-;;; 	a GParamSpec
-;;; 
-;;; gstring :
-;;; 	the GString to be parsed
-;;; 
-;;; property_value :
-;;; 	a GValue which must hold GdkColor values.
-;;; 
-;;; Returns :
-;;; 	TRUE if gstring could be parsed and property_value has been set to the
-;;;     resulting GdkColor.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_rc_property_parse_enum ()
-;;; 
-;;; gboolean gtk_rc_property_parse_enum (const GParamSpec *pspec,
-;;;                                      const GString *gstring,
-;;;                                      GValue *property_value);
-;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
-;;; or gtk_widget_class_install_style_property_parser() which parses a single
-;;; enumeration value.
-;;; 
-;;; The enumeration value can be specified by its name, its nickname or its
-;;; numeric value. For consistency with flags parsing, the value may be
-;;; surrounded by parentheses.
-;;; 
-;;; pspec :
-;;; 	a GParamSpec
-;;; 
-;;; gstring :
-;;; 	the GString to be parsed
-;;; 
-;;; property_value :
-;;; 	a GValue which must hold enum values.
-;;; 
-;;; Returns :
-;;; 	TRUE if gstring could be parsed and property_value has been set to the
-;;;     resulting GEnumValue.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_rc_property_parse_flags ()
-;;; 
-;;; gboolean gtk_rc_property_parse_flags (const GParamSpec *pspec,
-;;;                                       const GString *gstring,
-;;;                                       GValue *property_value);
-;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
-;;; or gtk_widget_class_install_style_property_parser() which parses flags.
-;;; 
-;;; Flags can be specified by their name, their nickname or numerically.
-;;; Multiple flags can be specified in the form "( flag1 | flag2 | ... )".
-;;; 
-;;; pspec :
-;;; 	a GParamSpec
-;;; 
-;;; gstring :
-;;; 	the GString to be parsed
-;;; 
-;;; property_value :
-;;; 	a GValue which must hold flags values.
-;;; 
-;;; Returns :
-;;; 	TRUE if gstring could be parsed and property_value has been set to the
-;;;     resulting flags value.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_rc_property_parse_requisition ()
-;;; 
-;;; gboolean gtk_rc_property_parse_requisition (const GParamSpec *pspec,
-;;;                                             const GString *gstring,
-;;;                                             GValue *property_value);
-;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
-;;; or gtk_widget_class_install_style_property_parser() which parses a
-;;; requisition in the form "{ width, height }" for integers width and height.
-;;; 
-;;; pspec :
-;;; 	a GParamSpec
-;;; 
-;;; gstring :
-;;; 	the GString to be parsed
-;;; 
-;;; property_value :
-;;; 	a GValue which must hold boxed values.
-;;; 
-;;; Returns :
-;;; 	TRUE if gstring could be parsed and property_value has been set to the
-;;;     resulting GtkRequisition.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_rc_property_parse_border ()
-;;; 
-;;; gboolean gtk_rc_property_parse_border (const GParamSpec *pspec,
-;;;                                        const GString *gstring,
-;;;                                        GValue *property_value);
-;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
-;;; gtk_widget_class_install_style_property_parser() which parses borders in the
-;;; form "{ left, right, top, bottom }" for integers left, right, top and
-;;; bottom.
-;;; 
-;;; pspec :
-;;; 	a GParamSpec
-;;; 
-;;; gstring :
-;;; 	the GString to be parsed
-;;; 
-;;; property_value :
-;;; 	a GValue which must hold boxed values.
-;;; 
-;;; Returns :
-;;; 	TRUE if gstring could be parsed and property_value has been set to the
-;;;     resulting GtkBorder.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_set_property_value ()
-;;; 
-;;; void gtk_settings_set_property_value (GtkSettings *settings,
-;;;                                       const gchar *name,
-;;;                                       const GtkSettingsValue *svalue);
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_set_string_property ()
-;;; 
-;;; void gtk_settings_set_string_property (GtkSettings *settings,
-;;;                                        const gchar *name,
-;;;                                        const gchar *v_string,
-;;;                                        const gchar *origin);
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_set_long_property ()
-;;; 
-;;; void gtk_settings_set_long_property (GtkSettings *settings,
-;;;                                      const gchar *name,
-;;;                                      glong v_long,
-;;;                                      const gchar *origin);
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_settings_set_double_property ()
-;;; 
-;;; void gtk_settings_set_double_property (GtkSettings *settings,
-;;;                                        const gchar *name,
-;;;                                        gdouble v_double,
-;;;                                        const gchar *origin);
-;;; ----------------------------------------------------------------------------
-
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; 
 ;;; Property Details
@@ -1394,5 +1004,447 @@
 ;;; Default value: NULL
 ;;; ----------------------------------------------------------------------------
 
-;;; --- End of file gtk.settings.lisp ------------------------------------------
+(in-package :gtk)
 
+;;; ----------------------------------------------------------------------------
+;;; GtkSettings
+;;; 
+;;; typedef struct _GtkSettings GtkSettings;
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkSettings" gtk-settings
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_settings_get_type")
+  ((color-hash
+    gtk-settings-color-hash
+    "color-hash" "GHashTable" t nil)
+   (gtk-alternative-button-order
+    gtk-settings-gtk-alternative-button-order
+    "gtk-alternative-button-order" "gboolean" t t)
+   (gtk-alternative-sort-arrows
+    gtk-settings-gtk-alternative-sort-arrows
+    "gtk-alternative-sort-arrows" "gboolean" t t)
+   (gtk-button-images
+    gtk-settings-gtk-button-images
+    "gtk-button-images" "gboolean" t t)
+   (gtk-can-change-accels
+    gtk-settings-gtk-can-change-accels
+    "gtk-can-change-accels" "gboolean" t t)
+   (gtk-color-palette
+    gtk-settings-gtk-color-palette
+    "gtk-color-palette" "gchararray" t t)
+   (gtk-color-scheme
+    gtk-settings-gtk-color-scheme
+    "gtk-color-scheme" "gchararray" t t)
+   (gtk-cursor-blink
+    gtk-settings-gtk-cursor-blink
+    "gtk-cursor-blink" "gboolean" t t)
+   (gtk-cursor-blink-time
+    gtk-settings-gtk-cursor-blink-time
+    "gtk-cursor-blink-time" "gint" t t)
+   (gtk-cursor-blink-timeout
+    gtk-settings-gtk-cursor-blink-timeout
+    "gtk-cursor-blink-timeout" "gint" t t)
+   (gtk-cursor-theme-name
+    gtk-settings-gtk-cursor-theme-name
+    "gtk-cursor-theme-name" "gchararray" t t)
+   (gtk-cursor-theme-size
+    gtk-settings-gtk-cursor-theme-size
+    "gtk-cursor-theme-size" "gint" t t)
+   (gtk-dnd-drag-threshold
+    gtk-settings-gtk-dnd-drag-threshold
+    "gtk-dnd-drag-threshold" "gint" t t)
+   (gtk-double-click-distance
+    gtk-settings-gtk-double-click-distance
+    "gtk-double-click-distance" "gint" t t)
+   (gtk-double-click-time
+    gtk-settings-gtk-double-click-time
+    "gtk-double-click-time" "gint" t t)
+   (gtk-enable-accels
+    gtk-settings-gtk-enable-accels
+    "gtk-enable-accels" "gboolean" t t)
+   (gtk-enable-animations
+    gtk-settings-gtk-enable-animations
+    "gtk-enable-animations" "gboolean" t t)
+   (gtk-enable-event-sounds
+    gtk-settings-gtk-enable-event-sounds
+    "gtk-enable-event-sounds" "gboolean" t t)
+   (gtk-enable-input-feedback-sounds
+    gtk-settings-gtk-enable-input-feedback-sounds
+    "gtk-enable-input-feedback-sounds" "gboolean" t t)
+   (gtk-enable-mnemonics
+    gtk-settings-gtk-enable-mnemonics
+    "gtk-enable-mnemonics" "gboolean" t t)
+   (gtk-enable-tooltips
+    gtk-settings-gtk-enable-tooltips
+    "gtk-enable-tooltips" "gboolean" t t)
+   (gtk-entry-password-hint-timeout
+    gtk-settings-gtk-entry-password-hint-timeout
+    "gtk-entry-password-hint-timeout" "guint" t t)
+   (gtk-entry-select-on-focus
+    gtk-settings-gtk-entry-select-on-focus
+    "gtk-entry-select-on-focus" "gboolean" t t)
+   (gtk-error-bell
+    gtk-settings-gtk-error-bell
+    "gtk-error-bell" "gboolean" t t)
+   (gtk-fallback-icon-theme
+    gtk-settings-gtk-fallback-icon-theme
+    "gtk-fallback-icon-theme" "gchararray" t t)
+   (gtk-file-chooser-backend
+    gtk-settings-gtk-file-chooser-backend
+    "gtk-file-chooser-backend" "gchararray" t t)
+   (gtk-font-name
+    gtk-settings-gtk-font-name
+    "gtk-font-name" "gchararray" t t)
+   (gtk-fontconfig-timestamp
+    gtk-settings-gtk-fontconfig-timestamp
+    "gtk-fontconfig-timestamp" "guint" t t)
+   (gtk-icon-sizes
+    gtk-settings-gtk-icon-sizes
+    "gtk-icon-sizes" "gchararray" t t)
+   (gtk-icon-theme-name
+    gtk-settings-gtk-icon-theme-name
+    "gtk-icon-theme-name" "gchararray" t t)
+   (gtk-im-module
+    gtk-settings-gtk-im-module "gtk-im-module"
+    "gchararray" t t)
+   (gtk-key-theme-name
+    gtk-settings-gtk-key-theme-name
+    "gtk-key-theme-name" "gchararray" t t)
+   (gtk-keynav-cursor-only
+    gtk-settings-gtk-keynav-cursor-only
+    "gtk-keynav-cursor-only" "gboolean" t t)
+   (gtk-keynav-wrap-around
+    gtk-settings-gtk-keynav-wrap-around
+    "gtk-keynav-wrap-around" "gboolean" t t)
+   (gtk-label-select-on-focus
+    gtk-settings-gtk-label-select-on-focus
+    "gtk-label-select-on-focus" "gboolean" t t)
+   (gtk-menu-bar-accel gtk-settings-gtk-menu-bar-accel
+    "gtk-menu-bar-accel" "gchararray" t t)
+   (gtk-menu-bar-popup-delay
+    gtk-settings-gtk-menu-bar-popup-delay
+    "gtk-menu-bar-popup-delay" "gint" t t)
+   (gtk-menu-images
+    gtk-settings-gtk-menu-images
+    "gtk-menu-images" "gboolean" t t)
+   (gtk-menu-popdown-delay
+    gtk-settings-gtk-menu-popdown-delay
+    "gtk-menu-popdown-delay" "gint" t t)
+   (gtk-menu-popup-delay
+    gtk-settings-gtk-menu-popup-delay
+    "gtk-menu-popup-delay" "gint" t t)
+   (gtk-modules
+    gtk-settings-gtk-modules
+    "gtk-modules" "gchararray" t t)
+   (gtk-print-backends
+    gtk-settings-gtk-print-backends
+    "gtk-print-backends" "gchararray" t t)
+   (gtk-print-preview-command
+    gtk-settings-gtk-print-preview-command
+    "gtk-print-preview-command" "gchararray" t t)
+   (gtk-recent-files-limit
+    gtk-settings-gtk-recent-files-limit
+    "gtk-recent-files-limit" "gint" t t)
+   (gtk-recent-files-max-age
+    gtk-settings-gtk-recent-files-max-age
+    "gtk-recent-files-max-age" "gint" t t)
+   (gtk-scrolled-window-placement
+    gtk-settings-gtk-scrolled-window-placement
+    "gtk-scrolled-window-placement" "GtkCornerType" t t)
+   (gtk-show-input-method-menu
+    gtk-settings-gtk-show-input-method-menu
+    "gtk-show-input-method-menu" "gboolean" t t)
+   (gtk-show-unicode-menu
+    gtk-settings-gtk-show-unicode-menu
+    "gtk-show-unicode-menu" "gboolean" t t)
+   (gtk-sound-theme-name
+    gtk-settings-gtk-sound-theme-name
+    "gtk-sound-theme-name" "gchararray" t t)
+   (gtk-split-cursor
+    gtk-settings-gtk-split-cursor
+    "gtk-split-cursor" "gboolean" t t)
+   (gtk-theme-name
+    gtk-settings-gtk-theme-name
+    "gtk-theme-name" "gchararray" t t)
+   (gtk-timeout-expand
+    gtk-settings-gtk-timeout-expand
+    "gtk-timeout-expand" "gint" t t)
+   (gtk-timeout-initial
+    gtk-settings-gtk-timeout-initial
+    "gtk-timeout-initial" "gint" t t)
+   (gtk-timeout-repeat
+    gtk-settings-gtk-timeout-repeat
+    "gtk-timeout-repeat" "gint" t t)
+   (gtk-toolbar-icon-size
+    gtk-settings-gtk-toolbar-icon-size
+    "gtk-toolbar-icon-size" "GtkIconSize" t t)
+   (gtk-toolbar-style
+    gtk-settings-gtk-toolbar-style
+    "gtk-toolbar-style" "GtkToolbarStyle" t t)
+   (gtk-tooltip-browse-mode-timeout
+    gtk-settings-gtk-tooltip-browse-mode-timeout
+    "gtk-tooltip-browse-mode-timeout" "gint" t t)
+   (gtk-tooltip-browse-timeout
+    gtk-settings-gtk-tooltip-browse-timeout
+    "gtk-tooltip-browse-timeout" "gint" t t)
+   (gtk-tooltip-timeout
+    gtk-settings-gtk-tooltip-timeout
+    "gtk-tooltip-timeout" "gint" t t)
+   (gtk-touchscreen-mode
+    gtk-settings-gtk-touchscreen-mode
+    "gtk-touchscreen-mode" "gboolean" t t)
+   (gtk-xft-antialias
+    gtk-settings-gtk-xft-antialias
+    "gtk-xft-antialias" "gint" t t)
+   (gtk-xft-dpi
+    gtk-settings-gtk-xft-dpi
+    "gtk-xft-dpi" "gint" t t)
+   (gtk-xft-hinting
+    gtk-settings-gtk-xft-hinting
+    "gtk-xft-hinting" "gint" t t)
+   (gtk-xft-hintstyle
+    gtk-settings-gtk-xft-hintstyle
+    "gtk-xft-hintstyle" "gchararray" t t)
+   (gtk-xft-rgba
+    gtk-settings-gtk-xft-rgba
+    "gtk-xft-rgba" "gchararray" t t)))
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkSettingsValue
+;;; 
+;;; struct GtkSettingsValue {
+;;;   /* origin should be something like "filename:linenumber" for rc files,
+;;;    * or e.g. "XProperty" for other sources
+;;;    */
+;;;   gchar *origin;
+;;; 
+;;;   /* valid types are LONG, DOUBLE and STRING corresponding to the token
+;;;    * parsed, or a GSTRING holding an unparsed statement
+;;;    */
+;;;   GValue value;
+;;; };
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_get_default ()
+;;; 
+;;; GtkSettings * gtk_settings_get_default (void);
+;;; 
+;;; Gets the GtkSettings object for the default GDK screen, creating it if
+;;; necessary. See gtk_settings_get_for_screen().
+;;; 
+;;; Returns :
+;;;     a GtkSettings object. If there is no default screen, then returns NULL.
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_settings_get_default" gtk-settings-get-default)
+    (g-object gtk-settings))
+
+(export 'gtk-settings-get-default)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_get_for_screen ()
+;;; 
+;;; GtkSettings * gtk_settings_get_for_screen (GdkScreen *screen);
+;;; 
+;;; Gets the GtkSettings object for screen, creating it if necessary.
+;;; 
+;;; screen :
+;;;     a GdkScreen.
+;;; 
+;;; Returns :
+;;;     a GtkSettings object.
+;;; 
+;;; Since 2.2
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_install_property ()
+;;; 
+;;; void gtk_settings_install_property (GParamSpec *pspec);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_install_property_parser ()
+;;; 
+;;; void gtk_settings_install_property_parser (GParamSpec *pspec,
+;;;                                            GtkRcPropertyParser parser);
+;;; 
+;;; parser :
+;;;     . [scope call]
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_rc_property_parse_color ()
+;;; 
+;;; gboolean gtk_rc_property_parse_color (const GParamSpec *pspec,
+;;;                                       const GString *gstring,
+;;;                                       GValue *property_value);
+;;; 
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
+;;; gtk_widget_class_install_style_property_parser() which parses a color given
+;;; either by its name or in the form { red, green, blue } where red, green and
+;;; blue are integers between 0 and 65535 or floating-point numbers between
+;;; 0 and 1.
+;;; 
+;;; pspec :
+;;;     a GParamSpec
+;;; 
+;;; gstring :
+;;;     the GString to be parsed
+;;; 
+;;; property_value :
+;;;     a GValue which must hold GdkColor values.
+;;; 
+;;; Returns :
+;;;     TRUE if gstring could be parsed and property_value has been set to the
+;;;     resulting GdkColor.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_rc_property_parse_enum ()
+;;; 
+;;; gboolean gtk_rc_property_parse_enum (const GParamSpec *pspec,
+;;;                                      const GString *gstring,
+;;;                                      GValue *property_value);
+;;; 
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses a single
+;;; enumeration value.
+;;; 
+;;; The enumeration value can be specified by its name, its nickname or its
+;;; numeric value. For consistency with flags parsing, the value may be
+;;; surrounded by parentheses.
+;;; 
+;;; pspec :
+;;;     a GParamSpec
+;;; 
+;;; gstring :
+;;;     the GString to be parsed
+;;; 
+;;; property_value :
+;;;     a GValue which must hold enum values.
+;;; 
+;;; Returns :
+;;;     TRUE if gstring could be parsed and property_value has been set to the
+;;;     resulting GEnumValue.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_rc_property_parse_flags ()
+;;; 
+;;; gboolean gtk_rc_property_parse_flags (const GParamSpec *pspec,
+;;;                                       const GString *gstring,
+;;;                                       GValue *property_value);
+;;; 
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses flags.
+;;; 
+;;; Flags can be specified by their name, their nickname or numerically.
+;;; Multiple flags can be specified in the form "( flag1 | flag2 | ... )".
+;;; 
+;;; pspec :
+;;;     a GParamSpec
+;;; 
+;;; gstring :
+;;;     the GString to be parsed
+;;; 
+;;; property_value :
+;;;     a GValue which must hold flags values.
+;;; 
+;;; Returns :
+;;;     TRUE if gstring could be parsed and property_value has been set to the
+;;;     resulting flags value.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_rc_property_parse_requisition ()
+;;; 
+;;; gboolean gtk_rc_property_parse_requisition (const GParamSpec *pspec,
+;;;                                             const GString *gstring,
+;;;                                             GValue *property_value);
+;;; 
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
+;;; or gtk_widget_class_install_style_property_parser() which parses a
+;;; requisition in the form "{ width, height }" for integers width and height.
+;;; 
+;;; pspec :
+;;;     a GParamSpec
+;;; 
+;;; gstring :
+;;;     the GString to be parsed
+;;; 
+;;; property_value :
+;;;     a GValue which must hold boxed values.
+;;; 
+;;; Returns :
+;;;     TRUE if gstring could be parsed and property_value has been set to the
+;;;     resulting GtkRequisition.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_rc_property_parse_border ()
+;;; 
+;;; gboolean gtk_rc_property_parse_border (const GParamSpec *pspec,
+;;;                                        const GString *gstring,
+;;;                                        GValue *property_value);
+;;; 
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
+;;; gtk_widget_class_install_style_property_parser() which parses borders in the
+;;; form "{ left, right, top, bottom }" for integers left, right, top and
+;;; bottom.
+;;; 
+;;; pspec :
+;;;     a GParamSpec
+;;; 
+;;; gstring :
+;;;     the GString to be parsed
+;;; 
+;;; property_value :
+;;;     a GValue which must hold boxed values.
+;;; 
+;;; Returns :
+;;;     TRUE if gstring could be parsed and property_value has been set to the
+;;;     resulting GtkBorder.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_set_property_value ()
+;;; 
+;;; void gtk_settings_set_property_value (GtkSettings *settings,
+;;;                                       const gchar *name,
+;;;                                       const GtkSettingsValue *svalue);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_set_string_property ()
+;;; 
+;;; void gtk_settings_set_string_property (GtkSettings *settings,
+;;;                                        const gchar *name,
+;;;                                        const gchar *v_string,
+;;;                                        const gchar *origin);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_set_long_property ()
+;;; 
+;;; void gtk_settings_set_long_property (GtkSettings *settings,
+;;;                                      const gchar *name,
+;;;                                      glong v_long,
+;;;                                      const gchar *origin);
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_settings_set_double_property ()
+;;; 
+;;; void gtk_settings_set_double_property (GtkSettings *settings,
+;;;                                        const gchar *name,
+;;;                                        gdouble v_double,
+;;;                                        const gchar *origin);
+;;; ----------------------------------------------------------------------------
+
+
+;;; --- End of file gtk.settings.lisp ------------------------------------------
