@@ -545,48 +545,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkCellRendererPixbuf" gtk-cell-renderer-pixbuf
-  (:superclass gtk-cell-renderer
-    :export t
-    :interfaces nil
-    :type-initializer "gtk_cell_renderer_pixbuf_get_type")
-  ((follow-state gtk-cell-renderer-pixbuf-follow-state
-    "follow-state" "gboolean" t t)
-   (gicon gtk-cell-renderer-pixbuf-gicon
-    "gicon" "GIcon" t t)
-   (icon-name gtk-cell-renderer-pixbuf-icon-name
-    "icon-name" "gchararray" t t)
-   (pixbuf gtk-cell-renderer-pixbuf-pixbuf
-    "pixbuf" "GdkPixbuf" t t)
-   (pixbuf-expander-closed gtk-cell-renderer-pixbuf-pixbuf-expander-closed
-    "pixbuf-expander-closed" "GdkPixbuf" t t)
-   (pixbuf-expander-open gtk-cell-renderer-pixbuf-pixbuf-expander-open
-    "pixbuf-expander-open" "GdkPixbuf" t t)
-   (stock-detail gtk-cell-renderer-pixbuf-stock-detail
-    "stock-detail" "gchararray" t t)
-   (stock-id gtk-cell-renderer-pixbuf-stock-id
-    "stock-id" "gchararray" t t)
-   (stock-size gtk-cell-renderer-pixbuf-stock-size
-    "stock-size" "guint" t t)))
-
-(define-g-object-class "GtkCellRendererProgress" gtk-cell-renderer-progress
-  (:superclass gtk-cell-renderer
-   :export t
-   :interfaces nil
-   :type-initializer "gtk_cell_renderer_progress_get_type")
-  ((orientation gtk-cell-renderer-progress-orientation
-    "orientation" "GtkProgressBarOrientation" t t)
-   (pulse gtk-cell-renderer-progress-pulse
-    "pulse" "gint" t t)
-   (text gtk-cell-renderer-progress-text
-    "text" "gchararray" t t)
-   (text-xalign gtk-cell-renderer-progress-text-xalign
-    "text-xalign" "gfloat" t t)
-   (text-yalign gtk-cell-renderer-progress-text-yalign
-    "text-yalign" "gfloat" t t)
-   (value gtk-cell-renderer-progress-value
-    "value" "gint" t t)))
-
 (define-g-object-class "GtkCellRendererAccel" gtk-cell-renderer-accel
   (:superclass gtk-cell-renderer-text
     :export t
