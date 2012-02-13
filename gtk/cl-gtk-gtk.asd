@@ -154,6 +154,8 @@
    (:file "gtk.cell-editable")         ; GtkCellEditable
    (:file "gtk.cell-renderer")         ; Object for rendering a cell
    (:file "gtk.cell-renderer-text")    ; Renders text in a cell
+   (:file "gtk.cell-renderer-pixbuf")  ; Renders a pixbuf in a cell
+   (:file "gtk.cell-renderer-progress"); Renders numbers as progress bars
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
    (:file "gtk.list-store")            ; list-like data structure
