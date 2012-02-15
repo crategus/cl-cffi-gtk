@@ -25,7 +25,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk-gtk)
+(asdf:operate 'asdf:load-op :cl-gtk)
 
 (defpackage :gtk-demo
   (:use :cl :gtk :gdk :gobject :iter))
