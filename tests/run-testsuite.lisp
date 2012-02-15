@@ -23,7 +23,7 @@
 
 (load "../lisp-utils/lisp-unit.lisp")
 
-(asdf:operate 'asdf:load-op :cl-gtk-gtk)
+(asdf:operate 'asdf:load-op :cl-gtk)
 
 ;;; ----------------------------------------------------------------------------
 
