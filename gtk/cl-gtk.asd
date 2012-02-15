@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cl-gtk-gtk.lisp
+;;; cl-gtk.asd
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -25,10 +25,10 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defpackage #:cl-gtk-gtk-system
+(defpackage #:cl-gtk-system
   (:use #:cl #:asdf))
 
-(in-package #:cl-gtk-gtk-system)
+(in-package #:cl-gtk-system)
 
 (defclass plain-file (static-file)
   ((type :initarg :type :reader plain-file-type :initform nil)))
@@ -36,8 +36,8 @@
 (defmethod source-file-type ((c plain-file) (s module))
   (plain-file-type c))
 
-(defsystem :cl-gtk-gtk
-  :name :cl-gtk-gtk
+(defsystem :cl-gtk
+  :name :cl-gtk
   :version "0.0.0"
   :author "Dr. Dieter Kaiser"
   :license "LLGPL"
@@ -226,4 +226,4 @@
                :bordeaux-threads
                :iterate))
 
-;;; --- End of file cl-gtk2-gtk.asd --------------------------------------------
+;;; --- End of file cl-gtk.asd -------------------------------------------------
