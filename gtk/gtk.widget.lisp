@@ -7430,6 +7430,11 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-widget-get-tooltip-text (widget)
+  (gtk-widget-tooltip-text widget))
+
+(export 'gtk-widget-get-tooltip-text)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_tooltip_text ()
 ;;; 
@@ -7449,6 +7454,11 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-widget-set-tooltip-text (widget text)
+  (setf (gtk-widget-tooltip-text widget) text))
+
+(export 'gtk-widget-set-tooltip-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_tooltip_window ()
