@@ -23,7 +23,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk-gtk)
+(asdf:operate 'asdf:load-op :cl-gtk)
 
 (defpackage :gtk-tutorial
   (:use :gtk :gdk :gobject :common-lisp))
@@ -581,78 +581,27 @@
       (gtk-container-add window hbox)
       (gtk-widget-show window))))
 
+;;; ----------------------------------------------------------------------------
+
 ;;; Radio Buttons
 
-(defun example-7 ()
+(defun example-radio-buttons ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Example Radio Buttons"
                                  :type :toplevel
                                  :border-width 0))
-          (vbox1  (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 0))
-          (vbox2  (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
-          (vbox3  (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
-          (separator (make-instance 'gtk-h-separator))
-          (button nil)
-          (group nil))
-      (gtk-container-add window vbox1)
-      (gtk-box-pack-start vbox1 vbox2 :expand t :fill t :padding 0)
-      
-      (setq button (gtk-radio-button-new-with-label group "Button 1"))
-      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
-      
-      (setq group (gtk-radio-button-get-group button))
-      (setq button (gtk-radio-button-new-with-label group "Button 2"))
-      (gtk-toggle-button-set-active button t)
-      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
-      
-      (setq group (gtk-radio-button-get-group button))
-      (setq button (gtk-radio-button-new-with-label group "Button 3"))
-      (setq group (gtk-radio-button-get-group button))
-      (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
-      
-      (gtk-box-pack-start vbox1 separator :expand nil :fill nil :padding 0)
-      (gtk-box-pack-start vbox1 vbox3 :expand nil :fill t :padding 0)
-      
-      (setq button (make-instance 'gtk-button :label "Close"))
-      (gtk-box-pack-start vbox3 button)
-      
-      (g-signal-connect button "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (gtk-widget-destroy window)))
-      
-      (gtk-widget-show window))))
-
-;; The same with the function gtk-radio-button-new-with-label-from-widget.
-;; For this example it is not necessary to have the list group.
-
-(defun example-7-1 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Radio Buttons"
-                                 :type :toplevel
-                                 :border-width 0))
-          (vbox1  (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 0))
-          (vbox2  (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
-          (vbox3  (make-instance 'gtk-v-box
-                                 :homogeneous nil
-                                 :spacing 10
-                                 :border-width 10))
-          (separator (make-instance 'gtk-h-separator))
+          (vbox1 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 0))
+          (vbox2 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
+          (vbox3 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 10
+                                :border-width 10))
           (button nil))
       (gtk-container-add window vbox1)
       (gtk-box-pack-start vbox1 vbox2 :expand t :fill t :padding 0)
@@ -661,20 +610,30 @@
       (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
       
       (setq button
-            (gtk-radio-button-new-with-label-from-widget button "Button 2"))
+            (gtk-radio-button-new-with-label (gtk-radio-button-get-group button)
+                                             "Button 2"))
       (gtk-toggle-button-set-active button t)
       (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
       
       (setq button
-            (gtk-radio-button-new-with-label-from-widget button "Button 3"))
+            (gtk-radio-button-new-with-mnemonic
+                                             (gtk-radio-button-get-group button)
+                                             "_Button 3"))
       (gtk-box-pack-start vbox2 button :expand t :fill t :padding 0)
       
-      (gtk-box-pack-start vbox1 separator :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-h-separator)
+                          :expand nil :fill nil :padding 0)
       (gtk-box-pack-start vbox1 vbox3 :expand nil :fill t :padding 0)
       
-      (setq button (make-instance 'gtk-button :label "Close"))
-      (gtk-box-pack-start vbox3 button)
+      (gtk-box-pack-start vbox3
+                          (setq button
+                                (make-instance 'gtk-button :label "Close")))
       
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
       (g-signal-connect button "clicked"
                         (lambda (button)
                           (declare (ignore button))
@@ -682,7 +641,11 @@
       
       (gtk-widget-show window))))
 
+;;; ----------------------------------------------------------------------------
+;;;
 ;;; Chapter 9. Range Widgets
+;;;
+;;; ----------------------------------------------------------------------------
 
 (defun example-8 ()
   (within-main-loop
@@ -899,9 +862,9 @@
                                  :label "Multi-line Label"))
       (setq label (make-instance 'gtk-label
                                  :label
-"This is a Multi-line label.
-Second line.
-Third line"))
+                                 (format nil "This is a Multi-line label.~%~
+                                              Second line.~%~
+                                              Third line.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
@@ -910,9 +873,10 @@ Third line"))
       (setq label (make-instance 'gtk-label
                                  :justify :left
                                  :label
-"This is a Left Justified
-Multi-line label.
-Third      line"))
+                                 (format nil
+                                         "This is a Left Justified~%~
+                                          Multi-line label.~%~
+                                          Third     line.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
@@ -921,9 +885,10 @@ Third      line"))
       (setq label (make-instance 'gtk-label
                                  :justify :right
                                  :label
-"This is a Right Justified
-Multi-line label.
-Third      line"))
+                                 (format nil
+                                         "This is a Right Justified~%~
+                                          Multi-line label.~%~
+                                          Third     line.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
@@ -936,7 +901,18 @@ Third      line"))
       (setq label (make-instance 'gtk-label
                                  :wrap t
                                  :label
-"This is an example of a line-wrapped label.  It should not be taking up the entire               width allocated to it, but automatically wraps the words to fit.  The time has come, for all good men, to come to the aid of their party. The sixth sheik's six sheep's sick.  It supports multiple paragraphs correctly, and  correctly   adds many          extra  spaces. "))
+                                 (format nil
+                                         "This is an example of a line-wrapped ~
+                                          label.  It should not be taking up   ~
+                                          the entire               width       ~
+                                          allocated to it, but automatically   ~
+                                          wraps the words to fit.  The time    ~
+                                          has come, for all good men, to come  ~
+                                          to the aid of their party. The sixth ~
+                                          sheik's six sheep's sick.  It        ~
+                                          supports multiple paragraphs         ~
+                                          correctly, and  correctly   adds     ~
+                                          many          extra  spaces.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
@@ -946,7 +922,17 @@ Third      line"))
                                  :wrap t
                                  :justify :fill
                                  :label
-"This is an example of a line-wrapped, filled label.  It should be taking up the entire             width allocated to it.  Here is a sentence to prove my point.  Here is another sentence.  Here comes the sun, do de do de do.    This is a new aragraph.    This is another newer, longer, better paragraph.  It is coming to an end, unfortunately."))
+                                 (format nil
+                                         "This is an example of a              ~
+                                          line-wrapped, filled label.  It      ~
+                                          should be taking up the entire       ~
+                                          width allocated to it.  Here is a    ~
+                                          sentence to prove my point.  Here    ~
+                                          is another sentence.  Here comes the ~
+                                          sun, do de do de do.   This is a new ~
+                                          paragraph.    This is another newer, ~
+                                          longer, better paragraph.  It is     ~
+                                          coming to an end, unfortunately.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
