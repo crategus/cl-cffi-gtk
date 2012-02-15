@@ -123,12 +123,14 @@
 
 (define-g-object-class "GtkArrow" gtk-arrow
   (:superclass gtk-misc
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_arrow_get_type")
-  ((arrow-type gtk-arrow-arrow-type
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_arrow_get_type")
+  ((arrow-type
+    gtk-arrow-arrow-type
     "arrow-type" "GtkArrowType" t t)
-   (shadow-type gtk-arrow-shadow-type
+   (shadow-type
+    gtk-arrow-shadow-type
     "shadow-type" "GtkShadowType" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -140,13 +142,13 @@
 ;;; Creates a new GtkArrow widget.
 ;;; 
 ;;; arrow_type :
-;;;     a valid GtkArrowType.
+;;;     a valid GtkArrowType
 ;;; 
 ;;; shadow_type :
-;;;     a valid GtkShadowType.
+;;;     a valid GtkShadowType
 ;;; 
 ;;; Returns :
-;;;     the new GtkArrow widget.
+;;;     the new GtkArrow widget
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-arrow-new (arrow-type shadow-type)
@@ -166,13 +168,13 @@
 ;;; Sets the direction and style of the GtkArrow, arrow.
 ;;; 
 ;;; arrow :
-;;;     a widget of type GtkArrow.
+;;;     a widget of type GtkArrow
 ;;; 
 ;;; arrow_type :
-;;;     a valid GtkArrowType.
+;;;     a valid GtkArrowType
 ;;; 
 ;;; shadow_type :
-;;;     a valid GtkShadowType.
+;;;     a valid GtkShadowType
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-arrow-set (arrow arrow-type shadow-type)
