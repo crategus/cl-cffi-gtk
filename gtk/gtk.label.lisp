@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,7 +31,7 @@
 ;;; GtkLabel
 ;;; 
 ;;; A widget that displays a small to medium amount of text
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkLabel
@@ -506,10 +506,10 @@
 ;;; The default bindings for this signal are all forms of the Enter key.
 ;;; 
 ;;; label :
-;;; 	The label on which the signal was emitted
+;;;     The label on which the signal was emitted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.18
 ;;;
@@ -523,16 +523,16 @@
 ;;; to it to override the default behaviour, which is to call gtk_show_uri().
 ;;; 
 ;;; label :
-;;; 	The label on which the signal was emitted
+;;;     The label on which the signal was emitted
 ;;; 
 ;;; uri :
-;;; 	the URI that is activated
+;;;     the URI that is activated
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the link has been activated
+;;;     TRUE if the link has been activated
 ;;; 
 ;;; Since 2.18
 ;;;
@@ -547,10 +547,10 @@
 ;;; The default binding for this signal is Ctrl-c.
 ;;; 
 ;;; label :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "move-cursor" signal
@@ -577,19 +577,19 @@
 ;;;     * Home/End keys move to the ends of the buffer
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; step :
-;;; 	the granularity of the move, as a GtkMovementStep
+;;;     the granularity of the move, as a GtkMovementStep
 ;;; 
 ;;; count :
-;;; 	the number of step units to move
+;;;     the number of step units to move
 ;;; 
 ;;; extend_selection :
-;;; 	TRUE if the move should extend the selection
+;;;     TRUE if the move should extend the selection
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "populate-popup" signal
@@ -605,13 +605,13 @@
 ;;; append your menuitems to the menu.
 ;;; 
 ;;; label :
-;;; 	The label on which the signal is emitted
+;;;     The label on which the signal is emitted
 ;;; 
 ;;; menu :
-;;; 	the menu that is being populated
+;;;     the menu that is being populated
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -626,55 +626,82 @@
   (register-object-type "GtkLabel" 'gtk-label))
 
 (define-g-object-class "GtkLabel" gtk-label
-                       (:superclass gtk-misc
-                        :export t
-                        :interfaces ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_label_get_type")
-                       ((angle gtk-label-angle "angle" "gdouble" t t)
-                        (attributes gtk-label-attributes
-                         "attributes" "PangoAttrList" t t)
-                        (cursor-position gtk-label-cursor-position
-                         "cursor-position" "gint" t nil)
-                        (ellipsize gtk-label-ellipsize "ellipsize"
-                         "PangoEllipsizeMode" t t)
-                        (justify gtk-label-justify "justify"
-                         "GtkJustification" t t)
-                        (label gtk-label-label "label" "gchararray" t t)
-                        (max-width-chars gtk-label-max-width-chars
-                         "max-width-chars" "gint" t t)
-                        (mnemonic-keyval gtk-label-mnemonic-keyval
-                         "mnemonic-keyval" "guint" t nil)
-                        (mnemonic-widget gtk-label-mnemonic-widget
-                         "mnemonic-widget" "GtkWidget" t t)
-                        (pattern gtk-label-pattern "pattern" "gchararray" nil t)
-                        (selectable gtk-label-selectable
-                         "selectable" "gboolean" t t)
-                        (selection-bound gtk-label-selection-bound
-                         "selection-bound" "gint" t nil)
-                        (single-line-mode gtk-label-single-line-mode
-                         "single-line-mode" "gboolean" t t)
-                        (track-visited-links gtk-label-track-visited-links
-                         "track-visited-links" "gboolean" t t)
-                        (use-markup gtk-label-use-markup
-                         "use-markup" "gboolean" t t)
-                        (use-underline gtk-label-use-underline "use-underline"
-                         "gboolean" t t)
-                        (width-chars gtk-label-width-chars
-                         "width-chars" "gint" t t)
-                        (wrap gtk-label-wrap "wrap" "gboolean" t t)
-                        (wrap-mode gtk-label-wrap-mode
-                         "wrap-mode" "PangoWrapMode" t t)
-                        (:cffi line-wrap gtk-label-line-wrap :boolean
-                         "gtk_label_get_line_wrap" "gtk_label_set_line_wrap")
-                        (:cffi line-wrap-mode gtk-label-line-wrap-mode
-                         pango-wrap-mode "gtk_label_get_line_wrap_mode"
-                         "gtk_label_set_line_wrap_mode")
-                        (:cffi layout gtk-label-layout g-object
-                         "gtk_label_get_layout" nil)
-                        (:cffi selection-bounds gtk-label-selection-bounds nil
-                         gtk-label-get-selection-bounds nil)
-                        (:cffi layout-offsets label-layout-offsets nil
-                         gtk-label-get-layout-offsets nil)))
+  (:superclass gtk-misc
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_label_get_type")
+  ((angle
+    gtk-label-angle
+    "angle" "gdouble" t t)
+   (attributes
+    gtk-label-attributes
+    "attributes" "PangoAttrList" t t)
+   (cursor-position
+    gtk-label-cursor-position
+    "cursor-position" "gint" t nil)
+   (ellipsize
+    gtk-label-ellipsize
+    "ellipsize" "PangoEllipsizeMode" t t)
+   (justify
+    gtk-label-justify
+    "justify" "GtkJustification" t t)
+   (label
+    gtk-label-label
+    "label" "gchararray" t t)
+   (max-width-chars
+    gtk-label-max-width-chars
+    "max-width-chars" "gint" t t)
+   (mnemonic-keyval
+    gtk-label-mnemonic-keyval
+    "mnemonic-keyval" "guint" t nil)
+   (mnemonic-widget
+    gtk-label-mnemonic-widget
+    "mnemonic-widget" "GtkWidget" t t)
+   (pattern
+    gtk-label-pattern
+    "pattern" "gchararray" nil t)
+   (selectable
+    gtk-label-selectable
+    "selectable" "gboolean" t t)
+   (selection-bound
+    gtk-label-selection-bound
+    "selection-bound" "gint" t nil)
+   (single-line-mode
+    gtk-label-single-line-mode
+    "single-line-mode" "gboolean" t t)
+   (track-visited-links
+    gtk-label-track-visited-links
+    "track-visited-links" "gboolean" t t)
+   (use-markup
+    gtk-label-use-markup
+    "use-markup" "gboolean" t t)
+   (use-underline
+    gtk-label-use-underline
+    "use-underline" "gboolean" t t)
+   (width-chars
+    gtk-label-width-chars
+    "width-chars" "gint" t t)
+   (wrap
+    gtk-label-wrap
+    "wrap" "gboolean" t t)
+   (wrap-mode
+    gtk-label-wrap-mode
+    "wrap-mode" "PangoWrapMode" t t)
+   (:cffi line-wrap
+          gtk-label-line-wrap :boolean
+          "gtk_label_get_line_wrap" "gtk_label_set_line_wrap")
+   (:cffi line-wrap-mode
+          gtk-label-line-wrap-mode pango-wrap-mode
+          "gtk_label_get_line_wrap_mode" "gtk_label_set_line_wrap_mode")
+   (:cffi layout
+          gtk-label-layout g-object
+          "gtk_label_get_layout" nil)
+   (:cffi selection-bounds
+          gtk-label-selection-bounds nil
+          gtk-label-get-selection-bounds nil)
+   (:cffi layout-offsets
+          gtk-label-layout-offsets nil
+          gtk-label-get-layout-offsets nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_new ()
@@ -685,10 +712,10 @@
 ;;; an empty label widget.
 ;;; 
 ;;; str :
-;;; 	The text of the label
+;;;     The text of the label
 ;;; 
 ;;; Returns :
-;;; 	the new GtkLabel
+;;;     the new GtkLabel
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-new (str)
@@ -707,10 +734,10 @@
 ;;; This will also clear any previously set mnemonic accelerators.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; str :
-;;; 	The text you want to set
+;;;     The text you want to set
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-set-text (label str)
@@ -735,10 +762,10 @@
 ;;; applied to the label after the markup string is parsed.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; attrs :
-;;; 	a PangoAttrList
+;;;     a PangoAttrList
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-set-attributes (label attrs)
@@ -763,10 +790,10 @@
 ;;;  g_free (markup);
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; str :
-;;; 	a markup string (see Pango markup format)
+;;;     a markup string (see Pango markup format)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_label_set_markup" gtk-label-set-markup) :void
@@ -789,10 +816,10 @@
 ;;; automatically, or explicitly using gtk_label_set_mnemonic_widget().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; str :
-;;; 	a markup string (see Pango markup format)
+;;;     a markup string (see Pango markup format)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_label_set_markup_with_mnemonic"
@@ -813,10 +840,10 @@
 ;;; but not "Bar".
 ;;; 
 ;;; label :
-;;; 	The GtkLabel you want to set the pattern to.
+;;;     The GtkLabel you want to set the pattern to.
 ;;; 
 ;;; pattern :
-;;; 	The pattern as described above.
+;;;     The pattern as described above.
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-set-pattern (label pattern)
@@ -837,10 +864,10 @@
 ;;; line.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; jtype :
-;;; 	a GtkJustification
+;;;     a GtkJustification
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-set-justify (label jtype)
@@ -857,10 +884,10 @@
 ;;; there is not enough space to render the entire string.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; mode :
-;;; 	a PangoEllipsizeMode
+;;;     a PangoEllipsizeMode
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -878,10 +905,10 @@
 ;;; Sets the desired width in characters of label to n_chars.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; n_chars :
-;;; 	the new desired width, in characters.
+;;;     the new desired width, in characters.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -899,10 +926,10 @@
 ;;; Sets the desired maximum width in characters of label to n_chars.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; n_chars :
-;;; 	the new desired maximum width, in characters.
+;;;     the new desired maximum width, in characters.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -928,10 +955,10 @@
 ;;; gtk_widget_set_size_request().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; wrap :
-;;; 	the setting
+;;;     the setting
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-set-line-wrap (label wrap)
@@ -949,10 +976,10 @@
 ;;; on word boundaries.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; wrap_mode :
-;;; 	the line wrapping mode
+;;;     the line wrapping mode
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -976,13 +1003,13 @@
 ;;; need to convert to and from pixels using PANGO_PIXELS() or PANGO_SCALE.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; x :
-;;; 	location to store X offset of layout, or NULL.
+;;;     location to store X offset of layout, or NULL.
 ;;; 
 ;;; y :
-;;; 	location to store Y offset of layout, or NULL.
+;;;     location to store Y offset of layout, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_label_get_layout_offsets" %gtk-label-get-layout-offsets) :void
@@ -1007,10 +1034,10 @@
 ;;; mnemonic set up it returns GDK_VoidSymbol.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	GDK keyval usable for accelerators, or GDK_VoidSymbol
+;;;     GDK keyval usable for accelerators, or GDK_VoidSymbol
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-get-mnemonic-keyval (label)
@@ -1026,10 +1053,10 @@
 ;;; Gets the value set by gtk_label_set_selectable().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the user can copy text from the label
+;;;     TRUE if the user can copy text from the label
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-get-selectable (label)
@@ -1047,10 +1074,10 @@
 ;;; markup. (See gtk_label_get_label())
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the text in the label widget. This is the internal string used by the
+;;;     the text in the label widget. This is the internal string used by the
 ;;;     label, and must not be modified.
 ;;; ----------------------------------------------------------------------------
 
@@ -1080,12 +1107,19 @@
 ;;; the mnemonic.
 ;;; 
 ;;; str :
-;;; 	The text of the label, with an underscore in front of the mnemonic
+;;;     the text of the label, with an underscore in front of the mnemonic
 ;;;     character
 ;;; 
 ;;; Returns :
-;;; 	the new GtkLabel
+;;;     the new GtkLabel
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-label-new-with-mnemonic (str)
+  (make-instance 'gtk-label
+                 :label str
+                 :use-underline t))
+
+(export 'gtk-label-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_select_region ()
@@ -1099,13 +1133,13 @@
 ;;; of the label will be substituted.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; start_offset :
-;;; 	start offset (in characters not bytes)
+;;;     start offset (in characters not bytes)
 ;;; 
 ;;; end_offset :
-;;; 	end offset (in characters not bytes)
+;;;     end offset (in characters not bytes)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_label_select_region" gtk-label-select-region) :void
@@ -1135,10 +1169,10 @@
 ;;; toggle focus between the colliding widgets otherwise.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; widget :
-;;; 	the target GtkWidget.
+;;;     the target GtkWidget.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1150,10 +1184,10 @@
 ;;; copy-and-paste.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; setting :
-;;; 	TRUE to allow selecting text in the label
+;;;     TRUE to allow selecting text in the label
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1168,10 +1202,10 @@
 ;;; using gtk_label_set_mnemonic_widget().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; str :
-;;; 	a string
+;;;     a string
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1186,10 +1220,10 @@
 ;;; pango_layout_get_attribute (gtk_label_get_layout (label)).
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the attribute list, or NULL if none was set.
+;;;     the attribute list, or NULL if none was set.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1200,10 +1234,10 @@
 ;;; Returns the justification of the label. See gtk_label_set_justify().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	GtkJustification
+;;;     GtkJustification
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1215,10 +1249,10 @@
 ;;; See gtk_label_set_ellipsize().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	PangoEllipsizeMode
+;;;     PangoEllipsizeMode
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1232,10 +1266,10 @@
 ;;; See gtk_label_set_width_chars().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the width of the label in characters.
+;;;     the width of the label in characters.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1249,10 +1283,10 @@
 ;;; See gtk_label_set_width_chars().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the maximum width of the label in characters.
+;;;     the maximum width of the label in characters.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1266,10 +1300,10 @@
 ;;; indicating mnemonics and Pango markup. (See gtk_label_get_text()).
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the text of the label widget. This string is owned by the widget and
+;;;     the text of the label widget. This string is owned by the widget and
 ;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -1285,10 +1319,10 @@
 ;;; layout at any time, so it should be considered read-only.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the PangoLayout for this label. [transfer none]
+;;;     the PangoLayout for this label
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1300,10 +1334,10 @@
 ;;; See gtk_label_set_line_wrap().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the lines of the label are automatically wrapped.
+;;;     TRUE if the lines of the label are automatically wrapped.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1315,10 +1349,10 @@
 ;;; See gtk_label_set_line_wrap_mode().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the lines of the label are automatically wrapped.
+;;;     TRUE if the lines of the label are automatically wrapped.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1332,10 +1366,10 @@
 ;;; See gtk_label_set_mnemonic_widget().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the target of the label's mnemonic, or NULL if none has been set and
+;;;     the target of the label's mnemonic, or NULL if none has been set and
 ;;;     the default algorithm will be used.
 ;;; ----------------------------------------------------------------------------
 
@@ -1349,16 +1383,16 @@
 ;;; there's a selection.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; start :
-;;; 	return location for start of selection, as a character offset.
+;;;     return location for start of selection, as a character offset.
 ;;; 
 ;;; end :
-;;; 	return location for end of selection, as a character offset.
+;;;     return location for end of selection, as a character offset.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if selection is non-empty
+;;;     TRUE if selection is non-empty
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_label_get_selection_bounds" %gtk-label-get-selection-bounds)
@@ -1383,10 +1417,10 @@
 ;;; Pango text markup language. See gtk_label_set_use_markup().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the label's text will be parsed for markup.
+;;;     TRUE if the label's text will be parsed for markup.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1398,10 +1432,10 @@
 ;;; See gtk_label_set_use_underline().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE whether an embedded underline in the label indicates the mnemonic
+;;;     TRUE whether an embedded underline in the label indicates the mnemonic
 ;;;     accelerator keys.
 ;;; ----------------------------------------------------------------------------
 
@@ -1413,10 +1447,10 @@
 ;;; Returns whether the label is in single line mode.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE when the label is in single line mode.
+;;;     TRUE when the label is in single line mode.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1429,10 +1463,10 @@
 ;;; Gets the angle of rotation for the label. See gtk_label_set_angle().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the angle of rotation for the label
+;;;     the angle of rotation for the label
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1452,10 +1486,10 @@
 ;;; "use-underline"" and "use-markup" properties.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; str :
-;;; 	the new text to set for the label
+;;;     the new text to set for the label
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-label-set-label (label str)
@@ -1472,10 +1506,10 @@
 ;;; language. See gtk_label_set_markup().
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; setting :
-;;; 	TRUE if the label's text should be parsed for markup.
+;;;     TRUE if the label's text should be parsed for markup.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1487,10 +1521,10 @@
 ;;; used for the mnemonic accelerator key.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; setting :
-;;; 	TRUE if underlines in the text indicate mnemonics
+;;;     TRUE if underlines in the text indicate mnemonics
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1502,10 +1536,10 @@
 ;;; Sets whether the label is in single line mode.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; single_line_mode :
-;;; 	TRUE if the label should be in single line mode
+;;;     TRUE if the label should be in single line mode
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1525,10 +1559,10 @@
 ;;; the label is ignored if the label is selectable, wrapped, or ellipsized.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; angle :
-;;; 	the angle that the baseline of the label makes with the horizontal, in
+;;;     the angle that the baseline of the label makes with the horizontal, in
 ;;;     degrees, measured counterclockwise
 ;;; 
 ;;; Since 2.6
@@ -1552,10 +1586,10 @@
 ;;; in a "query-tooltip" handler.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	the currently active URI. The string is owned by GTK+ and must not be
+;;;     the currently active URI. The string is owned by GTK+ and must not be
 ;;;     freed or modified.
 ;;; 
 ;;; Since 2.18
@@ -1576,10 +1610,10 @@
 ;;; different color for them).
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; track_links :
-;;; 	TRUE to track visited links
+;;;     TRUE to track visited links
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1597,10 +1631,10 @@
 ;;; Returns whether the label is currently keeping track of clicked links.
 ;;; 
 ;;; label :
-;;; 	a GtkLabel
+;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;; 	TRUE if clicked links are remembered
+;;;     TRUE if clicked links are remembered
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
