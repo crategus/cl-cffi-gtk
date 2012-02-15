@@ -829,15 +829,19 @@
 
 ;;; [...]
 
+;;; ----------------------------------------------------------------------------
+;;;
 ;;; Chapter 10. Miscellaneous Widgets
+;;;
+;;; ----------------------------------------------------------------------------
 
 ;; Label
 
-(defun example-label ()
+(defun example-labels ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Demo Label"
+                                 :title "Example Labels"
                                  :border-width 5))
           (vbox (make-instance 'gtk-v-box
                                :homogeneous nil
@@ -902,16 +906,17 @@
                                  :wrap t
                                  :label
                                  (format nil
-                                         "This is an example of a line-wrapped ~
-                                          label.  It should not be taking up   ~
-                                          the entire               width       ~
-                                          allocated to it, but automatically   ~
-                                          wraps the words to fit.  The time    ~
-                                          has come, for all good men, to come  ~
-                                          to the aid of their party. The sixth ~
-                                          sheik's six sheep's sick.  It        ~
-                                          supports multiple paragraphs         ~
-                                          correctly, and  correctly   adds     ~
+                                         "This is an example of a           ~
+                                          line-wrapped label. It should not ~
+                                          be taking up the entire width     ~
+                                          allocated to it, but              ~
+                                          automatically wraps the words to  ~
+                                          fit.  The time  has come, for all ~
+                                          good men, to come  to the aid of  ~
+                                          their party. The sixth            ~
+                                          sheik's six sheep's sick.  It     ~
+                                          supports multiple paragraphs      ~
+                                          correctly, and  correctly   adds  ~
                                           many          extra  spaces.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
@@ -923,16 +928,17 @@
                                  :justify :fill
                                  :label
                                  (format nil
-                                         "This is an example of a              ~
-                                          line-wrapped, filled label.  It      ~
-                                          should be taking up the entire       ~
-                                          width allocated to it.  Here is a    ~
-                                          sentence to prove my point.  Here    ~
-                                          is another sentence.  Here comes the ~
-                                          sun, do de do de do.   This is a new ~
-                                          paragraph.    This is another newer, ~
-                                          longer, better paragraph.  It is     ~
-                                          coming to an end, unfortunately.")))
+                                         "This is an example of a           ~
+                                          line-wrapped, filled label.  It   ~
+                                          should be taking up the entire    ~
+                                          width allocated to it.  Here is a ~
+                                          sentence to prove my point.  Here ~
+                                          is another sentence.  Here comes  ~
+                                          the sun, do de do de do.    This  ~
+                                          is a new paragraph.      This is  ~
+                                          another newer, longer, better     ~
+                                          paragraph.  It is coming to an    ~
+                                          end, unfortunately.")))
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
@@ -942,57 +948,159 @@
                                  :justify :left
                                  :use-underline t
                                  :pattern
-"_________________________ _ _________ _ ______     __ _______ ___"
+             "_________________________ _ _________ _ ______     __ _______ ___"
                                  :label
-"This label is underlined!
-This one is underlined in quite a funky fashion"))
+                                 (format nil
+                                         "This label is underlined!~%~
+                                          This one is underlined in quite a ~
+                                          funky fashion")))
       
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
       (gtk-widget-show window))))
 
+;;; ----------------------------------------------------------------------------
+
+(defun example-more-labels ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example More Labels"
+                                 :default-width 300
+                                 :border-width 5))
+          (vbox1 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 5))
+          (vbox2 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 5))
+          (hbox (make-instance 'gtk-h-box
+                               :homogeneous nil
+                               :spacing 5)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angle 90°"
+                                         :angle 90))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 45°"
+                                         :angle 45))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 315°"
+                                         :angle 315))
+      (gtk-box-pack-start hbox vbox1)
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angel 270°"
+                                         :angle 270))
+      (gtk-box-pack-start vbox2 hbox)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-h-separator))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new "Normal Label"))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new-with-mnemonic "With _Mnemonic"))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label "This Label is Selectable"
+                                         :selectable t))
+      (gtk-container-add window vbox2)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+;;;
 ;; Arrows
 
 (defun create-button (arrow-type shadow-type)
-  (let ((button (make-instance 'gtk-button))
-        (arrow (make-instance 'gtk-arrow
-                              :arrow-type arrow-type
-                              :shadow-type shadow-type)))
-    (gtk-container-add button arrow)
+  (let ((button (make-instance 'gtk-button)))
+    (gtk-container-add button
+                       (make-instance 'gtk-arrow
+                                      :arrow-type arrow-type
+                                      :shadow-type shadow-type))
     button))
 
-(defun example-arrow ()
+(defun example-arrows ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Arrow Buttons"
                                  :default-width 250
                                  :border-width 10))
-          (button (make-instance 'gtk-button))
           (box (make-instance 'gtk-h-box
-                              :homogeneous nil
+                              :homogeneous t
                               :spacing 0
-                              :border-width 2)))
+                              :border-width 5)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
+      (gtk-box-pack-start box
+                          (create-button :up :in)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-button :down :out)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-button :left :etched-in)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-button :right :etched-out) 
+                          :expand nil :fill nil :padding 3)
       (gtk-container-add window box)
-      
-      (setq button (create-button :up :in))
-      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
-      
-      (setq button (create-button :down :out))
-      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
-      
-      (setq button (create-button :left :etched-in))
-      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
-      
-      (setq button (create-button :right :etched-out))
-      (gtk-box-pack-start box button :expand nil :fill nil :padding 3)
-      
       (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; The Tooltip Object
+
+(defun create-button (arrow-type shadow-type)
+  (let ((button (make-instance 'gtk-button)))
+    (gtk-container-add button
+                       (make-instance 'gtk-arrow
+                                      :arrow-type arrow-type
+                                      :shadow-type shadow-type))
+    (gtk-widget-set-tooltip-text button
+                                 (format nil
+                                         "Arrow of type ~A"
+                                         (symbol-name arrow-type)))
+    button))
+
+(defun example-tooltips ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Arrow Buttons"
+                                 :default-width 250
+                                 :border-width 10))
+          (box (make-instance 'gtk-h-box
+                              :homogeneous t
+                              :spacing 0
+                              :border-width 5)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start box
+                          (create-button :up :in)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-button :down :out)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-button :left :etched-in)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-button :right :etched-out) 
+                          :expand nil :fill nil :padding 3)
+      (gtk-container-add window box)
+      (gtk-widget-show window))))
+
 
 ;;; [...]
 
