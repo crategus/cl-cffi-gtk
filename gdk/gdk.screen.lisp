@@ -31,10 +31,11 @@
 ;;; GdkScreen
 ;;; 
 ;;; Object representing a physical screen
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkScreen
+;;;
 ;;;     gdk_screen_get_default
 ;;;     gdk_screen_get_default_colormap
 ;;;     gdk_screen_set_default_colormap
@@ -102,6 +103,81 @@
 ;;; 
 ;;; Note that a screen may consist of multiple monitors which are merged to
 ;;; form a large screen area.
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "font-options" property
+;;; 
+;;;   "font-options"             gpointer              : Read / Write
+;;; 
+;;; The default font options for the screen.
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "resolution" property
+;;; 
+;;;   "resolution"               gdouble               : Read / Write
+;;; 
+;;; The resolution for fonts on the screen.
+;;; 
+;;; Default value: -1
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Signal Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "composited-changed" signal
+;;; 
+;;; void user_function (GdkScreen *screen, gpointer user_data)      : Run Last
+;;; 
+;;; The ::composited-changed signal is emitted when the composited status of
+;;; the screen changes.
+;;; 
+;;; screen :
+;;;     the object on which the signal is emitted
+;;; 
+;;; user_data :
+;;;     user data set when the signal handler was connected
+;;; 
+;;; Since 2.10
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "monitors-changed" signal
+;;; 
+;;; void user_function (GdkScreen *screen, gpointer user_data)      : Run Last
+;;; 
+;;; The ::monitors-changed signal is emitted when the number, size or position
+;;; of the monitors attached to the screen change.
+;;; 
+;;; Only for X11 and OS X for now. A future implementation for Win32 may be a
+;;; possibility.
+;;; 
+;;; screen :
+;;;     the object on which the signal is emitted
+;;; 
+;;; user_data :
+;;;     user data set when the signal handler was connected
+;;; 
+;;; Since 2.14
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "size-changed" signal
+;;; 
+;;; void user_function (GdkScreen *screen, gpointer user_data)      : Run Last
+;;; 
+;;; The ::size-changed signal is emitted when the pixel width or height of a
+;;; screen changes.
+;;; 
+;;; screen :
+;;;     the object on which the signal is emitted
+;;; 
+;;; user_data :
+;;;     user data set when the signal handler was connected
+;;; 
+;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -139,51 +215,75 @@
 
 (define-g-object-class "GdkScreen" gdk-screen
   (:type-initializer "gdk_screen_get_type")
-  ((font-options gdk-screen-font-options "font-options" "gpointer" t t)
-   (resolution gdk-screen-resolution "resolution" "gdouble" t t)
-   (:cffi default-colormap gdk-screen-default-colormap (g-object gdk-colormap)
+  ((font-options
+    gdk-screen-font-options
+    "font-options" "gpointer" t t)
+   (resolution
+    gdk-screen-resolution
+    "resolution" "gdouble" t t)
+   (:cffi default-colormap
+          gdk-screen-default-colormap (g-object gdk-colormap)
           "gdk_screen_get_default_colormap" "gdk_screen_set_default_colormap")
-   (:cffi system-colormap gdk-screen-system-colormap (g-object gdk-colormap)
+   (:cffi system-colormap
+          gdk-screen-system-colormap (g-object gdk-colormap)
           "gdk_screen_get_system_colormap" nil)
-   (:cffi system-visual gdk-screen-system-visual (g-object gdk-visual)
+   (:cffi system-visual
+          gdk-screen-system-visual (g-object gdk-visual)
           "gdk_screen_get_system_visual" nil)
-   (:cffi rgb-colormap gdk-screen-rgb-colormap (g-object gdk-colormap)
+   (:cffi rgb-colormap
+          gdk-screen-rgb-colormap (g-object gdk-colormap)
           "gdk_screen_get_rgb_colormap" nil)
-   (:cffi rgb-visual gdk-screen-rgb-visual (g-object gdk-visual)
+   (:cffi rgb-visual
+          gdk-screen-rgb-visual (g-object gdk-visual)
           "gdk_screen_get_rgb_visual" nil)
-   (:cffi rgba-colormap gdk-screen-rgba-colormap (g-object gdk-colormap)
+   (:cffi rgba-colormap
+          gdk-screen-rgba-colormap (g-object gdk-colormap)
           "gdk_screen_get_rgba_colormap" nil)
-   (:cffi rgba-visual gdk-screen-rgba-visual (g-object gdk-visual)
+   (:cffi rgba-visual
+          gdk-screen-rgba-visual (g-object gdk-visual)
           "gdk_screen_get_rgba_visual" nil)
-   (:cffi composited-p gdk-screen-composited-p :boolean
+   (:cffi composited-p
+          gdk-screen-composited-p :boolean
           "gdk_screen_is_composited" nil)
-   (:cffi root-window gdk-screen-root-window (g-object gdk-window)
+   (:cffi root-window
+          gdk-screen-root-window (g-object gdk-window)
           "gdk_screen_get_root_window" nil)
-   (:cffi display gdk-screen-display (g-object gdk-display)
+   (:cffi display
+          gdk-screen-display (g-object gdk-display)
           "gdk_screen_get_display" nil)
-   (:cffi number gdk-screen-number :int
+   (:cffi number
+          gdk-screen-number :int
           "gdk_screen_get_number" nil)
-   (:cffi width gdk-screen-width :int
+   (:cffi width
+          gdk-screen-width :int
           "gdk_screen_get_width" nil)
-   (:cffi height gdk-screen-height :int
+   (:cffi height
+          gdk-screen-height :int
           "gdk_screen_get_height" nil)
-   (:cffi width-mm gdk-screen-width-mm :int
+   (:cffi width-mm
+          gdk-screen-width-mm :int
           "gdk_screen_get_width_mm" nil)
-   (:cffi height-mm gdk-screen-height-mm :int
+   (:cffi height-mm
+          gdk-screen-height-mm :int
           "gdk_screen_get_height_mm" nil)
-   (:cffi visuals gdk-screen-visuals
-          (g-list (g-object gdk-visual) :free-from-foreign t)
+   (:cffi visuals
+          gdk-screen-visuals (g-list (g-object gdk-visual) :free-from-foreign t)
           "gdk_screen_list_visuals" nil)
-   (:cffi toplevel-windows gdk-screen-toplevel-windows
+   (:cffi toplevel-windows
+          gdk-screen-toplevel-windows
           (g-list (g-object gdk-window) :free-from-foreign t)
           "gdk_screen_get_toplevel_windows" nil)
-   (:cffi display-name gdk-screen-display-name (g-string :free-from-foreign t)
+   (:cffi display-name
+          gdk-screen-display-name (g-string :free-from-foreign t)
           "gdk_screen_make_display_name" nil)
-   (:cffi n-monitors gdk-screen-n-monitors :int
+   (:cffi n-monitors
+          gdk-screen-n-monitors :int
           "gdk_screen_get_n_monitors" nil)
-   (:cffi active-window gdk-screen-active-window (g-object gdk-window)
+   (:cffi active-window
+          gdk-screen-active-window (g-object gdk-window)
           "gdk_screen_get_active_window" nil)
-   (:cffi window-stack gdk-screen-window-stack
+   (:cffi window-stack
+          gdk-screen-window-stack
           (g-list (g-object gdk-window) :free-from-foreign t)
           "gdk_screen_get_window_stack" nil)))
 
@@ -196,7 +296,7 @@
 ;;; (See gdk_display_get_default()).
 ;;; 
 ;;; Returns :
-;;; 	a GdkScreen, or NULL if there is no default display.
+;;;     a GdkScreen, or NULL if there is no default display
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -214,17 +314,16 @@
 ;;; Gets the default colormap for screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the default GdkColormap.
+;;;     the default GdkColormap
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_screen_get_default_colormap" gdk-screen-get-default-colormap)
-    (g-object gdk-colormap)
-  (screen (g-object gdk-screen)))
+(defun gdk-screen-get-default-colormap (screen)
+  (gdk-screen-default-colormap screen))
 
 (export 'gdk-screen-get-default-colormap)
 
@@ -237,13 +336,18 @@
 ;;; Sets the default colormap for screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-set-default-colormap (screen colormap)
+  (setf (gdk-screen-default-colormap screen) colormap))
+
+(export 'gdk-screen-set-default-colormap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_system_colormap ()
@@ -253,13 +357,18 @@
 ;;; Gets the system's default colormap for screen
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the default colormap for screen. [transfer none]
+;;;     the default colormap for screen
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-system-colormap (screen)
+  (gdk-screen-system-colormap screen))
+
+(export 'gdk-screen-get-system-colormap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_system_visual ()
@@ -270,13 +379,18 @@
 ;;; window of the display. The return value should not be freed.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen.
+;;;     a GdkScreen.
 ;;; 
 ;;; Returns :
-;;; 	the system visual. [transfer none]
+;;;     the system visual
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-system-visual (screen)
+  (gdk-screen-system-visual screen))
+
+(export 'gdk-screen-get-system-visual)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_rgb_colormap ()
@@ -295,13 +409,18 @@
 ;;; colormap and visual. So there's no need to call this function.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the preferred colormap. [transfer none]
+;;;     the preferred colormap
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-rgb-colormap (screen)
+  (gdk-screen-rgb-colormap screen))
+
+(export 'gdk-screen-get-rgb-colormap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_rgb_visual ()
@@ -320,13 +439,18 @@
 ;;; render to drawables with any visual.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	The GdkVisual chosen by GdkRGB. [transfer none]
+;;;     the GdkVisual chosen by GdkRGB
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-rgb-visual (screen)
+  (gdk-screen-rgb-visual screen))
+
+(export 'gdk-screen-get-rgb-visual)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_rgba_colormap ()
@@ -347,14 +471,19 @@
 ;;; see gdk_window_set_opacity().
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	a colormap to use for windows with an alpha channel or NULL if the
-;;;     capability is not available. [transfer none]
+;;;     a colormap to use for windows with an alpha channel or NULL if the
+;;;     capability is not available
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-rgba-colormap (screen)
+  (gdk-screen-rgba-colormap screen))
+
+(export 'gdk-screen-get-rgba-colormap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_rgba_visual ()
@@ -365,14 +494,19 @@
 ;;; See the docs for gdk_screen_get_rgba_colormap() for caveats.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	a visual to use for windows with an alpha channel or NULL if the
-;;;     capability is not available. [transfer none]
+;;;     a visual to use for windows with an alpha channel or NULL if the
+;;;     capability is not available
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-rgba-visual (screen)
+  (gdk-screen-rgba-visual screen))
+
+(export 'gdk-screen-rgba-visual)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_is_composited ()
@@ -386,14 +520,19 @@
 ;;; screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	Whether windows with RGBA visuals can reasonably be expected to have
+;;;     Whether windows with RGBA visuals can reasonably be expected to have
 ;;;     their alpha channels drawn correctly on the screen.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-is-composited (screen)
+  (gdk-screen-composited-p screen))
+
+(export 'gdk-screen-is-composited)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_root_window ()
@@ -403,13 +542,18 @@
 ;;; Gets the root window of screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the root window. [transfer none]
+;;;     the root window
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-root-window (screen)
+  (gdk-screen-root-window screen))
+
+(export 'gdk-screen-get-root-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_display ()
@@ -419,13 +563,18 @@
 ;;; Gets the display to which the screen belongs.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the display to which screen belongs
+;;;     the display to which screen belongs
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-display (screen)
+  (gdk-screen-display screen))
+
+(export 'gdk-screen-get-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_number ()
@@ -436,13 +585,18 @@
 ;;; belongs. (See gdk_screen_get_display())
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the index
+;;;     the index
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-number (screen)
+  (gdk-screen-number screen))
+
+(export 'gdk-screen-get-number)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_width ()
@@ -452,13 +606,18 @@
 ;;; Gets the width of screen in pixels
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the width of screen in pixels.
+;;;     the width of screen in pixels
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-width (screen)
+  (gdk-screen-width screen))
+
+(export 'gdk-screen-get-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_height ()
@@ -468,13 +627,18 @@
 ;;; Gets the height of screen in pixels
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the height of screen in pixels.
+;;;     the height of screen in pixels
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-height (screen)
+  (gdk-screen-height screen))
+
+(export 'gdk-screen-get-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_width_mm ()
@@ -485,13 +649,18 @@
 ;;; value will not be correct.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the width of screen in millimeters.
+;;;     the width of screen in millimeters
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-width-mm (screen)
+  (gdk-screen-width-mm screen))
+
+(export 'gdk-screen-get-width-mm)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_height_mm ()
@@ -502,13 +671,18 @@
 ;;; this value will not be correct.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the heigth of screen in millimeters.
+;;;     the heigth of screen in millimeters
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-height-mm (screen)
+  (gdk-screen-height-mm screen))
+
+(export 'gdk-screen-get-height-mm)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_list_visuals ()
@@ -522,13 +696,18 @@
 ;;; Call g_list_free() on the return value when you're finished with it.
 ;;; 
 ;;; screen :
-;;; 	the relevant GdkScreen.
+;;;     the relevant GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	a list of visuals; the list must be freed, but not its contents.
+;;;     a list of visuals; the list must be freed, but not its contents
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-list-visuals (screen)
+  (gdk-screen-visuals screen))
+
+(export 'gdk-screen-list-visuals)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_toplevel_windows ()
@@ -543,13 +722,18 @@
 ;;; need not be freed.
 ;;; 
 ;;; screen :
-;;; 	The GdkScreen where the toplevels are located.
+;;;     The GdkScreen where the toplevels are located.
 ;;; 
 ;;; Returns :
-;;; 	list of toplevel windows, free with g_list_free().
+;;;     list of toplevel windows, free with g_list_free()
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-toplevel-windows (screen)
+  (gdk-screen-toplevel-windows screen))
+
+(export 'gdk-screen-toplevel-windows)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_make_display_name ()
@@ -560,13 +744,18 @@
 ;;; this screen as the default screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated string, free with g_free()
+;;;     a newly allocated string, free with g_free()
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-make-display-name (screen)
+  (gdk-screen-display-name screen))
+
+(export 'gdk-screen-make-display-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_n_monitors ()
@@ -576,16 +765,16 @@
 ;;; Returns the number of monitors which screen consists of.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	number of monitors which screen consists of
+;;;     number of monitors which screen consists of
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_screen_get_n_monitors" gdk-screen-get-n-monitors) :int
-  (screen (g-object gdk-screen)))
+(defun gdk-screen-get-n-monitors (screen)
+  (gdk-screen-n-monitors screen))
 
 (export 'gdk-screen-get-n-monitors)
 
@@ -603,10 +792,10 @@
 ;;; defaulting to the first monitor.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	An integer index for the primary monitor, or 0 if none is configured.
+;;;     An integer index for the primary monitor, or 0 if none is configured.
 ;;; 
 ;;; Since 2.20-obje
 ;;; ----------------------------------------------------------------------------
@@ -630,13 +819,13 @@
 ;;; gdk_screen_get_width() and gdk_screen_get_height().
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; monitor_num :
-;;; 	the monitor number, between 0 and gdk_screen_get_n_monitors (screen)
+;;;     the monitor number, between 0 and gdk_screen_get_n_monitors (screen)
 ;;; 
 ;;; dest :
-;;; 	a GdkRectangle to be filled with the monitor geometry
+;;;     a GdkRectangle to be filled with the monitor geometry
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -662,17 +851,17 @@
 ;;; Returns the monitor number in which the point (x,y) is located.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; x :
-;;; 	the x coordinate in the virtual screen.
+;;;     the x coordinate in the virtual screen
 ;;; 
 ;;; y :
-;;; 	the y coordinate in the virtual screen.
+;;;     the y coordinate in the virtual screen
 ;;; 
 ;;; Returns :
-;;; 	the monitor number in which the point (x,y) lies, or a monitor close
-;;;     to (x,y) if the point is not in any monitor.
+;;;     the monitor number in which the point (x,y) lies, or a monitor close
+;;;     to (x,y) if the point is not in any monitor
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -695,14 +884,14 @@
 ;;; rectangle of window resides.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; window :
-;;; 	a GdkWindow
+;;;     a GdkWindow
 ;;; 
 ;;; Returns :
-;;; 	the monitor number in which most of window is located, or if window
-;;;     does not intersect any monitors, a monitor, close to window.
+;;;     the monitor number in which most of window is located, or if window
+;;;     does not intersect any monitors, a monitor, close to window
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -722,13 +911,13 @@
 ;;; Gets the height in millimeters of the specified monitor.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; monitor_num :
-;;; 	number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+;;;     number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 ;;; 
 ;;; Returns :
-;;; 	the height of the monitor, or -1 if not available
+;;;     the height of the monitor, or -1 if not available
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -748,13 +937,13 @@
 ;;; Gets the width in millimeters of the specified monitor, if available.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; monitor_num :
-;;; 	number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+;;;     number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 ;;; 
 ;;; Returns :
-;;; 	the width of the monitor, or -1 if not available
+;;;     the width of the monitor, or -1 if not available
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -776,13 +965,13 @@
 ;;; VGA, DVI, or TV, not the actual product name of the display device.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; monitor_num :
-;;; 	number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+;;;     number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated string containing the name of the monitor, or NULL
+;;;     a newly-allocated string containing the name of the monitor, or NULL
 ;;;     if the name cannot be determined
 ;;; 
 ;;; Since 2.14
@@ -813,10 +1002,10 @@
 ;;; limited to one long, i.e. four bytes.
 ;;; 
 ;;; screen :
-;;; 	the GdkScreen where the event will be broadcasted.
+;;;     the GdkScreen where the event will be broadcasted
 ;;; 
 ;;; event :
-;;; 	the GdkEvent.
+;;;     the GdkEvent
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -841,17 +1030,17 @@
 ;;; FIXME needs a list of valid settings here, or a link to more information.
 ;;; 
 ;;; screen :
-;;; 	the GdkScreen where the setting is located
+;;;     the GdkScreen where the setting is located
 ;;; 
 ;;; name :
-;;; 	the name of the setting
+;;;     the name of the setting
 ;;; 
 ;;; value :
-;;; 	location to store the value of the setting
+;;;     location to store the value of the setting
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the setting existed and a value was stored in value,
-;;;     FALSE otherwise.
+;;;     TRUE if the setting existed and a value was stored in value,
+;;;     FALSE otherwise
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -879,14 +1068,19 @@
 ;;; Gets any options previously set with gdk_screen_set_font_options().
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the current font options, or NULL if no default font options have been
-;;;     set.
+;;;     the current font options, or NULL if no default font options have been
+;;;     set
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-font-options (screen)
+  (gdk-screen-font-options screen))
+
+(export 'gdk-screen-get-font-options)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_set_font_options ()
@@ -900,14 +1094,19 @@
 ;;; already been created.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; options :
-;;; 	a cairo_font_options_t, or NULL to unset any previously set default
-;;;     font options.
+;;;     a cairo_font_options_t, or NULL to unset any previously set default
+;;;     font options
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-set-font-options (screen options)
+  (setf (gdk-screen-font-options screen) options))
+
+(export 'gdk-screen-set-font-options)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_resolution ()
@@ -918,13 +1117,18 @@
 ;;; gdk_screen_set_resolution() for full details.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the current resolution, or -1 if no resolution has been set.
+;;;     the current resolution, or -1 if no resolution has been set
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-resolution (screen)
+  (gdk-screen-resolution screen))
+
+(export 'gdk-screen-get-resolution)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_set_resolution ()
@@ -937,14 +1141,19 @@
 ;;; (10 * 96. / 72. = 13.3).
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; dpi :
-;;; 	the resolution in "dots per inch". (Physical inches aren't actually
+;;;     the resolution in "dots per inch". (Physical inches aren't actually
 ;;;     involved; the terminology is conventional.)
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-set-resolution (screen dpi)
+  (setf (gdk-screen-resolution screen) dpi))
+
+(export 'gdk-screen-set-resolution)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_active_window ()
@@ -965,13 +1174,18 @@
 ;;; needed.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the currently active window, or NULL.
+;;;     the currently active window, or NULL
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-active-window (screen)
+  (gdk-screen-active-window screen))
+
+(export 'gdk-screen-get-active-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_window_stack ()
@@ -993,13 +1207,18 @@
 ;;; using g_object_unref() when no longer needed.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	a list of GdkWindows for the current window stack, or NULL.
+;;;     a list of GdkWindows for the current window stack, or NULL
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gdk-screen-get-window-stack (screen)
+  (gdk-screen-window-stack screen))
+
+(export 'gdk-screen-get-window-stack)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_spawn_on_screen ()
@@ -1028,34 +1247,34 @@
 ;;; specific screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; working_directory :
-;;; 	child's current working directory, or NULL to inherit parent's
+;;;     child's current working directory, or NULL to inherit parent's
 ;;; 
 ;;; argv :
-;;; 	child's argument vector
+;;;     child's argument vector
 ;;; 
 ;;; envp :
-;;; 	child's environment, or NULL to inherit parent's
+;;;     child's environment, or NULL to inherit parent's
 ;;; 
 ;;; flags :
-;;; 	flags from GSpawnFlags
+;;;     flags from GSpawnFlags
 ;;; 
 ;;; child_setup :
-;;; 	function to run in the child just before exec()
+;;;     function to run in the child just before exec()
 ;;; 
 ;;; user_data :
-;;; 	user data for child_setup
+;;;     user data for child_setup
 ;;; 
 ;;; child_pid :
-;;; 	return location for child process ID, or NULL
+;;;     return location for child process ID, or NULL
 ;;; 
 ;;; error :
-;;; 	return location for error
+;;;     return location for error
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success, FALSE if error is set
+;;;     TRUE on success, FALSE if error is set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1148,43 +1367,43 @@
 ;;; specific screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; working_directory :
-;;; 	child's current working directory, or NULL to inherit parent's
+;;;     child's current working directory, or NULL to inherit parent's
 ;;; 
 ;;; argv :
-;;; 	child's argument vector
+;;;     child's argument vector
 ;;; 
 ;;; envp :
-;;; 	child's environment, or NULL to inherit parent's
+;;;     child's environment, or NULL to inherit parent's
 ;;; 
 ;;; flags :
-;;; 	flags from GSpawnFlags
+;;;     flags from GSpawnFlags
 ;;; 
 ;;; child_setup :
-;;; 	function to run in the child just before exec()
+;;;     function to run in the child just before exec()
 ;;; 
 ;;; user_data :
-;;; 	user data for child_setup
+;;;     user data for child_setup
 ;;; 
 ;;; child_pid :
-;;; 	return location for child process ID, or NULL
+;;;     return location for child process ID, or NULL
 ;;; 
 ;;; standard_input :
-;;; 	return location for file descriptor to write to child's stdin, or NULL
+;;;     return location for file descriptor to write to child's stdin, or NULL
 ;;; 
 ;;; standard_output :
-;;; 	return location for file descriptor to read child's stdout, or NULL
+;;;     return location for file descriptor to read child's stdout, or NULL
 ;;; 
 ;;; standard_error :
-;;; 	return location for file descriptor to read child's stderr, or NULL
+;;;     return location for file descriptor to read child's stderr, or NULL
 ;;; 
 ;;; error :
-;;; 	return location for error
+;;;     return location for error
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success, FALSE if an error was set
+;;;     TRUE on success, FALSE if an error was set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1226,16 +1445,16 @@
 ;;; specific screen.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; command_line :
-;;; 	a command line
+;;;     a command line
 ;;; 
 ;;; error :
-;;; 	return location for errors
+;;;     return location for errors
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success, FALSE if error is set.
+;;;     TRUE on success, FALSE if error is set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1251,85 +1470,5 @@
     (%gdk-spawn-command-line-on-screen screen command-line err)))
 
 (export 'gdk-spawn-command-line-on-screen)
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font-options" property
-;;; 
-;;;   "font-options"             gpointer              : Read / Write
-;;; 
-;;; The default font options for the screen.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "resolution" property
-;;; 
-;;;   "resolution"               gdouble               : Read / Write
-;;; 
-;;; The resolution for fonts on the screen.
-;;; 
-;;; Default value: -1
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "composited-changed" signal
-;;; 
-;;; void user_function (GdkScreen *screen, gpointer user_data)      : Run Last
-;;; 
-;;; The ::composited-changed signal is emitted when the composited status of
-;;; the screen changes
-;;; 
-;;; screen :
-;;; 	the object on which the signal is emitted
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "monitors-changed" signal
-;;; 
-;;; void user_function (GdkScreen *screen, gpointer user_data)      : Run Last
-;;; 
-;;; The ::monitors-changed signal is emitted when the number, size or position
-;;; of the monitors attached to the screen change.
-;;; 
-;;; Only for X11 and OS X for now. A future implementation for Win32 may be a
-;;; possibility.
-;;; 
-;;; screen :
-;;; 	the object on which the signal is emitted
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; The "size-changed" signal
-;;; 
-;;; void user_function (GdkScreen *screen, gpointer user_data)      : Run Last
-;;; 
-;;; The ::size-changed signal is emitted when the pixel width or height of a
-;;; screen changes.
-;;; 
-;;; screen :
-;;; 	the object on which the signal is emitted
-;;; 
-;;; user_data :
-;;; 	user data set when the signal handler was connected.
-;;; 
-;;; Since 2.2
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.screen.lisp --------------------------------------------
