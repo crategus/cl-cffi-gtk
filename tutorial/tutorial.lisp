@@ -26,7 +26,7 @@
 (asdf:operate 'asdf:load-op :cl-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :common-lisp))
+  (:use :gtk :gdk :gobject :glib :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -1014,8 +1014,8 @@
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;; Arrows
+
+;;; Arrows
 
 (defun create-button (arrow-type shadow-type)
   (let ((button (make-instance 'gtk-button)))
@@ -1101,6 +1101,93 @@
       (gtk-container-add window box)
       (gtk-widget-show window))))
 
+;;; ----------------------------------------------------------------------------
+
+;;; Progress Bars
+
+(defstruct pbar-data
+  pbar
+  timer
+  mode)
+
+(defun progress-bar-timeout (pdata)
+  (if (pbar-data-mode pdata)
+      (gtk-progress-bar-pulse (pbar-data-pbar pdata))
+      (let ((val (+ (gtk-progress-bar-get-fraction (pbar-data-pbar pdata))
+                    0.01)))
+        (when (> val 1.0) (setq val 0.0))
+        (gtk-progress-bar-set-fraction (pbar-data-pbar pdata) val)))
+  t)
+
+(defun example-progress-bar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Progress Bar"))
+          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)
+                                 :mode nil))
+          (vbox (make-instance 'gtk-v-box
+                               :border-width 10))
+          (align (gtk-alignment-new 0.5 0.5 0.0 0.0))
+          (table (gtk-table-new 2 3 nil)))
+      (setf (pbar-data-timer pdata)
+            (g-timeout-add 100
+                           (lambda ()
+                             (progress-bar-timeout pdata))))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (g-source-remove (pbar-data-timer pdata))
+                          (setf (pbar-data-timer pdata) 0)
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox align)
+      (gtk-container-add align (pbar-data-pbar pdata))
+      (gtk-box-pack-start vbox (make-instance 'gtk-h-separator))
+      (gtk-box-pack-start vbox table)
+      (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (let ((text (gtk-progress-bar-get-text (pbar-data-pbar pdata))))
+               (if (or (null text) (zerop (length text)))
+                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
+                                              "Some text")
+                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
+                                              "")))))
+        (gtk-table-attach table check 0 1 0 1))
+      (let ((check (gtk-check-button-new-with-label "Activity mode")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (setf (pbar-data-mode pdata)
+                   (not (pbar-data-mode pdata)))
+             (if (pbar-data-mode pdata)
+                 (gtk-progress-bar-pulse (pbar-data-pbar pdata))
+                 (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
+                                                0.0))))
+        (gtk-table-attach table check 0 1 1 2))
+      (let ((check (gtk-check-button-new-with-label "Rigth to left")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (case (gtk-progress-bar-orientation (pbar-data-pbar pdata))
+               (:left-to-right
+                 (setf (gtk-progress-bar-orientation (pbar-data-pbar pdata))
+                       :right-to-left))
+               (:right-to-left
+                 (setf (gtk-progress-bar-orientation (pbar-data-pbar pdata))
+                       :left-to-right)))))
+        (gtk-table-attach table check 0 1 2 3))
+      (let ((button (gtk-button-new-with-label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
 
 ;;; [...]
 
