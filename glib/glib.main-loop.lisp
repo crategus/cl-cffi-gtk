@@ -1546,10 +1546,18 @@
 ;;;     the ID (greater than 0) of the event source.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_timeout_add" g-timeout-add) :uint
-  (interval-milliseconds :uint)
-  (function :pointer)
-  (data :pointer))
+(defcallback call-timeout-from-main-loop-cb :boolean
+    ((data :pointer))
+  (restart-case
+      (progn (funcall (get-stable-pointer-value data)))
+    (return-from-callback () nil)))
+
+(defun g-timeout-add (interval func &key (priority +g-priority-default+))
+  (g-timeout-add-full priority
+                      interval
+                      (callback call-timeout-from-main-loop-cb)
+                      (allocate-stable-pointer func)
+                      (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'g-timeout-add)
 
@@ -1650,10 +1658,13 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_timeout_add_seconds" g-timeout-add-seconds) :uint
-  (interval-seconds :uint)
-  (function :pointer)
-  (data :pointer))
+(defun g-timeout-add-seconds (interval func
+                                       &key (priority +g-priority-default+))
+  (g-timeout-add-seconds-full priority
+                              interval
+                              (callback call-timeout-from-main-loop-cb)
+                              (allocate-stable-pointer func)
+                              (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'g-timeout-add-seconds)
 
@@ -1776,9 +1787,11 @@
 ;;;     the ID (greater than 0) of the event source.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_idle_add" g-idle-add) :uint
-  (function :pointer)
-  (data :pointer))
+(defun g-idle-add (func &key (priority +g-priority-default+))
+  (g-idle-add-full priority
+                   (callback call-timeout-from-main-loop-cb)
+                   (allocate-stable-pointer func)
+                   (callback stable-pointer-free-destroy-notify-cb)))
 
 (export 'g-idle-add)
 
