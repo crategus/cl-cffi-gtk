@@ -32,6 +32,15 @@
            #:push-library-version-features
            #:require-library-version
            #:with-catching-to-g-error
-           #:with-g-error))
+           #:with-g-error
+           
+           ;; gobject.stable-pointer.lisp
+           #:allocate-stable-pointer
+           #:free-stable-pointer
+           #:get-stable-pointer-value
+           #:stable-pointer-value
+           #:with-stable-pointer
+           #:stable-pointer-free-destroy-notify-cb
+     ))
 
 ;;; --- End of file glib.package.lisp ------------------------------------------

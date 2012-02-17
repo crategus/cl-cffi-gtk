@@ -1,13 +1,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.stable-pointer.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,7 +25,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gobject)
+(in-package :glib)
 
 (defvar *registered-stable-pointers*
         (make-array 0 :adjustable t :fill-pointer t))
@@ -83,5 +81,10 @@
      (unwind-protect
           (progn ,@body)
        (free-stable-pointer ,ptr))))
+
+;; Callback function to free a pointer
+
+(defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
+  (free-stable-pointer data))
 
 ;;; --- End of file gobject.stable-pointer.lisp --------------------------------

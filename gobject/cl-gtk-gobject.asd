@@ -35,7 +35,6 @@
   :serial t
   :components ((:file "gobject.package")
                (:file "gobject.init")
-               (:file "gobject.stable-pointer")
                (:file "gobject.object-function")
                (:file "gobject.glib-defcallback")
                (:file "gobject.generating")

@@ -33,6 +33,7 @@
   :serial t
   :components ((:file "glib.package")
                (:file "glib.init")        ; Lisp Initialization
+               (:file "glib.stable-pointer") ; Stable Pointers for callbacks
 
                (:file "glib.misc")        ; Different Glib Types and Functions
                (:file "glib.version")     ; Glib Version information

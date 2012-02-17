@@ -29,12 +29,6 @@
   (:nicknames :g)
   (:use :c2cl :glib :cffi :tg :bordeaux-threads :iter :closer-mop)
   (:export
-    #:allocate-stable-pointer
-    #:free-stable-pointer
-    #:get-stable-pointer-value
-    #:stable-pointer-value
-    #:with-stable-pointer
-    
     #:using*
     
     #:connect-signal
