@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkProgressBar
+;;;     
 ;;;     gtk_progress_bar_new
 ;;;     gtk_progress_bar_pulse
 ;;;     gtk_progress_bar_set_fraction
@@ -299,25 +300,35 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_progress_bar_get_type")
-  ((activity-blocks gtk-progress-bar-activity-blocks
+  ((activity-blocks
+    gtk-progress-bar-activity-blocks
     "activity-blocks" "guint" t t)
-   (activity-step gtk-progress-bar-activity-step
+   (activity-step
+    gtk-progress-bar-activity-step
     "activity-step" "guint" t t)
-   (adjustment gtk-progress-bar-adjustment
+   (adjustment
+    gtk-progress-bar-adjustment
     "adjustment" "GtkAdjustment" t t)
-   (bar-style gtk-progress-bar-bar-style
+   (bar-style
+    gtk-progress-bar-bar-style
     "bar-style" "GtkProgressBarStyle" t t)
-   (discrete-blocks gtk-progress-bar-discrete-blocks
+   (discrete-blocks
+    gtk-progress-bar-discrete-blocks
     "discrete-blocks" "guint" t t)
-   (ellipsize gtk-progress-bar-ellipsize
+   (ellipsize
+    gtk-progress-bar-ellipsize
     "ellipsize" "PangoEllipsizeMode" t t)
-   (fraction gtk-progress-bar-fraction
+   (fraction
+    gtk-progress-bar-fraction
     "fraction" "gdouble" t t)
-   (orientation gtk-progress-bar-orientation
+   (orientation
+    gtk-progress-bar-orientation
     "orientation" "GtkProgressBarOrientation" t t)
-   (pulse-step gtk-progress-bar-pulse-step
+   (pulse-step
+    gtk-progress-bar-pulse-step
     "pulse-step" "gdouble" t t)
-   (text gtk-progress-bar-text
+   (text
+    gtk-progress-bar-text
     "text" "gchararray" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -328,8 +339,13 @@
 ;;; Creates a new GtkProgressBar.
 ;;; 
 ;;; Returns :
-;;;     a GtkProgressBar.
+;;;     a GtkProgressBar
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-progress-bar-new ()
+  (make-instance 'gtk-progress-bar))
+
+(export 'gtk-progress-bar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_pulse ()
@@ -478,8 +494,13 @@
 ;;;     a GtkProgressBar
 ;;; 
 ;;; text :
-;;;     a UTF-8 string, or NULL. [allow-none]
+;;;     a UTF-8 string, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-progress-bar-set-text (pbar text)
+  (setf (gtk-progress-bar-text pbar) text))
+
+(export 'gtk-progress-bar-set-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_get_text ()
@@ -495,8 +516,13 @@
 ;;; 
 ;;; Returns :
 ;;;     text, or NULL; this string is owned by the widget and should not be
-;;;     modified or freed.
+;;;     modified or freed
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-progress-bar-get-text (pbar)
+  (gtk-progress-bar-text pbar))
+
+(export 'gtk-progress-bar-get-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_set_ellipsize ()
