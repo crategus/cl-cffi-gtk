@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
+;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -31,10 +31,11 @@
 ;;; GtkCheckButton
 ;;; 
 ;;; Create widgets with a discrete toggle button
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkCheckButton
+;;;     
 ;;;     gtk_check_button_new
 ;;;     gtk_check_button_new_with_label
 ;;;     gtk_check_button_new_with_mnemonic
@@ -119,8 +120,13 @@
 ;;; Creates a new GtkCheckButton.
 ;;; 
 ;;; Returns :
-;;; 	a GtkWidget.
+;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-check-button-new ()
+  (make-instance 'gtk-check-button))
+
+(export 'gkt-check-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_button_new_with_label ()
@@ -130,11 +136,16 @@
 ;;; Creates a new GtkCheckButton with a GtkLabel to the right of it.
 ;;; 
 ;;; label :
-;;; 	the text for the check button.
+;;;     the text for the check button.
 ;;; 
 ;;; Returns :
-;;; 	a GtkWidget.
+;;;     a GtkWidget.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-check-button-new-with-label (label)
+  (make-instance 'gtk-check-button :label label))
+
+(export 'gtk-check-button-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_button_new_with_mnemonic ()
@@ -146,12 +157,18 @@
 ;;; mnemonic for the check button.
 ;;; 
 ;;; label :
-;;; 	The text of the button, with an underscore in front of the mnemonic
+;;;     the text of the button, with an underscore in front of the mnemonic
 ;;;     character
 ;;; 
 ;;; Returns :
-;;; 	a new GtkCheckButton
+;;;     a new GtkCheckButton
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-check-button-new-with-mnemonic (label)
+  (make-instance 'gtk-check-button
+                 :label label
+                 :use-underline t))
+
+(export 'gtk-check-button-new-with-mnemonic)
 
 ;;; --- End of file gtk.check-button.lisp --------------------------------------
