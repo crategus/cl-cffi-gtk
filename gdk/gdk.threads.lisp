@@ -250,9 +250,6 @@
     ((data :pointer))
   (funcall (stable-pointer-value data)))
 
-(defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
-  (free-stable-pointer data))
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_init ()
 ;;; 
