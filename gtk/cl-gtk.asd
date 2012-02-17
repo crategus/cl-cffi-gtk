@@ -209,6 +209,11 @@
    ;; Recently Used Documents
    (:file "gtk.recent-filter")         ; Selecting recently used files
    
+   ;; Deprecated
+   (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
+   (:file "gtk.curve")                 ; Allows direct editing of a curve
+   (:file "gtk.item-factory")          ; A factory for menus
+   
    ;; More definitions. The documentation is not completed.
    (:file "gtk.generated-classes")
    (:file "gtk.generated-child-properties")
