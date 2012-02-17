@@ -203,21 +203,29 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_alignment_get_type")
-  ((bottom-padding gtk-alignment-bottom-padding
+  ((bottom-padding
+    gtk-alignment-bottom-padding
     "bottom-padding" "guint" t t)
-   (left-padding gtk-alignment-left-padding
+   (left-padding
+    gtk-alignment-left-padding
     "left-padding" "guint" t t)
-   (right-padding gtk-alignment-right-padding
+   (right-padding
+    gtk-alignment-right-padding
     "right-padding" "guint" t t)
-   (top-padding gtk-alignment-top-padding
+   (top-padding
+    gtk-alignment-top-padding
     "top-padding" "guint" t t)
-   (xalign gtk-alignment-xalign
+   (xalign
+    gtk-alignment-xalign
     "xalign" "gfloat" t t)
-   (xscale gtk-alignment-xscale
+   (xscale
+    gtk-alignment-xscale
     "xscale" "gfloat" t t)
-   (yalign gtk-alignment-yalign
+   (yalign
+    gtk-alignment-yalign
     "yalign" "gfloat" t t)
-   (yscale gtk-alignment-yscale
+   (yscale
+    gtk-alignment-yscale
     "yscale" "gfloat" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -235,21 +243,30 @@
 ;;;     (right).
 ;;; 
 ;;; yalign :
-;;;     the vertical alignment of the child widget, from 0 (top) to 1 (bottom).
+;;;     the vertical alignment of the child widget, from 0 (top) to 1 (bottom)
 ;;; 
 ;;; xscale :
 ;;;     the amount that the child widget expands horizontally to fill up unused
 ;;;     space, from 0 to 1. A value of 0 indicates that the child widget should
 ;;;     never expand. A value of 1 indicates that the child widget will expand
-;;;     to fill all of the space allocated for the GtkAlignment.
+;;;     to fill all of the space allocated for the GtkAlignment
 ;;; 
 ;;; yscale :
 ;;;     the amount that the child widget expands vertically to fill up unused
-;;;     space, from 0 to 1. The values are similar to xscale.
+;;;     space, from 0 to 1. The values are similar to xscale
 ;;; 
 ;;; Returns :
-;;;     the new GtkAlignment.
+;;;     the new GtkAlignment
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-alignment-new (xalign yalign xscale yscale)
+  (make-instance 'gtk-alignment
+                 :xalign xalign
+                 :yalign yalign
+                 :xscale xscale
+                 :yscale yscale))
+
+(export 'gtk-alignment-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alignment_set ()
@@ -283,6 +300,14 @@
 ;;;     space, from 0 to 1. The values are similar to xscale.
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-alignment-set (alignment xalign yalign xscale yscale)
+  (setf (gtk-alignment-xalign alignment) xalign
+        (gtk-alignment-yalign alignment) yalign
+        (gtk-alignment-xscale alignment) xscale
+        (gtk-alignment-yscale alignment) yscale))
+
+(export 'gtk-alignment-set)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alignment_get_padding ()
 ;;; 
@@ -312,6 +337,14 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-alignment-get-padding (alignment)
+  (values (gtk-alignment-top-padding alignment)
+          (gtk-alignment-bottom-padding alignment)
+          (gtk-alignment-left-padding alignment)
+          (gtk-alignment-right-padding alignment)))
+
+(export 'gkt-alignment-get-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alignment_set_padding ()
@@ -344,5 +377,12 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-alignment-set-padding (alignment top bottom left right)
+  (setf (gtk-alignment-top-padding alignment) top
+        (gtk-alignment-bottom-padding alignment) bottom
+        (gtk-alignment-left-padding alignment) left
+        (gtk-alignment-right-padding alignment) right))
+
+(export 'gtk-alignment-set-padding)
 
 ;;; --- End of file gtk.alignment.lisp -----------------------------------------
