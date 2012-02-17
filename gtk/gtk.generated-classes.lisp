@@ -62,20 +62,6 @@
   (:gtk 0)
   (:other 1))
 
-(define-g-enum "GtkMetricType"
-    metric-type
-    (:export t :type-initializer "gtk_metric_type_get_type")
-  (:pixels 0)
-  (:inches 1)
-  (:centimeters 2))
-
-(define-g-enum "GtkCurveType"
-    curve-type
-    (:export t :type-initializer "gtk_curve_type_get_type")
-  (:linear 0)
-  (:spline 1)
-  (:free 2))
-
 (define-g-enum "GtkTreeViewGridLines"
     tree-view-grid-lines
     (:export t :type-initializer "gtk_tree_view_grid_lines_get_type")
@@ -834,12 +820,6 @@
                         (preview-text font-selection-preview-text
                          "preview-text" "gchararray" t t)))
 
-(define-g-object-class "GtkGammaCurve" gtk-gamma-curve
-                       (:superclass gtk-v-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_gamma_curve_get_type")
-                       nil)
-
 (define-g-object-class "GtkRecentChooserWidget" gtk-recent-chooser-widget
                        (:superclass gtk-v-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
@@ -868,39 +848,6 @@
                        (:superclass gtk-container :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
                         :type-initializer "gtk_socket_get_type")
-                       nil)
-
-(define-g-object-class "GtkCurve" gtk-curve
-                       (:superclass gtk-drawing-area :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_curve_get_type")
-                       ((curve-type curve-curve-type "curve-type"
-                         "GtkCurveType" t t)
-                        (max-x curve-max-x "max-x" "gfloat" t t)
-                        (max-y curve-max-y "max-y" "gfloat" t t)
-                        (min-x curve-min-x "min-x" "gfloat" t t)
-                        (min-y curve-min-y "min-y" "gfloat" t t)))
-
-(define-g-object-class "GtkRuler" gtk-ruler
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_ruler_get_type")
-                       ((lower ruler-lower "lower" "gdouble" t t)
-                        (max-size ruler-max-size "max-size" "gdouble" t t)
-                        (metric ruler-metric "metric" "GtkMetricType" t t)
-                        (position ruler-position "position" "gdouble" t t)
-                        (upper ruler-upper "upper" "gdouble" t t)))
-
-(define-g-object-class "GtkHRuler" gtk-h-ruler
-                       (:superclass gtk-ruler :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_hruler_get_type")
-                       nil)
-
-(define-g-object-class "GtkVRuler" gtk-v-ruler
-                       (:superclass gtk-ruler :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vruler_get_type")
                        nil)
 
 (define-g-object-class "GtkRcStyle" gtk-rc-style
@@ -977,10 +924,3 @@
     "limit" "gint" t t)
    (size gtk-recent-manager-size
     "size" "gint" t nil)))
-
-(define-g-object-class "GtkItemFactory" gtk-item-factory
-  (:superclass gtk-object
-   :export t
-   :interfaces nil
-   :type-initializer "gtk_item_factory_get_type")
-  nil)
