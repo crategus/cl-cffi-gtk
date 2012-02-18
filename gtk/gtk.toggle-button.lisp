@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -183,11 +183,14 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
    :type-initializer "gtk_toggle_button_get_type")
-  ((active gtk-toggle-button-active
+  ((active
+    gtk-toggle-button-active
     "active" "gboolean" t t)
-   (draw-indicator gtk-toggle-button-draw-indicator
+   (draw-indicator
+    gtk-toggle-button-draw-indicator
     "draw-indicator" "gboolean" t t)
-   (inconsistent gtk-toggle-button-inconsistent
+   (inconsistent
+    gtk-toggle-button-inconsistent
     "inconsistent" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
