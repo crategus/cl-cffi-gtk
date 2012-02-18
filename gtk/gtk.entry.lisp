@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkEntry
 ;;; 
 ;;; A single line text entry field
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkEntry
+;;;
 ;;;     gtk_entry_new
 ;;;     gtk_entry_new_with_buffer
 ;;;     gtk_entry_get_buffer
@@ -81,6 +82,7 @@
 ;;;     gtk_entry_reset_im_context
 ;;;
 ;;;     GtkEntryIconPosition
+;;;
 ;;;     gtk_entry_set_icon_from_pixbuf
 ;;;     gtk_entry_set_icon_from_stock
 ;;;     gtk_entry_set_icon_from_icon_name
@@ -798,10 +800,10 @@
 ;;; The default bindings for this signal are all forms of the Enter key.
 ;;; 
 ;;; entry :
-;;; 	The entry on which the signal is emitted
+;;;     The entry on which the signal is emitted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "backspace" signal
@@ -814,10 +816,10 @@
 ;;; The default bindings for this signal are Backspace and Shift-Backspace.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "copy-clipboard" signal
@@ -830,10 +832,10 @@
 ;;; The default bindings for this signal are Ctrl-c and Ctrl-Insert.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "cut-clipboard" signal
@@ -846,10 +848,10 @@
 ;;; The default bindings for this signal are Ctrl-x and Shift-Delete.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "delete-from-cursor" signal
@@ -869,16 +871,16 @@
 ;;; and Ctrl-Delete for deleting a word.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; type :
-;;; 	the granularity of the deletion, as a GtkDeleteType
+;;;     the granularity of the deletion, as a GtkDeleteType
 ;;; 
 ;;; count :
-;;; 	the number of type units to delete
+;;;     the number of type units to delete
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "icon-press" signal
@@ -891,16 +893,16 @@
 ;;; The ::icon-press signal is emitted when an activatable icon is clicked.
 ;;; 
 ;;; entry :
-;;; 	The entry on which the signal is emitted
+;;;     The entry on which the signal is emitted
 ;;; 
 ;;; icon_pos :
-;;; 	The position of the clicked icon
+;;;     The position of the clicked icon
 ;;; 
 ;;; event :
-;;; 	the button press event. [type Gdk.EventButton]
+;;;     the button press event. [type Gdk.EventButton]
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.16
 ;;;
@@ -916,16 +918,16 @@
 ;;; click over an activatable icon.
 ;;; 
 ;;; entry :
-;;; 	The entry on which the signal is emitted
+;;;     The entry on which the signal is emitted
 ;;; 
 ;;; icon_pos :
-;;; 	The position of the clicked icon
+;;;     The position of the clicked icon
 ;;; 
 ;;; event :
-;;; 	the button release event. [type Gdk.EventButton]
+;;;     the button release event. [type Gdk.EventButton]
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.16
 ;;;
@@ -942,13 +944,13 @@
 ;;; This signal has no default bindings.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; string :
-;;; 	the string to insert
+;;;     the string to insert
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "move-cursor" signal
@@ -975,19 +977,19 @@
 ;;;     * Home/End keys move to the ends of the buffer
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; step :
-;;; 	the granularity of the move, as a GtkMovementStep
+;;;     the granularity of the move, as a GtkMovementStep
 ;;; 
 ;;; count :
-;;; 	the number of step units to move
+;;;     the number of step units to move
 ;;; 
 ;;; extend_selection :
-;;; 	TRUE if the move should extend the selection
+;;;     TRUE if the move should extend the selection
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "paste-clipboard" signal
@@ -1000,10 +1002,10 @@
 ;;; The default bindings for this signal are Ctrl-v and Shift-Insert.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "populate-popup" signal
@@ -1019,13 +1021,13 @@
 ;;; append your menuitems to the menu.
 ;;; 
 ;;; entry :
-;;; 	The entry on which the signal is emitted
+;;;     The entry on which the signal is emitted
 ;;; 
 ;;; menu :
-;;; 	the menu that is being populated
+;;;     the menu that is being populated
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "preedit-changed" signal
@@ -1039,13 +1041,13 @@
 ;;; this signal.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; preedit :
-;;; 	the current preedit string
+;;;     the current preedit string
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.20
 ;;;
@@ -1060,10 +1062,10 @@
 ;;; The default bindings for this signal is Insert.
 ;;; 
 ;;; entry :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1080,80 +1082,138 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
                 "GtkEditable")
    :type-initializer "gtk_entry_get_type")
-  ((activates-default  gtk-entry-activates-default
-                       "activates-default" "gboolean" t t)
-   (caps-lock-warning  gtk-entry-caps-lock-warning
-                       "caps-lock-warning" "gboolean" t t)
-   (cursor-position    gtk-entry-cursor-position
-                       "cursor-position" "gint" t nil)
-   (editable           gtk-entry-editable "editable" "gboolean" t t)
-   (has-frame          gtk-entry-has-frame "has-frame" "gboolean" t t)
-   (im-module          gtk-entry-im-module "im-module" "gchararray" t t)
-   (inner-border       gtk-entry-inner-border "inner-border" "GtkBorder" t t)
-   (invisible-char     gtk-entry-invisible-char "invisible-char" "guint" t t)
-   (invisible-char-set gtk-entry-invisible-char-set
-                       "invisible-char-set" "gboolean" t t)
-   (max-length         gtk-entry-max-length "max-length" "gint" t t)
-   (overwrite-mode     gtk-entry-overwrite-mode "overwrite-mode" "gboolean" t t)
-   (primary-icon-activatable gtk-entry-primary-icon-activatable
-                       "primary-icon-activatable" "gboolean" t t)
-   (primary-icon-gicon gtk-entry-primary-icon-gicon
-                       "primary-icon-gicon" "GIcon" t t)
-   (primary-icon-name  gtk-entry-primary-icon-name
-                       "primary-icon-name" "gchararray" t t)
-   (primary-icon-pixbuf gtk-entry-primary-icon-pixbuf
-                       "primary-icon-pixbuf" "GdkPixbuf" t t)
-   (primary-icon-sensitive gtk-entry-primary-icon-sensitive
-                       "primary-icon-sensitive" "gboolean" t t)
-   (primary-icon-stock gtk-entry-primary-icon-stock
-                       "primary-icon-stock" "gchararray" t t)
-   (primary-icon-storage-type gtk-entry-primary-icon-storage-type
-                       "primary-icon-storage-type" "GtkImageType" t nil)
-   (primary-icon-tooltip-markup gtk-entry-primary-icon-tooltip-markup
-                       "primary-icon-tooltip-markup" "gchararray" t t)
-   (primary-icon-tooltip-text gtk-entry-primary-icon-tooltip-text
-                       "primary-icon-tooltip-text" "gchararray" t t)
-   (progress-fraction gtk-entry-progress-fraction
-                       "progress-fraction" "gdouble" t t)
-   (progress-pulse-step gtk-entry-progress-pulse-step
-                       "progress-pulse-step" "gdouble" t t)
-   (scroll-offset gtk-entry-scroll-offset "scroll-offset" "gint" t nil)
-   (secondary-icon-activatable gtk-entry-secondary-icon-activatable
-                       "secondary-icon-activatable" "gboolean" t t)
-   (secondary-icon-gicon gtk-entry-secondary-icon-gicon
-                       "secondary-icon-gicon" "GIcon" t t)
-   (secondary-icon-name gtk-entry-secondary-icon-name
-                       "secondary-icon-name" "gchararray" t t)
-   (secondary-icon-pixbuf gtk-entry-secondary-icon-pixbuf
-                       "secondary-icon-pixbuf" "GdkPixbuf" t t)
-   (secondary-icon-sensitive gtk-entry-secondary-icon-sensitive
-                       "secondary-icon-sensitive" "gboolean" t t)
-   (secondary-icon-stock gtk-entry-secondary-icon-stock
-                       "secondary-icon-stock" "gchararray" t t)
-   (secondary-icon-storage-type gtk-entry-secondary-icon-storage-type
-                       "secondary-icon-storage-type" "GtkImageType" t nil)
-   (secondary-icon-tooltip-markup gtk-entry-secondary-icon-tooltip-markup
-                       "secondary-icon-tooltip-markup" "gchararray" t t)
-   (secondary-icon-tooltip-text gtk-entry-secondary-icon-tooltip-text
-                       "secondary-icon-tooltip-text" "gchararray" t t)
-   (selection-bound    gtk-entry-selection-bound "selection-bound" "gint" t nil)
-   (shadow-type        gtk-entry-shadow-type "shadow-type" "GtkShadowType" t t)
-   (text               gtk-entry-text    "text" "gchararray" t t)
-   (text-length        gtk-entry-text-length "text-length" "guint" t nil)
-   (truncate-multiline gtk-entry-truncate-multiline
-                       "truncate-multiline" "gboolean" t t)
-   (visibility         gtk-entry-visibility "visibility" "gboolean" t t)
-   (width-chars        gtk-entry-width-chars "width-chars" "gint" t t)
-   (xalign             gtk-entry-xalign "xalign" "gfloat" t t)
-   (:cffi layout gtk-entry-layout g-object
+  ((activates-default
+    gtk-entry-activates-default
+    "activates-default" "gboolean" t t)
+   (caps-lock-warning
+    gtk-entry-caps-lock-warning
+    "caps-lock-warning" "gboolean" t t)
+   (cursor-position
+    gtk-entry-cursor-position
+    "cursor-position" "gint" t nil)
+   (editable
+    gtk-entry-editable
+    "editable" "gboolean" t t)
+   (has-frame
+    gtk-entry-has-frame
+    "has-frame" "gboolean" t t)
+   (im-module
+    gtk-entry-im-module
+    "im-module" "gchararray" t t)
+   (inner-border
+    gtk-entry-inner-border
+    "inner-border" "GtkBorder" t t)
+   (invisible-char
+    gtk-entry-invisible-char
+    "invisible-char" "guint" t t)
+   (invisible-char-set
+    gtk-entry-invisible-char-set
+    "invisible-char-set" "gboolean" t t)
+   (max-length
+    gtk-entry-max-length
+    "max-length" "gint" t t)
+   (overwrite-mode
+    gtk-entry-overwrite-mode
+    "overwrite-mode" "gboolean" t t)
+   (primary-icon-activatable
+    gtk-entry-primary-icon-activatable
+    "primary-icon-activatable" "gboolean" t t)
+   (primary-icon-gicon
+    gtk-entry-primary-icon-gicon
+    "primary-icon-gicon" "GIcon" t t)
+   (primary-icon-name
+    gtk-entry-primary-icon-name
+    "primary-icon-name" "gchararray" t t)
+   (primary-icon-pixbuf
+    gtk-entry-primary-icon-pixbuf
+    "primary-icon-pixbuf" "GdkPixbuf" t t)
+   (primary-icon-sensitive
+    gtk-entry-primary-icon-sensitive
+    "primary-icon-sensitive" "gboolean" t t)
+   (primary-icon-stock
+    gtk-entry-primary-icon-stock
+    "primary-icon-stock" "gchararray" t t)
+   (primary-icon-storage-type
+    gtk-entry-primary-icon-storage-type
+    "primary-icon-storage-type" "GtkImageType" t nil)
+   (primary-icon-tooltip-markup
+    gtk-entry-primary-icon-tooltip-markup
+    "primary-icon-tooltip-markup" "gchararray" t t)
+   (primary-icon-tooltip-text
+    gtk-entry-primary-icon-tooltip-text
+    "primary-icon-tooltip-text" "gchararray" t t)
+   (progress-fraction
+    gtk-entry-progress-fraction
+    "progress-fraction" "gdouble" t t)
+   (progress-pulse-step
+    gtk-entry-progress-pulse-step
+    "progress-pulse-step" "gdouble" t t)
+   (scroll-offset
+    gtk-entry-scroll-offset
+    "scroll-offset" "gint" t nil)
+   (secondary-icon-activatable
+    gtk-entry-secondary-icon-activatable
+    "secondary-icon-activatable" "gboolean" t t)
+   (secondary-icon-gicon
+    gtk-entry-secondary-icon-gicon
+    "secondary-icon-gicon" "GIcon" t t)
+   (secondary-icon-name
+    gtk-entry-secondary-icon-name
+    "secondary-icon-name" "gchararray" t t)
+   (secondary-icon-pixbuf
+    gtk-entry-secondary-icon-pixbuf
+    "secondary-icon-pixbuf" "GdkPixbuf" t t)
+   (secondary-icon-sensitive
+    gtk-entry-secondary-icon-sensitive
+    "secondary-icon-sensitive" "gboolean" t t)
+   (secondary-icon-stock
+    gtk-entry-secondary-icon-stock
+    "secondary-icon-stock" "gchararray" t t)
+   (secondary-icon-storage-type
+    gtk-entry-secondary-icon-storage-type
+    "secondary-icon-storage-type" "GtkImageType" t nil)
+   (secondary-icon-tooltip-markup
+    gtk-entry-secondary-icon-tooltip-markup
+    "secondary-icon-tooltip-markup" "gchararray" t t)
+   (secondary-icon-tooltip-text
+    gtk-entry-secondary-icon-tooltip-text
+    "secondary-icon-tooltip-text" "gchararray" t t)
+   (selection-bound
+    gtk-entry-selection-bound
+    "selection-bound" "gint" t nil)
+   (shadow-type
+    gtk-entry-shadow-type
+    "shadow-type" "GtkShadowType" t t)
+   (text
+    gtk-entry-text
+    "text" "gchararray" t t)
+   (text-length
+    gtk-entry-text-length
+    "text-length" "guint" t nil)
+   (truncate-multiline
+    gtk-entry-truncate-multiline
+    "truncate-multiline" "gboolean" t t)
+   (visibility
+    gtk-entry-visibility
+    "visibility" "gboolean" t t)
+   (width-chars
+    gtk-entry-width-chars
+    "width-chars" "gint" t t)
+   (xalign
+    gtk-entry-xalign
+    "xalign" "gfloat" t t)
+   (:cffi layout
+          gtk-entry-layout g-object
           "gtk_entry_get_layout" nil)
-   (:cffi completion gtk-entry-completion (g-object entry-completion)
+   (:cffi completion
+          gtk-entry-completion (g-object entry-completion)
           "gtk_entry_get_completion" "gtk_entry_set_completion")
-   (:cffi cursor-hadjustment gtk-entry-cursor-hadjustment
-          (g-object gtk-adjustment)
+   (:cffi cursor-hadjustment
+          gtk-entry-cursor-hadjustment (g-object gtk-adjustment)
           "gtk_entry_get_cursor_hadjustment" "gtk_entry_set_cursor_hadjustment")
-   (:cffi layout-offset gtk-entry-layout-offset
-          nil gtk-entry-get-layout-offset nil)))
+   (:cffi layout-offset
+          gtk-entry-layout-offset nil
+          gtk-entry-get-layout-offset nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_new ()
@@ -1163,8 +1223,13 @@
 ;;; Creates a new entry.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkEntry.
+;;;     a new GtkEntry
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-new ()
+  (make-instance 'gtk-entry))
+
+(export 'gtk-entry-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_new_with_buffer ()
@@ -1174,10 +1239,10 @@
 ;;; Creates a new entry with the specified text buffer.
 ;;; 
 ;;; buffer :
-;;; 	The buffer to use for the new GtkEntry.
+;;;     The buffer to use for the new GtkEntry.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkEntry
+;;;     a new GtkEntry
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1190,10 +1255,10 @@
 ;;; Get the GtkEntryBuffer object which holds the text for this widget.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	A GtkEntryBuffer object. [transfer none]
+;;;     a GtkEntryBuffer object
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1206,10 +1271,10 @@
 ;;; Set the GtkEntryBuffer object which holds the text for this widget.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; buffer :
-;;; 	a GtkEntryBuffer
+;;;     a GtkEntryBuffer
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1225,11 +1290,16 @@
 ;;; See gtk_entry_buffer_set_text().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; text :
-;;; 	the new text
+;;;     the new text
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-set-text (entry text)
+  (setf (gtk-entry-text entry) text))
+
+(export 'gtk-entry-set-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_text ()
@@ -1244,13 +1314,18 @@
 ;;;  gtk_entry_buffer_get_text (gtk_entry_get_buffer (entry));
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	a pointer to the contents of the widget as a string. This string points
+;;;     a pointer to the contents of the widget as a string. This string points
 ;;;     to internally allocated storage in the widget and must not be freed,
-;;;     modified or stored.
+;;;     modified or stored
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-get-text (entry)
+  (gtk-entry-text entry))
+
+(export 'gtk-entry-get-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_text_length ()
@@ -1264,13 +1339,18 @@
 ;;;  gtk_entry_buffer_get_length (gtk_entry_get_buffer (entry));
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the current number of characters in GtkEntry, or 0 if there are none.
+;;;     the current number of characters in GtkEntry, or 0 if there are none
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-get-text-length (entry)
+  (gtk-entry-text-length entry))
+
+(export 'gtk-entry-get-text-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_text_area ()
@@ -1285,10 +1365,10 @@
 ;;; See also gtk_entry_get_icon_area().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; text_area :
-;;; 	Return location for the text area. [out]
+;;;     return location for the text area
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -1306,11 +1386,16 @@
 ;;; current font, but it can be changed with gtk_entry_set_invisible_char().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; visible :
-;;; 	TRUE if the contents of the entry are displayed as plaintext
+;;;     TRUE if the contents of the entry are displayed as plaintext
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-set-visibility (entry visible)
+  (setf (gtk-entry-visibility entry) visible))
+
+(export 'gtk-entry-set-visibility)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_invisible_char ()
@@ -1326,10 +1411,10 @@
 ;;; they type.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; ch :
-;;; 	a Unicode character
+;;;     a Unicode character
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1342,7 +1427,7 @@
 ;;; again.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1361,12 +1446,12 @@
 ;;;  gtk_entry_buffer_set_max_length (gtk_entry_get_buffer (entry), max);
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; max :
-;;; 	the maximum length of the entry, or 0 for no maximum. (other than the
+;;;     the maximum length of the entry, or 0 for no maximum. (other than the
 ;;;     maximum length of entries.) The value passed in will be clamped to the
-;;;     range 0-65536.
+;;;     range 0-65536
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1377,10 +1462,10 @@
 ;;; Retrieves the value set by gtk_entry_set_activates_default().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the entry will activate the default widget
+;;;     TRUE if the entry will activate the default widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1391,10 +1476,10 @@
 ;;; Gets the value set by gtk_entry_set_has_frame().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	whether the entry has a beveled frame
+;;;     whether the entry has a beveled frame
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1406,10 +1491,10 @@
 ;;; See gtk_entry_set_inner_border() for more information.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the entry's GtkBorder, or NULL if none was set.
+;;;     the entry's GtkBorder, or NULL if none was set
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1427,10 +1512,10 @@
 ;;; Gets the value set by gtk_entry_set_width_chars().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	number of chars to request space for, or negative if unset
+;;;     number of chars to request space for, or negative if unset
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1448,10 +1533,10 @@
 ;;; default handler for the "activate" signal.)
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; setting :
-;;; 	TRUE to activate window's default widget on Enter keypress
+;;;     TRUE to activate window's default widget on Enter keypress
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1462,10 +1547,10 @@
 ;;; Sets whether the entry has a beveled frame around it.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; setting :
-;;; 	new value
+;;;     new value
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1483,10 +1568,10 @@
 ;;; entry is important.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; border :
-;;; 	a GtkBorder, or NULL.
+;;;     a GtkBorder, or NULL
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1507,10 +1592,10 @@
 ;;; size reverts to the default entry size.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; n_chars :
-;;; 	width in chars
+;;;     width in chars
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1522,11 +1607,11 @@
 ;;; entries with visibility set to false. See gtk_entry_set_invisible_char().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the current invisible char, or 0, if the entry does not show invisible
-;;;     text at all.
+;;;     the current invisible char, or 0, if the entry does not show invisible
+;;;     text at all
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1539,10 +1624,10 @@
 ;;; than the width of the entry.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; xalign :
-;;; 	The horizontal alignment, from 0 (left) to 1 (right). Reversed for
+;;;     The horizontal alignment, from 0 (left) to 1 (right). Reversed for
 ;;;     RTL layouts
 ;;; 
 ;;; Since 2.4
@@ -1556,10 +1641,10 @@
 ;;; Gets the value set by gtk_entry_set_alignment().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the alignment
+;;;     the alignment
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1578,10 +1663,10 @@
 ;;; the initial focus setting until the first key event arrives.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; text :
-;;; 	a string to be displayed when entry is empty an unfocused, or NULL
+;;;     a string to be displayed when entry is empty an unfocused, or NULL
 ;;; 
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
@@ -1594,10 +1679,10 @@
 ;;; Retrieves the text that will be displayed when entry is empty and unfocused
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	a pointer to the placeholder text as a string. This string points to
+;;;     A pointer to the placeholder text as a string. This string points to
 ;;;     internally allocated storage in the widget and must not be freed,
 ;;;     modified or stored.
 ;;; 
@@ -1612,10 +1697,10 @@
 ;;; Sets whether the text is overwritten when typing in the GtkEntry.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; overwrite :
-;;; 	new value
+;;;     new value
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -1628,10 +1713,10 @@
 ;;; Gets the value set by gtk_entry_set_overwrite_mode().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	whether the text is overwritten when typing.
+;;;     whether the text is overwritten when typing
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -1641,8 +1726,8 @@
 ;;; 
 ;;; PangoLayout * gtk_entry_get_layout (GtkEntry *entry);
 ;;; 
-;;; Gets the PangoLayout used to display the entry. The layout is useful to e.g.
-;;; convert text positions to pixel positions, in combination with
+;;; Gets the PangoLayout used to display the entry. The layout is useful to
+;;; e.g. convert text positions to pixel positions, in combination with
 ;;; gtk_entry_get_layout_offsets(). The returned layout is owned by the entry
 ;;; and must not be modified or freed by the caller.
 ;;; 
@@ -1652,10 +1737,10 @@
 ;;; in the layout to byte indices in the entry contents.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the PangoLayout for this entry. [transfer none]
+;;;     the PangoLayout for this entry
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1682,13 +1767,13 @@
 ;;; in the layout to byte indices in the entry contents.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; x :
-;;; 	location to store X offset of layout, or NULL.
+;;;     location to store X offset of layout, or NULL
 ;;; 
 ;;; y :
-;;; 	location to store Y offset of layout, or NULL.
+;;;     location to store Y offset of layout, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_entry_get_layout_offsets" %gtk-entry-get-layout-offsets) :void
@@ -1714,20 +1799,21 @@
 ;;; gtk_entry_get_layout(), with text retrieved via pango_layout_get_text()).
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; layout_index :
-;;; 	byte index into the entry layout text
+;;;     byte index into the entry layout text
 ;;; 
 ;;; Returns :
-;;; 	byte index into the entry contents
+;;;     byte index into the entry contents
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (entry-layout-index-to-text-index "gtk_entry_layout_index_to_text_index") :int
+(defcfun ("gtk_entry_layout_index_to_text_index"
+          gtk-entry-layout-index-to-text-index) :int
   (entry (g-object entry))
   (layout-index :int))
 
-(export 'entry-layout-index-to-text-index)
+(export 'gtk-entry-layout-index-to-text-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_text_index_to_layout_index ()
@@ -1739,20 +1825,21 @@
 ;;; gtk_entry_get_text()).
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; text_index :
-;;; 	byte index into the entry contents
+;;;     byte index into the entry contents
 ;;; 
 ;;; Returns :
-;;; 	byte index into the entry layout text
+;;;     byte index into the entry layout text
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (entry-text-index-to-layout-index "gtk_entry_text_index_to_layout_index") :int
+(defcfun ("gtk_entry_text_index_to_layout_index"
+          gtk-entry-text-index-to-layout-index) :int
   (entry (g-object entry))
   (text-index :int))
 
-(export 'entry-text-index-to-layout-info)
+(export 'gtk-entry-text-index-to-layout-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_max_length ()
@@ -1767,11 +1854,11 @@
 ;;;  gtk_entry_buffer_get_max_length (gtk_entry_get_buffer (entry));
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the maximum allowed number of characters in GtkEntry, or 0 if there is
-;;;     no maximum.
+;;;     the maximum allowed number of characters in GtkEntry, or 0 if there is
+;;;     no maximum
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1783,11 +1870,16 @@
 ;;; See gtk_entry_set_visibility().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the text is currently visible
+;;;     TRUE if the text is currently visible
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-get-visibility (entry)
+  (gtk-entry-visibility entry))
+
+(export 'gtk-entry-get-visibility)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_completion ()
@@ -1801,10 +1893,10 @@
 ;;; set to NULL.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; completion :
-;;; 	The GtkEntryCompletion or NULL. [allow-none]
+;;;     The GtkEntryCompletion or NULL
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1817,10 +1909,10 @@
 ;;; Returns the auxiliary completion object currently in use by entry.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	The auxiliary completion object currently in use by entry. [transfer none]
+;;;     The auxiliary completion object currently in use by entry
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1840,10 +1932,10 @@
 ;;; as the entry.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; adjustment :
-;;; 	an adjustment which should be adjusted when the cursor is moved, or NULL
+;;;     an adjustment which should be adjusted when the cursor is moved, or NULL
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -1857,10 +1949,10 @@
 ;;; See gtk_entry_set_cursor_hadjustment().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	the horizontal cursor adjustment, or NULL if none has been set.
+;;;     the horizontal cursor adjustment, or NULL if none has been set
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -1874,10 +1966,10 @@
 ;;; the bar. The fraction should be between 0.0 and 1.0, inclusive.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; fraction :
-;;; 	fraction of the task that's been completed
+;;;     fraction of the task that's been completed
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1891,10 +1983,10 @@
 ;;; See gtk_entry_set_progress_fraction().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	a fraction from 0.0 to 1.0
+;;;     a fraction from 0.0 to 1.0
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1908,10 +2000,10 @@
 ;;; for each call to gtk_entry_progress_pulse().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; fraction :
-;;; 	fraction between 0.0 and 1.0
+;;;     fraction between 0.0 and 1.0
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1924,10 +2016,10 @@
 ;;; Retrieves the pulse step set with gtk_entry_set_progress_pulse_step().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Returns :
-;;; 	a fraction from 0.0 to 1.0
+;;;     a fraction from 0.0 to 1.0
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1944,15 +2036,15 @@
 ;;; determined by gtk_entry_set_progress_pulse_step()).
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (entry-progress-pulse "gtk_entry_progress_pulse") :void
-  (entry (g-object entry)))
+(defcfun ("gtk_entry_progress_pulse" gtk-entry-progress-pulse) :void
+  (entry (g-object gtk-entry)))
 
-(export 'entry-progress-pulse)
+(export 'gtk-entry-progress-pulse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_im_context_filter_keypress ()
@@ -1971,13 +2063,13 @@
 ;;; example of use.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; event :
-;;; 	the key event.
+;;;     the key event
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the input method handled the key event.
+;;;     TRUE if the input method handled the key event
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -1993,7 +2085,7 @@
 ;;; on-going input method behavior.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -2009,13 +2101,19 @@
 ;;; Specifies the side of the entry at which an icon is placed.
 ;;; 
 ;;; GTK_ENTRY_ICON_PRIMARY
-;;; 	At the beginning of the entry (depending on the text direction).
+;;;     At the beginning of the entry (depending on the text direction).
 ;;; 
 ;;; GTK_ENTRY_ICON_SECONDARY
-;;; 	At the end of the entry (depending on the text direction).
+;;;     At the end of the entry (depending on the text direction).
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkEntryIconPosition" gtk-entry-icon-position
+  (:export t
+   :type-initializer "gtk_entry_icon_position_get_type")
+  (:primary 0)
+  (:secondary 1))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_pixbuf ()
@@ -2029,13 +2127,13 @@
 ;;; If pixbuf is NULL, no icon will be shown in the specified position.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; pixbuf :
-;;; 	A GdkPixbuf, or NULL.
+;;;     a GdkPixbuf, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2053,13 +2151,13 @@
 ;;; If stock_id is NULL, no icon will be shown in the specified position.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; stock_id :
-;;; 	The name of the stock item, or NULL. [allow-none]
+;;;     The name of the stock item, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2080,13 +2178,13 @@
 ;;; If icon_name is NULL, no icon will be shown in the specified position.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	The position at which to set the icon
+;;;     The position at which to set the icon
 ;;; 
 ;;; icon_name :
-;;; 	An icon name, or NULL. [allow-none]
+;;;     An icon name, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2105,13 +2203,13 @@
 ;;; If icon is NULL, no icon will be shown in the specified position.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	The position at which to set the icon
+;;;     The position at which to set the icon
 ;;; 
 ;;; icon :
-;;; 	The icon to set, or NULL. [allow-none]
+;;;     The icon to set, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2126,13 +2224,13 @@
 ;;; If the icon has no image data, the return value will be GTK_IMAGE_EMPTY.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	image representation being used
+;;;     image representation being used
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2150,13 +2248,13 @@
 ;;; stock item, or an icon name.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	A GdkPixbuf, or NULL if no icon is set for this position. [transfer none]
+;;;     A GdkPixbuf, or NULL if no icon is set for this position
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2171,13 +2269,13 @@
 ;;; the icon was set by some other method (e.g., by pixbuf, icon name or gicon).
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	A stock id, or NULL if no icon is set or if the icon wasn't set from a
+;;;     A stock id, or NULL if no icon is set or if the icon wasn't set from a
 ;;;     stock id
 ;;; 
 ;;; Since 2.16
@@ -2193,13 +2291,13 @@
 ;;; if the icon was set by some other method (e.g., by pixbuf, stock or gicon).
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	An icon name, or NULL if no icon is set or if the icon wasn't set from
+;;;     An icon name, or NULL if no icon is set or if the icon wasn't set from
 ;;;     an icon name
 ;;; 
 ;;; Since 2.16
@@ -2216,13 +2314,13 @@
 ;;; name).
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	A GIcon, or NULL if no icon is set or if the icon is not a GIcon.
+;;;     A GIcon, or NULL if no icon is set or if the icon is not a GIcon
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2237,13 +2335,13 @@
 ;;; Sets whether the icon is activatable.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; activatable :
-;;; 	TRUE if the icon should be activatable
+;;;     TRUE if the icon should be activatable
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2257,13 +2355,13 @@
 ;;; Returns whether the icon is activatable.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the icon is activatable.
+;;;     TRUE if the icon is activatable
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2278,13 +2376,13 @@
 ;;; Sets the sensitivity for the specified icon.
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; sensitive :
-;;; 	Specifies whether the icon should appear sensitive or insensitive
+;;;     specifies whether the icon should appear sensitive or insensitive
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2298,13 +2396,13 @@
 ;;; Returns whether the icon appears sensitive or insensitive.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the icon is sensitive.
+;;;     TRUE if the icon is sensitive
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2320,26 +2418,26 @@
 ;;; "query-tooltip" signal handler.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the position to find
+;;;     the x coordinate of the position to find
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the position to find
+;;;     the y coordinate of the position to find
 ;;; 
 ;;; Returns :
-;;; 	the index of the icon at the given position, or -1
+;;;     the index of the icon at the given position, or -1
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (entry-icon-at-pos "gtk_entry_get_icon_at_pos") :int
-  (entry (g-object entry))
+(defcfun ("gtk_entry_get_icon_at_pos" gtk-entry-get-icon-at-pos) :int
+  (entry (g-object gtk-entry))
   (x :int)
   (y :int))
 
-(export 'entry-icon-at-pos)
+(export 'gtk-entry-get-icon-at-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_tooltip_text ()
@@ -2357,13 +2455,13 @@
 ;;; gtk_entry_set_icon_tooltip_markup().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	the icon position
+;;;     the icon position
 ;;; 
 ;;; tooltip :
-;;; 	the contents of the tooltip for the icon, or NULL.
+;;;     the contents of the tooltip for the icon, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2378,14 +2476,14 @@
 ;;; entry.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	the icon position
+;;;     the icon position
 ;;; 
 ;;; Returns :
-;;; 	the tooltip text, or NULL. Free the returned string with g_free()
-;;;     when done.
+;;;     the tooltip text, or NULL. Free the returned string with g_free()
+;;;     when done
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2407,13 +2505,13 @@
 ;;; gtk_enty_set_icon_tooltip_text().
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	the icon position
+;;;     the icon position
 ;;; 
 ;;; tooltip :
-;;; 	the contents of the tooltip for the icon, or NULL. [allow-none]
+;;;     the contents of the tooltip for the icon, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2428,14 +2526,14 @@
 ;;; entry.
 ;;; 
 ;;; entry :
-;;; 	a GtkEntry
+;;;     a GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	the icon position
+;;;     the icon position
 ;;; 
 ;;; Returns :
-;;; 	the tooltip text, or NULL. Free the returned string with g_free()
-;;;     when done.
+;;;     the tooltip text, or NULL. Free the returned string with g_free()
+;;;     when done
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2453,8 +2551,8 @@
 ;;; 
 ;;; To handle the drag operation, you need to connect to the usual
 ;;; "drag-data-get" (or possibly "drag-data-delete") signal, and use
-;;; gtk_entry_get_current_icon_drag_source() in your signal handler to find out
-;;; if the drag was started from an icon.
+;;; gtk_entry_get_current_icon_drag_source() in your signal handler to find
+;;; out if the drag was started from an icon.
 ;;; 
 ;;; By default, GTK+ uses the icon as the drag icon. You can use the
 ;;; "drag-begin" signal to set a different icon. Note that you have to use
@@ -2462,16 +2560,16 @@
 ;;; after the default handler.
 ;;; 
 ;;; entry :
-;;; 	a GtkIconEntry
+;;;     a GtkIconEntry
 ;;; 
 ;;; icon_pos :
-;;; 	icon position
+;;;     icon position
 ;;; 
 ;;; target_list :
-;;; 	the targets (data formats) in which the data can be provided
+;;;     the targets (data formats) in which the data can be provided
 ;;; 
 ;;; actions :
-;;; 	a bitmask of the allowed drag actions
+;;;     a bitmask of the allowed drag actions
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2487,11 +2585,11 @@
 ;;; This function is meant to be used in a "drag-data-get" callback.
 ;;; 
 ;;; entry :
-;;; 	a GtkIconEntry
+;;;     a GtkIconEntry
 ;;; 
 ;;; Returns :
-;;; 	index of the icon which is the source of the current DND operation,
-;;;     or -1.
+;;;     index of the icon which is the source of the current DND operation,
+;;;     or -1
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -2512,13 +2610,13 @@
 ;;; See also gtk_entry_get_text_area()
 ;;; 
 ;;; entry :
-;;; 	A GtkEntry
+;;;     A GtkEntry
 ;;; 
 ;;; icon_pos :
-;;; 	Icon position
+;;;     Icon position
 ;;; 
 ;;; icon_area :
-;;; 	Return location for the icon's area. [out]
+;;;     Return location for the icon's area
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
