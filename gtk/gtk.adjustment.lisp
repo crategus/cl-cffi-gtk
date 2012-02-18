@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -177,10 +177,10 @@
 ;;; other than the value field.
 ;;; 
 ;;; adjustment :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "value-changed" signal
@@ -191,10 +191,10 @@
 ;;; Emitted when the GtkAdjustment value field has been changed.
 ;;; 
 ;;; adjustment :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -213,17 +213,23 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_adjustment_get_type")
-  ((lower gtk-adjustment-lower
+  ((lower
+    gtk-adjustment-lower
     "lower" "gdouble" t t)
-   (page-increment gtk-adjustment-page-increment
+   (page-increment
+    gtk-adjustment-page-increment
     "page-increment" "gdouble" t t)
-   (page-size gtk-adjustment-page-size
+   (page-size
+    gtk-adjustment-page-size
     "page-size" "gdouble" t t)
-   (step-increment gtk-adjustment-step-increment
+   (step-increment
+    gtk-adjustment-step-increment
     "step-increment" "gdouble" t t)
-   (upper gtk-adjustment-upper
+   (upper
+    gtk-adjustment-upper
     "upper" "gdouble" t t)
-   (value gtk-adjustment-value
+   (value
+    gtk-adjustment-value
     "value" "gdouble" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -239,25 +245,25 @@
 ;;; Creates a new GtkAdjustment.
 ;;; 
 ;;; value :
-;;; 	the initial value.
+;;;     the initial value.
 ;;; 
 ;;; lower :
-;;; 	the minimum value.
+;;;     the minimum value.
 ;;; 
 ;;; upper :
-;;; 	the maximum value.
+;;;     the maximum value.
 ;;; 
 ;;; step_increment :
-;;; 	the step increment.
+;;;     the step increment.
 ;;; 
 ;;; page_increment :
-;;; 	the page increment.
+;;;     the page increment.
 ;;; 
 ;;; page_size :
-;;; 	the page size.
+;;;     the page size.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkAdjustment.
+;;;     a new GtkAdjustment.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -268,10 +274,10 @@
 ;;; Gets the current value of the adjustment. See gtk_adjustment_set_value().
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	The current value of the adjustment.
+;;;     The current value of the adjustment.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -287,10 +293,10 @@
 ;;; GtkAdjustment.upper - GtkAdjustment.page_size.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment.
+;;;     a GtkAdjustment.
 ;;; 
 ;;; value :
-;;; 	the new value.
+;;;     the new value.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -308,13 +314,13 @@
 ;;; changed.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment.
+;;;     a GtkAdjustment.
 ;;; 
 ;;; lower :
-;;; 	the lower value.
+;;;     the lower value.
 ;;; 
 ;;; upper :
-;;; 	the upper value.
+;;;     the upper value.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_adjustment_clamp_page" gtk-adjustment-clamp-page) :void
@@ -334,7 +340,7 @@
 ;;; GtkAdjustment fields other than the value.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -347,7 +353,7 @@
 ;;; GtkAdjustment value field.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -368,25 +374,25 @@
 ;;; multiple emissions of "changed" into one.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; value :
-;;; 	the new value
+;;;     the new value
 ;;; 
 ;;; lower :
-;;; 	the new minimum value
+;;;     the new minimum value
 ;;; 
 ;;; upper :
-;;; 	the new maximum value
+;;;     the new maximum value
 ;;; 
 ;;; step_increment :
-;;; 	the new step increment
+;;;     the new step increment
 ;;; 
 ;;; page_increment :
-;;; 	the new page increment
+;;;     the new page increment
 ;;; 
 ;;; page_size :
-;;; 	the new page size
+;;;     the new page size
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -399,10 +405,10 @@
 ;;; Retrieves the minimum value of the adjustment.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	The current minimum value of the adjustment.
+;;;     The current minimum value of the adjustment.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -415,10 +421,10 @@
 ;;; Retrieves the page increment of the adjustment.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	The current page increment of the adjustment.
+;;;     The current page increment of the adjustment.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -431,10 +437,10 @@
 ;;; Retrieves the page size of the adjustment.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	The current page size of the adjustment.
+;;;     The current page size of the adjustment.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -447,10 +453,10 @@
 ;;; Retrieves the step increment of the adjustment.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	The current step increment of the adjustment.
+;;;     The current step increment of the adjustment.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -463,10 +469,10 @@
 ;;; Gets the smaller of step increment and page increment.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	the minimum increment of adjustment
+;;;     the minimum increment of adjustment
 ;;; 
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
@@ -479,10 +485,10 @@
 ;;; Retrieves the maximum value of the adjustment.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;; 	The current maximum value of the adjustment.
+;;;     The current maximum value of the adjustment.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -506,10 +512,10 @@
 ;;; compressing "changed" emissions.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; lower :
-;;; 	the new minimum value
+;;;     the new minimum value
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -526,10 +532,10 @@
 ;;; of the "changed" signal when setting multiple adjustment properties.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; page_increment :
-;;; 	the new page increment
+;;;     the new page increment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -546,10 +552,10 @@
 ;;; of the "changed" signal when setting multiple adjustment properties.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; page_size :
-;;; 	the new page size
+;;;     the new page size
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -566,10 +572,10 @@
 ;;; the "changed" signal when setting multiple adjustment properties.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; step_increment :
-;;; 	the new step increment
+;;;     the new step increment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -588,10 +594,10 @@
 ;;; the "changed" signal when setting multiple adjustment properties.
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; upper :
-;;; 	the new maximum value
+;;;     the new maximum value
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
