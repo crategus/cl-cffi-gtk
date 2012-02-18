@@ -316,17 +316,6 @@
   (:unbind 308)
   (:last 309))
 
-(define-g-enum "GtkRecentManagerError"
-    recent-manager-error
-    (:export t :type-initializer "gtk_recent_manager_error_get_type")
-  (:not-found 0)
-  (:invalid-uri 1)
-  (:invalid-encoding 2)
-  (:not-registered 3)
-  (:read 4)
-  (:write 5)
-  (:unknown 6))
-
 (define-g-enum "GtkSideType"
     side-type
     (:export t :type-initializer "gtk_side_type_get_type")
@@ -379,12 +368,6 @@
   (:none 0)
   (:partial 1)
   (:full 2))
-
-(define-g-enum "GtkEntryIconPosition"
-    entry-icon-position
-    (:export t :type-initializer "gtk_entry_icon_position_get_type")
-  (:primary 0)
-  (:secondary 1))
 
 (define-g-flags "GtkButtonAction"
     button-action
@@ -755,13 +738,6 @@
                         (selected-printer print-unix-dialog-selected-printer
                          "selected-printer" "GtkPrinter" t nil)))
 
-(define-g-object-class "GtkRecentChooserDialog" gtk-recent-chooser-dialog
-                       (:superclass gtk-dialog :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable"
-                         "GtkRecentChooser")
-                        :type-initializer "gtk_recent_chooser_dialog_get_type")
-                       nil)
-
 (define-g-object-class "GtkPlug" gtk-plug
                        (:superclass gtk-window :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -819,21 +795,6 @@
                          "gchararray" t t)
                         (preview-text font-selection-preview-text
                          "preview-text" "gchararray" t t)))
-
-(define-g-object-class "GtkRecentChooserWidget" gtk-recent-chooser-widget
-                       (:superclass gtk-v-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
-                         "GtkRecentChooser")
-                        :type-initializer "gtk_recent_chooser_widget_get_type")
-                       nil)
-
-(define-g-object-class "GtkRecentChooserMenu" gtk-recent-chooser-menu
-                       (:superclass gtk-menu :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
-                         "GtkRecentChooser")
-                        :type-initializer "gtk_recent_chooser_menu_get_type")
-                       ((show-numbers recent-chooser-menu-show-numbers
-                         "show-numbers" "gboolean" t t)))
 
 (define-g-object-class "GtkMenuBar" gtk-menu-bar
                        (:superclass gtk-menu-shell :export t :interfaces
@@ -912,15 +873,3 @@
    :interfaces nil
    :type-initializer "gtk_print_settings_get_type")
   nil)
-
-(define-g-object-class "GtkRecentManager" gtk-recent-manager
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "gtk_recent_manager_get_type")
-  ((filename gtk-recent-manager-filename
-    "filename" "gchararray" t nil)
-   (limit gtk-recent-manager-limit
-    "limit" "gint" t t)
-   (size gtk-recent-manager-size
-    "size" "gint" t nil)))
