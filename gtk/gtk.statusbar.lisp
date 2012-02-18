@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkStatusbar
 ;;; 
 ;;; Report messages of minor importance to the user
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkStatusbar
@@ -125,16 +125,16 @@
 ;;; Is emitted whenever a new message is popped off a statusbar's stack.
 ;;; 
 ;;; statusbar :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; context_id :
-;;; 	the context id of the relevant message/statusbar
+;;;     the context id of the relevant message/statusbar
 ;;; 
 ;;; text :
-;;; 	the message that was just popped
+;;;     the message that was just popped
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "text-pushed" signal
@@ -147,16 +147,16 @@
 ;;; Is emitted whenever a new message gets pushed onto a statusbar's stack.
 ;;; 
 ;;; statusbar :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; context_id :
-;;; 	the context id of the relevant message/statusbar
+;;;     the context id of the relevant message/statusbar
 ;;; 
 ;;; text :
-;;; 	the message that was pushed
+;;;     the message that was pushed
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -175,7 +175,8 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_statusbar_get_type")
-  ((has-resize-grip gtk-statusbar-has-resize-grip
+  ((has-resize-grip
+    gtk-statusbar-has-resize-grip
     "has-resize-grip" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -208,8 +209,13 @@
 ;;; Creates a new GtkStatusbar ready for messages.
 ;;; 
 ;;; Returns :
-;;; 	the new GtkStatusbar
+;;;     the new GtkStatusbar
 ;;; ----------------------------------------------------------------------------
+
+(defun gkt-statusbar-new ()
+  (make-instance 'gtk-statusbar))
+
+(export 'gtk-statusbar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_statusbar_get_context_id ()
@@ -221,25 +227,25 @@
 ;;; Note that the description is not shown in the UI.
 ;;; 
 ;;; statusbar :
-;;; 	a GtkStatusbar
+;;;     a GtkStatusbar
 ;;; 
 ;;; context_description :
-;;; 	textual description of what context the new message is being used in
+;;;     textual description of what context the new message is being used in
 ;;; 
 ;;; Returns :
-;;; 	an integer id
+;;;     an integer id
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_statusbar_get_context_id" %gtk-statusbar-get-context-id) :uint
   (statusbar (g-object gtk-statusbar))
   (context-description :string))
 
-(defun gtk-statusbar-context-id (statusbar context)
+(defun gtk-statusbar-get-context-id (statusbar context)
   (etypecase context
     (integer context)
     (string (%gtk-statusbar-get-context-id statusbar context))))
 
-(export 'gtk-statusbar-context-id)
+(export 'gtk-statusbar-get-context-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_statusbar_push ()
@@ -251,16 +257,16 @@
 ;;; Pushes a new message onto a statusbar's stack.
 ;;; 
 ;;; statusbar :
-;;; 	a GtkStatusbar
+;;;     a GtkStatusbar
 ;;; 
 ;;; context_id :
-;;; 	the message's context id, as returned by gtk_statusbar_get_context_id()
+;;;     the message's context id, as returned by gtk_statusbar_get_context_id()
 ;;; 
 ;;; text :
-;;; 	the message to add to the statusbar
+;;;     the message to add to the statusbar
 ;;; 
 ;;; Returns :
-;;; 	a message id that can be used with gtk_statusbar_remove().
+;;;     a message id that can be used with gtk_statusbar_remove()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_statusbar_push" %gtk-statusbar-push) :uint
@@ -270,7 +276,7 @@
 
 (defun gtk-statusbar-push (statusbar context text)
   (%gtk-statusbar-push statusbar
-                       (gtk-statusbar-context-id statusbar context)
+                       (gtk-statusbar-get-context-id statusbar context)
                        text))
 
 (export 'gtk-statusbar-push)
@@ -287,10 +293,10 @@
 ;;; top of the stack has a different context id.
 ;;; 
 ;;; statusbar :
-;;; 	a GtkStatusBar
+;;;     a GtkStatusBar
 ;;; 
 ;;; context_id :
-;;; 	a context identifier
+;;;     a context identifier
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_statusbar_pop" %gtk-statusbar-pop) :void
@@ -298,7 +304,8 @@
   (context-id :uint))
 
 (defun gtk-statusbar-pop (statusbar context)
-  (%gtk-statusbar-pop statusbar (gtk-statusbar-context-id statusbar context)))
+  (%gtk-statusbar-pop statusbar
+                      (gtk-statusbar-get-context-id statusbar context)))
 
 (export 'gtk-statusbar-pop)
 
@@ -313,13 +320,13 @@
 ;;; context_id and message_id must be specified.
 ;;; 
 ;;; statusbar :
-;;; 	a GtkStatusBar
+;;;     a GtkStatusBar
 ;;; 
 ;;; context_id :
-;;; 	a context identifier
+;;;     a context identifier
 ;;; 
 ;;; message_id :
-;;; 	a message identifier, as returned by gtk_statusbar_push()
+;;;     a message identifier, as returned by gtk_statusbar_push()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_statusbar_remove" %gtk-statusbar-remove) :void
@@ -329,7 +336,7 @@
 
 (defun gtk-statusbar-remove (statusbar context message-id)
   (%gtk-statusbar-remove statusbar
-                         (gtk-statusbar-context-id statusbar context)
+                         (gtk-statusbar-get-context-id statusbar context)
                          message-id))
 
 (export 'gtk-statusbar-remove)
@@ -343,13 +350,23 @@
 ;;; context_id.
 ;;; 
 ;;; statusbar :
-;;; 	a GtkStatusBar
+;;;     a GtkStatusBar
 ;;; 
 ;;; context_id :
-;;; 	a context identifier
+;;;     a context identifier
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_statusbar_remove_all" %gtk-statusbar-remove-all) :void
+  (statusbar (g-object gtk-statusbar))
+  (conext-id :uint))
+
+(defun gtk-statusbar-remove-all (statusbar context)
+  (%gtk-statusbar-remove-all statusbar
+                             (gtk-statusbar-get-context-id statusbar context)))
+
+(export 'gtk-statusbar-remove-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_statusbar_get_message_area ()
@@ -359,13 +376,18 @@
 ;;; Retrieves the box containing the label widget.
 ;;; 
 ;;; statusbar :
-;;; 	a GtkStatusBar
+;;;     a GtkStatusBar
 ;;; 
 ;;; Returns :
-;;; 	a GtkBox.
+;;;     a GtkBox
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_statusbar_get_message_area" gtk-statusbar-get-message-area)
+    (g-object gtk-widget)
+  (statusbar (g-object gtk-statusbar)))
+
+(export 'gtk-statusbar-get-message-area)
 
 ;;; --- End of file gtk.statusbar.lisp -----------------------------------------
