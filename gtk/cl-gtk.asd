@@ -207,6 +207,10 @@
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
    
    ;; Recently Used Documents
+   (:file "gtk.recent-manager")        ; Managing recently used files
+   (:file "gtk.recent-chooser-dialog") ; Displays recently used files
+   (:file "gtk.recent-chooser-menu")   ; Displays recently used files in a menu
+   (:file "gtk.recent-chooser-widget") ; Displays recently used files
    (:file "gtk.recent-filter")         ; Selecting recently used files
    
    ;; Deprecated
