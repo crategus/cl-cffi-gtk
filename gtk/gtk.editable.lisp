@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkEditable
+;;;
 ;;;     gtk_editable_select_region
 ;;;     gtk_editable_get_selection_bounds
 ;;;     gtk_editable_insert_text
@@ -119,10 +120,10 @@
 ;;; multiple ::notify::text signals to be emitted).
 ;;; 
 ;;; editable :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "delete-text" signal
@@ -140,16 +141,16 @@
 ;;; end_pos parameters are interpreted as for gtk_editable_delete_text().
 ;;; 
 ;;; editable :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; start_pos :
-;;; 	the starting position
+;;;     the starting position
 ;;; 
 ;;; end_pos :
-;;; 	the end position
+;;;     the end position
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "insert-text" signal
@@ -167,22 +168,22 @@
 ;;; text, or prevent it from being inserted entirely.
 ;;; 
 ;;; editable :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; new_text :
-;;; 	the new text to insert
+;;;     the new text to insert
 ;;; 
 ;;; new_text_length :
-;;; 	the length of the new text, in bytes, or -1 if new_text is
+;;;     the length of the new text, in bytes, or -1 if new_text is
 ;;;     nul-terminated
 ;;; 
 ;;; position :
-;;; 	the position, in characters, at which to insert the new text. this is
+;;;     the position, in characters, at which to insert the new text. this is
 ;;;     an in-out parameter. After the signal emission is finished, it should
 ;;;     point after the newly inserted text.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -196,9 +197,11 @@
 (define-g-interface "GtkEditable" gtk-editable
   (:export t
    :type-initializer "gtk_editable_get_type")
-  (:cffi position gtk-editable-position :int
+  (:cffi position
+         gtk-editable-position :int
          "gtk_editable_get_position" "gtk_editable_set_position")
-  (:cffi editable gtk-editable-editable :boolean
+  (:cffi editable
+         gtk-editable-editable :boolean
          "gtk_editable_get_editable" "gtk_editable_set_editable"))
 
 ;;; ----------------------------------------------------------------------------
@@ -218,13 +221,13 @@
 ;;; Virtual: set_selection_bounds
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; start_pos :
-;;; 	start of region
+;;;     start of region
 ;;; 
 ;;; end_pos :
-;;; 	end of region
+;;;     end of region
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_select_region" gtk-editable-select-region) :void
@@ -248,16 +251,16 @@
 ;;; Note that positions are specified in characters, not bytes.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; start_pos :
-;;; 	location to store the starting position, or NULL.
+;;;     location to store the starting position, or NULL
 ;;; 
 ;;; end_pos :
-;;; 	location to store the end position, or NULL.
+;;;     location to store the end position, or NULL
 ;;; 
 ;;; Returns :
-;;; 	TRUE if an area is selected, FALSE otherwise
+;;;     TRUE if an area is selected, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_get_selection_bounds" gtk-editable-get-selection-bounds)
@@ -290,16 +293,16 @@
 ;;; Virtual: do_insert_text
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; new_text :
-;;; 	the text to append
+;;;     the text to append
 ;;; 
 ;;; new_text_length :
-;;; 	the length of the text in bytes, or -1
+;;;     the length of the text in bytes, or -1
 ;;; 
 ;;; position :
-;;; 	location of the position text will be inserted at.
+;;;     location of the position text will be inserted at
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_insert_text" %gtk-editable-insert-text) :void
@@ -333,13 +336,13 @@
 ;;; Virtual: do_delete_text
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; start_pos :
-;;; 	start position
+;;;     start position
 ;;; 
 ;;; end_pos :
-;;; 	end position
+;;;     end position
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_delete_text" %gtk-editable-delete-text) :void
@@ -367,18 +370,18 @@
 ;;; Note that positions are specified in characters, not bytes.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; start_pos :
-;;; 	start of text
+;;;     start of text
 ;;; 
 ;;; end_pos :
-;;; 	end of text
+;;;     end of text
 ;;; 
 ;;; Returns :
-;;; 	a pointer to the contents of the widget as a string. This string is
+;;;     a pointer to the contents of the widget as a string. This string is
 ;;;     allocated by the GtkEditable implementation and should be freed by the
-;;;     caller.
+;;;     caller
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_get_chars" %gtk-editable-get-chars) g-string
@@ -400,7 +403,7 @@
 ;;; puts it on the clipboard.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_cut_clipboard" gtk-editable-cut-clipboard) :void
@@ -417,7 +420,7 @@
 ;;; puts it on the clipboard.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_copy_clipboard" gtk-editable-copy-clipboard) :void
@@ -434,7 +437,7 @@
 ;;; in the editable.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_paste_clipboard" gtk-editable-paste-clipboard) :void
@@ -451,7 +454,7 @@
 ;;; anything if there is no selected text.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_delete_selection" gtk-editable-delete-selection) :void
@@ -473,11 +476,16 @@
 ;;; position is in characters, not in bytes.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; position :
-;;; 	the position of the cursor
+;;;     the position of the cursor
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-editable-set-position (editable position)
+  (setf (gtk-editable-position editable) position))
+
+(export 'gtk-editable-set-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_editable_get_position ()
@@ -490,11 +498,16 @@
 ;;; Note that this position is in characters, not in bytes.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; Returns :
-;;; 	the cursor position
+;;;     the cursor position
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-editable-get-position (editable)
+  (gtk-editable-position editable))
+
+(export 'gtk-editable-get-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_editable_set_editable ()
@@ -504,11 +517,16 @@
 ;;; Determines if the user can edit the text in the editable widget or not.
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; is_editable :
-;;; 	TRUE if the user is allowed to edit the text in the widget
+;;;     TRUE if the user is allowed to edit the text in the widget
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-editable-set-editable (editable is-editable)
+  (setf (gtk-editable-editable editable) is-editable))
+
+(export 'gtk-editable-set-editable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_editable_get_editable ()
@@ -518,10 +536,15 @@
 ;;; Retrieves whether editable is editable. See gtk_editable_set_editable().
 ;;; 
 ;;; editable :
-;;; 	a GtkEditable
+;;;     a GtkEditable
 ;;; 
 ;;; Returns :
-;;; 	TRUE if editable is editable.
+;;;     TRUE if editable is editable.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-editable-get-editable (editable)
+  (gtk-editable-editable editable))
+
+(export 'gtk-editable-get-editable)
 
 ;;; --- End of file gtk.editable.lisp ------------------------------------------
