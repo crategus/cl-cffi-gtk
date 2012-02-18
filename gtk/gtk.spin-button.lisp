@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -382,21 +382,29 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
                 "GtkEditable")
    :type-initializer "gtk_spin_button_get_type")
-  ((adjustment gtk-spin-button-adjustment
+  ((adjustment
+    gtk-spin-button-adjustment
     "adjustment" "GtkAdjustment" t t)
-   (climb-rate gtk-spin-button-climb-rate
+   (climb-rate
+    gtk-spin-button-climb-rate
     "climb-rate" "gdouble" t t)
-   (digits gtk-spin-button-digits
+   (digits
+    gtk-spin-button-digits
     "digits" "guint" t t)
-   (numeric gtk-spin-button-numeric
+   (numeric
+    gtk-spin-button-numeric
     "numeric" "gboolean" t t)
-   (snap-to-ticks gtk-spin-button-snap-to-ticks
+   (snap-to-ticks
+    gtk-spin-button-snap-to-ticks
     "snap-to-ticks" "gboolean" t t)
-   (update-policy gtk-spin-button-update-policy
+   (update-policy
+    gtk-spin-button-update-policy
     "update-policy" "GtkSpinButtonUpdatePolicy" t t)
-   (value gtk-spin-button-value
+   (value
+    gtk-spin-button-value
     "value" "gdouble" t t)
-   (wrap gtk-spin-button-wrap
+   (wrap
+    gtk-spin-button-wrap
     "wrap" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -595,6 +603,11 @@
 ;;;     spin button's value
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-spin-button-set-digits (spin-button digits)
+  (setf (gtk-spin-button-digits spin-button) digits))
+
+(export 'gtk-spin-button-set-digits)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_increments ()
 ;;; 
@@ -648,6 +661,11 @@
 ;;;     the value of spin_button
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-spin-button-get-value-as-int (spin-button)
+  (truncate (gtk-spin-button-value spin-button)))
+
+(export 'gtk-spin-button-get-value-as-int)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_value ()
 ;;; 
@@ -693,6 +711,11 @@
 ;;; numeric :
 ;;;     flag indicating if only numeric entry is allowed
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-spin-button-set-numeric (spin-button numeric)
+  (setf (gtk-spin-button-numeric spin-button) numeric))
+
+(export 'gtk-spin-button-set-numeric)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_spin ()
@@ -751,6 +774,11 @@
 ;;; snap_to_ticks :
 ;;;     a flag indicating if invalid values should be corrected
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-spin-button-set-snap-to-ticks (spin-button snap-to-ticks)
+  (setf (gtk-spin-button-snap-to-ticks spin-button) snap-to-ticks))
+
+(export 'gtk-spin-button-set-snap-to-ticks)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_update ()
@@ -817,6 +845,11 @@
 ;;;     TRUE if only numeric text can be entered
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-spin-button-get-numeric (spin-button)
+  (gtk-spin-button-numeric spin-button))
+
+(export 'gtk-spin-button-get-numeric)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_range ()
 ;;; 
@@ -830,10 +863,10 @@
 ;;;     a GtkSpinButton
 ;;; 
 ;;; min :
-;;;     location to store minimum allowed value, or NULL.
+;;;     location to store minimum allowed value, or NULL
 ;;; 
 ;;; max :
-;;;     location to store maximum allowed value, or NULL.
+;;;     location to store maximum allowed value, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -850,6 +883,11 @@
 ;;; Returns :
 ;;;     TRUE if values are snapped to the nearest step
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-spin-button-get-snap-to-ticks (spin-button)
+  (gtk-spin-button-snap-to-ticks spin-button))
+
+(export 'gkt-spin-button-get-snap-to-ticks)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_update_policy ()
@@ -880,6 +918,11 @@
 ;;; Returns :
 ;;;     the value of spin_button
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-spin-button-get-value (spin-button)
+  (gtk-spin-button-value spin-button))
+
+(export 'gtk-spin-button-get-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_wrap ()
