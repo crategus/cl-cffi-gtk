@@ -1189,6 +1189,307 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;;; Status Bar
+
+(defun example-statusbar ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Status Bar"
+                                  :default-width 300
+                                  :border-width 10))
+           (vbox (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 1))
+           (statusbar (make-instance 'gtk-statusbar))
+           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
+           (count 0))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox statusbar)
+      (let ((button (gtk-button-new-with-label "Push Item")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (setq count (+ 1 count))
+             (gtk-statusbar-push statusbar id (format nil "Item ~A" count))))
+        (gtk-box-pack-start vbox button :expand t :fill t :padding 2))
+      (let ((button (gtk-button-new-with-label "Pop Item")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-statusbar-pop statusbar id)))
+        (gtk-box-pack-start vbox button :expand t :fill t :padding 2))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Text Entry
+
+(defun example-text-entry ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Text Entry"
+                                  :default-width 250))
+           (vbox (make-instance 'gtk-v-box))
+           (hbox (make-instance 'gtk-h-box))
+           (entry (make-instance 'gtk-entry
+                                 :text "Hello"
+                                 :max-length 50))
+           (pos (gtk-entry-get-text-length entry)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect entry "activate"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "Entry contents: ~A"
+                                  (gtk-entry-get-text entry))))
+      (gtk-editable-insert-text entry " world" pos)
+      (gtk-editable-select-region entry 0 (gtk-entry-get-text-length entry))
+      (gtk-box-pack-start vbox entry :expand t :fill t :padding 0)
+      (let ((check (gtk-check-button-new-with-label "Editable")))
+        (g-signal-connect check "toggled"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-editable-set-editable entry
+                                        (gtk-toggle-button-get-active check))))
+        (gtk-box-pack-start hbox check))
+      (let ((check (gtk-check-button-new-with-label "Visible")))
+        (gtk-toggle-button-set-active check t)
+        (g-signal-connect check "toggled"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-entry-set-visibility entry
+                                       (gtk-toggle-button-get-active check))))
+        (gtk-box-pack-start hbox check))
+      (gtk-box-pack-start vbox hbox)
+      (let ((button (gtk-button-new-from-stock "gtk-close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Spin Button
+
+(defun example-spin-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Spin Button"
+                                 :default-width 300))
+          (vbox (make-instance 'gtk-v-box
+                               :homogeneous nil
+                               :spacing 5
+                               :border-width 10))
+          (vbox1 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 0
+                                :border-width 5))
+          (vbox2 (make-instance 'gtk-v-box
+                                :homogeneous nil
+                                :spacing 0
+                                :boder-width 5))
+          (hbox (make-instance 'gtk-h-box))
+          (frame1 (make-instance 'gtk-frame
+                                 :label "Not accelerated"))
+          (frame2 (make-instance 'gtk-frame
+                                 :label "Accelerated"))
+          (label (make-instance 'gtk-label
+                                :label "0")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (let ((vbox (make-instance 'gtk-v-box))
+            (spinner (make-instance 'gtk-spin-button
+                                    :adjustment
+                                    (make-instance 'gtk-adjustment
+                                                   :value 1.0
+                                                   :lower 1.0
+                                                   :upper 31.0
+                                                   :step-increment 1.0
+                                                   :page-increment 5.0
+                                                   :page-size 0.0)
+                                    :climb-rate 0
+                                    :digits 0
+                                    :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Day :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil
+                            :fill t
+                            :padding 0)
+        (gtk-box-pack-start vbox spinner :expand nil :fill t :padding 0)
+        (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5))
+      (let ((vbox (make-instance 'gtk-v-box))
+            (spinner (make-instance 'gtk-spin-button
+                                    :adjustment
+                                    (make-instance 'gtk-adjustment
+                                                   :value 1.0
+                                                   :lower 1.0
+                                                   :upper 12.0
+                                                   :step-increment 1.0
+                                                   :page-increment 5.0
+                                                   :page-size 0.0)
+                                    :climb-rate 0
+                                    :digits 0
+                                    :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Month :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil
+                            :fill t
+                            :padding 0)
+        (gtk-box-pack-start vbox spinner :expand nil :fill t :padding 0)
+        (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5))
+      (let ((vbox (make-instance 'gtk-v-box))
+            (spinner (make-instance 'gtk-spin-button
+                                    :adjustment
+                                    (make-instance 'gtk-adjustment
+                                                   :value 1.0
+                                                   :lower 1998.0
+                                                   :upper 2100.0
+                                                   :step-increment 1.0
+                                                   :page-increment 100.0
+                                                   :page-size 0.0)
+                                    :climb-rate 0
+                                    :digits 0
+                                    :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Year :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil
+                            :fill t
+                            :padding 0)
+        (gtk-box-pack-start vbox spinner :expand nil :fill t :padding 0)
+        (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5))
+      (gtk-box-pack-start vbox1 hbox :expand t :fill t :padding 5)
+      (gtk-container-add frame1 vbox1)
+      (gtk-box-pack-start vbox frame1 :expand t :fill t :padding 0)
+      (setq hbox (make-instance 'gtk-h-box))
+      (let ((vbox (make-instance 'gtk-v-box))
+            (spinner1 (make-instance 'gtk-spin-button
+                                     :adjustment
+                                     (make-instance 'gtk-adjustment
+                                                    :value 1.0
+                                                    :lower -10000.0
+                                                    :upper  10000.0
+                                                    :step-increment 0.5
+                                                    :page-increment 100.0
+                                                    :page-size 0.0)
+                                     :climb-rate 1.0
+                                     :digits 2
+                                     :wrap t))
+            (spinner2 (make-instance 'gtk-spin-button
+                                     :adjustment
+                                     (make-instance 'gtk-adjustment
+                                                    :value 2
+                                                    :lower 1
+                                                    :upper 5
+                                                    :step-increment 1
+                                                    :page-increment 1
+                                                    :page-size 0)
+                                     :climb-rate 0.0
+                                     :digits 0
+                                     :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Value :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil
+                            :fill t
+                            :padding 0)
+        (gtk-box-pack-start vbox spinner1 :expand nil :fill t :padding 0)
+        (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5)
+        (g-signal-connect spinner2 "value-changed"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-spin-button-set-digits
+                                  spinner1
+                                  (gtk-spin-button-get-value-as-int spinner2))))
+        (setq vbox (make-instance 'gtk-v-box))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Digits :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil
+                            :fill t
+                            :padding 0)
+        (gtk-box-pack-start vbox spinner2 :expand nil :fill t :padding 0)
+        (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5)
+        (gtk-box-pack-start vbox2 hbox :expand t :fill t :padding 5)
+        (let ((check (make-instance 'gtk-check-button
+                                    :label "Snap to 0.5-ticks"
+                                    :active t)))
+          (g-signal-connect check "clicked"
+             (lambda (widget)
+               (gtk-spin-button-set-snap-to-ticks
+                                        spinner1
+                                        (gtk-toggle-button-get-active widget))))
+          (gtk-box-pack-start vbox2 check :expand t :fill t :padding 0))
+        (let ((check (make-instance 'gtk-check-button
+                                    :label "Numeric only input mode"
+                                    :active t)))
+          (g-signal-connect check "clicked"
+             (lambda (widget)
+               (gtk-spin-button-set-numeric
+                                        spinner1
+                                        (gtk-toggle-button-get-active widget))))
+          (gtk-box-pack-start vbox2 check :expand t :fill t :padding 0))
+        (gtk-container-add frame2 vbox2)
+        (setq hbox (make-instance 'gtk-h-box))
+        (let ((button (gtk-button-new-with-label "Value as Int")))
+          (g-signal-connect button "clicked"
+             (lambda (widget)
+               (declare (ignore widget))
+               (gtk-label-set-text
+                         label
+                         (format nil "~A"
+                                 (gtk-spin-button-get-value-as-int spinner1)))))
+            (gtk-box-pack-start hbox button))
+        (let ((button (gtk-button-new-with-label "Value as Float")))
+          (g-signal-connect button "clicked"
+             (lambda (widget)
+               (declare (ignore widget))
+               (gtk-label-set-text
+                                label
+                                (format nil "~A"
+                                        (gtk-spin-button-get-value spinner1)))))
+          (gtk-box-pack-start hbox button))
+        (gtk-box-pack-start vbox2 hbox)
+        (gtk-box-pack-start vbox2 label))
+      (gtk-box-pack-start vbox frame2 :expand t :fill t :padding 0)
+      (let ((button (make-instance 'gtk-button
+                                   :label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
 ;;; [...]
 
 ;;; Chapter 11. Container Widgets
