@@ -1,1 +1,17 @@
-cl-cffi-gtk is a Lisp binding to the GTK+ library based on cl-gtk2.
+cl-cffi-gtk is a Lisp binding to the GTK+ (GIMP Toolkit) which is a library
+for creating graphical user interfaces.
+
+It is licensed using the LGPL which has been adopted with a preamble that
+clarifies the terms for use with Lisp programs and is referred as the LLGPL.
+
+This work is based on the cl-gtk2 library which has been developed by
+Kalyanov Dmitry and already is a fairly complete Lisp binding to GTK+.
+
+The focus of this work is to document the library more complete and to
+do the implementation as consistent as possible. Most informations about GTK+
+can be gained by reading the C documentation. Therefore, the C documentation
+from www.gtk.org is included into the Lisp files to document the Lisp binding
+to the GTK+ library.
+
+Examples of the usage are included in demos and tutorial examples.
+
