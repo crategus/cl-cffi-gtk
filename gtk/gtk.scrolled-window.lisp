@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkScrolledWindow
 ;;; 
 ;;; Adds scrollbars to its child widget
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkScrolledWindow
+;;;     
 ;;;     gtk_scrolled_window_new
 ;;;     gtk_scrolled_window_get_hadjustment
 ;;;     gtk_scrolled_window_get_vadjustment
@@ -262,13 +263,13 @@
 ;;; signal are Tab+Ctrl and Tab+Ctrl+Shift.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; direction_type :
-;;; 	either GTK_DIR_TAB_FORWARD or GTK_DIR_TAB_BACKWARD
+;;;     either GTK_DIR_TAB_FORWARD or GTK_DIR_TAB_BACKWARD
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "scroll-child" signal
@@ -284,16 +285,16 @@
 ;;; listen to and scroll itself.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; scroll :
-;;; 	a GtkScrollType describing how much to scroll
+;;;     a GtkScrollType describing how much to scroll
 ;;; 
 ;;; horizontal :
-;;; 	whether the keybinding scrolls the child horizontally or not
+;;;     whether the keybinding scrolls the child horizontally or not
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -309,23 +310,32 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_scrolled_window_get_type")
-  ((hadjustment gtk-scrolled-window-hadjustment
+  ((hadjustment
+    gtk-scrolled-window-hadjustment
     "hadjustment" "GtkAdjustment" t t)
-   (hscrollbar-policy gtk-scrolled-window-hscrollbar-policy
+   (hscrollbar-policy
+    gtk-scrolled-window-hscrollbar-policy
     "hscrollbar-policy" "GtkPolicyType" t t)
-   (shadow-type gtk-scrolled-window-shadow-type
+   (shadow-type
+    gtk-scrolled-window-shadow-type
     "shadow-type" "GtkShadowType" t t)
-   (vadjustment gtk-scrolled-window-vadjustment
+   (vadjustment
+    gtk-scrolled-window-vadjustment
     "vadjustment" "GtkAdjustment" t t)
-   (vscrollbar-policy gtk-scrolled-window-vscrollbar-policy
+   (vscrollbar-policy
+    gtk-scrolled-window-vscrollbar-policy
     "vscrollbar-policy" "GtkPolicyType" t t)
-   (window-placement gtk-scrolled-window-window-placement
+   (window-placement
+    gtk-scrolled-window-window-placement
     "window-placement" "GtkCornerType" t t)
-   (window-placement-set gtk-scrolled-window-window-placement-set
+   (window-placement-set
+    gtk-scrolled-window-window-placement-set
     "window-placement-set" "gboolean" t t)
-   (:cffi hscrollbar gtk-scrolled-window-hscrollbar (g-object gtk-widget)
+   (:cffi hscrollbar
+          gtk-scrolled-window-hscrollbar (g-object gtk-widget)
           "gtk_scrolled_window_get_hscrollbar" nil)
-   (:cffi vscrollbar gtk-scrolled-window-vscrollbar (g-object gtk-widget)
+   (:cffi vscrollbar
+          gtk-scrolled-window-vscrollbar (g-object gtk-widget)
           "gtk_scrolled_window_get_vscrollbar" nil)))
 
 ;;; ----------------------------------------------------------------------------
@@ -342,13 +352,13 @@
 ;;; will cause the scrolled window to create them for you.
 ;;; 
 ;;; hadjustment :
-;;; 	horizontal adjustment.
+;;;     horizontal adjustment.
 ;;; 
 ;;; vadjustment :
-;;; 	vertical adjustment.
+;;;     vertical adjustment.
 ;;; 
 ;;; Returns :
-;;; 	a new scrolled window
+;;;     a new scrolled window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -361,10 +371,10 @@
 ;;; horizontal scrollbar to the child widget's horizontal scroll functionality.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the horizontal GtkAdjustment.
+;;;     the horizontal GtkAdjustment.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -377,10 +387,10 @@
 ;;; scrollbar to the child widget's vertical scroll functionality.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the vertical GtkAdjustment.
+;;;     the vertical GtkAdjustment.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -392,10 +402,10 @@
 ;;; Returns the horizontal scrollbar of scrolled_window.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the horizontal scrollbar of the scrolled window, or NULL if it does
+;;;     the horizontal scrollbar of the scrolled window, or NULL if it does
 ;;;     not have one.
 ;;; 
 ;;; Since 2.8
@@ -410,10 +420,10 @@
 ;;; Returns the vertical scrollbar of scrolled_window.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the vertical scrollbar of the scrolled window, or NULL if it does not
+;;;     the vertical scrollbar of the scrolled window, or NULL if it does not
 ;;;     have one.
 ;;; 
 ;;; Since 2.8
@@ -436,14 +446,23 @@
 ;;; is larger than the page size).
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; hscrollbar_policy :
-;;; 	policy for horizontal bar
+;;;     policy for horizontal bar
 ;;; 
 ;;; vscrollbar_policy :
-;;; 	policy for vertical bar
+;;;     policy for vertical bar
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-scrolled-window-set-policy (scrolled-window hscrollbar-policy
+                                                       vscrollbar-policy)
+  (setf (gtk-scrolled-window-hscrollbar-policy scrolled-window)
+        hscrollbar-policy
+        (gtk-scrolled-window-vscrollbar-policy scrolled-window)
+        vscrollbar-policy))
+
+(export 'gtk-scrolled-window-set-policy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_add_with_viewport ()
@@ -468,10 +487,10 @@
 ;;; interface.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; child :
-;;; 	the widget you want to scroll
+;;;     the widget you want to scroll
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scrolled_window_add_with_viewport"
@@ -499,10 +518,10 @@
 ;;; gtk_scrolled_window_unset_placement().
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; window_placement :
-;;; 	position of the child window
+;;;     position of the child window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -518,7 +537,7 @@
 ;;; gtk_scrolled_window_get_placement().
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -532,10 +551,10 @@
 ;;; Changes the type of shadow drawn around the contents of scrolled_window.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; type :
-;;; 	kind of shadow to draw around scrolled window contents
+;;;     kind of shadow to draw around scrolled window contents
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -547,10 +566,10 @@
 ;;; Sets the GtkAdjustment for the horizontal scrollbar.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; hadjustment :
-;;; 	horizontal scroll adjustment
+;;;     horizontal scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -562,10 +581,10 @@
 ;;; Sets the GtkAdjustment for the vertical scrollbar.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; vadjustment :
-;;; 	vertical scroll adjustment
+;;;     vertical scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -578,10 +597,10 @@
 ;;; scrolled window. See gtk_scrolled_window_set_placement().
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the current placement value. See also
+;;;     the current placement value. See also
 ;;;     gtk_scrolled_window_set_placement() and
 ;;;     gtk_scrolled_window_unset_placement().
 ;;; ----------------------------------------------------------------------------
@@ -597,13 +616,13 @@
 ;;; scrollbars. See gtk_scrolled_window_set_policy().
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; hscrollbar_policy :
-;;; 	location to store the policy for the horizontal scrollbar, or NULL.
+;;;     location to store the policy for the horizontal scrollbar, or NULL.
 ;;; 
 ;;; vscrollbar_policy :
-;;; 	location to store the policy for the vertical scrollbar, or NULL.
+;;;     location to store the policy for the vertical scrollbar, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -616,10 +635,10 @@
 ;;; gtk_scrolled_window_set_shadow_type().
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the current shadow type
+;;;     the current shadow type
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -631,10 +650,10 @@
 ;;; Gets the minimum content width of scrolled_window, or -1 if not set.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the minimum content width
+;;;     the minimum content width
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -650,10 +669,10 @@
 ;;; this can and (usually will) be smaller than the minimum size of the content.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; width :
-;;; 	the minimal content width
+;;;     the minimal content width
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -667,10 +686,10 @@
 ;;; Gets the minimal content height of scrolled_window, or -1 if not set.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; Returns :
-;;; 	the minimal content height
+;;;     the minimal content height
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -686,12 +705,13 @@
 ;;; this can and (usually will) be smaller than the minimum size of the content.
 ;;; 
 ;;; scrolled_window :
-;;; 	a GtkScrolledWindow
+;;;     a GtkScrolledWindow
 ;;; 
 ;;; height :
-;;; 	the minimal content height
+;;;     the minimal content height
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
 
 ;;; --- End of file gtk.scrolled-window.lisp -----------------------------------
