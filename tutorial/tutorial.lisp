@@ -1492,8 +1492,10 @@
 
 ;;; [...]
 
+;;; ----------------------------------------------------------------------------
+;;;
 ;;; Chapter 11. Container Widgets
-
+;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; The Event Box
@@ -1670,7 +1672,7 @@
       (gtk-container-add frame area)
       (gtk-widget-show window))))
 
-;;; [...]
+;;; ----------------------------------------------------------------------------
 
 ;;; Paned Window Widgets
 
@@ -1695,3 +1697,59 @@
       (gtk-paned-add2 vpaned frame2)
       
       (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Scrolled Windows
+
+(defun example-scrolled-window ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-dialog
+                                 :type :toplevel
+                                 :title "Example Scrolled Window"
+                                 :border-width 0
+                                 :width-request 350
+                                 :height-request 300))
+          (scrolled (make-instance 'gtk-scrolled-window
+                                   :border-width 10
+                                   :hscrollbar-policy :automatic
+                                   :vscrollbar-policy :always))
+          (table (make-instance 'gtk-table
+                                :n-rows 10
+                                :n-columns 10
+                                :row-spacing 10
+                                :column-spacing 10
+                                :homogeneous nil)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      
+      (gtk-box-pack-start (gtk-dialog-get-content-area window)
+                          scrolled
+                          :expand t :fill t :padding 0)
+      (gtk-scrolled-window-add-with-viewport scrolled table)
+      
+      (dotimes (i 10)
+        (dotimes (j 10)
+          (gtk-table-attach table
+                            (make-instance 'gtk-button
+                                           :label
+                                           (format nil "(~d, ~d)" i j))
+                            i (+ i 1) j (+ j 1))))
+      
+      (let ((button (make-instance 'gtk-button
+                                   :label "Close"
+                                   :can-default t)))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start (gtk-dialog-get-action-area window)
+                            button
+                            :expand t :fill t :padding 0)
+        (gtk-widget-grab-default button))
+      
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
