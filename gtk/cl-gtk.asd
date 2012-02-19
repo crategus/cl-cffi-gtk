@@ -91,6 +91,7 @@
    (:file "gtk.paned")                 ; Two adjustable panes
    (:file "gtk.expander")              ; Container which can hide childs
    (:file "gtk.alignment")             ; GtkAlignment
+   (:file "gtk.button-box")            ; Container for arranging buttons
                                        
    ;; Ornaments                        
    (:file "gtk.separator")             ; Separator widget
