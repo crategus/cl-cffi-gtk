@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -7760,6 +7760,11 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-widget-get-can-default (widget)
+  (gtk-widget-can-default widget))
+
+(export 'gtk-widget-get-can-default)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_can_default ()
 ;;; 
@@ -7772,10 +7777,15 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; can_default :
-;;;     whether or not widget can be a default widget.
+;;;     whether or not widget can be a default widget
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-widget-set-can-default (widget can-default)
+  (setf (gtk-widget-can-default widget) can-default))
+
+(export 'gtk-widget-set-can-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_can_focus ()
@@ -9178,12 +9188,18 @@
 ;;; 
 ;;; GTK_WIDGET_SET_FLAGS has been deprecated since version 2.22 and should not
 ;;; be used in newly-written code. Use the proper function instead:
-;;; gtk_widget_set_app_paintable(), gtk_widget_set_can_default(),
-;;; gtk_widget_set_can_focus(), gtk_widget_set_double_buffered(),
-;;; gtk_widget_set_has_window(), gtk_widget_set_mapped(),
-;;; gtk_widget_set_no_show_all(), gtk_widget_set_realized(),
-;;; gtk_widget_set_receives_default(), gtk_widget_set_sensitive() or
-;;; gtk_widget_set_visible().
+;;;
+;;;  gtk_widget_set_app_paintable(),
+;;;  gtk_widget_set_can_default(),
+;;;  gtk_widget_set_can_focus(), 
+;;;  gtk_widget_set_double_buffered(),
+;;;  gtk_widget_set_has_window(),
+;;;  gtk_widget_set_mapped(),
+;;;  gtk_widget_set_no_show_all(),
+;;;  gtk_widget_set_realized(),
+;;;  gtk_widget_set_receives_default(),
+;;;  gtk_widget_set_sensitive() or
+;;;  gtk_widget_set_visible().
 ;;; 
 ;;; Turns on certain widget flags.
 ;;; 
