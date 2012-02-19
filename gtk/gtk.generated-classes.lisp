@@ -746,25 +746,6 @@
                         (socket-window plug-socket-window "socket-window"
                          "GdkWindow" t nil)))
 
-(define-g-object-class "GtkButtonBox" gtk-button-box
-                       (:superclass gtk-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_button_box_get_type")
-                       ((layout-style button-box-layout-style "layout-style"
-                         "GtkButtonBoxStyle" t t)))
-
-(define-g-object-class "GtkHButtonBox" gtk-h-button-box
-                       (:superclass gtk-button-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_hbutton_box_get_type")
-                       nil)
-
-(define-g-object-class "GtkVButtonBox" gtk-v-button-box
-                       (:superclass gtk-button-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vbutton_box_get_type")
-                       nil)
-
 (define-g-object-class "GtkFileChooserButton" gtk-file-chooser-button
                        (:superclass gtk-h-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
