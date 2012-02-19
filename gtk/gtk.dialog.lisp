@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -270,7 +270,7 @@
 ;;; The default binding for this signal is the Escape key.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "response" signal
@@ -285,13 +285,13 @@
 ;;; depends on which action widget was clicked.
 ;;; 
 ;;; dialog :
-;;; 	the object on which the signal is emitted
+;;;     the object on which the signal is emitted
 ;;; 
 ;;; response_id :
-;;; 	the response ID
+;;;     the response ID
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -310,12 +310,17 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_dialog_get_type")
-  ((has-separator gtk-dialog-has-separator "has-separator" "gboolean" t t)
-   (:cffi content-area gtk-dialog-content-area (g-object v-box)
+  ((has-separator
+    gtk-dialog-has-separator
+    "has-separator" "gboolean" t t)
+   (:cffi content-area
+          gtk-dialog-content-area (g-object v-box)
           "gtk_dialog_get_content_area" nil)
-   (:cffi action-area gtk-dialog-action-area (g-object gtk-widget)
+   (:cffi action-area
+          gtk-dialog-action-area (g-object gtk-widget)
           "gtk_dialog_get_action_area" nil)
-   (:cffi default-response gtk-dialog-default-response gtk-response-type
+   (:cffi default-response
+          gtk-dialog-default-response gtk-response-type
           nil "gtk_dialog_set_default_response")))
 
 ;;; ----------------------------------------------------------------------------
@@ -329,10 +334,10 @@
 ;;; Flags used to influence dialog construction.
 ;;; 
 ;;; GTK_DIALOG_MODAL
-;;; 	Make the constructed dialog modal, see gtk_window_set_modal()
+;;;     Make the constructed dialog modal, see gtk_window_set_modal()
 ;;; 
 ;;; GTK_DIALOG_DESTROY_WITH_PARENT
-;;; 	Destroy the dialog when its parent is destroyed, see
+;;;     Destroy the dialog when its parent is destroyed, see
 ;;;     gtk_window_set_destroy_with_parent()
 ;;; ----------------------------------------------------------------------------
 
@@ -365,38 +370,38 @@
 ;;; application-defined response ids.
 ;;; 
 ;;; GTK_RESPONSE_NONE
-;;; 	Returned if an action widget has no response id, or if the dialog gets
+;;;     Returned if an action widget has no response id, or if the dialog gets
 ;;;     programmatically hidden or destroyed
 ;;; 
 ;;; GTK_RESPONSE_REJECT
-;;; 	Generic response id, not used by GTK+ dialogs
+;;;     Generic response id, not used by GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_ACCEPT
-;;; 	Generic response id, not used by GTK+ dialogs
+;;;     Generic response id, not used by GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_DELETE_EVENT
-;;; 	Returned if the dialog is deleted
+;;;     Returned if the dialog is deleted
 ;;; 
 ;;; GTK_RESPONSE_OK
-;;; 	Returned by OK buttons in GTK+ dialogs
+;;;     Returned by OK buttons in GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_CANCEL
-;;; 	Returned by Cancel buttons in GTK+ dialogs
+;;;     Returned by Cancel buttons in GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_CLOSE
-;;; 	Returned by Close buttons in GTK+ dialogs
+;;;     Returned by Close buttons in GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_YES
-;;; 	Returned by Yes buttons in GTK+ dialogs
+;;;     Returned by Yes buttons in GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_NO
-;;; 	Returned by No buttons in GTK+ dialogs
+;;;     Returned by No buttons in GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_APPLY
-;;; 	Returned by Apply buttons in GTK+ dialogs
+;;;     Returned by Apply buttons in GTK+ dialogs
 ;;; 
 ;;; GTK_RESPONSE_HELP
-;;; 	Returned by Help buttons in GTK+ dialogs
+;;;     Returned by Help buttons in GTK+ dialogs
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkResponseType" gtk-response-type
@@ -425,7 +430,7 @@
 ;;; vbox and action_area, as described above.
 ;;; 
 ;;; Returns :
-;;; 	the new dialog as a GtkWidget
+;;;     the new dialog as a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -469,19 +474,19 @@
 ;;;     Title of the dialog, or NULL.
 ;;; 
 ;;; parent :
-;;; 	Transient parent of the dialog, or NULL.
+;;;     Transient parent of the dialog, or NULL.
 ;;; 
 ;;; flags :
-;;; 	from GtkDialogFlags
+;;;     from GtkDialogFlags
 ;;; 
 ;;; first_button_text :
-;;; 	stock ID or text to go in first button, or NULL.
+;;;     stock ID or text to go in first button, or NULL.
 ;;; 
 ;;; ... :
-;;; 	response ID for first button, then additional buttons, ending with NULL
+;;;     response ID for first button, then additional buttons, ending with NULL
 ;;; 
 ;;; Returns :
-;;; 	a new GtkDialog
+;;;     a new GtkDialog
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -531,10 +536,10 @@
 ;;; gtk_dialog_run() call.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; Returns :
-;;; 	response ID
+;;;     response ID
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_run" gtk-dialog-run) gtk-response-type
@@ -553,10 +558,10 @@
 ;;; appropriate action.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; response_id :
-;;; 	response ID
+;;;     response ID
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_response" gtk-dialog-response) :void
@@ -579,16 +584,16 @@
 ;;; you don't need it.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; button_text :
-;;; 	text of button, or stock ID
+;;;     text of button, or stock ID
 ;;; 
 ;;; response_id :
-;;; 	response ID for the button
+;;;     response ID for the button
 ;;; 
 ;;; Returns :
-;;; 	the GtkButton widget that was added.
+;;;     the GtkButton widget that was added.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_add_button" gtk-dialog-add-button) (g-object gtk-widget)
@@ -611,13 +616,13 @@
 ;;; response ID.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; first_button_text :
-;;; 	button text or stock ID
+;;;     button text or stock ID
 ;;; 
 ;;; ... :
-;;; 	response ID for first button, then more text-response_id pairs
+;;;     response ID for first button, then more text-response_id pairs
 ;;; ----------------------------------------------------------------------------
 
 ;;; *** NOT IMPLEMENTED ***
@@ -636,13 +641,13 @@
 ;;; into the action_area field of the GtkDialog struct.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; child :
-;;; 	an activatable widget
+;;;     an activatable widget
 ;;; 
 ;;; response_id :
-;;; 	response ID for child
+;;;     response ID for child
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_add_action_widget" gtk-dialog-add-action-widget) :void
@@ -662,10 +667,10 @@
 ;;; the default widget.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; response_id :
-;;; 	a response ID
+;;;     a response ID
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-dialog-set-default-response (dialog response-id)
@@ -685,13 +690,13 @@
 ;;; sensitize/desensitize dialog buttons.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; response_id :
-;;; 	a response ID
+;;;     a response ID
 ;;; 
 ;;; setting :
-;;; 	TRUE for sensitive
+;;;     TRUE for sensitive
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_set_response_sensitive" gtk-dialog-set-response-sensitive)
@@ -711,13 +716,13 @@
 ;;; Gets the response id of a widget in the action area of a dialog.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; widget :
-;;; 	a widget in the action area of dialog
+;;;     a widget in the action area of dialog
 ;;; 
 ;;; Returns :
-;;; 	the response id of widget, or GTK_RESPONSE_NONE if widget doesn't have
+;;;     the response id of widget, or GTK_RESPONSE_NONE if widget doesn't have
 ;;;     a response id set.
 ;;; 
 ;;; Since 2.8
@@ -740,13 +745,13 @@
 ;;; of a dialog.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; response_id :
-;;; 	the response ID used by the dialog widget
+;;;     the response ID used by the dialog widget
 ;;; 
 ;;; Returns :
-;;; 	the widget button that uses the given response_id, or NULL.
+;;;     the widget button that uses the given response_id, or NULL
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -766,10 +771,10 @@
 ;;; Returns the action area of dialog.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; Returns :
-;;; 	the action area.
+;;;     the action area.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -787,10 +792,10 @@
 ;;; Returns the content area of dialog.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; Returns :
-;;; 	the content area GtkBox.
+;;;     the content area GtkBox.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -815,10 +820,10 @@
 ;;; changes.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen, or NULL to use the default screen.
+;;;     a GdkScreen, or NULL to use the default screen.
 ;;; 
 ;;; Returns :
-;;; 	Whether the alternative button order should be used
+;;;     Whether the alternative button order should be used
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -870,13 +875,13 @@
 ;;;                                           -1);
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; first_response_id :
-;;; 	a response id used by one dialog's buttons
+;;;     a response id used by one dialog's buttons
 ;;; 
 ;;; ... :
-;;; 	a list of more response ids of dialog's buttons, terminated by -1
+;;;     a list of more response ids of dialog's buttons, terminated by -1
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -910,13 +915,13 @@
 ;;; This function is for use by language bindings.
 ;;; 
 ;;; dialog :
-;;; 	a GtkDialog
+;;;     a GtkDialog
 ;;; 
 ;;; n_params :
-;;; 	the number of response ids in new_order
+;;;     the number of response ids in new_order
 ;;; 
 ;;; new_order :
-;;; 	an array of response ids of dialog's buttons.
+;;;     an array of response ids of dialog's buttons.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
