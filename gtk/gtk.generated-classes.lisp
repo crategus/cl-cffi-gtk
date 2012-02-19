@@ -35,27 +35,6 @@
   (:inch 2)
   (:mm 3))
 
-(define-g-enum "GtkPrintStatus"
-    print-status
-    (:export t :type-initializer "gtk_print_status_get_type")
-  (:initial 0)
-  (:preparing 1)
-  (:generating-data 2)
-  (:sending-data 3)
-  (:pending 4)
-  (:pending-issue 5)
-  (:printing 6)
-  (:finished 7)
-  (:finished-aborted 8))
-
-(define-g-enum "GtkFileChooserAction"
-    file-chooser-action
-    (:export t :type-initializer "gtk_file_chooser_action_get_type")
-  (:open 0)
-  (:save 1)
-  (:select-folder 2)
-  (:create-folder 3))
-
 (define-g-enum "GtkCellRendererAccelMode"
     cell-renderer-accel-mode
     (:export t :type-initializer "gtk_cell_renderer_accel_mode_get_type")
@@ -162,21 +141,6 @@
   (:as-child 1)
   (:after 2))
 
-(define-g-enum "GtkFileChooserConfirmation"
-    file-chooser-confirmation
-    (:export t :type-initializer "gtk_file_chooser_confirmation_get_type")
-  (:confirm 0)
-  (:accept-filename 1)
-  (:select-again 2))
-
-(define-g-enum "GtkFileChooserError"
-    file-chooser-error
-    (:export t :type-initializer "gtk_file_chooser_error_get_type")
-  (:nonexistent 0)
-  (:bad-filename 1)
-  (:already-exists 2)
-  (:incomplete-hostname 3))
-
 (define-g-enum "GtkIconThemeError"
     icon-theme-error
     (:export t :type-initializer "gtk_icon_theme_error_get_type")
@@ -193,84 +157,11 @@
   (:exact 4)
   (:last 5))
 
-(define-g-enum "GtkNumberUpLayout"
-    number-up-layout
-    (:export t :type-initializer "gtk_number_up_layout_get_type")
-  (:lrtb 0)
-  (:lrbt 1)
-  (:rltb 2)
-  (:rlbt 3)
-  (:tblr 4)
-  (:tbrl 5)
-  (:btlr 6)
-  (:btrl 7))
-
-(define-g-enum "GtkPageOrientation"
-    page-orientation
-    (:export t :type-initializer "gtk_page_orientation_get_type")
-  (:portrait 0)
-  (:landscape 1)
-  (:reverse-portrait 2)
-  (:reverse-landscape 3))
-
-(define-g-enum "GtkPageSet"
-    page-set
-    (:export t :type-initializer "gtk_page_set_get_type")
-  (:all 0)
-  (:even 1)
-  (:odd 2))
-
 (define-g-enum "GtkPreviewType"
     preview-type
     (:export t :type-initializer "gtk_preview_type_get_type")
   (:color 0)
   (:grayscale 1))
-
-(define-g-enum "GtkPrintDuplex"
-    print-duplex
-    (:export t :type-initializer "gtk_print_duplex_get_type")
-  (:simplex 0)
-  (:horizontal 1)
-  (:vertical 2))
-
-(define-g-enum "GtkPrintError"
-    print-error
-    (:export t :type-initializer "gtk_print_error_get_type")
-  (:general 0)
-  (:internal-error 1)
-  (:nomem 2)
-  (:invalid-file 3))
-
-(define-g-enum "GtkPrintOperationAction"
-    print-operation-action
-    (:export t :type-initializer "gtk_print_operation_action_get_type")
-  (:print-dialog 0)
-  (:print 1)
-  (:preview 2)
-  (:export 3))
-
-(define-g-enum "GtkPrintOperationResult"
-    print-operation-result
-    (:export t :type-initializer "gtk_print_operation_result_get_type")
-  (:error 0)
-  (:apply 1)
-  (:cancel 2)
-  (:in-progress 3))
-
-(define-g-enum "GtkPrintPages"
-    print-pages
-    (:export t :type-initializer "gtk_print_pages_get_type")
-  (:all 0)
-  (:current 1)
-  (:ranges 2))
-
-(define-g-enum "GtkPrintQuality"
-    print-quality
-    (:export t :type-initializer "gtk_print_quality_get_type")
-  (:low 0)
-  (:normal 1)
-  (:high 2)
-  (:draft 3))
 
 (define-g-enum "GtkRcTokenType"
     rc-token-type
@@ -437,81 +328,6 @@
   (:action 32)
   (:no-hooks 64))
 
-(define-g-interface "GtkFileChooser" gtk-file-chooser
-  (:export t
-   :type-initializer "gtk_file_chooser_get_type")
-  (action gtk-file-chooser-action
-   "action" "GtkFileChooserAction" t t)
-  (do-overwrite-confirmation gtk-file-chooser-do-overwrite-confirmation
-   "do-overwrite-confirmation" "gboolean" t t)
-  (extra-widget gtk-file-chooser-extra-widget
-   "extra-widget" "GtkWidget" t t)
-  (file-system-backend gtk-file-chooser-file-system-backend
-   "file-system-backend" "gchararray" nil nil)
-  (filter gtk-file-chooser-filter
-   "filter" "GtkFileFilter" t t)
-  (local-only gtk-file-chooser-local-only
-   "local-only" "gboolean" t t)
-  (preview-widget gtk-file-chooser-preview-widget
-   "preview-widget" "GtkWidget" t t)
-  (preview-widget-active gtk-file-chooser-preview-widget-active
-   "preview-widget-active" "gboolean" t t)
-  (select-multiple gtk-file-chooser-select-multiple
-   "select-multiple" "gboolean" t t)
-  (show-hidden gtk-file-chooser-show-hidden
-   "show-hidden" "gboolean" t t)
-  (use-preview-label gtk-file-chooser-use-preview-label
-   "use-preview-label" "gboolean" t t)
-  (:cffi current-name gtk-file-chooser-current-name
-         (:string :free-to-foreign t :encoding :utf-8) nil
-         "gtk_file_chooser_set_current_name")
-  #+win32
-  (:cffi filename gtk-file-chooser-filename
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_filename_utf8"
-         "gtk_file_chooser_set_filename_utf8")
-  #-win32
-  (:cffi filename gtk-file-chooser-filename
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_filename"
-         "gtk_file_chooser_set_filename")
-  #+win32
-  (:cffi current-folder gtk-file-chooser-current-folder
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_current_folder_utf8"
-         "gtk_file_chooser_set_current_folder_utf8")
-  #-win32
-  (:cffi current-folder gtk-file-chooser-current-folder
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_current_folder"
-         "gtk_file_chooser_set_current_folder")
-  (:cffi uri gtk-file-chooser-uri
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_uri" "gtk_file_chooser_set_uri")
-  (:cffi current-folder-uri gtk-file-chooser-current-folder-uri
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_current_folder_uri"
-         "gtk_file_chooser_set_current_folder_uri")
-  #+win32
-  (:cffi preview-filename gtk-file-chooser-preview-filename
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_preview_filename_utf8" nil)
-  #-win32
-  (:cffi preview-filename gtk-file-chooser-preview-filename
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_preview_filename" nil)
-  (:cffi preview-uri gtk-file-chooser-preview-uri
-         (g-string :free-from-foreign t :free-to-foreign t)
-         "gtk_file_chooser_get_preview_uri" nil))
-
-(define-g-interface "GtkFileChooserEmbed"
-    file-chooser-embed
-    (:export t))
-
-(define-g-interface "GtkPrintOperationPreview"
-    print-operation-preview
-    (:export t :type-initializer "gtk_print_operation_preview_get_type"))
-
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRendererAccel" gtk-cell-renderer-accel
@@ -677,12 +493,6 @@
                         (ok-button color-selection-dialog-ok-button "ok-button"
                          "GtkWidget" t nil)))
 
-(define-g-object-class "GtkFileChooserDialog" gtk-file-chooser-dialog
-                       (:superclass gtk-dialog :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser")
-                        :type-initializer "gtk_file_chooser_dialog_get_type")
-                       nil)
-
 (define-g-object-class "GtkFontSelectionDialog" gtk-font-selection-dialog
                        (:superclass gtk-dialog :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
@@ -746,27 +556,6 @@
                         (socket-window plug-socket-window "socket-window"
                          "GdkWindow" t nil)))
 
-(define-g-object-class "GtkFileChooserButton" gtk-file-chooser-button
-                       (:superclass gtk-h-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
-                         "GtkOrientable")
-                        :type-initializer "gtk_file_chooser_button_get_type")
-                       ((dialog file-chooser-button-dialog "dialog"
-                         "GtkFileChooser" nil nil)
-                        (focus-on-click file-chooser-button-focus-on-click
-                         "focus-on-click" "gboolean" t t)
-                        (title file-chooser-button-title "title" "gchararray" t
-                         t)
-                        (width-chars file-chooser-button-width-chars
-                         "width-chars" "gint" t t)))
-
-(define-g-object-class "GtkFileChooserWidget" gtk-file-chooser-widget
-                       (:superclass gtk-v-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
-                         "GtkFileChooserEmbed" "GtkOrientable")
-                        :type-initializer "gtk_file_chooser_widget_get_type")
-                       nil)
-
 (define-g-object-class "GtkFontSelection" gtk-font-selection
                        (:superclass gtk-v-box :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -806,51 +595,3 @@
                        (:superclass g-object :export t :interfaces nil
                         :type-initializer "gtk_icon_theme_get_type")
                        nil)
-
-(define-g-object-class "GtkPageSetup" gtk-page-setup
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_page_setup_get_type")
-                       nil)
-
-(define-g-object-class "GtkPrintContext" gtk-print-context
-                       (:superclass g-object :export t :interfaces nil
-                        :type-initializer "gtk_print_context_get_type")
-                       nil)
-
-(define-g-object-class "GtkPrintOperation" gtk-print-operation
-                       (:superclass g-object :export t :interfaces
-                        ("GtkPrintOperationPreview") :type-initializer
-                        "gtk_print_operation_get_type")
-                       ((allow-async print-operation-allow-async "allow-async"
-                         "gboolean" t t)
-                        (current-page print-operation-current-page
-                         "current-page" "gint" t t)
-                        (custom-tab-label print-operation-custom-tab-label
-                         "custom-tab-label" "gchararray" t t)
-                        (default-page-setup print-operation-default-page-setup
-                         "default-page-setup" "GtkPageSetup" t t)
-                        (export-filename print-operation-export-filename
-                         "export-filename" "gchararray" t t)
-                        (job-name print-operation-job-name "job-name"
-                         "gchararray" t t)
-                        (n-pages print-operation-n-pages "n-pages" "gint" t t)
-                        (print-settings print-operation-print-settings
-                         "print-settings" "GtkPrintSettings" t t)
-                        (show-progress print-operation-show-progress
-                         "show-progress" "gboolean" t t)
-                        (status print-operation-status "status"
-                         "GtkPrintStatus" t nil)
-                        (status-string print-operation-status-string
-                         "status-string" "gchararray" t nil)
-                        (track-print-status print-operation-track-print-status
-                         "track-print-status" "gboolean" t t)
-                        (unit print-operation-unit "unit" "GtkUnit" t t)
-                        (use-full-page print-operation-use-full-page
-                         "use-full-page" "gboolean" t t)))
-
-(define-g-object-class "GtkPrintSettings" gtk-print-settings
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "gtk_print_settings_get_type")
-  nil)
