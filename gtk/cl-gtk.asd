@@ -195,6 +195,10 @@
    (:file "gtk.color-button")          ; Launch a color selection dialog
    (:file "gtk.color-selection")       ; A widget used to select a color
    (:file "gtk.hsv")                   ; GtkHSV
+   (:file "gtk.file-chooser")          ; File chooser interface
+   (:file "gtk.file-chooser-widget")   ; File chooser widget
+   (:file "gtk.file-chooser-button")   ; Button to launch a file selection
+   (:file "gtk.file-chooser-dialog")   ; A file chooser dialog
    (:file "gtk.file-filter")           ; Selecting a file subset
    
    ;; Miscellaneous
@@ -213,6 +217,17 @@
    (:file "gtk.recent-chooser-menu")   ; Displays recently used files in a menu
    (:file "gtk.recent-chooser-widget") ; Displays recently used files
    (:file "gtk.recent-filter")         ; Selecting recently used files
+   
+   ;; Printing
+   (:file "gtk.print-operation")       ; High-level Printing API
+   (:file "gtk.print-context")         ; Encapsulates context for drawing pages
+   (:file "gtk.print-settings")        ; Stores print settings
+   (:file "gtk.page-setup")            ; Stores page setup information
+   ; GtkPaperSize — Support for named paper sizes
+   ; GtkPrinter — Represents a printer
+   ; GtkPrintJob — Represents a print job
+   ; GtkPrintUnixDialog — A print dialog
+   ; GtkPageSetupUnixDialog — A page setup dialog 
    
    ;; Deprecated
    (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
