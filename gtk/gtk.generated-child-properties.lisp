@@ -27,23 +27,6 @@
 
 (in-package :gtk)
 
-(define-child-property "GtkFileChooserWidget" file-chooser-widget-child-expand
-                       "expand" "gboolean" t t t)
-
-(define-child-property "GtkFileChooserWidget" file-chooser-widget-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkFileChooserWidget" file-chooser-widget-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkFileChooserWidget"
-                       file-chooser-widget-child-pack-type "pack-type"
-                       "GtkPackType" t t t)
-
-(define-child-property "GtkFileChooserWidget"
-                       file-chooser-widget-child-position "position" "gint" t t
-                       t)
-
 (define-child-property "GtkFontSelection" font-selection-child-expand "expand"
                        "gboolean" t t t)
 
@@ -59,19 +42,3 @@
 (define-child-property "GtkFontSelection" font-selection-child-position
                        "position" "gint" t t t)
 
-(define-child-property "GtkFileChooserButton" file-chooser-button-child-expand
-                       "expand" "gboolean" t t t)
-
-(define-child-property "GtkFileChooserButton" file-chooser-button-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkFileChooserButton" file-chooser-button-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkFileChooserButton"
-                       file-chooser-button-child-pack-type "pack-type"
-                       "GtkPackType" t t t)
-
-(define-child-property "GtkFileChooserButton"
-                       file-chooser-button-child-position "position" "gint" t t
-                       t)
