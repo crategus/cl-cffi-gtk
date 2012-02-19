@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -417,30 +417,59 @@
 ;;; struct GtkMenu;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkMenu" 'gtk-menu))
+
 (define-g-object-class "GtkMenu" gtk-menu
   (:superclass gtk-menu-shell
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_menu_get_type")
-  ((accel-group gtk-menu-accel-group
+  ((accel-group
+    gtk-menu-accel-group
     "accel-group" "GtkAccelGroup" t t)
-   (accel-path gtk-menu-accel-path
+   (accel-path
+    gtk-menu-accel-path
     "accel-path" "gchararray" t t)
-   (active gtk-menu-active
+   (active
+    gtk-menu-active
     "active" "gint" t t)
-   (attach-widget gtk-menu-attach-widget
+   (attach-widget
+    gtk-menu-attach-widget
     "attach-widget" "GtkWidget" t t)
-   (monitor gtk-menu-monitor
+   (monitor
+    gtk-menu-monitor
     "monitor" "gint" t t)
-   (tearoff-state gtk-menu-tearoff-state
+   (tearoff-state
+    gtk-menu-tearoff-state
     "tearoff-state" "gboolean" t t)
-   (tearoff-title gtk-menu-tearoff-title
+   (tearoff-title
+    gtk-menu-tearoff-title
     "tearoff-title" "gchararray" t t)
-   (:cffi screen gtk-menu-screen g-object
+   (:cffi screen
+          gtk-menu-screen g-object
           nil "gtk_menu_set_screen")
-   (:cffi title gtk-menu-title
-          (:string :free-from-foreign nil :free-to-foreign t)
+   (:cffi title
+          gtk-menu-title (:string :free-from-foreign nil :free-to-foreign t)
           "gtk_menu_get_title" "gtk_menu_set_title")))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkMenu"
+                       gtk-menu-child-left-attach
+                       "left-attach" "gint" t t t)
+
+(define-child-property "GtkMenu"
+                       gtk-menu-child-right-attach
+                       "right-attach" "gint" t t t)
+
+(define-child-property "GtkMenu"
+                       gtk-menu-child-top-attach
+                       "top-attach" "gint" t t t)
+
+(define-child-property "GtkMenu"
+                       gtk-menu-child-bottom-attach
+                       "bottom-attach" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_new ()
@@ -1122,5 +1151,6 @@
 ;;; menu :
 ;;;     the GtkMenu being detached.
 ;;; ----------------------------------------------------------------------------
+
 
 ;;; --- End of file gtk.menu.lisp ----------------------------------------------

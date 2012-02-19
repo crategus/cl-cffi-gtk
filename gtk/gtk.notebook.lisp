@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -661,35 +661,76 @@
 ;;; struct GtkNotebook;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkNotebook" 'gtk-notebook))
+
 (define-g-object-class "GtkNotebook" gtk-notebook
   (:superclass gtk-container
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_notebook_get_type")
-  ((enable-popup gtk-notebook-enable-popup
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_notebook_get_type")
+  ((enable-popup
+    gtk-notebook-enable-popup
     "enable-popup" "gboolean" t t)
-   (group gtk-notebook-group
+   (group
+    gtk-notebook-group
     "group" "gpointer" t t)
-   (group-id gtk-notebook-group-id
+   (group-id
+    gtk-notebook-group-id
     "group-id" "gint" t t)
-   (homogeneous gtk-notebook-homogeneous
+   (homogeneous
+    gtk-notebook-homogeneous
     "homogeneous" "gboolean" t t)
-   (page gtk-notebook-page
+   (page
+    gtk-notebook-page
     "page" "gint" t t)
-   (scrollable gtk-notebook-scrollable
+   (scrollable
+    gtk-notebook-scrollable
     "scrollable" "gboolean" t t)
-   (show-border gtk-notebook-show-border
+   (show-border
+    gtk-notebook-show-border
     "show-border" "gboolean" t t)
-   (show-tabs gtk-notebook-show-tabs
+   (show-tabs
+    gtk-notebook-show-tabs
     "show-tabs" "gboolean" t t)
-   (tab-border gtk-notebook-tab-border
+   (tab-border
+    gtk-notebook-tab-border
     "tab-border" "guint" nil t)
-   (tab-hborder gtk-notebook-tab-hborder
+   (tab-hborder
+    gtk-notebook-tab-hborder
     "tab-hborder" "guint" t t)
-   (tab-pos gtk-notebook-tab-pos
+   (tab-pos
+    gtk-notebook-tab-pos
     "tab-pos" "GtkPositionType" t t)
-   (tab-vborder gtk-notebook-tab-vborder
+   (tab-vborder
+    gtk-notebook-tab-vborder
     "tab-vborder" "guint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook" notebook-child-tab-label "tab-label"
+                       "gchararray" t t t)
+
+(define-child-property "GtkNotebook" notebook-child-menu-label "menu-label"
+                       "gchararray" t t t)
+
+(define-child-property "GtkNotebook" notebook-child-position "position" "gint"
+                       t t t)
+
+(define-child-property "GtkNotebook" notebook-child-tab-expand "tab-expand"
+                       "gboolean" t t t)
+
+(define-child-property "GtkNotebook" notebook-child-tab-fill "tab-fill"
+                       "gboolean" t t t)
+
+(define-child-property "GtkNotebook" notebook-child-tab-pack "tab-pack"
+                       "GtkPackType" t t t)
+
+(define-child-property "GtkNotebook" notebook-child-reorderable "reorderable"
+                       "gboolean" t t t)
+
+(define-child-property "GtkNotebook" notebook-child-detachable "detachable"
+                       "gboolean" t t t)
 
 ;;; ---------------------------------------------------------------------------- 
 ;;; gtk_notebook_new ()

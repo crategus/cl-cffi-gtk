@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -275,15 +275,20 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_table_get_type")
-  ((column-spacing gtk-table-column-spacing
+  ((column-spacing
+    gtk-table-column-spacing
     "column-spacing" "guint" t t)
-   (homogeneous gtk-table-homogeneous
+   (homogeneous
+    gtk-table-homogeneous
     "homogeneous" "gboolean" t t)
-   (n-columns gtk-table-n-columns
+   (n-columns
+    gtk-table-n-columns
     "n-columns" "guint" t t)
-   (n-rows gtk-table-n-rows
+   (n-rows
+    gtk-table-n-rows
     "n-rows" "guint" t t)
-   (row-spacing gtk-table-row-spacing
+   (row-spacing
+    gtk-table-row-spacing
     "row-spacing" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------

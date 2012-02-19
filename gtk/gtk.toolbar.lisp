@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -355,22 +355,40 @@
 ;;; struct GtkToolbar;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkToolbar" 'gtk-toolbar))
+
 (define-g-object-class "GtkToolbar" gtk-toolbar
   (:superclass gtk-container
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
                 "GtkToolShell")
    :type-initializer "gtk_toolbar_get_type")
-  ((icon-size gtk-toolbar-icon-size
+  ((icon-size
+    gtk-toolbar-icon-size
     "icon-size" "gint" t t)
-   (icon-size-set gtk-toolbar-icon-size-set
+   (icon-size-set
+    gtk-toolbar-icon-size-set
     "icon-size-set" "gboolean" t t)
-   (show-arrow gtk-toolbar-show-arrow
+   (show-arrow
+    gtk-toolbar-show-arrow
     "show-arrow" "gboolean" t t)
-   (toolbar-style gtk-toolbar-toolbar-style
+   (toolbar-style
+    gtk-toolbar-toolbar-style
     "toolbar-style" "GtkToolbarStyle" t t)
-   (tooltips gtk-toolbar-tooltips
+   (tooltips
+    gtk-toolbar-tooltips
     "tooltips" "gboolean" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkToolbar"
+                       gtk-toolbar-child-expand
+                       "expand" "gboolean" t t t)
+
+(define-child-property "GtkToolbar"
+                       gtk-toolbar-child-homogeneous
+                       "homogeneous" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkToolbarSpaceStyle

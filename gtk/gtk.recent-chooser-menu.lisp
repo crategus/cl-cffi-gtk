@@ -107,6 +107,9 @@
 ;;; struct GtkRecentChooserMenu;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkRecentChooserMenu" 'gtk-recent-chooser-menu))
+
 (define-g-object-class "GtkRecentChooserMenu" gtk-recent-chooser-menu
   (:superclass gtk-menu
    :export t
@@ -116,6 +119,24 @@
   ((show-numbers
     gtk-recent-chooser-menu-show-numbers
     "show-numbers" "gboolean" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkRecentChooserMenu"
+                       gtk-recent-chooser-menu-child-left-attach
+                       "left-attach" "gint" t t t)
+
+(define-child-property "GtkRecentChooserMenu"
+                       gtk-recent-chooser-menu-child-right-attach
+                       "right-attach" "gint" t t t)
+
+(define-child-property "GtkRecentChooserMenu"
+                       gtk-recent-chooser-menu-child-top-attach
+                       "top-attach" "gint" t t t)
+
+(define-child-property "GtkRecentChooserMenu"
+                       gtk-recent-chooser-menu-child-bottom-attach
+                       "bottom-attach" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_new ()

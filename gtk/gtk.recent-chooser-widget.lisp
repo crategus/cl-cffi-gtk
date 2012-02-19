@@ -74,6 +74,9 @@
 ;;; struct GtkRecentChooserWidget;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkRecentChooserWidget" 'gtk-recent-chooser-widget))
+
 (define-g-object-class "GtkRecentChooserWidget" gtk-recent-chooser-widget
   (:superclass gtk-v-box
    :export t
@@ -81,6 +84,28 @@
                 "GtkRecentChooser")
    :type-initializer "gtk_recent_chooser_widget_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkRecentChooserWidget"
+                       gtk-recent-chooser-widget-child-expand
+                       "expand" "gboolean" t t t)
+
+(define-child-property "GtkRecentChooserWidget"
+                       gtk-recent-chooser-widget-child-fill
+                       "fill" "gboolean" t t t)
+
+(define-child-property "GtkRecentChooserWidget"
+                       gtk-recent-chooser-widget-child-padding
+                       "padding" "guint" t t t)
+
+(define-child-property "GtkRecentChooserWidget"
+                       gtk-recent-chooser-widget-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
+
+(define-child-property "GtkRecentChooserWidget"
+                       gtk-recent-chooser-widget-child-position
+                       "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_widget_new ()
