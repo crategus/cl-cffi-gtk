@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -138,21 +138,39 @@
 ;;; struct GtkLayout;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkLayout" 'gtk-layout))
+
 (define-g-object-class "GtkLayout" gtk-layout
   (:superclass gtk-container
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_layout_get_type")
-  ((hadjustment gtk-layout-hadjustment
+  ((hadjustment
+    gtk-layout-hadjustment
     "hadjustment" "GtkAdjustment" t t)
-   (height gtk-layout-height
+   (height
+    gtk-layout-height
     "height" "guint" t t)
-   (vadjustment gtk-layout-vadjustment
+   (vadjustment
+    gtk-layout-vadjustment
     "vadjustment" "GtkAdjustment" t t)
-   (width gtk-layout-width
+   (width
+    gtk-layout-width
     "width" "guint" t t)
-   (:cffi bin-window gtk-layout-bin-window g-object
+   (:cffi bin-window
+          gtk-layout-bin-window g-object
           "gtk_layout_get_bin_window" nil)))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkLayout"
+                       gtk-layout-child-x
+                       "x" "gint" t t t)
+
+(define-child-property "GtkLayout"
+                       gtk-layout-child-y
+                       "y" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_new ()
