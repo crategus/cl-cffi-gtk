@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -122,13 +122,27 @@
 ;;; struct GtkFixed;
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkFixed" 'gtk-fixed))
+
 (define-g-object-class "GtkFixed" gtk-fixed
   (:superclass gtk-container
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_fixed_get_type")
-  ((:cffi has-window gtk-fixed-has-window :boolean
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_fixed_get_type")
+  ((:cffi has-window
+          gtk-fixed-has-window :boolean
           "gtk_fixed_get_has_window" "gtk_fixed_set_has_window")))
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkFixed"
+                       gtk-fixed-child-x
+                       "x" "gint" t t t)
+
+(define-child-property "GtkFixed"
+                       gtk-fixed-child-y
+                       "y" "gint" t t t)
 
 ;;; ---------------------------------------------------------------------------- 
 ;;; gtk_fixed_new ()
