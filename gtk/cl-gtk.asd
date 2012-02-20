@@ -237,7 +237,6 @@
    
    ;; More definitions. The documentation is not completed.
    (:file "gtk.generated-classes")
-   (:file "gtk.generated-child-properties")
    (:file "gtk.selectors")
    (:file "gtk.timer")
    
