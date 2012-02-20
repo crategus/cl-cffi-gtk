@@ -200,6 +200,7 @@
    (:file "gtk.file-chooser-button")   ; Button to launch a file selection
    (:file "gtk.file-chooser-dialog")   ; A file chooser dialog
    (:file "gtk.file-filter")           ; Selecting a file subset
+   (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
    
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value
