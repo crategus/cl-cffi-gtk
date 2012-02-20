@@ -556,16 +556,6 @@
                         (socket-window plug-socket-window "socket-window"
                          "GdkWindow" t nil)))
 
-(define-g-object-class "GtkFontSelection" gtk-font-selection
-                       (:superclass gtk-v-box :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_font_selection_get_type")
-                       ((font font-selection-font "font" "GdkFont" t nil)
-                        (font-name font-selection-font-name "font-name"
-                         "gchararray" t t)
-                        (preview-text font-selection-preview-text
-                         "preview-text" "gchararray" t t)))
-
 (define-g-object-class "GtkMenuBar" gtk-menu-bar
                        (:superclass gtk-menu-shell :export t :interfaces
                         ("AtkImplementorIface" "GtkBuildable")
