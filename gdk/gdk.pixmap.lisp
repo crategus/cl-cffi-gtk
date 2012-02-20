@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; Bitmaps and Pixmaps
 ;;; 
 ;;; Offscreen drawables
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
-;;;     gdk-pixmaps
+;;;     GdkPixmap
+;;;     
 ;;;     gdk_pixmap_new
 ;;;     gdk_pixmap_create_from_data
 ;;;     gdk_pixmap_create_from_xpm
@@ -43,14 +44,9 @@
 ;;;     gdk_pixmap_colormap_create_from_xpm_d
 ;;;     gdk_pixmap_get_size
 ;;;     
-;;;     GdkBitmap;
+;;;     GdkBitmap
 ;;;     
 ;;;     gdk_bitmap_create_from_data
-;;;
-;;;     gdk_pixmap_ref
-;;;     gdk_pixmap_unref
-;;;     gdk_bitmap_ref
-;;;     gdk_bitmap_unref
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -87,7 +83,7 @@
 (define-g-object-class "GdkPixmap" gdk-pixmap
   (:superclass gdk-drawable
    :type-initializer "gdk_pixmap_get_type")
-  ())
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixmap_new ()
@@ -104,22 +100,22 @@
 ;;; function for this function in GTK 3.
 ;;; 
 ;;; drawable :
-;;; 	A GdkDrawable, used to determine default values for the new pixmap.
+;;;     A GdkDrawable, used to determine default values for the new pixmap.
 ;;;     Can be NULL if depth is specified.
 ;;; 
 ;;; width :
-;;; 	The width of the new pixmap in pixels.
+;;;     The width of the new pixmap in pixels.
 ;;; 
 ;;; height :
-;;; 	The height of the new pixmap in pixels.
+;;;     The height of the new pixmap in pixels.
 ;;; 
 ;;; depth :
-;;; 	The depth (number of bits per pixel) of the new pixmap. If -1, and
+;;;     The depth (number of bits per pixel) of the new pixmap. If -1, and
 ;;;     drawable is not NULL, the depth of the new pixmap will be equal to
 ;;;     that of drawable.
 ;;; 
 ;;; Returns :
-;;; 	the GdkPixmap
+;;;     the GdkPixmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixmap_new" gdk-pixmap-new)
@@ -154,29 +150,29 @@
 ;;; Create a two-color pixmap from data in XBM data.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable, used to determine default values for the new pixmap.
+;;;     a GdkDrawable, used to determine default values for the new pixmap.
 ;;;     Can be NULL, if the depth is given.
 ;;; 
 ;;; data :
-;;; 	a pointer to the data.
+;;;     a pointer to the data
 ;;; 
 ;;; width :
-;;; 	the width of the new pixmap in pixels.
+;;;     the width of the new pixmap in pixels
 ;;; 
 ;;; height :
-;;; 	the height of the new pixmap in pixels.
+;;;     the height of the new pixmap in pixels
 ;;; 
 ;;; depth :
-;;; 	the depth (number of bits per pixel) of the new pixmap.
+;;;     the depth (number of bits per pixel) of the new pixmap
 ;;; 
 ;;; fg :
-;;; 	the foreground color.
+;;;     the foreground color
 ;;; 
 ;;; bg :
-;;; 	the background color.
+;;;     the background color
 ;;; 
 ;;; Returns :
-;;; 	the GdkPixmap
+;;;     the GdkPixmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixmap_create_from_data" gdk-pixmap-create-from-data)
@@ -209,22 +205,22 @@
 ;;; Create a pixmap from a XPM file.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable, used to determine default values for the new pixmap.
+;;;     a GdkDrawable, used to determine default values for the new pixmap
 ;;; 
 ;;; mask :
-;;; 	(out) a pointer to a place to store a bitmap representing the
+;;;     (out) a pointer to a place to store a bitmap representing the
 ;;;     transparency mask of the XPM file. Can be NULL, in which case
 ;;;     transparency will be ignored.
 ;;; 
 ;;; transparent_color :
-;;; 	the color to be used for the pixels that are transparent in the input
+;;;     the color to be used for the pixels that are transparent in the input
 ;;;     file. Can be NULL, in which case a default color will be used.
 ;;; 
 ;;; filename :
-;;; 	the filename of a file containing XPM data.
+;;;     the filename of a file containing XPM data
 ;;; 
 ;;; Returns :
-;;; 	the GdkPixmap.
+;;;     the GdkPixmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixmap_create_from_xpm" %gdk-pixmap-create-from-xpm)
@@ -291,27 +287,27 @@
 ;;; Create a pixmap from a XPM file using a particular colormap.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable, used to determine default values for the new pixmap.
+;;;     a GdkDrawable, used to determine default values for the new pixmap.
 ;;;     Can be NULL if colormap is given.
 ;;; 
 ;;; colormap :
-;;; 	the GdkColormap that the new pixmap will be use. If omitted, the
+;;;     the GdkColormap that the new pixmap will be use. If omitted, the
 ;;;     colormap for window will be used.
 ;;; 
 ;;; mask :
-;;; 	a pointer to a place to store a bitmap representing the transparency
+;;;     a pointer to a place to store a bitmap representing the transparency
 ;;;     mask of the XPM file. Can be NULL, in which case transparency will be
 ;;;     ignored.
 ;;; 
 ;;; transparent_color :
-;;; 	the color to be used for the pixels that are transparent in the input
+;;;     the color to be used for the pixels that are transparent in the input
 ;;;     file. Can be NULL, in which case a default color will be used.
 ;;; 
 ;;; filename :
-;;; 	the filename of a file containing XPM data.
+;;;     the filename of a file containing XPM data
 ;;; 
 ;;; Returns :
-;;; 	the GdkPixmap.
+;;;     the GdkPixmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixmap_colormap_create_from_xpm"
@@ -343,22 +339,22 @@
 ;;; Create a pixmap from data in XPM format.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable, used to determine default values for the new pixmap.
+;;;     a GdkDrawable, used to determine default values for the new pixmap
 ;;; 
 ;;; mask :
-;;; 	Pointer to a place to store a bitmap representing the transparency mask
+;;;     Pointer to a place to store a bitmap representing the transparency mask
 ;;;     of the XPM file. Can be NULL, in which case transparency will be
 ;;;     ignored.
 ;;; 
 ;;; transparent_color :
-;;; 	This color will be used for the pixels that are transparent in the
+;;;     This color will be used for the pixels that are transparent in the
 ;;;     input file. Can be NULL in which case a default color will be used.
 ;;; 
 ;;; data :
-;;; 	Pointer to a string containing the XPM data.
+;;;     Pointer to a string containing the XPM data.
 ;;; 
 ;;; Returns :
-;;; 	the GdkPixmap.
+;;;     the GdkPixmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixmap_create_from_xpm_d" %gdk-pixmap-create-from-xpm-d)
@@ -406,27 +402,27 @@
 ;;; Create a pixmap from data in XPM format using a particular colormap.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable, used to determine default values for the new pixmap.
+;;;     a GdkDrawable, used to determine default values for the new pixmap.
 ;;;     Can be NULL if colormap is given.
 ;;; 
 ;;; colormap :
-;;; 	the GdkColormap that the new pixmap will be use. If omitted, the
+;;;     the GdkColormap that the new pixmap will be use. If omitted, the
 ;;;     colormap for window will be used.
 ;;; 
 ;;; mask :
-;;; 	a pointer to a place to store a bitmap representing the transparency
+;;;     a pointer to a place to store a bitmap representing the transparency
 ;;;     mask of the XPM file. Can be NULL, in which case transparency will be
 ;;;     ignored.
 ;;; 
 ;;; transparent_color :
-;;; 	the color to be used for the pixels that are transparent in the input
+;;;     the color to be used for the pixels that are transparent in the input
 ;;;     file. Can be NULL, in which case a default color will be used.
 ;;; 
 ;;; data :
-;;; 	Pointer to a string containing the XPM data.
+;;;     Pointer to a string containing the XPM data.
 ;;; 
 ;;; Returns :
-;;; 	the GdkPixmap.
+;;;     the GdkPixmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixmap_colormap_create_from_xpm_d"
@@ -467,18 +463,16 @@
 ;;; It is identical to gdk_drawable_get_size(), but for pixmaps.
 ;;; 
 ;;; pixmap :
-;;; 	a GdkPixmap
+;;;     a GdkPixmap
 ;;; 
 ;;; width :
-;;; 	location to store pixmap's width, or NULL.
+;;;     location to store pixmap's width, or NULL
 ;;; 
 ;;; height :
-;;; 	location to store pixmap's height, or NULL.
+;;;     location to store pixmap's height, or NULL
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
-
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkBitmap
@@ -514,20 +508,20 @@
 ;;; Creates a new bitmap from data in XBM format.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable, used to determine default values for the new pixmap.
+;;;     a GdkDrawable, used to determine default values for the new pixmap.
 ;;;     Can be NULL, in which case the root window is used.
 ;;; 
 ;;; data :
-;;; 	a pointer to the XBM data.
+;;;     a pointer to the XBM data
 ;;; 
 ;;; width :
-;;; 	the width of the new pixmap in pixels.
+;;;     the width of the new pixmap in pixels
 ;;; 
 ;;; height :
-;;; 	the height of the new pixmap in pixels.
+;;;     the height of the new pixmap in pixels
 ;;; 
 ;;; Returns :
-;;; 	the GdkBitmap
+;;;     the GdkBitmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_bitmap_create_from_data" gdk-bitmap-create-from-data)
@@ -539,58 +533,4 @@
 
 (export 'gdk-bitmap-create-from-data)
 
-;;; ----------------------------------------------------------------------------
-;;; gdk_pixmap_ref
-;;; 
-;;; #define gdk_pixmap_ref g_object_ref
-;;; 
-;;; Warning
-;;; 
-;;; gdk_pixmap_ref is deprecated and should not be used in newly-written code.
-;;; 
-;;; Deprecated equivalent of g_object_ref().
-;;; 
-;;; Returns :
-;;; 	pixmap
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_pixmap_unref
-;;; 
-;;; #define gdk_pixmap_unref g_object_unref
-;;; 
-;;; Warning
-;;; 
-;;; gdk_pixmap_unref is deprecated and should not be used in newly-written code.
-;;; 
-;;; Deprecated equivalent of g_object_unref().
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_bitmap_ref
-;;; 
-;;; #define gdk_bitmap_ref g_object_ref
-;;; 
-;;; Warning
-;;; 
-;;; gdk_bitmap_ref is deprecated and should not be used in newly-written code.
-;;; 
-;;; Deprecated equivalent of g_object_ref().
-;;; 
-;;; Returns :
-;;; 	pixmap
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_bitmap_unref
-;;; 
-;;; #define gdk_bitmap_unref g_object_unref
-;;; 
-;;; Warning
-;;; 
-;;; gdk_bitmap_unref is deprecated and should not be used in newly-written code.
-;;; 
-;;; Deprecated equivalent of g_object_unref().
-;;; ----------------------------------------------------------------------------
-
-;;; End of file gdk.bitmaps.lisp -----------------------------------------------
+;;; --- End of file gdk.pixmap.lisp --------------------------------------------
