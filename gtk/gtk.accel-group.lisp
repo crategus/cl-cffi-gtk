@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkAccelGroup
+;;;
 ;;;     gtk_accel_group_new
 ;;;     gtk_accel_group_connect
 ;;;     gtk_accel_group_connect_by_path
@@ -52,6 +53,7 @@
 ;;;     gtk_accel_group_find
 ;;;
 ;;;     GtkAccelKey
+;;;
 ;;;     gtk_accelerator_valid
 ;;;     gtk_accelerator_parse
 ;;;     gtk_accelerator_name
@@ -193,9 +195,12 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_accel_group_get_type")
-  ((is-locked     gtk-accel-group-is-locked "is-locked" "gboolean" t nil)
-   (modifier-mask gtk-accel-group-modifier-mask
-                  "modifier-mask" "GdkModifierType" t nil)))
+  ((is-locked
+    gtk-accel-group-is-locked
+    "is-locked" "gboolean" t nil)
+   (modifier-mask
+    gtk-accel-group-modifier-mask
+    "modifier-mask" "GdkModifierType" t nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_new ()
@@ -209,7 +214,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-accel-group-new ()
-  (make-instance 'accel-group))
+  (make-instance 'gtk-accel-group))
 
 (export 'gtk-accel-group-new)
 
@@ -676,5 +681,6 @@
 ;;; Returns :
 ;;;     the default accelerator modifier mask
 ;;; ----------------------------------------------------------------------------
+
 
 ;;; --- End of file gtk.accel-group.lisp ---------------------------------------

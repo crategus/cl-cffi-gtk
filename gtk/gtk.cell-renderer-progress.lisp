@@ -1,8 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer-progress.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
 ;;; See http://www.gtk.org.
@@ -31,7 +31,7 @@
 ;;; GtkCellRendererProgress
 ;;; 
 ;;; Renders numbers as progress bars
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkCellRendererProgress
@@ -196,10 +196,14 @@
 ;;; Creates a new GtkCellRendererProgress.
 ;;; 
 ;;; Returns :
-;;; 	the new cell renderer
+;;;     the new cell renderer
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-cell-renderer-progress-new ()
+  (make-instance 'gtk-cell-renderer-progress-new))
+
+(export 'gtk-cell-renderer-progress-new)
 
 ;;; --- End of file gtk.cell-renderer-progress.lisp ----------------------------

@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkCellRendererText
 ;;; 
 ;;; Renders text in a cell
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkCellRendererText
@@ -559,16 +559,16 @@
 ;;; new_text at the position indicated by path.
 ;;; 
 ;;; renderer :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; path :
-;;; 	the path identifying the edited cell
+;;;     the path identifying the edited cell
 ;;; 
 ;;; new_text :
-;;; 	the new text
+;;;     the new text
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -584,93 +584,137 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_cell_renderer_text_get_type")
-  ((align-set gtk-cell-renderer-text-align-set
+  ((align-set
+    gtk-cell-renderer-text-align-set
     "align-set" "gboolean" t t)
-   (alignment gtk-cell-renderer-text-alignment
+   (alignment
+    gtk-cell-renderer-text-alignment
     "alignment" "PangoAlignment" t t)
-   (attributes gtk-cell-renderer-text-attributes
+   (attributes
+    gtk-cell-renderer-text-attributes
     "attributes" "PangoAttrList" t t)
-   (background gtk-cell-renderer-text-background
+   (background
+    gtk-cell-renderer-text-background
     "background" "gchararray" nil t)
-   (background-gdk gtk-cell-renderer-text-background-gdk
+   (background-gdk
+    gtk-cell-renderer-text-background-gdk
     "background-gdk" "GdkColor" t t)
-   (background-set gtk-cell-renderer-text-background-set
+   (background-set
+    gtk-cell-renderer-text-background-set
     "background-set" "gboolean" t t)
-   (editable gtk-cell-renderer-text-editable
+   (editable
+    gtk-cell-renderer-text-editable
     "editable" "gboolean" t t)
-   (editable-set gtk-cell-renderer-text-editable-set
+   (editable-set
+    gtk-cell-renderer-text-editable-set
     "editable-set" "gboolean" t t)
-   (ellipsize gtk-cell-renderer-text-ellipsize
+   (ellipsize
+    gtk-cell-renderer-text-ellipsize
     "ellipsize" "PangoEllipsizeMode" t t)
-   (ellipsize-set gtk-cell-renderer-text-ellipsize-set
+   (ellipsize-set
+    gtk-cell-renderer-text-ellipsize-set
     "ellipsize-set" "gboolean" t t)
-   (family gtk-cell-renderer-text-family
+   (family
+    gtk-cell-renderer-text-family
     "family" "gchararray" t t)
-   (family-set gtk-cell-renderer-text-family-set
+   (family-set
+    gtk-cell-renderer-text-family-set
     "family-set" "gboolean" t t)
-   (font gtk-cell-renderer-text-font
+   (font
+    gtk-cell-renderer-text-font
     "font" "gchararray" t t)
-   (font-desc gtk-cell-renderer-text-font-desc
+   (font-desc
+    gtk-cell-renderer-text-font-desc
     "font-desc" "PangoFontDescription" t t)
-   (foreground gtk-cell-renderer-text-foreground
+   (foreground
+    gtk-cell-renderer-text-foreground
     "foreground" "gchararray" nil t)
-   (foreground-gdk gtk-cell-renderer-text-foreground-gdk
+   (foreground-gdk
+    gtk-cell-renderer-text-foreground-gdk
     "foreground-gdk" "GdkColor" t t)
-   (foreground-set gtk-cell-renderer-text-foreground-set
+   (foreground-set
+    gtk-cell-renderer-text-foreground-set
     "foreground-set" "gboolean" t t)
-   (language gtk-cell-renderer-text-language
+   (language
+    gtk-cell-renderer-text-language
     "language" "gchararray" t t)
-   (language-set gtk-cell-renderer-text-language-set
+   (language-set
+    gtk-cell-renderer-text-language-set
     "language-set" "gboolean" t t)
-   (markup gtk-cell-renderer-text-markup
+   (markup
+    gtk-cell-renderer-text-markup
     "markup" "gchararray" nil t)
-   (rise gtk-cell-renderer-text-rise
+   (rise
+    gtk-cell-renderer-text-rise
     "rise" "gint" t t)
-   (rise-set gtk-cell-renderer-text-rise-set
+   (rise-set
+    gtk-cell-renderer-text-rise-set
     "rise-set" "gboolean" t t)
-   (scale gtk-cell-renderer-text-scale
+   (scale
+    gtk-cell-renderer-text-scale
     "scale" "gdouble" t t)
-   (scale-set gtk-cell-renderer-text-scale-set
+   (scale-set
+    gtk-cell-renderer-text-scale-set
     "scale-set" "gboolean" t t)
-   (single-paragraph-mode gtk-cell-renderer-text-single-paragraph-mode
+   (single-paragraph-mode
+    gtk-cell-renderer-text-single-paragraph-mode
     "single-paragraph-mode" "gboolean" t t)
-   (size gtk-cell-renderer-text-size
+   (size
+    gtk-cell-renderer-text-size
     "size" "gint" t t)
-   (size-points gtk-cell-renderer-text-size-points
+   (size-points
+    gtk-cell-renderer-text-size-points
     "size-points" "gdouble" t t)
-   (size-set gtk-cell-renderer-text-size-set
+   (size-set
+    gtk-cell-renderer-text-size-set
     "size-set" "gboolean" t t)
-   (stretch gtk-cell-renderer-text-stretch
+   (stretch
+    gtk-cell-renderer-text-stretch
     "stretch" "PangoStretch" t t)
-   (stretch-set gtk-cell-renderer-text-stretch-set
+   (stretch-set
+    gtk-cell-renderer-text-stretch-set
     "stretch-set" "gboolean" t t)
-   (strikethrough gtk-cell-renderer-text-strikethrough
+   (strikethrough
+    gtk-cell-renderer-text-strikethrough
     "strikethrough" "gboolean" t t)
-   (strikethrough-set gtk-cell-renderer-text-strikethrough-set
+   (strikethrough-set
+    gtk-cell-renderer-text-strikethrough-set
     "strikethrough-set" "gboolean" t t)
-   (style gtk-cell-renderer-text-style
+   (style
+    gtk-cell-renderer-text-style
     "style" "PangoStyle" t t)
-   (style-set gtk-cell-renderer-text-style-set
+   (style-set
+    gtk-cell-renderer-text-style-set
     "style-set" "gboolean" t t)
-   (text gtk-cell-renderer-text-text
+   (text
+    gtk-cell-renderer-text-text
     "text" "gchararray" t t)
-   (underline gtk-cell-renderer-text-underline
+   (underline
+    gtk-cell-renderer-text-underline
     "underline" "PangoUnderline" t t)
-   (underline-set gtk-cell-renderer-text-underline-set
+   (underline-set
+    gtk-cell-renderer-text-underline-set
     "underline-set" "gboolean" t t)
-   (variant gtk-cell-renderer-text-variant
+   (variant
+    gtk-cell-renderer-text-variant
     "variant" "PangoVariant" t t)
-   (variant-set gtk-cell-renderer-text-variant-set
+   (variant-set
+    gtk-cell-renderer-text-variant-set
     "variant-set" "gboolean" t t)
-   (weight gtk-cell-renderer-text-weight
+   (weight
+    gtk-cell-renderer-text-weight
     "weight" "gint" t t)
-   (weight-set gtk-cell-renderer-text-weight-set
+   (weight-set
+    gtk-cell-renderer-text-weight-set
     "weight-set" "gboolean" t t)
-   (width-chars gtk-cell-renderer-text-width-chars
+   (width-chars
+    gtk-cell-renderer-text-width-chars
     "width-chars" "gint" t t)
-   (wrap-mode gtk-cell-renderer-text-wrap-mode
+   (wrap-mode
+    gtk-cell-renderer-text-wrap-mode
     "wrap-mode" "PangoWrapMode" t t)
-   (wrap-width gtk-cell-renderer-text-wrap-width
+   (wrap-width
+    gtk-cell-renderer-text-wrap-width
     "wrap-width" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -686,8 +730,13 @@
 ;;; in each row of the GtkTreeView
 ;;; 
 ;;; Returns :
-;;; 	the new cell renderer
+;;;     the new cell renderer
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-cell-renderer-text-new ()
+  (make-instance 'gtk-cell-renderer-text))
+
+(export 'gtk-cell-renderer-text-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_text_set_fixed_height_from_font ()
@@ -705,10 +754,10 @@
 ;;; and the height is determined by the properties again.
 ;;; 
 ;;; renderer :
-;;; 	A GtkCellRendererText
+;;;     A GtkCellRendererText
 ;;; 
 ;;; number_of_rows :
-;;; 	Number of rows of text each cell renderer is allocated, or -1
+;;;     Number of rows of text each cell renderer is allocated, or -1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_text_set_fixed_height_from_font"
