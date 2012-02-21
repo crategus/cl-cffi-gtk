@@ -35,12 +35,6 @@
   (:inch 2)
   (:mm 3))
 
-(define-g-enum "GtkCellRendererAccelMode"
-    cell-renderer-accel-mode
-    (:export t :type-initializer "gtk_cell_renderer_accel_mode_get_type")
-  (:gtk 0)
-  (:other 1))
-
 (define-g-enum "GtkTreeViewGridLines"
     tree-view-grid-lines
     (:export t :type-initializer "gtk_tree_view_grid_lines_get_type")
@@ -330,71 +324,29 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkCellRendererAccel" gtk-cell-renderer-accel
-  (:superclass gtk-cell-renderer-text
-    :export t
-    :interfaces nil
-    :type-initializer "gtk_cell_renderer_accel_get_type")
-  ((accel-key gtk-cell-renderer-accel-accel-key
-    "accel-key" "guint" t t)
-   (accel-mode gtk-cell-renderer-accel-accel-mode
-    "accel-mode" "GtkCellRendererAccelMode" t t)
-   (accel-mods gtk-cell-renderer-accel-accel-mods
-    "accel-mods" "GdkModifierType" t t)
-   (keycode gtk-cell-renderer-accel-keycode
-    "keycode" "guint" t t)))
-
-(define-g-object-class "GtkCellRendererCombo" gtk-cell-renderer-combo
-                       (:superclass gtk-cell-renderer-text :export t :interfaces
-                        nil :type-initializer
-                        "gtk_cell_renderer_combo_get_type")
-                       ((has-entry cell-renderer-combo-has-entry "has-entry"
-                         "gboolean" t t)
-                        (model cell-renderer-combo-model "model" "GtkTreeModel"
-                         t t)
-                        (text-column cell-renderer-combo-text-column
-                         "text-column" "gint" t t)))
-
-(define-g-object-class "GtkCellRendererSpin" gtk-cell-renderer-spin
-                       (:superclass gtk-cell-renderer-text :export t :interfaces
-                        nil :type-initializer
-                        "gtk_cell_renderer_spin_get_type")
-                       ((adjustment cell-renderer-spin-adjustment "adjustment"
-                         "GtkAdjustment" t t)
-                        (climb-rate cell-renderer-spin-climb-rate "climb-rate"
-                         "gdouble" t t)
-                        (digits cell-renderer-spin-digits "digits" "guint" t
-                         t)))
-
-(define-g-object-class "GtkCellRendererToggle" gtk-cell-renderer-toggle
-                       (:superclass gtk-cell-renderer :export t :interfaces nil
-                        :type-initializer "gtk_cell_renderer_toggle_get_type")
-                       ((activatable cell-renderer-toggle-activatable
-                         "activatable" "gboolean" t t)
-                        (active cell-renderer-toggle-active "active" "gboolean"
-                         t t)
-                        (inconsistent cell-renderer-toggle-inconsistent
-                         "inconsistent" "gboolean" t t)
-                        (indicator-size cell-renderer-toggle-indicator-size
-                         "indicator-size" "gint" t t)
-                        (radio cell-renderer-toggle-radio "radio" "gboolean" t
-                         t)))
-
 (define-g-object-class "GtkFontButton" gtk-font-button
-                       (:superclass gtk-button :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_font_button_get_type")
-                       ((font-name font-button-font-name "font-name"
-                         "gchararray" t t)
-                        (show-size font-button-show-size "show-size" "gboolean"
-                         t t)
-                        (show-style font-button-show-style "show-style"
-                         "gboolean" t t)
-                        (title font-button-title "title" "gchararray" t t)
-                        (use-font font-button-use-font "use-font" "gboolean" t
-                         t)
-                        (use-size font-button-use-size "use-size" "gboolean" t
-                         t)))
+  (:superclass gtk-button
+    :export t
+    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :type-initializer "gtk_font_button_get_type")
+  ((font-name
+    gtk-font-button-font-name
+    "font-name" "gchararray" t t)
+   (show-size
+    gtk-font-button-show-size
+    "show-size" "gboolean" t t)
+   (show-style
+    gtk-font-button-show-style
+    "show-style" "gboolean" t t)
+   (title
+    gtk-font-button-title
+    "title" "gchararray" t t)
+   (use-font
+    gtk-font-button-use-font
+    "use-font" "gboolean" t t)
+   (use-size
+    gtk-font-button-use-size
+    "use-size" "gboolean" t t)))
 
 (define-g-object-class "GtkComboBoxEntry" gtk-combo-box-entry
                        (:superclass gtk-combo-box :export t :interfaces
