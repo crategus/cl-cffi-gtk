@@ -157,6 +157,10 @@
    (:file "gtk.cell-renderer-text")    ; Renders text in a cell
    (:file "gtk.cell-renderer-pixbuf")  ; Renders a pixbuf in a cell
    (:file "gtk.cell-renderer-progress"); Renders numbers as progress bars
+   (:file "gtk.cell-renderer-accel")   ; Renders a keyboard accelerator
+   (:file "gtk.cell-renderer-combo")   ; Renders a combobox in a cell
+   (:file "gtk.cell-renderer-spin")    ; Renders a spin button in a cell
+   (:file "gtk.cell-renderer-toggle")  ; Renders a toggle button in a cell
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
    (:file "gtk.list-store")            ; list-like data structure
