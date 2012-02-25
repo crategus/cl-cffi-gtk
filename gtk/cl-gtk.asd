@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,7 +39,7 @@
 (defsystem :cl-gtk
   :name :cl-gtk
   :version "0.0.0"
-  :author "Dr. Dieter Kaiser"
+  :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components
@@ -71,6 +71,7 @@
    ;; Theming in Gtk+                  
    (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.stock-images")          ; Manipulating stock icons
+   (:file "gtk.icon-theme")            ; Looking up icons by name
                                        
    ;; Abstract Base Classes            
    (:file "gtk.object")                ; GtkObject
@@ -178,14 +179,17 @@
    ;; Menus, Combo Box, Toolbar
    (:file "gtk.item")                  ; Abstract base class GtkItem
    (:file "gtk.menu-item")             ; Widget used for item in menus
-   (:file "gtk.menu")                  ; A menu widget
+   (:file "gtk.menu")                  ; Menu widget
+   (:file "gtk.menu-bar")              ; Subclass for GtkMenuItem widgets
    (:file "gtk.combo-box")             ; GtkComboBox
+   (:file "gtk.combo-box-entry")       ; Text entry field with a dropdown list
    (:file "gtk.tool-shell")            ; Interface for GtkToolItem
    (:file "gtk.tool-item")             ; GtkToolItem
    (:file "gtk.toolbar")               ; Create bars of buttons
    (:file "gtk.tool-button")           ; GtkToolButton
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
+   (:file "gtk.menu-tool-button")      ; GtkMenuToolButton
    
    ;; Action-based menus and toolbars
    (:file "gtk.ui-manager")            ; Constructing menus and toolbars
@@ -197,24 +201,31 @@
    
    ;; Selectors
    (:file "gtk.color-button")          ; Launch a color selection dialog
-   (:file "gtk.color-selection")       ; A widget used to select a color
+   (:file "gtk.color-selection")       ; Widget used to select a color
+   (:file "gtk.color-selection-dialog"); Widget used to select a color
    (:file "gtk.hsv")                   ; GtkHSV
    (:file "gtk.file-chooser")          ; File chooser interface
    (:file "gtk.file-chooser-widget")   ; File chooser widget
    (:file "gtk.file-chooser-button")   ; Button to launch a file selection
-   (:file "gtk.file-chooser-dialog")   ; A file chooser dialog
+   (:file "gtk.file-chooser-dialog")   ; File chooser dialog
    (:file "gtk.file-filter")           ; Selecting a file subset
+   (:file "gtk.font-button")           ; Button to launch a font chooser dialog
    (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
    
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value
    (:file "gtk.drawing-area")          ; Custom user interface elements
-   (:file "gtk.event-box")             ; A widget used to catch events
+   (:file "gtk.event-box")             ; Widget used to catch events
    (:file "gtk.calendar")              ; Displays a calendar
    (:file "gtk.size-group")            ; Grouping widgets to the same size
    (:file "gtk.tooltip")               ; Add tips to your widgets
    (:file "gtk.arrow")                 ; Displays an arrow
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
+   (:file "gtk.handle-box")            ; Widget for detachable window portions
+   
+   ;; Cross-process Embedding
+   (:file "gtk.plug")                  ; Embedding into other processes
+   (:file "gtk.socket")                ; For widgets from other processes
    
    ;; Recently Used Documents
    (:file "gtk.recent-manager")        ; Managing recently used files
@@ -231,13 +242,17 @@
    ; GtkPaperSize — Support for named paper sizes
    ; GtkPrinter — Represents a printer
    ; GtkPrintJob — Represents a print job
-   ; GtkPrintUnixDialog — A print dialog
-   ; GtkPageSetupUnixDialog — A page setup dialog 
+   (:file "gtk.print-unix-dialog")     ; A print dialog
+   (:file "gtk.page-setup-unix-dialog"); A page setup dialog
    
    ;; Deprecated
    (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
    (:file "gtk.curve")                 ; Allows direct editing of a curve
    (:file "gtk.item-factory")          ; A factory for menus
+   (:file "gtk.style")                 ; Functions for drawing widget parts
+   (:file "gtk.resource-files")        ; Routines for handling resource files
+   (:file "gtk.input-dialog")          ; Configure devices for XInput extension
+   (:file "gtk.font-selection-dialog") ; Widget for selecting fonts
    
    ;; More definitions. The documentation is not completed.
    (:file "gtk.generated-classes")
