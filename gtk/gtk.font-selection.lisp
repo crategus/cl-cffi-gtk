@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -297,6 +297,11 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_selection_get_face" gtk-font-selection-face) g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-face)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_face_list ()
 ;;; 
@@ -318,6 +323,12 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_font_selection_get_face_list" gtk-font-selection-face-list)
+    g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-face-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_family ()
@@ -342,6 +353,11 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_selection_get_family" gtk-font-selection-family) g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-family)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size ()
 ;;; 
@@ -363,6 +379,11 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_font_selection_get_size" gtk-font-selection-size) :int
+  (fontsel g-object))
+
+(export 'gtk-font-selection-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_family_list ()
@@ -386,6 +407,12 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_selection_get_family_list" gtk-font-selection-family-list)
+    g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-family-list)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_preview_entry ()
 ;;; 
@@ -406,6 +433,12 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_font_selection_get_preview_entry"
+          gtk-font-selection-preview-entry) g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-preview-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size_entry ()
@@ -429,10 +462,16 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_selection_get_size_entry" gtk-font-selection-size-entry)
+    g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-size-entry)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size_list ()
 ;;; 
-;;; GtkWidget * gtk_font_selection_get_size_list (GtkFontSelection *fontsel);
+;;; GtkWidget * gtk_font_selection_get_size_list (GtkFontSelection *fontsel)
 ;;; 
 ;;; Warning
 ;;; 
@@ -450,5 +489,10 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_selection_get_size_list" gtk-font-selection-size-list)
+    g-object
+  (fontsel g-object))
+
+(export 'gtk-font-selection-size-list)
 
 ;;; --- End of file gtk.font-selection.lisp ------------------------------------

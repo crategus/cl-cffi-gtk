@@ -35,21 +35,6 @@
   (:inch 2)
   (:mm 3))
 
-(define-g-enum "GtkTreeViewGridLines"
-    tree-view-grid-lines
-    (:export t :type-initializer "gtk_tree_view_grid_lines_get_type")
-  (:none 0)
-  (:horizontal 1)
-  (:vertical 2)
-  (:both 3))
-
-(define-g-enum "GtkSensitivityType"
-    sensitivity-type
-    (:export t :type-initializer "gtk_sensitivity_type_get_type")
-  (:auto 0)
-  (:on 1)
-  (:off 2))
-
 (define-g-enum "GtkNotebookTab"
     notebook-tab
     (:export t :type-initializer "gtk_notebook_tab_get_type")
@@ -151,17 +136,6 @@
   (:left 2)
   (:right 3))
 
-(define-g-enum "GtkSpinType"
-    spin-type
-    (:export t :type-initializer "gtk_spin_type_get_type")
-  (:step-forward 0)
-  (:step-backward 1)
-  (:page-forward 2)
-  (:page-backward 3)
-  (:home 4)
-  (:end 5)
-  (:user-defined 6))
-
 (define-g-enum "GtkSubmenuDirection"
     submenu-direction
     (:export t :type-initializer "gtk_submenu_direction_get_type")
@@ -248,51 +222,3 @@
   (:no-hooks 64))
 
 ;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkCheckMenuItem" gtk-check-menu-item
-                       (:superclass gtk-menu-item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_check_menu_item_get_type")
-                       ((active check-menu-item-active "active" "gboolean" t t)
-                        (draw-as-radio check-menu-item-draw-as-radio
-                         "draw-as-radio" "gboolean" t t)
-                        (inconsistent check-menu-item-inconsistent
-                         "inconsistent" "gboolean" t t)))
-
-(define-g-object-class "GtkRadioMenuItem" gtk-radio-menu-item
-                       (:superclass gtk-check-menu-item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_radio_menu_item_get_type")
-                       ((group radio-menu-item-group "group" "GtkRadioMenuItem"
-                         nil t)))
-
-(define-g-object-class "GtkImageMenuItem" gtk-image-menu-item
-                       (:superclass gtk-menu-item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_image_menu_item_get_type")
-                       ((accel-group image-menu-item-accel-group "accel-group"
-                         "GtkAccelGroup" nil t)
-                        (always-show-image image-menu-item-always-show-image
-                         "always-show-image" "gboolean" t t)
-                        (image image-menu-item-image "image" "GtkWidget" t t)
-                        (use-stock image-menu-item-use-stock "use-stock"
-                         "gboolean" t t)))
-
-(define-g-object-class "GtkSeparatorMenuItem" gtk-separator-menu-item
-                       (:superclass gtk-menu-item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_separator_menu_item_get_type")
-                       nil)
-
-(define-g-object-class "GtkTearoffMenuItem" gtk-tearoff-menu-item
-                       (:superclass gtk-menu-item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_tearoff_menu_item_get_type")
-                       nil)
-
-(define-g-object-class "GtkSeparatorToolItem" gtk-separator-tool-item
-                       (:superclass gtk-tool-item :export t :interfaces
-                        ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
-                        :type-initializer "gtk_separator_tool_item_get_type")
-                       ((draw separator-tool-item-draw "draw" "gboolean" t t)))
-

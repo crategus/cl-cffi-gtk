@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -151,6 +151,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkTreeView implements AtkImplementorIface, GtkBuildable and GtkScrollable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "enable-grid-lines"        GtkTreeViewGridLines  : Read / Write
@@ -217,10 +218,10 @@
 ;;; Coordinate systems in GtkTreeView API
 ;;; 
 ;;; Widget coordinates
-;;; 	Coordinates relative to the widget (usually widget->window).
+;;;     Coordinates relative to the widget (usually widget->window).
 ;;; 
 ;;; Bin window coordinates
-;;; 	Coordinates relative to the window that GtkTreeView renders to.
+;;;     Coordinates relative to the window that GtkTreeView renders to.
 ;;; 
 ;;; Tree coordinates
 ;;;     Coordinates relative to the entire scrollable area of GtkTreeView. These
@@ -773,61 +774,87 @@
 
 (define-g-object-class "GtkTreeView" gtk-tree-view
   (:superclass gtk-container
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_tree_view_get_type")
-   ((enable-grid-lines gtk-tree-view-enable-grid-lines
-     "enable-grid-lines" "GtkTreeViewGridLines" t t)
-    (enable-search gtk-tree-view-enable-search
-     "enable-search" "gboolean" t t)
-    (enable-tree-lines gtk-tree-view-enable-tree-lines
-     "enable-tree-lines" "gboolean" t t)
-    (expander-column gtk-tree-view-expander-column
-     "expander-column" "GtkTreeViewColumn" t t)
-    (fixed-height-mode gtk-tree-view-fixed-height-mode
-     "fixed-height-mode" "gboolean" t t)
-    (hadjustment gtk-tree-view-hadjustment
-     "hadjustment" "GtkAdjustment" t t)
-    (headers-clickable gtk-tree-view-headers-clickable
-     "headers-clickable" "gboolean" t t)
-    (headers-visible gtktree-view-headers-visible
-     "headers-visible" "gboolean" t t)
-    (hover-expand gtk-tree-view-hover-expand
-     "hover-expand" "gboolean" t t)
-    (hover-selection gtk-tree-view-hover-selection
-     "hover-selection" "gboolean" t t)
-    (level-indentation gtk-tree-view-level-indentation
-     "level-indentation" "gint" t t)
-    (model gtk-tree-view-model
-     "model" "GtkTreeModel" t t)
-    (reorderable gtk-tree-view-reorderable
-     "reorderable" "gboolean" t t)
-    (rubber-banding gtk-tree-view-rubber-banding
-     "rubber-banding" "gboolean" t t)
-    (rules-hint gtk-tree-view-rules-hint
-     "rules-hint" "gboolean" t t)
-    (search-column gtk-tree-view-search-column
-     "search-column" "gint" t t)
-    (show-expanders gtk-tree-view-show-expanders
-     "show-expanders" "gboolean" t t)
-    (tooltip-column gtk-tree-view-tooltip-column
-     "tooltip-column" "gint" t t)
-    (vadjustment gtk-tree-view-vadjustment
-     "vadjustment" "GtkAdjustment" t t)
-    (:cffi selection gtk-tree-view-selection g-object
-           "gtk_tree_view_get_selection" nil)
-    (:cffi column-drag-function gtk-tree-view-column-drag-function
-           nil nil gtk-tree-view-set-column-drag-function)
-    (:cffi bin-window gtk-tree-view-bin-window g-object
-           "gtk_tree_view_get_bin_window" nil)
-    (:cffi search-equal-func gtk-tree-view-search-equal-func
-           nil nil gtk-tree-view-set-search-equal-func)
-    (:cffi search-entry gtk-tree-view-search-entry g-object
-           "gtk_tree_view_get_search_entry" "gtk_tree_view_set_search_entry")
-    (:cffi search-position-func gtk-tree-view-search-position-func
-           nil nil gtk-tree-view-set-search-position-func)
-    (:cffi row-separator-func gtk-tree-view-row-separator-func
-           nil nil gtk-tree-view-set-row-separartor-func)))
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_tree_view_get_type")
+  ((enable-grid-lines
+    gtk-tree-view-enable-grid-lines
+    "enable-grid-lines" "GtkTreeViewGridLines" t t)
+   (enable-search
+    gtk-tree-view-enable-search
+    "enable-search" "gboolean" t t)
+   (enable-tree-lines
+    gtk-tree-view-enable-tree-lines
+    "enable-tree-lines" "gboolean" t t)
+   (expander-column
+    gtk-tree-view-expander-column
+    "expander-column" "GtkTreeViewColumn" t t)
+   (fixed-height-mode
+    gtk-tree-view-fixed-height-mode
+    "fixed-height-mode" "gboolean" t t)
+   (hadjustment
+    gtk-tree-view-hadjustment
+    "hadjustment" "GtkAdjustment" t t)
+   (headers-clickable
+    gtk-tree-view-headers-clickable
+    "headers-clickable" "gboolean" t t)
+   (headers-visible
+    gtk-tree-view-headers-visible
+    "headers-visible" "gboolean" t t)
+   (hover-expand
+    gtk-tree-view-hover-expand
+    "hover-expand" "gboolean" t t)
+   (hover-selection
+    gtk-tree-view-hover-selection
+    "hover-selection" "gboolean" t t)
+   (level-indentation
+    gtk-tree-view-level-indentation
+    "level-indentation" "gint" t t)
+   (model
+    gtk-tree-view-model
+    "model" "GtkTreeModel" t t)
+   (reorderable
+    gtk-tree-view-reorderable
+    "reorderable" "gboolean" t t)
+   (rubber-banding
+    gtk-tree-view-rubber-banding
+    "rubber-banding" "gboolean" t t)
+   (rules-hint
+    gtk-tree-view-rules-hint
+    "rules-hint" "gboolean" t t)
+   (search-column
+    gtk-tree-view-search-column
+    "search-column" "gint" t t)
+   (show-expanders
+    gtk-tree-view-show-expanders
+    "show-expanders" "gboolean" t t)
+   (tooltip-column
+    gtk-tree-view-tooltip-column
+    "tooltip-column" "gint" t t)
+   (vadjustment
+    gtk-tree-view-vadjustment
+    "vadjustment" "GtkAdjustment" t t)
+   (:cffi selection
+          gtk-tree-view-selection g-object
+          "gtk_tree_view_get_selection" nil)
+   (:cffi column-drag-function
+          gtk-tree-view-column-drag-function nil
+          nil gtk-tree-view-set-column-drag-function)
+   (:cffi bin-window
+          gtk-tree-view-bin-window g-object
+          "gtk_tree_view_get_bin_window" nil)
+   (:cffi search-equal-func
+          gtk-tree-view-search-equal-func nil
+          nil gtk-tree-view-set-search-equal-func)
+   (:cffi search-entry
+          gtk-tree-view-search-entry g-object
+          "gtk_tree_view_get_search_entry" "gtk_tree_view_set_search_entry")
+   (:cffi search-position-func
+          gtk-tree-view-search-position-func nil
+          nil gtk-tree-view-set-search-position-func)
+   (:cffi row-separator-func
+          gtk-tree-view-row-separator-func nil
+          nil gtk-tree-view-set-row-separartor-func)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTreeViewDropPosition
@@ -3529,6 +3556,14 @@
 ;;; GTK_TREE_VIEW_GRID_LINES_BOTH
 ;;;     Horizontal and vertical grid lines.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkTreeViewGridLines" gtk-tree-view-grid-lines
+  (:export t
+   :type-initializer "gtk_tree_view_grid_lines_get_type")
+  (:none 0)
+  (:horizontal 1)
+  (:vertical 2)
+  (:both 3))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_grid_lines ()

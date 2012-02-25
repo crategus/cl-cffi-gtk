@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; GtkRange
 ;;; 
 ;;; Base class for widgets which visualize an adjustment
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkRange
@@ -316,13 +316,13 @@
 ;;; adjust the bounds.
 ;;; 
 ;;; range :
-;;; 	the GtkRange that received the signal
+;;;     the GtkRange that received the signal
 ;;; 
 ;;; value :
-;;; 	the value before we clamp
+;;;     the value before we clamp
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "change-value" signal
@@ -348,20 +348,20 @@
 ;;; "change-value" handler.
 ;;; 
 ;;; range :
-;;; 	the GtkRange that received the signal
+;;;     the GtkRange that received the signal
 ;;; 
 ;;; scroll :
-;;; 	the type of scroll action that was performed
+;;;     the type of scroll action that was performed
 ;;; 
 ;;; value :
-;;; 	the new value resulting from the scroll action
+;;;     the new value resulting from the scroll action
 ;;; 
 ;;; returns :
-;;; 	TRUE to prevent other handlers from being invoked for the signal, FALSE
+;;;     TRUE to prevent other handlers from being invoked for the signal, FALSE
 ;;;     to propagate the signal further
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.6
 ;;
@@ -375,13 +375,13 @@
 ;;; Virtual function that moves the slider. Used for keybindings.
 ;;; 
 ;;; range :
-;;; 	the GtkRange that received the signal
+;;;     the GtkRange that received the signal
 ;;; 
 ;;; step :
-;;; 	how to move the slider
+;;;     how to move the slider
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "value-changed" signal
@@ -391,10 +391,10 @@
 ;;; Emitted when the range value changes.
 ;;; 
 ;;; range :
-;;; 	the GtkRange that received the signal
+;;;     the GtkRange that received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -432,10 +432,10 @@
 ;;; Gets the current position of the fill level indicator.
 ;;; 
 ;;; range :
-;;; 	A GtkRange
+;;;     A GtkRange
 ;;; 
 ;;; Returns :
-;;; 	The current fill level
+;;;     The current fill level
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -448,10 +448,10 @@
 ;;; Gets whether the range is restricted to the fill level.
 ;;; 
 ;;; range :
-;;; 	A GtkRange
+;;;     A GtkRange
 ;;; 
 ;;; Returns :
-;;; 	TRUE if range is restricted to the fill level.
+;;;     TRUE if range is restricted to the fill level.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -464,10 +464,10 @@
 ;;; Gets whether the range displays the fill level graphically.
 ;;; 
 ;;; range :
-;;; 	A GtkRange
+;;;     A GtkRange
 ;;; 
 ;;; Returns :
-;;; 	TRUE if range shows the fill level.
+;;;     TRUE if range shows the fill level.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -495,10 +495,10 @@
 ;;; gtk_range_set_restrict_to_fill_level() and is by default enabled.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; fill_level :
-;;; 	the new position of the fill level indicator
+;;;     the new position of the fill level indicator
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -514,10 +514,10 @@
 ;;; concept.
 ;;; 
 ;;; range :
-;;; 	A GtkRange
+;;;     A GtkRange
 ;;; 
 ;;; restrict_to_fill_level :
-;;; 	Whether the fill level restricts slider movement.
+;;;     Whether the fill level restricts slider movement.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -533,10 +533,10 @@
 ;;; concept.
 ;;; 
 ;;; range :
-;;; 	A GtkRange
+;;;     A GtkRange
 ;;; 
 ;;; show_fill_level :
-;;; 	Whether a fill level indicator graphics is shown.
+;;;     Whether a fill level indicator graphics is shown.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -551,10 +551,10 @@
 ;;; reference added, so should not be unreferenced.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	a GtkAdjustment.
+;;;     a GtkAdjustment.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -570,10 +570,10 @@
 ;;; being scrolled. The page size affects the size of the scrollbar slider.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -584,10 +584,10 @@
 ;;; Gets the value set by gtk_range_set_inverted().
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the range is inverted
+;;;     TRUE if the range is inverted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -600,10 +600,10 @@
 ;;; top or on the right rather than on the bottom or left.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; setting :
-;;; 	TRUE to invert the range
+;;;     TRUE to invert the range
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -614,10 +614,10 @@
 ;;; Gets the current value of the range.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	current value of the range.
+;;;     current value of the range.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -630,10 +630,10 @@
 ;;; the "value-changed" signal if the value changes.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; value :
-;;; 	new value of the range
+;;;     new value of the range
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -646,13 +646,13 @@
 ;;; page size is used for example when moving via Page Up or Page Down keys.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; step :
-;;; 	step size
+;;;     step size
 ;;; 
 ;;; page :
-;;; 	page size
+;;;     page size
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -665,13 +665,13 @@
 ;;; between min and max - page-size.)
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; min :
-;;; 	minimum range value
+;;;     minimum range value
 ;;; 
 ;;; max :
-;;; 	maximum range value
+;;;     maximum range value
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -683,10 +683,10 @@
 ;;; See "change-value".
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	the number of digits to round to
+;;;     the number of digits to round to
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -700,10 +700,10 @@
 ;;; See "change-value".
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; round_digits :
-;;; 	the precision in digits, or -1
+;;;     the precision in digits, or -1
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
@@ -721,14 +721,21 @@
 ;;; of range widgets.
 ;;; 
 ;;; GTK_SENSITIVITY_AUTO
-;;; 	The arrow is made insensitive if the thumb is at the end
+;;;     The arrow is made insensitive if the thumb is at the end
 ;;; 
 ;;; GTK_SENSITIVITY_ON
-;;; 	The arrow is always sensitive
+;;;     The arrow is always sensitive
 ;;; 
 ;;; GTK_SENSITIVITY_OFF
-;;; 	The arrow is always insensitive
+;;;     The arrow is always insensitive
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkSensitivityType" gtk-sensitivity-type
+  (:export t
+   :type-initializer "gtk_sensitivity_type_get_type")
+  (:auto 0)
+  (:on 1)
+  (:off 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_lower_stepper_sensitivity ()
@@ -740,10 +747,10 @@
 ;;; of the GtkRange's adjustment.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; sensitivity :
-;;; 	the lower stepper's sensitivity policy.
+;;;     the lower stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -757,10 +764,10 @@
 ;;; of the GtkRange's adjustment.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	The lower stepper's sensitivity policy.
+;;;     The lower stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -775,10 +782,10 @@
 ;;; end of the GtkRange's adjustment.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; sensitivity :
-;;; 	the upper stepper's sensitivity policy.
+;;;     the upper stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -792,10 +799,10 @@
 ;;; end of the GtkRange's adjustment.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	The upper stepper's sensitivity policy.
+;;;     The upper stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -808,10 +815,10 @@
 ;;; Gets the value set by gtk_range_set_flippable().
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the range is flippable
+;;;     TRUE if the range is flippable
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -827,10 +834,10 @@
 ;;; See gtk_widget_get_direction().
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; flippable :
-;;; 	TRUE to make the range flippable
+;;;     TRUE to make the range flippable
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -845,10 +852,10 @@
 ;;; See gtk_range_set_min_slider_size().
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	The minimum size of the range's slider.
+;;;     The minimum size of the range's slider.
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -864,10 +871,10 @@
 ;;; This function is useful mainly for GtkRange subclasses.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; range_rect :
-;;; 	return location for the range rectangle. [out]
+;;;     return location for the range rectangle. [out]
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -885,13 +892,13 @@
 ;;; This function is useful mainly for GtkRange subclasses.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; slider_start :
-;;; 	return location for the slider's start, or NULL.
+;;;     return location for the slider's start, or NULL.
 ;;; 
 ;;; slider_end :
-;;; 	return location for the slider's end, or NULL.
+;;;     return location for the slider's end, or NULL.
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -906,10 +913,10 @@
 ;;; See gtk_range_set_slider_size_fixed().
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;; 	whether the range's slider has a fixed size.
+;;;     whether the range's slider has a fixed size.
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -924,10 +931,10 @@
 ;;; This function is useful mainly for GtkRange subclasses.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; min_size :
-;;; 	The slider's minimum size
+;;;     The slider's minimum size
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -943,10 +950,10 @@
 ;;; This function is useful mainly for GtkRange subclasses.
 ;;; 
 ;;; range :
-;;; 	a GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; size_fixed :
-;;; 	TRUE to make the slider size constant
+;;;     TRUE to make the slider size constant
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------

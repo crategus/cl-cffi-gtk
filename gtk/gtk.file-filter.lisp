@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -289,6 +289,12 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_file_filter_add_pattern" gtk-file-filter-add-pattern) :void
+  (filter g-object)
+  (pattern :string))
+
+(export 'gtk-file-filter-add-pattern)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_filter_add_pixbuf_formats ()
 ;;; 
@@ -301,6 +307,12 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_filter_add_pixbuf_formats"
+          gtk-file-filter-add-pixbuf-formats) :void
+  (filter g-object))
+
+(export 'gtk-file-filter-add-pixbuf-formats)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_filter_add_custom ()
