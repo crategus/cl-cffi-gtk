@@ -181,11 +181,17 @@
    (:file "gtk.menu-item")             ; Widget used for item in menus
    (:file "gtk.menu")                  ; Menu widget
    (:file "gtk.menu-bar")              ; Subclass for GtkMenuItem widgets
+   (:file "gtk.radio-menu-item")       ; Choice from multiple check menu items
+   (:file "gtk.check-menu-item")       ; Menu item with a check box
+   (:file "gtk.image-menu-item")       ; Menu item with an icon
+   (:file "gtk.separator-menu-item")   ; Separator used in menus
+   (:file "gtk.tearoff-menu-item")     ; Menu item used to tear off and reattach
    (:file "gtk.combo-box")             ; GtkComboBox
    (:file "gtk.combo-box-entry")       ; Text entry field with a dropdown list
    (:file "gtk.tool-shell")            ; Interface for GtkToolItem
    (:file "gtk.tool-item")             ; GtkToolItem
    (:file "gtk.toolbar")               ; Create bars of buttons
+   (:file "gtk.separator-tool-item")   ; Toolbar item that separates groups
    (:file "gtk.tool-button")           ; GtkToolButton
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
