@@ -28,6 +28,18 @@
 (defpackage #:cl-gtk-system
   (:use #:cl #:asdf))
 
+;;; ----------------------------------------------------------------------------
+
+(in-package :cl-user)
+
+(defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
+(defvar *cl-cffi-gtk-version* "0.0.0")
+
+(export '*cl-cffi-gtk-build-time*)
+(export '*cl-cffi-gtk-version*)
+
+;;; ----------------------------------------------------------------------------
+
 (in-package #:cl-gtk-system)
 
 (defclass plain-file (static-file)
@@ -35,6 +47,8 @@
 
 (defmethod source-file-type ((c plain-file) (s module))
   (plain-file-type c))
+
+;;; ----------------------------------------------------------------------------
 
 (defsystem :cl-gtk
   :name :cl-gtk
