@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -176,37 +176,47 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_color_selection_get_type")
-  ((current-alpha gtk-color-selection-current-alpha
+  ((current-alpha
+    gtk-color-selection-current-alpha
     "current-alpha" "guint" t t)
-   (current-color gtk-color-selection-current-color
+   (current-color
+    gtk-color-selection-current-color
     "current-color" "GdkColor" t t)
-   (has-opacity-control gtk-color-selection-has-opacity-control
+   (has-opacity-control
+    gtk-color-selection-has-opacity-control
     "has-opacity-control" "gboolean" t t)
-   (has-palette gtk-color-selection-has-palette
+   (has-palette
+    gtk-color-selection-has-palette
     "has-palette" "gboolean" t t)
-   (:cffi previous-alpha gtk-color-selection-previous-alpha :uint16
+   (:cffi previous-alpha
+          gtk-color-selection-previous-alpha :uint16
           "gtk_color_selection_get_previous_alpha"
           "gtk_color_selection_set_previous_alpha")
-   (:cffi previous-color gtk-color-selection-previous-color
-          (g-boxed-foreign gdk-color)
+   (:cffi previous-color
+          gtk-color-selection-previous-color (g-boxed-foreign gdk-color)
           gtk-color-selection-get-previous-color
           gtk-color-selection-set-previous-color)))
 
 ;;; ----------------------------------------------------------------------------
 
-(define-child-property "GtkColorSelection" gtk-color-selection-child-expand
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-expand
                        "expand" "gboolean" t t t)
 
-(define-child-property "GtkColorSelection" gtk-color-selection-child-fill
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-fill
                        "fill" "gboolean" t t t)
 
-(define-child-property "GtkColorSelection" gtk-color-selection-child-padding
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-padding
                        "padding" "guint" t t t)
 
-(define-child-property "GtkColorSelection" gtk-color-selection-child-pack-type
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
-(define-child-property "GtkColorSelection" gtk-color-selection-child-position
+(define-child-property "GtkColorSelection"
+                       gtk-color-selection-child-position
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
@@ -219,6 +229,11 @@
 ;;; Returns :
 ;;;     a new GtkColorSelection
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-color-selection-new ()
+  (make-instance 'gtk-color-selection))
+
+(export 'gtk-color-selection-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_has_opacity_control ()
@@ -236,6 +251,11 @@
 ;;;     TRUE if colorsel can set the opacity, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-color-selection-set-has-opacity-control (colorsel has-opacity)
+  (setf (gtk-color-selection-has-opacity-control colorsel) has-opacity))
+
+(export 'gtk-color-selection-set-has-opacity-control)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_has_opacity_control ()
 ;;; 
@@ -250,6 +270,11 @@
 ;;; Returns :
 ;;;     TRUE if the colorsel has an opacity control, FALSE if it does't
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-color-selection-get-has-opacity-control (colorsel)
+  (gtk-color-selection-has-opacity-control colorsel))
+
+(export 'gtk-color-selection-get-has-opacity-control)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_has_palette ()
@@ -266,6 +291,11 @@
 ;;;     TRUE if palette is to be visible, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-color-selection-set-has-palette (colorsel has-palette)
+  (setf (gtk-color-selection-has-palette colorsel) has-palette))
+
+(export 'gtk-color-selection-set-has-palette)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_has_palette ()
 ;;; 
@@ -280,6 +310,11 @@
 ;;;     TRUE if the selector has a palette, FALSE if it hasn't
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-color-selection-get-has-palette (colorsel)
+  (gtk-color-selection-has-palette colorsel))
+
+(export 'gtk-color-selection-get-has-palette)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_current_alpha ()
 ;;; 
@@ -293,6 +328,11 @@
 ;;; Returns :
 ;;;     an integer between 0 and 65535
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-color-selection-get-current-alpha (colorsel)
+  (gtk-color-selection-current-alpha colorsel))
+
+(export 'gtk-color-selection-get-current-alpha)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_current_alpha ()
@@ -312,6 +352,11 @@
 ;;;     an integer between 0 and 65535
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-color-selection-set-current-alpha (colorsel alpha)
+  (setf (gtk-color-selection-current-alpha colorsel) alpha))
+
+(export 'gtk-color-selection-set-current-alpha)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_current_color ()
 ;;; 
@@ -326,6 +371,11 @@
 ;;; color :
 ;;;     a GdkColor to fill in with the current color.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-color-selection-get-current-color (colorsel)
+  (gtk-color-selection-current-color colorsel))
+
+(export 'gtk-color-selection-get-current-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_current_color ()
@@ -345,6 +395,11 @@
 ;;;     a GdkColor to set the current color with
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-color-selection-set-current-color (colorsel color)
+  (setf (gtk-color-selection-current-color colorsel) color))
+
+(export 'gtk-color-selection-set-current-color)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_previous_alpha ()
 ;;; 
@@ -358,6 +413,11 @@
 ;;; Returns :
 ;;;     an integer between 0 and 65535
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-color-selection-get-previous-alpha (colorsel)
+  (gtk-color-selection-previous-alpha colorsel))
+
+(export 'gtk-color-selection-get-previous-alpha)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_previous_alpha ()
@@ -376,6 +436,11 @@
 ;;; alpha :
 ;;;     an integer between 0 and 65535
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-color-selection-set-previous-alpha (colorsel alpha)
+  (setf (gtk-color-selection-previous-alpha colorsel) alpha))
+
+(export 'gtk-color-selection-set-previous-alpha)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_previous_color ()
