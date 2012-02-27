@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -26,15 +26,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gtk
-  (:use :cl :cffi :gobject :gdk :glib :iter :pango)
-  (:export #:get-major-version
-           #:get-minor-version
-           #:get-micro-version
-           #:get-binary-age
-           #:get-interface-age
-           #:check-version
+  (:use :cl :cl-user :cffi :gobject :gdk :glib :iter :pango)
+  (:export #:cl-cffi-gtk-build-info
            
-           #:gtk-main
            #:define-child-property
            #:container-class-child-properties
            #:generate-child-properties
@@ -51,7 +45,7 @@
            #:tree-node-remove-at
            #:tree-node-child-at
            #:tree-lisp-store-add-column
-           #:gtk-main-add-timeout
+           
            #:gtk-call-aborted
            #:gtk-call-aborted-condition
            #:let-ui))
@@ -65,3 +59,5 @@
 #+sbcl (when (and (find-package "SB-EXT")
                   (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")))
          (funcall (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")) :traps nil))
+
+;;; --- End of file gtk.package.lisp -------------------------------------------
