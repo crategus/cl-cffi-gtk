@@ -3,7 +3,7 @@
 ;;;
 ;;; Examples from the offical GTK+ 2.0 Tutorial translated to Lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,15 +38,19 @@
 
 (defun example-simple-window ()
   (within-main-loop
-    (let ((window (gtk-window-new :toplevel)))
+    (let (;; Create a toplevel window.
+          (window (gtk-window-new :toplevel)))
+      ;; Show the window.
       (gtk-widget-show window))))
 
 (defun example-simple-window-2 ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
+    (let (;; Create a toplevel window with a title and a default width.
+          (window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Getting started"
                                  :default-width 250)))
+      ;; Show the window.
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -55,27 +59,39 @@
 
 (defun example-hello-world ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
+    (let (;; Create a toplevel window, the window gets a border width.
+          (window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Hello World"
                                  :default-width 250
                                  :border-width 10))
+          ;; Create a button with a label.
           (button (make-instance 'gtk-button :label "Hello World")))
+      ;; Connect a signal handler to the button.
+      ;; Handle the "clicked" signal: print a message on the console and
+      ;; destroy the main window.
       (g-signal-connect button "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (format t "Hello world.~%")
                           (gtk-widget-destroy window)))
+      ;; Connect a signal handler to the window.
+      ;; Handle the "destroy" signal: Leave the application.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Connect a second signal handler to the window.
+      ;; Handle the "delete-event" signal: print a message on the console
+      ;; and continue the application.
       (g-signal-connect window "delete-event"
-                        (lambda (window event)
-                          (declare (ignore window event))
+                        (lambda (widget event)
+                          (declare (ignore widget event))
                           (format t "Delete Event Occured.~%")
                           t))
-      (g-signal-connect window "destroy-event"
-                        (lambda (window event)
-                          (declare (ignore window event))
-                          (gtk-main-quit)))
+      ;; Put the button into the window.
       (gtk-container-add window button)
+      ;; Show the window and the included button.
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -85,11 +101,11 @@
 (defun example-upgraded-hello-world ()
   (within-main-loop
     (let ((window (gtk-window-new :toplevel))
-          (box    (gtk-h-box-new nil 5))
+          (box (gtk-h-box-new nil 5))
           (button  nil))
-      (g-signal-connect window "delete_event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-main-quit)))
       (gtk-window-set-title window "Hello Buttons")
       (gtk-window-set-default-size window 250 75)
@@ -128,26 +144,23 @@
           (box (make-instance 'gtk-h-box
                               :homogeneous nil
                               :spacing 5)))
-      (g-signal-connect window "delete_event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-main-quit)))
-      (gtk-container-add window box)
-      
       (let ((button (gtk-button-new-with-label "Button 1")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
                             (declare (ignore widget))
                             (format t "Button 1 was pressed.~%")))
         (gtk-box-pack-start box button :expand t :fill t :padding 0))
-      
       (let ((button (gtk-button-new-with-label "Button 2")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
                             (declare (ignore widget))
                             (format t "Button 2 was pressed.~%")))
         (gtk-box-pack-start box button :expand t :fill t :padding 0))
-      
+      (gtk-container-add window box)
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -295,9 +308,9 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-widget-destroy window)))
-      (g-signal-connect window "delete_event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-main-quit)))
       (gtk-widget-show window))))
 
@@ -398,9 +411,9 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-widget-destroy window)))
-      (g-signal-connect window "delete_event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-main-quit)))
       (gtk-widget-show window))))
 
@@ -426,18 +439,18 @@
                                   :label "Button 2"))
           (quit (make-instance 'gtk-button
                                :label "Quit")))
-      
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
       (g-signal-connect quit "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
+                        (lambda (widget)
+                          (declare (ignore widget))
                           (gtk-widget-destroy window)))
-      
-      (gtk-container-add window table)
-      
       (gtk-table-attach-defaults table button1 0 1 0 1)
       (gtk-table-attach-defaults table button2 1 2 0 1)
       (gtk-table-attach-defaults table quit    0 2 1 2)
-      
+      (gtk-container-add window table)
       (gtk-widget-show window))))
 
 (defun example-packing-table-2 ()
@@ -458,7 +471,10 @@
                                   :label "More Col Spacing"))
           (quit (make-instance 'gtk-button
                                :label "Quit")))
-      
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
       (g-signal-connect button1 "toggled"
          (lambda (widget)
            (if (gtk-toggle-button-get-active widget)
@@ -481,13 +497,10 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-widget-destroy window)))
-            
-      (gtk-container-add window table)
-      
       (gtk-table-attach-defaults table button1 0 1 0 1)
       (gtk-table-attach-defaults table button2 1 2 0 1)
       (gtk-table-attach-defaults table quit    0 2 1 2)
-      
+      (gtk-container-add window table)
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -1492,6 +1505,57 @@
 
 ;;; [...]
 
+;;; Color Selection Widget
+
+(let ((color (make-gdk-color :red 0
+                             :blue 65535
+                             :green 0)))
+
+  (defun drawing-area-event (widget event area)
+    (declare (ignore widget))
+    (let ((handled nil))
+      (when (eql (gdk-event-type event) :button-press)
+        (let* ((colorseldlg (make-instance 'gtk-color-selection-dialog
+                                           :title "Select Background Color"))
+               (colorsel
+                 (gtk-color-selection-dialog-color-selection colorseldlg)))
+          (setq handled t)
+          (gtk-color-selection-set-previous-color colorsel color)
+          (gtk-color-selection-set-current-color colorsel color)
+          (gtk-color-selection-set-has-palette colorsel t)
+          (g-signal-connect colorsel "color-changed"
+             (lambda (widget)
+               (declare (ignore widget))
+               (let ((color (gtk-color-selection-get-current-color colorsel)))
+                 (gtk-widget-modify-bg area :normal color))))
+          (let ((response (gtk-dialog-run colorseldlg)))
+            (gtk-widget-destroy colorseldlg)
+            (if (eql response :ok)
+                (setq color (gtk-color-selection-get-current-color colorsel))
+                (gtk-widget-modify-bg area :normal color)))))
+      handled))
+
+  (defun example-color-selection ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title "Example Color Selection"
+                                   :default-width 300))
+            (area (make-instance 'gtk-drawing-area)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-widget-modify-bg area :normal color)
+        (gtk-widget-set-events area :button-press-mask)
+        (g-signal-connect area "event"
+                          (lambda (widget event)
+                            (drawing-area-event widget event area)))
+        (gtk-container-add window area)
+        (gtk-widget-show window))))
+)
+
+;;; [...]
+
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Chapter 11. Container Widgets
@@ -1563,6 +1627,9 @@
   (let* ((allocation (gtk-widget-get-allocation fixed))
          (width (- (gdk-rectangle-width allocation) 20))
          (height (- (gdk-rectangle-height allocation) 10)))
+;    (format t "Position of button is: (~A ~A)~%"
+;            (gtk-fixed-child-x fixed button)
+;            (gtk-fixed-child-y fixed button))
     (gtk-fixed-move fixed button (random width) (random height))))
 
 (defun example-fixed ()
