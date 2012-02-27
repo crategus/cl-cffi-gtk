@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,6 +39,11 @@
 ;;;     gtk_fixed_new
 ;;;     gtk_fixed_put
 ;;;     gtk_fixed_move
+;;;
+;;;     From the GTK+ 2 Reference Manual
+;;;
+;;;     gtk_fixed_get_has_window
+;;;     gtk_fixed_set_has_window
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -155,6 +160,11 @@
 ;;;     a new GtkFixed.
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-fixed-new ()
+  (make-instance 'gtk-fixed))
+
+(export 'gtk-fixed-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_fixed_put ()
 ;;; 
@@ -204,11 +214,66 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_fixed_move" gtk-fixed-move) :void
-  (fixed g-object)
+  (fixed (g-object gtk-fixed))
   (widget g-object)
   (x :int)
   (y :int))
 
 (export 'gtk-fixed-move)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_fixed_get_has_window ()
+;;; 
+;;; gboolean gtk_fixed_get_has_window (GtkFixed *fixed);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_fixed_get_has_window has been deprecated since version 2.20 and should
+;;; not be used in newly-written code. Use gtk_widget_get_has_window() instead.
+;;; 
+;;; Gets whether the GtkFixed has its own GdkWindow. See
+;;; gtk_fixed_set_has_window().
+;;; 
+;;; fixed :
+;;;     a GtkWidget
+;;; 
+;;; Returns :
+;;;     TRUE if fixed has its own window
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-fixed-get-has-window (fixed)
+  (gtk-fixed-has-window fixed))
+
+(export 'gtk-fixed-get-has-window)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_fixed_set_has_window ()
+;;; 
+;;; void gtk_fixed_set_has_window (GtkFixed *fixed, gboolean has_window);
+;;;
+;;; Warning
+;;; 
+;;; gtk_fixed_set_has_window has been deprecated since version 2.20 and should
+;;; not be used in newly-written code. Use gtk_widget_set_has_window() instead.
+;;; 
+;;; Sets whether a GtkFixed widget is created with a separate GdkWindow for
+;;; widget->window or not. (By default, it will be created with no separate
+;;; GdkWindow). This function must be called while the GtkFixed is not realized,
+;;; for instance, immediately after the window is created.
+;;; 
+;;; This function was added to provide an easy migration path for older
+;;; applications which may expect GtkFixed to have a separate window.
+;;; 
+;;; fixed :
+;;;     a GtkFixed
+;;; 
+;;; has_window :
+;;;     TRUE if a separate window should be created
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-fixed-set-has-window (fixed has-window)
+  (setf (gtk-fixed-has-window fixed) has-window))
+
+(export 'gtk-fixed-set-has-wiindow)
 
 ;;; --- End of file gtk.fixed.lisp ---------------------------------------------
