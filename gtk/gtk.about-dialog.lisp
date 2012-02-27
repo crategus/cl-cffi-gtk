@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,6 +36,7 @@
 ;;; 
 ;;;     GtkAboutDialog
 ;;;     GtkLicense
+;;;
 ;;;     gtk_about_dialog_new
 ;;;     gtk_about_dialog_get_program_name
 ;;;     gtk_about_dialog_set_program_name
@@ -377,36 +378,50 @@
 
 (define-g-object-class "GtkAboutDialog" gtk-about-dialog
   (:superclass gtk-dialog
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
-    :type-initializer "gtk_about_dialog_get_type")
-  ((artists gtk-about-dialog-artists
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_about_dialog_get_type")
+  ((artists
+    gtk-about-dialog-artists
     "artists" "GStrv" t t)
-   (authors gtk-about-dialog-authors
+   (authors
+    gtk-about-dialog-authors
     "authors" "GStrv" t t)
-   (comments gtk-about-dialog-comments
+   (comments
+    gtk-about-dialog-comments
     "comments" "gchararray" t t)
-   (copyright gtk-about-dialog-copyright
+   (copyright
+    gtk-about-dialog-copyright
     "copyright" "gchararray" t t)
-   (documenters gtk-about-dialog-documenters
+   (documenters
+    gtk-about-dialog-documenters
     "documenters" "GStrv" t t)
-   (license gtk-about-dialog-license
+   (license
+    gtk-about-dialog-license
     "license" "gchararray" t t)
-   (logo gtk-about-dialog-logo
+   (logo
+    gtk-about-dialog-logo
     "logo" "GdkPixbuf" t t)
-   (logo-icon-name gtk-about-dialog-logo-icon-name
+   (logo-icon-name
+    gtk-about-dialog-logo-icon-name
     "logo-icon-name" "gchararray" t t)
-   (program-name gtk-about-dialog-program-name
+   (program-name
+    gtk-about-dialog-program-name
     "program-name" "gchararray" t t)
-   (translator-credits gtk-about-dialog-translator-credits
+   (translator-credits
+    gtk-about-dialog-translator-credits
     "translator-credits" "gchararray" t t)
-   (version gtk-about-dialog-version
+   (version
+    gtk-about-dialog-version
     "version" "gchararray" t t)
-   (website gtk-about-dialog-website
+   (website
+    gtk-about-dialog-website
     "website" "gchararray" t t)
-   (website-label gtk-about-dialog-website-label
+   (website-label
+    gtk-about-dialog-website-label
     "website-label" "gchararray" t t)
-   (wrap-license gtk-about-dialog-wrap-license
+   (wrap-license
+    gtk-about-dialog-wrap-license
     "wrap-license" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -1196,16 +1211,16 @@
 ;;; deactivate it, you can pass NULL for func.
 ;;; 
 ;;; func :
-;;; 	a function to call when an email link is activated.
+;;;     a function to call when an email link is activated.
 ;;; 
 ;;; data :
-;;; 	data to pass to func
+;;;     data to pass to func
 ;;; 
 ;;; destroy :
-;;; 	GDestroyNotify for data
+;;;     GDestroyNotify for data
 ;;; 
 ;;; Returns :
-;;; 	the previous email hook.
+;;;     the previous email hook.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1234,11 +1249,11 @@
   (if new-value
       (gtk-about-dialog-set-email-hook
                                   (callback about-dialog-email-func-cb)
-				  (null-pointer)
-				  (callback about-dialog-email-func-destroy-cb))
+                                  (null-pointer)
+                                  (callback about-dialog-email-func-destroy-cb))
       (gtk-about-dialog-set-email-hook (null-pointer)
-				       (null-pointer)
-				       (null-pointer)))
+                                       (null-pointer)
+                                       (null-pointer)))
   (setf *about-dialog-email-func* new-value))
 
 (export 'gtk-about-dialog-global-email-hook)
@@ -1263,16 +1278,16 @@
 ;;; deactivate it, you can pass NULL for func.
 ;;; 
 ;;; func :
-;;; 	a function to call when a URL link is activated.
+;;;     a function to call when a URL link is activated.
 ;;; 
 ;;; data :
-;;; 	data to pass to func
+;;;     data to pass to func
 ;;; 
 ;;; destroy :
-;;; 	GDestroyNotify for data
+;;;     GDestroyNotify for data
 ;;; 
 ;;; Returns :
-;;; 	the previous URL hook.
+;;;     the previous URL hook.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1300,11 +1315,11 @@
   (if new-value
       (gtk-about-dialog-set-url-hook
                                     (callback about-dialog-url-func-cb)
-				    (null-pointer)
-				    (callback about-dialog-url-func-destroy-cb))
+                                    (null-pointer)
+                                    (callback about-dialog-url-func-destroy-cb))
       (gtk-about-dialog-set-url-hook (null-pointer)
-				     (null-pointer)
-				     (null-pointer)))
+                                     (null-pointer)
+                                     (null-pointer)))
   (setf *about-dialog-url-func* new-value))
 
 (export 'gtk-about-dialog-global-url-hook)
