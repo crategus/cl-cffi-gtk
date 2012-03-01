@@ -110,8 +110,6 @@
       (gtk-window-set-title window "Hello Buttons")
       (gtk-window-set-default-size window 250 75)
       (gtk-container-set-border-width window 10)
-      (gtk-container-add window box)
-      
       (setq button (gtk-button-new-with-label "Button 1"))
       (g-signal-connect button "clicked"
                         (lambda (widget)
@@ -126,9 +124,7 @@
                           (declare (ignore widget))
                           (format t "Button 2 was pressed.~%")))
       (gtk-box-pack-start box button :expand t :fill t :padding 0)
-      (gtk-widget-show button)
-      
-      (gtk-widget-show box)
+      (gtk-container-add window box)
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
