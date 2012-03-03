@@ -218,7 +218,6 @@
           (quitbox (make-instance 'gtk-hbox
                                   :homogeneous nil
                                   :spacing 0)))
-      ;; Connect signal handlers to the window and the quit button.
       (g-signal-connect button "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -227,79 +226,68 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      ;; Create a label and pack the label into the vertical box.
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                                 "GtkHBox homogeneous nil spacing ~A"
+                                          "GtkHBox homogeneous nil spacing ~A"
                                                  spacing)
                                          :xalign 0
                                          :yalign 0)
                           :expand nil
                           :fill nil
                           :padding 0)
-      ;; Create a horizontal separator
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-h-separator)
                           :expand nil
                           :fill t
                           :padding 0)
-      ;; Call the make-box function
       (gtk-box-pack-start vbox
                           (make-box nil spacing nil nil 0)
                           :expand nil
                           :fill nil
                           :padding 0)
-      ;; Call the make-box function
       (gtk-box-pack-start vbox
                           (make-box nil spacing t nil 0)
                           :expand nil
                           :fill nil
                           :padding 0)
-      ;; Call the make-box function
       (gtk-box-pack-start vbox
                           (make-box nil spacing t t 0)
                           :expand nil
                           :fill nil
                           :padding 0)
-      ;; Create a horizontal separator
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-h-separator)
                           :expand nil
                           :fill t
                           :padding 0)
-      ;; Create another label and pack the label into the vertical box.
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                                 "GtkHBox homogeneous t spacing ~A"
+                                          "GtkHBox homogeneous t spacing ~A"
                                                  spacing)
                                          :xalign 0
                                          :yalign 0)
                           :expand nil
                           :fill nil
                           :padding 5)
-      ;; Create a horizontal separator
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-h-separator)
                           :expand nil
                           :fill t
                           :padding 0)
-      ;; Call the make-box function
       (gtk-box-pack-start vbox
                           (make-box t spacing t nil 0)
                           :expand nil
                           :fill nil
                           :padding 0)
-      ;; Call the make-box function
       (gtk-box-pack-start vbox
                           (make-box t spacing t t 0)
                           :expand nil
                           :fill nil
                           :padding 0)
-      ;; Create a horizontal separator
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-h-separator)
                           :expand nil
@@ -314,14 +302,13 @@
 
 ;;; Table Packing Example
 
-(defun example-packing-table ()
+(defun example-table-packing ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Table Packing"
-                                 :border-width 20
-                                 :default-width 300
-                                 :default-heigt 200))
+                                 :border-width 12
+                                 :default-width 300))
           (table (make-instance 'gtk-table
                                 :n-columns 2
                                 :n-rows 2
@@ -340,20 +327,19 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-widget-destroy window)))
-      (gtk-table-attach-defaults table button1 0 1 0 1)
-      (gtk-table-attach-defaults table button2 1 2 0 1)
-      (gtk-table-attach-defaults table quit    0 2 1 2)
+      (gtk-table-attach table button1 0 1 0 1)
+      (gtk-table-attach table button2 1 2 0 1)
+      (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
       (gtk-widget-show window))))
 
-(defun example-packing-table-2 ()
+(defun example-table-packing-2 ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Table Packing Example"
-                                 :border-width 20
-                                 :default-width 300
-                                 :default-heigt 200))
+                                 :title "Example Table Packing"
+                                 :border-width 12
+                                 :default-width 300))
           (table (make-instance 'gtk-table
                                 :n-columns 2
                                 :n-rows 2
@@ -372,7 +358,7 @@
          (lambda (widget)
            (if (gtk-toggle-button-get-active widget)
                (progn
-                 (gtk-table-set-row-spacings table 15)
+                 (gtk-table-set-row-spacings table 12)
                  (gtk-button-set-label widget "Less Row Spacing"))
                (progn
                  (gtk-table-set-row-spacings table 0)
@@ -381,7 +367,7 @@
          (lambda (widget)
            (if (gtk-toggle-button-get-active widget)
                (progn
-                 (gtk-table-set-col-spacings table 15)
+                 (gtk-table-set-col-spacings table 12)
                  (gtk-button-set-label widget "Less Col Spacing"))
                (progn
                  (gtk-table-set-col-spacings table 0)
@@ -390,9 +376,9 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-widget-destroy window)))
-      (gtk-table-attach-defaults table button1 0 1 0 1)
-      (gtk-table-attach-defaults table button2 1 2 0 1)
-      (gtk-table-attach-defaults table quit    0 2 1 2)
+      (gtk-table-attach table button1 0 1 0 1)
+      (gtk-table-attach table button2 1 2 0 1)
+      (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
       (gtk-widget-show window))))
 
