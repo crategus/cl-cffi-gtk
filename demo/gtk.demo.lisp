@@ -2,7 +2,7 @@
 ;;; gtk.demo.lisp
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -188,7 +188,7 @@
                                   :title "Demo Entry"
                                   :default-width 250
                                   :border-width 10))
-           (box (make-instance 'gtk-v-box))
+           (box (make-instance 'gtk-vbox))
            (entry (make-instance 'gtk-entry))
            (button (make-instance 'gtk-button :label "OK"))
            (text-buffer (make-instance 'gtk-text-buffer))
@@ -302,7 +302,7 @@
     (let ((window (make-instance 'gtk-window
                                  :title "Demo Progress Bar"
                                  :default-width 250))
-          (v-box (make-instance 'gtk-v-box))
+          (v-box (make-instance 'gtkv-box))
           (p-bar (make-instance 'gtk-progress-bar :test "A process"))
           (button-pulse (make-instance 'gtk-button :label "Pulse"))
           (button-set (make-instance 'gtk-button :label "Set"))
@@ -337,8 +337,8 @@
     (let ((window (make-instance 'gtk-window
                                  :title "Demo Status Bar"
                                  :default-width 300))
-          (v-box (make-instance 'gtk-v-box))
-          (h-box (make-instance 'gtk-h-box))
+          (v-box (make-instance 'gtk-vbox))
+          (h-box (make-instance 'gtk-hbox))
           (label (make-instance 'gtk-label
                                 :label "Push or Pop text on the statusbar" 
                                 :xalign 0.5
@@ -435,7 +435,7 @@
            (view (make-instance 'gtk-text-view
                                 :buffer buffer
                                 :wrap-mode :word))
-           (box (make-instance 'gtk-v-box))
+           (box (make-instance 'gtk-vbox))
            (scrolled (make-instance 'gtk-scrolled-window
                                     :hscrollbar-policy :automatic
                                     :vscrollbar-policy :automatic)))
@@ -527,8 +527,8 @@
                               :width-request 100
                               :height-request 400
                               :rules-hint t))
-           (h-box (make-instance 'gtk-h-box))
-           (v-box (make-instance 'gtk-v-box))
+           (h-box (make-instance 'gtk-hbox))
+           (v-box (make-instance 'gtk-vbox))
            (title-entry (make-instance 'gtk-entry))
            (value-entry (make-instance 'gtk-entry))
            (button (make-instance 'gtk-button :label "Add")))
@@ -620,8 +620,8 @@
                                      :width-request 300
                                      :height-request 400
                                      :rules-hint t))
-           (h-box (make-instance 'gtk-h-box))
-           (v-box (make-instance 'gtk-v-box))
+           (h-box (make-instance 'gtk-hbox))
+           (v-box (make-instance 'gtk-vbox))
            (entry (make-instance 'gtk-entry))
            (button (make-instance 'gtk-button :label "Display")))
       (tree-lisp-store-add-column model "gchararray" #'tvi-title)
@@ -687,8 +687,8 @@
                                   :title "Combo Box"))
            (model (make-instance 'array-list-store))
            (combo-box (make-instance 'gtk-combo-box :model model))
-           (h-box (make-instance 'gtk-h-box))
-           (v-box (make-instance 'gtk-v-box))
+           (h-box (make-instance 'gtk-hbox))
+           (v-box (make-instance 'gtk-vbox))
            (title-entry (make-instance 'gtk-entry))
            (value-entry (make-instance 'gtk-entry))
            (button (make-instance 'gtk-button :label "Add")))
@@ -885,7 +885,7 @@
                                   (declare (ignore button))
                                   (format t "Removing page ~A~%" page)
                                   (gtk-notebook-remove-page notebook page))))
-            (for tab-hbox = (make-instance 'gtk-h-box))
+            (for tab-hbox = (make-instance 'gtk-hbox))
             (gtk-box-pack-start tab-hbox tab-label)
             (gtk-box-pack-start tab-hbox tab-button)
             (gtk-widget-show tab-hbox)
@@ -938,7 +938,7 @@
                                  :window-position :center
                                  :default-width 250
                                  :default-height 100))
-          (v-box (make-instance 'gtk-v-box))
+          (v-box (make-instance 'gtk-vbox))
           (button (make-instance 'gtk-file-chooser-button :action :open))
           (b (make-instance 'gtk-button
                             :label "Choose for save"
@@ -982,7 +982,7 @@
                                  :window-position :center
                                  :default-width 250
                                  :default-height 100))
-          (v-box (make-instance 'gtk-v-box))
+          (v-box (make-instance 'gtk-vbox))
           (button (make-instance 'gtk-font-button
                                  :title "Choose font"
                                  :font-name "Sans 10")))
@@ -1011,7 +1011,7 @@
                                  :window-position :center
                                  :width-request 250
                                  :height-request 200))
-          (box (make-instance 'gtk-h-box))
+          (box (make-instance 'gtk-hbox))
           (button (make-instance 'gtk-toggle-button
                                  :active t
                                  :label "Expand")))
@@ -1040,7 +1040,7 @@
                   :default-width 600
                   :default-height 400
                   :var w
-                  (gtk-v-box
+                  (gtk-vbox
                     (gtk-label :label "A GtkListStore")
                                :expand nil
                                (gtk-scrolled-window :hscrollbar-policy
@@ -1099,7 +1099,7 @@
                   :default-width 600
                   :default-height 400
                   :var w
-                  (gtk-v-box
+                  (gtk-vbox
                     (gtk-label :label "A GtkListStore")
                                :expand nil
                                (gtk-scrolled-window :hscrollbar-policy
@@ -1164,19 +1164,19 @@
                     :default-width 300
                     :default-height 400
                     :var w
-          (gtk-v-box (:expr label)
-                     :expand nil
-                     (gtk-scrolled-window :hscrollbar-policy :automatic
-                                          :vscrollbar-policy :automatic
-                                          :shadow-type :etched-in
-                                          (gtk-text-view :var tv))
-                     (gtk-h-box (gtk-label :label "Insert:")
-                                :expand nil
-                                (gtk-entry :var entry)
-                                (gtk-button :label "gtk-ok"
-                                            :use-stock t
-                                            :var btn)
-                                :expand nil)
+          (gtk-vbox (:expr label)
+                    :expand nil
+                    (gtk-scrolled-window :hscrollbar-policy :automatic
+                                         :vscrollbar-policy :automatic
+                                         :shadow-type :etched-in
+                                         (gtk-text-view :var tv))
+                    (gtk-hbox (gtk-label :label "Insert:")
+                               :expand nil
+                               (gtk-entry :var entry)
+                               (gtk-button :label "gtk-ok"
+                                           :use-stock t
+                                           :var btn)
+                               :expand nil)
                      :expand nil
                      (gtk-label :label "Table packing")
                      :expand nil
@@ -1216,7 +1216,7 @@
   (within-main-loop
     (let ((output *standard-output*)
           (d (make-instance 'gtk-assistant :title "Username wizard"))
-          (p-1 (make-instance 'gtk-h-box))
+          (p-1 (make-instance 'gtk-hbox))
           (entry (make-instance 'gtk-entry))
           (p-2 (make-instance 'gtk-label
                               :label "Click Apply to close this wizard")))
@@ -1505,8 +1505,8 @@
                                   :vscrollbar-policy :automatic))
            (slots-model (make-instance 'array-list-store))
            (slots-list (make-instance 'gtk-tree-view :model slots-model)))
-      (let ((v-box (make-instance 'gtk-v-box))
-            (search-box (make-instance 'gtk-h-box)))
+      (let ((v-box (make-instance 'gtk-vbox))
+            (search-box (make-instance 'gtk-hbox)))
         (gtk-container-add window v-box)
         (gtk-box-pack-start v-box search-box :expand nil)
         (gtk-box-pack-start search-box search-entry)
@@ -1572,7 +1572,7 @@
         (format nil "Now is: ~A~%" (get-internal-run-time))))
 
 (defmethod initialize-instance :after ((w custom-window) &key &allow-other-keys)
-  (let ((box (make-instance 'gtk-v-box)))
+  (let ((box (make-instance 'gtk-vbox)))
     (gtk-box-pack-start box (custom-window-label w))
     (gtk-box-pack-start box (custom-window-button w) :expand nil)
     (gtk-container-add w box))
@@ -1600,7 +1600,7 @@
                                  :type :toplevel
                                  :title "Testing dialogs"
                                  :default-width 250))
-          (v-box (make-instance 'gtk-v-box)))
+          (v-box (make-instance 'gtk-vbox)))
       (g-signal-connect window
                         "destroy"
                         (lambda (w)
