@@ -125,7 +125,7 @@
   (register-object-type "GtkFontSelection" 'gtk-font-selection))
 
 (define-g-object-class "GtkFontSelection" gtk-font-selection
-  (:superclass gtk-v-box
+  (:superclass gtk-vbox
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_font_selection_get_type")

@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; rtest-gtk-box.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -58,13 +58,13 @@
    (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkBox"))))
   )
 
-(define-test gtk-h-box
-  (let* ((hbox (make-instance 'gtk-h-box
+(define-test gtk-hbox
+  (let* ((hbox (make-instance 'gtk-hbox
                               :homogeneous nil
                               :spacing 0))
          (hbox-type (g-type-from-instance (pointer hbox))))
     (assert-equal "GtkHBox" (gtype-name hbox-type))
-    (assert-eql 'gtk-h-box (registered-object-type-by-name "GtkHBox"))
+    (assert-eql 'gtk-hbox (registered-object-type-by-name "GtkHBox"))
     (assert-equal "GtkBox" (gtype-name (g-type-parent hbox-type)))
     (unordered-equal '("GtkFileChooserButton" "GtkStatusbar")
                      (mapcar #'gtype-name (g-type-children hbox-type)))
@@ -79,7 +79,7 @@
     (assert-eql 10 (gtk-box-get-spacing hbox))
     
     (assert-equal
-      '(DEFINE-G-OBJECT-CLASS "GtkHBox" GTK-H-BOX
+      '(DEFINE-G-OBJECT-CLASS "GtkHBox" GTK-HBOX
                        (:SUPERCLASS GTK-BOX :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :TYPE-INITIALIZER "gtk_hbox_get_type")
@@ -88,22 +88,22 @@
     
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-H-BOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
+         (DEFCLASS GTK-HBOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
                                       GTK-ORIENTABLE) NIL
            (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkHBox")
            (:G-TYPE-INITIALIZER . "gtk_hbox_get_type"))
-         (EXPORT 'GTK-H-BOX (FIND-PACKAGE "GTK")))
+         (EXPORT 'GTK-HBOX (FIND-PACKAGE "GTK")))
      (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkHBox"))))
     
 ))
 
-(define-test gtk-v-box
-  (let* ((vbox (make-instance 'gtk-v-box
+(define-test gtk-vbox
+  (let* ((vbox (make-instance 'gtk-vbox
                               :homogeneous nil
                               :spacing 0))
          (vbox-type (g-type-from-instance (pointer vbox))))
     (assert-equal "GtkVBox" (gtype-name vbox-type))
-    (assert-eql 'gtk-v-box (registered-object-type-by-name "GtkVBox"))
+    (assert-eql 'gtk-vbox (registered-object-type-by-name "GtkVBox"))
     (assert-equal "GtkBox" (gtype-name (g-type-parent vbox-type)))
     (unordered-equal '("GtkColorSelection"
                        "GtkFileChooserWidget"
@@ -122,7 +122,7 @@
     (assert-eql 10 (gtk-box-get-spacing vbox))
     
     (assert-equal
-      '(DEFINE-G-OBJECT-CLASS "GtkVBox" GTK-V-BOX
+      '(DEFINE-G-OBJECT-CLASS "GtkVBox" GTK-VBOX
                        (:SUPERCLASS GTK-BOX :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :TYPE-INITIALIZER "gtk_vbox_get_type")
@@ -131,11 +131,11 @@
     
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-V-BOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
+         (DEFCLASS GTK-VBOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
                                       GTK-ORIENTABLE) NIL
            (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkVBox")
            (:G-TYPE-INITIALIZER . "gtk_vbox_get_type"))
-         (EXPORT 'GTK-V-BOX (FIND-PACKAGE "GTK")))
+         (EXPORT 'GTK-VBOX (FIND-PACKAGE "GTK")))
      (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkVBox"))))
     ))
 

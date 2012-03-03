@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -236,9 +236,11 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_box_get_type")
-  ((homogeneous gtk-box-homogeneous
+  ((homogeneous
+    gtk-box-homogeneous
     "homogeneous" "gboolean" t t)
-   (spacing gtk-box-spacing
+   (spacing
+    gtk-box-spacing
     "spacing" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -281,7 +283,6 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_pack_start ()
@@ -567,6 +568,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkHBox
+;;;
 ;;;     gtk_hbox_new
 ;;; 
 ;;; Object Hierarchy
@@ -581,6 +583,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkHBox implements AtkImplementorIface, GtkBuildable and GtkOrientable.
+;;;
 ;;; Description
 ;;; 
 ;;; GtkHBox is a container that organizes child widgets into a single row.
@@ -612,9 +615,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkHBox" 'gtk-h-box))
+  (register-object-type "GtkHBox" 'gtk-hbox))
 
-(define-g-object-class "GtkHBox" gtk-h-box
+(define-g-object-class "GtkHBox" gtk-hbox
   (:superclass gtk-box
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -624,23 +627,23 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-expand
+                       gtk-hbox-child-expand
                        "expand" "gboolean" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-fill
+                       gtk-hbox-child-fill
                        "fill" "gboolean" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-padding
+                       gtk-hbox-child-padding
                        "padding" "guint" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-pack-type
+                       gtk-hbox-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
 (define-child-property "GtkHBox"
-                       gtk-h-box-child-position
+                       gtk-hbox-child-position
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
@@ -668,10 +671,10 @@
 ;;;     a new GtkHBox.
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-h-box-new (homogeneous spacing)
-  (make-instance 'gtk-h-box :homogeneous homogeneous :spacing spacing))
+(defun gtk-hbox-new (homogeneous spacing)
+  (make-instance 'gtk-hbox :homogeneous homogeneous :spacing spacing))
 
-(export 'gtk-h-box-new)
+(export 'gtk-hbox-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -682,6 +685,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkVBox
+;;;
 ;;;     gtk_vbox_new
 ;;; 
 ;;; Object Hierarchy
@@ -732,9 +736,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkVBox" 'gtk-v-box))
+  (register-object-type "GtkVBox" 'gtk-vbox))
 
-(define-g-object-class "GtkVBox" gtk-v-box
+(define-g-object-class "GtkVBox" gtk-vbox
   (:superclass gtk-box
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -744,23 +748,23 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-expand
+                       gtk-vbox-child-expand
                        "expand" "gboolean" t t t)
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-fill
+                       gtk-vbox-child-fill
                        "fill" "gboolean" t t t)
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-padding
+                       gtk-vbox-child-padding
                        "padding" "guint" t t t)
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-pack-type
+                       gtk-vbox-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
 (define-child-property "GtkVBox"
-                       gtk-v-box-child-position
+                       gtk-vbox-child-position
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
@@ -788,11 +792,12 @@
 ;;;     a new GtkVBox.
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-v-box-new (homogeneous spacing)
-  (make-instance 'gtk-v-box
+(defun gtk-vbox-new (homogeneous spacing)
+  (make-instance 'gtk-vbox
                  :homogeneous homogeneous
                  :spacing spacing))
 
-(export 'gtk-v-box-new)
+(export 'gtk-vbox-new)
 
 ;;; --- End of file gtk.box.lisp -----------------------------------------------
+

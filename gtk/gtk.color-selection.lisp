@@ -172,7 +172,7 @@
   (register-object-type "GtkColorSelection" 'gtk-color-selection))
 
 (define-g-object-class "GtkColorSelection" gtk-color-selection
-  (:superclass gtk-v-box
+  (:superclass gtk-vbox
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_color_selection_get_type")

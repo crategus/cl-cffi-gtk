@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;.
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -88,7 +88,7 @@
                                   :type :toplevel
                                   :title name
                                   :window-position :center))
-           (box (make-instance 'gtk-v-box))
+           (box (make-instance 'gtk-vbox))
            (bar (make-instance 'progress-bar :text name)))
       (gtk-container-add window box)
       (gtk-box-pack-start box bar :expand nil)

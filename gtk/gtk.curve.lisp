@@ -8,7 +8,7 @@
 ;;; See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -427,7 +427,7 @@
   (register-object-type "GtkGammaCurve" 'gtk-gamma-curve))
 
 (define-g-object-class "GtkGammaCurve" gtk-gamma-curve
-  (:superclass gtk-v-box
+  (:superclass gtk-vbox
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_gamma_curve_get_type")
