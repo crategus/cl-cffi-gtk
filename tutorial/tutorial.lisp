@@ -59,31 +59,26 @@
 
 (defun example-hello-world ()
   (within-main-loop
-    (let (;; Create a toplevel window, the window gets a border width.
+    (let (;; Create a toplevel window, set a border width.
           (window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Hello World"
                                  :default-width 250
-                                 :border-width 10))
+                                 :border-width 12))
           ;; Create a button with a label.
           (button (make-instance 'gtk-button :label "Hello World")))
-      ;; Connect a signal handler to the button.
-      ;; Handle the "clicked" signal: print a message on the console and
-      ;; destroy the main window.
+      ;; Signal handler for the button to handle the signal "clicked".
       (g-signal-connect button "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "Hello world.~%")
                           (gtk-widget-destroy window)))
-      ;; Connect a signal handler to the window.
-      ;; Handle the "destroy" signal: Leave the application.
+      ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      ;; Connect a second signal handler to the window.
-      ;; Handle the "delete-event" signal: print a message on the console
-      ;; and continue the application.
+      ;; Signal handler for the window to handle the signal "delete-event".
       (g-signal-connect window "delete-event"
                         (lambda (widget event)
                           (declare (ignore widget event))
@@ -91,7 +86,7 @@
                           t))
       ;; Put the button into the window.
       (gtk-container-add window button)
-      ;; Show the window and the included button.
+      ;; Show the window and the button.
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -101,7 +96,7 @@
 (defun example-upgraded-hello-world ()
   (within-main-loop
     (let ((window (gtk-window-new :toplevel))
-          (box (gtk-h-box-new nil 5))
+          (box (gtk-hbox-new nil 6))
           (button  nil))
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -109,7 +104,7 @@
                           (gtk-main-quit)))
       (gtk-window-set-title window "Hello Buttons")
       (gtk-window-set-default-size window 250 75)
-      (gtk-container-set-border-width window 10)
+      (gtk-container-set-border-width window 12)
       (setq button (gtk-button-new-with-label "Button 1"))
       (g-signal-connect button "clicked"
                         (lambda (widget)
@@ -136,10 +131,10 @@
                                  :title "Hello Buttons"
                                  :default-width 250
                                  :default-height 75
-                                 :border-width 10))
-          (box (make-instance 'gtk-h-box
+                                 :border-width 12))
+          (box (make-instance 'gtk-hbox
                               :homogeneous nil
-                              :spacing 5)))
+                              :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -168,7 +163,7 @@
 ;;; Packing Demonstrations Program
 
 (defun make-box (homogeneous spacing expand fill padding)
-  (let ((box (make-instance 'gtk-h-box
+  (let ((box (make-instance 'gtk-hbox
                             :homogeneous homogeneous
                             :spacing spacing)))
     (gtk-box-pack-start box
@@ -188,15 +183,15 @@
                         :padding padding)
     (gtk-box-pack-start box
                         (if expand
-                            (gtk-button-new-with-label "TRUE")
-                            (gtk-button-new-with-label "FALSE"))
+                            (gtk-button-new-with-label "T")
+                            (gtk-button-new-with-label "NIL"))
                         :expand expand
                         :fill fill
                         :padding padding)
     (gtk-box-pack-start box
                         (if fill
-                            (gtk-button-new-with-label "TRUE")
-                            (gtk-button-new-with-label "FALSE"))
+                            (gtk-button-new-with-label "T")
+                            (gtk-button-new-with-label "NIL"))
                         :expand expand
                         :fill fill
                         :padding padding)
@@ -207,26 +202,38 @@
                         :padding padding)
     box))
 
-(defun example-packing-boxes-1 ()
+(defun example-packing-boxes (&optional (spacing 0))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
-                                 :title "Example Packing Boxes 1"
+                                 :title "Example Packing Boxes"
                                  :type :toplevel
-                                 :border-width 10
+                                 :border-width 12
                                  :default-height 200
                                  :default-width 300))
-          (vbox (make-instance 'gtk-v-box
+          (vbox (make-instance 'gtk-vbox
                                :homogeneous nil
-                               :spacing 5))
-          (button (make-instance 'gtk-button :label "Quit"))
-          (quitbox (make-instance 'gtk-h-box
+                               :spacing 6))
+          (button (make-instance 'gtk-button
+                                 :label "Quit"))
+          (quitbox (make-instance 'gtk-hbox
                                   :homogeneous nil
                                   :spacing 0)))
-      ;; Create a new label and pack the label into the vertical box.
+      ;; Connect signal handlers to the window and the quit button.
+      (g-signal-connect button "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create a label and pack the label into the vertical box.
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
-                                         "GtkHBox homogeneous nil spacing 0"
+                                         (format nil
+                                                 "GtkHBox homogeneous nil spacing ~A"
+                                                 spacing)
                                          :xalign 0
                                          :yalign 0)
                           :expand nil
@@ -240,19 +247,19 @@
                           :padding 0)
       ;; Call the make-box function
       (gtk-box-pack-start vbox
-                          (make-box nil 0 nil nil 0)
+                          (make-box nil spacing nil nil 0)
                           :expand nil
                           :fill nil
                           :padding 0)
       ;; Call the make-box function
       (gtk-box-pack-start vbox
-                          (make-box nil 0 t nil 0)
+                          (make-box nil spacing t nil 0)
                           :expand nil
                           :fill nil
                           :padding 0)
       ;; Call the make-box function
       (gtk-box-pack-start vbox
-                          (make-box nil 0 t t 0)
+                          (make-box nil spacing t t 0)
                           :expand nil
                           :fill nil
                           :padding 0)
@@ -266,7 +273,9 @@
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
-                                         "GtkHBox homogeneous t spacing 0"
+                                         (format nil
+                                                 "GtkHBox homogeneous t spacing ~A"
+                                                 spacing)
                                          :xalign 0
                                          :yalign 0)
                           :expand nil
@@ -280,13 +289,13 @@
                           :padding 0)
       ;; Call the make-box function
       (gtk-box-pack-start vbox
-                          (make-box t 0 t nil 0)
+                          (make-box t spacing t nil 0)
                           :expand nil
                           :fill nil
                           :padding 0)
       ;; Call the make-box function
       (gtk-box-pack-start vbox
-                          (make-box t 0 t t 0)
+                          (make-box t spacing t t 0)
                           :expand nil
                           :fill nil
                           :padding 0)
@@ -299,118 +308,6 @@
       (gtk-box-pack-start quitbox button :expand nil :fill nil :padding 0)
       (gtk-box-pack-start vbox quitbox :expand nil :fill nil :padding 0)
       (gtk-container-add window vbox)
-      
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-widget-show window))))
-
-(defun example-packing-boxes-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Packing Boxes 2"
-                                 :type :toplevel
-                                 :border-width 10
-                                 :default-height 200
-                                 :default-width 300))
-          (vbox (make-instance 'gtk-v-box
-                               :homogeneous nil
-                               :spacing 5))
-          (button (make-instance 'gtk-button :label "Quit"))
-          (quitbox (make-instance 'gtk-h-box
-                                  :homogeneous nil
-                                  :spacing 0)))
-      ;; Create a new label and pack the label into the vertical box.
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-label
-                                         :label
-                                         "GtkHBox homogeneous nil spacing 10"
-                                         :xalign 0
-                                         :yalign 0)
-                          :expand nil
-                          :fill nil
-                          :padding 0)
-      ;; Create a horizontal separator
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
-                          :expand nil
-                          :fill t
-                          :padding 0)
-      ;; Call the make-box function
-      (gtk-box-pack-start vbox
-                          (make-box nil 10 nil nil 0)
-                          :expand nil
-                          :fill nil
-                          :padding 0)
-      ;; Call the make-box function
-      (gtk-box-pack-start vbox
-                          (make-box nil 10 t nil 0)
-                          :expand nil
-                          :fill nil
-                          :padding 0)
-      ;; Call the make-box function
-      (gtk-box-pack-start vbox
-                          (make-box nil 10 t t 0)
-                          :expand nil
-                          :fill nil
-                          :padding 0)
-      ;; Create a horizontal separator
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
-                          :expand nil
-                          :fill t
-                          :padding 0)
-      ;; Create another label and pack the label into the vertical box.
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-label
-                                         :label
-                                         "GtkHBox homogeneous t spacing 10"
-                                         :xalign 0
-                                         :yalign 0)
-                          :expand nil
-                          :fill nil
-                          :padding 5)
-      ;; Create a horizontal separator
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
-                          :expand nil
-                          :fill t
-                          :padding 0)
-      ;; Call the make-box function
-      (gtk-box-pack-start vbox
-                          (make-box t 10 t nil 0)
-                          :expand nil
-                          :fill nil
-                          :padding 0)
-      ;; Call the make-box function
-      (gtk-box-pack-start vbox
-                          (make-box t 10 t t 0)
-                          :expand nil
-                          :fill nil
-                          :padding 0)
-      ;; Create a horizontal separator
-      (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
-                          :expand nil
-                          :fill t
-                          :padding 5)
-      (gtk-box-pack-start quitbox button :expand nil :fill nil :padding 0)
-      (gtk-box-pack-start vbox quitbox :expand nil :fill nil :padding 0)
-      (gtk-container-add window vbox)
-      
-      (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -508,7 +405,7 @@
 ;;; Normal Buttons
 
 (defun xpm-label-box (filename text)
-  (let ((box (make-instance 'gtk-h-box
+  (let ((box (make-instance 'gtk-hbox
                             :homogeneous nil
                             :spacing 0
                             :border-width 2))
@@ -544,9 +441,9 @@
                                  :type :toplevel
                                  :default-width 250
                                  :border-width 10))
-          (vbox1 (make-instance 'gtk-v-box :spacing 5))
-          (vbox2 (make-instance 'gtk-v-box :spacing 5))
-          (hbox  (make-instance 'gtk-h-box :spacing 5)))
+          (vbox1 (make-instance 'gtk-vbox :spacing 5))
+          (vbox2 (make-instance 'gtk-vbox :spacing 5))
+          (hbox  (make-instance 'gtk-hbox :spacing 5)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -600,14 +497,14 @@
                                  :title "Example Radio Buttons"
                                  :type :toplevel
                                  :border-width 0))
-          (vbox1 (make-instance 'gtk-v-box
+          (vbox1 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 0))
-          (vbox2 (make-instance 'gtk-v-box
+          (vbox2 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
-          (vbox3 (make-instance 'gtk-v-box
+          (vbox3 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -661,14 +558,14 @@
     (let* ((window   (make-instance 'gtk-window
                                     :type :toplevel
                                     :title "Range Controls"))
-           (box1     (make-instance 'gtk-v-box
+           (box1     (make-instance 'gtk-vbox
                                     :homogeneous nil
                                     :spacing 0))
-           (box2     (make-instance 'gtk-h-box
+           (box2     (make-instance 'gtk-hbox
                                     :homogeneous nil
                                     :spacing 10
                                     :border-width 10))
-           (box3     (make-instance 'gtk-v-box
+           (box3     (make-instance 'gtk-vbox
                                     :homogeneous nil
                                     :spacing 10))
            (adj      (make-instance 'gtk-adjustment
@@ -724,7 +621,7 @@
             
       (gtk-container-add window box1)
       
-      (setq box2 (make-instance 'gtk-h-box
+      (setq box2 (make-instance 'gtk-hbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -740,7 +637,7 @@
       
       (gtk-box-pack-start box2 button :expand t :fill t :padding 0)
       
-      (setq box2 (make-instance 'gtk-h-box
+      (setq box2 (make-instance 'gtk-hbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -751,7 +648,7 @@
       
       (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (setq box2 (make-instance 'gtk-h-box
+      (setq box2 (make-instance 'gtk-hbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -763,7 +660,7 @@
       
       (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (setq box2 (make-instance 'gtk-h-box
+      (setq box2 (make-instance 'gtk-hbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -781,7 +678,7 @@
       (gtk-box-pack-start box2 scale :expand t :fill t :padding 0)
       (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
       
-      (setq box2 (make-instance 'gtk-h-box
+      (setq box2 (make-instance 'gtk-hbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -814,7 +711,7 @@
                           (make-instance 'gtk-h-separator)
                           :expand nil :fill t :padding 0)
       
-      (setq box2 (make-instance 'gtk-v-box
+      (setq box2 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 10
                                 :border-width 10))
@@ -852,10 +749,10 @@
                                  :type :toplevel
                                  :title "Example Labels"
                                  :border-width 5))
-          (vbox (make-instance 'gtk-v-box
+          (vbox (make-instance 'gtk-vbox
                                :homogeneous nil
                                :spacing 5))
-          (hbox (make-instance 'gtk-h-box
+          (hbox (make-instance 'gtk-hbox
                                :homogeneous nil
                                :spacing 5))
           (frame (make-instance 'gtk-frame
@@ -905,7 +802,7 @@
       (gtk-container-add frame label)
       (gtk-box-pack-start vbox frame :expand nil :fill nil :padding 0)
       
-      (setq vbox (make-instance 'gtk-v-box
+      (setq vbox (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 5))
       (gtk-box-pack-start hbox vbox :expand nil :fill nil :padding 0)
@@ -978,13 +875,13 @@
                                  :title "Example More Labels"
                                  :default-width 300
                                  :border-width 5))
-          (vbox1 (make-instance 'gtk-v-box
+          (vbox1 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 5))
-          (vbox2 (make-instance 'gtk-v-box
+          (vbox2 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 5))
-          (hbox (make-instance 'gtk-h-box
+          (hbox (make-instance 'gtk-hbox
                                :homogeneous nil
                                :spacing 5)))
       (g-signal-connect window "destroy"
@@ -1041,7 +938,7 @@
                                  :title "Arrow Buttons"
                                  :default-width 250
                                  :border-width 10))
-          (box (make-instance 'gtk-h-box
+          (box (make-instance 'gtk-hbox
                               :homogeneous t
                               :spacing 0
                               :border-width 5)))
@@ -1087,7 +984,7 @@
                                  :title "Arrow Buttons"
                                  :default-width 250
                                  :border-width 10))
-          (box (make-instance 'gtk-h-box
+          (box (make-instance 'gtk-hbox
                               :homogeneous t
                               :spacing 0
                               :border-width 5)))
@@ -1135,7 +1032,7 @@
                                  :title "Example Progress Bar"))
           (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)
                                  :mode nil))
-          (vbox (make-instance 'gtk-v-box
+          (vbox (make-instance 'gtk-vbox
                                :border-width 10))
           (align (gtk-alignment-new 0.5 0.5 0.0 0.0))
           (table (gtk-table-new 2 3 nil)))
@@ -1207,7 +1104,7 @@
                                   :title "Example Status Bar"
                                   :default-width 300
                                   :border-width 10))
-           (vbox (make-instance 'gtk-v-box
+           (vbox (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 1))
            (statusbar (make-instance 'gtk-statusbar))
@@ -1244,8 +1141,8 @@
                                   :type :toplevel
                                   :title "Example Text Entry"
                                   :default-width 250))
-           (vbox (make-instance 'gtk-v-box))
-           (hbox (make-instance 'gtk-h-box))
+           (vbox (make-instance 'gtk-vbox))
+           (hbox (make-instance 'gtk-hbox))
            (entry (make-instance 'gtk-entry
                                  :text "Hello"
                                  :max-length 50))
@@ -1297,19 +1194,19 @@
                                  :type :toplevel
                                  :title "Example Spin Button"
                                  :default-width 300))
-          (vbox (make-instance 'gtk-v-box
+          (vbox (make-instance 'gtk-vbox
                                :homogeneous nil
                                :spacing 5
                                :border-width 10))
-          (vbox1 (make-instance 'gtk-v-box
+          (vbox1 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 0
                                 :border-width 5))
-          (vbox2 (make-instance 'gtk-v-box
+          (vbox2 (make-instance 'gtk-vbox
                                 :homogeneous nil
                                 :spacing 0
                                 :boder-width 5))
-          (hbox (make-instance 'gtk-h-box))
+          (hbox (make-instance 'gtk-hbox))
           (frame1 (make-instance 'gtk-frame
                                  :label "Not accelerated"))
           (frame2 (make-instance 'gtk-frame
@@ -1320,7 +1217,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (let ((vbox (make-instance 'gtk-v-box))
+      (let ((vbox (make-instance 'gtk-vbox))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
                                     (make-instance 'gtk-adjustment
@@ -1343,7 +1240,7 @@
                             :padding 0)
         (gtk-box-pack-start vbox spinner :expand nil :fill t :padding 0)
         (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5))
-      (let ((vbox (make-instance 'gtk-v-box))
+      (let ((vbox (make-instance 'gtk-vbox))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
                                     (make-instance 'gtk-adjustment
@@ -1366,7 +1263,7 @@
                             :padding 0)
         (gtk-box-pack-start vbox spinner :expand nil :fill t :padding 0)
         (gtk-box-pack-start hbox vbox :expand t :fill t :padding 5))
-      (let ((vbox (make-instance 'gtk-v-box))
+      (let ((vbox (make-instance 'gtk-vbox))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
                                     (make-instance 'gtk-adjustment
@@ -1392,8 +1289,8 @@
       (gtk-box-pack-start vbox1 hbox :expand t :fill t :padding 5)
       (gtk-container-add frame1 vbox1)
       (gtk-box-pack-start vbox frame1 :expand t :fill t :padding 0)
-      (setq hbox (make-instance 'gtk-h-box))
-      (let ((vbox (make-instance 'gtk-v-box))
+      (setq hbox (make-instance 'gtk-hbox))
+      (let ((vbox (make-instance 'gtk-vbox))
             (spinner1 (make-instance 'gtk-spin-button
                                      :adjustment
                                      (make-instance 'gtk-adjustment
@@ -1434,7 +1331,7 @@
              (gtk-spin-button-set-digits
                                   spinner1
                                   (gtk-spin-button-get-value-as-int spinner2))))
-        (setq vbox (make-instance 'gtk-v-box))
+        (setq vbox (make-instance 'gtk-vbox))
         (gtk-box-pack-start vbox
                             (make-instance 'gtk-label
                                            :label "Digits :"
@@ -1465,7 +1362,7 @@
                                         (gtk-toggle-button-get-active widget))))
           (gtk-box-pack-start vbox2 check :expand t :fill t :padding 0))
         (gtk-container-add frame2 vbox2)
-        (setq hbox (make-instance 'gtk-h-box))
+        (setq hbox (make-instance 'gtk-hbox))
         (let ((button (gtk-button-new-with-label "Value as Int")))
           (g-signal-connect button "clicked"
              (lambda (widget)
