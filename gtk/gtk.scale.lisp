@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; GtkScale
 ;;; 
 ;;; A slider widget for selecting a value from a range
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkScale
@@ -184,16 +184,16 @@
 ;;;  }
 ;;; 
 ;;; scale :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; value :
-;;; 	the value to format
+;;;     the value to format
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	allocated string representing value
+;;;     allocated string representing value
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -209,9 +209,15 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_scale_get_type")
-  ((digits gtk-scale-digits "digits" "gint" t t)
-   (draw-value gtk-scale-draw-value "draw-value" "gboolean" t t)
-   (value-pos gtk-scale-value-pos "value-pos" "GtkPositionType" t t)))
+  ((digits
+    gtk-scale-digits
+    "digits" "gint" t t)
+   (draw-value
+    gtk-scale-draw-value
+    "draw-value" "gboolean" t t)
+   (value-pos
+    gtk-scale-value-pos
+    "value-pos" "GtkPositionType" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_new ()
@@ -222,14 +228,14 @@
 ;;; Creates a new GtkScale.
 ;;; 
 ;;; orientation :
-;;; 	the scale's orientation.
+;;;     the scale's orientation.
 ;;; 
 ;;; adjustment :
-;;; 	the GtkAdjustment which sets the range of the scale, or NULL to create
+;;;     the GtkAdjustment which sets the range of the scale, or NULL to create
 ;;;     a new adjustment.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkScale
+;;;     a new GtkScale
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -252,19 +258,19 @@
 ;;; use gtk_scale_set_digits() to correct it.
 ;;; 
 ;;; orientation :
-;;; 	the scale's orientation.
+;;;     the scale's orientation.
 ;;; 
 ;;; min :
-;;; 	minimum value
+;;;     minimum value
 ;;; 
 ;;; max :
-;;; 	maximum value
+;;;     maximum value
 ;;; 
 ;;; step :
-;;; 	step increment (tick size) used with keyboard shortcuts
+;;;     step increment (tick size) used with keyboard shortcuts
 ;;; 
 ;;; Returns :
-;;; 	a new GtkScale
+;;;     a new GtkScale
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -279,10 +285,10 @@
 ;;; digits, so the retrieved value matches the value the user saw.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; digits :
-;;; 	the number of decimal places to display, e.g. use 1 to display
+;;;     the number of decimal places to display, e.g. use 1 to display
 ;;;     1.0, 2 to display 1.00, etc
 ;;; ----------------------------------------------------------------------------
 
@@ -295,10 +301,10 @@
 ;;; slider.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; draw_value :
-;;; 	TRUE to draw the value
+;;;     TRUE to draw the value
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -309,11 +315,16 @@
 ;;; Sets the position in which the current value is displayed.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; pos :
-;;; 	the position in which the current value is displayed
+;;;     the position in which the current value is displayed
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-scale-set-value-pos (scale pos)
+  (setf (gtk-scale-value-pos scale) pos))
+
+(export 'gtk-scale-set-value-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_digits ()
@@ -323,10 +334,10 @@
 ;;; Gets the number of decimal places that are displayed in the value.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; Returns :
-;;; 	the number of decimal places that are displayed
+;;;     the number of decimal places that are displayed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -338,10 +349,10 @@
 ;;; slider.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; Returns :
-;;; 	whether the current value is displayed as a string
+;;;     whether the current value is displayed as a string
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -352,11 +363,16 @@
 ;;; Gets the position in which the current value is displayed.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; Returns :
-;;; 	the position in which the current value is displayed
+;;;     the position in which the current value is displayed
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-scale-get-value-pos (scale)
+  (gtk-scale-value-pos scale))
+
+(export 'gtk-scale-get-value-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_layout ()
@@ -367,10 +383,10 @@
 ;;; owned by the scale so does not need to be freed by the caller.
 ;;; 
 ;;; scale :
-;;; 	A GtkScale
+;;;     A GtkScale
 ;;; 
 ;;; Returns :
-;;; 	the PangoLayout for this scale, or NULL if the "draw-value" property
+;;;     the PangoLayout for this scale, or NULL if the "draw-value" property
 ;;;     is FALSE.
 ;;; 
 ;;; Since 2.4
@@ -394,13 +410,13 @@
 ;;; If the "draw-value" property is FALSE, the return values are undefined.
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; x :
-;;; 	location to store X offset of layout, or NULL.
+;;;     location to store X offset of layout, or NULL.
 ;;; 
 ;;; y :
-;;; 	location to store Y offset of layout, or NULL.
+;;;     location to store Y offset of layout, or NULL.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -436,20 +452,20 @@
 ;;; To remove marks from a scale, use gtk_scale_clear_marks().
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; value :
-;;; 	the value at which the mark is placed, must be between the lower and
+;;;     the value at which the mark is placed, must be between the lower and
 ;;;     upper limits of the scales' adjustment
 ;;; 
 ;;; position :
-;;; 	where to draw the mark. For a horizontal scale, GTK_POS_TOP and
+;;;     where to draw the mark. For a horizontal scale, GTK_POS_TOP and
 ;;;     GTK_POS_LEFT are drawn above the scale, anything else below. For a
 ;;;     vertical scale, GTK_POS_LEFT and GTK_POS_TOP are drawn to the left of
 ;;;     the scale, anything else to the right.
 ;;; 
 ;;; markup :
-;;; 	Text to be shown at the mark, using Pango markup, or NULL.
+;;;     Text to be shown at the mark, using Pango markup, or NULL.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -470,7 +486,7 @@
 ;;; Removes any marks that have been added with gtk_scale_add_mark().
 ;;; 
 ;;; scale :
-;;; 	a GtkScale
+;;;     a GtkScale
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
