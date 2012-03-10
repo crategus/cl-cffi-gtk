@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -376,7 +376,10 @@
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
+;;;
 ;;; Style Property Details
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "appears-as-list" style property
 ;;; 
 ;;;   "appears-as-list"          gboolean              : Read
@@ -510,11 +513,11 @@
 
 (in-package :gtk)
 
-(defcfun (combo-box-active-text "gtk_combo_box_get_active_text")
+(defcfun ("gtk_combo_box_get_active_text" gtk-combo-box-get-active-text)
     (:string :free-from-foreign t)
   (combo-box g-object))
 
-(export 'combo-box-active-text)
+(export 'gtk-combo-box-get-active-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkComboBox
@@ -524,37 +527,51 @@
 
 (define-g-object-class "GtkComboBox" gtk-combo-box
   (:superclass gtk-bin
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
-                 "GtkCellLayout")
-    :type-initializer "gtk_combo_box_get_type")
-  ((active gtk-combo-box-active
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
+                "GtkCellLayout")
+   :type-initializer "gtk_combo_box_get_type")
+  ((active
+    gtk-combo-box-active
     "active" "gint" t t)
-   (add-tearoffs gtk-combo-box-add-tearoffs
+   (add-tearoffs
+    gtk-combo-box-add-tearoffs
     "add-tearoffs" "gboolean" t t)
-   (button-sensitivity gtk-combo-box-button-sensitivity
+   (button-sensitivity
+    gtk-combo-box-button-sensitivity
     "button-sensitivity" "GtkSensitivityType" t t)
-   (column-span-column gtk-combo-box-column-span-column
+   (column-span-column
+    gtk-combo-box-column-span-column
     "column-span-column" "gint" t t)
-   (focus-on-click gtk-combo-box-focus-on-click
+   (focus-on-click
+    gtk-combo-box-focus-on-click
     "focus-on-click" "gboolean" t t)
-   (has-frame gtk-combo-box-has-frame
+   (has-frame
+    gtk-combo-box-has-frame
     "has-frame" "gboolean" t t)
-   (model gtk-combo-box-model
+   (model
+    gtk-combo-box-model
     "model" "GtkTreeModel" t t)
-   (popup-shown gtk-combo-box-popup-shown
+   (popup-shown
+    gtk-combo-box-popup-shown
     "popup-shown" "gboolean" t nil)
-   (row-span-column gtk-combo-box-row-span-column
+   (row-span-column
+    gtk-combo-box-row-span-column
     "row-span-column" "gint" t t)
-   (tearoff-title gtk-combo-box-tearoff-title
+   (tearoff-title
+    gtk-combo-box-tearoff-title
     "tearoff-title" "gchararray" t t)
-   (wrap-width gtk-combo-box-wrap-width
+   (wrap-width
+    gtk-combo-box-wrap-width
     "wrap-width" "gint" t t)
-   (:cffi active-iter gtk-combo-box-active-iter (g-boxed-foreign gtk-tree-iter)
+   (:cffi active-iter
+          gtk-combo-box-active-iter (g-boxed-foreign gtk-tree-iter)
           combo-box-get-active-iter "gtk_combo_box_set_active_iter")
-   (:cffi row-separator-func gtk-combo-box-separator-func
-          nil nil combo-box-set-separator-func)
-   (:cffi title gtk-combo-box-title
+   (:cffi row-separator-func
+          gtk-combo-box-separator-func nil
+          nil combo-box-set-separator-func)
+   (:cffi title
+          gtk-combo-box-title
           (:string :free-from-foreign nil :free-to-foreign t)
           "gtk_combo_box_get_title" "gtk_combo_box_set_title")))
 
@@ -786,6 +803,12 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_combo_box_set_active" gtk-combo-box-set-active) :void
+  (combo-box (g-object gtk-combo-box))
+  (index :int))
+
+(export 'gtk-combo-box-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_active_iter ()
