@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,7 +59,8 @@
 ;;; 
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
-;;;          +----GtkAdjustment
+;;;          +----GtkObject
+;;;                +----GtkAdjustment
 ;;; 
 ;;; Properties
 ;;; 
@@ -177,10 +178,10 @@
 ;;; other than the value field.
 ;;; 
 ;;; adjustment :
-;;;     the object which received the signal.
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "value-changed" signal
@@ -191,10 +192,10 @@
 ;;; Emitted when the GtkAdjustment value field has been changed.
 ;;; 
 ;;; adjustment :
-;;;     the object which received the signal.
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -245,26 +246,42 @@
 ;;; Creates a new GtkAdjustment.
 ;;; 
 ;;; value :
-;;;     the initial value.
+;;;     the initial value
 ;;; 
 ;;; lower :
-;;;     the minimum value.
+;;;     the minimum value
 ;;; 
 ;;; upper :
-;;;     the maximum value.
+;;;     the maximum value
 ;;; 
 ;;; step_increment :
-;;;     the step increment.
+;;;     the step increment
 ;;; 
 ;;; page_increment :
-;;;     the page increment.
+;;;     the page increment
 ;;; 
 ;;; page_size :
-;;;     the page size.
+;;;     the page size
 ;;; 
 ;;; Returns :
-;;;     a new GtkAdjustment.
+;;;     a new GtkAdjustment
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-new (value
+                           lower
+                           upper
+                           step-increment
+                           page-increment
+                           page-size)
+  (make-instance 'gtk-adjustment
+                 :value value
+                 :lower lower
+                 :upper upper
+                 :step-increment step-increment
+                 :page-increment page-increment
+                 :page-size page-size))
+
+(export 'gtk-adjustment-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_value ()
@@ -277,8 +294,13 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     The current value of the adjustment.
+;;;     the current value of the adjustment
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-get-value (adjustment)
+  (gtk-adjustment-value adjustment))
+
+(export 'gtk-adjustment-get-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_set_value ()
@@ -293,11 +315,16 @@
 ;;; GtkAdjustment.upper - GtkAdjustment.page_size.
 ;;; 
 ;;; adjustment :
-;;;     a GtkAdjustment.
+;;;     a GtkAdjustment
 ;;; 
 ;;; value :
-;;;     the new value.
+;;;     the new value
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-set-value (adjustment value)
+  (setf (gtk-adjustment-value adjustment) value))
+
+(export 'gtk-adjustment-set-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_clamp_page ()
@@ -314,13 +341,13 @@
 ;;; changed.
 ;;; 
 ;;; adjustment :
-;;;     a GtkAdjustment.
+;;;     a GtkAdjustment
 ;;; 
 ;;; lower :
-;;;     the lower value.
+;;;     the lower value
 ;;; 
 ;;; upper :
-;;;     the upper value.
+;;;     the upper value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_adjustment_clamp_page" gtk-adjustment-clamp-page) :void
@@ -343,6 +370,11 @@
 ;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_adjustment_changed" gtk-adjustment-changed) :void
+  (adjustment (g-object gtk-adjustment)))
+
+(export 'gtk-adjustment-changed)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_value_changed ()
 ;;; 
@@ -355,6 +387,11 @@
 ;;; adjustment :
 ;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_adjustment_value_changed" gtk-adjustment-value-changed) :void
+  (adjustment (g-object gtk-adjustment)))
+
+(export 'gtk-adjustment-value-changed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_configure ()
@@ -397,6 +434,17 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_adjustment_configure" gtk-adjustment-configure) :void
+  (adjustment (g-object gtk-adjustment))
+  (value :double)
+  (lower :double)
+  (upper :double)
+  (step-increment :double)
+  (page-increment :double)
+  (page-size :double))
+
+(export 'gtk-adjustment-configure)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_lower ()
 ;;; 
@@ -408,10 +456,15 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     The current minimum value of the adjustment.
+;;;     the current minimum value of the adjustment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-get-lower (adjustment)
+  (gtk-adjustment-lower adjustment))
+
+(export 'gtk-adjustment-get-lower)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_page_increment ()
@@ -424,10 +477,15 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     The current page increment of the adjustment.
+;;;     the current page increment of the adjustment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-get-page-increment (adjustment)
+  (gtk-adjustment-page-increment adjustment))
+
+(export 'gtk-adjustment-get-page-increment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_page_size ()
@@ -440,10 +498,15 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     The current page size of the adjustment.
+;;;     the current page size of the adjustment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-get-page-size (adjustment)
+  (gtk-adjustment-page-size adjustment))
+
+(export 'gtk-adjustment-get-page-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_step_increment ()
@@ -456,10 +519,15 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     The current step increment of the adjustment.
+;;;     the current step increment of the adjustment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-get-step-increment (adjustment)
+  (gtk-adjustment-step-increment adjustment))
+
+(export 'gtk-adjustment-get-step-increment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_minimum_increment ()
@@ -488,10 +556,15 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     The current maximum value of the adjustment.
+;;;     the current maximum value of the adjustment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-get-upper (adjustment)
+  (gtk-adjustment-upper adjustment))
+
+(export 'gtk-adjustment-get-upper)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_set_lower ()
@@ -520,6 +593,11 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-adjustment-set-lower (adjustment lower)
+  (setf (gtk-adjustment-lower adjustment) lower))
+
+(export 'gtk-adjustment-set-lower)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_set_page_increment ()
 ;;; 
@@ -539,6 +617,11 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-set-page-increment (adjustment page-increment)
+  (setf (gtk-adjustment-page-increment adjustment) page-increment))
+
+(export 'gtk-adjustment-set-page-increment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_set_page_size ()
@@ -560,6 +643,11 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-adjustment-set-page-size (adjustment page-size)
+  (setf (gtk-adjustment-page-size adjustment) page-size))
+
+(export 'gtk-adjustment-set-page-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_set_step_increment ()
 ;;; 
@@ -579,6 +667,11 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-set-step-increment (adjustment step-increment)
+  (setf (gtk-adjustment-step-increment adjustment) step-increment))
+
+(export 'gtk-adjustment-set-step-increment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_set_upper ()
@@ -601,5 +694,10 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-adjustment-set-upper (adjustment upper)
+  (setf (gtk-adjustment-upper adjustment) upper))
+
+(export 'gtk-adjustment-set-upper)
 
 ;;; --- End of file gtk.adjustment.lisp ----------------------------------------
