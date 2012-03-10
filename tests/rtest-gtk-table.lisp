@@ -93,11 +93,12 @@
     
     ;; Get the names of the style properties.
     (assert-equal
-        '("separator-width" "link-color" "interior-focus" "focus-padding"
-         "wide-separators" "scroll-arrow-hlength" "scroll-arrow-vlength"
-         "focus-line-pattern" "new-tooltip-style" "secondary-cursor-color"
-         "cursor-color" "draw-border" "visited-link-color"
-         "cursor-aspect-ratio" "separator-height" "focus-line-width")
+        '("cursor-aspect-ratio" "cursor-color" "draw-border"
+         "focus-line-pattern" "focus-line-width" "focus-padding"
+         "interior-focus" "link-color" "new-tooltip-style"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators")
         (mapcar #'g-class-property-definition-name
                 (gtk-widget-class-list-style-properties (gtype "GtkTable"))))
   )
