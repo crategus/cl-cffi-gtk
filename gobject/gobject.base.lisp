@@ -521,6 +521,16 @@
 
 (register-object-type "GObject" 'g-object)
 
+;; Returns the GType value for a given type. If type is an integer, it is
+;; returned. If type is a string, GType corresponding to this type name is
+;; looked up and returned. type is a string or and integer. The return value
+;; is an integer equal to GType of type.
+(defun ensure-g-type (type)
+  (etypecase type
+    (integer type)
+    (string (or (%g-type-from-name type)
+                (error "Type ~A is invalid" type)))))
+
 (defun ensure-object-pointer (object)
   (if (pointerp object)
       object
