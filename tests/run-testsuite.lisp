@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; run-testsuite.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,6 +31,7 @@
   (:use :glib :cffi :common-lisp :lisp-unit))
 
 (load "rtest-glib.lisp")
+
 (in-package :glib-tests)
 (run-all-tests :glib-tests)
 
@@ -41,6 +42,7 @@
 
 (load "rtest-gobject.lisp")
 (load "rtest-gobject-type-info.lisp")
+
 (in-package :gobject-tests)
 (run-all-tests :gobject-tests)
 
@@ -52,6 +54,7 @@
 (load "rtest-gdk-region.lisp")
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
+
 (in-package :gdk-tests)
 (run-all-tests :gdk-tests)
 
@@ -69,6 +72,8 @@
 (load "rtest-gtk-label.lisp")
 (load "rtest-gtk-progress-bar.lisp")
 (load "rtest-gtk-table.lisp")
+(load "rtest-gtk-adjustment.lisp")
+
 (in-package :gtk-tests)
 (run-all-tests :gtk-tests)
 
