@@ -201,6 +201,7 @@
    (:file "gtk.separator-menu-item")   ; Separator used in menus
    (:file "gtk.tearoff-menu-item")     ; Menu item used to tear off and reattach
    (:file "gtk.combo-box")             ; GtkComboBox
+   (:file "gtk.combo-box-text")        ; Simple, text-only combo box
    (:file "gtk.combo-box-entry")       ; Text entry field with a dropdown list
    (:file "gtk.tool-shell")            ; Interface for GtkToolItem
    (:file "gtk.tool-item")             ; GtkToolItem
