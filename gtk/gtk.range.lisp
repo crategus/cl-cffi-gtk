@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkRange
+;;;
 ;;;     gtk_range_get_fill_level
 ;;;     gtk_range_get_restrict_to_fill_level
 ;;;     gtk_range_get_show_fill_level
@@ -53,6 +54,7 @@
 ;;;     gtk_range_set_round_digits
 ;;;
 ;;;     GtkSensitivityType
+;;;
 ;;;     gtk_range_set_lower_stepper_sensitivity
 ;;;     gtk_range_get_lower_stepper_sensitivity
 ;;;     gtk_range_set_upper_stepper_sensitivity
@@ -407,21 +409,32 @@
 
 (define-g-object-class "GtkRange" gtk-range
   (:superclass gtk-widget
-    :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-    :type-initializer "gtk_range_get_type") 
-  ((adjustment gtk-range-adjustment "adjustment" "GtkAdjustment" t t)
-   (fill-level gtk-range-fill-level "fill-level" "gdouble" t t)
-   (inverted gtk-range-inverted "inverted" "gboolean" t t)
-   (lower-stepper-sensitivity gtk-range-lower-stepper-sensitivity
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_range_get_type") 
+  ((adjustment
+    gtk-range-adjustment
+    "adjustment" "GtkAdjustment" t t)
+   (fill-level
+    gtk-range-fill-level
+    "fill-level" "gdouble" t t)
+   (inverted
+    gtk-range-inverted
+    "inverted" "gboolean" t t)
+   (lower-stepper-sensitivity
+    gtk-range-lower-stepper-sensitivity
     "lower-stepper-sensitivity" "GtkSensitivityType" t t)
-   (restrict-to-fill-level gtk-range-restrict-to-fill-level
+   (restrict-to-fill-level
+    gtk-range-restrict-to-fill-level
     "restrict-to-fill-level" "gboolean" t t)
-   (show-fill-level gtk-range-show-fill-level
+   (show-fill-level
+    gtk-range-show-fill-level
     "show-fill-level" "gboolean" t t)
-   (update-policy gtk-range-update-policy "update-policy"
-    "GtkUpdateType" t t)
-   (upper-stepper-sensitivity gtk-range-upper-stepper-sensitivity
+   (update-policy
+    gtk-range-update-policy
+    "update-policy" "GtkUpdateType" t t)
+   (upper-stepper-sensitivity
+    gtk-range-upper-stepper-sensitivity
     "upper-stepper-sensitivity" "GtkSensitivityType" t t)))
 
 ;;; ---------------------------------------------------------------------------- 
