@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -106,11 +106,14 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_viewport_get_type")
-  ((hadjustment gtk-viewport-hadjustment
+  ((hadjustment
+    gtk-viewport-hadjustment
     "hadjustment" "GtkAdjustment" t t)
-   (shadow-type gtk-viewport-shadow-type
+   (shadow-type
+    gtk-viewport-shadow-type
     "shadow-type" "GtkShadowType" t t)
-   (vadjustment gtk-viewport-vadjustment
+   (vadjustment
+    gtk-viewport-vadjustment
     "vadjustment" "GtkAdjustment" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -152,7 +155,7 @@
 ;;; Returns the horizontal adjustment of the viewport.
 ;;; 
 ;;; viewport :
-;;;     a GtkViewport.
+;;;     a GtkViewport
 ;;; 
 ;;; Returns :
 ;;;     the horizontal adjustment of viewport
@@ -177,7 +180,7 @@
 ;;; Returns the vertical adjustment of the viewport.
 ;;; 
 ;;; viewport :
-;;;     a GtkViewport.
+;;;     a GtkViewport
 ;;; 
 ;;; Returns :
 ;;;     the vertical adjustment of viewport
@@ -191,7 +194,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_hadjustment ()
 ;;; 
-;;; void gtk_viewport_set_hadjustment (GtkViewport *viewport,
+;;; void gtk_viewport_set_hadjustment (GtkViewport   *viewport,
 ;;;                                    GtkAdjustment *adjustment);
 ;;; 
 ;;; Warning
@@ -203,7 +206,7 @@
 ;;; Sets the horizontal adjustment of the viewport.
 ;;; 
 ;;; viewport :
-;;;     a GtkViewport.
+;;;     a GtkViewport
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
@@ -217,7 +220,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_vadjustment ()
 ;;; 
-;;; void gtk_viewport_set_vadjustment (GtkViewport *viewport,
+;;; void gtk_viewport_set_vadjustment (GtkViewport   *viewport,
 ;;;                                    GtkAdjustment *adjustment);
 ;;; 
 ;;; Warning
@@ -229,7 +232,7 @@
 ;;; Sets the vertical adjustment of the viewport.
 ;;; 
 ;;; viewport :
-;;;     a GtkViewport.
+;;;     a GtkViewport
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
@@ -243,8 +246,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_shadow_type ()
 ;;; 
-;;; void gtk_viewport_set_shadow_type (GtkViewport *viewport,
-;;;                                    GtkShadowType type);
+;;; void gtk_viewport_set_shadow_type (GtkViewport   *viewport,
+;;;                                    GtkShadowType  type);
 ;;; 
 ;;; Sets the shadow type of the viewport.
 ;;; 
