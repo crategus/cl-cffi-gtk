@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -258,20 +258,6 @@
 
 (in-package :gtk)
 
-(define-g-enum "GtkProgressBarOrientation" gtk-progress-bar-orientation
-  (:export t
-   :type-initializer "gtk_progress_bar_orientation_get_type")
-  (:left-to-right 0)
-  (:right-to-left 1)
-  (:bottom-to-top 2)
-  (:top-to-bottom 3))
-
-(define-g-enum "GtkProgressBarStyle" gtk-progress-bar-style
-  (:export t
-   :type-initializer "gtk_progress_bar_style_get_type")
-  (:continuous 0)
-  (:discrete 1))
-
 ;; The GTK+ Documentation does not have a class GtkProgress
 ;; The accessors do not work.
 
@@ -280,14 +266,75 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_progress_get_type")
-  ((activity-mode gtk-progress-activity-mode
+  ((activity-mode
+    gtk-progress-activity-mode
     "activity-mode" "gboolean" t t)
-   (show-text gtk-progress-show-text
+   (show-text
+    gtk-progress-show-text
     "show-text" "gboolean" t t)
-   (text-xalign gtk-progress-text-xalign
+   (text-xalign
+    gtk-progress-text-xalign
     "text-xalign" "gfloat" t t)
-   (text-yalign gtk-progress-text-yalign
+   (text-yalign
+    gtk-progress-text-yalign
     "text-yalign" "gfloat" t t)))
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkProgressBarStyle
+;;;
+;;; typedef enum {
+;;;   GTK_PROGRESS_CONTINUOUS,
+;;;   GTK_PROGRESS_DISCRETE
+;;; } GtkProgressBarStyle;
+;;;
+;;; An enumeration representing the styles for drawing the progress bar.
+;;;
+;;; GTK_PROGRESS_CONTINUOUS
+;;;     The progress bar grows in a smooth, continuous manner.
+;;;
+;;; GTK_PROGRESS_DISCRETE
+;;;     The progress bar grows in discrete, visible blocks.
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkProgressBarStyle" gtk-progress-bar-style
+  (:export t
+   :type-initializer "gtk_progress_bar_style_get_type")
+  (:continuous 0)
+  (:discrete 1))
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkProgressBarOrientation
+;;;
+;;; typedef enum {
+;;;   GTK_PROGRESS_LEFT_TO_RIGHT,
+;;;   GTK_PROGRESS_RIGHT_TO_LEFT,
+;;;   GTK_PROGRESS_BOTTOM_TO_TOP,
+;;;   GTK_PROGRESS_TOP_TO_BOTTOM
+;;; } GtkProgressBarOrientation;
+;;; 
+;;; An enumeration representing possible orientations and growth directions for
+;;; the visible progress bar.
+;;; 
+;;; GTK_PROGRESS_LEFT_TO_RIGHT
+;;;     A horizontal progress bar growing from left to right.
+;;;
+;;; GTK_PROGRESS_RIGHT_TO_LEFT
+;;;     A horizontal progress bar growing from right to left.
+;;;
+;;; GTK_PROGRESS_BOTTOM_TO_TOP
+;;;     A vertical progress bar growing from bottom to top.
+;;;
+;;; GTK_PROGRESS_TOP_TO_BOTTOM
+;;;     A vertical progress bar growing from top to bottom.
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkProgressBarOrientation" gtk-progress-bar-orientation
+  (:export t
+   :type-initializer "gtk_progress_bar_orientation_get_type")
+  (:left-to-right 0)
+  (:right-to-left 1)
+  (:bottom-to-top 2)
+  (:top-to-bottom 3))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkProgressBar

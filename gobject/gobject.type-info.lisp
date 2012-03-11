@@ -8,7 +8,7 @@
 ;;; GObject 2.30.2 Reference Manual. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -618,7 +618,15 @@
 (at-finalize () (invalidate-gtypes))
 
 (defun warn-unknown-gtype (name)
-  (warn "GType ~A is not known to GObject" name))
+  ;; Do not print a warning for types which are not derived from GObject
+  ;; TODO: This is a hack. 
+  (when (not (member name '("GdkWindow"
+                            "AtkImplementorIface"
+                            "LispArrayListStore"
+                            "LispTreeStore"
+                            "GtkFileChooserEmbed")
+                     :test #'equal))
+    (warn "GType ~A is not known to GObject" name)))
 
 ;;; ----------------------------------------------------------------------------
 
