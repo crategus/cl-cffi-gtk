@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -133,7 +133,7 @@
 ;;; argv : . [array length=argc][inout]
 ;;;
 ;;; Returns :
-;;;	TRUE if initialization succeeded.
+;;;     TRUE if initialization succeeded.
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -152,10 +152,10 @@
 ;;; gtk_init_check(), gdk_init(), or gdk_init_check().
 ;;;
 ;;; argc :
-;;; 	the number of command line arguments.
+;;;     the number of command line arguments.
 ;;;
 ;;; argv :
-;;;	the array of command line arguments. [inout][array length=argc]
+;;;     the array of command line arguments. [inout][array length=argc]
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -169,7 +169,7 @@
 ;;; gdk_init() or gdk_parse_args(), if any.
 ;;;
 ;;; Returns :
-;;;	the display name, if specified explicitely, otherwise NULL this string
+;;;     the display name, if specified explicitely, otherwise NULL this string
 ;;;     is owned by GTK+ and must not be modified or freed.
 ;;;
 ;;; Since 2.2
@@ -199,7 +199,7 @@
 ;;; locale.
 ;;;
 ;;; Returns :
-;;;	the resulting locale.
+;;;     the resulting locale.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_set_locale" gdk-set-locale) (:string :free-from-foreign nil))
@@ -226,7 +226,7 @@
 ;;; are part of the X Window System distribution.)
 
 ;;; sm_client_id :
-;;;	the client id assigned by the session manager when the connection was
+;;;     the client id assigned by the session manager when the connection was
 ;;;     opened, or NULL to remove the property.
 ;;; ----------------------------------------------------------------------------
 
@@ -252,7 +252,7 @@
 ;;; use of g_atexit()).
 ;;;
 ;;; error_code :
-;;;	the error code to pass to the exit() call.
+;;;     the error code to pass to the exit() call.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -291,7 +291,7 @@
 ;;; feature.
 ;;;
 ;;; startup_id :
-;;;	a startup-notification identifier, for which notification process
+;;;     a startup-notification identifier, for which notification process
 ;;;     should be completed
 ;;;
 ;;; Since 2.12
@@ -319,7 +319,7 @@
 ;;; the first character converted to uppercase.
 ;;;
 ;;; Returns :
-;;;	the program class.
+;;;     the program class.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_get_program_class" gdk-get-program-class)
@@ -336,7 +336,7 @@
 ;;; class name part of the WM_CLASS property on toplevel windows; see the ICCCM.
 ;;;
 ;;; program_class :
-;;;	a string.
+;;;     a string.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_set_program_class" gdk-set-program-class) :void
@@ -363,7 +363,7 @@
 ;;; environment variable or the --display command line option.
 ;;;
 ;;; Returns :
-;;;	the name of the display.
+;;;     the name of the display.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_get_display" gdk-get-display) (:string :free-from-foreign nil))
@@ -393,7 +393,7 @@
 ;;; Returns the width of the default screen in pixels.
 ;;;
 ;;; Returns :
-;;;	the width of the default screen in pixels.
+;;;     the width of the default screen in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;; Do not use the name gdk-screen-width.
@@ -411,7 +411,7 @@
 ;;; Returns the height of the default screen in pixels.
 ;;;
 ;;; Returns :
-;;;	the height of the default screen in pixels.
+;;;     the height of the default screen in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;; Do not use the name gdk-screen-height.
@@ -430,7 +430,7 @@
 ;;; X servers this value will not be correct.
 ;;;
 ;;; Returns :
-;;;	the width of the default screen in millimeters, though it is not
+;;;     the width of the default screen in millimeters, though it is not
 ;;;     always correct.
 ;;; ----------------------------------------------------------------------------
 
@@ -450,7 +450,7 @@
 ;;; X servers this value will not be correct.
 ;;;
 ;;; Returns :
-;;;	the height of the default screen in millimeters, though it is not
+;;;     the height of the default screen in millimeters, though it is not
 ;;;     always correct.
 ;;; ----------------------------------------------------------------------------
 
@@ -477,19 +477,19 @@
 ;;; or the reason for the failure of the grab attempt.
 ;;;
 ;;; GDK_GRAB_SUCCESS
-;;;	the resource was successfully grabbed.
+;;;     the resource was successfully grabbed.
 ;;;
 ;;; GDK_GRAB_ALREADY_GRABBED
-;;;	the resource is actively grabbed by another client.
+;;;     the resource is actively grabbed by another client.
 ;;;
 ;;; GDK_GRAB_INVALID_TIME
-;;;	the resource was grabbed more recently than the specified time.
+;;;     the resource was grabbed more recently than the specified time.
 ;;;
 ;;; GDK_GRAB_NOT_VIEWABLE
-;;;	the grab window or the confine_to window are not viewable.
+;;;     the grab window or the confine_to window are not viewable.
 ;;;
 ;;; GDK_GRAB_FROZEN
-;;;	the resource is frozen by an active grab of another client.
+;;;     the resource is frozen by an active grab of another client.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkGrabStatus" gdk-grab-status
@@ -532,10 +532,10 @@
 ;;; events that are emitted when the grab ends unvoluntarily.
 ;;;
 ;;; window :
-;;;	the GdkWindow which will own the grab (the grab window).
+;;;     the GdkWindow which will own the grab (the grab window).
 ;;;
 ;;; owner-events :
-;;;	if FALSE then all pointer events are reported with respect to window
+;;;     if FALSE then all pointer events are reported with respect to window
 ;;;     and are only reported if selected by event-mask. If TRUE then pointer
 ;;;     events for this application are reported as normal, but pointer events
 ;;;     outside this application are reported with respect to window and only
@@ -543,28 +543,28 @@
 ;;;     discarded.
 ;;;
 ;;; event-mask :
-;;;	specifies the event mask, which is used in accordance with
+;;;     specifies the event mask, which is used in accordance with
 ;;;     owner-events. Note that only pointer events (i.e. button and motion
 ;;;     events) may be selected.
 ;;;
 ;;; confine-to :
-;;;	If non-NULL, the pointer will be confined to this window during the
+;;;     If non-NULL, the pointer will be confined to this window during the
 ;;;     grab. If the pointer is outside confine_to, it will automatically be
 ;;;     moved to the closest edge of confine_to and enter and leave events will
 ;;;     be generated as necessary.
 ;;;
 ;;; cursor :
-;;;	the cursor to display while the grab is active. If this is NULL then
+;;;     the cursor to display while the grab is active. If this is NULL then
 ;;;     the normal cursors are used for window and its descendants, and the
 ;;;     cursor for window is used for all other windows.
 ;;;
 ;;; time :
-;;;	the timestamp of the event which led to this pointer grab. This usually
+;;;     the timestamp of the event which led to this pointer grab. This usually
 ;;;     comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used
 ;;;     if the time isn't known.
 ;;;
 ;;; Returns :
-;;;	GDK_GRAB_SUCCESS if the grab was successful.
+;;;     GDK_GRAB_SUCCESS if the grab was successful.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pointer_grab" gdk-pointer-grab) gdk-grab-status
@@ -644,17 +644,17 @@
 ;;; events that are emitted when the grab ends unvoluntarily.
 ;;;
 ;;; window :
-;;;	the GdkWindow which will own the grab (the grab window).
+;;;     the GdkWindow which will own the grab (the grab window).
 ;;;
 ;;; owner-events :
-;;;	if FALSE then all keyboard events are reported with respect to window.
+;;;     if FALSE then all keyboard events are reported with respect to window.
 ;;;     If TRUE then keyboard events for this application are reported as
 ;;;     normal, but keyboard events outside this application are reported with
 ;;;     respect to window. Both key press and key release events are always
 ;;;     reported, independant of the event mask set by the application.
 ;;;
 ;;; time :
-;;;	a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
+;;;     a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 ;;;     available.
 ;;;
 ;;; Returns :

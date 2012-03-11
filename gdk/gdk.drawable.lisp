@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; Drawing Primitives
 ;;; 
 ;;; Functions for drawing points, lines, arcs, and text
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkDrawable
@@ -149,10 +149,10 @@
 ;;; were not objects in previous versions of GDK.)
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	the same drawable passed in
+;;;     the same drawable passed in
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -168,7 +168,7 @@
 ;;; Deprecated equivalent of calling g_object_unref() on drawable.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -188,16 +188,16 @@
 ;;; should be used instead.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; key :
-;;; 	name to store the data under
+;;;     name to store the data under
 ;;; 
 ;;; data :
-;;; 	arbitrary data
+;;;     arbitrary data
 ;;; 
 ;;; destroy_func :
-;;; 	function to free data, or NULL. [allow-none]
+;;;     function to free data, or NULL. [allow-none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -214,13 +214,13 @@
 ;;; instead.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; key :
-;;; 	name the data was stored under
+;;;     name the data was stored under
 ;;; 
 ;;; Returns :
-;;; 	the data stored at key
+;;;     the data stored at key
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -236,10 +236,10 @@
 ;;; Gets the GdkDisplay associated with a GdkDrawable.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	the GdkDisplay associated with drawable
+;;;     the GdkDisplay associated with drawable
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -257,10 +257,10 @@
 ;;; Gets the GdkScreen associated with a GdkDrawable.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	the GdkScreen associated with drawable
+;;;     the GdkScreen associated with drawable
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -278,10 +278,10 @@
 ;;; Gets the GdkVisual describing the pixel format of drawable.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -299,10 +299,10 @@
 ;;; copying one drawable to another, the colormaps should match.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -313,10 +313,10 @@
 ;;; Gets the colormap for drawable, if one is set; returns NULL otherwise.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	the colormap, or NULL
+;;;     the colormap, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -329,10 +329,10 @@
 ;;; 24 bits per pixel, etc.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	number of bits per pixel
+;;;     number of bits per pixel
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -357,13 +357,13 @@
 ;;; the current size on the X server.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; width :
-;;; 	location to store drawable's width, or NULL. [out][allow-none]
+;;;     location to store drawable's width, or NULL. [out][allow-none]
 ;;; 
 ;;; height :
-;;; 	location to store drawable's height, or NULL. [out][allow-none]
+;;;     location to store drawable's height, or NULL. [out][allow-none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drawable_get_size" %gdk-drawable-get-size) :void
@@ -393,10 +393,10 @@
 ;;; will be affected by drawing primitives.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	a GdkRegion. This must be freed with gdk_region_destroy() when you are
+;;;     a GdkRegion. This must be freed with gdk_region_destroy() when you are
 ;;;     done.
 ;;; ----------------------------------------------------------------------------
 
@@ -410,10 +410,10 @@
 ;;; windows, but no area outside of this region is visible.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; Returns :
-;;; 	a GdkRegion. This must be freed with gdk_region_destroy() when you
+;;;     a GdkRegion. This must be freed with gdk_region_destroy() when you
 ;;;     are done.
 ;;; ----------------------------------------------------------------------------
 
@@ -431,16 +431,16 @@
 ;;; Draws a point, using the foreground color and other attributes of the GdkGC.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the point.
+;;;     the x coordinate of the point.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the point.
+;;;     the y coordinate of the point.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_point" gdk-draw-point) :void
@@ -469,16 +469,16 @@
 ;;; of the GdkGC.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; points :
-;;; 	an array of GdkPoint structures.
+;;;     an array of GdkPoint structures.
 ;;; 
 ;;; n_points :
-;;; 	the number of points to be drawn.
+;;;     the number of points to be drawn.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_points" %gdk-draw-points) :void
@@ -522,22 +522,22 @@
 ;;; Draws a line, using the foreground color and other attributes of the GdkGC.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x1_ :
-;;; 	the x coordinate of the start point.
+;;;     the x coordinate of the start point.
 ;;; 
 ;;; y1_ :
-;;; 	the y coordinate of the start point.
+;;;     the y coordinate of the start point.
 ;;; 
 ;;; x2_ :
-;;; 	the x coordinate of the end point.
+;;;     the x coordinate of the end point.
 ;;; 
 ;;; y2_ :
-;;; 	the y coordinate of the end point.
+;;;     the y coordinate of the end point.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_line" gdk-draw-line) :void
@@ -570,16 +570,16 @@
 ;;; This can be set with gdk_gc_set_line_attributes().
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; points :
-;;; 	an array of GdkPoint structures specifying the endpoints of the
+;;;     an array of GdkPoint structures specifying the endpoints of the
 ;;; 
 ;;; n_points :
-;;; 	the size of the points array.
+;;;     the size of the points array.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_lines" %gdk-draw-lines) :void
@@ -631,40 +631,40 @@
 ;;; off by setting the GDK_DISABLE_MEDIALIB environment variable.
 ;;; 
 ;;; drawable :
-;;; 	Destination drawable.
+;;;     Destination drawable.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC, used for clipping, or NULL.
+;;;     a GdkGC, used for clipping, or NULL.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf
+;;;     a GdkPixbuf
 ;;; 
 ;;; src_x :
-;;; 	Source X coordinate within pixbuf.
+;;;     Source X coordinate within pixbuf.
 ;;; 
 ;;; src_y :
-;;; 	Source Y coordinates within pixbuf.
+;;;     Source Y coordinates within pixbuf.
 ;;; 
 ;;; dest_x :
-;;; 	Destination X coordinate within drawable.
+;;;     Destination X coordinate within drawable.
 ;;; 
 ;;; dest_y :
-;;; 	Destination Y coordinate within drawable.
+;;;     Destination Y coordinate within drawable.
 ;;; 
 ;;; width :
-;;; 	Width of region to render, in pixels, or -1 to use pixbuf width.
+;;;     Width of region to render, in pixels, or -1 to use pixbuf width.
 ;;; 
 ;;; height :
-;;; 	Height of region to render, in pixels, or -1 to use pixbuf height.
+;;;     Height of region to render, in pixels, or -1 to use pixbuf height.
 ;;; 
 ;;; dither :
-;;; 	Dithering mode for GdkRGB.
+;;;     Dithering mode for GdkRGB.
 ;;; 
 ;;; x_dither :
-;;; 	X offset for dither.
+;;;     X offset for dither.
 ;;; 
 ;;; y_dither :
-;;; 	Y offset for dither.
+;;;     Y offset for dither.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -699,16 +699,16 @@
 ;;; gdk_draw_segments() function.
 ;;; 
 ;;; gint x1;
-;;; 	the x coordinate of the start point.
+;;;     the x coordinate of the start point.
 ;;; 
 ;;; gint y1;
-;;; 	the y coordinate of the start point.
+;;;     the y coordinate of the start point.
 ;;; 
 ;;; gint x2;
-;;; 	the x coordinate of the end point.
+;;;     the x coordinate of the end point.
 ;;; 
 ;;; gint y2;
-;;; 	the y coordinate of the end point.
+;;;     the y coordinate of the end point.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-segment nil
@@ -737,17 +737,17 @@
 ;;; Draws a number of unconnected lines.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; segs :
-;;; 	an array of GdkSegment structures specifying the start and end points
+;;;     an array of GdkSegment structures specifying the start and end points
 ;;;     of the lines to be drawn.
 ;;; 
 ;;; n_segs :
-;;; 	the number of line segments to draw, i.e. the size of the segs array.
+;;;     the number of line segments to draw, i.e. the size of the segs array.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_segments" %gdk-draw-segments) :void
@@ -794,25 +794,25 @@
 ;;; Note
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; filled :
-;;; 	TRUE if the rectangle should be filled.
+;;;     TRUE if the rectangle should be filled.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the left edge of the rectangle.
+;;;     the x coordinate of the left edge of the rectangle.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the top edge of the rectangle.
+;;;     the y coordinate of the top edge of the rectangle.
 ;;; 
 ;;; width :
-;;; 	the width of the rectangle.
+;;;     the width of the rectangle.
 ;;; 
 ;;; height :
-;;; 	the height of the rectangle.
+;;;     the height of the rectangle.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_rectangle" gdk-draw-rectangle) :void
@@ -851,32 +851,32 @@
 ;;; of the ellipse to be drawn.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; filled :
-;;; 	TRUE if the arc should be filled, producing a 'pie slice'.
+;;;     TRUE if the arc should be filled, producing a 'pie slice'.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the left edge of the bounding rectangle.
+;;;     the x coordinate of the left edge of the bounding rectangle.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the top edge of the bounding rectangle.
+;;;     the y coordinate of the top edge of the bounding rectangle.
 ;;; 
 ;;; width :
-;;; 	the width of the bounding rectangle.
+;;;     the width of the bounding rectangle.
 ;;; 
 ;;; height :
-;;; 	the height of the bounding rectangle.
+;;;     the height of the bounding rectangle.
 ;;; 
 ;;; angle1 :
-;;; 	the start angle of the arc, relative to the 3 o'clock position,
+;;;     the start angle of the arc, relative to the 3 o'clock position,
 ;;;     counter-clockwise, in 1/64ths of a degree.
 ;;; 
 ;;; angle2 :
-;;; 	the end angle of the arc, relative to angle1, in 1/64ths of a degree.
+;;;     the end angle of the arc, relative to angle1, in 1/64ths of a degree.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_arc" gdk-draw-arc) :void
@@ -910,22 +910,22 @@
 ;;; Draws an outlined or filled polygon.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; filled :
-;;; 	TRUE if the polygon should be filled. The polygon is closed
+;;;     TRUE if the polygon should be filled. The polygon is closed
 ;;;     automatically, connecting the last point to the first point if
 ;;;     necessary.
 ;;; 
 ;;; points :
-;;; 	an array of GdkPoint structures specifying the points making up the
+;;;     an array of GdkPoint structures specifying the points making up the
 ;;;     polygon.
 ;;; 
 ;;; n_points :
-;;; 	the number of points.
+;;;     the number of points.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_polygon" %gdk-draw-polygon) :void
@@ -952,22 +952,22 @@
 ;;; used here have parallel, horizontal top and bottom edges.
 ;;; 
 ;;; double y1;
-;;; 	the y coordinate of the start point.
+;;;     the y coordinate of the start point.
 ;;; 
 ;;; double x11;
-;;; 	the x coordinate of the top left corner
+;;;     the x coordinate of the top left corner
 ;;; 
 ;;; double x21;
-;;; 	the x coordinate of the top right corner
+;;;     the x coordinate of the top right corner
 ;;; 
 ;;; double y2;
-;;; 	the y coordinate of the end point.
+;;;     the y coordinate of the end point.
 ;;; 
 ;;; double x12;
-;;; 	the x coordinate of the bottom left corner
+;;;     the x coordinate of the bottom left corner
 ;;; 
 ;;; double x22;
-;;; 	the x coordinate of the bottom right corner
+;;;     the x coordinate of the bottom right corner
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-trapezoid nil
@@ -1001,16 +1001,16 @@
 ;;; applications.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; trapezoids :
-;;; 	an array of GdkTrapezoid structures
+;;;     an array of GdkTrapezoid structures
 ;;; 
 ;;; n_trapezoids :
-;;; 	the number of trapezoids to draw
+;;;     the number of trapezoids to draw
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1052,22 +1052,22 @@
 ;;; the details.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; font :
-;;; 	font to be used
+;;;     font to be used
 ;;; 
 ;;; x :
-;;; 	X coordinate of baseline origin
+;;;     X coordinate of baseline origin
 ;;; 
 ;;; y :
-;;; 	Y coordinate of baseline origin
+;;;     Y coordinate of baseline origin
 ;;; 
 ;;; glyphs :
-;;; 	the glyph string to draw
+;;;     the glyph string to draw
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_glyphs" gdk-draw-glyphs) :void
@@ -1106,27 +1106,27 @@
 ;;; See also gdk_draw_glyphs(), gdk_draw_layout().
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; matrix :
-;;; 	a PangoMatrix, or NULL to use an identity transformation.
+;;;     a PangoMatrix, or NULL to use an identity transformation.
 ;;; 
 ;;; font :
-;;; 	the font in which to draw the string
+;;;     the font in which to draw the string
 ;;; 
 ;;; x :
-;;; 	the x position of the start of the string (in Pango units in user space
+;;;     the x position of the start of the string (in Pango units in user space
 ;;;     coordinates)
 ;;; 
 ;;; y :
-;;; 	the y position of the baseline (in Pango units in user space
+;;;     the y position of the baseline (in Pango units in user space
 ;;;     coordinates)
 ;;; 
 ;;; glyphs :
-;;; 	the glyph string to draw
+;;;     the glyph string to draw
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1162,19 +1162,19 @@
 ;;; before-tranform user coordinates) in after-transform device coordinates.
 ;;; 
 ;;; drawable :
-;;; 	the drawable on which to draw the line
+;;;     the drawable on which to draw the line
 ;;; 
 ;;; gc :
-;;; 	base graphics to use
+;;;     base graphics to use
 ;;; 
 ;;; x :
-;;; 	the x position of start of string (in pixels)
+;;;     the x position of start of string (in pixels)
 ;;; 
 ;;; y :
-;;; 	the y position of baseline (in pixels)
+;;;     the y position of baseline (in pixels)
 ;;; 
 ;;; line :
-;;; 	a PangoLayoutLine
+;;;     a PangoLayoutLine
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_layout_line" gdk-draw-layout-line) :void
@@ -1211,25 +1211,25 @@
 ;;; before-tranform user coordinates) in after-transform device coordinates.
 ;;; 
 ;;; drawable :
-;;; 	the drawable on which to draw the line
+;;;     the drawable on which to draw the line
 ;;; 
 ;;; gc :
-;;; 	base graphics to use
+;;;     base graphics to use
 ;;; 
 ;;; x :
-;;; 	the x position of start of string (in pixels)
+;;;     the x position of start of string (in pixels)
 ;;; 
 ;;; y :
-;;; 	the y position of baseline (in pixels)
+;;;     the y position of baseline (in pixels)
 ;;; 
 ;;; line :
-;;; 	a PangoLayoutLine
+;;;     a PangoLayoutLine
 ;;; 
 ;;; foreground :
-;;; 	foreground override color, or NULL for none. [allow-none]
+;;;     foreground override color, or NULL for none. [allow-none]
 ;;; 
 ;;; background :
-;;; 	background override color, or NULL for none. [allow-none]
+;;;     background override color, or NULL for none. [allow-none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_layout_line_with_colors" gdk-draw-layout-line-with-colors)
@@ -1267,19 +1267,19 @@
 ;;; gtk_widget_create_pango_layout().
 ;;; 
 ;;; drawable :
-;;; 	the drawable on which to draw string
+;;;     the drawable on which to draw string
 ;;; 
 ;;; gc :
-;;; 	base graphics context to use
+;;;     base graphics context to use
 ;;; 
 ;;; x :
-;;; 	the X position of the left of the layout (in pixels)
+;;;     the X position of the left of the layout (in pixels)
 ;;; 
 ;;; y :
-;;; 	the Y position of the top of the layout (in pixels)
+;;;     the Y position of the top of the layout (in pixels)
 ;;; 
 ;;; layout :
-;;; 	a PangoLayout
+;;;     a PangoLayout
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_layout" gdk-draw-layout) :void
@@ -1319,25 +1319,25 @@
 ;;; gtk_widget_create_pango_layout().
 ;;; 
 ;;; drawable :
-;;; 	the drawable on which to draw string
+;;;     the drawable on which to draw string
 ;;; 
 ;;; gc :
-;;; 	base graphics context to use
+;;;     base graphics context to use
 ;;; 
 ;;; x :
-;;; 	the X position of the left of the layout (in pixels)
+;;;     the X position of the left of the layout (in pixels)
 ;;; 
 ;;; y :
-;;; 	the Y position of the top of the layout (in pixels)
+;;;     the Y position of the top of the layout (in pixels)
 ;;; 
 ;;; layout :
-;;; 	a PangoLayout
+;;;     a PangoLayout
 ;;; 
 ;;; foreground :
-;;; 	foreground override color, or NULL for none. [allow-none]
+;;;     foreground override color, or NULL for none. [allow-none]
 ;;; 
 ;;; background :
-;;; 	background override color, or NULL for none. [allow-none]
+;;;     background override color, or NULL for none. [allow-none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_layout_with_colors" gdk-draw-layout-with-colors) :void
@@ -1369,22 +1369,22 @@
 ;;; Draws a string of characters in the given font or fontset.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; font :
-;;; 	a GdkFont.
+;;;     a GdkFont.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the left edge of the text.
+;;;     the x coordinate of the left edge of the text.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the baseline of the text.
+;;;     the y coordinate of the baseline of the text.
 ;;; 
 ;;; string :
-;;; 	the string of characters to draw.
+;;;     the string of characters to draw.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1406,25 +1406,25 @@
 ;;; Draws a number of characters in the given font or fontset.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; font :
-;;; 	a GdkFont.
+;;;     a GdkFont.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the left edge of the text.
+;;;     the x coordinate of the left edge of the text.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the baseline of the text.
+;;;     the y coordinate of the baseline of the text.
 ;;; 
 ;;; text :
-;;; 	the characters to draw.
+;;;     the characters to draw.
 ;;; 
 ;;; text_length :
-;;; 	the number of characters of text to draw.
+;;;     the number of characters of text to draw.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1448,25 +1448,25 @@
 ;;; (discarding the high bytes) before output.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; font :
-;;; 	a GdkFont.
+;;;     a GdkFont.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the left edge of the text.
+;;;     the x coordinate of the left edge of the text.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the baseline of the text.
+;;;     the y coordinate of the baseline of the text.
 ;;; 
 ;;; text :
-;;; 	the wide characters to draw.
+;;;     the wide characters to draw.
 ;;; 
 ;;; text_length :
-;;; 	the number of characters to draw.
+;;;     the number of characters to draw.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1518,31 +1518,31 @@
 ;;; GDK_STIPPLED, and then draw the rectangle.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; gc :
-;;; 	a GdkGC sharing the drawable's visual and colormap
+;;;     a GdkGC sharing the drawable's visual and colormap
 ;;; 
 ;;; src :
-;;; 	the source GdkDrawable, which may be the same as drawable
+;;;     the source GdkDrawable, which may be the same as drawable
 ;;; 
 ;;; xsrc :
-;;; 	X position in src of rectangle to draw
+;;;     X position in src of rectangle to draw
 ;;; 
 ;;; ysrc :
-;;; 	Y position in src of rectangle to draw
+;;;     Y position in src of rectangle to draw
 ;;; 
 ;;; xdest :
-;;; 	X position in drawable where the rectangle should be drawn
+;;;     X position in drawable where the rectangle should be drawn
 ;;; 
 ;;; ydest :
-;;; 	Y position in drawable where the rectangle should be drawn
+;;;     Y position in drawable where the rectangle should be drawn
 ;;; 
 ;;; width :
-;;; 	width of rectangle to draw, or -1 for entire src width
+;;;     width of rectangle to draw, or -1 for entire src width
 ;;; 
 ;;; height :
-;;; 	height of rectangle to draw, or -1 for entire src height
+;;;     height of rectangle to draw, or -1 for entire src height
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_drawable" gdk-draw-drawable) :void
@@ -1581,32 +1581,32 @@
 ;;; depth of the GdkDrawable.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable (a GdkWindow or a GdkPixmap).
+;;;     a GdkDrawable (a GdkWindow or a GdkPixmap).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; image :
-;;; 	the GdkImage to draw.
+;;;     the GdkImage to draw.
 ;;; 
 ;;; xsrc :
-;;; 	the left edge of the source rectangle within image.
+;;;     the left edge of the source rectangle within image.
 ;;; 
 ;;; ysrc :
-;;; 	the top of the source rectangle within image.
+;;;     the top of the source rectangle within image.
 ;;; 
 ;;; xdest :
-;;; 	the x coordinate of the destination within drawable.
+;;;     the x coordinate of the destination within drawable.
 ;;; 
 ;;; ydest :
-;;; 	the y coordinate of the destination within drawable.
+;;;     the y coordinate of the destination within drawable.
 ;;; 
 ;;; width :
-;;; 	the width of the area to be copied, or -1 to make the area extend to
+;;;     the width of the area to be copied, or -1 to make the area extend to
 ;;;     the right edge of image.
 ;;; 
 ;;; height :
-;;; 	the height of the area to be copied, or -1 to make the area extend to
+;;;     the height of the area to be copied, or -1 to make the area extend to
 ;;;     the bottom edge of image.
 ;;; ----------------------------------------------------------------------------
 
@@ -1665,22 +1665,22 @@
 ;;; data.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; x :
-;;; 	x coordinate on drawable
+;;;     x coordinate on drawable
 ;;; 
 ;;; y :
-;;; 	y coordinate on drawable
+;;;     y coordinate on drawable
 ;;; 
 ;;; width :
-;;; 	width of region to get
+;;;     width of region to get
 ;;; 
 ;;; height :
-;;; 	height or region to get
+;;;     height or region to get
 ;;; 
 ;;; Returns :
-;;; 	a GdkImage containing the contents of drawable
+;;;     a GdkImage containing the contents of drawable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drawable_get_image" gdk-drawable-get-image) (g-object gdk-image)
@@ -1716,31 +1716,31 @@
 ;;; into that. See gdk_drawable_get_image() for further details.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; image :
-;;; 	a GdkDrawable, or NULL if a new image should be created.
+;;;     a GdkDrawable, or NULL if a new image should be created.
 ;;; 
 ;;; src_x :
-;;; 	x coordinate on drawable
+;;;     x coordinate on drawable
 ;;; 
 ;;; src_y :
-;;; 	y coordinate on drawable
+;;;     y coordinate on drawable
 ;;; 
 ;;; dest_x :
-;;; 	x coordinate within image. Must be 0 if image is NULL
+;;;     x coordinate within image. Must be 0 if image is NULL
 ;;; 
 ;;; dest_y :
-;;; 	y coordinate within image. Must be 0 if image is NULL
+;;;     y coordinate within image. Must be 0 if image is NULL
 ;;; 
 ;;; width :
-;;; 	width of region to get
+;;;     width of region to get
 ;;; 
 ;;; height :
-;;; 	height or region to get
+;;;     height or region to get
 ;;; 
 ;;; Returns :
-;;; 	image, or a new a GdkImage containing the contents of drawable
+;;;     image, or a new a GdkImage containing the contents of drawable
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

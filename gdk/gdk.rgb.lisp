@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; GdkRGB
 ;;; 
 ;;; Renders RGB, grayscale, or indexed image data to a GdkDrawable
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     gdk_rgb_init
@@ -155,13 +155,13 @@
 ;;; dithering on 24 bit per pixel displays is a moot point.
 ;;; 
 ;;; GDK_RGB_DITHER_NONE
-;;; 	Never use dithering.
+;;;     Never use dithering.
 ;;; 
 ;;; GDK_RGB_DITHER_NORMAL
-;;; 	Use dithering in 8 bits per pixel (and below) only.
+;;;     Use dithering in 8 bits per pixel (and below) only.
 ;;; 
 ;;; GDK_RGB_DITHER_MAX
-;;; 	Use dithering in 16 bits per pixel and below.
+;;;     Use dithering in 16 bits per pixel and below.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkRgbDither" gdk-rgb-dither
@@ -217,32 +217,32 @@
 ;;; + i * 3 + 2].
 ;;; 
 ;;; drawable :
-;;; 	The GdkDrawable to draw in (usually a GdkWindow).
+;;;     The GdkDrawable to draw in (usually a GdkWindow).
 ;;; 
 ;;; gc :
-;;; 	The graphics context (all GDK drawing operations require one; its
+;;;     The graphics context (all GDK drawing operations require one; its
 ;;;     contents are ignored).
 ;;; 
 ;;; x :
-;;; 	The x coordinate of the top-left corner in the drawable.
+;;;     The x coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; y :
-;;; 	The y coordinate of the top-left corner in the drawable.
+;;;     The y coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; width :
-;;; 	The width of the rectangle to be drawn.
+;;;     The width of the rectangle to be drawn.
 ;;; 
 ;;; height :
-;;; 	The height of the rectangle to be drawn.
+;;;     The height of the rectangle to be drawn.
 ;;; 
 ;;; dith :
-;;; 	A GdkRgbDither value, selecting the desired dither mode.
+;;;     A GdkRgbDither value, selecting the desired dither mode.
 ;;; 
 ;;; rgb_buf :
-;;; 	The pixel data, represented as packed 24-bit data.
+;;;     The pixel data, represented as packed 24-bit data.
 ;;; 
 ;;; rowstride :
-;;; 	The number of bytes from the start of one row in rgb_buf to the start
+;;;     The number of bytes from the start of one row in rgb_buf to the start
 ;;;     of the next.
 ;;; ----------------------------------------------------------------------------
 
@@ -292,37 +292,37 @@
 ;;; textures.
 ;;; 
 ;;; drawable :
-;;; 	The GdkDrawable to draw in (usually a GdkWindow).
+;;;     The GdkDrawable to draw in (usually a GdkWindow).
 ;;; 
 ;;; gc :
-;;; 	The graphics context.
+;;;     The graphics context.
 ;;; 
 ;;; x :
-;;; 	The x coordinate of the top-left corner in the drawable.
+;;;     The x coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; y :
-;;; 	The y coordinate of the top-left corner in the drawable.
+;;;     The y coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; width :
-;;; 	The width of the rectangle to be drawn.
+;;;     The width of the rectangle to be drawn.
 ;;; 
 ;;; height :
-;;; 	The height of the rectangle to be drawn.
+;;;     The height of the rectangle to be drawn.
 ;;; 
 ;;; dith :
-;;; 	A GdkRgbDither value, selecting the desired dither mode.
+;;;     A GdkRgbDither value, selecting the desired dither mode.
 ;;; 
 ;;; rgb_buf :
-;;; 	The pixel data, represented as packed 24-bit data.
+;;;     The pixel data, represented as packed 24-bit data.
 ;;; 
 ;;; rowstride :
-;;; 	The number of bytes from the start of one row in rgb_buf to the start of the next.
+;;;     The number of bytes from the start of one row in rgb_buf to the start of the next.
 ;;; 
 ;;; xdith :
-;;; 	An x offset for dither alignment.
+;;;     An x offset for dither alignment.
 ;;; 
 ;;; ydith :
-;;; 	A y offset for dither alignment.
+;;;     A y offset for dither alignment.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_rgb_image_dithalign" gdk-draw-rgb-image-dithalign) :void
@@ -356,10 +356,10 @@
 ;;; This is used only for gdk_draw_indexed_image().
 ;;; 
 ;;; guint32 colors[256];
-;;; 	The colors, represented as 0xRRGGBB integer values.
+;;;     The colors, represented as 0xRRGGBB integer values.
 ;;; 
 ;;; gint n_colors;
-;;; 	The number of colors in the cmap.
+;;;     The number of colors in the cmap.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-rgb-cmap nil
@@ -393,34 +393,34 @@
 ;;; colors to the color indices.
 ;;; 
 ;;; drawable :
-;;; 	The GdkDrawable to draw in (usually a GdkWindow).
+;;;     The GdkDrawable to draw in (usually a GdkWindow).
 ;;; 
 ;;; gc :
-;;; 	The graphics context.
+;;;     The graphics context.
 ;;; 
 ;;; x :
-;;; 	The x coordinate of the top-left corner in the drawable.
+;;;     The x coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; y :
-;;; 	The y coordinate of the top-left corner in the drawable.
+;;;     The y coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; width :
-;;; 	The width of the rectangle to be drawn.
+;;;     The width of the rectangle to be drawn.
 ;;; 
 ;;; height :
-;;; 	The height of the rectangle to be drawn.
+;;;     The height of the rectangle to be drawn.
 ;;; 
 ;;; dith :
-;;; 	A GdkRgbDither value, selecting the desired dither mode.
+;;;     A GdkRgbDither value, selecting the desired dither mode.
 ;;; 
 ;;; buf :
-;;; 	The pixel data, represented as 8-bit color indices.
+;;;     The pixel data, represented as 8-bit color indices.
 ;;; 
 ;;; rowstride :
-;;; 	The number of bytes from the start of one row in buf to the start of the next.
+;;;     The number of bytes from the start of one row in buf to the start of the next.
 ;;; 
 ;;; cmap :
-;;; 	The GdkRgbCmap used to assign colors to the color indices.
+;;;     The GdkRgbCmap used to assign colors to the color indices.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_indexed_image" gdk-draw-indexed-image) :void
@@ -458,31 +458,31 @@
 ;;; Draws a grayscale image in the drawable.
 ;;; 
 ;;; drawable :
-;;; 	The GdkDrawable to draw in (usually a GdkWindow).
+;;;     The GdkDrawable to draw in (usually a GdkWindow).
 ;;; 
 ;;; gc :
-;;; 	The graphics context.
+;;;     The graphics context.
 ;;; 
 ;;; x :
-;;; 	The x coordinate of the top-left corner in the drawable.
+;;;     The x coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; y :
-;;; 	The y coordinate of the top-left corner in the drawable.
+;;;     The y coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; width :
-;;; 	The width of the rectangle to be drawn.
+;;;     The width of the rectangle to be drawn.
 ;;; 
 ;;; height :
-;;; 	The height of the rectangle to be drawn.
+;;;     The height of the rectangle to be drawn.
 ;;; 
 ;;; dith :
-;;; 	A GdkRgbDither value, selecting the desired dither mode.
+;;;     A GdkRgbDither value, selecting the desired dither mode.
 ;;; 
 ;;; buf :
-;;; 	The pixel data, represented as 8-bit gray values.
+;;;     The pixel data, represented as 8-bit gray values.
 ;;; 
 ;;; rowstride :
-;;; 	The number of bytes from the start of one row in buf to the start of
+;;;     The number of bytes from the start of one row in buf to the start of
 ;;;     the next.
 ;;; ----------------------------------------------------------------------------
 
@@ -526,31 +526,31 @@
 ;;; to 32-bit boundaries is cancelled out by the increased memory bandwidth.
 ;;; 
 ;;; drawable :
-;;; 	The GdkDrawable to draw in (usually a GdkWindow).
+;;;     The GdkDrawable to draw in (usually a GdkWindow).
 ;;; 
 ;;; gc :
-;;; 	The graphics context.
+;;;     The graphics context.
 ;;; 
 ;;; x :
-;;; 	The x coordinate of the top-left corner in the drawable.
+;;;     The x coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; y :
-;;; 	The y coordinate of the top-left corner in the drawable.
+;;;     The y coordinate of the top-left corner in the drawable.
 ;;; 
 ;;; width :
-;;; 	The width of the rectangle to be drawn.
+;;;     The width of the rectangle to be drawn.
 ;;; 
 ;;; height :
-;;; 	The height of the rectangle to be drawn.
+;;;     The height of the rectangle to be drawn.
 ;;; 
 ;;; dith :
-;;; 	A GdkRgbDither value, selecting the desired dither mode.
+;;;     A GdkRgbDither value, selecting the desired dither mode.
 ;;; 
 ;;; buf :
-;;; 	The pixel data, represented as padded 32-bit data.
+;;;     The pixel data, represented as padded 32-bit data.
 ;;; 
 ;;; rowstride :
-;;; 	The number of bytes from the start of one row in buf to the start of
+;;;     The number of bytes from the start of one row in buf to the start of
 ;;;     the next.
 ;;; ----------------------------------------------------------------------------
 
@@ -591,37 +591,37 @@
 ;;; See gdk_draw_rgb_image_dithalign() for more details.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; x :
-;;; 	X coordinate on drawable where image should go
+;;;     X coordinate on drawable where image should go
 ;;; 
 ;;; y :
-;;; 	Y coordinate on drawable where image should go
+;;;     Y coordinate on drawable where image should go
 ;;; 
 ;;; width :
-;;; 	width of area of image to draw
+;;;     width of area of image to draw
 ;;; 
 ;;; height :
-;;; 	height of area of image to draw
+;;;     height of area of image to draw
 ;;; 
 ;;; dith :
-;;; 	dithering mode
+;;;     dithering mode
 ;;; 
 ;;; buf :
-;;; 	RGB image data
+;;;     RGB image data
 ;;; 
 ;;; rowstride :
-;;; 	rowstride of RGB image data
+;;;     rowstride of RGB image data
 ;;; 
 ;;; xdith :
-;;; 	X dither offset
+;;;     X dither offset
 ;;; 
 ;;; ydith :
-;;; 	Y dither offset
+;;;     Y dither offset
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_draw_rgb_32_image_dithalign" gdk-draw-rgb-32-image-dithalign)
@@ -655,13 +655,13 @@
 ;;; possibly segfaults.
 ;;; 
 ;;; colors :
-;;; 	The colors, represented as 0xRRGGBB integer values.
+;;;     The colors, represented as 0xRRGGBB integer values.
 ;;; 
 ;;; n_colors :
-;;; 	The number of colors in the cmap.
+;;;     The number of colors in the cmap.
 ;;; 
 ;;; Returns :
-;;; 	The newly created GdkRgbCmap
+;;;     The newly created GdkRgbCmap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -677,7 +677,7 @@
 ;;; Frees the memory associated with a GdkRgbCmap created by gdk_rgb_cmap_new().
 ;;; 
 ;;; cmap :
-;;; 	The GdkRgbCmap to free.
+;;;     The GdkRgbCmap to free.
 ;;; ----------------------------------------------------------------------------
 
 
@@ -695,10 +695,10 @@
 ;;; approximation, in the case of limited visuals).
 ;;; 
 ;;; gc :
-;;; 	The GdkGC to modify.
+;;;     The GdkGC to modify.
 ;;; 
 ;;; rgb :
-;;; 	The color, represented as a 0xRRGGBB integer value.
+;;;     The color, represented as a 0xRRGGBB integer value.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -715,10 +715,10 @@
 ;;; approximation, in the case of limited visuals).
 ;;; 
 ;;; gc :
-;;; 	The GdkGC to modify.
+;;;     The GdkGC to modify.
 ;;; 
 ;;; rgb :
-;;; 	The color, represented as a 0xRRGGBB integer value.
+;;;     The color, represented as a 0xRRGGBB integer value.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -735,10 +735,10 @@
 ;;; may be used to set the pixel field of a GdkColor struct.
 ;;; 
 ;;; rgb :
-;;; 	The color, represented as a 0xRRGGBB integer value.
+;;;     The color, represented as a 0xRRGGBB integer value.
 ;;; 
 ;;; Returns :
-;;; 	The X pixel value.
+;;;     The X pixel value.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -767,10 +767,10 @@
 ;;; need for gdk_rgb_find_color().
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; 
 ;;; color :
-;;; 	a GdkColor
+;;;     a GdkColor
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_find_color" gdk-rgb-find-color) :void
@@ -798,7 +798,7 @@
 ;;; also leads to the dreaded "colormap flashing" effect.
 ;;; 
 ;;; install :
-;;; 	TRUE to set install mode.
+;;;     TRUE to set install mode.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_set_install" gdk-rgb-set-install) :void
@@ -821,7 +821,7 @@
 ;;; color cube at least as large as min_colors, it installs a private colormap.
 ;;; 
 ;;; min_colors :
-;;; 	The minimum number of colors accepted.
+;;;     The minimum number of colors accepted.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_set_min_colors" gdk-rgb-set-min-colors) :void
@@ -847,7 +847,7 @@
 ;;; GdkRGB can now render to drawables with any visual.
 ;;; 
 ;;; Returns :
-;;; 	The GdkVisual chosen by GdkRGB. [transfer none]
+;;;     The GdkVisual chosen by GdkRGB. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_get_visual" gdk-rgb-get-visual) (g-object gdk-visual))
@@ -871,7 +871,7 @@
 ;;; colormap and visual. So there's no need to call this function.
 ;;; 
 ;;; Returns :
-;;; 	the preferred colormap. [transfer none]
+;;;     the preferred colormap. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_get_colormap" gdk-rgb-get-colormap) (g-object gdk-colormap))
@@ -891,7 +891,7 @@
 ;;; should be used when creating windows that will be drawn in by GdkRGB.
 ;;; 
 ;;; Returns :
-;;; 	The GdkColormap set by GdkRGB.
+;;;     The GdkColormap set by GdkRGB.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -910,7 +910,7 @@
 ;;; to gray out or hide the corresponding UI widget.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the preferred visual is ditherable.
+;;;     TRUE if the preferred visual is ditherable.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_ditherable" gdk-rgb-ditherable) :boolean)
@@ -933,10 +933,10 @@
 ;;; may make sense to gray out or hide the corresponding UI widget.
 ;;; 
 ;;; cmap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the visual associated with cmap is ditherable.
+;;;     TRUE if the visual associated with cmap is ditherable.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_colormap_ditherable" gdk-rgb-colormap-ditherable) :boolean
@@ -957,7 +957,7 @@
 ;;; Sets the "verbose" flag. This is generally only useful for debugging.
 ;;; 
 ;;; verbose :
-;;; 	TRUE if verbose messages are desired.
+;;;     TRUE if verbose messages are desired.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgb_set_verbose" gdk-rgb-set-verbose) :void

@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 2 Reference Manual
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,10 +31,11 @@
 ;;; Application launching
 ;;; 
 ;;; Startup notification for applications
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkAppLaunchContext
+;;;
 ;;;     gdk_app_launch_context_new
 ;;;     gdk_app_launch_context_set_display
 ;;;     gdk_app_launch_context_set_screen
@@ -72,20 +73,27 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkAppLaunchContext" gdk-app-launch-context
-  (:superclass g-object :export t
-               :interfaces nil :type-initializer
-               "gdk_app_launch_context_get_type")
-  ((:cffi display gdk-app-launch-context-display (g-object gdk-display)
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gdk_app_launch_context_get_type")
+  ((:cffi display
+          gdk-app-launch-context-display (g-object gdk-display)
           nil "gdk_app_launch_context_set_display")
-   (:cffi screen gdk-app-launch-context-screen (g-object gdk-screen)
+   (:cffi screen
+          gdk-app-launch-context-screen (g-object gdk-screen)
           nil "gdk_app_launch_context_set_screen")
-   (:cffi desktop gdk-app-launch-context-desktop :int
+   (:cffi desktop
+          gdk-app-launch-context-desktop :int
           nil "gdk_app_launch_context_set_desktop")
-   (:cffi timestamp gdk-app-launch-context-timestamp :uint32
+   (:cffi timestamp
+          gdk-app-launch-context-timestamp :uint32
           nil "gdk_app_launch_context_set_timestamp")
-   (:cffi icon gdk-app-launch-context-icon g-object
+   (:cffi icon
+          gdk-app-launch-context-icon g-object
           nil "gdk_app_launch_context_set_icon")
-   (:cffi icon-name gdk-app-launch-context-icon-name :string
+   (:cffi icon-name
+          gdk-app-launch-context-icon-name :string
           nil "gdk_app_launch_context_set_icon_name"))) ;; TODO: GIcon
 
 ;;; ----------------------------------------------------------------------------
@@ -96,7 +104,7 @@
 ;;; Creates a new GdkAppLaunchContext.
 ;;; 
 ;;; Returns :
-;;; 	a new GdkAppLaunchContext
+;;;     a new GdkAppLaunchContext
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -111,10 +119,10 @@
 ;;; context. See also gdk_app_launch_context_set_screen().
 ;;; 
 ;;; context :
-;;; 	a GdkAppLaunchContext
+;;;     a GdkAppLaunchContext
 ;;; 
 ;;; display :
-;;; 	a GdkDisplay
+;;;     a GdkDisplay
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -132,10 +140,10 @@
 ;;; screen or display are set, the default screen and display are used.
 ;;; 
 ;;; context :
-;;; 	a GdkAppLaunchContext
+;;;     a GdkAppLaunchContext
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -154,10 +162,10 @@
 ;;; the window manager to pick one, typically it will be the current workspace.
 ;;; 
 ;;; context :
-;;; 	a GdkAppLaunchContext
+;;;     a GdkAppLaunchContext
 ;;; 
 ;;; desktop :
-;;; 	the number of a workspace, or -1
+;;;     the number of a workspace, or -1
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -176,10 +184,10 @@
 ;;; This is also known as 'focus stealing prevention'.
 ;;; 
 ;;; context :
-;;; 	a GdkAppLaunchContext
+;;;     a GdkAppLaunchContext
 ;;; 
 ;;; timestamp :
-;;; 	a timestamp
+;;;     a timestamp
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -198,10 +206,10 @@
 ;;; See also gdk_app_launch_context_set_icon_name().
 ;;; 
 ;;; context :
-;;; 	a GdkAppLaunchContext
+;;;     a GdkAppLaunchContext
 ;;; 
 ;;; icon :
-;;; 	a GIcon, or NULL.
+;;;     a GIcon, or NULL
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -222,12 +230,13 @@
 ;;; launched application itself.
 ;;; 
 ;;; context :
-;;; 	a GdkAppLaunchContext
+;;;     a GdkAppLaunchContext
 ;;; 
 ;;; icon_name :
-;;; 	an icon name, or NULL.
+;;;     an icon name, or NULL
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-;;; --- End of file gkd.app.lisp -----------------------------------------------
+
+;;; --- End of file gdk.app.lisp -----------------------------------------------

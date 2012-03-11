@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.pixbuf-structure.lisp
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; The GdkPixbuf Structure
 ;;; 
 ;;; Information that describes an image.
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkPixbufError
@@ -159,23 +157,23 @@
 ;;; can cause errors in this domain, or in the G_FILE_ERROR domain.
 ;;; 
 ;;; GDK_PIXBUF_ERROR_CORRUPT_IMAGE
-;;; 	An image file was broken somehow.
+;;;     An image file was broken somehow.
 ;;; 
 ;;; GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY
-;;; 	Not enough memory.
+;;;     Not enough memory.
 ;;; 
 ;;; GDK_PIXBUF_ERROR_BAD_OPTION
-;;; 	A bad option was passed to a pixbuf save module.
+;;;     A bad option was passed to a pixbuf save module.
 ;;; 
 ;;; GDK_PIXBUF_ERROR_UNKNOWN_TYPE
-;;; 	Unknown image type.
+;;;     Unknown image type.
 ;;; 
 ;;; GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION
-;;; 	Don't know how to perform the given operation on the type of image at
+;;;     Don't know how to perform the given operation on the type of image at
 ;;;     hand.
 ;;; 
 ;;; GDK_PIXBUF_ERROR_FAILED
-;;; 	Generic failure code, something went wrong.
+;;;     Generic failure code, something went wrong.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -192,14 +190,14 @@
 ;;; enum GdkColorspace
 ;;; 
 ;;; typedef enum {
-;;; 	GDK_COLORSPACE_RGB
+;;;     GDK_COLORSPACE_RGB
 ;;; } GdkColorspace;
 ;;; 
 ;;; This enumeration defines the color spaces that are supported by the
 ;;; &gdk-pixbuf; library. Currently only RGB is supported.
 ;;; 
 ;;; GDK_COLORSPACE_RGB
-;;; 	Indicates a red/green/blue additive color space.
+;;;     Indicates a red/green/blue additive color space.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkColorspace" gdk-colorspace
@@ -223,12 +221,12 @@
 ;;; mask.
 ;;; 
 ;;; GDK_PIXBUF_ALPHA_BILEVEL
-;;; 	A bilevel clipping mask (black and white) will be created and used to
+;;;     A bilevel clipping mask (black and white) will be created and used to
 ;;;     draw the image. Pixels below 0.5 opacity will be considered fully
 ;;;     transparent, and all others will be considered fully opaque.
 ;;; 
 ;;; GDK_PIXBUF_ALPHA_FULL
-;;; 	For now falls back to GDK_PIXBUF_ALPHA_BILEVEL. In the future it will
+;;;     For now falls back to GDK_PIXBUF_ALPHA_BILEVEL. In the future it will
 ;;;     do full alpha compositing.
 ;;; ----------------------------------------------------------------------------
 
@@ -268,10 +266,10 @@
 ;;; Queries the color space of a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	Color space.
+;;;     Color space.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -282,10 +280,10 @@
 ;;; Queries the number of channels of a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	Number of channels.
+;;;     Number of channels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -296,10 +294,10 @@
 ;;; Queries whether a pixbuf has an alpha channel (opacity information).
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if it has an alpha channel, FALSE otherwise.
+;;;     TRUE if it has an alpha channel, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -310,10 +308,10 @@
 ;;; Queries the number of bits per color sample in a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	Number of bits per color sample.
+;;;     Number of bits per color sample.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -324,10 +322,10 @@
 ;;; Queries a pointer to the pixel data of a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	A pointer to the pixbuf's pixel data. Please see the section called
+;;;     A pointer to the pixbuf's pixel data. Please see the section called
 ;;;     “Image Data” for information about how the pixel data is stored in
 ;;;     memory.
 ;;; ----------------------------------------------------------------------------
@@ -341,13 +339,13 @@
 ;;; Queries a pointer to the pixel data of a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; length :
-;;; 	The length of the binary data. [out]
+;;;     The length of the binary data. [out]
 ;;; 
 ;;; Returns :
-;;; 	A pointer to the pixbuf's pixel data. Please see the section called
+;;;     A pointer to the pixbuf's pixel data. Please see the section called
 ;;;     “Image Data” for information about how the pixel data is stored in
 ;;;     memory. Rename to: gdk_pixbuf_get_pixels.
 ;;; 
@@ -362,10 +360,10 @@
 ;;; Queries the width of a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	Width in pixels.
+;;;     Width in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -376,10 +374,10 @@
 ;;; Queries the height of a pixbuf.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	Height in pixels.
+;;;     Height in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -391,10 +389,10 @@
 ;;; the start of a row and the start of the next row.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf.
+;;;     A pixbuf.
 ;;; 
 ;;; Returns :
-;;; 	Distance between row starts.
+;;;     Distance between row starts.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -405,10 +403,10 @@
 ;;; Returns the length of the pixel data, in bytes.
 ;;; 
 ;;; pixbuf :
-;;; 	A pixbuf
+;;;     A pixbuf
 ;;; 
 ;;; Returns :
-;;; 	The length of the pixel data.
+;;;     The length of the pixel data.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -430,13 +428,13 @@
 ;;; orientation tag (if present).
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf
+;;;     a GdkPixbuf
 ;;; 
 ;;; key :
-;;; 	a nul-terminated string.
+;;;     a nul-terminated string.
 ;;; 
 ;;; Returns :
-;;; 	the value associated with key. This is a nul-terminated string that
+;;;     the value associated with key. This is a nul-terminated string that
 ;;;     should not be freed or NULL if key was not found.
 ;;; ----------------------------------------------------------------------------
 

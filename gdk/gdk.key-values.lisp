@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +31,12 @@
 ;;; Key Values
 ;;; 
 ;;; Functions for manipulating keyboard codes
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkKeymap
 ;;;     GdkKeymapKey
+;;;
 ;;;     gdk_keymap_get_default
 ;;;     gdk_keymap_get_for_display
 ;;;     gdk_keymap_lookup_key
@@ -148,10 +149,10 @@
 ;;; keymap changes.
 ;;; 
 ;;; keymap :
-;;; 	the object on which the signal is emitted
+;;;     the object on which the signal is emitted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.0
 ;;;
@@ -164,10 +165,10 @@
 ;;; changes.
 ;;; 
 ;;; keymap :
-;;; 	the object on which the signal is emitted
+;;;     the object on which the signal is emitted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.2
 ;;;
@@ -181,10 +182,10 @@
 ;;; See gdk_keymap_get_caps_lock_state().
 ;;; 
 ;;; keymap :
-;;; 	the object on which the signal is emitted
+;;;     the object on which the signal is emitted
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -226,17 +227,17 @@
 ;;; A GdkKeymapKey is a hardware key that can be mapped to a keyval.
 ;;; 
 ;;; guint keycode;
-;;; 	the hardware keycode. This is an identifying number for a physical key.
+;;;     the hardware keycode. This is an identifying number for a physical key.
 ;;; 
 ;;; gint group;
-;;; 	indicates movement in a horizontal direction. Usually groups are used
+;;;     indicates movement in a horizontal direction. Usually groups are used
 ;;;     for two different languages. In group 0, a key might have two English
 ;;;     characters, and in group 1 it might have two Hebrew characters. The
 ;;;     Hebrew characters will be printed on the key next to the English
 ;;;     characters.
 ;;; 
 ;;; gint level;
-;;; 	indicates which symbol on the key will be used, in a vertical direction.
+;;;     indicates which symbol on the key will be used, in a vertical direction.
 ;;;     So on a standard US keyboard, the key with the number "1" on it also has
 ;;;     the exclamation point ("!") character on it. The level indicates whether
 ;;;     to use the "1" or the "!" symbol. The letter keys are considered to have
@@ -257,7 +258,7 @@
 ;;; Returns the GdkKeymap attached to the default display.
 ;;; 
 ;;; Returns :
-;;; 	the GdkKeymap attached to the default display.
+;;;     the GdkKeymap attached to the default display.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_default" gdk-keymap-get-default)
@@ -273,10 +274,10 @@
 ;;; Returns the GdkKeymap attached to display.
 ;;; 
 ;;; display :
-;;; 	the GdkDisplay.
+;;;     the GdkDisplay.
 ;;; 
 ;;; Returns :
-;;; 	the GdkKeymap attached to display.
+;;;     the GdkKeymap attached to display.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -298,13 +299,13 @@
 ;;; effective group/level may not be the same as the current keyboard state.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap or NULL to use the default keymap
+;;;     a GdkKeymap or NULL to use the default keymap
 ;;; 
 ;;; key :
-;;; 	a GdkKeymapKey with keycode, group, and level initialized
+;;;     a GdkKeymapKey with keycode, group, and level initialized
 ;;; 
 ;;; Returns :
-;;; 	a keyval, or 0 if none was mapped to the given key
+;;;     a keyval, or 0 if none was mapped to the given key
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_lookup_key" %gdk-keymap-lookup-key) :uint
@@ -373,32 +374,32 @@
 ;;; GTK+ 3.0. Use gdk_keymap_get_for_display() instead.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap, or NULL to use the default.
+;;;     a GdkKeymap, or NULL to use the default.
 ;;; 
 ;;; hardware_keycode :
-;;; 	a keycode
+;;;     a keycode
 ;;; 
 ;;; state :
-;;; 	a modifier state
+;;;     a modifier state
 ;;; 
 ;;; group :
-;;; 	active keyboard group
+;;;     active keyboard group
 ;;; 
 ;;; keyval :
-;;; 	return location for keyval, or NULL.
+;;;     return location for keyval, or NULL.
 ;;; 
 ;;; effective_group :
-;;; 	return location for effective group, or NULL.
+;;;     return location for effective group, or NULL.
 ;;; 
 ;;; level :
-;;; 	return location for level, or NULL.
+;;;     return location for level, or NULL.
 ;;; 
 ;;; consumed_modifiers :
-;;; 	return location for modifiers that were used to determine the group
+;;;     return location for modifiers that were used to determine the group
 ;;;     or level, or NULL.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if there was a keyval bound to the keycode/state/group
+;;;     TRUE if there was a keyval bound to the keycode/state/group
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_translate_keyboard_state"
@@ -451,19 +452,19 @@
 ;;; array should be freed with g_free().
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap, or NULL to use the default keymap
+;;;     a GdkKeymap, or NULL to use the default keymap
 ;;; 
 ;;; keyval :
-;;; 	a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
+;;;     a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
 ;;; 
 ;;; keys :
-;;; 	return location for an array of GdkKeymapKey
+;;;     return location for an array of GdkKeymapKey
 ;;; 
 ;;; n_keys :
-;;; 	return location for number of elements in returned array
+;;;     return location for number of elements in returned array
 ;;; 
 ;;; Returns :
-;;; 	TRUE if keys were found and returned
+;;;     TRUE if keys were found and returned
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_entries_for_keyval"
@@ -506,22 +507,22 @@
 ;;; level. See gdk_keymap_translate_keyboard_state().
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap or NULL to use the default keymap
+;;;     a GdkKeymap or NULL to use the default keymap
 ;;; 
 ;;; hardware_keycode :
-;;; 	a keycode
+;;;     a keycode
 ;;; 
 ;;; keys :
-;;; 	return location for array of GdkKeymapKey, or NULL
+;;;     return location for array of GdkKeymapKey, or NULL
 ;;; 
 ;;; keyvals :
-;;; 	return location for array of keyvals, or NULL
+;;;     return location for array of keyvals, or NULL
 ;;; 
 ;;; n_entries :
-;;; 	length of keys and keyvals
+;;;     length of keys and keyvals
 ;;; 
 ;;; Returns :
-;;; 	TRUE if there were any entries
+;;;     TRUE if there were any entries
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_entries_for_keycode"
@@ -571,10 +572,10 @@
 ;;; Returns the direction of the keymap.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap or NULL to use the default keymap
+;;;     a GdkKeymap or NULL to use the default keymap
 ;;; 
 ;;; Returns :
-;;; 	PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the
+;;;     PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the
 ;;;     direction. PANGO_DIRECTION_NEUTRAL otherwise.
 ;;; ----------------------------------------------------------------------------
 
@@ -590,10 +591,10 @@
 ;;; GTK+ 3.0. Use gdk_keymap_get_for_display() instead.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap or NULL to use the default keymap
+;;;     a GdkKeymap or NULL to use the default keymap
 ;;; 
 ;;; Returns :
-;;; 	TRUE if there are layouts in both directions, FALSE otherwise
+;;;     TRUE if there are layouts in both directions, FALSE otherwise
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -606,10 +607,10 @@
 ;;; Returns whether the Caps Lock modifer is locked.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap
+;;;     a GdkKeymap
 ;;; 
 ;;; Returns :
-;;; 	TRUE if Caps Lock is on
+;;;     TRUE if Caps Lock is on
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -632,10 +633,10 @@
 ;;; This function is useful when matching key events against accelerators.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap
+;;;     a GdkKeymap
 ;;; 
 ;;; state :
-;;; 	pointer to the modifier mask to change
+;;;     pointer to the modifier mask to change
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -653,13 +654,13 @@
 ;;; This function is useful when matching key events against accelerators.
 ;;; 
 ;;; keymap :
-;;; 	a GdkKeymap
+;;;     a GdkKeymap
 ;;; 
 ;;; state :
-;;; 	pointer to the modifier state to map
+;;;     pointer to the modifier state to map
 ;;; 
 ;;; Returns :
-;;; 	TRUE if no virtual modifiers were mapped to the same non-virtual
+;;;     TRUE if no virtual modifiers were mapped to the same non-virtual
 ;;;     modifier. Note that FALSE is also returned if a virtual modifier is
 ;;;     mapped to a non-virtual modifier that was already set in state.
 ;;; 
@@ -680,10 +681,10 @@
 ;;; in the <gdk/gdkkeysyms.h> header file but without the leading "GDK_".
 ;;; 
 ;;; keyval :
-;;; 	a key value
+;;;     a key value
 ;;; 
 ;;; Returns :
-;;; 	a string containing the name of the key, or NULL if keyval is not a
+;;;     a string containing the name of the key, or NULL if keyval is not a
 ;;;     valid key. The string should not be modified.
 ;;; ----------------------------------------------------------------------------
 
@@ -705,10 +706,10 @@
 ;;; Converts a key name to a key value.
 ;;; 
 ;;; keyval_name :
-;;; 	a key name
+;;;     a key name
 ;;; 
 ;;; Returns :
-;;; 	the corresponding key value, or GDK_KEY_VoidSymbol if the key name
+;;;     the corresponding key value, or GDK_KEY_VoidSymbol if the key name
 ;;;     is not a valid key
 ;;; ----------------------------------------------------------------------------
 
@@ -726,13 +727,13 @@
 ;;; Examples of keyvals are GDK_a, GDK_Enter, GDK_F1, etc.
 ;;; 
 ;;; symbol :
-;;; 	a keyval
+;;;     a keyval
 ;;; 
 ;;; lower :
-;;; 	return location for lowercase version of symbol. [out]
+;;;     return location for lowercase version of symbol. [out]
 ;;; 
 ;;; upper :
-;;; 	return location for uppercase version of symbol. [out]
+;;;     return location for uppercase version of symbol. [out]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -743,10 +744,10 @@
 ;;; Converts a key value to upper case, if applicable.
 ;;; 
 ;;; keyval :
-;;; 	a key value.
+;;;     a key value.
 ;;; 
 ;;; Returns :
-;;; 	the upper case form of keyval, or keyval itself if it is already in
+;;;     the upper case form of keyval, or keyval itself if it is already in
 ;;;     upper case or it is not subject to case conversion.
 ;;; ----------------------------------------------------------------------------
 
@@ -763,10 +764,10 @@
 ;;; Converts a key value to lower case, if applicable.
 ;;; 
 ;;; keyval :
-;;; 	a key value.
+;;;     a key value.
 ;;; 
 ;;; Returns :
-;;; 	the lower case form of keyval, or keyval itself if it is already in
+;;;     the lower case form of keyval, or keyval itself if it is already in
 ;;;     lower case or it is not subject to case conversion.
 ;;; ----------------------------------------------------------------------------
 
@@ -783,10 +784,10 @@
 ;;; Returns TRUE if the given key value is in upper case.
 ;;; 
 ;;; keyval :
-;;; 	a key value.
+;;;     a key value.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if keyval is in upper case, or if keyval is not subject to
+;;;     TRUE if keyval is in upper case, or if keyval is not subject to
 ;;;     case conversion.
 ;;; ----------------------------------------------------------------------------
 
@@ -803,10 +804,10 @@
 ;;; Returns TRUE if the given key value is in lower case.
 ;;; 
 ;;; keyval :
-;;; 	a key value.
+;;;     a key value.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if keyval is in lower case, or if keyval is not subject
+;;;     TRUE if keyval is in lower case, or if keyval is not subject
 ;;;     to case conversion.
 ;;; ----------------------------------------------------------------------------
 
@@ -824,10 +825,10 @@
 ;;; character.
 ;;; 
 ;;; keyval :
-;;; 	a GDK key symbol
+;;;     a GDK key symbol
 ;;; 
 ;;; Returns :
-;;; 	the corresponding unicode character, or 0 if there is no corresponding
+;;;     the corresponding unicode character, or 0 if there is no corresponding
 ;;;     character.
 ;;; ----------------------------------------------------------------------------
 
@@ -857,10 +858,10 @@
 ;;; Convert from a ISO10646 character to a key symbol.
 ;;; 
 ;;; wc :
-;;; 	a ISO10646 encoded character
+;;;     a ISO10646 encoded character
 ;;; 
 ;;; Returns :
-;;; 	the corresponding GDK key symbol, if one exists. or, if there is no
+;;;     the corresponding GDK key symbol, if one exists. or, if there is no
 ;;;     corresponding symbol, wc | 0x01000000
 ;;; ----------------------------------------------------------------------------
 

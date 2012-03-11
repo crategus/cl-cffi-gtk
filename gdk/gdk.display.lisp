@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,10 +31,10 @@
 ;;; GdkDisplay
 ;;;
 ;;; Controls the keyboard/mouse pointer grabs and a set of GdkScreens
-;;;	
+;;;
 ;;; Synopsis
 ;;;
-;;;     GdkDisplay;
+;;;     GdkDisplay
 ;;;
 ;;;     gdk_display_open
 ;;;     gdk_display_get_default
@@ -59,7 +59,9 @@
 ;;;     gdk_display_set_double_click_distance
 ;;;     gdk_display_get_pointer
 ;;;     gdk_display_get_window_at_pointer
+;;;
 ;;;     GdkDisplayPointerHooks
+;;;
 ;;;     gdk_display_set_pointer_hooks
 ;;;     gdk_display_warp_pointer
 ;;;     gdk_display_supports_cursor_color
@@ -176,10 +178,10 @@
 ;;; Opens a display.
 ;;;
 ;;; display_name :
-;;;	the name of the display to open
+;;;     the name of the display to open
 ;;;
 ;;; Returns :
-;;;	a GdkDisplay, or NULL if the display could not be opened.
+;;;     a GdkDisplay, or NULL if the display could not be opened.
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -198,7 +200,7 @@
 ;;; gdk_display_manager_get_default_display (gdk_display_manager_get()).
 ;;;
 ;;; Returns :
-;;;	a GdkDisplay, or NULL if there is no default display. [transfer none]
+;;;     a GdkDisplay, or NULL if there is no default display
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -215,10 +217,10 @@
 ;;; Gets the name of the display.
 ;;;
 ;;; display :
-;;;	a GdkDisplay
+;;;     a GdkDisplay
 ;;;
 ;;; Returns :
-;;;	a string representing the display name. This string is owned by GDK and
+;;;     a string representing the display name. This string is owned by GDK and
 ;;;     should not be modified or freed.
 ;;;
 ;;; Since 2.2
@@ -234,10 +236,10 @@
 ;;; Gets the number of screen managed by the display.
 ;;;
 ;;; display :
-;;;	a GdkDisplay
+;;;     a GdkDisplay
 ;;;
 ;;; Returns :
-;;;	number of screens.
+;;;     number of screens
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -297,7 +299,7 @@
 ;;; display :
 ;;;     a GdkDisplay.
 ;;;
-;;; time_  :
+;;; time_ :
 ;;;     a timestap (e.g. GDK_CURRENT_TIME).
 ;;;
 ;;; Since 2.2
@@ -316,8 +318,11 @@
 ;;;
 ;;; Release any keyboard grab
 ;;;
-;;; display : a GdkDisplay.
-;;; time_   : a timestap (e.g GDK_CURRENT_TIME).
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; time_ :
+;;;     a timestap (e.g GDK_CURRENT_TIME)
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -335,8 +340,11 @@
 ;;;
 ;;; Test if the pointer is grabbed.
 ;;;
-;;; display : a GdkDisplay
-;;; Returns : TRUE if an active X pointer grab is in effect
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; Returns :
+;;;     TRUE if an active X pointer grab is in effect
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -354,7 +362,8 @@
 ;;;
 ;;; Emits a short beep on display
 ;;;
-;;; display : a GdkDisplay
+;;; display :
+;;;     a GdkDisplay
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -720,17 +729,17 @@
 ;;; Applications should never have any reason to use this facility
 ;;; 
 ;;; get_pointer ()
-;;;	Obtains the current pointer position and modifier state. The position
+;;;     Obtains the current pointer position and modifier state. The position
 ;;;     is given in coordinates relative to the window containing the pointer,
 ;;;     which is returned in window.
 ;;;
 ;;; window_get_pointer ()
-;;;	Obtains the window underneath the mouse pointer. Current pointer
+;;;     Obtains the window underneath the mouse pointer. Current pointer
 ;;;     position and modifier state are returned in x, y and mask. The position
 ;;;     is given in coordinates relative to window.
 ;;;
 ;;; window_at_pointer ()
-;;;	Obtains the window underneath the mouse pointer, returning the location
+;;;     Obtains the window underneath the mouse pointer, returning the location
 ;;;     of that window in win_x, win_y. Returns NULL if the window under the
 ;;;     mouse pointer is not known to GDK (for example, belongs to another
 ;;;     application).

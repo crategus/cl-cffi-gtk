@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,12 +31,13 @@
 ;;; Images
 ;;; 
 ;;; A client-side area for bit-mapped graphics
-;;; 	
+;;; 
 ;;; Synopsis
 ;;;
 ;;;     GdkImage
-;;;     gdk_image_new
 ;;;     GdkImageType
+;;;
+;;;     gdk_image_new
 ;;;     gdk_image_new_bitmap
 ;;;     gdk_image_get
 ;;;     gdk_image_ref
@@ -91,17 +92,17 @@
 ;;; Specifies the type of a GdkImage.
 ;;; 
 ;;; GDK_IMAGE_NORMAL
-;;; 	The original X image type, which is quite slow since the image has to
+;;;     The original X image type, which is quite slow since the image has to
 ;;;     be transferred from the client to the server to display it.
 ;;; 
 ;;; GDK_IMAGE_SHARED
-;;; 	A faster image type, which uses shared memory to transfer the image data
+;;;     A faster image type, which uses shared memory to transfer the image data
 ;;;     between client and server. However this will only be available if client
 ;;;     and server are on the same machine and the shared memory extension is
 ;;;     supported by the server.
 ;;; 
 ;;; GDK_IMAGE_FASTEST
-;;; 	Specifies that GDK_IMAGE_SHARED should be tried first, and if that fails
+;;;     Specifies that GDK_IMAGE_SHARED should be tried first, and if that fails
 ;;;     then GDK_IMAGE_NORMAL will be used.
 ;;; ----------------------------------------------------------------------------
 
@@ -136,7 +137,7 @@
 ;;; The GdkImage struct contains information on the image and the pixel data.
 ;;; 
 ;;; GObject parent_instance;
-;;; 	the parent instance
+;;;     the parent instance
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkImage" gdk-image
@@ -163,22 +164,22 @@
 ;;; Creates a new GdkImage.
 ;;; 
 ;;; type :
-;;; 	the type of the GdkImage, one of GDK_IMAGE_NORMAL, GDK_IMAGE_SHARED and
+;;;     the type of the GdkImage, one of GDK_IMAGE_NORMAL, GDK_IMAGE_SHARED and
 ;;;     GDK_IMAGE_FASTEST. GDK_IMAGE_FASTEST is probably the best choice, since
 ;;;     it will try creating a GDK_IMAGE_SHARED image first and if that fails
 ;;;     it will then use GDK_IMAGE_NORMAL.
 ;;; 
 ;;; visual :
-;;; 	the GdkVisual to use for the image.
+;;;     the GdkVisual to use for the image.
 ;;; 
 ;;; width :
-;;; 	the width of the image in pixels.
+;;;     the width of the image in pixels.
 ;;; 
 ;;; height :
-;;; 	the height of the image in pixels.
+;;;     the height of the image in pixels.
 ;;; 
 ;;; Returns :
-;;; 	a new GdkImage, or NULL if the image could not be created.
+;;;     a new GdkImage, or NULL if the image could not be created.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_image_new" gdk-image-new)
@@ -210,19 +211,19 @@
 ;;; malloc() (NOT g_malloc()) and will be freed when the image is freed.
 ;;; 
 ;;; visual :
-;;; 	the GdkVisual to use for the image.
+;;;     the GdkVisual to use for the image.
 ;;; 
 ;;; data :
-;;; 	the pixel data.
+;;;     the pixel data.
 ;;; 
 ;;; width :
-;;; 	the width of the image in pixels.
+;;;     the width of the image in pixels.
 ;;; 
 ;;; height :
-;;; 	the height of the image in pixels.
+;;;     the height of the image in pixels.
 ;;; 
 ;;; Returns :
-;;; 	a new GdkImage.
+;;;     a new GdkImage.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -243,22 +244,22 @@
 ;;; cases gdk_pixbuf_get_from_drawable() is the most convenient choice.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable
+;;;     a GdkDrawable
 ;;; 
 ;;; x :
-;;; 	x coordinate in window
+;;;     x coordinate in window
 ;;; 
 ;;; y :
-;;; 	y coordinate in window
+;;;     y coordinate in window
 ;;; 
 ;;; width :
-;;; 	width of area in window
+;;;     width of area in window
 ;;; 
 ;;; height :
-;;; 	height of area in window
+;;;     height of area in window
 ;;; 
 ;;; Returns :
-;;; 	a new GdkImage or NULL
+;;;     a new GdkImage or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -274,10 +275,10 @@
 ;;; Deprecated function; use g_object_ref() instead.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the image
+;;;     the image
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -293,7 +294,7 @@
 ;;; Deprecated function; use g_object_unref() instead.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -324,10 +325,10 @@
 ;;; a colormap was set explicitely with gdk_image_set_colormap().
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	colormap for the image
+;;;     colormap for the image
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -346,10 +347,10 @@
 ;;; use the colormap of the drawable you intend to render the image to.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -366,10 +367,10 @@
 ;;; Determines the number of bits per pixel of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the bits per pixel
+;;;     the bits per pixel
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -388,10 +389,10 @@
 ;;; Determines the number of bytes per pixel of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the bytes per pixel
+;;;     the bytes per pixel
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -410,10 +411,10 @@
 ;;; Determines the number of bytes per line of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the bytes per line
+;;;     the bytes per line
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -431,10 +432,10 @@
 ;;; Determines the byte order of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -452,10 +453,10 @@
 ;;; Determines the depth of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the depth
+;;;     the depth
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -473,10 +474,10 @@
 ;;; Determines the height of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the height
+;;;     the height
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -494,10 +495,10 @@
 ;;; Determines the type of a given image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the GdkImageType of the image
+;;;     the GdkImageType of the image
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -515,10 +516,10 @@
 ;;; Determines the visual that was used to create the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -536,10 +537,10 @@
 ;;; Determines the width of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the width
+;;;     the width
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -557,10 +558,10 @@
 ;;; Returns a pointer to the pixel data of the image.
 ;;; 
 ;;; image :
-;;; 	a GdkImage
+;;;     a GdkImage
 ;;; 
 ;;; Returns :
-;;; 	the pixel data of the image
+;;;     the pixel data of the image
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -585,16 +586,16 @@
 ;;; Sets a pixel in a GdkImage to a given pixel value.
 ;;; 
 ;;; image :
-;;; 	a GdkImage.
+;;;     a GdkImage.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the pixel to set.
+;;;     the x coordinate of the pixel to set.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the pixel to set.
+;;;     the y coordinate of the pixel to set.
 ;;; 
 ;;; pixel :
-;;; 	the pixel value to set.
+;;;     the pixel value to set.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_image_put_pixel" gdk-image-put-pixel) :void
@@ -618,16 +619,16 @@
 ;;; Gets a pixel value at a specified position in a GdkImage.
 ;;; 
 ;;; image :
-;;; 	a GdkImage.
+;;;     a GdkImage.
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the pixel to get.
+;;;     the x coordinate of the pixel to get.
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the pixel to get.
+;;;     the y coordinate of the pixel to get.
 ;;; 
 ;;; Returns :
-;;; 	the pixel value at the given position.
+;;;     the pixel value at the given position.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.image.lisp ---------------------------------------------

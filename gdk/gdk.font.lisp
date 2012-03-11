@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +31,12 @@
 ;;; Fonts
 ;;; 
 ;;; Loading and manipulating fonts
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkFont
-;;;     GdkFontType;
+;;;     GdkFontType
+;;;
 ;;;     gdk_font_load
 ;;;     gdk_font_load_for_display
 ;;;     gdk_fontset_load
@@ -64,6 +65,7 @@
 ;;;     gdk_char_height
 ;;; 
 ;;;     GdkWChar
+;;;
 ;;;     gdk_wcstombs
 ;;;     gdk_mbstowcs
 ;;; 
@@ -231,10 +233,10 @@
 ;;; Indicates the type of a font. The possible values are currently:
 ;;; 
 ;;; GDK_FONT_FONT
-;;; 	the font is a single font.
+;;;     the font is a single font.
 ;;; 
 ;;; GDK_FONT_FONTSET
-;;; 	the font is a fontset.
+;;;     the font is a fontset.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkFontType" gdk-font-type () :font :fontset)
@@ -258,15 +260,15 @@
 ;;; gdk_font_ref() and gdk_font_unref()
 ;;; 
 ;;; GdkFontType type;
-;;; 	a value of type GdkFontType which indicates whether this font is a
+;;;     a value of type GdkFontType which indicates whether this font is a
 ;;;     single font or a fontset.
 ;;; 
 ;;; gint ascent;
-;;; 	the maximum distance that the font, when drawn, ascends above the
+;;;     the maximum distance that the font, when drawn, ascends above the
 ;;;     baseline.
 ;;; 
 ;;; gint descent;
-;;; 	the maximum distance that the font, when drawn, descends below the
+;;;     the maximum distance that the font, when drawn, descends below the
 ;;;     baseline.
 ;;; ----------------------------------------------------------------------------
 
@@ -290,10 +292,10 @@
 ;;; make no assumptions about the initial reference count.
 ;;; 
 ;;; font_name :
-;;; 	a XLFD describing the font to load.
+;;;     a XLFD describing the font to load.
 ;;; 
 ;;; Returns :
-;;; 	a GdkFont, or NULL if the font could not be loaded.
+;;;     a GdkFont, or NULL if the font could not be loaded.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -313,13 +315,13 @@
 ;;; make no assumptions about the initial reference count.
 ;;; 
 ;;; display :
-;;; 	a GdkDisplay
+;;;     a GdkDisplay
 ;;; 
 ;;; font_name :
-;;; 	a XLFD describing the font to load.
+;;;     a XLFD describing the font to load.
 ;;; 
 ;;; Returns :
-;;; 	a GdkFont, or NULL if the font could not be loaded.
+;;;     a GdkFont, or NULL if the font could not be loaded.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -339,11 +341,11 @@
 ;;; assumptions about the initial reference count.
 ;;; 
 ;;; fontset_name :
-;;; 	a comma-separated list of XLFDs describing the component fonts of the
+;;;     a comma-separated list of XLFDs describing the component fonts of the
 ;;;     fontset to load.
 ;;; 
 ;;; Returns :
-;;; 	a GdkFont, or NULL if the fontset could not be loaded.
+;;;     a GdkFont, or NULL if the fontset could not be loaded.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -363,14 +365,14 @@
 ;;; no assumptions about the initial reference count.
 ;;; 
 ;;; display :
-;;; 	a GdkDisplay
+;;;     a GdkDisplay
 ;;; 
 ;;; fontset_name :
-;;; 	a comma-separated list of XLFDs describing the component fonts of the
+;;;     a comma-separated list of XLFDs describing the component fonts of the
 ;;;     fontset to load.
 ;;; 
 ;;; Returns :
-;;; 	a GdkFont, or NULL if the fontset could not be loaded.
+;;;     a GdkFont, or NULL if the fontset could not be loaded.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -392,10 +394,10 @@
 ;;; better results.
 ;;; 
 ;;; font_desc :
-;;; 	a PangoFontDescription.
+;;;     a PangoFontDescription.
 ;;; 
 ;;; Returns :
-;;; 	the newly loaded font, or NULL if the font cannot be loaded.
+;;;     the newly loaded font, or NULL if the font cannot be loaded.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -417,13 +419,13 @@
 ;;; Using Pango directly will produce better results.
 ;;; 
 ;;; display :
-;;; 	a GdkDisplay
+;;;     a GdkDisplay
 ;;; 
 ;;; font_desc :
-;;; 	a PangoFontDescription.
+;;;     a PangoFontDescription.
 ;;; 
 ;;; Returns :
-;;; 	the newly loaded font, or NULL if the font cannot be loaded.
+;;;     the newly loaded font, or NULL if the font cannot be loaded.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -441,10 +443,10 @@
 ;;; Returns the GdkDisplay for font.
 ;;; 
 ;;; font :
-;;; 	the GdkFont.
+;;;     the GdkFont.
 ;;; 
 ;;; Returns :
-;;; 	the corresponding GdkDisplay.
+;;;     the corresponding GdkDisplay.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -461,10 +463,10 @@
 ;;; Increases the reference count of a font by one.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; Returns :
-;;; 	font
+;;;     font
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -480,7 +482,7 @@
 ;;; destroys the font.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -495,10 +497,10 @@
 ;;; Returns the X Font ID for the given font.
 ;;; 
 ;;; font :
-;;; 	a GdkFont.
+;;;     a GdkFont.
 ;;; 
 ;;; Returns :
-;;; 	the numeric X Font ID
+;;;     the numeric X Font ID
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -515,13 +517,13 @@
 ;;; fontsets.
 ;;; 
 ;;; fonta :
-;;; 	a GdkFont.
+;;;     a GdkFont.
 ;;; 
 ;;; fontb :
-;;; 	another GdkFont.
+;;;     another GdkFont.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the fonts are equal.
+;;;     TRUE if the fonts are equal.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -543,25 +545,25 @@
 ;;; Gets the metrics of a nul-terminated string.
 ;;; 
 ;;; font :
-;;; 	a GdkFont.
+;;;     a GdkFont.
 ;;; 
 ;;; string :
-;;; 	the nul-terminated string to measure.
+;;;     the nul-terminated string to measure.
 ;;; 
 ;;; lbearing :
-;;; 	the left bearing of the string.
+;;;     the left bearing of the string.
 ;;; 
 ;;; rbearing :
-;;; 	the right bearing of the string.
+;;;     the right bearing of the string.
 ;;; 
 ;;; width :
-;;; 	the width of the string.
+;;;     the width of the string.
 ;;; 
 ;;; ascent :
-;;; 	the ascent of the string.
+;;;     the ascent of the string.
 ;;; 
 ;;; descent :
-;;; 	the descent of the string.
+;;;     the descent of the string.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -583,29 +585,29 @@
 ;;; Gets the metrics of a string.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; text :
-;;; 	the text to measure
+;;;     the text to measure
 ;;; 
 ;;; text_length :
-;;; 	the length of the text in bytes. (If the font is a 16-bit font, this is
+;;;     the length of the text in bytes. (If the font is a 16-bit font, this is
 ;;;     twice the length of the text in characters.)
 ;;; 
 ;;; lbearing :
-;;; 	the left bearing of the string.
+;;;     the left bearing of the string.
 ;;; 
 ;;; rbearing :
-;;; 	the right bearing of the string.
+;;;     the right bearing of the string.
 ;;; 
 ;;; width :
-;;; 	the width of the string.
+;;;     the width of the string.
 ;;; 
 ;;; ascent :
-;;; 	the ascent of the string.
+;;;     the ascent of the string.
 ;;; 
 ;;; descent :
-;;; 	the descent of the string.
+;;;     the descent of the string.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -628,28 +630,28 @@
 ;;; Gets the metrics of a string of wide characters.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; text :
-;;; 	the text to measure.
+;;;     the text to measure.
 ;;; 
 ;;; text_length :
-;;; 	the length of the text in character.
+;;;     the length of the text in character.
 ;;; 
 ;;; lbearing :
-;;; 	the left bearing of the string.
+;;;     the left bearing of the string.
 ;;; 
 ;;; rbearing :
-;;; 	the right bearing of the string.
+;;;     the right bearing of the string.
 ;;; 
 ;;; width :
-;;; 	the width of the string.
+;;;     the width of the string.
 ;;; 
 ;;; ascent :
-;;; 	the ascent of the string.
+;;;     the ascent of the string.
 ;;; 
 ;;; descent :
-;;; 	the descent of the string.
+;;;     the descent of the string.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -666,13 +668,13 @@
 ;;; strings should be drawn)
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; string :
-;;; 	the nul-terminated string to measure
+;;;     the nul-terminated string to measure
 ;;; 
 ;;; Returns :
-;;; 	the width of the string in pixels.
+;;;     the width of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -687,16 +689,16 @@
 ;;; Determines the width of a given string.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; text :
-;;; 	the text to measure.
+;;;     the text to measure.
 ;;; 
 ;;; text_length :
-;;; 	the length of the text in bytes.
+;;;     the length of the text in bytes.
 ;;; 
 ;;; Returns :
-;;; 	the width of the string in pixels.
+;;;     the width of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -714,16 +716,16 @@
 ;;; Determines the width of a given wide-character string.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; text :
-;;; 	the text to measure.
+;;;     the text to measure.
 ;;; 
 ;;; text_length :
-;;; 	the length of the text in characters.
+;;;     the length of the text in characters.
 ;;; 
 ;;; Returns :
-;;; 	the width of the string in pixels.
+;;;     the width of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -739,13 +741,13 @@
 ;;; Determines the width of a given character.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; character :
-;;; 	the character to measure.
+;;;     the character to measure.
 ;;; 
 ;;; Returns :
-;;; 	the width of the character in pixels.
+;;;     the width of the character in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -762,13 +764,13 @@
 ;;; wide-character encoding of the current locale).
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; character :
-;;; 	the character to measure.
+;;;     the character to measure.
 ;;; 
 ;;; Returns :
-;;; 	the width of the character in pixels.
+;;;     the width of the character in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -787,13 +789,13 @@
 ;;; pieces. See gdk_string_width().
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; string :
-;;; 	the nul-terminated string to measure.
+;;;     the nul-terminated string to measure.
 ;;; 
 ;;; Returns :
-;;; 	the right bearing of the string in pixels.
+;;;     the right bearing of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -811,16 +813,16 @@
 ;;; See gdk_text_width().
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; text :
-;;; 	the text to measure.
+;;;     the text to measure.
 ;;; 
 ;;; text_length :
-;;; 	the length of the text in bytes.
+;;;     the length of the text in bytes.
 ;;; 
 ;;; Returns :
-;;; 	the right bearing of the string in pixels.
+;;;     the right bearing of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -837,13 +839,13 @@
 ;;; origin of the next portion when drawing text in multiple pieces.
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; character :
-;;; 	the character to measure.
+;;;     the character to measure.
 ;;; 
 ;;; Returns :
-;;; 	the right bearing of the character in pixels.
+;;;     the right bearing of the character in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -861,13 +863,13 @@
 ;;; will be drawn in relation to the baseline. See gdk_string_extents().
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; string :
-;;; 	the nul-terminated string to measure.
+;;;     the nul-terminated string to measure.
 ;;; 
 ;;; Returns :
-;;; 	the height of the string in pixels.
+;;;     the height of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -884,16 +886,16 @@
 ;;; relation to the baseline. See gdk_text_extents().
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; text :
-;;; 	the text to measure.
+;;;     the text to measure.
 ;;; 
 ;;; text_length :
-;;; 	the length of the text in bytes.
+;;;     the length of the text in bytes.
 ;;; 
 ;;; Returns :
-;;; 	the height of the string in pixels.
+;;;     the height of the string in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -911,13 +913,13 @@
 ;;; be drawn in relation to the baseline. See gdk_text_extents().
 ;;; 
 ;;; font :
-;;; 	a GdkFont
+;;;     a GdkFont
 ;;; 
 ;;; character :
-;;; 	the character to measure.
+;;;     the character to measure.
 ;;; 
 ;;; Returns :
-;;; 	the height of the character in pixels.
+;;;     the height of the character in pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -966,10 +968,10 @@
 ;;; comes from an acronym of 'Wide Character String TO Multi-Byte String').
 ;;; 
 ;;; src :
-;;; 	a wide character string.
+;;;     a wide character string.
 ;;; 
 ;;; Returns :
-;;; 	the multi-byte string corresponding to src, or NULL if the conversion
+;;;     the multi-byte string corresponding to src, or NULL if the conversion
 ;;;     failed. The returned string should be freed with g_free() when no longer
 ;;;     needed.
 ;;; ----------------------------------------------------------------------------
@@ -987,16 +989,16 @@
 ;;; comes from an acronym of 'Multi-Byte String TO Wide Character String').
 ;;; 
 ;;; dest :
-;;; 	the space to place the converted wide character string into.
+;;;     the space to place the converted wide character string into.
 ;;; 
 ;;; src :
-;;; 	the multi-byte string to convert, which must be nul-terminated.
+;;;     the multi-byte string to convert, which must be nul-terminated.
 ;;; 
 ;;; dest_max :
-;;; 	the maximum number of wide characters to place in dest.
+;;;     the maximum number of wide characters to place in dest.
 ;;; 
 ;;; Returns :
-;;; 	the number of wide characters written into dest, or -1 if the
+;;;     the number of wide characters written into dest, or -1 if the
 ;;;     conversion failed.
 ;;; ----------------------------------------------------------------------------
 

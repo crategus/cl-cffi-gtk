@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; Graphics Contexts
 ;;; 
 ;;; Objects to encapsulate drawing properties
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkGC
@@ -134,52 +134,52 @@
 ;;; and GDK_OR are also useful.
 ;;; 
 ;;; GDK_COPY
-;;; 	dst = src
+;;;     dst = src
 ;;; 
 ;;; GDK_INVERT
-;;; 	dst = NOT dst
+;;;     dst = NOT dst
 ;;; 
 ;;; GDK_XOR
-;;; 	dst = src XOR dst
+;;;     dst = src XOR dst
 ;;; 
 ;;; GDK_CLEAR
-;;; 	dst = 0
+;;;     dst = 0
 ;;; 
 ;;; GDK_AND
-;;; 	dst = dst AND src
+;;;     dst = dst AND src
 ;;; 
 ;;; GDK_AND_REVERSE
-;;; 	dst = src AND (NOT dst)
+;;;     dst = src AND (NOT dst)
 ;;; 
 ;;; GDK_AND_INVERT
-;;; 	dst = (NOT src) AND dst
+;;;     dst = (NOT src) AND dst
 ;;; 
 ;;; GDK_NOOP
-;;; 	dst = dst
+;;;     dst = dst
 ;;; 
 ;;; GDK_OR
-;;; 	dst = src OR dst
+;;;     dst = src OR dst
 ;;; 
 ;;; GDK_EQUIV
-;;; 	dst = (NOT src) XOR dst
+;;;     dst = (NOT src) XOR dst
 ;;; 
 ;;; GDK_OR_REVERSE
-;;; 	dst = src OR (NOT dst)
+;;;     dst = src OR (NOT dst)
 ;;; 
 ;;; GDK_COPY_INVERT
-;;; 	dst = NOT src
+;;;     dst = NOT src
 ;;; 
 ;;; GDK_OR_INVERT
-;;; 	dst = (NOT src) OR dst
+;;;     dst = (NOT src) OR dst
 ;;; 
 ;;; GDK_NAND
-;;; 	dst = (NOT src) OR (NOT dst)
+;;;     dst = (NOT src) OR (NOT dst)
 ;;; 
 ;;; GDK_NOR
-;;; 	dst = (NOT src) AND (NOT dst)
+;;;     dst = (NOT src) AND (NOT dst)
 ;;; 
 ;;; GDK_SET
-;;; 	dst = 1
+;;;     dst = 1
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkFunction" gdk-function
@@ -215,18 +215,18 @@
 ;;; Determines how primitives are drawn.
 ;;; 
 ;;; GDK_SOLID
-;;; 	draw with the foreground color.
+;;;     draw with the foreground color.
 ;;; 
 ;;; GDK_TILED
-;;; 	draw with a tiled pixmap.
+;;;     draw with a tiled pixmap.
 ;;; 
 ;;; GDK_STIPPLED
-;;; 	draw using the stipple bitmap. Pixels corresponding to bits in the
+;;;     draw using the stipple bitmap. Pixels corresponding to bits in the
 ;;;     stipple bitmap that are set will be drawn in the foreground color;
 ;;;     pixels corresponding to bits that are not set will be left untouched.
 ;;; 
 ;;; GDK_OPAQUE_STIPPLED
-;;; 	draw using the stipple bitmap. Pixels corresponding to bits in the
+;;;     draw using the stipple bitmap. Pixels corresponding to bits in the
 ;;;     stipple bitmap that are set will be drawn in the foreground color;
 ;;;     pixels corresponding to bits that are not set will be drawn with the
 ;;;     background color.
@@ -253,10 +253,10 @@
 ;;; window.
 ;;; 
 ;;; GDK_CLIP_BY_CHILDREN
-;;; 	only draw onto the window itself.
+;;;     only draw onto the window itself.
 ;;; 
 ;;; GDK_INCLUDE_INFERIORS
-;;; 	draw onto the window and child windows.
+;;;     draw onto the window and child windows.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkSubwindowMode" gdk-subwindow-mode
@@ -323,13 +323,13 @@
 ;;; Determines how the joins between segments of a polygon are drawn.
 ;;; 
 ;;; GDK_JOIN_MITER
-;;; 	the sides of each line are extended to meet at an angle.
+;;;     the sides of each line are extended to meet at an angle.
 ;;; 
 ;;; GDK_JOIN_ROUND
-;;; 	the sides of the two lines are joined by a circular arc.
+;;;     the sides of the two lines are joined by a circular arc.
 ;;; 
 ;;; GDK_JOIN_BEVEL
-;;; 	the sides of the two lines are joined by a straight line which makes
+;;;     the sides of the two lines are joined by a straight line which makes
 ;;;     an equal angle with each line.
 ;;; ----------------------------------------------------------------------------
 
@@ -353,13 +353,13 @@
 ;;; Determines how lines are drawn.
 ;;; 
 ;;; GDK_LINE_SOLID
-;;; 	lines are drawn solid.
+;;;     lines are drawn solid.
 ;;; 
 ;;; GDK_LINE_ON_OFF_DASH
-;;; 	even segments are drawn; odd segments are not drawn.
+;;;     even segments are drawn; odd segments are not drawn.
 ;;; 
 ;;; GDK_LINE_DOUBLE_DASH
-;;; 	even segments are normally. Odd segments are drawn in the background
+;;;     even segments are normally. Odd segments are drawn in the background
 ;;;     color if the fill style is GDK_SOLID, or in the background color masked
 ;;;     by the stipple if the fill style is GDK_STIPPLED.
 ;;; ----------------------------------------------------------------------------
@@ -385,19 +385,19 @@
 ;;; Determines how the end of lines are drawn.
 ;;; 
 ;;; GDK_CAP_NOT_LAST
-;;; 	the same as GDK_CAP_BUTT for lines of non-zero width. for zero width
+;;;     the same as GDK_CAP_BUTT for lines of non-zero width. for zero width
 ;;;     lines, the final point on the line will not be drawn.
 ;;; 
 ;;; GDK_CAP_BUTT
-;;; 	the ends of the lines are drawn squared off and extending to the
+;;;     the ends of the lines are drawn squared off and extending to the
 ;;;     coordinates of the end point.
 ;;; 
 ;;; GDK_CAP_ROUND
-;;; 	the ends of the lines are drawn as semicircles with the diameter equal
+;;;     the ends of the lines are drawn as semicircles with the diameter equal
 ;;;     to the line width and centered at the end point.
 ;;; 
 ;;; GDK_CAP_PROJECTING
-;;; 	the ends of the lines are drawn squared off and extending half the
+;;;     the ends of the lines are drawn squared off and extending half the
 ;;;     width of the line beyond the end point.
 ;;; ----------------------------------------------------------------------------
 
@@ -413,84 +413,84 @@
 ;;; struct GdkGCValues
 ;;; 
 ;;; struct GdkGCValues {
-;;;   GdkColor	    foreground;
-;;;   GdkColor	    background;
-;;;   GdkFont	   *font;
-;;;   GdkFunction	    function;
-;;;   GdkFill	    fill;
-;;;   GdkPixmap	   *tile;
-;;;   GdkPixmap	   *stipple;
-;;;   GdkPixmap	   *clip_mask;
+;;;   GdkColor          foreground;
+;;;   GdkColor          background;
+;;;   GdkFont          *font;
+;;;   GdkFunction       function;
+;;;   GdkFill           fill;
+;;;   GdkPixmap        *tile;
+;;;   GdkPixmap        *stipple;
+;;;   GdkPixmap        *clip_mask;
 ;;;   GdkSubwindowMode  subwindow_mode;
-;;;   gint		    ts_x_origin;
-;;;   gint		    ts_y_origin;
-;;;   gint		    clip_x_origin;
-;;;   gint		    clip_y_origin;
-;;;   gint		    graphics_exposures;
-;;;   gint		    line_width;
-;;;   GdkLineStyle	    line_style;
-;;;   GdkCapStyle	    cap_style;
-;;;   GdkJoinStyle	    join_style;
+;;;   gint              ts_x_origin;
+;;;   gint              ts_y_origin;
+;;;   gint              clip_x_origin;
+;;;   gint              clip_y_origin;
+;;;   gint              graphics_exposures;
+;;;   gint              line_width;
+;;;   GdkLineStyle      line_style;
+;;;   GdkCapStyle       cap_style;
+;;;   GdkJoinStyle      join_style;
 ;;; };
 ;;; 
 ;;; The GdkGCValues structure holds a set of values used to create or modify a
 ;;; graphics context.
 ;;; 
 ;;; GdkColor foreground;
-;;; 	the foreground color. Note that gdk_gc_get_values() only sets the pixel
+;;;     the foreground color. Note that gdk_gc_get_values() only sets the pixel
 ;;;     value.
 ;;; 
 ;;; GdkColor background;
-;;; 	the background color. Note that gdk_gc_get_values() only sets the pixel
+;;;     the background color. Note that gdk_gc_get_values() only sets the pixel
 ;;;     value.
 ;;; 
 ;;; GdkFont *font;
-;;; 	the default font.
+;;;     the default font.
 ;;; 
 ;;; GdkFunction function;
-;;; 	the bitwise operation used when drawing.
+;;;     the bitwise operation used when drawing.
 ;;; 
 ;;; GdkFill fill;
-;;; 	the fill style.
+;;;     the fill style.
 ;;; 
 ;;; GdkPixmap *tile;
-;;; 	the tile pixmap.
+;;;     the tile pixmap.
 ;;; 
 ;;; GdkPixmap *stipple;
-;;; 	the stipple bitmap.
+;;;     the stipple bitmap.
 ;;; 
 ;;; GdkPixmap *clip_mask;
-;;; 	the clip mask bitmap.
+;;;     the clip mask bitmap.
 ;;; 
 ;;; GdkSubwindowMode subwindow_mode;
-;;; 	the subwindow mode.
+;;;     the subwindow mode.
 ;;; 
 ;;; gint ts_x_origin;
-;;; 	the x origin of the tile or stipple.
+;;;     the x origin of the tile or stipple.
 ;;; 
 ;;; gint ts_y_origin;
-;;; 	the y origin of the tile or stipple.
+;;;     the y origin of the tile or stipple.
 ;;; 
 ;;; gint clip_x_origin;
-;;; 	the x origin of the clip mask.
+;;;     the x origin of the clip mask.
 ;;; 
 ;;; gint clip_y_origin;
-;;; 	the y origin of the clip mask.
+;;;     the y origin of the clip mask.
 ;;; 
 ;;; gint graphics_exposures;
-;;; 	whether graphics exposures are enabled.
+;;;     whether graphics exposures are enabled.
 ;;; 
 ;;; gint line_width;
-;;; 	the line width.
+;;;     the line width.
 ;;; 
 ;;; GdkLineStyle line_style;
-;;; 	the way dashed lines are drawn.
+;;;     the way dashed lines are drawn.
 ;;; 
 ;;; GdkCapStyle cap_style;
-;;; 	the way the ends of lines are drawn.
+;;;     the way the ends of lines are drawn.
 ;;; 
 ;;; GdkJoinStyle join_style;
-;;; 	the way joins between lines are drawn.
+;;;     the way joins between lines are drawn.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-gc-values nil
@@ -522,10 +522,10 @@
 ;;; {
 ;;;   GDK_GC_FOREGROUND    = 1 << 0,
 ;;;   GDK_GC_BACKGROUND    = 1 << 1,
-;;;   GDK_GC_FONT	       = 1 << 2,
+;;;   GDK_GC_FONT          = 1 << 2,
 ;;;   GDK_GC_FUNCTION      = 1 << 3,
-;;;   GDK_GC_FILL	       = 1 << 4,
-;;;   GDK_GC_TILE	       = 1 << 5,
+;;;   GDK_GC_FILL          = 1 << 4,
+;;;   GDK_GC_TILE          = 1 << 5,
 ;;;   GDK_GC_STIPPLE       = 1 << 6,
 ;;;   GDK_GC_CLIP_MASK     = 1 << 7,
 ;;;   GDK_GC_SUBWINDOW     = 1 << 8,
@@ -544,58 +544,58 @@
 ;;; set.
 ;;; 
 ;;; GDK_GC_FOREGROUND
-;;; 	the foreground is set.
+;;;     the foreground is set.
 ;;; 
 ;;; GDK_GC_BACKGROUND
-;;; 	the background is set.
+;;;     the background is set.
 ;;; 
 ;;; GDK_GC_FONT
-;;; 	the font is set.
+;;;     the font is set.
 ;;; 
 ;;; GDK_GC_FUNCTION
-;;; 	the function is set.
+;;;     the function is set.
 ;;; 
 ;;; GDK_GC_FILL
-;;; 	the fill is set.
+;;;     the fill is set.
 ;;; 
 ;;; GDK_GC_TILE
-;;; 	the tile is set.
+;;;     the tile is set.
 ;;; 
 ;;; GDK_GC_STIPPLE
-;;; 	the stipple is set.
+;;;     the stipple is set.
 ;;; 
 ;;; GDK_GC_CLIP_MASK
-;;; 	the clip_mask is set.
+;;;     the clip_mask is set.
 ;;; 
 ;;; GDK_GC_SUBWINDOW
-;;; 	the subwindow_mode is set.
+;;;     the subwindow_mode is set.
 ;;; 
 ;;; GDK_GC_TS_X_ORIGIN
-;;; 	the ts_x_origin is set.
+;;;     the ts_x_origin is set.
 ;;; 
 ;;; GDK_GC_TS_Y_ORIGIN
-;;; 	the ts_y_origin is set.
+;;;     the ts_y_origin is set.
 ;;; 
 ;;; GDK_GC_CLIP_X_ORIGIN
-;;; 	the clip_x_origin is set.
+;;;     the clip_x_origin is set.
 ;;; 
 ;;; GDK_GC_CLIP_Y_ORIGIN
-;;; 	the clip_y_origin is set.
+;;;     the clip_y_origin is set.
 ;;; 
 ;;; GDK_GC_EXPOSURES
-;;; 	the graphics_exposures is set.
+;;;     the graphics_exposures is set.
 ;;; 
 ;;; GDK_GC_LINE_WIDTH
-;;; 	the line_width is set.
+;;;     the line_width is set.
 ;;; 
 ;;; GDK_GC_LINE_STYLE
-;;; 	the line_style is set.
+;;;     the line_style is set.
 ;;; 
 ;;; GDK_GC_CAP_STYLE
-;;; 	the cap_style is set.
+;;;     the cap_style is set.
 ;;; 
 ;;; GDK_GC_JOIN_STYLE
-;;; 	the join_style is set.
+;;;     the join_style is set.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GdkGCValuesMask" gdk-gc-values-mask
@@ -635,11 +635,11 @@
 ;;; Create a new graphics context with default values.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable. The created GC must always be used with drawables of the
+;;;     a GdkDrawable. The created GC must always be used with drawables of the
 ;;;     same depth as this one.
 ;;; 
 ;;; Returns :
-;;; 	the new graphics context.
+;;;     the new graphics context.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_new" gdk-gc-new)
@@ -663,17 +663,17 @@
 ;;; Create a new GC with the given initial values.
 ;;; 
 ;;; drawable :
-;;; 	a GdkDrawable. The created GC must always be used with drawables of
+;;;     a GdkDrawable. The created GC must always be used with drawables of
 ;;;     the same depth as this one.
 ;;; 
 ;;; values :
-;;; 	a structure containing initial values for the GC.
+;;;     a structure containing initial values for the GC.
 ;;; 
 ;;; values_mask :
-;;; 	a bit mask indicating which fields in values are set.
+;;;     a bit mask indicating which fields in values are set.
 ;;; 
 ;;; Returns :
-;;; 	the new graphics context.
+;;;     the new graphics context.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_new_with_values" gdk-gc-new-with-values)
@@ -697,10 +697,10 @@
 ;;; Gets the GdkScreen for which gc was created
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; Returns :
-;;; 	the GdkScreen for gc.
+;;;     the GdkScreen for gc.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -718,10 +718,10 @@
 ;;; Deprecated function; use g_object_ref() instead.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; Returns :
-;;; 	the gc.
+;;;     the gc.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -737,7 +737,7 @@
 ;;; Decrement the reference count of gc.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -771,13 +771,13 @@
 ;;; individual "setter" functions is likely more convenient.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; values :
-;;; 	struct containing the new values
+;;;     struct containing the new values
 ;;; 
 ;;; values_mask :
-;;; 	mask indicating which struct fields are to be used
+;;;     mask indicating which struct fields are to be used
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_set_values" gdk-gc-set-values) :void
@@ -802,10 +802,10 @@
 ;;; use gdk_colormap_query_color() to obtain the rgb values if you need them.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; values :
-;;; 	the GdkGCValues structure in which to store the results.
+;;;     the GdkGCValues structure in which to store the results.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_get_values" %gdk-gc-get-values) :void
@@ -835,10 +835,10 @@
 ;;; color as red, green, blue components.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; color :
-;;; 	the new foreground color
+;;;     the new foreground color
 ;;; ----------------------------------------------------------------------------
 
 (defun gdk-gc-set-foreground (gc color)
@@ -864,10 +864,10 @@
 ;;; color as red, green, blue components.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; color :
-;;; 	the new background color.
+;;;     the new background color.
 ;;; ----------------------------------------------------------------------------
 
 (defun gdk-gc-set-background (gc color)
@@ -894,10 +894,10 @@
 ;;; Calling this function for a GC without a colormap is an error.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; color :
-;;; 	an unallocated GdkColor.
+;;;     an unallocated GdkColor.
 ;;; ----------------------------------------------------------------------------
 
 (defun gdk-gc-set-rgb-fg-color (gc color)
@@ -924,10 +924,10 @@
 ;;; Calling this function for a GC without a colormap is an error.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; color :
-;;; 	an unallocated GdkColor.
+;;;     an unallocated GdkColor.
 ;;; ----------------------------------------------------------------------------
 
 (defun gdk-gc-set-rgb-bg-color (gc color)
@@ -949,10 +949,10 @@
 ;;; is NULL.)
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; font :
-;;; 	the new font
+;;;     the new font
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -969,10 +969,10 @@
 ;;; are combined to produce the final pixel values.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; function :
-;;; 	the GdkFunction to use
+;;;     the GdkFunction to use
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -990,10 +990,10 @@
 ;;; Set the fill mode for a graphics context.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; fill :
-;;; 	the new fill mode
+;;;     the new fill mode
 ;;; ----------------------------------------------------------------------------
 
 
@@ -1015,10 +1015,10 @@
 ;;; fill mode is GDK_TILED.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; tile :
-;;; 	the new tile pixmap.
+;;;     the new tile pixmap.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1039,10 +1039,10 @@
 ;;; used if the fill mode is GDK_STIPPLED or GDK_OPAQUE_STIPPLED.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; stipple :
-;;; 	the new stipple bitmap.
+;;;     the new stipple bitmap.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1063,13 +1063,13 @@
 ;;; coincide with this point.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x :
-;;; 	the x-coordinate of the origin.
+;;;     the x-coordinate of the origin.
 ;;; 
 ;;; y :
-;;; 	the y-coordinate of the origin.
+;;;     the y-coordinate of the origin.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_set_ts_origin" gdk-gc-set-ts-origin) :void
@@ -1095,13 +1095,13 @@
 ;;; operation.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; x :
-;;; 	the x-coordinate of the origin.
+;;;     the x-coordinate of the origin.
 ;;; 
 ;;; y :
-;;; 	the y-coordinate of the origin.
+;;;     the y-coordinate of the origin.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_set_clip_origin" gdk-gc-set-clip-origin) :void
@@ -1125,10 +1125,10 @@
 ;;; interpreted relative to the clip origin. (See gdk_gc_set_clip_origin()).
 ;;; 
 ;;; gc :
-;;; 	the GdkGC.
+;;;     the GdkGC.
 ;;; 
 ;;; mask :
-;;; 	a bitmap.
+;;;     a bitmap.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1146,10 +1146,10 @@
 ;;; is interpreted relative to the clip origin. (See gdk_gc_set_clip_origin()).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; rectangle :
-;;; 	the rectangle to clip to.
+;;;     the rectangle to clip to.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1168,10 +1168,10 @@
 ;;; (See gdk_gc_set_clip_origin()).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; region :
-;;; 	the GdkRegion.
+;;;     the GdkRegion.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1191,10 +1191,10 @@
 ;;; window.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; mode :
-;;; 	the subwindow mode.
+;;;     the subwindow mode.
 ;;; ----------------------------------------------------------------------------
 
 
@@ -1216,10 +1216,10 @@
 ;;; destination drawable. (See gdk_draw_drawable()).
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; exposures :
-;;; 	if TRUE, exposure events will be generated.
+;;;     if TRUE, exposure events will be generated.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1244,19 +1244,19 @@
 ;;; members of GdkGCValues for full explanations of the arguments.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; line_width :
-;;; 	the width of lines.
+;;;     the width of lines.
 ;;; 
 ;;; line_style :
-;;; 	the dash-style for lines.
+;;;     the dash-style for lines.
 ;;; 
 ;;; cap_style :
-;;; 	the manner in which the ends of lines are drawn.
+;;;     the manner in which the ends of lines are drawn.
 ;;; 
 ;;; join_style :
-;;; 	the in which lines are joined together.
+;;;     the in which lines are joined together.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_set_line_attributes" gdk-gc-set-line-attributes) :void
@@ -1290,16 +1290,16 @@
 ;;; pixels into the dash-list the pattern should actually begin.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC.
+;;;     a GdkGC.
 ;;; 
 ;;; dash_offset :
-;;; 	the phase of the dash pattern.
+;;;     the phase of the dash pattern.
 ;;; 
 ;;; dash_list :
-;;; 	an array of dash lengths.
+;;;     an array of dash lengths.
 ;;; 
 ;;; n :
-;;; 	the number of elements in dash_list.
+;;;     the number of elements in dash_list.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_set_dashes" %gdk-gc-set-dashes) :void
@@ -1336,10 +1336,10 @@
 ;;; context.
 ;;; 
 ;;; dst_gc :
-;;; 	the destination graphics context.
+;;;     the destination graphics context.
 ;;; 
 ;;; src_gc :
-;;; 	the source graphics context.
+;;;     the source graphics context.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_copy" gdk-gc-copy) :void
@@ -1364,10 +1364,10 @@
 ;;; created.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1386,10 +1386,10 @@
 ;;; colormap was set explicitely with gdk_gc_set_colormap.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; Returns :
-;;; 	the colormap of gc, or NULL if gc doesn't have one.
+;;;     the colormap of gc, or NULL if gc doesn't have one.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1408,13 +1408,13 @@
 ;;; effect as drawing at x, y with the original GC.
 ;;; 
 ;;; gc :
-;;; 	a GdkGC
+;;;     a GdkGC
 ;;; 
 ;;; x_offset :
-;;; 	amount by which to offset the GC in the X direction
+;;;     amount by which to offset the GC in the X direction
 ;;; 
 ;;; y_offset :
-;;; 	amount by which to offset the GC in the Y direction
+;;;     amount by which to offset the GC in the Y direction
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_gc_offset" gdk-gc-offset) :void

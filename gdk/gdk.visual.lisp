@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; Visuals
 ;;; 
 ;;; Low-level display hardware information
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkVisualType;
@@ -108,12 +108,12 @@
 ;;; values in memory.
 ;;; 
 ;;; GDK_LSB_FIRST
-;;; 	The values are stored with the least-significant byte first. For
+;;;     The values are stored with the least-significant byte first. For
 ;;;     instance, the 32-bit value 0xffeecc would be stored in memory as 0xcc,
 ;;;     0xee, 0xff, 0x00.
 ;;; 
 ;;; GDK_MSB_FIRST
-;;; 	The values are stored with the most-significant byte first. For
+;;;     The values are stored with the most-significant byte first. For
 ;;;     instance, the 32-bit value 0xffeecc would be stored in memory as 0x00,
 ;;;     0xcc, 0xee, 0xff.
 ;;; ----------------------------------------------------------------------------
@@ -141,27 +141,27 @@
 ;;; visual are converted into RGB values for display.
 ;;; 
 ;;; GDK_VISUAL_STATIC_GRAY
-;;; 	Each pixel value indexes a grayscale value directly.
+;;;     Each pixel value indexes a grayscale value directly.
 ;;; 
 ;;; GDK_VISUAL_GRAYSCALE
-;;; 	Each pixel is an index into a color map that maps pixel values into
+;;;     Each pixel is an index into a color map that maps pixel values into
 ;;;     grayscale values. The color map can be changed by an application.
 ;;; 
 ;;; GDK_VISUAL_STATIC_COLOR
-;;; 	Each pixel value is an index into a predefined, unmodifiable color map
+;;;     Each pixel value is an index into a predefined, unmodifiable color map
 ;;;     that maps pixel values into RGB values.
 ;;; 
 ;;; GDK_VISUAL_PSEUDO_COLOR
-;;; 	Each pixel is an index into a color map that maps pixel values into
+;;;     Each pixel is an index into a color map that maps pixel values into
 ;;;     rgb values. The color map can be changed by an application.
 ;;; 
 ;;; GDK_VISUAL_TRUE_COLOR
-;;; 	Each pixel value directly contains red, green, and blue components. The
+;;;     Each pixel value directly contains red, green, and blue components. The
 ;;;     red_mask, green_mask, and blue_mask fields of the GdkVisual structure
 ;;;     describe how the components are assembled into a pixel value.
 ;;; 
 ;;; GDK_VISUAL_DIRECT_COLOR
-;;; 	Each pixel value contains red, green, and blue components as for
+;;;     Each pixel value contains red, green, and blue components as for
 ;;;     GDK_VISUAL_TRUE_COLOR, but the components are mapped via a color table
 ;;;     into the final output table instead of being converted directly.
 ;;; ----------------------------------------------------------------------------
@@ -216,7 +216,7 @@
 ;;; 
 ;;; 
 ;;; GObject parent_instance;
-;;; 	inherited portion from GObject
+;;;     inherited portion from GObject
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkVisual" gdk-visual
@@ -304,10 +304,10 @@
 ;;; The array returned by this function should not be freed.
 ;;; 
 ;;; depths :
-;;; 	return location for available depths. [out][array]
+;;;     return location for available depths. [out][array]
 ;;; 
 ;;; count :
-;;; 	return location for number of available depths. [out]
+;;;     return location for number of available depths. [out]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_query_depths" %gdk-query-depths) :void
@@ -336,10 +336,10 @@
 ;;; The array returned by this function should not be freed.
 ;;; 
 ;;; visual_types :
-;;; 	return location for the available visual types
+;;;     return location for the available visual types
 ;;; 
 ;;; count :
-;;; 	return location for the number of available visual types
+;;;     return location for the number of available visual types
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_query_visual_types" %gdk-query-visual-types) :void
@@ -369,7 +369,7 @@
 ;;; Call g_list_free() on the return value when you're finished with it.
 ;;; 
 ;;; Returns :
-;;; 	a list of visuals; the list must be freed, but not its contents.
+;;;     a list of visuals; the list must be freed, but not its contents.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_list_visuals" gdk-list-visuals)
@@ -386,7 +386,7 @@
 ;;; "largest," i.e. 32 preferred over 24 preferred over 8 bits per pixel.
 ;;; 
 ;;; Returns :
-;;; 	best available depth
+;;;     best available depth
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_depth" gdk-visual-get-best-depth) :int)
@@ -401,7 +401,7 @@
 ;;; Return the best available visual type for the default GDK screen.
 ;;; 
 ;;; Returns :
-;;; 	best visual type
+;;;     best visual type
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_type" gdk-visual-get-best-type) gdk-visual-type)
@@ -418,7 +418,7 @@
 ;;; freed.
 ;;; 
 ;;; Returns :
-;;; 	system visual.
+;;;     system visual.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_system" gdk-visual-get-system) (g-object gdk-visual))
@@ -434,7 +434,7 @@
 ;;; The return value should not be freed.
 ;;; 
 ;;; Returns :
-;;; 	best visual. [transfer none]
+;;;     best visual. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best" gdk-visual-get-best) (g-object gdk-visual))
@@ -452,10 +452,10 @@
 ;;; returned if no visual supports depth.
 ;;; 
 ;;; depth :
-;;; 	a bit depth
+;;;     a bit depth
 ;;; 
 ;;; Returns :
-;;; 	best visual for the given depth. [transfer none]
+;;;     best visual for the given depth. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_with_depth" gdk-visual-get-best-with-depth)
@@ -474,10 +474,10 @@
 ;;; should not be freed. NULL may be returned if no visual has type visual_type.
 ;;; 
 ;;; visual_type :
-;;; 	a visual type
+;;;     a visual type
 ;;; 
 ;;; Returns :
-;;; 	best visual of the given type. [transfer none]
+;;;     best visual of the given type. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -490,13 +490,13 @@
 ;;; gdk_visual_get_best_with_type().
 ;;; 
 ;;; depth :
-;;; 	a bit depth
+;;;     a bit depth
 ;;; 
 ;;; visual_type :
-;;; 	a visual type
+;;;     a visual type
 ;;; 
 ;;; Returns :
-;;; 	best visual with both depth and visual_type, or NULL if none.
+;;;     best visual with both depth and visual_type, or NULL if none.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_with_both" gdk-visual-get-best-with-both)
@@ -518,10 +518,10 @@
 ;;; Deprecated equivalent of g_object_ref().
 ;;; 
 ;;; v :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; Returns :
-;;; 	the same visual
+;;;     the same visual
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -536,7 +536,7 @@
 ;;; Deprecated equivalent of g_object_unref().
 ;;; 
 ;;; v :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -547,10 +547,10 @@
 ;;; Gets the screen to which this visual belongs
 ;;; 
 ;;; visual :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; Returns :
-;;; 	the screen to which this visual belongs. [transfer none]
+;;;     the screen to which this visual belongs. [transfer none]
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -563,10 +563,10 @@
 ;;; Returns the number of significant bits per red, green and blue value.
 ;;; 
 ;;; visual :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; Returns :
-;;; 	The number of significant bits per color value for visual.
+;;;     The number of significant bits per color value for visual.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -586,16 +586,16 @@
 ;;; precision the pixel value contains for a particular primary.
 ;;; 
 ;;; visual :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; mask :
-;;; 	A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; shift :
-;;; 	A pointer to a gint to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a gint to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; precision :
-;;; 	A pointer to a gint to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a gint to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -608,10 +608,10 @@
 ;;; Returns the byte order of this visual.
 ;;; 
 ;;; visual :
-;;; 	A GdkVisual.
+;;;     A GdkVisual.
 ;;; 
 ;;; Returns :
-;;; 	A GdkByteOrder stating the byte order of visual.
+;;;     A GdkByteOrder stating the byte order of visual.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -624,10 +624,10 @@
 ;;; Returns the size of a colormap for this visual.
 ;;; 
 ;;; visual :
-;;; 	A GdkVisual.
+;;;     A GdkVisual.
 ;;; 
 ;;; Returns :
-;;; 	The size of a colormap that is suitable for visual.
+;;;     The size of a colormap that is suitable for visual.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -640,10 +640,10 @@
 ;;; Returns the bit depth of this visual.
 ;;; 
 ;;; visual :
-;;; 	A GdkVisual.
+;;;     A GdkVisual.
 ;;; 
 ;;; Returns :
-;;; 	The bit depth of this visual.
+;;;     The bit depth of this visual.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -663,16 +663,16 @@
 ;;; precision the pixel value contains for a particular primary.
 ;;; 
 ;;; visual :
-;;; 	a GdkVisual
+;;;     a GdkVisual
 ;;; 
 ;;; mask :
-;;; 	A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; shift :
-;;; 	A pointer to a gint to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a gint to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; precision :
-;;; 	A pointer to a gint to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a gint to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -692,16 +692,16 @@
 ;;; precision the pixel value contains for a particular primary.
 ;;; 
 ;;; visual :
-;;; 	A GdkVisual.
+;;;     A GdkVisual.
 ;;; 
 ;;; mask :
-;;; 	A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a guint32 to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; shift :
-;;; 	A pointer to a gint to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a gint to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; precision :
-;;; 	A pointer to a gint to be filled in, or NULL. [out][allow-none]
+;;;     A pointer to a gint to be filled in, or NULL. [out][allow-none]
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -714,10 +714,10 @@
 ;;; Returns the type of visual this is (PseudoColor, TrueColor, etc).
 ;;; 
 ;;; visual :
-;;; 	A GdkVisual.
+;;;     A GdkVisual.
 ;;; 
 ;;; Returns :
-;;; 	A GdkVisualType stating the type of visual.
+;;;     A GdkVisualType stating the type of visual.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------

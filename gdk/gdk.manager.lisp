@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,10 +31,11 @@
 ;;; GdkDisplayManager
 ;;;
 ;;; Maintains a list of all open GdkDisplays
-;;;	
+;;;
 ;;; Synopsis
 ;;;
 ;;;     GdkDisplayManager
+;;;
 ;;;     gdk_display_manager_get
 ;;;     gdk_display_manager_get_default_display
 ;;;     gdk_display_manager_set_default_display

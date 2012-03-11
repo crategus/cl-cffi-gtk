@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; Pango Interaction
 ;;; 
 ;;; Using Pango in GDK
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkPangoRenderer
@@ -224,10 +224,10 @@
 ;;; of gdk_pango_renderer_get_default() rather than creating a new renderer.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	a newly created PangoRenderer. Free with g_object_unref().
+;;;     a newly created PangoRenderer. Free with g_object_unref().
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -253,10 +253,10 @@
 ;;; the drawable and graphics context to use for drawing.
 ;;; 
 ;;; screen :
-;;; 	a GdkScreen
+;;;     a GdkScreen
 ;;; 
 ;;; Returns :
-;;; 	the default PangoRenderer for screen. The renderer is owned by GTK+
+;;;     the default PangoRenderer for screen. The renderer is owned by GTK+
 ;;;     and will be kept around until the screen is closed.
 ;;; 
 ;;; Since 2.6
@@ -277,10 +277,10 @@
 ;;; Sets the drawable the renderer draws to.
 ;;; 
 ;;; gdk_renderer :
-;;; 	a GdkPangoRenderer
+;;;     a GdkPangoRenderer
 ;;; 
 ;;; drawable :
-;;; 	the new target drawable, or NULL.
+;;;     the new target drawable, or NULL.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -303,10 +303,10 @@
 ;;; updated to follow changes to the original GC.
 ;;; 
 ;;; gdk_renderer :
-;;; 	a GdkPangoRenderer
+;;;     a GdkPangoRenderer
 ;;; 
 ;;; gc :
-;;; 	the new GC to use for drawing, or NULL. [allow-none]
+;;;     the new GC to use for drawing, or NULL. [allow-none]
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -332,13 +332,13 @@
 ;;; GdkPangoRenderer.
 ;;; 
 ;;; gdk_renderer :
-;;; 	a GdkPangoRenderer
+;;;     a GdkPangoRenderer
 ;;; 
 ;;; part :
-;;; 	the part to render with the stipple
+;;;     the part to render with the stipple
 ;;; 
 ;;; stipple :
-;;; 	the new stipple value.
+;;;     the new stipple value.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -362,13 +362,13 @@
 ;;; this renderer.
 ;;; 
 ;;; gdk_renderer :
-;;; 	a GdkPangoRenderer
+;;;     a GdkPangoRenderer
 ;;; 
 ;;; part :
-;;; 	the part to render to set the color of
+;;;     the part to render to set the color of
 ;;; 
 ;;; color :
-;;; 	the color to use, or NULL to unset a previously set override color.
+;;;     the color to use, or NULL to unset a previously set override color.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -400,7 +400,7 @@
 ;;; rendering settings.
 ;;; 
 ;;; Returns :
-;;; 	a new PangoContext for the default display
+;;;     a new PangoContext for the default display
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_context_get" gdk-pango-context-get)
@@ -428,10 +428,10 @@
 ;;; rendering settings.
 ;;; 
 ;;; screen :
-;;; 	the GdkScreen for which the context is to be created.
+;;;     the GdkScreen for which the context is to be created.
 ;;; 
 ;;; Returns :
-;;; 	a new PangoContext for screen
+;;;     a new PangoContext for screen
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -458,10 +458,10 @@
 ;;; drawing, so calling this function is no longer necessary.
 ;;; 
 ;;; context :
-;;; 	a PangoContext
+;;;     a PangoContext
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap
+;;;     a GdkColormap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -476,10 +476,10 @@
 ;;; rendering the text.
 ;;; 
 ;;; PangoAttribute attr;
-;;; 	the PangoAttribute.
+;;;     the PangoAttribute.
 ;;; 
 ;;; gboolean embossed;
-;;; 	the embossed bitmap.
+;;;     the embossed bitmap.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -493,10 +493,10 @@
 ;;; A Pango text attribute specifying the color to emboss text with.
 ;;; 
 ;;; PangoAttribute attr;
-;;; 	the PangoAttribute
+;;;     the PangoAttribute
 ;;; 
 ;;; PangoColor color;
-;;; 	the color
+;;;     the color
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -511,10 +511,10 @@
 ;;; rendering the text.
 ;;; 
 ;;; PangoAttribute attr;
-;;; 	the PangoAttribute.
+;;;     the PangoAttribute.
 ;;; 
 ;;; GdkBitmap *stipple;
-;;; 	the stipple bitmap.
+;;;     the stipple bitmap.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -525,10 +525,10 @@
 ;;; Creates a new attribute specifying the color to emboss text with.
 ;;; 
 ;;; color :
-;;; 	a GdkColor representing the color to emboss with
+;;;     a GdkColor representing the color to emboss with
 ;;; 
 ;;; Returns :
-;;; 	new PangoAttribute
+;;;     new PangoAttribute
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -541,10 +541,10 @@
 ;;; Creates a new attribute flagging a region as embossed or not.
 ;;; 
 ;;; embossed :
-;;; 	if the region should be embossed
+;;;     if the region should be embossed
 ;;; 
 ;;; Returns :
-;;; 	new PangoAttribute
+;;;     new PangoAttribute
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -556,10 +556,10 @@
 ;;; rendering the text.
 ;;; 
 ;;; stipple :
-;;; 	a bitmap to be set as stipple
+;;;     a bitmap to be set as stipple
 ;;; 
 ;;; Returns :
-;;; 	new PangoAttribute
+;;;     new PangoAttribute
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -582,23 +582,23 @@
 ;;; of text, such as when text is selected.
 ;;; 
 ;;; layout :
-;;; 	a PangoLayout
+;;;     a PangoLayout
 ;;; 
 ;;; x_origin :
-;;; 	X pixel where you intend to draw the layout with this clip
+;;;     X pixel where you intend to draw the layout with this clip
 ;;; 
 ;;; y_origin :
-;;; 	Y pixel where you intend to draw the layout with this clip
+;;;     Y pixel where you intend to draw the layout with this clip
 ;;; 
 ;;; index_ranges :
-;;; 	array of byte indexes into the layout, where even members of array are
+;;;     array of byte indexes into the layout, where even members of array are
 ;;;     start indexes and odd elements are end indexes
 ;;; 
 ;;; n_ranges :
-;;; 	number of ranges in index_ranges, i.e. half the size of index_ranges
+;;;     number of ranges in index_ranges, i.e. half the size of index_ranges
 ;;; 
 ;;; Returns :
-;;; 	a clip region containing the given ranges
+;;;     a clip region containing the given ranges
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_layout_get_clip_region" %gdk-pango-layout-get-clip-region)
@@ -652,23 +652,23 @@
 ;;; of text, such as when text is selected.
 ;;; 
 ;;; line :
-;;; 	a PangoLayoutLine
+;;;     a PangoLayoutLine
 ;;; 
 ;;; x_origin :
-;;; 	X pixel where you intend to draw the layout line with this clip
+;;;     X pixel where you intend to draw the layout line with this clip
 ;;; 
 ;;; y_origin :
-;;; 	baseline pixel where you intend to draw the layout line with this clip
+;;;     baseline pixel where you intend to draw the layout line with this clip
 ;;; 
 ;;; index_ranges :
-;;; 	array of byte indexes into the layout, where even members of array are
+;;;     array of byte indexes into the layout, where even members of array are
 ;;;     start indexes and odd elements are end indexes
 ;;; 
 ;;; n_ranges :
-;;; 	number of ranges in index_ranges, i.e. half the size of index_ranges
+;;;     number of ranges in index_ranges, i.e. half the size of index_ranges
 ;;; 
 ;;; Returns :
-;;; 	a clip region containing the given ranges
+;;;     a clip region containing the given ranges
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_layout_line_get_clip_region"

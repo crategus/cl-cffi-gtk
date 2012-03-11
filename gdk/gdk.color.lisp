@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,8 +34,9 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     GdkColor;
-;;;     GdkColormap;
+;;;     GdkColor
+;;;     GdkColormap
+;;;
 ;;;     gdk_colormap_new
 ;;;     gdk_colormap_ref
 ;;;     gdk_colormap_unref
@@ -100,17 +101,17 @@
 ;;; color.
 ;;; 
 ;;; guint32 pixel;
-;;; 	For allocated colors, the value used to draw this color on the screen.
+;;;     For allocated colors, the value used to draw this color on the screen.
 ;;; 
 ;;; guint16 red;
-;;; 	The red component of the color. This is a value between 0 and 65535,
+;;;     The red component of the color. This is a value between 0 and 65535,
 ;;;     with 65535 indicating full intensitiy.
 ;;; 
 ;;; guint16 green;
-;;; 	The green component of the color.
+;;;     The green component of the color.
 ;;; 
 ;;; guint16 blue;
-;;; 	The blue component of the color.
+;;;     The blue component of the color.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-color "GdkColor"
@@ -138,15 +139,11 @@
    :interfaces nil
    :type-initializer "gdk_colormap_get_type")
   ((:cffi visual
-          gdk-colormap-visual
-          (g-object gdk-visual)
-          "gdk_colormap_get_visual"
-          nil)
+          gdk-colormap-visual (g-object gdk-visual)
+          "gdk_colormap_get_visual" nil)
    (:cffi screen
-          gdk-colormap-screen
-          (g-object gdk-screen)
-          "gdk_colormap_get_screen"
-          nil)))
+          gdk-colormap-screen (g-object gdk-screen)
+          "gdk_colormap_get_screen" nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_new ()
@@ -217,7 +214,7 @@
 ;;; gdk_colormap_get_system_for_screen())
 ;;; 
 ;;; Returns :
-;;;     the default colormap.
+;;;     the default colormap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_colormap_get_system" gdk-colormap-get-system)
@@ -239,7 +236,7 @@
 ;;; struct GdkColormap for an explanation of the size of a colormap.)
 ;;; 
 ;;; Returns :
-;;;     the size of the system's default colormap.
+;;;     the size of the system's default colormap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -257,26 +254,26 @@
 ;;; should not be used. See gdk_color_change().
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; ncolors :
-;;;     the number of colors to change.
+;;;     the number of colors to change
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_alloc_colors ()
 ;;; 
 ;;; gint gdk_colormap_alloc_colors (GdkColormap *colormap,
-;;;                                 GdkColor *colors,
-;;;                                 gint n_colors,
-;;;                                 gboolean writeable,
-;;;                                 gboolean best_match,
-;;;                                 gboolean *success);
+;;;                                 GdkColor    *colors,
+;;;                                 gint         n_colors,
+;;;                                 gboolean     writeable,
+;;;                                 gboolean     best_match,
+;;;                                 gboolean    *success);
 ;;; 
 ;;; Allocates colors from a colormap.
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; colors :
 ;;;     The color values to allocate. On return, the pixel values for 
@@ -327,9 +324,9 @@
 ;;; gdk_colormap_alloc_color ()
 ;;; 
 ;;; gboolean gdk_colormap_alloc_color (GdkColormap *colormap,
-;;;                                    GdkColor *color,
-;;;                                    gboolean writeable,
-;;;                                    gboolean best_match);
+;;;                                    GdkColor    *color,
+;;;                                    gboolean     writeable,
+;;;                                    gboolean     best_match);
 ;;; 
 ;;; Allocates a single color from a colormap.
 ;;; 
@@ -364,20 +361,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_free_colors ()
 ;;; 
-;;; void gdk_colormap_free_colors (GdkColormap *colormap,
+;;; void gdk_colormap_free_colors (GdkColormap    *colormap,
 ;;;                                const GdkColor *colors,
-;;;                                gint n_colors);
+;;;                                gint            n_colors);
 ;;; 
 ;;; Frees previously allocated colors.
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; colors :
-;;;     the colors to free.
+;;;     the colors to free
 ;;; 
 ;;; n_colors :
-;;;     the number of colors in colors.
+;;;     the number of colors in colors
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_colormap_free_colors" %gdk-colormap-free-colors) :void
@@ -438,10 +435,10 @@
 ;;; Returns the visual for which a given colormap was created.
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; Returns :
-;;;     the visual of the colormap.
+;;;     the visual of the colormap
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -455,7 +452,7 @@
 ;;;     a GdkColormap
 ;;; 
 ;;; Returns :
-;;;     the screen for which this colormap was created.
+;;;     the screen for which this colormap was created
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -475,13 +472,13 @@
 ;;; function is obsolete and should not be used. See gdk_color_change().
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; colors :
-;;; 	the new color values.
+;;;     the new color values
 ;;; 
 ;;; ncolors :
-;;; 	the number of colors to change.
+;;;     the number of colors to change
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -493,10 +490,10 @@
 ;;; gdk_color_free().
 ;;; 
 ;;; color :
-;;; 	a GdkColor.
+;;;     a GdkColor.
 ;;; 
 ;;; Returns :
-;;; 	a copy of color.
+;;;     a copy of color
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -507,7 +504,7 @@
 ;;; Frees a color structure created with gdk_color_copy().
 ;;; 
 ;;; color :
-;;; 	a GdkColor.
+;;;     a GdkColor
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -529,23 +526,23 @@
 ;;; Xlib documentation for XAllocColorCells().
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; contiguous :
-;;;     if TRUE, the colors should be allocated in contiguous color cells.
+;;;     if TRUE, the colors should be allocated in contiguous color cells
 ;;; 
 ;;; planes :
-;;;     an array in which to store the plane masks.
+;;;     an array in which to store the plane masks
 ;;; 
 ;;; nplanes :
 ;;;     the number of planes to allocate. (Or zero, to indicate that the color 
 ;;;     allocation should not be planar.)
 ;;; 
 ;;; pixels :
-;;;     an array into which to store allocated pixel values.
+;;;     an array into which to store allocated pixel values
 ;;; 
 ;;; npixels :
-;;;     the number of pixels in each plane to allocate.
+;;;     the number of pixels in each plane to allocate
 ;;; 
 ;;; Returns :
 ;;;     TRUE if the allocation was successful
@@ -567,16 +564,16 @@
 ;;; See gdk_colormap_free_colors().
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap.
+;;;     a GdkColormap.
 ;;; 
 ;;; pixels :
-;;; 	the pixel values of the colors to free.
+;;;     the pixel values of the colors to free
 ;;; 
 ;;; npixels :
-;;; 	the number of values in pixels.
+;;;     the number of values in pixels
 ;;; 
 ;;; planes :
-;;; 	the plane masks for all planes to free, OR'd together.
+;;;     the plane masks for all planes to free, OR'd together
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -592,13 +589,13 @@
 ;;; already allocated been allocated.
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; color :
-;;; 	the location to store the color.
+;;;     the location to store the color
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the allocation succeeded.
+;;;     TRUE if the allocation succeeded
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -614,13 +611,13 @@
 ;;; already been allocated.
 ;;; 
 ;;; colormap :
-;;; 	a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; color :
-;;; 	the location to store the color.
+;;;     the location to store the color
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the allocation succeeded.
+;;;     TRUE if the allocation succeeded
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -638,13 +635,13 @@
 ;;; '#fffffffff' and '#ffffffffffff')
 ;;; 
 ;;; spec :
-;;;     the string specifying the color.
+;;;     the string specifying the color
 ;;; 
 ;;; color :
-;;;     the GdkColor to fill in. [out]
+;;;     the GdkColor to fill in
 ;;; 
 ;;; Returns :
-;;;     TRUE if the parsing succeeded.
+;;;     TRUE if the parsing succeeded
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_color_parse" %gdk-color-parse) :boolean
@@ -671,13 +668,13 @@
 ;;; Allocates a single color from a colormap.
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; color :
 ;;;     The color to allocate. On return, the pixel field will be filled in.
 ;;; 
 ;;; Returns :
-;;;     TRUE if the allocation succeeded.
+;;;     TRUE if the allocation succeeded
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -694,14 +691,14 @@
 ;;; gdk_colormap_alloc_colors() with the writeable set to TRUE.
 ;;; 
 ;;; colormap :
-;;;     a GdkColormap.
+;;;     a GdkColormap
 ;;; 
 ;;; color :
 ;;;     a GdkColor, with the color to change in the pixel field, and the new 
-;;;     value in the remaining fields.
+;;;     value in the remaining fields
 ;;; 
 ;;; Returns :
-;;;     TRUE if the color was successfully changed.
+;;;     TRUE if the color was successfully changed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -712,10 +709,10 @@
 ;;; Compares two colors.
 ;;; 
 ;;; colora :
-;;;     a GdkColor.
+;;;     a GdkColor
 ;;; 
 ;;; colorb :
-;;;     another GdkColor.
+;;;     another GdkColor
 ;;; 
 ;;; Returns :
 ;;;     TRUE if the two colors compare equal
@@ -735,7 +732,7 @@
 ;;; A hash function suitable for using for a hash table that stores GdkColor's.
 ;;; 
 ;;; colora :
-;;;     a GdkColor.
+;;;     a GdkColor
 ;;; 
 ;;; Returns :
 ;;;     The hash function applied to colora

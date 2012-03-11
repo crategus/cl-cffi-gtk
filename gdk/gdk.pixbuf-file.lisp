@@ -1,16 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.pixbuf-file.lisp
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +31,7 @@
 ;;; File Loading
 ;;; 
 ;;; Loading a pixbuf from a file.
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     gdk_pixbuf_new_from_file
@@ -69,13 +67,13 @@
 ;;; Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
 ;;; 
 ;;; filename :
-;;; 	Name of file to load, in the GLib file name encoding
+;;;     Name of file to load, in the GLib file name encoding
 ;;; 
 ;;; error :
-;;; 	Return location for an error
+;;;     Return location for an error
 ;;; 
 ;;; Returns :
-;;; 	A newly-created pixbuf with a reference count of 1, or NULL if any of
+;;;     A newly-created pixbuf with a reference count of 1, or NULL if any of
 ;;;     several error conditions occurred: the file could not be opened, there
 ;;;     was no loader for the file's format, there was not enough memory to
 ;;;     allocate the image buffer, or the image file contained invalid data.
@@ -111,19 +109,19 @@
 ;;; gdk_pixbuf_new_from_file_at_scale().
 ;;; 
 ;;; filename :
-;;; 	Name of file to load, in the GLib file name encoding
+;;;     Name of file to load, in the GLib file name encoding
 ;;; 
 ;;; width :
-;;; 	The width the image should have or -1 to not constrain the width
+;;;     The width the image should have or -1 to not constrain the width
 ;;; 
 ;;; height :
-;;; 	The height the image should have or -1 to not constrain the height
+;;;     The height the image should have or -1 to not constrain the height
 ;;; 
 ;;; error :
-;;; 	Return location for an error
+;;;     Return location for an error
 ;;; 
 ;;; Returns :
-;;; 	A newly-created pixbuf with a reference count of 1, or NULL if any of
+;;;     A newly-created pixbuf with a reference count of 1, or NULL if any of
 ;;;     several error conditions occurred: the file could not be opened, there
 ;;;     was no loader for the file's format, there was not enough memory to
 ;;;     allocate the image buffer, or the image file contained invalid data.
@@ -154,22 +152,22 @@
 ;;; dimension. Negative values for width and height are allowed since 2.8.
 ;;; 
 ;;; filename :
-;;; 	Name of file to load, in the GLib file name encoding
+;;;     Name of file to load, in the GLib file name encoding
 ;;; 
 ;;; width :
-;;; 	The width the image should have or -1 to not constrain the width
+;;;     The width the image should have or -1 to not constrain the width
 ;;; 
 ;;; height :
-;;; 	The height the image should have or -1 to not constrain the height
+;;;     The height the image should have or -1 to not constrain the height
 ;;; 
 ;;; preserve_aspect_ratio :
-;;; 	TRUE to preserve the image's aspect ratio
+;;;     TRUE to preserve the image's aspect ratio
 ;;; 
 ;;; error :
-;;; 	Return location for an error
+;;;     Return location for an error
 ;;; 
 ;;; Returns :
-;;; 	A newly-created pixbuf with a reference count of 1, or NULL if any of
+;;;     A newly-created pixbuf with a reference count of 1, or NULL if any of
 ;;;     several error conditions occurred: the file could not be opened, there
 ;;;     was no loader for the file's format, there was not enough memory to
 ;;;     allocate the image buffer, or the image file contained invalid data.
@@ -187,16 +185,16 @@
 ;;; Parses an image file far enough to determine its format and size.
 ;;; 
 ;;; filename :
-;;; 	The name of the file to identify.
+;;;     The name of the file to identify.
 ;;; 
 ;;; width :
-;;; 	Return location for the width of the image, or NULL. [out]
+;;;     Return location for the width of the image, or NULL. [out]
 ;;; 
 ;;; height :
-;;; 	Return location for the height of the image, or NULL. [out]
+;;;     Return location for the height of the image, or NULL. [out]
 ;;; 
 ;;; Returns :
-;;; 	A GdkPixbufFormat describing the image format of the file or NULL if
+;;;     A GdkPixbufFormat describing the image format of the file or NULL if
 ;;;     the image format wasn't recognized. The return value is owned by
 ;;;     GdkPixbuf and should not be freed. [transfer none]
 ;;; 
@@ -221,16 +219,16 @@
 ;;; The stream is not closed.
 ;;; 
 ;;; stream :
-;;; 	a GInputStream to load the pixbuf from
+;;;     a GInputStream to load the pixbuf from
 ;;; 
 ;;; cancellable :
-;;; 	optional GCancellable object, NULL to ignore
+;;;     optional GCancellable object, NULL to ignore
 ;;; 
 ;;; error :
-;;; 	Return location for an error
+;;;     Return location for an error
 ;;; 
 ;;; Returns :
-;;; 	A newly-created pixbuf, or NULL if any of several error conditions
+;;;     A newly-created pixbuf, or NULL if any of several error conditions
 ;;;     occurred: the file could not be opened, the image format is not
 ;;;     supported, there was not enough memory to allocate the image buffer,
 ;;;     the stream contained invalid data, or the operation was cancelled.
@@ -267,25 +265,25 @@
 ;;; The stream is not closed.
 ;;; 
 ;;; stream :
-;;; 	a GInputStream to load the pixbuf from
+;;;     a GInputStream to load the pixbuf from
 ;;; 
 ;;; width :
-;;; 	The width the image should have or -1 to not constrain the width
+;;;     The width the image should have or -1 to not constrain the width
 ;;; 
 ;;; height :
-;;; 	The height the image should have or -1 to not constrain the height
+;;;     The height the image should have or -1 to not constrain the height
 ;;; 
 ;;; preserve_aspect_ratio :
-;;; 	TRUE to preserve the image's aspect ratio
+;;;     TRUE to preserve the image's aspect ratio
 ;;; 
 ;;; cancellable :
-;;; 	optional GCancellable object, NULL to ignore
+;;;     optional GCancellable object, NULL to ignore
 ;;; 
 ;;; error :
-;;; 	Return location for an error
+;;;     Return location for an error
 ;;; 
 ;;; Returns :
-;;; 	A newly-created pixbuf, or NULL if any of several error conditions
+;;;     A newly-created pixbuf, or NULL if any of several error conditions
 ;;;     occurred: the file could not be opened, the image format is not
 ;;;     supported, there was not enough memory to allocate the image buffer,
 ;;;     the stream contained invalid data, or the operation was cancelled.
@@ -299,7 +297,7 @@
 ;;; File saving
 ;;; 
 ;;; Saving a pixbuf to a file.
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     gdk_pixbuf_savev
@@ -333,25 +331,25 @@
 ;;; See gdk_pixbuf_save() for more details.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf.
+;;;     a GdkPixbuf.
 ;;; 
 ;;; filename :
-;;; 	name of file to save.
+;;;     name of file to save.
 ;;; 
 ;;; type :
-;;; 	name of file format.
+;;;     name of file format.
 ;;; 
 ;;; option_keys :
-;;; 	name of options to set, NULL-terminated.
+;;;     name of options to set, NULL-terminated.
 ;;; 
 ;;; option_values :
-;;; 	values for named options.
+;;;     values for named options.
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL.
+;;;     return location for error, or NULL.
 ;;; 
 ;;; Returns :
-;;; 	whether an error was set
+;;;     whether an error was set
 ;;; ----------------------------------------------------------------------------
 
 ;; This function is not exported and is defined for internal use.
@@ -431,22 +429,22 @@
 ;;; produces a CUR instead of an ICO.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf.
+;;;     a GdkPixbuf.
 ;;; 
 ;;; filename :
-;;; 	name of file to save.
+;;;     name of file to save.
 ;;; 
 ;;; type :
-;;; 	name of file format.
+;;;     name of file format.
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL.
+;;;     return location for error, or NULL.
 ;;; 
 ;;; Varargs :
-;;; 	list of key-value save options
+;;;     list of key-value save options
 ;;; 
 ;;; Returns :
-;;; 	whether an error was set
+;;;     whether an error was set
 ;;; ---------------------------------------------------------------------------- 
 
 ;; This implementation does not support the arguments error and Varargs.
@@ -478,19 +476,19 @@
 ;;; gdk_pixbuf_save_to_callback() will fail with the same error.
 ;;; 
 ;;; buf :
-;;; 	bytes to be written. [array length=count][element-type guint8]
+;;;     bytes to be written. [array length=count][element-type guint8]
 ;;; 
 ;;; count :
-;;; 	number of bytes in buf.
+;;;     number of bytes in buf.
 ;;; 
 ;;; error :
-;;; 	A location to return an error. [out]
+;;;     A location to return an error. [out]
 ;;; 
 ;;; data :
-;;; 	user data passed to gdk_pixbuf_save_to_callback(). [closure]
+;;;     user data passed to gdk_pixbuf_save_to_callback(). [closure]
 ;;; 
 ;;; Returns :
-;;; 	TRUE if successful, FALSE (with error set) if failed.
+;;;     TRUE if successful, FALSE (with error set) if failed.
 ;;; 
 ;;; Since 2.4
 ;;; ---------------------------------------------------------------------------- 
@@ -514,26 +512,26 @@
 ;;; See gdk_pixbuf_save() for more details.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf.
+;;;     a GdkPixbuf.
 ;;; 
 ;;; save_func :
-;;; 	a function that is called to save each block of data that the save
+;;;     a function that is called to save each block of data that the save
 ;;;     routine generates. [scope call]
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to the save function.
+;;;     user data to pass to the save function.
 ;;; 
 ;;; type :
-;;; 	name of file format.
+;;;     name of file format.
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL. [allow-none]
+;;;     return location for error, or NULL. [allow-none]
 ;;; 
 ;;; Varargs :
-;;; 	list of key-value save options
+;;;     list of key-value save options
 ;;; 
 ;;; Returns :
-;;; 	whether an error was set
+;;;     whether an error was set
 ;;; 
 ;;; Since 2.4
 ;;; ---------------------------------------------------------------------------- 
@@ -554,29 +552,29 @@
 ;;; See gdk_pixbuf_save_to_callback() for more details.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf.
+;;;     a GdkPixbuf.
 ;;; 
 ;;; save_func :
-;;; 	a function that is called to save each block of data that the save
+;;;     a function that is called to save each block of data that the save
 ;;;     routine generates.
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to the save function. [closure]
+;;;     user data to pass to the save function. [closure]
 ;;; 
 ;;; type :
-;;; 	name of file format.
+;;;     name of file format.
 ;;; 
 ;;; option_keys :
-;;; 	name of options to set, NULL-terminated.
+;;;     name of options to set, NULL-terminated.
 ;;; 
 ;;; option_values :
-;;; 	values for named options.
+;;;     values for named options.
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL. [allow-none]
+;;;     return location for error, or NULL. [allow-none]
 ;;; 
 ;;; Returns :
-;;; 	whether an error was set
+;;;     whether an error was set
 ;;; 
 ;;; Since 2.4
 ;;; ---------------------------------------------------------------------------- 
@@ -601,25 +599,25 @@
 ;;; See gdk_pixbuf_save() for more details.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf.
+;;;     a GdkPixbuf.
 ;;; 
 ;;; buffer :
-;;; 	location to receive a pointer to the new buffer.
+;;;     location to receive a pointer to the new buffer.
 ;;; 
 ;;; buffer_size :
-;;; 	location to receive the size of the new buffer.
+;;;     location to receive the size of the new buffer.
 ;;; 
 ;;; type :
-;;; 	name of file format.
+;;;     name of file format.
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL.
+;;;     return location for error, or NULL.
 ;;; 
 ;;; Varargs :
-;;; 	list of key-value save options
+;;;     list of key-value save options
 ;;; 
 ;;; Returns :
-;;; 	whether an error was set
+;;;     whether an error was set
 ;;; 
 ;;; Since 2.4
 ;;; ---------------------------------------------------------------------------- 
@@ -640,28 +638,28 @@
 ;;; details.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf.
+;;;     a GdkPixbuf.
 ;;; 
 ;;; buffer :
-;;; 	location to receive a pointer to the new buffer.
+;;;     location to receive a pointer to the new buffer.
 ;;; 
 ;;; buffer_size :
-;;; 	location to receive the size of the new buffer.
+;;;     location to receive the size of the new buffer.
 ;;; 
 ;;; type :
-;;; 	name of file format.
+;;;     name of file format.
 ;;; 
 ;;; option_keys :
-;;; 	name of options to set, NULL-terminated.
+;;;     name of options to set, NULL-terminated.
 ;;; 
 ;;; option_values :
-;;; 	values for named options.
+;;;     values for named options.
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL.
+;;;     return location for error, or NULL.
 ;;; 
 ;;; Returns :
-;;; 	whether an error was set
+;;;     whether an error was set
 ;;; 
 ;;; Since 2.4
 ;;; ---------------------------------------------------------------------------- 
@@ -688,25 +686,25 @@
 ;;; The stream is not closed.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf
+;;;     a GdkPixbuf
 ;;; 
 ;;; stream :
-;;; 	a GOutputStream to save the pixbuf to
+;;;     a GOutputStream to save the pixbuf to
 ;;; 
 ;;; type :
-;;; 	name of file format
+;;;     name of file format
 ;;; 
 ;;; cancellable :
-;;; 	optional GCancellable object, NULL to ignore
+;;;     optional GCancellable object, NULL to ignore
 ;;; 
 ;;; error :
-;;; 	return location for error, or NULL. [allow-none]
+;;;     return location for error, or NULL. [allow-none]
 ;;; 
 ;;; Varargs :
-;;; 	list of key-value save options
+;;;     list of key-value save options
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the pixbuf was saved successfully, FALSE if an error was set.
+;;;     TRUE if the pixbuf was saved successfully, FALSE if an error was set.
 ;;; 
 ;;; Since 2.14
 ;;; ---------------------------------------------------------------------------- 

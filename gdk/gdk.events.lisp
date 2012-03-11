@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;; 
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -55,17 +55,14 @@
 ;;;     gdk_event_get_root_coords
 ;;;     gdk_event_request_motions
 ;;;     gdk_event_handler_set
-;;;     
 ;;;     gdk_event_send_client_message
 ;;;     gdk_event_send_client_message_for_display
 ;;;     gdk_event_send_clientmessage_toall
 ;;;     gdk_add_client_message_filter
-;;;     
 ;;;     gdk_get_show_events
 ;;;     gdk_set_show_events
 ;;;     gdk_event_set_screen
 ;;;     gdk_event_get_screen
-;;;     
 ;;;     gdk_setting_get
 ;;; 
 ;;; Description

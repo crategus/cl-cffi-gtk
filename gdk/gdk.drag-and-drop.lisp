@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,6 +36,7 @@
 ;;; 
 ;;;     GdkDragAction
 ;;;     GdkDragContext
+;;;
 ;;;     gdk_drag_get_selection
 ;;;     gdk_drag_abort
 ;;;     gdk_drop_reply
@@ -53,7 +54,9 @@
 ;;;     gdk_drop_finish
 ;;;     gdk_drag_get_protocol
 ;;;     gdk_drag_get_protocol_for_display
+;;;
 ;;;     GdkDragProtocol
+;;;
 ;;;     gdk_drag_context_unref
 ;;;     gdk_drag_status
 ;;;     gdk_drag_drop_succeeded
@@ -88,25 +91,25 @@
 ;;; dropped data.
 ;;; 
 ;;; GDK_ACTION_DEFAULT
-;;; 	Means nothing, and should not be used.
+;;;     Means nothing, and should not be used.
 ;;; 
 ;;; GDK_ACTION_COPY
-;;; 	Copy the data.
+;;;     Copy the data.
 ;;; 
 ;;; GDK_ACTION_MOVE
-;;; 	Move the data, i.e. first copy it, then delete it from the source using 
+;;;     Move the data, i.e. first copy it, then delete it from the source using 
 ;;;     the DELETE target of the X selection protocol.
 ;;; 
 ;;; GDK_ACTION_LINK
-;;; 	Add a link to the data. Note that this is only useful if source and 
+;;;     Add a link to the data. Note that this is only useful if source and 
 ;;;     destination agree on what it means.
 ;;; 
 ;;; GDK_ACTION_PRIVATE
-;;; 	Special action which tells the source that the destination will do 
+;;;     Special action which tells the source that the destination will do 
 ;;;     something that the source doesn't understand.
 ;;; 
 ;;; GDK_ACTION_ASK
-;;; 	Ask the user what to do with the data.
+;;;     Ask the user what to do with the data.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GdkDragAction" gdk-drag-action
@@ -138,25 +141,25 @@
 ;;; done.
 ;;; 
 ;;; GDK_DRAG_PROTO_MOTIF
-;;; 	The Motif DND protocol.
+;;;     The Motif DND protocol.
 ;;; 
 ;;; GDK_DRAG_PROTO_XDND
-;;; 	The Xdnd protocol.
+;;;     The Xdnd protocol.
 ;;; 
 ;;; GDK_DRAG_PROTO_ROOTWIN
-;;; 	An extension to the Xdnd protocol for unclaimed root window drops.
+;;;     An extension to the Xdnd protocol for unclaimed root window drops.
 ;;; 
 ;;; GDK_DRAG_PROTO_NONE
-;;; 	no protocol.
+;;;     no protocol.
 ;;; 
 ;;; GDK_DRAG_PROTO_WIN32_DROPFILES
-;;; 	The simple WM_DROPFILES protocol.
+;;;     The simple WM_DROPFILES protocol.
 ;;; 
 ;;; GDK_DRAG_PROTO_OLE2
-;;; 	The complex OLE2 DND protocol (not implemented).
+;;;     The complex OLE2 DND protocol (not implemented).
 ;;; 
 ;;; GDK_DRAG_PROTO_LOCAL
-;;; 	Intra-application DND.
+;;;     Intra-application DND.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkDragProtocol" gdk-drag-protocol
@@ -195,7 +198,7 @@
 ;;; both source and destination sides.
 ;;; 
 ;;; GObject parent_instance;
-;;; 	the parent instance
+;;;     the parent instance
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %gdk-drag-context
@@ -268,10 +271,10 @@
 ;;; Returns the selection atom for the current source window.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; Returns :
-;;; 	the selection atom.
+;;;     the selection atom.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_get_selection" gdk-drag-get-selection) gdk-atom-as-string
@@ -289,10 +292,10 @@
 ;;; This function is called by the drag source.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp for this operation.
+;;;     the timestamp for this operation.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_abort" gdk-drag-abort) :void
@@ -312,13 +315,13 @@
 ;;; initiated by the drag source.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; ok :
-;;; 	TRUE if the drop is accepted.
+;;;     TRUE if the drop is accepted.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp for this operation.
+;;;     the timestamp for this operation.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drop_reply" gdk-drop-reply) :void
@@ -342,7 +345,7 @@
 ;;; Creates a new GdkDragContext.
 ;;; 
 ;;; Returns :
-;;; 	the newly created GdkDragContext.
+;;;     the newly created GdkDragContext.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -355,10 +358,10 @@
 ;;; This function is called by the drag source.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp for this operation.
+;;;     the timestamp for this operation.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_drop" gdk-drag-drop) :void
@@ -390,23 +393,23 @@
 ;;; protocol parameters for gdk_drag_motion().
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; drag_window :
-;;; 	a window which may be at the pointer position, but should be ignored, 
+;;;     a window which may be at the pointer position, but should be ignored, 
 ;;;     since it is put up by the drag source as an icon.
 ;;; 
 ;;; x_root :
-;;; 	the x position of the pointer in root coordinates.
+;;;     the x position of the pointer in root coordinates.
 ;;; 
 ;;; y_root :
-;;; 	the y position of the pointer in root coordinates.
+;;;     the y position of the pointer in root coordinates.
 ;;; 
 ;;; dest_window :
-;;; 	location to store the destination window in. [out]
+;;;     location to store the destination window in. [out]
 ;;; 
 ;;; protocol :
-;;; 	location to store the DND protocol in. [out]
+;;;     location to store the DND protocol in. [out]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_find_window" %gdk-drag-find-window) :void
@@ -443,26 +446,26 @@
 ;;; protocol parameters for gdk_drag_motion().
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; drag_window :
-;;; 	a window which may be at the pointer position, but should be ignored, 
+;;;     a window which may be at the pointer position, but should be ignored, 
 ;;;     since it is put up by the drag source as an icon.
 ;;; 
 ;;; screen :
-;;; 	the screen where the destination window is sought.
+;;;     the screen where the destination window is sought.
 ;;; 
 ;;; x_root :
-;;; 	the x position of the pointer in root coordinates.
+;;;     the x position of the pointer in root coordinates.
 ;;; 
 ;;; y_root :
-;;; 	the y position of the pointer in root coordinates.
+;;;     the y position of the pointer in root coordinates.
 ;;; 
 ;;; dest_window :
-;;; 	location to store the destination window in. [out]
+;;;     location to store the destination window in. [out]
 ;;; 
 ;;; protocol :
-;;; 	location to store the DND protocol in. [out]
+;;;     location to store the DND protocol in. [out]
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -504,7 +507,7 @@
 ;;; Deprecated function; use g_object_ref() instead.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -516,10 +519,10 @@
 ;;; gdk_drag_context_suggested_action() returns GDK_ACTION_ASK.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; Returns :
-;;; 	the GdkDragAction flags
+;;;     the GdkDragAction flags
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -532,10 +535,10 @@
 ;;; Determines the action chosen by the drag destination.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; Returns :
-;;; 	a GdkDragAction value
+;;;     a GdkDragAction value
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -548,10 +551,10 @@
 ;;; Determines the suggested drag action of the context.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; Returns :
-;;; 	a GdkDragAction value
+;;;     a GdkDragAction value
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -564,10 +567,10 @@
 ;;; Retrieves the list of targets of the context.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; Returns :
-;;; 	a GList of targets.
+;;;     a GList of targets.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -580,10 +583,10 @@
 ;;; Returns the GdkWindow where the DND operation started.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; Returns :
-;;; 	a GdkWindow.
+;;;     a GdkWindow.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -598,13 +601,13 @@
 ;;; This function is called by the drag source.
 ;;; 
 ;;; window :
-;;; 	the source window for this drag.
+;;;     the source window for this drag.
 ;;; 
 ;;; targets :
-;;; 	the offered targets, as list of GdkAtoms.
+;;;     the offered targets, as list of GdkAtoms.
 ;;; 
 ;;; Returns :
-;;; 	a newly created GdkDragContext.
+;;;     a newly created GdkDragContext.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_begin" gdk-drag-begin)
@@ -632,31 +635,31 @@
 ;;; This function is called by the drag source.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; dest_window :
-;;; 	the new destination window, obtained by gdk_drag_find_window().
+;;;     the new destination window, obtained by gdk_drag_find_window().
 ;;; 
 ;;; protocol :
-;;; 	the DND protocol in use, obtained by gdk_drag_find_window().
+;;;     the DND protocol in use, obtained by gdk_drag_find_window().
 ;;; 
 ;;; x_root :
-;;; 	the x position of the pointer in root coordinates.
+;;;     the x position of the pointer in root coordinates.
 ;;; 
 ;;; y_root :
-;;; 	the y position of the pointer in root coordinates.
+;;;     the y position of the pointer in root coordinates.
 ;;; 
 ;;; suggested_action :
-;;; 	the suggested action.
+;;;     the suggested action.
 ;;; 
 ;;; possible_actions :
-;;; 	the possible actions.
+;;;     the possible actions.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp for this operation.
+;;;     the timestamp for this operation.
 ;;; 
 ;;; Returns :
-;;; 	FIXME
+;;;     FIXME
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_motion" gdk-drag-motion) :boolean
@@ -683,13 +686,13 @@
 ;;; This function is called by the drag destination.
 ;;; 
 ;;; context :
-;;; 	a GtkDragContext.
+;;;     a GtkDragContext.
 ;;; 
 ;;; success :
-;;; 	TRUE if the data was successfully received.
+;;;     TRUE if the data was successfully received.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp for this operation.
+;;;     the timestamp for this operation.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drop_finish" gdk-drop-finish) :void
@@ -714,13 +717,13 @@
 ;;; Finds out the DND protocol supported by a window.
 ;;; 
 ;;; xid :
-;;; 	the windowing system id of the destination window.
+;;;     the windowing system id of the destination window.
 ;;; 
 ;;; protocol :
-;;; 	location where the supported DND protocol is returned.
+;;;     location where the supported DND protocol is returned.
 ;;; 
 ;;; Returns :
-;;; 	the windowing system specific id for the window where the drop should 
+;;;     the windowing system specific id for the window where the drop should 
 ;;;     happen. This may be xid or the id of a proxy window, or zero if xid
 ;;;     doesn't support Drag and Drop.
 ;;; ----------------------------------------------------------------------------
@@ -746,16 +749,16 @@
 ;;; Finds out the DND protocol supported by a window.
 ;;; 
 ;;; display :
-;;; 	the GdkDisplay where the destination window resides
+;;;     the GdkDisplay where the destination window resides
 ;;; 
 ;;; xid :
-;;; 	the windowing system id of the destination window.
+;;;     the windowing system id of the destination window.
 ;;; 
 ;;; protocol :
-;;; 	location where the supported DND protocol is returned.
+;;;     location where the supported DND protocol is returned.
 ;;; 
 ;;; Returns :
-;;; 	the windowing system id of the window where the drop should happen. 
+;;;     the windowing system id of the window where the drop should happen. 
 ;;;     This may be xid or the id of a proxy window, or zero if xid doesn't
 ;;;     support Drag and Drop.
 ;;; 
@@ -791,7 +794,7 @@
 ;;; Deprecated function; use g_object_unref() instead.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -807,14 +810,14 @@
 ;;; gdk_drag_motion() called by the drag source.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext.
+;;;     a GdkDragContext.
 ;;; 
 ;;; action :
-;;; 	the selected action which will be taken when a drop happens, or 0 to 
+;;;     the selected action which will be taken when a drop happens, or 0 to 
 ;;;     indicate that a drop will not be accepted.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp for this operation.
+;;;     the timestamp for this operation.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drag_status" gdk-drag-status) :void
@@ -834,10 +837,10 @@
 ;;; its return value is meaningless at other times.
 ;;; 
 ;;; context :
-;;; 	a GdkDragContext
+;;;     a GdkDragContext
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the drop was successful.
+;;;     TRUE if the drop was successful.
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------

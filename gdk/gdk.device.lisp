@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 2 Reference Manual
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,12 +34,13 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     GdkDevice;
-;;;     GdkInputSource;
-;;;     GdkInputMode;
-;;;     GdkDeviceKey;
-;;;     GdkDeviceAxis;
-;;;     GdkAxisUse;
+;;;     GdkDevice
+;;;     GdkInputSource
+;;;     GdkInputMode
+;;;     GdkDeviceKey
+;;;     GdkDeviceAxis
+;;;     GdkAxisUse
+;;;
 ;;;     gdk_devices_list
 ;;;     gdk_device_get_name
 ;;;     gdk_device_set_source
@@ -51,16 +52,17 @@
 ;;;     gdk_device_set_axis_use
 ;;;     gdk_device_get_axis_use
 ;;;     gdk_device_get_core_pointer
-;;;     
 ;;;     gdk_device_get_state
 ;;;     gdk_device_get_history
 ;;;     gdk_device_free_history
+;;;
 ;;;     GdkTimeCoord
+;;;
 ;;;     gdk_device_get_axis
 ;;;     gdk_device_get_n_axes
-;;;     
 ;;;     gdk_input_set_extension_events
-;;;     GdkExtensionMode;
+;;;
+;;;     GdkExtensionMode
 ;;; 
 ;;; Description
 ;;; 
@@ -491,10 +493,10 @@
 ;;; Determines the mode of the device.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice
+;;;     a GdkDevice
 ;;; 
 ;;; Returns :
-;;; 	a GdkInputSource
+;;;     a GdkInputSource
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -514,16 +516,16 @@
 ;;; pressed.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice.
+;;;     a GdkDevice.
 ;;; 
 ;;; index_ :
-;;; 	the index of the macro button to set.
+;;;     the index of the macro button to set.
 ;;; 
 ;;; keyval :
-;;; 	the keyval to generate.
+;;;     the keyval to generate.
 ;;; 
 ;;; modifiers :
-;;; 	the modifiers to set.
+;;;     the modifiers to set.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_set_key" gdk-device-set-key) :void
@@ -546,16 +548,16 @@
 ;;; modifiers with the keyval settings.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice.
+;;;     a GdkDevice.
 ;;; 
 ;;; index :
-;;; 	the index of the macro button to get.
+;;;     the index of the macro button to get.
 ;;; 
 ;;; keyval :
-;;; 	return value for the keyval.
+;;;     return value for the keyval.
 ;;; 
 ;;; modifiers :
-;;; 	return value for modifiers.
+;;;     return value for modifiers.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -570,13 +572,13 @@
 ;;; Specifies how an axis of a device is used.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice.
+;;;     a GdkDevice.
 ;;; 
 ;;; index_ :
-;;; 	the index of the axis.
+;;;     the index of the axis.
 ;;; 
 ;;; use :
-;;; 	specifies how the axis is used.
+;;;     specifies how the axis is used.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_set_axis_use" gdk-device-set-axis-use) :void
@@ -594,13 +596,13 @@
 ;;; Returns the axis use for index.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice.
+;;;     a GdkDevice.
 ;;; 
 ;;; index :
-;;; 	the index of the axis.
+;;;     the index of the axis.
 ;;; 
 ;;; Returns :
-;;; 	a GdkAxisUse specifying how the axis is used.
+;;;     a GdkAxisUse specifying how the axis is used.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -613,7 +615,7 @@
 ;;; Returns the core pointer device for the default display.
 ;;; 
 ;;; Returns :
-;;; 	the core pointer device; this is owned by the display and should not
+;;;     the core pointer device; this is owned by the display and should not
 ;;;     be freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -633,17 +635,17 @@
 ;;; Gets the current state of a device.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice.
+;;;     a GdkDevice.
 ;;; 
 ;;; window :
-;;; 	a GdkWindow.
+;;;     a GdkWindow.
 ;;; 
 ;;; axes :
-;;; 	an array of doubles to store the values of the axes of device in,
+;;;     an array of doubles to store the values of the axes of device in,
 ;;;     or NULL.
 ;;; 
 ;;; mask :
-;;; 	location to store the modifiers, or NULL.
+;;;     location to store the modifiers, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_get_state" %gdk-device-get-state) :void
@@ -674,10 +676,10 @@
 ;;; contains the following fields:
 ;;; 
 ;;; guint32 time;
-;;; 	The timestamp for this event.
+;;;     The timestamp for this event.
 ;;; 
 ;;; gdouble axes[GDK_MAX_TIMECOORD_AXES];
-;;; 	the values of the device's axes.
+;;;     the values of the device's axes.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-time-coord nil
@@ -701,26 +703,26 @@
 ;;; the case where motion history is supported and no events were found.)
 ;;; 
 ;;; device :
-;;; 	a GdkDevice
+;;;     a GdkDevice
 ;;; 
 ;;; window :
-;;; 	the window with respect to which which the event coordinates will
+;;;     the window with respect to which which the event coordinates will
 ;;;     be reported
 ;;; 
 ;;; start :
-;;; 	starting timestamp for range of events to return
+;;;     starting timestamp for range of events to return
 ;;; 
 ;;; stop :
-;;; 	ending timestamp for the range of events to return
+;;;     ending timestamp for the range of events to return
 ;;; 
 ;;; events :
-;;; 	location to store a newly-allocated array of GdkTimeCoord, or NULL.
+;;;     location to store a newly-allocated array of GdkTimeCoord, or NULL.
 ;;; 
 ;;; n_events :
-;;; 	location to store the length of events, or NULL
+;;;     location to store the length of events, or NULL
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the windowing system supports motion history and at least
+;;;     TRUE if the windowing system supports motion history and at least
 ;;;     one event was found.
 ;;; ----------------------------------------------------------------------------
 
@@ -756,10 +758,10 @@
 ;;; gdk_device_get_history().
 ;;; 
 ;;; events :
-;;; 	an array of GdkTimeCoord.
+;;;     an array of GdkTimeCoord.
 ;;; 
 ;;; n_events :
-;;; 	the length of the array.
+;;;     the length of the array.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_free_history" gdk-device-free-history) :void
@@ -780,19 +782,19 @@
 ;;; locates the value in the array for a given axis use.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice
+;;;     a GdkDevice
 ;;; 
 ;;; axes :
-;;; 	pointer to an array of axes
+;;;     pointer to an array of axes
 ;;; 
 ;;; use :
-;;; 	the use to look for
+;;;     the use to look for
 ;;; 
 ;;; value :
-;;; 	location to store the found value.
+;;;     location to store the found value.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the given axis use was found, otherwise FALSE
+;;;     TRUE if the given axis use was found, otherwise FALSE
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_get_axis" %gdk-device-get-axis) :boolean
@@ -824,10 +826,10 @@
 ;;; Gets the number of axes of a device.
 ;;; 
 ;;; device :
-;;; 	a GdkDevice.
+;;;     a GdkDevice.
 ;;; 
 ;;; Returns :
-;;; 	the number of axes of device
+;;;     the number of axes of device
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -849,13 +851,13 @@
 ;;; particular widget.
 ;;; 
 ;;; GDK_EXTENSION_EVENTS_NONE
-;;; 	no extension events are desired.
+;;;     no extension events are desired.
 ;;; 
 ;;; GDK_EXTENSION_EVENTS_ALL
-;;; 	all extension events are desired.
+;;;     all extension events are desired.
 ;;; 
 ;;; GDK_EXTENSION_EVENTS_CURSOR
-;;; 	extension events are desired only if a cursor will be displayed for
+;;;     extension events are desired only if a cursor will be displayed for
 ;;;     the device.
 ;;; ----------------------------------------------------------------------------
 
@@ -877,13 +879,13 @@
 ;;; event mask for extension events.
 ;;; 
 ;;; window :
-;;; 	a GdkWindow.
+;;;     a GdkWindow.
 ;;; 
 ;;; mask :
-;;; 	the event mask
+;;;     the event mask
 ;;; 
 ;;; mode :
-;;; 	the type of extension events that are desired.
+;;;     the type of extension events that are desired.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_input_set_extension_events" gdk-input-set-extension-events) :void

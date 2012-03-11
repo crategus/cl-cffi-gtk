@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; See http://www.gtk.org
+;;; Version 2.24.10. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; Selections
 ;;; 
 ;;; Functions for transfering data via the X selection mechanism
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GdkSelection;
@@ -136,7 +136,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_PRIMARY
 ;;; 
-;;; #define GDK_SELECTION_PRIMARY 		_GDK_MAKE_ATOM (1)
+;;; #define GDK_SELECTION_PRIMARY         _GDK_MAKE_ATOM (1)
 ;;; 
 ;;; A GdkAtom representing the PRIMARY selection.
 ;;; ----------------------------------------------------------------------------
@@ -148,7 +148,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_SECONDARY
 ;;; 
-;;; #define GDK_SELECTION_SECONDARY 	_GDK_MAKE_ATOM (2)
+;;; #define GDK_SELECTION_SECONDARY     _GDK_MAKE_ATOM (2)
 ;;; 
 ;;; A GdkAtom representing the SECONDARY selection.
 ;;; ----------------------------------------------------------------------------
@@ -160,7 +160,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_CLIPBOARD
 ;;; 
-;;; #define GDK_SELECTION_CLIPBOARD 	_GDK_MAKE_ATOM (69)
+;;; #define GDK_SELECTION_CLIPBOARD     _GDK_MAKE_ATOM (69)
 ;;; 
 ;;; A GdkAtom representing the CLIPBOARD selection.
 ;;; ----------------------------------------------------------------------------
@@ -172,7 +172,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_BITMAP
 ;;; 
-;;; #define GDK_TARGET_BITMAP 		_GDK_MAKE_ATOM (5)
+;;; #define GDK_TARGET_BITMAP         _GDK_MAKE_ATOM (5)
 ;;; 
 ;;; A GdkAtom representing the BITMAP selection target.
 ;;; ----------------------------------------------------------------------------
@@ -183,7 +183,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_COLORMAP
 ;;; 
-;;; #define GDK_TARGET_COLORMAP 		_GDK_MAKE_ATOM (7)
+;;; #define GDK_TARGET_COLORMAP         _GDK_MAKE_ATOM (7)
 ;;; 
 ;;; A GdkAtom representing the COLORMAP selection target.
 ;;; ----------------------------------------------------------------------------
@@ -194,7 +194,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_DRAWABLE
 ;;; 
-;;; #define GDK_TARGET_DRAWABLE 		_GDK_MAKE_ATOM (17)
+;;; #define GDK_TARGET_DRAWABLE         _GDK_MAKE_ATOM (17)
 ;;; 
 ;;; A GdkAtom representing the DRAWABLE selection target.
 ;;; ----------------------------------------------------------------------------
@@ -205,7 +205,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_PIXMAP
 ;;; 
-;;; #define GDK_TARGET_PIXMAP 		_GDK_MAKE_ATOM (20)
+;;; #define GDK_TARGET_PIXMAP         _GDK_MAKE_ATOM (20)
 ;;; 
 ;;; A GdkAtom representing the PIXMAP selection target.
 ;;; ----------------------------------------------------------------------------
@@ -217,7 +217,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_STRING
 ;;; 
-;;; #define GDK_TARGET_STRING 		_GDK_MAKE_ATOM (31)
+;;; #define GDK_TARGET_STRING         _GDK_MAKE_ATOM (31)
 ;;; 
 ;;; A GdkAtom representing the STRING selection target.
 ;;; ----------------------------------------------------------------------------
@@ -229,7 +229,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_ATOM
 ;;; 
-;;; #define GDK_SELECTION_TYPE_ATOM 	_GDK_MAKE_ATOM (4)
+;;; #define GDK_SELECTION_TYPE_ATOM     _GDK_MAKE_ATOM (4)
 ;;; 
 ;;; A GdkAtom representing the ATOM selection type.
 ;;; ----------------------------------------------------------------------------
@@ -241,7 +241,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_BITMAP
 ;;; 
-;;; #define GDK_SELECTION_TYPE_BITMAP 	_GDK_MAKE_ATOM (5)
+;;; #define GDK_SELECTION_TYPE_BITMAP     _GDK_MAKE_ATOM (5)
 ;;; 
 ;;; A GdkAtom representing the BITMAP selection type.
 ;;; ----------------------------------------------------------------------------
@@ -253,7 +253,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_COLORMAP
 ;;; 
-;;; #define GDK_SELECTION_TYPE_COLORMAP 	_GDK_MAKE_ATOM (7)
+;;; #define GDK_SELECTION_TYPE_COLORMAP     _GDK_MAKE_ATOM (7)
 ;;; 
 ;;; A GdkAtom representing the COLORMAP selection type.
 ;;; ----------------------------------------------------------------------------
@@ -265,7 +265,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_DRAWABLE
 ;;; 
-;;; #define GDK_SELECTION_TYPE_DRAWABLE 	_GDK_MAKE_ATOM (17)
+;;; #define GDK_SELECTION_TYPE_DRAWABLE     _GDK_MAKE_ATOM (17)
 ;;; 
 ;;; A GdkAtom representing the DRAWABLE selection type.
 ;;; ----------------------------------------------------------------------------
@@ -277,7 +277,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_INTEGER
 ;;; 
-;;; #define GDK_SELECTION_TYPE_INTEGER 	_GDK_MAKE_ATOM (19)
+;;; #define GDK_SELECTION_TYPE_INTEGER     _GDK_MAKE_ATOM (19)
 ;;; 
 ;;; A GdkAtom representing the INTEGER selection type.
 ;;; ----------------------------------------------------------------------------
@@ -289,7 +289,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_PIXMAP
 ;;; 
-;;; #define GDK_SELECTION_TYPE_PIXMAP 	_GDK_MAKE_ATOM (20)
+;;; #define GDK_SELECTION_TYPE_PIXMAP     _GDK_MAKE_ATOM (20)
 ;;; 
 ;;; A GdkAtom representing the PIXMAP selection type.
 ;;; ----------------------------------------------------------------------------
@@ -301,7 +301,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_WINDOW
 ;;; 
-;;; #define GDK_SELECTION_TYPE_WINDOW 	_GDK_MAKE_ATOM (33)
+;;; #define GDK_SELECTION_TYPE_WINDOW     _GDK_MAKE_ATOM (33)
 ;;; 
 ;;; A GdkAtom representing the WINDOW selection type.
 ;;; ----------------------------------------------------------------------------
@@ -313,7 +313,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_STRING
 ;;; 
-;;; #define GDK_SELECTION_TYPE_STRING 	_GDK_MAKE_ATOM (31)
+;;; #define GDK_SELECTION_TYPE_STRING     _GDK_MAKE_ATOM (31)
 ;;; 
 ;;; A GdkAtom representing the STRING selection type.
 ;;; ----------------------------------------------------------------------------
@@ -333,23 +333,23 @@
 ;;; Sets the owner of the given selection.
 ;;; 
 ;;; owner :
-;;; 	a GdkWindow or NULL to indicate that the the owner for the given should
+;;;     a GdkWindow or NULL to indicate that the the owner for the given should
 ;;;     be unset.
 ;;; 
 ;;; selection :
-;;; 	an atom identifying a selection.
+;;;     an atom identifying a selection.
 ;;; 
 ;;; time_ :
-;;; 	timestamp to use when setting the selection. If this is older than the
+;;;     timestamp to use when setting the selection. If this is older than the
 ;;;     timestamp given last time the owner was set for the given selection,
 ;;;     the request will be ignored.
 ;;; 
 ;;; send_event :
-;;; 	if TRUE, and the new owner is different from the current owner, the
+;;;     if TRUE, and the new owner is different from the current owner, the
 ;;;     current owner will be sent a SelectionClear event.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the selection owner was successfully changed to owner,
+;;;     TRUE if the selection owner was successfully changed to owner,
 ;;;     otherwise FALSE.
 ;;; ----------------------------------------------------------------------------
 
@@ -373,26 +373,26 @@
 ;;; Sets the GdkWindow owner as the current owner of the selection selection.
 ;;; 
 ;;; display :
-;;; 	the GdkDisplay.
+;;;     the GdkDisplay.
 ;;; 
 ;;; owner :
-;;; 	a GdkWindow or NULL to indicate that the owner for the given should
+;;;     a GdkWindow or NULL to indicate that the owner for the given should
 ;;;     be unset.
 ;;; 
 ;;; selection :
-;;; 	an atom identifying a selection.
+;;;     an atom identifying a selection.
 ;;; 
 ;;; time_ :
-;;; 	timestamp to use when setting the selection. If this is older than the
+;;;     timestamp to use when setting the selection. If this is older than the
 ;;;     timestamp given last time the owner was set for the given selection,
 ;;;     the request will be ignored.
 ;;; 
 ;;; send_event :
-;;; 	if TRUE, and the new owner is different from the current owner, the
+;;;     if TRUE, and the new owner is different from the current owner, the
 ;;;     current owner will be sent a SelectionClear event.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the selection owner was successfully changed to owner,
+;;;     TRUE if the selection owner was successfully changed to owner,
 ;;;     otherwise FALSE.
 ;;; 
 ;;; Since 2.2
@@ -416,10 +416,10 @@
 ;;; Determines the owner of the given selection.
 ;;; 
 ;;; selection :
-;;; 	an atom indentifying a selection.
+;;;     an atom indentifying a selection.
 ;;; 
 ;;; Returns :
-;;; 	if there is a selection owner for this window, and it is a window known
+;;;     if there is a selection owner for this window, and it is a window known
 ;;;     to the current process, the GdkWindow that owns the selection, otherwise
 ;;;     NULL. Note that the return value may be owned by a different process if
 ;;;     a foreign window was previously created for that window, but a new
@@ -445,13 +445,13 @@
 ;;; never be created by this call.
 ;;; 
 ;;; display :
-;;; 	a GdkDisplay.
+;;;     a GdkDisplay.
 ;;; 
 ;;; selection :
-;;; 	an atom indentifying a selection.
+;;;     an atom indentifying a selection.
 ;;; 
 ;;; Returns :
-;;; 	if there is a selection owner for this window, and it is a window
+;;;     if there is a selection owner for this window, and it is a window
 ;;;     known to the current process, the GdkWindow that owns the selection,
 ;;;     otherwise NULL.
 ;;; 
@@ -476,16 +476,16 @@
 ;;; Retrieves the contents of a selection in a given form.
 ;;; 
 ;;; requestor :
-;;; 	a GdkWindow.
+;;;     a GdkWindow.
 ;;; 
 ;;; selection :
-;;; 	an atom identifying the selection to get the contents of.
+;;;     an atom identifying the selection to get the contents of.
 ;;; 
 ;;; target :
-;;; 	the form in which to retrieve the selection.
+;;;     the form in which to retrieve the selection.
 ;;; 
 ;;; time_ :
-;;; 	the timestamp to use when retrieving the selection. The selection owner
+;;;     the timestamp to use when retrieving the selection. The selection owner
 ;;;     may refuse the request if it did not own the selection at the time
 ;;;     indicated by the timestamp.
 ;;; ----------------------------------------------------------------------------
@@ -511,10 +511,10 @@
 ;;; applications, who should use the GtkClipboard API instead.
 ;;; 
 ;;; requestor :
-;;; 	the window on which the data is stored
+;;;     the window on which the data is stored
 ;;; 
 ;;; data :
-;;; 	location to store a pointer to the retrieved data. If the retrieval
+;;;     location to store a pointer to the retrieved data. If the retrieval
 ;;;     failed, NULL we be stored here, otherwise, it will be non-NULL and the
 ;;;     returned data should be freed with g_free() when you are finished using
 ;;;     it. The length of the allocated memory is one more than the length of
@@ -522,13 +522,13 @@
 ;;;     nul-termination of strings.
 ;;; 
 ;;; prop_type :
-;;; 	location to store the type of the property.
+;;;     location to store the type of the property.
 ;;; 
 ;;; prop_format :
-;;; 	location to store the format of the property.
+;;;     location to store the format of the property.
 ;;; 
 ;;; Returns :
-;;; 	the length of the retrieved data.
+;;;     the length of the retrieved data.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_property_get" gdk-selection-property-get) :int
@@ -551,20 +551,20 @@
 ;;; Sends a response to SelectionRequest event.
 ;;; 
 ;;; requestor :
-;;; 	window to which to deliver response.
+;;;     window to which to deliver response.
 ;;; 
 ;;; selection :
-;;; 	selection that was requested.
+;;;     selection that was requested.
 ;;; 
 ;;; target :
-;;; 	target that was selected.
+;;;     target that was selected.
 ;;; 
 ;;; property :
-;;; 	property in which the selection owner stored the data, or GDK_NONE
+;;;     property in which the selection owner stored the data, or GDK_NONE
 ;;;     to indicate that the request was rejected.
 ;;; 
 ;;; time_ :
-;;; 	timestamp.
+;;;     timestamp.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_send_notify" gdk-selection-send-notify) :void
@@ -589,23 +589,23 @@
 ;;; Send a response to SelectionRequest event.
 ;;; 
 ;;; display :
-;;; 	the GdkDisplay where requestor is realized
+;;;     the GdkDisplay where requestor is realized
 ;;; 
 ;;; requestor :
-;;; 	window to which to deliver response.
+;;;     window to which to deliver response.
 ;;; 
 ;;; selection :
-;;; 	selection that was requested.
+;;;     selection that was requested.
 ;;; 
 ;;; target :
-;;; 	target that was selected.
+;;;     target that was selected.
 ;;; 
 ;;; property :
-;;; 	property in which the selection owner stored the data, or GDK_NONE to
+;;;     property in which the selection owner stored the data, or GDK_NONE to
 ;;;     indicate that the request was rejected.
 ;;; 
 ;;; time_ :
-;;; 	timestamp.
+;;;     timestamp.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
