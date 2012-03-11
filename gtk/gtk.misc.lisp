@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,7 +34,8 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     GtkMisc;
+;;;     GtkMisc
+;;;
 ;;;     gtk_misc_set_alignment
 ;;;     gtk_misc_set_padding
 ;;;     gtk_misc_get_alignment
@@ -139,13 +140,21 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkMisc" gtk-misc
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable")
-                        :type-initializer "gtk_misc_get_type")
-                       ((xalign gtk-misc-xalign "xalign" "gfloat" t t)
-                        (xpad gtk-misc-xpad "xpad" "gint" t t)
-                        (yalign gtk-misc-yalign "yalign" "gfloat" t t)
-                        (ypad gtk-misc-ypad "ypad" "gint" t t)))
+  (:superclass gtk-widget
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :type-initializer "gtk_misc_get_type")
+  ((xalign
+    gtk-misc-xalign
+    "xalign" "gfloat" t t)
+   (xpad
+    gtk-misc-xpad
+    "xpad" "gint" t t)
+   (yalign
+    gtk-misc-yalign
+    "yalign" "gfloat" t t)
+   (ypad
+    gtk-misc-ypad "ypad" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_misc_set_alignment ()
