@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; GtkFrame
 ;;; 
 ;;; A bin with a decorative frame and optional label
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkFrame
@@ -157,17 +157,23 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_frame_get_type")
-  ((label gtk-frame-label
+  ((label
+    gtk-frame-label
     "label" "gchararray" t t)
-   (label-widget gtk-frame-label-widget
+   (label-widget
+    gtk-frame-label-widget
     "label-widget" "GtkWidget" t t)
-   (label-xalign gtk-frame-label-xalign
+   (label-xalign
+    gtk-frame-label-xalign
     "label-xalign" "gfloat" t t)
-   (label-yalign gtk-frame-label-yalign
+   (label-yalign
+    gtk-frame-label-yalign
     "label-yalign" "gfloat" t t)
-   (shadow gtk-frame-shadow
+   (shadow
+    gtk-frame-shadow
     "shadow" "GtkShadowType" t t)
-   (shadow-type gtk-frame-shadow-type
+   (shadow-type
+    gtk-frame-shadow-type
     "shadow-type" "GtkShadowType" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -179,11 +185,16 @@
 ;;; label is omitted.
 ;;; 
 ;;; label :
-;;; 	the text to use as the label of the frame
+;;;     the text to use as the label of the frame
 ;;; 
 ;;; Returns :
-;;; 	a new GtkFrame widget
+;;;     a new GtkFrame widget
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-new (label)
+  (make-instance 'gtk-frame :label label))
+
+(export 'gtk-frame-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_set_label ()
@@ -193,11 +204,16 @@
 ;;; Sets the text of the label. If label is NULL, the current label is removed.
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; label :
-;;; 	the text to use as the label of the frame.
+;;;     the text to use as the label of the frame
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-set-label (frame label)
+  (setf (gtk-frame-label frame) label))
+
+(export 'gtk-frame-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_set_label_widget ()
@@ -208,11 +224,16 @@
 ;;; embedded in the top edge of the frame as a title.
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; label_widget :
-;;; 	the new label widget
+;;;     the new label widget
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-set-label-widget (frame label-widget)
+  (setf (gtk-frame-label-widget frame) label-widget))
+
+(export 'gtk-frame-set-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_set_label_align ()
@@ -225,18 +246,24 @@
 ;;; newly created frame are 0.0 and 0.5.
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; xalign :
-;;; 	The position of the label along the top edge of the widget. A value of
+;;;     The position of the label along the top edge of the widget. A value of
 ;;;     0.0 represents left alignment; 1.0 represents right alignment.
 ;;; 
 ;;; yalign :
-;;; 	The y alignment of the label. A value of 0.0 aligns under the frame;
+;;;     The y alignment of the label. A value of 0.0 aligns under the frame;
 ;;;     1.0 aligns above the frame. If the values are exactly 0.0 or 1.0 the
 ;;;     gap in the frame won't be painted because the label will be completely
 ;;;     above or below the frame.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-set-label-align (frame xalign yalign)
+  (setf (gtk-frame-label-xalign frame) xalign
+        (gtk-frame-label-yalign frame) yalign))
+
+(export 'gtk-frame-set-label-align)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_set_shadow_type ()
@@ -246,11 +273,16 @@
 ;;; Sets the shadow type for frame.
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; type :
-;;; 	the new GtkShadowType
+;;;     the new GtkShadowType
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-set-shadow-type (frame type)
+  (setf (gtk-frame-shadow-type frame) type))
+
+(export 'gtk-frame-set-shadow-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_get_label ()
@@ -262,13 +294,18 @@
 ;;; argument was passed to gtk_frame_new().)
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; Returns :
-;;; 	the text in the label, or NULL if there was no label widget or the
+;;;     The text in the label, or NULL if there was no label widget or the
 ;;;     lable widget was not a GtkLabel. This string is owned by GTK+ and must
 ;;;     not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-get-label (frame)
+  (gtk-frame-label frame))
+
+(export 'gtk-frame-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_get_label_align ()
@@ -281,14 +318,20 @@
 ;;; See gtk_frame_set_label_align().
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; xalign :
-;;; 	location to store X alignment of frame's label, or NULL.
+;;;     location to store X alignment of frame's label, or NULL
 ;;; 
 ;;; yalign :
-;;; 	location to store X alignment of frame's label, or NULL.
+;;;     location to store X alignment of frame's label, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-get-label-align (frame)
+  (values (gtk-frame-label-xalign frame)
+          (gtk-frame-label-yalign frame)))
+
+(export 'gtk-frame-get-label-align)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_get_label_widget ()
@@ -298,11 +341,16 @@
 ;;; Retrieves the label widget for the frame. See gtk_frame_set_label_widget().
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; Returns :
-;;; 	the label widget, or NULL if there is none.
+;;;     the label widget, or NULL if there is none
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-frame-get-label-widget (frame)
+  (gtk-frame-label-widget frame))
+
+(export 'gtk-frame-get-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_get_shadow_type ()
@@ -312,12 +360,16 @@
 ;;; Retrieves the shadow type of the frame. See gtk_frame_set_shadow_type().
 ;;; 
 ;;; frame :
-;;; 	a GtkFrame
+;;;     a GtkFrame
 ;;; 
 ;;; Returns :
-;;; 	the current shadow type of the frame.
+;;;     the current shadow type of the frame
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-frame-get-shadow-type (frame)
+  (gtk-frame-get-shadow-type frame))
+
+(export 'gtk-framge-get-shadow-type)
 
 ;;; --- End of file gtk.frame.lisp ---------------------------------------------
 
