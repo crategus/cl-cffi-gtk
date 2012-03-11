@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -421,9 +421,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkHButtonBox" 'gtk-h-button-box))
+  (register-object-type "GtkHButtonBox" 'gtk-hbutton-box))
 
-(define-g-object-class "GtkHButtonBox" gtk-h-button-box
+(define-g-object-class "GtkHButtonBox" gtk-hbutton-box
   (:superclass gtk-button-box
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -433,27 +433,27 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHButtonBox"
-                       gtk-h-button-box-child-expand
+                       gtk-hbutton-box-child-expand
                        "expand" "gboolean" t t t)
 
 (define-child-property "GtkHButtonBox"
-                       gtk-h-button-box-child-fill
+                       gtk-hbutton-box-child-fill
                        "fill" "gboolean" t t t)
 
 (define-child-property "GtkHButtonBox"
-                       gtk-h-button-box-child-padding
+                       gtk-hbutton-box-child-padding
                        "padding" "guint" t t t)
 
 (define-child-property "GtkHButtonBox"
-                       gtk-h-button-box-child-pack-type
+                       gtk-hbutton-box-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
 (define-child-property "GtkHButtonBox"
-                       gtk-h-button-box-child-position
+                       gtk-hbutton-box-child-position
                        "position" "gint" t t t)
 
 (define-child-property "GtkHButtonBox"
-                       gtk-h-button-box-child-secondary
+                       gtk-hbutton-box-child-secondary
                        "secondary" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
@@ -531,9 +531,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkVButtonBox" 'gtk-v-button-box))
+  (register-object-type "GtkVButtonBox" 'gtk-vbutton-box))
 
-(define-g-object-class "GtkVButtonBox" gtk-v-button-box
+(define-g-object-class "GtkVButtonBox" gtk-vbutton-box
   (:superclass gtk-button-box
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -543,27 +543,27 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVButtonBox"
-                       gtk-v-button-box-child-expand
+                       gtk-vbutton-box-child-expand
                        "expand" "gboolean" t t t)
 
 (define-child-property "GtkVButtonBox"
-                       gtk-v-button-box-child-fill
+                       gtk-vbutton-box-child-fill
                        "fill" "gboolean" t t t)
 
 (define-child-property "GtkVButtonBox"
-                       gtk-v-button-box-child-padding
+                       gtk-vbutton-box-child-padding
                        "padding" "guint" t t t)
 
 (define-child-property "GtkVButtonBox"
-                       gtk-v-button-box-child-pack-type
+                       gtk-vbutton-box-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
 (define-child-property "GtkVButtonBox"
-                       gtk-v-button-box-child-position
+                       gtk-vbutton-box-child-position
                        "position" "gint" t t t)
 
 (define-child-property "GtkVButtonBox"
-                       gtk-v-button-box-child-secondary
+                       gtk-vbutton-box-child-secondary
                        "secondary" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
