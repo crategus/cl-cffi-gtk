@@ -8,7 +8,7 @@
 ;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -179,7 +179,7 @@
 ;;; 
 ;;; If the sub-function does not indicate errors other than by reporting a
 ;;; GError, you need to create a temporary GError since the passed-in one may
-;;; be NULL. g_propagate_error() is intended for use in this case. 	
+;;; be NULL. g_propagate_error() is intended for use in this case.
 ;;; 
 ;;;  gboolean
 ;;;  my_function_that_can_fail (GError **err)
@@ -258,7 +258,7 @@
 ;;; Error domains and codes are conventionally named as follows:
 ;;; 
 ;;;     The error domain is called <NAMESPACE>_<MODULE>_ERROR, for example 
-;;;     G_SPAWN_ERROR or G_THREAD_ERROR:    	
+;;;     G_SPAWN_ERROR or G_THREAD_ERROR:
 ;;; 
 ;;;      #define G_SPAWN_ERROR g_spawn_error_quark ()
 ;;;     
