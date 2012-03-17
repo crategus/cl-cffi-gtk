@@ -615,7 +615,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkHBox" 'gtk-hbox))
+  (register-object-type "GtkHBox" 'gtk-hbox)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkHBox" GTK-HBOX)) *lisp-name-exceptions*)))
 
 (define-g-object-class "GtkHBox" gtk-hbox
   (:superclass gtk-box
@@ -736,7 +738,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkVBox" 'gtk-vbox))
+  (register-object-type "GtkVBox" 'gtk-vbox)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkVBox" GTK-VBOX)) *lisp-name-exceptions*)))
 
 (define-g-object-class "GtkVBox" gtk-vbox
   (:superclass gtk-box
