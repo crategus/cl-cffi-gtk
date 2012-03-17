@@ -701,6 +701,9 @@
    (gravity
      gtk-window-gravity
      "gravity" "GdkGravity" t t)
+   (has-resize-grip
+    gtk-window-has-resize-grip
+    "resize-grip" "gboolean" t t)
    (has-toplevel-focus
      gtk-window-has-toplevel-focus
      "has-toplevel-focus" "gboolean" t nil)
@@ -725,6 +728,9 @@
    (resizable
      gtk-window-resizable
      "resizable" "gboolean" t t)
+   (resize-grip-visible
+    gtk-window-resize-grip-visible
+    "resize-grip-visible" "gboolean" t nil)
    (role
      gtk-window-role
      "role" "gchararray" t t)
@@ -752,6 +758,9 @@
    (type-hint
      gtk-window-type-hint
      "type-hint" "GdkWindowTypeHint" t t)
+   (ubuntu-no-proxy
+    gtk-window-ubuntu-no-proxy
+    "ubuntu-no-proxy" "gboolean" t nil)
    (urgency-hint
      gtk-window-urgency-hint
      "urgency-hint" "gboolean" t t)
@@ -774,8 +783,8 @@
           gtk-window-icon-list
           (g-list gdk-pixbuf :free-from-foreign t :free-to-foreign t)
           "gtk_window_get_icon_list" "gtk_window_set_icon_list")
-   (:cffi group gtk-window-group
-          (g-object gtk-window-group)
+   (:cffi group
+          gtk-window-group (g-object gtk-window-group)
           "gtk_window_get_group" nil)
    (:cffi keep-above
           gtk-window-keep-above :boolean
