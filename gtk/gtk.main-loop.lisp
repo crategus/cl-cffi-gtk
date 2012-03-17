@@ -154,6 +154,10 @@
 ;;;     the default language as a PangoLanguage, must not be freed
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_get_default_language" gtk-get-default-language) :pointer)
+
+(export 'gtk-get-default-language)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_parse_args ()
 ;;; 
