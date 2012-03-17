@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; rtest-glib.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,7 +29,7 @@
 
 (defvar *main-loop* (g-main-loop-new (null-pointer) nil))
 
-(at-finalize ()
+(defun destroy-main-thread ()
   (when (and *main-thread*
              (bt:thread-alive-p *main-thread*))
     (bt:destroy-thread *main-thread*)
@@ -60,13 +60,13 @@
 
 (define-test glib-version
   (assert-equal    2 *glib-major-version*)
-  (assert-equal   24 *glib-minor-version*)
-  (assert-equal    1 *glib-micro-version*)
-  (assert-equal 2401 *glib-binary-age*)
-  (assert-equal    1 *glib-interface-age*)
-  (assert-false (glib-check-version 2 0 0))
+  (assert-equal   30 *glib-minor-version*)
+  (assert-equal    0 *glib-micro-version*)
+  (assert-equal 3000 *glib-binary-age*)
+  (assert-equal    0 *glib-interface-age*)
+  (assert-false (glib-check-version 2 24 0))
   (assert-equal "GLib version too old (micro mismatch)"
-                (glib-check-version 2 28 0)))
+                (glib-check-version 2 32 0)))
 
 (define-test glib-threads
   (assert-true (g-thread-get-initialized))
@@ -83,11 +83,20 @@
   (assert-equal "GTK Program" (g-get-prgname)))
 
 (define-test glib-main-loop
+  ;; Create a thread with a GMainLoop
   (ensure-main-thread)
+  ;; Wait until the loop is ready
   (do ()
       ((and *main-loop*
             (g-main-loop-is-running *main-loop*))))
+  ;; Do we have a thread and a main loop?
   (assert-true (bt:thread-alive-p *main-thread*))
-  (assert-true (g-main-loop-is-running *main-loop*)))
+  (assert-true (g-main-loop-is-running *main-loop*)
+  ;; GMainContext is the default context
+  (assert-true (pointer-eq (g-main-loop-get-context *main-loop*)
+                           (g-main-context-default)))
+  ;; Stop the main-loop and destroy the thread
+  (g-main-loop-quit *main-loop*)
+  (destroy-main-thread)))
 
 ;;; --- End of file rtest-glib.lisp --------------------------------------------

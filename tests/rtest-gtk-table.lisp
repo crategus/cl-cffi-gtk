@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; rtest-gtk-table.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -69,7 +69,7 @@
   (assert-equal '("AtkImplementorIface" "GtkBuildable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkTable")))
   
-  ;; Query infos about the class "GtkObject"
+  ;; Query infos about the class "GtkTable"
   (with-foreign-object (query 'g-type-query)
     (g-type-query "GtkTable" query)
     (assert-equal (gtype "GtkTable")
@@ -79,29 +79,28 @@
     (assert-eql 416 (foreign-slot-value query 'g-type-query :class-size))
     (assert-eql  92 (foreign-slot-value query 'g-type-query :instance-size)))
     
-    ;; Get the names of the class properties.
-    (assert-equal
-        '("user-data" "name" "parent" "width-request" "height-request" "visible"
-         "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-         "can-default" "has-default" "receives-default" "composite-child"
-         "style" "events" "extension-events" "no-show-all" "has-tooltip"
-         "tooltip-markup" "tooltip-text" "window" "double-buffered"
-         "border-width" "resize-mode" "child" "n-rows" "n-columns"
-         "column-spacing" "row-spacing" "homogeneous")
-       (mapcar #'g-class-property-definition-name
-               (g-object-class-list-properties (gtype "GtkTable"))))
+  ;; Get the names of the class properties.
+  (assert-equal
+      '("user-data" "name" "parent" "width-request" "height-request" "visible"
+       "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
+       "can-default" "has-default" "receives-default" "composite-child"
+       "style" "events" "extension-events" "no-show-all" "has-tooltip"
+       "tooltip-markup" "tooltip-text" "window" "double-buffered"
+       "border-width" "resize-mode" "child" "n-rows" "n-columns"
+       "column-spacing" "row-spacing" "homogeneous")
+     (mapcar #'g-class-property-definition-name
+             (g-object-class-list-properties (gtype "GtkTable"))))
     
-    ;; Get the names of the style properties.
-    (assert-equal
-        '("cursor-aspect-ratio" "cursor-color" "draw-border"
-         "focus-line-pattern" "focus-line-width" "focus-padding"
-         "interior-focus" "link-color" "new-tooltip-style"
-         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-         "separator-height" "separator-width" "visited-link-color"
-         "wide-separators")
-        (mapcar #'g-class-property-definition-name
-                (gtk-widget-class-list-style-properties (gtype "GtkTable"))))
-  )
+  ;; Get the names of the style properties.
+  (assert-equal
+      '("cursor-aspect-ratio" "cursor-color" "draw-border"
+        "focus-line-pattern" "focus-line-width" "focus-padding"
+        "interior-focus" "link-color" "new-tooltip-style"
+        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+        "separator-height" "separator-width" "visited-link-color"
+        "wide-separators")
+      (mapcar #'g-class-property-definition-name
+                (gtk-widget-class-list-style-properties (gtype "GtkTable")))))
 
 (define-test gtk-table-functions
   (let ((table (make-instance 'gtk-table)))
@@ -110,7 +109,7 @@
     (assert-eql 0 (gtk-table-get-default-col-spacing table))
     (assert-false (gtk-table-get-homogeneous table))
     
-    (assert-equal (values 3 2) (gtk-table-resize table 3 2))
+    (gtk-table-resize table 3 2)
     (assert-equal (values 3 2) (gtk-table-get-size table))
     
     (assert-eql 5 (gtk-table-set-row-spacings table 5))
@@ -121,8 +120,5 @@
     
     (assert-true  (gtk-table-set-homogeneous table t))
     (assert-true  (gtk-table-get-homogeneous table))
-    
-    )) 
-   
-   
-       
+    ))
+
