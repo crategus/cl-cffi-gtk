@@ -1,13 +1,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.generating.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,7 +28,6 @@
 (in-package :gobject)
 
 (defvar *lisp-name-exceptions* nil)
-(defvar *generation-exclusions* nil)
 (defvar *known-interfaces* (make-hash-table :test 'equal))
 (defvar *additional-properties* nil)
 
@@ -85,12 +82,12 @@
 
 (defun parse-gobject-property (spec)
   (destructuring-bind (name accessor-name gname type readable writable) spec
-      (make-gobject-property :name name
-                             :accessor-name accessor-name
-                             :gname gname
-                             :type type
-                             :readable readable
-                             :writable writable)))
+    (make-gobject-property :name name
+                           :accessor-name accessor-name
+                           :gname gname
+                           :type type
+                           :readable readable
+                           :writable writable)))
 
 (defun parse-cffi-property (spec)
   (destructuring-bind (name accessor-name type reader writer) spec
@@ -138,8 +135,9 @@
 (defvar *strip-prefix* "")
 
 (defun accessor-name (class-name property-name)
-  (intern (format nil "~A-~A" (symbol-name class-name)
-                  (lispify-name property-name))
+  (intern (format nil "~A-~A"
+                      (symbol-name class-name)
+                      (lispify-name property-name))
           *lisp-name-package*))
 
 (defun lispify-name (name)
@@ -153,6 +151,11 @@
   (if (starts-with name prefix)
       (subseq name (length prefix))
       name))
+
+(defun starts-with (name prefix)
+  (and prefix
+       (> (length name) (length prefix))
+       (string= (subseq name 0 (length prefix)) prefix)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -300,4 +303,4 @@
      (eval-when (:compile-toplevel :load-toplevel :execute)
        (setf (gethash ,g-type-name *known-interfaces*) ',name))))
 
-;;; ----------------------------------------------------------------------------
+;;; --- gobject.generating.lisp ------------------------------------------------

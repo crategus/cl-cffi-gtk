@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject 2.30.2 Reference Manual. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.30.3. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser

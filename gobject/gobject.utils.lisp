@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -26,6 +26,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
+
+(defvar *generation-exclusions* nil)
 
 ;; Get the definition of a GType
 
@@ -150,11 +152,6 @@
         (writable (and (g-class-property-definition-writable property)
                        (not (g-class-property-definition-constructor-only property)))))
     `(,name ,accessor-name ,g-name ,type ,readable ,writable)))
-
-(defun starts-with (name prefix)
-  (and prefix
-       (> (length name) (length prefix))
-       (string= (subseq name 0 (length prefix)) prefix)))
 
 (defun g-name->name (name)
   (or (second (assoc name *lisp-name-exceptions* :test 'equal))

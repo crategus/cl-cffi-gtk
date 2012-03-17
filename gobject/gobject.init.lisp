@@ -1,13 +1,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.init.lisp
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
-;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,9 +43,7 @@
 
 (in-package :gobject)
 
-(defvar *lisp-name-package* nil
-  "For internal use (used by class definitions generator).
-  Specifies the package in which symbols are interned.")
+(defvar *lisp-name-package* nil)
 (defvar *generated-types* nil)
 
 (defvar *gobject-debug* nil)
