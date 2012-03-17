@@ -119,20 +119,26 @@
 
 (define-g-object-class "GdkDrawable" gdk-drawable
   (:type-initializer "gdk_drawable_get_type")
-  ((:cffi display gdk-drawable-display (g-object gdk-display)
+  ((:cffi display
+          gdk-drawable-display (g-object gdk-display)
           "gdk_drawable_get_display" nil)
-   (:cffi screen gdk-drawable-screen (g-object gdk-screen)
+   (:cffi screen
+          gdk-drawable-screen (g-object gdk-screen)
           "gdk_drawable_get_screen" nil)
-   (:cffi visual gdk-drawable-visual (g-object gdk-visual)
+   (:cffi visual
+          gdk-drawable-visual (g-object gdk-visual)
           "gdk_drawable_get_visual" nil)
-   (:cffi colormap gdk-drawable-colormap (g-object gdk-colormap)
+   (:cffi colormap
+          gdk-drawable-colormap (g-object gdk-colormap)
           "gdk_drawable_get_colormap" "gdk_drawable_set_colormap")
-   (:cffi depth gdk-drawable-depth :int
+   (:cffi depth
+          gdk-drawable-depth :int
           "gdk_drawable_get_depth" nil)
-   (:cffi clip-region gdk-drawable-clip-region (g-boxed-foreign gdk-region :return)
+   (:cffi clip-region
+          gdk-drawable-clip-region (g-boxed-foreign gdk-region :return)
           "gdk_drawable_get_clip_region" nil)
-   (:cffi visible-region gdk-drawable-visible-region
-          (g-boxed-foreign gdk-region :return)
+   (:cffi visible-region
+          gdk-drawable-visible-region (g-boxed-foreign gdk-region :return)
           "gdk_drawable_get_visible_region" nil)))
 
 ;;; ----------------------------------------------------------------------------
@@ -360,10 +366,10 @@
 ;;;     a GdkDrawable
 ;;; 
 ;;; width :
-;;;     location to store drawable's width, or NULL. [out][allow-none]
+;;;     location to store drawable's width, or NULL
 ;;; 
 ;;; height :
-;;;     location to store drawable's height, or NULL. [out][allow-none]
+;;;     location to store drawable's height, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_drawable_get_size" %gdk-drawable-get-size) :void

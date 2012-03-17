@@ -35,6 +35,7 @@
       (:darwin (:or "libgdk-x11-2.0.0.dylib" "libgdk-x11-2.0.dylib"))
       (:windows "libgdk-win32-2.0-0.dll")
       (t "libgdk-2.0"))
+    
     (define-foreign-library gdk-pixbuf
       ((:and :unix (:not :darwin))
        (:or "libgdk_pixbuf-2.0.so.0" "libgdk_pixbuf-2.0.so"))
