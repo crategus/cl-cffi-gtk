@@ -200,12 +200,6 @@
 ;;; call the component functions of g_main_context_iteration() directly. These
 ;;; functions are g_main_context_prepare(), g_main_context_query(),
 ;;; g_main_context_check() and g_main_context_dispatch().
-;;; 
-;;; The operation of these functions can best be seen in terms of a state
-;;; diagram, as shown in Figure 1, “States of a Main Context”.
-;;; 
-;;; Figure 1. States of a Main Context
-;;; States of a Main Context
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
@@ -315,7 +309,7 @@
 ;;; 
 ;;; struct GPollFD {
 ;;; #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
-;;;   gint64 fd;
+;;;   gint64  fd;
 ;;; #else
 ;;;   gint    fd;
 ;;; #endif
@@ -323,9 +317,8 @@
 ;;;   gushort revents;
 ;;; };
 ;;; 
-;;; gint64 fd;
-;;; 
-;;; gint fd;
+;;; gint64    fd;
+;;; gint      fd;
 ;;; 
 ;;; gushort events;
 ;;;     a bitwise combination from GIOCondition, specifying which events should
@@ -1184,33 +1177,33 @@
 ;;; This function is useful in a situation like the following: Imagine an
 ;;; extremely simple "garbage collected" system.
 ;;; 
-;;;  1 static GList *free_list;
-;;;  2 
-;;;  3 gpointer
-;;;  4 allocate_memory (gsize size)
-;;;  5 { 
-;;;  6   gpointer result = g_malloc (size);
-;;;  7   free_list = g_list_prepend (free_list, result);
-;;;  8   return result;
-;;;  9 }
-;;; 10 
-;;; 11 void
-;;; 12 free_allocated_memory (void)
-;;; 13 {
-;;; 14   GList *l;
-;;; 15   for (l = free_list; l; l = l->next);
-;;; 16     g_free (l->data);
-;;; 17   g_list_free (free_list);
-;;; 18   free_list = NULL;
-;;; 19  }
-;;; 20 
-;;; 21 [...]
-;;; 22 
-;;; 23 while (TRUE); 
-;;; 24  {
-;;; 25    g_main_context_iteration (NULL, TRUE);
-;;; 26    free_allocated_memory();
-;;; 27   }
+;;;  static GList *free_list;
+;;;  
+;;;  gpointer
+;;;  allocate_memory (gsize size)
+;;;  { 
+;;;    gpointer result = g_malloc (size);
+;;;    free_list = g_list_prepend (free_list, result);
+;;;    return result;
+;;;  }
+;;;  
+;;;  void
+;;;  free_allocated_memory (void)
+;;;  {
+;;;    GList *l;
+;;;    for (l = free_list; l; l = l->next);
+;;;      g_free (l->data);
+;;;    g_list_free (free_list);
+;;;    free_list = NULL;
+;;;   }
+;;;  
+;;;  [...]
+;;;  
+;;;  while (TRUE); 
+;;;   {
+;;;     g_main_context_iteration (NULL, TRUE);
+;;;     free_allocated_memory();
+;;;    }
 ;;; 
 ;;; This works from an application, however, if you want to do the same thing
 ;;; from a library, it gets more difficult, since you no longer control the
@@ -1219,36 +1212,36 @@
 ;;; function could be called from a recursive callback. This can be fixed by
 ;;; using g_main_depth()
 ;;; 
-;;;  1 gpointer
-;;;  2 allocate_memory (gsize size)
-;;;  3 { 
-;;;  4   FreeListBlock *block = g_new (FreeListBlock, 1);
-;;;  5   block->mem = g_malloc (size);
-;;;  6   block->depth = g_main_depth ();   
-;;;  7   free_list = g_list_prepend (free_list, block);
-;;;  8   return block->mem;
-;;;  9 }
-;;; 10
-;;; 11 void
-;;; 12 free_allocated_memory (void)
-;;; 13 {
-;;; 14   GList *l;
-;;; 15   
-;;; 16   int depth = g_main_depth ();
-;;; 17   for (l = free_list; l; );
-;;; 18     {
-;;; 19       GList *next = l->next;
-;;; 20       FreeListBlock *block = l->data;
-;;; 21       if (block->depth > depth)
-;;; 22         {
-;;; 23           g_free (block->mem);
-;;; 24           g_free (block);
-;;; 25           free_list = g_list_delete_link (free_list, l);
-;;; 26         }
-;;; 27               
-;;; 28       l = next;
-;;; 29     }
-;;; 30   }
+;;;  gpointer
+;;;  allocate_memory (gsize size)
+;;;  { 
+;;;    FreeListBlock *block = g_new (FreeListBlock, 1);
+;;;    block->mem = g_malloc (size);
+;;;    block->depth = g_main_depth ();   
+;;;    free_list = g_list_prepend (free_list, block);
+;;;    return block->mem;
+;;;  }
+;;; 
+;;;  void
+;;;  free_allocated_memory (void)
+;;;  {
+;;;    GList *l;
+;;;    
+;;;    int depth = g_main_depth ();
+;;;    for (l = free_list; l; );
+;;;      {
+;;;        GList *next = l->next;
+;;;        FreeListBlock *block = l->data;
+;;;        if (block->depth > depth)
+;;;          {
+;;;            g_free (block->mem);
+;;;            g_free (block);
+;;;            free_list = g_list_delete_link (free_list, l);
+;;;          }
+;;;                
+;;;        l = next;
+;;;      }
+;;;    }
 ;;;
 ;;; There is a temptation to use g_main_depth() to solve problems with
 ;;; reentrancy. For instance, while waiting for data to be received from the
@@ -1302,8 +1295,8 @@
 ;;; Invokes a function in such a way that context is owned during the
 ;;; invocation of function.
 ;;; 
-;;; If context is NULL then the global default main context — as returned by
-;;; g_main_context_default() — is used.
+;;; If context is NULL then the global default main context - as returned by
+;;; g_main_context_default() - is used.
 ;;; 
 ;;; If context is owned by the current thread, function is called directly.
 ;;; Otherwise, if context is the thread-default main context of the current
@@ -2216,55 +2209,55 @@
 ;;; handlers, but may have freed the object before the dispatch of your idle
 ;;; handler.
 ;;;  
-;;;  1 static gboolean 
-;;;  2 idle_callback (gpointer data)
-;;;  3 {
-;;;  4   SomeWidget *self = data;
-;;;  5    
-;;;  6   GDK_THREADS_ENTER ();
-;;;  7   /* do stuff with self */
-;;;  8   self->idle_id = 0;
-;;;  9   GDK_THREADS_LEAVE ();
-;;; 10   
-;;; 11   return FALSE;
-;;; 12 }
-;;; 13 
-;;; 14 static void 
-;;; 15 some_widget_do_stuff_later (SomeWidget *self)
-;;; 16 {
-;;; 17   self->idle_id = g_idle_add (idle_callback, self);
-;;; 18 }
-;;; 19  
-;;; 20 static void 
-;;; 21 some_widget_finalize (GObject *object)
-;;; 22 {
-;;; 23   SomeWidget *self = SOME_WIDGET (object);
-;;; 24   
-;;; 25   if (self->idle_id)
-;;; 26     g_source_remove (self->idle_id);
-;;; 27   
-;;; 28   G_OBJECT_CLASS (parent_class)->finalize (object);
-;;; 29 }
+;;;  static gboolean 
+;;;  idle_callback (gpointer data)
+;;;  {
+;;;    SomeWidget *self = data;
+;;;     
+;;;    GDK_THREADS_ENTER ();
+;;;    /* do stuff with self */
+;;;    self->idle_id = 0;
+;;;    GDK_THREADS_LEAVE ();
+;;;    
+;;;    return FALSE;
+;;;  }
+;;;  
+;;;  static void 
+;;;  some_widget_do_stuff_later (SomeWidget *self)
+;;;  {
+;;;    self->idle_id = g_idle_add (idle_callback, self);
+;;;  }
+;;;   
+;;;  static void 
+;;;  some_widget_finalize (GObject *object)
+;;;  {
+;;;    SomeWidget *self = SOME_WIDGET (object);
+;;;    
+;;;    if (self->idle_id)
+;;;      g_source_remove (self->idle_id);
+;;;    
+;;;    G_OBJECT_CLASS (parent_class)->finalize (object);
+;;;  }
 ;;; 
 ;;; This will fail in a multi-threaded application if the widget is destroyed
 ;;; before the idle handler fires due to the use after free in the callback. A
 ;;; solution, to this particular problem, is to check to if the source has
 ;;; already been destroy within the callback.
 ;;; 
-;;;  1 static gboolean 
-;;;  2 idle_callback (gpointer data)
-;;;  3 {
-;;;  4   SomeWidget *self = data;
-;;;  5   
-;;;  6   GDK_THREADS_ENTER ();
-;;;  7   if (!g_source_is_destroyed (g_main_current_source ()))
-;;;  8     {
-;;;  9       /* do stuff with self */
-;;; 10     }
-;;; 11   GDK_THREADS_LEAVE ();
-;;; 12  
-;;; 13   return FALSE;
-;;; 14 }
+;;;  static gboolean 
+;;;  idle_callback (gpointer data)
+;;;  {
+;;;    SomeWidget *self = data;
+;;;    
+;;;    GDK_THREADS_ENTER ();
+;;;    if (!g_source_is_destroyed (g_main_current_source ()))
+;;;      {
+;;;        /* do stuff with self */
+;;;      }
+;;;    GDK_THREADS_LEAVE ();
+;;;   
+;;;    return FALSE;
+;;;  }
 ;;; 
 ;;; source :
 ;;;     a GSource

@@ -687,9 +687,9 @@
 ;;; and to return the real home directory for the user. If applications want to
 ;;; pay attention to HOME, they can do:
 ;;; 
-;;;  1 const char *homedir = g_getenv ("HOME");
-;;;  2 if (!homedir)
-;;;  3     homedir = g_get_home_dir ();
+;;;  const char *homedir = g_getenv ("HOME");
+;;;  if (!homedir)
+;;;      homedir = g_get_home_dir ();
 ;;; 
 ;;; Returns :
 ;;;     the current user's home directory

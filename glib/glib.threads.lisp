@@ -135,33 +135,33 @@
 ;;; 
 ;;; Example 8. Using GCond to block a thread until a condition is satisfied
 ;;; 
-;;;  1 GCond* data_cond = NULL; /* Must be initialized somewhere */
-;;;  2 GMutex* data_mutex = NULL; /* Must be initialized somewhere */
-;;;  3 gpointer current_data = NULL;
-;;;  4
-;;;  5 void
-;;;  6 push_data (gpointer data)
-;;;  7 {
-;;;  8   g_mutex_lock (data_mutex);
-;;;  9   current_data = data;
-;;; 10   g_cond_signal (data_cond);
-;;; 11   g_mutex_unlock (data_mutex);
-;;; 12 }
-;;; 13
-;;; 14 gpointer
-;;; 15 pop_data (void)
-;;; 16 {
-;;; 17   gpointer data;
-;;; 18
-;;; 19   g_mutex_lock (data_mutex);
-;;; 20   while (!current_data)
-;;; 21     g_cond_wait (data_cond, data_mutex);
-;;; 22   data = current_data;
-;;; 23   current_data = NULL;
-;;; 24   g_mutex_unlock (data_mutex);
-;;; 25 
-;;; 26   return data;
-;;; 27 }
+;;;  GCond* data_cond = NULL; /* Must be initialized somewhere */
+;;;  GMutex* data_mutex = NULL; /* Must be initialized somewhere */
+;;;  gpointer current_data = NULL;
+;;; 
+;;;  void
+;;;  push_data (gpointer data)
+;;;  {
+;;;    g_mutex_lock (data_mutex);
+;;;    current_data = data;
+;;;    g_cond_signal (data_cond);
+;;;    g_mutex_unlock (data_mutex);
+;;;  }
+;;; 
+;;;  gpointer
+;;;  pop_data (void)
+;;;  {
+;;;    gpointer data;
+;;; 
+;;;    g_mutex_lock (data_mutex);
+;;;    while (!current_data)
+;;;      g_cond_wait (data_cond, data_mutex);
+;;;    data = current_data;
+;;;    current_data = NULL;
+;;;    g_mutex_unlock (data_mutex);
+;;;  
+;;;    return data;
+;;;  }
 ;;; 
 ;;; Whenever a thread calls pop_data() now, it will wait until current_data is
 ;;; non-NULL, i.e. until some other thread has called push_data().
@@ -773,18 +773,18 @@
 ;;; 
 ;;; Example 2. A function which will not work in a threaded environment
 ;;; 
-;;;  1 int
-;;;  2 give_me_next_number (void)
-;;;  3 {
-;;;  4   static int current_number = 0;
-;;;  5 
-;;;  6   /* now do a very complicated calculation to calculate the new
-;;;  7    * number, this might for example be a random number generator
-;;;  8    */
-;;;  9   current_number = calc_next_number (current_number);
-;;; 10 
-;;; 11   return current_number;
-;;; 12 }
+;;;  int
+;;;  give_me_next_number (void)
+;;;  {
+;;;    static int current_number = 0;
+;;;  
+;;;    /* now do a very complicated calculation to calculate the new
+;;;     * number, this might for example be a random number generator
+;;;     */
+;;;    current_number = calc_next_number (current_number);
+;;;  
+;;;    return current_number;
+;;;  }
 ;;; 
 ;;; 
 ;;; It is easy to see that this won't work in a multi-threaded application.
@@ -793,21 +793,21 @@
 ;;; 
 ;;; Example 3. The wrong way to write a thread-safe function
 ;;; 
-;;;  1 int
-;;;  2 give_me_next_number (void)
-;;;  3 {
-;;;  4   static int current_number = 0;
-;;;  5   int ret_val;
-;;;  6   static GMutex * mutex = NULL;
-;;;  7 
-;;;  8   if (!mutex) mutex = g_mutex_new ();
-;;;  9
-;;; 10   g_mutex_lock (mutex);
-;;; 11   ret_val = current_number = calc_next_number (current_number);
-;;; 12   g_mutex_unlock (mutex);
-;;; 13 
-;;; 14   return ret_val;
-;;; 15 }
+;;;  int
+;;;  give_me_next_number (void)
+;;;  {
+;;;    static int current_number = 0;
+;;;    int ret_val;
+;;;    static GMutex * mutex = NULL;
+;;;  
+;;;    if (!mutex) mutex = g_mutex_new ();
+;;; 
+;;;    g_mutex_lock (mutex);
+;;;    ret_val = current_number = calc_next_number (current_number);
+;;;    g_mutex_unlock (mutex);
+;;;  
+;;;    return ret_val;
+;;;  }
 ;;; 
 ;;; This looks like it would work, but there is a race condition while
 ;;; constructing the mutex and this code cannot work reliable. Please do not
@@ -815,32 +815,32 @@
 ;;; 
 ;;; Example 4. A correct thread-safe function
 ;;;  
-;;;  1 static GMutex *give_me_next_number_mutex = NULL;
-;;;  2 
-;;;  3 /* this function must be called before any call to
-;;;  4  * give_me_next_number()
-;;;  5  *
-;;;  6  * it must be called exactly once.
-;;;  7  */
-;;;  8 void
-;;;  9 init_give_me_next_number (void)
-;;; 10 {
-;;; 11   g_assert (give_me_next_number_mutex == NULL);
-;;; 12   give_me_next_number_mutex = g_mutex_new ();
-;;; 13 }
-;;; 14
-;;; 15 int
-;;; 16 give_me_next_number (void)
-;;; 17 {
-;;; 18   static int current_number = 0;
-;;; 19   int ret_val;
-;;; 20 
-;;; 21   g_mutex_lock (give_me_next_number_mutex);
-;;; 22   ret_val = current_number = calc_next_number (current_number);
-;;; 23   g_mutex_unlock (give_me_next_number_mutex);
-;;; 24
-;;; 25   return ret_val;
-;;; 26 }
+;;;  static GMutex *give_me_next_number_mutex = NULL;
+;;;  
+;;;  /* this function must be called before any call to
+;;;   * give_me_next_number()
+;;;   *
+;;;   * it must be called exactly once.
+;;;   */
+;;;  void
+;;;  init_give_me_next_number (void)
+;;;  {
+;;;    g_assert (give_me_next_number_mutex == NULL);
+;;;    give_me_next_number_mutex = g_mutex_new ();
+;;;  }
+;;; 
+;;;  int
+;;;  give_me_next_number (void)
+;;;  {
+;;;    static int current_number = 0;
+;;;    int ret_val;
+;;;  
+;;;    g_mutex_lock (give_me_next_number_mutex);
+;;;    ret_val = current_number = calc_next_number (current_number);
+;;;    g_mutex_unlock (give_me_next_number_mutex);
+;;; 
+;;;    return ret_val;
+;;;  }
 ;;; 
 ;;; GStaticMutex provides a simpler and safer way of doing this.
 ;;; 

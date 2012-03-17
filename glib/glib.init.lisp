@@ -4,9 +4,6 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
@@ -49,12 +46,12 @@
             *finalizers* (nconc *finalizers* (list fn))))))
 
 (defun run-initializers ()
-  (iter (for fn in *initializers*)
-        (funcall fn)))
+  (dolist (fn *initializers*)
+    (funcall fn)))
 
 (defun run-finalizers ()
-  (iter (for fn in *finalizers*)
-        (funcall fn)))
+  (dolist (fn *finalizers*)
+    (funcall fn)))
 
 #+sbcl
 (pushnew 'run-initializers sb-ext:*init-hooks*)
@@ -107,7 +104,9 @@
       (:darwin (:or "libglib-2.0.0.dylib" "libglib-2.0.dylib"))
       (:windows "libglib-2.0-0.dll")
       (t (:default "libglib-2.0"))))
-  
+  (use-foreign-library glib))
+
+(at-init ()  
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gthread
       ((:and :unix (:not :darwin))
@@ -115,8 +114,6 @@
       (:darwin (:or "libgthread-2.0.0.dylib"  "libgthread-2.0.dylib"))
       (:windows "libgthread-2.0-0.dll")
       (t "libgthread-2.0")))
-
-  (use-foreign-library glib)
   (use-foreign-library gthread))
 
 ;;; --- End of file glib.init.lisp --------------------------------------------- 

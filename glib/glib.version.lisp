@@ -40,7 +40,7 @@
 ;;;     *glib-binary-age*
 ;;;     *glib-interface-age*
 ;;;
-;;;     glib-check-version (required-major required-minor required-micro)
+;;;     glib-check-version
 ;;; 
 ;;; Description
 ;;; 

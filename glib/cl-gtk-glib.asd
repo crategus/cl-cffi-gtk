@@ -28,22 +28,22 @@
 (defsystem :cl-gtk-glib
   :name :cl-gtk-glib
   :version "0.0.0"
-  :author "Dr. Dieter Kaiser"
+  :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components ((:file "glib.package")
-               (:file "glib.init")        ; Lisp Initialization
-               (:file "glib.stable-pointer") ; Stable Pointers for callbacks
+               (:file "glib.init")          ; Lisp Initialization
+               (:file "glib.stable-pointer"); Stable Pointers for callbacks
 
-               (:file "glib.misc")        ; Different Glib Types and Functions
-               (:file "glib.version")     ; Glib Version information
-               (:file "glib.threads")     ; Thread abstraction
-               (:file "glib.main-loop")   ; The Main Event Loop
-               (:file "glib.quark")       ; Association between string and id
-               (:file "glib.error")       ; Error Reporting
-               (:file "glib.utils")       ; Miscellaneous Utility Functions
+               (:file "glib.misc")          ; Different Glib Types and Functions
+               (:file "glib.version")       ; Glib Version information
+               (:file "glib.threads")       ; Thread abstraction
+               (:file "glib.main-loop")     ; The Main Event Loop
+               (:file "glib.quark")         ; Association between string and id
+               (:file "glib.error")         ; Error Reporting
+               (:file "glib.utils")         ; Miscellaneous Utility Functions
                
-               (:file "glib.lisp"))       ; More Lisp support
+               (:file "glib.lisp"))         ; More Lisp support
   :depends-on (:cffi
                :trivial-garbage
                :iterate
