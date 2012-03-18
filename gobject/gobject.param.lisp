@@ -3422,12 +3422,15 @@
 ;;; 	a valid GValue of G_TYPE_OBJECT derived type
 ;;; 
 ;;; v_object :
-;;; 	object value to be set. [type GObject.Object][allow-none]
+;;; 	object value to be set
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_set_object" g-value-set-object) :void
+(defcfun ("g_value_set_object" %g-value-set-object) :void
   (value (:pointer g-value))
   (v-object :pointer))
+
+(defun g-value-set-object (value v-object)
+  (%g-value-set-object value (if v-object (pointer v-object) (null-pointer))))
 
 (export 'g-value-set-object)
 
@@ -3486,8 +3489,16 @@
 ;;; 	object contents of value.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_get_object" g-value-get-object) :pointer
+(defcfun ("g_value_get_object" %g-value-get-object) :pointer
   (value (:pointer g-value)))
+
+;; TODO: %g-value-get-object returns a pointer. The pointer is translated
+;;       with get-object-for-pointer to a Lisp object. The transformation
+;;       should be done automatically when specifing the type g-object for
+;;       the return value.
+
+(defun g-value-get-object (value)
+  (get-g-object-for-pointer (%g-value-get-object value)))
 
 (export 'g-value-get-object)
 

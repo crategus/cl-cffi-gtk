@@ -143,14 +143,13 @@
 ;; Helper functions for getting the definitions
 
 (defun property->property-definition (class-name property)
-  (let ((name (g-name->name (g-class-property-definition-name property)))
-        (accessor-name (accessor-name class-name
-                                      (g-class-property-definition-name property)))
-        (g-name (g-class-property-definition-name property))
-        (type (gtype-name (g-class-property-definition-type property)))
-        (readable (g-class-property-definition-readable property))
-        (writable (and (g-class-property-definition-writable property)
-                       (not (g-class-property-definition-constructor-only property)))))
+  (let ((name (g-name->name (param-spec-name property)))
+        (accessor-name (accessor-name class-name (param-spec-name property)))
+        (g-name (param-spec-name property))
+        (type (gtype-name (param-spec-type property)))
+        (readable (param-spec-readable property))
+        (writable (and (param-spec-writable property)
+                       (not (param-spec-constructor-only property)))))
     `(,name ,accessor-name ,g-name ,type ,readable ,writable)))
 
 (defun g-name->name (name)
@@ -188,7 +187,7 @@
          (g-name (gtype-name type))
          (name (g-name->name g-name))
          (properties (sort (copy-list (interface-properties type))
-                           #'string< :key #'g-class-property-definition-name))
+                           #'string< :key #'param-spec-name))
          (probable-type-initializer (probable-type-init-name g-name)))
     `(define-g-interface ,g-name ,name
          (:export t
@@ -209,7 +208,7 @@
                                     :test 'string=)))))))
 
 ;; Returns a list of properties of GObject interface g-type. Each property is
-;; described by an object of type g-class-property-definition. type is an
+;; described by an object of type param-spec. type is an
 ;; integer or a string specifying the GType
 
 (defun interface-properties (type)
@@ -252,9 +251,9 @@
          (own-properties
           (sort (copy-list (remove type
                                    properties
-                                   :key #'g-class-property-definition-owner-type
+                                   :key #'param-spec-owner-type
                                    :test-not #'g-type=))
-                #'string< :key #'g-class-property-definition-name)))
+                #'string< :key #'param-spec-name)))
     `(define-g-object-class ,g-name ,name 
          (:superclass ,superclass-name
           :export t
@@ -277,7 +276,7 @@
                                :key 'car :test 'string=)))))))
 
 ;; Returns a list of properties of GObject class g-type. Each property
-;; is described by an object of type g-class-property-definition. type is an
+;; is described by an object of type param-spec. type is an
 ;; integer or a string specifying the GType
 
 (defun class-properties (type)
@@ -444,8 +443,8 @@
   (setf type (gtype type))
   (remove-duplicates (sort (loop
                              for property in (class-or-interface-properties type)
-                             when (g-type= type (g-class-property-definition-owner-type property))
-                             collect (g-class-property-definition-type property))
+                             when (g-type= type (param-spec-owner-type property))
+                             collect (param-spec-type property))
                            #'string<
                            :key #'gtype-name)
                      :test 'equal))

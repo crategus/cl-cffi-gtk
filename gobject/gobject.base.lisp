@@ -311,7 +311,7 @@
       (push pointer *gobject-gc-hooks*)
       (unless locks-were-present
         (log-for :gc "adding idle-gc-hook to main loop~%")
-        (g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
+        (g-idle-add (callback g-idle-gc-hook))))))
 
 (defcallback g-idle-gc-hook :boolean ((data :pointer))
   (declare (ignore data))
@@ -426,7 +426,7 @@
              pointer))
   (remhash (pointer-address pointer) *foreign-gobjects-strong*))
 
-
+;;; ----------------------------------------------------------------------------
 
 (defvar *registered-object-types* (make-hash-table :test 'equal))
 
@@ -438,45 +438,29 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun get-g-object-lisp-type (type)
-  (setf type (gtype type))
-  (iter (while (not (null type)))
-        (for lisp-type = (gethash (gtype-name type)
-                                  *registered-object-types*))
-        (when lisp-type
-          (return lisp-type))
-        (setf type (g-type-parent type))))
+;; If object was not created from lisp-side, we should ref it
+;; If an object is regular g-object, we should not ref-sink it
+;; If an object is GInitiallyUnowned, then it is created with a floating
+;; reference, we should ref-sink it
+;; A special case is GtkWindow: we should ref-sink it anyway
 
 (defun should-ref-sink-at-creation (object)
-;;If object was not created from lisp-side, we should ref it
-;;If an object is regular g-object, we should not ref-sink it
-;;If an object is GInitiallyUnowned, then it is created with a floating
-;; reference, we should ref-sink it
-;;A special case is GtkWindow: we should ref-sink it anyway
   (let ((r (cond
+             ;; not new objects should be ref_sunk
              ((equal *current-object-from-pointer* (pointer object))
               (log-for :gc "*cur-obj-from-ptr* ")
-              t)  ;; not new objects should be ref_sunk
-             ((eq object *current-creating-object*) ;; g_object_new returns objects with ref = 1, we should save _this_ ref
-              (typep object 'g-initially-unowned)) ;; but GInitiallyUnowned objects should be ref_sunk
+              t)
+             ;; g_object_new returns objects with ref=1, we should save this ref
+             ((eq object *current-creating-object*)
+              ;; but GInitiallyUnowned objects should be ref_sunk
+              (typep object 'g-initially-unowned))
              (t t))))
     (log-for :gc "(should-ref-sink-at-creation ~A) => ~A~%" object r)
     r))
 
 ;;; ----------------------------------------------------------------------------
 
-(defun make-g-object-from-pointer (pointer)
-  (let* ((type (g-type-from-instance pointer))
-         (lisp-type (get-g-object-lisp-type type)))
-    (unless lisp-type
-      (error "Type ~A is not registered with REGISTER-OBJECT-TYPE"
-             (gtype-name type)))
-    (let ((*current-object-from-pointer* pointer))
-      (make-instance lisp-type :pointer pointer))))
-
-;;; ----------------------------------------------------------------------------
-
-;; Define the type foreign-g-object-type
+;; Define the type foreign-g-object-type and the type transformation rules.
 
 (define-foreign-type foreign-g-object-type ()
   ((sub-type :reader sub-type
@@ -517,56 +501,41 @@
       (g-object-unref (pointer object)))
     object))
 
+;; Translate a pointer to a C object to the corresponding Lisp object.
+;; If a correpondig Lisp object does not exist, create the Lisp object.
+
 (defun get-g-object-for-pointer (pointer)
   (unless (null-pointer-p pointer)
     (or (gethash (pointer-address pointer) *foreign-gobjects-strong*)
         (gethash (pointer-address pointer) *foreign-gobjects-weak*)
         (progn (log-for :gc "Now creating object for ~A~%" pointer)
-               (make-g-object-from-pointer pointer)))))
+               (create-gobject-from-pointer pointer)))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Create a Lisp object from a C pointer to an existing C object.
+
+(defun create-gobject-from-pointer (pointer)
+  (let* ((type (g-type-from-instance pointer))
+         (lisp-type (get-gobject-lisp-type type)))
+    (unless lisp-type
+      (error "Type ~A is not registered with REGISTER-OBJECT-TYPE"
+             (gtype-name type)))
+    (let ((*current-object-from-pointer* pointer))
+      (make-instance lisp-type :pointer pointer))))
+
+(defun get-gobject-lisp-type (type)
+  (setf type (gtype type))
+  (iter (while (not (null type)))
+        (for lisp-type = (gethash (gtype-name type)
+                                  *registered-object-types*))
+        (when lisp-type
+          (return lisp-type))
+        (setf type (g-type-parent type))))
 
 ;;; ----------------------------------------------------------------------------
 
 (register-object-type "GObject" 'g-object)
-
-;; Returns the GType value for a given type. If type is an integer, it is
-;; returned. If type is a string, GType corresponding to this type name is
-;; looked up and returned. type is a string or and integer. The return value
-;; is an integer equal to GType of type.
-(defun ensure-g-type (type)
-  (etypecase type
-    (integer type)
-    (string (or (%g-type-from-name type)
-                (error "Type ~A is invalid" type)))))
-
-(defun ensure-object-pointer (object)
-  (if (pointerp object)
-      object
-      (etypecase object
-        (g-object (pointer object)))))
-
-(defun parse-g-value-object (gvalue)
-  (get-g-object-for-pointer (g-value-get-object gvalue)))
-
-(defun set-gvalue-object (gvalue value)
-  (g-value-set-object gvalue (if value (pointer value) (null-pointer))))
-
-(defmethod parse-g-value-for-type (gvalue-ptr (type (eql (gtype +g-type-object+)))
-                                              parse-kind)
-  (declare (ignore parse-kind))
-  (parse-g-value-object gvalue-ptr))
-
-(defmethod parse-g-value-for-type (gvalue-ptr (type (eql (gtype +g-type-interface+)))
-                                              parse-kind)
-  (declare (ignore parse-kind))
-  (parse-g-value-object gvalue-ptr))
-
-(defmethod set-gvalue-for-type (gvalue-ptr (type (eql (gtype +g-type-object+)))
-                                           value)
-  (set-gvalue-object gvalue-ptr value))
-
-(defmethod set-gvalue-for-type (gvalue-ptr (type (eql (gtype +g-type-interface+)))
-                                           value)
-  (set-gvalue-object gvalue-ptr value))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObjectClass
@@ -689,7 +658,7 @@
 
 ;; Structure describing a property of a GObject class.
 
-(defstruct g-class-property-definition
+(defstruct param-spec
   name
   type
   readable
@@ -698,19 +667,19 @@
   constructor-only
   owner-type)
 
-(defmethod print-object ((instance g-class-property-definition) stream)
+(defmethod print-object ((instance param-spec) stream)
   (if *print-readably*
       (call-next-method)
       (print-unreadable-object (instance stream)
         (format stream
                 "PROPERTY ~A ~A.~A (flags:~@[~* readable~]~@[~* writable~]~@[~* constructor~]~@[~* constructor-only~])"
-                (gtype-name (g-class-property-definition-type instance))
-                (g-class-property-definition-owner-type instance)
-                (g-class-property-definition-name instance)
-                (g-class-property-definition-readable instance)
-                (g-class-property-definition-writable instance)
-                (g-class-property-definition-constructor instance)
-                (g-class-property-definition-constructor-only instance)))))
+                (gtype-name (param-spec-type instance))
+                (param-spec-owner-type instance)
+                (param-spec-name instance)
+                (param-spec-readable instance)
+                (param-spec-writable instance)
+                (param-spec-constructor instance)
+                (param-spec-constructor-only instance)))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -720,16 +689,16 @@
                             &key assert-readable assert-writable)
   (let* ((property (class-property-info object-type property-name)))
     (when (and assert-readable
-               (not (g-class-property-definition-readable property)))
+               (not (param-spec-readable property)))
       (error 'property-unreadable-error
              :property-name property-name
              :class-name (gtype-name (gtype object-type))))
     (when (and assert-writable
-               (not (g-class-property-definition-writable property)))
+               (not (param-spec-writable property)))
       (error 'property-unwritable-error
              :property-name property-name
              :class-name (gtype-name (gtype object-type))))
-    (g-class-property-definition-type property)))
+    (param-spec-type property)))
 
 ;; Get the definition of a property for the GObject type. Both arguments are of
 ;; type string, e.g. (class-property-info "GtkLabel" "label")
@@ -740,9 +709,11 @@
       (when param-spec
         (parse-g-param-spec param-spec)))))
 
+;; Transform a value of the C type GParamSpec to Lisp type param-spec
+
 (defun parse-g-param-spec (param)
   (let ((flags (foreign-slot-value param 'g-param-spec :flags)))
-    (make-g-class-property-definition
+    (make-param-spec
              :name (foreign-slot-value param 'g-param-spec :name)
              :type (foreign-slot-value param 'g-param-spec :value-type)
              :readable (not (null (member :readable flags)))
@@ -753,44 +724,64 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun g-object-property-type (object-ptr property-name &key assert-readable
-                                                             assert-writable)
-  (class-property-type (g-type-from-instance object-ptr)
-                       property-name
-                       :assert-readable assert-readable
-                       :assert-writable assert-writable))
+(defun compute-new-initargs-for-metaclass (initargs base-class)
+  (if (initargs-have-base-in-superclass initargs base-class)
+      initargs
+      (append (filter-from-initargs initargs :direct-superclasses)
+          (list :direct-superclasses
+            (append (getf initargs :direct-superclasses)
+                (list (find-class base-class)))))))
 
-(defun g-object-call-get-property (object-ptr property-name
-                                              &optional property-type)
-  (restart-case
-      (unless property-type
-        (setf property-type
-              (class-property-type (g-type-from-instance object-ptr)
-                                   property-name
-                                   :assert-readable t)))
-    (return-nil () (return-from g-object-call-get-property nil)))
-  (with-foreign-object (value 'g-value)
-    (g-value-zero value)
-    (g-value-init value property-type)
-    (g-object-get-property object-ptr property-name value)
-    (unwind-protect
-         (parse-g-value value)
-      (g-value-unset value))))
+(defun initargs-have-base-in-superclass (initargs base-class)
+  (let ((d-s (getf initargs :direct-superclasses)))
+    (loop
+       for class in d-s
+       thereis (subtypep class base-class))))
 
-(defun g-object-call-set-property (object-ptr property-name new-value
-                                   &optional property-type)
-  (unless property-type
-    (setf property-type
-          (class-property-type (g-type-from-instance object-ptr)
-                               property-name
-                               :assert-writable t)))
-  (with-foreign-object (value 'g-value)
-    (set-g-value value new-value property-type :zero-g-value t)
-    (unwind-protect
-         (g-object-set-property object-ptr property-name value)
-      (g-value-unset value))))
+(defun filter-from-initargs (initargs removed-key)
+  (loop
+     for (key value) on initargs by #'cddr
+     unless (eq key removed-key)
+     collect key and collect value))
+     
+(defun filter-initargs-by-class (class initargs)
+  (iter (with slots = (class-slots class))
+        (for (arg-name arg-value) on initargs by #'cddr)
+        (for slot = (find arg-name slots :key #'slot-definition-initargs
+                                         :test 'member))
+        (unless (and slot (typep slot 'gobject-effective-slot-definition))
+          (nconcing (list arg-name arg-value)))))
 
 ;;; ----------------------------------------------------------------------------
+
+(defmethod reinitialize-instance :around ((class gobject-class)
+                                          &rest initargs
+                                          &key (direct-superclasses nil d-s-p)
+                                          &allow-other-keys)
+  (declare (ignore direct-superclasses))
+  (if d-s-p
+      (apply #'call-next-method class
+             (compute-new-initargs-for-metaclass initargs 'g-object))
+      (call-next-method)))
+      
+;;; ----------------------------------------------------------------------------
+
+(defmethod initialize-instance :around ((class gobject-class) &rest initargs)
+  (apply #'call-next-method class
+         (compute-new-initargs-for-metaclass initargs 'g-object)))
+
+(defmethod initialize-instance ((instance g-object) &rest initargs
+                                                    &key &allow-other-keys)
+  (let ((filtered-initargs (filter-initargs-by-class (class-of instance)
+                                                     initargs)))
+    (apply #'call-next-method instance filtered-initargs)))
+
+(defmethod initialize-instance :after ((object gobject-class)
+                                       &key &allow-other-keys)
+  (when (gobject-class-direct-g-type-name object)
+    (register-object-type (gobject-class-direct-g-type-name object)
+                          (class-name object))
+    (at-init (object) (initialize-gobject-class-g-type object))))
 
 (defun initialize-gobject-class-g-type (class)
   (if (gobject-class-g-type-initializer class)
@@ -824,48 +815,7 @@
               (gobject-class-direct-g-type-name class)
               (class-name class)))))
 
-(defun filter-from-initargs (initargs removed-key)
-  (loop
-     for (key value) on initargs by #'cddr
-     unless (eq key removed-key)
-     collect key and collect value))
-
-(defun initargs-have-base-in-superclass (initargs base-class)
-  (let ((d-s (getf initargs :direct-superclasses)))
-    (loop
-       for class in d-s
-       thereis (subtypep class base-class))))
-
-(defun compute-new-initargs-for-metaclass (initargs base-class)
-  (if (initargs-have-base-in-superclass initargs base-class)
-      initargs
-      (append (filter-from-initargs initargs :direct-superclasses)
-          (list :direct-superclasses
-            (append (getf initargs :direct-superclasses)
-                (list (find-class base-class)))))))
-
 ;;; ----------------------------------------------------------------------------
-
-(defmethod initialize-instance :around ((class gobject-class) &rest initargs)
-  (apply #'call-next-method class
-         (compute-new-initargs-for-metaclass initargs 'g-object)))
-
-(defmethod reinitialize-instance :around ((class gobject-class)
-                                          &rest initargs
-                                          &key (direct-superclasses nil d-s-p)
-                                          &allow-other-keys)
-  (declare (ignore direct-superclasses))
-  (if d-s-p
-      (apply #'call-next-method class
-             (compute-new-initargs-for-metaclass initargs 'g-object))
-      (call-next-method)))
-
-(defmethod initialize-instance :after ((object gobject-class)
-                                       &key &allow-other-keys)
-  (when (gobject-class-direct-g-type-name object)
-    (register-object-type (gobject-class-direct-g-type-name object)
-                          (class-name object))
-    (at-init (object) (initialize-gobject-class-g-type object))))
 
 (defmethod finalize-inheritance :after ((class gobject-class))
   (iter (for superclass in (class-direct-superclasses class))
@@ -960,7 +910,9 @@
                               return (slot-definition-allocation direct-slot)))
             (property-name (loop
                               for direct-slot in direct-slots
-                              when (and (typep direct-slot 'gobject-property-direct-slot-definition) (gobject-property-direct-slot-definition-g-property-name direct-slot))
+                              when (and (typep direct-slot
+                                               'gobject-property-direct-slot-definition)
+                                        (gobject-property-direct-slot-definition-g-property-name direct-slot))
                               return (gobject-property-direct-slot-definition-g-property-name direct-slot)))
             (property-type (loop
                               for direct-slot in direct-slots
@@ -968,11 +920,14 @@
                               return (gobject-direct-slot-definition-g-property-type direct-slot)))
             (property-getter (loop
                               for direct-slot in direct-slots
-                              when (and (typep direct-slot 'gobject-fn-direct-slot-definition) (gobject-fn-direct-slot-definition-g-getter-name direct-slot))
+                              when (and (typep direct-slot
+                                               'gobject-fn-direct-slot-definition)
+                                        (gobject-fn-direct-slot-definition-g-getter-name direct-slot))
                               return (gobject-fn-direct-slot-definition-g-getter-name direct-slot)))
             (property-setter (loop
                               for direct-slot in direct-slots
-                              when (and (typep direct-slot 'gobject-fn-direct-slot-definition) (gobject-fn-direct-slot-definition-g-setter-name direct-slot))
+                              when (and (typep direct-slot 'gobject-fn-direct-slot-definition)
+                                        (gobject-fn-direct-slot-definition-g-setter-name direct-slot))
                               return (gobject-fn-direct-slot-definition-g-setter-name direct-slot))))
         (setf (gobject-effective-slot-definition-g-property-type effective-slot)
               (gobject-effective-slot-definition-g-property-type effective-slot))
@@ -1008,28 +963,19 @@
                              (gobject-fn-effective-slot-definition-g-setter-fn effective-slot)
                              (and property-setter
                                   (if (stringp property-setter)
-                                      (compile nil (if (foreign-symbol-pointer property-setter)
-                               `(lambda (object new-value)
-                              (foreign-funcall ,property-setter
-                                       g-object object
-                                       ,property-type new-value
-                                       :void))
-                               `(lambda (object)
-                              (declare (ignore object))
-                              (error "Property setter ~A is not avaiable" ,property-setter))))
-                                      property-setter)))))))
+                                      (compile nil
+                                               (if (foreign-symbol-pointer property-setter)
+                                                   `(lambda (object new-value)
+                                                      (foreign-funcall ,property-setter
+                                                                       g-object object
+                                                                       ,property-type new-value
+                                                                       :void))
+                                                   `(lambda (object)
+                                                      (declare (ignore object))
+                                                      (error "Property setter ~A is not avaiable"
+                                                             ,property-setter))))
+                                                             property-setter)))))))
     effective-slot))
-
-(defun filter-initargs-by-class (class initargs)
-  (iter (with slots = (class-slots class))
-        (for (arg-name arg-value) on initargs by #'cddr)
-        (for slot = (find arg-name slots :key #'slot-definition-initargs :test 'member))
-        (unless (and slot (typep slot 'gobject-effective-slot-definition))
-          (nconcing (list arg-name arg-value)))))
-
-(defmethod initialize-instance ((instance g-object) &rest initargs &key &allow-other-keys)
-  (let ((filtered-initargs (filter-initargs-by-class (class-of instance) initargs)))
-    (apply #'call-next-method instance filtered-initargs)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1047,14 +993,14 @@
         (let* ((default-initargs (iter (for (arg value) in (class-default-initargs class))
                                        (nconcing (list arg value))))
                (effective-initargs (append initargs default-initargs))
-               (pointer (create-gobject-from-class-and-initargs class effective-initargs)))
+               (pointer (create-gobject-from-class class effective-initargs)))
           (apply #'call-next-method class
                  :pointer
                  pointer effective-initargs)))))
 
 ;;; ----------------------------------------------------------------------------
 
-(defun create-gobject-from-class-and-initargs (class initargs)
+(defun create-gobject-from-class (class initargs)
   (when (gobject-class-interface-p class)
     (error "Trying to create instance of GInterface '~A' (class '~A')"
            (gobject-class-g-type-name class)
@@ -1125,6 +1071,45 @@
                                                    'g-parameter
                                                    :value)))))))
                                                    
+;;; ----------------------------------------------------------------------------
+
+(defun g-object-property-type (object-ptr property-name &key assert-readable
+                                                             assert-writable)
+  (class-property-type (g-type-from-instance object-ptr)
+                       property-name
+                       :assert-readable assert-readable
+                       :assert-writable assert-writable))
+
+(defun g-object-call-get-property (object-ptr property-name
+                                              &optional property-type)
+  (restart-case
+      (unless property-type
+        (setf property-type
+              (class-property-type (g-type-from-instance object-ptr)
+                                   property-name
+                                   :assert-readable t)))
+      (return-nil () (return-from g-object-call-get-property nil)))
+  (with-foreign-object (value 'g-value)
+    (g-value-zero value)
+    (g-value-init value property-type)
+    (g-object-get-property object-ptr property-name value)
+    (unwind-protect
+         (parse-g-value value)
+      (g-value-unset value))))
+
+(defun g-object-call-set-property (object-ptr property-name new-value
+                                   &optional property-type)
+  (unless property-type
+    (setf property-type
+          (class-property-type (g-type-from-instance object-ptr)
+                               property-name
+                               :assert-writable t)))
+  (with-foreign-object (value 'g-value)
+    (set-g-value value new-value property-type :zero-g-value t)
+    (unwind-protect
+         (g-object-set-property object-ptr property-name value)
+      (g-value-unset value))))
+
 ;;; ----------------------------------------------------------------------------
 
 (defmethod slot-boundp-using-class ((class gobject-class) object

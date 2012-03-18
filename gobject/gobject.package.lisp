@@ -46,10 +46,11 @@
     #:gtype-from-name
     
     #:create-fn-ref 
-    #:g-class-property-definition-name
-    #:g-class-property-definition-readable
-    #:g-class-property-definition-type
-    #:g-class-property-definition-writable
+    
+    #:param-spec-name
+    #:param-spec-readable
+    #:param-spec-type
+    #:param-spec-writable
     
     #:boxed-related-symbols
     #:copy-boxed-slots-to-foreign

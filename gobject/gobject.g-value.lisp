@@ -169,6 +169,18 @@
   (declare (ignore parse-kind))
   (parse-g-param-spec (g-value-get-param gvalue-ptr)))
 
+(defmethod parse-g-value-for-type (gvalue-ptr
+                                   (type (eql (gtype +g-type-object+)))
+                                   parse-kind)
+  (declare (ignore parse-kind))
+  (g-value-get-object gvalue-ptr))
+
+(defmethod parse-g-value-for-type (gvalue-ptr
+                                   (type (eql (gtype +g-type-interface+)))
+                                   parse-kind)
+  (declare (ignore parse-kind))
+  (g-value-get-object gvalue-ptr))
+
 ;;; ----------------------------------------------------------------------------
 ;;; parse-g-value (gvalue parse-kind)
 ;;;
@@ -237,6 +249,16 @@
   (declare (ignore gvalue-ptr value))
   (error "Setting of GParam is not implemented"))
 
+(defmethod set-gvalue-for-type (gvalue-ptr
+                                (type (eql (gtype +g-type-object+)))
+                                value)
+  (g-value-set-object gvalue-ptr value))
+
+(defmethod set-gvalue-for-type (gvalue-ptr
+                                (type (eql (gtype +g-type-interface+)))
+                                value)
+  (g-value-set-object gvalue value))
+
 ;;; ----------------------------------------------------------------------------
 ;;; set-g-value (gvalue value type zero-g-value unset-g-value g-value-init)
 ;;;
@@ -259,7 +281,7 @@
 ;;;
 ;;; zero-g-value :
 ;;;     a boolean specifying whether GValue should be zero-initialized before
-;;;     assigning. See  g-value-zero.
+;;;     assigning. See g-value-zero.
 ;;;
 ;;; unset-g-value :
 ;;;     a boolean specifying whether GValue should be 'unset' before assigning.
