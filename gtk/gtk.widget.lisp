@@ -6611,7 +6611,7 @@
   (let ((property-info (gtk-widget-style-property-info
                                                    (g-type-from-instance widget)
                                                    property-name)))
-    (g-class-property-definition-type property-info)))
+    (param-spec-type property-info)))
 
 (defun gtk-widget-style-property-value (widget property-name
                                                &optional property-type)

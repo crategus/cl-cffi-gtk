@@ -118,7 +118,10 @@
       (g-type-class-unref class))))
 
 (defun child-property-name (type-name property-name package-name)
-  (intern (format nil "~A-CHILD-~A" (symbol-name (registered-object-type-by-name type-name)) (string-upcase property-name)) (find-package package-name)))
+  (intern (format nil "~A-CHILD-~A"
+                  (symbol-name (registered-object-type-by-name type-name))
+                  (string-upcase property-name))
+          (find-package package-name)))
 
 (defun generate-child-properties (&optional (type-root "GtkContainer") (package-name "GTK"))
   (setf type-root (gtype type-root))
@@ -127,12 +130,15 @@
              collect
                `(define-child-property
                     ,(gtype-name type-root)
-                    ,(child-property-name (gtype-name type-root) (g-class-property-definition-name property) package-name)
-                  ,(g-class-property-definition-name property)
-                  ,(gtype-name (g-class-property-definition-type property))
-                  ,(g-class-property-definition-readable property)
-                  ,(g-class-property-definition-writable property)
+                    ,(child-property-name (gtype-name type-root)
+                                          (param-spec-name property)
+                                          package-name)
+                  ,(param-spec-name property)
+                  ,(gtype-name (param-spec-type property))
+                  ,(param-spec-readable property)
+                  ,(param-spec-writable property)
                   t))
           (loop
              for subclass in (g-type-children type-root)
            appending (generate-child-properties subclass package-name))))
+
