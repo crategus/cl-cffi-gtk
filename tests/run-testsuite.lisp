@@ -54,6 +54,7 @@
 (load "rtest-gdk-region.lisp")
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
+(load "rtest-gdk-display-manager.lisp")
 
 (in-package :gdk-tests)
 (run-all-tests :gdk-tests)
