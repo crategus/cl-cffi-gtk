@@ -62,7 +62,7 @@
           "activity-step" "activity-blocks" "discrete-blocks"))
       #'string<)
      (sort
-      (mapcar #'g-class-property-definition-name
+      (mapcar #'param-spec-name
               (g-object-class-list-properties (gtype "GtkProgressBar")))
       #'string<))
     
@@ -80,7 +80,7 @@
           "min-horizontal-bar-width"))
       #'string<)
      (sort
-      (mapcar #'g-class-property-definition-name
+      (mapcar #'param-spec-name
               (gtk-widget-class-list-style-properties
                (gtype "GtkProgressBar")))
       #'string<))

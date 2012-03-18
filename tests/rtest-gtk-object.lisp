@@ -113,12 +113,13 @@
     ;; Get the names of the class properties.
     (unordered-equal
         '("user-data")
-       (mapcar #'g-class-property-definition-name
+       (mapcar #'param-spec-name
                (g-object-class-list-properties (gtype "GtkObject"))))
     
     ;; Get the names of the style properties.
     (unordered-equal
         '()
-        (mapcar #'g-class-property-definition-name
+        (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkWidget"))))
   )
+

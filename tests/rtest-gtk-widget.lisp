@@ -51,7 +51,7 @@
         "tooltip-text" "window" "double-buffered"))
       #'string< )
      (sort
-       (mapcar #'g-class-property-definition-name
+       (mapcar #'param-spec-name
                (g-object-class-list-properties (gtype "GtkWidget")))
        #'string<))
        
@@ -67,7 +67,7 @@
         "focus-line-width" "focus-padding" "new-tooltip-style"))
       #'string< )
      (sort
-      (mapcar #'g-class-property-definition-name
+      (mapcar #'param-spec-name
               (gtk-widget-class-list-style-properties (gtype "GtkWidget")))
       #'string<))
     ))

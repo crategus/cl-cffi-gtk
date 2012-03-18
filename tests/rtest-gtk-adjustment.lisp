@@ -83,13 +83,13 @@
     (assert-equal
         '("user-data" "value" "lower" "upper" "step-increment" "page-increment"
          "page-size")
-       (mapcar #'g-class-property-definition-name
+       (mapcar #'param-spec-name
                (g-object-class-list-properties (gtype "GtkAdjustment"))))
     
     ;; Get the names of the style properties.
     (assert-equal
         '()
-        (mapcar #'g-class-property-definition-name
+        (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkAdjustment"))))
                 
     (let ((adj (make-instance 'gtk-adjustment)))

@@ -88,7 +88,7 @@
        "tooltip-markup" "tooltip-text" "window" "double-buffered"
        "border-width" "resize-mode" "child" "n-rows" "n-columns"
        "column-spacing" "row-spacing" "homogeneous")
-     (mapcar #'g-class-property-definition-name
+     (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkTable"))))
     
   ;; Get the names of the style properties.
@@ -99,7 +99,7 @@
         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
         "separator-height" "separator-width" "visited-link-color"
         "wide-separators")
-      (mapcar #'g-class-property-definition-name
+      (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkTable")))))
 
 (define-test gtk-table-functions
