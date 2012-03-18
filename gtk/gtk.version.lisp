@@ -319,6 +319,10 @@
           (gtk-get-major-version)
           (gtk-get-minor-version)
           (gtk-get-micro-version))
+  (format t "GLIB version: ~a.~a.~a~%"
+          *glib-major-version*
+          *glib-minor-version*
+          *glib-micro-version*)
   (format t "Machine type: ~a~%" (machine-type))
   (format t "Machine version: ~a~%" (machine-version))
   (format t "Software type: ~a~%" (software-type))
