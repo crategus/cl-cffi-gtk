@@ -457,18 +457,29 @@
                                                             :instance-size)
                                         (callback c-instance-init) nil))
        (add-interfaces ,name))
+     (defmethod initialize-instance :before ((object ,class) &key pointer)
+       (log-for :subclass
+                "(initialize-instance ~A :pointer ~A) :before~%"
+                object pointer)
+       (unless (or pointer
+                   (and (slot-boundp object 'pointer)
+                        (pointer object)))
+         (log-for :subclass "calling g-object-constructor~%")
+         (setf (pointer object)
+               (call-gobject-constructor ,name nil nil)
+               (g-object-has-reference object) t)))
      (progn
        ,@(iter (for (prop-name prop-type prop-accessor prop-reader prop-writer)
                     in properties)
                (declare (ignorable prop-type))
                (when prop-reader
                  (collect `(defun ,prop-accessor (object)
-                             (g-object-call-get-property object ,prop-name))))
+                             (get-gobject-property object ,prop-name))))
                (when prop-writer
                  (collect `(defun (setf ,prop-accessor) (new-value object)
-                             (g-object-call-set-property object
-                                                         ,prop-name
-                                                         new-value))))))
+                             (set-gobject-property object
+                                                   ,prop-name
+                                                   new-value))))))
      ,name))
 
-;;; ----------------------------------------------------------------------------
+;;; --- End of file gobject.foreign-gobject-subclassing.lisp -------------------

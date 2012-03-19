@@ -257,7 +257,7 @@
 (defmethod set-gvalue-for-type (gvalue-ptr
                                 (type (eql (gtype +g-type-interface+)))
                                 value)
-  (g-value-set-object gvalue value))
+  (g-value-set-object gvalue-ptr value))
 
 ;;; ----------------------------------------------------------------------------
 ;;; set-g-value (gvalue value type zero-g-value unset-g-value g-value-init)
