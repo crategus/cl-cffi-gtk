@@ -28,7 +28,7 @@
 (defsystem :cl-gtk-gdk
   :name :cl-gtk-gdk
   :version "0.0.0"
-  :author "Dr. Dieter Kaiser"
+  :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components ((:file "gdk.package")
@@ -51,7 +51,7 @@
                (:file "gdk.drawable")         ; Drawing Primitives
                (:file "gdk.pixmap")           ; Offscreen drawables
                (:file "gdk.display")          ; Controls the keyboard/mouse
-               (:file "gdk.manager")          ; Maintains a list GdkDisplays
+               (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
                (:file "gdk.pixbuf-structure") ; Implementation of PixBuf
                (:file "gdk.pixbuf-file")      ; Loading and saving PixBuf
                (:file "gdk.pixbuf")           ; Gdk functions for PixBuf
@@ -70,3 +70,5 @@
                :cl-gtk-glib
                :cffi
                :cl-gtk-pango))
+
+;;; --- End of file cl-gtk-gdk.asd ---------------------------------------------

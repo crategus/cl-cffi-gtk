@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gdk.manager.lisp
+;;; gdk.display-manager.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -96,16 +96,19 @@
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
-
+   
 (define-g-object-class "GdkDisplayManager" gdk-display-manager
-  (:type-initializer "gdk_display_manager_get_type")
-  ((default-display gdk-display-manager-default-display
-                    "default-display" "GdkDisplay" t t)
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gdk_display_manager_get_type")
+  ((default-display
+    gdk-display-manager-default-display
+    "default-display" "GdkDisplay" t t)
    (:cffi displays
           gdk-display-manager-displays
           (g-slist (g-object gdk-display) :free-from-foreign t)
-          "gdk_display_manager_list_displays"
-          nil)))
+          "gdk_display_manager_list_displays" nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_get ()
@@ -138,12 +141,15 @@
 ;;;     a GdkDisplayManager
 ;;;
 ;;; Returns :
-;;;     a GdkDisplay, or NULL if there is no default display.
+;;;     a GdkDisplay, or NULL if there is no default display
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
+(defun gdk-display-manager-get-default-display (display-manager)
+  (gdk-display-manager-default-display display-manager))
+
+(export 'gdk-display-manager-get-default-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_set_default_display ()
@@ -163,7 +169,10 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
+(defun gdk-display-manager-set-default-display (display-manager display)
+  (setf (gdk-display-manager-default-display display-manager) display))
+
+(export 'gdk-display-manager-set-default-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_list_displays ()
@@ -177,31 +186,38 @@
 ;;;     a GdkDisplayManager
 ;;;
 ;;; Returns :
-;;;     a newly allocated GSList of GdkDisplay objects. Free this list with
+;;;     A newly allocated GSList of GdkDisplay objects. Free this list with
 ;;;     g_slist_free() when you are done with it.
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
+(defun gdk-display-manager-list-displays (display-manager)
+  (gdk-display-manager-displays display-manager))
+
+(export 'gdk-display-manager-list-displays)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_core_pointer ()
 ;;;
 ;;; GdkDevice * gdk_display_get_core_pointer (GdkDisplay *display)
 ;;;
-;;; Returns the core pointer device for the given display
+;;; Returns the core pointer device for the given display.
 ;;;
 ;;; display :
 ;;;     a GdkDisplay
 ;;;
 ;;; Returns :
 ;;;     the core pointer device; this is owned by the display and should
-;;;     not be freed.
+;;;     not be freed
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
+(defcfun ("gdk_display_get_core_pointer" gdk-display-get-core-pointer)
+    (g-object gdk-device)
+  (display (g-object gdk-display)))
 
-;;; --- End of file gdk.manager.lisp -------------------------------------------
+(export 'gdk-display-get-core-pointer)
+
+;;; --- End of file gdk.display-manager.lisp -----------------------------------
