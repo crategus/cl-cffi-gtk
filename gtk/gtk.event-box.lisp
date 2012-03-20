@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; GtkEventBox
 ;;; 
 ;;; A widget used to catch events for widgets which do not have their own window
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;  GtkEventBox
@@ -54,6 +54,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkEventBox implements AtkImplementorIface and GtkBuildable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "above-child"              gboolean              : Read / Write
@@ -103,9 +104,11 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_event_box_get_type")
-  ((above-child gtk-event-box-above-child
+  ((above-child
+    gtk-event-box-above-child
     "above-child" "gboolean" t t)
-   (visible-window gtk-event-box-visible-window
+   (visible-window
+    gtk-event-box-visible-window
     "visible-window" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -116,7 +119,7 @@
 ;;; Creates a new GtkEventBox.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkEventBox
+;;;     a new GtkEventBox
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-event-box-new ()
@@ -139,10 +142,10 @@
 ;;; The default is to keep the window below the child.
 ;;; 
 ;;; event_box :
-;;; 	a GtkEventBox
+;;;     a GtkEventBox
 ;;; 
 ;;; above_child :
-;;; 	TRUE if the event box window is above its child
+;;;     TRUE if the event box window is above its child
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -161,10 +164,10 @@
 ;;; child. See gtk_event_box_set_above_child() for details.
 ;;; 
 ;;; event_box :
-;;; 	a GtkEventBox
+;;;     a GtkEventBox
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the event box window is above the window of its child
+;;;     TRUE if the event box window is above the window of its child
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -212,10 +215,10 @@
 ;;; not just at the same place on the screen.
 ;;; 
 ;;; event_box :
-;;; 	a GtkEventBox
+;;;     a GtkEventBox
 ;;; 
 ;;; visible_window :
-;;; 	TRUE to make the event box have a visible window
+;;;     TRUE to make the event box have a visible window
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -234,10 +237,10 @@
 ;;; See gtk_event_box_set_visible_window() for details.
 ;;; 
 ;;; event_box :
-;;; 	a GtkEventBox
+;;;     a GtkEventBox
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the event box window is visible
+;;;     TRUE if the event box window is visible
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

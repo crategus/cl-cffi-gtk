@@ -672,35 +672,35 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_window_get_type")
   ((accept-focus
-     gtk-window-accept-focus
-     "accept-focus" "gboolean" t t)
+    gtk-window-accept-focus
+    "accept-focus" "gboolean" t t)
    (allow-grow
-     gtk-window-allow-grow
-     "allow-grow" "gboolean" t t)
+    gtk-window-allow-grow
+    "allow-grow" "gboolean" t t)
    (allow-shrink
-     gtk-window-allow-shrink
-     "allow-shrink" "gboolean" t t)
+    gtk-window-allow-shrink
+    "allow-shrink" "gboolean" t t)
    (decorated
-     gtk-window-decorated
-     "decorated" "gboolean" t t)
+    gtk-window-decorated
+    "decorated" "gboolean" t t)
    (default-height
-     gtk-window-default-height
-     "default-height" "gint" t t)
+    gtk-window-default-height
+    "default-height" "gint" t t)
    (default-width
-     gtk-window-default-width
-     "default-width" "gint" t t)
+    gtk-window-default-width
+    "default-width" "gint" t t)
    (deletable
-     gtk-window-deletable
-     "deletable" "gboolean" t t)
+    gtk-window-deletable
+    "deletable" "gboolean" t t)
    (destroy-with-parent
-     gtk-window-destroy-with-parent
-     "destroy-with-parent" "gboolean" t t)
+    gtk-window-destroy-with-parent
+    "destroy-with-parent" "gboolean" t t)
    (focus-on-map
-     gtk-window-focus-on-map
-     "focus-on-map" "gboolean" t t)
+    gtk-window-focus-on-map
+    "focus-on-map" "gboolean" t t)
    (gravity
-     gtk-window-gravity
-     "gravity" "GdkGravity" t t)
+    gtk-window-gravity
+    "gravity" "GdkGravity" t t)
    (has-resize-grip
     gtk-window-has-resize-grip
     "resize-grip" "gboolean" t t)
@@ -708,65 +708,65 @@
      gtk-window-has-toplevel-focus
      "has-toplevel-focus" "gboolean" t nil)
    (icon
-     gtk-window-icon
-     "icon" "GdkPixbuf" t t)
+    gtk-window-icon
+    "icon" "GdkPixbuf" t t)
    (icon-name
-     gtk-window-icon-name
-     "icon-name" "gchararray" t t)
+    gtk-window-icon-name
+    "icon-name" "gchararray" t t)
    (is-active
-     gtk-window-is-active
-     "is-active" "gboolean" t nil)
+    gtk-window-is-active
+    "is-active" "gboolean" t nil)
    (mnemonics-visible
-     gtk-window-mnemonics-visible
-     "mnemonis-visible" "gboolean" t t)
+    gtk-window-mnemonics-visible
+    "mnemonis-visible" "gboolean" t t)
    (modal
-     gtk-window-modal
-     "modal" "gboolean" t t)
+    gtk-window-modal
+    "modal" "gboolean" t t)
    (opacity
-     gtk-window-opacity
-     "opacity" "gdouble" t t)
+    gtk-window-opacity
+    "opacity" "gdouble" t t)
    (resizable
-     gtk-window-resizable
-     "resizable" "gboolean" t t)
+    gtk-window-resizable
+    "resizable" "gboolean" t t)
    (resize-grip-visible
     gtk-window-resize-grip-visible
     "resize-grip-visible" "gboolean" t nil)
    (role
-     gtk-window-role
-     "role" "gchararray" t t)
+    gtk-window-role
+    "role" "gchararray" t t)
    (screen
-     gtk-window-screen
-     "screen" "GdkScreen" t t)
+    gtk-window-screen
+    "screen" "GdkScreen" t t)
    (skip-pager-hint
-     gtk-window-skip-pager-hint
-     "skip-pager-hint" "gboolean" t t)
+    gtk-window-skip-pager-hint
+    "skip-pager-hint" "gboolean" t t)
    (skip-taskbar-hint
-     gtk-window-skip-taskbar-hint
-     "skip-taskbar-hint" "gboolean" t t)
+    gtk-window-skip-taskbar-hint
+    "skip-taskbar-hint" "gboolean" t t)
    (startup-id
-     gtk-window-startup-id
-     "startup-id" "gchararray" nil t)
+    gtk-window-startup-id
+    "startup-id" "gchararray" nil t)
    (title
-     gtk-window-title
-     "title" :string  t t)
+    gtk-window-title
+    "title" :string  t t)
    (transient-for
-     gtk-window-transient-for
-     "transient-for" "GtkWindow" t t)
+    gtk-window-transient-for
+    "transient-for" "GtkWindow" t t)
    (type
-     gtk-window-type
-     "type" "GtkWindowType" t nil)
+    gtk-window-type
+    "type" "GtkWindowType" t nil)
    (type-hint
-     gtk-window-type-hint
-     "type-hint" "GdkWindowTypeHint" t t)
+    gtk-window-type-hint
+    "type-hint" "GdkWindowTypeHint" t t)
    (ubuntu-no-proxy
     gtk-window-ubuntu-no-proxy
     "ubuntu-no-proxy" "gboolean" t nil)
    (urgency-hint
-     gtk-window-urgency-hint
-     "urgency-hint" "gboolean" t t)
+    gtk-window-urgency-hint
+    "urgency-hint" "gboolean" t t)
    (window-position
-     gtk-window-window-position
-     "window-position" "GtkWindowPosition" t t)
+    gtk-window-window-position
+    "window-position" "GtkWindowPosition" t t)
    (:cffi focus
           gtk-window-focus (g-object gtk-widget)
           "gtk_window_get_focus" "gtk_window_set_focus")
