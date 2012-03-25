@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -653,25 +653,51 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_text_view_get_type")
-  ((accepts-tab gtk-text-view-accepts-tab "accepts-tab" "gboolean" t t)
-   (buffer gtk-text-view-buffer "buffer" "GtkTextBuffer" t t)
-   (cursor-visible text-view-cursor-visible "cursor-visible" "gboolean" t t)
-   (editable gtk-text-view-editable "editable" "gboolean" t t)
-   (im-module gtk-text-view-im-module "im-module" "gchararray" t t)
-   (indent gtk-text-view-indent "indent" "gint" t t)
-   (justification gtk-text-view-justification
-         "justification" "GtkJustification" t t)
-   (left-margin gtk-text-view-left-margin "left-margin" "gint" t t)
-   (overwrite gtk-text-view-overwrite "overwrite" "gboolean" t t)
-   (pixels-above-lines gtk-text-view-pixels-above-lines
-         "pixels-above-lines" "gint" t t)
-   (pixels-below-lines gtk-text-view-pixels-below-lines
-         "pixels-below-lines" "gint" t t)
-   (pixels-inside-wrap gtk-text-view-pixels-inside-wrap
-         "pixels-inside-wrap" "gint" t t)
-   (right-margin gtk-text-view-right-margin "right-margin" "gint" t t)
-   (tabs gtk-text-view-tabs "tabs" "PangoTabArray" t t)
-   (wrap-mode gtk-text-view-wrap-mode "wrap-mode" "GtkWrapMode" t t)))
+  ((accepts-tab
+    gtk-text-view-accepts-tab
+    "accepts-tab" "gboolean" t t)
+   (buffer
+    gtk-text-view-buffer
+    "buffer" "GtkTextBuffer" t t)
+   (cursor-visible
+   gtk-text-view-cursor-visible
+   "cursor-visible" "gboolean" t t)
+   (editable
+    gtk-text-view-editable
+    "editable" "gboolean" t t)
+   (im-module
+    gtk-text-view-im-module
+    "im-module" "gchararray" t t)
+   (indent
+    gtk-text-view-indent
+    "indent" "gint" t t)
+   (justification
+    gtk-text-view-justification
+    "justification" "GtkJustification" t t)
+   (left-margin
+    gtk-text-view-left-margin
+    "left-margin" "gint" t t)
+   (overwrite
+    gtk-text-view-overwrite
+    "overwrite" "gboolean" t t)
+   (pixels-above-lines
+    gtk-text-view-pixels-above-lines
+    "pixels-above-lines" "gint" t t)
+   (pixels-below-lines
+    gtk-text-view-pixels-below-lines
+    "pixels-below-lines" "gint" t t)
+   (pixels-inside-wrap
+    gtk-text-view-pixels-inside-wrap
+    "pixels-inside-wrap" "gint" t t)
+   (right-margin
+    gtk-text-view-right-margin
+    "right-margin" "gint" t t)
+   (tabs
+    gtk-text-view-tabs
+    "tabs" "PangoTabArray" t t)
+   (wrap-mode
+    gtk-text-view-wrap-mode
+    "wrap-mode" "GtkWrapMode" t t)))
                          
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTextWindowType

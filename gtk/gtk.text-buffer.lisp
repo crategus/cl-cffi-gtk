@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -564,19 +564,26 @@
     :export t
     :interfaces nil
     :type-initializer "gtk_text_buffer_get_type")
-  ((copy-target-list gtk-text-buffer-copy-target-list
+  ((copy-target-list
+    gtk-text-buffer-copy-target-list
     "copy-target-list" "GtkTargetList" t nil)
-   (cursor-position gtk-text-buffer-cursor-position
+   (cursor-position
+    gtk-text-buffer-cursor-position
     "cursor-position" "gint" t nil)
-   (has-selection gtk-text-buffer-has-selection
+   (has-selection
+    gtk-text-buffer-has-selection
     "has-selection" "gboolean" t nil)
-   (paste-target-list gtk-text-buffer-paste-target-list
+   (paste-target-list
+    gtk-text-buffer-paste-target-list
     "paste-target-list" "GtkTargetList" t nil)
-   (tag-table gtk-text-buffer-tag-table
+   (tag-table
+    gtk-text-buffer-tag-table
     "tag-table" "GtkTextTagTable" t nil)
-   (text gtk-text-buffer-text
+   (text
+    gtk-text-buffer-text
     "text" "gchararray" t t)
-   (:cffi modified gtk-text-buffer-modified :boolean
+   (:cffi modified
+          gtk-text-buffer-modified :boolean
           "gtk_text_buffer_get_modified" "gtk_text_buffer_set_modified")))
 
 ;;; ----------------------------------------------------------------------------
@@ -587,7 +594,7 @@
 ;;; Creates a new text buffer.
 ;;; 
 ;;; table :
-;;;     a tag table, or NULL to create a new one. [allow-none]
+;;;     a tag table, or NULL to create a new one
 ;;; 
 ;;; Returns :
 ;;;     a new text buffer
