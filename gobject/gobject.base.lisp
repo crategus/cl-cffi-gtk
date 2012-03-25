@@ -2520,7 +2520,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_get_data" g-object-get-data) :pointer
-  (object :pointer)
+  (object g-object)
   (key :string))
 
 (export 'g-object-get-data)
@@ -2549,7 +2549,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_data" g-object-set-data) :void
-  (object :pointer)
+  (object g-object)
   (key :string)
   (new-value :pointer))
 
