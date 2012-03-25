@@ -273,13 +273,13 @@
 ;;; Creates a new GtkBox.
 ;;; 
 ;;; orientation :
-;;;     the box's orientation.
+;;;     the box's orientation
 ;;; 
 ;;; spacing :
-;;;     the number of pixels to place by default between children.
+;;;     the number of pixels to place by default between children
 ;;; 
 ;;; Returns :
-;;;     a new GtkBox.
+;;;     a new GtkBox
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -305,7 +305,7 @@
 ;;; expand :
 ;;;     TRUE if the new child is to be given extra space allocated to box. The
 ;;;     extra space will be divided evenly between all children that use this
-;;;     option
+;;;     option.
 ;;; 
 ;;; fill :
 ;;;     TRUE if space given to child by the expand option is actually allocated
@@ -315,10 +315,10 @@
 ;;;     option affects the other dimension.
 ;;; 
 ;;; padding :
-;;;     extra space in pixels to put between this child and its neighbors, over
+;;;     Extra space in pixels to put between this child and its neighbors, over
 ;;;     and above the global amount specified by "spacing" property. If child is
 ;;;     a widget at one of the reference ends of box, then padding pixels are
-;;;     also put between child and the reference edge of box
+;;;     also put between child and the reference edge of box.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_box_pack_start" %gtk-box-pack-start) :void
@@ -365,7 +365,7 @@
 ;;;     option affects the other dimension.
 ;;; 
 ;;; padding :
-;;;     extra space in pixels to put between this child and its neighbors, over
+;;;     Extra space in pixels to put between this child and its neighbors, over
 ;;;     and above the global amount specified by "spacing" property. If child is
 ;;;     a widget at one of the reference ends of box, then padding pixels are
 ;;;     also put between child and the reference edge of box.
@@ -395,14 +395,16 @@
 ;;;     a GtkBox
 ;;; 
 ;;; Returns :
-;;;     TRUE if the box is homogeneous.
+;;;     TRUE if the box is homogeneous
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-box-get-homogeneous))
 
 (defun gtk-box-get-homogeneous (box)
   (gtk-box-homogeneous box))
 
 (export 'gtk-box-get-homogeneous)
-  
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_set_homogeneous ()
 ;;; 
@@ -418,6 +420,8 @@
 ;;;     a boolean value, TRUE to create equal allotments, FALSE for variable
 ;;;     allotments
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-box-set-homogeneous))
 
 (defun gtk-box-set-homogeneous (box homogeneous)
   (setf (gtk-box-homogeneous box) homogeneous))
@@ -438,6 +442,8 @@
 ;;;     spacing between children
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-box-get-spacing))
+
 (defun gtk-box-get-spacing (box)
   (gtk-box-spacing box))
 
@@ -457,6 +463,8 @@
 ;;; spacing :
 ;;;     the number of pixels to put between children
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-box-set-spacing))
 
 (defun gtk-box-set-spacing (box spacing)
   (setf (gtk-box-spacing box) spacing))
@@ -515,17 +523,25 @@
 ;;;     the GtkWidget of the child to query
 ;;; 
 ;;; expand :
-;;;     pointer to return location for "expand" child property.
+;;;     pointer to return location for "expand" child property
 ;;; 
 ;;; fill :
-;;;     pointer to return location for "fill" child property.
+;;;     pointer to return location for "fill" child property
 ;;; 
 ;;; padding :
-;;;     pointer to return location for "padding" child property.
+;;;     pointer to return location for "padding" child property
 ;;; 
 ;;; pack_type :
-;;;     pointer to return location for "pack-type" child property.
+;;;     pointer to return location for "pack-type" child property
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-box-query-child-packing (box child)
+  (values (gtk-box-child-expand box child)
+          (gtk-box-child-fill box child)
+          (gtk-box-child-padding box child)
+          (gtk-box-child-pack-type box child)))
+
+(export 'gtk-box-query-child-packing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_set_child_packing ()
@@ -558,6 +574,13 @@
 ;;;     the new value of the "pack-type" child property
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-box-set-child-packing (box child expand fill padding pack-type)
+  (setf (gtk-box-child-expand box child) expand)
+  (setf (gtk-box-child-fill box child) fill)
+  (setf (gtk-box-child-padding box child) padding)
+  (setf (gtk-box-child-pack-type box child) pack-type))
+
+(export 'gtk-box-set-child-packing)
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -664,17 +687,19 @@
 ;;; Creates a new GtkHBox.
 ;;; 
 ;;; homogeneous :
-;;;     TRUE if all children are to be given equal space allotments.
+;;;     TRUE if all children are to be given equal space allotments
 ;;; 
 ;;; spacing :
-;;;     the number of pixels to place by default between children.
+;;;     the number of pixels to place by default between children
 ;;; 
 ;;; Returns :
-;;;     a new GtkHBox.
+;;;     a new GtkHBox
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-hbox-new (homogeneous spacing)
-  (make-instance 'gtk-hbox :homogeneous homogeneous :spacing spacing))
+  (make-instance 'gtk-hbox
+                 :homogeneous homogeneous
+                 :spacing spacing))
 
 (export 'gtk-hbox-new)
 
@@ -787,13 +812,13 @@
 ;;; Creates a new GtkVBox.
 ;;; 
 ;;; homogeneous :
-;;;     TRUE if all children are to be given equal space allotments.
+;;;     TRUE if all children are to be given equal space allotments
 ;;; 
 ;;; spacing :
-;;;     the number of pixels to place by default between children.
+;;;     the number of pixels to place by default between children
 ;;; 
 ;;; Returns :
-;;;     a new GtkVBox.
+;;;     a new GtkVBox
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-vbox-new (homogeneous spacing)
@@ -804,4 +829,3 @@
 (export 'gtk-vbox-new)
 
 ;;; --- End of file gtk.box.lisp -----------------------------------------------
-
