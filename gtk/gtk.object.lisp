@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -93,7 +93,6 @@
 ;;; 
 ;;;   "destroy"                                        : No Hooks
 ;;; 
-;;; Description
 ;;; Description
 ;;; 
 ;;; GtkObject is the base class for all widgets, and for a few non-widget
@@ -201,8 +200,21 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_object_get_type")
-  ((user-data gtk-object-user-data
+  ((user-data
+    gtk-object-user-data
     "user-data" "gpointer" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+(defcstruct %gtk-object
+  (parent-instance %g-initially-unowned)
+  (flags :uint32))
+
+(defun gtk-object-flags-as-integer (object)
+  (foreign-slot-value (pointer object) '%gtk-object 'flags))
+
+(defun (setf gtk-object-flags-as-integer) (new-value object)
+  (setf (foreign-slot-value (pointer object) '%gtk-object 'flags) new-value))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_OBJECT_TYPE

@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -413,8 +413,13 @@
 ;;; Creates a new toolbar.
 ;;; 
 ;;; Returns :
-;;;     the newly-created toolbar.
+;;;     the newly-created toolbar
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-toolbar-new ()
+  (make-instance 'gtk-toolbar))
+
+(export 'gtk-toolbar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_insert ()

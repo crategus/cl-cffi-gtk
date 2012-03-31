@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,6 +47,7 @@
 ;;; Prerequisites
 ;;; 
 ;;; GtkOrientable requires GObject.
+;;;
 ;;; Known Implementations
 ;;; 
 ;;; GtkOrientable is implemented by GtkAppChooserWidget, GtkBox, GtkButtonBox,
@@ -67,8 +68,8 @@
 ;;; 
 ;;; The GtkOrientable interface is implemented by all widgets that can be
 ;;; oriented horizontally or vertically. Historically, such widgets have been
-;;; realized as subclasses of a common base class (e.g GtkBox/GtkHBox/GtkVBox or
-;;; GtkScale/GtkHScale/GtkVScale). GtkOrientable is more flexible in that it
+;;; realized as subclasses of a common base class (e.g GtkBox/GtkHBox/GtkVBox
+;;; or GtkScale/GtkHScale/GtkVScale). GtkOrientable is more flexible in that it
 ;;; allows the orientation to be changed at runtime, allowing the widgets to
 ;;; 'flip'.
 ;;; 
@@ -101,7 +102,8 @@
 (define-g-interface "GtkOrientable" gtk-orientable
   (:export t
    :type-initializer "gtk_orientable_get_type")
-  (orientation gtk-orientable-orientation
+  (orientation
+   gtk-orientable-orientation
    "orientation" "GtkOrientation" t t))
 
 ;;; ----------------------------------------------------------------------------
@@ -115,10 +117,17 @@
 ;;;     a GtkOrientable
 ;;; 
 ;;; Returns :
-;;;     the orientation of the orientable.
+;;;     the orientation of the orientable
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-orientable-get-orientation))
+
+(defun gtk-orientable-get-orientation (orientable)
+  (gtk-orientable-orientation orientable))
+
+(export 'gtk-orientable-get-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_orientable_set_orientation ()
@@ -132,10 +141,16 @@
 ;;;     a GtkOrientable
 ;;; 
 ;;; orientation :
-;;;     the orientable's new orientation.
+;;;     the orientable's new orientation
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-orientable-set-orientation))
+
+(defun gtk-orientable-set-orientation (orientable orientation)
+  (setf (gtk-orientable-orientation orientable) orientation))
+
+(export 'gtk-orientable-set-orientation)
 
 ;;; --- End of file gtk.orientable.lisp ----------------------------------------

@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -210,17 +210,23 @@
     :export t
     :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
     :type-initializer "gtk_tool_button_get_type")
-  ((icon-name gtk-tool-button-icon-name
+  ((icon-name
+    gtk-tool-button-icon-name
     "icon-name" "gchararray" t t)
-   (icon-widget gtk-tool-button-icon-widget
+   (icon-widget
+    gtk-tool-button-icon-widget
     "icon-widget" "GtkWidget" t t)
-   (label gtk-tool-button-label
+   (label
+    gtk-tool-button-label
     "label" "gchararray" t t)
-   (label-widget gtk-tool-button-label-widget
+   (label-widget
+    gtk-tool-button-label-widget
     "label-widget" "GtkWidget" t t)
-   (stock-id gtk-tool-button-stock-id
+   (stock-id
+    gtk-tool-button-stock-id
     "stock-id" "gchararray" t t)
-   (use-underline gtk-tool-button-use-underline
+   (use-underline
+    gtk-tool-button-use-underline
     "use-underline" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------

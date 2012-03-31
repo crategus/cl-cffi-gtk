@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -216,24 +216,33 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
    :type-initializer "gtk_tool_item_get_type")
-  ((is-important gtk-tool-item-is-important
+  ((is-important
+    gtk-tool-item-is-important
     "is-important" "gboolean" t t)
-   (visible-horizontal gtk-tool-item-visible-horizontal
+   (visible-horizontal
+    gtk-tool-item-visible-horizontal
     "visible-horizontal" "gboolean" t t)
-   (visible-vertical gtk-tool-item-visible-vertical
+   (visible-vertical
+    gtk-tool-item-visible-vertical
     "visible-vertical" "gboolean" t t)
-   (:cffi expand gtk-tool-item-expand :boolean
+   (:cffi expand
+          gtk-tool-item-expand :boolean
           "gtk_tool_item_get_expand" "gtk_tool_item_set_expand")
-   (:cffi use-drag-window gtk-tool-item-use-drag-window :boolean
+   (:cffi use-drag-window
+          gtk-tool-item-use-drag-window :boolean
           "gtk_tool_item_get_use_drag_window"
           "gtk_tool_item_set_use_drag_window")
-   (:cffi icon-size gtk-tool-item-icon-size gtk-icon-size
+   (:cffi icon-size
+          gtk-tool-item-icon-size gtk-icon-size
           "gtk_tool_item_get_icon_size" nil)
-   (:cffi orientation gtk-tool-item-orientation gtk-orientation
+   (:cffi orientation
+          gtk-tool-item-orientation gtk-orientation
           "gtk_tool_item_get_orientation" nil)
-   (:cffi toolbar-style gtk-tool-item-toolbar-style gtk-toolbar-style
+   (:cffi toolbar-style
+          gtk-tool-item-toolbar-style gtk-toolbar-style
           "gtk_tool_item_get_toolbar_style" nil)
-   (:cffi relief-style gtk-tool-item-relief-style gtk-relief-style
+   (:cffi relief-style
+          gtk-tool-item-relief-style gtk-relief-style
           "gtk_tool_item_get_relief_style" nil)))
 
 ;;; ----------------------------------------------------------------------------
@@ -248,6 +257,11 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-tool-item-new ()
+  (make-instance 'gtk-tool-item-new))
+
+(export 'gtk-tool-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_set_homogeneous ()
@@ -280,7 +294,7 @@
 ;;;     a GtkToolItem
 ;;; 
 ;;; Returns :
-;;;     TRUE if the item is the same size as other homogeneous items.
+;;;     TRUE if the item is the same size as other homogeneous items
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -770,7 +784,7 @@
 ;;;     a GtkToolItem
 ;;; 
 ;;; Returns :
-;;;     a GtkSizeGroup. [transfer none]
+;;;     a GtkSizeGroup
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------

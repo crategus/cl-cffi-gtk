@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -2886,18 +2886,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct %gtk-object
-  (parent-instance %g-initially-unowned)
-  (flags :uint32))
-
-(defun gtk-object-flags-as-integer (object)
-  (foreign-slot-value (pointer object) '%gtk-object 'flags))
-
-(defun (setf gtk-object-flags-as-integer) (new-value object)
-  (setf (foreign-slot-value (pointer object) '%gtk-object 'flags) new-value))
-
-;;; ----------------------------------------------------------------------------
-
 (defcfun ("gtk_widget_push_colormap" gtk-widget-push-colormap) :void
   (colormap (g-object gdk-colormap)))
 
@@ -3223,58 +3211,111 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_widget_get_type")
-  ((app-paintable gtk-widget-app-paintable "app-paintable" "gboolean" t t)
-   (can-default gtk-widget-can-default "can-default" "gboolean" t t)
-   (can-focus gtk-widget-can-focus "can-focus" "gboolean" t t)
-   (composite-child gtk-widget-composite-child
-                    "composite-child" "gboolean" t nil)
-   (double-buffered gtk-widget-double-buffered "double-buffered" "gboolean" t t)
-   (events gtk-widget-events "events" "GdkEventMask" t t)
-   (extension-events gtk-widget-extension-events
-                     "extension-events" "GdkExtensionMode" t t)
-   (has-default gtk-widget-has-default "has-default" "gboolean" t t)
-   (has-focus gtk-widget-has-focus "has-focus" "gboolean" t t)
-   (has-tooltip gtk-widget-has-tooltip "has-tooltip" "gboolean" t t)
-   (height-request gtk-widget-height-request "height-request" "gint" t t)
-   (is-focus gtk-widget-is-focus "is-focus" "gboolean" t t)
-   (name gtk-widget-name "name" "gchararray" t t)
-   (no-show-all widget-no-show-all "no-show-all" "gboolean" t t)
-   (parent gtk-widget-parent "parent" "GtkContainer" t t)
-   (receives-default gtk-widget-receives-default
-                     "receives-default" "gboolean" t t)
-   (sensitive gtk-widget-sensitive "sensitive" "gboolean" t t)
-   (style widget-style "style" "GtkStyle" t t)
-   (tooltip-markup gtk-widget-tooltip-markup "tooltip-markup" "gchararray" t t)
-   (tooltip-text gtk-widget-tooltip-text "tooltip-text" "gchararray" t t)
-   (visible gtk-widget-visible "visible" "gboolean" t t)
-   (width-request gtk-widget-width-request
-          "width-request" "gint" t t)
-   (window gtk-widget-window
-          "window" "GdkWindow" t nil)
-   (:cffi parent-window gtk-widget-parent-window (g-object gdk-window)
+  ((app-paintable
+    gtk-widget-app-paintable
+    "app-paintable" "gboolean" t t)
+   (can-default
+    gtk-widget-can-default
+    "can-default" "gboolean" t t)
+   (can-focus
+    gtk-widget-can-focus
+    "can-focus" "gboolean" t t)
+   (composite-child
+    gtk-widget-composite-child
+    "composite-child" "gboolean" t nil)
+   (double-buffered
+    gtk-widget-double-buffered
+    "double-buffered" "gboolean" t t)
+   (events
+    gtk-widget-events
+    "events" "GdkEventMask" t t)
+   (extension-events
+    gtk-widget-extension-events
+    "extension-events" "GdkExtensionMode" t t)
+   (has-default
+    gtk-widget-has-default
+    "has-default" "gboolean" t t)
+   (has-focus
+    gtk-widget-has-focus
+    "has-focus" "gboolean" t t)
+   (has-tooltip
+    gtk-widget-has-tooltip
+    "has-tooltip" "gboolean" t t)
+   (height-request
+    gtk-widget-height-request
+    "height-request" "gint" t t)
+   (is-focus
+    gtk-widget-is-focus
+    "is-focus" "gboolean" t t)
+   (name
+    gtk-widget-name
+    "name" "gchararray" t t)
+   (no-show-all
+    gtk-widget-no-show-all
+    "no-show-all" "gboolean" t t)
+   (parent
+    gtk-widget-parent
+    "parent" "GtkContainer" t t)
+   (receives-default
+    gtk-widget-receives-default
+    "receives-default" "gboolean" t t)
+   (sensitive
+    gtk-widget-sensitive
+    "sensitive" "gboolean" t t)
+   (style
+    gtk-widget-style
+    "style" "GtkStyle" t t)
+   (tooltip-markup
+    gtk-widget-tooltip-markup
+    "tooltip-markup" "gchararray" t t)
+   (tooltip-text
+    gtk-widget-tooltip-text
+    "tooltip-text" "gchararray" t t)
+   (visible
+    gtk-widget-visible
+    "visible" "gboolean" t t)
+   (width-request
+    gtk-widget-width-request
+    "width-request" "gint" t t)
+   (window
+    gtk-widget-window
+    "window" "GdkWindow" t nil)
+   (:cffi parent-window
+          gtk-widget-parent-window (g-object gdk-window)
           "gtk_widget_get_parent_window" "gtk_widget_set_parent_window")
-   (:cffi toplevel gtk-widget-toplevel (g-object gtk-widget)
+   (:cffi toplevel
+          gtk-widget-toplevel (g-object gtk-widget)
           "gtk_widget_get_toplevel" nil)
-   (:cffi colormap gtk-widget-colormap (g-object gdk-colormap)
+   (:cffi colormap
+          gtk-widget-colormap (g-object gdk-colormap)
           "gtk_widget_get_colormap" "gtk_widget_set_colormap")
-   (:cffi visual gtk-widget-visual (g-object gdk-visual)
+   (:cffi visual
+          gtk-widget-visual (g-object gdk-visual)
           "gtk_widget_get_visual" nil)
-   (:cffi modifier-style gtk-widget-modifier-style (g-object rc-style)
+   (:cffi modifier-style
+          gtk-widget-modifier-style (g-object rc-style)
           "gtk_widget_get_modifier_style" "gtk_widget_modify_style")
-   (:cffi pango-context gtk-widget-pango-context g-object
+   (:cffi pango-context
+          gtk-widget-pango-context g-object
           "gtk_widget_get_pango_context" nil)
-   (:cffi child-visible gtk-widget-child-visible :boolean
+   (:cffi child-visible
+          gtk-widget-child-visible :boolean
           "gtk_widget_get_child_visible" "gtk_widget_set_child_visible")
-   (:cffi direction gtk-widget-direction gtk-text-direction
+   (:cffi direction
+          gtk-widget-direction gtk-text-direction
           "gtk_widget_get_direction" "gtk_widget_set_direction")
-   (:cffi composite-name gtk-widget-composite-name
+   (:cffi composite-name
+          gtk-widget-composite-name
           (g-string :free-from-foreign t :free-to-foreign t)
           "gtk_widget_get_composite_name" "gtk_widget_set_composite_name")
-   (:cffi redraw-on-allocate gtk-widget-redraw-on-allocate :boolean
+   (:cffi redraw-on-allocate
+          gtk-widget-redraw-on-allocate :boolean
           nil "gtk_widget_set_redraw_on_allocate")
-   (:cffi accessible gtk-widget-accessible g-object
+   (:cffi accessible
+          gtk-widget-accessible g-object
           "gtk_widget_get_accessible" nil)
-   (:cffi tooltip-window gtk-widget-tooltip-window g-object
+   (:cffi tooltip-window
+          gtk-widget-tooltip-window g-object
           "gtk_widget_get_tooltip_window" "gtk_widget_set_tooltip_window")))
 
 ;;; ----------------------------------------------------------------------------
@@ -3861,7 +3902,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; widget_pointer :
-;;;     address of a variable that contains widget.
+;;;     address of a variable that contains widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -4191,7 +4232,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; requisition :
-;;;     a GtkRequisition to be filled in.
+;;;     a GtkRequisition to be filled in
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_size_request" gtk-widget-size-request) :void
@@ -4233,7 +4274,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; requisition :
-;;;     a GtkRequisition to be filled in.
+;;;     a GtkRequisition to be filled in
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

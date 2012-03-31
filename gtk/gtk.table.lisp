@@ -600,6 +600,8 @@
 ;;;     the number of pixels of space to place between every row in the table.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-table-set-row-spacings))
+
 (defun gtk-table-set-row-spacings (table spacing)
   (setf (gtk-table-row-spacing table) spacing))
 
@@ -619,6 +621,8 @@
 ;;;     the number of pixels of space to place between every column in
 ;;;     the table.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-table-set-col-spacings))
 
 (defun gtk-table-set-col-spacings (table spacing)
   (setf (gtk-table-column-spacing table) spacing))
@@ -641,6 +645,8 @@
 ;;;     if this is not your desired behaviour.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-table-set-homogeneous))
+
 (defun gtk-table-set-homogeneous (table homogeneous)
   (setf (gtk-table-homogeneous table) homogeneous))
 
@@ -661,6 +667,8 @@
 ;;;     the default row spacing
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-table-get-default-row-spacing))
+
 (defun gtk-table-get-default-row-spacing (table)
   (gtk-table-row-spacing table))
 
@@ -680,6 +688,8 @@
 ;;; Returns :
 ;;;     TRUE if the cells are all constrained to the same size
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-table-get-homogeneous))
 
 (defun gtk-table-get-homogeneous (table)
   (gtk-table-homogeneous table))
@@ -748,6 +758,8 @@
 ;;; Returns :
 ;;;     the default column spacing
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-table-get-default-col-spacing))
 
 (defun gtk-table-get-default-col-spacing (table)
   (gtk-table-column-spacing table))

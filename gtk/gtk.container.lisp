@@ -522,6 +522,13 @@
 ;;;     the current resize mode
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-container-get-resize-mode))
+
+(defun gtk-container-get-resize-mode (container)
+  (gtk-container-resize-mode container))
+
+(export 'gkt-container-get-resize-mode)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_set_resize_mode ()
 ;;; 
@@ -540,6 +547,13 @@
 ;;; resize_mode :
 ;;;     the new resize mode
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-set-resize-mode))
+
+(defun gtk-container-set-resize-mode (container resize-mode)
+  (setf (gtk-container-resize-mode container) resize-mode))
+
+(export 'gtk-container-set-resize-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_check_resize ()
@@ -587,19 +601,13 @@
   (callback :pointer)
   (data :pointer))
 
-(defun map-container-children (container function)
-  (with-stable-pointer (ptr function)
-    (%gtk-container-foreach container (callback gtk-container-foreach-callback)
-                           ptr)))
-
-(export 'map-container-children)
-
 (defun gtk-container-foreach (container function)
   (with-stable-pointer (ptr function)
-    (%gtk-container-foreach container (callback gtk-container-foreach-callback)
+    (%gtk-container-foreach container
+                            (callback gtk-container-foreach-callback)
                             ptr)))
 
-(export 'gtk-container-children)
+(export 'gtk-container-foreach)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_children ()
@@ -659,6 +667,13 @@
 ;;;     the new value for the container's reallocate_redraws flag
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-container-set-reallocate-redraws))
+
+(defun gtk-container-set-reallocate-redraws (container need-redraws)
+  (setf (gtk-container-reallocate-redraws container) need-redraws))
+
+(export 'gtk-container-set-reallocate-redraws)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_focus_child ()
 ;;; 
@@ -677,6 +692,13 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-get-focus-child))
+
+(defun gtk-container-get-focus-child (container)
+  (gtk-container-focus-child container))
+
+(export 'gtk-container-get-focus-child)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_set_focus_child ()
@@ -700,6 +722,13 @@
 ;;;     a GtkWidget, or NULL.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-container-set-focus-child))
+
+(defun gtk-container-set-focus-child (window child)
+  (setf (gtk-container-focus-child window) child))
+
+(export 'gtk-container-set-focus-child)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_focus_vadjustment ()
 ;;; 
@@ -715,6 +744,13 @@
 ;;; Returns :
 ;;;     the vertical focus adjustment, or NULL if none has been set.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-get-focus-vadjustment))
+
+(defun gtk-container-get-focus-vadjustment (container)
+  (gtk-container-focus-vadjustment container))
+
+(export 'gtk-container-get-focus-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_set_focus_vadjustment ()
@@ -740,6 +776,13 @@
 ;;;     the descendents of container
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-container-set-focus-vadjustment))
+
+(defun gtk-container-set-focus-vadjustment (container adjustment)
+  (setf (gtk-container-focus-vadjustment container) adjustment))
+
+(export 'gtk-container-set-focus-vadjustment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_focus_hadjustment ()
 ;;; 
@@ -755,6 +798,13 @@
 ;;; Returns :
 ;;;     the horizontal focus adjustment, or NULL if none has been set.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-get-focus-hadjustment))
+
+(defun gtk-container-get-focus-hadjustment (container)
+  (gtk-container-focus-hadjustment container))
+
+(export 'gtk-container-get-focus-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_set_focus_hadjustment ()
@@ -779,6 +829,13 @@
 ;;;     an adjustment which should be adjusted when the focus is moved among 
 ;;;     the descendents of container
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-set-focus-hadjustment))
+
+(defun gtk-container-set-focus-hadjustment (container adjustment)
+  (setf (gtk-container-focus-hadjustment container) adjustment))
+
+(export 'gtk-container-set-focus-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_resize_children ()
@@ -1012,14 +1069,6 @@
   (callback :pointer)
   (data :pointer))
 
-(defun map-container-internal-children (container function)
-  (with-stable-pointer (ptr function)
-    (%gtk-container-forall container
-                           (callback gtk-container-foreach-callback)
-                           ptr)))
-
-(export 'map-container-internal-children)
-
 (defun gtk-container-forall (container function)
   (with-stable-pointer (ptr function)
     (%gtk-container-forall container
@@ -1042,6 +1091,8 @@
 ;;; Returns :
 ;;;     the current border width
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-get-border-width))
 
 (defun gtk-container-get-border-width (container)
   (gtk-container-border-width container))
@@ -1069,8 +1120,10 @@
 ;;; 
 ;;; border-width :
 ;;;     amount of blank space to leave outside the container. Valid values are
-;;;     in the range 0-65535 pixels.
+;;;     in the range 0-65535 pixels
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-container-set-border-width))
 
 (defun gtk-container-set-border-width (container border-width)
   (setf (gtk-container-border-width container) border-width))
@@ -1288,4 +1341,3 @@
 (export 'gtk-container-propagate-expose)
 
 ;;; --- End of file gtk.container.lisp -----------------------------------------
-
