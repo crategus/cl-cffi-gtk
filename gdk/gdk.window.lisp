@@ -244,119 +244,119 @@
 ;;; 
 ;;; Example 7. Composited windows
 ;;; 
-;;;  1 #include <gtk/gtk.h>
-;;;  2 /* The expose event handler for the event box.
-;;;  3  *
-;;;  4  * This function simply draws a transparency onto a widget on the area
-;;;  5  * for which it receives expose events.  This is intended to give the
-;;;  6  * event box a "transparent" background.
-;;;  7  *
-;;;  8  * In order for this to work properly, the widget must have an RGBA
-;;;  9  * colourmap.  The widget should also be set as app-paintable since it
-;;; 10  * doesn't make sense for GTK+ to draw a background if we are drawing it
-;;; 11  * (and because GTK+ might actually replace our transparency with its
-;;; 12  * default background colour).
-;;; 13  */
-;;; 14 static gboolean
-;;; 15 transparent_expose (GtkWidget      *widget,
-;;; 16                     GdkEventExpose *event)
-;;; 17 {
-;;; 18   cairo_t *cr;
-;;; 19   cr = gdk_cairo_create (widget->window);
-;;; 20   cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-;;; 21   gdk_cairo_region (cr, event->region);
-;;; 22   cairo_fill (cr);
-;;; 23   cairo_destroy (cr);
-;;; 24   return FALSE;
-;;; 25 }
-;;; 26 /* The expose event handler for the window.
-;;; 27  *
-;;; 28  * This function performs the actual compositing of the event box onto
-;;; 29  * the already-existing background of the window at 50% normal opacity.
-;;; 30  *
-;;; 31  * In this case we do not want app-paintable to be set on the widget
-;;; 32  * since we want it to draw its own (red) background. Because of this,
-;;; 33  * however, we must ensure that we use g_signal_connect_after so that
-;;; 34  * this handler is called after the red has been drawn. If it was
-;;; 35  * called before then GTK would just blindly paint over our work.
-;;; 36  *
-;;; 37  * Note: if the child window has children, then you need a cairo 1.6
-;;; 38  * feature to make this work correctly.
-;;; 39  */
-;;; 40 static gboolean
-;;; 41 window_expose_event (GtkWidget      *widget,
-;;; 42                     GdkEventExpose *event)
-;;; 43 {
-;;; 44   GdkRegion *region;
-;;; 45   GtkWidget *child;
-;;; 46   cairo_t *cr;
-;;; 47   /* get our child (in this case, the event box) */
-;;; 48   child = gtk_bin_get_child (GTK_BIN (widget));
-;;; 49   /* create a cairo context to draw to the window */
-;;; 50   cr = gdk_cairo_create (widget->window);
-;;; 51   /* the source data is the (composited) event box */
-;;; 52   gdk_cairo_set_source_pixmap (cr, child->window,
-;;; 53                                child->allocation.x,
-;;; 54                                child->allocation.y);
-;;; 55   /* draw no more than our expose event intersects our child */
-;;; 56   region = gdk_region_rectangle (&child->allocation);
-;;; 57   gdk_region_intersect (region, event->region);
-;;; 58   gdk_cairo_region (cr, region);
-;;; 59   cairo_clip (cr);
-;;; 60   /* composite, with a 50% opacity */
-;;; 61   cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-;;; 62   cairo_paint_with_alpha (cr, 0.5);
-;;; 63   /* we're done */
-;;; 64   cairo_destroy (cr);
-;;; 65   return FALSE;
-;;; 66 }
-;;; 67 int
-;;; 68 main (int argc, char **argv)
-;;; 69 {
-;;; 70   GtkWidget *window, *event, *button;
-;;; 71   GdkScreen *screen;
-;;; 72   GdkColormap *rgba;
-;;; 73   GdkColor red;
-;;; 74   gtk_init (&argc, &argv);
-;;; 75   /* Make the widgets */
-;;; 76   button = gtk_button_new_with_label ("A Button");
-;;; 77   event = gtk_event_box_new ();
-;;; 78   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-;;; 79   /* Put a red background on the window */
-;;; 80   gdk_color_parse ("red", &red);
-;;; 81   gtk_widget_modify_bg (window, GTK_STATE_NORMAL, &red);
-;;; 82   /* Set the colourmap for the event box.
-;;; 83    * Must be done before the event box is realised.
-;;; 84    */
-;;; 85   screen = gtk_widget_get_screen (event);
-;;; 86   rgba = gdk_screen_get_rgba_colormap (screen);
-;;; 87   gtk_widget_set_colormap (event, rgba);
-;;; 88   /* Set our event box to have a fully-transparent background
-;;; 89    * drawn on it. Currently there is no way to simply tell GTK+
-;;; 90    * that "transparency" is the background colour for a widget.
-;;; 91    */
-;;; 92   gtk_widget_set_app_paintable (GTK_WIDGET (event), TRUE);
-;;; 93   g_signal_connect (event, "expose-event",
-;;; 94                     G_CALLBACK (transparent_expose), NULL);
-;;; 95   /* Put them inside one another */
-;;; 96   gtk_container_set_border_width (GTK_CONTAINER (window), 10);
-;;; 97   gtk_container_add (GTK_CONTAINER (window), event);
-;;; 98   gtk_container_add (GTK_CONTAINER (event), button);
-;;; 99   /* Realise and show everything */
-;;; 100   gtk_widget_show_all (window);
-;;; 101   /* Set the event box GdkWindow to be composited.
-;;; 102    * Obviously must be performed after event box is realised.
-;;; 103    */
-;;; 104   gdk_window_set_composited (event->window, TRUE);
-;;; 105   /* Set up the compositing handler.
-;;; 106    * Note that we do _after_ so that the normal red background is drawn
-;;; 107    * by gtk before our compositing occurs.
-;;; 108    */
-;;; 109   g_signal_connect_after (window, "expose-event",
-;;; 110                           G_CALLBACK (window_expose_event), NULL);
-;;; 111   gtk_main ();
-;;; 112   return 0;
-;;; 113 }
+;;;  #include <gtk/gtk.h>
+;;;  /* The expose event handler for the event box.
+;;;   *
+;;;   * This function simply draws a transparency onto a widget on the area
+;;;   * for which it receives expose events.  This is intended to give the
+;;;   * event box a "transparent" background.
+;;;   *
+;;;   * In order for this to work properly, the widget must have an RGBA
+;;;   * colourmap.  The widget should also be set as app-paintable since it
+;;;   * doesn't make sense for GTK+ to draw a background if we are drawing it
+;;;   * (and because GTK+ might actually replace our transparency with its
+;;;   * default background colour).
+;;;   */
+;;;  static gboolean
+;;;  transparent_expose (GtkWidget      *widget,
+;;;                      GdkEventExpose *event)
+;;;  {
+;;;    cairo_t *cr;
+;;;    cr = gdk_cairo_create (widget->window);
+;;;    cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+;;;    gdk_cairo_region (cr, event->region);
+;;;    cairo_fill (cr);
+;;;    cairo_destroy (cr);
+;;;    return FALSE;
+;;;  }
+;;;  /* The expose event handler for the window.
+;;;   *
+;;;   * This function performs the actual compositing of the event box onto
+;;;   * the already-existing background of the window at 50% normal opacity.
+;;;   *
+;;;   * In this case we do not want app-paintable to be set on the widget
+;;;   * since we want it to draw its own (red) background. Because of this,
+;;;   * however, we must ensure that we use g_signal_connect_after so that
+;;;   * this handler is called after the red has been drawn. If it was
+;;;   * called before then GTK would just blindly paint over our work.
+;;;   *
+;;;   * Note: if the child window has children, then you need a cairo 1.6
+;;;   * feature to make this work correctly.
+;;;   */
+;;;  static gboolean
+;;;  window_expose_event (GtkWidget      *widget,
+;;;                      GdkEventExpose *event)
+;;;  {
+;;;    GdkRegion *region;
+;;;    GtkWidget *child;
+;;;    cairo_t *cr;
+;;;    /* get our child (in this case, the event box) */
+;;;    child = gtk_bin_get_child (GTK_BIN (widget));
+;;;    /* create a cairo context to draw to the window */
+;;;    cr = gdk_cairo_create (widget->window);
+;;;    /* the source data is the (composited) event box */
+;;;    gdk_cairo_set_source_pixmap (cr, child->window,
+;;;                                 child->allocation.x,
+;;;                                 child->allocation.y);
+;;;    /* draw no more than our expose event intersects our child */
+;;;    region = gdk_region_rectangle (&child->allocation);
+;;;    gdk_region_intersect (region, event->region);
+;;;    gdk_cairo_region (cr, region);
+;;;    cairo_clip (cr);
+;;;    /* composite, with a 50% opacity */
+;;;    cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+;;;    cairo_paint_with_alpha (cr, 0.5);
+;;;    /* we're done */
+;;;    cairo_destroy (cr);
+;;;    return FALSE;
+;;;  }
+;;;  int
+;;;  main (int argc, char **argv)
+;;;  {
+;;;    GtkWidget *window, *event, *button;
+;;;    GdkScreen *screen;
+;;;    GdkColormap *rgba;
+;;;    GdkColor red;
+;;;    gtk_init (&argc, &argv);
+;;;    /* Make the widgets */
+;;;    button = gtk_button_new_with_label ("A Button");
+;;;    event = gtk_event_box_new ();
+;;;    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+;;;    /* Put a red background on the window */
+;;;    gdk_color_parse ("red", &red);
+;;;    gtk_widget_modify_bg (window, GTK_STATE_NORMAL, &red);
+;;;    /* Set the colourmap for the event box.
+;;;     * Must be done before the event box is realised.
+;;;     */
+;;;    screen = gtk_widget_get_screen (event);
+;;;    rgba = gdk_screen_get_rgba_colormap (screen);
+;;;    gtk_widget_set_colormap (event, rgba);
+;;;    /* Set our event box to have a fully-transparent background
+;;;     * drawn on it. Currently there is no way to simply tell GTK+
+;;;     * that "transparency" is the background colour for a widget.
+;;;     */
+;;;    gtk_widget_set_app_paintable (GTK_WIDGET (event), TRUE);
+;;;    g_signal_connect (event, "expose-event",
+;;;                      G_CALLBACK (transparent_expose), NULL);
+;;;    /* Put them inside one another */
+;;;    gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+;;;    gtk_container_add (GTK_CONTAINER (window), event);
+;;;    gtk_container_add (GTK_CONTAINER (event), button);
+;;;    /* Realise and show everything */
+;;;    gtk_widget_show_all (window);
+;;;    /* Set the event box GdkWindow to be composited.
+;;;     * Obviously must be performed after event box is realised.
+;;;     */
+;;;    gdk_window_set_composited (event->window, TRUE);
+;;;    /* Set up the compositing handler.
+;;;     * Note that we do _after_ so that the normal red background is drawn
+;;;     * by gtk before our compositing occurs.
+;;;     */
+;;;    g_signal_connect_after (window, "expose-event",
+;;;                            G_CALLBACK (window_expose_event), NULL);
+;;;    gtk_main ();
+;;;    return 0;
+;;;  }
 ;;; 
 ;;; In the example Example 7, “Composited windows”, a button is placed inside
 ;;; of an event box inside of a window. The event box is set as composited and
@@ -465,7 +465,7 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     the GdkWindow of the embedded child at x, y, or NULL. [transfer none]
+;;;     the GdkWindow of the embedded child at x, y, or NULL
 ;;; 
 ;;; Since 2.18
 ;;;
@@ -616,77 +616,114 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkWindow" gdk-window
-   (:superclass gdk-drawable)
+   (:superclass gdk-drawable
+    :export t
+    :interfaces ()
+    :type-initializer "gdk_window_get_type")
    (#+gtk-2.18
-    (cursor gdk-window-cursor "cursor"
-            "GdkCursor" t t)
+    (cursor
+     gdk-window-cursor
+     "cursor" "GdkCursor" t t)
     #-gtk-2.18
-    (:cffi cursor gdk-window-cursor (g-boxed-foreign gdk-cursor :return)
+    (:cffi cursor
+           gdk-window-cursor (g-boxed-foreign gdk-cursor :return)
            "gdk_window_get_cursor" "gdk_window_set_cursor")
-    (:cffi window-type gdk-window-window-type gdk-window-type
+    (:cffi window-type
+           gdk-window-window-type gdk-window-type
            "gdk_window_get_window_type" nil)
-    (:cffi is-destroyed gdk-window-is-destroyed :boolean
+    (:cffi is-destroyed
+           gdk-window-is-destroyed :boolean
            "gdk_window_is_destroyed" nil)
-    (:cffi is-visible gdk-window-is-visible :boolean
+    (:cffi is-visible
+           gdk-window-is-visible :boolean
            "gdk_window_is_visible" nil)
-    (:cffi is-viewable gdk-window-is-viewable :boolean
+    (:cffi is-viewable
+           gdk-window-is-viewable :boolean
            "gdk_window_is_viewable" nil)
-    (:cffi state gdk-window-state gdk-window-state
+    (:cffi state
+           gdk-window-state gdk-window-state
            "gdk_window_get_state" nil)
-    (:cffi keep-above gdk-window-keep-above :boolean 
+    (:cffi keep-above
+           gdk-window-keep-above :boolean 
            nil "gdk_window_set_keep_above")
-    (:cffi keep-below gdk-window-keep-below :boolean 
+    (:cffi keep-below
+           gdk-window-keep-below :boolean 
            nil "gdk_window_set_keep_below" )
-    (:cffi opacity gdk-window-opacity :double
+    (:cffi opacity
+           gdk-window-opacity :double
            nil "gdk_window_set_opacity")
-    (:cffi composited gdk-window-composited :boolean 
+    (:cffi composited
+           gdk-window-composited :boolean 
            nil "gdk_window_set_composited")
-    (:cffi user-data gdk-window-user-data :pointer
+    (:cffi user-data
+           gdk-window-user-data :pointer
            "gdk_window_get_user_data" "gdk_window_set_user_data")
-    (:cffi override-redirect gdk-window-override-redirect :boolean
+    (:cffi override-redirect
+           gdk-window-override-redirect :boolean
            nil "gdk_window_set_override_redirect")
-    (:cffi accept-focus gdk-window-accept-focus :boolean
+    (:cffi accept-focus
+           gdk-window-accept-focus :boolean
            nil "gdk_window_set_accept_focus")
-    (:cffi focus-on-map gdk-window-focus-on-map :boolean
+    (:cffi focus-on-map
+           gdk-window-focus-on-map :boolean
            nil "gdk_window_set_focus_on_map")
-    (:cffi title gdk-window-title :string
+    (:cffi title
+           gdk-window-title :string
            nil "gdk_window_set_title")
-    (:cffi background gdk-window-background (g-boxed-foreign gdk-color)
+    (:cffi background
+           gdk-window-background (g-boxed-foreign gdk-color)
            nil "gdk_window_set_background")
-    (:cffi icon-list gdk-window-icon-list (glib:g-list (g-object gdk-pixbuf))
+    (:cffi icon-list
+           gdk-window-icon-list (g-list (g-object gdk-pixbuf))
            nil "gdk_window_set_icon_list")
-    (:cffi modal-hint gdk-window-modal-hint :boolean
+    (:cffi modal-hint
+           gdk-window-modal-hint :boolean
            nil "gdk_window_set_modal_hint")
-    (:cffi type-hint gdk-window-type-hint gdk-window-type-hint
+    (:cffi type-hint
+           gdk-window-type-hint gdk-window-type-hint
            "gdk_window_get_type_hint" "gdk_window_set_type_hint")
-    (:cffi skip-taskbar-hint gdk-window-skip-taskbar-hint :boolean
+    (:cffi skip-taskbar-hint
+           gdk-window-skip-taskbar-hint :boolean
            nil "gdk_window_set_skip_taskbar_hint")
-    (:cffi skip-pager-hint gdk-window-skip-pager-hint :boolean
+    (:cffi skip-pager-hint
+           gdk-window-skip-pager-hint :boolean
            nil "gdk_window_set_skip_pager_hint")
-    (:cffi urgency-hint gdk-window-urgency-hint :boolean
+    (:cffi urgency-hint
+           gdk-window-urgency-hint :boolean
            nil "gdk_window_set_urgency_hint")
-    (:cffi parent gdk-window-parent (g-object gdk-window)
+    (:cffi parent
+           gdk-window-parent (g-object gdk-window)
            "gdk_window_get_parent" nil)
-    (:cffi toplevel gdk-window-get-toplevel (g-object gdk-window)
+    (:cffi toplevel
+           gdk-window-get-toplevel (g-object gdk-window)
            "gdk_window_get_toplevel" nil)
-    (:cffi children gdk-window-children
-           (glib:g-list (g-object gdk-window) :free-from-foreign nil)
+    (:cffi children
+           gdk-window-children
+           (g-list (g-object gdk-window) :free-from-foreign nil)
            "gdk_window_peek_children" nil)
-    (:cffi events gdk-window-events gdk-event-mask
+    (:cffi events
+           gdk-window-events gdk-event-mask
            "gdk_window_get_events" "gdk_window_set_events")
-    (:cffi icon-name gdk-window-icon-name :string
+    (:cffi icon-name
+           gdk-window-icon-name :string
            nil "gdk_window_set_icon_name")
-    (:cffi transient-for gdk-window-transient-for (g-object gdk-window)
+    (:cffi transient-for
+           gdk-window-transient-for (g-object gdk-window)
            nil "gdk_window_set_transient_for")
-    (:cffi role gdk-window-role :string
+    (:cffi role
+           gdk-window-role :string
            nil "gdk_window_set_role")
-    (:cffi startup-id gdk-window-startup-id :string
+    (:cffi startup-id
+           gdk-window-startup-id :string
            nil "gdk_window_set_startup_id")
-    (:cffi group gdk-window-group (g-object gdk-window)
+    (:cffi group
+           gdk-window-group (g-object gdk-window)
            "gdk_window_get_group" "gdk_window_set_group")
-    (:cffi decorations gdk-window-decorations gdk-wm-decoration
+    (:cffi decorations
+           gdk-window-decoration gdk-wm-decoration
            gdk-window-get-decorations "gdk_window_set_decorations")
-    (:cffi functions gdk-window-functions gdk-wm-function
+    (:cffi functions
+           gdk-window-functions gdk-wm-function
            nil "gdk_window_set_functions")))
 
 ;;; ----------------------------------------------------------------------------
@@ -730,7 +767,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkWindowType" gdk-window-type
-  (:export t :type-initializer "gdk_window_type_get_type")
+  (:export t
+   :type-initializer "gdk_window_type_get_type")
   (:root 0)
   (:toplevel 1)
   (:child 2)
@@ -760,7 +798,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkWindowClass" gdk-window-class
-  (:export t :type-initializer "gdk_window_class_get_type")
+  (:export t
+   :type-initializer "gdk_window_class_get_type")
   (:input-output 0)
   (:input-only 1))
 
@@ -818,7 +857,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GdkWindowHints" gdk-window-hints
-  (:export t :type-initializer "gdk_window_hints_get_type")
+  (:export t
+   :type-initializer "gdk_window_hints_get_type")
   (:pos 1)
   (:min-size 2)
   (:max-size 4)
@@ -883,7 +923,8 @@
 ;;;     ignoring window manager decorations.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkGravity" gravity ()
+(define-g-enum "GdkGravity" gdk-gravity
+  ()
   (:north-west 1)
   :north
   :north-east
@@ -1021,7 +1062,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkWindowTypeHint" gdk-window-type-hint
-  (:export t :type-initializer "gdk_window_type_hint_get_type")
+  (:export t
+   :type-initializer "gdk_window_type_hint_get_type")
   (:normal 0)
   (:dialog 1)
   (:menu 2)
@@ -1085,19 +1127,19 @@
 ;;; Here's an example of how the terminal example would be implemented, assuming
 ;;; a terminal area widget called "terminal" and a toplevel window "toplevel":
 ;;; 
-;;;  1 GdkGeometry hints;
-;;;  2 hints.base_width = terminal->char_width;
-;;;  3         hints.base_height = terminal->char_height;
-;;;  4         hints.min_width = terminal->char_width;
-;;;  5         hints.min_height = terminal->char_height;
-;;;  6         hints.width_inc = terminal->char_width;
-;;;  7         hints.height_inc = terminal->char_height;
-;;;  8 gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
-;;;  9                    GTK_WIDGET (terminal),
-;;; 10                        &hints,
-;;; 11                    GDK_HINT_RESIZE_INC |
-;;; 12                                        GDK_HINT_MIN_SIZE |
-;;; 13                                        GDK_HINT_BASE_SIZE);
+;;;  GdkGeometry hints;
+;;;  hints.base_width = terminal->char_width;
+;;;          hints.base_height = terminal->char_height;
+;;;          hints.min_width = terminal->char_width;
+;;;          hints.min_height = terminal->char_height;
+;;;          hints.width_inc = terminal->char_width;
+;;;          hints.height_inc = terminal->char_height;
+;;;  gtk_window_set_geometry_hints (GTK_WINDOW (toplevel),
+;;;                     GTK_WIDGET (terminal),
+;;;                         &hints,
+;;;                     GDK_HINT_RESIZE_INC |
+;;;                                         GDK_HINT_MIN_SIZE |
+;;;                                         GDK_HINT_BASE_SIZE);
 ;;; 
 ;;; The other useful fields are the min_aspect and max_aspect fields; these
 ;;; contain a width/height ratio as a floating point number. If a geometry
@@ -1142,7 +1184,8 @@
 ;;;     window gravity, see gtk_window_set_gravity()
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-cstruct geometry nil
+(define-g-boxed-cstruct gdk-geometry
+  ()
   (min-width :int :initform 0)
   (min-height :int :initform 0)
   (max-width :int :initform 0)
@@ -1153,9 +1196,9 @@
   (height-increment :int :initform 0)
   (min-aspect :double :initform 0.0d0)
   (max-aspect :double :initform 0.0d0)
-  (gravity gravity :initform :north-west))
+  (gravity gdk-gravity :initform :north-west))
 
-(export (boxed-related-symbols 'geometry))
+(export (boxed-related-symbols 'gdk-geometry))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowAttributesType
@@ -1209,7 +1252,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GdkWindowAttributesType" gdk-window-attributes-type
-  (:export t :type-initializer "gdk_window_attributes_type_get_type")
+  (:export t
+   :type-initializer "gdk_window_attributes_type_get_type")
   (:title 2)
   (:x 4)
   (:y 8)
@@ -1289,8 +1333,9 @@
 ;;;     a hint of the function of the window
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-cstruct gdk-window-attr nil
-  (title (:string :free-from-foreign nil) :initform nil)
+(define-g-boxed-cstruct gdk-window-attr
+  ()
+  (title (:string :free-from-foreign nil) :initform "")
   (event-mask gdk-event-mask :initform nil)
   (x :int :initform 0)
   (y :int :initform 0)
@@ -1301,8 +1346,8 @@
   (colormap (g-object colormap) :initform nil)
   (window-type gdk-window-type :initform :toplevel)
   (cursor (g-object gdk-cursor) :initform nil)
-  (wmclass-name (:string :free-from-foreign nil) :initform nil)
-  (wmclass-class (:string :free-from-foreign nil) :initform nil)
+  (wmclass-name (:string :free-from-foreign nil) :initform "")
+  (wmclass-class (:string :free-from-foreign nil) :initform "")
   (override-redirect :boolean :initform nil)
   (type-hint gdk-window-type-hint :initform :normal))
 
@@ -1407,6 +1452,12 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_get_display" gdk-window-get-display)
+    (g-object gdk-display)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-display)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_screen ()
 ;;; 
@@ -1420,6 +1471,11 @@
 ;;; Returns :
 ;;;     the GdkScreen associated with window
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_get_screen" gdk-window-get-screen) (g-object gdk-screen)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_visual ()
@@ -1436,6 +1492,11 @@
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_get_visual" gdk-window-get-visual) (g-object gdk-visual)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-visual)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_width ()
@@ -1457,6 +1518,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_get_width" gdk-window-get-width) :int
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_height ()
 ;;; 
@@ -1477,6 +1543,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_get_height" gdk-window-get-height) :int
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-height)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_window_type ()
 ;;; 
@@ -1490,6 +1561,13 @@
 ;;; Returns :
 ;;;     type of window
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-window-type))
+
+(defun gdk-window-get-window-type (window)
+  (gdk-window-window-type window))
+
+(export 'gdk-window-get-window-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_at_pointer ()
@@ -1505,16 +1583,16 @@
 ;;; gdk_display_get_window_at_pointer() instead.
 ;;; 
 ;;; win-x :
-;;;     return location for origin of the window under the pointer.
+;;;     return location for origin of the window under the pointer
 ;;; 
 ;;; win-y :
-;;;     return location for origin of the window under the pointer.
+;;;     return location for origin of the window under the pointer
 ;;; 
 ;;; Returns :
-;;;     window under the mouse pointer.
+;;;     window under the mouse pointer
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (%gdk-window-at-pointer "gdk_window_at_pointer") (g-object gdk-window)
+(defcfun ("gdk_window_at_pointer" %gdk-window-at-pointer) (g-object gdk-window)
   (win-x (:pointer :int))
   (win-y (:pointer :int)))
 
@@ -1595,7 +1673,7 @@
 ;;; 
 ;;; gboolean gdk_window_is_destroyed (GdkWindow *window);
 ;;; 
-;;; Check to see if a window is destroyed..
+;;; Check to see if a window is destroyed.
 ;;; 
 ;;; window :
 ;;;     a GdkWindow
@@ -1605,6 +1683,8 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+;;; *** Implemented as the slot accessor for the property is-destroyed ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_is_visible ()
@@ -1620,6 +1700,8 @@
 ;;; Returns :
 ;;;     TRUE if the window is mapped
 ;;; ----------------------------------------------------------------------------
+
+;;; *** Implemented as the slot accessor for the property is-visible ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_is_viewable ()
@@ -1637,6 +1719,8 @@
 ;;;     TRUE if the window is viewable
 ;;; ----------------------------------------------------------------------------
 
+;;; *** Implemented as the slot accessor for the property is-viewable ***
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_is_shaped ()
 ;;; 
@@ -1652,6 +1736,11 @@
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_is_shaped" gdk-window-is-shaped) :boolean
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-is-shaped)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_is_input_only ()
@@ -1669,6 +1758,11 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_is_input_only" gdk-window-is-input-only) :boolean
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-is-input-only)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_state ()
 ;;; 
@@ -1683,6 +1777,13 @@
 ;;; Returns :
 ;;;     window state bitfield
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-state))
+
+(defun gdk-window-get-state (window)
+  (gdk-window-state window))
+
+(export 'gdk-window-get-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_withdraw ()
@@ -1882,6 +1983,11 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_unfullscreen" gdk-window-unfullscreen) :void
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-unfullscreen)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_keep_above ()
 ;;; 
@@ -1904,6 +2010,13 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-keep-above))
+
+(defun gdk-window-set-keep-above (window setting)
+  (setf (gdk-window-keep-above window) setting))
+
+(export 'gdk-window-set-keep-above)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_keep_below ()
@@ -1928,6 +2041,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-keep-below))
+
+(defun gdk-window-set-keep-below (window setting)
+  (setf (gdk-window-keep-below window) setting))
+
+(export 'gdk-window-set-keep-below)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_opacity ()
 ;;; 
@@ -1950,6 +2070,13 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-opacity))
+
+(defun gdk-window-set-opacity (window opacity)
+  (setf (gdk-window-opacity window) opacity))
+
+(export 'gdk-window-set-opacity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_composited ()
@@ -1984,6 +2111,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-composited))
+
+(defun gdk-window-set-composited (window composited)
+  (setf (gdk-window-composited window) composited))
+
+(export 'gdk-window-set-composited)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_composited ()
 ;;; 
@@ -1997,10 +2131,17 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if the window is composited.
+;;;     TRUE if the window is composited
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-composited))
+
+(defun gdk-window-get-composited (window)
+  (gdk-window-composited window))
+
+(export 'gdk-window-get-composited)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_move ()
@@ -2191,7 +2332,7 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-flush :void
+(defcfun ("gdk_window_flush" gdk-window-flush) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-flush)
@@ -2208,10 +2349,15 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if the window has a native window, FALSE otherwise.
+;;;     TRUE if the window has a native window, FALSE otherwise
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_has_native" gdk-window-has-native) :boolean
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-has-native)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_ensure_native ()
@@ -2263,7 +2409,7 @@
 ;;;     Y location inside the new parent
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-reparent :void
+(defcfun ("gdk_window_reparent" gdk-window-reparent) :void
   (window (g-object gdk-window))
   (new-parent (g-object gdk-window))
   (x :int)
@@ -2282,7 +2428,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-clear :void
+(defcfun ("gdk_window_clear" gdk-window-clear) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-clear)
@@ -2314,7 +2460,7 @@
 ;;;     height of rectangle to clear
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-clear-area :void
+(defcfun ("gdk_window_clear_area" gdk-window-clear-area) :void
   (window (g-object gdk-window))
   (x :int)
   (y :int)
@@ -2354,7 +2500,7 @@
 ;;;     height of rectangle to clear
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-clear-area-e :void
+(defcfun ("gdk_window_clear_area_e" gdk-window-clear-area-e) :void
   (window (g-object gdk-window))
   (x :int)
   (y :int)
@@ -2421,7 +2567,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-raise :void
+(defcfun ("gdk_window_raise" gdk-window-raise) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-raise)
@@ -2446,7 +2592,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-lower :void
+(defcfun ("gdk_window_lower" gdk-window-lower) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-lower)
@@ -2472,7 +2618,7 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; sibling :
-;;;     a GdkWindow that is a sibling of window, or NULL. [allow-none]
+;;;     a GdkWindow that is a sibling of window, or NULL
 ;;; 
 ;;; above :
 ;;;     a boolean
@@ -2480,7 +2626,7 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-restack :void
+(defcfun ("gdk_window_restack" gdk-window-restack) :void
   (window (g-object gdk-window))
   (sibling (g-object gdk-window))
   (above :boolean))
@@ -2502,7 +2648,7 @@
 ;;;     timestamp of the event triggering the window focus
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-focus :void
+(defcfun ("gdk_window_focus" gdk-window-focus) :void
   (window (g-object gdk-window))
   (timestamp :uint32))
 
@@ -2516,10 +2662,10 @@
 ;;; Registers a window as a potential drop destination.
 ;;; 
 ;;; window :
-;;;     a GdkWindow.
+;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-register-dnd :void
+(defcfun ("gdk_window_register_dnd" gdk-window-register-dnd) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-register-dnd)
@@ -2559,7 +2705,7 @@
 ;;;     timestamp of mouse click that began the drag (use gdk_event_get_time())
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-begin-resize-drag :void
+(defcfun ("gdk_window_begin_resize_drag" gdk-window-begin-resize-drag) :void
   (window (g-object gdk-window))
   (edge gdk-window-edge)
   (button :int)
@@ -2599,7 +2745,7 @@
 ;;;     timestamp of mouse click that began the drag
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-begin-move-drag :void
+(defcfun ("gdk_window_begin_move_drag" gdk-window-begin-move-drag) :void
   (window (g-object gdk-window))
   (button :int)
   (root-x :int)
@@ -2634,14 +2780,14 @@
 ;;;     desired height of the window
 ;;; 
 ;;; new_width :
-;;;     location to store resulting width. [out]
+;;;     location to store resulting width
 ;;; 
 ;;; new_height :
-;;;     location to store resulting height. [out]
+;;;     location to store resulting height
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_constrain_size :void
-  (geometry (g-boxed-foreign geometry))
+(defcfun ("gdk_window_constrain_size" %gdk-window-constrain-size) :void
+  (geometry (g-boxed-foreign gdk-geometry))
   (flags gdk-window-hints)
   (width :int)
   (height :int)
@@ -2650,7 +2796,12 @@
 
 (defun gdk-window-constrain-size (geometry flags width height)
   (with-foreign-objects ((new-width :int) (new-height :int))
-    (gdk_window_constrain_size geometry flags width height new-width new-height)
+    (%gdk-window-constrain-size geometry
+                                flags
+                                width
+                                height
+                                new-width
+                                new-height)
     (values (mem-ref new-width :int)
             (mem-ref new-height :int))))
 
@@ -2671,7 +2822,7 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-beep :void
+(defcfun ("gdk_window_beep" gdk-window-beep) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-beep)
@@ -2693,7 +2844,7 @@
 ;;;     rectangle you intend to draw to
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-begin-paint-rect :void
+(defcfun ("gdk_window_begin_paint_rect" gdk-window-begin-paint-rect) :void
   (window (g-object gdk-window))
   (rectangle (g-boxed-foreign gdk-rectangle)))
 
@@ -2747,12 +2898,11 @@
 ;;;     region you intend to draw to
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-begin-paint-region :void
+(defcfun ("gdk_window_begin_paint_region" gdk-window-begin-paint-region) :void
   (window (g-object gdk-window))
   (region (g-boxed-foreign gdk-region)))
 
 (export 'gdk-window-begin-paint-region)
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_end_paint ()
@@ -2769,6 +2919,11 @@
 ;;; window :
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_end_paint" gkd-window-end-paint) :void
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-end-paint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_invalidate_rect ()
@@ -2791,7 +2946,7 @@
 ;;;     whether to also invalidate child windows
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-invalidate-rect :void
+(defcfun ("gdk_window_invalidate_rect" gdk-window-invalidate-rect) :void
   (window (g-object gdk-window))
   (rectangle (g-boxed-foreign gdk-rectangle))
   (invalidate-children :boolean))
@@ -2832,7 +2987,7 @@
 ;;;     TRUE to also invalidate child windows
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-invalidate-region :void
+(defcfun ("gdk_window_invalidate_region" gdk-window-invalidate-region) :void
   (window (g-object gdk-window))
   (region (g-boxed-foreign gdk-region))
   (invalidate-children :boolean))
@@ -2877,10 +3032,11 @@
 ;;;     data passed to child_func
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_invalidate_maybe_recurse :void
+(defcfun ("gdk_window_invalidate_maybe_recurse"
+          %gdk-window-invalidate-maybe-recurse) :void
   (window (g-object gdk-window))
   (region (g-boxed-foreign gdk-region))
-  (recurse-p-fn :pointer)
+  (child-func :pointer)
   (user-data :pointer))
 
 (defcallback gdk-window-invalidate-maybe-recurse-cb :boolean
@@ -2889,12 +3045,13 @@
   (let ((fn (stable-pointer-value user-data)))
     (funcall fn window)))
 
-(defun gdk-window-invalidate-maybe-recurse (window region fn)
-  (with-stable-pointer (ptr fn)
-    (gdk_window_invalidate_maybe_recurse window
-                                         region
-                                         (callback gdk-window-invalidate-maybe-recurse-cb)
-                                         ptr)))
+(defun gdk-window-invalidate-maybe-recurse (window region child-func)
+  (with-stable-pointer (ptr child-func)
+    (%gdk-window-invalidate-maybe-recurse
+                               window
+                               region
+                               (callback gdk-window-invalidate-maybe-recurse-cb)
+                               ptr)))
 
 (export 'gdk-window-invalidate-maybe-recurse)
 
@@ -2938,7 +3095,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-freeze-updates :void
+(defcfun ("gdk_window_freeze_updates" gdk-window-freeze-updates) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-freeze-updates)
@@ -2954,7 +3111,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-thaw-updates :void
+(defcfun ("gdk_window_thaw_updates" gdk-window-thaw-updates) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-thaw-updates)
@@ -2968,7 +3125,8 @@
 ;;; application.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-process-all-updates :void)
+(defcfun ("gdk_window_process_all_updates" gdk-window-process-all-updates)
+    :void)
 
 (export 'gdk-window-process-all-updates)
 
@@ -2994,7 +3152,7 @@
 ;;;     whether to also process updates for child windows
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-process-updates :void
+(defcfun ("gdk_window_process_updates" gdk-window-process-updates) :void
   (window (g-object gdk-window))
   (update-children :boolean))
 
@@ -3028,8 +3186,8 @@
 ;;;     TRUE to turn on update debugging
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-set-debug-updates :void
-  (settings :boolean))
+(defcfun ("gdk_window_set_debug_updates" gdk-window-set-debug-updates) :void
+  (setting :boolean))
 
 (export 'gdk-window-set-debug-updates)
 
@@ -3055,26 +3213,29 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; real_drawable :
-;;;     location to store the drawable to which drawing should be done. [out]
+;;;     location to store the drawable to which drawing should be done
 ;;; 
 ;;; x_offset :
 ;;;     location to store the X offset between coordinates in window, and the
-;;;     underlying window system primitive coordinates for *real_drawable.
+;;;     underlying window system primitive coordinates for *real_drawable
 ;;; 
 ;;; y_offset :
 ;;;     location to store the Y offset between coordinates in window, and the
-;;;     underlying window system primitive coordinates for *real_drawable.
+;;;     underlying window system primitive coordinates for *real_drawable
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_internal_paint_info :void
+(defcfun ("gdk_window_get_internal_paint_info"
+          %gdk-window-get-internal-paint-info) :void
   (window (g-object gdk-window))
   (real-drawable (:pointer (g-object gdk-drawable)))
   (x-offset (:pointer :int))
   (y-offset (:pointer :int)))
 
 (defun gdk-window-get-internal-paint-info (window)
-  (with-foreign-objects ((real-drawable :pointer) (x-offset :int) (y-offset :int))
-    (gdk_window_get_internal_paint_info window real-drawable x-offset y-offset)
+  (with-foreign-objects ((real-drawable :pointer)
+                         (x-offset :int)
+                         (y-offset :int))
+    (%gdk-window-get-internal-paint-info window real-drawable x-offset y-offset)
     (values (mem-ref real-drawable '(g-object gdk-drawable))
             (mem-ref x-offset :int)
             (mem-ref y-offset :int))))
@@ -3102,7 +3263,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-enable-synchronized-configure :void
+(defcfun ("gdk_window_enable_synchronized_configure"
+           gdk-window-enable-synchronized-configure) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-enable-synchronized-configure)
@@ -3126,7 +3288,7 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-configure-finished :void
+(defcfun ("gdk_window_configure_finished" gdk-window-configure-finished) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-configure-finished)
@@ -3151,6 +3313,13 @@
 ;;;     user data
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-user-data))
+
+(defun gdk-window-set-user-data (window user-data)
+  (setf (gdk-window-user-data window) user-data))
+
+(export 'gdk-window-set-user-data)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_override_redirect ()
 ;;; 
@@ -3173,6 +3342,13 @@
 ;;;     TRUE if window should be override redirect
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-override-redirect))
+
+(defun gdk-window-set-override-redirect (window override-redirect)
+  (setf (gdk-window-override-redirect window) override-redirect))
+
+(export 'gdk-window-set-override-redirect)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_accept_focus ()
 ;;; 
@@ -3193,12 +3369,19 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-accept-focus))
+
+(defun gdk-window-set-accecpt-focus (window accept-focus)
+  (setf (gdk-window-accept-focus window) accept-focus))
+
+(export 'gdk-window-set-accept-focus)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_accept_focus ()
 ;;; 
 ;;; gboolean gdk_window_get_accept_focus (GdkWindow *window);
 ;;; 
-;;; Determines whether or not the desktop environment shuld be hinted that the
+;;; Determines whether or not the desktop environment should be hinted that the
 ;;; window does not want to receive input focus.
 ;;; 
 ;;; window :
@@ -3209,6 +3392,13 @@
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-accept-focus))
+
+(defun gdk-window-get-accept-focus (window)
+  (gdk-window-accept-focus window))
+
+(export 'gdk-window-get-accept-focus)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_focus_on_map ()
@@ -3233,6 +3423,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-focus-on-map))
+
+(defun gdk-window-set-focus-on-map (window focus-on-map)
+  (setf (gdk-window-focus-on-map window) focus-on-map))
+
+(export 'gdk-window-set-focus-on-map)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_focus_on_map ()
 ;;; 
@@ -3250,6 +3447,13 @@
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-focus-on-map))
+
+(defun gdk-window-get-focus-on-map (window)
+  (gdk-window-focus-on-map window))
+
+(export 'gdk-window-get-focus-on-map)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_add_filter ()
@@ -3325,13 +3529,6 @@
 ;;;     a GdkFilterReturn value.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkFilterReturn" gdk-filter-return
-  (:export t
-   :type-initializer "gdk_filter_return_get_type")
-  (:continue 0)
-  (:translate 1)
-  (:remove 2))
-
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkFilterReturn
 ;;; 
@@ -3355,6 +3552,13 @@
 ;;; GDK_FILTER_REMOVE
 ;;;     event handled, terminate processing.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GdkFilterReturn" gdk-filter-return
+  (:export t
+   :type-initializer "gdk_filter_return_get_type")
+  (:continue 0)
+  (:translate 1)
+  (:remove 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkXEvent
@@ -3400,8 +3604,8 @@
 ;;;     Y position of shape mask with respect to window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-shape-combine-mask :void
-  (window (g-object window))
+(defcfun ("gdk_window_shape_combine_mask" gdk-window-shape-combine-mask) :void
+  (window (g-object gdk-window))
   (mask (g-object gdk-pixmap))
   (x :int)
   (y :int))
@@ -3443,8 +3647,9 @@
 ;;;     Y position of shape_region in window coordinates
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-shape-combine-region :void
-  (window (g-object window))
+(defcfun ("gdk_window_shape_combine_region" gdk-window-shape-combine-region)
+    :void
+  (window (g-object gdk-window))
   (region (g-boxed-foreign gdk-region))
   (offset-x :int)
   (offset-y :int))
@@ -3465,7 +3670,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-set-child-shapes :void
+(defcfun ("gdk_window_set_child_shapes" gdk-window-set-child-shapes) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-set-child-shapes)
@@ -3486,7 +3691,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-merge-child-shapes :void
+(defcfun ("gdk_window_merge_child_shapes" gdk-window-merge-child-shapes) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-merge-child-shapes)
@@ -3517,7 +3722,7 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; mask :
-;;;     shape mask, or NULL. [allow-none]
+;;;     shape mask, or NULL
 ;;; 
 ;;; x :
 ;;;     X position of shape mask with respect to window
@@ -3528,7 +3733,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-input-shape-combine-mask :void
+(defcfun ("gdk_window_input_shape_combine_mask"
+           gdk-window-input-shape-combine-mask) :void
   (window (g-object gdk-window))
   (mask (g-object gdk-pixmap))
   (x :int)
@@ -3573,7 +3779,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-input-shape-combine-region :void
+(defcfun ("gdk_window_input_shape_combine_region"
+           gdk-window-input-shape-combine-region) :void
   (window (g-object gdk-window))
   (shape-region (g-boxed-foreign gdk-region))
   (offset-x :int)
@@ -3597,7 +3804,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-set-child-input-shapes :void
+(defcfun ("gdk_window_set_child_input_shapes" gdk-window-set-child-input-shapes)
+    :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-set-child-input-shapes)
@@ -3621,7 +3829,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-merge-child-input-shapes :void
+(defcfun ("gdk_window_merge_child_input_shapes"
+           gdk-window-merge-child-input-shapes) :void
   (window (g-object gdk-window)))
 
 (export 'gdk-window-merge-child-input-shapes)
@@ -3647,7 +3856,8 @@
 ;;;     TRUE if the server supports static gravity
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-set-static-gravities :boolean
+(defcfun ("gdk_window_set_static_gravities" gdk-window-set-static-gravities)
+    :boolean
   (window (g-object gdk-window))
   (use-static :boolean))
 
@@ -3720,6 +3930,13 @@
 ;;;     title of window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-title))
+
+(defun gdk-window-set-title (window title)
+  (setf (gdk-window-title window) title))
+
+(export 'gdk-window-set-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_background ()
 ;;; 
@@ -3741,6 +3958,13 @@
 ;;; color :
 ;;;     an allocated GdkColor
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-background))
+
+(defun gdk-window-set-background (window color)
+  (setf (gdk-window-background window) color))
+
+(export 'gdk-window-set-background)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_back_pixmap ()
@@ -3769,13 +3993,13 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; pixmap :
-;;;     a GdkPixmap, or NULL. [allow-none]
+;;;     a GdkPixmap, or NULL
 ;;; 
 ;;; parent_relative :
 ;;;     whether the tiling origin is at the origin of window's parent
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-set-back-pixmap :void
+(defcfun ("gdk_window_set_back_pixmap" gdk-window-set-back-pixmap) :void
   (window (g-object gdk-window))
   (pixmap (g-object gdk-pixmap))
   (parent-relative :boolean))
@@ -3796,7 +4020,7 @@
 ;;; 
 ;;; Returns :
 ;;;     The pattern to use for the background or NULL to use the parent's
-;;;     background. [transfer none]
+;;;     background.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -3828,9 +4052,10 @@
 ;;;     a cursor
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_set_cursor" gdk-window-set-cursor) :void
-  (window (g-object gdk-window))
-  (cursor (g-boxed-foreign gdk-cursor)))
+(declaim (inline gdk-window-set-cursor))
+
+(defun gdk-window-set-cursor (window cursor)
+  (setf (gdk-window-cursor window) cursor))
 
 (export 'gdk-window-set-cursor)
 
@@ -3850,10 +4075,17 @@
 ;;; Returns :
 ;;;     a GdkCursor, or NULL. The returned object is owned by the GdkWindow and
 ;;;     should not be unreferenced directly. Use gdk_window_set_cursor() to
-;;;     unset the cursor of the window. [transfer none]
+;;;     unset the cursor of the window
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-cursor))
+
+(defun gdk-window-get-cursor (window)
+  (gdk-window-cursor window))
+
+(export 'gdk-window-get-cursor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_colormap
@@ -3880,8 +4112,15 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; data :
-;;;     return location for user data. [out]
+;;;     return location for user data
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-user-data))
+
+(defun gdk-window-get-user-data (window)
+  (gdk-window-user-data window))
+
+(export 'gdk-window-get-user-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_geometry ()
@@ -3992,7 +4231,7 @@
 
 (defcfun gdk-window-set-geometry-hints :void
   (window (g-object gdk-window))
-  (geometry (g-boxed-foreign geometry))
+  (geometry (g-boxed-foreign gdk-geometry))
   (geometry-mask gdk-window-hints))
 
 (export 'gdk-window-set-geometry-hints)
@@ -4016,6 +4255,13 @@
 ;;;     A list of pixbufs, of different sizes.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-icon-list))
+
+(defun gdk-window-set-icon-list (window pixbufs)
+  (setf (gdk-window-icon-list window) pixbufs))
+
+(export 'gdk-window-set-icon-list)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_modal_hint ()
 ;;; 
@@ -4035,6 +4281,13 @@
 ;;;     TRUE if the window is modal, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-modal-hint))
+
+(defun gdk-window-set-modal-hint (window modal)
+  (setf (gdk-window-modal-hint window) modal))
+
+(export 'gdk-window-set-modal-hint)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_modal_hint ()
 ;;; 
@@ -4051,6 +4304,13 @@
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-modal-hint))
+
+(defun gdk-window-get-modal-hint (window)
+  (gdk-window-modal-hint window))
+
+(export 'gdk-window-get-modal-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_type_hint ()
@@ -4070,6 +4330,13 @@
 ;;;     A hint of the function this window will have
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-type-hint))
+
+(defun gdk-window-set-type-hint (window hint)
+  (setf (gdk-window-type-hint window) hint))
+
+(export 'gdk-window-set-type-hint)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_type_hint ()
 ;;; 
@@ -4085,6 +4352,13 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-type-hint))
+
+(defun gdk-window-get-type-hint (window)
+  (gdk-window-type-hint window))
+
+(export 'gdk-window-get-type-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_skip_taskbar_hint ()
@@ -4106,6 +4380,13 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-skip-taskbar-hint))
+
+(defun gdk-window-set-taskbar-hint (window skips-taskbar)
+  (setf (gdk-window-skip-taskbar-hint window) skips-taskbar))
+
+(export 'gdk-window-set-skip-taskbar-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_skip_pager_hint ()
@@ -4129,6 +4410,13 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-skip-pager-hint))
+
+(defun gdk-window-set-skip-pager-hint (window skips-pager)
+  (setf (gdk-window-skip-pager-hint window) skips-pager))
+
+(export 'gdk-window-set-skip-pager-hint)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_urgency_hint ()
 ;;; 
@@ -4144,6 +4432,13 @@
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-urgency-hint))
+
+(defun gdk-window-set-urgency-hint (window urgent)
+  (setf (gdk-window-urgency-hint window) urgent))
+
+(export 'gdk-window-set-urgency-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_position ()
@@ -4161,21 +4456,22 @@
 ;;;     a GdkWindow
 ;;; 
 ;;; x :
-;;;     X coordinate of window. [out][allow-none]
+;;;     X coordinate of window
 ;;; 
 ;;; y :
-;;;     Y coordinate of window. [out][allow-none]
+;;;     Y coordinate of window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_position :void
+(defcfun ("gdk_window_get_position" %gdk-window-get-position) :void
   (window (g-object gdk-window))
   (x (:pointer :int))
   (y (:pointer :int)))
 
 (defun gdk-window-get-position (window)
   (with-foreign-objects ((x :int) (y :int))
-    (gdk_window_get_position window x y)
-    (values (mem-ref x :int) (mem-ref y :int))))
+    (%gdk-window-get-position window x y)
+    (values (mem-ref x :int)
+            (mem-ref y :int))))
 
 (export 'gdk-window-get-position)
 
@@ -4197,14 +4493,14 @@
 ;;;     return location for Y position of window frame
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_root_origin :void
+(defcfun ("gdk_window_get_root_origin" %gdk-window-get-root-origin) :void
   (window (g-object gdk-window))
   (x (:pointer :int))
   (y (:pointer :int)))
 
 (defun gdk-window-get-root-origin (window)
   (with-foreign-objects ((x :int) (y :int))
-    (gdk_window_get_root_origin window x y)
+    (%gdk-window-get-root-origin window x y)
     (values (mem-ref x :int) (mem-ref y :int))))
 
 (export 'gdk-window-get-root-origin)
@@ -4226,13 +4522,13 @@
 ;;;     rectangle to fill with bounding box of the window frame
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_frame_extents :void
+(defcfun ("gdk_window_get_frame_extents" %gdk-window-get-frame-extents) :void
   (window (g-object gdk-window))
   (rectangle (g-boxed-foreign gdk-rectangle)))
 
 (defun gdk-window-get-frame-extents (window)
   (let ((rectangle (make-gdk-rectangle)))
-    (gdk_window_get_frame_extents window rectangle)
+    (%gdk-window-get-frame-extents window rectangle)
     rectangle))
 
 (export 'gdk-window-get-frame-extents)
@@ -4304,15 +4600,16 @@
 ;;;     not meaningful, ignore
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_origin :int
+(defcfun ("gdk_window_get_origin" %gdk-window-get-origin) :int
   (window (g-object gdk-window))
   (x (:pointer :int))
   (y (:pointer :int)))
 
 (defun gdk-window-get-origin (window)
   (with-foreign-objects ((x :int) (y :int))
-    (gdk_window_get_origin window x y)
-    (values (mem-ref x :int) (mem-ref y :int))))
+    (%gdk-window-get-origin window x y)
+    (values (mem-ref x :int)
+            (mem-ref y :int))))
 
 (export 'gdk-window-get-origin)
 
@@ -4370,29 +4667,28 @@
 ;;;     Y coordinate in window
 ;;; 
 ;;; root_x :
-;;;     return location for X coordinate. [out]
+;;;     return location for X coordinate
 ;;; 
 ;;; root_y :
-;;;     return location for Y coordinate. [out]
+;;;     return location for Y coordinate
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-2.18
-(progn
-  (defcfun gdk_window_get_root_coords :void
-    (window (g-object gdk-window))
-    (x :int)
-    (y :int)
-    (root-x :int)
-    (root-y :int))
+(defcfun ("gdk_window_get_root_coords" %gdk-window-get-root-coords) :void
+  (window (g-object gdk-window))
+  (x :int)
+  (y :int)
+  (root-x :int)
+  (root-y :int))
 
-  (defun gdk-window-get-root-coords (window x y)
-    (with-foreign-objects ((root-x :int) (root-y :int))
-      (gdk_window_get_root_coords window x y root-x root-y)
-      (values (mem-ref root-x :int) (mem-ref root-y :int))))
+(defun gdk-window-get-root-coords (window x y)
+  (with-foreign-objects ((root-x :int) (root-y :int))
+    (%gdk-window-get-root-coords window x y root-x root-y)
+    (values (mem-ref root-x :int)
+            (mem-ref root-y :int))))
   
-  (export 'gdk-window-get-root-coords))
+(export 'gdk-window-get-root-coords)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_coords_from_parent ()
@@ -4437,6 +4733,21 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_coords_from_parent" %gdk-window-coords-from-parent) :void
+  (window (g-object gdk-window))
+  (parent-x :double)
+  (parent-y :double)
+  (x :double)
+  (y :double))
+
+(defun gdk-window-coords-from-parent (window parent-x parent-y)
+  (with-foreign-objects ((x :double) (y :double))
+    (%gdk-window-coords-from-parent window parent-x parent-y x y)
+    (values (mem-ref x :double)
+            (mem-ref y :double))))
+  
+(export 'gdk-window-coords-form-parent)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_coords_to_parent ()
 ;;; 
@@ -4480,6 +4791,21 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_coords_to_parent" %gdk-window-coords-to-parent) :void
+  (window (g-object gdk-window))
+  (x :double)
+  (y :double)
+  (parent-x :double)
+  (parent-y :double))
+
+(defun gdk-window-coords-to-parent (window x y)
+  (with-foreign-objects ((parent-x :double) (parent-y :double))
+    (%gdk-window-coords-to-parent window x y parent-x parent-y)
+    (values (mem-ref parent-x :double)
+            (mem-ref parent-y :double))))
+  
+(export 'gdk-window-coords-to-parent)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_pointer ()
 ;;; 
@@ -4500,18 +4826,19 @@
 ;;; 
 ;;; y :
 ;;;     return location for Y coordinate of pointer or NULL to not return the
-;;;     Y coordinate. [out][allow-none]
+;;;     Y coordinate
 ;;; 
 ;;; mask :
 ;;;     return location for modifier mask or NULL to not return the modifier
-;;;     mask. [out][allow-none]
+;;;     mask
 ;;; 
 ;;; Returns :
 ;;;     the window containing the pointer (as with gdk_window_at_pointer()), or
-;;;     NULL if the window containing the pointer isn't known to GDK.
+;;;     NULL if the window containing the pointer isn't known to GDK
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_pointer (g-object gdk-window)
+(defcfun ("gdk_window_get_pointer" %gdk-window-get-pointer)
+    (g-object gdk-window)
   (window (g-object gdk-window))
   (x (:pointer :int))
   (y (:pointer :int))
@@ -4519,7 +4846,7 @@
 
 (defun gdk-window-get-pointer (window)
   (with-foreign-objects ((x :int) (y :int) (mask 'gdk-modifier-type))
-    (let ((w (gdk_window_get_pointer window x y mask)))
+    (let ((w (%gdk-window-get-pointer window x y mask)))
       (values w
               (mem-ref x :int)
               (mem-ref y :int)
@@ -4550,6 +4877,13 @@
 ;;;     parent of window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-get-parent))
+
+(defun gdk-window-get-parent (window)
+  (gdk-window-parent window))
+
+(export 'gdk-window-get-parent)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_effective_parent ()
 ;;; 
@@ -4569,6 +4903,12 @@
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_window_get_effective_parent" gdk-window-get-effective-parent)
+    (g-object gdk-window)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-effective-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_toplevel ()
@@ -4592,6 +4932,13 @@
 ;;;     the toplevel window containing window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-get-toplevel))
+
+(defun gdk-window-get-toplevel (window)
+  (gdk-window-toplevel window))
+
+(export 'gdk-window-get-toplevel)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_effective_toplevel ()
 ;;; 
@@ -4613,6 +4960,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_get_effective_toplevel" gdk-window-get-effective-toplevel)
+    (g-object gdk-window)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-effective-toplevel)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_children ()
 ;;; 
@@ -4631,6 +4984,13 @@
 ;;;     list of child windows inside window.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-get-children))
+
+(defun gdk-window-get-children (window)
+  (gdk-window-children window))
+
+(export 'gdk-window-get-children)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_peek_children ()
 ;;; 
@@ -4646,6 +5006,12 @@
 ;;;     a reference to the list of child windows in window.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_window_peek_children" gdk-window-peek-children)
+    (g-list (g-object gdk-window))
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-peek-children)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_events ()
 ;;; 
@@ -4659,6 +5025,13 @@
 ;;; Returns :
 ;;;     event mask for window
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-events))
+
+(defun gdk-window-get-events (window)
+  (gdk-window-events window))
+
+(export 'gdk-window-get-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_events ()
@@ -4676,6 +5049,13 @@
 ;;; event_mask :
 ;;;     event mask for window
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-events))
+
+(defun gdk-window-set-events (window event-mask)
+  (setf (gdk-window-events window) event-mask))
+
+(export 'gdk-window-set-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_icon ()
@@ -4705,7 +5085,7 @@
 ;;;     none
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-window-set-icon :void
+(defcfun ("gdk_window_set_icon" gdk-window-set-icon) :void
   (window (g-object gdk-window))
   (icon-window (g-object gdk-window))
   (pixmap (g-object gdk-pixmap))
@@ -4736,6 +5116,13 @@
 ;;;     name of window while iconified (minimized)
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-icon-name))
+
+(defun gdk-window-set-icon-name (window name)
+  (setf (gdk-window-icon-name window) name))
+
+(export 'gdk-window-set-icon-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_transient_for ()
 ;;; 
@@ -4754,6 +5141,13 @@
 ;;;     another toplevel GdkWindow
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-transient-for))
+
+(defun gdk-window-set-transient-for (window parent)
+  (setf (gdk-window-transient-for window) parent))
+
+(export 'gdk-window-set-transient-for)
+ 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_role ()
 ;;; 
@@ -4778,6 +5172,13 @@
 ;;;     a string indicating its role
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-role))
+
+(defun gdk-window-set-role (window role)
+  (setf (gdk-window-role window) role))
+
+(export 'gdk-window-set-role)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_startup_id ()
 ;;; 
@@ -4794,6 +5195,13 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-startup-id))
+
+(defun gdk-window-set-startup-id (window startup-id)
+  (setf (gdk-window-startup-id window) startup-id))
+
+(export 'gdk-window-set-startup-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_group ()
@@ -4817,6 +5225,13 @@
 ;;;     group leader window, or NULL to restore the default group leader window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-group))
+
+(defun gdk-window-set-group (window leader)
+  (setf (gdk-window-group window) leader))
+
+(export 'gdk-window-set-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_group ()
 ;;; 
@@ -4832,6 +5247,13 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-get-group))
+
+(defun gdk-window-get-group (window)
+  (gdk-window-group window))
+
+(export 'gdk-window-get-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_decorations ()
@@ -4861,6 +5283,13 @@
 ;;;     decoration hint mask
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-window-set-decorations))
+
+(defun gdk-window-set-decorations (window decorations)
+  (setf (gdk-window-decorations window) decorations))
+
+(export 'gdk-window-set-decorations)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_decorations ()
 ;;; 
@@ -4879,14 +5308,16 @@
 ;;;     TRUE if the window has decorations set, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk_window_get_decorations :boolean
+(defcfun ("gdk_window_get_decorations" %gdk-window-get-decorations) :boolean
   (window (g-object gdk-window))
   (decorations (:pointer gdk-wm-decoration)))
 
 (defun gdk-window-get-decorations (window)
   (with-foreign-object (decorations 'gdk-wm-decoration)
-    (gdk_window_get_decorations window decorations)
+    (%gdk-window-get-decorations window decorations)
     (mem-ref decorations 'gdk-wm-decoration)))
+
+(export 'gdk-window-get-decorations)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_functions ()
@@ -4911,6 +5342,13 @@
 ;;; functions :
 ;;;     bitmask of operations to allow on window
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-window-set-functions))
+
+(defun gdk-window-set-functions (window functions)
+  (setf (gdk-window-functions window) functions))
+
+(export 'gdk-window-set-functions)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_toplevels ()
@@ -4946,7 +5384,8 @@
 ;;;     the default root window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-get-default-root-window (g-object gdk-window))
+(defcfun ("gdk_get_default_root_window" gdk-get-default-root-window)
+    (g-object gdk-window))
 
 (export 'gdk-get-default-root-window)
 
@@ -5004,7 +5443,7 @@
 ;;; 
 ;;; new_hooks :
 ;;;     a table of pointers to functions for getting quantities related to the
-;;; current pointer position, or NULL to restore the default table.
+;;;     current pointer position, or NULL to restore the default table.
 ;;; 
 ;;; Returns :
 ;;;     the previous pointer hook table
@@ -5028,7 +5467,8 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-offscreen-window-get-pixmap (g-object gdk-pixmap)
+(defcfun ("gdk_offscreen_window_get_pixmap" gdk-offscreen-window-get-pixmap)
+    (g-object gdk-pixmap)
   (window (g-object gdk-window)))
 
 (export 'gdk-offscreen-window-get-pixmap)
@@ -5054,18 +5494,12 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_offscreen_window_get_embedder" gdk-offscreen-window-embedder)
-    (g-object gdk-window)
-  (window (g-object gdk-window)))
-
-(defcfun gdk_offscreen_window_set_embedder :void
+(defcfun ("gdk_offscreen_window_set_embedder" gdk_offscreen_window_set_embedder)
+    :void
   (window (g-object gdk-window))
   (embedder (g-object gdk-window)))
 
-(defun (setf gdk-offscreen-window-embedder) (new-value window)
-  (gdk_offscreen_window_set_embedder window new-value))
-
-(export 'gdk-offscreen-window-embedder)
+(export 'gdk-offscreen-window-set-embedder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_offscreen_window_get_embedder ()
@@ -5083,6 +5517,12 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_offscreen_window_get_embedder" gdk-offscreen-get-window-embedder)
+    (g-object gdk-window)
+  (window (g-object gdk-window)))
+
+(export 'gdk-offscreen-window-get-embedder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_geometry_changed ()
