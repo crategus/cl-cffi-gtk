@@ -1120,7 +1120,7 @@
 (defcfun ("gtk_window_set_geometry_hints" gtk-window-set-geometry-hints) :void
   (window (g-object gtk-window))
   (geometry-widget (g-object gtk-widget))
-  (geometry (g-boxed-foreign geometry))
+  (geometry (g-boxed-foreign gdk-geometry))
   (geometry-mask gdk-window-hints))
 
 (export 'gtk-window-set-geometry-hints)
