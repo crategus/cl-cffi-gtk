@@ -55,6 +55,7 @@
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
 (load "rtest-gdk-display-manager.lisp")
+(load "rtest-gdk-window.lisp")
 
 (in-package :gdk-tests)
 (run-all-tests :gdk-tests)
