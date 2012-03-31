@@ -1714,3 +1714,38 @@
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
+
+;;; Toolbar - Example is not finished
+
+(defun example-toolbar ()
+  (within-main-loop
+    (let ((dialog (make-instance 'gtk-dialog
+                                 :title "Example GtkToolbar"
+                                 :width-request 600
+                                 :height-request 300
+                                 :allow-shring t))
+          (handle-box (make-instance 'gtk-handle-box))
+          (toolbar (make-instance 'gtk-toolbar
+                                  :toolbar-style :both
+                                  :border-width 6)))
+      (g-signal-connect dialog "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-realize dialog)
+      (gtk-box-pack-start (gtk-dialog-get-content-area dialog)
+                          handle-box
+                          :expand nil
+                          :fill nil
+                          :padding 6)
+      (gtk-container-add handle-box toolbar)
+      (gtk-toolbar-insert toolbar
+                          (make-instance 'gtk-tool-button
+                                         :label "Close"
+                                         :icon-widget
+                                         (gtk-image-new-from-file "gtk-logo.png"))
+                          0)
+      
+      (gtk-widget-show dialog))))
+
+;;; ----------------------------------------------------------------------------
