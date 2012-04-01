@@ -490,6 +490,11 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-about-dialog-new ()
+  (make-instance 'gtk-about-dialog))
+
+(export 'gtk-about-dialog-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_program_name ()
 ;;; 
@@ -506,6 +511,8 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-get-program-name))
 
 (defun gtk-about-dialog-get-program-name (about)
   (gtk-about-dialog-program-name about))
@@ -530,6 +537,8 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-set-program-name))
+
 (defun gtk-about-dialog-set-program-name (about name)
   (setf (gtk-about-dialog-program-name about) name))
 
@@ -552,6 +561,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-version))
+
 (defun gtk-about-dialog-get-version (about)
   (gtk-about-dialog-version about))
 
@@ -569,10 +580,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; version :
-;;;     the version string. [allow-none]
+;;;     the version string
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-version))
 
 (defun gtk-about-dialog-set-version (about version)
   (setf (gtk-about-dialog-version about) version))
@@ -595,6 +608,8 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-get-copyright))
 
 (defun gtk-about-dialog-get-copyright (about)
   (gtk-about-dialog-copyright about))
@@ -619,6 +634,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-set-copyright))
+
 (defun gtk-about-dialog-set-copyright (about copyright)
   (setf (gtk-about-dialog-copyright about) copyright))
 
@@ -641,6 +658,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-comments))
+
 (defun gtk-about-dialog-get-comments (about)
   (gtk-about-dialog-comments about))
 
@@ -659,10 +678,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; comments :
-;;;     a comments string.
+;;;     a comments string
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-comments))
 
 (defun gtk-about-dialog-set-comments (about comments)
   (setf (gtk-about-dialog-comments about) comments))
@@ -686,6 +707,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-license))
+
 (defun gtk-about-dialog-get-license (about)
   (gtk-about-dialog-license about))
 
@@ -704,10 +727,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; license :
-;;;     the license information or NULL.
+;;;     the license information or NULL
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-license))
 
 (defun gtk-about-dialog-set-license (about license)
   (setf (gtk-about-dialog-license about) license))
@@ -730,6 +755,8 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-wrap-license))
+
 (defun gtk-about-dialog-get-wrap-license (about)
   (gtk-about-dialog-wrap-license about))
 
@@ -751,6 +778,8 @@
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-wrap-license))
 
 (defun gtk-about-dialog-set-wrap-license (about wrap-license)
   (setf (gtk-about-dialog-wrap-license about) wrap-license))
@@ -811,6 +840,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-website))
+
 (defun gtk-about-dialog-get-website (about)
   (gtk-about-dialog-website about))
 
@@ -828,10 +859,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; website :
-;;;     a URL string starting with "http://". [allow-none]
+;;;     a URL string starting with "http://"
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-website))
 
 (defun gtk-about-dialog-set-website (about website)
   (setf (gtk-about-dialog-website about) website))
@@ -855,6 +888,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-website-label))
+
 (defun gtk-about-dialog-get-website-label (about)
   (gtk-about-dialog-website-label about))
 
@@ -876,6 +911,8 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-website-label))
 
 (defun gtk-about-dialog-set-website-label (about website-label)
   (setf (gtk-about-dialog-website-label about) website-label))
@@ -900,6 +937,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-authors))
+
 (defun gtk-about-dialog-get-authors (about)
   (gtk-about-dialog-authors about))
 
@@ -922,6 +961,8 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-authors))
 
 (defun gtk-about-dialog-set-authors (about authors)
   (setf (gtk-about-dialog-authors about) authors))
@@ -946,8 +987,10 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-artists))
+
 (defun gtk-about-dialog-get-artists (about)
-  (gtk-about-dialog-get-artists about))
+  (gtk-about-dialog-artists about))
 
 (export 'gtk-about-dialog-get-artists)
 
@@ -964,10 +1007,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; artists :
-;;;     a NULL-terminated array of strings.
+;;;     a NULL-terminated array of strings
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-artists))
 
 (defun gtk-about-dialog-set-artists (about artists)
   (setf (gtk-about-dialog-artists about) artists))
@@ -992,6 +1037,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-documenters))
+
 (defun gtk-about-dialog-get-documenters (about)
   (gtk-about-dialog-documenters about))
 
@@ -1010,10 +1057,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; documenters :
-;;;     a NULL-terminated array of strings.
+;;;     a NULL-terminated array of strings
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-documenters))
 
 (defun gtk-about-dialog-set-documenters (about documenters)
   (setf (gtk-about-dialog-documenters about) documenters))
@@ -1037,6 +1086,8 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-get-translator-credits))
 
 (defun gtk-about-dialog-get-translator-credits (about)
   (gtk-about-dialog-translator-credits about))
@@ -1067,10 +1118,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; translator_credits :
-;;;     the translator credits. [allow-none]
+;;;     the translator credits
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-translator-credits))
 
 (defun gtk-about-dialog-set-translator-credits (about translator-credits)
   (setf (gtk-about-dialog-translator-credits about) translator-credits))
@@ -1095,6 +1148,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-logo))
+
 (defun gtk-about-dialog-get-logo (about)
   (gtk-about-dialog-logo about))
 
@@ -1113,10 +1168,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; logo :
-;;;     a GdkPixbuf, or NULL.
+;;;     a GdkPixbuf, or NULL
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-logo))
 
 (defun gtk-about-dialog-set-logo (about logo)
   (setf (gtk-about-dialog-logo about) logo))
@@ -1140,6 +1197,8 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-about-dialog-get-logo-icon-name))
+
 (defun gtk-about-dialog-get-logo-icon-name (about)
   (gtk-about-dialog-logo-icon-name about))
 
@@ -1158,10 +1217,12 @@
 ;;;     a GtkAboutDialog
 ;;; 
 ;;; icon_name :
-;;;     an icon name, or NULL.
+;;;     an icon name, or NULL
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-logo-icon-name))
 
 (defun gtk-about-dialog-set-logo-icon-name (about icon-name)
   (setf (gtk-about-dialog-logo-icon-name about) icon-name))
@@ -1180,7 +1241,7 @@
 ;;; future invocations of this function.
 ;;; 
 ;;; parent :
-;;;     transient parent, or NULL for none.
+;;;     transient parent, or NULL for none
 ;;; 
 ;;; first_property_name :
 ;;;     the name of the first property
@@ -1211,7 +1272,7 @@
 ;;; deactivate it, you can pass NULL for func.
 ;;; 
 ;;; func :
-;;;     a function to call when an email link is activated.
+;;;     a function to call when an email link is activated
 ;;; 
 ;;; data :
 ;;;     data to pass to func
@@ -1220,7 +1281,7 @@
 ;;;     GDestroyNotify for data
 ;;; 
 ;;; Returns :
-;;;     the previous email hook.
+;;;     the previous email hook
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1287,7 +1348,7 @@
 ;;;     GDestroyNotify for data
 ;;; 
 ;;; Returns :
-;;;     the previous URL hook.
+;;;     the previous URL hook
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------

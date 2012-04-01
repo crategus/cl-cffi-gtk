@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -314,7 +314,7 @@
     gtk-dialog-has-separator
     "has-separator" "gboolean" t t)
    (:cffi content-area
-          gtk-dialog-content-area (g-object v-box)
+          gtk-dialog-content-area (g-object gtk-vbox)
           "gtk_dialog_get_content_area" nil)
    (:cffi action-area
           gtk-dialog-action-area (g-object gtk-widget)
@@ -432,6 +432,11 @@
 ;;; Returns :
 ;;;     the new dialog as a GtkWidget
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-dialog-new ()
+  (make-instance 'gtk-dialog))
+
+(export 'gtk-dialog-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_dialog_new_with_buttons ()
@@ -673,6 +678,8 @@
 ;;;     a response ID
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-dialog-set-default-response))
+
 (defun gtk-dialog-set-default-response (dialog response-id)
   (setf (gtk-dialog-default-response dialog) response-id))
 
@@ -774,10 +781,12 @@
 ;;;     a GtkDialog
 ;;; 
 ;;; Returns :
-;;;     the action area.
+;;;     the action area
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-dialog-get-action-area))
 
 (defun gtk-dialog-get-action-area (dialog)
   (gtk-dialog-action-area dialog))
@@ -795,10 +804,12 @@
 ;;;     a GtkDialog
 ;;; 
 ;;; Returns :
-;;;     the content area GtkBox.
+;;;     the content area GtkBox
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-dialog-get-content-area))
 
 (defun gtk-dialog-get-content-area (dialog)
   (gtk-dialog-content-area dialog))

@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -233,6 +233,8 @@
 
 (in-package :gtk)
 
+;;; A function to show a simple message dialog
+
 (defun show-message (message &key (buttons :ok) (message-type :info)
                                   (use-markup nil))
   (let ((dialog (make-instance 'gtk-message-dialog
@@ -245,6 +247,8 @@
       (gtk-widget-destroy dialog))))
 
 (export 'show-message)
+
+;;; Handle an error and show an error message dialog
 
 (defmacro with-gtk-message-error-handler (&body body)
   (let ((dialog (gensym))
@@ -278,19 +282,26 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_message_dialog_get_type")
-  ((buttons gtk-message-dialog-buttons
+  ((buttons
+    gtk-message-dialog-buttons
     "buttons" "GtkButtonsType" nil nil)
-   (image gtk-message-dialog-image
+   (image
+    gtk-message-dialog-image
     "image" "GtkWidget" t t)
-   (message-type gtk-message-dialog-message-type
+   (message-type
+    gtk-message-dialog-message-type
     "message-type" "GtkMessageType" t t)
-   (secondary-text gtk-message-dialog-secondary-text
+   (secondary-text
+    gtk-message-dialog-secondary-text
     "secondary-text" "gchararray" t t)
-   (secondary-use-markup gtk-message-dialog-secondary-use-markup
+   (secondary-use-markup
+    gtk-message-dialog-secondary-use-markup
     "secondary-use-markup" "gboolean" t t)
-   (text gtk-message-dialog-text
+   (text
+    gtk-message-dialog-text
     "text" "gchararray" t t)
-   (use-markup gtk-message-dialog-use-markup
+   (use-markup
+    gtk-message-dialog-use-markup
     "use-markup" "gboolean" t t)))
 
 ;;; ---------------------------------------------------------------------------- 
@@ -307,19 +318,19 @@
 ;;; The type of message being displayed in the dialog.
 ;;; 
 ;;; GTK_MESSAGE_INFO
-;;; 	Informational message
+;;;     Informational message
 ;;; 
 ;;; GTK_MESSAGE_WARNING
-;;; 	Nonfatal warning message
+;;;     Nonfatal warning message
 ;;; 
 ;;; GTK_MESSAGE_QUESTION
-;;; 	Question requiring a choice
+;;;     Question requiring a choice
 ;;; 
 ;;; GTK_MESSAGE_ERROR
-;;; 	Fatal error message
+;;;     Fatal error message
 ;;; 
 ;;; GTK_MESSAGE_OTHER
-;;; 	None of the above, doesn't get an icon
+;;;     None of the above, doesn't get an icon
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkMessageType" gtk-message-type
@@ -352,22 +363,22 @@
 ;;; GTK_BUTTONS_OK_CANCEL are discouraged by the GNOME HIG.
 ;;; 
 ;;; GTK_BUTTONS_NONE
-;;; 	no buttons at all
+;;;     no buttons at all
 ;;; 
 ;;; GTK_BUTTONS_OK
-;;; 	an OK button
+;;;     an OK button
 ;;; 
 ;;; GTK_BUTTONS_CLOSE
-;;; 	a Close button
+;;;     a Close button
 ;;; 
 ;;; GTK_BUTTONS_CANCEL
-;;; 	a Cancel button
+;;;     a Cancel button
 ;;; 
 ;;; GTK_BUTTONS_YES_NO
-;;; 	Yes and No buttons
+;;;     Yes and No buttons
 ;;; 
 ;;; GTK_BUTTONS_OK_CANCEL
-;;; 	OK and Cancel buttons
+;;;     OK and Cancel buttons
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkButtonsType" gtk-buttons-type
@@ -397,25 +408,25 @@
 ;;; details.
 ;;; 
 ;;; parent :
-;;; 	transient parent, or NULL for none. [allow-none]
+;;;     transient parent, or NULL for none
 ;;; 
 ;;; flags :
-;;; 	flags
+;;;     flags
 ;;; 
 ;;; type :
-;;; 	type of message
+;;;     type of message
 ;;; 
 ;;; buttons :
-;;; 	set of buttons to use
+;;;     set of buttons to use
 ;;; 
 ;;; message_format :
-;;; 	printf()-style format string, or NULL. [allow-none]
+;;;     printf()-style format string, or NULL
 ;;; 
 ;;; ... :
-;;; 	arguments for message_format
+;;;     arguments for message_format
 ;;; 
 ;;; Returns :
-;;; 	a new GtkMessageDialog. [transfer none]
+;;;     a new GtkMessageDialog
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -442,35 +453,35 @@
 ;;; can't pass the markup string either as the format (it might contain '%'
 ;;; characters) or as a string argument.
 ;;; 
-;;;  1 GtkWidget *dialog;
-;;;  2 dialog = gtk_message_dialog_new (main_application_window,
-;;;  3                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;  4                                  GTK_MESSAGE_ERROR,
-;;;  5                                  GTK_BUTTONS_CLOSE,
-;;;  6                                  NULL);
-;;;  7 gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
-;;;  8                                markup);
+;;;  GtkWidget *dialog;
+;;;  dialog = gtk_message_dialog_new (main_application_window,
+;;;                                   GTK_DIALOG_DESTROY_WITH_PARENT,
+;;;                                   GTK_MESSAGE_ERROR,
+;;;                                   GTK_BUTTONS_CLOSE,
+;;;                                   NULL);
+;;;  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
+;;;                                 markup);
 ;;; 
 ;;; parent :
-;;; 	transient parent, or NULL for none. [allow-none]
+;;;     transient parent, or NULL for none
 ;;; 
 ;;; flags :
-;;; 	flags
+;;;     flags
 ;;; 
 ;;; type :
-;;; 	type of message
+;;;     type of message
 ;;; 
 ;;; buttons :
-;;; 	set of buttons to use
+;;;     set of buttons to use
 ;;; 
 ;;; message_format :
-;;; 	printf()-style format string, or NULL. [allow-none]
+;;;     printf()-style format string, or NULL
 ;;; 
 ;;; ... :
-;;; 	arguments for message_format
+;;;     arguments for message_format
 ;;; 
 ;;; Returns :
-;;; 	a new GtkMessageDialog
+;;;     a new GtkMessageDialog
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -478,20 +489,27 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_set_markup ()
 ;;; 
-;;; void gtk_message_dialog_set_markup (GtkMessageDialog *message_dialog,
-;;;                                     const gchar *str);
+;;; void gtk_message_dialog_set_markup (GtkMessageDialog *dialog,
+;;;                                     const gchar *text);
 ;;; 
 ;;; Sets the text of the message dialog to be str, which is marked up with the
 ;;; Pango text markup language.
 ;;; 
-;;; message_dialog :
-;;; 	a GtkMessageDialog
+;;; dialog :
+;;;     a GtkMessageDialog
 ;;; 
-;;; str :
-;;; 	markup string (see Pango markup format)
+;;; text :
+;;;     markup string (see Pango markup format)
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-message-dialog-set-markup))
+
+(defun gtk-message-dialog-set-markup (dialog text)
+  (setf (gtk-message-dialog-text dialog) text))
+
+(export 'gtk-message-dialog-set-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_set_image ()
@@ -502,13 +520,20 @@
 ;;; Sets the dialog's image to image.
 ;;; 
 ;;; dialog :
-;;; 	a GtkMessageDialog
+;;;     a GtkMessageDialog
 ;;; 
 ;;; image :
-;;; 	the image
+;;;     the image
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-message-dialog-set-image))
+
+(defun gtk-message-dialog-set-image (dialog image)
+  (setf (gtk-message-dialog-image dialog) image))
+
+(export 'gtk-message-dialog-set-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_get_image ()
@@ -518,13 +543,20 @@
 ;;; Gets the dialog's image.
 ;;; 
 ;;; dialog :
-;;; 	a GtkMessageDialog
+;;;     a GtkMessageDialog
 ;;; 
 ;;; Returns :
-;;; 	the dialog's image. [transfer none]
+;;;     the dialog's image
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-message-dialog-get-image))
+
+(defun gtk-message-dialog-get-image (dialog)
+  (gtk-message-dialog-image dialog))
+
+(export 'gtk-message-dialog-get-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_format_secondary_text ()
@@ -541,13 +573,13 @@
 ;;; unless you have provided explicit markup.
 ;;; 
 ;;; message_dialog :
-;;; 	a GtkMessageDialog
+;;;     a GtkMessageDialog
 ;;; 
 ;;; message_format :
-;;; 	printf()-style format string, or NULL. [allow-none]
+;;;     printf()-style format string, or NULL
 ;;; 
 ;;; ... :
-;;; 	arguments for message_format
+;;;     arguments for message_format
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -571,20 +603,20 @@
 ;;; contain special XML characters, you should use g_markup_printf_escaped() to
 ;;; escape it.
 ;;; 
-;;;  1 gchar *msg;
-;;;  2 
-;;;  3 msg = g_markup_printf_escaped (message_format, ...);
-;;;  4 gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
-;;;  5 g_free (msg);
+;;;  gchar *msg;
+;;;  
+;;;  msg = g_markup_printf_escaped (message_format, ...);
+;;;  gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
+;;;  g_free (msg);
 ;;; 
 ;;; message_dialog :
-;;; 	a GtkMessageDialog
+;;;     a GtkMessageDialog
 ;;; 
 ;;; message_format :
-;;; 	printf()-style markup string (see Pango markup format), or NULL
+;;;     printf()-style markup string (see Pango markup format), or NULL
 ;;; 
 ;;; ... :
-;;; 	arguments for message_format
+;;;     arguments for message_format
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -592,8 +624,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_get_message_area ()
 ;;; 
-;;; GtkWidget * gtk_message_dialog_get_message_area
-;;;                                           (GtkMessageDialog *message_dialog)
+;;; GtkWidget * gtk_message_dialog_get_message_area (GtkMessageDialog *dialog)
 ;;; 
 ;;; Returns the message area of the dialog. This is the box where the dialog's
 ;;; primary and secondary labels are packed. You can add your own extra content
@@ -602,14 +633,19 @@
 ;;; gtk_dialog_get_content_area() for the corresponding function in the parent
 ;;; GtkDialog.
 ;;; 
-;;; message_dialog :
-;;; 	a GtkMessageDialog
+;;; dialog :
+;;;     a GtkMessageDialog
 ;;; 
 ;;; Returns :
-;;; 	A GtkVBox corresponding to the "message area" in the message_dialog.
+;;;     a GtkVBox corresponding to the "message area" in the message_dialog
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_message_dialog_get_message_area"
+           gtk-message-dialog-get-message-area) (g-object g-widget)
+  (dialog (g-object gtk-message-dialog)))
+
+(export 'gtk-message-dialog-get-message-area)
 
 ;;; --- End of file gtk.message-dialog.lisp ------------------------------------
