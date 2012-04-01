@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 2.2.2 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,7 +34,8 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     GtkSeparator;
+;;;     GtkSeparator
+;;;
 ;;;     gtk_separator_new
 ;;; 
 ;;; Object Hierarchy
@@ -70,10 +71,11 @@
   (register-object-type "GtkSeparator" 'gtk-separator))
 
 (define-g-object-class "GtkSeparator" gtk-separator
-                       (:superclass gtk-widget :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_separator_get_type")
-                       nil)
+  (:superclass gtk-widget
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_separator_get_type")
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_new ()
@@ -86,7 +88,7 @@
 ;;;     the separator's orientation.
 ;;; 
 ;;; Returns :
-;;;     a new GtkSeparator.
+;;;     a new GtkSeparator
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -143,13 +145,16 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkHSeparator" 'gtk-h-separator))
+  (register-object-type "GtkHSeparator" 'gtk-hseparator)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkVSeparator" GTK-HSEPARATOR)) *lisp-name-exceptions*)))
 
-(define-g-object-class "GtkHSeparator" gtk-h-separator
-                       (:superclass gtk-separator :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_hseparator_get_type")
-                       nil)
+(define-g-object-class "GtkHSeparator" gtk-hseparator
+  (:superclass gtk-separator
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_hseparator_get_type")
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hseparator_new ()
@@ -168,8 +173,10 @@
 ;;;     a new GtkHSeparator.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-hseparator-new))
+
 (defun gtk-hseparator-new ()
-  (make-instance 'gtk-h-seprator))
+  (make-instance 'gtk-hseprator))
 
 (export 'gtk-hseparator)
 
@@ -218,13 +225,16 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkVSeparator" 'gtk-v-separator))
+  (register-object-type "GtkVSeparator" 'gtk-vseparator)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkVSeparator" GTK-VSEPARATOR)) *lisp-name-exceptions*)))
 
-(define-g-object-class "GtkVSeparator" gtk-v-separator
-                       (:superclass gtk-separator :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vseparator_get_type")
-                       nil)
+(define-g-object-class "GtkVSeparator" gtk-vseparator
+  (:superclass gtk-separator
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_vseparator_get_type")
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vseparator_new ()
@@ -243,8 +253,10 @@
 ;;;     a new GtkVSeparator.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-vseparator-new))
+
 (defun gtk-vseparator-new ()
-  (make-instance 'gtk-v-separator))
+  (make-instance 'gtk-vseparator))
 
 (export 'gtk-vseparator)
 
