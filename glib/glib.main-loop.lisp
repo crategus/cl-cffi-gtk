@@ -1780,6 +1780,12 @@
 ;;;     the ID (greater than 0) of the event source.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_idle_add" %g-idle-add) :uint
+  (function :pointer)
+  (data :pointer))
+
+(export '%g-idle-add)
+  
 (defun g-idle-add (func &key (priority +g-priority-default+))
   (g-idle-add-full priority
                    (callback call-timeout-from-main-loop-cb)

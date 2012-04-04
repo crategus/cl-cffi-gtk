@@ -346,7 +346,7 @@
       (push (list pointer type) *gboxed-gc-hooks*)
       (unless locks-were-present
         (log-for :gc "adding gboxed idle-gc-hook to main loop~%")
-        (g-idle-add (callback gboxed-idle-gc-hook))))))
+        (%g-idle-add (callback gboxed-idle-gc-hook) (null-pointer))))))
 
 (defun make-boxed-free-finalizer (type pointer)
   (lambda () (register-gboxed-for-gc type pointer)))
