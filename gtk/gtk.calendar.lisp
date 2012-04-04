@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -394,29 +394,40 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_calendar_get_type")
-  ((day gtk-calendar-day
+  ((day
+    gtk-calendar-day
     "day" "gint" t t)
-   (detail-height-rows gtk-calendar-detail-height-rows
+   (detail-height-rows
+    gtk-calendar-detail-height-rows
     "detail-height-rows" "gint" t t)
-   (detail-width-chars gtk-calendar-detail-width-chars
+   (detail-width-chars
+    gtk-calendar-detail-width-chars
     "detail-width-chars" "gint" t t)
-   (month gtk-calendar-month "month" "gint" t t)
-   (no-month-change gtk-calendar-no-month-change
+   (month
+    gtk-calendar-month "month" "gint" t t)
+   (no-month-change
+    gtk-calendar-no-month-change
     "no-month-change" "gboolean" t t)
-   (show-day-names gtk-calendar-show-day-names
+   (show-day-names
+    gtk-calendar-show-day-names
     "show-day-names" "gboolean" t t)
-   (show-details gtk-calendar-show-details
+   (show-details
+    gtk-calendar-show-details
     "show-details" "gboolean" t t)
-   (show-heading gtk-calendar-show-heading
+   (show-heading
+    gtk-calendar-show-heading
     "show-heading" "gboolean" t t)
-   (show-week-numbers gtk-calendar-show-week-numbers
+   (show-week-numbers
+    gtk-calendar-show-week-numbers
     "show-week-numbers" "gboolean" t t)
-   (year gtk-calendar-year
+   (year
+    gtk-calendar-year
     "year" "gint" t t)
-   (:cffi detail-function gtk-calendar-detail-function
-          nil nil gtk-calendar-set-detail-func)
-   (:cffi display-options gtk-calendar-display-options
-          gtk-calendar-display-options
+   (:cffi detail-function
+          gtk-calendar-detail-function nil
+          nil gtk-calendar-set-detail-func)
+   (:cffi display-options
+          gtk-calendar-display-options gtk-calendar-display-options
           "gtk_calendar_get_display_options"
           "gtk_calendar_set_display_options")))
 
@@ -434,19 +445,19 @@
 ;;; function returns NULL when no information is available.
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; year :
-;;;     the year for which details are needed.
+;;;     the year for which details are needed
 ;;; 
 ;;; month :
-;;;     the month for which details are needed.
+;;;     the month for which details are needed
 ;;; 
 ;;; day :
-;;;     the day of month for which details are needed.
+;;;     the day of month for which details are needed
 ;;; 
 ;;; user_data :
-;;;     the data passed with gtk_calendar_set_detail_func().
+;;;     the data passed with gtk_calendar_set_detail_func()
 ;;; 
 ;;; Returns :
 ;;;     Newly allocated string with Pango markup with details for the specified
@@ -508,6 +519,11 @@
 ;;;     a newly GtkCalendar widget
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-calendar-new ()
+  (make-instance 'gtk-calendar))
+
+(export 'gtk-calendar-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_select_month ()
 ;;; 
@@ -521,11 +537,19 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; month :
-;;;     a month number between 0 and 11.
+;;;     a month number between 0 and 11
 ;;; 
 ;;; year :
-;;;     the year the month is in.
+;;;     the year the month is in
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-calendar-select-month))
+
+(defun gtk-calendar-select-month (calendar month year)
+  (setf (gtk-calendar-month calendar) month
+        (gtk-calendar-year calendar) year))
+
+(export 'gtk-calendar-select-month)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_select_day ()
@@ -535,12 +559,19 @@
 ;;; Selects a day from the current month.
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; day :
 ;;;     the day number between 1 and 31, or 0 to unselect the currently
-;;;     selected day.
+;;;     selected day
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-calendar-select-day))
+
+(defun gtk-calendar-select-day (calendar day)
+  (setf (gtk-calendar-day calendar) day))
+
+(export 'gtk-calendar-select-day)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_mark_day ()
@@ -553,7 +584,7 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; day :
-;;;     the day number to mark between 1 and 31.
+;;;     the day number to mark between 1 and 31
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_mark_day" gtk-calendar-mark-day) :boolean
@@ -570,10 +601,10 @@
 ;;; Removes the visual marker from a particular day.
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; day :
-;;;     the day number to unmark between 1 and 31.
+;;;     the day number to unmark between 1 and 31
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_unmark_day" gtk-calendar-unmark-day) :boolean
@@ -593,10 +624,10 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; day :
-;;;     the day number between 1 and 31.
+;;;     the day number between 1 and 31
 ;;; 
 ;;; Returns :
-;;;     whether the day is marked.
+;;;     whether the day is marked
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -606,7 +637,7 @@
 ;;; 
 ;;; void gtk_calendar_clear_marks (GtkCalendar *calendar);
 ;;; 
-;;; Remove all visual markers.
+;;; Remove all visual markers
 ;;; 
 ;;; calendar :
 ;;;     a GtkCalendar
@@ -634,6 +665,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-calendar-get-display-options))
+
+(defun gtk-calendar-get-display-options (calendar)
+  (gtk-calendar-display-options calendar))
+
+(export 'gtk-calendar-get-display-options)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_display_options ()
 ;;; 
@@ -652,6 +690,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-calendar-set-display-options))
+
+(defun gtk-calendar-set-display-options (calendar flags)
+  (setf (gtk-calendar-display-options calendar) flags))
+
+(export 'gtk-calendar-set-display-options)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_date ()
 ;;; 
@@ -666,14 +711,23 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; year :
-;;;     location to store the year as a decimal number (e.g. 2011), or NULL.
+;;;     location to store the year as a decimal number (e.g. 2011), or NULL
 ;;; 
 ;;; month :
-;;;     location to store the month number (between 0 and 11), or NULL.
+;;;     location to store the month number (between 0 and 11), or NULL
 ;;; 
 ;;; day :
-;;;     location to store the day number (between 1 and 31), or NULL.
+;;;     location to store the day number (between 1 and 31), or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-calendar-get-date))
+
+(defun gtk-calendar-get-date (calendar)
+  (values (gtk-calendar-year calendar)
+          (gtk-calendar-month calendar)
+          (gtk-calendar-day calendar)))
+
+(export 'gtk-calendar-get-date)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_detail_func ()
@@ -696,13 +750,13 @@
 ;;;     a GtkCalendar.
 ;;; 
 ;;; func :
-;;;     a function providing details for each day.
+;;;     a function providing details for each day
 ;;; 
 ;;; data :
-;;;     data to pass to func invokations.
+;;;     data to pass to func invokations
 ;;; 
 ;;; destroy :
-;;;     a function for releasing data.
+;;;     a function for releasing data
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -741,10 +795,17 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; Returns :
-;;;     The width of detail cells, in characters.
+;;;     the width of detail cells, in characters
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-calendar-get-detail-width-chars))
+
+(defun gtk-calendar-get-detail-width-chars (calendar)
+  (gtk-calendar-detail-width-chars calendar))
+
+(export 'gtk-calendar-get-detail-width-chars)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_detail_width_chars ()
@@ -762,6 +823,13 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-calendar-set-detail-width-chars))
+
+(defun gtk-calendar-set-detail-width-chars (calendar chars)
+  (setf (gtk-calendar-detail-width-chars calendar) chars))
+
+(export 'gtk-calendar-set-detail-width-chars)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_detail_height_rows ()
 ;;; 
@@ -773,10 +841,17 @@
 ;;;     a GtkCalendar
 ;;; 
 ;;; Returns :
-;;;     The height of detail cells, in rows.
+;;;     The height of detail cells, in rows
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-calendar-get-detail-height-rows))
+
+(defun gtk-calendar-get-detail-height-rows (calendar)
+  (gtk-calendar-detail-height-rows calendar))
+
+(export 'gtk-calendar-get-detail-height-rows)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_detail_height_rows ()
@@ -786,7 +861,7 @@
 ;;; Updates the height of detail cells. See "detail-height-rows".
 ;;; 
 ;;; calendar :
-;;;     a GtkCalendar.
+;;;     a GtkCalendar
 ;;; 
 ;;; rows :
 ;;;     detail height in rows
@@ -794,5 +869,11 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-calendar-set-detail-height-rows))
+
+(defun gtk-calendar-set-detail-height-rows (calendar rows)
+  (setf (gtk-calendar-detail-height-rows calendar) rows))
+
+(export 'gtk-calendar-set-detail-height-rows)
 
 ;;; --- End of file gtk.calendar.lisp ------------------------------------------
