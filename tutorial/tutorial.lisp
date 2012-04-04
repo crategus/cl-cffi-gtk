@@ -238,7 +238,7 @@
                           :fill nil
                           :padding 0)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
+                          (make-instance 'gtk-hseparator)
                           :expand nil
                           :fill t
                           :padding 0)
@@ -258,7 +258,7 @@
                           :fill nil
                           :padding 0)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
+                          (make-instance 'gtk-hseparator)
                           :expand nil
                           :fill t
                           :padding 0)
@@ -274,7 +274,7 @@
                           :fill nil
                           :padding 5)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
+                          (make-instance 'gtk-hseparator)
                           :expand nil
                           :fill t
                           :padding 0)
@@ -289,7 +289,7 @@
                           :fill nil
                           :padding 0)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
+                          (make-instance 'gtk-hseparator)
                           :expand nil
                           :fill t
                           :padding 5)
@@ -533,7 +533,7 @@
       (gtk-box-pack-start vbox hbox :expand nil :fill nil)
       ;; Add a separator to the vbox
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-h-separator)
+                          (make-instance 'gtk-hseparator)
                           :expand nil :fill nil :padding 0)
       ;; Add a quit button to the vbox
       (let ((vbox-quit (make-instance 'gtk-vbox
@@ -725,7 +725,7 @@
         (gtk-box-pack-start box1 box :expand t :fill t :padding 0))
       ;; Add a separator
       (gtk-box-pack-start box1
-                          (make-instance 'gtk-h-separator)
+                          (make-instance 'gtk-hseparator)
                           :expand nil :fill t :padding 0)
       ;; Create the quit button.
       (let ((box (make-instance 'gtk-vbox
@@ -915,7 +915,7 @@
                                          :angle 270))
       (gtk-box-pack-start vbox2 hbox)
       (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-h-separator))
+                          (make-instance 'gtk-hseparator))
       (gtk-box-pack-start vbox2
                           (gtk-label-new "Normal Label"))
       (gtk-box-pack-start vbox2
@@ -1015,7 +1015,7 @@
                           (gtk-main-quit)))
       (gtk-box-pack-start vbox align)
       (gtk-container-add align (pbar-data-pbar pdata))
-      (gtk-box-pack-start vbox (make-instance 'gtk-h-separator))
+      (gtk-box-pack-start vbox (make-instance 'gtk-hseparator))
       (gtk-box-pack-start vbox table)
       (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
         (g-signal-connect check "clicked"
@@ -1493,7 +1493,136 @@
       (gtk-container-add window vbox)
       (gtk-widget-show window))))
 
-;;; [...]
+;;; ----------------------------------------------------------------------------
+
+;; Combo Box
+
+(defstruct tvi
+  title
+  value)
+
+(defun example-combo-box ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :border-width 12
+                                  :title "Example Combo Box"))
+           (model (make-instance 'array-list-store))
+           (combo-box (make-instance 'gtk-combo-box :model model))
+           (title-label (make-instance 'gtk-label :label "Title:"))
+           (value-label (make-instance 'gtk-label :label "Value:"))
+           (title-entry (make-instance 'gtk-entry))
+           (value-entry (make-instance 'gtk-entry))
+           (button (make-instance 'gtk-button :label "Add"))
+           (table (make-instance 'gtk-table
+                                 :n-rows 3
+                                 :n-columns 3)))
+      ;; Define two columns
+      (store-add-column model "gchararray" #'tvi-title)
+      (store-add-column model "gint" #'tvi-value)
+      ;; Fill in data into the columns
+      (store-add-item model (make-tvi :title "Monday" :value 1))
+      (store-add-item model (make-tvi :title "Tuesday" :value 2))
+      (store-add-item model (make-tvi :title "Wednesday" :value 3))
+      (store-add-item model (make-tvi :title "Thursday" :value 4))
+      (store-add-item model (make-tvi :title "Friday" :value 5))
+      (store-add-item model (make-tvi :title "Saturday" :value 6))
+      (store-add-item model (make-tvi :title "Sunday" :value 7))
+      ;; Set the first entry to active
+      (gtk-combo-box-set-active combo-box 0)
+      ;; Define the signal handlers
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (store-add-item model
+                           (make-tvi :title
+                                     (gtk-entry-text title-entry)
+                                     :value
+                                     (or (parse-integer
+                                           (gtk-entry-text value-entry)
+                                           :junk-allowed t)
+                                         0)))))
+      (g-signal-connect combo-box "changed"
+         (lambda (widget)
+           (declare (ignore widget))
+           (show-message (format nil "You clicked on row ~A~%"
+                                 (gtk-combo-box-get-active combo-box)))))
+      ;; Create renderers for the cells
+      (let ((renderer (make-instance 'gtk-cell-renderer-text
+                                     :text "A text")))
+        (gtk-cell-layout-pack-start combo-box renderer :expand t)
+        (gtk-cell-layout-add-attribute combo-box renderer "text" 0))
+      (let ((renderer (make-instance 'gtk-cell-renderer-text
+                                     :text "A number")))
+        (gtk-cell-layout-pack-start combo-box renderer :expand nil)
+        (gtk-cell-layout-add-attribute combo-box renderer "text" 1))
+      ;; Align the labels
+      (gtk-misc-set-alignment title-label 0.0 0.0)
+      (gtk-misc-set-alignment value-label 0.0 0.0)
+      ;; Put the widgets into the table
+      (gtk-table-attach table title-label 0 1 0 1)
+      (gtk-table-attach table value-label 1 2 0 1)
+      (gtk-table-attach table title-entry 0 1 1 2)
+      (gtk-table-attach table value-entry 1 2 1 2)
+      (gtk-table-attach table button      2 3 1 2)
+      (gtk-table-attach table combo-box   0 3 2 3)
+      ;; Put the table into the window
+      (gtk-container-add window table)
+      ;; Show the window
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Combo Box Text
+
+(defun example-combo-box-text ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :border-width 12
+                                 :title "Example Combo Box Text"))
+          (combo (make-instance 'gtk-combo-box-text)))
+      (gtk-combo-box-text-append-text combo "First entry")
+      (gtk-combo-box-text-append-text combo "Second entry")
+      (gtk-combo-box-text-append-text combo "Third entry")
+      (gtk-combo-box-set-active combo 0)
+      (gtk-container-add window combo)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Calendar
+
+(defun calendar-detail (calendar year month day)
+  (declare (ignore calendar year month))
+  (when (= day 23)
+    "!"))
+
+(defun example-calendar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Calendar"
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 100))
+          (calendar (make-instance 'gtk-calendar
+                                   :detail-function #'calendar-detail)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect calendar "day-selected"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "selected: year ~A month ~A day ~A~%"
+                                  (gtk-calendar-year calendar)
+                                  (gtk-calendar-month calendar)
+                                  (gtk-calendar-day calendar))))
+      (gtk-container-add window calendar)
+      (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1546,7 +1675,69 @@
         (gtk-widget-show window))))
 )
 
-;;; [...]
+;;; ----------------------------------------------------------------------------
+
+;;; File Chooser Button
+
+(defun example-file-chooser-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Button"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-file-chooser-button
+                                 :action :open)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button "file-set"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "File set: ~A~%"
+                                  (gtk-file-chooser-filename button))))
+      (gtk-container-add window button)
+      (gtk-widget-show window))))
+      
+;;; ----------------------------------------------------------------------------
+
+;;; File Chooser Dialog
+
+(defun example-file-chooser-dialog ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Dialog"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-button
+                                 :label "Select a file for save ..."
+                                 :image
+                                 (gtk-image-new-from-stock "gtk-save"
+                                                           :button))))
+      ;; Handle the signal "destroy" for the window.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Handle the signal "clicked" for the button.
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let ((dialog (make-instance 'gtk-file-chooser-dialog
+                                        :action :save
+                                        :title "Choose file to save")))
+             (gtk-dialog-add-button dialog "gtk-save" :accept)
+             (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
+             (when (eq (gtk-dialog-run dialog) :accept)
+               (format t "saved to file ~A~%"
+                       (gtk-file-chooser-filename dialog)))
+             (gtk-widget-destroy dialog))))
+      (gtk-container-add window button)
+      (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
