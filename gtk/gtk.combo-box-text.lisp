@@ -130,6 +130,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-combo-box-text-new ()
+  (make-instance 'gtk-combo-box-text))
+
+(export 'gtk-combo-box-text-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_text_new_with_entry ()
 ;;;
@@ -143,6 +148,14 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: A ComboBoxText with an entry seems not to work as expected.
+
+(defun gtk-combo-box-text-with-entry ()
+  (make-instance 'gtk-combo-box-text
+                 :has-entry t))
+
+(export 'gtk-combo-box-text-with-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_text_append ()
@@ -168,6 +181,8 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: gtk_combo_box_text_append is not available on Ubuntu with GTK+ 2.24.
 
 (defcfun ("gtk_combo_box_text_append" gtk-combo-box-text-append) :void
   (combo-box (g-object gtk-combo-box-text))
@@ -200,6 +215,8 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: gtk_combo_box_text_prepend is not available on Ubuntu with GTK+ 2.24.
 
 (defcfun ("gtk_combo_box_text_prepend" gtk-combo-box-text-prepend) :void
   (combo-box (g-object gtk-combo-box-text))
@@ -384,4 +401,3 @@
 (export 'gtk-combo-box-text-get-active-text)
 
 ;;; --- End of file gtk.combo-box-text.lisp ------------------------------------
-

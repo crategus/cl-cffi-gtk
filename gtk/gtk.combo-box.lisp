@@ -546,6 +546,9 @@
    (focus-on-click
     gtk-combo-box-focus-on-click
     "focus-on-click" "gboolean" t t)
+   (has-entry
+    gtk-combo-box-has-entry
+    "has-entry" "gboolean" t nil)
    (has-frame
     gtk-combo-box-has-frame
     "has-frame" "gboolean" t t)
@@ -787,6 +790,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-combo-box-get-active))
+
+(defun gtk-combo-box-get-active (combo-box)
+  (gtk-combo-box-active combo-box))
+
+(export 'gtk-combo-box-get-active)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_active ()
 ;;; 
@@ -804,9 +814,10 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_combo_box_set_active" gtk-combo-box-set-active) :void
-  (combo-box (g-object gtk-combo-box))
-  (index :int))
+(declaim (inline gtk-combo-box-set-active))
+
+(defun gtk-combo-box-set-active (combo-box index)
+  (setf (gtk-combo-box-active combo-box) index))
 
 (export 'gtk-combo-box-set-active)
 

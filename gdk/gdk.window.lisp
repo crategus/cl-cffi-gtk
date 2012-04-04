@@ -619,15 +619,11 @@
    (:superclass gdk-drawable
     :export t
     :interfaces ()
-    :type-initializer "gdk_window_get_type")
-   (#+gtk-2.18
-    (cursor
+;    :type-initializer "gdk_drawable_get_type"
+    )
+   ((cursor
      gdk-window-cursor
      "cursor" "GdkCursor" t t)
-    #-gtk-2.18
-    (:cffi cursor
-           gdk-window-cursor (g-boxed-foreign gdk-cursor :return)
-           "gdk_window_get_cursor" "gdk_window_set_cursor")
     (:cffi window-type
            gdk-window-window-type gdk-window-type
            "gdk_window_get_window_type" nil)

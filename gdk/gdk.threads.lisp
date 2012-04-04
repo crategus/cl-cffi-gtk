@@ -241,7 +241,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; Callback functions for:
+;; Callback function for:
 ;;     gdk-threads-add-idle-full
 ;;     gdk-threads-add-timeout-full
 ;;     gdk-threads-add-timeout-seconds-full

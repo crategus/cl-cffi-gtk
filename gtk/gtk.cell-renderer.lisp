@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -438,35 +438,50 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_cell_renderer_get_type")
-  ((cell-background gtk-cell-renderer-cell-background
+  ((cell-background
+    gtk-cell-renderer-cell-background
     "cell-background" "gchararray" nil t)
-   (cell-background-gdk gtk-cell-renderer-cell-background-gdk
+   (cell-background-gdk
+    gtk-cell-renderer-cell-background-gdk
     "cell-background-gdk" "GdkColor" t t)
-   (cell-background-set gtk-cell-renderer-cell-background-set
+   (cell-background-set
+    gtk-cell-renderer-cell-background-set
     "cell-background-set" "gboolean" t t)
-   (editing gtk-cell-renderer-editing
+   (editing
+    gtk-cell-renderer-editing
     "editing" "gboolean" t nil)
-   (height gtk-cell-renderer-height
+   (height
+    gtk-cell-renderer-height
     "height" "gint" t t)
-   (is-expanded gtk-cell-renderer-is-expanded
+   (is-expanded
+    gtk-cell-renderer-is-expanded
     "is-expanded" "gboolean" t t)
-   (is-expander gtk-cell-renderer-is-expander
+   (is-expander
+    gtk-cell-renderer-is-expander
     "is-expander" "gboolean" t t)
-   (mode gtk-cell-renderer-mode
+   (mode
+    gtk-cell-renderer-mode
     "mode" "GtkCellRendererMode" t t)
-   (sensitive gtk-cell-renderer-sensitive
+   (sensitive
+    gtk-cell-renderer-sensitive
     "sensitive" "gboolean" t t)
-   (visible gtk-cell-renderer-visible
+   (visible
+    gtk-cell-renderer-visible
     "visible" "gboolean" t t)
-   (width gtk-cell-renderer-width
+   (width
+    gtk-cell-renderer-width
     "width" "gint" t t)
-   (xalign gtk-cell-renderer-xalign
+   (xalign
+    gtk-cell-renderer-xalign
     "xalign" "gfloat" t t)
-   (xpad gtk-cell-renderer-xpad
+   (xpad
+    gtk-cell-renderer-xpad
     "xpad" "guint" t t)
-   (yalign gtk-cell-renderer-yalign
+   (yalign
+    gtk-cell-renderer-yalign
     "yalign" "gfloat" t t)
-   (ypad gtk-cell-renderer-ypad
+   (ypad
+    gtk-cell-renderer-ypad
     "ypad" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------
