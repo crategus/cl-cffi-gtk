@@ -51,6 +51,10 @@
 (defvar *debug-subclass* nil)
 (defvar *debug-stream* t)
 
+(export '*gobject-debug*)
+(export '*debug-gc*)
+(export '*debug-subclass*)
+
 (defmacro log-for (categories control-string &rest args)
   (let ((vars (iter (for sym in (if (listp categories)
                                     categories
