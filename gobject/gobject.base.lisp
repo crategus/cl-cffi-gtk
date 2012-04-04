@@ -322,8 +322,7 @@
       (push pointer *gobject-gc-hooks*)
       (unless locks-were-present
         (log-for :gc "adding idle-gc-hook to main loop~%")
-        (%g-idle-add (callback g-idle-gc-hook) (null-pointer))
-        ))))
+        (%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
 
 (defcallback g-idle-gc-hook :boolean ((data :pointer))
   (declare (ignore data))
