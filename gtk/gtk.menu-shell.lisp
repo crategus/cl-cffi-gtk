@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -276,7 +276,8 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_menu_shell_get_type")
-  ((take-focus gtk-menu-shell-take-focus
+  ((take-focus
+    gtk-menu-shell-take-focus
     "take-focus" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -294,8 +295,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_shell_append" gtk-menu-shell-append) :void
-  (menu-shell g-object)
-  (child g-object))
+  (menu-shell (g-object gtk-menu-shell))
+  (child (g-object gtk-widget)))
 
 (export 'gtk-menu-shell-append)
 
@@ -399,7 +400,7 @@
 ;;;     a GtkMenuShell
 ;;; 
 ;;; search_sensitive :
-;;;     if TRUE, search for the first selectable menu item, otherwise select
+;;;     If TRUE, search for the first selectable menu item, otherwise select
 ;;;     nothing if the first item isn't sensitive. This should be FALSE if the
 ;;;     menu is being popped up initially.
 ;;; 
@@ -520,6 +521,13 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-shell-set-take-focus))
+
+(defun gtk-menu-shell-set-take-focus (menu-shell take-focus)
+  (setf (gtk-menu-shell-take-focus menu-shell) take-focus))
+
+(export 'gtk-menu-shell-set-take-focus)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_shell_get_take_focus ()
 ;;; 
@@ -535,6 +543,13 @@
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-shell-get-take-focus))
+
+(defun gtk-menu-shell-get-take-focus (menu-shell)
+  (gtk-menu-shell-take-focus menu-shell))
+
+(export 'gtk-menu-shell-get-take-focus)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_shell_get_selected_item ()

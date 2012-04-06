@@ -61,7 +61,7 @@
 ;;;   "accumulative-margin"      gboolean              : Read / Write
 ;;;   "background"               gchar*                : Write
 ;;;   "background-full-height"   gboolean              : Read / Write
-;;;   "background-full-height-set" gboolean              : Read / Write
+;;;   "background-full-height-set" gboolean            : Read / Write
 ;;;   "background-gdk"           GdkColor*             : Read / Write
 ;;;   "background-rgba"          GdkRGBA*              : Read / Write
 ;;;   "background-set"           gboolean              : Read / Write
@@ -89,7 +89,7 @@
 ;;;   "name"                     gchar*                : Read / Write /Construct
 ;;;   "paragraph-background"     gchar*                : Write
 ;;;   "paragraph-background-gdk" GdkColor*             : Read / Write
-;;;   "paragraph-background-rgba" GdkRGBA*              : Read / Write
+;;;   "paragraph-background-rgba" GdkRGBA*             : Read / Write
 ;;;   "paragraph-background-set" gboolean              : Read / Write
 ;;;   "pixels-above-lines"       gint                  : Read / Write
 ;;;   "pixels-above-lines-set"   gboolean              : Read / Write

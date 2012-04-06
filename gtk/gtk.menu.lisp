@@ -8,7 +8,7 @@
 ;;; Version 3.2.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -440,6 +440,9 @@
    (monitor
     gtk-menu-monitor
     "monitor" "gint" t t)
+   (reserve-toggle-size
+    gtk-menu-reserve-toggle-size
+    "reserve-toggle-size" "gboolean" t t)
    (tearoff-state
     gtk-menu-tearoff-state
     "tearoff-state" "gboolean" t t)
@@ -482,6 +485,11 @@
 ;;;     a new GtkMenu
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-menu-new ()
+  (make-instance 'gtk-menu))
+
+(export 'gtk-menu)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_screen ()
 ;;; 
@@ -494,10 +502,17 @@
 ;;; 
 ;;; screen :
 ;;;     a GdkScreen, or NULL if the screen should be determined by the widget
-;;;     the menu is attached to.
+;;;     the menu is attached to
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-set-screen))
+
+(defun gtk-menu-set-screen (menu screen)
+  (setf (gtk-menu-screen menu) screen))
+
+(export 'gtk-menu-set-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_reorder_child ()
@@ -753,6 +768,13 @@
 ;;;     the GtkAccelGroup to be associated with the menu
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-set-accel-group))
+
+(defun gtk-menu-set-accel-group (menu accel-group)
+  (setf (gtk-menu-accel-group menu) accel-group))
+
+(export 'gtk-menu-set-accel-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_accel_group ()
 ;;; 
@@ -765,8 +787,15 @@
 ;;;     a GtkMenu
 ;;; 
 ;;; Returns :
-;;;     the GtkAccelGroup associated with the menu.
+;;;     the GtkAccelGroup associated with the menu
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-get-accel-group))
+
+(defun gtk-menu-get-accel-group (menu)
+  (gtk-menu-accel-group menu))
+
+(export 'gtk-menu-get-accel-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_accel_path ()
@@ -802,6 +831,13 @@
 ;;;     a valid accelerator path
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-set-accel-path))
+
+(defun gtk-menu-set-accel-path (menu accel-path)
+  (setf (gtk-menu-accel-path menu) accel-path))
+
+(export 'gtk-menu-set-accel-path)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_accel_path ()
 ;;; 
@@ -813,10 +849,17 @@
 ;;;     a valid GtkMenu
 ;;; 
 ;;; Returns :
-;;;     the accelerator path set on the menu.
+;;;     the accelerator path set on the menu
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-get-accel-path))
+
+(defun gtk-menu-get-accel-path (menu)
+  (gtk-menu-accel-path menu))
+
+(export 'gtk-menu-get-accel-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_title ()
@@ -836,6 +879,13 @@
 ;;;     a string containing the title for the menu
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-set-title))
+
+(defun gtk-menu-set-title (menu title)
+  (setf (gtk-menu-title menu) title))
+
+(export 'gtk-menu-set-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_title ()
 ;;; 
@@ -847,9 +897,16 @@
 ;;;     a GtkMenu
 ;;; 
 ;;; Returns :
-;;;     the title of the menu, or NULL if the menu has no title set on it. This 
+;;;     The title of the menu, or NULL if the menu has no title set on it. This 
 ;;;     string is owned by GTK+ and should not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-get-title))
+
+(defun gtk-menu-get-title (menu)
+  (gtk-menu-title menu))
+
+(export 'gtk-menu-get-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_monitor ()
@@ -874,6 +931,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-set-monitor))
+
+(defun gtk-menu-set-monitor (menu monitor-num)
+  (setf (gtk-menu-monitor menu) monitor-num))
+
+(export 'gtk-menu-set-monitor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_monitor ()
 ;;; 
@@ -891,6 +955,13 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-get-monitor))
+
+(defun gtk-menu-get-monitor (menu)
+  (gtk-menu-monitor menu))
+
+(export 'gtk-menu-get-monitor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_tearoff_state ()
 ;;; 
@@ -904,6 +975,13 @@
 ;;; Returns :
 ;;;     TRUE if the menu is currently torn off.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-get-tearoff-state))
+
+(defun gtk-menu-get-tearoff-state (menu)
+  (gtk-menu-tearoff-state menu))
+
+(export 'gtk-menu-get-tearoff-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_reserve_toggle_size ()
@@ -923,6 +1001,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-set-reserve-toggle-size))
+
+(defun gtk-menu-set-reserve-toggle-size (menu reserve-toggle-size)
+  (setf (gtk-menu-reserve-toggle-size menu) reserve-toggle-size))
+
+(export 'gtk-menu-set-reserve-toggle-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_reserve_toggle_size ()
 ;;; 
@@ -939,6 +1024,13 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-get-reserve-toggle-size))
+
+(defun gtk-menu-get-reserve-toggle-size (menu)
+  (gtk-menu-reserve-toggle-size menu))
+
+(export 'gtk-menu-get-reserve-toggle-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_popdown ()
@@ -988,6 +1080,13 @@
 ;;;     not yet been made, the first menu item is selected
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-get-active))
+
+(defun gtk-menu-get-active (menu)
+  (gtk-menu-active menu))
+
+(export 'gtk-menu-get-active)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_active ()
 ;;; 
@@ -1000,8 +1099,15 @@
 ;;;     a GtkMenu
 ;;; 
 ;;; index :
-;;;     the index of the menu item to select. Iindex values are from 0 to n-1
+;;;     The index of the menu item to select. Index values are from 0 to n-1
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-set-active))
+
+(defun gtk-menu-set-active (menu index)
+  (setf (gtk-menu-active menu) index))
+
+(export 'gtk-menu-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_tearoff_state ()
@@ -1018,6 +1124,13 @@
 ;;; torn_off :
 ;;;     If TRUE, menu is displayed as a tearoff menu.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-set-tearoff-state))
+
+(defun gtk-menu-set-tearoff-state (menu torn-off)
+  (setf (gtk-menu-tearoff-state menu) torn-off))
+
+(export 'gtk-menu-set-tearoff-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_attach_to_widget ()
@@ -1069,7 +1182,7 @@
 ;;;     a GtkMenu
 ;;; 
 ;;; Returns :
-;;;     the GtkWidget that the menu is attached to. [transfer none]
+;;;     the GtkWidget that the menu is attached to
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1084,7 +1197,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the list of menus attached to his widget.
+;;;     the list of menus attached to his widget
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------

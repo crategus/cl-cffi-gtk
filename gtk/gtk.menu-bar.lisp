@@ -189,6 +189,11 @@
 ;;;     the new menu bar, as a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-menu-bar-new ()
+  (make-instance 'gtk-menu-bar))
+
+(export 'gtk-menu-bar-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_set_pack_direction ()
 ;;; 
@@ -205,6 +210,13 @@
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-bar-set-pack-direction))
+
+(defun gtk-menu-bar-set-pack-direction (menubar pack-dir)
+  (setf (gtk-menu-bar-pack-direction menubar) pack-dir))
+
+(export 'gtk-menu-bar-set-pack-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_get_pack_direction ()
@@ -223,6 +235,13 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-bar-get-pack-direction))
+
+(defun gtk-menu-bar-get-pack-direction (menubar)
+  (gtk-menu-bar-pack-direction menubar))
+
+(export 'gtk-menu-bar-get-pack-direction)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_set_child_pack_direction ()
 ;;; 
@@ -239,6 +258,13 @@
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-bar-set-child-pack-direction))
+
+(defun gtk-menu-bar-set-child-pack-direction (menubar child-pack-dir)
+  (setf (gtk-menu-bar-child-pack-direction menubar) child-pack-dir))
+
+(export 'gtk-menu-bar-set-child-pack-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_get_child_pack_direction ()
@@ -257,5 +283,11 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-bar-get-child-pack-direction))
+
+(defun gtk-menu-bar-get-child-pack-direction (menubar)
+  (gtk-menu-bar-child-pack-direction menubar))
+
+(export 'gtk-menu-bar-get-child-pack-direction)
 
 ;;; --- End of file gtk.menu-bar.lisp ------------------------------------------

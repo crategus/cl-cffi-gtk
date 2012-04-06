@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.2.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -156,7 +156,8 @@
 ;;; 
 ;;;   "right-justified"          gboolean              : Read / Write
 ;;; 
-;;; Sets whether the menu item appears justified at the right side of a menu bar.
+;;; Sets whether the menu item appears justified at the right side of a
+;;; menu bar.
 ;;; 
 ;;; Default value: FALSE
 ;;; 
@@ -325,14 +326,19 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
    :type-initializer "gtk_menu_item_get_type")
-  ((accel-path gtk-menu-item-accel-path
+  ((accel-path
+    gtk-menu-item-accel-path
     "accel-path" "gchararray" t t)
-   (label gtk-menu-item-label "label" "gchararray" t t)
-   (right-justified gtk-menu-item-right-justified
+   (label
+    gtk-menu-item-label "label" "gchararray" t t)
+   (right-justified
+    gtk-menu-item-right-justified
     "right-justified" "gboolean" t t)
-   (submenu gtk-menu-item-submenu
+   (submenu
+    gtk-menu-item-submenu
     "submenu" "GtkMenu" t t)
-   (use-underline gtk-menu-item-use-underline
+   (use-underline
+    gtk-menu-item-use-underline
     "use-underline" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -345,6 +351,11 @@
 ;;; Returns :
 ;;;     the newly created GtkMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-menu-item-new ()
+  (make-instance 'gtk-menu-item))
+
+(export 'gt-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new_with_label ()
@@ -510,6 +521,13 @@
 ;;;     the submenu, or NULL
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-set-submenu))
+
+(defun gtk-menu-item-set-submenu (menu-item submenu)
+  (setf (gtk-menu-item-submenu menu-item) submenu))
+
+(export 'gtk-menu-item-set-submenu)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_submenu ()
 ;;; 
@@ -524,6 +542,13 @@
 ;;; Returns :
 ;;;     submenu for this menu item, or NULL if none
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-item-get-submenu))
+
+(defun gtk-menu-item-get-submenu (menu-item)
+  (gtk-menu-item-submenu menu-item))
+
+(export 'gtk-menu-item-get-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_accel_path ()

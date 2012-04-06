@@ -83,12 +83,14 @@
 ;;; Creates a new GtkSeparatorMenuItem.
 ;;; 
 ;;; Returns :
-;;;     a new GtkSeparatorMenuItem.
+;;;     a new GtkSeparatorMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-separator-menu-item-new))
 
 (defun gtk-separator-menu-item-new ()
   (make-instance 'gtk-separator-menu-item))
 
-(export 'gtk-separator-menu-item)
+(export 'gtk-separator-menu-item-new)
 
 ;;; --- End of file gtk.separator-menu-item.lisp -------------------------------

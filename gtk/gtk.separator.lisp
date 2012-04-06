@@ -102,7 +102,8 @@
 ;;;     
 ;;; Synopsis
 ;;; 
-;;;     GtkHSeparator;
+;;;     GtkHSeparator
+;;;
 ;;;     gtk_hseparator_new
 ;;; 
 ;;; Object Hierarchy
@@ -170,7 +171,7 @@
 ;;; Creates a new GtkHSeparator.
 ;;; 
 ;;; Returns :
-;;;     a new GtkHSeparator.
+;;;     a new GtkHSeparator
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hseparator-new))
@@ -187,7 +188,8 @@
 ;;;     
 ;;; Synopsis
 ;;; 
-;;;     GtkVSeparator;
+;;;     GtkVSeparator
+;;;
 ;;;     gtk_vseparator_new
 ;;; 
 ;;; Object Hierarchy
@@ -202,6 +204,7 @@
 ;;; 
 ;;; GtkVSeparator implements AtkImplementorIface, GtkBuildable and
 ;;; GtkOrientable.
+;;;
 ;;; Description
 ;;; 
 ;;; The GtkVSeparator widget is a vertical separator, used to group the widgets
@@ -250,7 +253,7 @@
 ;;; Creates a new GtkVSeparator.
 ;;; 
 ;;; Returns :
-;;;     a new GtkVSeparator.
+;;;     a new GtkVSeparator
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vseparator-new))

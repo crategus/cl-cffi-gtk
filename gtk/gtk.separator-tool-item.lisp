@@ -115,6 +115,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-separator-tool-item-set-draw))
+
+(defun gtk-separator-tool-item-new ()
+  (make-instance 'gtk-separator-tool-item-new))
+
+(export 'gtk-separator-tool-item-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_tool_item_set_draw ()
 ;;; 
@@ -122,8 +129,8 @@
 ;;;                                        gboolean draw);
 ;;; 
 ;;; Whether item is drawn as a vertical line, or just blank. Setting this to
-;;; FALSE along with gtk_tool_item_set_expand() is useful to create an item that
-;;; forces following items to the end of the toolbar.
+;;; FALSE along with gtk_tool_item_set_expand() is useful to create an item
+;;; that forces following items to the end of the toolbar.
 ;;; 
 ;;; item :
 ;;;     a GtkSeparatorToolItem
@@ -133,6 +140,13 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-separator-tool-item-set-draw))
+
+(defun gtk-separator-tool-item-set-draw (item draw)
+  (setf (gtk-separator-tool-item-draw item) draw))
+
+(export 'gtk-separator-tool-item-set-draw)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_tool_item_get_draw ()
@@ -146,10 +160,16 @@
 ;;;     a GtkSeparatorToolItem
 ;;; 
 ;;; Returns :
-;;;     TRUE if item is drawn as a line, or just blank.
+;;;     TRUE if item is drawn as a line, or just blank
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-separator-tool-item-get-draw))
+
+(defun gtk-separator-tool-item-get-draw (item)
+  (gtk-separator-tool-item-draw item))
+
+(export 'gtk-separator-tool-item-get-draw)
 
 ;;; --- End of file gtk.separator-tool-item.lisp -------------------------------

@@ -129,19 +129,19 @@
 ;;; 
 ;;; Signals
 ;;; 
-;;;   "apply-tag"                                      : Run Last
-;;;   "begin-user-action"                              : Run Last
-;;;   "changed"                                        : Run Last
-;;;   "delete-range"                                   : Run Last
-;;;   "end-user-action"                                : Run Last
-;;;   "insert-child-anchor"                            : Run Last
-;;;   "insert-pixbuf"                                  : Run Last
-;;;   "insert-text"                                    : Run Last
-;;;   "mark-deleted"                                   : Run Last
-;;;   "mark-set"                                       : Run Last
-;;;   "modified-changed"                               : Run Last
-;;;   "paste-done"                                     : Run Last
-;;;   "remove-tag"                                     : Run Last
+;;;   "apply-tag"                                     : Run Last
+;;;   "begin-user-action"                             : Run Last
+;;;   "changed"                                       : Run Last
+;;;   "delete-range"                                  : Run Last
+;;;   "end-user-action"                               : Run Last
+;;;   "insert-child-anchor"                           : Run Last
+;;;   "insert-pixbuf"                                 : Run Last
+;;;   "insert-text"                                   : Run Last
+;;;   "mark-deleted"                                  : Run Last
+;;;   "mark-set"                                      : Run Last
+;;;   "modified-changed"                              : Run Last
+;;;   "paste-done"                                    : Run Last
+;;;   "remove-tag"                                    : Run Last
 ;;; 
 ;;; Description
 ;;; 
@@ -600,6 +600,14 @@
 ;;;     a new text buffer
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-text-buffer-new))
+
+(defun gtk-text-buffer-new (table)
+  (make-instance 'gtk-text-buffer
+                 :tag-table table))
+
+(export 'gtk-text-buffer-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_line_count ()
 ;;; 
@@ -653,8 +661,15 @@
 ;;;     a GtkTextBuffer
 ;;; 
 ;;; Returns :
-;;;     the buffer's tag table. [transfer none]
+;;;     the buffer's tag table
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-buffer-get-tag-table))
+
+(defun gtk-text-buffer-get-tag-table (buffer)
+  (gtk-text-buffer-tag-table buffer))
+
+(export 'gtk-text-buffer-get-tag-table)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert ()
@@ -1141,6 +1156,8 @@
 ;;;     length of text in bytes
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-text-buffer-set-text))
+
 (defun gtk-text-buffer-set-text (buffer text)
   (setf (gtk-text-buffer-text buffer) text))
 
@@ -1364,7 +1381,7 @@
 ;;;     a GtkTextBuffer
 ;;; 
 ;;; mark_name :
-;;;     name for mark, or NULL.
+;;;     name for mark, or NULL
 ;;; 
 ;;; where :
 ;;;     location to place mark
@@ -1373,19 +1390,18 @@
 ;;;     whether the mark has left gravity
 ;;; 
 ;;; Returns :
-;;;     the new GtkTextMark object.
+;;;     the new GtkTextMark object
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_create_mark" %gtk-text-buffer-create-mark)
     (g-object gtk-text-mark)
   (buffer (g-object gtk-text-buffer))
   (name (:string :free-to-foreign t))
-  (position (g-boxed-foreign gtk-text-iter))
+  (pos (g-boxed-foreign gtk-text-iter))
   (left-gravity :boolean))
 
-(defun gtk-text-buffer-create-mark (buffer name position &optional
-                                           (left-gravity t))
-  (%gtk-text-buffer-create-mark buffer name position left-gravity))
+(defun gtk-text-buffer-create-mark (buffer name pos &optional (left-gravity t))
+  (%gtk-text-buffer-create-mark buffer name pos left-gravity))
 
 (export 'gtk-text-buffer-create-mark)
 

@@ -91,8 +91,10 @@
 ;;; Creates a new GtkTearoffMenuItem.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkTearoffMenuItem.
+;;; 	a new GtkTearoffMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tearoff-menu-item-new))
 
 (defun gtk-tearoff-menu-item-new ()
   (make-instance 'gtk-tearoff-menu-item))
