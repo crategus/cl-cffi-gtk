@@ -2082,3 +2082,330 @@
       (gtk-widget-show dialog))))
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Menu Widget
+;;;
+;;; ----------------------------------------------------------------------------
+
+(defun example-menu ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 200
+                                 :default-height 200
+                                 :title "Example Menu Widget"))
+          (vbox (make-instance 'gtk-vbox)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create the menu-bar and the items of the menu-bar.
+      (let ((menubar (make-instance 'gtk-menu-bar
+                                    :visible t
+                                    :can-focus nil))
+            ;; Item file of the menu-bar.
+            (item-file (make-instance 'gtk-menu-item
+                                      :label "_Datei"
+                                      :use-underline t))
+            ;; Item edit of the menu-bar.
+            (item-edit (make-instance 'gtk-menu-item
+                                      :label "_Bearbeiten"
+                                      :use-underline t))
+            ;; Item help of the menu-bar.
+            (item-help (make-instance 'gtk-menu-item
+                                      :label "_Hilfe"
+                                      :use-underline t)))
+        ;; Create submenu for the item file.
+        (let ((submenu (make-instance 'gtk-menu
+                                      :visible t
+                                      :can-focus nil))
+              (item-file-new (make-instance 'gtk-image-menu-item
+                                       :label "gtk-new"
+                                       :use-underline t
+                                       :use-stock t))
+              (item-file-open (make-instance 'gtk-image-menu-item
+                                        :label "gtk-open"
+                                        :use-underline t
+                                        :use-stock t))
+              (item-file-save (make-instance 'gtk-image-menu-item
+                                        :label "gtk-save"
+                                        :user-underline t
+                                        :use-stock t))
+              (item-file-save-as (make-instance 'gtk-image-menu-item
+                                                :label "gtk-save-as"
+                                                :user-underline t
+                                                :use-stock t))
+              (item-file-quit (make-instance 'gtk-image-menu-item
+                                             :label "gtk-quit"
+                                             :user-underline t
+                                             :use-stock t)))
+          ;; Add the items to to the submenu.
+          (gtk-menu-shell-append submenu item-file-new)
+          (gtk-menu-shell-append submenu item-file-open)
+          (gtk-menu-shell-append submenu item-file-save)
+          (gtk-menu-shell-append submenu item-file-save-as)
+          ;; Insert a GtkSeparatorMenuItem.
+          (gtk-menu-shell-append submenu (gtk-separator-menu-item-new))
+          ;; Add the item file quit to the submenu
+          (gtk-menu-shell-append submenu item-file-quit)
+          ;; Set the submenu of the item file.
+          (gtk-menu-item-set-submenu item-file submenu))
+        ;; Create submenu for the item edit.
+        (let ((submenu (make-instance 'gtk-menu
+                                      :visible t
+                                      :can-focus nil))
+              (item-edit-cut (make-instance 'gtk-image-menu-item
+                                            :label "gtk-cut"
+                                            :use-underline t
+                                            :use-stock t))
+              (item-edit-copy (make-instance 'gtk-image-menu-item
+                                             :label "gtk-copy"
+                                             :use-underline t
+                                             :use-stock t))
+              (item-edit-paste (make-instance 'gtk-image-menu-item
+                                              :label "gtk-paste"
+                                              :user-underline t
+                                              :use-stock t))
+              (item-edit-delete (make-instance 'gtk-image-menu-item
+                                               :label "gtk-delete"
+                                               :user-underline t
+                                               :use-stock t)))
+          ;; Add the items to to the submenu.
+          (gtk-menu-shell-append submenu item-edit-cut)
+          (gtk-menu-shell-append submenu item-edit-copy)
+          (gtk-menu-shell-append submenu item-edit-paste)
+          (gtk-menu-shell-append submenu item-edit-delete)
+          ;; Set the submenu of the item edit.
+          (gtk-menu-item-set-submenu item-edit submenu))
+        ;; Create submenu for the item help.
+        (let ((submenu (make-instance 'gtk-menu
+                                      :visible t
+                                      :can-focus nil))
+              (item-help-about (make-instance 'gtk-image-menu-item
+                                              :label "gtk-about"
+                                              :use-underline t
+                                              :use-stock t)))
+          ;; Add the items to to the submenu.
+          (gtk-menu-shell-append submenu item-help-about)
+          ;; Set the submenu of the item help.
+          (gtk-menu-item-set-submenu item-help submenu))
+        ;; Add the items file, edit, and help into the menubar.
+        (gtk-menu-shell-append menubar item-file)
+        (gtk-menu-shell-append menubar item-edit)
+        (gtk-menu-shell-append menubar item-help)
+        ;; Pack the menubar into the vbox.
+        (gtk-box-pack-start vbox menubar))
+      ;; Pack the vbox into the window.
+      (gtk-container-add window vbox)
+      ;; Show the window.
+      (gtk-widget-show window))))
+
+(defun example-menu-builder ()
+  (within-main-loop
+    (let ((builder (make-instance 'gtk-builder)))
+      (gtk-builder-add-from-file builder "example-menu-builder.ui")
+      (g-signal-connect (gtk-builder-get-object builder "window") "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-show (gtk-builder-get-object builder "window")))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Multiline Text Editing Widget
+
+(defun example-1 ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Simple Multiline Text Input"
+                                  :default-width 350
+                                  :default-height 200))
+           (vbox (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 3))
+           (text-view (make-instance 'gtk-text-view))
+           (buffer (gtk-text-view-get-buffer text-view))
+           (button (make-instance 'gtk-button
+                                  :label "Close")))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      (g-signal-connect button "clicked"
+         (lambda (button)
+           (declare (ignore button))
+           (let* ((start (gtk-text-buffer-get-start-iter buffer))
+                  (end   (gtk-text-buffer-get-end-iter buffer))
+                  (text  (gtk-text-buffer-get-text buffer start end)))
+             (format t "~A~%" text)
+             (gtk-widget-destroy window))))
+      (gtk-container-add window vbox)
+      (gtk-box-pack-start vbox text-view)
+      (gtk-text-buffer-set-text buffer "Hello Text View")
+      (gtk-box-pack-start vbox button :expand nil :fill nil)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun on-button-clicked (buffer tag)
+  (multiple-value-bind (start end)
+      (gtk-text-buffer-get-selection-bounds buffer)
+    (gtk-text-buffer-apply-tag-by-name buffer tag start end)))
+    
+(defun example-2 ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Multiline Text Input"
+                                  :type :toplevel
+                                  :default-width 200
+                                  :default-height 200))
+           (vbox (make-instance 'gtk-vbox))
+           (bbox (make-instance 'gtk-hbutton-box))
+           (text-view (make-instance 'gtk-text-view))
+           (buffer (gtk-text-view-get-buffer text-view)))
+      (g-signal-connect window "destroy"
+                               (lambda (widget)
+                                 (declare (ignore widget))
+                                 (gtk-main-quit)))
+      (gtk-box-pack-start vbox bbox)
+      (gtk-box-pack-start vbox text-view)
+      (gtk-text-buffer-set-text buffer "Hello World Text View")
+      ;; Create tags associated with the buffer.
+      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "bold"
+                                             :weight +pango-weight-bold+))
+      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "italic"
+                                             :style :pango-style-italic))
+      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "font"
+                                             :font "fixed"))
+      ;; Create button for bold.
+      (let ((button (make-instance 'gtk-button :label "Bold")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (on-button-clicked buffer "bold")))
+        (gtk-container-add bbox button))
+      ;; Create button for italic.
+      (let ((button (make-instance 'gtk-button :label "Italic")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (on-button-clicked buffer "italic")))
+        (gtk-container-add bbox button))
+      ;; Create button for fixed font.
+      (let ((button (make-instance 'gtk-button :label "Font Fixed")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (on-button-clicked buffer "font")))
+        (gtk-container-add bbox button))
+      ;; Create the close button.   
+      (let ((button (make-instance 'gtk-button :label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun example-3 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Text Search"
+                                 :type :toplevel))
+          (entry (make-instance 'gtk-entry))
+          (button (make-instance 'gtk-button
+                                 :label "Search"))
+          (scrolled (make-instance 'gtk-scrolled-window))
+          (text-view (make-instance 'gtk-text-view))
+          (vbox (make-instance 'gtk-vbox))
+          (hbox (make-instance 'gtk-hbox)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((text (gtk-entry-get-text entry))
+                  (buffer (gtk-text-view-get-buffer text-view))
+                  (iter (gtk-text-buffer-get-start-iter buffer)))
+             (multiple-value-bind (found start end)
+                 (gtk-text-iter-search iter text)
+               (when found
+                 (gtk-text-buffer-select-range buffer start end))))))
+      (gtk-container-add scrolled text-view)
+      (gtk-box-pack-start hbox entry)
+      (gtk-box-pack-start hbox button)
+      (gtk-box-pack-start vbox hbox)
+      (gtk-box-pack-start vbox scrolled)
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+      
+;;; ----------------------------------------------------------------------------
+
+(defun find-text (text-view text iter)
+  (let ((buffer (gtk-text-view-get-buffer text-view)))
+    (multiple-value-bind (found start end)
+        (gtk-text-iter-search iter text)
+      (when found
+        (gtk-text-buffer-select-range buffer start end)
+        (let ((last-pos (gtk-text-buffer-create-mark buffer "last-pos" end)))
+          (gtk-text-view-scroll-mark-onscreen text-view last-pos))))))
+
+(defun example-4 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Text Search"
+                                 :type :toplevel))
+          (entry (make-instance 'gtk-entry))
+          (button-search (make-instance 'gtk-button
+                                        :label "Search"))
+          (button-next (make-instance 'gtk-button
+                                      :label "Next"))
+          (scrolled (make-instance 'gtk-scrolled-window))
+          (text-view (make-instance 'gtk-text-view))
+          (vbox (make-instance 'gtk-vbox))
+          (hbox (make-instance 'gtk-hbox)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button-search "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((text (gtk-entry-get-text entry))
+                  (buffer (gtk-text-view-get-buffer text-view))
+                  (iter (gtk-text-buffer-get-start-iter buffer)))
+             (find-text text-view text iter))))
+      (g-signal-connect button-next "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((text (gtk-entry-get-text entry))
+                  (buffer (gtk-text-view-get-buffer text-view))
+                  (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
+             (when last-pos
+               (find-text text-view
+                          text
+                          (gtk-text-buffer-get-iter-at-mark buffer
+                                                            last-pos))))))
+               
+      
+      (gtk-container-add scrolled text-view)
+      (gtk-box-pack-start hbox entry)
+      (gtk-box-pack-start hbox button-search)
+      (gtk-box-pack-start hbox button-next)
+      (gtk-box-pack-start vbox hbox)
+      (gtk-box-pack-start vbox scrolled)
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
