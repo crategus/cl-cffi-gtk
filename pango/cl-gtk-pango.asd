@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; Copyright (C) 2009, 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011, 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,12 @@
 (defsystem :cl-gtk-pango
   :name :cl-gtk-pango
   :version "0.0.0"
-  :author "Dr. Dieter Kaiser"
+  :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components ((:file "pango.package")
                (:file "pango.init")
+               (:file "pango.fonts")
                (:file "pango"))
   :depends-on (:cl-gtk-glib :cl-gtk-gobject :iterate))
 
