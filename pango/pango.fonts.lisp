@@ -1247,6 +1247,13 @@
 ;;; in.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-object-class "PangoFont" pango-font
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "pango_font_get_type")
+  nil)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_find_shaper ()
 ;;; 

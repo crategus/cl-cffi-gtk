@@ -34,6 +34,7 @@
   :components ((:file "pango.package")
                (:file "pango.init")
                (:file "pango.fonts")
+               (:file "pango.layout")
                (:file "pango"))
   :depends-on (:cl-gtk-glib :cl-gtk-gobject :iterate))
 
