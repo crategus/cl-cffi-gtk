@@ -185,9 +185,7 @@
    (:file "gtk.entry")                 ; GtkEntry
    ;; GtkEntryBuffer not implemented
    (:file "gtk.entry-completion")      ; GtkEntryCompletion
-   (:file "gtk.scale")                 ; GtkScale
-   (:file "gtk.h-scale")               ; GtkHScale
-   (:file "gtk.v-scale")               ; GtkVScale
+   (:file "gtk.scale")                 ; GtkScale, GtkHScale, GtkVScale
    (:file "gtk.spin-button")           ; GtkSpinButton
    
    ;; Menus, Combo Box, Toolbar
