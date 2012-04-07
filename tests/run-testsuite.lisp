@@ -65,16 +65,17 @@
 (defpackage :gtk-tests
   (:use :gtk :gobject :glib :cffi :common-lisp :lisp-unit))
 
-(load "rtest-gtk-object.lisp")
-(load "rtest-gtk-widget.lisp")
+(load "rtest-gtk-adjustment.lisp")
 (load "rtest-gtk-border.lisp")
-(load "rtest-gtk-window.lisp")
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")
 (load "rtest-gtk-label.lisp")
+(load "rtest-gtk-object.lisp")
 (load "rtest-gtk-progress-bar.lisp")
+(load "rtest-gtk-scale.lisp")
 (load "rtest-gtk-table.lisp")
-(load "rtest-gtk-adjustment.lisp")
+(load "rtest-gtk-window.lisp")
+(load "rtest-gtk-widget.lisp")
 
 (in-package :gtk-tests)
 (run-all-tests :gtk-tests)
