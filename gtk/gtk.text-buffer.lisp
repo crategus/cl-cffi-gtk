@@ -1197,7 +1197,8 @@
 (defcfun ("gtk_text_buffer_get_text" gtk-text-buffer-get-text) :string
   (buffer (g-object gtk-text-buffer))
   (start (g-boxed-foreign gtk-text-iter))
-  (end (g-boxed-foreign gtk-text-iter)))
+  (end (g-boxed-foreign gtk-text-iter))
+  (include-hidden-chars :boolean))
 
 (export 'gtk-text-buffer-get-text)
 
@@ -1277,7 +1278,7 @@
 
 (defcfun ("gtk_text_buffer_insert_pixbuf" gtk-text-buffer-insert-pixbuf) :void
   (buffer (g-object gtk-text-buffer))
-  (position (g-boxed-foreign gtk-text-iter))
+  (iter (g-boxed-foreign gtk-text-iter))
   (pixbuf (g-object gdk-pixbuf)))
 
 (export 'gtk-text-buffer-insert-pixbuf)

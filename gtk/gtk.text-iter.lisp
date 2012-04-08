@@ -226,7 +226,7 @@
 
 (defun gtk-text-iter-alloc ()
   (with-foreign-object (iter '%gtk-text-iter)
-    (gtk-text-iter-copy iter)))
+    (%gtk-text-iter-copy iter)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_buffer ()
@@ -264,8 +264,12 @@
 ;;; 	a copy of the iter, free with gtk_text_iter_free()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_iter_copy" gtk-text-iter-copy) :pointer
+(defcfun ("gtk_text_iter_copy" %gtk-text-iter-copy) :pointer
   (iter :pointer))
+  
+(defcfun ("gtk_text_iter_copy" gtk-text-iter-copy)
+    (g-boxed-foreign gtk-text-iter)
+  (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-copy)
 
@@ -442,6 +446,15 @@
   :type unichar)
 
 (export 'gtk-text-iter-char)
+
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-iter-get-char))
+
+(defun gtk-text-iter-get-char (iter)
+  (gtk-text-iter-char iter))
+
+(export 'gtk-text-iter-get-char)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_slice ()
@@ -1198,6 +1211,11 @@
 ;;; 	whether iter moved and is dereferenceable
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_text_iter_forward_char" gtk-text-iter-forward-char) :boolean
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-forward-char)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_char ()
 ;;; 
@@ -1922,6 +1940,13 @@
 ;;; 	a character offset relative to the start of iter's current line
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-text-iter-set-line-offset))
+
+(defun gtk-text-iter-set-line-offset (iter char-on-line)
+  (setf (gtk-text-iter-line-offset iter) char-on-line))
+
+(export 'gtk-text-iter-set-line-offset)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_set_line_index ()
 ;;; 
@@ -2079,7 +2104,8 @@
 ;;; gboolean (*GtkTextCharPredicate) (gunichar ch, gpointer user_data);
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-text-char-predicate :boolean ((char unichar) (user-data :pointer))
+(defcallback gtk-text-char-predicate :boolean ((char unichar)
+                                               (user-data :pointer))
   (let ((function (get-stable-pointer-value user-data)))
     (funcall function char)))
 
@@ -2227,13 +2253,13 @@
 ;;; 	flags affecting how the search is done
 ;;; 
 ;;; match_start :
-;;; 	return location for start of match, or NULL.
+;;; 	return location for start of match, or NULL
 ;;; 
 ;;; match_end :
-;;; 	return location for end of match, or NULL.
+;;; 	return location for end of match, or NULL
 ;;; 
 ;;; limit :
-;;; 	bound for the search, or NULL for the end of the buffer.
+;;; 	bound for the search, or NULL for the end of the buffer
 ;;; 
 ;;; Returns :
 ;;; 	whether a match was found
@@ -2296,13 +2322,13 @@
 ;;; 	bitmask of flags affecting the search
 ;;; 
 ;;; match_start :
-;;; 	return location for start of match, or NULL.
+;;; 	return location for start of match, or NULL
 ;;; 
 ;;; match_end :
-;;; 	return location for end of match, or NULL.
+;;; 	return location for end of match, or NULL
 ;;; 
 ;;; limit :
-;;; 	location of last possible match_start, or NULL for start of buffer.
+;;; 	location of last possible match_start, or NULL for start of buffer
 ;;; 
 ;;; Returns :
 ;;; 	whether a match was found
