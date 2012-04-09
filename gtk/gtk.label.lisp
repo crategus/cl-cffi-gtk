@@ -255,8 +255,8 @@
 ;;; appear in web browsers, with colored, underlined text. The title attribute
 ;;; is displayed as a tooltip on the link. An example looks like this:
 ;;; 
-;;;  1 gtk_label_set_markup (label, "Go to the <span style="color: red">
-;;;                                 <a>GTK+ website</a></span> for more...");
+;;;  gtk_label_set_markup (label, "Go to the <span style="color: red">
+;;;                               <a>GTK+ website</a></span> for more...");
 ;;; 
 ;;; It is possible to implement custom handling for links and their tooltips
 ;;; with the "activate-link" signal and the gtk_label_get_current_uri()
@@ -306,7 +306,7 @@
 ;;;   "ellipsize"  PangoEllipsizeMode    : Read / Write
 ;;; 
 ;;; The preferred place to ellipsize the string, if the label does not have
-;;; enough room to display the entire string, specified as a PangoEllisizeMode.
+;;; enough room to display the entire string, specified as a PangoEllipsizeMode.
 ;;; 
 ;;; Note that setting this property to a value other than PANGO_ELLIPSIZE_NONE
 ;;; has the side-effect that the label requests only enough space to display
@@ -1269,7 +1269,7 @@
 ;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;;     the width of the label in characters.
+;;;     the width of the label in characters
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -1286,7 +1286,7 @@
 ;;;     a GtkLabel
 ;;; 
 ;;; Returns :
-;;;     the maximum width of the label in characters.
+;;;     the maximum width of the label in characters
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
