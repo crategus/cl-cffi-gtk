@@ -26,7 +26,7 @@
 (asdf:operate 'asdf:load-op :cl-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :common-lisp))
+  (:use :gtk :gdk :gobject :glib :pango :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -877,6 +877,68 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun example-more-labels ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example More Labels"
+                                 :default-width 300
+                                 :border-width 6))
+          (vbox1 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 6))
+          (hbox (make-instance 'gtk-hbox
+                               :homogeneous nil
+                               :spacing 6)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angle 90°"
+                                         :angle 90))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 45°"
+                                         :angle 45))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 315°"
+                                         :angle 315))
+      (gtk-box-pack-start hbox vbox1)
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angel 270°"
+                                         :angle 270))
+      (gtk-box-pack-start vbox2 hbox)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-hseparator))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new "Normal Label"))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new-with-mnemonic "With _Mnemonic"))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label "This Label is Selectable"
+                                         :selectable t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label
+                                         "<small>Small text</small>"
+                                          :use-markup t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label
+                                         "<b>Bold text</b>"
+                                          :use-markup t))
+      (gtk-container-add window vbox2)
+      (gtk-widget-show window))))
+      
+
+(defun example-more-labels-2 ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
@@ -2236,7 +2298,7 @@
            (declare (ignore button))
            (let* ((start (gtk-text-buffer-get-start-iter buffer))
                   (end   (gtk-text-buffer-get-end-iter buffer))
-                  (text  (gtk-text-buffer-get-text buffer start end)))
+                  (text  (gtk-text-buffer-get-text buffer start end nil)))
              (format t "~A~%" text)
              (gtk-widget-destroy window))))
       (gtk-container-add window vbox)
@@ -2406,6 +2468,157 @@
       (gtk-box-pack-start vbox hbox)
       (gtk-box-pack-start vbox scrolled)
       (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+      
+;;; ----------------------------------------------------------------------------
+
+(defun example-5 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Text Editing"
+                                 :type :toplevel
+                                 :default-width 200
+                                 :default-heigth 200))
+          (text-view (make-instance 'gtk-text-view))
+          (button (make-instance 'gtk-button
+                                 :label "Make List Item"))
+          (vbox (make-instance 'gtk-vbox))
+                                 )
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (gtk-main-quit)))
+    (g-signal-connect button "clicked"
+       (lambda (widget)
+         (declare (ignore widget))
+         (let* ((buffer (gtk-text-view-get-buffer text-view))
+                (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+           (gtk-text-iter-set-line-offset iter 0)
+           (gtk-text-buffer-insert buffer "<li>" :position iter)
+           (gtk-text-iter-forward-to-line-end iter)
+           (gtk-text-buffer-insert buffer "</li>" :position iter))))
+           
+   (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+                             (format nil "Item 1~%Item 2~%Item 3~%"))
+   
+   (gtk-box-pack-start vbox text-view)
+   (gtk-box-pack-start vbox button)
+   (gtk-container-add window vbox)
+   (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun get-this-tag (iter buffer)
+  (let* ((start-tag (gtk-text-iter-copy iter))
+         end-tag)
+    (and (gtk-text-iter-find-char start-tag #'alpha-char-p)
+         (setq end-tag (gtk-text-iter-copy start-tag))
+         (gtk-text-iter-find-char end-tag
+                                  (lambda (ch) (not (alphanumericp ch))))
+         (gtk-text-buffer-get-text buffer start-tag end-tag nil))))
+
+(defun closing-tag-p (iter)
+  (let ((slash (gtk-text-iter-copy iter)))
+    (gtk-text-iter-forward-char slash)
+    (eql (gtk-text-iter-get-char slash) #\/)))
+
+(defun example-6 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Editing Text"
+                                 :type :toplevel
+                                 :default-width 200
+                                 :defalut-heigth 200))
+          (text-view (make-instance 'gtk-text-view))
+          (button (make-instance 'gtk-button
+                                 :label "Insert Close Tag"))
+          (vbox (make-instance 'gtk-vbox)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((buffer (gtk-text-view-get-buffer text-view))
+                  (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                  (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+             
+             (do ((stack '()))
+                 ((not (gtk-text-iter-find-char iter
+                                               (lambda (ch) (eq ch #\<))
+                                               :direction :backward)))
+               (let ((tag (get-this-tag iter buffer)))
+                 (if (closing-tag-p iter)
+                     (push tag stack)
+                     (let ((tag-in-stack (pop stack)))
+                       (when (not tag-in-stack)
+                         (gtk-text-buffer-insert buffer
+                                                 (format nil "</~a>" tag))
+                         (return)))))))))
+      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+                                (format nil
+                                        "<html>~%~
+                                         <head><title>Title</title></head>~%~
+                                         <body>~%~
+                                         <h1>Heading</h1>~%"))
+      (gtk-box-pack-start vbox text-view)
+      (gtk-box-pack-start vbox button)
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun insert-image (text-view)
+  (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
+         (buffer (gtk-text-view-get-buffer text-view))
+         (cursor (gtk-text-buffer-get-insert buffer))
+         (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+    (gtk-text-buffer-insert-pixbuf buffer iter pixbuf)))
+
+(defun example-7 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Multiline Text Widget"
+                                 :default-width 200
+                                 :default-heigt 200))
+          (text-view (make-instance 'gtk-text-view))
+          (button (make-instance 'gtk-button
+                                 :label "Insert Image"))
+          (vbox (make-instance 'gtk-vbox)))
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (gtk-main-quit)))
+    (g-signal-connect button "clicked"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (insert-image text-view)))
+    (gtk-box-pack-start vbox button)
+    (gtk-box-pack-start vbox text-view)
+    (gtk-container-add window vbox)
+    (gtk-widget-show window))))
+    
+;;; ----------------------------------------------------------------------------
+
+(defun create-view-and-model ()
+  (make-instance 'gtk-tree-view))
+
+(defun example-8 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example TreeView"
+                                 :type :toplevel
+                                 :default-width 200
+                                 :default-heigth 200))
+                                 )
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window (create-view-and-model))
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
