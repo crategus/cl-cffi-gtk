@@ -268,8 +268,8 @@
 (defcstruct %gdk-cursor
   (cursor-type gdk-cursor-type))
 
-(define-g-boxed-opaque gdk-cursor "GdkCursor" :alloc
-  (error "GdkCursor can not be created from Lisp side"))
+(define-g-boxed-opaque gdk-cursor "GdkCursor"
+  :alloc (error "GdkCursor can not be created from Lisp side"))
 
 (export (boxed-related-symbols 'gdk-cursor))
 
