@@ -323,6 +323,7 @@
           *glib-major-version*
           *glib-minor-version*
           *glib-micro-version*)
+  (format t "Pango version: ~a~%" (pango-version-string))
   (format t "Machine type: ~a~%" (machine-type))
   (format t "Machine version: ~a~%" (machine-version))
   (format t "Software type: ~a~%" (software-type))
@@ -342,10 +343,13 @@
   2 12
   2 14
   2 16
-  2 18)
+  2 18
+  2 20
+  2 22
+  2 24)
 
 (glib:require-library-version "Gtk+"
-                              2 16
+                              2 24
                               *gtk-major-version*
                               *gtk-minor-version*)
 
