@@ -27,17 +27,6 @@
 
 (in-package :pango)
 
-(define-g-enum "PangoUnderline" pango-underline
-  (:export t
-   :type-initializer "pango_underline_get_type")
-  (:none 0)
-  (:single 1)
-  (:double 2)
-  (:low 3)
-  (:error 4))
-
-(export 'pango-underline)
-
 (define-g-enum "PangoDirection" pango-direction
   (:export t
    :type-initializer "pango_direction_get_type")

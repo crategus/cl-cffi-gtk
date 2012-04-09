@@ -33,6 +33,8 @@
   :serial t
   :components ((:file "pango.package")
                (:file "pango.init")
+               (:file "pango.version")
+               (:file "pango.attributes")
                (:file "pango.fonts")
                (:file "pango.layout")
                (:file "pango"))

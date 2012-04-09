@@ -347,11 +347,11 @@
 ;;; An enumeration specifying capitalization variant of the font.
 ;;; 
 ;;; PANGO_VARIANT_NORMAL
-;;;     A normal font.
+;;;     a normal font
 ;;; 
 ;;; PANGO_VARIANT_SMALL_CAPS
-;;;     A font with the lower case characters replaced by smaller variants of
-;;;     the capital characters.
+;;;     a font with the lower case characters replaced by smaller variants of
+;;;     the capital characters
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
