@@ -434,7 +434,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRenderer" gtk-cell-renderer
-  (:superclass gtk-object
+  (:superclass g-initially-unowned
    :export t
    :interfaces nil
    :type-initializer "gtk_cell_renderer_get_type")
