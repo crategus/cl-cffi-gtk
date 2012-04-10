@@ -265,8 +265,8 @@
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
    
    ;; Deprecated
-   (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
-   (:file "gtk.curve")                 ; Allows direct editing of a curve
+;   (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
+;   (:file "gtk.curve")                 ; Allows direct editing of a curve
 ;   (:file "gtk.item-factory")          ; A factory for menus
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
