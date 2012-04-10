@@ -1499,6 +1499,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-entry-get-inner-border))
+
 (defun gtk-entry-get-inner-border (entry)
   (gtk-entry-inner-border entry))
 
@@ -1575,6 +1577,8 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-entry-set-inner-border))
 
 (defun gtk-entry-set-inner-border (entry border)
   (setf (gtk-entry-inner-border entry) border))
