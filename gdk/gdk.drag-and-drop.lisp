@@ -42,7 +42,6 @@
 ;;;     gdk_drop_reply
 ;;;     gdk_drag_context_new
 ;;;     gdk_drag_drop
-;;;     gdk_drag_find_window
 ;;;     gdk_drag_find_window_for_screen
 ;;;     gdk_drag_context_ref
 ;;;     gdk_drag_context_get_actions
@@ -52,8 +51,6 @@
 ;;;     gdk_drag_context_get_source_window
 ;;;     gdk_drag_motion
 ;;;     gdk_drop_finish
-;;;     gdk_drag_get_protocol
-;;;     gdk_drag_get_protocol_for_display
 ;;;
 ;;;     GdkDragProtocol
 ;;;
@@ -371,64 +368,6 @@
 (export 'gdk-drag-drop)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_drag_find_window ()
-;;; 
-;;; void gdk_drag_find_window (GdkDragContext *context,
-;;;                            GdkWindow *drag_window,
-;;;                            gint x_root,
-;;;                            gint y_root,
-;;;                            GdkWindow **dest_window,
-;;;                            GdkDragProtocol *protocol);
-;;; 
-;;; Warning
-;;; 
-;;; gdk_drag_find_window has been deprecated since version 2.24 and should not 
-;;; be used in newly-written code. Use gdk_drag_find_window_for_screen()
-;;; instead.
-;;; 
-;;; Finds the destination window and DND protocol to use at the given pointer 
-;;; position.
-;;; 
-;;; This function is called by the drag source to obtain the dest_window and 
-;;; protocol parameters for gdk_drag_motion().
-;;; 
-;;; context :
-;;;     a GdkDragContext.
-;;; 
-;;; drag_window :
-;;;     a window which may be at the pointer position, but should be ignored, 
-;;;     since it is put up by the drag source as an icon.
-;;; 
-;;; x_root :
-;;;     the x position of the pointer in root coordinates.
-;;; 
-;;; y_root :
-;;;     the y position of the pointer in root coordinates.
-;;; 
-;;; dest_window :
-;;;     location to store the destination window in. [out]
-;;; 
-;;; protocol :
-;;;     location to store the DND protocol in. [out]
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_drag_find_window" %gdk-drag-find-window) :void
-  (context (g-object gdk-drag-context))
-  (window (g-object gdk-window))
-  (x-root :int)
-  (y-root :int)
-  (dest-window (:pointer (g-object gdk-window)))
-  (protocol (:pointer gdk-drag-protocol)))
-
-(defun gdk-drag-find-window (context window x-root y-root)
-  (with-foreign-objects ((dest-window :pointer) (protocol 'gdk-drag-protocol))
-    (%gdk-drag-find-window context window x-root y-root dest-window protocol)
-    (values (mem-ref dest-window '(g-object gdk-window))
-            (mem-ref protocol 'gdk-drag-protocol))))
-
-(export 'gdk-drag-find-window)
-
-;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_find_window_for_screen ()
 ;;; 
 ;;; void gdk_drag_find_window_for_screen (GdkDragContext *context,
@@ -701,85 +640,6 @@
   (time :uint32))
 
 (export 'gdk-drop-finish)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_drag_get_protocol ()
-;;; 
-;;; GdkNativeWindow gdk_drag_get_protocol (GdkNativeWindow xid,
-;;;                                        GdkDragProtocol *protocol);
-;;; 
-;;; Warning
-;;; 
-;;; gdk_drag_get_protocol has been deprecated since version 2.24 and should not 
-;;; be used in newly-written code. Use gdk_drag_get_protocol_for_display()
-;;; instead.
-;;; 
-;;; Finds out the DND protocol supported by a window.
-;;; 
-;;; xid :
-;;;     the windowing system id of the destination window.
-;;; 
-;;; protocol :
-;;;     location where the supported DND protocol is returned.
-;;; 
-;;; Returns :
-;;;     the windowing system specific id for the window where the drop should 
-;;;     happen. This may be xid or the id of a proxy window, or zero if xid
-;;;     doesn't support Drag and Drop.
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_drag_get_protocol" %gdk_drag_get_protocol) gdk-native-window
-  (xid gdk-native-window)
-  (protocol (:pointer gdk-drag-protocol)))
-
-(defun gdk-drag-get-protocol (xid)
-  (with-foreign-object (protocol 'gdk-drag-protocol)
-    (let ((dest-window (%gdk_drag_get_protocol xid protocol)))
-      (values dest-window (mem-ref protocol 'gdk-drag-protocol)))))
-
-(export 'gdk-drag-get-protocol)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_drag_get_protocol_for_display ()
-;;; 
-;;; GdkNativeWindow gdk_drag_get_protocol_for_display(GdkDisplay *display,
-;;;                                                   GdkNativeWindow xid,
-;;;                                                   GdkDragProtocol *protocol)
-;;; 
-;;; Finds out the DND protocol supported by a window.
-;;; 
-;;; display :
-;;;     the GdkDisplay where the destination window resides
-;;; 
-;;; xid :
-;;;     the windowing system id of the destination window.
-;;; 
-;;; protocol :
-;;;     location where the supported DND protocol is returned.
-;;; 
-;;; Returns :
-;;;     the windowing system id of the window where the drop should happen. 
-;;;     This may be xid or the id of a proxy window, or zero if xid doesn't
-;;;     support Drag and Drop.
-;;; 
-;;; Since 2.2
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_drag_get_protocol_for_display"
-          %gdk_drag_get_protocol_for_display)
-    gdk-native-window
-  (display (g-object gdk-display))
-  (xid gdk-native-window)
-  (protocol (:pointer gdk-drag-protocol)))
-
-(defun gdk-drag-get-protocol-for-dispaly (display xid)
-  (with-foreign-object (protocol 'gdk-drag-protocol)
-    (let ((dest-window (%gdk_drag_get_protocol_for_display display
-                                                           xid
-                                                           protocol)))
-      (values dest-window (mem-ref protocol 'gdk-drag-protocol)))))
-
-(export 'gdk-drag-get-protocol-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_unref ()

@@ -38,8 +38,6 @@
 ;;;     gdk_init_check
 ;;;     gdk_parse_args
 ;;;     gdk_get_display_arg_name
-;;;     gdk_set_locale
-;;;     gdk_set_sm_client_id
 ;;;     gdk_exit
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
@@ -174,66 +172,6 @@
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_set_locale ()
-;;;
-;;; gchar * gdk_set_locale (void)
-;;;
-;;; Warning
-;;;
-;;; gdk_set_locale has been deprecated since version 2.24 and should not be
-;;; used in newly-written code. Use setlocale() directly
-;;;
-;;; Initializes the support for internationalization by calling the setlocale()
-;;; system call. This function is called by gtk_set_locale() and so GTK+
-;;; applications should use that instead.
-;;;
-;;; The locale to use is determined by the LANG environment variable, so to run
-;;; an application in a certain locale you can do something like this:
-;;;
-;;;  1 export LANG="fr"
-;;;  2 ... run application ...
-;;;
-;;; If the locale is not supported by X then it is reset to the standard "C"
-;;; locale.
-;;;
-;;; Returns :
-;;;     the resulting locale.
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_set_locale" gdk-set-locale) (:string :free-from-foreign nil))
-
-(export 'gdk-set-locale)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_set_sm_client_id ()
-;;;
-;;; void gdk_set_sm_client_id (const gchar *sm_client_id)
-;;;
-;;; WARNING
-;;;
-;;; gdk_set_sm_client_id has been deprecated since version 2.24 and should not
-;;; be used in newly-written code. Use gdk_x11_set_sm_client_id() instead.
-;;;
-;;; Sets the SM_CLIENT_ID property on the application's leader window so that
-;;; the window manager can save the application's state using the X11R6 ICCCM
-;;; session management protocol.
-;;;
-;;; See the X Session Management Library documentation for more information on
-;;; session management and the Inter-Client Communication Conventions Manual
-;;; (ICCCM) for information on the WM_CLIENT_LEADER property. (Both documents
-;;; are part of the X Window System distribution.)
-
-;;; sm_client_id :
-;;;     the client id assigned by the session manager when the connection was
-;;;     opened, or NULL to remove the property.
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_set_sm_client_id" gdk-set-sm-client-id) :void
-  (sm-client-id :string))
-
-(export 'gdk-set-sm-client-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_exit ()

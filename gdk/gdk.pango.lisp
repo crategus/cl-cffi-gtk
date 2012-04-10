@@ -36,6 +36,7 @@
 ;;; 
 ;;;     GdkPangoRenderer
 ;;;     GdkPangoRendererClass
+;;;
 ;;;     gdk_pango_renderer_new
 ;;;     gdk_pango_renderer_get_default
 ;;;     gdk_pango_renderer_set_drawable
@@ -45,9 +46,11 @@
 ;;;     gdk_pango_context_get
 ;;;     gdk_pango_context_get_for_screen
 ;;;     gdk_pango_context_set_colormap
+;;;
 ;;;     GdkPangoAttrEmbossed
 ;;;     GdkPangoAttrEmbossColor
 ;;;     GdkPangoAttrStipple
+;;;
 ;;;     gdk_pango_attr_emboss_color_new
 ;;;     gdk_pango_attr_embossed_new
 ;;;     gdk_pango_attr_stipple_new
