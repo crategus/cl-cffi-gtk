@@ -616,7 +616,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkWindow" gdk-window
-   (:superclass gdk-drawable
+   (:superclass g-object
     :export t
     :interfaces ()
 ;    :type-initializer "gdk_drawable_get_type"
