@@ -45,8 +45,7 @@
     (assert-false        (gtk-window-has-toplevel-focus window))
     (assert-false        (gtk-window-icon window))
     (assert-false        (gtk-window-icon-name window))
-;; The access causes a core dump of sbcl !
-;;    (assert-false  (gtk-window-mnemonics-visible window))
+    (assert-true         (gtk-window-mnemonics-visible window))
     (assert-false        (gtk-window-modal window))
     (assert-eql 1.0d0    (gtk-window-opacity window))
     (assert-true         (gtk-window-resizable window))
