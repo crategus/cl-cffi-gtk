@@ -703,7 +703,7 @@
     "gravity" "GdkGravity" t t)
    (has-resize-grip
     gtk-window-has-resize-grip
-    "resize-grip" "gboolean" t t)
+    "has-resize-grip" "gboolean" t t)
    (has-toplevel-focus
      gtk-window-has-toplevel-focus
      "has-toplevel-focus" "gboolean" t nil)
@@ -718,7 +718,7 @@
     "is-active" "gboolean" t nil)
    (mnemonics-visible
     gtk-window-mnemonics-visible
-    "mnemonis-visible" "gboolean" t t)
+    "mnemonics-visible" "gboolean" t t)
    (modal
     gtk-window-modal
     "modal" "gboolean" t t)
