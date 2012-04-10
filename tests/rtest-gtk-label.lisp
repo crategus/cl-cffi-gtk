@@ -57,7 +57,7 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkMisc") (g-type-parent "GtkLabel"))
-  (assert-eql 6 (g-type-depth "GtkLabel"))
+  (assert-eql 5 (g-type-depth "GtkLabel"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkLabel" "GObject"))
   (assert-true  (g-type-is-a "GtkLabel" "GtkLabel"))
@@ -76,87 +76,56 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkLabel"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 392 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 112 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 476 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties.
   (assert-equal
-      '("user-data" "name" "parent" "width-request" "height-request" "visible"
-         "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-         "can-default" "has-default" "receives-default" "composite-child"
-         "style" "events" "extension-events" "no-show-all" "has-tooltip"
-         "tooltip-markup" "tooltip-text" "window" "double-buffered" "xalign"
-         "yalign" "xpad" "ypad" "label" "attributes" "use-markup"
-         "use-underline" "justify" "pattern" "wrap" "wrap-mode" "selectable"
-         "mnemonic-keyval" "mnemonic-widget" "cursor-position"
-         "selection-bound" "ellipsize" "width-chars" "single-line-mode" "angle"
-         "max-width-chars" "track-visited-links")
+      '("name" "parent" "width-request" "height-request" "visible" "sensitive"
+         "app-paintable" "can-focus" "has-focus" "is-focus" "can-default"
+         "has-default" "receives-default" "composite-child" "style" "events"
+         "no-show-all" "has-tooltip" "tooltip-markup" "tooltip-text" "window"
+         "double-buffered" "halign" "valign" "margin-left" "margin-right"
+         "margin-top" "margin-bottom" "margin" "hexpand" "vexpand"
+         "hexpand-set" "vexpand-set" "expand" "xalign" "yalign" "xpad" "ypad"
+         "label" "attributes" "use-markup" "use-underline" "justify" "pattern"
+         "wrap" "wrap-mode" "selectable" "mnemonic-keyval" "mnemonic-widget"
+         "cursor-position" "selection-bound" "ellipsize" "width-chars"
+         "single-line-mode" "angle" "max-width-chars" "track-visited-links")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkLabel"))))
   
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-        "focus-line-pattern" "focus-line-width" "focus-padding"
-        "interior-focus" "link-color" "new-tooltip-style"
-        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-        "separator-height" "separator-width" "visited-link-color"
-        "wide-separators")
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkLabel"))))
   
-  (let ((label (make-instance 'gtk-label)))    
-    ;; Properties from gtk-object
-    (assert-true         (pointerp (gtk-object-user-data label)))
-    ;; Properties from gtk-widget
-    (assert-equal ""     (gtk-widget-name label))
-    (assert-false        (gtk-widget-parent label))
-    (assert-eql -1       (gtk-widget-width-request label))
-    (assert-eql -1       (gtk-widget-height-request label)) 
-    (assert-false        (gtk-widget-visible label))
-    (assert-true         (gtk-widget-sensitive label))
-    (assert-false        (gtk-widget-app-paintable label))
-    (assert-false        (gtk-widget-can-focus label))
-    (assert-false        (gtk-widget-has-focus label))
-    (assert-false        (gtk-widget-is-focus label))
-    (assert-false        (gtk-widget-can-default label))
-    (assert-false        (gtk-widget-has-default label))
-    (assert-false        (gtk-widget-receives-default label))
-    (assert-false        (gtk-widget-composite-child label))
-    (assert-true         (gtk-widget-style label)) ; value is of type GtkStyle
-    (assert-false        (gtk-widget-events label))
-    (assert-eq :none     (gtk-widget-extension-events label))
-    (assert-false        (gtk-widget-no-show-all label))
-    (assert-false        (gtk-widget-has-tooltip label))
-    (assert-false        (gtk-widget-tooltip-markup label))
-    (assert-false        (gtk-widget-tooltip-text label))
-    (assert-false        (gtk-widget-window label))
-    (assert-true         (gtk-widget-double-buffered label))
-    ;; Properties from gtk-misc
-    (assert-eql 0.5      (gtk-misc-xalign label))
-    (assert-eql 0.5      (gtk-misc-yalign label))
-    (assert-eql 0        (gtk-misc-xpad label))
-    (assert-eql 0        (gtk-misc-ypad label))
-    ;; Properties from gtk-label
-    (assert-equal ""     (gtk-label-label label))
+  ;; Read the default values of the class properties
+  (let ((label (make-instance 'gtk-label)))
+    (assert-eql 0.0d0    (gtk-label-angle label))
     (assert-true         (gtk-label-attributes label)) ; Returns PangoAttrList
-    (assert-false        (gtk-label-use-markup label))
-    (assert-false        (gtk-label-use-underline label))
+    (assert-eql 0        (gtk-label-cursor-position label))
+    (assert-eq :none     (gtk-label-ellipsize label))
     (assert-eq :left     (gtk-label-justify label))
-    (assert-error 'error (gtk-label-pattern label)) ; not readable
-    (assert-false        (gtk-label-wrap label))
-    (assert-eq :word     (gtk-label-wrap-mode label))
-    (assert-false        (gtk-label-selectable label))
+    (assert-equal ""     (gtk-label-label label))
+    (assert-eql -1       (gtk-label-max-width-chars label))
     (assert-eql 16777215 (gtk-label-mnemonic-keyval label))
     (assert-false        (gtk-label-mnemonic-widget label))
-    (assert-eql 0        (gtk-label-cursor-position label))
+    (assert-error 'error (gtk-label-pattern label)) ; not readable
+    (assert-false        (gtk-label-selectable label))
     (assert-eql 0        (gtk-label-selection-bound label))
-    (assert-eq :none     (gtk-label-ellipsize label))
-    (assert-eql -1       (gtk-label-width-chars label))
     (assert-false        (gtk-label-single-line-mode label))
-    (assert-eql 0.0d0    (gtk-label-angle label))
-    (assert-eql -1       (gtk-label-max-width-chars label))
-    (assert-true         (gtk-label-track-visited-links label)))
+    (assert-true         (gtk-label-track-visited-links label))
+    (assert-false        (gtk-label-use-markup label))
+    (assert-false        (gtk-label-use-underline label))
+    (assert-eql -1       (gtk-label-width-chars label))
+    (assert-false        (gtk-label-wrap label))
+    (assert-eq :word     (gtk-label-wrap-mode label)))
     
   ;; Check the defintion of the class gtk-window
   (assert-equal

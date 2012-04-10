@@ -188,7 +188,7 @@
     (assert-eq :normal (gtk-button-relief button))
     (assert-false      (gtk-button-use-stock button))
     (assert-false      (gtk-button-use-underline button))
-    (assert-eql 0.5    (gtk-button-xalign button))
+    (assert-eql 0.0    (gtk-button-xalign button))
     (assert-eql 0.5    (gtk-button-yalign button))
     
     (assert-true       (gtk-toggle-button-active button))

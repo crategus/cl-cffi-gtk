@@ -33,7 +33,7 @@
     (assert-eq (find-class 'gobject-class) (class-of class))
     
     ;; Check the parent and the childs
-    (assert-equal "GtkProgress" (gtype-name (g-type-parent type)))
+    (assert-equal "GtkWidget" (gtype-name (g-type-parent type)))
     (assert-equal '()
                   (mapcar #'gtype-name (g-type-children type)))
     
@@ -50,86 +50,37 @@
     
     ;; Get the names of the class properties
     (assert-equal
-     (sort
-      (copy-list
-        '("user-data" "name" "parent" "width-request" "height-request" "visible"
-        "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-        "can-default" "has-default" "receives-default" "composite-child"
-        "style" "events" "extension-events" "no-show-all" "has-tooltip"
-        "tooltip-markup" "tooltip-text" "window" "double-buffered"
-        "activity-mode" "show-text" "text-xalign" "text-yalign" "fraction"
-        "pulse-step" "orientation" "text" "ellipsize" "adjustment" "bar-style"
-          "activity-step" "activity-blocks" "discrete-blocks"))
-      #'string<)
-     (sort
+        '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "fraction" "pulse-step" "inverted" "text" "show-text" "ellipsize")
       (mapcar #'param-spec-name
-              (g-object-class-list-properties (gtype "GtkProgressBar")))
-      #'string<))
+              (g-object-class-list-properties (gtype "GtkProgressBar"))))
     
     ;; Get the names of the style properties.
     (assert-equal
-     (sort
-      (copy-list
-        '("draw-border" "focus-line-pattern" "secondary-cursor-color"
-        "separator-width" "visited-link-color" "cursor-aspect-ratio"
-        "scroll-arrow-hlength" "wide-separators" "scroll-arrow-vlength"
-        "cursor-color" "interior-focus" "link-color" "separator-height"
-        "focus-line-width" "focus-padding" "new-tooltip-style"
-        "min-vertical-bar-width" "min-vertical-bar-height"
-        "min-horizontal-bar-height" "xspacing" "yspacing"
-          "min-horizontal-bar-width"))
-      #'string<)
-     (sort
+        '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging" "min-horizontal-bar-height"
+         "min-horizontal-bar-width" "min-vertical-bar-height"
+         "min-vertical-bar-width" "xspacing" "yspacing")
       (mapcar #'param-spec-name
               (gtk-widget-class-list-style-properties
-               (gtype "GtkProgressBar")))
-      #'string<))
-    
-    ;; Properties from gtk-object
-    (assert-true (pointerp (gtk-object-user-data pbar)))
-    
-    ;; Properties from gtk-widget
-    (assert-equal "" (gtk-widget-name pbar))
-    (assert-false    (gtk-widget-parent pbar))
-    (assert-eql -1   (gtk-widget-width-request pbar))
-    (assert-eql -1   (gtk-widget-height-request pbar)) 
-    (assert-false    (gtk-widget-visible pbar))
-    (assert-true     (gtk-widget-sensitive pbar))
-    (assert-false    (gtk-widget-app-paintable pbar))
-    (assert-false    (gtk-widget-can-focus pbar))
-    (assert-false    (gtk-widget-has-focus pbar))
-    (assert-false    (gtk-widget-is-focus pbar))
-    (assert-false    (gtk-widget-can-default pbar))
-    (assert-false    (gtk-widget-has-default pbar))
-    (assert-false    (gtk-widget-receives-default pbar))
-    (assert-false    (gtk-widget-composite-child pbar))
-    (assert-true     (gtk-widget-style pbar)) ; value is of type GtkStyle
-    (assert-false    (gtk-widget-events pbar))
-    (assert-eq :none (gtk-widget-extension-events pbar))
-    (assert-false    (gtk-widget-no-show-all pbar))
-    (assert-false    (gtk-widget-has-tooltip pbar))
-    (assert-false    (gtk-widget-tooltip-markup pbar))
-    (assert-false    (gtk-widget-tooltip-text pbar))
-    (assert-false    (gtk-widget-window pbar))
-    (assert-true     (gtk-widget-double-buffered pbar))
-    
-    ;; Properties from gtk-progress
-;    (assert-false    (gtk-progress-activity-mode pbar))
-;    (assert-false    (gtk-progress-show-text pbar))
-;    (assert-false    (gtk-progress-xalign pbar))
-;    (assert-false    (gtk-progress-yalign pbar))
-    
+               (gtype "GtkProgressBar"))))
+        
     ;; Properties from gtk-progress-bar
-    (assert-eql 0.0d0 (gtk-progress-bar-fraction pbar))
-    (assert-eql 0.1d0 (gtk-progress-bar-pulse-step pbar))
-    (assert-eq :left-to-right (gtk-progress-bar-orientation pbar))
-    (assert-false     (gtk-progress-bar-text pbar))
-    (assert-eq :none  (gtk-progress-bar-ellipsize pbar))
-    (assert-true      (gtk-progress-bar-adjustment pbar))
-    (assert-eq :continuous (gtk-progress-bar-bar-style pbar))
-    (assert-eql  3    (gtk-progress-bar-activity-step pbar))
-    (assert-eql  5    (gtk-progress-bar-activity-blocks pbar))
-    (assert-eql 10    (gtk-progress-bar-discrete-blocks pbar))
+    (assert-eq :none  (gtk-progress-bar-get-ellipsize pbar))
+    (assert-eql 0.0d0 (gtk-progress-bar-get-fraction pbar))
+    (assert-false     (gtk-progress-bar-get-inverted pbar))
+    (assert-eql 0.1d0 (gtk-progress-bar-get-pulse-step pbar))
+    (assert-false     (gtk-progress-bar-get-show-text pbar))
+    (assert-false     (gtk-progress-bar-get-text pbar))
     ))
 
 ;;; --- End of file rtest-gtk-progress-bar.lisp --------------------------------

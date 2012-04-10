@@ -24,7 +24,7 @@
 (in-package :gdk-tests)
 
 (define-test gdk-window
-  (assert-false (g-type-is-abstract "GdkWindow"))
+  (assert-true  (g-type-is-abstract "GdkWindow"))
   (assert-true  (g-type-is-derived "GdkWindow"))  
   (assert-false (g-type-is-fundamental "GdkWindow"))  
   (assert-true  (g-type-is-value-type "GdkWindow"))
@@ -55,15 +55,16 @@
                   (gobject-class-g-type-initializer class))
     (assert-false (gobject-class-interface-p class)))
   
-  (assert-equal (gtype "GdkDrawable") (g-type-parent "GdkWindow"))
-  (assert-eql 3 (g-type-depth "GdkWindow"))
-  (assert-eql   (gtype "GdkDrawable")
+  (assert-equal (gtype "GObject") (g-type-parent "GdkWindow"))
+  (assert-eql 2 (g-type-depth "GdkWindow"))
+  (assert-eql   (gtype "GdkWindow")
                 (g-type-next-base "GdkWindow" "GObject"))
   (assert-true  (g-type-is-a "GdkWindow" "GdkWindow"))
-  (assert-true  (g-type-is-a "GdkWindow" "GdkDrawable"))
+  (assert-true  (g-type-is-a "GdkWindow" "GObject"))
   (assert-false (g-type-is-a "GdkWindow" "gboolean"))
   (assert-false (g-type-is-a "GdkWindow" "GtkWindow"))
-  (assert-equal '() (mapcar #'gtype-name (g-type-children "GdkWindow")))
+  (assert-equal '("GdkX11Window")
+                (mapcar #'gtype-name (g-type-children "GdkWindow")))
   (assert-equal '() (mapcar #'gtype-name (g-type-interfaces "GdkWindow")))
   
   ;; Query infos about the class "GdkWindow"
@@ -73,8 +74,8 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GdkWindow"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 224 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 172 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 116 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql 168 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties.
   (assert-equal
@@ -82,35 +83,34 @@
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GdkWindow"))))
     
-  (let ((win (gdk-window-new (null-pointer) (make-gdk-window-attr) '())))
-    (assert-true win)
-    (assert-true (g-type-is-a "GdkWindow"
-                              (g-type-from-instance (pointer win))))
-    (assert-true (g-type-is-a "GdkDisplayX11"
-                              (g-type-from-instance
-                                (pointer (gdk-window-get-display win)))))
-    (assert-true (g-type-is-a "GdkScreenX11"
-                              (g-type-from-instance
-                                (pointer (gdk-window-get-screen win)))))
-    (assert-true (g-type-is-a "GdkVisual"
-                              (g-type-from-instance
-                                (pointer (gdk-window-get-visual win)))))
-    (assert-eql 1 (gdk-window-get-width win))
-    (assert-eql 1 (gdk-window-get-height win))
-    (assert-eq :toplevel (gdk-window-get-window-type win))
-    (assert-false (gdk-window-is-destroyed win))
-    (assert-false (gdk-window-is-visible win))
-    (assert-false (gdk-window-is-viewable win))
-    (assert-false (gdk-window-is-shaped win))
-    (assert-false (gdk-window-is-input-only win))
-    (assert-equal '(:withdrawn) (gdk-window-get-state win))
-    
-    (gdk-window-maximize win)
-    (assert-eql 1 (gdk-window-get-width win))
-    (assert-eql 1 (gdk-window-get-height win))
-    (gdk-window-unmaximize win)
-                 )
-                
-                
+;  (let ((win (gdk-window-new (null-pointer) (make-gdk-window-attr) '())))
+;    (assert-true win)
+;    (assert-true (g-type-is-a "GdkWindow"
+;                              (g-type-from-instance (pointer win))))
+;    (assert-true (g-type-is-a "GdkDisplayX11"
+;                              (g-type-from-instance
+;                                (pointer (gdk-window-get-display win)))))
+;    (assert-true (g-type-is-a "GdkScreenX11"
+;                              (g-type-from-instance
+;                                (pointer (gdk-window-get-screen win)))))
+;    (assert-true (g-type-is-a "GdkVisual"
+;                              (g-type-from-instance
+;                                (pointer (gdk-window-get-visual win)))))
+;    (assert-eql 1 (gdk-window-get-width win))
+;    (assert-eql 1 (gdk-window-get-height win))
+;    (assert-eq :toplevel (gdk-window-get-window-type win))
+;    (assert-false (gdk-window-is-destroyed win))
+;    (assert-false (gdk-window-is-visible win))
+;    (assert-false (gdk-window-is-viewable win))
+;    (assert-false (gdk-window-is-shaped win))
+;    (assert-false (gdk-window-is-input-only win))
+;    (assert-equal '(:withdrawn) (gdk-window-get-state win))
+;    
+;    (gdk-window-maximize win)
+;    (assert-eql 1 (gdk-window-get-width win))
+;    (assert-eql 1 (gdk-window-get-height win))
+;    (gdk-window-unmaximize win)
+;                 )               
+
  )
 

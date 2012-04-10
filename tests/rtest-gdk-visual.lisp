@@ -26,9 +26,9 @@
 (define-test gdk-visual
   (let* ((visual (gdk-visual-get-system))
          (type (g-type-from-instance (pointer visual))))
-    (assert-equal "GdkVisual" (gtype-name type))
+    (assert-equal "GdkX11Visual" (gtype-name type))
     (assert-eql 'gdk-visual (registered-object-type-by-name "GdkVisual"))
-    (assert-equal "GObject" (gtype-name (g-type-parent type)))
+    (assert-equal "GdkVisual" (gtype-name (g-type-parent type)))
     (assert-equal '() (mapcar #'gtype-name (g-type-children type)))
     ))
 

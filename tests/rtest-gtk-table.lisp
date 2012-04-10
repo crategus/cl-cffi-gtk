@@ -57,7 +57,7 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkContainer") (g-type-parent "GtkTable"))
-  (assert-eql 6 (g-type-depth "GtkTable"))
+  (assert-eql 5 (g-type-depth "GtkTable"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkTable" "GObject"))
   (assert-true  (g-type-is-a "GtkTable" "GtkTable"))
@@ -76,29 +76,30 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkTable"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 416 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql  92 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 504 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
     
   ;; Get the names of the class properties.
   (assert-equal
-      '("user-data" "name" "parent" "width-request" "height-request" "visible"
-       "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-       "can-default" "has-default" "receives-default" "composite-child"
-       "style" "events" "extension-events" "no-show-all" "has-tooltip"
-       "tooltip-markup" "tooltip-text" "window" "double-buffered"
-       "border-width" "resize-mode" "child" "n-rows" "n-columns"
-       "column-spacing" "row-spacing" "homogeneous")
+      '("name" "parent" "width-request" "height-request" "visible" "sensitive"
+         "app-paintable" "can-focus" "has-focus" "is-focus" "can-default"
+         "has-default" "receives-default" "composite-child" "style" "events"
+         "no-show-all" "has-tooltip" "tooltip-markup" "tooltip-text" "window"
+         "double-buffered" "halign" "valign" "margin-left" "margin-right"
+         "margin-top" "margin-bottom" "margin" "hexpand" "vexpand"
+         "hexpand-set" "vexpand-set" "expand" "border-width" "resize-mode"
+         "child" "n-rows" "n-columns" "column-spacing" "row-spacing"
+         "homogeneous")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkTable"))))
     
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-        "focus-line-pattern" "focus-line-width" "focus-padding"
-        "interior-focus" "link-color" "new-tooltip-style"
-        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-        "separator-height" "separator-width" "visited-link-color"
-        "wide-separators")
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkTable")))))
 

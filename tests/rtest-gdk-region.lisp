@@ -55,6 +55,7 @@
     (assert-eql 30 (gdk-rectangle-width union))
     (assert-eql 15 (gdk-rectangle-height union))))
 
+#+nil
 (define-test gdk-region
   (let* ((rect nil)
          (rect1   (make-gdk-rectangle :width 20 :height 10))

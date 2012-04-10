@@ -34,35 +34,38 @@
     
     ;; Access all available slots and lookup the default values.
     (assert-true         (gtk-window-accept-focus window))
-    (assert-true         (gtk-window-allow-grow window))
-    (assert-false        (gtk-window-allow-shrink window))
+    ;; application is missing
+    (assert-true         (gtk-window-decorated window))
     (assert-eql -1       (gtk-window-default-height window))
     (assert-eql -1       (gtk-window-default-width window))
     (assert-true         (gtk-window-deletable window))
     (assert-false        (gtk-window-destroy-with-parent window))
     (assert-true         (gtk-window-focus-on-map window))
+    (assert-true         (gtk-window-focus-visible window))
     (assert-eq :north-west (gtk-window-gravity window))
+    (assert-false        (gtk-window-has-resize-grip window))
     (assert-false        (gtk-window-has-toplevel-focus window))
     (assert-false        (gtk-window-icon window))
     (assert-false        (gtk-window-icon-name window))
-;; The access causes a core dump of sbcl !
-;;    (assert-false  (gtk-window-mnemonics-visible window))
+    (assert-false        (gtk-window-is-active window))
+    (assert-true         (gtk-window-mnemonics-visible window))
     (assert-false        (gtk-window-modal window))
     (assert-eql 1.0d0    (gtk-window-opacity window))
     (assert-true         (gtk-window-resizable window))
+    (assert-false        (gtk-window-resize-grip-visible window))
     (assert-false        (gtk-window-role window))
-    (assert-equal "GdkScreenX11"
+    (assert-equal "GdkX11Screen"
                          (gtype-name
                            (g-type-from-instance
                              (pointer (gtk-window-screen window)))))
     (assert-false        (gtk-window-skip-pager-hint window))
     (assert-false        (gtk-window-skip-taskbar-hint window))
-;; startup-id is only writable
-;;    (assert-false (gtk-window-startup-id window))
+    ;; startup-id is only writable
     (assert-false        (gtk-window-title window))
     (assert-false        (gtk-window-transient-for window))
     (assert-eq :toplevel (gtk-window-type window))
     (assert-eq :normal   (gtk-window-type-hint window))
+    (assert-false        (gtk-window-ubuntu-no-proxy window))
     (assert-false        (gtk-window-urgency-hint window))
     (assert-eq :none     (gtk-window-window-position window))
     
@@ -74,10 +77,8 @@
                                 :TYPE-INITIALIZER "gtk_window_get_type")
                                ((ACCEPT-FOCUS GTK-WINDOW-ACCEPT-FOCUS
                                  "accept-focus" "gboolean" T T)
-                                (ALLOW-GROW GTK-WINDOW-ALLOW-GROW "allow-grow"
-                                 "gboolean" T T)
-                                (ALLOW-SHRINK GTK-WINDOW-ALLOW-SHRINK
-                                 "allow-shrink" "gboolean" T T)
+                                (APPLICATION GTK-WINDOW-APPLICATION
+                                 "application" "GtkApplication" T T)
                                 (DECORATED GTK-WINDOW-DECORATED "decorated"
                                  "gboolean" T T)
                                 (DEFAULT-HEIGHT GTK-WINDOW-DEFAULT-HEIGHT
@@ -91,6 +92,8 @@
                                  "destroy-with-parent" "gboolean" T T)
                                 (FOCUS-ON-MAP GTK-WINDOW-FOCUS-ON-MAP
                                  "focus-on-map" "gboolean" T T)
+                                (FOCUS-VISIBLE GTK-WINDOW-FOCUS-VISIBLE
+                                 "focus-visible" "gboolean" T T)
                                 (GRAVITY GTK-WINDOW-GRAVITY "gravity"
                                  "GdkGravity" T T)
                                 (HAS-RESIZE-GRIP GTK-WINDOW-HAS-RESIZE-GRIP
@@ -147,13 +150,9 @@
                      :G-PROPERTY-TYPE "gboolean" :ACCESSOR
                      GTK-WINDOW-ACCEPT-FOCUS :INITARG :ACCEPT-FOCUS
                      :G-PROPERTY-NAME "accept-focus")
-                    (ALLOW-GROW :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gboolean" :ACCESSOR GTK-WINDOW-ALLOW-GROW :INITARG
-                     :ALLOW-GROW :G-PROPERTY-NAME "allow-grow")
-                    (ALLOW-SHRINK :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gboolean" :ACCESSOR
-                     GTK-WINDOW-ALLOW-SHRINK :INITARG :ALLOW-SHRINK
-                     :G-PROPERTY-NAME "allow-shrink")
+                    (APPLICATION :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
+                     "GtkApplication" :ACCESSOR GTK-WINDOW-APPLICATION :INITARG
+                     :APPLICATION :G-PROPERTY-NAME "application")
                     (DECORATED :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
                      "gboolean" :ACCESSOR GTK-WINDOW-DECORATED :INITARG
                      :DECORATED :G-PROPERTY-NAME "decorated")
@@ -176,6 +175,10 @@
                      :G-PROPERTY-TYPE "gboolean" :ACCESSOR
                      GTK-WINDOW-FOCUS-ON-MAP :INITARG :FOCUS-ON-MAP
                      :G-PROPERTY-NAME "focus-on-map")
+                    (FOCUS-VISIBLE :ALLOCATION :GOBJECT-PROPERTY
+                     :G-PROPERTY-TYPE "gboolean" :ACCESSOR
+                     GTK-WINDOW-FOCUS-VISIBLE :INITARG :FOCUS-VISIBLE
+                     :G-PROPERTY-NAME "focus-visible")
                     (GRAVITY :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
                      "GdkGravity" :ACCESSOR GTK-WINDOW-GRAVITY :INITARG
                      :GRAVITY :G-PROPERTY-NAME "gravity")
@@ -260,14 +263,14 @@
                    (:G-TYPE-INITIALIZER . "gtk_window_get_type"))
          (EXPORT 'GTK-WINDOW (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-ACCEPT-FOCUS (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-WINDOW-ALLOW-GROW (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-WINDOW-ALLOW-SHRINK (FIND-PACKAGE "GTK"))
+         (EXPORT 'GTK-WINDOW-APPLICATION (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DECORATED (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DEFAULT-HEIGHT (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DEFAULT-WIDTH (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DELETABLE (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DESTROY-WITH-PARENT (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-FOCUS-ON-MAP (FIND-PACKAGE "GTK"))
+         (EXPORT 'GTK-WINDOW-FOCUS-VISIBLE (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-GRAVITY (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-HAS-RESIZE-GRIP (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-HAS-TOPLEVEL-FOCUS (FIND-PACKAGE "GTK"))
