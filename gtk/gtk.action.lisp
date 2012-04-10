@@ -364,35 +364,6 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_action_connect_proxy" gtk-action-connect-proxy) :void
-  (action g-object)
-  (proxy g-object))
-
-(export 'gtk-action-connect-proxy)
-
-(defcfun ("gtk_action_disconnect_proxy" gtk-action-disconnect-proxy) :void
-  (action g-object)
-  (proxy g-object))
-
-(export 'gtk-action-disconnect-proxy)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_action_block_activate_from" gtk-action-block-activate-from) :void
-  (action g-object)
-  (proxy g-object))
-
-(export 'gtk-action-block-activate-from)
-
-(defcfun ("gtk_action_unblock_activate_from" gtk-action-unblock-activate-from)
-    :void
-  (action g-object)
-  (proxy g-object))
-
-(export 'gtk-action-unblock-activate-from)
-
-;;; ----------------------------------------------------------------------------
 ;;; struct GtkAction
 ;;; 
 ;;; struct GtkAction;
@@ -402,41 +373,58 @@
   (:superclass g-object
     :export t :interfaces ("GtkBuildable")
     :type-initializer "gtk_action_get_type")
-  ((action-group gtk-action-action-group
+  ((action-group
+    gtk-action-action-group
     "action-group" "GtkActionGroup" t t)
-   (gicon gtk-action-gicon
+   (gicon
+    gtk-action-gicon
     "gicon" "GIcon" t t)
-   (hide-if-empty gtk-action-hide-if-empty
+   (hide-if-empty
+    gtk-action-hide-if-empty
     "hide-if-empty" "gboolean" t t)
-   (icon-name gtk-action-icon-name
+   (icon-name
+    gtk-action-icon-name
     "icon-name" "gchararray" t t)
-   (is-important gtk-action-is-important
+   (is-important
+    gtk-action-is-important
     "is-important" "gboolean" t t)
-   (label gtk-action-label
+   (label
+    gtk-action-label
     "label" "gchararray" t t)
-   (name gtk-action-name
+   (name
+    gtk-action-name
     "name" "gchararray" t nil)
-   (sensitive gtk-action-sensitive
+   (sensitive
+    gtk-action-sensitive
     "sensitive" "gboolean" t t)
-   (short-label gtk-action-short-label
+   (short-label
+    gtk-action-short-label
     "short-label" "gchararray" t t)
-   (stock-id gtk-action-stock-id
+   (stock-id
+    gtk-action-stock-id
     "stock-id" "gchararray" t t)
-   (tooltip gtk-action-tooltip
+   (tooltip
+    gtk-action-tooltip
     "tooltip" "gchararray" t t)
-   (visible gtk-action-visible
+   (visible
+    gtk-action-visible
     "visible" "gboolean" t t)
-   (visible-horizontal gtk-action-visible-horizontal
+   (visible-horizontal
+    gtk-action-visible-horizontal
     "visible-horizontal" "gboolean" t t)
-   (visible-overflown gtk-action-visible-overflown
+   (visible-overflown
+    gtk-action-visible-overflown
     "visible-overflown" "gboolean" t t)
-   (visible-vertical gtk-action-visible-vertical
+   (visible-vertical
+    gtk-action-visible-vertical
     "visible-vertical" "gboolean" t t)
-   (:cffi accel-path gtk-action-accel-path
+   (:cffi accel-path
+          gtk-action-accel-path
           (:string :free-from-foreign nil :free-to-foreign t)
           "gtk_action_get_accel_path"
           "gtk_action_set_accel_path")
-   (:cffi accel-group gtk-action-accel-group g-object nil
+   (:cffi accel-group
+          gtk-action-accel-group g-object nil
           "gtk_action_set_accel_group")))
 
 ;;; ----------------------------------------------------------------------------

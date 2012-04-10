@@ -153,8 +153,8 @@
 ;;; GtkNotebook as GtkBuildable
 ;;; 
 ;;; The GtkNotebook implementation of the GtkBuildable interface supports
-;;; placing children into tabs by specifying "tab" as the "type" attribute of a
-;;; <child> element. Note that the content of the tab must be created before
+;;; placing children into tabs by specifying "tab" as the "type" attribute of
+;;; a <child> element. Note that the content of the tab must be created before
 ;;; the tab can be filled. A tab child can be specified without specifying a
 ;;; <child> type attribute.
 ;;; 
@@ -598,6 +598,8 @@
 
 (in-package :gtk)
 
+;;; ----------------------------------------------------------------------------
+
 (defun gtk-notebook-add-page (notebook child tab-label &key
                                        (position :end) menu)
   (assert (typep position '(or integer (member :start :end))))
@@ -633,28 +635,6 @@
                                              position)))))
 
 (export 'gtk-notebook-add-page)
-
-;;; ----------------------------------------------------------------------------
-
-(defcallback gtk-notebook-window-creation-func-callback g-object
-    ((source g-object) (page g-object) (x :int) (y :int) (data :pointer))
-  (restart-case
-      (funcall (get-stable-pointer-value data)
-               source page x y)
-    (return-null () nil)))
-
-(defcfun gtk-notebook-set-window-creation-hook :void
-  (func :pointer)
-  (data :pointer)
-  (destroy-notify :pointer))
-
-(defun notebook-set-window-creation-hook (function)
-  (gtk-notebook-set-window-creation-hook
-                        (callback gtk-notebook-window-creation-func-callback)
-                        (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-cb)))
-
-(export 'notebook-set-window-creation-hook)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkNotebook

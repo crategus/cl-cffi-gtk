@@ -513,12 +513,6 @@
 
 (in-package :gtk)
 
-(defcfun ("gtk_combo_box_get_active_text" gtk-combo-box-get-active-text)
-    (:string :free-from-foreign t)
-  (combo-box g-object))
-
-(export 'gtk-combo-box-get-active-text)
-
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkComboBox
 ;;; 

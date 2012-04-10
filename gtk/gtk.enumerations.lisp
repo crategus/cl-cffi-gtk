@@ -67,8 +67,6 @@
 ;;;     GtkJunctionSides
 ;;;     GtkBorderStyle
 ;;;     GtkRegionFlags
-;;;
-;;;     GtkUpdateType  from GTK+ 2 Reference Manual
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1193,32 +1191,5 @@
 ;;;     Region is part of a sorted area.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkUpdateType
-;;;
-;;; typedef enum {
-;;;   GTK_UPDATE_CONTINUOUS,
-;;;   GTK_UPDATE_DISCONTINUOUS,
-;;;   GTK_UPDATE_DELAYED
-;;; } GtkUpdateType;
-;;; 
-;;; Used by GtkRange to control the policy for notifying value changes.
-;;; 
-;;; GTK_UPDATE_CONTINUOUS
-;;;     Notify updates whenever the value changed
-;;; 
-;;; GTK_UPDATE_DISCONTINUOUS
-;;;     Notify updates when the mouse button has been released
-;;; 
-;;; GTK_UPDATE_DELAYED
-;;;     Space out updates with a small timeout
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkUpdateType" gtk-update-type
-  (:export t
-   :type-initializer "gtk_update_type_get_type")
-  (:continuous 0)
-  (:discontinuous 1)
-  (:delayed 2))
 
 ;;; --- End of file gtk.enumerations.lisp --------------------------------------

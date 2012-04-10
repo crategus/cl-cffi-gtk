@@ -70,11 +70,6 @@
 ;;;     gtk_about_dialog_set_logo_icon_name
 ;;;     gtk_show_about_dialog
 ;;;
-;;;     From the Gtk+ 2 Reference Manual
-;;;
-;;;     gtk_about_dialog_set_email_hook
-;;;     gtk_about_dialog_set_url_hook
-;;;
 ;;; Object Hierarchy
 ;;; 
 ;;;   GObject
@@ -399,6 +394,9 @@
    (license
     gtk-about-dialog-license
     "license" "gchararray" t t)
+   (license-type
+    gtk-about-dialog-license-type
+    "license-type" "GtkLicense" t t)
    (logo
     gtk-about-dialog-logo
     "logo" "GdkPixbuf" t t)
@@ -477,6 +475,19 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "GtkLicense" gtk-license
+  (:export t
+   :type-initializer "gtk_license_get_type")
+  (:unknown 0)
+  (:custom 1)
+  (:gpl-2-0 2)
+  (:gpl-3-0 3)
+  (:lgpl-2-1 4)
+  (:lgpl-3-0 5)
+  (:bsd 6)
+  (:mit-x11 7)
+  (:artistic 8))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_new ()
 ;;; 
@@ -489,6 +500,8 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-new))
 
 (defun gtk-about-dialog-new ()
   (make-instance 'gtk-about-dialog))
@@ -791,7 +804,7 @@
 ;;; 
 ;;; GtkLicense gtk_about_dialog_get_license_type (GtkAboutDialog *about)
 ;;; 
-;;; Retrieves the license set using gtk_about_dialog_set_license_type()
+;;; Retrieves the license set using gtk_about_dialog_set_license_type().
 ;;; 
 ;;; about :
 ;;;     a GtkAboutDialog
@@ -801,6 +814,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-get-license-type))
+
+(defun gtk-about-dialog-get-license-type (about-dialog)
+  (gtk-about-dialog-license-type about-dialog))
+
+(export 'gtk-about-dialog-get-license-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_license_type ()
@@ -822,6 +842,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-about-dialog-set-license-type))
+
+(defun gtk-about-dialog-set-license-type (about-dialog license-type)
+  (setf (gtk-about-dialog-license-type about-dialog) license-type))
+
+(export 'gtk-about-dialog-set-license-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_website ()
@@ -1252,137 +1279,5 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_about_dialog_set_email_hook ()
-;;; 
-;;; GtkAboutDialogActivateLinkFunc gtk_about_dialog_set_email_hook
-;;;                                        (GtkAboutDialogActivateLinkFunc func,
-;;;                                         gpointer data,
-;;;                                         GDestroyNotify destroy);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_about_dialog_set_email_hook has been deprecated since version 2.24 and
-;;; should not be used in newly-written code. Use the "activate-link" signal
-;;; 
-;;; Installs a global function to be called whenever the user activates an email
-;;; link in an about dialog.
-;;; 
-;;; Since 2.18 there exists a default function which uses gtk_show_uri(). To
-;;; deactivate it, you can pass NULL for func.
-;;; 
-;;; func :
-;;;     a function to call when an email link is activated
-;;; 
-;;; data :
-;;;     data to pass to func
-;;; 
-;;; destroy :
-;;;     GDestroyNotify for data
-;;; 
-;;; Returns :
-;;;     the previous email hook
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-(defvar *about-dialog-email-func* nil)
-
-(defcallback about-dialog-email-func-cb :void
-  ((dialog (g-object about-dialog))
-   (link (:string :free-from-foreign nil))
-   (user-data :pointer))
-  (declare (ignore user-data))
-  (funcall *about-dialog-email-func* dialog link))
-
-(defcallback about-dialog-email-func-destroy-cb :void
-  ((data :pointer))
-  (declare (ignore data))
-  (setf *about-dialog-email-func* nil))
-
-(defcfun ("gtk_about_dialog_set_email_hook" gtk-about-dialog-set-email-hook)
-    :void
-  (func :pointer)
-  (data :pointer)
-  (destroy-notify :pointer))
-
-(defun (setf gtk-about-dialog-global-email-hook) (new-value)
-  (if new-value
-      (gtk-about-dialog-set-email-hook
-                                  (callback about-dialog-email-func-cb)
-                                  (null-pointer)
-                                  (callback about-dialog-email-func-destroy-cb))
-      (gtk-about-dialog-set-email-hook (null-pointer)
-                                       (null-pointer)
-                                       (null-pointer)))
-  (setf *about-dialog-email-func* new-value))
-
-(export 'gtk-about-dialog-global-email-hook)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_about_dialog_set_url_hook ()
-;;; 
-;;; GtkAboutDialogActivateLinkFunc gtk_about_dialog_set_url_hook
-;;;                                        (GtkAboutDialogActivateLinkFunc func,
-;;;                                         gpointer data,
-;;;                                         GDestroyNotify destroy);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_about_dialog_set_url_hook has been deprecated since version 2.24 and
-;;; should not be used in newly-written code. Use the "activate-link" signal
-;;; 
-;;; Installs a global function to be called whenever the user activates a URL
-;;; link in an about dialog.
-;;; 
-;;; Since 2.18 there exists a default function which uses gtk_show_uri(). To
-;;; deactivate it, you can pass NULL for func.
-;;; 
-;;; func :
-;;;     a function to call when a URL link is activated.
-;;; 
-;;; data :
-;;;     data to pass to func
-;;; 
-;;; destroy :
-;;;     GDestroyNotify for data
-;;; 
-;;; Returns :
-;;;     the previous URL hook
-;;; 
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-(defvar *about-dialog-url-func* nil)
-
-(defcallback about-dialog-url-func-cb :void
-  ((dialog (g-object about-dialog)) 
-   (link (:string :free-from-foreign nil))
-   (user-data :pointer))
-  (declare (ignore user-data))
-  (funcall *about-dialog-url-func* dialog link))
-
-(defcallback about-dialog-url-func-destroy-cb :void
-  ((data :pointer))
-  (declare (ignore data))
-  (setf *about-dialog-url-func* nil))
-
-(defcfun ("gtk_about_dialog_set_url_hook" gtk-about-dialog-set-url-hook) :void
-  (func :pointer)
-  (data :pointer)
-  (destroy-notify :pointer))
-
-(defun (setf gtk-about-dialog-global-url-hook) (new-value)
-  (if new-value
-      (gtk-about-dialog-set-url-hook
-                                    (callback about-dialog-url-func-cb)
-                                    (null-pointer)
-                                    (callback about-dialog-url-func-destroy-cb))
-      (gtk-about-dialog-set-url-hook (null-pointer)
-                                     (null-pointer)
-                                     (null-pointer)))
-  (setf *about-dialog-url-func* new-value))
-
-(export 'gtk-about-dialog-global-url-hook)
 
 ;;; --- End of file gtk.about-dialog.lisp --------------------------------------

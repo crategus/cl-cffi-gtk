@@ -74,10 +74,6 @@
 ;;;     gtk_container_class_install_child_property
 ;;;     gtk_container_class_list_child_properties
 ;;;     gtk_container_class_handle_border_width
-;;;
-;;;     From the GTK 2.0 Reference Manual
-;;;
-;;;     gtk_container_propagate_expose
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -1297,47 +1293,5 @@
 ;;;     the class struct of a GtkContainer subclass
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_container_propagate_expose ()
-;;;
-;;; void gtk_container_propagate_expose (GtkContainer *container,
-;;;                                      GtkWidget *child,
-;;;                                      GdkEventExpose *event);
-;;;
-;;; When a container receives an expose event, it must send synthetic expose
-;;; events to all children that don't have their own GdkWindows. This function
-;;; provides a convenient way of doing this. A container, when it receives an
-;;; expose event, calls gtk_container_propagate_expose() once for each child,
-;;; passing in the event the container received.
-;;;
-;;; gtk_container_propagate_expose() takes care of deciding whether an expose
-;;; event needs to be sent to the child, intersecting the event's area with the
-;;; child area, and sending the event.
-;;;
-;;; In most cases, a container can simply either simply inherit the "expose"
-;;; implementation from GtkContainer, or, do some drawing and then chain to the
-;;; ::expose implementation from GtkContainer.
-;;;
-;;; Note that the ::expose-event signal has been replaced by a ::draw signal in
-;;; GTK+ 3, and consequently, gtk_container_propagate_expose() has been replaced
-;;; by gtk_container_propagate_draw(). The GTK+ 3 migration guide for hints on
-;;; how to port from ::expose-event to ::draw.
-;;;
-;;; container :
-;;;     a GtkContainer
-;;;
-;;; child :
-;;;     a child of container
-;;;
-;;; event :
-;;;     a expose event sent to container
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_container_propagate_expose" gtk-container-propagate-expose) :void
-  (container (g-object gtk-container))
-  (child (g-object gtk-widget))
-  (event (g-boxed-foreign gdk-event)))
-
-(export 'gtk-container-propagate-expose)
 
 ;;; --- End of file gtk.container.lisp -----------------------------------------

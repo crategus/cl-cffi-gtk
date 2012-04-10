@@ -88,7 +88,6 @@
    (:file "gtk.icon-theme")            ; Looking up icons by name
                                        
    ;; Abstract Base Classes            
-;   (:file "gtk.object")                ; GtkObject
    (:file "gtk.widget")                ; Base class for all widgets
    (:file "gtk.misc")                  ; Base class for alignments
    (:file "gtk.container")             ; GtkContainer
@@ -189,7 +188,6 @@
    (:file "gtk.spin-button")           ; GtkSpinButton
    
    ;; Menus, Combo Box, Toolbar
-   (:file "gtk.item")                  ; Abstract base class GtkItem
    (:file "gtk.menu-item")             ; Widget used for item in menus
    (:file "gtk.menu")                  ; Menu widget
    (:file "gtk.menu-bar")              ; Subclass for GtkMenuItem widgets
@@ -200,7 +198,6 @@
    (:file "gtk.tearoff-menu-item")     ; Menu item used to tear off and reattach
    (:file "gtk.combo-box")             ; GtkComboBox
    (:file "gtk.combo-box-text")        ; Simple, text-only combo box
-   (:file "gtk.combo-box-entry")       ; Text entry field with a dropdown list
    (:file "gtk.tool-shell")            ; Interface for GtkToolItem
    (:file "gtk.tool-item")             ; GtkToolItem
    (:file "gtk.toolbar")               ; Create bars of buttons
@@ -265,12 +262,8 @@
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
    
    ;; Deprecated
-;   (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
-;   (:file "gtk.curve")                 ; Allows direct editing of a curve
-;   (:file "gtk.item-factory")          ; A factory for menus
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
-   (:file "gtk.input-dialog")          ; Configure devices for XInput extension
    (:file "gtk.font-selection-dialog") ; Widget for selecting fonts
    
    ;; More definitions. The documentation is not completed.

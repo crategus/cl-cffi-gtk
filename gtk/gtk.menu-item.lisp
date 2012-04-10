@@ -322,7 +322,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkMenuItem" gtk-menu-item
-  (:superclass gtk-item
+  (:superclass gtk-bin
    :export t
    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
    :type-initializer "gtk_menu_item_get_type")

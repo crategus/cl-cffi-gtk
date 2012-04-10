@@ -36,7 +36,6 @@
 ;;; 
 ;;;     GtkRequisition
 ;;;     GtkAllocation
-;;;     GtkWidgetFlags  from Gtk+ 2 Reference Manual
 ;;;     GtkWidget
 ;;;     GtkWidgetClass
 ;;;     GtkSelectionData
@@ -273,8 +272,6 @@
 ;;;     gtk_widget_set_vexpand_set
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
-;;;
-;;;     GTK_WIDGET_SET_FLAGS()       from GTK+ 2 Reference Manual
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -2885,108 +2882,6 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_push_colormap" gtk-widget-push-colormap) :void
-  (colormap (g-object gdk-colormap)))
-
-(export 'gtk-widget-push-colormap)
-
-(defcfun ("gtk_widget_pop_colormap" gtk-widget-pop-colormap) :void)
-
-(export 'gtk-widget-pop-colormap)
-
-(defcfun ("gtk_widget_set_default_colormap" gtk-widget-set-default-colormap)
-    :void
-  (colormap (g-object gdk-colormap)))
-
-(export 'gtk-widget-set-default-colormap)
-
-(defcfun ("gtk_widget_get_default_colormap" gtk-widget-default-colormap)
-    (g-object gdk-colormap))
-
-(defun (setf gtk-widget-default-colormap) (colormap)
-  (gtk-widget-set-default-colormap colormap))
-
-(export 'gtk-widget-default-colormap)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_get_default_visual" gtk-widget-default-visual)
-  (g-object gdk-visual))
-
-(export 'gtk-widget-default-visual)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_shape_combine_mask" gtk-widget-shape-combine-mask) :void
-  (widget (g-object gtk-widget))
-  (shape-mask g-object)
-  (offset-x :int)
-  (offset-y :int))
-
-(export 'gtk-widget-shape-combine-mask)
-
-(defcfun ("gtk_widget_input_shape_combine_mask"
-          gtk-widget-input-shape-combine-mask) :void
-  (widget (g-object gtk-widget))
-  (shape-mask g-object)
-  (offset-x :int)
-  (offset-y :int))
-
-(export 'gtk-widget-input-shape-combine-mask)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_queue_clear" gtk-widget-queue-clear) :void
-  (widget (g-object gtk-widget)))
-
-(export 'gtk-widget-queue-clear)
-
-(defcfun ("gtk_widget_queue_clear_area" gtk-widget-queue-clear-area) :void
-  (widget (g-object gtk-widget))
-  (x :int)
-  (y :int)
-  (width :int)
-  (height :int))
-
-(export 'gtk-widget-queue-clear-area)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_reset_shapes" gtk-widget-reset-shapes) :void
-  (widget g-object))
-
-(export 'gtk-widget-reset-shapes)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_set_scroll_adjustments"
-          gtk-widget-set-scroll-adjustments) :boolean
-  (widget g-object)
-  (hadjustment g-object)
-  (vadjustment g-object))
-
-(export 'gtk-widget-set-scroll-adjustments)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_get_action" gtk-widget-get-action) g-object
-  (widget g-object))
-
-(export 'gtk-widget-get-action)
-
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_widget_get_snapshot" %gtk-widget-get-snapshot) g-object
-  (widget g-object)
-  (clip-rectangle (g-boxed-foreign gdk-rectangle)))
-
-(defun gtk-widget-snapshot (widget &optional clip-rectangle)
-  (%gtk-widget-get-snapshot widget clip-rectangle))
-
-(export 'gtk-widget-snapshot)
-
-;;; ----------------------------------------------------------------------------
 ;;; struct GtkRequisition
 ;;; 
 ;;; struct GtkRequisition {
@@ -3045,146 +2940,6 @@
   (:none 0)
   (:ltr 1)
   (:rtl 2))
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkWidgetFlags
-;;; 
-;;; typedef enum {
-;;;   GTK_TOPLEVEL             = 1 << 4,
-;;;   GTK_NO_WINDOW            = 1 << 5,
-;;;   GTK_REALIZED             = 1 << 6,
-;;;   GTK_MAPPED               = 1 << 7,
-;;;   GTK_VISIBLE              = 1 << 8,
-;;;   GTK_SENSITIVE            = 1 << 9,
-;;;   GTK_PARENT_SENSITIVE     = 1 << 10,
-;;;   GTK_CAN_FOCUS            = 1 << 11,
-;;;   GTK_HAS_FOCUS            = 1 << 12,
-;;;   GTK_CAN_DEFAULT          = 1 << 13,
-;;;   GTK_HAS_DEFAULT          = 1 << 14,
-;;;   GTK_HAS_GRAB             = 1 << 15,
-;;;   GTK_RC_STYLE             = 1 << 16,
-;;;   GTK_COMPOSITE_CHILD      = 1 << 17,
-;;; #ifndef GTK_DISABLE_DEPRECATED
-;;;   GTK_NO_REPARENT          = 1 << 18,
-;;; #endif
-;;;   GTK_APP_PAINTABLE        = 1 << 19,
-;;;   GTK_RECEIVES_DEFAULT     = 1 << 20,
-;;;   GTK_DOUBLE_BUFFERED      = 1 << 21,
-;;;   GTK_NO_SHOW_ALL          = 1 << 22
-;;; } GtkWidgetFlags;
-;;; 
-;;; Tells about certain properties of the widget.
-;;; 
-;;; GTK_TOPLEVEL
-;;;     widgets without a real parent, as there are GtkWindows and GtkMenus have
-;;;     this flag set throughout their lifetime. Toplevel widgets always contain
-;;;     their own GdkWindow.
-;;; 
-;;; GTK_NO_WINDOW
-;;;     Indicative for a widget that does not provide its own GdkWindow. Visible
-;;;     action (e.g. drawing) is performed on the parent's GdkWindow.
-;;; 
-;;; GTK_REALIZED
-;;;     Set by gtk_widget_realize(), unset by gtk_widget_unrealize(). A realized
-;;;     widget has an associated GdkWindow.
-;;; 
-;;; GTK_MAPPED
-;;;     Set by gtk_widget_map(), unset by gtk_widget_unmap(). Only realized
-;;;     widgets can be mapped. It means that gdk_window_show() has been called
-;;;     on the widgets window(s).
-;;; 
-;;; GTK_VISIBLE
-;;;     Set by gtk_widget_show(), unset by gtk_widget_hide(). Implies that a
-;;;     widget will be mapped as soon as its parent is mapped.
-;;; 
-;;; GTK_SENSITIVE
-;;;     Set and unset by gtk_widget_set_sensitive(). The sensitivity of a widget
-;;;     determines whether it will receive certain events (e.g. button or key
-;;;     presses). One premise for the widget's sensitivity is to have this flag
-;;;     set.
-;;; 
-;;; GTK_PARENT_SENSITIVE
-;;;     Set and unset by gtk_widget_set_sensitive() operations on the parents of
-;;;     the widget. This is the second premise for the widget's sensitivity.
-;;;     Once it has GTK_SENSITIVE and GTK_PARENT_SENSITIVE set, its state is
-;;;     effectively sensitive. This is expressed (and can be examined) by the
-;;;     GTK_WIDGET_IS_SENSITIVE macro.
-;;; 
-;;; GTK_CAN_FOCUS
-;;;     Determines whether a widget is able to handle focus grabs.
-;;; 
-;;; GTK_HAS_FOCUS
-;;;     Set by gtk_widget_grab_focus() for widgets that also have GTK_CAN_FOCUS
-;;;     set. The flag will be unset once another widget grabs the focus.
-;;; 
-;;; GTK_CAN_DEFAULT
-;;;     The widget is allowed to receive the default action via
-;;;     gtk_widget_grab_default() and will reserve space to draw the default if
-;;;     possible
-;;; 
-;;; GTK_HAS_DEFAULT
-;;;     The widget currently is receiving the default action and should be drawn
-;;;     appropriately if possible
-;;; 
-;;; GTK_HAS_GRAB
-;;;     Set by gtk_grab_add(), unset by gtk_grab_remove(). It means that the
-;;;     widget is in the grab_widgets stack, and will be the preferred one for
-;;;     receiving events other than ones of cosmetic value.
-;;; 
-;;; GTK_RC_STYLE
-;;;     Indicates that the widget's style has been looked up through the rc
-;;;     mechanism. It does not imply that the widget actually had a style
-;;;     defined through the rc mechanism.
-;;; 
-;;; GTK_COMPOSITE_CHILD
-;;;     Indicates that the widget is a composite child of its parent;
-;;;     see gtk_widget_push_composite_child(), gtk_widget_pop_composite_child().
-;;; 
-;;; GTK_NO_REPARENT
-;;;     Unused since before GTK+ 1.2, will be removed in a future version.
-;;; 
-;;; GTK_APP_PAINTABLE
-;;;     Set and unset by gtk_widget_set_app_paintable(). Must be set on widgets
-;;;     whose window the application directly draws on, in order to keep GTK+
-;;;     from overwriting the drawn stuff. See the section called “App-paintable
-;;;     widgets” for a detailed description of this flag.
-;;; 
-;;; GTK_RECEIVES_DEFAULT
-;;;     The widget when focused will receive the default action and have
-;;;     GTK_HAS_DEFAULT set even if there is a different widget set as default.
-;;; 
-;;; GTK_DOUBLE_BUFFERED
-;;;     Set and unset by gtk_widget_set_double_buffered(). Indicates that
-;;;     exposes done on the widget should be double-buffered. See the section
-;;;     called “Double buffering” for a detailed discussion of how
-;;;     double-buffering works in GTK+ and why you may want to disable it for
-;;;     special cases.
-;;; 
-;;; GTK_NO_SHOW_ALL
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkWidgetFlags" gtk-widget-flags
-  (:export t
-   :type-initializer "gtk_widget_flags_get_type")
-  (:toplevel 16)
-  (:no-window 32)
-  (:realized 64)
-  (:mapped 128)
-  (:visible 256)
-  (:sensitive 512)
-  (:parent-sensitive 1024)
-  (:can-focus 2048)
-  (:has-focus 4096)
-  (:can-default 8192)
-  (:has-default 16384)
-  (:has-grab 32768)
-  (:rc-style 65536)
-  (:composite-child 131072)
-  (:no-reparent 262144)
-  (:app-paintable 524288)
-  (:receives-default 1048576)
-  (:double-buffered 2097152)
-  (:no-show-all 4194304))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
@@ -3317,49 +3072,6 @@
    (:cffi tooltip-window
           gtk-widget-tooltip-window g-object
           "gtk_widget_get_tooltip_window" "gtk_widget_set_tooltip_window")))
-
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-widget-state (widget)
-  (convert-from-foreign (foreign-slot-value (pointer widget)
-                                            '%gtk-widget :state)
-                        'gtk-state-type))
-
-(export 'gtk-widget-state)
-
-(defun gtk-widget-saved-state (widget)
-  (convert-from-foreign (foreign-slot-value (pointer widget)
-                                            '%gtk-widget :saved-state)
-                        'gtk-state-type))
-
-(export 'gtk-widget-saved-state)
-
-(defmacro gtk-widget-p-fn (type)
-  (let ((name (intern (format nil "WIDGET-~A-P" (symbol-name type))
-                      (find-package :gtk))))
-    `(progn (defun ,name (widget)
-              (member ,type (gtk-widget-flags widget)))
-            (export ',name))))
-
-(gtk-widget-p-fn :toplevel)
-(gtk-widget-p-fn :no-window)
-(gtk-widget-p-fn :realized)
-(gtk-widget-p-fn :mapped)
-(gtk-widget-p-fn :visible)
-(gtk-widget-p-fn :sensitive)
-(gtk-widget-p-fn :parent-sensitive)
-(gtk-widget-p-fn :can-focus)
-(gtk-widget-p-fn :has-focus)
-(gtk-widget-p-fn :can-default)
-(gtk-widget-p-fn :has-default)
-(gtk-widget-p-fn :has-grab)
-(gtk-widget-p-fn :rc-style)
-(gtk-widget-p-fn :composite-child)
-(gtk-widget-p-fn :no-reparent)
-(gtk-widget-p-fn :app-paintable)
-(gtk-widget-p-fn :receives-default)
-(gtk-widget-p-fn :double-buffered)
-(gtk-widget-p-fn :no-show-all)
 
 ;;; ---------------------------------------------------------------------------- 
 ;;; struct GtkWidgetClass
@@ -3988,23 +3700,8 @@
 ;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_hide" %gtk-widget-hide) :void
+(defcfun ("gtk_widget_hide" gtk-widget-hide) :void
   (widget g-object))
-
-;; gtk-widget-hide-all seems to be not documented in the GTK Manual.
-
-(defcfun ("gtk_widget_hide_all" gtk-widget-hide-all) :void
-  (widget g-object))
-
-(export 'gtk-widget-hide-all)
-
-;; TODO: Combines gtk-widget-hide and gtk-widget-hide-all.
-;; But gtk_widget_hide_all is not documented. Consider to cut this out. 
-
-(defun gtk-widget-hide (widget &key (all t))
-  (if all
-      (gtk-widget-hide-all widget)
-      (%gtk-widget-hide widget)))
 
 (export 'gtk-widget-hide)
 
@@ -9219,46 +8916,5 @@
 ;;;     whether widget tree rooted here should be expanded
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; GTK_WIDGET_SET_FLAGS()
-;;;
-;;; #define GTK_WIDGET_SET_FLAGS(wid,flag)
-;;;                G_STMT_START{ (GTK_WIDGET_FLAGS (wid) |= (flag)); }G_STMT_END
-;;;
-;;; Warning
-;;; 
-;;; GTK_WIDGET_SET_FLAGS has been deprecated since version 2.22 and should not
-;;; be used in newly-written code. Use the proper function instead:
-;;;
-;;;  gtk_widget_set_app_paintable(),
-;;;  gtk_widget_set_can_default(),
-;;;  gtk_widget_set_can_focus(), 
-;;;  gtk_widget_set_double_buffered(),
-;;;  gtk_widget_set_has_window(),
-;;;  gtk_widget_set_mapped(),
-;;;  gtk_widget_set_no_show_all(),
-;;;  gtk_widget_set_realized(),
-;;;  gtk_widget_set_receives_default(),
-;;;  gtk_widget_set_sensitive() or
-;;;  gtk_widget_set_visible().
-;;; 
-;;; Turns on certain widget flags.
-;;; 
-;;; wid :
-;;;     a GtkWidget.
-;;; 
-;;; flag :
-;;;     the flags to set.
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-widget-flags (widget)
-  (convert-from-foreign (gtk-object-flags-as-integer widget) 'gtk-widget-flags))
-
-(defun (setf gtk-widget-flags) (new-value widget)
-  (setf (gtk-object-flags-as-integer widget)
-        (convert-to-foreign new-value 'gtk-widget-flags))
-  new-value)
-
-(export 'gtk-widget-flags)
 
 ;;; --- End of file gtk.widget.lisp --------------------------------------------

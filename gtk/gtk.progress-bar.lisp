@@ -259,63 +259,6 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkProgressBarStyle
-;;;
-;;; typedef enum {
-;;;   GTK_PROGRESS_CONTINUOUS,
-;;;   GTK_PROGRESS_DISCRETE
-;;; } GtkProgressBarStyle;
-;;;
-;;; An enumeration representing the styles for drawing the progress bar.
-;;;
-;;; GTK_PROGRESS_CONTINUOUS
-;;;     The progress bar grows in a smooth, continuous manner.
-;;;
-;;; GTK_PROGRESS_DISCRETE
-;;;     The progress bar grows in discrete, visible blocks.
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkProgressBarStyle" gtk-progress-bar-style
-  (:export t
-   :type-initializer "gtk_progress_bar_style_get_type")
-  (:continuous 0)
-  (:discrete 1))
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkProgressBarOrientation
-;;;
-;;; typedef enum {
-;;;   GTK_PROGRESS_LEFT_TO_RIGHT,
-;;;   GTK_PROGRESS_RIGHT_TO_LEFT,
-;;;   GTK_PROGRESS_BOTTOM_TO_TOP,
-;;;   GTK_PROGRESS_TOP_TO_BOTTOM
-;;; } GtkProgressBarOrientation;
-;;; 
-;;; An enumeration representing possible orientations and growth directions for
-;;; the visible progress bar.
-;;; 
-;;; GTK_PROGRESS_LEFT_TO_RIGHT
-;;;     A horizontal progress bar growing from left to right.
-;;;
-;;; GTK_PROGRESS_RIGHT_TO_LEFT
-;;;     A horizontal progress bar growing from right to left.
-;;;
-;;; GTK_PROGRESS_BOTTOM_TO_TOP
-;;;     A vertical progress bar growing from bottom to top.
-;;;
-;;; GTK_PROGRESS_TOP_TO_BOTTOM
-;;;     A vertical progress bar growing from top to bottom.
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkProgressBarOrientation" gtk-progress-bar-orientation
-  (:export t
-   :type-initializer "gtk_progress_bar_orientation_get_type")
-  (:left-to-right 0)
-  (:right-to-left 1)
-  (:bottom-to-top 2)
-  (:top-to-bottom 3))
-
-;;; ----------------------------------------------------------------------------
 ;;; struct GtkProgressBar
 ;;; 
 ;;; struct GtkProgressBar;

@@ -68,8 +68,8 @@
 ;; The interface GtkFileChooserEmbed seems to be not documented in the
 ;; GTK+ documentation. It is implemented by GtkFileChooserWidget.
 
-(define-g-interface "GtkFileChooserEmbed" gtk-file-chooser-embed
-    (:export t))
+;(define-g-interface "GtkFileChooserEmbed" gtk-file-chooser-embed
+;    (:export t))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFileChooserWidget
@@ -84,7 +84,8 @@
   (:superclass gtk-vbox
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
-                "GtkFileChooserEmbed" "GtkOrientable")
+;                "GtkFileChooserEmbed" 
+                "GtkOrientable")
    :type-initializer "gtk_file_chooser_widget_get_type")
   nil)
 

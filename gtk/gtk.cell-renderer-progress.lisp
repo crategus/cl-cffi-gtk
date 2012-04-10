@@ -167,11 +167,11 @@
 (define-g-object-class "GtkCellRendererProgress" gtk-cell-renderer-progress
   (:superclass gtk-cell-renderer
    :export t
-   :interfaces nil
+   :interfaces ("GtkOrientable")
    :type-initializer "gtk_cell_renderer_progress_get_type")
-  ((orientation
-    gtk-cell-renderer-progress-orientation
-    "orientation" "GtkProgressBarOrientation" t t)
+  ((inverted
+    gtk-cell-renderer-progress-inverted
+    "inverted" "gboolean" t t)
    (pulse
     gtk-cell-renderer-progress-pulse
     "pulse" "gint" t t)
@@ -201,8 +201,10 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-cell-renderer-progress-new))
+
 (defun gtk-cell-renderer-progress-new ()
-  (make-instance 'gtk-cell-renderer-progress-new))
+  (make-instance 'gtk-cell-renderer-progress))
 
 (export 'gtk-cell-renderer-progress-new)
 

@@ -132,42 +132,13 @@
 ;;; handler.
 ;;; 
 ;;; button :
-;;; 	the GtkLinkButton that emitted the signal
+;;;     the GtkLinkButton that emitted the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
-
-(defvar *link-button-uri-func* nil)
-
-(defcallback link-button-uri-func-cb :void
-    ((button (g-object link-button)) (link (:string :free-from-foreign nil)) (user-data :pointer))
-  (declare (ignore user-data))
-  (funcall *link-button-uri-func* button link))
-
-(defcallback link-button-uri-func-destroy-cb :void
-    ((data :pointer))
-  (declare (ignore data))
-  (setf *link-button-uri-func* nil))
-
-(defcfun gtk-link-button-set-uri-hook :void
-  (func :pointer)
-  (data :pointer)
-  (destroy-notify :pointer))
-
-(defun (setf link-button-global-uri-hook) (new-value)
-  (if new-value
-      (gtk-link-button-set-uri-hook (callback link-button-uri-func-cb)
-                                    (null-pointer)
-                                    (callback link-button-uri-func-destroy-cb))
-      (gtk-link-button-set-uri-hook (null-pointer)
-                                    (null-pointer)
-                                    (null-pointer)))
-  (setf *link-button-uri-func* new-value))
-
-(export 'link-button-global-uri-hook)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkLinkButton
@@ -183,13 +154,14 @@
     :export t
     :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
     :type-initializer "gtk_link_button_get_type")
-  ((uri gtk-link-button-uri
+  ((uri
+    gtk-link-button-uri
     "uri" "gchararray" t t)
-   (visited gtk-link-button-visited
+   (visited
+    gtk-link-button-visited
     "visited" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
-
 ;;; gtk_link_button_new ()
 ;;; 
 ;;; GtkWidget * gtk_link_button_new (const gchar *uri);
@@ -197,13 +169,21 @@
 ;;; Creates a new GtkLinkButton with the URI as its text.
 ;;; 
 ;;; uri :
-;;; 	a valid URI
+;;;     a valid URI
 ;;; 
 ;;; Returns :
-;;; 	a new link button widget.
+;;;     a new link button widget
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-link-button-new))
+
+(defun gtk-link-button-new (uri)
+  (make-instance 'gtk-link-button
+                 :uri uri))
+
+(export 'gtk-link-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_link_button_new_with_label ()
@@ -214,16 +194,23 @@
 ;;; Creates a new GtkLinkButton containing a label.
 ;;; 
 ;;; uri :
-;;; 	a valid URI
+;;;     a valid URI
 ;;; 
 ;;; label :
-;;; 	the text of the button. [allow-none]
+;;;     the text of the button
 ;;; 
 ;;; Returns :
-;;; 	a new link button widget. [transfer none]
+;;;     a new link button widget
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_link_button_new_with_label" gtk-link-button-new-with-label)
+    (g-object gtk-widget)
+  (uri :string)
+  (label :string))
+
+(export 'gtk-link-button-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_link_button_get_uri ()
@@ -237,10 +224,17 @@
 ;;; 
 ;;; Returns :
 ;;;     a valid URI. The returned string is owned by the link button and 
-;;;     should not be modified or freed.
+;;;     should not be modified or freed
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-link-button-get-uri))
+
+(defun gtk-link-button-get-uri (link-button)
+  (gtk-link-button-uri link-button))
+
+(export 'gtk-link-button-get-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_link_button_set_uri ()
@@ -259,14 +253,21 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-link-button-set-uri))
+
+(defun gtk-link-button-set-uri (link-button uri)
+  (setf (gtk-link-button-uri link-button) uri))
+
+(export 'gtk-link-button-set-uri)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_link_button_get_visited ()
 ;;; 
 ;;; gboolean gtk_link_button_get_visited (GtkLinkButton *link_button);
 ;;; 
 ;;; Retrieves the 'visited' state of the URI where the GtkLinkButton points. 
-;;; The button becomes visited when it is clicked. If the URI is changed on the
-;;; button, the 'visited' state is unset again.
+;;; The button becomes visited when it is clicked. If the URI is changed on
+;;; the button, the 'visited' state is unset again.
 ;;; 
 ;;; The state may also be changed using gtk_link_button_set_visited().
 ;;; 
@@ -278,6 +279,13 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-link-button-get-visited))
+
+(defun gtk-link-button-get-visited (link-button)
+  (gtk-link-button-visited link-button))
+
+(export 'gtk-link-button-get-visited)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_link_button_set_visited ()
@@ -296,5 +304,12 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-link-button-set-visited))
+
+(defun gtk-link-button-set-visited (link-button visited)
+  (setf (gtk-link-button-visited link-button) visited))
+
+(export 'gtk-link-button-set-visited)
 
 ;;; --- End of file gtk.link-button.lisp ---------------------------------------
