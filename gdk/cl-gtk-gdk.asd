@@ -69,6 +69,7 @@
   :depends-on (:cl-gtk-gobject
                :cl-gtk-glib
                :cffi
-               :cl-gtk-pango))
+               :cl-gtk-pango
+               :cl-gtk-cairo))
 
 ;;; --- End of file cl-gtk-gdk.asd ---------------------------------------------
