@@ -109,7 +109,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkFileFilter" gtk-file-filter
-  (:superclass gtk-object
+  (:superclass g-initially-unowned
    :export t
    :interfaces nil
    :type-initializer "gtk_file_filter_get_type")
