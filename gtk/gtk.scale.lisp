@@ -190,7 +190,7 @@
 ;;;     the value to format
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; 
 ;;; Returns :
 ;;;     allocated string representing value
