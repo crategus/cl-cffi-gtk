@@ -120,7 +120,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRecentFilter" gtk-recent-filter
-  (:superclass gtk-object
+  (:superclass g-initially-unowned
    :export t
    :interfaces nil
    :type-initializer "gtk_recent_filter_get_type")
