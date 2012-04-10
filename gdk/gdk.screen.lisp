@@ -1327,63 +1327,63 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_spawn_on_screen" %gdk-spawn-on-screen) :boolean
-  (screen (g-object gdk-screen))
-  (working-directory :string)
-  (argv :pointer)
-  (envp :pointer)
-  (flags g-spawn-flags)
-  (child-setup :pointer)
-  (user-data :pointer)
-  (child-pid (:pointer :int))
-  (g-error :pointer))
+;(defcfun ("gdk_spawn_on_screen" %gdk-spawn-on-screen) :boolean
+;  (screen (g-object gdk-screen))
+;  (working-directory :string)
+;  (argv :pointer)
+;  (envp :pointer)
+;  (flags g-spawn-flags)
+;  (child-setup :pointer)
+;  (user-data :pointer)
+;  (child-pid (:pointer :int))
+;  (g-error :pointer))
 
-(defun gdk-spawn-on-screen (screen argv &key working-directory
-                                             env
-                                             (flags '(:search-path))
-                                             with-pipes)
-  (unless working-directory (setf working-directory (null-pointer)))
-  (with-g-error (err)
-    (with-foreign-objects ((pid :int) (stdin :int) (stdout :int) (stderr :int))
-      (with-foreign-string-array (argvp argv)
-        (if (null env)
-            (if with-pipes
-                (gdk-spawn-on-screen-with-pipes screen
-                                                working-directory
-                                                argvp
-                                                (null-pointer)
-                                                flags
-                                                (null-pointer)
-                                                (null-pointer)
-                                                pid stdin stdout stderr err)
-                (%gdk-spawn-on-screen screen
-                                      working-directory
-                                      argvp
-                                      (null-pointer)
-                                      flags
-                                      (null-pointer)
-                                      (null-pointer)
-                                      pid err))
-            (with-foreign-string-array (envp env)
-              (if with-pipes
-                  (gdk-spawn-on-screen-with-pipes screen
-                                                  working-directory
-                                                  argvp envp flags
-                                                  (null-pointer) (null-pointer)
-                                                  pid stdin stdout stderr err)
-                  (%gdk-spawn-on-screen screen
-                                        working-directory
-                                        argvp envp
-                                        flags (null-pointer) (null-pointer)
-                                        pid err)))))
-      (if with-pipes
-          (values (mem-ref pid :int)
-                  (mem-ref stdin :int)
-                  (mem-ref stdout :int)
-                  (mem-ref stderr :int))
-          (mem-ref pid :int)))))
-
-(export 'gdk-spawn-on-screen)
+;(defun gdk-spawn-on-screen (screen argv &key working-directory
+;                                             env
+;                                             (flags '(:search-path))
+;                                             with-pipes)
+;  (unless working-directory (setf working-directory (null-pointer)))
+;  (with-g-error (err)
+;    (with-foreign-objects ((pid :int) (stdin :int) (stdout :int) (stderr :int))
+;      (with-foreign-string-array (argvp argv)
+;        (if (null env)
+;            (if with-pipes
+;                (gdk-spawn-on-screen-with-pipes screen
+;                                                working-directory
+;                                                argvp
+;                                                (null-pointer)
+;                                                flags
+;                                                (null-pointer)
+;                                                (null-pointer)
+;                                                pid stdin stdout stderr err)
+;                (%gdk-spawn-on-screen screen
+;                                      working-directory
+;                                      argvp
+;                                      (null-pointer)
+;                                      flags
+;                                      (null-pointer)
+;                                      (null-pointer)
+;                                      pid err))
+;            (with-foreign-string-array (envp env)
+;              (if with-pipes
+;                  (gdk-spawn-on-screen-with-pipes screen
+;                                                  working-directory
+;                                                  argvp envp flags
+;                                                  (null-pointer) (null-pointer)
+;                                                  pid stdin stdout stderr err)
+;                  (%gdk-spawn-on-screen screen
+;                                        working-directory
+;                                        argvp envp
+;                                        flags (null-pointer) (null-pointer)
+;                                        pid err)))))
+;      (if with-pipes
+;          (values (mem-ref pid :int)
+;                  (mem-ref stdin :int)
+;                  (mem-ref stdout :int)
+;                  (mem-ref stderr :int))
+;          (mem-ref pid :int)))))
+;
+;(export 'gdk-spawn-on-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_spawn_on_screen_with_pipes ()
@@ -1456,20 +1456,20 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_spawn_on_screen_with_pipes" gdk-spawn-on-screen-with-pipes)
-    :boolean
-  (screen (g-object gdk-screen))
-  (working-directory :string)
-  (argv :pointer)
-  (envp :pointer)
-  (flags g-spawn-flags)
-  (child-setup :pointer)
-  (user-data :pointer)
-  (child-pid (:pointer :int))
-  (std-input (:pointer :int))
-  (std-output (:pointer :int))
-  (std-err (:pointer :int))
-  (g-error :pointer))
+;(defcfun ("gdk_spawn_on_screen_with_pipes" gdk-spawn-on-screen-with-pipes)
+;    :boolean
+;  (screen (g-object gdk-screen))
+;  (working-directory :string)
+;  (argv :pointer)
+;  (envp :pointer)
+;  (flags g-spawn-flags)
+;  (child-setup :pointer)
+;  (user-data :pointer)
+;  (child-pid (:pointer :int))
+;  (std-input (:pointer :int))
+;  (std-output (:pointer :int))
+;  (std-err (:pointer :int))
+;  (g-error :pointer))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_spawn_command_line_on_screen ()
@@ -1507,16 +1507,16 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_spawn_command_line_on_screen" %gdk-spawn-command-line-on-screen)
-    :boolean
-  (screen (g-object gdk-screen))
-  (command-line :string)
-  (error :pointer))
+;(defcfun ("gdk_spawn_command_line_on_screen" %gdk-spawn-command-line-on-screen)
+;    :boolean
+;  (screen (g-object gdk-screen))
+;  (command-line :string)
+;  (error :pointer))
 
-(defun gdk-spawn-command-line-on-screen (screen command-line)
-  (with-g-error (err)
-    (%gdk-spawn-command-line-on-screen screen command-line err)))
+;(defun gdk-spawn-command-line-on-screen (screen command-line)
+;  (with-g-error (err)
+;    (%gdk-spawn-command-line-on-screen screen command-line err)))
 
-(export 'gdk-spawn-command-line-on-screen)
+;(export 'gdk-spawn-command-line-on-screen)
 
 ;;; --- End of file gdk.screen.lisp --------------------------------------------
