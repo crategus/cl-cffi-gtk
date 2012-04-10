@@ -807,10 +807,10 @@
 ;;;     the user data passed to gdk_region_spans_intersect_foreach().
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gdk-span-func-callback :void
-    ((span (g-boxed-foreign gdk-span)) (data :pointer))
-  (let ((fn (stable-pointer-value data)))
-    (funcall fn span)))
+;(defcallback gdk-span-func-callback :void
+;    ((span (g-boxed-foreign gdk-span)) (data :pointer))
+;  (let ((fn (stable-pointer-value data)))
+;    (funcall fn span)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_spans_intersect_foreach ()
@@ -848,26 +848,26 @@
 ;;;     data to pass to function
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_spans_intersect_foreach"
-          %gdk-region-spans-intersect-foreach) :void
-  (region (g-boxed-foreign gdk-region))
-  (spans :pointer)
-  (n-spans :int)
-  (sorted :boolean)
-  (func :pointer)
-  (data :pointer))
+;(defcfun ("gdk_region_spans_intersect_foreach"
+;          %gdk-region-spans-intersect-foreach) :void
+;  (region (g-boxed-foreign gdk-region))
+;  (spans :pointer)
+;  (n-spans :int)
+;  (sorted :boolean)
+;  (func :pointer)
+;  (data :pointer))
 
-(defun gdk-region-spans-intersect-foreach (region spans sorted fn)
-  (with-stable-pointer (ptr fn)
-    (with-foreign-boxed-array (n spans-ptr gdk-span spans)
-      (%gdk-region-spans-intersect-foreach
-                                  region
-                                  spans-ptr
-                                  n
-                                  sorted
-                                  (callback %gdk-region-spans-intersect-foreach)
-                                  ptr))))
+;(defun gdk-region-spans-intersect-foreach (region spans sorted fn)
+;  (with-stable-pointer (ptr fn)
+;    (with-foreign-boxed-array (n spans-ptr gdk-span spans)
+;      (%gdk-region-spans-intersect-foreach
+;                                  region
+;                                  spans-ptr
+;                                  n
+;                                  sorted
+;                                  (callback %gdk-region-spans-intersect-foreach)
+;                                  ptr))))
 
-(export 'gdk-region-spans-intersect-foreach)
+;(export 'gdk-region-spans-intersect-foreach)
 
 ;;; --- End of file gdk.region.lisp --------------------------------------------
