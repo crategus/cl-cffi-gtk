@@ -3193,7 +3193,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %gtk-widget
-  (:object %gtk-object)
+;  (:object %gtk-object)
   (:private-flags :uint16)
   (:state :uint8)
   (:saved-state :uint8)
@@ -3207,7 +3207,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkWidget" gtk-widget
-  (:superclass gtk-object
+  (:superclass g-initially-unowned
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_widget_get_type")

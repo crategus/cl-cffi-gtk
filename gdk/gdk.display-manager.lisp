@@ -146,6 +146,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-display-manager-get-default-display))
+
 (defun gdk-display-manager-get-default-display (display-manager)
   (gdk-display-manager-default-display display-manager))
 
@@ -168,6 +170,8 @@
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-display-manager-set-default-display))
 
 (defun gdk-display-manager-set-default-display (display-manager display)
   (setf (gdk-display-manager-default-display display-manager) display))
@@ -192,6 +196,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-display-manager-list-displays))
+
 (defun gdk-display-manager-list-displays (display-manager)
   (gdk-display-manager-displays display-manager))
 
@@ -214,10 +220,12 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_display_get_core_pointer" gdk-display-get-core-pointer)
-    (g-object gdk-device)
-  (display (g-object gdk-display)))
+;; This function is no longer present in Gtk+ 3 !?
 
-(export 'gdk-display-get-core-pointer)
+;(defcfun ("gdk_display_get_core_pointer" gdk-display-get-core-pointer)
+;    (g-object gdk-device)
+;  (display (g-object gdk-display)))
+
+;(export 'gdk-display-get-core-pointer)
 
 ;;; --- End of file gdk.display-manager.lisp -----------------------------------

@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gdk-visual.lisp
+;;; cl-gtk-cairo.asd
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -21,15 +21,21 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gdk-tests)
+(defsystem :cl-gtk-cairo
+  :name :cl-gtk-cairo
+  :version "0.0.0"
+  :author  "Dieter Kaiser"
+  :license "LLGPL"
+  :serial t
+  :components ((:file "cairo.package")
+               (:file "cairo.init")
+               (:file "cairo.regions")
+;               (:file "cairo")
+;               (:file "cairo.demo")
+              )
+  :depends-on (:cl-gtk-glib
+               :cl-gtk-gobject
+               :cffi
+               :iterate))
 
-(define-test gdk-visual
-  (let* ((visual (gdk-visual-get-system))
-         (type (g-type-from-instance (pointer visual))))
-    (assert-equal "GdkX11Visual" (gtype-name type))
-    (assert-eql 'gdk-visual (registered-object-type-by-name "GdkVisual"))
-    (assert-equal "GdkVisual" (gtype-name (g-type-parent type)))
-    (assert-equal '() (mapcar #'gtype-name (g-type-children type)))
-    ))
-
-;;; --- End of file rtest-gdk-visual.lisp --------------------------------------
+;;; --- End of file cl-gtk-cairo.asd -------------------------------------------

@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gdk-visual.lisp
+;;; cairo.init.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -21,15 +21,17 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gdk-tests)
+(in-package :cairo)
 
-(define-test gdk-visual
-  (let* ((visual (gdk-visual-get-system))
-         (type (g-type-from-instance (pointer visual))))
-    (assert-equal "GdkX11Visual" (gtype-name type))
-    (assert-eql 'gdk-visual (registered-object-type-by-name "GdkVisual"))
-    (assert-equal "GdkVisual" (gtype-name (g-type-parent type)))
-    (assert-equal '() (mapcar #'gtype-name (g-type-children type)))
-    ))
+(at-init ()
+  (eval-when (:compile-toplevel :load-toplevel :execute)
+    (define-foreign-library cairo
+      ((:and :unix (:not :darwin))
+       (:or "libcairo.so.2" "libcairo.so"))
+      (:darwin "libcairo.dylib")
+      (:windows "libcariro-2.dll")
+      (t (:default "libcairo"))))
 
-;;; --- End of file rtest-gdk-visual.lisp --------------------------------------
+  (use-foreign-library cairo))
+
+;;; --- End of file cairo.init.lisp --------------------------------------------

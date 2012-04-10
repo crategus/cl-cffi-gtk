@@ -64,7 +64,7 @@
   (assert-true  (g-type-is-a "GdkDisplayManager" "GObject"))
   (assert-false (g-type-is-a "GdkDisplayManager" "gboolean"))
   (assert-false (g-type-is-a "GdkDisplayManager" "GtkWindow"))
-  (assert-equal '()
+  (assert-equal '("GdkX11DisplayManager")
                 (mapcar #'gtype-name (g-type-children "GdkDisplayManager")))
   (assert-equal '()
                 (mapcar #'gtype-name (g-type-interfaces "GdkDisplayManager")))
@@ -75,8 +75,8 @@
                    (foreign-slot-value query 'g-type-query :type))
     (assert-equal  "GdkDisplayManager"
                    (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 72 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 12 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 108 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  12 (foreign-slot-value query 'g-type-query :instance-size)))
   ;; Get the names of the class properties.
   (assert-equal
       '("default-display")
@@ -84,17 +84,13 @@
              (g-object-class-list-properties (gtype "GdkDisplayManager"))))
   ;; Check the return values of some functions
   (let* ((display-manager (gdk-display-manager-get))
-         (display (gdk-display-manager-get-default-display display-manager))
-         (device (gdk-display-get-core-pointer display)))
+         (display (gdk-display-manager-get-default-display display-manager)))
     (assert-true
-      (g-type-is-a "GdkDisplayManager"
+      (g-type-is-a "GdkX11DisplayManager"
                    (g-type-from-instance (pointer display-manager))))
     (assert-true
-      (g-type-is-a 
-                 "GdkDisplayX11"                          
-                 (g-type-from-instance (pointer display))))
-    (assert-true
-      (g-type-is-a "GdkDevice"
-                   (g-type-from-instance (pointer device))))))
+      (g-type-is-a
+                 "GdkX11Display"
+                 (g-type-from-instance (pointer display))))))
 
 ;;; --- End of file gdk.display-manager.lisp -----------------------------------

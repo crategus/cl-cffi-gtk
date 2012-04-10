@@ -221,9 +221,9 @@
    (resolution
     gdk-screen-resolution
     "resolution" "gdouble" t t)
-   (:cffi default-colormap
-          gdk-screen-default-colormap (g-object gdk-colormap)
-          "gdk_screen_get_default_colormap" "gdk_screen_set_default_colormap")
+;   (:cffi default-colormap
+;          gdk-screen-default-colormap (g-object gdk-colormap)
+;          "gdk_screen_get_default_colormap" "gdk_screen_set_default_colormap")
    (:cffi system-colormap
           gdk-screen-system-colormap (g-object gdk-colormap)
           "gdk_screen_get_system_colormap" nil)
@@ -322,10 +322,10 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defun gdk-screen-get-default-colormap (screen)
-  (gdk-screen-default-colormap screen))
+;(defun gdk-screen-get-default-colormap (screen)
+;  (gdk-screen-default-colormap screen))
 
-(export 'gdk-screen-get-default-colormap)
+;(export 'gdk-screen-get-default-colormap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_set_default_colormap ()
@@ -344,10 +344,10 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defun gdk-screen-set-default-colormap (screen colormap)
-  (setf (gdk-screen-default-colormap screen) colormap))
+;(defun gdk-screen-set-default-colormap (screen colormap)
+;  (setf (gdk-screen-default-colormap screen) colormap))
 
-(export 'gdk-screen-set-default-colormap)
+;(export 'gdk-screen-set-default-colormap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_system_colormap ()
@@ -364,6 +364,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-system-colormap))
 
 (defun gdk-screen-get-system-colormap (screen)
   (gdk-screen-system-colormap screen))
@@ -386,6 +388,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-system-visual))
 
 (defun gdk-screen-get-system-visual (screen)
   (gdk-screen-system-visual screen))
@@ -417,6 +421,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-rgb-colormap))
+
 (defun gdk-screen-get-rgb-colormap (screen)
   (gdk-screen-rgb-colormap screen))
 
@@ -446,6 +452,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-rgb-visual))
 
 (defun gdk-screen-get-rgb-visual (screen)
   (gdk-screen-rgb-visual screen))
@@ -480,6 +488,8 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-rgba-colormap))
+
 (defun gdk-screen-get-rgba-colormap (screen)
   (gdk-screen-rgba-colormap screen))
 
@@ -502,6 +512,8 @@
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-rgba-visual))
 
 (defun gdk-screen-get-rgba-visual (screen)
   (gdk-screen-rgba-visual screen))
@@ -529,6 +541,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-is-composited))
+
 (defun gdk-screen-is-composited (screen)
   (gdk-screen-composited-p screen))
 
@@ -550,6 +564,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-root-window))
+
 (defun gdk-screen-get-root-window (screen)
   (gdk-screen-root-window screen))
 
@@ -570,6 +586,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-display))
 
 (defun gdk-screen-get-display (screen)
   (gdk-screen-display screen))
@@ -593,6 +611,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-number))
+
 (defun gdk-screen-get-number (screen)
   (gdk-screen-number screen))
 
@@ -614,6 +634,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-width))
+
 (defun gdk-screen-get-width (screen)
   (gdk-screen-width screen))
 
@@ -634,6 +656,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-height))
 
 (defun gdk-screen-get-height (screen)
   (gdk-screen-height screen))
@@ -657,6 +681,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-width-mm))
+
 (defun gdk-screen-get-width-mm (screen)
   (gdk-screen-width-mm screen))
 
@@ -678,6 +704,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-height-mm))
 
 (defun gdk-screen-get-height-mm (screen)
   (gdk-screen-height-mm screen))
@@ -703,6 +731,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-list-visuals))
 
 (defun gdk-screen-list-visuals (screen)
   (gdk-screen-visuals screen))
@@ -730,6 +760,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-toplevel-windows))
+
 (defun gdk-screen-get-toplevel-windows (screen)
   (gdk-screen-toplevel-windows screen))
 
@@ -752,6 +784,8 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-make-display-name))
+
 (defun gdk-screen-make-display-name (screen)
   (gdk-screen-display-name screen))
 
@@ -772,6 +806,8 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-n-monitors))
 
 (defun gdk-screen-get-n-monitors (screen)
   (gdk-screen-n-monitors screen))
@@ -1077,6 +1113,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-font-options))
+
 (defun gdk-screen-get-font-options (screen)
   (gdk-screen-font-options screen))
 
@@ -1103,6 +1141,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-set-font-options))
+
 (defun gdk-screen-set-font-options (screen options)
   (setf (gdk-screen-font-options screen) options))
 
@@ -1124,6 +1164,8 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-resolution))
 
 (defun gdk-screen-get-resolution (screen)
   (gdk-screen-resolution screen))
@@ -1149,6 +1191,8 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-set-resolution))
 
 (defun gdk-screen-set-resolution (screen dpi)
   (setf (gdk-screen-resolution screen) dpi))
@@ -1182,6 +1226,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-screen-get-active-window))
+
 (defun gdk-screen-get-active-window (screen)
   (gdk-screen-active-window screen))
 
@@ -1214,6 +1260,8 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-screen-get-window-stack))
 
 (defun gdk-screen-get-window-stack (screen)
   (gdk-screen-window-stack screen))

@@ -210,7 +210,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkAdjustment" gtk-adjustment
-  (:superclass gtk-object
+  (:superclass g-initially-unowned
    :export t
    :interfaces nil
    :type-initializer "gtk_adjustment_get_type")

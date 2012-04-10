@@ -418,47 +418,66 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkTreeViewColumn" gtk-tree-view-column
-  (:superclass gtk-object
+  (:superclass g-initially-unowned
     :export t
     :interfaces ("GtkBuildable" "GtkCellLayout")
     :type-initializer "gtk_tree_view_column_get_type")
-  ((alignment gtk-tree-view-column-alignment
+  ((alignment
+    gtk-tree-view-column-alignment
     "alignment" "gfloat" t t)
-   (clickable gtk-tree-view-column-clickable
+   (clickable
+    gtk-tree-view-column-clickable
     "clickable" "gboolean" t t)
-   (expand gtk-tree-view-column-expand
+   (expand
+    gtk-tree-view-column-expand
     "expand" "gboolean" t t)
-   (fixed-width gtk-tree-view-column-fixed-width
+   (fixed-width
+    gtk-tree-view-column-fixed-width
     "fixed-width" "gint" t t)
-   (max-width gtk-tree-view-column-max-width
+   (max-width
+    gtk-tree-view-column-max-width
     "max-width" "gint" t t)
-   (min-width gtk-tree-view-column-min-width
+   (min-width
+    gtk-tree-view-column-min-width
     "min-width" "gint" t t)
-   (reorderable gtk-tree-view-column-reorderable
+   (reorderable
+    gtk-tree-view-column-reorderable
     "reorderable" "gboolean" t t)
-   (resizable gtk-tree-view-column-resizable
+   (resizable
+    gtk-tree-view-column-resizable
     "resizable" "gboolean" t t)
-   (sizing gtk-tree-view-column-sizing
+   (sizing
+    gtk-tree-view-column-sizing
     "sizing" "GtkTreeViewColumnSizing" t t)
-   (sort-indicator gtk-tree-view-column-sort-indicator
+   (sort-indicator
+    gtk-tree-view-column-sort-indicator
     "sort-indicator" "gboolean" t t)
-   (sort-order gtk-tree-view-column-sort-order
+   (sort-order
+    gtk-tree-view-column-sort-order
     "sort-order" "GtkSortType" t t)
-   (spacing gtk-tree-view-column-spacing
+   (spacing
+    gtk-tree-view-column-spacing
     "spacing" "gint" t t)
-   (title gtk-tree-view-column-title
+   (title
+    gtk-tree-view-column-title
     "title" "gchararray" t t)
-   (visible gtk-tree-view-column-visible
+   (visible
+    gtk-tree-view-column-visible
     "visible" "gboolean" t t)
-   (widget gtk-tree-view-column-widget
+   (widget
+    gtk-tree-view-column-widget
     "widget" "GtkWidget" t t)
-   (width gtk-tree-view-column-width "width" "gint" t nil)
-   (:cffi tree-view gtk-tree-view-column-tree-view g-object
+   (width
+    gtk-tree-view-column-width "width" "gint" t nil)
+   (:cffi tree-view
+          gtk-tree-view-column-tree-view g-object
           "gtk_tree_view_column_get_tree_view" nil)
-   (:cffi sort-column-id gtk-tree-view-column-sort-column-id :int
+   (:cffi sort-column-id
+          gtk-tree-view-column-sort-column-id :int
           "gtk_tree_view_column_get_sort_column_id"
           "gtk_tree_view_column_set_sort_column_id")
-   (:cffi cell-renderers gtk-tree-view-column-cell-renderers
+   (:cffi cell-renderers
+          gtk-tree-view-column-cell-renderers
           (g-list g-object :free-from-foreign t)
           "gtk_tree_view_column_get_cell_renderers" nil)))
 

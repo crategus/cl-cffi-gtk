@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; rtest-gdk-screen.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -29,14 +29,13 @@
          (n (gdk-screen-get-primary-monitor screen)))
     ;; The following tests are valid only for a specific display.
     ;; The tests should be cut out or the values must be replaced.
-    (assert-equal "GdkScreenX11" (gtype-name type))
+    (assert-equal "GdkX11Screen" (gtype-name type))
     (assert-eql 'gdk-screen (registered-object-type-by-name "GdkScreen"))
     (assert-equal "GdkScreen" (gtype-name (g-type-parent type)))
     (assert-equal '()
                   (mapcar #'gtype-name (g-type-children type)))
     (assert-true (gdk-screen-font-options screen))
     (assert-eql 96.0d0 (gdk-screen-resolution screen))
-    (assert-true (gdk-screen-get-default-colormap screen))
     (let ((rect (gdk-screen-get-monitor-geometry screen n)))
       (assert-eql 0 (gdk-rectangle-x rect))
       (assert-eql 0 (gdk-rectangle-y rect))

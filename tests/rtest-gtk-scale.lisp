@@ -24,12 +24,12 @@
 (in-package :gtk-tests)
 
 (define-test gtk-scale
-  (assert-true  (g-type-is-abstract "GtkScale"))  
-  (assert-true  (g-type-is-derived "GtkScale"))  
-  (assert-false (g-type-is-fundamental "GtkScale"))  
+  (assert-false (g-type-is-abstract "GtkScale"))
+  (assert-true  (g-type-is-derived "GtkScale"))
+  (assert-false (g-type-is-fundamental "GtkScale"))
   (assert-true  (g-type-is-value-type "GtkScale"))
   (assert-true  (g-type-has-value-table "GtkScale"))
-  (assert-true  (g-type-is-classed "GtkScale"))  
+  (assert-true  (g-type-is-classed "GtkScale"))
   (assert-true  (g-type-is-instantiatable "GtkScale"))
   (assert-true  (g-type-is-derivable "GtkScale"))
   (assert-true  (g-type-is-deep-derivable "GtkScale"))
@@ -57,7 +57,7 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkRange") (g-type-parent "GtkScale"))
-  (assert-eql 6 (g-type-depth "GtkScale"))
+  (assert-eql 5 (g-type-depth "GtkScale"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkScale" "GObject"))
   (assert-true  (g-type-is-a "GtkScale" "GtkScale"))
@@ -76,34 +76,33 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkScale"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 428 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 144 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 484 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "user-data" "name" "parent" "width-request"
-         "height-request" "visible" "sensitive" "app-paintable" "can-focus"
-         "has-focus" "is-focus" "can-default" "has-default" "receives-default"
-         "composite-child" "style" "events" "extension-events" "no-show-all"
-         "has-tooltip" "tooltip-markup" "tooltip-text" "window"
-         "double-buffered" "update-policy" "adjustment" "inverted"
-         "lower-stepper-sensitivity" "upper-stepper-sensitivity"
-         "show-fill-level" "restrict-to-fill-level" "fill-level" "round-digits"
-         "digits" "draw-value" "value-pos")
+      '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "adjustment" "inverted" "lower-stepper-sensitivity"
+         "upper-stepper-sensitivity" "show-fill-level" "restrict-to-fill-level"
+         "fill-level" "round-digits" "digits" "draw-value" "value-pos")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkScale"))))
   
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-         "focus-line-pattern" "focus-line-width" "focus-padding"
-         "interior-focus" "link-color" "new-tooltip-style"
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
          "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "activate-slider" "arrow-displacement-x"
-         "arrow-displacement-y" "arrow-scaling" "slider-width"
-         "stepper-position-details" "stepper-size" "stepper-spacing"
-         "trough-border" "trough-side-details" "trough-under-steppers"
+         "wide-separators" "window-dragging" "arrow-displacement-x"
+         "arrow-displacement-y" "arrow-scaling" "slider-width" "stepper-size"
+         "stepper-spacing" "trough-border" "trough-under-steppers"
          "slider-length" "value-spacing")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkScale")))
@@ -178,7 +177,7 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkScale") (g-type-parent "GtkHScale"))
-  (assert-eql 7 (g-type-depth "GtkHScale"))
+  (assert-eql 6 (g-type-depth "GtkHScale"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkHScale" "GObject"))
   (assert-true  (g-type-is-a "GtkHScale" "GtkHScale"))
@@ -197,34 +196,33 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkHScale"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 428 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 144 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 484 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "user-data" "name" "parent" "width-request"
-         "height-request" "visible" "sensitive" "app-paintable" "can-focus"
-         "has-focus" "is-focus" "can-default" "has-default" "receives-default"
-         "composite-child" "style" "events" "extension-events" "no-show-all"
-         "has-tooltip" "tooltip-markup" "tooltip-text" "window"
-         "double-buffered" "update-policy" "adjustment" "inverted"
-         "lower-stepper-sensitivity" "upper-stepper-sensitivity"
-         "show-fill-level" "restrict-to-fill-level" "fill-level" "round-digits"
-         "digits" "draw-value" "value-pos")
+      '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "adjustment" "inverted" "lower-stepper-sensitivity"
+         "upper-stepper-sensitivity" "show-fill-level" "restrict-to-fill-level"
+         "fill-level" "round-digits" "digits" "draw-value" "value-pos")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkHScale"))))
   
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-         "focus-line-pattern" "focus-line-width" "focus-padding"
-         "interior-focus" "link-color" "new-tooltip-style"
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
          "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "activate-slider" "arrow-displacement-x"
-         "arrow-displacement-y" "arrow-scaling" "slider-width"
-         "stepper-position-details" "stepper-size" "stepper-spacing"
-         "trough-border" "trough-side-details" "trough-under-steppers"
+         "wide-separators" "window-dragging" "arrow-displacement-x"
+         "arrow-displacement-y" "arrow-scaling" "slider-width" "stepper-size"
+         "stepper-spacing" "trough-border" "trough-under-steppers"
          "slider-length" "value-spacing")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkHScale")))
@@ -285,7 +283,7 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkScale") (g-type-parent "GtkVScale"))
-  (assert-eql 7 (g-type-depth "GtkVScale"))
+  (assert-eql 6 (g-type-depth "GtkVScale"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkVScale" "GObject"))
   (assert-true  (g-type-is-a "GtkVScale" "GtkVScale"))
@@ -304,34 +302,33 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkVScale"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 428 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 144 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 484 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "user-data" "name" "parent" "width-request"
-         "height-request" "visible" "sensitive" "app-paintable" "can-focus"
-         "has-focus" "is-focus" "can-default" "has-default" "receives-default"
-         "composite-child" "style" "events" "extension-events" "no-show-all"
-         "has-tooltip" "tooltip-markup" "tooltip-text" "window"
-         "double-buffered" "update-policy" "adjustment" "inverted"
-         "lower-stepper-sensitivity" "upper-stepper-sensitivity"
-         "show-fill-level" "restrict-to-fill-level" "fill-level" "round-digits"
-         "digits" "draw-value" "value-pos")
+      '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "adjustment" "inverted" "lower-stepper-sensitivity"
+         "upper-stepper-sensitivity" "show-fill-level" "restrict-to-fill-level"
+         "fill-level" "round-digits" "digits" "draw-value" "value-pos")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkVScale"))))
   
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-         "focus-line-pattern" "focus-line-width" "focus-padding"
-         "interior-focus" "link-color" "new-tooltip-style"
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
          "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "activate-slider" "arrow-displacement-x"
-         "arrow-displacement-y" "arrow-scaling" "slider-width"
-         "stepper-position-details" "stepper-size" "stepper-spacing"
-         "trough-border" "trough-side-details" "trough-under-steppers"
+         "wide-separators" "window-dragging" "arrow-displacement-x"
+         "arrow-displacement-y" "arrow-scaling" "slider-width" "stepper-size"
+         "stepper-spacing" "trough-border" "trough-under-steppers"
          "slider-length" "value-spacing")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkVScale")))

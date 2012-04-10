@@ -674,12 +674,15 @@
   ((accept-focus
     gtk-window-accept-focus
     "accept-focus" "gboolean" t t)
-   (allow-grow
-    gtk-window-allow-grow
-    "allow-grow" "gboolean" t t)
-   (allow-shrink
-    gtk-window-allow-shrink
-    "allow-shrink" "gboolean" t t)
+   (application
+    gtk-window-application
+    "application" "GtkApplication" t t)
+;   (allow-grow
+;    gtk-window-allow-grow
+;    "allow-grow" "gboolean" t t)
+;   (allow-shrink
+;    gtk-window-allow-shrink
+;    "allow-shrink" "gboolean" t t)
    (decorated
     gtk-window-decorated
     "decorated" "gboolean" t t)
@@ -698,12 +701,15 @@
    (focus-on-map
     gtk-window-focus-on-map
     "focus-on-map" "gboolean" t t)
+   (focus-visible
+    gtk-window-visible
+    "focus-visible" "gboolean" t t)
    (gravity
     gtk-window-gravity
     "gravity" "GdkGravity" t t)
    (has-resize-grip
     gtk-window-has-resize-grip
-    "resize-grip" "gboolean" t t)
+    "has-resize-grip" "gboolean" t t)
    (has-toplevel-focus
      gtk-window-has-toplevel-focus
      "has-toplevel-focus" "gboolean" t nil)
@@ -718,7 +724,7 @@
     "is-active" "gboolean" t nil)
    (mnemonics-visible
     gtk-window-mnemonics-visible
-    "mnemonis-visible" "gboolean" t t)
+    "mnemonics-visible" "gboolean" t t)
    (modal
     gtk-window-modal
     "modal" "gboolean" t t)

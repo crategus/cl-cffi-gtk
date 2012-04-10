@@ -1,13 +1,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.version.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
 ;;; The documentation has been copied from the Pango Reference Manual
 ;;; for Pango 1.30.0. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify

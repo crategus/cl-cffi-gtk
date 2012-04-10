@@ -24,7 +24,7 @@
 (in-package :gtk-tests)
 
 (define-test gtk-box
-  (assert-true  (g-type-is-abstract "GtkBox"))
+  (assert-false (g-type-is-abstract "GtkBox"))
   (assert-true  (g-type-is-derived "GtkBox"))
   (assert-false (g-type-is-fundamental "GtkBox"))
   (assert-true  (g-type-is-value-type "GtkBox"))
@@ -56,14 +56,17 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkContainer") (g-type-parent "GtkBox"))
-  (assert-eql 6 (g-type-depth "GtkBox"))
+  (assert-eql 5 (g-type-depth "GtkBox"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkBox" "GObject"))
   (assert-true  (g-type-is-a "GtkBox" "GtkBox"))
   (assert-true  (g-type-is-a "GtkBox" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkBox" "gboolean"))
   (assert-false (g-type-is-a "GtkBox" "GtkWindow"))
-  (assert-equal '("GtkHBox" "GtkVBox" "GtkButtonBox")
+  (assert-equal '("GtkHBox" "GtkVBox" "GtkButtonBox" "GtkStatusbar"
+                  "GtkColorSelection" "GtkFileChooserWidget"
+                  "GtkFileChooserButton" "GtkFontSelection"
+                  "GtkRecentChooserWidget")
                 (mapcar #'gtype-name (g-type-children "GtkBox")))
   (assert-equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkBox")))
@@ -75,29 +78,29 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkBox"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 416 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql  76 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 504 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
     
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "user-data" "name" "parent" "width-request"
-        "height-request" "visible" "sensitive" "app-paintable" "can-focus"
-        "has-focus" "is-focus" "can-default" "has-default" "receives-default"
-        "composite-child" "style" "events" "extension-events" "no-show-all"
-        "has-tooltip" "tooltip-markup" "tooltip-text" "window"
-        "double-buffered" "border-width" "resize-mode" "child" "spacing"
-        "homogeneous")
+      '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "border-width" "resize-mode" "child" "spacing" "homogeneous")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkBox"))))
     
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-        "focus-line-pattern" "focus-line-width" "focus-padding"
-        "interior-focus" "link-color" "new-tooltip-style"
-        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-        "separator-height" "separator-width" "visited-link-color"
-        "wide-separators")
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkBox"))))
 
@@ -194,14 +197,14 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkBox") (g-type-parent "GtkHBox"))
-  (assert-eql 7 (g-type-depth "GtkHBox"))
+  (assert-eql 6 (g-type-depth "GtkHBox"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkHBox" "GObject"))
   (assert-true  (g-type-is-a "GtkHBox" "GtkHBox"))
   (assert-true  (g-type-is-a "GtkHBox" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkHBox" "gboolean"))
   (assert-false (g-type-is-a "GtkHBox" "GtkWindow"))
-  (assert-equal '("GtkStatusbar" "GtkFileChooserButton")
+  (assert-equal '()
                 (mapcar #'gtype-name (g-type-children "GtkHBox")))
   (assert-equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkHBox")))
@@ -213,29 +216,29 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkHBox"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 416 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql  76 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 504 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
     
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "user-data" "name" "parent" "width-request"
-        "height-request" "visible" "sensitive" "app-paintable" "can-focus"
-        "has-focus" "is-focus" "can-default" "has-default" "receives-default"
-        "composite-child" "style" "events" "extension-events" "no-show-all"
-        "has-tooltip" "tooltip-markup" "tooltip-text" "window"
-        "double-buffered" "border-width" "resize-mode" "child" "spacing"
-        "homogeneous")
+      '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "border-width" "resize-mode" "child" "spacing" "homogeneous")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkHBox"))))
     
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-        "focus-line-pattern" "focus-line-width" "focus-padding"
-        "interior-focus" "link-color" "new-tooltip-style"
-        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-        "separator-height" "separator-width" "visited-link-color"
-        "wide-separators")
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkHBox"))))
 
@@ -332,15 +335,14 @@
     (assert-false (gobject-class-interface-p class)))
   
   (assert-equal (gtype "GtkBox") (g-type-parent "GtkVBox"))
-  (assert-eql 7 (g-type-depth "GtkVBox"))
+  (assert-eql 6 (g-type-depth "GtkVBox"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkVBox" "GObject"))
   (assert-true  (g-type-is-a "GtkVBox" "GtkVBox"))
   (assert-true  (g-type-is-a "GtkVBox" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkVBox" "gboolean"))
   (assert-false (g-type-is-a "GtkVBox" "GtkWindow"))
-  (assert-equal '("GtkColorSelection" "GtkFileChooserWidget" "GtkFontSelection"
-                  "GtkRecentChooserWidget" "GtkGammaCurve")
+  (assert-equal '()
                 (mapcar #'gtype-name (g-type-children "GtkVBox")))
   (assert-equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkVBox")))
@@ -352,29 +354,29 @@
                   (foreign-slot-value query 'g-type-query :type))
     (assert-equal "GtkVBox"
                   (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 416 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql  76 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 504 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
     
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "user-data" "name" "parent" "width-request"
-        "height-request" "visible" "sensitive" "app-paintable" "can-focus"
-        "has-focus" "is-focus" "can-default" "has-default" "receives-default"
-        "composite-child" "style" "events" "extension-events" "no-show-all"
-        "has-tooltip" "tooltip-markup" "tooltip-text" "window"
-        "double-buffered" "border-width" "resize-mode" "child" "spacing"
-        "homogeneous")
+      '("orientation" "name" "parent" "width-request" "height-request"
+         "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
+         "is-focus" "can-default" "has-default" "receives-default"
+         "composite-child" "style" "events" "no-show-all" "has-tooltip"
+         "tooltip-markup" "tooltip-text" "window" "double-buffered" "halign"
+         "valign" "margin-left" "margin-right" "margin-top" "margin-bottom"
+         "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
+         "border-width" "resize-mode" "child" "spacing" "homogeneous")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkVBox"))))
     
   ;; Get the names of the style properties.
   (assert-equal
-      '("cursor-aspect-ratio" "cursor-color" "draw-border"
-        "focus-line-pattern" "focus-line-width" "focus-padding"
-        "interior-focus" "link-color" "new-tooltip-style"
-        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-        "separator-height" "separator-width" "visited-link-color"
-        "wide-separators")
+      '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkVBox"))))
 

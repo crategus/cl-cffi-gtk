@@ -2124,10 +2124,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gtk-border "GtkBorder"
-  (left   :int :initform 0)
-  (right  :int :initform 0)
-  (top    :int :initform 0)
-  (bottom :int :initform 0))
+  (left   :int16 :initform 0)
+  (right  :int16 :initform 0)
+  (top    :int16 :initform 0)
+  (bottom :int16 :initform 0))
 
 (at-init () (foreign-funcall "gtk_border_get_type" :int))
 (at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))

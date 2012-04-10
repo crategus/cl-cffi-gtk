@@ -67,10 +67,6 @@
 ;;; run time.
 ;;; ----------------------------------------------------------------------------
 
-(defcvar (*gtk-major-version* "gtk_major_version" :read-only t) :uint)
-
-(export '*gtk-major-version*)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_MINOR_VERSION
 ;;; 
@@ -80,10 +76,6 @@
 ;;; compile time, rather than from the library linked against at application
 ;;; run time.
 ;;; ----------------------------------------------------------------------------
-
-(defcvar (*gtk-minor-version* "gtk_minor_version" :read-only t) :uint)
-
-(export '*gtk-minor-version*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_MICRO_VERSION
@@ -95,10 +87,6 @@
 ;;; run time.
 ;;; ----------------------------------------------------------------------------
 
-(defcvar (*gtk-micro-version* "gtk_micro_version" :read-only t) :uint)
-
-(export 'gtk-micro-version*)
-
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_BINARY_AGE
 ;;; 
@@ -107,10 +95,6 @@
 ;;; Like gtk_get_binary_age(), but from the headers used at application compile
 ;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
-
-(defcvar (*gtk-binary-age* "gtk_binary_age" :read-only t) :uint)
-
-(export 'gtk-binary-age*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_INTERFACE_AGE
@@ -121,10 +105,6 @@
 ;;; compile time, rather than from the library linked against at application
 ;;; run time.
 ;;; ----------------------------------------------------------------------------
-
-(defcvar (*gtk-interface-age* "gtk_interface_age" :read-only t) :uint)
-
-(export 'gtk-interface-age*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_CHECK_VERSION()
@@ -164,8 +144,7 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-get-major-version ()
-  *gtk-major-version*)
+(defcfun ("gtk_get_major_version" gtk-get-major-version) :int)
 
 (export 'gtk-get-major-version)
 
@@ -188,8 +167,7 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-get-minor-version ()
-  *gtk-minor-version*)
+(defcfun ("gtk_get_minor_version" gtk-get-minor-version) :int)
 
 (export 'gtk-get-minor-version)
 
@@ -212,8 +190,7 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-get-micro-version ()
-  *gtk-micro-version*)
+(defcfun ("gtk_get_micro_version" gtk-get-micro-version) :int)
 
 (export 'gtk-get-micro-version)
 
@@ -232,8 +209,7 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-get-binary-age ()
-  *gtk-binary-age*)
+(defcfun ("gtk_get_binary_age" gtk-get-binary-age) :int)
 
 (export 'gtk-get-binary-age)
 
@@ -252,8 +228,7 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-get-interface-age ()
-  *gtk-interface-age*)
+(defcfun ("gtk_get_interface_age" gtk-get-interface-age) :int)
 
 (export 'gtk-get-interface-age)
 
@@ -299,9 +274,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun (check-version "gtk_check_version") :string
-  (required_major :uint)
-  (required_minor :uint)
-  (required_micro :uint))
+  (required-major :uint)
+  (required-minor :uint)
+  (required-micro :uint))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -333,8 +308,8 @@
   nil)
 
 (glib:push-library-version-features gtk
-                                    *gtk-major-version*
-                                    *gtk-minor-version*
+                                    (gtk-get-major-version)
+                                    (gtk-get-minor-version)
   2 2
   2 4
   2 6
@@ -346,11 +321,12 @@
   2 18
   2 20
   2 22
-  2 24)
+  2 24
+  3 0)
 
 (glib:require-library-version "Gtk+"
-                              2 24
-                              *gtk-major-version*
-                              *gtk-minor-version*)
+                              3 0
+                              (gtk-get-major-version)
+                              (gtk-get-minor-version))
 
 ;;; --- End of file gtk.version.lisp -------------------------------------------

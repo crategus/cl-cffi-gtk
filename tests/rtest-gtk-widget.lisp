@@ -42,34 +42,25 @@
     
     ;; Get the names of the class properties
     (assert-equal
-     (sort
-      (copy-list
-        '("user-data" "name" "parent" "width-request" "height-request" "visible"
-        "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-        "can-default" "has-default" "receives-default" "composite-child" "style"
-        "events" "extension-events" "no-show-all" "has-tooltip" "tooltip-markup"
-        "tooltip-text" "window" "double-buffered"))
-      #'string< )
-     (sort
+       '("name" "parent" "width-request" "height-request" "visible" "sensitive"
+         "app-paintable" "can-focus" "has-focus" "is-focus" "can-default"
+         "has-default" "receives-default" "composite-child" "style" "events"
+         "no-show-all" "has-tooltip" "tooltip-markup" "tooltip-text" "window"
+         "double-buffered" "halign" "valign" "margin-left" "margin-right"
+         "margin-top" "margin-bottom" "margin" "hexpand" "vexpand"
+         "hexpand-set" "vexpand-set" "expand")
        (mapcar #'param-spec-name
-               (g-object-class-list-properties (gtype "GtkWidget")))
-       #'string<))
-       
+               (g-object-class-list-properties (gtype "GtkWidget"))))
     
     ;; Get the names of the style properties.
     (assert-equal
-     (sort
-      (copy-list
-        '("draw-border" "focus-line-pattern" "secondary-cursor-color"
-         "separator-width" "visited-link-color" "cursor-aspect-ratio"
-         "scroll-arrow-hlength" "wide-separators" "scroll-arrow-vlength"
-         "cursor-color" "interior-focus" "link-color" "separator-height"
-        "focus-line-width" "focus-padding" "new-tooltip-style"))
-      #'string< )
-     (sort
+       '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "visited-link-color"
+         "wide-separators" "window-dragging")
       (mapcar #'param-spec-name
-              (gtk-widget-class-list-style-properties (gtype "GtkWidget")))
-      #'string<))
+              (gtk-widget-class-list-style-properties (gtype "GtkWidget"))))
     ))
 
 ;;; --- End of file rtest-gtk-widget.lisp --------------------------------------

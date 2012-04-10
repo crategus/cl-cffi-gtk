@@ -31,7 +31,7 @@
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gdk
       ((:and :unix (:not :darwin))
-       (:or "libgdk-x11-2.0.so.0" "libgdk-x11-2.0.so"))
+       (:or "libgdk-3.so.0" "libgdk-3.so"))
       (:darwin (:or "libgdk-x11-2.0.0.dylib" "libgdk-x11-2.0.dylib"))
       (:windows "libgdk-win32-2.0-0.dll")
       (t "libgdk-2.0"))
@@ -45,7 +45,7 @@
 
     (define-foreign-library gtk
       ((:and :unix (:not :darwin))
-       (:or "libgtk-x11-2.0.so.0" "libgtk-x11-2.0.so"))
+       (:or "libgtk-3.so.0" "libgtk-3.so"))
       (:darwin (:or "libgtk-x11-2.0.0.dylib" "libgtk-x11-2.0.dylib"))
       (:windows (:or "libgtk-2.0-0.dll" "libgtk-win32-2.0-0.dll"))
       (t "libgtk-2.0")))

@@ -258,27 +258,6 @@
 
 (in-package :gtk)
 
-;; The GTK+ Documentation does not have a class GtkProgress
-;; The accessors do not work.
-
-(define-g-object-class "GtkProgress" gtk-progress
-  (:superclass gtk-widget
-   :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
-   :type-initializer "gtk_progress_get_type")
-  ((activity-mode
-    gtk-progress-activity-mode
-    "activity-mode" "gboolean" t t)
-   (show-text
-    gtk-progress-show-text
-    "show-text" "gboolean" t t)
-   (text-xalign
-    gtk-progress-text-xalign
-    "text-xalign" "gfloat" t t)
-   (text-yalign
-    gtk-progress-text-yalign
-    "text-yalign" "gfloat" t t)))
-
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkProgressBarStyle
 ;;;
@@ -343,37 +322,25 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkProgressBar" gtk-progress-bar
-  (:superclass gtk-progress
+  (:superclass gtk-widget
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_progress_bar_get_type")
-  ((activity-blocks
-    gtk-progress-bar-activity-blocks
-    "activity-blocks" "guint" t t)
-   (activity-step
-    gtk-progress-bar-activity-step
-    "activity-step" "guint" t t)
-   (adjustment
-    gtk-progress-bar-adjustment
-    "adjustment" "GtkAdjustment" t t)
-   (bar-style
-    gtk-progress-bar-bar-style
-    "bar-style" "GtkProgressBarStyle" t t)
-   (discrete-blocks
-    gtk-progress-bar-discrete-blocks
-    "discrete-blocks" "guint" t t)
-   (ellipsize
+  ((ellipsize
     gtk-progress-bar-ellipsize
-    "ellipsize" "PangoEllipsizeMode" t t)
+    "ellipsize" "PangoEllipsize" t t)
    (fraction
     gtk-progress-bar-fraction
     "fraction" "gdouble" t t)
-   (orientation
-    gtk-progress-bar-orientation
-    "orientation" "GtkProgressBarOrientation" t t)
+   (inverted
+    gtk-progress-bar-inverted
+    "inverted" "gboolean" t t)
    (pulse-step
     gtk-progress-bar-pulse-step
     "pulse-step" "gdouble" t t)
+   (show-text
+    gtk-progress-bar-show-text
+    "show-text" "gboolean" t t)
    (text
     gtk-progress-bar-text
     "text" "gchararray" t t)))
@@ -388,6 +355,8 @@
 ;;; Returns :
 ;;;     a GtkProgressBar
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-progress-bar-new))
 
 (defun gtk-progress-bar-new ()
   (make-instance 'gtk-progress-bar))
@@ -429,6 +398,8 @@
 ;;;     fraction of the task that's been completed
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-set-fraction))
+
 (defun gtk-progress-bar-set-fraction (pbar fraction)
   (setf (gtk-progress-bar-fraction pbar) fraction))
 
@@ -447,6 +418,8 @@
 ;;; Returns :
 ;;;     a fraction from 0.0 to 1.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-progress-bar-get-fraction))
 
 (defun gtk-progress-bar-get-fraction (pbar)
   (gtk-progress-bar-fraction pbar))
@@ -468,6 +441,13 @@
 ;;;     TRUE to invert the progress bar
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-set-inverted))
+
+(defun gtk-progress-bar-set-inverted (pbar inverted)
+  (setf (gtk-progress-bar-inverted pbar) inverted))
+
+(export 'gtk-progress-bar-set-inverted)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_get_inverted ()
 ;;; 
@@ -481,6 +461,13 @@
 ;;; Returns :
 ;;;     TRUE if the progress bar is inverted
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-progress-bar-get-inverted))
+
+(defun gtk-progress-bar-get-inverted (pbar)
+  (gtk-progress-bar-inverted pbar))
+
+(export 'gtk-progress-bar-get-inverted)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_set_show_text ()
@@ -505,6 +492,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-set-show-text))
+
+(defun gtk-progress-bar-set-show-text (pbar show-text)
+  (setf (gtk-progress-bar-show-text pbar) show-text))
+
+(export 'gtk-progress-bar-set-show-text)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_get_show_text ()
 ;;; 
@@ -521,6 +515,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-progress-bar-get-show-text))
+
+(defun gtk-progress-bar-get-show-text (pbar)
+  (gtk-progress-bar-show-text pbar))
+
+(export 'gtk-progress-bar-get-show-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_set_text ()
@@ -544,6 +545,8 @@
 ;;;     a UTF-8 string, or NULL
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-set-text))
+
 (defun gtk-progress-bar-set-text (pbar text)
   (setf (gtk-progress-bar-text pbar) text))
 
@@ -565,6 +568,8 @@
 ;;;     text, or NULL; this string is owned by the widget and should not be
 ;;;     modified or freed
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-progress-bar-get-text))
 
 (defun gtk-progress-bar-get-text (pbar)
   (gtk-progress-bar-text pbar))
@@ -589,6 +594,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-set-ellipsize))
+
+(defun gtk-progress-bar-set-ellipsize (pbar mode)
+  (setf (gtk-progress-bar-ellipsize pbar) mode))
+
+(export 'gtk-progress-bar-set-ellipsize)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_get_ellipsize ()
 ;;; 
@@ -606,6 +618,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-get-ellipsize))
+
+(defun gtk-progress-bar-get-ellipsize (pbar)
+  (gtk-progress-bar-ellipsize pbar))
+
+(export 'gtk-progress-bar-get-ellipsize)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_set_pulse_step ()
 ;;; 
@@ -622,6 +641,13 @@
 ;;;     fraction between 0.0 and 1.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-set-pulse-step))
+
+(defun gtk-progress-bar-set-pulse-step (pbar fraction)
+  (setf (gtk-progress-bar-pulse-step pbar) fraction))
+
+(export 'gtk-progress-bar-set-pulse-step)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_get_pulse_step ()
 ;;; 
@@ -636,5 +662,11 @@
 ;;;     a fraction from 0.0 to 1.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-progress-bar-get-pulse-step))
+
+(defun gtk-progress-bar-get-pulse-step (pbar)
+  (gtk-progress-bar-pulse-step pbar))
+
+(export 'gtk-progress-bar-get-pulse-step)
 
 ;;; --- End of file gtk.progress-bar.lisp --------------------------------------

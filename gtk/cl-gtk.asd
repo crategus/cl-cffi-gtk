@@ -88,7 +88,7 @@
    (:file "gtk.icon-theme")            ; Looking up icons by name
                                        
    ;; Abstract Base Classes            
-   (:file "gtk.object")                ; GtkObject
+;   (:file "gtk.object")                ; GtkObject
    (:file "gtk.widget")                ; Base class for all widgets
    (:file "gtk.misc")                  ; Base class for alignments
    (:file "gtk.container")             ; GtkContainer
@@ -267,7 +267,7 @@
    ;; Deprecated
    (:file "gtk.ruler")                 ; Class for horizontal or vertical rulers
    (:file "gtk.curve")                 ; Allows direct editing of a curve
-   (:file "gtk.item-factory")          ; A factory for menus
+;   (:file "gtk.item-factory")          ; A factory for menus
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
    (:file "gtk.input-dialog")          ; Configure devices for XInput extension
@@ -285,6 +285,7 @@
                :cl-gtk-gobject
                :cl-gtk-gdk
                :cl-gtk-pango
+               :cl-gtk-cairo
                :cffi
                :bordeaux-threads
                :iterate))

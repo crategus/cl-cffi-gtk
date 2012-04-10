@@ -70,7 +70,7 @@
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")
 (load "rtest-gtk-label.lisp")
-(load "rtest-gtk-object.lisp")
+;(load "rtest-gtk-object.lisp")
 (load "rtest-gtk-progress-bar.lisp")
 (load "rtest-gtk-scale.lisp")
 (load "rtest-gtk-table.lisp")
