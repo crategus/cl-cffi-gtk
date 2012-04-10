@@ -69,6 +69,7 @@
 (load "rtest-gtk-border.lisp")
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")
+(load "rtest-gtk-cell-renderer-progress.lisp")
 (load "rtest-gtk-label.lisp")
 ;(load "rtest-gtk-object.lisp")
 (load "rtest-gtk-progress-bar.lisp")
