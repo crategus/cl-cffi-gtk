@@ -256,9 +256,9 @@
 ;;;     a new empty GdkRegion
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_new" gdk-region-new) (g-boxed-foreign gdk-region :return))
-
-(export 'gdk-region-new)
+;(defcfun ("gdk_region_new" gdk-region-new) (g-boxed-foreign gdk-region :return))
+;
+;(export 'gdk-region-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkFillRule
@@ -285,11 +285,11 @@
 ;;;     overlapping areas are always included.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkFillRule" gdk-fill-rule
-  (:export t
-   :type-initializer "gdk_fill_rule_get_type")
-  (:even-odd-rule 0)
-  (:winding-rule 1))
+;(define-g-enum "GdkFillRule" gdk-fill-rule
+;  (:export t
+;   :type-initializer "gdk_fill_rule_get_type")
+;  (:even-odd-rule 0)
+;  (:winding-rule 1))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_polygon ()
@@ -320,17 +320,17 @@
 ;;;     a new GdkRegion based on the given polygon
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_polygon" %gdk-region-polygon)
-    (g-boxed-foreign gdk-region :return)
-  (points :pointer)
-  (n-points :int)
-  (fill-rule gdk-fill-rule))
+;(defcfun ("gdk_region_polygon" %gdk-region-polygon)
+;    (g-boxed-foreign gdk-region :return)
+;  (points :pointer)
+;  (n-points :int)
+;  (fill-rule gdk-fill-rule))
 
-(defun gdk-region-polygon (points fill-rule)
-  (with-foreign-boxed-array (n pts gdk-point points)
-    (%gdk-region-polygon pts n fill-rule)))
+;(defun gdk-region-polygon (points fill-rule)
+;  (with-foreign-boxed-array (n pts gdk-point points)
+;    (%gdk-region-polygon pts n fill-rule)))
 
-(export 'gdk-region-polygon)
+;(export 'gdk-region-polygon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_copy ()
@@ -360,11 +360,11 @@
 ;;;     a new region
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_rectangle" gdk-region-rectangle)
-    (g-boxed-foreign gdk-region :return)
-  (rectangle (g-boxed-foreign gdk-rectangle)))
+;(defcfun ("gdk_region_rectangle" gdk-region-rectangle)
+;    (g-boxed-foreign gdk-region :return)
+;  (rectangle (g-boxed-foreign gdk-rectangle)))
 
-(export 'gdk-region-rectangle)
+;(export 'gdk-region-rectangle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_destroy ()
@@ -392,16 +392,16 @@
 ;;;     return location for the clipbox
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_get_clipbox" %gdk-region-get-clipbox) :void
-  (region (g-boxed-foreign gdk-region))
-  (rectangle (g-boxed-foreign gdk-rectangle)))
+;(defcfun ("gdk_region_get_clipbox" %gdk-region-get-clipbox) :void
+;  (region (g-boxed-foreign gdk-region))
+;  (rectangle (g-boxed-foreign gdk-rectangle)))
 
-(defun gdk-region-get-clipbox (region)
-  (let ((clipbox (make-gdk-rectangle)))
-    (%gdk-region-get-clipbox region clipbox)
-    clipbox))
+;(defun gdk-region-get-clipbox (region)
+;  (let ((clipbox (make-gdk-rectangle)))
+;    (%gdk-region-get-clipbox region clipbox)
+;    clipbox))
 
-(export 'gdk-region-get-clipbox)
+;(export 'gdk-region-get-clipbox)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_get_rectangles ()
@@ -423,27 +423,27 @@
 ;;;     length of returned array
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_get_rectangles" %gdk-region-get-rectangles) :void
-  (region (g-boxed-foreign gdk-region))
-  (rectangles :pointer)
-  (n-rectangles :pointer))
+;(defcfun ("gdk_region_get_rectangles" %gdk-region-get-rectangles) :void
+;  (region (g-boxed-foreign gdk-region))
+;  (rectangles :pointer)
+;  (n-rectangles :pointer))
 
-(defun gdk-region-get-rectangles (region)
-  (with-foreign-objects ((rectangles-ptr :pointer) (n-rectangles-ptr :int))
-    (%gdk-region-get-rectangles region rectangles-ptr n-rectangles-ptr)
-    (let ((n (mem-ref n-rectangles-ptr :int))
-          (rectangles (mem-ref rectangles-ptr :pointer)))
-      (prog1
-        (iter (for i from 0 below n)
-              (for rect = (convert-from-foreign
-                            (inc-pointer rectangles
-                                         (* (foreign-type-size 'gdk-rectangle-cstruct)
-                                            i))
-                            '(g-boxed-foreign gdk-rectangle)))
-              (collect rect))
-        (g-free rectangles)))))
+;(defun gdk-region-get-rectangles (region)
+;  (with-foreign-objects ((rectangles-ptr :pointer) (n-rectangles-ptr :int))
+;    (%gdk-region-get-rectangles region rectangles-ptr n-rectangles-ptr)
+;    (let ((n (mem-ref n-rectangles-ptr :int))
+;          (rectangles (mem-ref rectangles-ptr :pointer)))
+;      (prog1
+;        (iter (for i from 0 below n)
+;              (for rect = (convert-from-foreign
+;                            (inc-pointer rectangles
+;                                         (* (foreign-type-size 'gdk-rectangle-cstruct)
+;                                            i))
+;                            '(g-boxed-foreign gdk-rectangle)))
+;              (collect rect))
+;        (g-free rectangles)))))
 
-(export 'gdk-region-get-rectangles)
+;(export 'gdk-region-get-rectangles)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_empty ()
@@ -459,10 +459,10 @@
 ;;;     TRUE if region is empty.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_empty" gdk-region-is-empty) :boolean
-  (region (g-boxed-foreign gdk-region)))
+;(defcfun ("gdk_region_empty" gdk-region-is-empty) :boolean
+;  (region (g-boxed-foreign gdk-region)))
 
-(export 'gdk-region-is-empty)
+;(export 'gdk-region-is-empty)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_equal ()
@@ -482,11 +482,11 @@
 ;;;     TRUE if region1 and region2 are equal.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_equal" gdk-region-equal) :boolean
-  (region-1 (g-boxed-foreign gdk-region))
-  (region-2 (g-boxed-foreign gdk-region)))
+;(defcfun ("gdk_region_equal" gdk-region-equal) :boolean
+;  (region-1 (g-boxed-foreign gdk-region))
+;  (region-2 (g-boxed-foreign gdk-region)))
 
-(export 'gdk-region-equal)
+;(export 'gdk-region-equal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_rect_equal ()
@@ -534,12 +534,12 @@
 ;;;     TRUE if the point is in region.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_point_in" gdk-region-point-in) :boolean
-  (region (g-boxed-foreign gdk-region))
-  (x :int)
-  (y :int))
+;(defcfun ("gdk_region_point_in" gdk-region-point-in) :boolean
+;  (region (g-boxed-foreign gdk-region))
+;  (x :int)
+;  (y :int))
 
-(export 'gdk-region-point-in)
+;(export 'gdk-region-point-in)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkOverlapType
@@ -563,12 +563,12 @@
 ;;;     if the rectangle is partly inside the GdkRegion.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkOverlapType" gdk-overlap-type
-  (:export t
-   :type-initializer "gdk_overlap_type_get_type")
-  (:in 0)
-  (:out 1)
-  (:part 2))
+;(define-g-enum "GdkOverlapType" gdk-overlap-type
+;  (:export t
+;   :type-initializer "gdk_overlap_type_get_type")
+;  (:in 0)
+;  (:out 1)
+;  (:part 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_rect_in ()
@@ -590,11 +590,11 @@
 ;;;     inside, outside, or partly inside the GdkRegion, respectively.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_rect_in" gdk-region-rect-in) gdk-overlap-type
-  (region (g-boxed-foreign gdk-region))
-  (rectangle (g-boxed-foreign gdk-rectangle)))
+;(defcfun ("gdk_region_rect_in" gdk-region-rect-in) gdk-overlap-type
+;  (region (g-boxed-foreign gdk-region))
+;  (rectangle (g-boxed-foreign gdk-rectangle)))
 
-(export 'gdk-region-rect-in)
+;(export 'gdk-region-rect-in)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_offset ()
@@ -613,12 +613,12 @@
 ;;;     the distance to move the region vertically
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_offset" gdk-region-offset) :void
-  (region (g-boxed-foreign gdk-region))
-  (dx :int)
-  (dy :int))
+;(defcfun ("gdk_region_offset" gdk-region-offset) :void
+;  (region (g-boxed-foreign gdk-region))
+;  (dx :int)
+;  (dy :int))
 
-(export 'gdk-region-offset)
+;(export 'gdk-region-offset)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_shrink ()
@@ -643,12 +643,12 @@
 ;;;     the number of pixels to shrink the region vertically
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_shrink" gdk-region-shrink) :void
-  (region (g-boxed-foreign gdk-region))
-  (dx :int)
-  (dy :int))
+;(defcfun ("gdk_region_shrink" gdk-region-shrink) :void
+;  (region (g-boxed-foreign gdk-region))
+;  (dx :int)
+;  (dy :int))
 
-(export 'gdk-region-shrink)
+;(export 'gdk-region-shrink)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_union_with_rect ()
@@ -666,11 +666,11 @@
 ;;;     a GdkRectangle.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_union_with_rect" gdk-region-union-with-rect) :void
-  (region (g-boxed-foreign gdk-region))
-  (rect (g-boxed-foreign gdk-rectangle)))
+;(defcfun ("gdk_region_union_with_rect" gdk-region-union-with-rect) :void
+;  (region (g-boxed-foreign gdk-region))
+;  (rect (g-boxed-foreign gdk-rectangle)))
 
-(export 'gdk-region-union-with-rect)
+;(export 'gdk-region-union-with-rect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_intersect ()
@@ -688,11 +688,11 @@
 ;;;     another GdkRegion
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_intersect" gdk-region-intersect) :void
-  (target (g-boxed-foreign gdk-region))
-  (source (g-boxed-foreign gdk-region)))
+;(defcfun ("gdk_region_intersect" gdk-region-intersect) :void
+;  (target (g-boxed-foreign gdk-region))
+;  (source (g-boxed-foreign gdk-region)))
 
-(export 'gdk-region-intersect)
+;(export 'gdk-region-intersect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_union ()
@@ -710,11 +710,11 @@
 ;;;     a GdkRegion
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_union" gdk-region-union) :void
-  (target (g-boxed-foreign gdk-region))
-  (source (g-boxed-foreign gdk-region)))
+;(defcfun ("gdk_region_union" gdk-region-union) :void
+;  (target (g-boxed-foreign gdk-region))
+;  (source (g-boxed-foreign gdk-region)))
 
-(export 'gdk-region-union)
+;(export 'gdk-region-union)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_subtract ()
@@ -731,11 +731,11 @@
 ;;;     another GdkRegion
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_subtract" gdk-region-subtract) :void
-  (source-1 (g-boxed-foreign gdk-region))
-  (source-2 (g-boxed-foreign gdk-region)))
+;(defcfun ("gdk_region_subtract" gdk-region-subtract) :void
+;  (source-1 (g-boxed-foreign gdk-region))
+;  (source-2 (g-boxed-foreign gdk-region)))
 
-(export 'gdk-region-subtract)
+;(export 'gdk-region-subtract)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_region_xor ()
@@ -753,11 +753,11 @@
 ;;;     another GdkRegion
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_region_xor" gdk-region-xor) :void
-  (target (g-boxed-foreign gdk-region))
-  (source (g-boxed-foreign gdk-region)))
+;(defcfun ("gdk_region_xor" gdk-region-xor) :void
+;  (target (g-boxed-foreign gdk-region))
+;  (source (g-boxed-foreign gdk-region)))
 
-(export 'gdk-region-xor)
+;(export 'gdk-region-xor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkSpan
