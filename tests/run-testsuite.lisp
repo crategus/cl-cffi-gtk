@@ -63,7 +63,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gtk-tests
-  (:use :gtk :gobject :glib :cffi :common-lisp :lisp-unit))
+  (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :common-lisp :lisp-unit))
 
 (load "rtest-gtk-adjustment.lisp")
 (load "rtest-gtk-border.lisp")
@@ -71,8 +71,8 @@
 (load "rtest-gtk-button.lisp")
 (load "rtest-gtk-cell-renderer-progress.lisp")
 (load "rtest-gtk-label.lisp")
-;(load "rtest-gtk-object.lisp")
 (load "rtest-gtk-progress-bar.lisp")
+(load "rtest-gtk-range.lisp")
 (load "rtest-gtk-scale.lisp")
 (load "rtest-gtk-table.lisp")
 (load "rtest-gtk-window.lisp")
