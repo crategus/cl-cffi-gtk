@@ -559,57 +559,62 @@
 
 (defun example-range-widgets ()
   (within-main-loop
-    (let* ((window   (make-instance 'gtk-window
-                                    :type :toplevel
-                                    :title "Example Range Widgets"))
-           (box1     (make-instance 'gtk-vbox
-                                    :homogeneous nil
-                                    :spacing 0))
-           (box2     (make-instance 'gtk-hbox
-                                    :homogeneous nil
-                                    :spacing 12
-                                    :border-width 12))
-           (box3     (make-instance 'gtk-vbox
-                                    :homogeneous nil
-                                    :spacing 12))
-           (adj1     (make-instance 'gtk-adjustment
-                                    :value 0.0
-                                    :lower 0.0
-                                    :upper 101.0
-                                    :step-increment 0.1
-                                    :page-increment 1.0
-                                    :page-size 1.0))
-           (vscale   (make-instance 'gtk-v-scale
-                                    :update-policy :continuous
-                                    :digits 1
-                                    :value-pos :top
-                                    :draw-value t
-                                    :adjustment adj1))
-           (hscale   (make-instance 'gtk-h-scale
-                                    :update-policy :continuous
-                                    :digits 1
-                                    :value-pos :top
-                                    :draw-value t
-                                    :width-request 200
-                                    :height-request -1
-                                    :adjustment adj1))
-           (scrollbar (make-instance 'gtk-h-scrollbar
-                                     :update-policy :continuous
-                                     :adjustment adj1)))
-      ;; Connect handler for the signal "destroy" to the main window.
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Range Widgets"))
+           (box1 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :homogeneous nil
+                                :spacing 0))
+           (box2 (make-instance 'gtk-box
+                                :orientation :horizontal
+                                :homogeneous nil
+                                :spacing 12
+                                :border-width 12))
+           (box3 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :homogeneous nil
+                                :spacing 12))
+           (adj1 (make-instance 'gtk-adjustment
+                                :value 0.0
+                                :lower 0.0
+                                :upper 101.0
+                                :step-increment 0.1
+                                :page-increment 1.0
+                                :page-size 1.0))
+           (vscale (make-instance 'gtk-scale
+                                  :orientation :vertical
+                                  :digits 1
+                                  :value-pos :top
+                                  :draw-value t
+                                  :adjustment adj1))
+           (hscale (make-instance 'gtk-scale
+                                   :orientation :horizontal
+                                   :digits 1
+                                   :value-pos :top
+                                   :draw-value t
+                                   :width-request 200
+                                   :height-request -1
+                                   :adjustment adj1))
+           (scrollbar (make-instance 'gtk-scrollbar
+                                     :orientation :horizontal
+                                     :adjustment adj1))
+                                     )
+      ;; Connect a handler for the signal "destroy" to the main window.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
       ;; Packing of the global widgets hscale, vscale, and scrollbar
       (gtk-container-add window box1)
-      (gtk-box-pack-start box1 box2 :expand t :fill t :padding 0)
-      (gtk-box-pack-start box2 vscale :expand t :fill t :padding 0)
-      (gtk-box-pack-start box2 box3 :expand t :fill t :padding 0)
-      (gtk-box-pack-start box3 hscale :expand t :fill t :padding 0)
-      (gtk-box-pack-start box3 scrollbar :expand t :fill t :padding 0)
+      (gtk-box-pack-start box1 box2)
+      (gtk-box-pack-start box2 vscale)
+      (gtk-box-pack-start box2 box3)
+      (gtk-box-pack-start box3 hscale)
+      (gtk-box-pack-start box3 scrollbar)
       ;; A check button to control whether the value is displayed or not.
-      (let ((box (make-instance 'gtk-hbox
+      (let ((box (make-instance 'gtk-box
+                                :orientation :horizontal
                                 :homogeneous nil
                                 :spacing 12
                                 :border-width 12))
@@ -618,14 +623,17 @@
                                    :active t)))
         (g-signal-connect button "toggled"
                           (lambda (widget)
-                            (setf (gtk-scale-draw-value hscale)
-                                  (gtk-toggle-button-active widget))
-                            (setf (gtk-scale-draw-value vscale)
-                                  (gtk-toggle-button-active widget))))
-        (gtk-box-pack-start box button :expand t :fill t :padding 0)
-        (gtk-box-pack-start box1 box :expand t :fill t :padding 0))
+                            (gtk-scale-set-draw-value
+                                       hscale
+                                       (gtk-toggle-button-get-active widget))
+                            (gtk-scale-set-draw-value
+                                       vscale
+                                       (gtk-toggle-button-get-active widget))))
+        (gtk-box-pack-start box button)
+        (gtk-box-pack-start box1 box))
       ;; A ComboBox to change the position of the value.
-      (let ((box (make-instance 'gtk-hbox
+      (let ((box (make-instance 'gtk-box
+                                :orientation :horizontal
                                 :homogeneous nil
                                 :spacing 12
                                 :border-width 12))
@@ -637,40 +645,21 @@
         (gtk-combo-box-set-active combo 0)
         (g-signal-connect combo "changed"
            (lambda (widget)
-             (let ((pos (intern (gtk-combo-box-get-active-text widget)
-                                :keyword)))
+             (let ((pos (gtk-combo-box-text-get-active-text widget)))
+               (format t "type      : ~A~%" (g-type-from-instance (pointer widget)))
+               (format t "active is : ~A~%" (gtk-combo-box-get-active widget))
+               (setq pos (if pos (intern pos :keyword) :top))
                (gtk-scale-set-value-pos hscale pos)
                (gtk-scale-set-value-pos vscale pos))))
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
                                            :label "Scale value position")
                             :expand nil :fill nil :padding 0)
-        (gtk-box-pack-start box combo :expand t :fill t :padding 0)
-        (gtk-box-pack-start box1 box :expand t :fill t :padding 0))
-      ;; Another ComboBox for the update policy of the scale widgets.
-      (let ((box (make-instance 'gtk-hbox
-                                :homogeneous nil
-                                :spacing 12
-                                :border-width 12))
-            (combo (make-instance 'gtk-combo-box-text)))
-        (gtk-combo-box-text-append-text combo "CONTINUOUS")
-        (gtk-combo-box-text-append-text combo "DISCONTINUOUS")
-        (gtk-combo-box-text-append-text combo "DELAYED")
-        (gtk-combo-box-set-active combo 0)
-        (g-signal-connect combo "changed"
-           (lambda (widget)
-             (let ((policy (intern (gtk-combo-box-get-active-text widget)
-                                   :keyword)))
-               (setf (gtk-range-update-policy hscale) policy)
-               (setf (gtk-range-update-policy vscale) policy))))
-        (gtk-box-pack-start box
-                            (make-instance 'gtk-label
-                                           :label "Scale Update Policy")
-                            :expand nil :fill nil :padding 0)
-        (gtk-box-pack-start box combo :expand t :fill t :padding 0)
-        (gtk-box-pack-start box1 box :expand t :fill t :padding 0))
+        (gtk-box-pack-start box combo)
+        (gtk-box-pack-start box1 box))
       ;; Create a scale to change the digits of hscale and vscale.
-      (let* ((box (make-instance 'gtk-hbox
+      (let* ((box (make-instance 'gtk-box
+                                 :orientation :horizontal
                                  :homogeneous nil
                                  :spacing 12
                                  :border-width 12))
@@ -681,7 +670,8 @@
                                  :step-increment 1.0
                                  :page-increment 1.0
                                  :page-size 0.0))
-             (scale (make-instance 'gtk-h-scale
+             (scale (make-instance 'gtk-scale
+                                   :orientation :horizontal
                                    :digits 0
                                    :adjustment adj)))
         (g-signal-connect adj "value-changed"
@@ -693,11 +683,12 @@
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
                                            :label "Scale Digits:")
-                            :expand nil :fill nil :padding 0)
-        (gtk-box-pack-start box scale :expand t :fill t :padding 0)
-        (gtk-box-pack-start box1 box :expand t :fill t :padding 0))
+                            :expand nil :fill nil)
+        (gtk-box-pack-start box scale)
+        (gtk-box-pack-start box1 box))
       ;; Another hscale for adjusting the page size of the scrollbar
-      (let* ((box (make-instance 'gtk-hbox
+      (let* ((box (make-instance 'gtk-box
+                                 :orientation :horizontal
                                  :homogeneous nil
                                  :spacing 12
                                  :border-width 12))
@@ -708,7 +699,8 @@
                                  :step-increment 1.0
                                  :page-increment 1.0
                                  :page-size 0.0))
-             (scale (make-instance 'gtk-h-scale
+             (scale (make-instance 'gtk-scale
+                                   :orientation :horizontal
                                    :digits 0
                                    :adjustment adj)))
         (g-signal-connect adj "value-changed"
@@ -721,14 +713,16 @@
                             (make-instance 'gtk-label
                                            :label "Scrollbar Page Size:") 
                             :expand nil :fill nil :padding 0)
-        (gtk-box-pack-start box scale :expand t :fill t :padding 0)
-        (gtk-box-pack-start box1 box :expand t :fill t :padding 0))
+        (gtk-box-pack-start box scale)
+        (gtk-box-pack-start box1 box))
       ;; Add a separator
       (gtk-box-pack-start box1
-                          (make-instance 'gtk-hseparator)
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal)
                           :expand nil :fill t :padding 0)
       ;; Create the quit button.
-      (let ((box (make-instance 'gtk-vbox
+      (let ((box (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
                                 :spacing 12
                                 :border-width 12))
@@ -737,8 +731,8 @@
                           (lambda (button)
                             (declare (ignore button))
                             (gtk-widget-destroy window)))
-        (gtk-box-pack-start box button :expand t :fill t :padding 0)
-        (gtk-box-pack-start box1 box :expand nil :fill t :padding 0))
+        (gtk-box-pack-start box button)
+        (gtk-box-pack-start box1 box :expand nil))
       (gtk-widget-show window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -1015,10 +1009,10 @@
                                  :type :toplevel
                                  :title "Example Progress Bar"
                                  :default-width 300))
-          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)
-                                 :mode nil))
+          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)))
           (vbox (make-instance 'gtk-vbox
-                               :border-width 12))
+                               :border-width 12
+                               :spacing 12))
           (align (gtk-alignment-new 0.1 0.9 1.0 0.0))
           (table (gtk-table-new 2 3 t)))
       (setf (pbar-data-timer pdata)
@@ -1033,7 +1027,6 @@
                           (gtk-main-quit)))
       (gtk-box-pack-start vbox align)
       (gtk-container-add align (pbar-data-pbar pdata))
-      (gtk-box-pack-start vbox (make-instance 'gtk-hseparator))
       (gtk-box-pack-start vbox table)
       (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
         (g-signal-connect check "clicked"
@@ -1044,7 +1037,10 @@
                    (gtk-progress-bar-set-text (pbar-data-pbar pdata)
                                               "Some text")
                    (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              "")))))
+                                              ""))
+               (gtk-progress-bar-set-show-text
+                                     (pbar-data-pbar pdata)
+                                     (gtk-toggle-button-get-active check)))))
         (gtk-table-attach table check 0 1 0 1))
       (let ((check (gtk-check-button-new-with-label "Activity mode")))
         (g-signal-connect check "clicked"
@@ -1057,17 +1053,13 @@
                  (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
                                                 0.0))))
         (gtk-table-attach table check 0 1 1 2))
-      (let ((check (gtk-check-button-new-with-label "Rigth to left")))
+      (let ((check (gtk-check-button-new-with-label "Inverted")))
         (g-signal-connect check "clicked"
            (lambda (widget)
              (declare (ignore widget))
-             (case (gtk-progress-bar-orientation (pbar-data-pbar pdata))
-               (:left-to-right
-                 (setf (gtk-progress-bar-orientation (pbar-data-pbar pdata))
-                       :right-to-left))
-               (:right-to-left
-                 (setf (gtk-progress-bar-orientation (pbar-data-pbar pdata))
-                       :left-to-right)))))
+             (gtk-progress-bar-set-inverted
+                                      (pbar-data-pbar pdata)
+                                      (gtk-toggle-button-get-active check))))
         (gtk-table-attach table check 0 1 2 3))
       (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
