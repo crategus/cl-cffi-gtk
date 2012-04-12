@@ -411,7 +411,7 @@
   (:superclass gtk-widget
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-   :type-initializer "gtk_range_get_type") 
+   :type-initializer "gtk_range_get_type")
   ((adjustment
     gtk-range-adjustment
     "adjustment" "GtkAdjustment" t t)
@@ -427,12 +427,12 @@
    (restrict-to-fill-level
     gtk-range-restrict-to-fill-level
     "restrict-to-fill-level" "gboolean" t t)
+   (round-digits
+    gtk-range-round-digits
+    "round-digits" "gint" t t)
    (show-fill-level
     gtk-range-show-fill-level
     "show-fill-level" "gboolean" t t)
-   (update-policy
-    gtk-range-update-policy
-    "update-policy" "GtkUpdateType" t t)
    (upper-stepper-sensitivity
     gtk-range-upper-stepper-sensitivity
     "upper-stepper-sensitivity" "GtkSensitivityType" t t)))
@@ -453,6 +453,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-get-fill-level))
+
+(defun gtk-range-get-fill-level (range)
+  (gtk-range-fill-level range))
+
+(export 'gtk-range-get-fill-level)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_restrict_to_fill_level ()
 ;;; 
@@ -469,6 +476,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-get-restrict-to-fill-level))
+
+(defun gtk-range-get-restrict-to-fill-level (range)
+  (gtk-range-restrict-to-fill-level range))
+
+(export 'gtk-range-get-restrict-to-fill-level)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_show_fill_level ()
 ;;; 
@@ -484,6 +498,13 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-get-show-fill-level))
+
+(defun gtk-range-get-show-fill-level (range)
+  (gtk-range-show-fill-level range)) 
+
+(export 'gtk-range-get-show-fill-level)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_fill_level ()
@@ -516,6 +537,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-fill-level))
+
+(defun gtk-range-set-fill-level (range fill-level)
+  (setf (gtk-range-fill-level range) fill-level))
+
+(export 'gtk-range-set-fill-level)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_restrict_to_fill_level ()
 ;;; 
@@ -534,6 +562,13 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-set-restrict-to-fill-level))
+
+(defun gtk-range-set-restrict-to-fill-level (range restrict-to-fill-level)
+  (setf (gtk-range-restrict-to-fill-level range) restrict-to-fill-level))
+
+(export 'gtk-range-set-restrict-to-fill-level)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_show_fill_level ()
@@ -554,6 +589,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-show-fill-level))
+
+(defun gtk-range-set-show-fill-level (range show-fill-level)
+  (setf (gtk-range-show-fill-level range) show-fill-level))
+
+(export 'gtk-range-set-show-fill-level)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_adjustment ()
 ;;; 
@@ -569,6 +611,13 @@
 ;;; Returns :
 ;;;     a GtkAdjustment.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-get-adjustment))
+
+(defun gtk-range-get-adjustment (range)
+  (gtk-range-adjustment range))
+
+(export 'gtk-range-get-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_adjustment ()
@@ -589,6 +638,13 @@
 ;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-adjustment))
+
+(defun gtk-range-set-adjustment (range adjustment)
+  (setf (gtk-range-adjustment range) adjustment))
+
+(export 'gtk-range-set-adjustment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_inverted ()
 ;;; 
@@ -602,6 +658,13 @@
 ;;; Returns :
 ;;;     TRUE if the range is inverted
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-get-inverted))
+
+(defun gtk-range-get-inverted (range)
+  (gtk-range-inverted range))
+
+(export 'gtk-range-get-inverted)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_inverted ()
@@ -619,6 +682,13 @@
 ;;;     TRUE to invert the range
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-inverted))
+
+(defun gtk-range-set-inverted (range setting)
+  (setf (gtk-range-inverted range) setting))
+
+(export 'gtk-range-set-inverted)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_value ()
 ;;; 
@@ -632,6 +702,13 @@
 ;;; Returns :
 ;;;     current value of the range.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-get-value))
+
+(defun gtk-range-get-value (range)
+  (gtk-adjustment-value (gtk-range-adjustment range)))
+
+(export 'gtk-range-get-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_value ()
@@ -648,6 +725,13 @@
 ;;; value :
 ;;;     new value of the range
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-set-value))
+
+(defun gtk-range-set-value (range value)
+  (setf (gtk-adjustment-value (gtk-range-adjustment range)) value))
+
+(export 'gtk-range-set-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_increments ()
@@ -668,6 +752,14 @@
 ;;;     page size
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-increments))
+
+(defun gtk-range-set-increments (range step page)
+  (setf (gtk-adjustment-page-increment (gtk-range-adjustment range)) page
+        (gtk-adjustment-step-increment (gtk-range-adjustment range)) step))
+
+(export 'gtk-range-set-increments)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_range ()
 ;;; 
@@ -687,6 +779,14 @@
 ;;;     maximum range value
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-range))
+
+(defun gtk-range-set-range (range min max)
+  (setf (gtk-adjustment-lower (gtk-range-adjustment range)) min
+        (gtk-adjustment-upper (gtk-range-adjustment range)) max))
+
+(export 'gtk-range-set-range)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_round_digits ()
 ;;; 
@@ -704,6 +804,13 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-get-round-digits))
+
+(defun gtk-range-get-round-digits (range)
+  (gtk-range-round-digits range))
+
+(export 'gtk-range-get-round-digits)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_round_digits ()
 ;;; 
@@ -720,6 +827,13 @@
 ;;; 
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-set-round-digits))
+
+(defun gtk-range-set-round-digits (range round-digits)
+  (setf (gtk-range-round-digits range) round-digits))
+
+(export 'gtk-range-set-round-digits)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkSensitivityType
@@ -768,10 +882,17 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-lower-stepper-sensitivity))
+
+(defun gtk-range-set-lower-stepper-sensitivity (range sensitivity)
+  (setf (gtk-range-lower-stepper-sensitivity range) sensitivity))
+
+(export 'gtk-range-set-lower-stepper-sensitivity)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_lower_stepper_sensitivity ()
 ;;; 
-;;; GtkSensitivityType  gtk_range_get_lower_stepper_sensitivity(GtkRange *range)
+;;; GtkSensitivityType gtk_range_get_lower_stepper_sensitivity(GtkRange *range)
 ;;; 
 ;;; Gets the sensitivity policy for the stepper that points to the 'lower' end
 ;;; of the GtkRange's adjustment.
@@ -780,10 +901,17 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     The lower stepper's sensitivity policy.
+;;;     the lower stepper's sensitivity policy
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-get-lower-stepper-sensitivity))
+
+(defun gtk-range-get-lower-stepper-sensitivity (range)
+  (gtk-range-lower-stepper-sensitivity range))
+
+(export 'gtk-range-get-lower-stepper-sensitivity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_upper_stepper_sensitivity ()
@@ -798,15 +926,22 @@
 ;;;     a GtkRange
 ;;; 
 ;;; sensitivity :
-;;;     the upper stepper's sensitivity policy.
+;;;     the upper stepper's sensitivity policy
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-range-set-upper-stepper-sensitivity))
+
+(defun gtk-range-set-upper-stepper-sensitivity (range sensitivity)
+  (setf (gtk-range-upper-stepper-sensitivity range) sensitivity))
+
+(export 'gtk-range-set-upper-stepper-sensitivity)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_upper_stepper_sensitivity ()
 ;;; 
-;;; GtkSensitivityType  gtk_range_get_upper_stepper_sensitivity(GtkRange *range)
+;;; GtkSensitivityType gtk_range_get_upper_stepper_sensitivity(GtkRange *range)
 ;;; 
 ;;; Gets the sensitivity policy for the stepper that points to the 'upper'
 ;;; end of the GtkRange's adjustment.
@@ -815,10 +950,17 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     The upper stepper's sensitivity policy.
+;;;     the upper stepper's sensitivity policy
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-range-get-upper-stepper-sensitivity))
+
+(defun gtk-range-get-upper-stepper-sensitivity (range)
+  (gtk-range-upper-stepper-sensitivity range))
+
+(export 'gtk-range-get-upper-stepper-sensitivity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_flippable ()
@@ -835,6 +977,11 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_range_get_flippable" gtk-range-get-flippable) :boolean
+  (range (g-object gtk-range)))
+
+(export 'gtk-range-get-flippable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_flippable ()
@@ -855,6 +1002,12 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_range_get_flippable" gtk-range-set-flippable) :void
+  (range (g-object gtk-range))
+  (flippable :boolean))
+
+(export 'gtk-range-set-flippable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_min_slider_size ()
 ;;; 
@@ -868,10 +1021,15 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     The minimum size of the range's slider.
+;;;     the minimum size of the range's slider
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_range_get_min_slider_size" gtk-range-get-min-slider-size) :int
+  (range (g-object gtk-range)))
+
+(export 'gtk-range-get-min-slider-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_range_rect ()
@@ -887,10 +1045,21 @@
 ;;;     a GtkRange
 ;;; 
 ;;; range_rect :
-;;;     return location for the range rectangle. [out]
+;;;     return location for the range rectangle
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_range_get_range_rect" %gtk-range-get-range-rect) :void
+  (range (g-object gtk-range))
+  (range-rect (g-boxed-foreign gdk-rectangle)))
+
+(defun gtk-range-get-range-rect (range)
+  (let ((range-rect (make-gdk-rectangle)))
+    (%gtk-range-get-range-rect range range-rect)
+    range-rect))
+
+(export 'gtk-range-get-range-rect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_slider_range ()
@@ -902,19 +1071,36 @@
 ;;; This function returns sliders range along the long dimension,
 ;;; in widget->window coordinates.
 ;;; 
-;;; This function is useful mainly for GtkRange subclasses.
+;;; This function is useful mainly for GtkRange subclasses
 ;;; 
 ;;; range :
 ;;;     a GtkRange
 ;;; 
 ;;; slider_start :
-;;;     return location for the slider's start, or NULL.
+;;;     return location for the slider's start, or NULL
 ;;; 
 ;;; slider_end :
-;;;     return location for the slider's end, or NULL.
+;;;     return location for the slider's end, or NULL
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_range_get_slider_range" %gtk-range-get-slider-range) :void
+  (range (g-object gtk-range))
+  (slider-start (:pointer :int))
+  (slider-end (:pointer :int)))
+
+(defun gtk-range-get-slider-range (range)
+  (with-foreign-objects ((slider-start :int) (slider-end :int))
+    (%gtk-range-get-slider-range range slider-start slider-end)
+    (values (if (not (null-pointer-p slider-start))
+                (mem-ref slider-start :int)
+                nil)
+            (if (not (null-pointer-p slider-end))
+                (mem-ref slider-end :int)
+                nil))))
+
+(export 'gtk-range-get-slider-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_slider_size_fixed ()
@@ -934,6 +1120,12 @@
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_range_get_slider_size_fixed" gtk-range-get-slider-size-fixed)
+    :boolean
+  (range (g-object gtk-range)))
+
+(export 'gtk-range-get-slider-size-fixed)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_min_slider_size ()
 ;;; 
@@ -947,10 +1139,16 @@
 ;;;     a GtkRange
 ;;; 
 ;;; min_size :
-;;;     The slider's minimum size
+;;;     the slider's minimum size
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_range_set_min_slider_size" gtk-range-set-min-slider-size) :void
+  (range (g-object gtk-range))
+  (min-size :int))
+
+(export 'gtk-range-set-min-slider-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_slider_size_fixed ()
@@ -970,5 +1168,12 @@
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_range_set_slider_size_fixed" gtk-range-set-slider-size-fixed)
+    :void
+  (range (g-object gtk-range))
+  (size-fixed :boolean))
+
+(export 'gtk-range-set-slider-size-fixed)
 
 ;;; --- End of file gtk.range.lisp ---------------------------------------------

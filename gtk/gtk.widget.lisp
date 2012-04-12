@@ -1231,7 +1231,7 @@
 ;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;;     the GdkEventButton which triggered this signal. [type Gdk.EventButton]
+;;;     the GdkEventButton which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -1259,7 +1259,7 @@
 ;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;;     the GdkEventButton which triggered this signal. [type Gdk.EventButton]
+;;;     the GdkEventButton which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -1367,7 +1367,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventExpose event. [type Gdk.EventExpose]
+;;;     the GdkEventExpose event
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2050,7 +2050,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventGrabBroken event. [type Gdk.EventGrabBroken]
+;;;     the GdkEventGrabBroken event
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2266,7 +2266,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventAny which triggered this signal. [type Gdk.EventAny]
+;;;     the GdkEventAny which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2518,7 +2518,7 @@
 ;;; 
 ;;; previous_screen :
 ;;;     the previous screen, or NULL if the widget was not associated with a
-;;;     screen before. [allow-none]
+;;;     screen before
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2601,7 +2601,7 @@
 ;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;;     . [type Gdk.EventSelection]
+;;;     . 
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2984,9 +2984,12 @@
    (events
     gtk-widget-events
     "events" "GdkEventMask" t t)
-   (extension-events
-    gtk-widget-extension-events
-    "extension-events" "GdkExtensionMode" t t)
+   (expand
+    gtk-widget-expand
+    "expand" "gboolean" t t)
+   (halign
+    gtk-widget-halign
+    "halign" "GtkAlign" t t)
    (has-default
     gtk-widget-has-default
     "has-default" "gboolean" t t)
@@ -2999,9 +3002,30 @@
    (height-request
     gtk-widget-height-request
     "height-request" "gint" t t)
+   (hexpand
+    gtk-widget-hexpand
+    "hexpand" "gboolean" t t)
+   (hexpand-set
+    gtk-widget-hexpand-set
+    "hexpand-set" "gboolean" t t)
    (is-focus
     gtk-widget-is-focus
     "is-focus" "gboolean" t t)
+   (margin
+    gtk-widget-margin
+    "margin" "gint" t t)
+   (margin-bottom
+    gtk-widget-margin-bottom
+    "margin-bottom" "gint" t t)
+   (margin-left
+    gtk-widget-margin-left
+    "margin-left" "gint" t t)
+   (margin-right
+    gtk-widget-margin-right
+    "margin-right" "gint" t t)
+   (margin-top
+    gtk-widget-margin-top
+    "margin-top" "gint" t t)
    (name
     gtk-widget-name
     "name" "gchararray" t t)
@@ -3026,6 +3050,15 @@
    (tooltip-text
     gtk-widget-tooltip-text
     "tooltip-text" "gchararray" t t)
+   (valign
+    gtk-widget-valign
+    "valign" "GtkAlign" t t)
+   (vexpand
+    gtk-widget-vexpand
+    "vexpand" "gboolean" t t)
+   (vexpand-set
+    gtk-widget-vexpand-set
+    "vexpand-set" "gboolean" t t)
    (visible
     gtk-widget-visible
     "visible" "gboolean" t t)
@@ -3041,12 +3074,9 @@
    (:cffi toplevel
           gtk-widget-toplevel (g-object gtk-widget)
           "gtk_widget_get_toplevel" nil)
-   (:cffi colormap
-          gtk-widget-colormap (g-object gdk-colormap)
-          "gtk_widget_get_colormap" "gtk_widget_set_colormap")
    (:cffi visual
           gtk-widget-visual (g-object gdk-visual)
-          "gtk_widget_get_visual" nil)
+          "gtk_widget_get_visual" "gtk_widget_set_visual")
    (:cffi modifier-style
           gtk-widget-modifier-style (g-object rc-style)
           "gtk_widget_get_modifier_style" "gtk_widget_modify_style")
@@ -3087,18 +3117,16 @@
 ;;;                                              GParamSpec **pspecs);
 ;;; 
 ;;;   /* basics */
-;;;   void (* destroy)             (GtkWidget        *widget);
-;;;   void (* show)                (GtkWidget        *widget);
-;;;   void (* show_all)            (GtkWidget        *widget);
-;;;   void (* hide)                (GtkWidget        *widget);
+;;;   void (* destroy)             (GtkWidget *widget);
+;;;   void (* show)                (GtkWidget *widget);
+;;;   void (* show_all)            (GtkWidget *widget);
+;;;   void (* hide)                (GtkWidget *widget);
 ;;;   void (* map)                 (GtkWidget        *widget);
 ;;;   void (* unmap)               (GtkWidget        *widget);
 ;;;   void (* realize)             (GtkWidget        *widget);
 ;;;   void (* unrealize)           (GtkWidget        *widget);
-;;;   void (* size_allocate)       (GtkWidget        *widget,
-;;;                                 GtkAllocation    *allocation);
-;;;   void (* state_changed)       (GtkWidget        *widget,
-;;;                                 GtkStateType      previous_state);
+;;;   void (* size_allocate)     (GtkWidget *widget, GtkAllocation *allocation);
+;;;   void (* state_changed)     (GtkWidget *widget, GtkStateType previous_state);
 ;;;   void (* state_flags_changed) (GtkWidget        *widget,
 ;;;                                 GtkStateFlags     previous_state_flags);
 ;;;   void (* parent_set)          (GtkWidget        *widget,
@@ -3135,29 +3163,29 @@
 ;;;                                                        gint *natural_height)
 ;;; 
 ;;;   /* Mnemonics */
-;;;   gboolean (* mnemonic_activate)        (GtkWidget    *widget,
-;;;                                          gboolean      group_cycling);
+;;;   gboolean (* mnemonic_activate)           (GtkWidget    *widget,
+;;;                                             gboolean      group_cycling);
 ;;; 
 ;;;   /* explicit focus */
-;;;   void     (* grab_focus)               (GtkWidget           *widget);
-;;;   gboolean (* focus)                    (GtkWidget           *widget,
-;;;                                          GtkDirectionType     direction);
+;;;   void     (* grab_focus)                  (GtkWidget           *widget);
+;;;   gboolean (* focus)                       (GtkWidget           *widget,
+;;;                                             GtkDirectionType     direction);
 ;;; 
 ;;;   /* keyboard navigation */
-;;;   void     (* move_focus)               (GtkWidget           *widget,
-;;;                                          GtkDirectionType     direction);
-;;;   gboolean (* keynav_failed)            (GtkWidget           *widget,
-;;;                                          GtkDirectionType     direction);
+;;;   void     (* move_focus)                  (GtkWidget           *widget,
+;;;                                             GtkDirectionType     direction);
+;;;   gboolean (* keynav_failed)               (GtkWidget           *widget,
+;;;                                             GtkDirectionType     direction);
 ;;; 
 ;;;   /* events */
-;;;   gboolean (* event)              (GtkWidget           *widget,
-;;;                                    GdkEvent            *event);
-;;;   gboolean (* button_press_event) (GtkWidget           *widget,
-;;;                                    GdkEventButton      *event);
-;;;   gboolean (* button_release_event) (GtkWidget         *widget,
-;;;                                    GdkEventButton      *event);
-;;;   gboolean (* scroll_event)        (GtkWidget          *widget,
-;;;                      GdkEventScroll      *event);
+;;;   gboolean (* event)                       (GtkWidget           *widget,
+;;;                                             GdkEvent            *event);
+;;;   gboolean (* button_press_event)          (GtkWidget           *widget,
+;;;                                             GdkEventButton      *event);
+;;;   gboolean (* button_release_event)        (GtkWidget           *widget,
+;;;                                             GdkEventButton      *event);
+;;;   gboolean (* scroll_event)                (GtkWidget           *widget,
+;;;                                             GdkEventScrol       *event);
 ;;;   gboolean (* motion_notify_event) (GtkWidget         *widget,
 ;;;                      GdkEventMotion      *event);
 ;;;   gboolean (* delete_event)        (GtkWidget         *widget,
@@ -3598,6 +3626,11 @@
 ;;;     TRUE if widget is being destroyed
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_in_destruction" gtk-widget-in-destruction) :boolean
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-in-destruction)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_destroyed ()
 ;;; 
@@ -3807,7 +3840,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_draw ()
 ;;; 
-;;; void gtk_widget_draw (GtkWidget *widget,cairo_t *cr);
+;;; void gtk_widget_draw (GtkWidget *widget, cairo_t *cr);
 ;;; 
 ;;; Draws widget to cr. The top left corner of the widget will be drawn to the
 ;;; currently set origin point of cr.
@@ -3932,9 +3965,14 @@
 ;;;     a GtkRequisition to be filled in
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_size_request" gtk-widget-size-request) :void
+(defcfun ("gtk_widget_size_request" %gtk-widget-size-request) :void
   (widget g-object)
   (requisition (g-boxed-foreign gtk-requisition)))
+  
+(defun gtk-widget-size-request (widget)
+  (let ((requisition (make-gtk-requisition)))
+    (%gtk-widget-size-request widget requisition)
+    requisition))
 
 (export 'gtk-widget-size-request)
 
@@ -3999,11 +4037,11 @@
 ;;; gtk_widget_add_accelerator ()
 ;;; 
 ;;; void gtk_widget_add_accelerator (GtkWidget *widget,
-;;;                                            const gchar *accel_signal,
-;;;                                            GtkAccelGroup *accel_group,
-;;;                                            guint accel_key,
-;;;                                            GdkModifierType accel_mods,
-;;;                                            GtkAccelFlags accel_flags)
+;;;                                  const gchar *accel_signal,
+;;;                                  GtkAccelGroup *accel_group,
+;;;                                  guint accel_key,
+;;;                                  GdkModifierType accel_mods,
+;;;                                  GtkAccelFlags accel_flags)
 ;;; 
 ;;; Installs an accelerator for this widget in accel_group that causes
 ;;; accel_signal to be emitted if the accelerator is activated. The accel_group
@@ -4108,10 +4146,10 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; accel_path :
-;;;     path used to look up the accelerator. [allow-none]
+;;;     path used to look up the accelerator
 ;;; 
 ;;; accel_group :
-;;;     a GtkAccelGroup. [allow-none]
+;;;     a GtkAccelGroup
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_set_accel_path" gtk-widget-set-accel-path) :void
@@ -4299,12 +4337,7 @@
 ;;;     TRUE if the widget is the focus widget.
 ;;; ----------------------------------------------------------------------------
 
-;; This function is already defined as the accessor of the slot is-focus
-
-;(defcfun ("gtk_widget_is_focus" gtk-widget-is-focus) :boolean
-;  (widget g-object))
-
-;(export 'gtk-widget-is-focus)
+;; This function is already defined as the accessor of the slot "is-focus".
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_grab_focus ()
@@ -4376,6 +4409,13 @@
 ;;;     name for the widget
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-name))
+
+(defun gtk-widget-set-name (widget name)
+  (setf (gtk-widget-name widget) name))
+
+(export 'gtk-widget-set-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_name ()
 ;;; 
@@ -4391,6 +4431,13 @@
 ;;;     name of the widget. This string is owned by GTK+ and should not be
 ;;;     modified or freed
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-name))
+
+(defun gtk-widget-get-name (widget)
+  (gtk-widget-name widget))
+
+(export 'gtk-widget-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_state ()
@@ -4436,6 +4483,13 @@
 ;;;     TRUE to make the widget sensitive
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-sensitive))
+
+(defun gtk-widget-set-sensitive (widget sensitive)
+  (setf (gtk-widget-sensitive widget) sensitive))
+
+(export 'gtk-widget-set-sensitive)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_parent ()
 ;;; 
@@ -4452,6 +4506,13 @@
 ;;; parent :
 ;;;     parent container
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gkt-widget-set-parent))
+
+(defun gtk-widget-set-parent (widget parent)
+  (setf (gtk-widget-parent widget) parent))
+
+(export 'gtk-widget-set-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_parent_window ()
@@ -4470,11 +4531,18 @@
 ;;; realized.
 ;;; 
 ;;; widget :
-;;;     a GtkWidget.
+;;;     a GtkWidget
 ;;; 
 ;;; parent_window :
-;;;     the new parent window.
+;;;     the new parent window
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-parent-window))
+
+(defun gtk-widget-set-parent-window (widget parent-window)
+  (setf (gtk-widget-parent-window widget) parent-window))
+
+(export 'gtk-widget-set-parent-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_parent_window ()
@@ -4487,8 +4555,15 @@
 ;;;     a GtkWidget.
 ;;; 
 ;;; Returns :
-;;;     the parent window of widget. [transfer none]
+;;;     the parent window of widget
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-parent-window))
+
+(defun gtk-widget-get-parent-window (widget)
+  (gtk-widget-parent-window widget))
+
+(export 'gtk-widget-get-parent-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_events ()
@@ -4512,9 +4587,10 @@
 ;;;     event mask
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_set_events" gtk-widget-set-events) :void
-  (widget g-object)
-  (events gdk-event-mask))
+(declaim (inline gtk-widget-set-events))
+
+(defun gtk-widget-set-events (widget events)
+  (setf (gtk-widget-events widget) events))
 
 (export 'gtk-widget-set-events)
 
@@ -4533,6 +4609,13 @@
 ;;; Returns :
 ;;;     event mask for widget
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-events))
+
+(defun gtk-widget-get-events (widget)
+  (gtk-widget-events widget))
+
+(export 'gtk-widget-get-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_events ()
@@ -4700,8 +4783,15 @@
 ;;; 
 ;;; Returns :
 ;;;     the topmost ancestor of widget, or widget itself if there's no 
-;;;     ancestor. [transfer none]
+;;;     ancestor
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-toplevel))
+
+(defun gtk-widget-get-toplevel (widget)
+  (gtk-widget-toplevel widget))
+
+(export 'gtk-widget-get-toplevel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_ancestor ()
@@ -4724,7 +4814,7 @@
 ;;;     ancestor type
 ;;; 
 ;;; Returns :
-;;;     the ancestor widget, or NULL if not found. [transfer none]
+;;;     the ancestor widget, or NULL if not found
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_ancestor" gtk-widget-get-ancestor)
@@ -4745,8 +4835,15 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the visual for widget. [transfer none]
+;;;     the visual for widget
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-visual))
+
+(defun gtk-widget-get-visual (widget)
+  (gtk-widget-visual widget))
+
+(export 'gtk-widget-get-visual)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_visual ()
@@ -4768,6 +4865,13 @@
 ;;;     visual to be used or NULL to unset a previous one
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-visual))
+
+(defun gtk-widget-set-visual (widget visual)
+  (setf (gtk-widget-visual widget) visual))
+
+(export 'gtk-widget-set-visual)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_pointer ()
 ;;; 
@@ -4783,23 +4887,24 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; x :
-;;;     return location for the X coordinate, or NULL.
+;;;     return location for the X coordinate, or NULL
 ;;; 
 ;;; y :
-;;;     return location for the Y coordinate, or NULL.
+;;;     return location for the Y coordinate, or NULL
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_pointer" gtk-widget-get-pointer) :void
+(defcfun ("gtk_widget_get_pointer" %gtk-widget-get-pointer) :void
   (widget g-object)
   (x (:pointer :int))
   (y (:pointer :int)))
 
-(defun gtk-widget-pointer (widget)
+(defun gtk-widget-get-pointer (widget)
   (with-foreign-objects ((x :int) (y :int))
-    (gtk-widget-get-pointer widget x y)
-    (values (mem-ref x :int) (mem-ref y :int))))
+    (%gtk-widget-get-pointer widget x y)
+    (values (mem-ref x :int)
+            (mem-ref y :int))))
 
-(export 'gtk-widget-pointer)
+(export 'gtk-widget-get-pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_ancestor ()
@@ -4965,7 +5070,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the widget's GtkStyle. [transfer none]
+;;;     the widget's GtkStyle
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -5010,7 +5115,7 @@
 ;;; 
 ;;; Returns :
 ;;;     the default style. This GtkStyle object is owned by GTK+ and should not
-;;;     be modified or freed. [transfer none]
+;;;     be modified or freed
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
@@ -5071,6 +5176,12 @@
 ;;;     gtk_widget_get_default_direction ()
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_set_default_direction" gtk-widget-set-default-direction)
+    :void
+  (direction gtk-text-direction))
+
+(export 'gtk-widget-set-default-direction)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTextDirection gtk_widget_get_default_direction (void);
 ;;; 
@@ -5078,20 +5189,13 @@
 ;;; gtk_widget_set_default_direction().
 ;;; 
 ;;; Returns :
-;;;     the current default direction.
+;;;     the current default direction
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_default_direction" gtk-widget-default-direction)
+(defcfun ("gtk_widget_get_default_direction" gtk-widget-get-default-direction)
     gtk-text-direction)
 
-(defcfun ("gtk_widget_set_default_direction" gtk-widget-set-default-direction)
-    :void
-  (direction gtk-text-direction))
-
-(defun (setf gtk-widget-default-direction) (new-value)
-  (gtk-widget-set-default-direction new-value))
-
-(export 'gtk-widget-default-direction)
+(export 'gtk-widget-get-default-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_shape_combine_region ()
@@ -5106,7 +5210,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; region :
-;;;     shape to be added, or NULL to remove an existing shape. [allow-none]
+;;;     shape to be added, or NULL to remove an existing shape
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5125,7 +5229,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; region :
-;;;     shape to be added, or NULL to remove an existing shape. [allow-none]
+;;;     shape to be added, or NULL to remove an existing shape
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5239,6 +5343,13 @@
 ;;;     child. The string should be freed when it is no longer needed.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-composite-name))
+
+(defun gtk-widget-get-composite-name (widget)
+  (gtk-widget-composite-name widget))
+
+(export 'gtk-widget-get-composite-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_override_background_color ()
 ;;; 
@@ -5321,7 +5432,7 @@
 ;;; 
 ;;; font_desc :
 ;;;     the font descriptiong to use, or NULL to undo the effect of previous 
-;;;     calls to gtk_widget_override_font(). [allow-none]
+;;;     calls to gtk_widget_override_font()
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5694,7 +5805,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the new PangoContext. [transfer full]
+;;;     the new PangoContext
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_create_pango_context" gtk-widget-create-pango-context)
@@ -5724,7 +5835,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the PangoContext for the widget. [transfer none]
+;;;     the PangoContext for the widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -5748,7 +5859,7 @@
 ;;;     text to set on the layout (can be NULL)
 ;;; 
 ;;; Returns :
-;;;     the new PangoLayout. [transfer full]
+;;;     the new PangoLayout
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_create_pango_layout" gtk-widget-create-pango-layout)
@@ -5791,13 +5902,13 @@
 ;;; size :
 ;;;     a stock size. A size of (GtkIconSize)-1 means render at the size of the
 ;;;     source and don't scale (if there are multiple source sizes, GTK+ picks
-;;;     one of the available sizes). [type int]
+;;;     one of the available sizes)
 ;;; 
 ;;; detail :
-;;;     render detail to pass to theme engine. [allow-none]
+;;;     render detail to pass to theme engine
 ;;; 
 ;;; Returns :
-;;;     a new pixbuf, or NULL if the stock ID wasn't known. [transfer full]
+;;;     a new pixbuf, or NULL if the stock ID wasn't known
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_render_icon" gtk-widget-render-icon) g-object
@@ -5833,10 +5944,10 @@
 ;;; size :
 ;;;     a stock size. A size of (GtkIconSize)-1 means render at the size of the
 ;;;     source and don't scale (if there are multiple source sizes, GTK+ picks
-;;;     one of the available sizes). [type int]
+;;;     one of the available sizes)
 ;;; 
 ;;; Returns :
-;;;     a new pixbuf, or NULL if the stock ID wasn't known. [transfer full]
+;;;     a new pixbuf, or NULL if the stock ID wasn't known
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5850,8 +5961,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_pop_composite_child" gtk-widget-pop-composite-child)
-    :void
-  (widget g-object))
+    :void)
+
+(export 'gtk-widget-pop-composite-child)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_push_composite_child ()
@@ -5880,8 +5992,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_push_composite_child" gtk-widget-push-composite-child)
-    :void
-  (widget g-object))
+    :void)
 
 (export 'gtk-widget-push-composite-child)
 
@@ -5978,6 +6089,13 @@
 ;;;     TRUE if the application will paint on the widget
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-app-paintable))
+
+(defun gtk-widget-set-app-paintable (widget app-paintable)
+  (setf (gtk-widget-app-paintable widget) app-paintable))
+
+(export 'gtk-widget-set-app-paintable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_double_buffered ()
 ;;; 
@@ -6008,9 +6126,10 @@
 ;;;     TRUE to double-buffer a widget
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_set_double_buffered" gtk-widget-set-double-buffered) :void
-  (widget (g-object gtk-widget))
-  (double-buffered :boolean))
+(declaim (inline gtk-widget-set-double-buffered))
+
+(defun gtk-widget-set-double-buffered (widget double-buffered)
+  (setf (gtk-widget-double-buffered widget) double-buffered))
 
 (export 'gtk-widget-set-double-buffered)
 
@@ -6056,6 +6175,13 @@
 ;;; name :
 ;;;     the name to set
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-composite-name))
+
+(defun gtk-widget-set-composite-name (widget name)
+  (setf (gtk-widget-composite-name widget) name))
+
+(export 'gtk-widget-set-composite-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_mnemonic_activate ()
@@ -6137,7 +6263,7 @@
 ;;; 
 ;;; Returns :
 ;;;     the GParamSpec of the style property or NULL if class has no style
-;;;     property with that name. [transfer none]
+;;;     property with that name
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -6165,7 +6291,7 @@
 ;;; 
 ;;; Returns :
 ;;;     a newly allocated array of GParamSpec*. The array must be freed with
-;;;     g_free(). [array length=n_properties][transfer container]
+;;;     g_free()
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -6218,9 +6344,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_region_intersect" gtk-widget-region-intersect)
-    (g-boxed-foreign gdk-region :return)
+    (g-boxed-foreign cairo-region-t :return)
   (widget (g-object gtk-widget))
-  (region (g-boxed-foreign gdk-region)))
+  (region (g-boxed-foreign cairo-region-t)))
 
 (export 'gtk-widget-region-intersect)
 
@@ -6328,12 +6454,29 @@
 ;;;     location to return the property value
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_style_get_property" gtk-widget-style-get-property) :void
-  (widget g-object)
+(defcfun ("gtk_widget_style_get_property" %gtk-widget-style-get-property) :void
+  (widget (g-object gtk-widget))
   (property-name :string)
   (value (:pointer g-value)))
 
+;; TODO: Check the implementation. We have to pass a pointer for widget.
+
+(defun gtk-widget-style-get-property (widget property-name)
+  (let ((property-type (gtype (gtk-widget-style-property-type widget
+                                                              property-name))))
+  (with-foreign-object (value 'g-value)
+    ;; TODO: Check the implementation of g-value-zero and g-value-init
+    ;;       This can be simplified.
+    (g-value-zero value)
+    (g-value-init value property-type)
+    (prog2
+      (%gtk-widget-style-get-property widget property-name value)
+      (parse-g-value value)
+      (g-value-unset value)))))
+      
 (export 'gtk-widget-style-get-property)
+
+;;; ----------------------------------------------------------------------------
 
 (defun gtk-widget-style-property-info (type property-name)
   (let ((class (g-type-class-ref type)))
@@ -6345,11 +6488,19 @@
 
 (export 'gtk-widget-style-property-info)
 
+;;; ----------------------------------------------------------------------------
+
 (defun gtk-widget-style-property-type (widget property-name)
   (let ((property-info (gtk-widget-style-property-info
                                                    (g-type-from-instance widget)
                                                    property-name)))
     (param-spec-type property-info)))
+
+(export 'gtk-widget-style-property-type)
+
+;;; ----------------------------------------------------------------------------
+
+;; This implementation is wrong. 
 
 (defun gtk-widget-style-property-value (widget property-name
                                                &optional property-type)
@@ -6360,7 +6511,7 @@
   (with-foreign-object (gvalue 'g-value)
     (g-value-zero gvalue)
     (g-value-init gvalue property-type)
-    (prog1 (gtk-widget-style-get-property widget property-name gvalue)
+    (prog1 (%gtk-widget-style-get-property widget property-name gvalue)
       (g-value-unset gvalue))))
 
 (export 'gtk-widget-style-property-value)
@@ -6483,7 +6634,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the AtkObject associated with widget. [transfer none]
+;;;     the AtkObject associated with widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -6601,8 +6752,15 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the parent container of widget, or NULL. [transfer none]
+;;;     the parent container of widget, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-parent))
+
+(defun gtk-widget-get-parent (widget)
+  (gtk-widget-parent widget))
+
+(export 'gtk-widget-get-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_settings ()
@@ -6619,7 +6777,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the relevant GtkSettings object. [transfer none]
+;;;     the relevant GtkSettings object
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_settings" gtk-widget-get-settings) g-object
@@ -6648,16 +6806,17 @@
 ;;; Returns :
 ;;;     the appropriate clipboard object. If no clipboard already exists, a new
 ;;;     one will be created. Once a clipboard object has been created, it is
-;;;     persistent for all time. [transfer none]
+;;;     persistent for all time
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_clipboard" gtk-widget-clipboard) (g-object clipboard)
+(defcfun ("gtk_widget_get_clipboard" gtk-widget-get-clipboard)
+    (g-object gtk-clipboard)
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string))
 
-(export 'gtk-widget-clipboard)
+(export 'gtk-widget-get-clipboard)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_display ()
@@ -6731,7 +6890,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the GdkScreen for the toplevel for this widget. [transfer none]
+;;;     the GdkScreen for the toplevel for this widget
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -6782,11 +6941,13 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; width :
-;;;     return location for width, or NULL.
+;;;     return location for width, or NULL
 ;;; 
 ;;; height :
-;;;     return location for height, or NULL.
+;;;     return location for height, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-size-request))
 
 (defun gtk-widget-get-size-request (widget)
   (values (gtk-widget-width-request widget)
@@ -6871,6 +7032,8 @@
 ;;;     height widget should request, or -1 to unset
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-size-request))
+
 (defun gtk-widget-set-size-request (widget width height)
   (setf (gtk-widget-width-request widget) width)
   (setf (gtk-widget-height-request widget) height))
@@ -6914,6 +7077,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-no-show-all))
+
+(defun gtk-widget-set-no-show-all (widget no-show-all)
+  (setf (gtk-widget-no-show-all widget) no-show-all))
+
+(export 'gtk-widget-set-no-show-all)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_no_show_all ()
 ;;; 
@@ -6926,10 +7096,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the current value of the "no-show-all" property.
+;;;     the current value of the "no-show-all" property
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-no-show-all))
+
+(defun gtk-widget-get-no-show-all (widget)
+  (gtk-widget-no-show-all widget))
+
+(export 'gtk-widget-get-no-show-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_list_mnemonic_labels ()
@@ -6951,7 +7128,7 @@
 ;;; 
 ;;; Returns :
 ;;;     the list of mnemonic labels; free this list with g_list_free() when
-;;;     you are done with it. [element-type GtkWidget][transfer container]
+;;;     you are done with it
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -7060,7 +7237,7 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (widget-error-bell "gtk_widget_error_bell") :void
+(defcfun ("gtk_widget_error_bell" gtk-widget-error-bell) :void
   (widget g-object))
 
 (export 'widget-error-bell)
@@ -7129,6 +7306,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-tooltip-markup))
+
+(defun gtk-widget-get-tooltip-markup (widget)
+  (gtk-widget-tooltip-markup widget))
+
+(export 'gtk-widget-get-tooltip-markup)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_tooltip_markup ()
 ;;; 
@@ -7146,10 +7330,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; markup :
-;;;     the contents of the tooltip for widget, or NULL. [allow-none]
+;;;     the contents of the tooltip for widget, or NULL
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-tooltip-markup))
+
+(defun gtk-widget-set-tooltip-markup (widget markup)
+  (setf (gtk-widget-tooltip-markup widget) markup))
+
+(export 'gtk-widget-set-tooltip-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_tooltip_text ()
@@ -7167,6 +7358,8 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-get-tooltip-text))
 
 (defun gtk-widget-get-tooltip-text (widget)
   (gtk-widget-tooltip-text widget))
@@ -7193,6 +7386,8 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-tooltip-text))
+
 (defun gtk-widget-set-tooltip-text (widget text)
   (setf (gtk-widget-tooltip-text widget) text))
 
@@ -7211,10 +7406,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     The GtkWindow of the current tooltip. [transfer none]
+;;;     the GtkWindow of the current tooltip
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-tooltip-window))
+
+(defun gtk-widget-get-tooltip-window (widget)
+  (gtk-widget-tooltip-window widget))
+
+(export 'gtk-widget-get-tooltip-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_tooltip_window ()
@@ -7234,10 +7436,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; custom_window :
-;;;     a GtkWindow, or NULL. [allow-none]
+;;;     a GtkWindow, or NULL
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-tooltip-window))
+
+(defun gtk-widget-set-tooltip-window (widget custom-window)
+  (setf (gtk-widget-tooltip-window widget) custom-window))
+
+(export 'gtk-widget-set-tooltip-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_has_tooltip ()
@@ -7256,6 +7465,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-has-tooltip))
+
+(defun gtk-widget-get-has-tooltip (widget)
+  (gtk-widget-has-tooltip widget))
+
+(export 'gtk-widget-get-has-tooltip)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_has_tooltip ()
 ;;; 
@@ -7272,6 +7488,13 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-has-tooltip))
+
+(defun gtk-widget-set-has-tooltip (widget has-tooltip)
+  (setf (gtk-widget-has-tooltip widget) has-tooltip))
+
+(export 'gtk-widget-set-has-tooltip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_trigger_tooltip_query ()
@@ -7304,10 +7527,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     widget's window. [transfer none]
+;;;     widget's window
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-window))
+
+(defun gtk-widget-get-window (widget)
+  (gtk-widget-window widget))
+
+(export 'gtk-widget-get-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cairo_should_draw_window ()
@@ -7378,6 +7608,11 @@
 ;;;     the width of the widget
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_get_allocated_width" gtk-widget-get-allocated-width) :int
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-allocated-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_allocated_height ()
 ;;; 
@@ -7393,6 +7628,12 @@
 ;;; Returns :
 ;;;     the height of the widget
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_allocated_height" gtk-widget-get-allocated-height)
+    :int
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-allocated-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_allocation ()
@@ -7462,6 +7703,12 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_set_allocation" gtk-widget-set-allocation) :void
+  (widget (g-object gtk-widget))
+  (allocation (g-boxed-foreign gdk-rectangle)))
+
+(export 'gtk-widget-set-allocation)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_app_paintable ()
 ;;; 
@@ -7481,6 +7728,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-app-paintable))
+
+(defun gtk-widget-get-app-paintable (widget)
+  (gtk-widget-app-paintable widget))
+
+(export 'gtk-widget-get-app-paintable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_can_default ()
 ;;; 
@@ -7497,6 +7751,8 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gkt-widget-get-can-default))
 
 (defun gtk-widget-get-can-default (widget)
   (gtk-widget-can-default widget))
@@ -7520,6 +7776,8 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-can-default))
+
 (defun gtk-widget-set-can-default (widget can-default)
   (setf (gtk-widget-can-default widget) can-default))
 
@@ -7542,6 +7800,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-can-focus))
+
+(defun gtk-widget-get-can-focus (widget)
+  (gtk-widget-can-focus widget))
+
+(export 'gtk-widget-get-can-focus)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_can_focus ()
 ;;; 
@@ -7558,6 +7823,13 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-can-focus))
+
+(defun gtk-widget-set-can-focus (widget can-focus)
+  (setf (gtk-widget-can-focus widget) can-focus))
+
+(export 'gtk-widget-set-can-focus)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_double_buffered ()
@@ -7577,6 +7849,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-double-buffered))
+
+(defun gtk-widget-get-double-buffered (widget)
+  (gtk-widget-double-buffered widget))
+
+(export 'gtk-widget-get-double-buffered)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_has_window ()
 ;;; 
@@ -7593,6 +7872,11 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_has_window" gtk-widget-get-has-window) :boolean
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-has-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_has_window ()
@@ -7618,6 +7902,12 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_set_has_window" gtk-widget-set-has-window) :void
+  (widget (g-object gtk-widget))
+  (has-window :boolean))
+
+(export 'gtk-widget-set-has-window)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_sensitive ()
 ;;; 
@@ -7638,13 +7928,20 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-sensitive))
+
+(defun gtk-widget-get-sensitive (widget)
+  (gtk-widget-sensitive widget))
+
+(export 'gtk-widget-get-sensitive)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_sensitive ()
 ;;; 
 ;;; gboolean gtk_widget_is_sensitive (GtkWidget *widget);
 ;;; 
 ;;; Returns the widget's effective sensitivity, which means it is sensitive 
-;;; itself and also its parent widget is sensitive
+;;; itself and also its parent widget is sensitive.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -7654,6 +7951,11 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_is_sensitive" gtk-widget-is-sensitive) :boolean
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-is-sensitive)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_state ()
@@ -7696,6 +7998,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-visible))
+
+(defun gtk-widget-get-visible (widget)
+  (gtk-widget-visible widget))
+
+(export 'gtk-widget-get-visible)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_visible ()
 ;;; 
@@ -7715,6 +8024,13 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-visible))
+
+(defun gtk-widget-set-visible (widget visible)
+  (setf (gtk-widget-visible widget) visible))
+
+(export 'gtk-widget-set-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_state_flags ()
@@ -7799,6 +8115,8 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+;; Is implemented as the accessor of the property "has-default"
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_focus ()
 ;;; 
@@ -7816,6 +8134,8 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+;; Is implemented as the accessor of the property "has-focus"
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_visible_focus ()
@@ -7898,6 +8218,11 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_is_drawable" gtk-widget-is-drawable) :boolean
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-is-drawable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_toplevel ()
 ;;; 
@@ -7916,6 +8241,11 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_is_toplevel" gtk-widget-is-toplevel) :boolean
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-is-toplevel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_window ()
@@ -7939,10 +8269,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; window :
-;;;     a GdkWindow. [transfer full]
+;;;     a GdkWindow
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-window))
+
+(defun gtk-widget-set-window (widget window)
+  (setf (gtk-widget-window widget) window))
+
+(export 'gtk-widget-set-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_receives_default ()
@@ -7964,6 +8301,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-receives-default))
+
+(defun gtk-widget-set-receives-default (widget receives-default)
+  (setf (gtk-widget-receives-default widget) receives-default))
+
+(export 'gtk-widget-set-receives-default)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_receives_default ()
 ;;; 
@@ -7982,6 +8326,13 @@
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-receives-default))
+
+(defun gtk-widget-get-receives-default (widget)
+  (gtk-widget-receives-default widget))
+
+(export 'gtk-widget-get-receives-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_support_multidevice ()
@@ -8115,7 +8466,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; requisition :
-;;;     a pointer to a GtkRequisition to copy to. [out]
+;;;     a pointer to a GtkRequisition to copy to
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -8156,7 +8507,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     The GtkWidgetPath representing widget. [transfer none]
+;;;     the GtkWidgetPath representing widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8296,10 +8647,10 @@
 ;;;     a GtkWidget instance
 ;;; 
 ;;; minimum_height :
-;;;     location to store the minimum height, or NULL. [out][allow-none]
+;;;     location to store the minimum height, or NULL
 ;;; 
 ;;; natural_height :
-;;;     location to store the natural height, or NULL. [out][allow-none]
+;;;     location to store the natural height, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -8326,10 +8677,10 @@
 ;;;     a GtkWidget instance
 ;;; 
 ;;; minimum_width :
-;;;     location to store the minimum width, or NULL. [out][allow-none]
+;;;     location to store the minimum width, or NULL
 ;;; 
 ;;; natural_width :
-;;;     location to store the natural width, or NULL. [out][allow-none]
+;;;     location to store the natural width, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -8357,10 +8708,10 @@
 ;;;     the width which is available for allocation
 ;;; 
 ;;; minimum_height :
-;;;     location for storing the minimum height, or NULL. [out][allow-none]
+;;;     location for storing the minimum height, or NULL
 ;;; 
 ;;; natural_height :
-;;;     location for storing the natural height, or NULL. [out][allow-none]
+;;;     location for storing the natural height, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -8388,10 +8739,10 @@
 ;;;     the height which is available for allocation
 ;;; 
 ;;; minimum_width :
-;;;     location for storing the minimum width, or NULL. [out][allow-none]
+;;;     location for storing the minimum width, or NULL
 ;;; 
 ;;; natural_width :
-;;;     location for storing the natural width, or NULL. [out][allow-none]
+;;;     location for storing the natural width, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -8438,8 +8789,8 @@
 ;;; 
 ;;; Handle with care. Note that the natural height of a height-for-width 
 ;;; widget will generally be a smaller size than the minimum height, since the 
-;;; required height for the natural width is generally smaller than the required
-;;; height for the minimum width.
+;;; required height for the natural width is generally smaller than the
+;;; required height for the minimum width.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget instance
@@ -8517,6 +8868,14 @@
 ;;;     center natural width of widget inside the allocation
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "GtkAlign" gtk-align
+  (:export t
+   :type-initializer "gtk_align_get_type")
+  (:gtk-align-fill 0)
+  (:gtk-align-start 1)
+  (:gtk-align-end 2)
+  (:gtk-align-center 3))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_halign ()
 ;;; 
@@ -8530,6 +8889,13 @@
 ;;; Returns :
 ;;;     the horizontal alignment of widget
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-halign))
+
+(defun gtk-widget-get-halign (widget)
+  (gtk-widget-halign widget))
+
+(export 'gtk-widget-get-halign)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_halign ()
@@ -8545,6 +8911,13 @@
 ;;;     the horizontal alignment
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-halign))
+
+(defun gtk-widget-set-halign (widget align)
+  (setf (gtk-widget-halign widget) align))
+
+(export 'gtk-widget-set-halign)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_valign ()
 ;;; 
@@ -8559,6 +8932,13 @@
 ;;;     the vertical alignment of widget
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-valign))
+
+(defun gtk-widget-get-valign (widget)
+  (gtk-widget-valign widget))
+
+(export 'gtk-widget-get-valign)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_valign ()
 ;;; 
@@ -8572,6 +8952,13 @@
 ;;; align :
 ;;;     the vertical alignment
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-valign))
+
+(defun gtk-widget-set-valign (widget align)
+  (setf (gtk-widget-valign widget) align))
+
+(export 'gtk-widget-set-valign)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_margin_left ()
@@ -8589,6 +8976,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-margin-left))
+
+(defun gtk-widget-get-margin-left (widget)
+  (gtk-widget-margin-left widget))
+
+(export 'gtk-widget-get-margin-left)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_margin_left ()
 ;;; 
@@ -8604,6 +8998,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-margin-left))
+
+(defun gtk-widget-set-margin-left (widget margin)
+  (setf (gtk-widget-margin-left widget) margin))
+
+(export 'gtk-widget-set-margin-left)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_margin_right ()
@@ -8621,6 +9022,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-margin-right))
+
+(defun gtk-widget-get-margin-right (widget)
+  (gtk-widget-margin-right widget))
+
+(export 'gtk-widget-get-margin-right)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_margin_right ()
 ;;; 
@@ -8636,6 +9044,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-margin-right))
+
+(defun gtk-widget-set-margin-right (widget margin)
+  (setf (gtk-widget-margin-right widget) margin))
+
+(export 'gtk-widget-set-margin-right)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_margin_top ()
@@ -8653,6 +9068,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-margin-top))
+
+(defun gtk-widget-get-margin-top (widget)
+  (gtk-widget-margin-top widget))
+
+(export 'gtk-widget-get-margin-top)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_margin_top ()
 ;;; 
@@ -8668,6 +9090,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-margin-top))
+
+(defun gtk-widget-set-margin-top (widget margin)
+  (setf (gtk-widget-margin-top widget) margin))
+
+(export 'gtk-widget-set-margin-top)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_margin_bottom ()
@@ -8685,6 +9114,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-margin-bottom))
+
+(defun gtk-widget-get-margin-bottom (widget)
+  (gtk-widget-margin-bottom widget))
+
+(export 'gtk-widget-get-margin-bottom)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_margin_bottom ()
 ;;; 
@@ -8700,6 +9136,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-margin-bottom))
+
+(defun gtk-widget-set-margin-bottom (widget margin)
+  (setf (gtk-widget-margin-top widget) margin))
+
+(export 'gtk-widget-set-margin-bottom)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_hexpand ()
@@ -8726,6 +9169,13 @@
 ;;; Returns :
 ;;;     whether hexpand flag is set
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-hexpand))
+
+(defun gtk-widget-get-hexpand (widget)
+  (gtk-widget-hexpand widget))
+
+(export 'gtk-widget-get-hexpand)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_hexpand ()
@@ -8762,6 +9212,13 @@
 ;;;     whether to expand
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-hexpand))
+
+(defun gtk-widget-set-hexpand (widget expand)
+  (setf (gtk-widget-hexpand widget) expand))
+
+(export 'gtk-widget-set-hexpand)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_hexpand_set ()
 ;;; 
@@ -8783,6 +9240,13 @@
 ;;; Returns :
 ;;;     whether hexpand has been explicitly set
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-get-hexpand-set))
+
+(defun gtk-widget-get-hexpand-set (widget)
+  (gtk-widget-hexpand-set widget))
+
+(export 'gtk-widget-get-hexpand-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_hexpand_set ()
@@ -8809,6 +9273,13 @@
 ;;;     value for hexpand-set property
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-set-hexpand-set))
+
+(defun gtk-widget-set-hexpand-set (widget set)
+  (setf (gtk-widget-hexpand-set widget) set))
+
+(export 'gtk-widget-set-hexpand-set)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_vexpand ()
 ;;; 
@@ -8825,6 +9296,13 @@
 ;;;     whether vexpand flag is set
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-vexpand))
+
+(defun gtk-widget-get-vexpand (widget)
+  (gtk-widget-vexpand widget))
+
+(export 'gtk-widget-get-vexpand)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_vexpand ()
 ;;; 
@@ -8840,6 +9318,13 @@
 ;;; expand :
 ;;;     whether to expand
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-vexpand))
+
+(defun gtk-widget-set-vexpand (widget expand)
+  (setf (gtk-widget-vexpand widget) expand))
+
+(export 'gtk-widget-set-vexpand)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_vexpand_set ()
@@ -8858,6 +9343,13 @@
 ;;;     whether vexpand has been explicitly set
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-widget-get-vexpand-set))
+
+(defun gtk-widget-get-vexpand-set (widget)
+  (gtk-widget-vexpand-set widget))
+
+(export 'gtk-widget-get-vexpand-set)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_vexpand_set ()
 ;;; 
@@ -8873,6 +9365,13 @@
 ;;; set :
 ;;;     value for vexpand-set property
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-widget-set-vexpand-set))
+
+(defun gtk-widget-set-vexpand-set (widget set)
+  (setf (gtk-widget-vexpand-set widget) set))
+
+(export 'gtk-widget-set-vexpand-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_compute_expand ()

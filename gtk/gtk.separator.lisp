@@ -93,7 +93,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-;;; TODO: Implement gtk_separator_new
+(declaim (inline gtk-separator-new))
+
+(defun gtk-separator-new (orientation)
+  (make-instance 'gtk-separator
+                 :orientation orientation))
+
+(export 'gtk-separator-new)
 
 ;;; ---------------------------------------------------------------------------- 
 ;;; GtkHSeparator
@@ -177,7 +183,7 @@
 (declaim (inline gtk-hseparator-new))
 
 (defun gtk-hseparator-new ()
-  (make-instance 'gtk-hseprator))
+  (make-instance 'gtk-hseparator))
 
 (export 'gtk-hseparator)
 

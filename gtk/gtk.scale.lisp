@@ -240,6 +240,15 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-scale-new))
+
+(defun gtk-scale-new (orientation adjustment)
+  (make-instance 'gtk-scale
+                 :orientation orientation
+                 :adjustment adjustment))
+
+(export 'gtk-scale-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_new_with_range ()
 ;;; 

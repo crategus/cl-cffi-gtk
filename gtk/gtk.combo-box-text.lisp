@@ -115,7 +115,7 @@
                 "GtkCellLayout")
    :type-initializer "gtk_combo_box_text_get_type")
   nil)
-          
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_text_new ()
 ;;;
@@ -129,6 +129,8 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-text-new))
 
 (defun gtk-combo-box-text-new ()
   (make-instance 'gtk-combo-box-text))
@@ -396,7 +398,7 @@
 
 (defcfun ("gtk_combo_box_text_get_active_text"
            gtk-combo-box-text-get-active-text) :string
-  (combo-box g-object))
+  (combo-box (g-object gtk-combo-box-text)))
   
 (export 'gtk-combo-box-text-get-active-text)
 

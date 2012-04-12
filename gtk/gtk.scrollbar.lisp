@@ -160,16 +160,23 @@
 ;;; Creates a new scrollbar with the given orientation.
 ;;; 
 ;;; orientation :
-;;; 	the scrollbar's orientation.
+;;; 	the scrollbar's orientation
 ;;; 
 ;;; adjustment :
-;;; 	the GtkAdjustment to use, or NULL to create a new adjustment.
+;;; 	the GtkAdjustment to use, or NULL to create a new adjustment
 ;;; 
 ;;; Returns :
-;;; 	the new GtkScrollbar.
+;;; 	the new GtkScrollbar
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-scrollbar-new (orientation adjustment)
+  (make-instance 'gtk-scrollbar
+                 :orientation orientation
+                 :adjustment adjustment))
+
+(export 'gtk-scrollbar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkHScrollbar

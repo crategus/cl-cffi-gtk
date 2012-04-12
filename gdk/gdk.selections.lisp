@@ -34,9 +34,10 @@
 ;;; 
 ;;; Synopsis
 ;;; 
-;;;     GdkSelection;
-;;;     GdkSelectionType;
-;;;     GdkTarget;
+;;;     GdkSelection
+;;;     GdkSelectionType
+;;;     GdkTarget
+;;;     
 ;;;     GDK_SELECTION_PRIMARY
 ;;;     GDK_SELECTION_SECONDARY
 ;;;     GDK_SELECTION_CLIPBOARD
@@ -53,6 +54,7 @@
 ;;;     GDK_SELECTION_TYPE_PIXMAP
 ;;;     GDK_SELECTION_TYPE_WINDOW
 ;;;     GDK_SELECTION_TYPE_STRING
+;;;     
 ;;;     gdk_selection_owner_set
 ;;;     gdk_selection_owner_set_for_display
 ;;;     gdk_selection_owner_get
@@ -178,6 +180,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defparameter *target-bitmap* "BITMAP")
+
 (export '*target-bitmap*)
 
 ;;; ----------------------------------------------------------------------------
@@ -189,6 +192,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defparameter *target-colormap* "COLORMAP")
+
 (export '*target-colormap*)
 
 ;;; ----------------------------------------------------------------------------
@@ -200,6 +204,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defparameter *target-drawable* "DRAWABLE")
+
 (export '*target-drawable*)
 
 ;;; ----------------------------------------------------------------------------
