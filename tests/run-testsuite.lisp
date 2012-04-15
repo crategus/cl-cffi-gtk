@@ -21,8 +21,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(load "../lisp-utils/lisp-unit.lisp")
-
+(asdf:operate 'asdf:load-op :lisp-unit)
 (asdf:operate 'asdf:load-op :cl-gtk)
 
 ;;; ----------------------------------------------------------------------------
@@ -51,6 +50,7 @@
 (defpackage :gdk-tests
   (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
+(load "rtest-gdk-device.lisp")
 (load "rtest-gdk-region.lisp")
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
