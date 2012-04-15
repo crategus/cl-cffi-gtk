@@ -563,20 +563,7 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_display_add_client_message_filter"
-          %gdk-display-add-client-message-filter) :void
-  (display (g-object gdk-display))
-  (message-type gdk-atom-as-string)
-  (func :pointer)
-  (data :pointer))
-
-(defun gdk-display-add-client-message-filter (display message-type fn)
-  (%gdk-display-add-client-message-filter display
-                                          message-type
-                                          (callback gdk-client-message-filter-func)
-                                          (allocate-stable-pointer fn)))
-
-(export 'gdk-display-add-client-message-filter)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_set_double_click_time ()

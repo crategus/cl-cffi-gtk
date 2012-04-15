@@ -106,9 +106,9 @@
 ;;;     then GDK_IMAGE_NORMAL will be used.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkImageType"
-    gdk-image-type
-    (:export t :type-initializer "gdk_image_type_get_type")
+(define-g-enum "GdkImageType" gdk-image-type
+  (:export t
+   :type-initializer "gdk_image_type_get_type")
   (:normal 0)
   (:shared 1)
   (:fastest 2))

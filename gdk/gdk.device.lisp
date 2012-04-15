@@ -123,6 +123,23 @@
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkDeviceType
+;;;
+;;; typedef enum {
+;;;   GDK_DEVICE_TYPE_MASTER,
+;;;   GDK_DEVICE_TYPE_SLAVE,
+;;;   GDK_DEVICE_TYPE_FLOATING
+;;; } GdkDeviceType;
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GdkDeviceType" gdk-device-type
+  (:export t
+   :type-initializer "gdk_device_type_get_type")
+  (:gdk-device-type-master 0)
+  (:gdk-device-type-slave 1)
+  (:gdk-device-type-floating 2))
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GdkInputSource
 ;;; 
 ;;; typedef enum
@@ -331,20 +348,15 @@
   (source gdk-input-source)
   (mode gdk-input-mode)
   (has-cursor :boolean)
-  (num-axes :int)
+  (n-axes :int)
   (axes :pointer)
-  (num-keys :int)
+  (n-keys :int)
   (keys :pointer))
 
-(defun %gdk-device-has-cursor (device)
-  (foreign-slot-value (pointer device) '%gdk-device 'has-cursor))
-
-(defun %gdk-device-n-keys (device)
-  (foreign-slot-value (pointer device) '%gdk-device 'num-keys))
-
+;;; ----------------------------------------------------------------------------
 
 (defun %gdk-device-axes (device)
-  (let ((n (foreign-slot-value (pointer device) '%gdk-device 'num-axes))
+  (let ((n (foreign-slot-value (pointer device) '%gdk-device 'n-axes))
         (axes (foreign-slot-value (pointer device) '%gdk-device 'axes)))
     (iter (for i from 0 below n)
           (for axis = (convert-from-foreign
@@ -353,8 +365,9 @@
                        '(g-boxed-foreign gdk-device-axis)))
           (collect axis))))
 
+
 (defun %gdk-device-keys (device)
-  (let ((n (foreign-slot-value (pointer device) '%gdk-device 'num-keys))
+  (let ((n (foreign-slot-value (pointer device) '%gdk-device 'n-keys))
         (keys (foreign-slot-value (pointer device) '%gdk-device 'keys)))
     (iter (for i from 0 below n)
           (for key = (convert-from-foreign
@@ -363,33 +376,68 @@
                       '(g-boxed-foreign gdk-device-key)))
           (collect key))))
 
+;;; ----------------------------------------------------------------------------
+
 (define-g-object-class "GdkDevice" gdk-device
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "gdk_device_get_type")
-  ((:cffi name gdk-device-name :string
-          %gdk-device-name nil)
-   (:cffi source gdk-device-source gdk-input-source
-          %gdk-device-source "gdk_device_set_source")
-   (:cffi mode gdk-device-mode gdk-input-mode
-          %gdk-device-mode gdk_device_set_mode)
-   (:cffi has-cursor gdk-device-has-cursor :boolean
-          %gdk-device-has-cursor nil)
-   (:cffi n-axes gdk-device-n-axes :int
-          %gdk-device-n-axes nil)
-   (:cffi axes gdk-device-axes nil
+  ((associated-device
+    gdk-device-associated-device
+    "associated-device" "GdkDevice" t t)
+   (device-manager
+    gdk-device-device-manager
+    "device-manager" "GdkDeviceManager" t t)
+   (display
+    gdk-device-display
+    "display" "GdkDisplay" t t)
+   (has-cursor
+    gdk-device-has-cursor
+    "has-cursor" "gboolean" t t)
+   (input-mode
+    gdk-device-input-mode
+    "input-mode" "GdkInputMode" t t)
+   (input-source
+    gdk-device-input-source
+    "input-source" "GdkInputSource" t t)
+   (n-axes
+    gdk-device-n-axes
+    "n-axes" "gint" t t)
+   (name
+    gdk-device-name
+    "name" "gchar" t t)
+   (type
+    gdk-device-type
+    "type" "GdkDeviceType" t t)
+   (:cffi axes
+          gdk-device-axes nil
           %gdk-device-axes nil)
-   (:cffi keys gdk-device-keys nil
+   (:cffi keys
+          gdk-device-keys gdk-device-key
           %gdk-device-keys nil)
-   (:cffi n-keys gdk-device-n-keys nil
-     %gdk-device-n-keys nil)))
+   (:cffi n-keys
+          gdk-device-n-keys :int
+          "gdk_device_get_n_keys" nil)))
 
-(defmethod print-object ((object gdk-device) stream)
-  (print-unreadable-object (object stream :type t :identity t)
-    (format stream "~A (~A, ~A)" (gdk-device-name object)
-                                 (gdk-device-source object)
-                                 (gdk-device-mode object))))
+;;; ----------------------------------------------------------------------------
+          
+(define-g-object-class "GdkX11DeviceXI2" gdk-x11-device-xi2
+  (:superclass gdk-device
+   :export t
+   :interfaces nil
+   :type-initializer "gdk_x11_device_xi2_get_type")
+  ((device-id
+    gdk-x11-device-xi2-device-id
+    "device-id" "gint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+;(defmethod print-object ((object gdk-device) stream)
+;  (print-unreadable-object (object stream :type t :identity t)
+;    (format stream "~A (~A, ~A)" (gdk-device-name object)
+;                                 (gdk-device-source object)
+;                                 (gdk-device-mode object))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_devices_list ()
@@ -403,10 +451,7 @@
 ;;;     a list of GdkDevice
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_devices_list" gdk-devices-list)
-    (g-list (g-object gdk-device) :free-from-foreign nil))
-
-(export 'gdk-devices-list)
+;;; *** Not present in GTK 3.2 on Linux ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_name ()
@@ -424,8 +469,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-(defun %gdk-device-name (device)
-  (foreign-slot-value (pointer device) '%gdk-device 'name))
+(declaim (inline gdk-device-get-name))
+
+(defun gdk-device-get-name (device)
+  (gdk-device-name device))
+
+(export 'gdk-device-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_set_source ()
@@ -440,6 +489,13 @@
 ;;; source :
 ;;;     the source type.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-device-set-source))
+
+(defun gdk-device-set-source (device source)
+  (setf (gdk-device-input-source device) source))
+
+(export 'gdk-device-set-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_source ()
@@ -457,8 +513,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-(defun %gdk-device-source (device)
-  (foreign-slot-value (pointer device) '%gdk-device 'source))
+(declaim (inline gdk-device-get-source))
+
+(defun gdk-device-get-source (device)
+  (gdk-device-input-source device))
+
+(export 'gdk-device-get-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_set_mode ()
@@ -479,9 +539,10 @@
 ;;;     TRUE if the mode was successfully changed.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_device_set_mode" gdk-device-set-mode) :boolean
-  (device (g-object gdk-device))
-  (mode gdk-input-mode))
+(declaim (inline gdk-device-set-mode))
+
+(defun gdk-device-set-mode (device mode)
+  (setf (gdk-device-input-mode device) mode))
 
 (export 'gdk-device-set-mode)
 
@@ -501,8 +562,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-(defun %gdk-device-mode (device)
-  (foreign-slot-value (pointer device) '%gdk-device 'mode))
+(declaim (inline gdk-device-get-mode))
+
+(defun gdk-device-get-mode (device)
+  (gdk-device-input-mode device))
+
+(export 'gdk-device-get-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_set_key ()
@@ -516,16 +581,16 @@
 ;;; pressed.
 ;;; 
 ;;; device :
-;;;     a GdkDevice.
+;;;     a GdkDevice
 ;;; 
 ;;; index_ :
-;;;     the index of the macro button to set.
+;;;     the index of the macro button to set
 ;;; 
 ;;; keyval :
-;;;     the keyval to generate.
+;;;     the keyval to generate
 ;;; 
 ;;; modifiers :
-;;;     the modifiers to set.
+;;;     the modifiers to set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_set_key" gdk-device-set-key) :void
@@ -548,19 +613,27 @@
 ;;; modifiers with the keyval settings.
 ;;; 
 ;;; device :
-;;;     a GdkDevice.
+;;;     a GdkDevice
 ;;; 
 ;;; index :
-;;;     the index of the macro button to get.
+;;;     the index of the macro button to get
 ;;; 
 ;;; keyval :
-;;;     return value for the keyval.
+;;;     return value for the keyval
 ;;; 
 ;;; modifiers :
-;;;     return value for modifiers.
+;;;     return value for modifiers
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_device_get_key" gdk-device-get-key) :void
+  (device (g-object gdk-device))
+  (index :int)
+  (keyval :int)
+  (modifiers gdk-modifier-type))
+
+(export 'gdk-device-get-key)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_set_axis_use ()
@@ -572,13 +645,13 @@
 ;;; Specifies how an axis of a device is used.
 ;;; 
 ;;; device :
-;;;     a GdkDevice.
+;;;     a GdkDevice
 ;;; 
 ;;; index_ :
-;;;     the index of the axis.
+;;;     the index of the axis
 ;;; 
 ;;; use :
-;;;     specifies how the axis is used.
+;;;     specifies how the axis is used
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_set_axis_use" gdk-device-set-axis-use) :void
@@ -596,13 +669,13 @@
 ;;; Returns the axis use for index.
 ;;; 
 ;;; device :
-;;;     a GdkDevice.
+;;;     a GdkDevice
 ;;; 
 ;;; index :
-;;;     the index of the axis.
+;;;     the index of the axis
 ;;; 
 ;;; Returns :
-;;;     a GdkAxisUse specifying how the axis is used.
+;;;     a GdkAxisUse specifying how the axis is used
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -619,10 +692,7 @@
 ;;;     be freed.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_device_get_core_pointer" gdk-device-get-core-pointer)
-    (g-object gdk-device))
-
-(export 'gdk-device-get-core-pointer)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_state ()
@@ -655,10 +725,10 @@
   (mask (:pointer gdk-modifier-type)))
 
 (defun gdk-device-get-state (device window)
-  (with-foreign-objects ((axes :double (%gdk-device-n-axes device))
+  (with-foreign-objects ((axes :double (gdk-device-n-axes device))
                          (mask 'gdk-modifier-type))
     (%gdk-device-get-state device window axes mask)
-    (values (iter (for i from 0 below (%gdk-device-n-axes device))
+    (values (iter (for i from 0 below (gdk-device-n-axes device))
                   (collect (mem-aref axes :double i)))
             (mem-ref mask 'gdk-modifier-type))))
 
@@ -716,7 +786,7 @@
 ;;;     ending timestamp for the range of events to return
 ;;; 
 ;;; events :
-;;;     location to store a newly-allocated array of GdkTimeCoord, or NULL.
+;;;     location to store a newly-allocated array of GdkTimeCoord, or NULL
 ;;; 
 ;;; n_events :
 ;;;     location to store the length of events, or NULL
@@ -758,10 +828,10 @@
 ;;; gdk_device_get_history().
 ;;; 
 ;;; events :
-;;;     an array of GdkTimeCoord.
+;;;     an array of GdkTimeCoord
 ;;; 
 ;;; n_events :
-;;;     the length of the array.
+;;;     the length of the array
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_device_free_history" gdk-device-free-history) :void
@@ -804,8 +874,8 @@
   (value (:pointer :double)))
 
 (defun gdk-device-get-axis (device axes axis-use)
-  (assert (= (%gdk-device-n-axes device) (length axes)))
-  (with-foreign-objects ((axes-ar :double (%gdk-device-n-axes device))
+  (assert (= (gdk-device-n-axes device) (length axes)))
+  (with-foreign-objects ((axes-ar :double (gdk-device-n-axes device))
                          (value :double))
     (let ((i 0))
       (map nil
@@ -834,8 +904,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-(defun %gdk-device-n-axes (device)
-  (foreign-slot-value (pointer device) '%gdk-device 'num-axes))
+(declaim (inline gdk-device-get-n-axes))
+
+(defun gdk-device-get-n-axes (device)
+  (gdk-device-n-axes device))
+
+(export 'gdk-device-get-n-axes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkExtensionMode
@@ -888,11 +962,6 @@
 ;;;     the type of extension events that are desired.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_input_set_extension_events" gdk-input-set-extension-events) :void
-  (window (g-object gdk-window))
-  (mask :int)
-  (mode gdk-extension-mode))
-
-(export 'gdk-input-set-extension-events)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; --- End of file gdk.device.lisp --------------------------------------------

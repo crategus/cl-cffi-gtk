@@ -37,7 +37,6 @@
 ;;;     gdk_threads_init
 ;;;     gdk_threads_enter
 ;;;     gdk_threads_leave
-;;;     gdk_threads_mutex
 ;;;     gdk_threads_set_lock_functions
 ;;;     gdk_threads_add_idle
 ;;;     gdk_threads_add_idle_full
@@ -230,6 +229,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;;; A marco to execute code between gdk-threads-enter and gdk-threads-leave
+
 (defmacro with-gdk-threads-lock (&body body)
   `(progn
      (gdk-threads-enter)
@@ -242,6 +243,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;; Callback function for:
+;;
 ;;     gdk-threads-add-idle-full
 ;;     gdk-threads-add-timeout-full
 ;;     gdk-threads-add-timeout-seconds-full
@@ -292,20 +294,6 @@
 (defcfun ("gdk_threads_leave" gdk-threads-leave) :void)
 
 (export 'gdk-threads-leave)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_threads_mutex
-;;; 
-;;; extern GMutex *gdk_threads_mutex; /* private */
-;;; 
-;;; Warning
-;;; 
-;;; gdk_threads_mutex is deprecated and should not be used in newly-written
-;;; code.
-;;; 
-;;; The GMutex used to implement the critical region for
-;;; gdk_threads_enter()/gdk_threads_leave().
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_set_lock_functions ()

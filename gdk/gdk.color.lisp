@@ -133,17 +133,17 @@
 ;;; The colormap structure contains the following public fields.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GdkColormap" gdk-colormap
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "gdk_colormap_get_type")
-  ((:cffi visual
-          gdk-colormap-visual (g-object gdk-visual)
-          "gdk_colormap_get_visual" nil)
-   (:cffi screen
-          gdk-colormap-screen (g-object gdk-screen)
-          "gdk_colormap_get_screen" nil)))
+;(define-g-object-class "GdkColormap" gdk-colormap
+;  (:superclass g-object
+;   :export t
+;   :interfaces nil
+;   :type-initializer "gdk_colormap_get_type")
+;  ((:cffi visual
+;          gdk-colormap-visual (g-object gdk-visual)
+;          "gdk_colormap_get_visual" nil)
+;   (:cffi screen
+;          gdk-colormap-screen (g-object gdk-screen)
+;          "gdk_colormap_get_screen" nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_new ()
@@ -163,12 +163,7 @@
 ;;;     the new GdkColormap.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_colormap_new" gdk-colormap-new)
-    (g-object gdk-colormap :already-referenced)
-  (visual (g-object gdk-visual))
-  (allocate :boolean))
-
-(export 'gdk-colormap-new)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_ref ()
@@ -217,10 +212,7 @@
 ;;;     the default colormap
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_colormap_get_system" gdk-colormap-get-system)
-    (g-object gdk-colormap))
-
-(export 'gdk-colormap-get-system)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_get_system_size ()
@@ -299,26 +291,7 @@
 ;;;     The number of colors that were not successfully allocated.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_colormap_alloc_colors" %gdk-colormap-alloc-colors) :int
-  (colormap (g-object gdk-colormap))
-  (colors :pointer)
-  (n-colors :int)
-  (writeable :boolean)
-  (best-match :boolean)
-  (success (:pointer :boolean)))
-
-(defun gdk-colormap-alloc-colors (colormap colors writeable best-match)
-  (with-foreign-boxed-array (n colors-ar gdk-color colors)
-    (with-foreign-object (success :boolean)
-      (%gdk-colormap-alloc-colors colormap
-                                  colors-ar
-                                  n
-                                  writeable
-                                  best-match
-                                  success)
-      (mem-ref success :boolean))))
-
-(export 'gdk-colormap-alloc-colors)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_alloc_color ()
@@ -350,13 +323,7 @@
 ;;;     TRUE if the allocation succeeded.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_colormap_alloc_color" gdk-colormap-alloc-color) :boolean
-  (colormap (g-object gdk-colormap))
-  (color (g-boxed-foreign gdk-color))
-  (writeable :boolean)
-  (best-match :boolean))
-
-(export 'gdk-colormap-alloc-color)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_free_colors ()
@@ -377,16 +344,7 @@
 ;;;     the number of colors in colors
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_colormap_free_colors" %gdk-colormap-free-colors) :void
-  (colormap (g-object gdk-colormap))
-  (colors :pointer)
-  (n-colors :int))
-
-(defun gdk-colormap-free-colors (colormap colors)
-  (with-foreign-boxed-array (n colors-ptr gdk-color colors)
-    (%gdk-colormap-free-colors colormap colors-ptr n)))
-
-(export 'gdk-colormap-free-colors)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_query_color ()
@@ -415,17 +373,7 @@
 ;;;     GdkColor with red, green, blue fields initialized
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_colormap_query_color" %gdk-colormap-query-color) :void
-  (colormap (g-object gdk-colormap))
-  (pixel :ulong)
-  (result (g-boxed-foreign gdk-color)))
-
-(defun gdk-colormap-query-color (colormap pixel)
-  (let ((color (make-gdk-color)))
-    (%gdk-colormap-query-color colormap pixel color)
-    color))
-
-(export 'gdk-colormap-query-color)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_colormap_get_visual ()

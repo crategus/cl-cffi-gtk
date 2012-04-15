@@ -34,42 +34,42 @@
 ;;; 
 ;;; Synopsis
 ;;;
-;;; typedef             GdkNativeWindow;
+;;; typedef             GdkNativeWindow
 ;;; 
 ;;; enum                GdkEventType
-;;; enum                GdkScrollDirection;
-;;; enum                GdkVisibilityState;
-;;; enum                GdkCrossingMode;
-;;; enum                GdkNotifyType;
-;;; enum                GdkPropertyState;
-;;; enum                GdkWindowState;
-;;; enum                GdkSettingAction;
-;;; enum                GdkOwnerChange;
+;;; enum                GdkScrollDirection
+;;; enum                GdkVisibilityState
+;;; enum                GdkCrossingMode
+;;; enum                GdkNotifyType
+;;; enum                GdkPropertyState
+;;; enum                GdkWindowState
+;;; enum                GdkSettingAction
+;;; enum                GdkOwnerChange
 ;;; 
 ;;; flags               GdkModifierType
 ;;; 
-;;; union               GdkEvent;
+;;; union               GdkEvent
 ;;; 
-;;; struct              GdkEventAny;
-;;; struct              GdkEventKey;
-;;; struct              GdkEventButton;
-;;; struct              GdkEventScroll;
-;;; struct              GdkEventMotion;
-;;; struct              GdkEventExpose;
-;;; struct              GdkEventVisibility;
-;;; struct              GdkEventCrossing;
-;;; struct              GdkEventFocus;
-;;; struct              GdkEventConfigure;
-;;; struct              GdkEventProperty;
-;;; struct              GdkEventSelection;
-;;; struct              GdkEventDND;
-;;; struct              GdkEventProximity;
-;;; struct              GdkEventClient;
-;;; struct              GdkEventNoExpose;
-;;; struct              GdkEventWindowState;
-;;; struct              GdkEventSetting;
-;;; struct              GdkEventOwnerChange;
-;;; struct              GdkEventGrabBroken;
+;;; struct              GdkEventAny
+;;; struct              GdkEventKey
+;;; struct              GdkEventButton
+;;; struct              GdkEventScroll
+;;; struct              GdkEventMotion
+;;; struct              GdkEventExpose
+;;; struct              GdkEventVisibility
+;;; struct              GdkEventCrossing
+;;; struct              GdkEventFocus
+;;; struct              GdkEventConfigure
+;;; struct              GdkEventProperty
+;;; struct              GdkEventSelection
+;;; struct              GdkEventDND
+;;; struct              GdkEventProximity
+;;; struct              GdkEventClient
+;;; struct              GdkEventNoExpose
+;;; struct              GdkEventWindowState
+;;; struct              GdkEventSetting
+;;; struct              GdkEventOwnerChange
+;;; struct              GdkEventGrabBroken
 ;;; 
 ;;; Description
 ;;; 
@@ -191,131 +191,131 @@
 ;;; emitted, the events are often transformed or filtered along the way.
 ;;; 
 ;;; GDK_NOTHING
-;;;     a special code to indicate a null event.
+;;;     A special code to indicate a null event.
 ;;; 
 ;;; GDK_DELETE
-;;;     the window manager has requested that the toplevel window be hidden or
+;;;     The window manager has requested that the toplevel window be hidden or
 ;;;     destroyed, usually when the user clicks on a special icon in the title
 ;;;     bar.
 ;;; 
 ;;; GDK_DESTROY
-;;;     the window has been destroyed.
+;;;     The window has been destroyed.
 ;;; 
 ;;; GDK_EXPOSE
-;;;     all or part of the window has become visible and needs to be redrawn.
+;;;     All or part of the window has become visible and needs to be redrawn.
 ;;; 
 ;;; GDK_MOTION_NOTIFY
-;;;     the pointer (usually a mouse) has moved.
+;;;     The pointer (usually a mouse) has moved.
 ;;; 
 ;;; GDK_BUTTON_PRESS
-;;;     a mouse button has been pressed.
+;;;     A mouse button has been pressed.
 ;;; 
 ;;; GDK_2BUTTON_PRESS
-;;;     a mouse button has been double-clicked (clicked twice within a short
+;;;     A mouse button has been double-clicked (clicked twice within a short
 ;;;     period of time). Note that each click also generates a GDK_BUTTON_PRESS
 ;;;     event.
 ;;; 
 ;;; GDK_3BUTTON_PRESS
-;;;     a mouse button has been clicked 3 times in a short period of time. Note
-;;;     that each click also generates a GDK_BUTTON_PRESS event.
+;;;     A mouse button has been clicked 3 times in a short period of time.
+;;;     Note that each click also generates a GDK_BUTTON_PRESS event.
 ;;; 
 ;;; GDK_BUTTON_RELEASE
-;;;     a mouse button has been released.
+;;;     A mouse button has been released.
 ;;; 
 ;;; GDK_KEY_PRESS
-;;;     a key has been pressed.
+;;;     A key has been pressed.
 ;;; 
 ;;; GDK_KEY_RELEASE
-;;;     a key has been released.
+;;;     A key has been released.
 ;;; 
 ;;; GDK_ENTER_NOTIFY
-;;;     the pointer has entered the window.
+;;;     The pointer has entered the window.
 ;;; 
 ;;; GDK_LEAVE_NOTIFY
-;;;     the pointer has left the window.
+;;;     The pointer has left the window.
 ;;; 
 ;;; GDK_FOCUS_CHANGE
-;;;     the keyboard focus has entered or left the window.
+;;;     The keyboard focus has entered or left the window.
 ;;; 
 ;;; GDK_CONFIGURE
-;;;     the size, position or stacking order of the window has changed. Note
+;;;     The size, position or stacking order of the window has changed. Note
 ;;;     that GTK+ discards these events for GDK_WINDOW_CHILD windows.
 ;;; 
 ;;; GDK_MAP
-;;;     the window has been mapped.
+;;;     The window has been mapped.
 ;;; 
 ;;; GDK_UNMAP
-;;;     the window has been unmapped.
+;;;     The window has been unmapped.
 ;;; 
 ;;; GDK_PROPERTY_NOTIFY
-;;;     a property on the window has been changed or deleted.
+;;;     A property on the window has been changed or deleted.
 ;;; 
 ;;; GDK_SELECTION_CLEAR
-;;;     the application has lost ownership of a selection.
+;;;     The application has lost ownership of a selection.
 ;;; 
 ;;; GDK_SELECTION_REQUEST
-;;;     another application has requested a selection.
+;;;     Another application has requested a selection.
 ;;; 
 ;;; GDK_SELECTION_NOTIFY
-;;;     a selection has been received.
+;;;     A selection has been received.
 ;;; 
 ;;; GDK_PROXIMITY_IN
-;;;     an input device has moved into contact with a sensing surface
+;;;     An input device has moved into contact with a sensing surface
 ;;;     (e.g. a touchscreen or graphics tablet).
 ;;; 
 ;;; GDK_PROXIMITY_OUT
-;;;     an input device has moved out of contact with a sensing surface.
+;;;     An input device has moved out of contact with a sensing surface.
 ;;; 
 ;;; GDK_DRAG_ENTER
-;;;     the mouse has entered the window while a drag is in progress.
+;;;     The mouse has entered the window while a drag is in progress.
 ;;; 
 ;;; GDK_DRAG_LEAVE
-;;;     the mouse has left the window while a drag is in progress.
+;;;     The mouse has left the window while a drag is in progress.
 ;;; 
 ;;; GDK_DRAG_MOTION
-;;;     the mouse has moved in the window while a drag is in progress.
+;;;     The mouse has moved in the window while a drag is in progress.
 ;;; 
 ;;; GDK_DRAG_STATUS
-;;;     the status of the drag operation initiated by the window has changed.
+;;;     The status of the drag operation initiated by the window has changed.
 ;;; 
 ;;; GDK_DROP_START
-;;;     a drop operation onto the window has started.
+;;;     A drop operation onto the window has started.
 ;;; 
 ;;; GDK_DROP_FINISHED
-;;;     the drop operation initiated by the window has completed.
+;;;     The drop operation initiated by the window has completed.
 ;;; 
 ;;; GDK_CLIENT_EVENT
-;;;     a message has been received from another application.
+;;;     A message has been received from another application.
 ;;; 
 ;;; GDK_VISIBILITY_NOTIFY
-;;;     the window visibility status has changed.
+;;;     The window visibility status has changed.
 ;;; 
 ;;; GDK_NO_EXPOSE
-;;;     indicates that the source region was completely available when parts
+;;;     Indicates that the source region was completely available when parts
 ;;;     of a drawable were copied. This is not very useful.
 ;;; 
 ;;; GDK_SCROLL
-;;;     the scroll wheel was turned
+;;;     The scroll wheel was turned.
 ;;; 
 ;;; GDK_WINDOW_STATE
-;;;     the state of a window has changed. See GdkWindowState for the possible
-;;;     window states
+;;;     The state of a window has changed. See GdkWindowState for the possible
+;;;     window states.
 ;;; 
 ;;; GDK_SETTING
-;;;     a setting has been modified.
+;;;     A setting has been modified.
 ;;; 
 ;;; GDK_OWNER_CHANGE
-;;;     the owner of a selection has changed. This event type was added in 2.6
+;;;     The owner of a selection has changed. This event type was added in 2.6.
 ;;; 
 ;;; GDK_GRAB_BROKEN
-;;;     a pointer or keyboard grab was broken. This event type was added in 2.8.
+;;;     A pointer or keyboard grab was broken. This event type was added in 2.8.
 ;;; 
 ;;; GDK_DAMAGE
-;;;     the content of the window has been changed. This event type was added
+;;;     The content of the window has been changed. This event type was added
 ;;;     in 2.14.
 ;;; 
 ;;; GDK_EVENT_LAST
-;;;     marks the end of the GdkEventType enumeration. Added in 2.18
+;;;     Marks the end of the GdkEventType enumeration. Added in 2.18.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkEventType" gdk-event-type
@@ -373,16 +373,16 @@
 ;;; Specifies the direction for GdkEventScroll.
 ;;; 
 ;;; GDK_SCROLL_UP
-;;;     the window is scrolled up.
+;;;     The window is scrolled up.
 ;;; 
 ;;; GDK_SCROLL_DOWN
-;;;     the window is scrolled down.
+;;;     The window is scrolled down.
 ;;; 
 ;;; GDK_SCROLL_LEFT
-;;;     the window is scrolled to the left.
+;;;     The window is scrolled to the left.
 ;;; 
 ;;; GDK_SCROLL_RIGHT
-;;;     the window is scrolled to the right.
+;;;     The window is scrolled to the right.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkScrollDirection" gdk-scroll-direction
@@ -405,13 +405,13 @@
 ;;; Specifies the visiblity status of a window for a GdkEventVisibility.
 ;;; 
 ;;; GDK_VISIBILITY_UNOBSCURED
-;;;     the window is completely visible.
+;;;     The window is completely visible.
 ;;; 
 ;;; GDK_VISIBILITY_PARTIAL
-;;;     the window is partially visible.
+;;;     The window is partially visible.
 ;;; 
 ;;; GDK_VISIBILITY_FULLY_OBSCURED
-;;;     the window is not visible at all.
+;;;     The window is not visible at all.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkVisibilityState" gdk-visibility-state
@@ -937,24 +937,24 @@
 ;;; can always be accessed with the following code, no matter what type of
 ;;; event it is:
 ;;; 
-;;;  1 GdkEvent *event;
-;;;  2 GdkEventType type;
-;;;  3 type = event->type;
+;;;  GdkEvent *event;
+;;;  GdkEventType type;
+;;;  type = event->type;
 ;;; 
 ;;; To access other fields of the event structs, the pointer to the event can
 ;;; be cast to the appropriate event struct pointer, or the union member name
 ;;; can be used. For example if the event type is GDK_BUTTON_PRESS then the x
 ;;; coordinate of the button press can be accessed with:
 ;;; 
-;;;  1 GdkEvent *event;
-;;;  2 gdouble x;
-;;;  3 x = ((GdkEventButton*)event)->x;
+;;;  GdkEvent *event;
+;;;  gdouble x;
+;;;  x = ((GdkEventButton*)event)->x;
 ;;; 
 ;;; or:
 ;;;
-;;;  1 GdkEvent *event;
-;;;  2 gdouble x;
-;;;  3 x = event->button.x;
+;;;  GdkEvent *event;
+;;;  gdouble x;
+;;;  x = event->button.x;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-variant-cstruct gdk-event "GdkEvent"

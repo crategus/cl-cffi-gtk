@@ -373,16 +373,7 @@
 ;;;     a new GdkCursor.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_cursor_new_from_pixmap" gdk-cursor-new-from-pixmap)
-    (g-boxed-foreign gdk-cursor :return)
-  (source (g-object gdk-pixmap))
-  (make (g-object gdk-pixmap))
-  (fg-color (g-boxed-foreign gdk-color))
-  (bg-color (g-boxed-foreign gdk-color))
-  (x :int)
-  (y :int))
-
-(export 'gdk-cursor-new-from-pixmap)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new_from_pixbuf ()

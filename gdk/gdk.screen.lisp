@@ -221,9 +221,6 @@
    (resolution
     gdk-screen-resolution
     "resolution" "gdouble" t t)
-;   (:cffi default-colormap
-;          gdk-screen-default-colormap (g-object gdk-colormap)
-;          "gdk_screen_get_default_colormap" "gdk_screen_set_default_colormap")
    (:cffi system-colormap
           gdk-screen-system-colormap (g-object gdk-colormap)
           "gdk_screen_get_system_colormap" nil)
@@ -1046,12 +1043,7 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_screen_broadcast_client_message"
-          gdk-screen-broadcast-client-message) :void
-  (screen (g-object gdk-screen))
-  (event (g-boxed-foreign gdk-event)))
-
-(export 'gdk-screen-broadcast-client-message)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_setting ()

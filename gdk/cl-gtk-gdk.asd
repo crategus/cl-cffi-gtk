@@ -46,15 +46,15 @@
                (:file "gdk.cursor")           ; Standard and pixmap cursors
                
                (:file "gdk.font")             ; Loading and manipulating fonts
-               (:file "gdk.gc")               ; Encapsulate drawing properties
-               (:file "gdk.rgb")              ; Renders RGBto a GdkDrawable
-               (:file "gdk.drawable")         ; Drawing Primitives
-               (:file "gdk.pixmap")           ; Offscreen drawables
+;               (:file "gdk.gc")               ; Encapsulate drawing properties
+;               (:file "gdk.rgb")              ; Renders RGBto a GdkDrawable
+;               (:file "gdk.drawable")         ; Drawing Primitives
+;               (:file "gdk.pixmap")           ; Offscreen drawables
                (:file "gdk.display")          ; Controls the keyboard/mouse
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
                (:file "gdk.pixbuf-structure") ; Implementation of PixBuf
                (:file "gdk.pixbuf-file")      ; Loading and saving PixBuf
-               (:file "gdk.pixbuf")           ; Gdk functions for PixBuf
+;               (:file "gdk.pixbuf")           ; Gdk functions for PixBuf
                
                (:file "gdk.window")           ; Onscreen display areas
                (:file "gdk.events")           ; Functions for handling events
@@ -68,8 +68,8 @@
                )
   :depends-on (:cl-gtk-gobject
                :cl-gtk-glib
-               :cffi
                :cl-gtk-pango
-               :cl-gtk-cairo))
+               :cl-gtk-cairo
+               :cffi))
 
 ;;; --- End of file cl-gtk-gdk.asd ---------------------------------------------

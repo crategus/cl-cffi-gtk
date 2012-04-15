@@ -519,12 +519,7 @@
 ;;;     non-zero on success.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_send_client_message" gdk-event-send-client-message)
-    :boolean
-  (event (g-boxed-foreign gdk-event))
-  (windowid gdk-native-window))
-
-(export 'gdk-event-send-client-message)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_send_client_message_for_display ()
@@ -555,13 +550,7 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_send_client_message_for_display"
-          gdk-event-send-client-message-for-display) :boolean
-  (display (g-object gdk-display))
-  (event (g-boxed-foreign gdk-event))
-  (winid gdk-native-window))
-
-(export 'gdk-event-send-client-message-for-display)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_send_clientmessage_toall ()
@@ -580,12 +569,7 @@
 ;;;     the GdkEvent to send, which should be a GdkEventClient.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_send_clientmessage_toall"
-          gdk-event-send-client-message-toall)
-    :void
-  (event (g-boxed-foreign gdk-event)))
-
-(export 'gdk-event-send-client-message-toall)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_add_client_message_filter ()
@@ -608,25 +592,7 @@
 ;;;     user data to pass to func.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_add_client_message_filter" %gdk-add-client-message-filter) :void
-  (message-type gdk-atom-as-string)
-  (func :pointer)
-  (data :pointer))
-
-(defcallback gdk-client-message-filter-func gdk-filter-return
-    ((xevent :pointer) (event :pointer) (data :pointer))
-  (multiple-value-bind (return-value translated-event)
-      (funcall (stable-pointer-value data) xevent)
-    (when (eq return-value :translate)
-      (gobject:copy-boxed-slots-to-foreign translated-event event))
-    return-value))
-
-(defun gdk-add-client-message-filter (message-type fn)
-  (%gdk-add-client-message-filter message-type
-                                  (callback gdk-client-message-filter-func)
-                                  (allocate-stable-pointer fn)))
-
-(export 'gdk-add-client-message-filter)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_show_events ()

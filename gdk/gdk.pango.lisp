@@ -211,12 +211,12 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GdkPangoRenderer" gdk-pango-renderer
-  (:superclass pango-renderer :export t
-   :interfaces nil
-   :type-initializer "gdk_pango_renderer_get_type")
-  ((screen gdk-pango-renderer-screen
-           "screen" "GdkScreen" t nil)))
+;(define-g-object-class "GdkPangoRenderer" gdk-pango-renderer
+;  (:superclass pango-renderer :export t
+;   :interfaces nil
+;   :type-initializer "gdk_pango_renderer_get_type")
+;  ((screen gdk-pango-renderer-screen
+;           "screen" "GdkScreen" t nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_renderer_new ()
@@ -235,11 +235,11 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_pango_renderer_new" gdk-pango-renderer-new)
-    (g-object gdk-pango-renderer :already-referenced)
-  (screen (g-object gdk-screen)))
-
-(export 'gdk-pango-renderer-new)
+;(defcfun ("gdk_pango_renderer_new" gdk-pango-renderer-new)
+;    (g-object gdk-pango-renderer :already-referenced)
+;  (screen (g-object gdk-screen)))
+;
+;(export 'gdk-pango-renderer-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_renderer_get_default ()
@@ -265,11 +265,11 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_pango_renderer_get_default" gdk-pango-renderer-get-default)
-    (g-object gdk-pango-renderer)
-  (screen (g-object gdk-screen)))
-
-(export 'gdk-pango-renderer-get-default)
+;(defcfun ("gdk_pango_renderer_get_default" gdk-pango-renderer-get-default)
+;    (g-object gdk-pango-renderer)
+;  (screen (g-object gdk-screen)))
+;
+;(export 'gdk-pango-renderer-get-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_renderer_set_drawable ()
@@ -288,12 +288,12 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_pango_renderer_set_drawable" gdk-pango-renderer-set-drawable)
-    :void
-  (renderer (g-object gdk-pango-renderer))
-  (drawable (g-object gdk-drawable)))
+;(defcfun ("gdk_pango_renderer_set_drawable" gdk-pango-renderer-set-drawable)
+;    :void
+;  (renderer (g-object gdk-pango-renderer))
+;  (drawable (g-object gdk-drawable)))
 
-(export 'gdk-pango-renderer-set-drawable)
+;(export 'gdk-pango-renderer-set-drawable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_renderer_set_gc ()
@@ -314,11 +314,11 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_pango_renderer_set_gc" gdk-pango-renderer-set-gc) :void
-  (renderer (g-object gdk-pango-renderer))
-  (gc (g-object gdk-gc)))
-
-(export 'gdk-pango-renderer-set-gc)
+;(defcfun ("gdk_pango_renderer_set_gc" gdk-pango-renderer-set-gc) :void
+;  (renderer (g-object gdk-pango-renderer))
+;  (gc (g-object gdk-gc)))
+;
+;(export 'gdk-pango-renderer-set-gc)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_renderer_set_stipple ()
@@ -346,12 +346,12 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_pango_renderer_set_stipple" gdk-pango-renderer-set-stipple) :void
-  (renderer (g-object gdk-pango-renderer))
-  (part pango-render-part)
-  (stipple (g-object gdk-pixmap)))
+;(defcfun ("gdk_pango_renderer_set_stipple" gdk-pango-renderer-set-stipple) :void
+;  (renderer (g-object gdk-pango-renderer))
+;  (part pango-render-part)
+;  (stipple (g-object gdk-pixmap)))
 
-(export 'gdk-pango-renderer-set-stipple)
+;(export 'gdk-pango-renderer-set-stipple)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_renderer_set_override_color ()
@@ -376,12 +376,12 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun gdk-pango-renderer-set-override-color :void
-  (renderer (g-object gdk-pango-renderer))
-  (part pango-render-part)
-  (color (g-boxed-foreign gdk-color)))
-
-(export 'gdk-pango-renderer-set-override-color)
+;(defcfun gdk-pango-renderer-set-override-color :void
+;  (renderer (g-object gdk-pango-renderer))
+;  (part pango-render-part)
+;  (color (g-boxed-foreign gdk-color)))
+;
+;(export 'gdk-pango-renderer-set-override-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pango_context_get ()
@@ -605,7 +605,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_layout_get_clip_region" %gdk-pango-layout-get-clip-region)
-    (g-boxed-foreign gdk-region :return)
+    (g-boxed-foreign cairo-region-t :return)
   (layout (g-object pango-layout))
   (x-origin :int)
   (y-origin :int)
@@ -676,7 +676,7 @@
 
 (defcfun ("gdk_pango_layout_line_get_clip_region"
           %gdk-pango-layout-line-get-clip-region)
-    (g-boxed-foreign gdk-region :return)
+    (g-boxed-foreign cairo-region-t :return)
   (layout-line (g-boxed-foreign pango-layout-line))
   (x-origin :int)
   (y-origin :int)

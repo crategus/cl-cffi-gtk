@@ -619,7 +619,7 @@
    (:superclass g-object
     :export t
     :interfaces ()
-;    :type-initializer "gdk_drawable_get_type"
+    :type-initializer "gdk_window_get_type"
     )
    ((cursor
      gdk-window-cursor
@@ -795,7 +795,8 @@
 
 (define-g-enum "GdkWindowClass" gdk-window-class
   (:export t
-   :type-initializer "gdk_window_class_get_type")
+;   :type-initializer "gdk_window_class_get_type"
+   )
   (:input-output 0)
   (:input-only 1))
 
@@ -2296,7 +2297,7 @@
 
 (defcfun ("gdk_window_move_region" gdk-window-move-region) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign gdk-region))
+  (region (g-boxed-foreign cairo-region-t))
   (dx :int)
   (dy :int))
 
@@ -2424,10 +2425,7 @@
 ;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_clear" gdk-window-clear) :void
-  (window (g-object gdk-window)))
-
-(export 'gdk-window-clear)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_clear_area ()
@@ -2456,14 +2454,7 @@
 ;;;     height of rectangle to clear
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_clear_area" gdk-window-clear-area) :void
-  (window (g-object gdk-window))
-  (x :int)
-  (y :int)
-  (width :int)
-  (height :int))
-
-(export 'gdk-window-clear-area)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_clear_area_e ()
@@ -2496,14 +2487,7 @@
 ;;;     height of rectangle to clear
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_clear_area_e" gdk-window-clear-area-e) :void
-  (window (g-object gdk-window))
-  (x :int)
-  (y :int)
-  (width :int)
-  (height :int))
-
-(export 'gdk-window-clear-area-e)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_copy_area()
@@ -2896,7 +2880,7 @@
 
 (defcfun ("gdk_window_begin_paint_region" gdk-window-begin-paint-region) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign gdk-region)))
+  (region (g-boxed-foreign cairo-region-t)))
 
 (export 'gdk-window-begin-paint-region)
 
@@ -2985,7 +2969,7 @@
 
 (defcfun ("gdk_window_invalidate_region" gdk-window-invalidate-region) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign gdk-region))
+  (region (g-boxed-foreign cairo-region-t))
   (invalidate-children :boolean))
 
 (export 'gdk-window-invalidate-region)
@@ -3031,7 +3015,7 @@
 (defcfun ("gdk_window_invalidate_maybe_recurse"
           %gdk-window-invalidate-maybe-recurse) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign gdk-region))
+  (region (g-boxed-foreign cairo-region-t))
   (child-func :pointer)
   (user-data :pointer))
 
@@ -3071,7 +3055,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_update_area" gdk-window-get-update-area)
-    (g-boxed-foreign gdk-region :return)
+    (g-boxed-foreign cairo-region-t :return)
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-update-area)
@@ -3220,23 +3204,7 @@
 ;;;     underlying window system primitive coordinates for *real_drawable
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_get_internal_paint_info"
-          %gdk-window-get-internal-paint-info) :void
-  (window (g-object gdk-window))
-  (real-drawable (:pointer (g-object gdk-drawable)))
-  (x-offset (:pointer :int))
-  (y-offset (:pointer :int)))
-
-(defun gdk-window-get-internal-paint-info (window)
-  (with-foreign-objects ((real-drawable :pointer)
-                         (x-offset :int)
-                         (y-offset :int))
-    (%gdk-window-get-internal-paint-info window real-drawable x-offset y-offset)
-    (values (mem-ref real-drawable '(g-object gdk-drawable))
-            (mem-ref x-offset :int)
-            (mem-ref y-offset :int))))
-
-(export 'gdk-window-get-internal-paint-info)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_enable_synchronized_configure ()
@@ -3600,13 +3568,7 @@
 ;;;     Y position of shape mask with respect to window
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_shape_combine_mask" gdk-window-shape-combine-mask) :void
-  (window (g-object gdk-window))
-  (mask (g-object gdk-pixmap))
-  (x :int)
-  (y :int))
-
-(export 'gdk-window-shape-combine-mask)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_shape_combine_region ()
@@ -3646,7 +3608,7 @@
 (defcfun ("gdk_window_shape_combine_region" gdk-window-shape-combine-region)
     :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign gdk-region))
+  (region (g-boxed-foreign cairo-region-t))
   (offset-x :int)
   (offset-y :int))
 
@@ -3729,14 +3691,7 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_input_shape_combine_mask"
-           gdk-window-input-shape-combine-mask) :void
-  (window (g-object gdk-window))
-  (mask (g-object gdk-pixmap))
-  (x :int)
-  (y :int))
-
-(export 'gdk-window-input-shape-combine-mask)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_input_shape_combine_region ()
@@ -3778,7 +3733,7 @@
 (defcfun ("gdk_window_input_shape_combine_region"
            gdk-window-input-shape-combine-region) :void
   (window (g-object gdk-window))
-  (shape-region (g-boxed-foreign gdk-region))
+  (shape-region (g-boxed-foreign cairo-region-t))
   (offset-x :int)
   (offset-y :int))
 
@@ -3995,12 +3950,7 @@
 ;;;     whether the tiling origin is at the origin of window's parent
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_set_back_pixmap" gdk-window-set-back-pixmap) :void
-  (window (g-object gdk-window))
-  (pixmap (g-object gdk-pixmap))
-  (parent-relative :boolean))
-
-(export 'gdk-window-set-back-pixmap)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_background_pattern ()
@@ -5081,13 +5031,7 @@
 ;;;     none
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_set_icon" gdk-window-set-icon) :void
-  (window (g-object gdk-window))
-  (icon-window (g-object gdk-window))
-  (pixmap (g-object gdk-pixmap))
-  (mask (g-object mask)))
-
-(export 'gdk-window-set-icon)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_icon_name ()
@@ -5463,11 +5407,7 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_offscreen_window_get_pixmap" gdk-offscreen-window-get-pixmap)
-    (g-object gdk-pixmap)
-  (window (g-object gdk-window)))
-
-(export 'gdk-offscreen-window-get-pixmap)
+;;; *** Not in present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_offscreen_window_set_embedder ()
@@ -5588,18 +5528,7 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_redirect_to_drawable" gdk-window-redirect-to-drawable)
-    :void
-  (window (g-object gdk-window))
-  (drawable (g-object gdk-drawable))
-  (src-x :int)
-  (src-y :int)
-  (dest-x :int)
-  (dest-y :int)
-  (width :int)
-  (height :int))
-
-(export 'gdk-window-redirect-to-drawable)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_remove_redirection ()
@@ -5614,9 +5543,6 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_remove_redirection" gdk-window-remove-redirection) :void
-  (window (g-object gdk-window)))
-
-(export 'gdk-window-remove-redirection)
+;;; *** Not present in GTK 3.2 ***
 
 ;;; --- End of file gdk.window.lisp --------------------------------------------
