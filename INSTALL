@@ -1,0 +1,52 @@
+With SBCL the command to load the cl-cffi-gtk library is:
+
+   (asdf:load-system 'cl-gtk)
+
+The following libraries are loaded in addition with the above command:
+
+   glib, gobject, gdk, pango, and cario.
+
+These libraries can be loaded individually with the commands:
+
+   (asdf:load-system 'cl-cffi-gtk-glib)
+   (asdf:load-system 'cl-cffi-gtk-gobject)
+   (asdf:load-system 'cl-cffi-gtk-gdk)
+   (asdf:load-system 'cl-cffi-gtk-pango)
+   (asdf:load-system 'cl-cffi-gtk-cairo)
+
+It is assumed, that the corresponding system definition files cl-cffi-gtk.asd,
+cl-cffi-gtk-glib.asd, cl-cffi-gtk-gobject.asd, cl-cffi-gtk-gdk.asd,
+cl-cffi-gtk-pango.asd, and cl-cffi-gtk-cairo.asd are correctly registered to
+asdf:*central-registry* or the corresponding symlinks are created.
+
+For example for SBCL on a Linux system the symlinks are added to the directory
+~/.sbcl/systems with the commands:
+
+   cd ~/.sbcl/systems
+
+   ln -s /path-to-cl-cffi-gtk/gtk/cl-cffi-gtk.asd
+   ln -s /path-to-cl-cffi-gtk/gdk/cl-cffi-gtk-gdk.asd
+   ln -s /path-to-cl-cffi-gtk/gobject/cl-cffi-gtk-gobject.asd
+   ln -s /path-to-cl-cffi-gtk/glib/cl-cffi-gtk-glib.asd
+   ln -s /path-to-cl-cffi-gtk/pango/cl-cffi-gtk-pango.asd
+   ln -s /path-to-cl-cffi-gtk/cairo/cl-cffi-gtk-cairo.asd
+
+
+The cl-cffi-gtk library depends further on the following libraries, which
+must be installed:
+
+   CFFI
+   see http://common-lisp.net/project/cffi/
+   
+   Trivial-Garbage
+   see http://www.cliki.net/trivial-garbage
+   
+   Iterate
+   see http://common-lisp.net/project/iterate/
+   
+   Bordeaux-Threads
+   see http://common-lisp.net/project/bordeaux-threads/
+   
+   Closer-MOP
+   see http://common-lisp.net/project/closer/closer-mop.html
+   
