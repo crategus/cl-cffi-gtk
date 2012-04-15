@@ -13,5 +13,9 @@ can be gained by reading the C documentation. Therefore, the C documentation
 from www.gtk.org is included into the Lisp files to document the Lisp binding
 to the GTK+ library.
 
-Examples of the usage are included in demos and tutorial examples.
+At this time, the library is developed and tested with SBCL 1.0.56 and
+GTK+ 3.2.0 on a Linux system.
+
+Examples of the usage are included in demos and tutorial examples. Start with
+the tutorial to learn how to use the library.
 
