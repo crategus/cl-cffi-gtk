@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cl-gtk-pango.asd
+;;; cl-cffi-gtk-glib.asd
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -25,19 +25,29 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defsystem :cl-gtk-pango
-  :name :cl-gtk-pango
+(defsystem :cl-cffi-gtk-glib
+  :name :cl-cffi-gtk-glib
   :version "0.0.0"
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
-  :components ((:file "pango.package")
-               (:file "pango.init")
-               (:file "pango.version")
-               (:file "pango.attributes")
-               (:file "pango.fonts")
-               (:file "pango.layout")
-               (:file "pango"))
-  :depends-on (:cl-gtk-glib :cl-gtk-gobject :iterate))
+  :components ((:file "glib.package")
+               (:file "glib.init")          ; Lisp Initialization
+               (:file "glib.stable-pointer"); Stable Pointers for callbacks
 
-;;; --- End of file cl-gtk-pango.asd -------------------------------------------
+               (:file "glib.misc")          ; Different Glib Types and Functions
+               (:file "glib.version")       ; Glib Version information
+               (:file "glib.threads")       ; Thread abstraction
+               (:file "glib.main-loop")     ; The Main Event Loop
+               (:file "glib.quark")         ; Association between string and id
+               (:file "glib.error")         ; Error Reporting
+               (:file "glib.utils")         ; Miscellaneous Utility Functions
+               
+               (:file "glib.lisp"))         ; More Lisp support
+  :depends-on (:cffi
+               :trivial-garbage
+               :iterate
+               :bordeaux-threads
+               :closer-mop))
+
+;;; --- End of file cl-cffi-gtk-glib.asd ---------------------------------------

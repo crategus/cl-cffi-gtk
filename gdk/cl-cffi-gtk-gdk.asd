@@ -25,8 +25,8 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defsystem :cl-gtk-gdk
-  :name :cl-gtk-gdk
+(defsystem :cl-cffi-gtk-gdk
+  :name :cl-cffi-gtk-gdk
   :version "0.0.0"
   :author "Dieter Kaiser"
   :license "LLGPL"
@@ -66,10 +66,10 @@
                (:file "gdk.app")              ; Notification for applications
                (:file "gdk.pango")            ; Using Pango in GDK
                )
-  :depends-on (:cl-gtk-gobject
-               :cl-gtk-glib
-               :cl-gtk-pango
-               :cl-gtk-cairo
+  :depends-on (:cl-cffi-gtk-gobject
+               :cl-cffi-gtk-glib
+               :cl-cffi-gtk-pango
+               :cl-cffi-gtk-cairo
                :cffi))
 
-;;; --- End of file cl-gtk-gdk.asd ---------------------------------------------
+;;; --- End of file cl-cffi-gtk-gdk.asd ----------------------------------------

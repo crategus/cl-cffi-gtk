@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cl-gtk-cairo.asd
+;;; cl-cffi-gtk-cairo.asd
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
@@ -21,8 +21,8 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defsystem :cl-gtk-cairo
-  :name :cl-gtk-cairo
+(defsystem :cl-cffi-gtk-cairo
+  :name :cl-cffi-gtk-cairo
   :version "0.0.0"
   :author  "Dieter Kaiser"
   :license "LLGPL"
@@ -33,9 +33,9 @@
 ;               (:file "cairo")
 ;               (:file "cairo.demo")
               )
-  :depends-on (:cl-gtk-glib
-               :cl-gtk-gobject
+  :depends-on (:cl-cffi-gtk-glib
+               :cl-cffi-gtk-gobject
                :cffi
                :iterate))
 
-;;; --- End of file cl-gtk-cairo.asd -------------------------------------------
+;;; --- End of file cl-cffi-gtk-cairo.asd --------------------------------------

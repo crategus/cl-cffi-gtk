@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cl-gtk-gobject.asd
+;;; cl-cffi-gtk-gobject.asd
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -25,8 +25,8 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defsystem :cl-gtk-gobject
-  :name :cl-gtk-gobject
+(defsystem :cl-cffi-gtk-gobject
+  :name :cl-cffi-gtk-gobject
   :version "0.0.0"
   :author "Dieter Kaiser"
   :license "LLGPL"
@@ -51,11 +51,11 @@
                (:file "gobject.foreign-gobject-subclassing")
                (:file "gobject.utils")
                )
-  :depends-on (:cl-gtk-glib
+  :depends-on (:cl-cffi-gtk-glib
                :cffi
                :trivial-garbage
                :iterate
                :bordeaux-threads
                :closer-mop))
 
-;;; --- End of file cl-gtk-gobject.asd -----------------------------------------
+;;; --- End of file cl-cffi-gtk-gobject.asd ------------------------------------

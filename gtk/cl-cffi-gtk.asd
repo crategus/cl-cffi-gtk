@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cl-gtk.asd
+;;; cl-cffi-gtk.asd
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -25,7 +25,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defpackage #:cl-gtk-system
+(defpackage #:cl-cffi-gtk-system
   (:use #:cl #:asdf))
 
 ;;; ----------------------------------------------------------------------------
@@ -40,7 +40,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(in-package #:cl-gtk-system)
+(in-package #:cl-cffi-gtk-system)
 
 (defclass plain-file (static-file)
   ((type :initarg :type :reader plain-file-type :initform nil)))
@@ -50,8 +50,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defsystem :cl-gtk
-  :name :cl-gtk
+(defsystem :cl-cffi-gtk
+  :name :cl-cffi-gtk
   :version "0.0.0"
   :author "Dieter Kaiser"
   :license "LLGPL"
@@ -274,13 +274,13 @@
    ;; Lisp
    (:file "gtk.high-level")
    (:file "gtk.init"))
-  :depends-on (:cl-gtk-glib
-               :cl-gtk-gobject
-               :cl-gtk-gdk
-               :cl-gtk-pango
-               :cl-gtk-cairo
+  :depends-on (:cl-cffi-gtk-glib
+               :cl-cffi-gtk-gobject
+               :cl-cffi-gtk-gdk
+               :cl-cffi-gtk-pango
+               :cl-cffi-gtk-cairo
                :cffi
                :bordeaux-threads
                :iterate))
 
-;;; --- End of file cl-gtk.asd -------------------------------------------------
+;;; --- End of file cl-cffi-gtk.asd --------------------------------------------
