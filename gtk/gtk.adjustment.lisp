@@ -59,8 +59,7 @@
 ;;; 
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
-;;;          +----GtkObject
-;;;                +----GtkAdjustment
+;;;          +----GtkAdjustment
 ;;; 
 ;;; Properties
 ;;; 
@@ -297,6 +296,8 @@
 ;;;     the current value of the adjustment
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-adjustment-get-value))
+
 (defun gtk-adjustment-get-value (adjustment)
   (gtk-adjustment-value adjustment))
 
@@ -320,6 +321,8 @@
 ;;; value :
 ;;;     the new value
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustment-set-value))
 
 (defun gtk-adjustment-set-value (adjustment value)
   (setf (gtk-adjustment-value adjustment) value))
@@ -461,6 +464,8 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-adjustment-get-lower))
+
 (defun gtk-adjustment-get-lower (adjustment)
   (gtk-adjustment-lower adjustment))
 
@@ -481,6 +486,8 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustment-get-page-increment))
 
 (defun gtk-adjustment-get-page-increment (adjustment)
   (gtk-adjustment-page-increment adjustment))
@@ -503,6 +510,8 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-adjustment-get-page-size))
+
 (defun gtk-adjustment-get-page-size (adjustment)
   (gtk-adjustment-page-size adjustment))
 
@@ -523,6 +532,8 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustment-get-step-increment))
 
 (defun gtk-adjustment-get-step-increment (adjustment)
   (gtk-adjustment-step-increment adjustment))
@@ -545,6 +556,14 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-adjustment-get-minimum-increment))
+
+(defun gtk-adjustment-get-minimum-increment (adjustment)
+  (min (gtk-adjustment-step-increment adjustment)
+       (gtk-adjustment-page-increment adjustment)))
+
+(export 'gtk-adjustment-get-minimum-increment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_get_upper ()
 ;;; 
@@ -560,6 +579,8 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustment-get-upper))
 
 (defun gtk-adjustment-get-upper (adjustment)
   (gtk-adjustment-upper adjustment))
@@ -593,6 +614,8 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-adjustment-set-lower))
+
 (defun gtk-adjustment-set-lower (adjustment lower)
   (setf (gtk-adjustment-lower adjustment) lower))
 
@@ -617,6 +640,8 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustment-set-page-increment))
 
 (defun gtk-adjustment-set-page-increment (adjustment page-increment)
   (setf (gtk-adjustment-page-increment adjustment) page-increment))
@@ -643,6 +668,8 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-adjustment-set-page-size))
+
 (defun gtk-adjustment-set-page-size (adjustment page-size)
   (setf (gtk-adjustment-page-size adjustment) page-size))
 
@@ -667,6 +694,8 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustment-set-step-increment))
 
 (defun gtk-adjustment-set-step-increment (adjustment step-increment)
   (setf (gtk-adjustment-step-increment adjustment) step-increment))
@@ -694,6 +723,8 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-adjustent-set-upper))
 
 (defun gtk-adjustment-set-upper (adjustment upper)
   (setf (gtk-adjustment-upper adjustment) upper))
