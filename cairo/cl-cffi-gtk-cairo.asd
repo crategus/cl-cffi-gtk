@@ -29,6 +29,7 @@
   :serial t
   :components ((:file "cairo.package")
                (:file "cairo.init")
+               (:file "cairo.version")
                (:file "cairo.regions")
 ;               (:file "cairo")
 ;               (:file "cairo.demo")
