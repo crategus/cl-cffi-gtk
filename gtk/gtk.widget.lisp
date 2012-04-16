@@ -3689,16 +3689,8 @@
 ;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_show" %gtk-widget-show) :void
+(defcfun ("gtk_widget_show" gtk-widget-show) :void
   (widget g-object))
-
-;; The Lisp implementation combines the functions gtk-widget-show and
-;; gtk-widget-show-all. The standard is to call gtk-widget-show-all.
-
-(defun gtk-widget-show (widget &key (all t))
-  (if all
-      (gtk-widget-show-all widget)
-      (%gtk-widget-show widget)))
 
 (export 'gtk-widget-show)
 
