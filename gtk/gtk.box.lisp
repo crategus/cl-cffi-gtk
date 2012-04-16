@@ -284,6 +284,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-box-new (orientation spacing)
+  (make-instance 'gtk-box
+                 :orientation orientation
+                 :spacing spacing))
+
+(export 'gtk-box-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_pack_start ()
 ;;; 
