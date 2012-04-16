@@ -23,10 +23,10 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk)
+(asdf:operate 'asdf:load-op :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :pango :common-lisp))
+  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -41,7 +41,7 @@
     (let (;; Create a toplevel window.
           (window (gtk-window-new :toplevel)))
       ;; Show the window.
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 (defun example-simple-window-2 ()
   (within-main-loop
@@ -51,7 +51,7 @@
                                  :title "Getting started"
                                  :default-width 250)))
       ;; Show the window.
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@
       ;; Put the button into the window.
       (gtk-container-add window button)
       ;; Show the window and the button.
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@
 (defun example-upgraded-hello-world ()
   (within-main-loop
     (let ((window (gtk-window-new :toplevel))
-          (box (gtk-hbox-new nil 6))
+          (box (gtk-box-new :horizontal 6))
           (button  nil))
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -111,8 +111,6 @@
                           (declare (ignore widget))
                           (format t "Button 1 was pressed.~%")))
       (gtk-box-pack-start box button :expand t :fill t :padding 0)
-      (gtk-widget-show button)
-      
       (setq button (gtk-button-new-with-label "Button 2"))
       (g-signal-connect button "clicked"
                         (lambda (widget)
@@ -120,7 +118,7 @@
                           (format t "Button 2 was pressed.~%")))
       (gtk-box-pack-start box button :expand t :fill t :padding 0)
       (gtk-container-add window box)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -132,8 +130,8 @@
                                  :default-width 250
                                  :default-height 75
                                  :border-width 12))
-          (box (make-instance 'gtk-hbox
-                              :homogeneous nil
+          (box (make-instance 'gtk-box
+                              :orientation :horizontal
                               :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -144,15 +142,15 @@
                           (lambda (widget)
                             (declare (ignore widget))
                             (format t "Button 1 was pressed.~%")))
-        (gtk-box-pack-start box button :expand t :fill t :padding 0))
+        (gtk-box-pack-start box button))
       (let ((button (gtk-button-new-with-label "Button 2")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
                             (declare (ignore widget))
                             (format t "Button 2 was pressed.~%")))
-        (gtk-box-pack-start box button :expand t :fill t :padding 0))
+        (gtk-box-pack-start box button))
       (gtk-container-add window box)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
