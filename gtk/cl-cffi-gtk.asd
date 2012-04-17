@@ -96,9 +96,10 @@
    (:file "gtk.menu-shell")            ; Base class for menu objects
    (:file "gtk.im-context")            ; Base class for input contexts
                                        
-   ;; Layout Containers                
-   (:file "gtk.box")                   ; GtkBox, GtkHBox, GtkVBox
-   (:file "gtk.table")                 ; GtkTable
+   ;; Layout Containers
+   (:file "gtk.box")                   ; A container box
+   (:file "gtk.table")                 ; Pack widgets in regular patterns
+   (:file "gtk.grid")                  ; Pack widgets in a rows and columns
    (:file "gtk.layout")                ; Infinite scrollable
    (:file "gtk.fixed")                 ; Widgets at fixed coordinates
    (:file "gtk.notebook")              ; Tabbed notebook container
