@@ -2,6 +2,7 @@
 ;;; tutorial.lisp
 ;;;
 ;;; Examples from the offical GTK+ 2.0 Tutorial translated to Lisp
+;;; and updated to GTK+ 3.2
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
@@ -161,7 +162,8 @@
 ;;; Packing Demonstrations Program
 
 (defun make-box (homogeneous spacing expand fill padding)
-  (let ((box (make-instance 'gtk-hbox
+  (let ((box (make-instance 'gtk-box
+                            :orientation :horizontal
                             :homogeneous homogeneous
                             :spacing spacing)))
     (gtk-box-pack-start box
@@ -208,14 +210,13 @@
                                  :border-width 12
                                  :default-height 200
                                  :default-width 300))
-          (vbox (make-instance 'gtk-vbox
-                               :homogeneous nil
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical
                                :spacing 6))
           (button (make-instance 'gtk-button
                                  :label "Quit"))
-          (quitbox (make-instance 'gtk-hbox
-                                  :homogeneous nil
-                                  :spacing 0)))
+          (quitbox (make-instance 'gtk-box
+                                  :orientation :horizontal)))
       (g-signal-connect button "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -228,38 +229,31 @@
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                          "GtkHBox homogeneous nil spacing ~A"
-                                                 spacing)
+                                            "GtkHBox homogeneous nil spacing ~A"
+                                            spacing)
                                          :xalign 0
                                          :yalign 0)
                           :expand nil
-                          :fill nil
-                          :padding 0)
+                          :fill nil)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator)
-                          :expand nil
-                          :fill t
-                          :padding 0)
+                          (gtk-separator-new :horizontal)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing nil nil 0)
                           :expand nil
-                          :fill nil
-                          :padding 0)
+                          :fill nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing t nil 0)
                           :expand nil
-                          :fill nil
-                          :padding 0)
+                          :fill nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing t t 0)
                           :expand nil
-                          :fill nil
-                          :padding 0)
+                          :fill nil)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator)
+                          (gtk-separator-new :horizontal)
                           :expand nil
-                          :fill t
-                          :padding 0)
+                          :fill t)
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
@@ -272,29 +266,24 @@
                           :fill nil
                           :padding 5)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator)
-                          :expand nil
-                          :fill t
-                          :padding 0)
+                          (gtk-separator-new :horizontal)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box t spacing t nil 0)
                           :expand nil
-                          :fill nil
-                          :padding 0)
+                          :fill nil)
       (gtk-box-pack-start vbox
                           (make-box t spacing t t 0)
                           :expand nil
-                          :fill nil
-                          :padding 0)
+                          :fill nil)
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator)
+                          (gtk-separator-new :horizontal)
                           :expand nil
-                          :fill t
                           :padding 5)
-      (gtk-box-pack-start quitbox button :expand nil :fill nil :padding 0)
-      (gtk-box-pack-start vbox quitbox :expand nil :fill nil :padding 0)
+      (gtk-box-pack-start quitbox button :expand nil :fill nil)
+      (gtk-box-pack-start vbox quitbox :expand nil :fill nil)
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -329,7 +318,7 @@
       (gtk-table-attach table button2 1 2 0 1)
       (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 (defun example-table-packing-2 ()
   (within-main-loop
@@ -378,7 +367,7 @@
       (gtk-table-attach table button2 1 2 0 1)
       (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -414,7 +403,7 @@
                           (gtk-main-quit)))
       (gtk-container-add button box)
       (gtk-container-add window button)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -469,7 +458,7 @@
       (gtk-box-pack-start hbox vbox1)
       (gtk-box-pack-start hbox vbox2)
       (gtk-container-add window hbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -547,7 +536,7 @@
                             (gtk-widget-destroy window))))
       ;; Put the vbox in the window widget                     
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -731,7 +720,7 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start box button)
         (gtk-box-pack-start box1 box :expand nil))
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -864,7 +853,7 @@
       (gtk-box-pack-start hbox vbox1 :expand nil :fill nil)
       (gtk-box-pack-start hbox vbox2 :expand nil :fill nil)
       (gtk-container-add window hbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -935,7 +924,7 @@
                                          <a href=\"http://gtk.org/\">~
                                          GTK+ Website</a> for more ...")))
       (gtk-container-add window vbox2)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -981,7 +970,7 @@
                           (create-arrow-button :right :etched-out) 
                           :expand nil :fill nil :padding 3)
       (gtk-container-add window box)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1066,7 +1055,7 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1111,7 +1100,7 @@
       (gtk-box-pack-start vbox label)
       (gtk-box-pack-start (gtk-dialog-get-content-area dialog) vbox)
       ;; Show the content area of the dialog
-      (gtk-widget-show (gtk-dialog-get-content-area dialog)))
+      (gtk-widget-show-all (gtk-dialog-get-content-area dialog)))
     ;; Add buttons with a stock id to the action area
     (gtk-dialog-add-button dialog "gtk-yes" :yes)
     (gtk-dialog-add-button dialog "gtk-no" :no)
@@ -1208,7 +1197,7 @@
                             (declare (ignore widget))
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1246,7 +1235,7 @@
              (gtk-statusbar-pop statusbar id)))
         (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1299,7 +1288,7 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1499,7 +1488,7 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1581,7 +1570,7 @@
       ;; Put the table into the window
       (gtk-container-add window table)
       ;; Show the window
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1598,7 +1587,7 @@
       (gtk-combo-box-text-append-text combo "Third entry")
       (gtk-combo-box-set-active combo 0)
       (gtk-container-add window combo)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1630,7 +1619,7 @@
                                   (gtk-calendar-month calendar)
                                   (gtk-calendar-day calendar))))
       (gtk-container-add window calendar)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1680,7 +1669,7 @@
                           (lambda (widget event)
                             (drawing-area-event widget event area)))
         (gtk-container-add window area)
-        (gtk-widget-show window))))
+        (gtk-widget-show-all window))))
 )
 
 ;;; ----------------------------------------------------------------------------
@@ -1707,7 +1696,7 @@
                           (format t "File set: ~A~%"
                                   (gtk-file-chooser-filename button))))
       (gtk-container-add window button)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
       
 ;;; ----------------------------------------------------------------------------
 
@@ -1745,7 +1734,7 @@
                        (gtk-file-chooser-filename dialog)))
              (gtk-widget-destroy dialog))))
       (gtk-container-add window button)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -1782,7 +1771,7 @@
       (gtk-widget-realize eventbox)
       (gdk-window-set-cursor (gtk-widget-window eventbox)
                              (gdk-cursor-new :hand1))
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1809,7 +1798,7 @@
                           (gtk-widget-destroy window)))
       (gtk-container-add alignment button)
       (gtk-container-add window alignment)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1841,7 +1830,7 @@
                             (lambda (widget)
                               (move-button widget fixed)))
           (gtk-fixed-put fixed button (random 300) (random 200))))
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1865,7 +1854,7 @@
                           (declare (ignore widget))
                           (gtk-main-quit)))
       (gtk-container-add window frame)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1894,7 +1883,7 @@
                           (gtk-main-quit)))
       (gtk-container-add window frame)
       (gtk-container-add frame area)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1917,7 +1906,7 @@
       (gtk-container-add window vpaned)
       (gtk-paned-add1 vpaned frame1)
       (gtk-paned-add2 vpaned frame2)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1963,7 +1952,7 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
         (gtk-widget-grab-default button))
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2052,7 +2041,7 @@
                           (create-bbox nil "End (spacing 6)" 6 :end))
       (gtk-box-pack-start vbox1 hbox)
       (gtk-container-add window vbox1)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2087,7 +2076,7 @@
                                          (gtk-image-new-from-file "gtk-logo.png"))
                           0)
       
-      (gtk-widget-show dialog))))
+      (gtk-widget-show-all dialog))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -2206,7 +2195,7 @@
       ;; Pack the vbox into the window.
       (gtk-container-add window vbox)
       ;; Show the window.
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 (defun example-menu-builder ()
   (within-main-loop
@@ -2216,7 +2205,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (gtk-widget-show (gtk-builder-get-object builder "window")))))
+      (gtk-widget-show-all (gtk-builder-get-object builder "window")))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2251,7 +2240,7 @@
       (gtk-box-pack-start vbox text-view)
       (gtk-text-buffer-set-text buffer "Hello Text View")
       (gtk-box-pack-start vbox button :expand nil :fill nil)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2320,7 +2309,7 @@
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2356,7 +2345,7 @@
       (gtk-box-pack-start vbox hbox)
       (gtk-box-pack-start vbox scrolled)
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
       
 ;;; ----------------------------------------------------------------------------
 
@@ -2414,7 +2403,7 @@
       (gtk-box-pack-start vbox hbox)
       (gtk-box-pack-start vbox scrolled)
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
       
 ;;; ----------------------------------------------------------------------------
 
@@ -2451,7 +2440,7 @@
    (gtk-box-pack-start vbox text-view)
    (gtk-box-pack-start vbox button)
    (gtk-container-add window vbox)
-   (gtk-widget-show window))))
+   (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2512,7 +2501,7 @@
       (gtk-box-pack-start vbox text-view)
       (gtk-box-pack-start vbox button)
       (gtk-container-add window vbox)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2545,7 +2534,7 @@
     (gtk-box-pack-start vbox button)
     (gtk-box-pack-start vbox text-view)
     (gtk-container-add window vbox)
-    (gtk-widget-show window))))
+    (gtk-widget-show-all window))))
     
 ;;; ----------------------------------------------------------------------------
 
@@ -2565,6 +2554,6 @@
                           (declare (ignore widget))
                           (gtk-main-quit)))
       (gtk-container-add window (create-view-and-model))
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
