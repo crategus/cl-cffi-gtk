@@ -192,7 +192,7 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (register-object-type "GtkGrid" 'gtk-grid))
 
-(define-g-object-class "GtkSeparator" gtk-grid
+(define-g-object-class "GtkGrid" gtk-grid
   (:superclass gtk-container
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
