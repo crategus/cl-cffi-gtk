@@ -112,7 +112,7 @@
     (assert-true     (gtk-widget-double-buffered widget))
     (assert-false    (gtk-widget-events widget))
     (assert-false    (gtk-widget-expand widget))
-    (assert-eq       :gtk-align-fill
+    (assert-eq       :fill
                      (gtk-widget-halign widget))
     (assert-false    (gtk-widget-has-default widget))
     (assert-false    (gtk-widget-has-focus widget))
@@ -135,7 +135,7 @@
                      (g-type-from-instance (pointer (gtk-widget-style widget))))
     (assert-false    (gtk-widget-tooltip-markup widget))
     (assert-false    (gtk-widget-tooltip-text widget))
-    (assert-eq       :gtk-align-fill
+    (assert-eq       :fill
                      (gtk-widget-get-valign widget))
     (assert-false    (gtk-widget-vexpand widget))
     (assert-false    (gtk-widget-vexpand-set widget))
@@ -391,10 +391,10 @@
     ;; gtk_widget_get_preferred_size             not implemented
     ;; gtk_distribute_natural_allocation         not implemented
     ;; 
-    (assert-eq :gtk-align-fill (gtk-widget-get-halign widget))
-    (assert-eq :gtk-align-fill (gtk-widget-set-halign widget (gtk-widget-get-halign widget)))
-    (assert-eq :gtk-align-fill (gtk-widget-get-valign widget))
-    (assert-eq :gtk-align-fill (gtk-widget-set-valign widget (gtk-widget-get-valign widget)))
+    (assert-eq :fill (gtk-widget-get-halign widget))
+    (assert-eq :fill (gtk-widget-set-halign widget (gtk-widget-get-halign widget)))
+    (assert-eq :fill (gtk-widget-get-valign widget))
+    (assert-eq :fill (gtk-widget-set-valign widget (gtk-widget-get-valign widget)))
     (assert-eql 0 (gtk-widget-get-margin-left widget))
     (assert-eql 0 (gtk-widget-set-margin-left widget (gtk-widget-get-margin-left widget)))
     (assert-eql 0 (gtk-widget-get-margin-right widget))
