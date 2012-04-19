@@ -8863,10 +8863,10 @@
 (define-g-enum "GtkAlign" gtk-align
   (:export t
    :type-initializer "gtk_align_get_type")
-  (:gtk-align-fill 0)
-  (:gtk-align-start 1)
-  (:gtk-align-end 2)
-  (:gtk-align-center 3))
+  (:fill 0)
+  (:start 1)
+  (:end 2)
+  (:center 3))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_halign ()
