@@ -63,6 +63,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkCalendar implements AtkImplementorIface and GtkBuildable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "day"                      gint                  : Read / Write
@@ -519,6 +520,8 @@
 ;;;     a newly GtkCalendar widget
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-calendar-new))
+
 (defun gtk-calendar-new ()
   (make-instance 'gtk-calendar))
 
@@ -631,6 +634,13 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_calendar_get_day_is_marked" gtk-calendar-get-day-is-marked)
+    :boolean
+  (calendar (g-object gtk-calendar))
+  (day :int))
+
+(export 'gtk-calendar-get-day-is-marked)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_clear_marks ()
