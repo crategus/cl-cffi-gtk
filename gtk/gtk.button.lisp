@@ -40,11 +40,11 @@
 ;;;     gtk_button_new_with_label
 ;;;     gtk_button_new_with_mnemonic
 ;;;     gtk_button_new_from_stock
-;;;     gtk_button_pressed
-;;;     gtk_button_released
+;;;     gtk_button_pressed                * deprecated *
+;;;     gtk_button_released               * deprecated *
 ;;;     gtk_button_clicked
-;;;     gtk_button_enter
-;;;     gtk_button_leave
+;;;     gtk_button_enter                  * deprecated *
+;;;     gtk_button_leave                  * deprecated *
 ;;;     gtk_button_set_relief
 ;;;     gtk_button_get_relief
 ;;;     gtk_button_get_label
@@ -458,6 +458,8 @@
 ;;;     The newly created GtkButton widget.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-new))
+
 (defun gtk-button-new ()
   (make-instance 'gtk-button))
 
@@ -477,6 +479,8 @@
 ;;;     The newly created GtkButton widget.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-new-with-label))
+
 (defun gtk-button-new-with-label (label)
   (make-instance 'gtk-button :label label))
 
@@ -494,8 +498,8 @@
 ;;; Pressing Alt and that key activates the button.
 ;;; 
 ;;; label :
-;;;     The text of the button, with an underscore in front of the mnemonic
-;;;     character.
+;;;     the text of the button, with an underscore in front of the mnemonic
+;;;     character
 ;;; 
 ;;; Returns :
 ;;;     a new GtkButton
@@ -533,38 +537,6 @@
 (export 'gtk-button-new-from-stock)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_button_pressed ()
-;;; 
-;;; void gtk_button_pressed (GtkButton *button)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_button_pressed has been deprecated since version 2.20 and should not
-;;; be used in newly-written code. Use the "button-press-event" signal.
-;;; 
-;;; Emits a "pressed" signal to the given GtkButton.
-;;; 
-;;; button :
-;;;     The GtkButton you want to send the signal to.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_released ()
-;;; 
-;;; void gtk_button_released (GtkButton *button)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_button_released has been deprecated since version 2.20 and should not
-;;; be used in newly-written code. Use the "button-release-event" signal.
-;;; 
-;;; Emits a "released" signal to the given GtkButton.
-;;; 
-;;; button :
-;;;     The GtkButton you want to send the signal to.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_button_clicked ()
 ;;; 
 ;;; void gtk_button_clicked (GtkButton *button)
@@ -575,37 +547,10 @@
 ;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_enter ()
-;;; 
-;;; void gtk_button_enter (GtkButton *button)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_button_enter has been deprecated since version 2.20 and should not be
-;;; used in newly-written code. Use the "enter-notify-event" signal.
-;;; 
-;;; Emits a "enter" signal to the given GtkButton.
-;;; 
-;;; button :
-;;;     The GtkButton you want to send the signal to.
-;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_button_clicked" gtk-button-clicked) :void
+  (button (g-object gtk-button)))
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_leave ()
-;;; 
-;;; void gtk_button_leave (GtkButton *button)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_button_leave has been deprecated since version 2.20 and should not be
-;;; used in newly-written code. Use the "leave-notify-event" signal.
-;;; 
-;;; Emits a "leave" signal to the given GtkButton.
-;;; 
-;;; button :
-;;;     The GtkButton you want to send the signal to.
-;;; ----------------------------------------------------------------------------
+(export 'gtk-button-clicked)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_relief ()
@@ -623,6 +568,13 @@
 ;;;     The GtkReliefStyle as described above.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-set-relief))
+
+(defun gtk-button-set-relief (button newstyle)
+  (setf (gtk-button-relief button) newstyle))
+
+(export 'gtk-button-set-relief)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_relief ()
 ;;; 
@@ -636,6 +588,13 @@
 ;;; Returns :
 ;;;     The current GtkReliefStyle
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-get-relief))
+
+(defun gtk-button-get-relief (button)
+  (gtk-button-relief button))
+
+(export 'gtk-button-get-relief)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_label ()
@@ -654,6 +613,8 @@
 ;;;     The text of the label widget. This string is owned by the widget and
 ;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-get-label))
 
 (defun gtk-button-get-label (button)
   (gtk-button-label button))
@@ -677,6 +638,8 @@
 ;;;     a string
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-set-label))
+
 (defun gtk-button-set-label (button label)
   (setf (gtk-button-label button) label))
 
@@ -697,6 +660,13 @@
 ;;;     being used directly as the label text.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-get-use-stock))
+
+(defun gtk-button-get-use-stock (button)
+  (gtk-button-use-stock button))
+
+(export 'gtk-button-get-use-stock)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_use_stock ()
 ;;; 
@@ -711,6 +681,13 @@
 ;;; use_stock :
 ;;;     TRUE if the button should use a stock item
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-set-use-stock))
+
+(defun gtk-button-set-use-stock (button use-stock)
+  (setf (gtk-button-use-stock button) use-stock))
+
+(export 'gtk-button-set-use-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_use_underline ()
@@ -728,6 +705,13 @@
 ;;;     mnemonic accelerator keys.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-get-use-underline))
+
+(defun gtk-button-get-use-underline (button)
+  (gtk-button-use-underline button))
+
+(export 'gtk-button-get-use-underline)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_use_underline ()
 ;;; 
@@ -743,6 +727,13 @@
 ;;; use_underline :
 ;;;     TRUE if underlines in the text indicate mnemonics
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-set-use-underline))
+
+(defun gtk-button-set-use-underline (button use-underline)
+  (setf (gtk-button-use-underline button) use-underline))
+
+(export 'gtk-button-set-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_focus_on_click ()
@@ -764,6 +755,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-set-focus-on-click))
+
+(defun gtk-button-set-focus-on-click (button focus-on-click)
+  (setf (gtk-button-focus-on-click button) focus-on-click))
+
+(export 'gtk-button-set-focus-on-click)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_focus_on_click ()
 ;;; 
@@ -780,6 +778,13 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-get-focus-on-click))
+
+(defun gtk-button-get-focus-on-click (button)
+  (gtk-button-focus-on-click button))
+
+(export 'gtk-button-get-focus-on-click)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_alignment ()
@@ -805,6 +810,14 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-set-alignment))
+
+(defun gtk-button-set-alignment (button xalign yalign)
+  (setf (gtk-button-xalign button) xalign
+        (gtk-button-yalign button) yalign))
+
+(export 'gtk-button-set-alignment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_alignment ()
 ;;; 
@@ -826,6 +839,14 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-get-alignment))
+
+(defun gtk-button-get-alignment (button)
+  (values (gtk-button-xalign button)
+          (gtk-button-yalign button)))
+
+(export 'gtk-button-get-alignment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_image ()
 ;;; 
@@ -843,6 +864,13 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-set-image))
+
+(defun gtk-button-set-image (button image)
+  (setf (gtk-button-image button) image))
+
+(export 'gtk-button-set-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_image ()
@@ -862,6 +890,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-get-image))
+
+(defun gtk-button-get-image (button)
+  (gtk-button-image button))
+
+(export 'gtk-button-get-image)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_image_position ()
 ;;; 
@@ -879,6 +914,13 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-set-image-position))
+
+(defun gtk-button-set-image-position (button position)
+  (setf (gtk-button-image-position button) position))
+
+(export 'gtk-button-set-image-position)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_image_position ()
 ;;; 
@@ -895,6 +937,13 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-button-get-image-position))
+
+(defun gtk-button-get-image-position (button)
+  (gtk-button-image-position button))
+
+(export 'gtk-button-get-image-position)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_event_window ()
 ;;; 
@@ -907,9 +956,15 @@
 ;;;     a GtkButton
 ;;; 
 ;;; Returns :
-;;;     button's event window.
+;;;     button's event window
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_button_get_event_window" gtk-button-get-event-window)
+    (g-object gdk-window)
+  (button (g-object gtk-button)))
+
+(export 'gtk-button-get-event-window)
 
 ;;; --- End of file gtk.button.lisp --------------------------------------------

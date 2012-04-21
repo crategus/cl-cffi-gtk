@@ -161,10 +161,10 @@
 ;;; GtkToggleButton's state is changed.
 ;;; 
 ;;; togglebutton :
-;;;     the object which received the signal.
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -202,8 +202,10 @@
 ;;; in gtk_button_new().
 ;;; 
 ;;; Returns :
-;;;     a new toggle button.
+;;;     a new toggle button
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toogle-button-new))
 
 (defun gtk-toggle-button-new ()
   (make-instance 'gtk-toggle-button))
@@ -218,14 +220,17 @@
 ;;; Creates a new toggle button with a text label.
 ;;; 
 ;;; label :
-;;;     a string containing the message to be placed in the toggle button.
+;;;     a string containing the message to be placed in the toggle button
 ;;; 
 ;;; Returns :
-;;;     a new toggle button.
+;;;     a new toggle button
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-toggle-button-new-with-label))
+
 (defun gtk-toggle-button-new-with-label (label)
-  (make-instance 'gtk-toggle-button :label label))
+  (make-instance 'gtk-toggle-button
+                 :label label))
 
 (export 'gtk-toggle-button-new-with-label)
 
@@ -245,6 +250,13 @@
 ;;; Returns :
 ;;;     a new GtkToggleButton
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_toggle_button_new_with_mnemonic"
+           gtk-toggle-button-new-with-mnemonic)
+    (g-object gtk-widget)
+  (label :string))
+
+(export 'gtk-toggle-button-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_set_mode ()
@@ -268,6 +280,13 @@
 ;;;     draw the button like a normal button
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-toggle-button-set-mode))
+
+(defun gtk-toggle-button-set-mode (toggle-button draw-indicator)
+  (setf (gtk-toggle-button-draw-indicator toggle-button) draw-indicator))
+
+(export 'gtk-toggle-button-set-mode)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_get_mode ()
 ;;; 
@@ -280,8 +299,15 @@
 ;;;     a GtkToggleButton
 ;;; 
 ;;; Returns :
-;;;     TRUE if the togglebutton is drawn as a separate indicator and label.
+;;;     TRUE if the togglebutton is drawn as a separate indicator and label
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-button-get-mode))
+
+(defun gtk-toggle-button-get-mode (toggle-button)
+  (gtk-toggle-button-draw-indicator toggle-button))
+
+(export 'gtk-toggle-button-get-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_toggled ()
@@ -292,8 +318,13 @@
 ;;; for an application ever to call this function.
 ;;; 
 ;;; toggle_button :
-;;;     a GtkToggleButton.
+;;;     a GtkToggleButton
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_toggle_button_toggled" gtk-toggle-button-toggled) :void
+  (toggle-button (g-object gtk-toggle-button)))
+
+(export 'gtk-toggle-button-toggled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_get_active ()
@@ -304,11 +335,13 @@
 ;;; the toggle button is pressed in and FALSE if it is raised.
 ;;; 
 ;;; toggle_button :
-;;;     a GtkToggleButton.
+;;;     a GtkToggleButton
 ;;; 
 ;;; Returns :
-;;;     a gboolean value.
+;;;     a gboolean value
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-button-get-active))
 
 (defun gtk-toggle-button-get-active (toggle-button)
   (gtk-toggle-button-active toggle-button))
@@ -326,11 +359,13 @@
 ;;; causes the toggled signal to be emitted.
 ;;; 
 ;;; toggle_button :
-;;;     a GtkToggleButton.
+;;;     a GtkToggleButton
 ;;; 
 ;;; is_active :
-;;;     TRUE or FALSE.
+;;;     TRUE or FALSE
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-button-set-active))
 
 (defun gtk-toggle-button-set-active (toggle-button is-active)
   (setf (gtk-toggle-button-active toggle-button) is-active))
@@ -350,6 +385,13 @@
 ;;; Returns :
 ;;;     TRUE if the button is displayed as inconsistent, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-button-get-inconsistent))
+
+(defun gtk-toggle-button-get-inconsistent (toggle-button)
+  (gtk-toggle-button-inconsistent toggle-button))
+
+(export 'gtk-toggle-button-get-inconsistent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_set_inconsistent ()
@@ -372,5 +414,12 @@
 ;;; setting :
 ;;;     TRUE if state is inconsistent
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-button-set-inconsistent))
+
+(defun gtk-toggle-button-set-inconsistent (toggle-button setting)
+  (setf (gtk-toggle-button-inconsistent toggle-button) setting))
+
+(export 'gtk-toggle-button-set-inconsistent)
 
 ;;; --- End of file gtk.toogle-button.lisp -------------------------------------
