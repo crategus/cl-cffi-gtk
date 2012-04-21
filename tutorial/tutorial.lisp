@@ -508,16 +508,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 7. The Button Widget
+;;; Chapter 5. The Button Widget
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; Normal Buttons
 
 (defun image-label-box (filename text)
-  (let ((box (make-instance 'gtk-hbox
-                            :homogeneous nil
-                            :spacing 0
+  (let ((box (make-instance 'gtk-box
+                            :orientation :horizontal
                             :border-width 3))
         (label (make-instance 'gtk-label
                               :label text))
@@ -551,9 +550,15 @@
                                  :type :toplevel
                                  :default-width 250
                                  :border-width 12))
-          (vbox1 (make-instance 'gtk-vbox :spacing 6))
-          (vbox2 (make-instance 'gtk-vbox :spacing 6))
-          (hbox  (make-instance 'gtk-hbox :spacing 6)))
+          (vbox1 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :spacing 6))
+          (hbox  (make-instance 'gtk-box
+                                :orientation :horizontal
+                                :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -606,72 +611,69 @@
     (let ((window (make-instance 'gtk-window
                                  :title "Example Toggle Buttons"
                                  :type :toplevel))
-          (vbox (make-instance 'gtk-vbox
-                               :homogeneous nil
-                               :spacing 0))
-          (hbox (make-instance 'gtk-hbox
-                               :homogenous nil
-                               :spacing 0)))
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical))
+          (hbox (make-instance 'gtk-box
+                               :orientation :horizontal)))
       ;; Handler for the signal "destroy"
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
       ;; Create three radio buttons and put the buttons in a vbox      
-      (let ((vbox (make-instance 'gtk-vbox
-                                 :homogenous nil
+      (let ((vbox (make-instance 'gtk-box
+                                 :orientation :vertical
                                  :spacing 12
                                  :border-width 12))
             (button (gtk-radio-button-new-with-label nil "Radio Button 1")))
-        (gtk-box-pack-start vbox button :expand t :fill t)
+        (gtk-box-pack-start vbox button)
         (setq button
               (gtk-radio-button-new-with-label
                                           (gtk-radio-button-get-group button)
                                           "Radio Button 2"))
         (gtk-toggle-button-set-active button t)
-        (gtk-box-pack-start vbox button :expand t :fill t)
+        (gtk-box-pack-start vbox button)
         (setq button
               (gtk-radio-button-new-with-mnemonic
                                           (gtk-radio-button-get-group button)
                                           "_Radio Button 3"))
-        (gtk-box-pack-start vbox button :expand t :fill t)
+        (gtk-box-pack-start vbox button)
         ;; Put the vbox with the radio buttons in a hbox
         (gtk-box-pack-start hbox vbox :expand nil :fill nil))
       ;; Create three check buttons and put the buttons in a vbox
-      (let ((vbox (make-instance 'gtk-vbox
+      (let ((vbox (make-instance 'gtk-box
+                                 :orientation :vertical
                                  :homogenous nil
                                  :spacing 12
                                  :border-width 12)))
         (gtk-box-pack-start vbox
-                            (gtk-check-button-new-with-label "Check Button 1")
-                            :expand t :fill t :padding 0)
+                            (gtk-check-button-new-with-label "Check Button 1"))
         (gtk-box-pack-start vbox
-                            (gtk-check-button-new-with-label "Check Button 2")
-                            :expand t :fill t :padding 0)
+                            (gtk-check-button-new-with-label "Check Button 2"))
         (gtk-box-pack-start vbox
-                            (gtk-check-button-new-with-label "Check Button 3")
-                            :expand t :fill t :padding 0)
+                            (gtk-check-button-new-with-label "Check Button 3"))
         ;; Put the vbox with the buttons in a hbox
         (gtk-box-pack-start hbox vbox :expand nil :fill nil))
       ;; Put the hbox in a vbox
       (gtk-box-pack-start vbox hbox :expand nil :fill nil)
       ;; Add a separator to the vbox
       (gtk-box-pack-start vbox
-                          (make-instance 'gtk-hseparator)
-                          :expand nil :fill nil :padding 0)
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal)
+                          :expand nil :fill nil)
       ;; Add a quit button to the vbox
-      (let ((vbox-quit (make-instance 'gtk-vbox
-                                      :homogeneous nil
+      (let ((vbox-quit (make-instance 'gtk-box
+                                      :orientation :vertical
                                       :spacing 12
                                       :border-width 12))
             (button (make-instance 'gtk-button :label "Close")))
         (gtk-box-pack-start vbox-quit button :expand nil :fill nil)
-        (gtk-box-pack-start vbox vbox-quit :expand nil :fill t)
+        (gtk-box-pack-start vbox vbox-quit :expand nil)
         (g-signal-connect button "clicked"
                           (lambda (button)
                             (declare (ignore button))
                             (gtk-widget-destroy window))))
-      ;; Put the vbox in the window widget                     
+      ;; Put the vbox in the window widget
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 
