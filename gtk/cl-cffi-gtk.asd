@@ -114,6 +114,7 @@
    (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
    
    ;; Scrolling
+   (:file "gtk.scrollable")            ; An interface for scrollable widgets
    (:file "gtk.scrollbar")             ; GtkScrollbar
    (:file "gtk.scrolled-window")       ; Adds scrollbars
    
