@@ -75,6 +75,7 @@
 (load "rtest-gtk-progress-bar.lisp")
 (load "rtest-gtk-range.lisp")
 (load "rtest-gtk-scale.lisp")
+(load "rtest-gtk-scrollbar.lisp")
 (load "rtest-gtk-table.lisp")
 (load "rtest-gtk-window.lisp")
 (load "rtest-gtk-widget.lisp")

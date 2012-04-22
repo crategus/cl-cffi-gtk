@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-range.lisp
+;;; rtest-gtk-range.lisp
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
@@ -67,7 +67,7 @@
   (assert-equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkRange")))
   
-  ;; Query infos about the class "GtkTable"
+  ;; Query infos about the class "GtkRange"
   (with-foreign-object (query 'g-type-query)
     (g-type-query "GtkRange" query)
     (assert-equal (gtype "GtkRange")
