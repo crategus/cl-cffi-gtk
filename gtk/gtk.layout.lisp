@@ -41,10 +41,10 @@
 ;;;     gtk_layout_move
 ;;;     gtk_layout_set_size
 ;;;     gtk_layout_get_size
-;;;     gtk_layout_get_hadjustment
-;;;     gtk_layout_get_vadjustment
-;;;     gtk_layout_set_hadjustment
-;;;     gtk_layout_set_vadjustment
+;;;     gtk_layout_get_hadjustment   * deprecated *
+;;;     gtk_layout_get_vadjustment   * deprecated *
+;;;     gtk_layout_set_hadjustment   * deprecated *
+;;;     gtk_layout_set_vadjustment   * deprecated *
 ;;;     gtk_layout_get_bin_window
 ;;; 
 ;;; Object Hierarchy
@@ -58,6 +58,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkLayout implements AtkImplementorIface, GtkBuildable and GtkScrollable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "height"                   guint                 : Read / Write
@@ -144,17 +145,11 @@
 (define-g-object-class "GtkLayout" gtk-layout
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
    :type-initializer "gtk_layout_get_type")
-  ((hadjustment
-    gtk-layout-hadjustment
-    "hadjustment" "GtkAdjustment" t t)
-   (height
+  ((height
     gtk-layout-height
     "height" "guint" t t)
-   (vadjustment
-    gtk-layout-vadjustment
-    "vadjustment" "GtkAdjustment" t t)
    (width
     gtk-layout-width
     "width" "guint" t t)
@@ -190,6 +185,8 @@
 ;;; Returns :
 ;;;     a new GtkLayout
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-layout-new))
 
 (defun gtk-layout-new (&optional (hadjustment nil) (vadjustment nil))
   (make-instance 'gtk-layout
@@ -278,6 +275,8 @@
 ;;;     height of entire scrollable area
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-layout-set-size))
+
 (defun gtk-layout-set-size (layout width height)
   (setf (gtk-layout-width layout) width
         (gtk-layout-height layout) height))
@@ -302,123 +301,13 @@
 ;;;     location to store the height set on layout, or NULL
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-layout-get-size))
+
 (defun gtk-layout-get-size (layout)
   (values (gtk-layout-width layout)
           (gtk-layout-height layout)))
 
 (export 'gtk-layout-get-size)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_layout_get_hadjustment ()
-;;; 
-;;; GtkAdjustment * gtk_layout_get_hadjustment (GtkLayout *layout);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_layout_get_hadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
-;;; 
-;;; This function should only be called after the layout has been placed in a
-;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
-;;; GtkAdjustment used for communication between the horizontal scrollbar and
-;;; layout.
-;;; 
-;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; Returns :
-;;;     horizontal scroll adjustment
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-layout-get-hadjustment (layout)
-  (gtk-layout-hadjustment layout))
-
-(export 'gtk-layout-get-hadjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_layout_get_vadjustment ()
-;;; 
-;;; GtkAdjustment * gtk_layout_get_vadjustment (GtkLayout *layout);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_layout_get_vadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
-;;; 
-;;; This function should only be called after the layout has been placed in a
-;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
-;;; GtkAdjustment used for communication between the vertical scrollbar and
-;;; layout.
-;;; 
-;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; Returns :
-;;;     vertical scroll adjustment.
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-layout-get-vadjustment (layout)
-  (gtk-layout-vadjustment layout))
-
-(export 'gtk-layout-get-vadjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_layout_set_hadjustment ()
-;;; 
-;;; void gtk_layout_set_hadjustment (GtkLayout *layout,
-;;;                                  GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_layout_set_hadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
-;;; 
-;;; Sets the horizontal scroll adjustment for the layout.
-;;; 
-;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; adjustment :
-;;;     new scroll adjustment
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-layout-set-hadjustment (layout adjustment)
-  (setf (gtk-layout-hadjustment layout) adjustment))
-
-(export 'gtk-layout-set-hadjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_layout_set_vadjustment ()
-;;; 
-;;; void gtk_layout_set_vadjustment (GtkLayout *layout,
-;;;                                  GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_layout_set_vadjustment has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
-;;; 
-;;; Sets the vertical scroll adjustment for the layout.
-;;; 
-;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; adjustment :
-;;;     new scroll adjustment
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-layout-set-vadjustment (layout adjustment)
-  (setf (gtk-layout-vadjustment layout) adjustment))
-
-(export 'gtk-layout-set-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_bin_window ()

@@ -37,10 +37,10 @@
 ;;;     GtkViewport
 ;;;
 ;;;     gtk_viewport_new
-;;;     gtk_viewport_get_hadjustment
-;;;     gtk_viewport_get_vadjustment
-;;;     gtk_viewport_set_hadjustment
-;;;     gtk_viewport_set_vadjustment
+;;;     gtk_viewport_get_hadjustment     * deprecated *
+;;;     gtk_viewport_get_vadjustment     * deprecated *
+;;;     gtk_viewport_set_hadjustment     * deprecated *
+;;;     gtk_viewport_set_vadjustment     * deprecated *
 ;;;     gtk_viewport_set_shadow_type
 ;;;     gtk_viewport_get_shadow_type
 ;;;     gtk_viewport_get_bin_window
@@ -104,17 +104,11 @@
 (define-g-object-class "GtkViewport" gtk-viewport
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
    :type-initializer "gtk_viewport_get_type")
-  ((hadjustment
-    gtk-viewport-hadjustment
-    "hadjustment" "GtkAdjustment" t t)
-   (shadow-type
+  ((shadow-type
     gtk-viewport-shadow-type
-    "shadow-type" "GtkShadowType" t t)
-   (vadjustment
-    gtk-viewport-vadjustment
-    "vadjustment" "GtkAdjustment" t t)))
+    "shadow-type" "GtkShadowType" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_new ()
@@ -142,108 +136,6 @@
 (export 'gtk-viewport-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_get_hadjustment ()
-;;; 
-;;; GtkAdjustment * gtk_viewport_get_hadjustment (GtkViewport *viewport);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_viewport_get_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code.
-;;; Use gtk_scrollable_get_hadjustment()
-;;; 
-;;; Returns the horizontal adjustment of the viewport.
-;;; 
-;;; viewport :
-;;;     a GtkViewport
-;;; 
-;;; Returns :
-;;;     the horizontal adjustment of viewport
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-viewport-get-hadjustment (viewport)
-  (gtk-viewport-hadjustment viewport))
-
-(export 'gtk-viewport-get-hadjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_get_vadjustment ()
-;;; 
-;;; GtkAdjustment * gtk_viewport_get_vadjustment (GtkViewport *viewport);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_viewport_get_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code.
-;;; Use gtk_scrollable_get_vadjustment()
-;;; 
-;;; Returns the vertical adjustment of the viewport.
-;;; 
-;;; viewport :
-;;;     a GtkViewport
-;;; 
-;;; Returns :
-;;;     the vertical adjustment of viewport
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-viewport-get-vadjustment (viewport)
-  (gtk-viewport-vadjustment viewport))
-
-(export 'gtk-viewport-get-vadjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_set_hadjustment ()
-;;; 
-;;; void gtk_viewport_set_hadjustment (GtkViewport   *viewport,
-;;;                                    GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_viewport_set_hadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code.
-;;; Use gtk_scrollable_set_hadjustment()
-;;; 
-;;; Sets the horizontal adjustment of the viewport.
-;;; 
-;;; viewport :
-;;;     a GtkViewport
-;;; 
-;;; adjustment :
-;;;     a GtkAdjustment
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-viewport-set-hadjustment (viewport adjustment)
-  (setf (gtk-viewport-hadjustment viewport) adjustment))
-
-(export 'gtk-viewport-set-hadjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_viewport_set_vadjustment ()
-;;; 
-;;; void gtk_viewport_set_vadjustment (GtkViewport   *viewport,
-;;;                                    GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_viewport_set_vadjustment has been deprecated since version 3.0 and
-;;; should not be used in newly-written code.
-;;; Use gtk_scrollable_set_vadjustment()
-;;; 
-;;; Sets the vertical adjustment of the viewport.
-;;; 
-;;; viewport :
-;;;     a GtkViewport
-;;; 
-;;; adjustment :
-;;;     a GtkAdjustment
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-viewport-set-vadjustment (viewport adjustment)
-  (setf (gtk-viewport-vadjustment viewport) adjustment))
-
-(export 'gtk-viewport-set-vadjustment)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_shadow_type ()
 ;;; 
 ;;; void gtk_viewport_set_shadow_type (GtkViewport   *viewport,
@@ -257,6 +149,8 @@
 ;;; type :
 ;;;     the new shadow type
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-viewport-set-shadow-type))
 
 (defun gtk-viewport-set-shadow-type (viewport type)
   (setf (gtk-viewport-shadow-type viewport) type))
@@ -277,6 +171,8 @@
 ;;; Returns :
 ;;;     the shadow type
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-viewport-get-shadow-type))
 
 (defun gtk-viewport-get-shadow-type (viewport)
   (gtk-viewport-shadow-type viewport))
