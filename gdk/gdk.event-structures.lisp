@@ -642,7 +642,8 @@
 ;;;     a mask covering all modifier types.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-flags "GdkModifierType" gdk-modifier-type ()
+(define-g-flags "GdkModifierType" gdk-modifier-type
+  ()
   (:shift-mask 1)
   (:lock-mask 2)
   (:control-mask 4)
