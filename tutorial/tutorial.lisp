@@ -679,7 +679,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 9. Range Widgets
+;;; Chapter 7. Range Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -724,8 +724,7 @@
                                    :adjustment adj1))
            (scrollbar (make-instance 'gtk-scrollbar
                                      :orientation :horizontal
-                                     :adjustment adj1))
-                                     )
+                                     :adjustment adj1)))
       ;; Connect a handler for the signal "destroy" to the main window.
       (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -748,13 +747,13 @@
                                    :label "Display value on scale widget"
                                    :active t)))
         (g-signal-connect button "toggled"
-                          (lambda (widget)
-                            (gtk-scale-set-draw-value
-                                       hscale
-                                       (gtk-toggle-button-get-active widget))
-                            (gtk-scale-set-draw-value
-                                       vscale
-                                       (gtk-toggle-button-get-active widget))))
+           (lambda (widget)
+             (gtk-scale-set-draw-value
+                                     hscale
+                                     (gtk-toggle-button-get-active widget))
+             (gtk-scale-set-draw-value
+                                     vscale
+                                     (gtk-toggle-button-get-active widget))))
         (gtk-box-pack-start box button)
         (gtk-box-pack-start box1 box))
       ;; A ComboBox to change the position of the value.
@@ -772,8 +771,10 @@
         (g-signal-connect combo "changed"
            (lambda (widget)
              (let ((pos (gtk-combo-box-text-get-active-text widget)))
-               (format t "type      : ~A~%" (g-type-from-instance (pointer widget)))
-               (format t "active is : ~A~%" (gtk-combo-box-get-active widget))
+               (format t "type      : ~A~%"
+                         (g-type-from-instance (pointer widget)))
+               (format t "active is : ~A~%"
+                         (gtk-combo-box-get-active widget))
                (setq pos (if pos (intern pos :keyword) :top))
                (gtk-scale-set-value-pos hscale pos)
                (gtk-scale-set-value-pos vscale pos))))
@@ -838,14 +839,14 @@
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
                                            :label "Scrollbar Page Size:") 
-                            :expand nil :fill nil :padding 0)
+                            :expand nil :fill nil)
         (gtk-box-pack-start box scale)
         (gtk-box-pack-start box1 box))
       ;; Add a separator
       (gtk-box-pack-start box1
                           (make-instance 'gtk-separator
                                          :orientation :horizontal)
-                          :expand nil :fill t :padding 0)
+                          :expand nil :fill t)
       ;; Create the quit button.
       (let ((box (make-instance 'gtk-box
                                 :orientation :vertical
