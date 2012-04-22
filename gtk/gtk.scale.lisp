@@ -267,7 +267,7 @@
 ;;; use gtk_scale_set_digits() to correct it.
 ;;; 
 ;;; orientation :
-;;;     the scale's orientation.
+;;;     the scale's orientation
 ;;; 
 ;;; min :
 ;;;     minimum value
@@ -283,6 +283,18 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-new-with-range))
+
+(defun gtk-scale-new-with-range (orientation min max step)
+  (make-instance 'gtk-scale
+                 :orientation orientation
+                 :adjustment (make-instance 'gtk-adjustment
+                                            :lower min
+                                            :upper max
+                                            :step-increment step)))
+
+(export 'gtk-scale-new-with-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_set_digits ()
@@ -390,7 +402,7 @@
 (declaim (inline gkt-scale-get-draw-value))
 
 (defun gtk-scale-get-draw-value (scale)
-  (gtk-scale-get-draw-value scale))
+  (gtk-scale-draw-value scale))
 
 (export 'gtk-scale-get-draw-value)
 
@@ -433,7 +445,7 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_scale_get_layout" gtk-scale-get-layout) g-object
+(defcfun ("gtk_scale_get_layout" gtk-scale-get-layout) (g-object pango-layout)
   (scale (g-object gtk-scale)))
 
 (export 'gtk-scale-get-layout)
@@ -497,8 +509,8 @@
 ;;;     a GtkScale
 ;;; 
 ;;; value :
-;;;     the value at which the mark is placed, must be between the lower and
-;;;     upper limits of the scales' adjustment
+;;;     The value at which the mark is placed, must be between the lower and
+;;;     upper limits of the scales' adjustment.
 ;;; 
 ;;; position :
 ;;;     Where to draw the mark. For a horizontal scale, GTK_POS_TOP and
@@ -584,7 +596,12 @@
 ;;; GtkHScale is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkHScale" gtk-h-scale
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkHScale" 'gtk-hscale)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkHScale" GTK-HSCALE)) *lisp-name-exceptions*)))
+
+(define-g-object-class "GtkHScale" gtk-hscale
   (:superclass gtk-scale
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -610,6 +627,15 @@
 ;;; Returns :
 ;;; 	a new GtkHScale
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-hscale-new))
+
+(defun gtk-hscale-new (adjustment)
+  (make-instance 'gtk-scale
+                 :orientation :horizontal
+                 :adjustment adjustment))
+
+(export 'gtk-hscale-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hscale_new_with_range ()
@@ -645,6 +671,18 @@
 ;;; Returns :
 ;;; 	a new GtkHScale
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-hscale-new-with-range))
+
+(defun gtk-hscale-new-with-range (min max step)
+  (make-instance 'gtk-scale
+                 :orientation :horizontal
+                 :adjustment (make-instance 'gtk-adjustment
+                                            :lower min
+                                            :upper max
+                                            :step-increment step)))
+
+(export 'gtk-hscale-new-with-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -696,7 +734,12 @@
 ;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkVScale" gtk-v-scale
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkVScale" 'gtk-hscale)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkVScale" GTK-VSCALE)) *lisp-name-exceptions*)))
+
+(define-g-object-class "GtkVScale" gtk-vscale
   (:superclass gtk-scale
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -717,11 +760,20 @@
 ;;; Creates a new GtkVScale.
 ;;; 
 ;;; adjustment :
-;;;     the GtkAdjustment which sets the range of the scale.
+;;;     the GtkAdjustment which sets the range of the scale
 ;;; 
 ;;; Returns :
-;;;     a new GtkVScale.
+;;;     a new GtkVScale
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-vscale-new))
+
+(defun gtk-vscale-new (adjustment)
+  (make-instance 'gtk-scale
+                 :orientation :vertical
+                 :adjustment adjustment))
+
+(export 'gtk-vscale-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscale_new_with_range ()
@@ -758,5 +810,16 @@
 ;;;     a new GtkVScale
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-vscale-new-with-range))
+
+(defun gtk-vscale-new-with-range (min max step)
+  (make-instance 'gtk-scale
+                 :orientation :vertical
+                 :adjustment (make-instance 'gtk-adjustment
+                                            :lower min
+                                            :upper max
+                                            :step-increment step)))
+
+(export 'gtk-vscale-new-with-range)
 
 ;;; --- End of file gtk.scale.lisp ---------------------------------------------

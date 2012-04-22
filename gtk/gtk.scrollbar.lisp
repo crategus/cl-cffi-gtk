@@ -35,6 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkScrollbar
+;;;
 ;;;     gtk_scrollbar_new
 ;;; 
 ;;; Object Hierarchy
@@ -171,6 +172,8 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-scrollbar-new))
+
 (defun gtk-scrollbar-new (orientation adjustment)
   (make-instance 'gtk-scrollbar
                  :orientation orientation
@@ -185,7 +188,8 @@
 ;;; 	
 ;;; Synopsis
 ;;; 
-;;;     GtkHScrollbar;
+;;;     GtkHScrollbar
+;;;
 ;;;     gtk_hscrollbar_new
 ;;; 
 ;;; Object Hierarchy
@@ -224,11 +228,17 @@
 ;;; GtkHScrollbar is deprecated and should not be used in newly-written code.
 ;;; --------------------------------------------------------------------------
 
-(define-g-object-class "GtkHScrollbar" gtk-h-scrollbar
-                       (:superclass gtk-scrollbar :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_hscrollbar_get_type")
-                       nil)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkHScrollbar" 'gtk-hscrollbar)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkHScrollbar" GTK-HSCROLLBAR)) *lisp-name-exceptions*)))
+
+(define-g-object-class "GtkHScrollbar" gtk-hscrollbar
+  (:superclass gtk-scrollbar
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_hscrollbar_get_type")
+  nil)
 
 ;;; --------------------------------------------------------------------------
 ;;; gtk_hscrollbar_new ()
@@ -250,6 +260,15 @@
 ;;; 	the new GtkHScrollbar
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-hscrollbar-new))
+
+(defun gtk-hscrollbar-new (adjustment)
+  (make-instance 'gtk-scrollbar
+                 :orientation :horizontal
+                 :adjustment adjustment))
+
+(export 'gtk-hscrollbar-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVScrollbar
 ;;; 
@@ -257,7 +276,8 @@
 ;;; 	
 ;;; Synopsis
 ;;; 
-;;;     GtkVScrollbar;
+;;;     GtkVScrollbar
+;;;
 ;;;     gtk_vscrollbar_new
 ;;; 
 ;;; Object Hierarchy
@@ -296,11 +316,17 @@
 ;;; GtkVScrollbar is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkVScrollbar" gtk-v-scrollbar
-                       (:superclass gtk-scrollbar :export t :interfaces
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :type-initializer "gtk_vscrollbar_get_type")
-                       nil)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkVScrollbar" 'gtk-vscrollbar)
+  (setf *lisp-name-exceptions*
+        (append '(("GtkVScrollbar" GTK-VSCROLLBAR)) *lisp-name-exceptions*)))
+
+(define-g-object-class "GtkVScrollbar" gtk-vscrollbar
+  (:superclass gtk-scrollbar
+   :export t
+   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :type-initializer "gtk_vscrollbar_get_type")
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscrollbar_new ()
@@ -322,5 +348,13 @@
 ;;; 	the new GtkVScrollbar
 ;;; ----------------------------------------------------------------------------
 
-;;; --- End of file gtk.scrollbar.lisp -----------------------------------------
+(declaim (inline gtk-vscrollbar-new))
 
+(defun gtk-vscrollbar-new (adjustment)
+  (make-instance 'gtk-scrollbar
+                 :orientation :vertical
+                 :adjustment adjustment))
+
+(export 'gtk-vscrollbar-new)
+
+;;; --- End of file gtk.scrollbar.lisp -----------------------------------------
