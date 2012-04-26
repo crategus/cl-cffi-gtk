@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; Accelerator Groups
 ;;; 
 ;;; Groups of global keyboard accelerators for an entire GtkWindow
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkAccelGroup
@@ -85,12 +85,13 @@
 ;;; menus in the ui manager's GtkAccelGroup.
 ;;; 
 ;;; Note that accelerators are different from mnemonics. Accelerators are
-;;; shortcuts for activating a menu item; they appear alongside the menu item 
+;;; shortcuts for activating a menu item; they appear alongside the menu item
 ;;; they're a shortcut for. For example "Ctrl+Q" might appear alongside the
 ;;; "Quit" menu item. Mnemonics are shortcuts for GUI elements such as text
-;;; entries or buttons; they appear as underlined characters. See 
-;;; gtk_label_new_with_mnemonic(). Menu items can have both accelerators and 
+;;; entries or buttons; they appear as underlined characters. See
+;;; gtk_label_new_with_mnemonic(). Menu items can have both accelerators and
 ;;; mnemonics, of course.
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -111,8 +112,8 @@
 ;;; 
 ;;; Modifier Mask.
 ;;; 
-;;; Default value: GDK_SHIFT_MASK|GDK_CONTROL_MASK|GDK_MOD1_MASK|GDK_SUPER_MASK|
-;;;                GDK_HYPER_MASK|GDK_META_MASK
+;;; Default value: GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK |
+;;;                GDK_SUPER_MASK | GDK_HYPER_MASK   |GDK_META_MASK
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -127,7 +128,7 @@
 ;;;                         GdkModifierType modifier,
 ;;;                         gpointer        user_data)          : Has Details
 ;;; 
-;;; The accel-activate signal is an implementation detail of GtkAccelGroup and 
+;;; The accel-activate signal is an implementation detail of GtkAccelGroup and
 ;;; not meant to be used by applications.
 ;;; 
 ;;; accel_group :
@@ -186,7 +187,7 @@
 ;;; struct GtkAccelGroup
 ;;; 
 ;;; struct GtkAccelGroup;
-;;; 
+;;;
 ;;; An object representing and maintaining a group of accelerators.
 ;;; ----------------------------------------------------------------------------
 
@@ -212,6 +213,8 @@
 ;;; Returns :
 ;;;     a new GtkAccelGroup object
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-accel-group-new))
 
 (defun gtk-accel-group-new ()
   (make-instance 'gtk-accel-group))
@@ -260,17 +263,17 @@
 ;;;                                       const gchar *accel_path,
 ;;;                                       GClosure *closure);
 ;;; 
-;;; Installs an accelerator in this group, using an accelerator path to look 
-;;; up the appropriate key and modifiers (see gtk_accel_map_add_entry()). When 
-;;; accel_group is being activated in response to a call to 
-;;; gtk_accel_groups_activate(), closure will be invoked if the accel_key and 
-;;; accel_mods from gtk_accel_groups_activate() match the key and modifiers for 
+;;; Installs an accelerator in this group, using an accelerator path to look up
+;;; the appropriate key and modifiers (see gtk_accel_map_add_entry()). When
+;;; accel_group is being activated in response to a call to
+;;; gtk_accel_groups_activate(), closure will be invoked if the accel_key and
+;;; accel_mods from gtk_accel_groups_activate() match the key and modifiers for
 ;;; the path.
 ;;; 
 ;;; The signature used for the closure is that of GtkAccelGroupActivate.
 ;;; 
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you 
-;;; pass a static string, you can save some memory by interning it first with 
+;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
+;;; pass a static string, you can save some memory by interning it first with
 ;;; g_intern_static_string().
 ;;; 
 ;;; accel_group :
@@ -311,7 +314,7 @@
 ;;; gboolean gtk_accel_group_disconnect (GtkAccelGroup *accel_group,
 ;;;                                      GClosure *closure);
 ;;; 
-;;; Removes an accelerator previously installed through 
+;;; Removes an accelerator previously installed through
 ;;; gtk_accel_group_connect().
 ;;; 
 ;;; Since 2.20 closure can be NULL.
@@ -320,8 +323,8 @@
 ;;;     the accelerator group to remove an accelerator from
 ;;; 
 ;;; closure :
-;;;     the closure to remove from this accelerator group, or NULL to remove 
-;;;     all closures. [allow-none]
+;;;     the closure to remove from this accelerator group, or NULL to remove
+;;;     all closures
 ;;; 
 ;;; Returns :
 ;;;     TRUE if the closure was found and got disconnected
@@ -334,7 +337,7 @@
 ;;;                                          guint accel_key,
 ;;;                                          GdkModifierType accel_mods);
 ;;; 
-;;; Removes an accelerator previously installed through 
+;;; Removes an accelerator previously installed through
 ;;; gtk_accel_group_connect().
 ;;; 
 ;;; accel_group :
@@ -358,7 +361,7 @@
 ;;;                                             GdkModifierType accel_mods,
 ;;;                                             guint *n_entries);
 ;;; 
-;;; Queries an accelerator group for all entries matching accel_key and 
+;;; Queries an accelerator group for all entries matching accel_key and
 ;;; accel_mods.
 ;;; 
 ;;; accel_group :
@@ -371,11 +374,11 @@
 ;;;     modifier combination of the accelerator
 ;;; 
 ;;; n_entries :
-;;;     location to return the number of entries found, or NULL.
+;;;     location to return the number of entries found, or NULL
 ;;; 
 ;;; Returns :
-;;;     an array of n_entries GtkAccelGroupEntry elements, or NULL. The array 
-;;;     is owned by GTK+ and must not be freed.
+;;;     an array of n_entries GtkAccelGroupEntry elements, or NULL. The array
+;;;     is owned by GTK+ and must not be freed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -387,7 +390,7 @@
 ;;;                                    guint accel_key,
 ;;;                                    GdkModifierType accel_mods);
 ;;; 
-;;; Finds the first accelerator in accel_group that matches accel_key and 
+;;; Finds the first accelerator in accel_group that matches accel_key and
 ;;; accel_mods, and activates it.
 ;;; 
 ;;; accel_group :
@@ -416,11 +419,11 @@
 ;;; 
 ;;; Locks the given accelerator group.
 ;;; 
-;;; Locking an acelerator group prevents the accelerators contained within it 
-;;; to be changed during runtime. Refer to gtk_accel_map_change_entry() about 
+;;; Locking an acelerator group prevents the accelerators contained within it
+;;; to be changed during runtime. Refer to gtk_accel_map_change_entry() about
 ;;; runtime accelerator changes.
 ;;; 
-;;; If called more than once, accel_group remains locked until 
+;;; If called more than once, accel_group remains locked until
 ;;; gtk_accel_group_unlock() has been called an equivalent number of times.
 ;;; 
 ;;; accel_group :
@@ -443,7 +446,7 @@
 ;;; 
 ;;; gboolean gtk_accel_group_get_is_locked (GtkAccelGroup *accel_group);
 ;;; 
-;;; Locks are added and removed using gtk_accel_group_lock() and 
+;;; Locks are added and removed using gtk_accel_group_lock() and
 ;;; gtk_accel_group_unlock().
 ;;; 
 ;;; accel_group :
@@ -458,16 +461,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_from_accel_closure ()
 ;;; 
-;;; GtkAccelGroup * gtk_accel_group_from_accel_closure (GClosure *closure);
+;;; GtkAccelGroup * gtk_accel_group_from_accel_closure  (GClosure *closure);
 ;;; 
-;;; Finds the GtkAccelGroup to which closure is connected; see 
-;;; gtk_accel_group_connect().
+;;; Finds the GtkAccelGroup to which closure is connected;
+;;; see gtk_accel_group_connect().
 ;;; 
 ;;; closure :
 ;;;     a GClosure
 ;;; 
 ;;; Returns :
-;;;     the GtkAccelGroup to which closure is connected, or NULL.
+;;;     the GtkAccelGroup to which closure is connected, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -476,14 +479,14 @@
 ;;; GdkModifierType gtk_accel_group_get_modifier_mask
 ;;;                                                 (GtkAccelGroup *accel_group)
 ;;; 
-;;; Gets a GdkModifierType representing the mask for this accel_group. For 
+;;; Gets a GdkModifierType representing the mask for this accel_group. For
 ;;; example, GDK_CONTROL_MASK, GDK_SHIFT_MASK, etc.
 ;;; 
 ;;; accel_group :
 ;;;     a GtkAccelGroup
 ;;; 
 ;;; Returns :
-;;;     the modifier mask for this accel group.
+;;;     the modifier mask for this accel group
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -495,7 +498,7 @@
 ;;;                                     guint accel_key,
 ;;;                                     GdkModifierType accel_mods);
 ;;; 
-;;; Finds the first accelerator in any GtkAccelGroup attached to object that 
+;;; Finds the first accelerator in any GtkAccelGroup attached to object that
 ;;; matches accel_key and accel_mods, and activates that accelerator.
 ;;; 
 ;;; object :
@@ -522,7 +525,7 @@
 ;;;     a GObject, usually a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     a list of all accel groups which are attached to object.
+;;;     a list of all accel groups which are attached to object
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -532,21 +535,21 @@
 ;;;                                     GtkAccelGroupFindFunc find_func,
 ;;;                                     gpointer data);
 ;;; 
-;;; Finds the first entry in an accelerator group for which find_func returns 
+;;; Finds the first entry in an accelerator group for which find_func returns
 ;;; TRUE and returns its GtkAccelKey.
 ;;; 
 ;;; accel_group :
 ;;;     a GtkAccelGroup
 ;;; 
 ;;; find_func :
-;;;     a function to filter the entries of accel_group with.
+;;;     a function to filter the entries of accel_group with
 ;;; 
 ;;; data :
 ;;;     data to pass to find_func
 ;;; 
 ;;; Returns :
 ;;;     the key of the first entry passing find_func. The key is owned by GTK+
-;;;     and must not be freed.
+;;;     and must not be freed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -564,7 +567,7 @@
 ;;; 
 ;;; gboolean gtk_accelerator_valid (guint keyval, GdkModifierType modifiers);
 ;;; 
-;;; Determines whether a given keyval and modifier mask constitute a valid 
+;;; Determines whether a given keyval and modifier mask constitute a valid
 ;;; keyboard accelerator. For example, the GDK_KEY_a keyval plus
 ;;; GDK_CONTROL_MASK is valid - this is a "Ctrl+a" accelerator. But, you can't,
 ;;; for instance, use the GDK_KEY_Control_L keyval as an accelerator.
@@ -586,26 +589,26 @@
 ;;;                             guint *accelerator_key,
 ;;;                             GdkModifierType *accelerator_mods);
 ;;; 
-;;; Parses a string representing an accelerator. The format looks like 
-;;; "<Control>a" or "<Shift><Alt>F1" or "<Release>z" (the last one is for key 
-;;; release).
+;;; Parses a string representing an accelerator. The format looks like
+;;; "<Control>a" or "<Shift><Alt>F1" or "<Release>z" (the last one is for
+;;; key release).
 ;;; 
-;;; The parser is fairly liberal and allows lower or upper case, and also 
-;;; abbreviations such as "<Ctl>" and "<Ctrl>". Key names are parsed using 
+;;; The parser is fairly liberal and allows lower or upper case, and also
+;;; abbreviations such as "<Ctl>" and "<Ctrl>". Key names are parsed using
 ;;; gdk_keyval_from_name(). For character keys the name is not the symbol, but
 ;;; the lowercase name, e.g. one would use "<Ctrl>minus" instead of "<Ctrl>-".
 ;;; 
-;;; If the parse fails, accelerator_key and accelerator_mods will be set to 0 
+;;; If the parse fails, accelerator_key and accelerator_mods will be set to 0
 ;;; (zero).
 ;;; 
 ;;; accelerator :
 ;;;     string representing an accelerator
 ;;; 
 ;;; accelerator_key :
-;;;     return location for accelerator keyval, or NULL.
+;;;     return location for accelerator keyval, or NULL
 ;;; 
 ;;; accelerator_mods :
-;;;     return location for accelerator modifier mask, NULL.
+;;;     return location for accelerator modifier mask, NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -614,11 +617,11 @@
 ;;; gchar * gtk_accelerator_name (guint accelerator_key,
 ;;;                               GdkModifierType accelerator_mods);
 ;;; 
-;;; Converts an accelerator keyval and modifier mask into a string parseable 
-;;; by gtk_accelerator_parse(). For example, if you pass in GDK_KEY_q and 
+;;; Converts an accelerator keyval and modifier mask into a string parseable
+;;; by gtk_accelerator_parse(). For example, if you pass in GDK_KEY_q and
 ;;; GDK_CONTROL_MASK, this function returns "<Control>q".
 ;;; 
-;;; If you need to display accelerators in the user interface, see 
+;;; If you need to display accelerators in the user interface, see
 ;;; gtk_accelerator_get_label().
 ;;; 
 ;;; accelerator_key :
@@ -637,8 +640,8 @@
 ;;; gchar * gtk_accelerator_get_label (guint accelerator_key,
 ;;;                                    GdkModifierType accelerator_mods);
 ;;; 
-;;; Converts an accelerator keyval and modifier mask into a string which can 
-;;; be used to represent the accelerator to the user.
+;;; Converts an accelerator keyval and modifier mask into a string which can be
+;;; used to represent the accelerator to the user.
 ;;; 
 ;;; accelerator_key :
 ;;;     accelerator keyval
@@ -647,7 +650,7 @@
 ;;;     accelerator modifier mask
 ;;; 
 ;;; Returns :
-;;;     a newly-allocated string representing the accelerator.
+;;;     a newly-allocated string representing the accelerator
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -657,15 +660,15 @@
 ;;; 
 ;;; void gtk_accelerator_set_default_mod_mask (GdkModifierType default_mod_mask)
 ;;; 
-;;; Sets the modifiers that will be considered significant for keyboard 
-;;; accelerators. The default mod mask is GDK_CONTROL_MASK | GDK_SHIFT_MASK | 
-;;; GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK, that is, 
+;;; Sets the modifiers that will be considered significant for keyboard
+;;; accelerators. The default mod mask is GDK_CONTROL_MASK | GDK_SHIFT_MASK |
+;;; GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK, that is,
 ;;; Control, Shift, Alt, Super, Hyper and Meta. Other modifiers will by default
-;;; be ignored by GtkAccelGroup. You must include at least the three modifiers 
+;;; be ignored by GtkAccelGroup. You must include at least the three modifiers
 ;;; Control, Shift and Alt in any value you pass to this function.
 ;;; 
-;;; The default mod mask should be changed on application startup, before 
-;;; using any accelerator groups.
+;;; The default mod mask should be changed on application startup, before using
+;;; any accelerator groups.
 ;;; 
 ;;; default_mod_mask :
 ;;;     accelerator modifier mask
