@@ -26,7 +26,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gtk
-  (:use :cl :cl-user :cffi :gobject :gdk :glib :iter :pango :cairo)
+  (:use :cl :cl-user :cffi :gobject :gdk :glib :gio :iter :pango :cairo)
   (:export #:cl-cffi-gtk-build-info
            
            #:define-child-property
