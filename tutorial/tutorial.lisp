@@ -33,7 +33,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 3. Getting started
+;;; Chapter 2. Getting started
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -155,7 +155,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 5. Packing Widgets
+;;; Chapter 3. Packing Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -236,9 +236,6 @@
                           :expand nil
                           :fill nil)
       (gtk-box-pack-start vbox
-                          (gtk-separator-new :horizontal)
-                          :expand nil)
-      (gtk-box-pack-start vbox
                           (make-box nil spacing nil nil 0)
                           :expand nil
                           :fill nil)
@@ -251,10 +248,6 @@
                           :expand nil
                           :fill nil)
       (gtk-box-pack-start vbox
-                          (gtk-separator-new :horizontal)
-                          :expand nil
-                          :fill t)
-      (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
@@ -264,10 +257,7 @@
                                          :yalign 0)
                           :expand nil
                           :fill nil
-                          :padding 5)
-      (gtk-box-pack-start vbox
-                          (gtk-separator-new :horizontal)
-                          :expand nil)
+                          :padding 6)
       (gtk-box-pack-start vbox
                           (make-box t spacing t nil 0)
                           :expand nil
@@ -279,7 +269,7 @@
       (gtk-box-pack-start vbox
                           (gtk-separator-new :horizontal)
                           :expand nil
-                          :padding 5)
+                          :padding 6)
       (gtk-box-pack-start quitbox button :expand nil :fill nil)
       (gtk-box-pack-start vbox quitbox :expand nil :fill nil)
       (gtk-container-add window vbox)
