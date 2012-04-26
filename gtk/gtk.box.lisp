@@ -284,6 +284,8 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-box-new))
+
 (defun gtk-box-new (orientation spacing)
   (make-instance 'gtk-box
                  :orientation orientation
@@ -542,6 +544,8 @@
 ;;;     pointer to return location for "pack-type" child property
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-box-query-child-packing))
+
 (defun gtk-box-query-child-packing (box child)
   (values (gtk-box-child-expand box child)
           (gtk-box-child-fill box child)
@@ -580,6 +584,8 @@
 ;;; pack_type :
 ;;;     the new value of the "pack-type" child property
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-box-set-child-packing))
 
 (defun gtk-box-set-child-packing (box child expand fill padding pack-type)
   (setf (gtk-box-child-expand box child) expand)
