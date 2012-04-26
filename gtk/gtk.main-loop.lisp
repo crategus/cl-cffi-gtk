@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; Main loop and Events
 ;;; 
 ;;; Library initialization, main event loop, and events
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     gtk_disable_setlocale
@@ -50,14 +50,18 @@
 ;;;     gtk_main_do_event
 ;;;     gtk_true
 ;;;     gtk_false
+;;;     
 ;;;     gtk_grab_add
 ;;;     gtk_grab_get_current
 ;;;     gtk_grab_remove
 ;;;     gtk_device_grab_add
 ;;;     gtk_device_grab_remove
+;;;     
 ;;;     GTK_PRIORITY_RESIZE
+;;;     
 ;;;     gtk_key_snooper_install
 ;;;     gtk_key_snooper_remove
+;;;     
 ;;;     gtk_get_current_event
 ;;;     gtk_get_current_event_time
 ;;;     gtk_get_current_event_state
@@ -85,8 +89,8 @@
 ;;; invoking functions you've connected to the signal with g_signal_connect().
 ;;; Functions connected to a signal are often termed callbacks.
 ;;; 
-;;; When your callbacks are invoked, you would typically take some action - for
-;;; example, when an Open button is clicked you might display a
+;;; When your callbacks are invoked, you would typically take some action -
+;;; for example, when an Open button is clicked you might display a
 ;;; GtkFileChooserDialog. After a callback finishes, GTK+ will return to the
 ;;; main loop and await more user input.
 ;;; 
@@ -112,7 +116,7 @@
 ;;; 
 ;;;   /* Enter the main event loop, and wait for user interaction */
 ;;;   gtk_main ();
-;;;  
+;;; 
 ;;;   /* The user lost interest */
 ;;;   return 0;
 ;;; }
@@ -126,7 +130,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_disable_setlocale ()
 ;;; 
-;;; void gtk_disable_setlocale (void)
+;;; void gtk_disable_setlocale (void);
 ;;; 
 ;;; Prevents gtk_init(), gtk_init_check(), gtk_init_with_args() and
 ;;; gtk_parse_args() from automatically calling setlocale (LC_ALL, ""). You
@@ -137,10 +141,14 @@
 ;;; Most programs should not need to call this function.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_disable_set_locale" gtk-disable-set-locale) :void)
+
+(export 'gtk-disable-set-locale)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_default_language ()
 ;;; 
-;;; PangoLanguage * gtk_get_default_language (void)
+;;; PangoLanguage * gtk_get_default_language (void);
 ;;; 
 ;;; Returns the PangoLanguage for the default language currently in effect.
 ;;; (Note that this can change over the life of an application.) The default
@@ -154,18 +162,19 @@
 ;;;     the default language as a PangoLanguage, must not be freed
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_default_language" gtk-get-default-language) :pointer)
+(defcfun ("gtk_get_default_language" gtk-get-default-language)
+    (g-boxed-foreign pango-language))
 
 (export 'gtk-get-default-language)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_parse_args ()
 ;;; 
-;;; gboolean gtk_parse_args (int *argc, char ***argv)
+;;; gboolean gtk_parse_args (int *argc, char ***argv);
 ;;; 
 ;;; Parses command line arguments, and initializes global attributes of GTK+,
-;;; but does not actually open a connection to a display. (See
-;;; gdk_display_open(), gdk_get_display_arg_name())
+;;; but does not actually open a connection to a display.
+;;; (See gdk_display_open(), gdk_get_display_arg_name())
 ;;; 
 ;;; Any arguments used by GTK+ or GDK are removed from the array and argc and
 ;;; argv are updated accordingly.
@@ -174,10 +183,10 @@
 ;;; gtk_init(), or gtk_init_check().
 ;;; 
 ;;; argc :
-;;;     a pointer to the number of command line arguments.
+;;;     a pointer to the number of command line arguments
 ;;; 
 ;;; argv :
-;;;     a pointer to the array of command line arguments.
+;;;     a pointer to the array of command line arguments
 ;;; 
 ;;; Returns :
 ;;;     TRUE if initialization succeeded, otherwise FALSE
@@ -186,7 +195,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_init ()
 ;;; 
-;;; void gtk_init (int *argc, char ***argv)
+;;; void gtk_init (int *argc, char ***argv);
 ;;; 
 ;;; Call this function before using any other GTK+ functions in your GUI
 ;;; applications. It will initialize everything needed to operate the toolkit
@@ -196,8 +205,8 @@
 ;;; this function, it is possible to pass NULL if argv is not available or
 ;;; commandline handling is not required.
 ;;; 
-;;; argc and argv are adjusted accordingly so your own code will never see those
-;;; standard arguments.
+;;; argc and argv are adjusted accordingly so your own code will never see
+;;; those standard arguments.
 ;;; 
 ;;; Note that there are some alternative ways to initialize GTK+: if you are
 ;;; calling gtk_parse_args(), gtk_init_check(), gtk_init_with_args() or
@@ -245,7 +254,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_init_check ()
 ;;; 
-;;; gboolean gtk_init_check (int *argc, char ***argv)
+;;; gboolean gtk_init_check (int *argc, char ***argv);
 ;;; 
 ;;; This function does the same work as gtk_init() with only a single change:
 ;;; It does not terminate the program if the windowing system can't be
@@ -281,7 +290,7 @@
 ;;;                              const gchar *parameter_string,
 ;;;                              const GOptionEntry *entries,
 ;;;                              const gchar *translation_domain,
-;;;                              GError **error)
+;;;                              GError **error);
 ;;; 
 ;;; This function does the same work as gtk_init_check(). Additionally, it
 ;;; allows you to add your own commandline options, and it automatically
@@ -298,11 +307,11 @@
 ;;; 
 ;;; parameter_string :
 ;;;     a string which is displayed in the first line of --help output, after
-;;;     programname
+;;;     programname [OPTION...]
 ;;; 
 ;;; entries :
 ;;;     a NULL-terminated array of GOptionEntrys describing the options of your
-;;;     program.
+;;;     program
 ;;; 
 ;;; translation_domain :
 ;;;     a translation domain to use for translating the --help output for the
@@ -321,10 +330,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_option_group ()
 ;;; 
-;;; GOptionGroup * gtk_get_option_group (gboolean open_default_display)
+;;; GOptionGroup * gtk_get_option_group (gboolean open_default_display);
 ;;; 
-;;; Returns a GOptionGroup for the commandline arguments recognized by GTK+ and
-;;; GDK.
+;;; Returns a GOptionGroup for the commandline arguments recognized by GTK+
+;;; and GDK.
 ;;; 
 ;;; You should add this group to your GOptionContext with
 ;;; g_option_context_add_group(), if you are using g_option_context_parse() to
@@ -343,22 +352,23 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_events_pending ()
 ;;; 
-;;; gboolean gtk_events_pending (void)
+;;; gboolean gtk_events_pending (void);
 ;;; 
 ;;; Checks if any events are pending.
 ;;; 
-;;; This can be used to update the UI and invoke timeouts etc. while doing some
-;;; time intensive computation.
+;;; This can be used to update the UI and invoke timeouts etc. while doing
+;;; some time intensive computation.
 ;;; 
 ;;; Example 7. Updating the UI during a long computation
 ;;; 
-;;;  /* computation going on... */
-;;;  
-;;;  while (gtk_events_pending ())
-;;;    gtk_main_iteration ();
-;;;  
-;;;  /* ...computation continued */
-;;;  
+;;; /* computation going on... */
+;;; 
+;;; while (gtk_events_pending ())
+;;;   gtk_main_iteration ();
+;;; 
+;;; /* ...computation continued */
+;;; 
+;;; 
 ;;; Returns :
 ;;;     TRUE if any events are pending, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
@@ -370,7 +380,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_main ()
 ;;; 
-;;; void gtk_main (void)
+;;; void gtk_main (void);
 ;;; 
 ;;; Runs the main loop until gtk_main_quit() is called.
 ;;; 
@@ -388,7 +398,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_main_level ()
 ;;; 
-;;; guint gtk_main_level (void)
+;;; guint gtk_main_level (void);
 ;;; 
 ;;; Asks for the current nesting level of the main loop.
 ;;; 
@@ -403,7 +413,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_main_quit ()
 ;;; 
-;;; void gtk_main_quit (void)
+;;; void gtk_main_quit (void);
 ;;; 
 ;;; Makes the innermost invocation of the main loop return when it regains
 ;;; control.
@@ -416,7 +426,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_main_iteration ()
 ;;; 
-;;; gboolean gtk_main_iteration (void)
+;;; gboolean gtk_main_iteration (void);
 ;;; 
 ;;; Runs a single iteration of the mainloop.
 ;;; 
@@ -435,7 +445,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_main_iteration_do ()
 ;;; 
-;;; gboolean gtk_main_iteration_do (gboolean blocking)
+;;; gboolean gtk_main_iteration_do (gboolean blocking);
 ;;; 
 ;;; Runs a single iteration of the mainloop. If no events are available either
 ;;; return or block depending on the value of blocking.
@@ -455,7 +465,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_main_do_event ()
 ;;; 
-;;; void gtk_main_do_event (GdkEvent *event)
+;;; void gtk_main_do_event (GdkEvent *event);
 ;;; 
 ;;; Processes a single GDK event.
 ;;; 
@@ -466,37 +476,39 @@
 ;;; how exactly events are handled. So here is what this function does with the
 ;;; event:
 ;;; 
-;;;    1. Compress enter/leave notify events. If the event passed build an
-;;;       enter/leave pair together with the next event (peeked from GDK), both
-;;;       events are thrown away. This is to avoid a backlog of
-;;;       (de-)highlighting widgets crossed by the pointer.
-;;;
-;;;    2. Find the widget which got the event. If the widget can't be determined
-;;;       the event is thrown away unless it belongs to a INCR transaction. In
-;;;       that case it is passed to gtk_selection_incr_event().
-;;;
-;;;    3. Then the event is pushed onto a stack so you can query the currently
-;;;       handled event with gtk_get_current_event().
-;;;
-;;;    4. The event is sent to a widget. If a grab is active all events for
-;;;       widgets that are not in the contained in the grab widget are sent to
-;;;       the latter with a few exceptions:
-;;;
-;;;           * Deletion and destruction events are still sent to the event
-;;;             widget for obvious reasons.
-;;;           * Events which directly relate to the visual representation of
-;;;             the event widget.
-;;;           * Leave events are delivered to the event widget if there was an
-;;;             enter event delivered to it before without the paired leave
-;;;             event.
-;;;           * Drag events are not redirected because it is unclear what the
-;;;             semantics of that would be.
+;;;  1. Compress enter/leave notify events. If the event passed build an
+;;;     enter/leave pair together with the next event (peeked from GDK), both
+;;;     events are thrown away. This is to avoid a backlog of (de-)highlighting
+;;;     widgets crossed by the pointer.
 ;;; 
-;;;       Another point of interest might be that all key events are first
-;;;       passed through the key snooper functions if there are any. Read the
-;;;       description of gtk_key_snooper_install() if you need this feature.
-;;;
-;;;    5. After finishing the delivery the event is popped from the event stack.
+;;;  2. Find the widget which got the event. If the widget can't be determined
+;;;     the event is thrown away unless it belongs to a INCR transaction. In
+;;;     that case it is passed to gtk_selection_incr_event().
+;;; 
+;;;  3. Then the event is pushed onto a stack so you can query the currently
+;;;     handled event with gtk_get_current_event().
+;;; 
+;;;  4. The event is sent to a widget. If a grab is active all events for
+;;;     widgets that are not in the contained in the grab widget are sent to
+;;;     the latter with a few exceptions:
+;;; 
+;;;       * Deletion and destruction events are still sent to the event widget
+;;;         for obvious reasons.
+;;; 
+;;;       * Events which directly relate to the visual representation of the
+;;;         event widget.
+;;; 
+;;;       * Leave events are delivered to the event widget if there was an
+;;;         enter event delivered to it before without the paired leave event.
+;;; 
+;;;       * Drag events are not redirected because it is unclear what the
+;;;         semantics of that would be.
+;;; 
+;;;  5. Another point of interest might be that all key events are first passed
+;;;     through the key snooper functions if there are any. Read the description
+;;;     of gtk_key_snooper_install() if you need this feature.
+;;; 
+;;;     After finishing the delivery the event is popped from the event stack.
 ;;; 
 ;;; event :
 ;;;     An event to process (normally passed by GDK)
@@ -505,22 +517,22 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GtkModuleInitFunc ()
 ;;; 
-;;; void (*GtkModuleInitFunc) (gint *argc, gchar ***argv)
+;;; void (*GtkModuleInitFunc) (gint *argc, gchar ***argv);
 ;;; 
 ;;; Each GTK+ module must have a function gtk_module_init() with this prototype.
 ;;; This function is called after loading the module.
 ;;; 
 ;;; argc :
-;;;     GTK+ always passes NULL for this argument.
+;;;     GTK+ always passes NULL for this argument
 ;;; 
 ;;; argv :
-;;;     GTK+ always passes NULL for this argument.
+;;;     GTK+ always passes NULL for this argument
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkModuleDisplayInitFunc ()
 ;;; 
-;;; void (*GtkModuleDisplayInitFunc) (GdkDisplay *display)
+;;; void (*GtkModuleDisplayInitFunc) (GdkDisplay *display);
 ;;; 
 ;;; A multihead-aware GTK+ module may have a gtk_module_display_init() function
 ;;; with this prototype. GTK+ calls this function for each opened display.
@@ -534,42 +546,42 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_true ()
 ;;; 
-;;; gboolean gtk_true (void)
+;;; gboolean gtk_true (void);
 ;;; 
 ;;; All this function does it to return TRUE.
 ;;; 
 ;;; This can be useful for example if you want to inhibit the deletion of a
 ;;; window. Of course you should not do this as the user expects a reaction
-;;; from clicking the close icon of the window.
+;;; from clicking the close icon of the window...
 ;;; 
 ;;; Example 8. A persistent window
 ;;; 
-;;;  #include <gtk/gtk.h><
-;;;  
-;;;  int
-;;;  main (int argc, char **argv)
-;;;  {
-;;;    GtkWidget *win, *but;
-;;;  
-;;;    gtk_init (&argc, &argv);
-;;;  
-;;;    win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-;;;    g_signal_connect (win, "delete-event",
-;;;                      G_CALLBACK (gtk_true), NULL);
-;;;    g_signal_connect (win, "destroy",
-;;;                      G_CALLBACK (gtk_main_quit), NULL);
-;;;  
-;;;    but = gtk_button_new_with_label ("Close yourself. I mean it!");
-;;;    g_signal_connect_swapped (but, "clicked",
-;;;                              G_CALLBACK (gtk_object_destroy), win);
-;;;    gtk_container_add (GTK_CONTAINER (win), but);
-;;;  
-;;;    gtk_widget_show_all (win);
-;;;  
-;;;    gtk_main ();
-;;;  
-;;;    return 0;
-;;;  }
+;;; #include <gtk/gtk.h><
+;;; 
+;;; int
+;;; main (int argc, char **argv)
+;;; {
+;;;   GtkWidget *win, *but;
+;;; 
+;;;   gtk_init (&argc, &argv);
+;;; 
+;;;   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+;;;   g_signal_connect (win, "delete-event",
+;;;                     G_CALLBACK (gtk_true), NULL);
+;;;   g_signal_connect (win, "destroy",
+;;;                     G_CALLBACK (gtk_main_quit), NULL);
+;;; 
+;;;   but = gtk_button_new_with_label ("Close yourself. I mean it!");
+;;;   g_signal_connect_swapped (but, "clicked",
+;;;                             G_CALLBACK (gtk_object_destroy), win);
+;;;   gtk_container_add (GTK_CONTAINER (win), but);
+;;; 
+;;;   gtk_widget_show_all (win);
+;;; 
+;;;   gtk_main ();
+;;; 
+;;;   return 0;
+;;; }
 ;;; 
 ;;; Returns :
 ;;;     TRUE
@@ -578,7 +590,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_false ()
 ;;; 
-;;; gboolean gtk_false (void)
+;;; gboolean gtk_false (void);
 ;;; 
 ;;; Analogical to gtk_true(), this function does nothing but always returns
 ;;; FALSE.
@@ -590,7 +602,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grab_add ()
 ;;; 
-;;; void gtk_grab_add (GtkWidget *widget)
+;;; void gtk_grab_add (GtkWidget *widget);
 ;;; 
 ;;; Makes widget the current grabbed widget.
 ;;; 
@@ -601,7 +613,7 @@
 ;;; this function does nothing.
 ;;; 
 ;;; widget :
-;;;     The widget that grabs keyboard and pointer events
+;;;     the widget that grabs keyboard and pointer events
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_grab_add" gtk-grab-add) :void
@@ -612,7 +624,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grab_get_current ()
 ;;; 
-;;; GtkWidget * gtk_grab_get_current (void)
+;;; GtkWidget * gtk_grab_get_current (void);
 ;;; 
 ;;; Queries the current grab of the default window group.
 ;;; 
@@ -627,7 +639,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grab_remove ()
 ;;; 
-;;; void gtk_grab_remove (GtkWidget *widget)
+;;; void gtk_grab_remove (GtkWidget *widget);
 ;;; 
 ;;; Removes the grab from the given widget.
 ;;; 
@@ -649,7 +661,7 @@
 ;;; 
 ;;; void gtk_device_grab_add (GtkWidget *widget,
 ;;;                           GdkDevice *device,
-;;;                           gboolean block_others)
+;;;                           gboolean block_others);
 ;;; 
 ;;; Adds a GTK+ grab on device, so all the events on device and its associated
 ;;; pointer or keyboard (if any) are delivered to widget. If the block_others
@@ -660,10 +672,10 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; device :
-;;;     a GtkDevice to grab on.
+;;;     a GtkDevice to grab on
 ;;; 
 ;;; block_others :
-;;;     TRUE to prevent other devices to interact with widget.
+;;;     TRUE to prevent other devices to interact with widget
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -671,7 +683,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_device_grab_remove ()
 ;;; 
-;;; void gtk_device_grab_remove (GtkWidget *widget, GdkDevice *device)
+;;; void gtk_device_grab_remove (GtkWidget *widget, GdkDevice *device);
 ;;; 
 ;;; Removes a device grab from the given widget.
 ;;; 
@@ -702,7 +714,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_key_snooper_install ()
 ;;; 
-;;; guint gtk_key_snooper_install (GtkKeySnoopFunc snooper, gpointer func_data)
+;;; guint gtk_key_snooper_install (GtkKeySnoopFunc snooper,
+;;;                                gpointer func_data);
 ;;; 
 ;;; Installs a key snooper function, which will get called on all key events
 ;;; before delivering them normally.
@@ -714,7 +727,7 @@
 ;;;     data to pass to snooper
 ;;; 
 ;;; Returns :
-;;;     a unique id for this key snooper for use with gtk_key_snooper_remove().
+;;;     a unique id for this key snooper for use with gtk_key_snooper_remove()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -722,7 +735,7 @@
 ;;; 
 ;;; gint (*GtkKeySnoopFunc) (GtkWidget *grab_widget,
 ;;;                          GdkEventKey *event,
-;;;                          gpointer func_data)
+;;;                          gpointer func_data);
 ;;; 
 ;;; Key snooper functions are called before normal event delivery. They can be
 ;;; used to implement custom key event handling.
@@ -737,13 +750,13 @@
 ;;;     data supplied to gtk_key_snooper_install()
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop further processing of event, FALSE to continue.
+;;;     TRUE to stop further processing of event, FALSE to continue
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_key_snooper_remove ()
 ;;; 
-;;; void gtk_key_snooper_remove (guint snooper_handler_id)
+;;; void gtk_key_snooper_remove (guint snooper_handler_id);
 ;;; 
 ;;; Removes the key snooper function with the given id.
 ;;; 
@@ -754,7 +767,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_current_event ()
 ;;; 
-;;; GdkEvent * gtk_get_current_event (void)
+;;; GdkEvent * gtk_get_current_event (void);
 ;;; 
 ;;; Obtains a copy of the event currently being processed by GTK+.
 ;;; 
@@ -763,7 +776,7 @@
 ;;; 
 ;;; Returns :
 ;;;     a copy of the current event, or NULL if there is no current event. The
-;;;     returned event must be freed with gdk_event_free().
+;;;     returned event must be freed with gdk_event_free()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_get_current_event" gtk-get-current-event)
@@ -774,13 +787,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_current_event_time ()
 ;;; 
-;;; guint32 gtk_get_current_event_time (void)
+;;; guint32 gtk_get_current_event_time (void);
 ;;; 
 ;;; If there is a current event and it has a timestamp, return that timestamp,
 ;;; otherwise return GDK_CURRENT_TIME.
 ;;; 
 ;;; Returns :
-;;;     the timestamp from the current event, or GDK_CURRENT_TIME.
+;;;     the timestamp from the current event, or GDK_CURRENT_TIME
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_get_current_event_time" gtk-get-current-event-time) :uint32)
@@ -790,13 +803,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_current_event_state ()
 ;;; 
-;;; gboolean gtk_get_current_event_state (GdkModifierType *state)
+;;; gboolean gtk_get_current_event_state (GdkModifierType *state);
 ;;; 
 ;;; If there is a current event and it has a state field, place that state
 ;;; field in state and return TRUE, otherwise return FALSE.
 ;;; 
 ;;; state :
-;;;     a location to store the state of the current event.
+;;;     a location to store the state of the current event
 ;;; 
 ;;; Returns :
 ;;;     TRUE if there was a current event and it had a state field
@@ -805,19 +818,19 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_current_event_device ()
 ;;; 
-;;; GdkDevice * gtk_get_current_event_device (void)
+;;; GdkDevice * gtk_get_current_event_device (void);
 ;;; 
 ;;; If there is a current event and it has a device, return that device,
 ;;; otherwise return NULL.
 ;;; 
 ;;; Returns :
-;;;     a GdkDevice, or NULL.
+;;;     a GdkDevice, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_event_widget ()
 ;;; 
-;;; GtkWidget * gtk_get_event_widget (GdkEvent *event)
+;;; GtkWidget * gtk_get_event_widget (GdkEvent *event);
 ;;; 
 ;;; If event is NULL or the event was not associated with any widget, returns
 ;;; NULL, otherwise returns the widget that received the event originally.
@@ -826,7 +839,7 @@
 ;;;     a GdkEvent
 ;;; 
 ;;; Returns :
-;;;     the widget that originally received event, or NULL.
+;;;     the widget that originally received event, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_get_event_widget" gtk-get-event-widget) g-object
@@ -837,7 +850,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_propagate_event ()
 ;;; 
-;;; void gtk_propagate_event (GtkWidget *widget, GdkEvent *event)
+;;; void gtk_propagate_event (GtkWidget *widget, GdkEvent *event);
 ;;; 
 ;;; Sends an event to a widget, propagating the event to parent widgets if the
 ;;; event remains unhandled.
