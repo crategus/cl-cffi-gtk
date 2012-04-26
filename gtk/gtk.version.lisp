@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,16 +31,9 @@
 ;;; Version Information
 ;;; 
 ;;; Variables and functions to check the GTK+ version
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;     GTK_MAJOR_VERSION
-;;;     GTK_MINOR_VERSION
-;;;     GTK_MICRO_VERSION
-;;;     GTK_BINARY_AGE
-;;;     GTK_INTERFACE_AGE
-;;;     GTK_CHECK_VERSION
-;;;
 ;;;     gtk_get_major_version
 ;;;     gtk_get_minor_version
 ;;;     gtk_get_micro_version
@@ -58,80 +51,12 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_MAJOR_VERSION
-;;; 
-;;; #define GTK_MAJOR_VERSION (3)
-;;; 
-;;; Like gtk_get_major_version(), but from the headers used at application
-;;; compile time, rather than from the library linked against at application
-;;; run time.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_MINOR_VERSION
-;;; 
-;;; #define GTK_MINOR_VERSION (2)
-;;; 
-;;; Like gtk_get_minor_version(), but from the headers used at application
-;;; compile time, rather than from the library linked against at application
-;;; run time.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_MICRO_VERSION
-;;; 
-;;; #define GTK_MICRO_VERSION (3)
-;;; 
-;;; Like gtk_get_micro_version(), but from the headers used at application
-;;; compile time, rather than from the library linked against at application
-;;; run time.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_BINARY_AGE
-;;; 
-;;; #define GTK_BINARY_AGE    (203)
-;;; 
-;;; Like gtk_get_binary_age(), but from the headers used at application compile
-;;; time, rather than from the library linked against at application run time.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_INTERFACE_AGE
-;;; 
-;;; #define GTK_INTERFACE_AGE (3)
-;;; 
-;;; Like gtk_get_interface_age(), but from the headers used at application
-;;; compile time, rather than from the library linked against at application
-;;; run time.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_CHECK_VERSION()
-;;; 
-;;; #define GTK_CHECK_VERSION(major,minor,micro)
-;;; 
-;;; major :
-;;;     major version (e.g. 1 for version 1.2.5)
-;;; 
-;;; minor :
-;;;     minor version (e.g. 2 for version 1.2.5)
-;;; 
-;;; micro :
-;;;     micro version (e.g. 5 for version 1.2.5)
-;;; 
-;;; Returns :
-;;;     TRUE if the version of the GTK+ header files is the same as or newer
-;;;     than the passed-in version.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_get_major_version ()
 ;;; 
 ;;; guint gtk_get_major_version (void);
 ;;; 
-;;; Returns the major version number of the GTK+ library. (e.g. in GTK+ version
-;;; 3.1.5 this is 3.)
+;;; Returns the major version number of the GTK+ library. (e.g. in GTK+
+;;; version 3.1.5 this is 3.)
 ;;; 
 ;;; This function is in the library, so it represents the GTK+ library your
 ;;; code is running against. Contrast with the GTK_MAJOR_VERSION macro, which
@@ -153,8 +78,8 @@
 ;;; 
 ;;; guint gtk_get_minor_version (void);
 ;;; 
-;;; Returns the minor version number of the GTK+ library. (e.g. in GTK+ version
-;;; 3.1.5 this is 1.)
+;;; Returns the minor version number of the GTK+ library. (e.g. in GTK+
+;;; version 3.1.5 this is 1.)
 ;;; 
 ;;; This function is in the library, so it represents the GTK+ library your
 ;;; code is are running against. Contrast with the GTK_MINOR_VERSION macro,
@@ -176,8 +101,8 @@
 ;;; 
 ;;; guint gtk_get_micro_version (void);
 ;;; 
-;;; Returns the micro version number of the GTK+ library. (e.g. in GTK+ version
-;;; 3.1.5 this is 5.)
+;;; Returns the micro version number of the GTK+ library. (e.g. in GTK+
+;;; version 3.1.5 this is 5.)
 ;;; 
 ;;; This function is in the library, so it represents the GTK+ library your
 ;;; code is are running against. Contrast with the GTK_MICRO_VERSION macro,
@@ -269,18 +194,18 @@
 ;;; 
 ;;; Returns :
 ;;;     NULL if the GTK+ library is compatible with the given version, or a
-;;; string describing the version mismatch. The returned string is owned by
-;;; GTK+ and should not be modified or freed.
+;;;     string describing the version mismatch. The returned string is owned
+;;;     by GTK+ and should not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (check-version "gtk_check_version") :string
+(defcfun ("gtk_check_version" gtk-check-version) :string
   (required-major :uint)
   (required-minor :uint)
   (required-micro :uint))
 
 ;;; ----------------------------------------------------------------------------
 
-;;; More Lisp support
+;;; Lisp functions
 
 (defun cl-cffi-gtk-build-info ()
   (format t "~%cl-cffi-gtk version: ~a~%" *cl-cffi-gtk-version*)
@@ -308,26 +233,15 @@
   (format t "Lisp implementation version: ~a~%~%" (lisp-implementation-version))
   nil)
 
+;;; ----------------------------------------------------------------------------
+
 (glib:push-library-version-features gtk
                                     (gtk-get-major-version)
                                     (gtk-get-minor-version)
-  2 2
-  2 4
-  2 6
-  2 8
-  2 10
-  2 12
-  2 14
-  2 16
-  2 18
-  2 20
-  2 22
-  2 24
-  3 0
-  3 2)
+                                    3 0
+                                    3 2)
 
-(glib:require-library-version "Gtk+"
-                              3 0
+(glib:require-library-version "GTK+" 3 2
                               (gtk-get-major-version)
                               (gtk-get-minor-version))
 
