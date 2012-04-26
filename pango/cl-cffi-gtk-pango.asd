@@ -37,6 +37,7 @@
                (:file "pango.attributes")
                (:file "pango.fonts")
                (:file "pango.layout")
+               (:file "pango.script")
                (:file "pango"))
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject
