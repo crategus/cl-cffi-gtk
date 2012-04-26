@@ -1,0 +1,183 @@
+\input texinfo
+@c -*-texinfo-*-
+
+@setfilename  gtk-tutorial.info
+
+@c %**start of header
+@synindex vr fn
+@synindex cp fn
+@settitle GTK+ 3 Tutorial for Lisp
+@c %**end of header
+
+@setchapternewpage odd
+@ifinfo
+This is a Texinfo GTK+ 3 Tutorial for Lisp
+
+Copyright (C) 2012 Dr. Dieter Kaiser
+
+@format
+INFO-DIR-SECTION Math
+START-INFO-DIR-ENTRY
+* Tutorial: (tutorial).     A GTK+ 3 Tutorial for Lisp.
+END-INFO-DIR-ENTRY
+@end format
+@end ifinfo
+
+@ifinfo 
+@macro var {expr}
+<\expr\>
+@end macro
+@end ifinfo
+
+@c @include category-macros.texi
+
+@titlepage
+@sp 10
+@comment The title is printed in a large font.
+@center @titlefont{GTK+ 3 Tutorial for Lisp}
+@sp 2
+@center @copyright{} Dieter Kaiser
+@sp 1
+@center Version 0.0
+@page
+@vskip 0pt plus 1filll
+@end titlepage
+
+@summarycontents
+@contents
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top
+@end ifnottex
+
+@menu
+* Introduction::                Introduction to GTK+ 3 for Lisp
+* Getting Started::             First steps
+* Packing Widgets::             Packing widgets into boxes
+* Button Widgets::
+* Adjustments::
+* Range Widgets::
+* Miscellaneous Widgets::
+* Container Widgets::
+* Menu Widget::
+
+Index
+* Function and Variable Index:: Index.
+
+ --- The Detailed Node Listing ---
+
+Introduction
+* Introduction::
+
+Getting Started
+* Getting Started::
+* Installation::
+* A Simple Window::
+* More about the Lisp binding to GTK+::
+* Hello World in GTK+::
+* Introduction to Signals and Callbacks::
+* An Upgraded Hello World::
+
+Packing Widgets
+* Packing Widgets::
+* Packing Boxes::
+* Details of Boxes::
+* Packing Using Tables::
+* Table Packing Example::
+* Packing Using Grids::
+* Grid Packing Examples::
+
+Button Widgets
+* Button Widgets::
+* Normal Buttons::
+* Toggle Buttons::
+* Check Buttons::
+* Radio Buttons::
+
+Adjustments
+* Adjustments::
+* Introduction to Adjustments::
+* Creating an Adjustment::
+* Using Adjustments the Easy Way::
+* Adjustment Internals::
+
+Range Widgets
+* Range Widgets::
+* Introduction to Range Widgets::
+* Scrollbar Widgets::
+* Scale Widgets::
+* Common Range Functions::
+* Example Range Widgets::
+
+Miscellaneous Widgets
+* Miscellaneous Widgets::
+
+Container Widgets
+* Container Widgets::
+
+Menu Widgets
+* Menu Widget::
+@end menu
+
+
+@node Introduction, Getting Started, Top, Top
+@chapter Introduction
+@include gtk-introduction.texi
+
+@node Getting Started, Packing Widgets, Introduction, Top
+@chapter Getting Started
+@include gtk-getting-started.texi
+
+@node Packing Widgets, Button Widgets, Getting Started, Top
+@chapter Packing Widgets
+@include gtk-packing-widgets.texi
+
+@node Button Widgets, Adjustments, Packing Widgets, Top
+@chapter Button Widgets
+@include gtk-button-widget.texi
+
+@node Adjustments, Range Widgets, Button Widgets, Top
+@chapter Adjustments
+@include gtk-adjustments.texi
+
+@node Range Widgets, Miscellaneous Widgets, Adjustments, Top
+@chapter Range Widgets
+@include gtk-range-widgets.texi
+
+@node Miscellaneous Widgets, Container Widgets, Range Widgets
+@chapter Miscellaneous Widgets
+@include gtk-misc-widgets.texi
+
+@node Container Widgets, Menu Widget, Miscellaneous Widgets, Top
+@chapter Container Widgets
+@include gtk-container-widgets.texi
+
+@node Menu Widget, Reference Widgets, Container Widgets, Top
+@chapter Menu Widget
+@include gtk-menu-widget.texi
+
+@node Reference of Widgets, Tables, Menu Widget, Top
+@appendix Reference of Widgets
+@include gtk-reference.texi
+
+@node Tables, Figures, Reference of Widgets, Top
+@appendix Tables
+@listoffloats Table
+
+@node Figures, Examples, Tables, Top
+@appendix Figures
+@listoffloats Figure
+
+@node Examples, Functions and Variable Index, Figures, Top
+@appendix Examples
+@listoffloats Example
+
+@node Function and Variable Index,  , Menu Widget, Top
+@appendix Function and Variable Index
+@printindex fn
+
+
+
+@bye
+

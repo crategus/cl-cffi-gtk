@@ -1,0 +1,749 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-container-widgets.texi
+@c License  : GNU General Public License (GPL)
+@c Language : German
+@c Author   : Dieter Kaiser
+@c Date     : 09.02.2012
+@c Revision : 01.04.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@section Event Box
+
+@findex GtkEventBox
+@findex gtk-event-box
+
+@findex gtk-event-box-new
+@findex gtk-widget-set-events
+@findex gtk-widget-realize
+@findex gdk-window-set-cursor
+
+@findex event-box-new, gtk-event-box-new
+@findex widget-set-events, gtk-widget-set-events
+@findex widget-realize, gtk-widget-realize
+@findex window-set-cursor, gtk-window-set-cursor
+
+@ifnotinfo
+@float Figure, figure-event-box
+@caption{Event Box}
+@center @image{figures/event-box256x70, 171pt}
+@end float
+@end ifnotinfo
+
+Some GTK+ widgets do not have associated X windows, so these widgets just draw
+on their parents.  Because of this, they cannot receive events and if they are
+incorrectly sized, they do not clip so you can get messy overwriting.  If you
+require more from these widgets, the @code{GtkEventBox} widget is for you.
+
+At first glance, the @code{GtkEventBox} widget might appear to be totally
+useless.  It draws nothing on the screen and responds to no events.  However,
+it does serve a function - it provides an X window for its child widget.  This
+is important as many GTK+ widgets do not have an associated X window.  Not
+having an X window saves memory and improves performance, but also has some
+drawbacks.  A widget without an X window cannot receive events, and does not
+perform any clipping on its contents.  Although the name @code{GtkEventBox}
+emphasizes the event-handling function, the widget can also be used for
+clipping.
+
+To create a new @code{GtkEventBox} widget, use the call
+@code{(make-instance 'gtk-event-box)} or the function @code{gtk-event-box-new}.
+A child widget can then be added to this @code{GtkEventBox} with the function
+@code{gtk-container-add}.  With the function @code{gtk-widget-set-events} the
+events are set for the event box which can be connected to with a signal
+handler.  To create the resources associated with an event box, the function
+@code{gtk-widget-realize} has to be called explictely for the @code{GtkEventBox}
+widget.
+
+@ref{example-event-box} demonstrates both uses of a @code{GtkEventBox} widget -
+a label is created that is clipped to a small box, and set up so that a
+mouse-click on the label causes the program to exit.  Resizing the window
+reveals varying amounts of the label.
+
+@findex GdkWindow
+@findex gdk-window
+
+@findex gtk-widget-window
+@findex gdk-window-set-cursor
+@findex gdk-cursor-new
+
+@findex widget-window, gtk-widget-window
+@findex window-set-cursor, gdk-window-set-cursor
+@findex cursor-new, gdk-cursor-new
+
+In addition, @ref{example-event-box} shows how to change the mouse pointer
+over a window.  Every widget has an associated window of type @code{GdkWindow},
+which can be get with the function @code{gtk-widget-window}. The function
+@code{gdk-window-set-cursor} sets a mouse pointer for this @code{GdkWindow}.
+A new mouse pointer is created with the function @code{gdk-cursor-new}.  The
+functions takes one argument, which is a keyword for a predefined mouse pointer.
+In @ref{example-event-box} the mouse pointer @code{:hand1} is choosen.  This
+new mouse pointer is than associated to the @code{GdkWindow} with the function
+@code{gdk-window-set-cursor}.
+
+@float Example, example-event-box
+@caption{Event Box}
+@end float
+@verbatim
+(defun example-event-box ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Event Box"
+                                 :default-width 250
+                                 :border-width 12))
+          (eventbox (make-instance 'gtk-event-box))
+          (label (make-instance 'gtk-label
+                                :width-request 120
+                                :height-request 20
+                                :label
+                                "Click here to quit, and more text, more")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window eventbox)
+      (gtk-container-add eventbox label)
+      (gtk-widget-set-events eventbox :button-press-mask)
+      (g-signal-connect eventbox "button-press-event"
+                        (lambda (widget event)
+                          (declare (ignore widget event))
+                          (gtk-widget-destroy window)))
+      (gtk-widget-realize eventbox)
+      (gdk-window-set-cursor (gtk-widget-window eventbox)
+                             (gdk-cursor-new :hand1))
+      (gtk-widget-show window))))
+@end verbatim
+
+
+@section Alignment widget
+
+@findex GtkAlignment
+@findex gkt-alignment
+
+@findex gtk-alignment-new
+@findex gtk-alignment-set
+
+@findex alignment-new, gtk-alignment-new
+@findex alignment-set, gtk-alignment-set
+
+@ifnotinfo
+@float Figure, figure-alignment
+@caption{Alignment Widget}
+@center @image{figures/alignment306x226, 204pt}
+@end float
+@end ifnotinfo
+
+The alignment widget @code{GtkAlignment} allows to place a widget within its
+window at a position and size relative to the size of the @code{GtkAlignment}
+widget itself.  For example, it can be very useful for centering a widget within
+the window.
+
+The @code{GtkAlignment} widget has the four properties @code{xalign},
+@code{yalign}, @code{xscale}, and @code{yscale}.  The properties are floating
+point numbers, which can range from @code{0.0} to @code{1.0}. The @code{xalign}
+and @code{yalign} properties affect the position of the widget placed within
+the @code{GtkAlignment} widget.  The @code{xscale} and @code{yscale} properties
+affect the amount of space allocated to the widget.
+
+The properties are set when creating the @code{GtkAlignment} widget with the
+function @code{gtk-alignment-new}.  For an existing {GtkAlignment} widget the
+properties can be set with the function @code{gtk-alignemt-set}.  A child widget
+can be added to the @code{GtkAlignment} widget using the function
+@code{gtk-container-add}.
+
+@float Example, example-alignment
+@caption{Alignment Widget}
+@end float
+@verbatim
+(defun example-alignment ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Alignment"
+                                 :default-width 300
+                                 :default-height 200
+                                 :border-width 12))
+          (button (make-instance 'gtk-button
+                                 :label "Quit"))
+          (alignment (make-instance 'gtk-alignment
+                                    :xalign 0.25
+                                    :yalign 0.25
+                                    :xscale 0.75
+                                    :yscale 0.50)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-container-add alignment button)
+      (gtk-container-add window alignment)
+      (gtk-widget-show window))))
+@end verbatim
+
+@section Fixed Container
+
+@findex GtkFixed
+@findex gtk-fixed-new
+@findex fixed-new, gtk-fixed-new
+@findex gtk-fixed-put
+@findex fixed-put, gtk-fixed-put
+@findex gtk-fixed-move
+@findex fixed-move, gtk-fixed-move
+@findex gtk-fixed-set-has-window
+@findex fixed-set-has-window, gtk-fixed-set-has-window
+
+@ifnotinfo
+@float Figure, figure-fixed
+@caption{Fixed Container}
+@center @image{figures/fixed339x234, 226pt}
+@end float
+@end ifnotinfo
+
+The @code{GtkFixed} widget is a container widget which allows to place child
+widgets at a fixed position within the container, relative to the upper left
+hand corner.  The position of the child widgets can be changed dynamically.
+Only a few functions are associated with the @code{GtkFixed} widget
+like @code{gtk-fixed-new}, @code{gtk-fixed-put}, and @code{gtk-fixed-move}.
+
+The function @code{gtk-fixed-new} creates a new @code{GtkFixed} widget.
+@code{gtk-fixed-put} places a widget in the container fixed at the position
+specified by the arguments @code{x} and @code{y}.  The function
+@code{gtk-fixed-move} allows the specified widget to be moved to a new position.
+
+Normally, Fixed widgets do not have have their own X window. Since this is
+different from the behaviour of @code{GtkFixed} widgets in earlier releases of
+GTK+, the function @code{gtk-fixed-set-has-window} allows the creation of
+@code{GtkFixed} widgets with their own X window.  The function has to be called
+before realizing the widget.
+
+The following example illustrates how to use a fixed container.
+
+@float Example, example-fixed
+@caption{Fixed Container}
+@end float
+@verbatim
+(defun move-button (button fixed)
+  (let* ((allocation (gtk-widget-get-allocation fixed))
+         (width (- (gdk-rectangle-width allocation) 20))
+         (height (- (gdk-rectangle-height allocation) 10)))
+    (gtk-fixed-move fixed button (random width) (random height))))
+
+(defun example-fixed ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Fixed Container"
+                                 :default-width 300
+                                 :default-height 200
+                                 :border-width 12))
+          (fixed (make-instance 'gtk-fixed)))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      (gtk-container-add window fixed)
+      (dotimes (i 3)
+        (let ((button (gtk-button-new-with-label "Press me")))
+          (g-signal-connect button "clicked"
+                            (lambda (widget)
+                              (move-button widget fixed)))
+          (gtk-fixed-put fixed button (random 300) (random 200))))
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section Layout Container
+
+@findex GtkLayout
+@findex gtk-layout
+@findex layout, gtk-layout
+
+@findex gtk-layout-new
+@findex gtk-layout-put
+@findex gtk-layout-move
+@findex gtk-layout-get-size
+@findex gtk-layout-set-size
+
+@findex layout-new, gtk-layout-new
+@findex layout-put, gtk-layout-put
+@findex layout-move, gtk-layout-move
+@findex layout-get-size, gtk-layout-get-size
+@findex layout-set-size, gtk-layout-set-size
+
+The layout container @code{GtkLayout} is similar to the fixed container
+@code{GtkFixed} except that it implements an infinite (where infinity is less
+than 2^32) scrolling area.  The X window system has a limitation where windows
+can be at most 32767 pixels wide or tall.  The layout container gets around this
+limitation by doing some exotic stuff using window and bit gravities, so that
+you can have smooth scrolling even when you have many child widgets in your
+scrolling area.
+
+A layout container is created using @code{gtk-layout-new} which accepts the
+optional arguments @code{hadjustment} and @code{vadjustment} to specify
+adjustment objects that the layout widget will use for its scrolling.
+
+Widgets can be add and move in the Layout container using the functions
+@code{gtk-layout-put} and @code{gtk-layout-move}.  The size of the layout
+container can be set using the function @code{gtk-layout-set-size}.
+
+@code{GtkLayout} implements the interface @code{GtkScrollable}.  Therefore, for
+manipulating the horizontal and vertical adjustment widgets the functions
+@code{gtk-scrollable-get-hadjustment}, @code{gtk-scrollable-get-vadjustment},
+@code{gtk-scrollable-set-hadjustment}, and @code{gtk-scrollable-set-vadjustment}
+are available.
+
+@c -----------------------------------------------------------------------------
+@section Frames
+
+@ifnotinfo
+@float Figure, figure-frame
+@caption{Frame Widget}
+@center @image{figures/frame256x226, 171pt}
+@end float
+@end ifnotinfo
+
+Frames can be used to enclose one or a group of widgets with a box which can
+optionally be labelled. The position of the label and the style of the box can
+be altered to suit.
+
+A Frame can be created with @code{(make-instance 'gtk-frame} or the function
+@code{gtk-frame-new}.  The label is by default placed in the upper left hand
+corner of the frame. A value of Nil for the label argument will result in no
+label being displayed. The text of the label can be changed using the function
+@code{gtk-frame-set-label}.
+
+The position of the label can be changed using the function
+@code{gtk-frame-set-label-align} which has the arguments xalign and yalign
+which take values between 0.0 and 1.0. xalign indicates the position of the
+label along the top horizontal of the frame. yalign is not currently used. The
+default value of xalign is 0.0 which places the label at the left hand end of
+the frame.
+
+The function @code{gtk-frame-set-shadow-type} alters the style of the box that
+is used to outline the frame.  The second argument is a keyword of the
+enumeration @code{GtkShadowType}.  The possible values are listed in
+@ref{table-gtk-shadow-type}.
+
+@ref{example-frame} illustrates the use of the frame widget.
+
+@float Example, example-frame
+@caption{Frame Widget}
+@end float
+@verbatim
+(defun example-frame ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Frame"
+                                 :default-width 250
+                                 :default-height 200
+                                 :border-width 12))
+          (frame (make-instance 'gtk-frame
+                                :label "Gtk Frame Widget"
+                                :label-xalign 1.0
+                                :label-yalign 0.5
+                                :shadow-type :etched-in)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window frame)
+      (gtk-widget-show window))))
+@end verbatim
+
+@section Aspect Frames
+
+@ifnotinfo
+@float Figure, figure-aspect-frame
+@caption{Aspect Frame Widget}
+@center @image{figures/aspect-frame306x276, 204pt}
+@end float
+@end ifnotinfo
+
+The aspect frame widget is like a frame widget, except that it also enforces
+the aspect ratio (that is, the ratio of the width to the height) of the child
+widget to have a certain value, adding extra space if necessary. This is useful,
+for instance, if you want to preview a larger image. The size of the preview
+should vary when the user resizes the window, but the aspect ratio needs to
+always match the original image.
+
+To create a new aspect frame use @code{(make-instance 'gtk-aspect-frame} or the
+function @code{gtk-aspect-frame-new}.  xalign and yalign specify alignment as
+with Alignment widgets.  If obey_child is TRUE, the aspect ratio of a child
+widget will match the aspect ratio of the ideal size it requests. Otherwise, it
+is given by ratio.
+
+The options of an existing aspect frame can be changed with the function
+@code{gtk-aspect-frame-set}.
+
+As an example, the following program uses an AspectFrame to present a drawing
+area whose aspect ratio will always be 2:1, no matter how the user resizes the
+top-level window.
+
+@float Example, example-aspect-frame
+@caption{Aspect Frame Widget}
+@end float
+@verbatim
+(defun example-aspect-frame ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Aspect Frame"
+                                 :default-width 300
+                                 :default-height 250
+                                 :border-width 12))
+          (frame (make-instance 'gtk-aspect-frame
+                                :label "2 x 1"
+                                :xalign 0.5
+                                :yalign 0.5
+                                :ratio 2
+                                :obey-child nil))
+          (area (make-instance 'gtk-drawing-area
+                               :width-request 200
+                               :hight-request 200)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window frame)
+      (gtk-container-add frame area)
+      (gtk-widget-show window))))
+@end verbatim
+
+
+@section Paned Window Widgets
+
+@ifnotinfo
+@float Figure, figure-paned-window
+@caption{Paned Window Widgets}
+@center @image{figures/paned-window356x326, 237pt}
+@end float
+@end ifnotinfo
+
+The paned window widgets are useful when you want to divide an area into two
+parts, with the relative size of the two parts controlled by the user.  A groove
+is drawn between the two portions with a handle that the user can drag to change
+the ratio.  The division can either be horizontal (@code{GtkHPaned}) or
+vertical (@code{GtkVPaned}).
+
+To create a new paned window, call one of the functions @code{gtk-hpanded-new}
+or @code{gtk-vpaned-new}.
+
+After creating the paned window widget, you need to add child widgets to its two
+halves. To do this, use the functions @code{gtk-paned-add1} an
+@code{gtk-paned-add2}.  @code{gtk-paned-add1} adds the child widget to the left
+or top half of the paned window.  @code{gtk-paned-add2} adds the child widget to
+the right or bottom half of the paned window.
+
+@ref{example-paned-window} shows a simple example.
+
+@c TODO: The example is very simple. It is not taken from the GTK+ 2.0 Tutorial.
+
+@float Example, example-paned-window
+@caption{Paned Window Widgets}
+@end float
+@verbatim
+(defun example-paned-window ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Paned Window"
+                                 :border-width 12))
+          (vpaned (make-instance 'gtk-v-paned))
+          (frame1 (make-instance 'gtk-frame :label "Frame 1"))
+          (frame2 (make-instance 'gtk-frame :label "Frame 2")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-set-size-request window 350 300)
+      (gtk-container-add window vpaned)
+      (gtk-paned-add1 vpaned frame1)
+      (gtk-paned-add2 vpaned frame2)
+      (gtk-widget-show window))))
+@end verbatim
+
+@section Viewports
+
+@findex gtk-viewport-new
+@findex viewport-new, gtk-viewport-new
+@findex gtk-viewport-get-hadjustment
+@findex viewport-get-hadjustent, gtk-viewport-get-hadjustment
+@findex gtk-viewport-set-hadjustment
+@findex viewport-set-hadjustment, gtk-viewport-set-hadjustment
+@findex gtk-viewport-get-vadjustment
+@findex viewport-get-vadjustment, gtk-viewport-get-vadjustment
+@findex gtk-viewport-set-vadjustment
+@findex viewport-set-vadjustment, gkt-viewport-set-vadjustment
+@findex gtk-viewport-set-shadow-type
+@findex viewport-set-shadow-type, gtk-viewport-set-shadow-type
+
+It is unlikely that you will ever need to use the viewport widget directly.
+You are much more likely to use the scrolled window widget which itself uses
+the viewport.
+
+A viewport widget allows you to place a larger widget within it such that you
+can view a part of it at a time.  It uses adjustments to define the area that
+is currently in view.
+
+A viewport is created with the function @code{gtk-viewport-new}.  The function
+takes two arguments to specify the horizontal and vertical adjustments that the
+widget is to use when you create the widget.  It will create its own if you
+pass @code{NIL} as the value of the arguments.
+
+You can get and set the adjustments after the widget has been created using the
+one of the four functions @code{gtk-viewport-get-hadjustment},
+@code{gtk-viewport-get-vadjustment}, @code{gtk-viewport-set-hadjustment}, and
+@code{gtk-viewport-set-vadjustment}.
+
+The only other viewport function is @code{gtk-viewport-set-shadow-type} used to
+alter its appearance.  The second argument is of type @code{GtkShadowType}.
+Possible values are listed in @ref{table-gtk-shadow-type}.
+
+
+@section Scrolled Windows
+
+@ifnotinfo
+@float Figure, figure-scrolled-window
+@caption{Scrolled Window}
+@center @image{figures/scrolled-window356x326, 237pt}
+@end float
+@end ifnotinfo
+
+Scrolled windows are used to create a scrollable area with another widget inside
+it.  You may insert any type of widget into a scrolled window, and it will be
+accessible regardless of the size by using the scrollbars.
+
+The function @code{gtk-scrolled-window-new} is used to create a new scrolled
+window.  Where the first argument is the adjustment for the horizontal
+direction, and the second, the adjustment for the vertical direction.  These
+are almost always set to @code{NIL}.
+
+The function @code{gtk-scrolled-window-set-policy} sets the policy to be used
+with respect to the scrollbars.  The first argument is the scrolled window you
+wish to change.  The second sets the policy for the horizontal scrollbar, and
+the third the policy for the vertical scrollbar.
+
+The policy is of the enumeration type @code{GtkPolicyType} and may be one of
+@code{:automatic} or @code{:always}.  @code{:automatic} will automatically
+decide whether you need scrollbars, whereas @code{:always} will always leave
+the scrollbars there. All possible values of @code{GtkPolicyType} are listed
+in @ref{table-gtk-policy-type}.
+
+@float Table, table-gtk-policy-type
+@caption{The values of the enumeration type @code{GtkPolicyType} determines
+when a scroll bar will be visible.}
+@shortcaption{Values of the type @code{GtkPolicyType}}
+@end float
+@table @code
+@item :always
+      The scrollbar is always visible.
+@item :automatic
+      The scrollbar will appear and disappear as necessary. For example,
+      when all of a GtkCList can not be seen.
+@item :never
+      The scrollbar will never appear.
+@end table
+
+You can then place your object into the scrolled window using the function
+@code{gtk-scrolled-window-add-with-viewport}.
+
+@ref{example-scrolled-window} is a simple example that packs a table with 100
+toggle buttons into a scrolled window.  Try playing with resizing the window.
+You will notice how the scrollbars react.  You may also wish to use the
+@code{gtk-widget-set-size-request} call to set the default size of the window or
+other widgets.
+
+@float Example, example-scrolled-window
+@caption{Scrolled Window}
+@end float
+@verbatim
+(defun example-scrolled-window ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-dialog
+                                 :type :toplevel
+                                 :title "Example Scrolled Window"
+                                 :border-width 0
+                                 :width-request 350
+                                 :height-request 300))
+          (scrolled (make-instance 'gtk-scrolled-window
+                                   :border-width 12
+                                   :hscrollbar-policy :automatic
+                                   :vscrollbar-policy :always))
+          (table (make-instance 'gtk-table
+                                :n-rows 10
+                                :n-columns 10
+                                :row-spacing 10
+                                :column-spacing 10
+                                :homogeneous nil)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
+      (gtk-scrolled-window-add-with-viewport scrolled table)
+      (dotimes (i 10)
+        (dotimes (j 10)
+          (gtk-table-attach table
+                            (make-instance 'gtk-button
+                                           :label
+                                           (format nil "(~d, ~d)" i j))
+                            i (+ i 1) j (+ j 1))))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Close"
+                                   :can-default t)))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
+        (gtk-widget-grab-default button))
+      (gtk-widget-show window))))
+@end verbatim
+
+@section Button Boxes
+
+@ifnotinfo
+@float Figure, figure-button-box
+@caption{Button Boxes}
+@center @image{figures/button-box552x526, 368pt}
+@end float
+@end ifnotinfo
+
+Button boxes are a convenient way to quickly layout a group of buttons.  They
+come in both horizontal and vertical flavours.  You create a new Button Box
+with one of the following functions @code{gtk-hbutton-box-new} or
+@code{gtk-vbutton-box-new}, which create a horizontal or vertical box,
+respectively.
+
+Buttons are added to a Button Box using the usual function
+@code{gtk-container-add}.
+
+@ref{example-button-box} is an example that illustrates all the different
+layout settings for Button Boxes.
+
+@float Example, example-button-box
+@caption{Button Boxes}
+@end float
+@verbatim
+(defun create-bbox (horizontal title spacing layout)
+  (let ((frame (make-instance 'gtk-frame
+                              :label title))
+        (bbox (make-instance (if horizontal
+                                 'gtk-hbutton-box
+                                 'gtk-vbutton-box)
+                             :border-width 6
+                             :layout-style layout
+                             :spacing spacing)))
+  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
+  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
+  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
+  (gtk-container-add frame bbox)
+  frame))
+
+(defun example-button-box ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Button Box"
+                                 :border-width 12))
+          (vbox1 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 0))
+          (vbox2 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 0))
+          (hbox (make-instance 'gtk-hbox
+                               :homogeneous nil
+                               :spacing 0)))
+      ;; Set gtk-button-images to T. This allows buttons with text and image.
+      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)      
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create Horizontal Button Boxes
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :ypad 6
+                                         :xalign 0
+                                         :use-markup t
+                                         :label
+                                         "<b>Horizontal Button Boxes</b>")
+                          :expand nil
+                          :fill nil)
+      ;; Create the first Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "Spread (spacing 12)" 12 :spread))
+      ;; Create the second Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "Edge (spacing 12)" 12 :edge))
+      ;; Create the third Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "Start (spacing 6)" 6 :start))
+      ;; Create the fourth Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "End (spacing 6)" 6 :end))
+      (gtk-box-pack-start vbox1 vbox2)
+      ;; Create Vertical Button Boxes
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :ypad 12
+                                         :xalign 0
+                                         :use-markup t
+                                         :label
+                                         "<b>Vertical Button Boxes</b>")
+                          :expand nil
+                          :fill nil)
+      ;; Create the first Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "Spread (spacing 12)" 12 :spread))
+      ;; Create the second Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "Edge (spacing 12)" 12 :edge))
+      ;; Create the third Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "Start (spacing 6)" 6 :start))
+      ;; Create the fourth Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "End (spacing 6)" 6 :end))
+      (gtk-box-pack-start vbox1 hbox)
+      (gtk-container-add window vbox1)
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section Toolbar
+
+A toolbar is created with a call to @code{gtk-toolbar-new}.
+ 
+A toolbar can contain instances of a subclass of @code{GtkToolItem}.  To add a
+@code{GtkToolItem} to the a toolbar, use @code{gtk-toolbar-insert}.  To remove
+an item from the toolbar use @code{gtk-container-remove}.  To add a button to
+the toolbar, add an instance of @code{GtkToolButton}.
+ 
+Toolbar items can be visually grouped by adding instances of
+@code{GtkSeparatorToolItem} to the toolbar. If the GtkToolbar child property
+"expand" is TRUE and the property "draw" is set to FALSE, the effect is to
+force all following items to the end of the toolbar.
+ 
+Creating a context menu for the toolbar can be done by connecting to the
+"popup-context-menu" signal.
+
+
+@c -----------------------------------------------------------------------------
+@section Notebook
+
+The @code{GtkNotebook} widget is a @code{GtkContainer} whose children are pages
+that can be switched between using tab labels along one edge.
+ 
+There are many configuration options for @code{GtkNotebook}.  Among other
+things, you can choose on which edge the tabs appear (see
+@code{gtk-notebook-set-tab-pos}), whether, if there are too many tabs to fit
+the notebook should be made bigger or scrolling arrows added (see
+@code{gtk-notebook-set-scrollable}), and whether there will be a popup menu
+allowing the users to switch pages (see @code{gtk-notebook-popup-enable},
+@code{gtk-notebook-popup-disable}).
+
+
+

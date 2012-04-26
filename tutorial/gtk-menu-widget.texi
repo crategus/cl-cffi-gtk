@@ -1,0 +1,388 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-menu-widget.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 05.04.2012
+@c Revision : 06.04.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@section Manual Menu Creation
+
+GtkMenuShell
+
+A GtkMenuShell is the abstract base class used to derive the GtkMenu and
+GtkMenuBar subclasses.
+
+A GtkMenuShell is a container of GtkMenuItem objects arranged in a list
+which can be navigated, selected, and activated by the user to perform
+application functions. A GtkMenuItem can have a submenu associated with it,
+allowing for nested hierarchical menus.
+
+GtkMenuBar
+
+The GtkMenuBar is a subclass of GtkMenuShell which contains one or more
+GtkMenuItems. The result is a standard menu bar which can hold many menu
+items.
+
+GtkMenu
+
+A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of 
+a list of GtkMenuItem objects which can be navigated and activated by the
+user to perform application functions.
+
+A GtkMenu is most commonly dropped down by activating a GtkMenuItem in a 
+GtkMenuBar or popped up by activating a GtkMenuItem in another GtkMenu.
+
+A GtkMenu can also be popped up by activating a GtkOptionMenu. Other 
+composite widgets such as the GtkNotebook can pop up a GtkMenu as well.
+
+Applications can display a GtkMenu as a popup menu by calling the 
+gtk_menu_popup() function. The example below shows how an application can
+pop up a menu when the 3rd mouse button is pressed.
+
+GtkMenuItem
+
+The GtkMenuItem widget and the derived widgets are the only valid childs for
+menus. Their function is to correctly handle highlighting, alignment, events
+and submenus.
+ 
+As it derives from GtkBin it can hold any valid child widget, altough only
+a few are really useful.
+
+GtkCheckMenuItem
+
+A GtkCheckMenuItem is a menu item that maintains the state of a boolean
+value in addition to a GtkMenuItem usual role in activating application
+code.
+
+A check box indicating the state of the boolean value is displayed at the
+left side of the GtkMenuItem. Activating the GtkMenuItem toggles the value.
+
+GtkImageMenuItem
+
+A GtkImageMenuItem is a menu item which has an icon next to the text label.
+
+Note that the user can disable display of menu icons, so make sure to still
+fill in the text label.
+
+GtkSeparatorMenuItem
+
+The GtkSeparatorMenuItem is a separator used to group items within a menu.
+It displays a horizontal line with a shadow to make it appear sunken into
+the interface.
+
+GtkTearoffMenuItem
+
+A GtkTearoffMenuItem is a special GtkMenuItem which is used to tear off and
+reattach its menu.
+ 
+When its menu is shown normally, the GtkTearoffMenuItem is drawn as a dotted
+line indicating that the menu can be torn off. Activating it causes its menu
+to be torn off and displayed in its own window as a tearoff menu.
+ 
+When its menu is shown as a tearoff menu, the GtkTearoffMenuItem is drawn as
+dotted line which has a left pointing arrow graphic indicating that the
+tearoff menu can be reattached. Activating it will erase the tearoff menu
+window.
+
+@verbatim
+(defun example-menu ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 200
+                                 :default-height 200
+                                 :title "Example Menu Widget"))
+          (vbox (make-instance 'gtk-vbox)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create the menu-bar and the items of the menu-bar.
+      (let ((menubar (make-instance 'gtk-menu-bar
+                                    :visible t
+                                    :can-focus nil))
+            ;; Item file of the menu-bar.
+            (item-file (make-instance 'gtk-menu-item
+                                      :label "_Datei"
+                                      :use-underline t))
+            ;; Item edit of the menu-bar.
+            (item-edit (make-instance 'gtk-menu-item
+                                      :label "_Bearbeiten"
+                                      :use-underline t))
+            ;; Item help of the menu-bar.
+            (item-help (make-instance 'gtk-menu-item
+                                      :label "_Hilfe"
+                                      :use-underline t)))
+        ;; Create submenu for the item file.
+        (let ((submenu (make-instance 'gtk-menu
+                                      :visible t
+                                      :can-focus nil))
+              (item-file-new (make-instance 'gtk-image-menu-item
+                                       :label "gtk-new"
+                                       :use-underline t
+                                       :use-stock t))
+              (item-file-open (make-instance 'gtk-image-menu-item
+                                        :label "gtk-open"
+                                        :use-underline t
+                                        :use-stock t))
+              (item-file-save (make-instance 'gtk-image-menu-item
+                                        :label "gtk-save"
+                                        :user-underline t
+                                        :use-stock t))
+              (item-file-save-as (make-instance 'gtk-image-menu-item
+                                                :label "gtk-save-as"
+                                                :user-underline t
+                                                :use-stock t))
+              (item-file-quit (make-instance 'gtk-image-menu-item
+                                             :label "gtk-quit"
+                                             :user-underline t
+                                             :use-stock t)))
+          ;; Add the items to to the submenu.
+          (gtk-menu-shell-append submenu item-file-new)
+          (gtk-menu-shell-append submenu item-file-open)
+          (gtk-menu-shell-append submenu item-file-save)
+          (gtk-menu-shell-append submenu item-file-save-as)
+          ;; Insert a GtkSeparatorMenuItem.
+          (gtk-menu-shell-append submenu (gtk-separator-menu-item-new))
+          ;; Add the item file quit to the submenu
+          (gtk-menu-shell-append submenu item-file-quit)
+          ;; Set the submenu of the item file.
+          (gtk-menu-item-set-submenu item-file submenu))
+        ;; Create submenu for the item edit.
+        (let ((submenu (make-instance 'gtk-menu
+                                      :visible t
+                                      :can-focus nil))
+              (item-edit-cut (make-instance 'gtk-image-menu-item
+                                            :label "gtk-cut"
+                                            :use-underline t
+                                            :use-stock t))
+              (item-edit-copy (make-instance 'gtk-image-menu-item
+                                             :label "gtk-copy"
+                                             :use-underline t
+                                             :use-stock t))
+              (item-edit-paste (make-instance 'gtk-image-menu-item
+                                              :label "gtk-paste"
+                                              :user-underline t
+                                              :use-stock t))
+              (item-edit-delete (make-instance 'gtk-image-menu-item
+                                               :label "gtk-delete"
+                                               :user-underline t
+                                               :use-stock t)))
+          ;; Add the items to to the submenu.
+          (gtk-menu-shell-append submenu item-edit-cut)
+          (gtk-menu-shell-append submenu item-edit-copy)
+          (gtk-menu-shell-append submenu item-edit-paste)
+          (gtk-menu-shell-append submenu item-edit-delete)
+          ;; Set the submenu of the item edit.
+          (gtk-menu-item-set-submenu item-edit submenu))
+        ;; Create submenu for the item help.
+        (let ((submenu (make-instance 'gtk-menu
+                                      :visible t
+                                      :can-focus nil))
+              (item-help-about (make-instance 'gtk-image-menu-item
+                                              :label "gtk-about"
+                                              :use-underline t
+                                              :use-stock t)))
+          ;; Add the items to to the submenu.
+          (gtk-menu-shell-append submenu item-help-about)
+          ;; Set the submenu of the item help.
+          (gtk-menu-item-set-submenu item-help submenu))
+        ;; Add the items file, edit, and help into the menubar.
+        (gtk-menu-shell-append menubar item-file)
+        (gtk-menu-shell-append menubar item-edit)
+        (gtk-menu-shell-append menubar item-help)
+        ;; Pack the menubar into the vbox.
+        (gtk-box-pack-start vbox menubar))
+      ;; Pack the vbox into the window.
+      (gtk-container-add window vbox)
+      ;; Show the window.
+      (gtk-widget-show window))))
+@end verbatim
+
+@verbatim
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="2.24"/>
+  <object class="GtkWindow" id="window">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Example Menu Builder</property>
+    <property name="has_resize_grip">False</property>
+    <child>
+      <object class="GtkMenuBar" id="menubar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkMenuItem" id="File">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_action_appearance">False</property>
+            <property name="label" translatable="yes">_Datei</property>
+            <property name="use_underline">True</property>
+            <child type="submenu">
+              <object class="GtkMenu" id="menu1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem1">
+                    <property name="label">gtk-new</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem2">
+                    <property name="label">gtk-open</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem3">
+                    <property name="label">gtk-save</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem4">
+                    <property name="label">gtk-save-as</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparatorMenuItem"
+                             id="separatormenuitem1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem5">
+                    <property name="label">gtk-quit</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="Edit">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_action_appearance">False</property>
+            <property name="label" translatable="yes">_Bearbeiten</property>
+            <property name="use_underline">True</property>
+            <child type="submenu">
+              <object class="GtkMenu" id="menu2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem6">
+                    <property name="label">gtk-cut</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem7">
+                    <property name="label">gtk-copy</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem8">
+                    <property name="label">gtk-paste</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem9">
+                    <property name="label">gtk-delete</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="Help">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_action_appearance">False</property>
+            <property name="label" translatable="yes">_Hilfe</property>
+            <property name="use_underline">True</property>
+            <child type="submenu">
+              <object class="GtkMenu" id="menu3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkImageMenuItem" id="imagemenuitem10">
+                    <property name="label">gtk-about</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
+@end verbatim
+
+@verbatim
+(defun example-menu-builder ()
+  (within-main-loop
+    (let ((builder (make-instance 'gtk-builder)))
+      (gtk-builder-add-from-file builder "example-menu-builder.ui")
+      (g-signal-connect (gtk-builder-get-object builder "window") "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-show (gtk-builder-get-object builder "window")))))
+@end verbatim
+

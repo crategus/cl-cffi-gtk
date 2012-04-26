@@ -1,0 +1,61 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-introduction.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 03.02.2012
+@c Revision : 20.03.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+The @code{cl-cffi-gtk} library is a Lisp binding to GTK+ (GIMP Toolkit) which
+is a library for creating graphical user interfaces.  Gtk+ is licensed using
+the LGPL which has been adopted for the @code{cl-cffi-gtk} library with a
+preamble that clarifies the terms for use with Lisp programs and is referred
+as the LLGPL.
+
+This work is based on the @code{cl-gtk2} library which has been developed by
+Kalyanov Dmitry and already is a fairly complete Lisp binding to GTK+.  The
+focus of the @code{cl-cffi-gtk} library is to document the Lisp library much
+more complete and to do the implementation as consistent as possible.  Most
+informations about GTK+ can be gained by reading the C documentation.
+Therefore, the C documentation from @url{www.gtk.org} is included into the Lisp
+files to document the Lisp binding to the GTK+ library.  This way the calling
+conventions are easier to determine and missing functionality is easier to
+detect.
+
+At this time the Lisp library is developed using SBCL 1.0.56 on a Linux system
+with the version GTK+ 3.2 of the C library.  In addition the library is tested
+on windows with SBCL 1.0.54 and the version GTK+ 2.24.
+
+The GTK+ library is called the GIMP toolkit because GTK+ was originally written
+for developing the GNU Image Manipulation Program (GIMP), but GTK+ has now been
+used in a large number of software projects, including the GNU Network Object
+Model Environment (GNOME) project.  GTK+ is built on top of GDK (GIMP Drawing
+Kit) which is basically a wrapper around the low-level functions for accessing
+the underlying windowing functions (Xlib in the case of the X windows system),
+and gdk-pixbuf, a library for client-side image manipulation.
+
+GTK+ is essentially an object oriented application programmers interface (API).
+Although written completely in C, GTK+ is implemented using the idea of classes
+and callback functions (pointers to functions).
+
+A third component is called GLib which contains replacements for standard
+calls, as well as additional functions for handling linked lists, etc.  The
+replacement functions are used to increase the portability of GTK+, as some
+of the functions implemented here are not available or are non standard on other
+Unixes such as g_strerror().  Some also contain enhancements to the libc 
+versions, such as g_malloc() that has enhanced debugging utilities.
+
+In version 2.0, GLib has picked up the type system which forms the foundation
+for the class hierarchy of GTK+, the signal system which is used throughout
+GTK+, a thread API which abstracts the different native thread APIs of the
+various platforms and a facility for loading modules.
+
+As the last component, GTK+ uses the Pango library for internationalized text
+output.
+
+This tutorial describes the Lisp interface to GTK+.  It is based on the official
+GTK+ 2.0 Tutorial of the C implementation.
+

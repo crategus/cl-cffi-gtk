@@ -1,0 +1,372 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-reference.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 16.04.2012
+@c Revision : 22.04.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkAdjustment}
+@deffn {Class} GtkAdjustment
+
+A representation of an adjustable bounded value
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkAdjustment
+@end verbatim
+
+@b{Properties}
+@verbatim
+  "lower"                  gdouble            : Read / Write
+  "page-increment"         gdouble            : Read / Write
+  "page-size"              gdouble            : Read / Write
+  "step-increment"         gdouble            : Read / Write
+  "upper"                  gdouble            : Read / Write
+  "value"                  gdouble            : Read / Write
+@end verbatim
+
+@b{Signals}
+@verbatim
+  "changed"                                   : No Recursion
+  "value-changed"                             : No Recursion
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkBox}
+@deffn {Class} GtkBox
+ 
+A container box
+ 
+@b{Object Hierarchy}
+@verbatim
+  GObject
+    +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBox
+                           +----GtkAppChooserWidget
+                           +----GtkButtonBox
+                           +----GtkColorSelection
+                           +----GtkFileChooserButton
+                           +----GtkFileChooserWidget
+                           +----GtkFontChooserWidget
+                           +----GtkFontSelection
+                           +----GtkHBox
+                           +----GtkInfoBar
+                           +----GtkRecentChooserWidget
+                           +----GtkStatusbar
+                           +----GtkVBox
+@end verbatim
+
+@b{Implemented Interfaces}
+
+GtkBox implements @code{AtkImplementorIface}, @code{GtkBuildable} and
+@code{GtkOrientable}.
+
+@b{Properties}
+@verbatim
+  "homogeneous"            gboolean           : Read / Write
+  "spacing"                gint               : Read / Write
+@end verbatim
+
+@b{Child Properties}
+@verbatim
+  "expand"                 gboolean           : Read / Write
+  "fill"                   gboolean           : Read / Write
+  "pack-type"              GtkPackType        : Read / Write
+  "padding"                guint              : Read / Write
+  "position"               gint               : Read / Write
+@end verbatim
+@end deffn
+
+@anchor{GtkContainer}
+@deffn {Class} GtkContainer
+
+Base class for widgets which contain other widgets.
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBin
+                     +----GtkBox
+                     +----GtkFixed
+                     +----GtkGrid
+                     +----GtkPaned
+                     +----GtkIconView
+                     +----GtkLayout
+                     +----GtkMenuShell
+                     +----GtkNotebook
+                     +----GtkSocket
+                     +----GtkTable
+                     +----GtkTextView
+                     +----GtkToolbar
+                     +----GtkToolItemGroup
+                     +----GtkToolPalette
+                     +----GtkTreeView
+@end verbatim
+
+@b{Implemented Interfaces}
+ 
+GtkContainer implements @code{AtkImplementorIface} and @code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "border-width"           guint              : Read / Write
+  "child"                  GtkWidget*         : Write
+  "resize-mode"            GtkResizeMode      : Read / Write
+@end verbatim
+ 
+@b{Signals}
+@verbatim
+  "add"                                       : Run First
+  "check-resize"                              : Run Last
+  "remove"                                    : Run First
+  "set-focus-child"                           : Run First
+@end verbatim
+@end deffn
+
+@anchor{GtkLabel}
+@deffn {Class} GtkLabel
+
+A widget that displays a small to medium amount of text.
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkMisc
+                     +----GtkLabel
+                           +----GtkAccelLabel
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkLabel} implements @code{AtkImplementorIface} and @code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "angle"                  gdouble            : Read / Write
+  "attributes"             PangoAttrList*     : Read / Write
+  "cursor-position"        gint               : Read
+  "ellipsize"              PangoEllipsizeMode : Read / Write
+  "justify"                GtkJustification   : Read / Write
+  "label"                  gchar*             : Read / Write
+  "max-width-chars"        gint               : Read / Write
+  "mnemonic-keyval"        guint              : Read
+  "mnemonic-widget"        GtkWidget*         : Read / Write
+  "pattern"                gchar*             : Write
+  "selectable"             gboolean           : Read / Write
+  "selection-bound"        gint               : Read
+  "single-line-mode"       gboolean           : Read / Write
+  "track-visited-links"    gboolean           : Read / Write
+  "use-markup"             gboolean           : Read / Write
+  "use-underline"          gboolean           : Read / Write
+  "width-chars"            gint               : Read / Write
+  "wrap"                   gboolean           : Read / Write
+  "wrap-mode"              PangoWrapMode      : Read / Write
+@end verbatim
+ 
+@b{Signals}
+@verbatim
+  "activate-current-link"                     : Action
+  "activate-link"                             : Run Last
+  "copy-clipboard"                            : Action
+  "move-cursor"                               : Action
+  "populate-popup"                            : Run Last
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkRange}
+@deffn {Class} GtkRange
+
+Base class for widgets which visualize an adjustment
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkRange
+                     +----GtkScale
+                     +----GtkScrollbar
+@end verbatim
+
+@b{Implemented Interfaces}
+
+GtkRange implements @code{AtkImplementorIface}, @code{GtkBuildable} and
+@code{GtkOrientable}.
+
+@b{Properties}
+@verbatim
+  "adjustment"                GtkAdjustment*  : Read / Write /Construct
+  "fill-level"                gdouble            : Read / Write
+  "inverted"                  gboolean           : Read / Write
+  "lower-stepper-sensitivity" GtkSensitivityType : Read / Write
+  "restrict-to-fill-level"    gboolean           : Read / Write
+  "round-digits"              gint               : Read / Write
+  "show-fill-level"           gboolean           : Read / Write
+  "upper-stepper-sensitivity" GtkSensitivityType : Read / Write
+@end verbatim
+
+@b{Style Properties}
+@verbatim
+  "arrow-displacement-x"      gint            : Read
+  "arrow-displacement-y"      gint            : Read
+  "arrow-scaling"             gfloat          : Read
+  "slider-width"              gint            : Read
+  "stepper-size"              gint            : Read
+  "stepper-spacing"           gint            : Read
+  "trough-border"             gint            : Read
+  "trough-under-steppers"     gboolean        : Read
+@end verbatim
+
+@b{Signals}
+@verbatim
+  "adjust-bounds"                             : Run Last
+  "change-value"                              : Run Last
+  "move-slider"                               : Action
+  "value-changed"                             : Run Last
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkScrollbar}
+@deffn {Class} GtkScrollbar
+
+A Scrollbar
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkRange
+                     +----GtkScrollbar
+                           +----GtkHScrollbar
+                           +----GtkVScrollbar
+@end verbatim
+
+@b{Implemented Interfaces}
+
+GtkScrollbar implements @code{AtkImplementorIface}, @code{GtkBuildable} and
+@code{GtkOrientable}.
+
+@b{Style Properties}
+@verbatim
+  "fixed-slider-length"            gboolean   : Read
+  "has-backward-stepper"           gboolean   : Read
+  "has-forward-stepper"            gboolean   : Read
+  "has-secondary-backward-stepper" gboolean   : Read
+  "has-secondary-forward-stepper"  gboolean   : Read
+  "min-slider-length"              gint       : Read
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkSeparator}
+@deffn {Class} GtkSeparator
+
+A separator widget
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkSeparator
+                     +----GtkHSeparator
+                     +----GtkVSeparator
+@end verbatim
+
+@b{Implemented Interfaces}
+
+GtkSeparator implements @code{AtkImplementorIface}, @code{GtkBuildable} and
+@code{GtkOrientable}.
+@end deffn
+
+@anchor{GtkWindow}
+@deffn {Class} GtkWindow
+
+Toplevel which can contain other widgets.
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBin
+                           +----GtkWindow
+                                 +----GtkDialog
+                                 +----GtkAssistant
+                                 +----GtkOffscreenWindow
+                                 +----GtkPlug
+@end verbatim
+ 
+@b{Implemented Interfaces}
+
+GtkWindow implements @code{AtkImplementorIface} and @code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "accept-focus"           gboolean           : Read / Write
+  "application"            GtkApplication*    : Read / Write
+  "decorated"              gboolean           : Read / Write
+  "default-height"         gint               : Read / Write
+  "default-width"          gint               : Read / Write
+  "deletable"              gboolean           : Read / Write
+  "destroy-with-parent"    gboolean           : Read / Write
+  "focus-on-map"           gboolean           : Read / Write
+  "focus-visible"          gboolean           : Read / Write
+  "gravity"                GdkGravity         : Read / Write
+  "has-resize-grip"        gboolean           : Read / Write
+  "has-toplevel-focus"     gboolean           : Read
+  "icon"                   GdkPixbuf*         : Read / Write
+  "icon-name"              gchar*             : Read / Write
+  "is-active"              gboolean           : Read
+  "mnemonics-visible"      gboolean           : Read / Write
+  "modal"                  gboolean           : Read / Write
+  "opacity"                gdouble            : Read / Write
+  "resizable"              gboolean           : Read / Write
+  "resize-grip-visible"    gboolean           : Read
+  "role"                   gchar*             : Read / Write
+  "screen"                 GdkScreen*         : Read / Write
+  "skip-pager-hint"        gboolean           : Read / Write
+  "skip-taskbar-hint"      gboolean           : Read / Write
+  "startup-id"             gchar*             : Write
+  "title"                  gchar*             : Read / Write
+  "transient-for"          GtkWindow*         : Read / Write / Construct
+  "type"                   GtkWindowType      : Read / Write / Construct
+  "type-hint"              GdkWindowTypeHint  : Read / Write
+  "urgency-hint"           gboolean           : Read / Write
+  "window-position"        GtkWindowPosition  : Read / Write
+@end verbatim
+
+@b{Style Properties}
+@verbatim
+  "resize-grip-height"     gint               : Read / Write
+  "resize-grip-width"      gint               : Read / Write
+@end verbatim
+
+@b{Signals}
+@verbatim
+  "activate-default"                          : Action
+  "activate-focus"                            : Action
+  "keys-changed"                              : Run First
+  "set-focus"                                 : Run Last
+@end verbatim
+@end deffn
+

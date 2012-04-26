@@ -1,0 +1,926 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-packing-widgets.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 06.02.2012
+@c Revision : 23.04.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@menu
+* Packing Boxes::
+* Details of Boxes::
+* Packing Using Tables::
+* Table Packing Example::
+* Packing Using Grids::
+* Grid Packing Examples::
+@end menu
+
+@c -----------------------------------------------------------------------------
+@node Packing Boxes, Details of Boxes, Top, Top
+@section Packing Boxes
+
+When creating an application, it is necessary to put more than one widget inside
+a window.  The first Hello world example only used one button so it could simply
+use the function @code{gtk-container-add} to "pack" the button into the window.
+But when you want to put more than one widget into a window, how do you control
+where that widget is positioned? This is where packing comes in.
+
+Most packing is done by creating boxes.  These are invisible widget containers
+that can pack widgets into, which come in two forms, a horizontal box, and a
+vertical box.  When packing widgets into a horizontal box, the objects are
+inserted horizontally from left to right or right to left depending on the call
+used.  In a vertical box, widgets are packed from top to bottom or vice versa.
+You may use any combination of boxes inside or beside other boxes to create the
+desired effect.
+
+@findex GtkBox
+
+@findex gtk-box
+@findex gtk-box-new
+
+@findex gtk-box-pack-start
+@findex gtk-box-pack-end
+
+@findex box, gtk-box
+@findex box-new, gtk-box-new
+
+@findex box-pack-start, gtk-box-pack-start
+@findex box-pack-end, gtk-box-pack-start
+
+@findex GtkOrientation
+@findex GtkOrientable
+
+@findex gtk-orientation
+@findex orientation, gtk-orientation
+@findex gtk-orientable
+@findex orientable, gtk-orientable
+
+To create a new box of the type @code{GtkBox}, the function @code{gtk-box-new}
+or the call @code{(make-instance 'gtk-box)} is used.  The first argument of the
+function @code{gtk-box-new} takes a keyword of the enumeration type
+@code{GtkOrientation}, which is the Lisp binding implemented as
+@code{gtk-orientation} with the values @code{:horizontal} or @code{:vertical}
+to determine a horizontal or a vertical box.  Because @code{GtkBox} implements
+the interface @code{GtkOrientable} an instance of @code{GtkBox} has the property
+@code{orientiation} of type @code{GtkOrientation}, which can be set by a call
+of @code{make-instance}.
+
+The following examples show two equivalent ways to create an instance of a
+horizontal box.  The second argument of the function @code{gtk-box-new} is
+the value of the property @code{spacing}, which is described in
+@ref{Details of Boxes}.
+@verbatim
+  (let ((box (gtk-box-new :horizontal 3)))
+    [...] )
+@end verbatim
+or
+@verbatim
+  (let ((box (make-instance 'gtk-box
+                            :orientation :horizontal
+                            :spacing 3)))
+    [...] )
+@end verbatim
+
+The @code{gtk-box-pack-start} and @code{gtk-box-pack-end} functions are used to
+place widgets inside of boxes.  The @code{gtk-box-pack-start} function starts
+at the top and works its way down in a vertical box, and packs left to right in
+a horizontal box.  The function @code{gtk-box-pack-end} does the opposite,
+packing from bottom to top in a vertical box, and right to left in a horizontal
+box.  The widgets, which are packed into a box, can be containers, which are
+composed of other widgets.  Using the functions for packing widgets in boxes
+allows to right justify or left justify the widgets.  The functions can be
+mixed in any way to achieve the desired effect.  Most of the examples in this
+tutorial use the function @code{gtk-box-pack-start}.  In the following example
+a vertical box is created.  Then two label widgets are packed into the box with
+the function @code{gtk-box-pack-start}.
+
+@verbatim
+  (let ((box (gtk-box-new :vertical 3)))
+    (gtk-box-pack-start box (gtk-label-new "LABEL 1"))
+    (gtk-box-pack-start box (gtk-label-new "LABEL 2"))
+    [...] )
+@end verbatim
+
+By using boxes, GTK+ knows where to place the widgets so GTK+ can do automatic
+resizing and other nifty things.  A number of options control as to how the
+widgets should be packed into boxes.  This method of packing boxes gives the
+user a quite a bit of flexibility when placing widgets.
+
+@emph{Note}
+
+The classes @code{GtkHBox} for horizontal and @code{GtkVBox} for vertical
+boxes are deprecated, but still present in GTK 3.2.  In this tutorial deprecated
+classes and functions are not used.
+
+@c -----------------------------------------------------------------------------
+@node Details of Boxes, Packing Using Tables, Packing Boxes, Top
+@section Details of Boxes
+
+Because of the flexibility, packing boxes in GTK+ can be confusing at first.
+A lot of options control the packing of boxes, and it is not immediately obvious
+how the options all fit together.  In the end, however, basically five different
+styles are available.
+
+@findex homogeneous
+@findex spacing
+
+Boxes have the properties @code{homogeneous} and @code{spacing}.  The property
+@code{homogeneous} controls whether each widget in the box has the same width
+in a horizontal box or the same height in a vertical box.  The property
+@code{spacing} controls the amount of space between children in the box.  A
+complete example for creating a box is therefore
+@verbatim
+  (let ((box (make-instance 'gtk-box
+                            :orientation :vertical
+                            :spacing 3
+                            :homogeneous t)))
+    [...] )
+@end verbatim
+
+@ifnotinfo
+@float Figure, figure-box-packing
+@caption{Example Box Packing with a spacing of 3}
+@center @image{figures/packing-boxes2-645x352, 430pt}
+@end float
+@end ifnotinfo
+
+@findex expand
+@findex fill
+@findex padding
+
+@ref{figure-box-packing} shows an examples of packing buttons into horizontal
+boxes.  The buttons have a small spacing of 3.   Each line of the example
+contains one horizontal box with several buttons.  The first button represents
+the call of the function @code{gtk-box-pack-start} and the following buttons
+represent the arguments of the function.  The first two arguments are @code{box}
+for the box and @code{child} for the child widgets to put into the box, which
+are in our example buttons.  The further arguments of @code{gtk-box-pack-start}
+are in the C implementation @code{expand}, @code{fill} and @code{padding}.  In
+the Lisp binding to GTK+ these arguments are defined as the keyword arguments
+@code{:expand} and @code{:fill}, which both have a default value of @code{T},
+and @code{:padding} with a default value of @code{0}.  The keyword arguments
+can be omitted, when the default values should not be changed.
+
+The keyword argument @code{:expand} with a value @code{T} to the functions
+@code{gtk-box-pack-start} and @code{gtk-box-pack-end} controls whether the
+widgets are laid out in the box to fill in all the extra space in the box so
+the box is expanded to fill the area allotted to it; or with a value @code{NIL}
+the box is shrunk to just fit the widgets.  Setting expand to @code{NIL} allows
+to do right and left justification of the widgets.  Otherwise, the widgets
+expand to fit into the box.  The same effect can be achieved by using only one
+of the functions @code{gtk-box-pack-start} or @code{gtk_box_pack_end}.
+
+The keyword argument @code{:fill} with a value @code{T} to the
+@code{gtk-box-pack} functions control whether the extra space is allocated to
+the objects themselves, or with a value @code{NIL} as extra padding in the box
+around these objects.  It only has an effect if the keyword argument
+@code{expand} is also @code{T}.
+
+The difference between spacing (set when the box is created) and padding
+(set when elements are packed) is, that spacing is added between objects, and
+padding is added on either side of a child widget.
+
+The code for @ref{figure-box-packing} is shown in @ref{example-box-packing}.
+The function @code{example-box-packing} takes an optional argument
+@code{spacing}, which has the default value @code{0} and controls the spacing
+of the buttons in the boxes.
+
+@findex GtkSeparator
+@findex gtk-separator
+
+@findex gtk-separator-new
+@findex separator-new, gtk-separator-new
+
+@findex GtkOrientation
+@findex gtk-orientation
+@findex orientation, gtk-orientation
+
+The example uses two widgets which are not introduced up to now.  The first
+one is the @code{GtkLabel} widget, which is described in @ref{Labels} and is
+used to display text.  The second one is the @code{GtkSeparator} widget, which
+draws a horizontal or vertical line, depending on the only argument to the
+function @code{gtk-separator-new}, which is of the enumeration type
+@code{GtkOrientation} with the values @code{:horizontal} for a horizontal line
+and @code{:vertical} for a vertical line.
+
+@float Example, example-box-packing
+@caption{Example Packing Boxes}
+@end float
+@verbatim
+(defun make-box (homogeneous spacing expand fill padding)
+  (let ((box (make-instance 'gtk-box
+                            :orientation :horizontal
+                            :homogeneous homogeneous
+                            :spacing spacing)))
+    (gtk-box-pack-start box
+                        (gtk-button-new-with-label "gtk-box-pack")
+                        :expand expand
+                        :fill fill
+                        :padding padding)
+    (gtk-box-pack-start box
+                        (gtk-button-new-with-label "box")
+                        :expand expand
+                        :fill fill
+                        :padding padding)
+    (gtk-box-pack-start box
+                        (gtk-button-new-with-label "button")
+                        :expand expand
+                        :fill fill
+                        :padding padding)
+    (gtk-box-pack-start box
+                        (if expand
+                            (gtk-button-new-with-label "T")
+                            (gtk-button-new-with-label "NIL"))
+                        :expand expand
+                        :fill fill
+                        :padding padding)
+    (gtk-box-pack-start box
+                        (if fill
+                            (gtk-button-new-with-label "T")
+                            (gtk-button-new-with-label "NIL"))
+                        :expand expand
+                        :fill fill
+                        :padding padding)
+    (gtk-box-pack-start box
+                        (gtk-button-new-with-label (format nil "~A" padding))
+                        :expand expand
+                        :fill fill
+                        :padding padding)
+    box))
+
+(defun example-box-packing (&optional (spacing 0))
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Box Packing Box"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-height 200
+                                 :default-width 300))
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical
+                               :spacing 6))
+          (button (make-instance 'gtk-button
+                                 :label "Quit"))
+          (quitbox (make-instance 'gtk-box
+                                  :orientation :horizontal)))
+      (g-signal-connect button "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox
+                          (make-instance 'gtk-label
+                                         :label
+                                         (format nil
+                                          "GtkBox homogeneous nil spacing ~A"
+                                          spacing)
+                                         :xalign 0
+                                         :yalign 0)
+                          :expand nil
+                          :fill nil)
+      (gtk-box-pack-start vbox
+                          (make-box nil spacing nil nil 0)
+                          :expand nil
+                          :fill nil)
+      (gtk-box-pack-start vbox
+                          (make-box nil spacing t nil 0)
+                          :expand nil
+                          :fill nil)
+      (gtk-box-pack-start vbox
+                          (make-box nil spacing t t 0)
+                          :expand nil
+                          :fill nil)
+      (gtk-box-pack-start vbox
+                          (make-instance 'gtk-label
+                                         :label
+                                         (format nil
+                                            "GtkBox homogeneous t spacing ~A"
+                                            spacing)
+                                         :xalign 0
+                                         :yalign 0)
+                          :expand nil
+                          :fill nil
+                          :padding 6)
+      (gtk-box-pack-start vbox
+                          (make-box t spacing t nil 0)
+                          :expand nil
+                          :fill nil)
+      (gtk-box-pack-start vbox
+                          (make-box t spacing t t 0)
+                          :expand nil
+                          :fill nil)
+      (gtk-box-pack-start vbox
+                          (gtk-separator-new :horizontal)
+                          :expand nil
+                          :padding 6)
+      (gtk-box-pack-start quitbox button :expand nil :fill nil)
+      (gtk-box-pack-start vbox quitbox :expand nil :fill nil)
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Packing Using Tables, Table Packing Example, Details of Boxes, Top
+@section Packing Using Tables
+
+@findex GtkTable
+
+@findex gtk-table
+@findex gtk-table-new
+
+@findex table, gtk-table
+@findex table-new, gtk-table-new
+
+Tables are another way of packing widgets and can be extremely useful in certain
+situations.  Using tables a grid is created that widgets can placed in.  The
+widgets may take up as many spaces as specified.  Tables can be created with the
+function @code{gtk-table-new}.  The function takes three arguments which set the
+properties of a table.  Alternatively, the table is created with the function
+@code{make-instance}.
+
+The first argument of @code{gtk-table-new} is the number of rows to make in the
+table, while the second is the number of columns.  The last argument
+@code{homogeneous} has to do with how the boxes of the table are sized.  If
+@code{homogeneous} is @code{T}, the table boxes are resized to the size of the
+largest widget in the table.  If @code{homogeneous} is @code{NIL}, the size of
+a table boxes is dictated by the tallest widget in its same row, and the widest
+widget in its column.  The rows and columns are laid out from @code{0} to
+@code{n}, where @code{n} is the number specified in the call to
+@code{gtk-table-new}.  For @code{rows = 2} and @code{columns = 2}, the layout
+is shown in @ref{figure-table-layout}.  Note that the coordinate system starts
+in the upper left hand corner.
+
+@float Figure, figure-table-layout
+@caption{Layout of a 2 x 2 table}
+@example
+ 0          1          2
+0+----------+----------+
+ |          |          |
+1+----------+----------+
+ |          |          |
+2+----------+----------+
+@end example
+@end float
+
+@findex gtk-table-attach
+@findex table-attach, gtk-table-attach
+
+To place a widget into a table, the function @code{gtk-table-attach} can be
+used.  The arguments are listed in @ref{table-gtk-table-attach}.  The first
+argument @code{table} is the table you have created and the second @code{child}
+the widget you wish to place into the table.  The left and right attach
+arguments specify where to place the widget, and how many boxes to use.  If you
+want a button in the lower right table entry of a 2 x 2 table, and want it to
+fill that entry only, @code{left-attach} is @code{= 1}, @code{right-attach = 2},
+@code{top-attach = 1}, @code{bottom-attach = 2}.  Now, if you wanted a widget to
+take up the whole top row of a 2 x 2 table, you would use
+@code{left-attach = 0}, @code{right-attach = 2}, @code{top-attach = 0},
+@code{bottom-attach = 1}.
+
+@need 800
+@float Table, table-gtk-table-attach
+@caption{Arguments of the function @code{gtk-table-attach}}
+@end float
+@table @code
+@item table
+The GtkTable to add a new widget to.
+@item child
+The widget to add.
+@item left-attach
+The column number to attach the left side of a child widget to.
+@item right-attach
+The column number to attach the right side of a child widget to.
+@item top-attach
+The row number to attach the top of a child widget to.
+@item bottom-attach
+The row number to attach the bottom of a child widget to.
+@item :xoptions
+Used to specify the properties of the child widget when the table is resized.
+The default value is @code{'(:expand :fill)}.
+@item :yoptions
+The same as @code{xoptions}, except this field determines behavior of vertical
+resizing.  The default value is @code{'(:expand :fill)}.
+@item :xpadding
+An integer value specifying the padding on the left and right of the widget
+being added to the table.  The default value is @code{0}.
+@item :ypadding
+The amount of padding above and below the child widget.  The default value is
+@code{0}.
+@end table
+
+@findex GtkAttachOptions
+
+The arguments @code{:xoptions} and @code{:yoptions} are of the enumeration
+type @code{GtkAttachOptions} and used to specify packing options.  The packing
+options can be OR'ed together to allow multiple options.  In the Lisp binding a
+list of options is used to combine multiple options.  Possible values of the
+enumeration type @code{GtkAttachOptions} are listed in
+@ref{table-GtkAttachOptions}.
+
+Padding is just like in boxes, creating a clear area around the widget specified
+in pixels and is controlled with the arguments @code{:xpadding} and
+@code{:ypadding}.
+
+@float Table, table-GtkAttachOptions
+@caption{Values of the type @code{GtkAttachOptions}}
+@end float
+@table @code
+@item :fill
+If the table box is larger than the widget, and @code{:fill} is specified, the
+widget will expand to use all the room available.
+
+@item :shrink
+If the table widget was allocated less space then was requested (usually by the
+user resizing the window), then the widgets would normally just be pushed off
+the bottom of the window and disappear.  If @code{:shrink} is specified, the
+widgets will shrink with the table.
+
+@item :expand
+This will cause the table to expand to use up any remaining space in the window.
+@end table
+
+@findex gtk-table-attach-defaults
+@findex table-attach-defaults, gtk-table-attach-defaults
+
+In the Lisp binding the arguments @code{:xoptions}, @code{:yoptions},
+@code{:xpadding}, and @code{:ypadding} of the function @code{gtk-table-attach}
+are defined as keyword arguments with default values as shown in
+@ref{table-gtk-table-attach}.  In the C library this is realized with a second
+function @code{gtk_table_attach_defaults()}.  In the Lisp binding the function
+@code{gtk-table-attach-defaults} is a second equivalent implementation of
+@code{gtk-table-attach}, when using the default values of the keyword arguments.
+
+@findex gtk-table-set-row-spacing
+@findex gtk-table-set-col-spacing
+
+@findex table-set-row-spacing, gtk-table-set-row-spacing
+@findex table-set-col-spacing, gtk-table-set-col-spacing
+
+The functions @code{gtk-table-set-row-spacing} and
+@code{gtk-table-set-col-spacing} places spacing between the rows at the
+specified row or column.  The first argument of the functions is a
+@code{GtkTable}, the second argument a row or a column and the third argument
+the spacing.  Note that for columns, the space goes to the right of the column,
+and for rows, the space goes below the row.
+
+@findex gtk-table-set-row-spacings
+@findex gtk-table-set-col-spacings
+
+@findex table-set-row-spacings, gtk-table-set-row-spacings
+@findex table-set-col-spacings, gtk-table-set-col-spacings
+
+You can also set a consistent spacing of all rows and columns with the
+functions @code{gtk-table-set-row-spacings} and
+@code{gtk-table-set-col-spacings}.  Both functions take a @code{GtkTable} as the
+first argument and the desired spacing @code{spacing} as the second argument.
+Note that with these calls, the last row and last column do not get any spacing.
+
+@c -----------------------------------------------------------------------------
+@node Table Packing Example, Packing Using Grids, Packing Using Tables, Top
+@section Table Packing Example
+
+@ref{figure-table-packing} is a window with three buttons in a 2 x 2 table.
+The first two buttons are placed in the upper row.  A third, quit button, is
+placed in the lower row, spanning both columns. The code of this example is
+shown in @ref{example-table-packing}.
+
+@ifnotinfo
+@float Figure, figure-table-packing
+@caption{Table packing}
+@center @image{figures/table-packing306x108, 204pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-table-packing
+@caption{Table Packing}
+@end float
+@verbatim
+(defun example-table-packing ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Table Packing"
+                                 :border-width 12
+                                 :default-width 300))
+          (table (make-instance 'gtk-table
+                                :n-columns 2
+                                :n-rows 2
+                                :homogeneous t))
+          (button1 (make-instance 'gtk-button
+                                  :label "Button 1"))
+          (button2 (make-instance 'gtk-button
+                                  :label "Button 2"))
+          (quit (make-instance 'gtk-button
+                               :label "Quit")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect quit "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-table-attach table button1 0 1 0 1)
+      (gtk-table-attach table button2 1 2 0 1)
+      (gtk-table-attach table quit    0 2 1 2)
+      (gtk-container-add window table)
+      (gtk-widget-show window))))
+@end verbatim
+
+@ref{figure-table-packing-2} is an extended example to show the possibility to
+increase the spacing of the rows and columns.  This is implemented through two
+toggle buttons which increase and decrease the spacings.  Toggle buttons are
+described in @ref{Toggle Buttons} later in this tutorial.  The code of
+@ref{figure-table-packing-2} is shown in @ref{example-table-packing-2}.
+
+@ifnotinfo
+@float Figure, figure-table-packing-2
+@caption{Table packing with more spacing}
+@center @image{figures/table-packing-2-306x120, 204pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-table-packing-2
+@caption{Table Packing with more spacing}
+@end float
+@verbatim
+(defun example-table-packing-2 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Table Packing"
+                                 :border-width 12
+                                 :default-width 300))
+          (table (make-instance 'gtk-table
+                                :n-columns 2
+                                :n-rows 2
+                                :homogeneous t))
+          (button1 (make-instance 'gtk-toggle-button
+                                  :label "More Row Spacing"))
+          (button2 (make-instance 'gtk-toggle-button
+                                  :label "More Col Spacing"))
+          (quit (make-instance 'gtk-button
+                               :label "Quit")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button1 "toggled"
+         (lambda (widget)
+           (if (gtk-toggle-button-get-active widget)
+               (progn
+                 (gtk-table-set-row-spacings table 12)
+                 (gtk-button-set-label widget "Less Row Spacing"))
+               (progn
+                 (gtk-table-set-row-spacings table 0)
+                 (gtk-button-set-label widget "More Row Spacing")))))
+      (g-signal-connect button2 "toggled"
+         (lambda (widget)
+           (if (gtk-toggle-button-get-active widget)
+               (progn
+                 (gtk-table-set-col-spacings table 12)
+                 (gtk-button-set-label widget "Less Col Spacing"))
+               (progn
+                 (gtk-table-set-col-spacings table 0)
+                 (gtk-button-set-label widget "More Col Spacing")))))
+      (g-signal-connect quit "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-table-attach table button1 0 1 0 1)
+      (gtk-table-attach table button2 1 2 0 1)
+      (gtk-table-attach table quit    0 2 1 2)
+      (gtk-container-add window table)
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Packing Using Grids, , Table Packing Example, Top
+@section Packing Using Grids
+
+@findex GtkGrid
+@findex gtk-grid
+
+@code{GtkGrid} is an attempt to write a comprehensive, legacy-free, box-layout
+container that is flexible enough to replace @code{GtkBox}, @code{GtkTable} and
+the like.
+
+The layout model of @code{GtkGrid} is to arrange its children in rows and
+columns.  This is done by assigning positions on a two-dimensions grid that
+stretches arbitrarily far in all directions.  Children can span multiple rows
+or columns.
+
+@subsection GtkBox versus GtkGrid - packing
+
+@code{GtkBox} works by arranging child widgets in a single line, either
+horizontally or vertically.  It allows packing children from the beginning or
+end, using @code{gtk-box-pack-start} and @code{gtk-box-pack-end}.
+
+The following code creates a simple box with two labels:
+@verbatim
+  (let ((box (gtk-box-new :horizontal 0)))
+    (gtk-box-pack-start box (gtk-label-new "ONE") nil nil 0)
+    (gtk-box-pack-start box (gtk-label-new "TWO") nil nil 0)
+    [...] )
+@end verbatim
+
+This can be done with @code{GtkGrid} as follows:
+@verbatim  
+  (let ((grid (gtk-grid-new))
+        (child1 (gtk-label-new "ONE"))
+        (child2 (gtk-label-new "TWO")))
+    (gtk-grid-attach grid child1 0 0 1 1)
+    (gtk-grid-attach-next-to grid child2 child1 :right 1 1)
+    [...]  )
+@end verbatim
+
+And similarly for @code{gtk-box-pack-end}.  In that case, you would use
+@code{:left} to place the grid children from left to right.
+
+If you only need to pack children from the start, using
+@code{gtk-container-add} is an even simpler alternative.  @code{GtkGrid} places
+children added with @code{gtk-container-add} in a single row or column according
+to its "orientation".
+
+One difference to keep in mind is that the @code{gtk-box-pack-start} and
+@code{gtk-box-pack-end} functions allow you to place an arbitrary number of
+children from either end without ever 'colliding in the middle'.  With
+@code{GtkGrid}, you have to leave enough space between the two ends, if you
+want to combine packing from both ends towards the middle.  In practice, this
+should be easy to avoid; and @code{GtkGrid} simply ignores entirely empty rows
+or columns for layout and spacing.
+
+On the other hand, @code{GtkGrid} is more flexible in that its grid extends
+indefinitively in both directions — there is no problem with using negative
+numbers for the grid positions.  So, if you discover that you need to place a
+widget before your existing arrangement, you always can.
+
+@subsection GtkBox versus GtkGrid: sizing
+
+When adding a child to a @code{GtkBox}, there are two hard-to-remember
+parameters (child properties, more exactly) named @code{expand} and @code{fill}
+that determine how the child size behaves in the main direction of the box.  If
+expand is set, the box allows the position occupied by the child to grow when
+extra space is available.  If fill is also set, the extra space is allocated to
+the child widget itself.  Otherwise it is left 'free'.  There is no control
+about the 'minor' direction; children are always given the full size in the
+minor direction.
+
+@code{GtkGrid} does not have any custom child properties for controlling size
+allocation to children.  Instead, it fully supports the newly introduced
+@code{hexpand}, @code{vexpand}, @code{halign} and @code{valign} properties for
+widgets.
+
+The @code{hexpand} and @code{vexpand} properties operate in a similar way to
+the expand child properties of @code{GtkBox}.  As soon as a column contains a
+hexpanding child, @code{GtkGrid} allows the column to grow when extra space is
+available (similar for rows and vexpand). In contrast to @code{GtkBox}, all the
+extra space is always allocated to the child widget, there are no 'free' areas.
+
+To replace the functionality of the fill child properties, you can set the
+@code{halign} and @code{valign} properties.  An align value of @code{:fill} has
+the same effect as setting fill to @code{T}, a value of @code{:center}
+has the same effect as setting fill to FALSE.
+
+Expansion and alignment with @code{GtkBox}:
+@verbatim  
+  (let ((box (gtk-box-new :horizontal 0)))
+    (gtk-box-pack-start box (gtk-label-new "ONE") t nil 0)
+    (gtk-box-pack-start box (gtk-label-new "TWO") t t 0)
+    [...] )
+@end verbatim
+
+This can be done with @code{GtkGrid} as follows:
+@verbatim
+  (let ((grid (gtk-grid-new))
+        (child1 (make-instance 'gtk-label
+                               :label "ONE"
+                               :hexpand t
+                               :halign :center))
+        (child2 (make-instance 'gtk-label
+                               :label "TWO"
+                               :hexpand t
+                               :halign :fill))
+    (gtk-grid-attach grid child1 0 0 1 1)
+    (gtk-grid-attach-next-to grid child2 child1 :right 1 1)
+    [...] )
+@end verbatim
+
+One difference between the new @code{GtkWidget} expand properties and the
+@code{GtkBox} child property of the same name is that widget expandability is
+'inherited' from children.  What this means is that a container will become
+itself expanding as soon as it has an expanding child.  This is typically what
+you want, it lets you e.g. mark the content pane of your application window as
+expanding, and all the intermediate containers between the content pane and the
+toplevel window will automatically do the right thing.  This automatism can be
+overridden at any point by setting the expand flags on a container explicitly.
+
+Another difference between @code{GtkBox} and @code{GtkGrid} with respect to
+expandability is when there are no expanding children at all.  In this case,
+@code{GtkBox} will forcibly expand all children whereas @code{GtkGrid} will not.
+In practice, the effect of this is typically that a grid will 'stick to the
+corner' when the toplevel containing it is grown, instead of spreading out its
+children over the entire area.  The problem can be fixed by setting some or all
+of the children to expand.
+
+When you set the @code{homogeneous} property on a @code{GtkBox}, it reserves
+the same space for all its children.  @code{GtkGrid} does this in a very similar
+way, with @code{row-homogeneous} and @code{column-homogeneous} properties which
+control whether all rows have the same height and whether all columns have the
+same width.
+
+@subsection GtkBox versus GtkGrid - spacing
+
+With @code{GtkBox}, you have to specify the "spacing" when you construct it.
+This property specifies the space that separates the children from each other.
+Additionally, you can specify extra space to put around each child individually,
+using the @code{padding} child property.
+
+@code{GtkGrid} is very similar when it comes to spacing between the children,
+except that it has two separate properties, @code{row-spacing} and
+@code{column-spacing}, for the space to leave between rows and columns.  Note
+that row-spacing is the space between rows, not inside a row.  So, if you doing
+a horizontal layout, you need to set @code{column-spacing}.
+
+@code{GtkGrid} does not have any custom child properties to specify per-child
+padding; instead you can use the @code{margin} property.  You can also set
+different padding on each side with the @code{margin-left}, @code{margin-right},
+@code{margin-top} and @code{margin-bottom} properties.
+
+Example with spacing in boxes:
+@verbatim
+  (let ((box (gtk-box-new :vertical 6))
+        (child (gtk-label-new "Child")))
+    (gtk-box-pack-start box child nil nil 12)
+    [...] )
+@end verbatim
+
+This can be done with @code{GtkGrid} as follows:
+@verbatim
+  (let ((grid (gtk-grid-new))
+        (child (make-instance 'gtk-label
+                              :label "Child"
+                              :margin 12)))
+    (gtk-grid-attach box child 0 0 1 1)
+    [...] )
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Grid Packing Examples, , Packing Using Grids, Top
+@section Grid Packing Examples
+
+We repeat the implementation of @ref{example-box-packing} and
+@ref{example-table-packing} using @code{GtkGrid}.  The first
+@ref{example-grid-packing} shows how to replace @code{GtkBox} wit
+@code{GtkGrid} to create vertical and horizontal boxes.  In the second
+@ref{example-grid-packing-2} @code{GtkTable} is replaced with @code{GtkGrid}.
+See @ref{figure-box-packing} and @ref{figure-table-packing} for the output
+of the example programs.
+
+@float Example, example-grid-packing
+@caption{@ref{example-box-packing} using @code{GtkGrid}}
+@end float
+@verbatim
+(defun make-grid (homogeneous spacing expand align margin)
+  (let ((box (make-instance 'gtk-grid
+                            :orientation :horizontal
+                            :column-homogeneous homogeneous
+                            :column-spacing spacing)))
+    (gtk-container-add box
+                       (make-instance 'gtk-button
+                                      :label "gtk-container-add"
+                                      :hexpand expand
+                                      :halgin align
+                                      :margin margin))
+    (gtk-container-add box
+                       (make-instance 'gtk-button
+                                      :label "box"
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add box
+                       (make-instance 'gtk-button
+                                      :label "button"
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add box
+                       (make-instance 'gtk-button
+                                      :label (if expand "T" "NIL")
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add box
+                       (make-instance 'gtk-button
+                                      :label (format nil "~A" align)
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    (gtk-container-add box
+                       (make-instance 'gtk-button
+                                      :label (format nil "~A" margin)
+                                      :hexpand expand
+                                      :halign align
+                                      :margin margin))
+    box))
+
+(defun example-grid-packing (&optional (spacing 0))
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Grid Packing"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-height 200
+                                 :default-width 300))
+          (vbox (make-instance 'gtk-grid
+                               :orientation :vertical
+                               :row-spacing 6))
+          (button (make-instance 'gtk-button
+                                 :label "Quit"))
+          (quitbox (make-instance 'gtk-box
+                                  :orientation :horizontal)))
+      (g-signal-connect button "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add vbox
+                         (make-instance 'gtk-label
+                                        :label
+                                        (format nil
+                                         "GtkGrid homogeneous nil spacing ~A"
+                                         spacing)
+                                        :xalign 0
+                                        :yalign 0
+                                        :vexpand nil
+                                        :valign :start))
+      (gtk-container-add vbox (gtk-separator-new :horizontal))
+      (gtk-container-add vbox (make-grid nil spacing nil :center 0))
+      (gtk-container-add vbox (make-grid nil spacing t :center 0))
+      (gtk-container-add vbox (make-grid nil spacing t :fill 0))
+      (gtk-container-add vbox (gtk-separator-new :horizontal))
+      (gtk-container-add vbox
+                         (make-instance 'gtk-label
+                                        :label
+                                        (format nil
+                                           "GtkGrid homogeneous t spacing ~A"
+                                           spacing)
+                                         :xalign 0
+                                         :yalign 0
+                                         :vexpand nil
+                                         :valign :start
+                                         :margin 6))
+      (gtk-container-add vbox (gtk-separator-new :horizontal))
+      (gtk-container-add vbox (make-grid t spacing t :center 0))
+      (gtk-container-add vbox (make-grid t spacing t :fill 0))
+      (gtk-container-add vbox (gtk-separator-new :horizontal))
+      (gtk-container-add quitbox button)
+      (gtk-container-add vbox quitbox)
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@float Example, example-grid-packing-2
+@caption{@ref{example-table-packing} using @code{GtkGrid}}
+@end float
+@verbatim
+(defun example-grid-packing-2 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Grid Packing"
+                                 :border-width 12
+                                 :default-width 300))
+          (grid (make-instance 'gtk-grid
+                                :column-homogeneous t
+                                :row-homogeneous t))
+          (button1 (make-instance 'gtk-button
+                                  :label "Button 1"))
+          (button2 (make-instance 'gtk-button
+                                  :label "Button 2"))
+          (quit (make-instance 'gtk-button
+                               :label "Quit")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect quit "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-widget-destroy window)))
+      (gtk-grid-attach grid button1 0 1 1 1)
+      (gtk-grid-attach grid button2 1 1 1 1)
+      (gtk-grid-attach grid quit    0 2 2 1)
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
+@end verbatim
+

@@ -1,0 +1,2259 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-misc-widgets.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 15.02.2012
+@c Revision : 08.04.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@node Labels, Arrows, Top, Top
+@section Labels
+
+@findex GtkLabel
+@findex gtk-label
+@findex label, gtk-label
+
+@findex gtk-label-new
+@findex gtk-label-new-with-mnemonic
+@findex gtk-label-set-text
+@findex gtk-label-get-text
+
+@findex label-new, gtk-label-new
+@findex label-new-with-mnemonic, gtk-label-new-with-mnemonic
+@findex label-set-text, gtk-label-set-text
+@findex label-get-text, gtk-label-get-text
+
+Labels are used a lot in GTK+, and are relatively simple.  The @code{GtkLabel}
+widget displays a small amount of text.  As the name implies, most labels are
+used to label another widget such as a @code{GtkButton}, a @code{GtkMenuItem},
+or a @code{GtkOptionMenu}.  Labels emit no signals as they do not have an
+associated X window.  If you need to catch signals, or do clipping, place it
+inside a @code{GtkEventBox} widget or a Button widget.
+
+To create a new label, use @code{make-instance} with the class name
+@code{gtk-label} or the functions @code{gtk-label-new} or
+@code{gtk-label-new-with-mnemonic}.  The sole argument of the functions is the
+string you wish the label to display.  To change the text of the label after
+creation, use the function @code{gtk-label-set-text}.  The first argument is the
+label you created previously, and the second is the new string.  The space
+needed for the new string will be automatically adjusted if needed.  You can
+produce multi-line labels by putting line breaks in the label string.  To
+retrieve the current string, use @code{gtk-label-get-text}.
+
+@ifnotinfo
+@float Figure, figure-labels
+@caption{Lables}
+@center @image{figures/labels588x345, 392pt}
+@end float
+@end ifnotinfo
+
+@subheading Label with Mnemonics
+
+@findex gtk-label-new-with-mnemonic
+@findex gtk-label-set-text-with-mnemonic
+@findex gtk-label-set-mnemonic-widget
+
+@findex label-new-with-mnemonic, gtk-label-new-with-mnemonic
+@findex label-set-text-with-mnemonic, gtk-label-set-text-with-mnemonic
+@findex label-set-mnemonic-widget, gtk-label-set-mnemonic-widget
+
+Labels may contain mnemonics.  Mnemonics are underlined characters in the
+label, used for keyboard navigation.  Mnemonics are created by providing a
+string with an underscore before the mnemonic character, such as "_File",
+to the functions @code{gtk-label-new-with-mnemonic} or
+@code{gtk-label-set-text-with-mnemonic}.
+ 
+Mnemonics automatically activate any activatable widget the label is inside,
+such as a @code{GtkButton}; if the label is not inside the mnemonic's target
+widget, you have to tell the label about the target using
+@code{gtk-label-set-mnemonic-widget}.
+
+Here's a simple example where the label is inside a button:
+@verbatim
+  ;; Pressing Alt+H will activate this button
+  (let* ((button (gtk-button-new))
+         (label (gtk-label-new-with-mnemonic "_Hello")))
+    (gtk-container-add button label)
+    [...] )
+@end verbatim
+
+There's a convenience function to create buttons with a mnemonic label
+already inside:
+@verbatim 
+  ;; Pressing Alt+H will activate this button
+  (let ((button (gtk-button-new-with-mnemonic "_Hello")))
+    [...] )
+@end verbatim
+
+To create a mnemonic for a widget alongside the label, such as a
+@code{GtkEntry}, you have to point the label at the entry with
+@code{gtk-label-set-mnemonic-widget}:
+@verbatim
+  ;; Pressing Alt+H will focus the entry
+  (let* ((entry (gtk-entry-new))
+         (label (gtk-label-new-with-mnemonic "_Hello")))
+    (gtk-label-set-mnemonic-widget label entry)
+    [...] )
+@end verbatim
+
+@subheading Markup (styled text)
+
+@findex gtk-label-set-markup
+@findex gtk-label-set-attributes
+
+@findex label-set-markup, gtk-label-set-markup
+@findex label-set-attributes, gtk-label-set-attributes
+
+To make it easy to format text in a label (changing colors, fonts, etc.),
+label text can be provided in a simple markup format.  Here's how to create
+a label with a small font:
+
+@verbatim
+  (let ((label (gtk-label-new)))
+    (gtk-label-set-markup label
+                          "<small>Small text</small>")
+    [...] )
+@end verbatim
+
+or
+
+@verbatim
+  (let ((label (make-instance 'gtk-label
+                              :use-markup t
+                              :label "<small>Small text</small>")))
+    [...] )
+@end verbatim
+
+(See complete documentation of available tags in the Pango manual.)
+
+@c TODO: g-markup-escape-text and g-markup-printf-escaped are not implemented.
+
+The markup passed to @code{gtk-label-set-markup} must be valid; for example,
+literal <, > and & characters must be escaped as \<, \gt;, and \&.  If you
+pass text obtained from the user, file, or a network to
+@code{gtk-label-set-markup}, you'll want to escape it with
+@code{g-markup-escape-text} or @code{g-markup-printf-escaped}.  (Note: The
+functions @code{g-markup-escape-text} and @code{g-markup-printf-escaped} are
+not implemented in the Lisp binding.)
+ 
+Markup strings are just a convenient way to set the @code{PangoAttrList} on a
+label; @code{gtk-label-set-attributes} may be a simpler way to set attributes in
+some cases.  Be careful though; @code{PangoAttrList} tends to cause
+internationalization problems, unless you're applying attributes to the
+entire string (i.e. unless you set the range of each attribute to
+@code{[0, G_MAXINT)}).  The reason is that specifying the @code{start_index}
+and @code{end_index} for a @code{PangoAttribute} requires knowledge of the
+exact string being displayed, so translations will cause problems.
+
+@subheading Selectable labels
+
+@findex gtk-label-set-selectable
+@findex label-set-selectable, gtk-label-set-selectable
+
+Labels can be made selectable with @code{gtk-label-set-selectable}.  Selectable
+labels allow the user to copy the label contents to the clipboard.  Only
+labels that contain useful-to-copy information — such as error messages — 
+should be made selectable.
+ 
+@subheading Text layout
+
+A label can contain any number of paragraphs, but will have performance
+problems if it contains more than a small number.  Paragraphs are separated
+by newlines or other paragraph separators understood by Pango.
+
+@findex gtk-label-set-line-wrap
+@findex label-set-line-wrap, gtk-label-set-line-wrap
+
+The label widget is capable of line wrapping the text automatically. This can
+be activated using the function @code{gtk-label-set-line-wrap}.  The first
+argument is the label and the second argument take @code{T} or @code{NIL} to
+switch on or to switch off the line wrapping.
+
+@findex GtkJustification
+@findex gtk-justification
+@findex justification, gtk-justification
+
+@findex gtk-label-set-justify
+@findex label-set-justify, gtk-label-set-justify
+
+@code{gtk-label-set-justify} sets how the lines in a label align with one
+another.  The first argument is the label and the second argument one of the
+following values of the enumeration type @code{GtkJustification}.  The possible
+values are shown in @ref{table-gtk-justification}.  If you want to set how the
+label as a whole aligns in its available space, see
+@code{gtk-misc-set-alignment}.
+
+@float Table, table-gtk-justification
+@caption{Values of the type @code{GtkJustification}}
+@end float
+@table @code
+@item :left 
+      The text is placed at the left edge of the label.
+@item :right
+      The text is placed at the right edge of the label.
+@item :center
+      The text is placed in the center of the label.
+@item :fill
+      The text is placed is distributed across the label.
+@end table
+
+The @code{width-chars} and @code{max-width-chars} properties can be used to
+control the size allocation of ellipsized or wrapped labels.  For ellipsizing
+labels, if either is specified (and less than the actual text size), it is used
+as the minimum width, and the actual text size is used as the natural width of
+the label.  For wrapping labels, @code{width-chars} is used as the minimum
+width, if specified, and @code{max-width-chars} is used as the natural width.
+Even if @code{max-width-chars} specified, wrapping labels will be rewrapped to
+use all of the available width.
+
+@findex gtk-label-set-pattern
+@findex label-set-pattern, gtk-label-set-pattern
+
+If you want your label underlined, then you can set a pattern on the label with
+the function @code{gtk-label-set-pattern}.  The pattern argument indicates how
+the underlining should look.  It consists of a string of underscore and space
+characters.  An underscore indicates that the corresponding character in the
+label should be underlined.  For example, the string "__ __" would underline the
+first two characters and eight and ninth characters.
+
+@subheading Links
+
+@findex gtk-label-get-current-uri
+@findex label-get-current-uri, gtk-label-get-current-uri
+
+GTK+ supports markup for clickable hyperlinks in addition to regular Pango
+markup.  The markup for links is borrowed from HTML, using the a with href and
+title attributes.  GTK+ renders links similar to the way they appear in web
+browsers, with colored, underlined text.  The title attribute is displayed as a
+tooltip on the link.  An example looks like this:
+
+@verbatim
+  (gtk-label-set-markup label 
+       "Go to the <a href=\"http://gtk.org/\"> GTK+ Website</a> for more ...")))
+@end verbatim
+ 
+It is possible to implement custom handling for links and their tooltips
+with the @code{activate-link} signal and the @code{gtk-label-get-current-uri}
+function.
+
+@subheading GtkLabel as GtkBuildable
+ 
+The @code{GtkLabel} implementation of the @code{GtkBuildable} interface
+supports a custom @code{<attributes>} element, which supports any number of
+@code{<attribute>} elements.  The @code{<attribute>} element has attributes
+named @code{name}, @code{value}, @code{start} and @code{end} and allows you to
+specify @code{PangoAttribute} values for this label.
+
+@float Example, example-label-ui
+@caption{A UI definition fragment specifying Pango attributes}
+@end float
+@verbatim
+   <object class="GtkLabel">
+     <attributes>
+      <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+      <attribute name="background" value="red" start="5" end="10"/>"
+    </attributes>
+  </object>
+@end verbatim
+
+The @code{start} and @code{end} attributes specify the range of characters to
+which the Pango attribute applies.  If @code{start} and @code{end} are not
+specified, the attribute is applied to the whole text.  Note that specifying
+ranges does not make much sense with translatable attributes.  Use markup
+embedded in the translatable content instead.
+
+@subheading Examples
+
+@ref{figure-labels} and @ref{example-labels} illustrate these functions.  This
+example makes use of the frame widget to better demonstrate the label styles.
+You can ignore this for now as the frame widget is explained later on.
+
+In GTK+ 2.0, label texts can contain markup for font and other text attribute
+changes, and labels may be selectable (for copy-and-paste).  These advanced
+features won't be explained here.
+
+@float Example, example-labels
+@caption{Labels}
+@end float
+@verbatim
+(defun example-labels ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Labels"
+                                 :border-width 6))
+          (vbox1 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-vbox
+                                :homogenous nil
+                                :spacing 6))
+          (hbox (make-instance 'gtk-hbox
+                               :homogeneous nil
+                               :spacing 6)))
+      ;; Connect a handler for the signal "destroy" to window.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create a Normal Label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Normal Label"))
+            (label (make-instance 'gtk-label
+                                  :label "This is a Normal Label")))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
+      ;; Create a Multi-line Label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Multi-line label"))
+            (label (make-instance 'gtk-label
+                                  :label
+                                  (format nil "This is a Multi-line label~%~
+                                               Second line~%~
+                                               Third line"))))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
+      ;; Create a Left Justified Label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Left Justified Label"))
+            (label (make-instance 'gtk-label
+                                  :justify :left
+                                  :label
+                                  (format nil
+                                          "This is a Left Justified~%~
+                                           Multi-line label~%~
+                                           Third line"))))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
+      ;; Create a Right Justified Label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Right Justified Label"))
+            (label (make-instance 'gtk-label
+                                  :justify :right
+                                  :label
+                                  (format nil
+                                          "This is a Right Justified~%~
+                                           Multi-line label~%~
+                                           Third line"))))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
+      ;; Create a Line wrapped label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Line wrapped label"))
+                                  
+            (label (make-instance 'gtk-label
+                                  :wrap t
+                                  :label
+                                  (format nil
+                                          "This is an example of a ~
+                                           line-wrapped label.  It should ~
+                                           not be taking up the entire ~
+                                           width allocated to it, but ~
+                                           automatically wraps the words to ~
+                                           fit.  The time has come, for all ~
+                                           good men, to come to the aid of ~
+                                           their party.  The sixth sheik's ~
+                                           six sheep's sick.  It supports ~
+                                           multiple paragraphs correctly, ~
+                                           and correctly adds many extra ~
+                                           spaces."))))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox2 frame :expand nil :fill nil))
+      ;; Create a Filled and wrapped label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Filled and wrapped label"))
+            (label (make-instance 'gtk-label
+                                  :wrap t
+                                  :justify :fill
+                                  :label
+                                  (format nil
+                                          "This is an example of a ~
+                                           line-wrapped, filled label.  It ~
+                                           should be taking up the entire ~
+                                           width allocated to it.  Here is ~
+                                           a sentence to prove my point.  ~
+                                           Here is another sentence.  Here ~
+                                           comes the sun, do de do de do.  ~
+                                           This is a new paragraph.  This ~
+                                           is another newer, longer, better ~
+                                           paragraph.  It is coming to an ~
+                                           end, unfortunately."))))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox2 frame :expand nil :fill nil))
+      ;; Create an underlined label
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "Underlined label"))
+            (label (make-instance 'gtk-label
+                                  :justify :left
+                                  :use-underline t
+                                  :pattern
+          "_________________________ _ _________ _ ______     __ _______ ___"
+                                  :label
+                                  (format nil
+                                          "This label is underlined!~%~
+                                           This one is underlined in quite ~
+                                           a funky fashion"))))
+        (gtk-container-add frame label)
+        (gtk-box-pack-start vbox2 frame :expand nil :fill nil))
+      ;; Put the boxes into the window and show the window
+      (gtk-box-pack-start hbox vbox1 :expand nil :fill nil)
+      (gtk-box-pack-start hbox vbox2 :expand nil :fill nil)
+      (gtk-container-add window hbox)
+      (gtk-widget-show window))))
+@end verbatim
+
+At last, @ref{figure-more-labels} shows some more possibilities with labels.
+The code is shown in @ref{example-more-labels}.
+
+@ifnotinfo
+@float Figure, figure-more-labels
+@caption{More Labels}
+@center @image{figures/more-labels306x236, 204pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-more-labels
+@caption{More Labels}
+@end float
+@verbatim
+(defun example-more-labels ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example More Labels"
+                                 :default-width 300
+                                 :border-width 6))
+          (vbox1 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 6))
+          (hbox (make-instance 'gtk-hbox
+                               :homogeneous nil
+                               :spacing 6)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angle 90°"
+                                         :angle 90))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 45°"
+                                         :angle 45))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 315°"
+                                         :angle 315))
+      (gtk-box-pack-start hbox vbox1)
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angel 270°"
+                                         :angle 270))
+      (gtk-box-pack-start vbox2 hbox)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-hseparator))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new "Normal Label"))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new-with-mnemonic "With _Mnemonic"))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label "This Label is Selectable"
+                                         :selectable t))
+      (gtk-container-add window vbox2)
+      (gtk-widget-show window))))
+@end verbatim
+
+@section Arrows
+
+@findex GtkArrow
+@findex GtkArrowType
+@findex GtkShadowType
+@findex gtk-arrow-new
+@findex arrow-new, gtk-arrow-new
+@findex gtk-arrow-set
+@findex arrow-set, gtk-arrow-set
+
+@ifnotinfo
+@float Figure, figure-arrows
+@caption{Arrows}
+@center @image{figures/arrow-buttons256x89, 171pt}
+@end float
+@end ifnotinfo
+
+The arrow widget draws an arrowhead, facing in a number of possible directions
+and having a number of possible styles.  It can be very useful when placed on a
+button in many applications.  Like the label widget, it emits no signals.
+
+There are only two functions for manipulating an arrow widget
+@code{gtk-arrow-new} and @code{gtk-arrow-set}.  The first creates a new arrow
+widget with the indicated type and appearance.  The second allows these values
+to be altered retrospectively.  The type of an arrow can be one of the
+following values of the enumeration type @code{GtkArrowType} in
+@ref{table-gtk-arrow-type}.
+
+@float Table, table-gtk-arrow-type
+@caption{Values of the type @code{GtkArrowType} to indicate the
+direction in which a @code{GtkArrow} should point.}
+@shortcaption{Values of the type @code{GtkArrowType}}
+@end float
+@table @code
+@item :up
+      Represents an upward pointing arrow.
+@item :down
+      Represents a downward pointing arrow.
+@item :left
+      Represents a left pointing arrow.
+@item :right
+      Represents a right pointing arrow.
+@item :none
+      No arrow.
+@end table
+
+These values obviously indicate the direction in which the arrow will point.
+The shadow type argument is of the enumeration type @code{GtkShadowType} and
+may take one of the the values in @ref{table-gtk-shadow-type}.
+
+@float Table, table-gtk-shadow-type
+@caption{Values of the enumeration type @code{GtkShadowType} used to change
+the appearance of an outline typically provided by a @code{GtkFrame}.}
+@shortcaption{Values of the type @code{GtkShadowType}}
+@end float
+@table @code
+@item :none
+      No outline.
+@item :in
+      The outline is bevelled inwards.
+@item :out
+      The outline is bevelled outwards like a button. This is the default.
+@item :etched-in
+      The outline has a sunken 3d appearance.
+@item :etched-out
+      The outline has a raised 3d appearance.
+@end table
+
+@findex gtk-widget-set-tooltip-text
+@findex widget-set-tooltip-text, gtk-widget-set-tooltip-text
+
+@ref{example-arrows} shows a brief example to illustrate the use of arrows in
+buttons.  In addition, this example introduces the function
+@code{gtk-widget-set-tooltip-text}, which attaches a tooltip to the button
+widget.  The tooltip pops up, when the mouse is over the button.
+
+@float Example, example-arrows
+@caption{Buttons with Arrows}
+@end float
+@verbatim
+(defun create-arrow-button (arrow-type shadow-type)
+  (let ((button (make-instance 'gtk-button)))
+    (gtk-container-add button
+                       (make-instance 'gtk-arrow
+                                      :arrow-type arrow-type
+                                      :shadow-type shadow-type))
+    (gtk-widget-set-tooltip-text button
+                                 (format nil
+                                         "Arrow of type ~A"
+                                         (symbol-name arrow-type)))
+    button))
+
+(defun example-arrows ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Arrow Buttons"
+                                 :default-width 250
+                                 :border-width 12))
+          (box (make-instance 'gtk-hbox
+                              :homogeneous t
+                              :spacing 0
+                              :border-width 6)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start box
+                          (create-arrow-button :up :in)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-arrow-button :down :out)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-arrow-button :left :etched-in)
+                          :expand nil :fill nil :padding 3)
+      (gtk-box-pack-start box
+                          (create-arrow-button :right :etched-out) 
+                          :expand nil :fill nil :padding 3)
+      (gtk-container-add window box)
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section Progress Bars
+
+@findex gtk-progress-bar-new
+@findex progress-bar-new, gtk-progress-bar-new
+@findex gtk-progress-bar-set-fraction
+@findex progress-bar-set-fraction, gtk-progress-bar-set-fraction
+
+@ifnotinfo
+@float Figure, figure-progress-bar
+@caption{Progress Bar}
+@center @image{figures/progress-bar306x179, 204pt}
+@end float
+@end ifnotinfo
+
+Progress bars are used to show the status of an operation.  They are pretty easy
+to use, as you will see with the code below.  But first lets start out with the
+function @code{gtk-progress-bar-new} to create a new progress bar.  Now that the
+progress bar has been created we can use it and set the fraction with the
+function @code{gtk-progress-bar-set-fraction}, which has two arguments.  The
+first argument is the progress bar you wish to operate on, and the second
+argument is the amount "completed", meaning the amount the progress bar has been
+filled from 0-100%.  This is passed to the function as a real number ranging
+from 0 to 1.
+
+A progress bar may be set to one of a number of orientations using the function
+@code{gtk-progress-bar-set-orientation}.  The second argument is the
+orientation and can take one of the values 
+
+The orientation argument may take one of the values of
+@ref{table-gtk-progress-bar-orientation} to indicate the direction in which the
+progress bar moves.
+
+@float Table, table-gtk-progress-bar-orientation
+@caption{@code{GtkProgressBarOrientation} is an enumeration representing
+possible orientations and growth directions for the visible progress bar.}
+@shortcaption{Values of the type @code{GtkProgressBarOrientation}}
+@end float
+@table @code
+@item :left-to-right
+      A horizontal progress bar growing from left to right.
+@item :right-to-left
+      A horizontal progress bar growing from right to left.
+@item :bottom-to-top
+      A vertical progress bar growing from bottom to top.
+@item :top-to-bottom
+      A vertical progress bar growing from top to bottom.
+@end table
+
+As well as indicating the amount of progress that has occurred, the progress bar
+may be set to just indicate that there is some activity.  This can be useful in
+situations where progress cannot be measured against a value range.  The
+function @code{gtk-progress-bar-pulse} indicates that some progress has been
+made.  The step size of the activity indicator is set using the function
+@code{gtk-progress-bar-set-pulse-step}.
+
+When not in activity mode, the progress bar can also display a configurable text
+string within its trough, using the function @code{gtk-progress-bar-set-text}.
+
+You can turn off the display of the string by calling
+@code{gtk-progess-bar-set-text} again with @code{NIL} as second argument.
+
+The current text setting of a progressbar can be retrieved with the function
+@code{gtk-progress-bar-get-text}.
+
+Progress Bars are usually used with timeouts or other such functions (see
+section on Timeouts, I/O and Idle Functions) to give the illusion of
+multitasking.  All will employ the @code{gtk-progress-bar-set-fraction} or
+@code{gtk-progress-bar-pulse} functions in the same manner.
+
+@ref{example-progress-bar} shows an example of the progress bar, updated using
+timeouts.  This code also shows you how to reset the Progress Bar.  The output
+of this example is in @ref{figure-progress-bar}.
+
+@float Example, example-progress-bar
+@caption{Progress Bar}
+@end float
+@verbatim
+(defstruct pbar-data
+  pbar
+  timer
+  mode)
+
+(defun progress-bar-timeout (pdata)
+  (if (pbar-data-mode pdata)
+      (gtk-progress-bar-pulse (pbar-data-pbar pdata))
+      (let ((val (+ (gtk-progress-bar-get-fraction (pbar-data-pbar pdata))
+                    0.01)))
+        (when (> val 1.0) (setq val 0.0))
+        (gtk-progress-bar-set-fraction (pbar-data-pbar pdata) val)))
+  t)
+
+(defun example-progress-bar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Progress Bar"
+                                 :default-width 300))
+          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)
+                                 :mode nil))
+          (vbox (make-instance 'gtk-vbox
+                               :border-width 12))
+          (align (gtk-alignment-new 0.1 0.9 1.0 0.0))
+          (table (gtk-table-new 2 3 t)))
+      (setf (pbar-data-timer pdata)
+            (g-timeout-add 100
+                           (lambda ()
+                             (progress-bar-timeout pdata))))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (g-source-remove (pbar-data-timer pdata))
+                          (setf (pbar-data-timer pdata) 0)
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox align)
+      (gtk-container-add align (pbar-data-pbar pdata))
+      (gtk-box-pack-start vbox (make-instance 'gtk-hseparator))
+      (gtk-box-pack-start vbox table)
+      (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (let ((text (gtk-progress-bar-get-text (pbar-data-pbar pdata))))
+               (if (or (null text) (zerop (length text)))
+                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
+                                              "Some text")
+                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
+                                              "")))))
+        (gtk-table-attach table check 0 1 0 1))
+      (let ((check (gtk-check-button-new-with-label "Activity mode")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (setf (pbar-data-mode pdata)
+                   (not (pbar-data-mode pdata)))
+             (if (pbar-data-mode pdata)
+                 (gtk-progress-bar-pulse (pbar-data-pbar pdata))
+                 (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
+                                                0.0))))
+        (gtk-table-attach table check 0 1 1 2))
+      (let ((check (gtk-check-button-new-with-label "Rigth to left")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (case (gtk-progress-bar-orientation (pbar-data-pbar pdata))
+               (:left-to-right
+                 (setf (gtk-progress-bar-orientation (pbar-data-pbar pdata))
+                       :right-to-left))
+               (:right-to-left
+                 (setf (gtk-progress-bar-orientation (pbar-data-pbar pdata))
+                       :left-to-right)))))
+        (gtk-table-attach table check 0 1 2 3))
+      (let ((button (gtk-button-new-with-label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section Dialogs
+
+@subsection General Dialog
+
+@ifnotinfo
+@float Figure, figure-dialog-window
+@caption{General Dialog Window}
+@center @image{figures/dialog-window403x167, 269pt}
+@end float
+@end ifnotinfo
+
+@findex GtkDialog
+@findex gtk-dialog
+@findex dialog, gtk-dialog
+
+@findex gtk-dialog-new
+@findex dialog-new, gtk-dialog-new
+
+The dialog widget is just a window with a few things pre-packed into it.  The
+dialog widget is of type @code{GtkDialog} which is represented by the Lisp
+class @code{gtk-dialog}.  A dialog widget can be created with the function
+@code{gtk-dialog-new} or the call @code{(make-instance 'gtk-dialog)}.  The
+function @code{gtk-dialog-new} does not take an argument.  The C library
+knows in addition the function @code{gtk_dialog_new_with_buttons()} which is
+not implemented for the Lisp binding.
+
+@findex has-separator
+
+The dialog widget consists of an content-area which is of type @code{GtkVBox}.
+The content area can be filled with the content of a dialog.  At the button of
+the window the dialog widget has an action-area which takes the desired buttons
+of the dialog.  The action area can be separated with a horizontal from the
+content area setting the property @code{has-separator} of @code{GtkDialog}.
+
+@findex gtk-dialog-get-content-area
+@findex dialog-get-content-area, gtk-dialog-get-content-area
+
+The function @code{gtk-dialog-get-content-area} gets the content area of a
+dialog. Because the content area is a vertical box of type @code{GtkVBox} any
+desired widgets can be added to the content area with the functions
+@code{gtk-box-pack-start} or @code{gtk-box-pack-end}.  To display the content
+area it is necessary to call the function @code{gtk-widget-show} explicitly.
+The function @code{create-dialog} in @ref{example-dialog-window} shows
+how to fill widgets into a dialog widget.
+
+@findex gtk-dialog-add-button
+@findex dialog-add-button, gtk-dialog-add-button
+
+@findex GtkResponseType
+@findex gtk-response-type
+@findex response-type, gtk-response-type
+
+The action area can be filled with the desired buttons for the dialog window.
+Standard buttons can be added with the function @code{gtk-dialog-add-button}.
+The function takes three arguments.  The first argument is the dialog window
+the button is added to.  The second argument is a string which is the text
+of the button or a stock id.  The last argument is of the enumeration type
+@code{GtkResponseType} and defines the response type of the button.  Possible
+values of @code{GtkResponseType} are shown in @ref{table-gtk-response-type}.
+
+@findex gtk-dialog-get-action-area
+@findex dialog-get-action-area, gtk-dialog-get-action-area
+
+Alternatively to the function @code{gtk-dialog-add-button} buttons can be
+added with the functions @code{gtk-box-pack-start} or @code{box-pack-end} to
+the action area.  The action area is of type @code{GtkHBox} and can be get
+with the function @code{gtk-dialog-get-action-area}.
+
+@float Table, table-gtk-response-type
+@caption{Predefined values for use as response ids in
+@code{gtk-dialog-add-button}.  All predefined values are negative, GTK+ leaves
+positive values for application-defined response ids.}
+@shortcaption{Values of the type @code{GtkResponseType}}
+@end float
+@table @code
+@item :none
+      Returned if an action widget has no response id, or if the dialog gets
+      programmatically hidden or destroyed.
+@item :reject
+      Generic response id, not used by GTK+ dialogs
+@item :accept
+      Generic response id, not used by GTK+ dialogs
+@item :event
+      Returned if the dialog is deleted
+@item :ok
+      Returned by OK buttons in GTK+ dialogs
+@item :cancel
+      Returned by Cancel buttons in GTK+ dialogs
+@item :close
+      Returned by Close buttons in GTK+ dialogs
+@item :yes
+      Returned by Yes buttons in GTK+ dialogs
+@item :no
+      Returned by No buttons in GTK+ dialogs
+@item :apply
+      Returned by Apply buttons in GTK+ dialogs
+@item :help
+      Returned by Help buttons in GTK+ dialogs
+@end table
+
+@findex gtk-dialog-run
+@findex dialog-run, gtk-dialog-run
+
+After creation and configuration of the dialog window the dialog is executed
+with the function @code{gtk-dialog-run}.  The function takes the dialog window
+of type @code{GtkDialog} as the only argument.  After closing the dialog window
+with one of the buttons the response is returned as an integer value of type
+@code{GtkResponseType}. 
+
+@c -----------------------------------------------------------------------------
+@subsection Message Dialog
+
+@ifnotinfo
+@float Figure, figure-message-dialog
+@caption{Message Dialog}
+@center @image{figures/message-dialog480x157, 320pt}
+@end float
+@end ifnotinfo
+
+A message dialog @code{GtkMessageDialog} is a subclass of the more general
+class @code{GtkDialog} and gives an easy way to display messages to the user.
+@ref{figure-message-dialog} shows an example for an informational message.
+
+A message dialog is created with the call
+@code{make-instance 'gtk-message-dialog}.  The C functions
+@code{gtk_message_dialog_new()} and @code{gtk_message_dialog_new_with_markup()}
+have no corresponding Lisp implementation.  Various properties control the
+appearance of a message dialog.  The function @code{create-message-dialog} in
+@ref{example-dialog-window} shows the settings of the properties
+@code{message-type}, @code{buttons}, @code{text}, and @code{secondary-text}.
+The type of a message dialog is one of the values of @code{GtkMessageType}.
+The possible values are listed in @ref{table-gtk-message-type}.  Predefined
+buttons of type @code{GtkButtonsType} for a message dialog are listed in
+@ref{table-gtk-buttons-type}.
+
+@float Table, table-gtk-message-type
+@caption{The type of message being displayed in the dialog.}
+@shortcaption{Values of the type @code{GtkMessageType}}
+@end float
+@table @code
+@item :info
+      Informational message
+@item :warning
+      Nonfatal warning message
+@item :question
+      Question requiring a choice
+@item :error
+      Fatal error message
+@item :other
+      None of the above, doesn't get an icon
+@end table
+
+@float Table, table-gtk-buttons-type
+@caption{Prebuilt sets of buttons for a message dialog. If none of these
+choices are appropriate, simply use @code{:none} then call
+@code{gtk-dialog-add_buttons}. Please note that @code{:ok}, @code{:yes-no}, and
+@code{:canel} are discouraged by the GNOME Human Interface Guidelines.}
+@shortcaption{Values of the type @code{GtkButtonsType}}
+@end float
+@table @code
+@item :none
+      no buttons at all
+@item :ok
+      an OK button
+@item :close
+      a Close button
+@item :canel
+      a Cancel button
+@item :yes-no
+      Yes and No buttons
+@item :ok-cancel
+      OK and Cancel buttons
+@end table
+
+
+@c -----------------------------------------------------------------------------
+@subsection About Dialog
+
+@ifnotinfo
+@float Figure, figure-about-dialog
+@caption{About Dialog}
+@center @image{figures/about-dialog353x228, 235pt}
+@end float
+@end ifnotinfo
+
+The @code{GtkAboutDialog} offers a simple way to display information about a
+program like its logo, name, copyright, website and license.  It is also
+possible to give credits to the authors, documenters, translators and
+artists who have worked on the program.  An about dialog is typically opened
+when the user selects the About option from the Help menu.  All parts of the
+dialog are optional.
+ 
+About dialogs often contain links and email addresses.  @code{GtkAboutDialog}
+displays these as clickable links.  By default, it calls @code{gtk_show_uri()}
+when a user clicks one.  The behavior can be overridden with the "activate-link"
+signal.
+ 
+To make constructing a @code{GtkAboutDialog} as convenient as possible, the C
+library knows the function @code{gtk_show_about_dialog()} which constructs and
+shows a dialog and keeps it around so that it can be shown again.  This function
+is not implemented in the Lisp binding.
+ 
+Note that GTK+ sets a default title of @code{_("About %s")} on the dialog
+window, where @code{%s} is replaced by the name of the application, but in
+order to ensure proper translation of the title, applications should set the
+title property explicitly when constructing a @code{GtkAboutDialog}.
+
+It is possible to show a @code{GtkAboutDialog} like any other @code{GtkDialog},
+e.g. using @code{gtk-dialog-run}. In this case, you might need to know that the
+'Close' button returns the @code{:cancel} response id.
+
+@float Example, example-dialog-window
+@caption{Examples for a general, a message, and an about dialog.}
+@end float
+@verbatim
+(defun license-text ()
+  (format nil
+          "This program is free software: you can redistribute it and/or ~
+          modify it under the terms of the GNU Lesser General Public ~
+          License for Lisp as published by the Free Software Foundation, ~
+          either version 3 of the License, or (at your option) any later ~
+          version and with a preamble to the GNU Lesser General Public ~
+          License that clarifies the terms for use with Lisp programs and ~
+          is referred as the LLGPL.~%~% ~
+          This program is distributed in the hope that it will be useful, ~
+          but WITHOUT ANY WARRANTY; without even the implied warranty of ~
+          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the ~
+          GNU Lesser General Public License for more details. ~%~% ~
+          You should have received a copy of the GNU Lesser General Public ~
+          License along with this program and the preamble to the Gnu ~
+          Lesser General Public License.  If not, see ~
+          <http://www.gnu.org/licenses/> and ~
+          <http://opensource.franz.com/preamble.html>."))
+          
+(defun create-dialog ()
+  (let ((dialog (make-instance 'gtk-dialog
+                               :title "Dialog Window"
+                               :has-separator t)))
+    ;; Add a border width to the vbox of the content area
+    (gtk-container-set-border-width (gtk-dialog-get-content-area dialog) 12)
+    ;; Add a label widget with text to the content area
+    (let ((vbox (make-instance 'gtk-vbox :border-width 12))
+          (label (make-instance 'gtk-label
+                                :wrap t
+                                :label
+                                (format nil
+                                        "The content area is the place to ~
+                                         put in the widgets.~%~% ~
+                                         The action area is separated from ~
+                                         the content area with a horizontal ~
+                                         line."))))
+      (gtk-box-pack-start vbox label)
+      (gtk-box-pack-start (gtk-dialog-get-content-area dialog) vbox)
+      ;; Show the content area of the dialog
+      (gtk-widget-show (gtk-dialog-get-content-area dialog)))
+    ;; Add buttons with a stock id to the action area
+    (gtk-dialog-add-button dialog "gtk-yes" :yes)
+    (gtk-dialog-add-button dialog "gtk-no" :no)
+    (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
+    (gtk-dialog-set-default-response dialog :cancel)
+    ;; Change the order of the buttons
+    (gtk-dialog-set-alternative-button-order dialog
+                                             (list :yes :cancel :no))
+    ;; Run the dialog and print the message on the console
+    (format t "Response was: ~S~%" (gtk-dialog-run dialog))
+    ;; Destroy the dialog
+    (gtk-widget-destroy dialog)))
+
+(defun create-message-dialog ()
+  (let ((dialog (make-instance 'gtk-message-dialog
+                               :message-type :info
+                               :buttons :ok
+                               :text "Info Message Dialog"
+                               :secondary-text
+                               (format nil
+                                       "This is a message dialog of type ~
+                                        :info with a secondary text."))))
+    ;; Run the message dialog    
+    (gtk-dialog-run dialog)
+    ;; Destroy the message dialog
+    (gtk-widget-destroy dialog)))
+
+(defun create-about-dialog ()
+  (let ((dialog (make-instance 'gtk-about-dialog
+                               :program-name "Example Dialog"
+                               :version "0.00"
+                               :copyright "(c) Dieter Kaiser"
+                               :website
+                               "github.com/crategus/cl-cffi-gtk"
+                               :website-label "Project web site"
+                               :license (license-text)
+                               :authors '("Kalyanov Dmitry"
+                                          "Dieter Kaiser")
+                               :documenters '("Dieter Kaiser")
+                               :artists '("None")
+                               :logo-icon-name
+                               "applications-development"
+                               :wrap-license t)))
+    ;; Run the about dialog
+    (gtk-dialog-run dialog)
+    ;; Destroy the about dialog
+    (gtk-widget-destroy dialog)))
+
+(defun example-dialog ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Dialog"
+                                 :default-width 250
+                                 :border-width 12))
+          (vbox (make-instance 'gtk-vbox
+                               :spacing 6)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget)) 
+                          (gtk-main-quit)))
+      (gtk-container-add window vbox)
+      (let ((button (make-instance 'gtk-button
+                                   :label "Open a Dialog Window")))
+        (gtk-box-pack-start vbox button)
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the dialog
+             (create-dialog))))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Open a Message Dialog")))
+        (gtk-box-pack-start vbox button)
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the message dialog
+             (create-message-dialog))))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Open an About Dialog")))
+        (gtk-box-pack-start vbox button)
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             ;; Create and show the about dialog
+             (create-about-dialog))))
+      (gtk-box-pack-start vbox
+                          (make-instance 'gtk-hseparator))
+      ;; Create a quit button
+      (let ((button (make-instance 'gtk-button
+                                   :label "Quit")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section Statusbars
+
+@ifnotinfo
+@float Figure, figure-statusbar
+@caption{Statusbar}
+@center @image{figures/statusbar306x147, 204pt}
+@end float
+@end ifnotinfo
+
+Statusbars are simple widgets used to display a text message.  They keep a stack
+of the messages pushed onto them, so that popping the current message will
+re-display the previous text message.
+
+In order to allow different parts of an application to use the same statusbar
+to display messages, the statusbar widget issues context Identifiers which are
+used to identify different "users".  The message on top of the stack is the one
+displayed, no matter what context it is in. Messages are stacked in
+last-in-first-out order, not context identifier order.
+
+A statusbar is created with a call to @code{gtk-statusbar-new}.  A new context
+Identifier is requested using a call to the function
+@code{gtk-statusbar-get-context-id} with a short textual description of the
+context as the second argument.
+
+There are three functions that can operate on statusbars:
+@code{gtk-statusbar-push}, @code{gtk-statusbar-pop}, and
+@code{gtk-statusbar-remove}.  The first function, @code{gtk-statusbar-push}, is
+used to add a new message to the statusbar.  It returns a message identifier,
+which can be passed later to the function @code{gtk-statusbar-remove} to remove
+the message with the given message and context identifiers from the stack of
+the statusbar.  The function @code{gtk-statusbar-pop} removes the message
+highest in the stack with the given context identifier.
+
+In addition to messages, statusbars may also display a resize grip, which can
+be dragged with the mouse to resize the toplevel window containing the
+statusbar, similar to dragging the window frame.  The functions
+@code{gtk-statusbar-set-has-resize-grip} and
+@code{gtk-statusbar-get-has-resize-grip} control the display of the resize grip.
+
+@ref{example-statusbar} creates a statusbar and two buttons, one for pushing
+items onto the statusbar, and one for popping the last item back off.
+
+@float Example, example-statusbar
+@caption{Statusbar}
+@end float
+@verbatim
+(defun example-statusbar ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Status Bar"
+                                  :default-width 300
+                                  :border-width 12))
+           (vbox (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 3))
+           (statusbar (make-instance 'gtk-statusbar))
+           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
+           (count 0))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox statusbar)
+      (let ((button (gtk-button-new-with-label "Push Item")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (setq count (+ 1 count))
+             (gtk-statusbar-push statusbar id (format nil "Item ~A" count))))
+        (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
+      (let ((button (gtk-button-new-with-label "Pop Item")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-statusbar-pop statusbar id)))
+        (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section Text Entries
+
+@ifnotinfo
+@float Figure, figure-text-entry
+@caption{Text Entry}
+@center @image{figures/text-entry256x106, 171pt}
+@end float
+@end ifnotinfo
+
+The entry widget allows text to be typed and displayed in a single line text
+box.  The text may be set with function calls that allow new text to replace,
+prepend or append the current contents of the Entry widget.
+
+Create a new Entry widget with the function @code{gtk-entry-new}.  The function
+@code{gtk-entry-set-text} alters the text which is currently within the entry
+widget.  The function @code{gtk-entry-set-text} sets the contents of the entry
+widget, replacing the current contents.  Note that the class entry implements
+the editable interface which contains some more functions for manipulating the
+contents.
+
+The contents of the entry can be retrieved by using a call to the function
+@code{gtk-entry-get-text}.  This is useful in the callback functions described
+below.
+
+If we do not want the contents of the entry to be changed by someone typing
+into it, we can change its editable state with the function
+@code{gtk-editable-set-editable}.  This function allows us to toggle the
+editable state of the entry widget by passing in a @code{T} or @code{NIL} value
+for the editable argument.
+
+If we are using the entry where we do not want the text entered to be visible,
+for example when a password is being entered, we can use the function
+@code{gtk-entry-set-visibility}, which also takes a boolean flag.
+
+A region of the text may be set as selected by using the function
+@code{gtk-editable-select-region}.  This would most often be used after setting
+some default text in an Entry, making it easy for the user to remove it.
+
+If we want to catch when the user has entered text, we can connect to the
+activate or changed signal.  Activate is raised when the user hits the enter key
+within the entry widget.  Changed is raised when the text changes at all, e.g.,
+for every character entered or removed.
+
+@ref{example-text-entry} is an example of using an entry widget.
+
+@float Example, example-text-entry
+@caption{Text Entry}
+@end float
+@verbatim
+(defun example-text-entry ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Text Entry"
+                                  :default-width 250))
+           (vbox (make-instance 'gtk-vbox))
+           (hbox (make-instance 'gtk-hbox))
+           (entry (make-instance 'gtk-entry
+                                 :text "Hello"
+                                 :max-length 50))
+           (pos (gtk-entry-get-text-length entry)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect entry "activate"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "Entry contents: ~A"
+                                  (gtk-entry-get-text entry))))
+      (gtk-editable-insert-text entry " world" pos)
+      (gtk-editable-select-region entry 0 (gtk-entry-get-text-length entry))
+      (gtk-box-pack-start vbox entry :expand t :fill t :padding 0)
+      (let ((check (gtk-check-button-new-with-label "Editable")))
+        (g-signal-connect check "toggled"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-editable-set-editable
+                                      entry
+                                      (gtk-toggle-button-get-active check))))
+        (gtk-box-pack-start hbox check))
+      (let ((check (gtk-check-button-new-with-label "Visible")))
+        (gtk-toggle-button-set-active check t)
+        (g-signal-connect check "toggled"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-entry-set-visibility
+                                      entry
+                                      (gtk-toggle-button-get-active check))))
+        (gtk-box-pack-start hbox check))
+      (gtk-box-pack-start vbox hbox)
+      (let ((button (gtk-button-new-from-stock "gtk-close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+@end verbatim
+
+
+@c -----------------------------------------------------------------------------
+@section Spin Buttons
+
+@ifnotinfo
+@float Figure, figure-spin-button
+@caption{Spin Button}
+@center @image{figures/spin-button306x347, 204pt}
+@end float
+@end ifnotinfo
+
+The spin button widget is generally used to allow the user to select a value
+from a range of numeric values.  It consists of a text entry box with up and
+down arrow buttons attached to the side.  Selecting one of the buttons causes
+the value to "spin" up and down the range of possible values.  The entry box
+may also be edited directly to enter a specific value.
+
+The spin button allows the value to have zero or a number of decimal places and
+to be incremented or decremented in configurable steps.  The action of holding
+down one of the buttons optionally results in an acceleration of change in the
+value according to how long it is depressed.
+
+The spin button uses an adjustment object to hold information about the range
+of values that the spin button can take. This makes for a powerful spin button
+widget.
+
+Recall that an adjustment object is created with the function
+@code{gtk-adjustment-new}, which has the arguments @code{value}, @code{lower},
+@code{step-increment}, @code{page-increment}, and @code{page-size}.  These
+properties of an adjustment are used by the spin button in the following
+way:
+
+@table @code
+@item value
+      initial value for the Spin Button
+@item lower
+      lower range value
+@item upper
+      upper range value
+@item step-increment
+      value to increment/decrement when pressing mouse button 1 on a button
+@item page_increment
+      value to increment/decrement when pressing mouse button 2 on a button
+@item page_size
+      unused
+@end table
+
+Additionally, mouse button 3 can be used to jump directly to the upper or lower
+values when used to select one of the buttons.  A spin button is created with
+the function @code{gtk-spin-button-new}, which as the arguments
+@code{adjustment}, @code{climb-rate}, and @code{digits}.
+
+The @code{climb-rate} argument take a value between 0.0 and 1.0 and indicates
+the amount of acceleration that the spin button has.  The @code{digits} argument
+specifies the number of decimal places to which the value will be displayed.
+
+A spin button can be reconfigured after creation using the function
+@code{gtk-spin-button-configure}.  The first argument specifies the spin button
+that is to be reconfigured.  The other arguments are as specified for the
+function @code{gtk-spin-button-new}.
+
+The adjustment can be set and retrieved independently using the two
+functions @code{gtk-spin-button-set-adjustment} and
+@code{gtk-spin-button-get-adjustment}.
+
+The number of decimal places can also be altered using the function
+@code{gtk-spin-button-set-digits} and the value that a spin button is currently
+displaying can be changed using the function @code{gtk-spin-button-set-value}.
+
+The current value of a spin button can be retrieved as either a floating point
+or integer value with the functions @code{gtk-spin-button-get-value} and
+@code{gtk-spin-button-get-value-as-int}.
+
+If you want to alter the value of a spin button relative to its current value,
+then the function @code{gtk-spin-button-spin} can be used, which has the three
+arguments @code{spin-button}, @code{direction}, and @code{increment}.  The
+argument @code{direction} is of the enumeration type @code{GtkSpinType}, which
+can take one of the values shown in @ref{table-gtk-spin-type}.
+
+@float Table, table-gtk-spin-type
+@caption{The values of the @code{GtkSpinType} enumeration are used to specify
+the change to make in @code{gtk-spin-button-spin}}
+@shortcaption{Values of the type @code{GtkSpinType}}
+@end float
+@table @code
+@item :step-forward
+      Increment by the adjustments step increment.
+@item :backward
+      Decrement by the adjustments step increment.
+@item :forward
+      Increment by the adjustments page increment.
+@item :page-backward
+      Decrement by the adjustments page increment.
+@item :home
+      Go to the adjustments lower bound.
+@item :end
+      Go to the adjustments upper bound.
+@item :user-defined
+      Change by a specified amount.
+@end table
+
+@code{:step-forward} and @code{:step-backward} change the value of the spin
+button by the amount specified by increment, unless increment is equal
+to 0, in which case the value is changed by the value of @code{step-increment}
+in the adjustment.
+
+@code{:page-forward} and @code{:page-backward} simply alter the value of the
+spin button by @code{increment}.
+
+@code{:home} sets the value of the spin button to the bottom of the adjustments
+range and @code{:end} sets the value of the spin button to the top of the
+adjustments range.
+
+@code{:user-defined} simply alters the value of the spin button by the
+specified amount.
+
+We move away from functions for setting and retrieving the range attributes of
+the spin button now, and move onto functions that affect the appearance and
+behavior of the spin button widget itself.
+
+The first of these functions is @code{gtk-spin-button-set-numeric}, which is
+used to constrain the text box of the spin button such that it may only contain
+a numeric value.  This prevents a user from typing anything other than numeric
+values into the text box of a spin button.
+
+You can set whether a Spin Button will wrap around between the upper and lower
+range values with the function @code{gtk-spin-button-set-wrap}.  You can set a
+spin button to round the value to the nearest @code{step-increment}, which is
+set within the adjustment object used with the spin button.  This is
+accomplished with the function @code{gtk-spin-button-set-snap-to-ticks}.
+
+The update policy of a spin button can be changed with the function
+@code{gtk-spin-button-set-update-policy}.  The possible values of policy are
+either @code{:always} or @code{:if-valid}.  These policies affect the behavior
+of a Spin Button when parsing inserted text and syncing its value with the
+values of the adjustment.
+
+In the case of @code{:if-valid} the spin button value only gets changed if the
+text input is a numeric value that is within the range specified by the
+adjustment.  Otherwise the text is reset to the current value.  In case of
+@code{:always} we ignore errors while converting text into a numeric value.
+
+Finally, you can explicitly request that a spin button update itself with the
+function @code{gtk-spin-button-update}.
+
+@float Example, example-spin-button
+@caption{Spin Button}
+@end float
+@verbatim
+(defun example-spin-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Spin Button"
+                                 :default-width 300))
+          (vbox (make-instance 'gtk-vbox
+                               :homogeneous nil
+                               :spacing 6
+                               :border-width 12))
+          (vbox1 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 0
+                                :border-width 6))
+          (vbox2 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 0
+                                :boder-width 6))
+          (hbox (make-instance 'gtk-hbox))
+          (frame1 (make-instance 'gtk-frame
+                                 :label "Not accelerated"))
+          (frame2 (make-instance 'gtk-frame
+                                 :label "Accelerated"))
+          (label (make-instance 'gtk-label
+                                :label "0")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (let ((vbox (make-instance 'gtk-vbox))
+            (spinner (make-instance 'gtk-spin-button
+                                    :adjustment
+                                    (make-instance 'gtk-adjustment
+                                                   :value 1.0
+                                                   :lower 1.0
+                                                   :upper 31.0
+                                                   :step-increment 1.0
+                                                   :page-increment 5.0
+                                                   :page-size 0.0)
+                                    :climb-rate 0
+                                    :digits 0
+                                    :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Day :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil)
+        (gtk-box-pack-start vbox spinner :expand nil)
+        (gtk-box-pack-start hbox vbox :padding 6))
+      (let ((vbox (make-instance 'gtk-vbox))
+            (spinner (make-instance 'gtk-spin-button
+                                    :adjustment
+                                    (make-instance 'gtk-adjustment
+                                                   :value 1.0
+                                                   :lower 1.0
+                                                   :upper 12.0
+                                                   :step-increment 1.0
+                                                   :page-increment 5.0
+                                                   :page-size 0.0)
+                                    :climb-rate 0
+                                    :digits 0
+                                    :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Month :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil)
+        (gtk-box-pack-start vbox spinner :expand nil)
+        (gtk-box-pack-start hbox vbox :padding 6))
+      (let ((vbox (make-instance 'gtk-vbox))
+            (spinner (make-instance 'gtk-spin-button
+                                    :adjustment
+                                    (make-instance 'gtk-adjustment
+                                                   :value 1.0
+                                                   :lower 1998.0
+                                                   :upper 2100.0
+                                                   :step-increment 1.0
+                                                   :page-increment 100.0
+                                                   :page-size 0.0)
+                                    :climb-rate 0
+                                    :digits 0
+                                    :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Year :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil)
+        (gtk-box-pack-start vbox spinner :expand nil :fill t)
+        (gtk-box-pack-start hbox vbox :padding 6))
+      (gtk-box-pack-start vbox1 hbox :padding 6)
+      (gtk-container-add frame1 vbox1)
+      (gtk-box-pack-start vbox frame1)
+      (setq hbox (make-instance 'gtk-hbox))
+      (let ((vbox (make-instance 'gtk-vbox))
+            (spinner1 (make-instance 'gtk-spin-button
+                                     :adjustment
+                                     (make-instance 'gtk-adjustment
+                                                    :value 1.0
+                                                    :lower -10000.0
+                                                    :upper  10000.0
+                                                    :step-increment 0.5
+                                                    :page-increment 100.0
+                                                    :page-size 0.0)
+                                     :climb-rate 1.0
+                                     :digits 2
+                                     :wrap t))
+            (spinner2 (make-instance 'gtk-spin-button
+                                     :adjustment
+                                     (make-instance 'gtk-adjustment
+                                                    :value 2
+                                                    :lower 1
+                                                    :upper 5
+                                                    :step-increment 1
+                                                    :page-increment 1
+                                                    :page-size 0)
+                                     :climb-rate 0.0
+                                     :digits 0
+                                     :wrap t)))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Value :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :fill t)
+        (gtk-box-pack-start vbox spinner1 :expand nil)
+        (gtk-box-pack-start hbox vbox :padding 6)
+        (g-signal-connect spinner2 "value-changed"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-spin-button-set-digits
+                               spinner1
+                               (gtk-spin-button-get-value-as-int spinner2))))
+        (setq vbox (make-instance 'gtk-vbox))
+        (gtk-box-pack-start vbox
+                            (make-instance 'gtk-label
+                                           :label "Digits :"
+                                           :xalign 0
+                                           :yalign 0.5)
+                            :expand nil)
+        (gtk-box-pack-start vbox spinner2 :expand nil)
+        (gtk-box-pack-start hbox vbox :padding 6)
+        (gtk-box-pack-start vbox2 hbox :padding 6)
+        (let ((check (make-instance 'gtk-check-button
+                                    :label "Snap to 0.5-ticks"
+                                    :active t)))
+          (g-signal-connect check "clicked"
+             (lambda (widget)
+               (gtk-spin-button-set-snap-to-ticks
+                                     spinner1
+                                     (gtk-toggle-button-get-active widget))))
+          (gtk-box-pack-start vbox2 check))
+        (let ((check (make-instance 'gtk-check-button
+                                    :label "Numeric only input mode"
+                                    :active t)))
+          (g-signal-connect check "clicked"
+             (lambda (widget)
+               (gtk-spin-button-set-numeric
+                                     spinner1
+                                     (gtk-toggle-button-get-active widget))))
+          (gtk-box-pack-start vbox2 check))
+        (gtk-container-add frame2 vbox2)
+        (setq hbox (make-instance 'gtk-hbox))
+        (let ((button (gtk-button-new-with-label "Value as Int")))
+          (g-signal-connect button "clicked"
+             (lambda (widget)
+               (declare (ignore widget))
+               (gtk-label-set-text
+                      label
+                      (format nil "~A"
+                              (gtk-spin-button-get-value-as-int spinner1)))))
+            (gtk-box-pack-start hbox button))
+        (let ((button (gtk-button-new-with-label "Value as Float")))
+          (g-signal-connect button "clicked"
+             (lambda (widget)
+               (declare (ignore widget))
+               (gtk-label-set-text
+                             label
+                             (format nil "~A"
+                                     (gtk-spin-button-get-value spinner1)))))
+          (gtk-box-pack-start hbox button))
+        (gtk-box-pack-start vbox2 hbox)
+        (gtk-box-pack-start vbox2 label))
+      (gtk-box-pack-start vbox frame2)
+      (let ((button (make-instance 'gtk-button
+                                   :label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show window))))
+@end verbatim
+
+
+@c -----------------------------------------------------------------------------
+@need 800
+@section Combo Box
+@subsection General Combo Box
+
+@findex GtkComboBox
+@findex gtk-combo-box
+@findex combo-box, gtk-combo-box
+
+@ifnotinfo
+@float Figure, figure-combo-box
+@caption{Combo Box}
+@center @image{figures/combo-box386x131, 257pt}
+@end float
+@end ifnotinfo
+
+A @code{GtkComboBox} is a widget that allows the user to choose from a list of
+valid choices. The @code{GtkComboBox} displays the selected choice.  When
+activated, the @code{GtkComboBox} displays a popup which allows the user to make
+a new choice.  The style in which the selected value is displayed, and the style
+of the popup is determined by the current theme.  It may be similar to a
+Windows-style combo box.
+
+@findex GtkCellLayout
+@findex gtk-cell-layout
+@findex cell-layout, gtk-cell-layout
+
+The @code{GtkComboBox} uses the model-view pattern; the list of valid choices is
+specified in the form of a tree model, and the display of the choices can be
+adapted to the data in the model by using cell renderers, as you would in a
+tree view.  This is possible since @code{GtkComboBox} implements the
+@code{GtkCellLayout} interface.  The tree model holding the valid choices is not
+restricted to a flat list, it can be a real tree, and the popup will reflect the
+tree structure.
+
+@findex has-entry
+@findex GtkEntry
+@findex gtk-entry
+@findex entry, gtk-entry
+
+@findex gtk-bin-get-child
+@findex bin-get-child, gtk-bin-get-child
+
+To allow the user to enter values not in the model, the @code{has-entry}
+property allows the @code{GtkComboBox} to contain a @code{GtkEntry}.  This entry
+can be accessed by calling @code{gtk-bin-get-child} on the combo box.
+
+For a simple list of textual choices, the model-view API of @code{GtkComboBox}
+can be a bit overwhelming.  In this case, @code{GtkComboBoxText} offers a simple
+alternative.  Both @code{GtkComboBox} and @code{GtkComboBoxText} can contain an
+entry.
+
+@float Example, example-combo-box
+@caption{Combo Box}
+@end float
+@verbatim
+(defstruct tvi
+  title
+  value)
+
+(defun example-combo-box ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :border-width 12
+                                  :title "Example Combo Box"))
+           (model (make-instance 'array-list-store))
+           (combo-box (make-instance 'gtk-combo-box :model model))
+           (title-label (make-instance 'gtk-label :label "Title:"))
+           (value-label (make-instance 'gtk-label :label "Value:"))
+           (title-entry (make-instance 'gtk-entry))
+           (value-entry (make-instance 'gtk-entry))
+           (button (make-instance 'gtk-button :label "Add"))
+           (table (make-instance 'gtk-table
+                                 :n-rows 3
+                                 :n-columns 3)))
+      ;; Define two columns
+      (store-add-column model "gchararray" #'tvi-title)
+      (store-add-column model "gint" #'tvi-value)
+      ;; Fill in data into the columns
+      (store-add-item model (make-tvi :title "Monday" :value 1))
+      (store-add-item model (make-tvi :title "Tuesday" :value 2))
+      (store-add-item model (make-tvi :title "Wednesday" :value 3))
+      (store-add-item model (make-tvi :title "Thursday" :value 4))
+      (store-add-item model (make-tvi :title "Friday" :value 5))
+      (store-add-item model (make-tvi :title "Saturday" :value 6))
+      (store-add-item model (make-tvi :title "Sunday" :value 7))
+      ;; Set the first entry to active
+      (gtk-combo-box-set-active combo-box 0)
+      ;; Define the signal handlers
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (store-add-item model
+                           (make-tvi :title
+                                     (gtk-entry-text title-entry)
+                                     :value
+                                     (or (parse-integer
+                                           (gtk-entry-text value-entry)
+                                           :junk-allowed t)
+                                         0)))))
+      (g-signal-connect combo-box "changed"
+         (lambda (widget)
+           (declare (ignore widget))
+           (show-message (format nil "You clicked on row ~A~%"
+                                 (gtk-combo-box-get-active combo-box)))))
+      ;; Create renderers for the cells
+      (let ((renderer (make-instance 'gtk-cell-renderer-text
+                                     :text "A text")))
+        (gtk-cell-layout-pack-start combo-box renderer :expand t)
+        (gtk-cell-layout-add-attribute combo-box renderer "text" 0))
+      (let ((renderer (make-instance 'gtk-cell-renderer-text
+                                     :text "A number")))
+        (gtk-cell-layout-pack-start combo-box renderer :expand nil)
+        (gtk-cell-layout-add-attribute combo-box renderer "text" 1))
+      ;; Align the labels
+      (gtk-misc-set-alignment title-label 0.0 0.0)
+      (gtk-misc-set-alignment value-label 0.0 0.0)
+      ;; Put the widgets into the table
+      (gtk-table-attach table title-label 0 1 0 1)
+      (gtk-table-attach table value-label 1 2 0 1)
+      (gtk-table-attach table title-entry 0 1 1 2)
+      (gtk-table-attach table value-entry 1 2 1 2)
+      (gtk-table-attach table button      2 3 1 2)
+      (gtk-table-attach table combo-box   0 3 2 3)
+      ;; Put the table into the window
+      (gtk-container-add window table)
+      ;; Show the window
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@subsection Combo Box Text
+
+@findex GtkComboBoxText
+@findex gtk-combo-box-text
+@findex combo-box-text, gtk-combo-box-text
+
+@ifnotinfo
+@float Figure, figure-combo-box-text
+@caption{Combo Box Text}
+@center @image{figures/combo-box-text151x85, 101pt}
+@end float
+@end ifnotinfo
+
+A @code{GtkComboBoxText} is a simple variant of @code{GtkComboBox} that hides
+the model-view complexity for simple text-only use cases.
+
+@findex gtk-combo-box-text-new
+@findex gtk-combo-box-text-new-with-entry
+
+@findex combo-box-text-new, gtk-combo-box-text-new
+@findex combo-box-text-new-with-entry, gtk-combo-box-text-new-with-entry
+
+To create a @code{GtkComboBoxText}, use @code{gtk-combo-box-text-new} or
+@code{gtk-combo-box-text-new-with-entry}.
+
+@findex gtk-combo-box-text-append-text
+@findex gtk-combo-box-text-insert-text
+@findex gtk-combo-box-text-prepend-text
+@findex gtk-combo-box-text-remove
+
+@findex combo-box-text-append-text, gtk-combo-box-text-append-text
+@findex combo-box-text-insert-text, gtk-combo-box-text-insert-text
+@findex combo-box-text-prepend-text, gtk-combo-box-text-prepend-text
+@findex combo-box-text-remove, gtk-combo-box-text-remove
+
+You can add items to a @code{GtkComboBoxText} with
+@code{gtk-combo-box-text-append_text}, @code{gtk-combo-box-text-insert-text} or
+@code{gtk-combo-box-text-prepend-text} and remove options with
+@code{gtk-combo-box-text-remove}.
+
+@findex gtk-combo-box-text-get-active-text
+@findex gtk-bin-get-child
+
+@findex combo-box-text-get-active-tect, gtk-combo-box-text-get-active-text
+@findex bin-get-child, gtk-bin-get-child
+
+If the @code{GtkComboBoxText} contains an entry (via the @code{has-entry}
+property), its contents can be retrieved using
+@code{gtk-combo-box-text-get-active-text}.  The entry itself can be accessed by
+calling @code{gtk-bin-get-child} on the combo box.
+
+@float Example, example-combo-box-text
+@caption{Combo Box Text}
+@end float
+@verbatim
+(defun example-combo-box-text ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :border-width 12
+                                 :title "Example Combo Box Text"))
+          (combo (make-instance 'gtk-combo-box-text)))
+      (gtk-combo-box-text-append-text combo "First entry")
+      (gtk-combo-box-text-append-text combo "Second entry")
+      (gtk-combo-box-text-append-text combo "Third entry")
+      (gtk-combo-box-set-active combo 0)
+      (gtk-container-add window combo)
+      (gtk-widget-show window))))
+@end verbatim
+
+
+@c -----------------------------------------------------------------------------
+
+@section Calendar
+
+@findex GtkCalendar
+@findex gtk-calendar
+@findex calendar, gtk-calendar
+
+@findex gtk-calendar-new
+@findex calendar-new, gtk-calendar-new
+
+@ifnotinfo
+@float Figure, figure-calendar
+@caption{Calendar}
+@center @image{figures/calendar252x304, 168pt}
+@end float
+@end ifnotinfo
+
+@code{GtkCalendar} is a widget that displays a Gregorian calendar, one month at
+a time.  It can be created with @code{gtk-calendar-new}.
+ 
+The month and year currently displayed can be altered with
+@code{gtk-calendar-select-month}.  The exact day can be selected from the
+displayed month using @code{gtk-calendar-select_day}.
+ 
+To place a visual marker on a particular day, use @code{gtk-calendar-mark-day}
+and to remove the marker, @code{gtk-calendar-unmark-day}.  Alternative, all
+marks can be cleared with @code{gtk-calendar-clear-marks}.
+ 
+The way in which the calendar itself is displayed can be altered using
+@code{gtk-calendar-set-display-options}.
+ 
+The selected date can be retrieved from a @code{GtkCalendar} using
+@code{gtk-calendar-get-date}.
+ 
+Users should be aware that, although the Gregorian calendar is the legal
+calendar in most countries, it was adopted progressively between 1582 and
+1929.  Display before these dates is likely to be historically incorrect.
+
+@float Example, example-calendar
+@caption{Calendar}
+@end float
+@verbatim
+(defun calendar-detail (calendar year month day)
+  (declare (ignore calendar year month))
+  (when (= day 23)
+    "!"))
+
+(defun example-calendar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Calendar"
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 100))
+          (calendar (make-instance 'gtk-calendar
+                                   :detail-function #'calendar-detail)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect calendar "day-selected"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "selected: year ~A month ~A day ~A~%"
+                                  (gtk-calendar-year calendar)
+                                  (gtk-calendar-month calendar)
+                                  (gtk-calendar-day calendar))))
+      (gtk-container-add window calendar)
+      (gtk-widget-show window))))
+@end verbatim
+      
+@c -----------------------------------------------------------------------------
+@section Color Selection
+
+@ifnotinfo
+@float Figure, figure-color-selection
+@caption{Color Selection Widget}
+@center @image{figures/color-selection531x321, 354pt}
+@end float
+@end ifnotinfo
+
+@findex GtkColorSelection
+@findex GtkColorSelectionDialog
+
+The color selection widget is a widget for interactive selection of colors.
+This composite widget lets the user select a color by manipulating RGB
+(Red, Green, Blue) and HSV (Hue, Saturation, Value) triples.  This is done
+either by adjusting single values with sliders or entries, or by picking the
+desired color from a hue-saturation wheel/value bar.  Optionally, the opacity
+of the color can also be set.
+
+@findex gtk-color-selection-new
+@findex gtk-color-selection-dialog-new
+
+The widget comes in two flavors @code{GtkColorSelection} and
+@code{GtkColorSelectionDialog}.  A @code{GtkColorSelection} widget is created
+with @code{(make-instance 'gtk-color-selection)} or the function
+@code{gtk-color-selection-new}.  The function @code{gtk-color-selection-new}
+does not have an argument.  The most common color selection is the dialog
+created with @code{(make-instance 'gtk-color-selection-dialog)} or the function
+@code{gtk-color-selection-dialog-new}.  This function takes one argument, which
+is a string and specifies the title of the dialog window.
+
+@findex gtk-color-selection-current-color
+@findex gtk-color-selection-set-current-color
+
+The color selection widget currently emits only one signal, "color-changed",
+which is emitted whenever the current color in the widget changes, either when
+the user changes the color or if the color is set explicitly through the
+function @code{gtk-color-selection-set-current-color} or the accessor
+function @code{gtk-color-selection-current-color}.
+
+@findex gtk-color-selection-has-opacity-control
+
+The color selection widget supports adjusting the opacity of a color (also
+known as the alpha channel).  The opacity control is disabled by default.
+Calling the function @code{gtk-color-selection-set-has-opacity-control} with
+the argument @code{has_opacity} set to @code{T} enables opacity.  Likewise,
+@code{has_opacity} set to @code{NIL} will disable opacity.
+
+@findex gtk-color-selection-set-current-color
+@findex gtk-color-selection-get-current-color
+@findex gtk-color-selection-set-current-alpha
+@findex gtk-color-selection-get-current-alpha
+@findex GdkColor
+
+You can set the current color explicitly by calling
+@code{gtk-color-selection-set-current_color} with an argument @code{color} of
+type @code{GdkColor}.  Setting the opacity (alpha channel) is done with
+@code{gtk-color-selection-set-current-alpha}.  The alpha value should be between
+0 (fully transparent) and 65535 (fully opaque).  When you need to query the
+current settings, typically when the "color-changed" signal is received, you
+can use the functions @code{gtk-color-selection-get-current-color} and
+@code{gtk-color-selection-get-current-alpha}.
+
+The simple example demonstrates the use of the @code{ColorSelectionDialog}. The
+program displays a window containing a drawing area.  Clicking on it opens a
+color selection dialog, and changing the color in the color selection dialog
+changes the background color.
+
+@float Example, example-color-selection
+@caption{Color Selection Widget}
+@end float
+@verbatim
+(let ((color (make-gdk-color :red 0
+                             :blue 65535
+                             :green 0)))
+
+  (defun drawing-area-event (widget event area)
+    (declare (ignore widget))
+    (let ((handled nil))
+      (when (eql (gdk-event-type event) :button-press)
+        (let* ((colorseldlg (make-instance 'gtk-color-selection-dialog
+                                           :title "Select Background Color"))
+               (colorsel
+                 (gtk-color-selection-dialog-color-selection colorseldlg)))
+          (setq handled t)
+          (gtk-color-selection-set-previous-color colorsel color)
+          (gtk-color-selection-set-current-color colorsel color)
+          (gtk-color-selection-set-has-palette colorsel t)
+          (g-signal-connect colorsel "color-changed"
+             (lambda (widget)
+               (declare (ignore widget))
+               (let ((color (gtk-color-selection-current-color colorsel)))
+                 (gtk-widget-modify-bg area :normal color))))
+          (let ((response (gtk-dialog-run colorseldlg)))
+            (gtk-widget-destroy colorseldlg)
+            (if (eql response :ok)
+                (setq color (gtk-color-selection-get-current-color colorsel))
+                (gtk-widget-modify-bg area :normal color)))))
+      handled))
+
+  (defun example-color-selection ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title "Example Color Selection"
+                                   :default-width 300))
+            (area (make-instance 'gtk-drawing-area)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-widget-modify-bg area :normal color)
+        (gtk-widget-set-events area :button-press-mask)
+        (g-signal-connect area "event"
+                          (lambda (widget event)
+                            (drawing-area-event widget event area)))
+        (gtk-container-add window area)
+        (gtk-widget-show window)))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@section File Chooser
+
+@ifnotinfo
+@float Figure, figure-file-chooser
+@caption{File Chooser}
+@center @image{figures/file-chooser565x436, 377pt}
+@end float
+@end ifnotinfo
+
+@code{GtkFileChooser} is an interface that can be implemented by file selection
+widgets. In GTK+, the main objects that implement this interface are
+@code{GtkFileChooserWidget}, @code{GtkFileChooserDialog}, and
+@code{GtkFileChooserButton}. You do not need to write an object that implements
+the @code{GtkFileChooser} interface unless you are trying to adapt an existing
+file selector to expose a standard programming interface.
+
+@code{GtkFileChooser} allows for shortcuts to various places in the filesystem.
+In the default implementation these are displayed in the left pane. It may be a
+bit confusing at first that these shortcuts come from various sources and in
+various flavours, so lets explain the terminology here:
+
+@table @emph
+@item Bookmarks
+     are created by the user, by dragging folders from the right pane to the
+     left pane, or by using the "Add". Bookmarks can be renamed and deleted
+     by the user.
+ 
+@item Shortcuts
+     can be provided by the application or by the underlying filesystem
+     abstraction (e.g. both the gnome-vfs and the Windows filesystems provide
+     "Desktop" shortcuts). Shortcuts cannot be modified by the user.
+ 
+@item Volumes
+     are provided by the underlying filesystem abstraction. They are the
+     "roots" of the filesystem.
+@end table
+
+@need 800
+@noindent
+@b{File Names and Encodings}
+
+When the user is finished selecting files in a @code{GtkFileChooser}, your
+program can get the selected names either as filenames or as URIs. For URIs,
+the normal escaping rules are applied if the URI contains non-ASCII characters.
+However, filenames are always returned in the character set specified by the
+@code{G_FILENAME_ENCODING} environment variable. Please see the Glib
+documentation for more details about this variable.
+
+
+@b{Note:}
+This means that while you can pass the result of
+@code{gtk-file-chooser-get-filename} to open(2) or fopen(3), you may not be able
+to directly set it as the text of a @code{GtkLabel} widget unless you convert it
+first to UTF-8, which all GTK+ widgets expect. You should use
+@code{g-filename-to-utf8} to convert filenames into strings that can be passed
+to GTK+ widgets.
+
+@need 800
+@noindent
+@b{Adding a Preview Widget}
+ 
+You can add a custom preview widget to a file chooser and then get
+notification about when the preview needs to be updated. To install a
+preview widget, use @code{gtk-file-chooser-set-preview-widget}. Then, connect
+to the "update-preview" signal to get notified when you need to update the
+contents of the preview.
+
+Your callback should use @code{gtk-file-chooser-get-preview-filename} to see
+what needs previewing.  Once you have generated the preview for the
+corresponding file, you must call
+@code{gtk-file-chooser-set-preview-widget-active} with a boolean flag that
+indicates whether your callback could successfully generate a preview.
+
+@need 800
+@noindent
+@b{Adding Extra Widgets}
+ 
+You can add extra widgets to a file chooser to provide options that are not
+present in the default design.  For example, you can add a toggle button to
+give the user the option to open a file in read-only mode. You can use
+@code{gtk-file-chooser-set-extra-widget} to insert additional widgets in a file
+chooser.
+
+@b{Note:}
+If you want to set more than one extra widget in the file chooser, you can use
+a container such as a @code{GtkVBox} or a @code{GtkTable} and include your
+widgets in it.  Then, set the container as the whole extra widget.
+
+@c -----------------------------------------------------------------------------
+@subsection File Chooser Button
+
+@ifnotinfo
+@float Figure, figure-file-chooser-button
+@caption{File Chooser Button}
+@center @image{figures/file-chooser-button302x130, 201pt}
+@end float
+@end ifnotinfo
+
+The @code{GtkFileChooserButton} is a widget that lets the user select a file. It
+implements the @code{GtkFileChooser} interface.  Visually, it is a file name
+with a button to bring up a @code{GtkFileChooserDialog}.  The user can then use
+that dialog to change the file associated with that button.  This widget does
+not support setting the "select-multiple" property to TRUE.
+
+@ref{example-file-chooser-button} creates a button to let the user select a
+file.
+ 
+The @code{GtkFileChooserButton} supports the @code{GtkFileChooserActions}
+@code{:open} and @code{:select-folder}.
+
+The @code{GtkFileChooserButton} will ellipsize the label, and thus will thus
+request little horizontal space.  To give the button more space, you should
+call @code{gtk-widget-get-preferred_size},
+@code{gtk-file-chooser-button-set-width-chars}, or pack the button in such a way
+that other interface elements give space to the widget.
+
+@float Example, example-file-chooser-button
+@caption{File Chooser Button}
+@end float
+@verbatim
+(defun example-file-chooser-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Button"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-file-chooser-button
+                                 :action :open)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button "file-set"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "File set: ~A~%"
+                                  (gtk-file-chooser-filename button))))
+      (gtk-container-add window button)
+      (gtk-widget-show window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@subsection File Chooser Dialog
+
+@code{GtkFileChooserDialog} is a dialog box suitable for use with "File/Open"
+or "File/Save as" commands.  This widget works by putting a
+@code{GtkFileChooserWidget} inside a @code{GtkDialog}. It exposes the
+@code{GtkFileChooserIface} interface, so you can use all of the
+@code{GtkFileChooser} functions on the file chooser dialog as well as those for
+@code{GtkDialog}.
+ 
+Note that @code{GtkFileChooserDialog} does not have any methods of its own.
+Instead, you should use the functions that work on a @code{GtkFileChooser}.
+In the simplest of cases, you can the code in @ref{example-file-chooser-dialog}
+to use @code{GtkFileChooserDialog} to select a file for saving.
+
+There are various cases in which you may need to use a
+@code{GtkFileChooserDialog}:
+
+@enumerate
+@item To select a file for opening, as for a File/Open command.
+      Use @code{:open}.
+
+@item To save a file for the first time, as for a File/Save command. Use
+      @code{:save} and suggest a name such as "Untitled"
+      with @code{gtk-file-chooser-set-current-name}.
+
+@item To save a file under a different name, as for a File/Save As command.
+      Use @code{:save}, and set the existing filename with
+      @code{gtk-file-chooser-set-filename}.
+
+@item To choose a folder instead of a file.
+      Use @code{:select-folder}.
+@end enumerate
+
+@float Example, example-file-chooser-dialog
+@caption{File Chooser Dialog}
+@end float
+@verbatim
+(defun example-file-chooser-dialog ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Dialog"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-button
+                                 :label "Select a file for save ..."
+                                 :image
+                                 (gtk-image-new-from-stock "gtk-save"
+                                                           :button))))
+      ;; Handle the signal "destroy" for the window.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Handle the signal "clicked" for the button.
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let ((dialog (make-instance 'gtk-file-chooser-dialog
+                                        :action :save
+                                        :title "Choose file to save")))
+             (gtk-dialog-add-button dialog "gtk-save" :accept)
+             (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
+             (when (eq (gtk-dialog-run dialog) :accept)
+               (format t "saved to file ~A~%"
+                       (gtk-file-chooser-filename dialog)))
+             (gtk-widget-destroy dialog))))
+      (gtk-container-add window button)
+      (gtk-widget-show window))))
+@end verbatim
+

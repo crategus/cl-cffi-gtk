@@ -1,0 +1,445 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-button-widget.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 03.02.2012
+@c Revision : 21.04.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@menu
+* Normal Buttons::
+* Toggle Buttons::
+* Check Buttons::
+* Radio Buttons::
+@end menu
+
+@c -----------------------------------------------------------------------------
+@node Normal Buttons, Toggle Buttons, Top, Top
+@section Normal Buttons
+
+@findex GtkButton
+@findex gtk-button
+@findex button, gtk-button
+
+@findex gtk-button-new
+@findex gtk-button-new-with-label
+@findex gtk-button-new-with-mnemonic
+@findex gtk-button-new-from-stock
+
+@findex button-new, gtk-button-new
+@findex button-new-with-label, gtk-button-new-with-label
+@findex button-new-with-mnemonic, gtk-button-new-with-mnemonic
+@findex button-new-from-stock, gtk-button-new-from-stock
+
+We have almost seen all there is to see of the button widget.  The button widget
+is pretty simple.  There is however more than one way to create a button.  You
+can use the the function @code{gtk-button-new-with-label} or
+the function @code{gtk-button-new-with-mnemonic} to create a button with a
+label, use @code{gtk-button-new-from-stock} to create a button containing the
+image and text from a stock item or use @code{gtk-button-new} to create a blank
+button.  It is then up to you to pack a label or pixmap into this new button.
+To do this, create a new box, and then pack your objects into this box using the
+function @code{gtk-box-pack-start}, and then use the function
+@code{gtk-container-add} to pack the box into the button.
+
+@ifnotinfo
+@float Figure, figure-button
+@caption{Button with an image from a file}
+@center @image{figures/button158x90, 105pt}
+@end float
+@end ifnotinfo
+
+@ref{figure-button} is an example of using @code{gtk-button-new} to create a
+button with an image and a label in it.  The code to create a box is shown in
+@ref{example-image-label-box} and breaken up from the rest so you can use it in
+your programs.  The main program which uses this subroutine is shown in 
+@ref{example-button}.
+
+The @code{image-label-box} function could be used to pack images and labels into
+any widget that can be a container.
+
+@ref{figure-buttons} shows more buttons, which are created with standard
+functions and with the function @code{make-instance}.  To get buttons which show
+both a label and an image the global setting of the property
+@code{gtk-button-images} has to be set to the value @code{T}.  The code of
+@ref{figure-buttons} is shown in @ref{example-buttons}.
+
+@float Example, example-button
+@caption{A button with an image and a label}
+@end float
+@verbatim
+(defun example-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Cool Button"
+                                 :type :toplevel
+                                 :border-width 12))
+          (button (make-instance 'gtk-button))
+          (box (image-label-box "save.png" "Save to File")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add button box)
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@findex gtk-image-new-from-file
+@findex image-new-from-file, gtk-image-new-from-file
+
+@float Example, example-image-label-box
+@caption{Code to create a button with an image and a label}
+@end float
+@verbatim
+(defun image-label-box (filename text)
+  (let ((box (make-instance 'gtk-box
+                            :orientation :horizontal
+                            :border-width 3))
+        (label (make-instance 'gtk-label
+                              :label text))
+        (image (gtk-image-new-from-file filename)))
+    (gtk-box-pack-start box image :expand nil :fill nil :padding 3)
+    (gtk-box-pack-start box label :expand nil :fill nil :padding 3)
+    box))
+@end verbatim
+
+@ifnotinfo
+@float Figure, figure-buttons
+@caption{More Examples to create buttons}
+@center @image{figures/buttons256x185, 171pt}
+@end float
+@end ifnotinfo
+
+@findex gtk-settings-gtk-button-images
+@findex settings-gtk-button-images, gtk-settings-gtk-button-images
+
+@float Example, example-buttons
+@caption{More buttons}
+@end float
+@verbatim
+(defun example-buttons ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Buttons"
+                                 :type :toplevel
+                                 :default-width 250
+                                 :border-width 12))
+          (vbox1 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :spacing 6))
+          (hbox  (make-instance 'gtk-box
+                                :orientation :horizontal
+                                :spacing 6)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Set gtk-button-images to T. This allows buttons with text and image.
+      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+      ;; These are the standard functions to create a button.
+      (gtk-box-pack-start vbox1
+                          (gtk-button-new-with-label "Label"))
+      (gtk-box-pack-start vbox1
+                          (gtk-button-new-with-mnemonic "_Mnemonic"))
+      (gtk-box-pack-start vbox1
+                          (gtk-button-new-from-stock "gtk-apply"))
+      ;; Create some buttons with make-instance.
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-button
+                                         :image-position :right
+                                         :image
+                                         (gtk-image-new-from-stock "gtk-edit"
+                                                                   :button)
+                                         :label "gtk-edit"
+                                         :use-stock t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-button
+                                         :image-position :top
+                                         :image
+                                         (gtk-image-new-from-stock "gtk-cut"
+                                                                   :button)
+                                         :label "gtk-cut"
+                                         :use-stock t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-button
+                                         :image-position :bottom
+                                         :image
+                                         (gtk-image-new-from-stock
+                                                                 "gtk-cancel"
+                                                                 :button)
+                                         :label "gtk-cancel"
+                                         :use-stock t))
+      (gtk-box-pack-start hbox vbox1)
+      (gtk-box-pack-start hbox vbox2)
+      (gtk-container-add window hbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Toggle Buttons, Check Buttons, Normal Buttons, Top
+@section Toggle Buttons
+
+@findex GtkToggleButton
+@findex gtk-toggle-button
+@findex toggle-button, gtk-toggle-button
+
+@findex gtk-toggle-button-new
+@findex gtk-toggle-button-new-with-label
+@findex gtk-toggle-button-new-with-mnemonic
+
+@findex toggle-button-new, gtk-toggle-button-new
+@findex toggle-button-new-with-label, gtk-toggle-button-new-with-label
+@findex toggle-button-new-with-mnemonic, gtk-toggle-button-new-with-mnemonic
+
+Toggle buttons are derived from normal buttons and are very similar, except
+toggle buttons always are in one of two states, alternated by a click.  Toggle
+buttons can be depressed, and when clicked again, the toggle button will pop
+back up.  Toggle buttons are the basis for check buttons and radio buttons, as
+such, many of the calls used for toggle buttons are inherited by radio and check
+buttons.
+
+Toggle buttons can be created with the functions @code{gtk-toggle-button-new},
+@code{gtk-toggle-button-new-with-label}, and
+@code{gtk-toggle-button-new-with-mnemonic}.  The first function creates a blank
+toggle button, and the last two functions, a toggle button with a label widget
+already packed into it.  The @code{gtk-toggle-button-new-with-mnemonic} variant
+additionally parses the label for '_'-prefixed mnemonic characters.
+
+To retrieve the state of the toggle widget, including radio and check buttons,
+a construct as shown in the example below is used.  This tests the state of the
+toggle button, by accessing the active field of the toggle widget's structure.
+The signal of interest to us emitted by toggle buttons (the toggle button 
+check button, and radio button widgets) is the "toggled" signal.  To check the
+state of these buttons, set up a signal handler to catch the toggled signal, and
+access the property @code{active} to determine the state of the button.  A
+signal handler will look something like:
+
+@example
+(g-signal-connect button "toggled"
+   (lambda (widget)
+     (if (gtk-toggle-button-get-active widget)
+         (progn
+           ;; If control reaches here, the toggle button is down
+         )
+        (progn
+           ;; If control reaches here, the toggle button is up
+         ))))
+@end example
+
+@findex gtk-toggle-button-set-active
+@findex gtk-toggle-button-get-active
+
+@findex toggle-button-set-active, gtk-toggle-button-set-active
+@findex toggle-button-get-active, gtk-toggle-button-get-active
+
+To force the state of a toggle button, and its children, the radio and check
+buttons, use this function @code{gtk-toggle-button-set-active}.  This function
+can be used to set the state of the toggle button, and its children the radio
+and check buttons.  Passing in your created button as the first argument, and a
+@code{T} or @code{NIL} for the second state argument to specify whether it
+should be down (depressed) or up (released).  Default is up, or @code{NIL}.
+
+Note that when you use the @code{gtk-toggle-button-set-active} function, and the
+state is actually changed, it causes the "clicked" and "toggled" signals to be
+emitted from the button.  The current state of the toggle button as a boolean
+@code{T} or @code{NIL} value is returned from the function
+@code{gtk-toggle-button-get-active}.
+
+In @ref{example-table-packing-2} the usage of toggle buttons is shown.
+
+@c -----------------------------------------------------------------------------
+@node Check Buttons, Radio Buttons, Toggle Buttons, Top
+@section Check Buttons
+
+@findex GtkCheckButtons
+@findex gtk-check-buttons
+@findex check-buttons, gtk-check-buttons
+
+@findex gtk-check-button-new
+@findex gtk-check-button-new-with-label
+@findex gtk-check-button-new-with-mnemonic
+
+@findex check-button-new, gtk-check-button-new
+@findex check-button-new-with-label, gtk-check-button-new-with-label
+@findex check-button-new-with-mnemonic, gtk-check-button-new-with-mnemonic
+
+Check buttons inherit many properties and functions from the toggle buttons
+above, but look a little different.  Rather than being buttons with text inside
+them, they are small squares with the text to the right of them.  These are
+often used for toggling options on and off in applications.
+
+The creation functions are similar to those of the normal button:
+@code{gtk-check-button-new}, @code{gtk-check-button-new-with-label}, and
+@code{gtk-check-button-new-with-mnemonic}.  The
+@code{gtk-check-button-new-with-label} function creates a check button with a
+label beside it.
+
+Checking the state of the check button is identical to that of the toggle
+button.  @ref{figure-toggle-buttons} shows toggle buttons and
+@ref{example-toggle-buttons} the code to create toggle buttons.
+
+@c -----------------------------------------------------------------------------
+@node Radio Buttons, , Check Buttons, Top
+@section Radio Buttons
+
+@findex GtkRadioButtons
+@findex gtk-radio-buttons
+@findex radio-buttons, gtk-radio-buttons
+
+@findex gtk-radio-button-new
+@findex gtk-radio-button-new-with-label
+@findex gtk-radio-button-new-with-mnemonic
+
+@findex radio-button-new, gtk-radio-button-new
+@findex radio-button-new-with-label, gtk-radio-button-new-with-label
+@findex radio-button-new-with-mnemonic, gtk-radio-button-new-with-mnemonic
+
+@findex gtk-radio-button-get-group
+@findex radio-button-get-group, gtk-radio-button-get-group
+
+Radio buttons are similar to check buttons except they are grouped so that only
+one may be selected or depressed at a time.  This is good for places in your
+application where you need to select from a short list of options.
+
+Creating a new radio button is done with one of these calls:
+@code{gtk-radio-button-new},
+@code{gtk-radio-button-new-with-label}, and
+@code{gtk-radio-button-new-with-mnemonic}.  These functions take a list of
+radio buttons as the first argument or @code{NIL}.  When @code{NIL} a new
+list of radio buttons is created.  The newly created list for the radio buttons
+can be get with the function @code{gtk-radio-button-get-group}.  More radio
+buttons can then be added to this list.  The important thing to remember is that
+@code{gtk-radio-button-get-group} must be called for each new button added to
+the group, with the previous button passed in as an argument.  The result is
+then passed into the next call to @code{gtk-radio-button-new} or the other two
+functions for creating a radio button.  This allows a chain of buttons to be
+established.  @ref{example-toggle-buttons} creates a radio button group with
+three buttons.
+
+You can shorten this slightly by using the following syntax, which removes the
+need for a variable to hold the list of buttons:
+
+@verbatim
+(setq button
+      (gtk-radio-button-new-with-label (gtk-radio-button-get-group button)
+                                       "Button"))
+@end verbatim
+
+@findex gtk-radio-button-new-from-widget
+@findex gtk-radio-button-new-with-label-from-widget
+@findex gtk-radio-button-new-with-mnemonic-from-widget
+
+@findex radio-button-new-from-widget, gtk-radio-button-new-from-widget
+@findex radio-button-new-with-label-from-widget, gtk-radio-button-new-with-label-from-widget
+@findex radio-button-new-with-mnemonic-from-widget, gtk-radio-button-new-with-mnemonic-from-widget
+
+Each of these functions has a variant, which take a radio button as the first
+argument and allows to omit the @code{gtk-radio-button-get-group} call.  In this
+case the new radio button is added to the list of radio buttons the argument is
+already a part of.  These functions are:
+@code{gtk-radio-button-new-from-widget},
+@code{gtk-radio-button-new-with-label-from-widget}, and
+@code{gtk-radio-button-new-with-mnemonic-from-widget}.
+
+@ifnotinfo
+@float Figure, figure-toggle-buttons
+@caption{Toggle Buttons}
+@center @image{figures/toggle-buttons305x201, 203pt}
+@end float
+@end ifnotinfo
+
+It is also a good idea to explicitly set which button should be the default
+depressed button with the function @code{gtk-toggle-button-set-active}.  This is
+described in the section on toggle buttons, and works in exactly the same way.
+Once the radio buttons are grouped together, only one of the group may be active
+at a time.  If the user clicks on one radio button, and then on another, the
+first radio button will first emit a "toggled" signal (to report becoming
+inactive), and then the second will emit its "toggled" signal (to report
+becoming active).
+
+@float Example, example-toggle-buttons
+@caption{Radio and Toggle Buttons}
+@end float
+@verbatim
+(defun example-toggle-buttons ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Toggle Buttons"
+                                 :type :toplevel))
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical))
+          (hbox (make-instance 'gtk-box
+                               :orientation :horizontal)))
+      ;; Handler for the signal "destroy"
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create three radio buttons and put the buttons in a vbox      
+      (let ((vbox (make-instance 'gtk-box
+                                 :orientation :vertical
+                                 :spacing 12
+                                 :border-width 12))
+            (button (gtk-radio-button-new-with-label nil "Radio Button 1")))
+        (gtk-box-pack-start vbox button)
+        (setq button
+              (gtk-radio-button-new-with-label
+                                          (gtk-radio-button-get-group button)
+                                          "Radio Button 2"))
+        (gtk-toggle-button-set-active button t)
+        (gtk-box-pack-start vbox button)
+        (setq button
+              (gtk-radio-button-new-with-mnemonic
+                                          (gtk-radio-button-get-group button)
+                                          "_Radio Button 3"))
+        (gtk-box-pack-start vbox button)
+        ;; Put the vbox with the radio buttons in a hbox
+        (gtk-box-pack-start hbox vbox :expand nil :fill nil))
+      ;; Create three check buttons and put the buttons in a vbox
+      (let ((vbox (make-instance 'gtk-box
+                                 :orientation :vertical
+                                 :homogenous nil
+                                 :spacing 12
+                                 :border-width 12)))
+        (gtk-box-pack-start
+                          vbox
+                          (gtk-check-button-new-with-label "Check Button 1"))
+        (gtk-box-pack-start
+                          vbox
+                          (gtk-check-button-new-with-label "Check Button 2"))
+        (gtk-box-pack-start
+                          vbox
+                          (gtk-check-button-new-with-label "Check Button 3"))
+        ;; Put the vbox with the buttons in a hbox
+        (gtk-box-pack-start hbox vbox :expand nil :fill nil))
+      ;; Put the hbox in a vbox
+      (gtk-box-pack-start vbox hbox :expand nil :fill nil)
+      ;; Add a separator to the vbox
+      (gtk-box-pack-start vbox
+                          (make-instance 'gtk-separator
+                                         :orientation :horizontal)
+                          :expand nil :fill nil)
+      ;; Add a quit button to the vbox
+      (let ((vbox-quit (make-instance 'gtk-box
+                                      :orientation :vertical
+                                      :spacing 12
+                                      :border-width 12))
+            (button (make-instance 'gtk-button :label "Close")))
+        (gtk-box-pack-start vbox-quit button :expand nil :fill nil)
+        (gtk-box-pack-start vbox vbox-quit :expand nil)
+        (g-signal-connect button "clicked"
+                          (lambda (button)
+                            (declare (ignore button))
+                            (gtk-widget-destroy window))))
+      ;; Put the vbox in the window widget
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
