@@ -80,6 +80,7 @@
    (:file "atk.implementor-iface")     ; AtkImplementorIface
    (:file "gtk.orientable")            ; Interface for flippable widgets
    (:file "gtk.activatable")           ; Interface for activatable widgets
+   (:file "gtk.scrollable")            ; Interface for scrollable widgets
    (:file "gtk.recent-chooser")        ; Displaying recently used files
                                        
    ;; Theming in Gtk+                  
@@ -114,7 +115,6 @@
    (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
    
    ;; Scrolling
-   (:file "gtk.scrollable")            ; An interface for scrollable widgets
    (:file "gtk.scrollbar")             ; GtkScrollbar
    (:file "gtk.scrolled-window")       ; Adds scrollbars
    
@@ -263,6 +263,9 @@
    (:file "gtk.print-unix-dialog")     ; A print dialog
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
    
+   ;; Application support
+   (:file "gtk.application")           ; Application class
+   
    ;; Deprecated
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
@@ -277,6 +280,7 @@
    (:file "gtk.high-level")
    (:file "gtk.init"))
   :depends-on (:cl-cffi-gtk-glib
+               :cl-cffi-gtk-gio
                :cl-cffi-gtk-gobject
                :cl-cffi-gtk-gdk
                :cl-cffi-gtk-pango
