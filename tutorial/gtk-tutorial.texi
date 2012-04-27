@@ -133,11 +133,15 @@ Menu Widgets
 @chapter Packing Widgets
 @include gtk-packing-widgets.texi
 
-@node Button Widgets, Adjustments, Packing Widgets, Top
+@node Button Widgets, Display Widgets, Packing Widgets, Top
 @chapter Button Widgets
 @include gtk-button-widget.texi
 
-@node Adjustments, Range Widgets, Button Widgets, Top
+@node Display Widgets, Adjustments, Button Widgets, Top
+@chapter Display Widgets
+@include gtk-display-widgets.texi
+
+@node Adjustments, Range Widgets, Display Widgets, Top
 @chapter Adjustments
 @include gtk-adjustments.texi
 
