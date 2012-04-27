@@ -485,10 +485,12 @@
 ;;;     a new GtkMenu
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-new))
+
 (defun gtk-menu-new ()
   (make-instance 'gtk-menu))
 
-(export 'gtk-menu)
+(export 'gtk-menu-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_screen ()

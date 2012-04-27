@@ -352,6 +352,8 @@
 ;;;     the newly created GtkMenuItem
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-new))
+
 (defun gtk-menu-item-new ()
   (make-instance 'gtk-menu-item))
 
@@ -370,6 +372,14 @@
 ;;; Returns :
 ;;;     the newly created GtkMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-item-new-with-label))
+
+(defun gtk-menu-item-new-with-label (label)
+  (make-instance 'gtk-menu-item
+                 :label label))
+
+(export 'gtk-menu-item-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new_with_mnemonic ()

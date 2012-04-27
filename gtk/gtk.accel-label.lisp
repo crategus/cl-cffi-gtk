@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkAccelLabel
 ;;; 
 ;;; A label which displays an accelerator key on the right of the text
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkAccelLabel
@@ -101,13 +101,14 @@
 ;;; save_item = gtk_menu_item_new_with_label ("Save");
 ;;; gtk_widget_show (save_item);
 ;;; gtk_container_add (GTK_CONTAINER (menu), save_item);
-;;;
+;;; 
 ;;; /* Now add the accelerator to the GtkMenuItem. Note that since we called
 ;;;    gtk_menu_item_new_with_label() to create the GtkMenuItem the
 ;;;    GtkAccelLabel is automatically set up to display the GtkMenuItem
-;;;    accelerators. We just need to make sure we use GTK_ACCEL_VISIBLE here.*/
+;;;    accelerators. We just need to make sure we use GTK_ACCEL_VISIBLE here. */
 ;;; gtk_widget_add_accelerator (save_item, "activate", accel_group,
 ;;;                             GDK_KEY_s, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -133,7 +134,7 @@
 ;;; struct GtkAccelLabel
 ;;; 
 ;;; struct GtkAccelLabel;
-;;; 
+;;;
 ;;; The GtkAccelLabel struct contains private data only, and should be accessed
 ;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
@@ -143,27 +144,32 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_accel_label_get_type")
-  ((accel-closure gtk-accel-label-accel-closure
+  ((accel-closure
+    gtk-accel-label-accel-closure
     "accel-closure" "GClosure" t t)
-   (accel-widget gtk-accel-label-accel-widget
+   (accel-widget
+    gtk-accel-label-accel-widget
     "accel-widget" "GtkWidget" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_new ()
 ;;; 
-;;; GtkWidget * gtk_accel_label_new (const gchar *string)
+;;; GtkWidget * gtk_accel_label_new (const gchar *string);
 ;;; 
 ;;; Creates a new GtkAccelLabel.
 ;;; 
 ;;; string :
-;;;     the label string. Must be non-NULL.
+;;;     the label string. Must be non-NULL
 ;;; 
 ;;; Returns :
-;;;     a new GtkAccelLabel.
+;;;     a new GtkAccelLabel
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-accel-label-new))
+
 (defun gtk-accel-label-new (str)
-  (make-instance 'gtk-accel-label :label str))
+  (make-instance 'gtk-accel-label
+                 :label str))
 
 (export 'gtk-accel-label-new)
 
@@ -171,22 +177,29 @@
 ;;; gtk_accel_label_set_accel_closure ()
 ;;; 
 ;;; void gtk_accel_label_set_accel_closure (GtkAccelLabel *accel_label,
-;;;                                         GClosure *accel_closure)
+;;;                                         GClosure *accel_closure);
 ;;; 
-;;; Sets the closure to be monitored by this accelerator label. The closure
-;;; must be connected to an accelerator group; see gtk_accel_group_connect().
+;;; Sets the closure to be monitored by this accelerator label. The closure must
+;;; be connected to an accelerator group; see gtk_accel_group_connect().
 ;;; 
 ;;; accel_label :
 ;;;     a GtkAccelLabel
 ;;; 
 ;;; accel_closure :
-;;;     the closure to monitor for accelerator changes.
+;;;     the closure to monitor for accelerator changes
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-accel-label-set-accel-closure))
+
+(defun gtk-accel-label-set-accel-closure (accel-label accel-closure)
+  (setf (gtk-accel-label-accel-closure accel-label) accel-closure))
+
+(export 'gtk-accel-label-set-accel-closure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_get_accel_widget ()
 ;;; 
-;;; GtkWidget * gtk_accel_label_get_accel_widget (GtkAccelLabel *accel_label)
+;;; GtkWidget * gtk_accel_label_get_accel_widget (GtkAccelLabel *accel_label);
 ;;; 
 ;;; Fetches the widget monitored by this accelerator label.
 ;;; See gtk_accel_label_set_accel_widget().
@@ -195,14 +208,21 @@
 ;;;     a GtkAccelLabel
 ;;; 
 ;;; Returns :
-;;;     the object monitored by the accelerator label, or NULL.
+;;;     the object monitored by the accelerator label, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-accel-label-get-accel-widget))
+
+(defun gtk-accel-label-get-accel-widget (accel-label)
+  (gtk-accel-label-accel-widget accel-label))
+
+(export 'gtk-accel-label-get-accel-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_set_accel_widget ()
 ;;; 
 ;;; void gtk_accel_label_set_accel_widget (GtkAccelLabel *accel_label,
-;;;                                        GtkWidget *accel_widget)
+;;;                                        GtkWidget *accel_widget);
 ;;; 
 ;;; Sets the widget to be monitored by this accelerator label.
 ;;; 
@@ -210,39 +230,58 @@
 ;;;     a GtkAccelLabel
 ;;; 
 ;;; accel_widget :
-;;;     the widget to be monitored.
+;;;     the widget to be monitored
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-accel-label-set-accel-widget))
+
+(defun gtk-accel-label-set-accel-widget (accel-label accel-widget)
+  (setf (gtk-accel-label-accel-widget accel-label) accel-widget))
+
+(export 'gtk-accel-label-set-accel-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_get_accel_width ()
 ;;; 
-;;; guint gtk_accel_label_get_accel_width (GtkAccelLabel *accel_label)
+;;; guint gtk_accel_label_get_accel_width (GtkAccelLabel *accel_label);
 ;;; 
-;;; Returns the width needed to display the accelerator key(s). This is used by
-;;; menus to align all of the GtkMenuItem widgets, and shouldn't be needed by
-;;; applications.
+;;; Returns the width needed to display the accelerator key(s). This is used
+;;; by menus to align all of the GtkMenuItem widgets, and shouldn't be needed
+;;; by applications.
 ;;; 
 ;;; accel_label :
-;;;     a GtkAccelLabel.
+;;;     a GtkAccelLabel
 ;;; 
 ;;; Returns :
-;;;     the width needed to display the accelerator key(s).
+;;;     the width needed to display the accelerator key(s)
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_label_get_accel_width" gtk-accel-label-get-accel-width)
+    :int
+  (accel-label (g-object gtk-accel-label)))
+
+(export 'gtk-accel-label-get-accel-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_refetch ()
 ;;; 
-;;; gboolean gtk_accel_label_refetch (GtkAccelLabel *accel_label)
+;;; gboolean gtk_accel_label_refetch (GtkAccelLabel *accel_label);
 ;;; 
 ;;; Recreates the string representing the accelerator keys. This should not be
 ;;; needed since the string is automatically updated whenever accelerators are
 ;;; added or removed from the associated widget.
 ;;; 
 ;;; accel_label :
-;;;     a GtkAccelLabel.
+;;;     a GtkAccelLabel
 ;;; 
 ;;; Returns :
-;;;     always returns FALSE.
+;;;     always returns FALSE
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_label_refetch" gtk-accel-label-refetch)
+    :boolean
+  (accel-label (g-object gtk-accel-label)))
+
+(export 'gtk-accel-label-refetch)
 
 ;;; --- End of file gtk.accel-label.lisp ---------------------------------------
