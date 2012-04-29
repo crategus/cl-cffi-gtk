@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -30,8 +30,8 @@
 ;;;
 ;;; GtkLinkButton
 ;;; 
-;;; Create buttons bound to a URL
-;;; 
+;;; GtkLinkButton — Create buttons bound to a URL
+;;;      
 ;;; Synopsis
 ;;; 
 ;;;     GtkLinkButton
@@ -55,8 +55,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkLinkButton implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
+;;; GtkLinkButton implements AtkImplementorIface, GtkBuildable, GtkActionable
+;;; and GtkActivatable.
 ;;;
 ;;; Properties
 ;;; 
@@ -69,20 +69,20 @@
 ;;; 
 ;;; Description
 ;;; 
-;;; A GtkLinkButton is a GtkButton with a hyperlink, similar to the one used 
-;;; by web browsers, which triggers an action when clicked. It is useful to
-;;; show quick links to resources.
+;;; A GtkLinkButton is a GtkButton with a hyperlink, similar to the one used by
+;;; web browsers, which triggers an action when clicked. It is useful to show
+;;; quick links to resources.
 ;;; 
-;;; A link button is created by calling either gtk_link_button_new() or 
+;;; A link button is created by calling either gtk_link_button_new() or
 ;;; gtk_link_button_new_with_label(). If using the former, the URI you pass to
 ;;; the constructor is used as a label for the widget.
 ;;; 
-;;; The URI bound to a GtkLinkButton can be set specifically using 
+;;; The URI bound to a GtkLinkButton can be set specifically using
 ;;; gtk_link_button_set_uri(), and retrieved using gtk_link_button_get_uri().
 ;;; 
-;;; By default, GtkLinkButton calls gtk_show_uri() when the button is clicked. 
-;;; This behaviour can be overridden by connecting to the "activate-link"
-;;; signal and returning TRUE from the signal handler.
+;;; By default, GtkLinkButton calls gtk_show_uri() when the button is clicked.
+;;; This behaviour can be overridden by connecting to the "activate-link" signal
+;;; and returning TRUE from the signal handler.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -104,7 +104,7 @@
 ;;; 
 ;;;   "visited"                  gboolean              : Read / Write
 ;;; 
-;;; The 'visited' state of this button. A visited link is drawn in a different 
+;;; The 'visited' state of this button. A visited link is drawn in a different
 ;;; color.
 ;;; 
 ;;; Default value: FALSE
@@ -119,16 +119,16 @@
 ;;; The "activate-link" signal
 ;;; 
 ;;; gboolean user_function (GtkLinkButton *button,
-;;;                         gpointer       user_data)  : Run Last
+;;;                         gpointer user_data)        : Run Last
 ;;; 
-;;; The ::activate-link signal is emitted each time the GtkLinkButton has been 
+;;; The ::activate-link signal is emitted each time the GtkLinkButton has been
 ;;; clicked.
 ;;; 
-;;; The default handler will call gtk_show_uri() with the URI stored inside 
-;;; the "uri" property.
+;;; The default handler will call gtk_show_uri() with the URI stored inside the
+;;; "uri" property.
 ;;; 
-;;; To override the default behavior, you can connect to the ::activate-link 
-;;; signal and stop the propagation of the signal by returning TRUE from your 
+;;; To override the default behavior, you can connect to the ::activate-link
+;;; signal and stop the propagation of the signal by returning TRUE from your
 ;;; handler.
 ;;; 
 ;;; button :
@@ -144,15 +144,16 @@
 ;;; struct GtkLinkButton
 ;;; 
 ;;; struct GtkLinkButton;
-;;
-;;; The GtkLinkButton structure contains only private data and should be 
+;;;
+;;; The GtkLinkButton structure contains only private data and should be
 ;;; accessed using the provided API.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkLinkButton" gtk-link-button
   (:superclass gtk-button
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
+                 "GtkBuildable")
     :type-initializer "gtk_link_button_get_type")
   ((uri
     gtk-link-button-uri
@@ -172,7 +173,7 @@
 ;;;     a valid URI
 ;;; 
 ;;; Returns :
-;;;     a new link button widget
+;;;     a new link button widget.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -181,7 +182,11 @@
 
 (defun gtk-link-button-new (uri)
   (make-instance 'gtk-link-button
-                 :uri uri))
+                 :uri uri
+                 :label uri))
+
+;(defcfun ("gtk_link_button_new" gtk-link-button-new) (g-object gtk-widget)
+;  (uri :string))
 
 (export 'gtk-link-button-new)
 
@@ -205,10 +210,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_link_button_new_with_label" gtk-link-button-new-with-label)
-    (g-object gtk-widget)
-  (uri :string)
-  (label :string))
+(declaim (inline gtk-link-button-new-with-label))
+
+(defun gtk-link-button-new-with-label (uri label)
+  (make-instance 'gtk-link-button
+                 :uri uri
+                 :label label))
 
 (export 'gtk-link-button-new-with-label)
 
@@ -223,8 +230,8 @@
 ;;;     a GtkLinkButton
 ;;; 
 ;;; Returns :
-;;;     a valid URI. The returned string is owned by the link button and 
-;;;     should not be modified or freed
+;;;     a valid URI. The returned string is owned by the link button and should
+;;;     not be modified or freed.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -239,9 +246,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_link_button_set_uri ()
 ;;; 
-;;; void gtk_link_button_set_uri (GtkLinkButton *link_button, const gchar *uri)
+;;; void gtk_link_button_set_uri (GtkLinkButton *link_button, const gchar *uri);
 ;;; 
-;;; Sets uri as the URI where the GtkLinkButton points. As a side-effect this 
+;;; Sets uri as the URI where the GtkLinkButton points. As a side-effect this
 ;;; unsets the 'visited' state of the button.
 ;;; 
 ;;; link_button :
@@ -265,9 +272,9 @@
 ;;; 
 ;;; gboolean gtk_link_button_get_visited (GtkLinkButton *link_button);
 ;;; 
-;;; Retrieves the 'visited' state of the URI where the GtkLinkButton points. 
-;;; The button becomes visited when it is clicked. If the URI is changed on
-;;; the button, the 'visited' state is unset again.
+;;; Retrieves the 'visited' state of the URI where the GtkLinkButton points. The
+;;; button becomes visited when it is clicked. If the URI is changed on the
+;;; button, the 'visited' state is unset again.
 ;;; 
 ;;; The state may also be changed using gtk_link_button_set_visited().
 ;;; 

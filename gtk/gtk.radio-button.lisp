@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkRadioButton
 ;;; 
 ;;; A choice from multiple check buttons
-;;; 	
+;;; 
 ;;; Synopsis
 ;;; 
 ;;;     GtkRadioButton
@@ -60,7 +60,7 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkRadioButton implements AtkImplementorIface, GtkBuildable
+;;; GtkRadioButton implements AtkImplementorIface, GtkBuildable, GtkActionable
 ;;; and GtkActivatable.
 ;;;
 ;;; Properties
@@ -99,8 +99,8 @@
 ;;; To remove a GtkRadioButton from one group and make it part of a new one,
 ;;; use gtk_radio_button_set_group().
 ;;; 
-;;; The group list does not need to be freed, as each GtkRadioButton will
-;;; remove itself and its list item when it is destroyed.
+;;; The group list does not need to be freed, as each GtkRadioButton will remove
+;;; itself and its list item when it is destroyed.
 ;;; 
 ;;; Example 53. How to create a group of two radio buttons.
 ;;; 
@@ -118,8 +118,8 @@
 ;;; 
 ;;;    /* Create a radio button with a label */
 ;;;    radio2 = gtk_radio_button_new_with_label_from_widget
-;;;                                             (GTK_RADIO_BUTTON (radio1),
-;;;                                              "I'm the second radio button.")
+;;;                                            (GTK_RADIO_BUTTON (radio1),
+;;;                                             "I'm the second radio button.");
 ;;; 
 ;;;    /* Pack them into a box, then show all the widgets */
 ;;;    gtk_box_pack_start (GTK_BOX (box), radio1, TRUE, TRUE, 2);
@@ -128,11 +128,11 @@
 ;;;    gtk_widget_show_all (window);
 ;;;    return;
 ;;; }
-;;; 
+;;;  
 ;;; When an unselected button in the group is clicked the clicked button
 ;;; receives the "toggled" signal, as does the previously selected button.
-;;; Inside the "toggled" handler, gtk_toggle_button_get_active() can be used
-;;; to determine if the button has been selected or deselected.
+;;; Inside the "toggled" handler, gtk_toggle_button_get_active() can be used to
+;;; determine if the button has been selected or deselected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -156,15 +156,15 @@
 ;;; 
 ;;; Emitted when the group of radio buttons that a radio button belongs to
 ;;; changes. This is emitted when a radio button switches from being alone to
-;;; being part of a group of 2 or more buttons, or vice-versa, and when a
-;;; button is moved from one group of 2 or more buttons to a different one, but
-;;; not when the composition of the group that a button belongs to changes.
+;;; being part of a group of 2 or more buttons, or vice-versa, and when a button
+;;; is moved from one group of 2 or more buttons to a different one, but not
+;;; when the composition of the group that a button belongs to changes.
 ;;; 
 ;;; button :
 ;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -180,13 +180,12 @@
 (define-g-object-class "GtkRadioButton" gtk-radio-button
   (:superclass gtk-check-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
+                "GtkBuildable")
    :type-initializer "gtk_radio_button_get_type")
-  ((:cffi group
-          gtk-radio-button-group
-          (g-slist g-object :free-from-foreign nil :free-to-foreign nil)
-          "gtk_radio_button_get_group"
-          "gtk_radio_button_set_group")))
+  ((group
+    gtk-radio-button-group
+    "group" "GtkRadioButton" nil t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_button_new ()
@@ -197,7 +196,7 @@
 ;;; then be packed into the radio button.
 ;;; 
 ;;; group :
-;;;     an existing radio button group, or NULL if you are creating a new group.
+;;;     an existing radio button group, or NULL if you are creating a new group
 ;;; 
 ;;; Returns :
 ;;;     a new radio button
@@ -220,10 +219,10 @@
 ;;; packed into the radio button.
 ;;; 
 ;;; radio_group_member :
-;;;     an existing GtkRadioButton.
+;;;     an existing GtkRadioButton
 ;;; 
 ;;; Returns :
-;;;     a new radio button.
+;;;     a new radio button
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_button_new_from_widget" gtk-radio-button-new-from-widget)
@@ -241,13 +240,13 @@
 ;;; Creates a new GtkRadioButton with a text label.
 ;;; 
 ;;; group :
-;;;     an existing radio button group, or NULL if you are creating a new group.
+;;;     an existing radio button group, or NULL if you are creating a new group
 ;;; 
 ;;; label :
-;;;     the text label to display next to the radio button.
+;;;     the text label to display next to the radio button
 ;;; 
 ;;; Returns :
-;;;     a new radio button.
+;;;     a new radio button
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_button_new_with_label" gtk-radio-button-new-with-label)
@@ -268,13 +267,13 @@
 ;;; as radio_group_member.
 ;;; 
 ;;; radio_group_member :
-;;;     widget to get radio group from or NULL.
+;;;     widget to get radio group from or NULL
 ;;; 
 ;;; label :
-;;;     a text string to display next to the radio button.
+;;;     a text string to display next to the radio button
 ;;; 
 ;;; Returns :
-;;;     a new radio button.
+;;;     a new radio button
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_button_new_with_label_from_widget"
@@ -287,16 +286,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_button_new_with_mnemonic ()
 ;;; 
-;;; GtkWidget * gtk_radio_button_new_with_mnemonic  (GSList *group,
-;;;                                                  const gchar *label);
+;;; GtkWidget * gtk_radio_button_new_with_mnemonic (GSList *group,
+;;;                                                 const gchar *label);
 ;;; 
-;;; Creates a new GtkRadioButton containing a label, adding it to the same
-;;; group as group. The label will be created using
-;;; gtk_label_new_with_mnemonic(), so underscores in label indicate the
-;;; mnemonic for the button.
+;;; Creates a new GtkRadioButton containing a label, adding it to the same group
+;;; as group. The label will be created using gtk_label_new_with_mnemonic(), so
+;;; underscores in label indicate the mnemonic for the button.
 ;;; 
 ;;; group :
-;;;     the radio button group.
+;;;     the radio button group
 ;;; 
 ;;; label :
 ;;;     the text of the button, with an underscore in front of the mnemonic
@@ -325,14 +323,14 @@
 ;;; mnemonic for the button.
 ;;; 
 ;;; radio_group_member :
-;;;     widget to get radio group from or NULL.
+;;;     widget to get radio group from or NULL
 ;;; 
 ;;; label :
 ;;;     the text of the button, with an underscore in front of the mnemonic
 ;;;     character
 ;;; 
 ;;; Returns :
-;;;     a new GtkRadioButton.
+;;;     a new GtkRadioButton
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_button_new_with_mnemonic_from_widget"
@@ -350,16 +348,18 @@
 ;;; 
 ;;; Sets a GtkRadioButton's group. It should be noted that this does not change
 ;;; the layout of your interface in any way, so if you are changing the group,
-;;; it is likely you will need to re-arrange the user interface to reflect
-;;; these changes.
+;;; it is likely you will need to re-arrange the user interface to reflect these
+;;; changes.
 ;;; 
 ;;; radio_button :
-;;;     a GtkRadioButton.
+;;;     a GtkRadioButton
 ;;; 
 ;;; group :
 ;;;     an existing radio button group, such as one returned from
 ;;;     gtk_radio_button_get_group()
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-radio-button-set-group))
 
 (defun gtk-radio-button-set-group (radio-button group)
   (setf (gtk-radio-button-group radio-button) group))
@@ -374,7 +374,7 @@
 ;;; Retrieves the group assigned to a radio button.
 ;;; 
 ;;; radio_button :
-;;;     a GtkRadioButton.
+;;;     a GtkRadioButton
 ;;; 
 ;;; Returns :
 ;;;     a linked list containing all the radio buttons in the same group as
@@ -382,9 +382,10 @@
 ;;;     not be modified or freed
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-radio-button-get-group (radio-button)
-  (gtk-radio-button-group radio-button))
-
+(defcfun ("gtk_radio_button_get_group" gtk-radio-button-get-group)
+    (g-slist (g-object gtk-radio-button))
+  (radio-button (g-object gtk-radio-button)))
+    
 (export 'gtk-radio-button-get-group)
 
 ;;; ----------------------------------------------------------------------------
@@ -416,15 +417,15 @@
 ;;; 
 ;;; group_source :
 ;;;     a radio button object whos group we are joining, or NULL to remove the
-;;;     radio button from its group.
+;;;     radio button from its group
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-;(defcfun ("gtk_radio_button_join_group" gtk-radio-button-join-group) :void
-;  (radio-button (g-object radio-button))
-;  (group-source (g-slist (g-object radio-button))))
+(defcfun ("gtk_radio_button_join_group" gtk-radio-button-join-group) :void
+  (radio-button (g-object radio-button))
+  (group-source (g-slist (g-object radio-button))))
 
-;(export 'gtk-radio-button-join-group)
+(export 'gtk-radio-button-join-group)
 
 ;;; --- End of file gtk.radio-button.lisp --------------------------------------

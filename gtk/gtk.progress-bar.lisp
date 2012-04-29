@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkProgressBar
 ;;; 
 ;;; A widget which indicates progress visually
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkProgressBar
-;;;     
+;;;
 ;;;     gtk_progress_bar_new
 ;;;     gtk_progress_bar_pulse
 ;;;     gtk_progress_bar_set_fraction
@@ -65,21 +65,21 @@
 ;;;
 ;;; Properties
 ;;; 
-;;;   "ellipsize"                PangoEllipsizeMode    : Read / Write
-;;;   "fraction"                 gdouble               : Read / Write
-;;;   "inverted"                 gboolean              : Read / Write
-;;;   "pulse-step"               gdouble               : Read / Write
-;;;   "show-text"                gboolean              : Read / Write
-;;;   "text"                     gchar*                : Read / Write
+;;;   "ellipsize"                 PangoEllipsizeMode    : Read / Write
+;;;   "fraction"                  gdouble               : Read / Write
+;;;   "inverted"                  gboolean              : Read / Write
+;;;   "pulse-step"                gdouble               : Read / Write
+;;;   "show-text"                 gboolean              : Read / Write
+;;;   "text"                      gchar*                : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
-;;;   "min-horizontal-bar-height" gint                 : Read / Write
-;;;   "min-horizontal-bar-width"  gint                 : Read / Write
-;;;   "min-vertical-bar-height"   gint                 : Read / Write
-;;;   "min-vertical-bar-width"    gint                 : Read / Write
-;;;   "xspacing"                  gint                 : Read / Write
-;;;   "yspacing"                  gint                 : Read / Write
+;;;   "min-horizontal-bar-height" gint                  : Read / Write
+;;;   "min-horizontal-bar-width"  gint                  : Read / Write
+;;;   "min-vertical-bar-height"   gint                  : Read / Write
+;;;   "min-vertical-bar-width"    gint                  : Read / Write
+;;;   "xspacing"                  gint                  : Read / Write
+;;;   "yspacing"                  gint                  : Read / Write
 ;;; 
 ;;; Description
 ;;; 
@@ -102,9 +102,9 @@
 ;;; update the progress bar.
 ;;; 
 ;;; There is quite a bit of flexibility provided to control the appearance of
-;;; the GtkProgressBar. Functions are provided to control the orientation of
-;;; the bar, optional text can be displayed along with the bar, and the step
-;;; size used in activity mode can be set.
+;;; the GtkProgressBar. Functions are provided to control the orientation of the
+;;; bar, optional text can be displayed along with the bar, and the step size
+;;; used in activity mode can be set.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -115,14 +115,14 @@
 ;;; 
 ;;;   "ellipsize"                PangoEllipsizeMode    : Read / Write
 ;;; 
-;;; The preferred place to ellipsize the string, if the progressbar does not
+;;; The preferred place to ellipsize the string, if the progress bar does not
 ;;; have enough room to display the entire string, specified as a
 ;;; PangoEllisizeMode.
 ;;; 
 ;;; Note that setting this property to a value other than PANGO_ELLIPSIZE_NONE
-;;; has the side-effect that the progressbar requests only enough space to
-;;; display the ellipsis "...". Another means to set a progressbar's width is
-;;; gtk_widget_set_size_request().
+;;; has the side-effect that the progress bar requests only enough space to
+;;; display the ellipsis ("..."). Another means to set a progress bar's width
+;;; is gtk_widget_set_size_request().
 ;;; 
 ;;; Default value: PANGO_ELLIPSIZE_NONE
 ;;; 
@@ -164,11 +164,17 @@
 ;;; 
 ;;;   "show-text"                gboolean              : Read / Write
 ;;; 
-;;; Whether the progress is shown as text.
+;;; Sets whether the progress bar will show text superimposed over the bar.
+;;; The shown text is either the value of the "text" property or, if that is
+;;; NULL, the "fraction" value, as a percentage.
+;;; 
+;;; To make a progress bar that is styled and sized suitably for containing text
+;;; (even if the actual text is blank), set "show-text" to TRUE and "text" to
+;;; the empty string (not NULL).
 ;;; 
 ;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
+;;; 
+;;; Since 3.0
 ;;; The "text" property
 ;;; 
 ;;;   "text"                     gchar*                : Read / Write
@@ -176,7 +182,6 @@
 ;;; Text to be displayed in the progress bar.
 ;;; 
 ;;; Default value: NULL
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Style Property Details
@@ -311,10 +316,10 @@
 ;;; 
 ;;; void gtk_progress_bar_pulse (GtkProgressBar *pbar);
 ;;; 
-;;; Indicates that some progress is made, but you don't know how much. Causes
-;;; the progress bar to enter "activity mode," where a block bounces back and
-;;; forth. Each call to gtk_progress_bar_pulse() causes the block to move by a
-;;; little bit (the amount of movement per pulse is determined by
+;;; Indicates that some progress has been made, but you don't know how much.
+;;; Causes the progress bar to enter "activity mode," where a block bounces back
+;;; and forth. Each call to gtk_progress_bar_pulse() causes the block to move by
+;;; a little bit (the amount of movement per pulse is determined by
 ;;; gtk_progress_bar_set_pulse_step()).
 ;;; 
 ;;; pbar :
@@ -329,7 +334,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_set_fraction ()
 ;;; 
-;;; void gtk_progress_bar_set_fraction (GtkProgressBar *pbar, gdouble fraction)
+;;; void gtk_progress_bar_set_fraction (GtkProgressBar *pbar, gdouble fraction);
 ;;; 
 ;;; Causes the progress bar to "fill in" the given fraction of the bar. The
 ;;; fraction should be between 0.0 and 1.0, inclusive.
@@ -372,7 +377,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_set_inverted ()
 ;;; 
-;;; void gtk_progress_bar_set_inverted (GtkProgressBar *pbar, gboolean inverted)
+;;; void gtk_progress_bar_set_inverted (GtkProgressBar *pbar,
+;;;                                     gboolean inverted);
 ;;; 
 ;;; Progress bars normally grow from top to bottom or left to right. Inverted
 ;;; progress bars grow in the opposite direction.
@@ -394,9 +400,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_progress_bar_get_inverted ()
 ;;; 
-;;; gboolean gtk_progress_bar_get_inverted (GtkProgressBar *pbar)
+;;; gboolean gtk_progress_bar_get_inverted (GtkProgressBar *pbar);
 ;;; 
-;;; Gets the value set by gtk_progress_bar_set_inverted()
+;;; Gets the value set by gtk_progress_bar_set_inverted().
 ;;; 
 ;;; pbar :
 ;;;     a GtkProgressBar
@@ -418,13 +424,13 @@
 ;;; void gtk_progress_bar_set_show_text (GtkProgressBar *pbar,
 ;;;                                      gboolean show_text);
 ;;; 
-;;; Sets whether the progressbar will show text superimposed over the bar. The
+;;; Sets whether the progress bar will show text superimposed over the bar. The
 ;;; shown text is either the value of the "text" property or, if that is NULL,
 ;;; the "fraction" value, as a percentage.
 ;;; 
-;;; To make a progress bar that is styled and sized suitably for containing
-;;; text (even if the actual text is blank), set "show-text" to TRUE and "text"
-;;; to the empty string (not NULL).
+;;; To make a progress bar that is styled and sized suitably for containing text
+;;; (even if the actual text is blank), set "show-text" to TRUE and "text" to
+;;; the empty string (not NULL).
 ;;; 
 ;;; pbar :
 ;;;     a GtkProgressBar
@@ -476,9 +482,9 @@
 ;;; If text is NULL and "show-text" is TRUE, the current value of "fraction"
 ;;; will be displayed as a percentage.
 ;;; 
-;;; If text is non-NULL and "show-text" is TRUE, the text will be displayed.
-;;; In this case, it will not display the progress percentage. If text is the
-;;; empty string, the progress bar will still be styled and sized suitably for
+;;; If text is non-NULL and "show-text" is TRUE, the text will be displayed. In
+;;; this case, it will not display the progress percentage. If text is the empty
+;;; string, the progress bar will still be styled and sized suitably for
 ;;; containing text, as long as "show-text" is TRUE.
 ;;; 
 ;;; pbar :
@@ -549,7 +555,7 @@
 ;;; 
 ;;; PangoEllipsizeMode gtk_progress_bar_get_ellipsize (GtkProgressBar *pbar);
 ;;; 
-;;; Returns the ellipsizing position of the progressbar.
+;;; Returns the ellipsizing position of the progress bar.
 ;;; See gtk_progress_bar_set_ellipsize().
 ;;; 
 ;;; pbar :
@@ -596,7 +602,7 @@
 ;;; 
 ;;; gdouble gtk_progress_bar_get_pulse_step (GtkProgressBar *pbar);
 ;;; 
-;;; Retrieves the pulse step set with gtk_progress_bar_set_pulse_step()
+;;; Retrieves the pulse step set with gtk_progress_bar_set_pulse_step().
 ;;; 
 ;;; pbar :
 ;;;     a GtkProgressBar

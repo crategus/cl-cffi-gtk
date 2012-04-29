@@ -81,6 +81,7 @@
    (:file "gtk.orientable")            ; Interface for flippable widgets
    (:file "gtk.activatable")           ; Interface for activatable widgets
    (:file "gtk.scrollable")            ; Interface for scrollable widgets
+   (:file "gtk.actionable")            ; Interface for widgets that have actions
    (:file "gtk.recent-chooser")        ; Displaying recently used files
                                        
    ;; Theming in Gtk+                  

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,12 +31,12 @@
 ;;; GtkImage
 ;;; 
 ;;; A widget displaying an image
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkImage
 ;;;     GtkImageType
-;;;     
+;;;
 ;;;     gtk_image_get_icon_set
 ;;;     gtk_image_get_pixbuf
 ;;;     gtk_image_get_stock
@@ -92,7 +92,7 @@
 ;;; Description
 ;;; 
 ;;; The GtkImage widget displays an image. Various kinds of object can be
-;;; displayed as an image; most typically, you would load a GdkPixbuf 
+;;; displayed as an image; most typically, you would load a GdkPixbuf
 ;;; ("pixel buffer") from a file, and then display that. There's a convenience
 ;;; function to do this, gtk_image_new_from_file(), used as follows:
 ;;; 
@@ -113,8 +113,8 @@
 ;;; 
 ;;; GtkImage is a "no window" widget (has no GdkWindow of its own), so by
 ;;; default does not receive events. If you want to receive events on the image,
-;;; such as button clicks, place the image inside a GtkEventBox, then connect
-;;; to the event signals on the event box.
+;;; such as button clicks, place the image inside a GtkEventBox, then connect to
+;;; the event signals on the event box.
 ;;; 
 ;;; Example 50. Handling button press events on a GtkImage.
 ;;; 
@@ -162,7 +162,7 @@
 ;;; 
 ;;; Sometimes an application will want to avoid depending on external data
 ;;; files, such as image files. GTK+ comes with a program to avoid this, called
-;;; gdk-pixbuf-csource. This program allows you to convert an image into a C
+;;; gdk-pixbuf-csource. This library allows you to convert an image into a C
 ;;; variable declaration, which can then be loaded into a GdkPixbuf using
 ;;; gdk_pixbuf_new_from_inline().
 ;;;
@@ -184,8 +184,8 @@
 ;;; 
 ;;;   "gicon"                    GIcon*                : Read / Write
 ;;; 
-;;; The GIcon displayed in the GtkImage. For themed icons, If the icon theme
-;;; is changed, the image will be updated automatically.
+;;; The GIcon displayed in the GtkImage. For themed icons, If the icon theme is
+;;; changed, the image will be updated automatically.
 ;;; 
 ;;; Since 2.14
 ;;;
@@ -238,8 +238,8 @@
 ;;; 
 ;;;   "pixel-size"               gint                  : Read / Write
 ;;; 
-;;; The "pixel-size" property can be used to specify a fixed size overriding
-;;; the "icon-size" property for images of type GTK_IMAGE_ICON_NAME.
+;;; The "pixel-size" property can be used to specify a fixed size overriding the
+;;; "icon-size" property for images of type GTK_IMAGE_ICON_NAME.
 ;;; 
 ;;; Allowed values: >= G_MAXULONG
 ;;; 
@@ -310,12 +310,6 @@
    (icon-size
     gtk-image-icon-size
     "icon-size" "gint" t t)
-   (image
-    gtk-image-image
-    "image" "GdkImage" t t)
-   (mask
-    gtk-image-mask
-    "mask" "GdkPixmap" t t)
    (pixbuf
     gtk-image-pixbuf
     "pixbuf" "GdkPixbuf" t t)
@@ -325,15 +319,15 @@
    (pixel-size
     gtk-image-pixel-size
     "pixel-size" "gint" t t)
-   (pixmap
-    gtk-image-pixmap
-    "pixmap" "GdkPixmap" t t)
    (stock
     gtk-image-stock
     "stock" "gchararray" t t)
    (storage-type
     gtk-image-storage-type
-    "storage-type" "GtkImageType" t nil)))
+    "storage-type" "GtkImageType" t nil)
+   (use-fallback
+    gtk-image-use-fallback
+    "use-fallback" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkImageType
@@ -381,14 +375,12 @@
   (:export t
    :type-initializer "gtk_image_type_get_type")
   (:empty 0)
-  (:pixmap 1)
-  (:image 2)
-  (:pixbuf 3)
-  (:stock 4)
-  (:icon-set 5)
-  (:animation 6)
-  (:icon-name 7)
-  (:gicon 8))
+  (:pixbuf 1)
+  (:stock 2)
+  (:icon-set 3)
+  (:animation 4)
+  (:icon-name 5)
+  (:gicon 6))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_icon_set ()
@@ -397,19 +389,27 @@
 ;;;                              GtkIconSet **icon_set,
 ;;;                              GtkIconSize *size);
 ;;; 
-;;; Gets the icon set and size being displayed by the GtkImage. The storage
-;;; type of the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_ICON_SET (see
+;;; Gets the icon set and size being displayed by the GtkImage. The storage type
+;;; of the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_ICON_SET (see
 ;;; gtk_image_get_storage_type()).
 ;;; 
 ;;; image :
 ;;;     a GtkImage
 ;;; 
 ;;; icon_set :
-;;;     location to store a GtkIconSet, or NULL.
+;;;     location to store a GtkIconSet, or NULL
 ;;; 
 ;;; size :
-;;;     location to store a stock icon size, or NULL.
+;;;     location to store a stock icon size, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-get-icon-set))
+
+(defun gtk-image-get-icon-set (image)
+  (values (gtk-image-icon-set image)
+          (gtk-image-icon-size image)))
+
+(export 'gtk-image-get-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_pixbuf ()
@@ -428,6 +428,13 @@
 ;;;     the displayed pixbuf, or NULL if the image is empty
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-get-pixbuf))
+
+(defun gtk-image-get-pixbuf (image)
+  (gtk-image-pixbuf image))
+
+(export 'gtk-image-get-pixbuf)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_stock ()
 ;;; 
@@ -444,11 +451,19 @@
 ;;;     a GtkImage
 ;;; 
 ;;; stock_id :
-;;;     place to store a stock icon name, or NULL.
+;;;     place to store a stock icon name, or NULL
 ;;; 
 ;;; size :
-;;;     place to store a stock icon size, or NULL.
+;;;     place to store a stock icon size, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-get-stock))
+
+(defun gtk-image-get-stock (image)
+  (values (gtk-image-stock image)
+          (gtk-image-icon-size image)))
+
+(export 'gtk-image-get-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_animation ()
@@ -489,21 +504,29 @@
 ;;;     a GtkImage
 ;;; 
 ;;; icon_name :
-;;;     place to store an icon name, or NULL.
+;;;     place to store an icon name, or NULL
 ;;; 
 ;;; size :
-;;;     place to store an icon size, or NULL.
+;;;     place to store an icon size, or NULL
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-get-icon-name))
+
+(defun gtk-image-get-icon-name (image)
+  (values (gtk-image-icon-name image)
+          (gtk-image-icon-size image)))
+
+(export 'gtk-image-get-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_gicon ()
 ;;; 
 ;;; void gtk_image_get_gicon (GtkImage *image, GIcon **gicon, GtkIconSize *size)
 ;;; 
-;;; Gets the GIcon and size being displayed by the GtkImage. The storage type
-;;; of the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_GICON (see
+;;; Gets the GIcon and size being displayed by the GtkImage. The storage type of
+;;; the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_GICON (see
 ;;; gtk_image_get_storage_type()). The caller of this function does not own a
 ;;; reference to the returned GIcon.
 ;;; 
@@ -511,13 +534,21 @@
 ;;;     a GtkImage
 ;;; 
 ;;; gicon :
-;;;     place to store a GIcon, or NULL. 
+;;;     place to store a GIcon, or NULL
 ;;; 
 ;;; size :
-;;;     place to store an icon size, or NULL. 
+;;;     place to store an icon size, or NULL
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-get-gicon))
+
+(defun gtk-image-get-gicon (image)
+  (values (gtk-image-gicon image)
+          (gtk-image-icon-size image)))
+
+(export 'gtk-image-get-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_storage_type ()
@@ -535,34 +566,42 @@
 ;;;     image representation being used
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-get-storage-type))
+
+(defun gtk-image-get-storage-type (image)
+  (gtk-image-storage-type image))
+
+(export 'gtk-image-get-storage-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_file ()
 ;;; 
-;;; GtkWidget * gtk_image_new_from_file (const gchar *filename)
+;;; GtkWidget * gtk_image_new_from_file (const gchar *filename);
 ;;; 
-;;; Creates a new GtkImage displaying the file filename. If the file isn't
-;;; found or can't be loaded, the resulting GtkImage will display a "broken
-;;; image" icon. This function never returns NULL, it always returns a valid
-;;; GtkImage widget.
+;;; Creates a new GtkImage displaying the file filename. If the file isn't found
+;;; or can't be loaded, the resulting GtkImage will display a "broken image"
+;;; icon. This function never returns NULL, it always returns a valid GtkImage
+;;; widget.
 ;;; 
 ;;; If the file contains an animation, the image will contain an animation.
 ;;; 
 ;;; If you need to detect failures to load the file, use
 ;;; gdk_pixbuf_new_from_file() to load the file yourself, then create the
-;;; GtkImage from the pixbuf. (Or for animations,
-;;; use gdk_pixbuf_animation_new_from_file()).
+;;; GtkImage from the pixbuf. (Or for animations, use
+;;; gdk_pixbuf_animation_new_from_file()).
 ;;; 
-;;; The storage type (gtk_image_get_storage_type()) of the returned image is
-;;; not defined, it will be whatever is appropriate for displaying the file.
+;;; The storage type (gtk_image_get_storage_type()) of the returned image is not
+;;; defined, it will be whatever is appropriate for displaying the file.
 ;;; 
 ;;; filename :
-;;;     a filename.
+;;;     a filename
 ;;; 
 ;;; Returns :
 ;;;     a new GtkImage
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_image_new_from_file" gtk-image-new-from-file) (g-object widget)
+(defcfun ("gtk_image_new_from_file" gtk-image-new-from-file)
+    (g-object gtk-widget)
   (filename :string))
 
 (export 'gtk-image-new-from-file)
@@ -575,9 +614,9 @@
 ;;; 
 ;;; Creates a GtkImage displaying an icon set. Sample stock sizes are
 ;;; GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_SMALL_TOOLBAR. Instead of using this
-;;; function, usually it's better to create a GtkIconFactory, put your icon
-;;; sets in the icon factory, add the icon factory to the list of default
-;;; factories with gtk_icon_factory_add_default(), and then use
+;;; function, usually it's better to create a GtkIconFactory, put your icon sets
+;;; in the icon factory, add the icon factory to the list of default factories
+;;; with gtk_icon_factory_add_default(), and then use
 ;;; gtk_image_new_from_stock(). This will allow themes to override the icon you
 ;;; ship with your application.
 ;;; 
@@ -595,6 +634,16 @@
 ;;;     a new GtkImage
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-new-from-icon-set))
+
+(defun gtk-image-new-from-icon-set (icon-set size)
+  (make-instance 'gtk-image
+                 :icon-set icon-set
+                 :icon-size size
+                 :storage-type :icon-set))
+
+(export 'gtk-image-new-from-icon-set)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_pixbuf ()
 ;;; 
@@ -605,15 +654,24 @@
 ;;; GtkImage will add its own reference rather than adopting yours.
 ;;; 
 ;;; Note that this function just creates an GtkImage from the pixbuf. The
-;;; GtkImage created will not react to state changes. Should you want that,
-;;; you should use gtk_image_new_from_icon_set().
+;;; GtkImage created will not react to state changes. Should you want that, you
+;;; should use gtk_image_new_from_icon_set().
 ;;; 
 ;;; pixbuf :
-;;;     a GdkPixbuf, or NULL.
+;;;     a GdkPixbuf, or NULL
 ;;; 
 ;;; Returns :
 ;;;     a new GtkImage
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-new-from-pixbuf))
+
+(defun gtk-image-new-from-pixbuf (pixbuf)
+  (make-instance 'gtk-image
+                 :pixbuf pixbuf
+                 :storage-type :pixbuf))
+
+(export 'gtk-image-new-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_stock ()
@@ -631,7 +689,7 @@
 ;;;     a stock icon name
 ;;; 
 ;;; size :
-;;;     a stock icon size.
+;;;     a stock icon size
 ;;; 
 ;;; Returns :
 ;;;     a new GtkImage displaying the stock icon
@@ -654,9 +712,9 @@
 ;;; references. GtkImage will add its own reference rather than adopting yours.
 ;;; 
 ;;; Note that the animation frames are shown using a timeout with
-;;; G_PRIORITY_DEFAULT. When using animations to indicate busyness, keep in
-;;; mind that the animation will only be shown if the main loop is not busy
-;;; with something that has a higher priority.
+;;; G_PRIORITY_DEFAULT. When using animations to indicate busyness, keep in mind
+;;; that the animation will only be shown if the main loop is not busy with
+;;; something that has a higher priority.
 ;;; 
 ;;; animation :
 ;;;     an animation
@@ -719,7 +777,7 @@
 ;;;     a GtkImage
 ;;; 
 ;;; filename :
-;;;     a filename or NULL.
+;;;     a filename or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -738,7 +796,7 @@
 ;;;     a GtkIconSet
 ;;; 
 ;;; size :
-;;;     a stock icon size.
+;;;     a stock icon size
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -851,6 +909,11 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_image_clear" gtk-image-clear) :void
+  (image (g-object gtk-image)))
+
+(export 'gtk-image-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new ()
 ;;; 
@@ -859,8 +922,15 @@
 ;;; Creates a new empty GtkImage widget.
 ;;; 
 ;;; Returns :
-;;;     a newly created GtkImage widget.
+;;;     a newly created GtkImage widget
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-new))
+
+(defun gtk-image-new ()
+  (make-instance 'gtk-image))
+
+(export 'gtk-image-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_pixel_size ()
@@ -880,6 +950,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-set-pixel-size))
+
+(defun gtk-image-set-pixel-size (image pixel-size)
+  (setf (gtk-image-pixel-size image) pixel-size))
+
+(export 'gtk-image-set-pixel-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_pixel_size ()
 ;;; 
@@ -891,10 +968,16 @@
 ;;;     a GtkImage
 ;;; 
 ;;; Returns :
-;;;     the pixel size used for named icons.
+;;;     the pixel size used for named icons
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-get-pixel-size))
+
+(defun gtk-image-get-pixel-size (image)
+  (gtk-image-pixel-size image))
+
+(export 'gtk-imgage-get-pixel-size)
 
 ;;; --- End of file gtk.image.lisp ---------------------------------------------

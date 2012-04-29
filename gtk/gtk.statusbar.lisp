@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -134,7 +134,7 @@
 ;;;     the message that was just popped
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "text-pushed" signal
@@ -156,7 +156,7 @@
 ;;;     the message that was pushed
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -167,39 +167,12 @@
 ;;; struct GtkStatusbar;
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkStatusbar" 'gtk-statusbar))
-
 (define-g-object-class "GtkStatusbar" gtk-statusbar
-  (:superclass gtk-hbox
+  (:superclass gtk-box
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_statusbar_get_type")
-  ((has-resize-grip
-    gtk-statusbar-has-resize-grip
-    "has-resize-grip" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
-
-(define-child-property "GtkStatusbar"
-                       gtk-statusbar-child-expand
-                       "expand" "gboolean" t t t)
-
-(define-child-property "GtkStatusbar"
-                       gtk-statusbar-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkStatusbar" 
-                       gtk-statusbar-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkStatusbar"
-                       gtk-statusbar-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-(define-child-property "GtkStatusbar"
-                       gtk-statusbar-child-position
-                       "position" "gint" t t t)
+ nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_statusbar_new ()
@@ -211,6 +184,8 @@
 ;;; Returns :
 ;;;     the new GtkStatusbar
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-statusbar-new))
 
 (defun gkt-statusbar-new ()
   (make-instance 'gtk-statusbar))
@@ -344,7 +319,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_statusbar_remove_all ()
 ;;; 
-;;; void gtk_statusbar_remove_all (GtkStatusbar *statusbar, guint context_id);
+;;; void gtk_statusbar_remove_all (GtkStatusbar *statusbar,
+;;;                                guint context_id);
 ;;; 
 ;;; Forces the removal of all messages from a statusbar's stack with the exact
 ;;; context_id.

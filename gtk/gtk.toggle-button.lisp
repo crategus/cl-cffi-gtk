@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkToggleButton
 ;;; 
 ;;; Create buttons which retain their state
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkToggleButton
@@ -60,8 +60,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkToggleButton implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
+;;; GtkToggleButton implements AtkImplementorIface, GtkBuildable, GtkActionable
+;;; and GtkActivatable.
 ;;;
 ;;; Properties
 ;;; 
@@ -107,7 +107,8 @@
 ;;;    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
 ;;;                        toggle1, FALSE, FALSE, 2);
 ;;; 
-;;;    toggle2 = gtk_toggle_button_new_with_label ("Hi, i'm another toggle button.");
+;;;    toggle2 = gtk_toggle_button_new_with_label
+;;;                                          ("Hi, i'm another toggle button.");
 ;;;    gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle2), FALSE);
 ;;;    g_signal_connect (toggle2, "toggled",
 ;;;                      G_CALLBACK (output_state), NULL);
@@ -116,7 +117,7 @@
 ;;; 
 ;;;    gtk_widget_show_all (dialog);
 ;;; }
-;;;  
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -147,6 +148,7 @@
 ;;; If the toggle button is in an "in between" state.
 ;;; 
 ;;; Default value: FALSE
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -155,7 +157,7 @@
 ;;; The "toggled" signal
 ;;; 
 ;;; void user_function (GtkToggleButton *togglebutton,
-;;;                     gpointer user_data)                : Run First
+;;;                     gpointer         user_data)         : Run First
 ;;; 
 ;;; Should be connected if you wish to perform an action whenever the
 ;;; GtkToggleButton's state is changed.
@@ -175,13 +177,11 @@
 ;;; struct GtkToggleButton;
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkToggleButton" 'gtk-toggle-button))
-
 (define-g-object-class "GtkToggleButton" gtk-toggle-button
   (:superclass gtk-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
+                "GtkBuildable")
    :type-initializer "gtk_toggle_button_get_type")
   ((active
     gtk-toggle-button-active
@@ -220,7 +220,7 @@
 ;;; Creates a new toggle button with a text label.
 ;;; 
 ;;; label :
-;;;     a string containing the message to be placed in the toggle button
+;;;     a string containing the message to be placed in the toggle button.
 ;;; 
 ;;; Returns :
 ;;;     a new toggle button
@@ -331,8 +331,8 @@
 ;;; 
 ;;; gboolean gtk_toggle_button_get_active (GtkToggleButton *toggle_button);
 ;;; 
-;;; Queries a GtkToggleButton and returns its current state. Returns TRUE if
-;;; the toggle button is pressed in and FALSE if it is raised.
+;;; Queries a GtkToggleButton and returns its current state. Returns TRUE if the
+;;; toggle button is pressed in and FALSE if it is raised.
 ;;; 
 ;;; toggle_button :
 ;;;     a GtkToggleButton
@@ -401,10 +401,10 @@
 ;;; 
 ;;; If the user has selected a range of elements (such as some text or
 ;;; spreadsheet cells) that are affected by a toggle button, and the current
-;;; values in that range are inconsistent, you may want to display the toggle
-;;; in an "in between" state. This function turns on "in between" display.
-;;; Normally you would turn off the inconsistent state again if the user
-;;; toggles the toggle button. This has to be done manually,
+;;; values in that range are inconsistent, you may want to display the toggle in
+;;; an "in between" state. This function turns on "in between" display. Normally
+;;; you would turn off the inconsistent state again if the user toggles the
+;;; toggle button. This has to be done manually,
 ;;; gtk_toggle_button_set_inconsistent() only affects visual appearance, it
 ;;; doesn't affect the semantics of the button.
 ;;; 
@@ -422,4 +422,4 @@
 
 (export 'gtk-toggle-button-set-inconsistent)
 
-;;; --- End of file gtk.toogle-button.lisp -------------------------------------
+;;; --- End of file gtk.toggle-button.lisp -------------------------------------
