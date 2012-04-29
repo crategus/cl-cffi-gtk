@@ -189,6 +189,46 @@ A widget that displays a small to medium amount of text.
 @end deffn
 
 @c -----------------------------------------------------------------------------
+@anchor{GtkProgressBar}
+@deffn {Class} GtkProgressBar
+
+A widget which indicates progress visually
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkProgressBar
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkProgressBar} implements @code{AtkImplementorIface}, @code{GtkBuildable}
+and @code{GtkOrientable}.
+
+@b{Properties}
+@verbatim
+  "ellipsize"              PangoEllipsizeMode : Read / Write
+  "fraction"               gdouble            : Read / Write
+  "inverted"               gboolean           : Read / Write
+  "pulse-step"             gdouble            : Read / Write
+  "show-text"              gboolean           : Read / Write
+  "text"                   gchar*             : Read / Write
+@end verbatim
+
+@b{Style Properties}
+@verbatim
+  "min-horizontal-bar-height" gint            : Read / Write
+  "min-horizontal-bar-width"  gint            : Read / Write
+  "min-vertical-bar-height"   gint            : Read / Write
+  "min-vertical-bar-width"    gint            : Read / Write
+  "xspacing"                  gint            : Read / Write
+  "yspacing"                  gint            : Read / Write
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkRange}
 @deffn {Class} GtkRange
 
@@ -297,6 +337,40 @@ GtkSeparator implements @code{AtkImplementorIface}, @code{GtkBuildable} and
 @code{GtkOrientable}.
 @end deffn
 
+@c -----------------------------------------------------------------------------
+@anchor{GtkStatusbar}
+@deffn {Class} GtkStatusbar
+
+Report messages of minor importance to the user
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBox
+                           +----GtkStatusbar
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkStatusbar} implements @code{AtkImplementorIface}, @code{GtkBuildable}
+and @code{GtkOrientable}.
+
+@b{Style Properties}
+@verbatim
+  "shadow-type"            GtkShadowType      : Read
+@end verbatim
+
+@b{Signals}
+@verbatim
+  "text-popped"                               : Run Last
+  "text-pushed"                               : Run Last
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkWindow}
 @deffn {Class} GtkWindow
 

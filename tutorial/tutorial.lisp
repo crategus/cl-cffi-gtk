@@ -2,7 +2,7 @@
 ;;; tutorial.lisp
 ;;;
 ;;; Examples from the offical GTK+ 2.0 Tutorial translated to Lisp
-;;; and updated to GTK+ 3.2
+;;; and updated to GTK+ 3.4
 ;;;
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
@@ -498,7 +498,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 5. The Button Widget
+;;; Chapter 4. The Button Widget
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -666,12 +666,379 @@
       ;; Put the vbox in the window widget
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun example-link-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :border-width 12))
+          (vbox (make-instance 'gtk-box
+                               :type :vertical)))
+      (g-signal-connect window "destroy"
+                               (lambda (widget)
+                                 (declare (ignore widget))
+                                 (gtk-main-quit)))
+      (gtk-box-pack-start vbox
+                          (gtk-link-button-new "http://www.gtk.org/")
+                          :expand nil)
+      (gtk-box-pack-start vbox
+                          (gtk-link-button-new-with-label "http://www.gtk.org/"
+                                                          "Project WebSite")
+                          :expand nil)
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
       
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;;   Display Widgets
+;;; Chapter 4. Display Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;; Labels
+
+(defun make-heading (text)
+  (make-instance 'gtk-label
+                 :xalign 0
+                 :use-markup t
+                 :label (format nil "<b>~A</b>" text)))
+
+(defun example-labels ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "GTK+ 3.4 Example Labels"
+                                 :default-width 250
+                                 :border-width 12))
+          (vbox1 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :spacing 6))
+          (hbox (make-instance 'gtk-box
+                               :orientation :horizontal
+                               :spacing 12)))
+      ;; Connect a handler for the signal "destroy" to window.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create a Normal Label
+      (gtk-box-pack-start vbox1
+                          (make-heading "Normal Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "This is a Normal Label")
+                          :expand nil)
+      ;; Create a Multi-line Label
+      (gtk-box-pack-start vbox1
+                          (make-heading "Multi-line Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label
+                                         (format nil
+                                               "This is a Multi-line label~%~
+                                                Second line~%~
+                                                Third line"))
+                          :expand nil)
+      ;; Create a Left Justified Label
+      (gtk-box-pack-start vbox1
+                          (make-heading "Left Justified Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :justify :left
+                                         :label
+                                         (format nil
+                                                 "This is a Left Justified~%~
+                                                  Multi-line label~%~
+                                                  Third line"))
+                          :expand nil)
+      ;; Create a Right Justified Label
+      (gtk-box-pack-start vbox1
+                          (make-heading "Right Justified Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :justify :right
+                                         :label
+                                         (format nil
+                                                "This is a Right Justified~%~
+                                                 Multi-line label~%~
+                                                 Third line"))
+                          :expand nil)
+      ;; Create a Line wrapped label
+      (gtk-box-pack-start vbox2
+                          (make-heading "Line Wrapped Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :wrap t
+                                         :label
+                                         (format nil
+                                          "This is an example of a ~
+                                           line-wrapped label.  It should ~
+                                           not be taking up the entire ~
+                                           width allocated to it, but ~
+                                           automatically wraps the words to ~
+                                           fit.  The time has come, for all ~
+                                           good men, to come to the aid of ~
+                                           their party.  The sixth sheik's ~
+                                           six sheep's sick.  It supports ~
+                                           multiple paragraphs correctly, ~
+                                           and correctly adds many extra ~
+                                           spaces."))
+                          :expand nil)
+      ;; Create a Filled and wrapped label
+      (gtk-box-pack-start vbox2
+                          (make-heading "Filled and Wrapped Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :wrap t
+                                         :justify :fill
+                                         :label
+                                         (format nil
+                                          "This is an example of a ~
+                                           line-wrapped, filled label.  It ~
+                                           should be taking up the entire ~
+                                           width allocated to it.  Here is ~
+                                           a sentence to prove my point.  ~
+                                           Here is another sentence.  Here ~
+                                           comes the sun, do de do de do.  ~
+                                           This  is a new paragraph.  This ~
+                                           is  another newer, longer, ~
+                                           better  paragraph.  It is coming ~
+                                           to an end, unfortunately."))
+                          :expand nil)
+      ;; Create an underlined label
+      (gtk-box-pack-start vbox2
+                          (make-heading "Underlined Label:")
+                          :expand nil)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :justify :left
+                                         :use-underline t
+                                         :pattern
+          "_________________________ _ _________ _ ______     __ _______ ___"
+                                         :label
+                                         (format nil
+                                          "This label is underlined!~%~
+                                           This one is underlined in quite ~
+                                           a funky fashion"))
+                          :expand nil)
+      ;; Put the boxes into the window and show the window
+      (gtk-box-pack-start hbox vbox1 :expand nil)
+      (gtk-box-pack-start hbox (gtk-separator-new :vertical))
+      (gtk-box-pack-start hbox vbox2 :expand nil)
+      (gtk-container-add window hbox)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun example-more-labels ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "GTK+ 3.4 Example More Labels"
+                                 :default-width 300
+                                 :border-width 6))
+          (vbox1 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :homogeneous nil
+                                :spacing 6))
+          (vbox2 (make-instance 'gtk-box
+                                :orientation :vertical
+                                :homogeneous nil
+                                :spacing 6))
+          (hbox (make-instance 'gtk-box
+                               :orientation :horizontal
+                               :homogeneous nil
+                               :spacing 6)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angle 90°"
+                                         :angle 90))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 45°"
+                                         :angle 45))
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :label "Angel 315°"
+                                         :angle 315))
+      (gtk-box-pack-start hbox vbox1)
+      (gtk-box-pack-start hbox
+                          (make-instance 'gtk-label
+                                         :label "Angel 270°"
+                                         :angle 270))
+      (gtk-box-pack-start vbox2 hbox)
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-hseparator))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new "Normal Label"))
+      (gtk-box-pack-start vbox2
+                          (gtk-label-new-with-mnemonic "With _Mnemonic"))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label "This Label is Selectable"
+                                         :selectable t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label
+                                         "<small>Small text</small>"
+                                          :use-markup t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :label
+                                         "<b>Bold text</b>"
+                                          :use-markup t))
+      (gtk-box-pack-start vbox2
+                          (make-instance 'gtk-label
+                                         :use-markup t
+                                         :label
+                                         (format nil
+                                         "Go to the ~
+                                         <a href=\"http://gtk.org/\">~
+                                         GTK+ Website</a> for more ...")))
+      (gtk-container-add window vbox2)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Progress Bar
+
+(defstruct pbar-data
+  pbar
+  timer
+  mode)
+
+(defun progress-bar-timeout (pdata)
+  (if (pbar-data-mode pdata)
+      (gtk-progress-bar-pulse (pbar-data-pbar pdata))
+      (let ((val (+ (gtk-progress-bar-get-fraction (pbar-data-pbar pdata))
+                    0.01)))
+        (when (> val 1.0) (setq val 0.0))
+        (gtk-progress-bar-set-fraction (pbar-data-pbar pdata) val)))
+  t)
+
+(defun example-progress-bar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "GTK+ 3.4 Example Progress Bar"
+                                 :default-width 300))
+          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)))
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical
+                               :border-width 12
+                               :spacing 12))
+          (align (gtk-alignment-new 0.1 0.9 1.0 0.0))
+          (table (gtk-table-new 2 3 t)))
+      (setf (pbar-data-timer pdata)
+            (g-timeout-add 100
+                           (lambda ()
+                             (progress-bar-timeout pdata))))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (g-source-remove (pbar-data-timer pdata))
+                          (setf (pbar-data-timer pdata) 0)
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox align)
+      (gtk-container-add align (pbar-data-pbar pdata))
+      (gtk-box-pack-start vbox table)
+      (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (let ((text (gtk-progress-bar-get-text (pbar-data-pbar pdata))))
+               (if (or (null text) (zerop (length text)))
+                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
+                                              "Some text")
+                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
+                                              ""))
+               (gtk-progress-bar-set-show-text
+                                     (pbar-data-pbar pdata)
+                                     (gtk-toggle-button-get-active check)))))
+        (gtk-table-attach table check 0 1 0 1))
+      (let ((check (gtk-check-button-new-with-label "Activity mode")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (setf (pbar-data-mode pdata)
+                   (not (pbar-data-mode pdata)))
+             (if (pbar-data-mode pdata)
+                 (gtk-progress-bar-pulse (pbar-data-pbar pdata))
+                 (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
+                                                0.0))))
+        (gtk-table-attach table check 0 1 1 2))
+      (let ((check (gtk-check-button-new-with-label "Inverted")))
+        (g-signal-connect check "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-progress-bar-set-inverted
+                                      (pbar-data-pbar pdata)
+                                      (gtk-toggle-button-get-active check))))
+        (gtk-table-attach table check 0 1 2 3))
+      (let ((button (gtk-button-new-with-label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Status Bar
+
+(defun example-statusbar ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "GTK+ 3.4 Example Status Bar"
+                                  :default-width 300
+                                  :border-width 12))
+           (vbox (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 3))
+           (statusbar (make-instance 'gtk-statusbar))
+           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
+           (count 0))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start vbox statusbar)
+      (let ((button (gtk-button-new-with-label "Push Item")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (setq count (+ 1 count))
+             (gtk-statusbar-push statusbar id (format nil "Item ~A" count))))
+        (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
+      (let ((button (gtk-button-new-with-label "Pop Item")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (gtk-statusbar-pop statusbar id)))
+        (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+
+
+
+
 
 ;;;   Accel Labels
 
@@ -713,6 +1080,7 @@
 ;;;    accelerators. We just need to make sure we use GTK_ACCEL_VISIBLE here. */
 ;;; gtk_widget_add_accelerator (save_item, "activate", accel_group,
 ;;;                             GDK_KEY_s, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -905,206 +1273,6 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;; Label
-
-(defun example-labels ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Labels"
-                                 :border-width 6))
-          (vbox1 (make-instance 'gtk-vbox
-                                :homogeneous nil
-                                :spacing 6))
-          (vbox2 (make-instance 'gtk-vbox
-                                :homogenous nil
-                                :spacing 6))
-          (hbox (make-instance 'gtk-hbox
-                               :homogeneous nil
-                               :spacing 6)))
-      ;; Connect a handler for the signal "destroy" to window.
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      ;; Create a Normal Label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Normal Label"))
-            (label (make-instance 'gtk-label
-                                  :label "This is a Normal Label")))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
-      ;; Create a Multi-line Label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Multi-line label"))
-            (label (make-instance 'gtk-label
-                                  :label
-                                  (format nil "This is a Multi-line label~%~
-                                               Second line~%~
-                                               Third line"))))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
-      ;; Create a Left Justified Label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Left Justified Label"))
-            (label (make-instance 'gtk-label
-                                  :justify :left
-                                  :label
-                                  (format nil
-                                          "This is a Left Justified~%~
-                                           Multi-line label~%~
-                                           Third line"))))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
-      ;; Create a Right Justified Label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Right Justified Label"))
-            (label (make-instance 'gtk-label
-                                  :justify :right
-                                  :label
-                                  (format nil
-                                          "This is a Right Justified~%~
-                                           Multi-line label~%~
-                                           Third line"))))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox1 frame :expand nil :fill nil))
-      ;; Create a Line wrapped label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Line wrapped label"))
-                                  
-            (label (make-instance 'gtk-label
-                                  :wrap t
-                                  :label
-                                  (format nil
-                                          "This is an example of a ~
-                                           line-wrapped label.  It should ~
-                                           not be taking up the entire width ~
-                                           allocated to it, but ~
-                                           automatically wraps the words to ~
-                                           fit.  The time has come, for all ~
-                                           good men, to come to the aid of ~
-                                           their party.  The sixth sheik's ~
-                                           six sheep's sick.  It supports ~
-                                           multiple paragraphs correctly, ~
-                                           and correctly adds many extra ~
-                                           spaces."))))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox2 frame :expand nil :fill nil))
-      ;; Create a Filled and wrapped label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Filled and wrapped label"))
-            (label (make-instance 'gtk-label
-                                  :wrap t
-                                  :justify :fill
-                                  :label
-                                  (format nil
-                                          "This is an example of a ~
-                                           line-wrapped, filled label.  It ~
-                                           should be taking up the entire ~
-                                           width allocated to it.  Here is a ~
-                                           sentence to prove my point.  Here ~
-                                           is another sentence.  Here comes ~
-                                           the sun, do de do de do.  This ~
-                                           is a new paragraph.  This is ~
-                                           another newer, longer, better ~
-                                           paragraph.  It is coming to an ~
-                                           end, unfortunately."))))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox2 frame :expand nil :fill nil))
-      ;; Create an underlined label
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "Underlined label"))
-            (label (make-instance 'gtk-label
-                                  :justify :left
-                                  :use-underline t
-                                  :pattern
-             "_________________________ _ _________ _ ______     __ _______ ___"
-                                  :label
-                                  (format nil
-                                          "This label is underlined!~%~
-                                           This one is underlined in quite a ~
-                                           funky fashion"))))
-        (gtk-container-add frame label)
-        (gtk-box-pack-start vbox2 frame :expand nil :fill nil))
-      ;; Put the boxes into the window and show the window
-      (gtk-box-pack-start hbox vbox1 :expand nil :fill nil)
-      (gtk-box-pack-start hbox vbox2 :expand nil :fill nil)
-      (gtk-container-add window hbox)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-(defun example-more-labels ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example More Labels"
-                                 :default-width 300
-                                 :border-width 6))
-          (vbox1 (make-instance 'gtk-vbox
-                                :homogeneous nil
-                                :spacing 6))
-          (vbox2 (make-instance 'gtk-vbox
-                                :homogeneous nil
-                                :spacing 6))
-          (hbox (make-instance 'gtk-hbox
-                               :homogeneous nil
-                               :spacing 6)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-box-pack-start hbox
-                          (make-instance 'gtk-label
-                                         :label "Angle 90°"
-                                         :angle 90))
-      (gtk-box-pack-start vbox1
-                          (make-instance 'gtk-label
-                                         :label "Angel 45°"
-                                         :angle 45))
-      (gtk-box-pack-start vbox1
-                          (make-instance 'gtk-label
-                                         :label "Angel 315°"
-                                         :angle 315))
-      (gtk-box-pack-start hbox vbox1)
-      (gtk-box-pack-start hbox
-                          (make-instance 'gtk-label
-                                         :label "Angel 270°"
-                                         :angle 270))
-      (gtk-box-pack-start vbox2 hbox)
-      (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-hseparator))
-      (gtk-box-pack-start vbox2
-                          (gtk-label-new "Normal Label"))
-      (gtk-box-pack-start vbox2
-                          (gtk-label-new-with-mnemonic "With _Mnemonic"))
-      (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-label
-                                         :label "This Label is Selectable"
-                                         :selectable t))
-      (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-label
-                                         :label
-                                         "<small>Small text</small>"
-                                          :use-markup t))
-      (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-label
-                                         :label
-                                         "<b>Bold text</b>"
-                                          :use-markup t))
-      (gtk-box-pack-start vbox2
-                          (make-instance 'gtk-label
-                                         :use-markup t
-                                         :label
-                                         (format nil
-                                         "Go to the ~
-                                         <a href=\"http://gtk.org/\">~
-                                         GTK+ Website</a> for more ...")))
-      (gtk-container-add window vbox2)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
 ;;; Arrows
 
 (defun create-arrow-button (arrow-type shadow-type)
@@ -1147,91 +1315,6 @@
                           (create-arrow-button :right :etched-out) 
                           :expand nil :fill nil :padding 3)
       (gtk-container-add window box)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Progress Bars
-
-(defstruct pbar-data
-  pbar
-  timer
-  mode)
-
-(defun progress-bar-timeout (pdata)
-  (if (pbar-data-mode pdata)
-      (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-      (let ((val (+ (gtk-progress-bar-get-fraction (pbar-data-pbar pdata))
-                    0.01)))
-        (when (> val 1.0) (setq val 0.0))
-        (gtk-progress-bar-set-fraction (pbar-data-pbar pdata) val)))
-  t)
-
-(defun example-progress-bar ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Progress Bar"
-                                 :default-width 300))
-          (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)))
-          (vbox (make-instance 'gtk-vbox
-                               :border-width 12
-                               :spacing 12))
-          (align (gtk-alignment-new 0.1 0.9 1.0 0.0))
-          (table (gtk-table-new 2 3 t)))
-      (setf (pbar-data-timer pdata)
-            (g-timeout-add 100
-                           (lambda ()
-                             (progress-bar-timeout pdata))))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (g-source-remove (pbar-data-timer pdata))
-                          (setf (pbar-data-timer pdata) 0)
-                          (gtk-main-quit)))
-      (gtk-box-pack-start vbox align)
-      (gtk-container-add align (pbar-data-pbar pdata))
-      (gtk-box-pack-start vbox table)
-      (let ((check (gtk-check-button-new-with-mnemonic "_Show text")))
-        (g-signal-connect check "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (let ((text (gtk-progress-bar-get-text (pbar-data-pbar pdata))))
-               (if (or (null text) (zerop (length text)))
-                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              "Some text")
-                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              ""))
-               (gtk-progress-bar-set-show-text
-                                     (pbar-data-pbar pdata)
-                                     (gtk-toggle-button-get-active check)))))
-        (gtk-table-attach table check 0 1 0 1))
-      (let ((check (gtk-check-button-new-with-label "Activity mode")))
-        (g-signal-connect check "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (setf (pbar-data-mode pdata)
-                   (not (pbar-data-mode pdata)))
-             (if (pbar-data-mode pdata)
-                 (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-                 (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
-                                                0.0))))
-        (gtk-table-attach table check 0 1 1 2))
-      (let ((check (gtk-check-button-new-with-label "Inverted")))
-        (g-signal-connect check "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (gtk-progress-bar-set-inverted
-                                      (pbar-data-pbar pdata)
-                                      (gtk-toggle-button-get-active check))))
-        (gtk-table-attach table check 0 1 2 3))
-      (let ((button (gtk-button-new-with-label "Close")))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start vbox button))
-      (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -1374,44 +1457,6 @@
                             (declare (ignore widget))
                             (gtk-widget-destroy window)))
         (gtk-box-pack-start vbox button))
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Status Bar
-
-(defun example-statusbar ()
-  (within-main-loop
-    (let* ((window (make-instance 'gtk-window
-                                  :type :toplevel
-                                  :title "Example Status Bar"
-                                  :default-width 300
-                                  :border-width 12))
-           (vbox (make-instance 'gtk-vbox
-                                :homogeneous nil
-                                :spacing 3))
-           (statusbar (make-instance 'gtk-statusbar))
-           (id (gtk-statusbar-get-context-id statusbar "Example Status Bar"))
-           (count 0))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-box-pack-start vbox statusbar)
-      (let ((button (gtk-button-new-with-label "Push Item")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (setq count (+ 1 count))
-             (gtk-statusbar-push statusbar id (format nil "Item ~A" count))))
-        (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
-      (let ((button (gtk-button-new-with-label "Pop Item")))
-        (g-signal-connect button "clicked"
-           (lambda (widget)
-             (declare (ignore widget))
-             (gtk-statusbar-pop statusbar id)))
-        (gtk-box-pack-start vbox button :expand t :fill t :padding 3))
-      (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
