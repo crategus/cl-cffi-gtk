@@ -90,7 +90,8 @@
          "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
          "adjustment" "inverted" "lower-stepper-sensitivity"
          "upper-stepper-sensitivity" "show-fill-level" "restrict-to-fill-level"
-         "fill-level" "round-digits" "digits" "draw-value" "value-pos")
+         "fill-level" "round-digits" "digits" "draw-value" "has-origin"
+         "value-pos")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkScale"))))
   
@@ -110,35 +111,43 @@
     ;; Check the defintion of the class gtk-window
     (assert-equal
       '(DEFINE-G-OBJECT-CLASS "GtkScale" GTK-SCALE
-                       (:SUPERCLASS GTK-RANGE :EXPORT T :INTERFACES
-                        ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
-                        :TYPE-INITIALIZER "gtk_scale_get_type")
-                       ((DIGITS GTK-SCALE-DIGITS "digits" "gint" T T)
-                        (DRAW-VALUE GTK-SCALE-DRAW-VALUE "draw-value"
-                         "gboolean" T T)
-                        (VALUE-POS GTK-SCALE-VALUE-POS "value-pos"
-                         "GtkPositionType" T T)))
+                               (:SUPERCLASS GTK-RANGE :EXPORT T :INTERFACES
+                                ("AtkImplementorIface" "GtkBuildable"
+                                 "GtkOrientable")
+                                :TYPE-INITIALIZER "gtk_scale_get_type")
+                               ((DIGITS GTK-SCALE-DIGITS "digits" "gint" T T)
+                                (DRAW-VALUE GTK-SCALE-DRAW-VALUE "draw-value"
+                                 "gboolean" T T)
+                                (HAS-ORIGIN GTK-SCALE-HAS-ORIGIN "has-origin"
+                                 "gboolean" T T)
+                                (VALUE-POS GTK-SCALE-VALUE-POS "value-pos"
+                                 "GtkPositionType" T T)))
      (get-g-class-definition (gtype "GtkScale")))
     
     ;; Check the expansion of the class definition
     (assert-equal
       '(PROGN
          (DEFCLASS GTK-SCALE
-           (GTK-RANGE ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE GTK-ORIENTABLE)
-           ((DIGITS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE "gint"
-             :ACCESSOR GTK-SCALE-DIGITS :INITARG :DIGITS :G-PROPERTY-NAME
-             "digits")
-            (DRAW-VALUE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-             "gboolean" :ACCESSOR GTK-SCALE-DRAW-VALUE :INITARG :DRAW-VALUE
-             :G-PROPERTY-NAME "draw-value")
-            (VALUE-POS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-             "GtkPositionType" :ACCESSOR GTK-SCALE-VALUE-POS :INITARG
-             :VALUE-POS :G-PROPERTY-NAME "value-pos"))
-           (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkScale")
-           (:G-TYPE-INITIALIZER . "gtk_scale_get_type"))
+                   (GTK-RANGE ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
+                    GTK-ORIENTABLE)
+                   ((DIGITS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
+                     "gint" :ACCESSOR GTK-SCALE-DIGITS :INITARG :DIGITS
+                     :G-PROPERTY-NAME "digits")
+                    (DRAW-VALUE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
+                     "gboolean" :ACCESSOR GTK-SCALE-DRAW-VALUE :INITARG
+                     :DRAW-VALUE :G-PROPERTY-NAME "draw-value")
+                    (HAS-ORIGIN :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
+                     "gboolean" :ACCESSOR GTK::GTK-SCALE-HAS-ORIGIN :INITARG
+                     :HAS-ORIGIN :G-PROPERTY-NAME "has-origin")
+                    (VALUE-POS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
+                     "GtkPositionType" :ACCESSOR GTK-SCALE-VALUE-POS :INITARG
+                     :VALUE-POS :G-PROPERTY-NAME "value-pos"))
+                   (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkScale")
+                   (:G-TYPE-INITIALIZER . "gtk_scale_get_type"))
          (EXPORT 'GTK-SCALE (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-SCALE-DIGITS (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-SCALE-DRAW-VALUE (FIND-PACKAGE "GTK"))
+         (EXPORT 'GTK::GTK-SCALE-HAS-ORIGIN (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-SCALE-VALUE-POS (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
      (macroexpand-1 (get-g-class-definition (gtype "GtkScale"))))))
@@ -163,9 +172,9 @@
                   (g-type-from-class (g-type-class-peek-static "GtkHScale")))
     (g-type-class-unref class))
   
-  (let ((class (find-class 'gtk-h-scale)))
+  (let ((class (find-class 'gtk-hscale)))
     ;; Check the class name and type of the class
-    (assert-eq 'gtk-h-scale (class-name class))
+    (assert-eq 'gtk-hscale (class-name class))
     (assert-eq 'gobject-class (type-of class))
     (assert-eq (find-class 'gobject-class) (class-of class))
     
@@ -210,7 +219,8 @@
          "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
          "adjustment" "inverted" "lower-stepper-sensitivity"
          "upper-stepper-sensitivity" "show-fill-level" "restrict-to-fill-level"
-         "fill-level" "round-digits" "digits" "draw-value" "value-pos")
+         "fill-level" "round-digits" "digits" "draw-value" "has-origin"
+         "value-pos")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkHScale"))))
   
@@ -229,7 +239,7 @@
     
     ;; Check the defintion of the class gtk-window
     (assert-equal
-      '(DEFINE-G-OBJECT-CLASS "GtkHScale" GTK-H-SCALE
+      '(DEFINE-G-OBJECT-CLASS "GtkHScale" GTK-HSCALE
                                (:SUPERCLASS GTK-SCALE :EXPORT T :INTERFACES
                                 ("AtkImplementorIface" "GtkBuildable"
                                  "GtkOrientable")
@@ -240,12 +250,12 @@
     ;; Check the expansion of the class definition
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-H-SCALE
+         (DEFCLASS GTK-HSCALE
                    (GTK-SCALE ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
                     GTK-ORIENTABLE)
                    NIL (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkHScale")
                    (:G-TYPE-INITIALIZER . "gtk_hscale_get_type"))
-         (EXPORT 'GTK-H-SCALE (FIND-PACKAGE "GTK")))
+         (EXPORT 'GTK-HSCALE (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
      (macroexpand-1 (get-g-class-definition (gtype "GtkHScale"))))))
 
@@ -269,9 +279,9 @@
                   (g-type-from-class (g-type-class-peek-static "GtkVScale")))
     (g-type-class-unref class))
   
-  (let ((class (find-class 'gtk-v-scale)))
+  (let ((class (find-class 'gtk-vscale)))
     ;; Check the class name and type of the class
-    (assert-eq 'gtk-v-scale (class-name class))
+    (assert-eq 'gtk-vscale (class-name class))
     (assert-eq 'gobject-class (type-of class))
     (assert-eq (find-class 'gobject-class) (class-of class))
     
@@ -307,7 +317,7 @@
   
   ;; Get the names of the class properties.
   (assert-equal
-      '("orientation" "name" "parent" "width-request" "height-request"
+      ' ("orientation" "name" "parent" "width-request" "height-request"
          "visible" "sensitive" "app-paintable" "can-focus" "has-focus"
          "is-focus" "can-default" "has-default" "receives-default"
          "composite-child" "style" "events" "no-show-all" "has-tooltip"
@@ -316,7 +326,8 @@
          "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
          "adjustment" "inverted" "lower-stepper-sensitivity"
          "upper-stepper-sensitivity" "show-fill-level" "restrict-to-fill-level"
-         "fill-level" "round-digits" "digits" "draw-value" "value-pos")
+         "fill-level" "round-digits" "digits" "draw-value" "has-origin"
+         "value-pos")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkVScale"))))
   
@@ -335,7 +346,7 @@
     
     ;; Check the defintion of the class gtk-window
     (assert-equal
-      '(DEFINE-G-OBJECT-CLASS "GtkVScale" GTK-V-SCALE
+      '(DEFINE-G-OBJECT-CLASS "GtkVScale" GTK-VSCALE
                                (:SUPERCLASS GTK-SCALE :EXPORT T :INTERFACES
                                 ("AtkImplementorIface" "GtkBuildable"
                                  "GtkOrientable")
@@ -346,12 +357,12 @@
     ;; Check the expansion of the class definition
     (assert-equal
       '(PROGN
-         (DEFCLASS GTK-V-SCALE
+         (DEFCLASS GTK-VSCALE
                    (GTK-SCALE ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
                     GTK-ORIENTABLE)
                    NIL (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkVScale")
                    (:G-TYPE-INITIALIZER . "gtk_vscale_get_type"))
-         (EXPORT 'GTK-V-SCALE (FIND-PACKAGE "GTK")))
+         (EXPORT 'GTK-VSCALE (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
      (macroexpand-1 (get-g-class-definition (gtype "GtkVScale"))))))
 

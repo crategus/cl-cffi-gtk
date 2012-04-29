@@ -91,7 +91,10 @@
         (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkAdjustment"))))
                 
-    (let ((adj (make-instance 'gtk-adjustment)))
+    (let* ((adj (make-instance 'gtk-adjustment))
+           (ptr (pointer adj)))
+      (assert-eq 'gtk-adjustment (type-of adj))
+      (assert-eq (gtype "GtkAdjustment") (g-type-from-instance ptr))
       ;; Check the default values and the accessor functions
       (assert-eql 0.0d0 (gtk-adjustment-get-value adj))
       (assert-eql 0.0d0 (gtk-adjustment-get-lower adj))

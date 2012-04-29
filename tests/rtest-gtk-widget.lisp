@@ -24,12 +24,12 @@
 (in-package :gtk-tests)
 
 (define-test gtk-widget
-  (assert-true  (g-type-is-abstract "GtkWidget"))  
-  (assert-true  (g-type-is-derived "GtkWidget"))  
-  (assert-false (g-type-is-fundamental "GtkWidget"))  
+  (assert-true  (g-type-is-abstract "GtkWidget"))
+  (assert-true  (g-type-is-derived "GtkWidget"))
+  (assert-false (g-type-is-fundamental "GtkWidget"))
   (assert-true  (g-type-is-value-type "GtkWidget"))
   (assert-true  (g-type-has-value-table "GtkWidget"))
-  (assert-true  (g-type-is-classed "GtkWidget"))  
+  (assert-true  (g-type-is-classed "GtkWidget"))
   (assert-true  (g-type-is-instantiatable "GtkWidget"))
   (assert-true  (g-type-is-derivable "GtkWidget"))
   (assert-true  (g-type-is-deep-derivable "GtkWidget"))
@@ -69,7 +69,7 @@
   (assert-equal '("AtkImplementorIface" "GtkBuildable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkWidget")))
   
-  ;; Query infos about the class "GtkTable"
+  ;; Query infos about the class "GtkWidget"
   (with-foreign-object (query 'g-type-query)
     (g-type-query "GtkWidget" query)
     (assert-equal (gtype "GtkWidget")

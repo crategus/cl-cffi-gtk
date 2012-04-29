@@ -75,7 +75,7 @@
     (assert-equal "GdkWindow"
                   (foreign-slot-value query 'g-type-query :type-name))
     (assert-eql 116 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 168 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql 164 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties.
   (assert-equal

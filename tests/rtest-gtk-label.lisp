@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; rtest-gtk-label.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -24,12 +24,12 @@
 (in-package :gtk-tests)
 
 (define-test gtk-label
-  (assert-false (g-type-is-abstract "GtkLabel"))  
-  (assert-true  (g-type-is-derived "GtkLabel"))  
-  (assert-false (g-type-is-fundamental "GtkLabel"))  
+  (assert-false (g-type-is-abstract "GtkLabel"))
+  (assert-true  (g-type-is-derived "GtkLabel"))
+  (assert-false (g-type-is-fundamental "GtkLabel"))
   (assert-true  (g-type-is-value-type "GtkLabel"))
   (assert-true  (g-type-has-value-table "GtkLabel"))
-  (assert-true  (g-type-is-classed "GtkLabel"))  
+  (assert-true  (g-type-is-classed "GtkLabel"))
   (assert-true  (g-type-is-instantiatable "GtkLabel"))
   (assert-true  (g-type-is-derivable "GtkLabel"))
   (assert-true  (g-type-is-deep-derivable "GtkLabel"))
@@ -48,7 +48,6 @@
     (assert-eq 'gtk-label (class-name class))
     (assert-eq 'gobject-class (type-of class))
     (assert-eq (find-class 'gobject-class) (class-of class))
-    
     ;; Properties of the metaclass gobject-class
     (assert-equal "GtkLabel" (gobject-class-g-type-name class))
     (assert-equal "GtkLabel" (gobject-class-direct-g-type-name class))
@@ -60,7 +59,6 @@
   (assert-eql 5 (g-type-depth "GtkLabel"))
   (assert-eql   (gtype "GInitiallyUnowned")
                 (g-type-next-base "GtkLabel" "GObject"))
-  (assert-true  (g-type-is-a "GtkLabel" "GtkLabel"))
   (assert-true  (g-type-is-a "GtkLabel" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkLabel" "gboolean"))
   (assert-false (g-type-is-a "GtkLabel" "GtkWindow"))
@@ -106,28 +104,45 @@
                 (gtk-widget-class-list-style-properties (gtype "GtkLabel"))))
   
   ;; Read the default values of the class properties
-  (let ((label (make-instance 'gtk-label)))
-    (assert-eql 0.0d0    (gtk-label-angle label))
-    (assert-true         (gtk-label-attributes label)) ; Returns PangoAttrList
-    (assert-eql 0        (gtk-label-cursor-position label))
-    (assert-eq :none     (gtk-label-ellipsize label))
-    (assert-eq :left     (gtk-label-justify label))
-    (assert-equal ""     (gtk-label-label label))
-    (assert-eql -1       (gtk-label-max-width-chars label))
-    (assert-eql 16777215 (gtk-label-mnemonic-keyval label))
-    (assert-false        (gtk-label-mnemonic-widget label))
-    (assert-error 'error (gtk-label-pattern label)) ; not readable
-    (assert-false        (gtk-label-selectable label))
-    (assert-eql 0        (gtk-label-selection-bound label))
-    (assert-false        (gtk-label-single-line-mode label))
-    (assert-true         (gtk-label-track-visited-links label))
-    (assert-false        (gtk-label-use-markup label))
-    (assert-false        (gtk-label-use-underline label))
-    (assert-eql -1       (gtk-label-width-chars label))
-    (assert-false        (gtk-label-wrap label))
-    (assert-eq :word     (gtk-label-wrap-mode label)))
-    
-  ;; Check the defintion of the class gtk-window
+  (let* ((widget (make-instance 'gtk-label))
+         (ptr (pointer widget)))
+    (assert-eql 0.0d0    (gtk-label-angle widget))
+    (assert-eq 'pango-attr-list (type-of (gtk-label-attributes widget)))
+    (assert-eql 0        (gtk-label-cursor-position widget))
+    (assert-eq :none     (gtk-label-ellipsize widget))
+    (assert-eq :left     (gtk-label-justify widget))
+    (assert-equal ""     (gtk-label-label widget))
+    (assert-eql -1       (gtk-label-max-width-chars widget))
+    (assert-eql 16777215 (gtk-label-mnemonic-keyval widget))
+    (assert-false        (gtk-label-mnemonic-widget widget))
+    (assert-error 'error (gtk-label-pattern widget)) ; not readable
+    (assert-false        (gtk-label-selectable widget))
+    (assert-eql 0        (gtk-label-selection-bound widget))
+    (assert-false        (gtk-label-single-line-mode widget))
+    (assert-true         (gtk-label-track-visited-links widget))
+    (assert-false        (gtk-label-use-markup widget))
+    (assert-false        (gtk-label-use-underline widget))
+    (assert-eql -1       (gtk-label-width-chars widget))
+    (assert-false        (gtk-label-wrap widget))
+    (assert-eq :word     (gtk-label-wrap-mode widget))
+    ;; Get the values of style properties
+    (assert-eql 0.04 (gtk-widget-style-get-property ptr "cursor-aspect-ratio"))
+    (assert-false (gtk-widget-style-get-property ptr "cursor-color"))
+    (assert-equal "" (gtk-widget-style-get-property ptr "focus-line-pattern"))
+    (assert-eql 1 (gtk-widget-style-get-property ptr "focus-line-width"))
+    (assert-eql 0 (gtk-widget-style-get-property ptr "focus-padding"))
+    (assert-true (gtk-widget-style-get-property ptr "interior-focus"))
+    (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property ptr "link-color")))
+    (assert-eql 16 (gtk-widget-style-get-property ptr "scroll-arrow-hlength"))
+    (assert-eql 16 (gtk-widget-style-get-property ptr "scroll-arrow-vlength"))
+    (assert-false (gtk-widget-style-get-property ptr "secondary-cursor-color"))
+    (assert-eql 2 (gtk-widget-style-get-property ptr "separator-height"))
+    (assert-eql 2 (gtk-widget-style-get-property ptr "separator-width"))
+    (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property ptr "visited-link-color")))
+    (assert-true  (gtk-widget-style-get-property ptr "wide-separators"))
+    (assert-false (gtk-widget-style-get-property ptr "window-dragging")))
+         
+  ;; Check the definition of the class gtk-label
   (assert-equal
     '(DEFINE-G-OBJECT-CLASS "GtkLabel" GTK-LABEL
                                (:SUPERCLASS GTK-MISC :EXPORT T :INTERFACES
@@ -171,101 +186,6 @@
                                 (WRAP-MODE GTK-LABEL-WRAP-MODE "wrap-mode"
                                  "PangoWrapMode" T T)))
     (get-g-class-definition (gtype "GtkLabel")))
-    
-  ;; Check the expansion of the class definition
-  (assert-equal
-    '(PROGN
-         (DEFCLASS GTK-LABEL (GTK-MISC ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE)
-                   ((ANGLE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gdouble" :ACCESSOR GTK-LABEL-ANGLE :INITARG :ANGLE
-                     :G-PROPERTY-NAME "angle")
-                    (ATTRIBUTES :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "PangoAttrList" :ACCESSOR GTK-LABEL-ATTRIBUTES :INITARG
-                     :ATTRIBUTES :G-PROPERTY-NAME "attributes")
-                    (CURSOR-POSITION :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gint" :ACCESSOR
-                     GTK-LABEL-CURSOR-POSITION :INITARG :CURSOR-POSITION
-                     :G-PROPERTY-NAME "cursor-position")
-                    (ELLIPSIZE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "PangoEllipsizeMode" :ACCESSOR GTK-LABEL-ELLIPSIZE
-                     :INITARG :ELLIPSIZE :G-PROPERTY-NAME "ellipsize")
-                    (JUSTIFY :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "GtkJustification" :ACCESSOR GTK-LABEL-JUSTIFY :INITARG
-                     :JUSTIFY :G-PROPERTY-NAME "justify")
-                    (LABEL :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gchararray" :ACCESSOR GTK-LABEL-LABEL :INITARG :LABEL
-                     :G-PROPERTY-NAME "label")
-                    (MAX-WIDTH-CHARS :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gint" :ACCESSOR
-                     GTK-LABEL-MAX-WIDTH-CHARS :INITARG :MAX-WIDTH-CHARS
-                     :G-PROPERTY-NAME "max-width-chars")
-                    (MNEMONIC-KEYVAL :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "guint" :ACCESSOR
-                     GTK-LABEL-MNEMONIC-KEYVAL :INITARG :MNEMONIC-KEYVAL
-                     :G-PROPERTY-NAME "mnemonic-keyval")
-                    (MNEMONIC-WIDGET :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "GtkWidget" :ACCESSOR
-                     GTK-LABEL-MNEMONIC-WIDGET :INITARG :MNEMONIC-WIDGET
-                     :G-PROPERTY-NAME "mnemonic-widget")
-                    (PATTERN :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gchararray" :ACCESSOR GTK-LABEL-PATTERN :INITARG :PATTERN
-                     :G-PROPERTY-NAME "pattern")
-                    (SELECTABLE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gboolean" :ACCESSOR GTK-LABEL-SELECTABLE :INITARG
-                     :SELECTABLE :G-PROPERTY-NAME "selectable")
-                    (SELECTION-BOUND :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gint" :ACCESSOR
-                     GTK-LABEL-SELECTION-BOUND :INITARG :SELECTION-BOUND
-                     :G-PROPERTY-NAME "selection-bound")
-                    (SINGLE-LINE-MODE :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gboolean" :ACCESSOR
-                     GTK-LABEL-SINGLE-LINE-MODE :INITARG :SINGLE-LINE-MODE
-                     :G-PROPERTY-NAME "single-line-mode")
-                    (TRACK-VISITED-LINKS :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gboolean" :ACCESSOR
-                     GTK-LABEL-TRACK-VISITED-LINKS :INITARG
-                     :TRACK-VISITED-LINKS :G-PROPERTY-NAME
-                     "track-visited-links")
-                    (USE-MARKUP :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gboolean" :ACCESSOR GTK-LABEL-USE-MARKUP :INITARG
-                     :USE-MARKUP :G-PROPERTY-NAME "use-markup")
-                    (USE-UNDERLINE :ALLOCATION :GOBJECT-PROPERTY
-                     :G-PROPERTY-TYPE "gboolean" :ACCESSOR
-                     GTK-LABEL-USE-UNDERLINE :INITARG :USE-UNDERLINE
-                     :G-PROPERTY-NAME "use-underline")
-                    (WIDTH-CHARS :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gint" :ACCESSOR GTK-LABEL-WIDTH-CHARS :INITARG
-                     :WIDTH-CHARS :G-PROPERTY-NAME "width-chars")
-                    (WRAP :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "gboolean" :ACCESSOR GTK-LABEL-WRAP :INITARG :WRAP
-                     :G-PROPERTY-NAME "wrap")
-                    (WRAP-MODE :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
-                     "PangoWrapMode" :ACCESSOR GTK-LABEL-WRAP-MODE :INITARG
-                     :WRAP-MODE :G-PROPERTY-NAME "wrap-mode"))
-                   (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkLabel")
-                   (:G-TYPE-INITIALIZER . "gtk_label_get_type"))
-         (EXPORT 'GTK-LABEL (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-ANGLE (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-ATTRIBUTES (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-CURSOR-POSITION (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-ELLIPSIZE (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-JUSTIFY (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-LABEL (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-MAX-WIDTH-CHARS (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-MNEMONIC-KEYVAL (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-MNEMONIC-WIDGET (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-PATTERN (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-SELECTABLE (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-SELECTION-BOUND (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-SINGLE-LINE-MODE (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-TRACK-VISITED-LINKS (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-USE-MARKUP (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-USE-UNDERLINE (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-WIDTH-CHARS (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-WRAP (FIND-PACKAGE "GTK"))
-         (EXPORT 'GTK-LABEL-WRAP-MODE (FIND-PACKAGE "GTK")))
-    ;; macroexpand the class definition
-    (macroexpand-1 (get-g-class-definition (gtype "GtkLabel"))))
 )
 
 ;;; --- End of file rtest-gtk-label.lisp ---------------------------------------

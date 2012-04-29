@@ -43,7 +43,7 @@
     (assert-true         (gtk-window-focus-on-map window))
     (assert-true         (gtk-window-focus-visible window))
     (assert-eq :north-west (gtk-window-gravity window))
-    (assert-false        (gtk-window-has-resize-grip window))
+    (assert-true         (gtk-window-has-resize-grip window))
     (assert-false        (gtk-window-has-toplevel-focus window))
     (assert-false        (gtk-window-icon window))
     (assert-false        (gtk-window-icon-name window))
@@ -52,7 +52,7 @@
     (assert-false        (gtk-window-modal window))
     (assert-eql 1.0d0    (gtk-window-opacity window))
     (assert-true         (gtk-window-resizable window))
-    (assert-false        (gtk-window-resize-grip-visible window))
+    (assert-true         (gtk-window-resize-grip-visible window))
     (assert-false        (gtk-window-role window))
     (assert-equal "GdkX11Screen"
                          (gtype-name
@@ -79,6 +79,8 @@
                                  "accept-focus" "gboolean" T T)
                                 (APPLICATION GTK-WINDOW-APPLICATION
                                  "application" "GtkApplication" T T)
+                                (ATTACHED-TO GTK-WINDOW-ATTACHED-TO
+                                 "attached-to" "GtkWidget" T T)
                                 (DECORATED GTK-WINDOW-DECORATED "decorated"
                                  "gboolean" T T)
                                 (DEFAULT-HEIGHT GTK-WINDOW-DEFAULT-HEIGHT
@@ -101,6 +103,9 @@
                                 (HAS-TOPLEVEL-FOCUS
                                  GTK-WINDOW-HAS-TOPLEVEL-FOCUS
                                  "has-toplevel-focus" "gboolean" T NIL)
+                                (HIDE-TITLEBAR-WHEN-MAXIMIZED
+                                 GTK-WINDOW-HIDE-TITLEBAR-WHEN-MAXIMIZED
+                                 "hide-titlebar-when-maximized" "gboolean" T T)
                                 (ICON GTK-WINDOW-ICON "icon" "GdkPixbuf" T T)
                                 (ICON-NAME GTK-WINDOW-ICON-NAME "icon-name"
                                  "gchararray" T T)
@@ -153,6 +158,9 @@
                     (APPLICATION :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
                      "GtkApplication" :ACCESSOR GTK-WINDOW-APPLICATION :INITARG
                      :APPLICATION :G-PROPERTY-NAME "application")
+                    (ATTACHED-TO :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
+                     "GtkWidget" :ACCESSOR GTK::GTK-WINDOW-ATTACHED-TO :INITARG
+                     :ATTACHED-TO :G-PROPERTY-NAME "attached-to")
                     (DECORATED :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
                      "gboolean" :ACCESSOR GTK-WINDOW-DECORATED :INITARG
                      :DECORATED :G-PROPERTY-NAME "decorated")
@@ -190,6 +198,11 @@
                      :G-PROPERTY-TYPE "gboolean" :ACCESSOR
                      GTK-WINDOW-HAS-TOPLEVEL-FOCUS :INITARG :HAS-TOPLEVEL-FOCUS
                      :G-PROPERTY-NAME "has-toplevel-focus")
+                    (HIDE-TITLEBAR-WHEN-MAXIMIZED :ALLOCATION :GOBJECT-PROPERTY
+                     :G-PROPERTY-TYPE "gboolean" :ACCESSOR
+                     GTK::GTK-WINDOW-HIDE-TITLEBAR-WHEN-MAXIMIZED :INITARG
+                     :HIDE-TITLEBAR-WHEN-MAXIMIZED :G-PROPERTY-NAME
+                     "hide-titlebar-when-maximized")
                     (ICON :ALLOCATION :GOBJECT-PROPERTY :G-PROPERTY-TYPE
                      "GdkPixbuf" :ACCESSOR GTK-WINDOW-ICON :INITARG :ICON
                      :G-PROPERTY-NAME "icon")
@@ -264,6 +277,7 @@
          (EXPORT 'GTK-WINDOW (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-ACCEPT-FOCUS (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-APPLICATION (FIND-PACKAGE "GTK"))
+         (EXPORT 'GTK::GTK-WINDOW-ATTACHED-TO (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DECORATED (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DEFAULT-HEIGHT (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-DEFAULT-WIDTH (FIND-PACKAGE "GTK"))
@@ -274,6 +288,8 @@
          (EXPORT 'GTK-WINDOW-GRAVITY (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-HAS-RESIZE-GRIP (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-HAS-TOPLEVEL-FOCUS (FIND-PACKAGE "GTK"))
+         (EXPORT 'GTK::GTK-WINDOW-HIDE-TITLEBAR-WHEN-MAXIMIZED
+                 (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-ICON (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-ICON-NAME (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-IS-ACTIVE (FIND-PACKAGE "GTK"))

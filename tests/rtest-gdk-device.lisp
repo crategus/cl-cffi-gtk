@@ -144,7 +144,7 @@
     (assert-equal "GdkX11DeviceXI2"
                   (foreign-slot-value query 'g-type-query :type-name))
     (assert-eql 104 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql  64 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-eql  68 (foreign-slot-value query 'g-type-query :instance-size)))
   
   ;; Get the names of the class properties of "GdkX11DeviceXI2".
   (assert-equal
