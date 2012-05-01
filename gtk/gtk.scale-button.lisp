@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkScaleButton
 ;;; 
 ;;; A button which pops up a scale
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkScaleButton
@@ -59,9 +59,9 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkScaleButton implements AtkImplementorIface, GtkBuildable, GtkActivatable
-;;; and GtkOrientable.
-;;;
+;;; GtkScaleButton implements AtkImplementorIface, GtkBuildable, GtkActionable,
+;;; GtkActivatable and GtkOrientable.
+
 ;;; Properties
 ;;; 
 ;;;   "adjustment"               GtkAdjustment*        : Read / Write
@@ -98,10 +98,10 @@
 ;;; 
 ;;;   "icons"                    GStrv                 : Read / Write
 ;;; 
-;;; The names of the icons to be used by the scale button. The first item in the
-;;; array will be used in the button when the current value is the lowest value,
-;;; the second item for the highest value. All the subsequent icons will be used
-;;; for all the other values, spread evenly over the range of values.
+;;; The names of the icons to be used by the scale button. The first item in
+;;; the array will be used in the button when the current value is the lowest
+;;; value, the second item for the highest value. All the subsequent icons will
+;;; be used for all the other values, spread evenly over the range of values.
 ;;; 
 ;;; If there's only one icon name in the icons array, it will be used for all
 ;;; the values. If only two icon names are in the icons array, the first one
@@ -121,6 +121,8 @@
 ;;; The icon size.
 ;;; 
 ;;; Default value: GTK_ICON_SIZE_SMALL_TOOLBAR
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "value" property
 ;;; 
 ;;;   "value"                    gdouble               : Read / Write
@@ -145,10 +147,10 @@
 ;;; The default binding for this signal is Escape.
 ;;; 
 ;;; button :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.12
 ;;;
@@ -164,10 +166,10 @@
 ;;; The default bindings for this signal are Space, Enter and Return.
 ;;; 
 ;;; button :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; 
 ;;; Since 2.12
 ;;;
@@ -181,13 +183,13 @@
 ;;; The ::value-changed signal is emitted when the value field has changed.
 ;;; 
 ;;; button :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; value :
-;;; 	the new value
+;;;     the new value
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -203,16 +205,20 @@
 (define-g-object-class "GtkScaleButton" gtk-scale-button
   (:superclass gtk-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable"
+   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
                 "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_scale_button_get_type")
-  ((adjustment gtk-scale-button-adjustment
+  ((adjustment
+    gtk-scale-button-adjustment
     "adjustment" "GtkAdjustment" t t)
-   (icons gtk-scale-button-icons
+   (icons
+    gtk-scale-button-icons
     "icons" "GStrv" t t)
-   (size gtk-scale-button-size
+   (size
+    gtk-scale-button-size
     "size" "GtkIconSize" t t)
-   (value gtk-scale-button-value
+   (value
+    gtk-scale-button-value
     "value" "gdouble" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -228,27 +234,40 @@
 ;;; of step.
 ;;; 
 ;;; size :
-;;; 	a stock icon size
+;;;     a stock icon size
 ;;; 
 ;;; min :
-;;; 	the minimum value of the scale (usually 0)
+;;;     the minimum value of the scale (usually 0)
 ;;; 
 ;;; max :
-;;; 	the maximum value of the scale (usually 100)
+;;;     the maximum value of the scale (usually 100)
 ;;; 
 ;;; step :
-;;; 	the stepping of value when a scroll-wheel event, or up/down arrow event
+;;;     the stepping of value when a scroll-wheel event, or up/down arrow event
 ;;;     occurs (usually 2)
 ;;; 
 ;;; icons :
-;;; 	a NULL-terminated array of icon names, or NULL if you want to set the
-;;;     list later with gtk_scale_button_set_icons().
+;;;     a NULL-terminated array of icon names, or NULL if you want to set the
+;;;     list later with gtk_scale_button_set_icons()
 ;;; 
 ;;; Returns :
-;;; 	a new GtkScaleButton
+;;;     a new GtkScaleButton
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-button-new))
+
+(defun gtk-scale-button-new (size min max step icons)
+  (make-instance 'gtk-scale-button
+                 :size size
+                 :icons icons
+                 :adjustment (make-instance 'gtk-adjustment
+                                            :lower min
+                                            :upper max
+                                            :step-increment step)))
+
+(export 'gtk-scale-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_set_adjustment ()
@@ -260,13 +279,20 @@
 ;;; See gtk_range_set_adjustment() for details.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; adjustment :
-;;; 	a GtkAdjustment
+;;;     a GtkAdjustment
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-button-set-adjustment))
+
+(defun gtk-scale-button-set-adjustment (button adjustment)
+  (setf (gtk-scale-button-adjustment button) adjustment))
+
+(export 'gtk-scale-button-set-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_set_icons ()
@@ -278,13 +304,20 @@
 ;;; property.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; icons :
-;;; 	a NULL-terminated array of icon names
+;;;     a NULL-terminated array of icon names
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-button-set-icons))
+
+(defun gtk-scale-button-set-icons (button icons)
+  (setf (gtk-scale-button-icons button) icons))
+
+(export 'gtk-scale-button-set-icons)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_set_value ()
@@ -296,13 +329,20 @@
 ;;; button emits the "value-changed" signal if the value changes.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; value :
-;;; 	new value of the scale button
+;;;     new value of the scale button
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-button-set-value))
+
+(defun gtk-scale-button-set-value (button)
+  (setf (gtk-scale-button-value button) value))
+
+(export 'gtk-scale-button-set-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_get_adjustment ()
@@ -313,13 +353,20 @@
 ;;; See gtk_range_get_adjustment() for details.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; Returns :
-;;; 	the adjustment associated with the scale.
+;;;     the adjustment associated with the scale
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-button-get-adjustment))
+
+(defun gtk-scale-button-get-adjustment (button)
+  (gtk-scale-button-adjustment button))
+
+(export 'gtk-scale-button-get-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_get_value ()
@@ -329,13 +376,20 @@
 ;;; Gets the current value of the scale button.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; Returns :
-;;; 	current value of the scale button
+;;;     current value of the scale button
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-scale-button-get-value))
+
+(defun gtk-scale-button-get-value (button)
+  (gtk-scale-button-value button))
+
+(export 'gtk-scale-button-get-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_get_popup ()
@@ -345,10 +399,10 @@
 ;;; Retrieves the popup of the GtkScaleButton.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; Returns :
-;;; 	the popup of the GtkScaleButton.
+;;;     the popup of the GtkScaleButton
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -362,15 +416,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_get_plus_button ()
 ;;; 
-;;; GtkWidget * gtk_scale_button_get_plus_button (GtkScaleButton *button)
+;;; GtkWidget * gtk_scale_button_get_plus_button (GtkScaleButton *button);
 ;;; 
 ;;; Retrieves the plus button of the GtkScaleButton.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; Returns :
-;;; 	the plus button of the GtkScaleButton.
+;;;     the plus button of the GtkScaleButton
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -389,10 +443,10 @@
 ;;; Retrieves the minus button of the GtkScaleButton.
 ;;; 
 ;;; button :
-;;; 	a GtkScaleButton
+;;;     a GtkScaleButton
 ;;; 
 ;;; Returns :
-;;; 	the minus button of the GtkScaleButton.
+;;;     the minus button of the GtkScaleButton
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
