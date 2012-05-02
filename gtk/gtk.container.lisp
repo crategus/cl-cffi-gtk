@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,13 +31,14 @@
 ;;; GtkContainer
 ;;; 
 ;;; Base class for widgets which contain other widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkContainer
-;;;
+;;;     
 ;;;     GTK_IS_RESIZE_CONTAINER
 ;;;     GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID
+;;;     
 ;;;     gtk_container_add
 ;;;     gtk_container_remove
 ;;;     gtk_container_add_with_properties
@@ -101,7 +102,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkContainer implements AtkImplementorIface and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "border-width"             guint                 : Read / Write
@@ -118,8 +119,8 @@
 ;;; Description
 ;;; 
 ;;; A GTK+ user interface is constructed by nesting widgets inside widgets.
-;;; Container widgets are the inner nodes in the resulting tree of widgets:
-;;; they contain other widgets. So, for example, you might have a GtkWindow
+;;; Container widgets are the inner nodes in the resulting tree of widgets: they
+;;; contain other widgets. So, for example, you might have a GtkWindow
 ;;; containing a GtkFrame containing a GtkLabel. If you wanted an image instead
 ;;; of a textual label inside the frame, you might replace the GtkLabel widget
 ;;; with a GtkImage widget.
@@ -129,22 +130,22 @@
 ;;; 
 ;;; The first type of container widget has a single child widget and derives
 ;;; from GtkBin. These containers are decorators, which add some kind of
-;;; functionality to the child. For example, a GtkButton makes its child into
-;;; a clickable button; a GtkFrame draws a frame around its child and a
-;;; GtkWindow places its child widget inside a top-level window.
+;;; functionality to the child. For example, a GtkButton makes its child into a
+;;; clickable button; a GtkFrame draws a frame around its child and a GtkWindow
+;;; places its child widget inside a top-level window.
 ;;; 
-;;; The second type of container can have more than one child; its purpose is
-;;; to manage layout. This means that these containers assign sizes and
-;;; positions to their children. For example, a GtkHBox arranges its children
-;;; in a horizontal row, and a GtkTable arranges the widgets it contains in a
+;;; The second type of container can have more than one child; its purpose is to
+;;; manage layout. This means that these containers assign sizes and positions
+;;; to their children. For example, a GtkHBox arranges its children in a
+;;; horizontal row, and a GtkGrid arranges the widgets it contains in a
 ;;; two-dimensional grid.
 ;;; 
 ;;; Height for width geometry management
 ;;; 
 ;;; GTK+ uses a height-for-width (and width-for-height) geometry management
 ;;; system. Height-for-width means that a widget can change how much vertical
-;;; space it needs, depending on the amount of horizontal space that it is
-;;; given (and similar for width-for-height).
+;;; space it needs, depending on the amount of horizontal space that it is given
+;;; (and similar for width-for-height).
 ;;; 
 ;;; There are some things to keep in mind when implementing container widgets
 ;;; that make use of GTK+'s height for width geometry management system. First,
@@ -156,8 +157,8 @@
 ;;; has a request mode that is height-for-width, it is possible that its parent
 ;;; will request its sizes using the width-for-height APIs.
 ;;; 
-;;; To ensure that everything works properly, here are some guidelines to
-;;; follow when implementing height-for-width (or width-for-height) containers.
+;;; To ensure that everything works properly, here are some guidelines to follow
+;;; when implementing height-for-width (or width-for-height) containers.
 ;;; 
 ;;; Each request mode involves 2 virtual methods. Height-for-width apis run
 ;;; through gtk_widget_get_preferred_width() and then through
@@ -171,20 +172,19 @@
 ;;; implemented for itself as follows:
 ;;; 
 ;;; static void
-;;; foo_container_get_preferred_height (GtkWidget *widget, gint *min_height,
-;;;                                                        gint *nat_height)
+;;; foo_container_get_preferred_height (GtkWidget *widget,
+;;;                                     gint *min_height, gint *nat_height)
 ;;; {
 ;;;    if (i_am_in_height_for_width_mode)
 ;;;      {
 ;;;        gint min_width;
 ;;; 
-;;;        GTK_WIDGET_GET_CLASS (widget)->get_preferred_width(widget,
-;;;                                                           &min_width, NULL);
-;;;        GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width
-;;;                                                                (widget,
-;;;                                                                 min_width,
-;;;                                                                 min_height,
-;;;                                                                 nat_height);
+;;;        GTK_WIDGET_GET_CLASS (widget)->
+;;;                   get_preferred_width (widget, &min_width, NULL);
+;;;        GTK_WIDGET_GET_CLASS (widget)->
+;;;                   get_preferred_height_for_width (widget,
+;;;                                                   min_width,
+;;;                                                   min_height, nat_height);
 ;;;      }
 ;;;    else
 ;;;      {
@@ -207,30 +207,28 @@
 ;;; {
 ;;;    if (i_am_in_height_for_width_mode)
 ;;;      {
-;;;        GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget,
-;;;                                                            min_width,
-;;;                                                            nat_width);
+;;;        GTK_WIDGET_GET_CLASS (widget)->
+;;;                   get_preferred_width (widget, min_width, nat_width);
 ;;;      }
 ;;;    else
 ;;;      {
 ;;;        ... execute the real width-for-height request here based on the
-;;;        required width of the children collectively if the container were
-;;;        to be allocated the said height ...
+;;;        required width of the children collectively if the container were to
+;;;        be allocated the said height ...
 ;;;      }
 ;;; }
 ;;; 
 ;;; Height for width requests are generally implemented in terms of a virtual
-;;; allocation of widgets in the input orientation. Assuming an
-;;; height-for-width request mode, a container would implement the
+;;; allocation of widgets in the input orientation. Assuming an height-for-width
+;;; request mode, a container would implement the
 ;;; get_preferred_height_for_width() virtual function by first calling
 ;;; gtk_widget_get_preferred_width() for each of its children.
 ;;; 
 ;;; For each potential group of children that are lined up horizontally, the
 ;;; values returned by gtk_widget_get_preferred_width() should be collected in
-;;; an array of GtkRequestedSize structures. Any child spacing should be
-;;; removed from the input for_width and then the collective size should be
-;;; allocated using the gtk_distribute_natural_allocation() convenience
-;;; function.
+;;; an array of GtkRequestedSize structures. Any child spacing should be removed
+;;; from the input for_width and then the collective size should be allocated
+;;; using the gtk_distribute_natural_allocation() convenience function.
 ;;; 
 ;;; The container will then move on to request the preferred height for each
 ;;; child by using gtk_widget_get_preferred_height_for_width() and using the
@@ -238,8 +236,8 @@
 ;;; 
 ;;; To allocate a height-for-width container, it's again important to consider
 ;;; that a container must prioritize one dimension over the other. So if a
-;;; container is a height-for-width container it must first allocate all
-;;; widgets horizontally using a GtkRequestedSize array and
+;;; container is a height-for-width container it must first allocate all widgets
+;;; horizontally using a GtkRequestedSize array and
 ;;; gtk_distribute_natural_allocation() and then add any extra space (if and
 ;;; where appropriate) for the widget to expand.
 ;;; 
@@ -251,10 +249,10 @@
 ;;; containers this can be generalized into the heights and widths of rows and
 ;;; columns). The vertical space must then again be distributed using
 ;;; gtk_distribute_natural_allocation() while this time considering the
-;;; allocated height of the widget minus any vertical spacing that the
-;;; container adds. Then vertical expand space should be added where appropriate
-;;; and available and the container should go on to actually allocating the
-;;; child widgets.
+;;; allocated height of the widget minus any vertical spacing that the container
+;;; adds. Then vertical expand space should be added where appropriate and
+;;; available and the container should go on to actually allocating the child
+;;; widgets.
 ;;; 
 ;;; See GtkWidget's geometry management section to learn more about implementing
 ;;; height-for-width geometry management for widgets.
@@ -271,8 +269,8 @@
 ;;; gtk_container_class_list_child_properties() to get information about
 ;;; existing child properties.
 ;;; 
-;;; To set the value of a child property, use gtk_container
-;;;_child_set_property(), gtk_container_child_set() or
+;;; To set the value of a child property, use
+;;; gtk_container_child_set_property(), gtk_container_child_set() or
 ;;; gtk_container_child_set_valist(). To obtain the value of a child property,
 ;;; use gtk_container_child_get_property(), gtk_container_child_get() or
 ;;; gtk_container_child_get_valist(). To emit notification about child property
@@ -286,14 +284,14 @@
 ;;; 
 ;;; Example 105. Child properties in UI definitions
 ;;; 
-;;;  <object class="GtkVBox">
-;;;    <child>
-;;;      <object class="GtkLabel"/>
-;;;      <packing>
-;;;        <property name="pack-type">start</property>
-;;;      </packing>
-;;;    </child>
-;;;  </object>
+;;; <object class="GtkVBox">
+;;;   <child>
+;;;     <object class="GtkLabel"/>
+;;;     <packing>
+;;;       <property name="pack-type">start</property>
+;;;     </packing>
+;;;   </child>
+;;; </object>
 ;;; 
 ;;; Since 2.16, child properties can also be marked as translatable using the
 ;;; same "translatable", "comments" and "context" attributes that are used for
@@ -340,25 +338,27 @@
 ;;; void user_function (GtkContainer *container,
 ;;;                     GtkWidget    *widget,
 ;;;                     gpointer      user_data)      : Run First
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "check-resize" signal
 ;;; 
-;;; void user_function (GtkContainer *container, gpointer user_data)  : Run Last
-;;; 
+;;; void user_function (GtkContainer *container,
+;;;                     gpointer      user_data)      : Run Last
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "remove" signal
 ;;; 
 ;;; void user_function (GtkContainer *container,
 ;;;                     GtkWidget    *widget,
 ;;;                     gpointer      user_data)      : Run First
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "set-focus-child" signal
 ;;; 
 ;;; void user_function (GtkContainer *container,
 ;;;                     GtkWidget    *widget,
 ;;;                     gpointer      user_data)      : Run First
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -400,22 +400,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_IS_RESIZE_CONTAINER()
-;;;
+;;; 
 ;;; #define GTK_IS_RESIZE_CONTAINER(widget)
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID()
 ;;; 
-;;; #define GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID
-;;;                                                 (object, property_id, pspec)
+;;; #define GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID (object,
+;;;                                                       property_id, pspec)
 ;;; 
 ;;; This macro should be used to emit a standard warning about unexpected
 ;;; properties in set_child_property() and get_child_property() implementations.
 ;;; 
 ;;; object :
-;;;     the GObject on which set_child_property() or get_child_property()
-;;;     was called
+;;;     the GObject on which set_child_property() or get_child_property() was
+;;;     called
 ;;; 
 ;;; property_id :
 ;;;     the numeric id of the property
@@ -427,16 +427,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_add ()
 ;;; 
-;;; void gtk_container_add (GtkContainer *container, GtkWidget *widget)
+;;; void gtk_container_add (GtkContainer *container, GtkWidget *widget);
 ;;; 
 ;;; Adds widget to container. Typically used for simple containers such as
 ;;; GtkWindow, GtkFrame, or GtkButton; for more complicated layout containers
-;;; such as GtkBox or GtkTable, this function will pick default packing
+;;; such as GtkBox or GtkGrid, this function will pick default packing
 ;;; parameters that may not be correct. So consider functions such as
-;;; gtk_box_pack_start() and gtk_table_attach() as an alternative to
-;;; gtk_container_add() in those cases. A widget may be added to only one
-;;; container at a time; you can't place the same widget inside two different
-;;; containers.
+;;; gtk_box_pack_start() and gtk_grid_attach() as an alternative to
+;;; gtk_container_add() in those cases. A widget may be added to only
+;;; one container at a time; you can't place the same widget inside two
+;;; different containers.
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
@@ -454,7 +454,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_remove ()
 ;;; 
-;;; void gtk_container_remove (GtkContainer *container, GtkWidget *widget)
+;;; void gtk_container_remove (GtkContainer *container, GtkWidget *widget);
 ;;; 
 ;;; Removes widget from container. widget must be inside container. Note that
 ;;; container will own a reference to widget, and that this may be the last
@@ -533,8 +533,8 @@
 ;;; 
 ;;; Sets the resize mode for the container.
 ;;; 
-;;; The resize mode of a container determines whether a resize request will
-;;; be passed to the container's parent, queued for later execution or executed
+;;; The resize mode of a container determines whether a resize request will be
+;;; passed to the container's parent, queued for later execution or executed
 ;;; immediately.
 ;;; 
 ;;; container :
@@ -570,16 +570,16 @@
 ;;;                             GtkCallback callback,
 ;;;                             gpointer callback_data);
 ;;; 
-;;; Invokes callback on each non-internal child of container.
-;;; See gtk_container_forall() for details on what constitutes an "internal"
-;;; child. Most applications should use gtk_container_foreach(), rather than
+;;; Invokes callback on each non-internal child of container. See
+;;; gtk_container_forall() for details on what constitutes an "internal" child.
+;;; Most applications should use gtk_container_foreach(), rather than
 ;;; gtk_container_forall().
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
 ;;; callback :
-;;;     a callback.
+;;;     a callback
 ;;; 
 ;;; callback_data :
 ;;;     callback user data
@@ -617,7 +617,7 @@
 ;;;     a GtkContainer
 ;;; 
 ;;; Returns :
-;;;     a newly-allocated list of the container's non-internal children.
+;;;     a newly-allocated list of the container's non-internal children
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_get_children" gtk-container-get-children)
@@ -632,7 +632,7 @@
 ;;; GtkWidgetPath * gtk_container_get_path_for_child (GtkContainer *container,
 ;;;                                                   GtkWidget *child);
 ;;; 
-;;; Returns a newly created widget path representing all the widget hierarchy 
+;;; Returns a newly created widget path representing all the widget hierarchy
 ;;; from the toplevel down to and including child.
 ;;; 
 ;;; container :
@@ -683,8 +683,8 @@
 ;;;     a GtkContainer
 ;;; 
 ;;; Returns :
-;;;     The child widget which will receive the focus inside container when
-;;;     the conatiner is focussed, or NULL if none is set.
+;;;     The child widget which will receive the focus inside container when the
+;;;     conatiner is focussed, or NULL if none is set.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -704,18 +704,18 @@
 ;;; 
 ;;; Sets, or unsets if child is NULL, the focused child of container.
 ;;; 
-;;; This function emits the GtkContainer::set_focus_child signal of container. 
-;;; Implementations of GtkContainer can override the default behaviour by 
+;;; This function emits the GtkContainer::set_focus_child signal of container.
+;;; Implementations of GtkContainer can override the default behaviour by
 ;;; overriding the class closure of this signal.
 ;;; 
-;;; This is function is mostly meant to be used by widgets. Applications can 
-;;; use gtk_widget_grab_focus() to manualy set the focus to a specific widget.
+;;; This is function is mostly meant to be used by widgets. Applications can use
+;;; gtk_widget_grab_focus() to manualy set the focus to a specific widget.
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
 ;;; child :
-;;;     a GtkWidget, or NULL.
+;;;     a GtkWidget, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-container-set-focus-child))
@@ -731,14 +731,14 @@
 ;;; GtkAdjustment * gtk_container_get_focus_vadjustment
 ;;;                                                    (GtkContainer *container)
 ;;; 
-;;; Retrieves the vertical focus adjustment for the container. See 
+;;; Retrieves the vertical focus adjustment for the container. See
 ;;; gtk_container_set_focus_vadjustment().
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
 ;;; Returns :
-;;;     the vertical focus adjustment, or NULL if none has been set.
+;;;     the vertical focus adjustment, or NULL if none has been set
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-container-get-focus-vadjustment))
@@ -754,7 +754,7 @@
 ;;; void gtk_container_set_focus_vadjustment (GtkContainer *container,
 ;;;                                           GtkAdjustment *adjustment);
 ;;; 
-;;; Hooks up an adjustment to focus handling in a container, so when a child of 
+;;; Hooks up an adjustment to focus handling in a container, so when a child of
 ;;; the container is focused, the adjustment is scrolled to show that widget.
 ;;; This function sets the vertical alignment. See
 ;;; gtk_scrolled_window_get_vadjustment() for a typical way of obtaining the
@@ -768,8 +768,8 @@
 ;;;     a GtkContainer
 ;;; 
 ;;; adjustment :
-;;;     an adjustment which should be adjusted when the focus is moved among
-;;;     the descendents of container
+;;;     an adjustment which should be adjusted when the focus is moved among the
+;;;     descendents of container
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-container-set-focus-vadjustment))
@@ -785,14 +785,14 @@
 ;;; GtkAdjustment * gtk_container_get_focus_hadjustment
 ;;;                                                    (GtkContainer *container)
 ;;; 
-;;; Retrieves the horizontal focus adjustment for the container. See 
+;;; Retrieves the horizontal focus adjustment for the container. See
 ;;; gtk_container_set_focus_hadjustment().
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
 ;;; Returns :
-;;;     the horizontal focus adjustment, or NULL if none has been set.
+;;;     the horizontal focus adjustment, or NULL if none has been set
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-container-get-focus-hadjustment))
@@ -810,8 +810,8 @@
 ;;; 
 ;;; Hooks up an adjustment to focus handling in a container, so when a child of
 ;;; the container is focused, the adjustment is scrolled to show that widget.
-;;; This function sets the horizontal alignment. See 
-;;; gtk_scrolled_window_get_hadjustment() for a typical way of obtaining the 
+;;; This function sets the horizontal alignment. See
+;;; gtk_scrolled_window_get_hadjustment() for a typical way of obtaining the
 ;;; adjustment and gtk_container_set_focus_vadjustment() for setting the
 ;;; vertical adjustment.
 ;;; 
@@ -822,8 +822,8 @@
 ;;;     a GtkContainer
 ;;; 
 ;;; adjustment :
-;;;     an adjustment which should be adjusted when the focus is moved among 
-;;;     the descendents of container
+;;;     an adjustment which should be adjusted when the focus is moved among the
+;;;     descendents of container
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-container-set-focus-hadjustment))
@@ -859,7 +859,7 @@
 ;;;     a GtkContainer
 ;;; 
 ;;; Returns :
-;;;     a GType.
+;;;     a GType
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_child_type" gtk-container-child-type) g-type-designator
@@ -911,7 +911,7 @@
 ;;;     the name of the first property to set
 ;;; 
 ;;; ... :
-;;;     a NULL-terminated list of property names and values, starting with 
+;;;     a NULL-terminated list of property names and values, starting with
 ;;;     first_prop_name
 ;;; ----------------------------------------------------------------------------
 
@@ -981,7 +981,7 @@
 ;;;     the name of the first property to get
 ;;; 
 ;;; var_args :
-;;;     return location for the first property, followed optionally by more 
+;;;     return location for the first property, followed optionally by more
 ;;;     name/return location pairs, followed by NULL
 ;;; ----------------------------------------------------------------------------
 
@@ -1005,7 +1005,7 @@
 ;;;     the name of the first property to set
 ;;; 
 ;;; var_args :
-;;;     a NULL-terminated list of property names and values, starting with 
+;;;     a NULL-terminated list of property names and values, starting with
 ;;;     first_prop_name
 ;;; ----------------------------------------------------------------------------
 
@@ -1016,7 +1016,7 @@
 ;;;                                  GtkWidget *child,
 ;;;                                  const gchar *child_property);
 ;;; 
-;;; Emits a "child-notify" signal for the child property child_property on 
+;;; Emits a "child-notify" signal for the child property child_property on
 ;;; widget.
 ;;; 
 ;;; This is an analogue of g_object_notify() for child properties.
@@ -1042,10 +1042,10 @@
 ;;;                            GtkCallback callback,
 ;;;                            gpointer callback_data);
 ;;; 
-;;; Invokes callback on each child of container, including children that are 
-;;; considered "internal" (implementation details of the container). "Internal" 
+;;; Invokes callback on each child of container, including children that are
+;;; considered "internal" (implementation details of the container). "Internal"
 ;;; children generally weren't added by the user of the container, but were
-;;; added by the container implementation itself. Most applications should use 
+;;; added by the container implementation itself. Most applications should use
 ;;; gtk_container_foreach(), rather than gtk_container_forall().
 ;;; 
 ;;; Virtual: forall
@@ -1076,7 +1076,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_get_border_width ()
 ;;; 
-;;; guint gtk_container_get_border_width (GtkContainer *container)
+;;; guint gtk_container_get_border_width (GtkContainer *container);
 ;;; 
 ;;; Retrieves the border width of the container.
 ;;; See gtk_container_set_border_width().
@@ -1099,24 +1099,24 @@
 ;;; gtk_container_set_border_width ()
 ;;; 
 ;;; void gtk_container_set_border_width (GtkContainer *container,
-;;;                                      guint border_width)
+;;;                                      guint border_width);
 ;;; 
 ;;; Sets the border width of the container.
 ;;; 
 ;;; The border width of a container is the amount of space to leave around the
 ;;; outside of the container. The only exception to this is GtkWindow; because
-;;; toplevel windows can't leave space outside, they leave the space inside.
-;;; The border is added on all sides of the container. To add space to only one
+;;; toplevel windows can't leave space outside, they leave the space inside. The
+;;; border is added on all sides of the container. To add space to only one
 ;;; side, one approach is to create a GtkAlignment widget, call
-;;; gtk_widget_set_size_request() to give it a size, and place it on the side
-;;; of the container as a spacer.
+;;; gtk_widget_set_size_request() to give it a size, and place it on the side of
+;;; the container as a spacer.
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
-;;; border-width :
+;;; border_width :
 ;;;     amount of blank space to leave outside the container. Valid values are
-;;;     in the range 0-65535 pixels
+;;;     in the range 0-65535 pixels.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-container-set-border-width))
@@ -1166,18 +1166,18 @@
 ;;; gboolean gtk_container_get_focus_chain (GtkContainer *container,
 ;;;                                         GList **focusable_widgets);
 ;;; 
-;;; Retrieves the focus chain of the container, if one has been set 
-;;; explicitly. If no focus chain has been explicitly set, GTK+ computes the
-;;; focus chain based on the positions of the children. In that case, GTK+
-;;; stores NULL in focusable_widgets and returns FALSE.
+;;; Retrieves the focus chain of the container, if one has been set explicitly.
+;;; If no focus chain has been explicitly set, GTK+ computes the focus chain
+;;; based on the positions of the children. In that case, GTK+ stores NULL in
+;;; focusable_widgets and returns FALSE.
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
 ;;; focusable_widgets :
 ;;;     location to store the focus chain of the container, or NULL. You should
-;;;     free this list using g_list_free() when you are done with it, however
-;;;     no additional reference count is added to the individual widgets in the
+;;;     free this list using g_list_free() when you are done with it, however no
+;;;     additional reference count is added to the individual widgets in the
 ;;;     focus chain.
 ;;; 
 ;;; Returns :
@@ -1192,17 +1192,17 @@
 ;;; 
 ;;; Sets a focus chain, overriding the one computed automatically by GTK+.
 ;;; 
-;;; In principle each widget in the chain should be a descendant of the 
+;;; In principle each widget in the chain should be a descendant of the
 ;;; container, but this is not enforced by this method, since it's allowed to
 ;;; set the focus chain before you pack the widgets, or have a widget in the
-;;; chain that isn't always packed. The necessary checks are done when the
-;;; focus chain is actually traversed.
+;;; chain that isn't always packed. The necessary checks are done when the focus
+;;; chain is actually traversed.
 ;;; 
 ;;; container :
 ;;;     a GtkContainer
 ;;; 
 ;;; focusable_widgets :
-;;;     the new focus chain.
+;;;     the new focus chain
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1226,14 +1226,14 @@
 ;;; Finds a child property of a container class by name.
 ;;; 
 ;;; cclass :
-;;;     a GtkContainerClass.
+;;;     a GtkContainerClass
 ;;; 
 ;;; property_name :
 ;;;     the name of the child property to find
 ;;; 
 ;;; Returns :
-;;;     the GParamSpec of the child property or NULL if class has no child 
-;;;     property with that name.
+;;;     the GParamSpec of the child property or NULL if class has no child
+;;;     property with that name
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1260,19 +1260,19 @@
 ;;; 
 ;;; GParamSpec ** gtk_container_class_list_child_properties
 ;;;                                                       (GObjectClass *cclass,
-;;;                                                        guint *n_properties)
+;;;                                                        guint *n_properties);
 ;;; 
 ;;; Returns all child properties of a container class.
 ;;; 
 ;;; cclass :
-;;;     a GtkContainerClass.
+;;;     a GtkContainerClass
 ;;; 
 ;;; n_properties :
 ;;;     location to return the number of child properties found
 ;;; 
 ;;; Returns :
-;;;     a newly allocated NULL-terminated array of GParamSpec*. The array must 
-;;;     be freed with g_free().
+;;;     a newly allocated NULL-terminated array of GParamSpec*. The array must
+;;;     be freed with g_free()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1280,12 +1280,12 @@
 ;;; 
 ;;; void gtk_container_class_handle_border_width (GtkContainerClass *klass);
 ;;; 
-;;; Modifies a subclass of GtkContainerClass to automatically add and remove
-;;; the border-width setting on GtkContainer. This allows the subclass to
-;;; ignore the border width in its size request and allocate methods. The
-;;; intent is for a subclass to invoke this in its class_init function.
+;;; Modifies a subclass of GtkContainerClass to automatically add and remove the
+;;; border-width setting on GtkContainer. This allows the subclass to ignore the
+;;; border width in its size request and allocate methods. The intent is for a
+;;; subclass to invoke this in its class_init function.
 ;;; 
-;;; gtk_container_class_handle_border_width() is necessary because it would 
+;;; gtk_container_class_handle_border_width() is necessary because it would
 ;;; break API too badly to make this behavior the default. So subclasses must
 ;;; "opt in" to the parent class handling border_width for them.
 ;;; 

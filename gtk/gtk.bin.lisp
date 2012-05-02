@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkBin
 ;;; 
 ;;; A container with just one child
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkBin
+;;;     
 ;;;     gtk_bin_get_child
 ;;; 
 ;;; Object Hierarchy
@@ -80,6 +81,8 @@
 ;;; struct GtkBin;
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: Consider to cut out the cffi property child
+
 (define-g-object-class "GtkBin" gtk-bin
   (:superclass gtk-container
    :export t
@@ -92,17 +95,17 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_bin_get_child ()
 ;;; 
-;;; GtkWidget * gtk_bin_get_child (GtkBin *bin)
+;;; GtkWidget * gtk_bin_get_child (GtkBin *bin);
 ;;; 
 ;;; Gets the child of the GtkBin, or NULL if the bin contains no child widget.
 ;;; The returned widget does not have a reference added, so you do not need to
 ;;; unref it.
 ;;; 
 ;;; bin :
-;;; 	a GtkBin
+;;;     a GtkBin
 ;;; 
 ;;; Returns :
-;;; 	pointer to child of the GtkBin
+;;;     pointer to child of the GtkBin
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-bin-get-child))

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkWidget
 ;;; 
 ;;; Base class for all widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRequisition
@@ -227,7 +227,9 @@
 ;;;     gtk_widget_set_mapped
 ;;;     gtk_widget_get_mapped
 ;;;     gtk_widget_get_requisition
-;;;     gtk_widget_device_is_shadowed     
+;;;     gtk_widget_device_is_shadowed
+;;;     gtk_widget_get_modifier_mask
+;;;     
 ;;;     gtk_widget_get_path
 ;;;     gtk_widget_get_style_context
 ;;;     gtk_widget_reset_style
@@ -238,7 +240,7 @@
 ;;;     
 ;;;     GtkSizeRequestMode
 ;;;     GtkRequestedSize
-;;;
+;;;     
 ;;;     gtk_widget_get_preferred_height
 ;;;     gtk_widget_get_preferred_width
 ;;;     gtk_widget_get_preferred_height_for_width
@@ -248,7 +250,7 @@
 ;;;     gtk_distribute_natural_allocation
 ;;;     
 ;;;     GtkAlign
-;;;
+;;;     
 ;;;     gtk_widget_get_halign
 ;;;     gtk_widget_set_halign
 ;;;     gtk_widget_get_valign
@@ -300,8 +302,8 @@
 ;;; 
 ;;; Known Derived Interfaces
 ;;; 
-;;; GtkWidget is required by GtkAppChooser, GtkCellEditable, GtkFileChooser and
-;;; GtkToolShell.
+;;; GtkWidget is required by GtkActionable, GtkAppChooser, GtkCellEditable,
+;;; GtkFileChooser and GtkToolShell.
 ;;;
 ;;; Implemented Interfaces
 ;;; 
@@ -427,6 +429,7 @@
 ;;;   "state-flags-changed"                            : Run First
 ;;;   "style-set"                                      : Run First
 ;;;   "style-updated"                                  : Run First
+;;;   "touch-event"                                    : Run Last
 ;;;   "unmap"                                          : Run First
 ;;;   "unmap-event"                                    : Run Last
 ;;;   "unrealize"                                      : Run Last
@@ -442,19 +445,19 @@
 ;;; 
 ;;; GTK+ uses a height-for-width (and width-for-height) geometry management
 ;;; system. Height-for-width means that a widget can change how much vertical
-;;; space it needs, depending on the amount of horizontal space that it is
-;;; given (and similar for width-for-height). The most common example is a
-;;; label that reflows to fill up the available width, wraps to fewer lines,
-;;; and therefore needs less height.
+;;; space it needs, depending on the amount of horizontal space that it is given
+;;; (and similar for width-for-height). The most common example is a label that
+;;; reflows to fill up the available width, wraps to fewer lines, and therefore
+;;; needs less height.
 ;;; 
 ;;; Height-for-width geometry management is implemented in GTK+ by way of five
 ;;; virtual methods:
 ;;; 
-;;;     * GtkWidgetClass.get_request_mode()
-;;;     * GtkWidgetClass.get_preferred_width()
-;;;     * GtkWidgetClass.get_preferred_height()
-;;;     * GtkWidgetClass.get_preferred_height_for_width()
-;;;     * GtkWidgetClass.get_preferred_width_for_height()
+;;;     GtkWidgetClass.get_request_mode()
+;;;     GtkWidgetClass.get_preferred_width()
+;;;     GtkWidgetClass.get_preferred_height()
+;;;     GtkWidgetClass.get_preferred_height_for_width()
+;;;     GtkWidgetClass.get_preferred_width_for_height()
 ;;; 
 ;;; There are some important things to keep in mind when implementing
 ;;; height-for-width and when using it in container implementations.
@@ -511,8 +514,8 @@
 ;;; GtkWidgetClass.get_preferred_height() it will do:
 ;;; 
 ;;; static void
-;;; foo_widget_get_preferred_height (GtkWidget *widget, gint *min_height, gint
-;;;                                  *nat_height)
+;;; foo_widget_get_preferred_height (GtkWidget *widget,
+;;;                                  gint *min_height, gint *nat_height)
 ;;; {
 ;;;    if (i_am_in_height_for_width_mode)
 ;;;      {
@@ -521,25 +524,28 @@
 ;;;        GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget,
 ;;;                                                            &min_width,
 ;;;                                                            NULL);
-;;;        GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width
-;;;                                 (widget, min_width, min_height, nat_height);
+;;;        GTK_WIDGET_GET_CLASS (widget)->
+;;;                 get_preferred_height_for_width (widget,
+;;;                                                 min_width,
+;;;                                                 min_height,
+;;;                                                 nat_height);
 ;;;      }
 ;;;    else
 ;;;      {
 ;;;         ... some widgets do both. For instance, if a GtkLabel is rotated to
-;;;             90 degrees
-;;;         it will return the minimum and natural height for the rotated label
-;;;         here.
+;;;         90 degrees it will return the minimum and natural height for the
+;;;         rotated label here.
 ;;;      }
 ;;; }
 ;;; 
-;;; And in GtkWidgetClass.get_preferred_width_for_height() it will simply
-;;; return the minimum and natural width:
+;;; And in GtkWidgetClass.get_preferred_width_for_height() it will simply return
+;;; the minimum and natural width:
 ;;; 
 ;;; static void
 ;;; foo_widget_get_preferred_width_for_height (GtkWidget *widget,
 ;;;                                            gint for_height,
-;;;                                            gint *min_width, gint *nat_width)
+;;;                                            gint *min_width,
+;;;                                            gint *nat_width)
 ;;; {
 ;;;    if (i_am_in_height_for_width_mode)
 ;;;      {
@@ -550,8 +556,8 @@
 ;;;    else
 ;;;      {
 ;;;         ... again if a widget is sometimes operating in width-for-height
-;;;         mode (like a rotated GtkLabel) it can go ahead and do its real
-;;;         width for height calculation here.
+;;;         mode (like a rotated GtkLabel) it can go ahead and do its real width
+;;;         for height calculation here.
 ;;;      }
 ;;; }
 ;;; 
@@ -563,8 +569,8 @@
 ;;; 
 ;;; Example 101. Widget calling its own size request method.
 ;;; 
-;;;  GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget),
-;;;                                   &min, &natural);
+;;; GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget),
+;;;                                  &min, &natural);
 ;;; 
 ;;; It will not work to use the wrapper functions, such as
 ;;; gtk_widget_get_preferred_width() inside your own size request
@@ -601,9 +607,9 @@
 ;;; 
 ;;; Example 102. A UI definition fragment specifying an accelerator
 ;;; 
-;;;  <object class="GtkButton">
-;;;    <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
-;;;  </object>
+;;; <object class="GtkButton">
+;;;   <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
+;;; </object>
 ;;; 
 ;;; In addition to accelerators, GtkWidget also support a custom <accessible>
 ;;; element, which supports actions and relations. Properties on the accessible
@@ -612,32 +618,34 @@
 ;;; 
 ;;; Example 103. A UI definition fragment specifying an accessible
 ;;; 
-;;;  <object class="GtkButton" id="label1"/>
-;;;    <property name="label">I am a Label for a Button</property>
-;;;  </object>
-;;;  <object class="GtkButton" id="button1">
-;;;    <accessibility>
-;;;      <action action_name="click" translatable="yes">Click the button.</action>
-;;;      <relation target="label1" type="labelled-by"/>
-;;;    </accessibility>
-;;;    <child internal-child="accessible">
-;;;      <object class="AtkObject" id="a11y-button1">
-;;;        <property name="AtkObject::name">Clickable Button</property>
-;;;      </object>
-;;;    </child>
-;;;  </object>
-;;;  
+;;; <object class="GtkButton" id="label1"/>
+;;;   <property name="label">I am a Label for a Button</property>
+;;; </object>
+;;; <object class="GtkButton" id="button1">
+;;;   <accessibility>
+;;;     <action action_name="click"
+;;;             translatable="yes">Click the button.</action>
+;;;     <relation target="label1" type="labelled-by"/>
+;;;   </accessibility>
+;;;   <child internal-child="accessible">
+;;;     <object class="AtkObject" id="a11y-button1">
+;;;       <property name="AtkObject::name">Clickable Button</property>
+;;;     </object>
+;;;   </child>
+;;; </object>
+;;; 
 ;;; Finally, GtkWidget allows style information such as style classes to be
 ;;; associated with widgets, using the custom <style> element:
 ;;; 
 ;;; Example 104. A UI definition fragment specifying an style class
 ;;; 
-;;;  <object class="GtkButton" id="button1">
-;;;    <style>
-;;;      <class name="my-special-button-class"/>
-;;;      <class name="dark-button"/>
-;;;    </style>
-;;;  </object>
+;;; <object class="GtkButton" id="button1">
+;;;   <style>
+;;;     <class name="my-special-button-class"/>
+;;;     <class name="dark-button"/>
+;;;   </style>
+;;; </object>
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -907,8 +915,6 @@
 ;;;   "parent"                   GtkContainer*         : Read / Write
 ;;; 
 ;;; The parent widget of this widget. Must be a Container widget.
-;;;
-;;; ----------------------------------------------------------------------------
 ;;; The "receives-default" property
 ;;; 
 ;;;   "receives-default"         gboolean              : Read / Write
@@ -939,8 +945,8 @@
 ;;; 
 ;;;   "tooltip-markup"           gchar*                : Read / Write
 ;;; 
-;;; Sets the text of tooltip to be the given string, which is marked up with
-;;; the Pango text markup language. Also see gtk_tooltip_set_markup().
+;;; Sets the text of tooltip to be the given string, which is marked up with the
+;;; Pango text markup language. Also see gtk_tooltip_set_markup().
 ;;; 
 ;;; This is a convenience property which will take care of getting the tooltip
 ;;; shown if the given string is not NULL: "has-tooltip" will automatically be
@@ -1144,8 +1150,8 @@
 ;;; 
 ;;;   "separator-height"         gint                  : Read
 ;;; 
-;;; The "separator-height" style property defines the height of separators.
-;;; This property only takes effect if "wide-separators" is TRUE.
+;;; The "separator-height" style property defines the height of separators. This
+;;; property only takes effect if "wide-separators" is TRUE.
 ;;; 
 ;;; Allowed values: >= 0
 ;;; 
@@ -1158,8 +1164,8 @@
 ;;; 
 ;;;   "separator-width"          gint                  : Read
 ;;; 
-;;; The "separator-width" style property defines the width of separators.
-;;; This property only takes effect if "wide-separators" is TRUE.
+;;; The "separator-width" style property defines the width of separators. This
+;;; property only takes effect if "wide-separators" is TRUE.
 ;;; 
 ;;; Allowed values: >= 0
 ;;; 
@@ -1314,7 +1320,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "composited-changed" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Action
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Action
 ;;; 
 ;;; The ::composited-changed signal is emitted when the composited status of
 ;;; widgets screen changes. See gdk_screen_is_composited().
@@ -1343,7 +1350,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventConfigure which triggered this signal.
+;;;     the GdkEventConfigure which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -1356,8 +1363,8 @@
 ;;; The "damage-event" signal
 ;;; 
 ;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent *event,
-;;;                         gpointer user_data)      : Run Last
+;;;                         GdkEvent  *event,
+;;;                         gpointer   user_data)      : Run Last
 ;;; 
 ;;; Emitted when a redirected window belonging to widget gets drawn into. The
 ;;; region/area members of the event shows what area of the redirected drawable
@@ -1373,8 +1380,8 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;; 
 ;;; Since 2.14
 ;;;
@@ -1383,7 +1390,7 @@
 ;;; 
 ;;; gboolean user_function (GtkWidget *widget,
 ;;;                         GdkEvent  *event,
-;;;                         gpointer  user_data)      : Run Last
+;;;                         gpointer   user_data)      : Run Last
 ;;; 
 ;;; The ::delete-event signal is emitted if a user requests that a toplevel
 ;;; window is closed. The default handler for this signal destroys the window.
@@ -1401,13 +1408,14 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;; propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "destroy" signal
 ;;; 
-;;; void user_function (GtkWidget *object, gpointer user_data)      : No Hooks
+;;; void user_function (GtkWidget *object,
+;;;                     gpointer   user_data)      : No Hooks
 ;;; 
 ;;; Signals that all holders of a reference to the widget should release the
 ;;; reference that they hold. May result in finalization of the widget if all
@@ -1428,8 +1436,8 @@
 ;;; 
 ;;; The ::destroy-event signal is emitted when a GdkWindow is destroyed. You
 ;;; rarely get this signal, because most widgets disconnect themselves from
-;;; their window before they destroy it, so no widget owns the window at
-;;; destroy time.
+;;; their window before they destroy it, so no widget owns the window at destroy
+;;; time.
 ;;; 
 ;;; To receive this signal, the GdkWindow associated to the widget needs to
 ;;; enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask automatically
@@ -1445,8 +1453,8 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "direction-changed" signal
@@ -1479,8 +1487,8 @@
 ;;; drag icon with gtk_drag_source_set_icon().
 ;;; 
 ;;; Note that some widgets set up a drag icon in the default handler of this
-;;; signal, so you may have to use g_signal_connect_after() to override what
-;;; the default handler did.
+;;; signal, so you may have to use g_signal_connect_after() to override what the
+;;; default handler did.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal
@@ -1498,10 +1506,10 @@
 ;;;                     GdkDragContext *drag_context,
 ;;;                     gpointer        user_data)         : Run Last
 ;;; 
-;;; The ::drag-data-delete signal is emitted on the drag source when a drag
-;;; with the action GDK_ACTION_MOVE is successfully completed. The signal
-;;; handler is responsible for deleting the data that has been dropped. What
-;;; "delete" means depends on the context of the drag operation.
+;;; The ::drag-data-delete signal is emitted on the drag source when a drag with
+;;; the action GDK_ACTION_MOVE is successfully completed. The signal handler is
+;;; responsible for deleting the data that has been dropped. What "delete" means
+;;; depends on the context of the drag operation.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal
@@ -1557,10 +1565,10 @@
 ;;;                     guint             time,
 ;;;                     gpointer          user_data)         : Run Last
 ;;; 
-;;; The ::drag-data-received signal is emitted on the drop site when the
-;;; dragged data has been received. If the data was received in order to
-;;; determine whether the drop will be accepted, the handler is expected to
-;;; call gdk_drag_status() and not finish the drag. If the data was received in
+;;; The ::drag-data-received signal is emitted on the drop site when the dragged
+;;; data has been received. If the data was received in order to determine
+;;; whether the drop will be accepted, the handler is expected to call
+;;; gdk_drag_status() and not finish the drag. If the data was received in
 ;;; response to a "drag-drop" signal (and this is the last target to be
 ;;; received), the handler for this signal is expected to process the received
 ;;; data and then call gtk_drag_finish(), setting the success parameter
@@ -1666,11 +1674,11 @@
 ;;; time :
 ;;;     the timestamp of the motion event
 ;;; 
-;;; returns :
-;;;     whether the cursor position is in a drop zone
-;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
+;;; 
+;;; Returns :
+;;;     whether the cursor position is in a drop zone
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "drag-end" signal
@@ -1855,11 +1863,11 @@
 ;;; time :
 ;;;     the timestamp of the motion event
 ;;; 
-;;; returns :
-;;;     whether the cursor position is in a drop zone
-;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
+;;; 
+;;; Returns :
+;;;     whether the cursor position is in a drop zone
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "draw" signal
@@ -1868,15 +1876,15 @@
 ;;;                         CairoContext *cr,
 ;;;                         gpointer      user_data)      : Run Last
 ;;; 
-;;; This signal is emitted when a widget is supposed to render itself. The
-;;; widget's top left corner must be painted at the origin of the passed in
+;;; This signal is emitted when a widget is supposed to render itself.
+;;; The widget's top left corner must be painted at the origin of the passed in
 ;;; context and be sized to the values returned by
 ;;; gtk_widget_get_allocated_width() and gtk_widget_get_allocated_height().
 ;;; 
-;;; Signal handlers connected to this signal can modify the cairo context
-;;; passed as cr in any way they like and don't need to restore it. The signal
-;;; emission takes care of calling cairo_save() before and cairo_restore()
-;;; after invoking the handler.
+;;; Signal handlers connected to this signal can modify the cairo context passed
+;;; as cr in any way they like and don't need to restore it. The signal emission
+;;; takes care of calling cairo_save() before and cairo_restore() after invoking
+;;; the handler.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal
@@ -1908,7 +1916,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventCrossing which triggered this signal.
+;;;     the GdkEventCrossing which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -1924,10 +1932,10 @@
 ;;;                         GdkEvent  *event,
 ;;;                         gpointer   user_data)      : Run Last
 ;;; 
-;;; The GTK+ main loop will emit three signals for each GDK event delivered
-;;; to a widget: one generic ::event signal, another, more specific, signal
-;;; that matches the type of event delivered (e.g. "key-press-event") and
-;;; finally a generic "event-after" signal.
+;;; The GTK+ main loop will emit three signals for each GDK event delivered to a
+;;; widget: one generic ::event signal, another, more specific, signal that
+;;; matches the type of event delivered (e.g. "key-press-event") and finally a
+;;; generic "event-after" signal.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -1948,7 +1956,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "event-after" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, GdkEvent *event, gpointer user_data)
+;;; void user_function (GtkWidget *widget,
+;;;                     GdkEvent  *event,
+;;;                     gpointer   user_data)
 ;;; 
 ;;; After the emission of the "event" signal and (optionally) the second more
 ;;; specific signal, ::event-after will be emitted regardless of the previous
@@ -1977,8 +1987,8 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "focus-in-event" signal
@@ -1997,14 +2007,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventFocus which triggered this signal.
+;;;     the GdkEventFocus which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "focus-out-event" signal
@@ -2023,14 +2033,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventFocus which triggered this signal.
+;;;     the GdkEventFocus which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "grab-broken-event" signal
@@ -2039,12 +2049,12 @@
 ;;;                         GdkEvent  *event,
 ;;;                         gpointer   user_data)      : Run Last
 ;;; 
-;;; Emitted when a pointer or keyboard grab on a window belonging to widget
-;;; gets broken.
+;;; Emitted when a pointer or keyboard grab on a window belonging to widget gets
+;;; broken.
 ;;; 
-;;; On X11, this happens when the grab window becomes unviewable (i.e. it or
-;;; one of its ancestors is unmapped), or if the same application grabs the
-;;; pointer or keyboard again.
+;;; On X11, this happens when the grab window becomes unviewable (i.e. it or one
+;;; of its ancestors is unmapped), or if the same application grabs the pointer
+;;; or keyboard again.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal
@@ -2056,15 +2066,16 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;; 
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "grab-focus" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Action
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Action
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2079,12 +2090,12 @@
 ;;;                     gboolean   was_grabbed,
 ;;;                     gpointer   user_data)        : Run First
 ;;; 
-;;; The ::grab-notify signal is emitted when a widget becomes shadowed by a
-;;; GTK+ grab (not a pointer or keyboard grab) on another widget, or when it
-;;; becomes unshadowed due to a grab being removed.
+;;; The ::grab-notify signal is emitted when a widget becomes shadowed by a GTK+
+;;; grab (not a pointer or keyboard grab) on another widget, or when it becomes
+;;; unshadowed due to a grab being removed.
 ;;; 
-;;; A widget is shadowed by a gtk_grab_add() when the topmost grab widget in
-;;; the grab stack of its window group is not its ancestor.
+;;; A widget is shadowed by a gtk_grab_add() when the topmost grab widget in the
+;;; grab stack of its window group is not its ancestor.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal
@@ -2098,7 +2109,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "hide" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run First
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2123,7 +2135,7 @@
 ;;; 
 ;;; previous_toplevel :
 ;;;     the previous toplevel ancestor, or NULL if the widget was previously
-;;;     unanchored.
+;;;     unanchored
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2147,14 +2159,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventKey which triggered this signal.
+;;;     the GdkEventKey which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "key-release-event" signal
@@ -2174,14 +2186,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventKey which triggered this signal.
+;;;     the GdkEventKey which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "keynav-failed" signal
@@ -2228,19 +2240,20 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventCrossing which triggered this signal.
+;;;     the GdkEventCrossing which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "map" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run First
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2272,8 +2285,8 @@
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "mnemonic-activate" signal
@@ -2295,8 +2308,8 @@
 ;;;                         GdkEvent  *event,
 ;;;                         gpointer   user_data)      : Run Last
 ;;; 
-;;; The ::motion-notify-event signal is emitted when the pointer moves over
-;;; the widget's GdkWindow.
+;;; The ::motion-notify-event signal is emitted when the pointer moves over the
+;;; widget's GdkWindow.
 ;;; 
 ;;; To receive this signal, the GdkWindow associated to the widget needs to
 ;;; enable the GDK_POINTER_MOTION_MASK mask.
@@ -2307,14 +2320,14 @@
 ;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;;     the GdkEventMotion which triggered this signal.
+;;;     the GdkEventMotion which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "move-focus" signal
@@ -2351,7 +2364,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "popup-menu" signal
 ;;; 
-;;; gboolean user_function (GtkWidget *widget, gpointer user_data)     : Action
+;;; gboolean user_function (GtkWidget *widget,
+;;;                         gpointer   user_data)      : Action
 ;;; 
 ;;; This signal gets emitted whenever a widget should pop up a context menu.
 ;;; This usually happens through the standard key binding mechanism; by pressing
@@ -2386,14 +2400,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventProperty which triggered this signal.
+;;;     the GdkEventProperty which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "proximity-in-event" signal
@@ -2411,14 +2425,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventProximity which triggered this signal.
+;;;     the GdkEventProximity which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "proximity-out-event" signal
@@ -2436,14 +2450,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventProximity which triggered this signal.
+;;;     the GdkEventProximity which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "query-tooltip" signal
@@ -2455,17 +2469,17 @@
 ;;;                         GtkTooltip *tooltip,
 ;;;                         gpointer    user_data)          : Run Last
 ;;; 
-;;; Emitted when "has-tooltip" is TRUE and the "gtk-tooltip-timeout" has
-;;; expired with the cursor hovering "above" widget; or emitted when widget got
-;;; focus in keyboard mode.
+;;; Emitted when "has-tooltip" is TRUE and the "gtk-tooltip-timeout" has expired
+;;; with the cursor hovering "above" widget; or emitted when widget got focus in
+;;; keyboard mode.
 ;;; 
-;;; Using the given coordinates, the signal handler should determine whether
-;;; a tooltip should be shown for widget. If this is the case TRUE should be
-;;; returned, FALSE otherwise. Note that if keyboard_mode is TRUE, the values
-;;; of x and y are undefined and should not be used.
+;;; Using the given coordinates, the signal handler should determine whether a
+;;; tooltip should be shown for widget. If this is the case TRUE should be
+;;; returned, FALSE otherwise. Note that if keyboard_mode is TRUE, the values of
+;;; x and y are undefined and should not be used.
 ;;; 
-;;; The signal handler is free to manipulate tooltip with the therefore
-;;; destined function calls.
+;;; The signal handler is free to manipulate tooltip with the therefore destined
+;;; function calls.
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal
@@ -2495,7 +2509,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "realize" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run First
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2543,14 +2558,14 @@
 ;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;;     the GdkEventScroll which triggered this signal.
+;;;     the GdkEventScroll which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "selection-clear-event" signal
@@ -2566,14 +2581,14 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventSelection which triggered this signal.
+;;;     the GdkEventSelection which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from beig invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "selection-get" signal
@@ -2601,16 +2616,16 @@
 ;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;;     . 
+;;;     .
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
-;;; ----------------------------------------------------------------------------3
+;;; ----------------------------------------------------------------------------
 ;;; The "selection-received" signal
 ;;; 
 ;;; void user_function (GtkWidget        *widget,
@@ -2638,20 +2653,20 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventSelection which triggered this signal.
+;;;     the GdkEventSelection which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "show" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run First
-
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2697,8 +2712,8 @@
 ;;; GtkWidget::state-changed is deprecated and should not be used in
 ;;; newly-written code. 3.0. Use "state-flags-changed" instead.
 ;;; 
-;;; The ::state-changed signal is emitted when the widget state changes. See
-;;; gtk_widget_get_state().
+;;; The ::state-changed signal is emitted when the widget state changes.
+;;; See gtk_widget_get_state().
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2739,12 +2754,12 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; GtkWidget::style-set has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use the "style-updated" signal
+;;; GtkWidget::style-set has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use the "style-updated" signal
 ;;; 
 ;;; The ::style-set signal is emitted when a new style has been set on a widget.
-;;; Note that style-modifying functions like gtk_widget_modify_base() also
-;;; cause this signal to be emitted.
+;;; Note that style-modifying functions like gtk_widget_modify_base() also cause
+;;; this signal to be emitted.
 ;;; 
 ;;; Note that this signal is emitted for changes to the deprecated GtkStyle. To
 ;;; track changes to the GtkStyleContext associated with a widget, use the
@@ -2754,7 +2769,7 @@
 ;;;     the object on which the signal is emitted
 ;;; 
 ;;; previous_style :
-;;;     the previous style, or NULL if the widget just got its initial style.
+;;;     the previous style, or NULL if the widget just got its initial style
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2762,7 +2777,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "style-updated" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run First
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; The ::style-updated signal is emitted when the GtkStyleContext of a widget
 ;;; is changed. Note that style-modifying functions like
@@ -2777,9 +2793,17 @@
 ;;; Since 3.0
 ;;;
 ;;; ----------------------------------------------------------------------------
+;;; The "touch-event" signal
+;;; 
+;;; gboolean user_function (GtkWidget *widget,
+;;;                         GdkEvent  *arg1,
+;;;                         gpointer   user_data)      : Run Last
+;;; 
+;;; ----------------------------------------------------------------------------
 ;;; The "unmap" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run First
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2792,7 +2816,7 @@
 ;;; 
 ;;; gboolean user_function (GtkWidget *widget,
 ;;;                         GdkEvent  *event,
-;;;                         gpointer user_data)      : Run Last
+;;;                         gpointer   user_data)      : Run Last
 ;;; 
 ;;; The ::unmap-event signal will be emitted when the widget's window is
 ;;; unmapped. A window is unmapped when it becomes invisible on the screen.
@@ -2805,7 +2829,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventAny which triggered this signal.
+;;;     the GdkEventAny which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2817,7 +2841,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "unrealize" signal
 ;;; 
-;;; void user_function (GtkWidget *widget, gpointer user_data)      : Run Last
+;;; void user_function (GtkWidget *widget,
+;;;                     gpointer   user_data)      : Run Last
 ;;; 
 ;;; widget :
 ;;;     the object which received the signal.
@@ -2842,7 +2867,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventVisibility which triggered this signal.
+;;;     the GdkEventVisibility which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2855,8 +2880,8 @@
 ;;; The "window-state-event" signal
 ;;; 
 ;;; gboolean user_function (GtkWidget *widget,
-;;;                                   GdkEvent  *event,
-;;;                                   gpointer   user_data)      : Run Last
+;;;                         GdkEvent  *event,
+;;;                         gpointer   user_data)      : Run Last
 ;;; 
 ;;; The ::window-state-event will be emitted when the state of the toplevel
 ;;; window associated to the widget changes.
@@ -2869,7 +2894,7 @@
 ;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;;     the GdkEventWindowState which triggered this signal.
+;;;     the GdkEventWindowState which triggered this signal
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -2882,12 +2907,12 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkRequisition
+;;; GtkRequisition
 ;;; 
-;;; struct GtkRequisition {
+;;; typedef struct {
 ;;;   gint width;
 ;;;   gint height;
-;;; };
+;;; } GtkRequisition;
 ;;; 
 ;;; A GtkRequisition represents the desired size of a widget. See the section
 ;;; called “Height-for-width Geometry Management” for more information.
@@ -2923,23 +2948,6 @@
   (height :int :initform 0))
 
 (export (boxed-related-symbols 'gtk-allocation))
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkTextDirection
-;;; 
-;;; typedef enum {
-;;;   GTK_TEXT_DIR_NONE,
-;;;   GTK_TEXT_DIR_LTR,
-;;;   GTK_TEXT_DIR_RTL
-;;; } GtkTextDirection;
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkTextDirection" gtk-text-direction
-  (:export t
-   :type-initializer "gtk_text_direction_get_type")
-  (:none 0)
-  (:ltr 1)
-  (:rtl 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
@@ -3103,30 +3111,32 @@
           gtk-widget-tooltip-window g-object
           "gtk_widget_get_tooltip_window" "gtk_widget_set_tooltip_window")))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkWidgetClass
 ;;; 
 ;;; struct GtkWidgetClass {
 ;;;   GInitiallyUnownedClass parent_class;
-;;; 
+;;;   
 ;;;   guint activate_signal;
-;;; 
+;;;   
 ;;;   /* seldomly overidden */
 ;;;   void (*dispatch_child_properties_changed) (GtkWidget   *widget,
 ;;;                                              guint        n_pspecs,
 ;;;                                              GParamSpec **pspecs);
 ;;; 
 ;;;   /* basics */
-;;;   void (* destroy)             (GtkWidget *widget);
-;;;   void (* show)                (GtkWidget *widget);
-;;;   void (* show_all)            (GtkWidget *widget);
-;;;   void (* hide)                (GtkWidget *widget);
+;;;   void (* destroy)             (GtkWidget        *widget);
+;;;   void (* show)                (GtkWidget        *widget);
+;;;   void (* show_all)            (GtkWidget        *widget);
+;;;   void (* hide)                (GtkWidget        *widget);
 ;;;   void (* map)                 (GtkWidget        *widget);
 ;;;   void (* unmap)               (GtkWidget        *widget);
 ;;;   void (* realize)             (GtkWidget        *widget);
 ;;;   void (* unrealize)           (GtkWidget        *widget);
-;;;   void (* size_allocate)     (GtkWidget *widget, GtkAllocation *allocation);
-;;;   void (* state_changed)     (GtkWidget *widget, GtkStateType previous_state);
+;;;   void (* size_allocate)       (GtkWidget        *widget,
+;;;                                 GtkAllocation    *allocation);
+;;;   void (* state_changed)       (GtkWidget        *widget,
+;;;                                 GtkStateType      previous_state);
 ;;;   void (* state_flags_changed) (GtkWidget        *widget,
 ;;;                                 GtkStateFlags     previous_state_flags);
 ;;;   void (* parent_set)          (GtkWidget        *widget,
@@ -3145,191 +3155,194 @@
 ;;;                                 cairo_t          *cr);
 ;;; 
 ;;;   /* size requests */
-;;;   GtkSizeRequestMode (* get_request_mode)  (GtkWidget *widget)
+;;;   GtkSizeRequestMode (* get_request_mode)       (GtkWidget *widget);
 ;;; 
-;;;   void  (* get_preferred_height)           (GtkWidget *widget,
-;;;                                                        gint *minimum_height,
-;;;                                                        gint *natural_height)
-;;;   void  (* get_preferred_width_for_height) (GtkWidget *widget,
-;;;                                                        gint  height,
-;;;                                                        gint *minimum_width,
-;;;                                                        gint *natural_width)
-;;;   void  (* get_preferred_width)            (GtkWidget *widget,
-;;;                                                        gint *minimum_width,
-;;;                                                        gint *natural_width)
-;;;   void  (* get_preferred_height_for_width) (GtkWidget *widget,
-;;;                                                        gint  width,
-;;;                                                        gint *minimum_height,
-;;;                                                        gint *natural_height)
+;;;   void               (* get_preferred_height)   (GtkWidget *widget,
+;;;                                                  gint      *minimum_height,
+;;;                                                  gint      *natural_height);
+;;;   void               (* get_preferred_width_for_height)
+;;;                                                 (GtkWidget *widget,
+;;;                                                  gint       height,
+;;;                                                  gint      *minimum_width,
+;;;                                                  gint      *natural_width);
+;;;   void               (* get_preferred_width)    (GtkWidget *widget,
+;;;                                                  gint      *minimum_width,
+;;;                                                  gint      *natural_width);
+;;;   void               (* get_preferred_height_for_width)
+;;;                                                 (GtkWidget *widget,
+;;;                                                  gint       width,
+;;;                                                  gint      *minimum_height,
+;;;                                                  gint      *natural_height);
 ;;; 
 ;;;   /* Mnemonics */
-;;;   gboolean (* mnemonic_activate)           (GtkWidget    *widget,
-;;;                                             gboolean      group_cycling);
+;;;   gboolean (* mnemonic_activate)       (GtkWidget           *widget,
+;;;                                         gboolean             group_cycling);
 ;;; 
 ;;;   /* explicit focus */
-;;;   void     (* grab_focus)                  (GtkWidget           *widget);
-;;;   gboolean (* focus)                       (GtkWidget           *widget,
-;;;                                             GtkDirectionType     direction);
+;;;   void     (* grab_focus)              (GtkWidget           *widget);
+;;;   gboolean (* focus)                   (GtkWidget           *widget,
+;;;                                         GtkDirectionType     direction);
 ;;; 
 ;;;   /* keyboard navigation */
-;;;   void     (* move_focus)                  (GtkWidget           *widget,
-;;;                                             GtkDirectionType     direction);
-;;;   gboolean (* keynav_failed)               (GtkWidget           *widget,
-;;;                                             GtkDirectionType     direction);
+;;;   void     (* move_focus)              (GtkWidget           *widget,
+;;;                                         GtkDirectionType     direction);
+;;;   gboolean (* keynav_failed)           (GtkWidget           *widget,
+;;;                                         GtkDirectionType     direction);
 ;;; 
 ;;;   /* events */
-;;;   gboolean (* event)                       (GtkWidget           *widget,
-;;;                                             GdkEvent            *event);
-;;;   gboolean (* button_press_event)          (GtkWidget           *widget,
-;;;                                             GdkEventButton      *event);
-;;;   gboolean (* button_release_event)        (GtkWidget           *widget,
-;;;                                             GdkEventButton      *event);
-;;;   gboolean (* scroll_event)                (GtkWidget           *widget,
-;;;                                             GdkEventScrol       *event);
-;;;   gboolean (* motion_notify_event) (GtkWidget         *widget,
-;;;                      GdkEventMotion      *event);
-;;;   gboolean (* delete_event)        (GtkWidget         *widget,
-;;;                      GdkEventAny         *event);
-;;;   gboolean (* destroy_event)        (GtkWidget         *widget,
-;;;                      GdkEventAny         *event);
-;;;   gboolean (* key_press_event)        (GtkWidget         *widget,
-;;;                      GdkEventKey         *event);
-;;;   gboolean (* key_release_event) (GtkWidget         *widget,
-;;;                      GdkEventKey         *event);
-;;;   gboolean (* enter_notify_event) (GtkWidget         *widget,
-;;;                      GdkEventCrossing    *event);
-;;;   gboolean (* leave_notify_event) (GtkWidget         *widget,
-;;;                      GdkEventCrossing    *event);
-;;;   gboolean (* configure_event)        (GtkWidget         *widget,
-;;;                      GdkEventConfigure   *event);
-;;;   gboolean (* focus_in_event)        (GtkWidget         *widget,
-;;;                      GdkEventFocus       *event);
-;;;   gboolean (* focus_out_event)        (GtkWidget         *widget,
-;;;                      GdkEventFocus       *event);
-;;;   gboolean (* map_event)        (GtkWidget         *widget,
-;;;                      GdkEventAny         *event);
-;;;   gboolean (* unmap_event)        (GtkWidget         *widget,
-;;;                      GdkEventAny         *event);
-;;;   gboolean (* property_notify_event) (GtkWidget         *widget,
-;;;                      GdkEventProperty    *event);
-;;;   gboolean (* selection_clear_event) (GtkWidget         *widget,
-;;;                      GdkEventSelection   *event);
-;;;   gboolean (* selection_request_event) (GtkWidget         *widget,
-;;;                      GdkEventSelection   *event);
-;;;   gboolean (* selection_notify_event) (GtkWidget         *widget,
-;;;                      GdkEventSelection   *event);
-;;;   gboolean (* proximity_in_event) (GtkWidget         *widget,
-;;;                      GdkEventProximity   *event);
-;;;   gboolean (* proximity_out_event) (GtkWidget         *widget,
-;;;                      GdkEventProximity   *event);
-;;;   gboolean (* visibility_notify_event) (GtkWidget         *widget,
-;;;                      GdkEventVisibility  *event);
-;;;   gboolean (* window_state_event) (GtkWidget         *widget,
-;;;                      GdkEventWindowState *event);
-;;;   gboolean (* damage_event)             (GtkWidget           *widget,
-;;;                                          GdkEventExpose      *event);
-;;;   gboolean (* grab_broken_event)        (GtkWidget           *widget,
-;;;                                          GdkEventGrabBroken  *event);
+;;;   gboolean (* event)                   (GtkWidget           *widget,
+;;;                                         GdkEvent            *event);
+;;;   gboolean (* button_press_event)      (GtkWidget           *widget,
+;;;                                         GdkEventButton      *event);
+;;;   gboolean (* button_release_event)    (GtkWidget           *widget,
+;;;                                         GdkEventButton      *event);
+;;;   gboolean (* scroll_event)            (GtkWidget           *widget,
+;;;                                         GdkEventScroll      *event);
+;;;   gboolean (* motion_notify_event)     (GtkWidget           *widget,
+;;;                                         GdkEventMotion      *event);
+;;;   gboolean (* delete_event)            (GtkWidget           *widget,
+;;;                                         GdkEventAny         *event);
+;;;   gboolean (* destroy_event)           (GtkWidget           *widget,
+;;;                                         GdkEventAny         *event);
+;;;   gboolean (* key_press_event)         (GtkWidget           *widget,
+;;;                                         GdkEventKey         *event);
+;;;   gboolean (* key_release_event)       (GtkWidget           *widget,
+;;;                                         GdkEventKey         *event);
+;;;   gboolean (* enter_notify_event)      (GtkWidget           *widget,
+;;;                                         GdkEventCrossing    *event);
+;;;   gboolean (* leave_notify_event)      (GtkWidget           *widget,
+;;;                                         GdkEventCrossing    *event);
+;;;   gboolean (* configure_event)         (GtkWidget           *widget,
+;;;                                         GdkEventConfigure   *event);
+;;;   gboolean (* focus_in_event)          (GtkWidget           *widget,
+;;;                                         GdkEventFocus       *event);
+;;;   gboolean (* focus_out_event)         (GtkWidget           *widget,
+;;;                                         GdkEventFocus       *event);
+;;;   gboolean (* map_event)               (GtkWidget           *widget,
+;;;                                         GdkEventAny         *event);
+;;;   gboolean (* unmap_event)             (GtkWidget           *widget,
+;;;                                         GdkEventAny         *event);
+;;;   gboolean (* property_notify_event)   (GtkWidget           *widget,
+;;;                                         GdkEventProperty    *event);
+;;;   gboolean (* selection_clear_event)   (GtkWidget           *widget,
+;;;                                         GdkEventSelection   *event);
+;;;   gboolean (* selection_request_event) (GtkWidget           *widget,
+;;;                                         GdkEventSelection   *event);
+;;;   gboolean (* selection_notify_event)  (GtkWidget           *widget,
+;;;                                         GdkEventSelection   *event);
+;;;   gboolean (* proximity_in_event)      (GtkWidget           *widget,
+;;;                                         GdkEventProximity   *event);
+;;;   gboolean (* proximity_out_event)     (GtkWidget           *widget,
+;;;                                         GdkEventProximity   *event);
+;;;   gboolean (* visibility_notify_event) (GtkWidget           *widget,
+;;;                                         GdkEventVisibility  *event);
+;;;   gboolean (* window_state_event)      (GtkWidget           *widget,
+;;;                                         GdkEventWindowState *event);
+;;;   gboolean (* damage_event)            (GtkWidget           *widget,
+;;;                                         GdkEventExpose      *event);
+;;;   gboolean (* grab_broken_event)       (GtkWidget           *widget,
+;;;                                         GdkEventGrabBroken  *event);
 ;;; 
 ;;;   /* selection */
-;;;   void     (* selection_get)       (GtkWidget          *widget,
-;;;                     GtkSelectionData   *selection_data,
-;;;                     guint               info,
-;;;                     guint               time_);
-;;;   void     (* selection_received)  (GtkWidget          *widget,
-;;;                     GtkSelectionData   *selection_data,
-;;;                     guint               time_);
+;;;   void     (* selection_get)           (GtkWidget           *widget,
+;;;                                         GtkSelectionData    *selection_data,
+;;;                                         guint                info,
+;;;                                         guint                time_);
+;;;   void     (* selection_received)      (GtkWidget           *widget,
+;;;                                         GtkSelectionData    *selection_data,
+;;;                                         guint                time_);
 ;;; 
 ;;;   /* Source side drag signals */
-;;;   void     (* drag_begin)          (GtkWidget         *widget,
-;;;                     GdkDragContext     *context);
-;;;   void     (* drag_end)               (GtkWidget           *widget,
-;;;                     GdkDragContext     *context);
-;;;   void     (* drag_data_get)       (GtkWidget          *widget,
-;;;                     GdkDragContext     *context,
-;;;                     GtkSelectionData   *selection_data,
-;;;                     guint               info,
-;;;                     guint               time_);
-;;;   void     (* drag_data_delete)    (GtkWidget          *widget,
-;;;                     GdkDragContext     *context);
+;;;   void     (* drag_begin)              (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context);
+;;;   void     (* drag_end)                (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context);
+;;;   void     (* drag_data_get)           (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context,
+;;;                                         GtkSelectionData    *selection_data,
+;;;                                         guint                info,
+;;;                                         guint                time_);
+;;;   void     (* drag_data_delete)        (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context);
 ;;; 
 ;;;   /* Target side drag signals */
-;;;   void     (* drag_leave)          (GtkWidget          *widget,
-;;;                     GdkDragContext     *context,
-;;;                     guint               time_);
-;;;   gboolean (* drag_motion)         (GtkWidget           *widget,
-;;;                     GdkDragContext     *context,
-;;;                     gint                x,
-;;;                     gint                y,
-;;;                     guint               time_);
-;;;   gboolean (* drag_drop)           (GtkWidget           *widget,
-;;;                     GdkDragContext     *context,
-;;;                     gint                x,
-;;;                     gint                y,
-;;;                     guint               time_);
-;;;   void     (* drag_data_received)  (GtkWidget          *widget,
-;;;                     GdkDragContext     *context,
-;;;                     gint                x,
-;;;                     gint                y,
-;;;                     GtkSelectionData   *selection_data,
-;;;                     guint               info,
-;;;                     guint               time_);
-;;;   gboolean (* drag_failed)         (GtkWidget          *widget,
-;;;                                     GdkDragContext     *context,
-;;;                                     GtkDragResult       result);
+;;;   void     (* drag_leave)              (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context,
+;;;                                         guint                time_);
+;;;   gboolean (* drag_motion)             (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context,
+;;;                                         gint                 x,
+;;;                                         gint                 y,
+;;;                                         guint                time_);
+;;;   gboolean (* drag_drop)               (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context,
+;;;                                         gint                 x,
+;;;                                         gint                 y,
+;;;                                         guint                time_);
+;;;   void     (* drag_data_received)      (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context,
+;;;                                         gint                 x,
+;;;                                         gint                 y,
+;;;                                         GtkSelectionData    *selection_data,
+;;;                                         guint                info,
+;;;                                         guint                time_);
+;;;   gboolean (* drag_failed)             (GtkWidget           *widget,
+;;;                                         GdkDragContext      *context,
+;;;                                         GtkDragResult        result);
 ;;; 
 ;;;   /* Signals used only for keybindings */
-;;;   gboolean (* popup_menu)          (GtkWidget          *widget);
+;;;   gboolean (* popup_menu)              (GtkWidget           *widget);
 ;;; 
 ;;;   /* If a widget has multiple tooltips/whatsthis, it should show the
 ;;;    * one for the current focus location, or if that doesn't make
 ;;;    * sense, should cycle through them showing each tip alongside
 ;;;    * whatever piece of the widget it applies to.
 ;;;    */
-;;;   gboolean (* show_help)           (GtkWidget          *widget,
-;;;                                     GtkWidgetHelpType   help_type);
+;;;   gboolean (* show_help)               (GtkWidget           *widget,
+;;;                                         GtkWidgetHelpType    help_type);
 ;;; 
 ;;;   /* accessibility support
 ;;;    */
-;;;   AtkObject *  (* get_accessible)     (GtkWidget *widget);
+;;;   AtkObject *  (* get_accessible)      (GtkWidget         *widget);
 ;;; 
-;;;   void         (* screen_changed)     (GtkWidget *widget,
-;;;                                        GdkScreen *previous_screen);
-;;;   gboolean     (* can_activate_accel) (GtkWidget *widget,
-;;;                                        guint      signal_id);
+;;;   void         (* screen_changed)      (GtkWidget         *widget,
+;;;                                         GdkScreen         *previous_screen);
+;;;   gboolean     (* can_activate_accel)  (GtkWidget         *widget,
+;;;                                         guint              signal_id);
 ;;; 
+;;;   void         (* composited_changed)  (GtkWidget         *widget);
 ;;; 
-;;;   void         (* composited_changed) (GtkWidget *widget);
+;;;   gboolean     (* query_tooltip)       (GtkWidget         *widget,
+;;;                                         gint               x,
+;;;                                         gint               y,
+;;;                                         gboolean           keyboard_tooltip,
+;;;                                         GtkTooltip        *tooltip);
 ;;; 
-;;;   gboolean     (* query_tooltip)      (GtkWidget *widget,
-;;;                                                   gint     x,
-;;;                                                   gint     y,
-;;;                                                   gboolean keyboard_tooltip,
-;;;                                                   GtkTooltip *tooltip);
+;;;   void         (* compute_expand)     (GtkWidget          *widget,
+;;;                                        gboolean           *hexpand_p,
+;;;                                        gboolean           *vexpand_p);
 ;;; 
-;;;   void         (* compute_expand)     (GtkWidget  *widget,
-;;;                                        gboolean   *hexpand_p,
-;;;                                        gboolean   *vexpand_p);
+;;;   void         (* adjust_size_request)    (GtkWidget      *widget,
+;;;                                            GtkOrientation  orientation,
+;;;                                            gint           *minimum_size,
+;;;                                            gint           *natural_size);
+;;;   void         (* adjust_size_allocation) (GtkWidget      *widget,
+;;;                                            GtkOrientation  orientation,
+;;;                                            gint           *minimum_size,
+;;;                                            gint           *natural_size,
+;;;                                            gint           *allocated_pos,
+;;;                                            gint           *allocated_size);
 ;;; 
-;;;   void         (* adjust_size_request)    (GtkWidget        *widget,
-;;;                                            GtkOrientation    orientation,
-;;;                                            gint             *minimum_size,
-;;;                                            gint             *natural_size);
-;;;   void         (* adjust_size_allocation) (GtkWidget        *widget,
-;;;                                            GtkOrientation    orientation,
-;;;                                            gint             *minimum_size,
-;;;                                            gint             *natural_size,
-;;;                                            gint             *allocated_pos,
-;;;                                            gint             *allocated_size)
+;;;   void         (* style_updated)          (GtkWidget      *widget);
 ;;; 
-;;;   void         (* style_updated)          (GtkWidget *widget);
+;;;   gboolean     (* touch_event)            (GtkWidget      *widget,
+;;;                                            GdkEventTouch  *event);
 ;;; };
 ;;; 
 ;;; GInitiallyUnownedClass parent_class;
 ;;;     The object class structure needs to be the first element in the widget
-;;;     class structure in order for the class mechanism to work correctly.
-;;;     This allows a GtkWidgetClass pointer to be cast to a GObjectClass
-;;;     pointer.
+;;;     class structure in order for the class mechanism to work correctly. This
+;;;     allows a GtkWidgetClass pointer to be cast to a GObjectClass pointer.
 ;;; 
 ;;; guint activate_signal;
 ;;;     The signal to emit when a widget of this class is activated,
@@ -3337,23 +3350,41 @@
 ;;;     signal is optional.
 ;;; 
 ;;; dispatch_child_properties_changed ()
+;;; 
 ;;; destroy ()
+;;; 
 ;;; show ()
+;;; 
 ;;; show_all ()
+;;; 
 ;;; hide ()
+;;; 
 ;;; map ()
+;;; 
 ;;; unmap ()
+;;; 
 ;;; realize ()
+;;; 
 ;;; unrealize ()
+;;; 
 ;;; size_allocate ()
+;;; 
 ;;; state_changed ()
+;;; 
 ;;; state_flags_changed ()
+;;; 
 ;;; parent_set ()
+;;; 
 ;;; hierarchy_changed ()
+;;; 
 ;;; style_set ()
+;;; 
 ;;; direction_changed ()
+;;; 
 ;;; grab_notify ()
+;;; 
 ;;; child_notify ()
+;;; 
 ;;; draw ()
 ;;; 
 ;;; get_request_mode ()
@@ -3373,17 +3404,17 @@
 ;;;     queried in either GtkSizeRequestMode by its parent container.
 ;;; 
 ;;; get_preferred_height ()
-;;;     This is called by containers to obtain the minimum and natural height
-;;;     of a widget. A widget that does not actually trade any height for width
-;;;     or width for height only has to implement these two virtual methods
+;;;     This is called by containers to obtain the minimum and natural height of
+;;;     a widget. A widget that does not actually trade any height for width or
+;;;     width for height only has to implement these two virtual methods
 ;;;     (GtkWidgetClass.get_preferred_width() and
 ;;;     GtkWidgetClass.get_preferred_height()).
 ;;; 
 ;;; get_preferred_width_for_height ()
 ;;;     This is analogous to GtkWidgetClass.get_preferred_height_for_width()
 ;;;     except that it operates in the oposite orientation. It's rare that a
-;;;     widget actually does GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT requests but
-;;;     this can happen when, for example, a widget or container gets additional
+;;;     widget actually does GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT requests but this
+;;;     can happen when, for example, a widget or container gets additional
 ;;;     columns to compensate for a smaller allocated height.
 ;;; 
 ;;; get_preferred_width ()
@@ -3397,85 +3428,133 @@
 ;;; 
 ;;; get_preferred_height_for_width ()
 ;;;     This is similar to GtkWidgetClass.get_preferred_height() except that it
-;;;     is passed a contextual width to request height for. By implementing
-;;;     this virtual method it is possible for a GtkLabel to tell its parent
-;;;     how much height would be required if the label were to be allocated a
-;;;     said width.
+;;;     is passed a contextual width to request height for. By implementing this
+;;;     virtual method it is possible for a GtkLabel to tell its parent how much
+;;;     height would be required if the label were to be allocated a said width.
 ;;; 
 ;;; mnemonic_activate ()
+;;; 
 ;;; grab_focus ()
+;;; 
 ;;; focus ()
+;;; 
 ;;; move_focus ()
+;;; 
 ;;; keynav_failed ()
+;;; 
 ;;; event ()
+;;; 
 ;;; button_press_event ()
+;;; 
 ;;; button_release_event ()
+;;; 
 ;;; scroll_event ()
+;;; 
 ;;; motion_notify_event ()
+;;; 
 ;;; delete_event ()
+;;; 
 ;;; destroy_event ()
+;;; 
 ;;; key_press_event ()
+;;; 
 ;;; key_release_event ()
+;;; 
 ;;; enter_notify_event ()
+;;; 
 ;;; leave_notify_event ()
+;;; 
 ;;; configure_event ()
+;;; 
 ;;; focus_in_event ()
+;;; 
 ;;; focus_out_event ()
+;;; 
 ;;; map_event ()
+;;; 
 ;;; unmap_event ()
+;;; 
 ;;; property_notify_event ()
+;;; 
 ;;; selection_clear_event ()
+;;; 
 ;;; selection_request_event ()
+;;; 
 ;;; selection_notify_event ()
+;;; 
 ;;; proximity_in_event ()
+;;; 
 ;;; proximity_out_event ()
+;;; 
 ;;; visibility_notify_event ()
+;;; 
 ;;; window_state_event ()
+;;; 
 ;;; damage_event ()
+;;; 
 ;;; grab_broken_event ()
+;;; 
 ;;; selection_get ()
+;;; 
 ;;; selection_received ()
+;;; 
 ;;; drag_begin ()
+;;; 
 ;;; drag_end ()
+;;; 
 ;;; drag_data_get ()
+;;; 
 ;;; drag_data_delete ()
+;;; 
 ;;; drag_leave ()
+;;; 
 ;;; drag_motion ()
+;;; 
 ;;; drag_drop ()
+;;; 
 ;;; drag_data_received ()
+;;; 
 ;;; drag_failed ()
+;;; 
 ;;; popup_menu ()
+;;; 
 ;;; show_help ()
+;;; 
 ;;; get_accessible ()
+;;; 
 ;;; screen_changed ()
+;;; 
 ;;; can_activate_accel ()
+;;; 
 ;;; composited_changed ()
+;;; 
 ;;; query_tooltip ()
+;;; 
 ;;; compute_expand ()
 ;;; 
 ;;; adjust_size_request ()
 ;;;     Convert an initial size request from a widget's GtkSizeRequest virtual
 ;;;     method implementations into a size request to be used by parent
-;;;     containers in laying out the widget. adjust_size_request adjusts from
-;;;     a child widget's original request to what a parent container should use
+;;;     containers in laying out the widget. adjust_size_request adjusts from a
+;;;     child widget's original request to what a parent container should use
 ;;;     for layout. The for_size argument will be -1 if the request should not
 ;;;     be for a particular size in the opposing orientation, i.e. if the
 ;;;     request is not height-for-width or width-for-height. If for_size is
 ;;;     greater than -1, it is the proposed allocation in the opposing
 ;;;     orientation that we need the request for. Implementations of
-;;;     adjust_size_request should chain up to the default implementation,
-;;;     which applies GtkWidget's margin properties and imposes any values from
+;;;     adjust_size_request should chain up to the default implementation, which
+;;;     applies GtkWidget's margin properties and imposes any values from
 ;;;     gtk_widget_set_size_request(). Chaining up should be last, after your
-;;;     subclass adjusts the request, so GtkWidget can apply constraints and
-;;;     add the margin properly.
+;;;     subclass adjusts the request, so GtkWidget can apply constraints and add
+;;;     the margin properly.
 ;;; 
 ;;; adjust_size_allocation ()
 ;;;     Convert an initial size allocation assigned by a GtkContainer using
-;;;     gtk_widget_size_allocate(), into an actual size allocation to be used
-;;;     by the widget. adjust_size_allocation adjusts to a child widget's
-;;;     actual allocation from what a parent container computed for the child.
-;;;     The adjusted allocation must be entirely within the original allocation.
-;;;     In any custom implementation, chain up to the default GtkWidget
+;;;     gtk_widget_size_allocate(), into an actual size allocation to be used by
+;;;     the widget. adjust_size_allocation adjusts to a child widget's actual
+;;;     allocation from what a parent container computed for the child. The
+;;;     adjusted allocation must be entirely within the original allocation. In
+;;;     any custom implementation, chain up to the default GtkWidget
 ;;;     implementation of this method, which applies the margin and alignment
 ;;;     properties of GtkWidget. Chain up before performing your own adjustments
 ;;;     so your own adjustments remove more allocation after the GtkWidget base
@@ -3485,16 +3564,17 @@
 ;;;     natural size.
 ;;; 
 ;;; style_updated ()
+;;; 
+;;; touch_event ()
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCallback ()
 ;;; 
 ;;; void (*GtkCallback) (GtkWidget *widget, gpointer data);
 ;;; 
-;;; The type of the callback functions used for e.g. iterating over the
-;;; children of a container, see gtk_container_foreach().
+;;; The type of the callback functions used for e.g. iterating over the children
+;;; of a container, see gtk_container_foreach().
 ;;; 
 ;;; widget :
 ;;;     the widget to operate on
@@ -3502,7 +3582,6 @@
 ;;; data :
 ;;;     user-supplied data
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkSelectionData
@@ -3561,9 +3640,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_new ()
 ;;; 
-;;; GtkWidget *gtk_widget_new (GType type,
-;;;                            const gchar *first_property_name,
-;;;                            ...);
+;;; GtkWidget * gtk_widget_new (GType type,
+;;;                             const gchar *first_property_name,
+;;;                             ...);
 ;;; 
 ;;; This is a convenience function for creating a widget and setting its
 ;;; properties in one go. For example you might write:
@@ -3587,7 +3666,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_destroy ()
 ;;; 
-;;; void gtk_widget_destroy (GtkWidget *widget)
+;;; void gtk_widget_destroy (GtkWidget *widget);
 ;;; 
 ;;; Destroys a widget.
 ;;; 
@@ -3614,7 +3693,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_in_destruction ()
 ;;; 
-;;; gboolean gtk_widget_in_destruction (GtkWidget *widget)
+;;; gboolean gtk_widget_in_destruction (GtkWidget *widget);
 ;;; 
 ;;; Returns whether the widget is currently being destroyed. This information
 ;;; can sometimes be used to avoid doing unnecessary work.
@@ -3638,8 +3717,8 @@
 ;;; 
 ;;; This function sets *widget_pointer to NULL if widget_pointer != NULL. It's
 ;;; intended to be used as a callback connected to the "destroy" signal of a
-;;; widget. You connect gtk_widget_destroyed() as a signal handler, and pass
-;;; the address of your widget variable as user data. Then when the widget is
+;;; widget. You connect gtk_widget_destroyed() as a signal handler, and pass the
+;;; address of your widget variable as user data. Then when the widget is
 ;;; destroyed, the variable will be set to NULL. Useful for example to avoid
 ;;; multiple copies of the same dialog.
 ;;; 
@@ -3653,11 +3732,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_unparent ()
 ;;; 
-;;; void gtk_widget_unparent (GtkWidget *widget)
+;;; void gtk_widget_unparent (GtkWidget *widget);
 ;;; 
-;;; This function is only for use in widget implementations. Should be called
-;;; by implementations of the remove method on GtkContainer, to dissociate a
-;;; child from the container.
+;;; This function is only for use in widget implementations. Should be called by
+;;; implementations of the remove method on GtkContainer, to dissociate a child
+;;; from the container.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -3671,7 +3750,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_show ()
 ;;; 
-;;; void gtk_widget_show (GtkWidget *widget)
+;;; void gtk_widget_show (GtkWidget *widget);
 ;;; 
 ;;; Flags a widget to be displayed. Any widget that isn't shown will not appear
 ;;; on the screen. If you want to show all the widgets in a container, it's
@@ -3682,8 +3761,8 @@
 ;;; addition to the widget itself, before it will appear onscreen.
 ;;; 
 ;;; When a toplevel container is shown, it is immediately realized and mapped;
-;;; other shown widgets are realized and mapped when their toplevel container
-;;; is realized and mapped.
+;;; other shown widgets are realized and mapped when their toplevel container is
+;;; realized and mapped.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -3697,12 +3776,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_show_now ()
 ;;; 
-;;; void gtk_widget_show_now (GtkWidget *widget)
+;;; void gtk_widget_show_now (GtkWidget *widget);
 ;;; 
 ;;; Shows a widget. If the widget is an unmapped toplevel widget (i.e. a
-;;; GtkWindow that has not yet been shown), enter the main loop and wait for
-;;; the window to actually be mapped. Be careful; because the main loop is
-;;; running, anything can happen during this function.
+;;; GtkWindow that has not yet been shown), enter the main loop and wait for the
+;;; window to actually be mapped. Be careful; because the main loop is running,
+;;; anything can happen during this function.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -3716,7 +3795,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_hide ()
 ;;; 
-;;; void gtk_widget_hide (GtkWidget *widget)
+;;; void gtk_widget_hide (GtkWidget *widget);
 ;;; 
 ;;; Reverses the effects of gtk_widget_show(), causing the widget to be hidden
 ;;; (invisible to the user).
@@ -3733,7 +3812,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_show_all ()
 ;;; 
-;;; void gtk_widget_show_all (GtkWidget *widget)
+;;; void gtk_widget_show_all (GtkWidget *widget);
 ;;; 
 ;;; Recursively shows a widget, and any child widgets (if the widget is a
 ;;; container).
@@ -3750,10 +3829,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_map ()
 ;;; 
-;;; void gtk_widget_map (GtkWidget *widget)
+;;; void gtk_widget_map (GtkWidget *widget);
 ;;; 
-;;; This function is only for use in widget implementations. Causes a widget
-;;; to be mapped if it isn't already.
+;;; This function is only for use in widget implementations. Causes a widget to
+;;; be mapped if it isn't already.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -3767,7 +3846,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_unmap ()
 ;;; 
-;;; void gtk_widget_unmap (GtkWidget *widget)
+;;; void gtk_widget_unmap (GtkWidget *widget);
 ;;; 
 ;;; This function is only for use in widget implementations. Causes a widget to
 ;;; be unmapped if it's currently mapped.
@@ -3784,7 +3863,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_realize ()
 ;;; 
-;;; void gtk_widget_realize (GtkWidget *widget)
+;;; void gtk_widget_realize (GtkWidget *widget);
 ;;; 
 ;;; Creates the GDK (windowing system) resources associated with a widget. For
 ;;; example, widget->window will be created when a widget is realized. Normally
@@ -3814,7 +3893,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_unrealize ()
 ;;; 
-;;; void gtk_widget_unrealize(GtkWidget *widget)
+;;; void gtk_widget_unrealize (GtkWidget *widget);
 ;;; 
 ;;; This function is only useful in widget implementations. Causes a widget to
 ;;; be unrealized (frees all GDK resources associated with the widget, such as
@@ -3848,8 +3927,8 @@
 ;;; 
 ;;; Note
 ;;; 
-;;; Special purpose widgets may contain special code for rendering to the
-;;; screen and might appear differently on screen and when rendered using
+;;; Special purpose widgets may contain special code for rendering to the screen
+;;; and might appear differently on screen and when rendered using
 ;;; gtk_widget_draw().
 ;;; 
 ;;; widget :
@@ -3865,7 +3944,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_draw ()
 ;;; 
-;;; void gtk_widget_queue_draw (GtkWidget *widget)
+;;; void gtk_widget_queue_draw (GtkWidget *widget);
 ;;; 
 ;;; Equivalent to calling gtk_widget_queue_draw_area() for the entire area of
 ;;; a widget.
@@ -3882,7 +3961,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_resize ()
 ;;; 
-;;; void gtk_widget_queue_resize (GtkWidget *widget)
+;;; void gtk_widget_queue_resize (GtkWidget *widget);
 ;;; 
 ;;; This function is only for use in widget implementations. Flags a widget to
 ;;; have its size renegotiated; should be called when a widget for some reason
@@ -3892,9 +3971,9 @@
 ;;; Note
 ;;; 
 ;;; You cannot call gtk_widget_queue_resize() on a widget from inside its
-;;; implementation of the GtkWidgetClass::size_allocate virtual method. Calls
-;;; to gtk_widget_queue_resize() from inside GtkWidgetClass::size_allocate will
-;;; be silently ignored.
+;;; implementation of the GtkWidgetClass::size_allocate virtual method. Calls to
+;;; gtk_widget_queue_resize() from inside GtkWidgetClass::size_allocate will be
+;;; silently ignored.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -3908,7 +3987,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_resize_no_redraw ()
 ;;; 
-;;; void gtk_widget_queue_resize_no_redraw (GtkWidget *widget)
+;;; void gtk_widget_queue_resize_no_redraw (GtkWidget *widget);
 ;;; 
 ;;; This function works like gtk_widget_queue_resize(), except that the widget
 ;;; is not invalidated.
@@ -3933,19 +4012,18 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_size_request has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_widget_get_preferred_size()
-;;; instead.
+;;; gtk_widget_size_request has been deprecated since version 3.0 and should not
+;;; be used in newly-written code. Use gtk_widget_get_preferred_size() instead.
 ;;; 
 ;;; This function is typically used when implementing a GtkContainer subclass.
 ;;; Obtains the preferred size of a widget. The container uses this information
 ;;; to arrange its child widgets and decide what size allocations to give them
 ;;; with gtk_widget_size_allocate().
 ;;; 
-;;; You can also call this function from an application, with some caveats.
-;;; Most notably, getting a size request requires the widget to be associated
-;;; with a screen, because font information may be needed. Multihead-aware
-;;; applications should keep this in mind.
+;;; You can also call this function from an application, with some caveats. Most
+;;; notably, getting a size request requires the widget to be associated with a
+;;; screen, because font information may be needed. Multihead-aware applications
+;;; should keep this in mind.
 ;;; 
 ;;; Also remember that the size request is not necessarily the size a widget
 ;;; will actually be allocated.
@@ -3987,9 +4065,9 @@
 ;;; 
 ;;; This function differs from gtk_widget_size_request() in that it retrieves
 ;;; the last size request value from widget->requisition, while
-;;; gtk_widget_size_request() actually calls the "size_request" method on
-;;; widget to compute the size request and fill in widget->requisition, and
-;;; only then returns widget->requisition.
+;;; gtk_widget_size_request() actually calls the "size_request" method on widget
+;;; to compute the size request and fill in widget->requisition, and only then
+;;; returns widget->requisition.
 ;;; 
 ;;; Because this function does not call the "size_request" method, it can only
 ;;; be used when you know that widget->requisition is up-to-date, that is,
@@ -4012,8 +4090,8 @@
 ;;; This function is only used by GtkContainer subclasses, to assign a size and
 ;;; position to their child widgets.
 ;;; 
-;;; In this function, the allocation may be adjusted. It will be forced to a
-;;; 1x1 minimum size, and the adjust_size_allocation virtual method on the child
+;;; In this function, the allocation may be adjusted. It will be forced to a 1x1
+;;; minimum size, and the adjust_size_allocation virtual method on the child
 ;;; will be used to adjust the allocation. Standard adjustments include removing
 ;;; the widget's margins, and applying the widget's "halign" and "valign"
 ;;; properties.
@@ -4033,7 +4111,7 @@
 ;;;                                  GtkAccelGroup *accel_group,
 ;;;                                  guint accel_key,
 ;;;                                  GdkModifierType accel_mods,
-;;;                                  GtkAccelFlags accel_flags)
+;;;                                  GtkAccelFlags accel_flags);
 ;;; 
 ;;; Installs an accelerator for this widget in accel_group that causes
 ;;; accel_signal to be emitted if the accelerator is activated. The accel_group
@@ -4078,7 +4156,7 @@
 ;;; gboolean gtk_widget_remove_accelerator (GtkWidget *widget,
 ;;;                                         GtkAccelGroup *accel_group,
 ;;;                                         guint accel_key,
-;;;                                         GdkModifierType accel_mods)
+;;;                                         GdkModifierType accel_mods);
 ;;; 
 ;;; Removes an accelerator from widget, previously installed with
 ;;; gtk_widget_add_accelerator().
@@ -4112,7 +4190,7 @@
 ;;; 
 ;;; void gtk_widget_set_accel_path (GtkWidget *widget,
 ;;;                                 const gchar *accel_path,
-;;;                                 GtkAccelGroup *accel_group)
+;;;                                 GtkAccelGroup *accel_group);
 ;;; 
 ;;; Given an accelerator group, accel_group, and an accelerator path,
 ;;; accel_path, sets up an accelerator in accel_group so whenever the key
@@ -4131,8 +4209,8 @@
 ;;; somewhat more convenient interface.
 ;;; 
 ;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
-;;; pass a static string, you can save some memory by interning it first
-;;; with g_intern_static_string().
+;;; pass a static string, you can save some memory by interning it first with
+;;; g_intern_static_string().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -4157,22 +4235,23 @@
 ;;; GList * gtk_widget_list_accel_closures (GtkWidget *widget);
 ;;; 
 ;;; Lists the closures used by widget for accelerator group connections with
-;;; gtk_accel_group_connect_by_path() or gtk_accel_group_connect(). The
-;;; closures can be used to monitor accelerator changes on widget, by connecting
-;;; to the GtkAccelGroup::accel-changed signal of the GtkAccelGroup of a closure
-;;; which can be found out with gtk_accel_group_from_accel_closure().
+;;; gtk_accel_group_connect_by_path() or gtk_accel_group_connect(). The closures
+;;; can be used to monitor accelerator changes on widget, by connecting to the
+;;; GtkAccelGroup::accel-changed signal of the GtkAccelGroup of a closure which
+;;; can be found out with gtk_accel_group_from_accel_closure().
 ;;; 
 ;;; widget :
 ;;;     widget to list accelerator closures for
 ;;; 
 ;;; Returns :
-;;;     a newly allocated GList of closures.
+;;;     a newly allocated GList of closures
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_can_activate_accel ()
 ;;; 
-;;; gboolean gtk_widget_can_activate_accel (GtkWidget *widget, guint signal_id)
+;;; gboolean gtk_widget_can_activate_accel (GtkWidget *widget,
+;;;                                         guint signal_id);
 ;;; 
 ;;; Determines whether an accelerator that activates the signal identified by
 ;;; signal_id can currently be activated. This is done by emitting the
@@ -4207,13 +4286,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_event ()
 ;;; 
-;;; gboolean gtk_widget_event (GtkWidget *widget, GdkEvent *event)
+;;; gboolean gtk_widget_event (GtkWidget *widget, GdkEvent *event);
 ;;; 
 ;;; Rarely-used function. This function is used to emit the event signals on a
-;;; widget (those signals should never be emitted without using this function
-;;; to do so). If you want to synthesize an event though, don't use this
-;;; function; instead, use gtk_main_do_event() so the event will behave as if
-;;; it were in the event queue. Don't synthesize expose events; instead, use
+;;; widget (those signals should never be emitted without using this function to
+;;; do so). If you want to synthesize an event though, don't use this function;
+;;; instead, use gtk_main_do_event() so the event will behave as if it were in
+;;; the event queue. Don't synthesize expose events; instead, use
 ;;; gdk_window_invalidate_rect() to invalidate a region of the window.
 ;;; 
 ;;; widget :
@@ -4235,7 +4314,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_activate ()
 ;;; 
-;;; gboolean gtk_widget_activate (GtkWidget *widget)
+;;; gboolean gtk_widget_activate (GtkWidget *widget);
 ;;; 
 ;;; For widgets that can be "activated" (buttons, menu items, etc.) this
 ;;; function activates them. Activation is what happens when you press Enter on
@@ -4257,7 +4336,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_reparent ()
 ;;; 
-;;; void gtk_widget_reparent (GtkWidget *widget, GtkWidget *new_parent)
+;;; void gtk_widget_reparent (GtkWidget *widget, GtkWidget *new_parent);
 ;;; 
 ;;; Moves a widget from one GtkContainer to another, handling reference count
 ;;; issues to avoid destroying the widget.
@@ -4280,7 +4359,7 @@
 ;;; 
 ;;; gboolean gtk_widget_intersect (GtkWidget *widget,
 ;;;                                const GdkRectangle *area,
-;;;                                GdkRectangle *intersection)
+;;;                                GdkRectangle *intersection);
 ;;; 
 ;;; Computes the intersection of a widget's area and area, storing the
 ;;; intersection in intersection, and returns TRUE if there was an intersection.
@@ -4315,18 +4394,17 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_focus ()
 ;;; 
-;;; gboolean gtk_widget_is_focus (GtkWidget *widget)
+;;; gboolean gtk_widget_is_focus (GtkWidget *widget);
 ;;; 
-;;; Determines if the widget is the focus widget within its toplevel. (This
-;;; does not mean that the HAS_FOCUS flag is necessarily set; HAS_FOCUS will
-;;; only be set if the toplevel widget additionally has the global input
-;;; focus.)
+;;; Determines if the widget is the focus widget within its toplevel. (This does
+;;; not mean that the HAS_FOCUS flag is necessarily set; HAS_FOCUS will only be
+;;; set if the toplevel widget additionally has the global input focus.)
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     TRUE if the widget is the focus widget.
+;;;     TRUE if the widget is the focus widget
 ;;; ----------------------------------------------------------------------------
 
 ;; This function is already defined as the accessor of the slot "is-focus".
@@ -4334,7 +4412,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_grab_focus ()
 ;;; 
-;;; void gtk_widget_grab_focus (GtkWidget *widget)
+;;; void gtk_widget_grab_focus (GtkWidget *widget);
 ;;; 
 ;;; Causes widget to have the keyboard focus for the GtkWindow it's inside.
 ;;; widget must be a focusable widget, such as a GtkEntry; something like
@@ -4359,7 +4437,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_grab_default ()
 ;;; 
-;;; void gtk_widget_grab_default (GtkWidget *widget)
+;;; void gtk_widget_grab_default (GtkWidget *widget);
 ;;; 
 ;;; Causes widget to become the default widget. widget must have the
 ;;; GTK_CAN_DEFAULT flag set; typically you have to set this flag yourself by
@@ -4384,9 +4462,9 @@
 ;;; 
 ;;; void gtk_widget_set_name (GtkWidget *widget, const gchar *name);
 ;;; 
-;;; Widgets can be named, which allows you to refer to them from a CSS file.
-;;; You can apply a style to widgets with a particular name in the CSS file.
-;;; See the documentation for the CSS syntax (on the same page as the docs for
+;;; Widgets can be named, which allows you to refer to them from a CSS file. You
+;;; can apply a style to widgets with a particular name in the CSS file. See the
+;;; documentation for the CSS syntax (on the same page as the docs for
 ;;; GtkStyleContext).
 ;;; 
 ;;; Note that the CSS syntax has certain special characters to delimit and
@@ -4434,7 +4512,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_state ()
 ;;; 
-;;; void gtk_widget_set_state (GtkWidget *widget, GtkStateType state)
+;;; void gtk_widget_set_state (GtkWidget *widget, GtkStateType state);
 ;;; 
 ;;; Warning
 ;;; 
@@ -4461,7 +4539,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_sensitive ()
 ;;; 
-;;; void gtk_widget_set_sensitive (GtkWidget *widget, gboolean sensitive)
+;;; void gtk_widget_set_sensitive (GtkWidget *widget, gboolean sensitive);
 ;;; 
 ;;; Sets the sensitivity of a widget. A widget is sensitive if the user can
 ;;; interact with it. Insensitive widgets are "grayed out" and the user can't
@@ -4514,8 +4592,8 @@
 ;;; 
 ;;; Sets a non default parent window for widget.
 ;;; 
-;;; For GtkWindow classes, setting a parent_window effects whether the window
-;;; is a toplevel window or can be embedded into other widgets.
+;;; For GtkWindow classes, setting a parent_window effects whether the window is
+;;; a toplevel window or can be embedded into other widgets.
 ;;; 
 ;;; Note
 ;;; 
@@ -4523,7 +4601,7 @@
 ;;; realized.
 ;;; 
 ;;; widget :
-;;;     a GtkWidget
+;;;     a GtkWidget.
 ;;; 
 ;;; parent_window :
 ;;;     the new parent window
@@ -4566,11 +4644,11 @@
 ;;; determines which events a widget will receive. Keep in mind that different
 ;;; widgets have different default event masks, and by changing the event mask
 ;;; you may disrupt a widget's functionality, so be careful. This function must
-;;; be called while a widget is unrealized. Consider gtk_widget_add_events()
-;;; for widgets that are already realized, or if you want to preserve the
-;;; existing event mask. This function can't be used with GTK_NO_WINDOW widgets;
-;;; to get events on those widgets, place them inside a GtkEventBox and receive
-;;; events on the event box.
+;;; be called while a widget is unrealized. Consider gtk_widget_add_events() for
+;;; widgets that are already realized, or if you want to preserve the existing
+;;; event mask. This function can't be used with GTK_NO_WINDOW widgets; to get
+;;; events on those widgets, place them inside a GtkEventBox and receive events
+;;; on the event box.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -4632,10 +4710,10 @@
 ;;;                                    GdkEventMask events);
 ;;; 
 ;;; Sets the device event mask (see GdkEventMask) for a widget. The event mask
-;;; determines which events a widget will receive from device. Keep in mind
-;;; that different widgets have different default event masks, and by changing
-;;; the event mask you may disrupt a widget's functionality, so be careful.
-;;; This function must be called while a widget is unrealized. Consider
+;;; determines which events a widget will receive from device. Keep in mind that
+;;; different widgets have different default event masks, and by changing the
+;;; event mask you may disrupt a widget's functionality, so be careful. This
+;;; function must be called while a widget is unrealized. Consider
 ;;; gtk_widget_add_device_events() for widgets that are already realized, or if
 ;;; you want to preserve the existing event mask. This function can't be used
 ;;; with GTK_NO_WINDOW widgets; to get events on those widgets, place them
@@ -4659,9 +4737,9 @@
 ;;; GdkEventMask gtk_widget_get_device_events (GtkWidget *widget,
 ;;;                                            GdkDevice *device);
 ;;; 
-;;; Returns the events mask for the widget corresponding to an specific 
-;;; device. These are the events that the widget will receive when device
-;;; operates on it.
+;;; Returns the events mask for the widget corresponding to an specific device.
+;;; These are the events that the widget will receive when device operates on
+;;; it.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -4682,8 +4760,8 @@
 ;;;                                    GdkDevice *device,
 ;;;                                    GdkEventMask events);
 ;;; 
-;;; Adds the device events in the bitfield events to the event mask for 
-;;; widget. See gtk_widget_set_device_events() for details.
+;;; Adds the device events in the bitfield events to the event mask for widget.
+;;; See gtk_widget_set_device_events() for details.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -4704,11 +4782,11 @@
 ;;;                                     GdkDevice *device,
 ;;;                                     gboolean enabled);
 ;;; 
-;;; Enables or disables a GdkDevice to interact with widget and all its 
+;;; Enables or disables a GdkDevice to interact with widget and all its
 ;;; children.
 ;;; 
-;;; It does so by descending through the GdkWindow hierarchy and enabling the 
-;;; same mask that is has for core events (i.e. the one that 
+;;; It does so by descending through the GdkWindow hierarchy and enabling the
+;;; same mask that is has for core events (i.e. the one that
 ;;; gdk_window_get_events() returns).
 ;;; 
 ;;; widget :
@@ -4726,11 +4804,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_device_enabled ()
 ;;; 
-;;; gbooleangtk_widget_get_device_enabled (GtkWidget *widget,
-;;;                                        GdkDevice *device);
+;;; gboolean gtk_widget_get_device_enabled (GtkWidget *widget,
+;;;                                         GdkDevice *device);
 ;;; 
-;;; Returns whether device can interact with widget and its children. See 
-;;; gtk_widget_set_device_enabled().
+;;; Returns whether device can interact with widget and its children.
+;;; See gtk_widget_set_device_enabled().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -4749,19 +4827,19 @@
 ;;; 
 ;;; GtkWidget * gtk_widget_get_toplevel (GtkWidget *widget);
 ;;; 
-;;; This function returns the topmost widget in the container hierarchy widget 
-;;; is a part of. If widget has no parent widgets, it will be returned as the 
-;;; topmost widget. No reference will be added to the returned widget; it should 
+;;; This function returns the topmost widget in the container hierarchy widget
+;;; is a part of. If widget has no parent widgets, it will be returned as the
+;;; topmost widget. No reference will be added to the returned widget; it should
 ;;; not be unreferenced.
 ;;; 
-;;; Note the difference in behavior vs. gtk_widget_get_ancestor(); 
+;;; Note the difference in behavior vs. gtk_widget_get_ancestor();
 ;;; gtk_widget_get_ancestor (widget, GTK_TYPE_WINDOW) would return NULL if
-;;; widget wasn't inside a toplevel window, and if the window was inside a 
-;;; GtkWindow-derived widget which was in turn inside the toplevel GtkWindow. 
+;;; widget wasn't inside a toplevel window, and if the window was inside a
+;;; GtkWindow-derived widget which was in turn inside the toplevel GtkWindow.
 ;;; While the second case may seem unlikely, it actually happens when a GtkPlug
 ;;; is embedded inside a GtkSocket within the same application.
 ;;; 
-;;; To reliably find the toplevel GtkWindow, use gtk_widget_get_toplevel() and 
+;;; To reliably find the toplevel GtkWindow, use gtk_widget_get_toplevel() and
 ;;; check if the TOPLEVEL flags is set on the result.
 ;;; 
 ;;; GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
@@ -4774,8 +4852,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the topmost ancestor of widget, or widget itself if there's no 
-;;;     ancestor
+;;;     the topmost ancestor of widget, or widget itself if there's no ancestor
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-widget-get-toplevel))
@@ -4788,13 +4865,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_ancestor ()
 ;;; 
-;;; GtkWidget * gtk_widget_get_ancestor (GtkWidget *widget, GType widget_type)
+;;; GtkWidget * gtk_widget_get_ancestor (GtkWidget *widget, GType widget_type);
 ;;; 
 ;;; Gets the first ancestor of widget with type widget_type. For example,
 ;;; gtk_widget_get_ancestor (widget, GTK_TYPE_BOX) gets the first GtkBox that's
-;;; an ancestor of widget. No reference will be added to the returned widget;
-;;; it should not be unreferenced. See note about checking for a toplevel
-;;; GtkWindow in the docs for gtk_widget_get_toplevel().
+;;; an ancestor of widget. No reference will be added to the returned widget; it
+;;; should not be unreferenced. See note about checking for a toplevel GtkWindow
+;;; in the docs for gtk_widget_get_toplevel().
 ;;; 
 ;;; Note that unlike gtk_widget_is_ancestor(), gtk_widget_get_ancestor()
 ;;; considers widget to be an ancestor of itself.
@@ -4842,12 +4919,12 @@
 ;;; 
 ;;; void gtk_widget_set_visual (GtkWidget *widget, GdkVisual *visual);
 ;;; 
-;;; Sets the visual that should be used for by widget and its children for 
+;;; Sets the visual that should be used for by widget and its children for
 ;;; creating GdkWindows. The visual must be on the same GdkScreen as returned by
 ;;; gdk_widget_get_screen(), so handling the "screen-changed" signal is
 ;;; necessary.
 ;;; 
-;;; Setting a new visual will not cause widget to recreate its windows, so you 
+;;; Setting a new visual will not cause widget to recreate its windows, so you
 ;;; should call this function before widget is realized.
 ;;; 
 ;;; widget :
@@ -4867,7 +4944,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_pointer ()
 ;;; 
-;;; void gtk_widget_get_pointer (GtkWidget *widget, gint *x, gint *y)
+;;; void gtk_widget_get_pointer (GtkWidget *widget, gint *x, gint *y);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_widget_get_pointer has been deprecated since version 3.4 and should not
+;;; be used in newly-written code. Use gdk_window_get_device_position() instead.
 ;;; 
 ;;; Obtains the location of the mouse pointer in widget coordinates. Widget
 ;;; coordinates are a bit odd; for historical reasons, they are defined as
@@ -4901,7 +4983,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_ancestor ()
 ;;; 
-;;; gboolean gtk_widget_is_ancestor (GtkWidget *widget, GtkWidget *ancestor)
+;;; gboolean gtk_widget_is_ancestor (GtkWidget *widget, GtkWidget *ancestor);
 ;;; 
 ;;; Determines whether widget is somewhere inside ancestor, possibly with
 ;;; intermediate containers.
@@ -4931,7 +5013,7 @@
 ;;;                                            gint src_x,
 ;;;                                            gint src_y,
 ;;;                                            gint *dest_x,
-;;;                                            gint *dest_y)
+;;;                                            gint *dest_y);
 ;;; 
 ;;; Translate coordinates relative to src_widget's allocation to coordinates
 ;;; relative to dest_widget's allocations. In order to perform this operation,
@@ -4950,10 +5032,10 @@
 ;;;     Y position relative to src_widget
 ;;; 
 ;;; dest_x :
-;;;     location to store X position relative to dest_widget.
+;;;     location to store X position relative to dest_widget
 ;;; 
 ;;; dest_y :
-;;;     location to store Y position relative to dest_widget.
+;;;     location to store Y position relative to dest_widget
 ;;; 
 ;;; Returns :
 ;;;     FALSE if either widget was not realized, or there was no common
@@ -4984,7 +5066,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_hide_on_delete ()
 ;;; 
-;;; gboolean gtk_widget_hide_on_delete (GtkWidget *widget)
+;;; gboolean gtk_widget_hide_on_delete (GtkWidget *widget);
 ;;; 
 ;;; Utility function; intended to be connected to the "delete-event" signal on
 ;;; a GtkWindow. The function calls gtk_widget_hide() on its argument, then
@@ -5007,29 +5089,29 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_set_style has been deprecated since version 3.0 and should not 
-;;; be used in newly-written code. Use GtkStyleContext instead
+;;; gtk_widget_set_style has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use GtkStyleContext instead.
 ;;; 
-;;; Used to set the GtkStyle for a widget (widget->style). Since GTK 3, this 
+;;; Used to set the GtkStyle for a widget (widget->style). Since GTK 3, this
 ;;; function does nothing, the passed in style is ignored.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; style :
-;;;     a GtkStyle, or NULL to remove the effect of a previous call to 
-;;;     gtk_widget_set_style() and go back to the default style.
+;;;     a GtkStyle, or NULL to remove the effect of a previous call to
+;;;     gtk_widget_set_style() and go back to the default style
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_ensure_style ()
 ;;; 
-;;; void gtk_widget_ensure_style (GtkWidget *widget)
+;;; void gtk_widget_ensure_style (GtkWidget *widget);
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_ensure_style has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use GtkStyleContext instead.
+;;; gtk_widget_ensure_style has been deprecated since version 3.0 and should not
+;;; be used in newly-written code. Use GtkStyleContext instead
 ;;; 
 ;;; Ensures that widget has a style (widget->style).
 ;;; 
@@ -5053,7 +5135,7 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_get_style has been deprecated since version 3.0 and should not 
+;;; gtk_widget_get_style has been deprecated since version 3.0 and should not
 ;;; be used in newly-written code. Use GtkStyleContext instead
 ;;; 
 ;;; Simply an accessor function that returns widget->style.
@@ -5068,7 +5150,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_reset_rc_styles ()
 ;;; 
-;;; void gtk_widget_reset_rc_styles (GtkWidget *widget)
+;;; void gtk_widget_reset_rc_styles (GtkWidget *widget);
 ;;; 
 ;;; Warning
 ;;; 
@@ -5094,14 +5176,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_default_style ()
 ;;; 
-;;; GtkStyle * gtk_widget_get_default_style (void)
+;;; GtkStyle * gtk_widget_get_default_style (void);
 ;;; 
 ;;; Warning
 ;;; 
 ;;; gtk_widget_get_default_style has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use GtkStyleContext instead, and
-;;; gtk_css_provider_get_default() to obtain a GtkStyleProvider with the
-;;; default widget style information.
+;;; gtk_css_provider_get_default() to obtain a GtkStyleProvider with the default
+;;; widget style information.
 ;;; 
 ;;; Returns the default style used by all widgets initially.
 ;;; 
@@ -5120,7 +5202,7 @@
 ;;; 
 ;;; void gtk_widget_set_direction (GtkWidget *widget, GtkTextDirection dir);
 ;;; 
-;;; Sets the reading direction on a particular widget. This direction controls 
+;;; Sets the reading direction on a particular widget. This direction controls
 ;;; the primary direction for widgets containing text, and also the direction in
 ;;; which the children of a container are packed. The ability to set the
 ;;; direction is present in order so that correct localization into languages
@@ -5129,7 +5211,7 @@
 ;;; the containers are arranged in an order that is explicitely visual rather
 ;;; than logical (such as buttons for text justification).
 ;;; 
-;;; If the direction is set to GTK_TEXT_DIR_NONE, then the value set by 
+;;; If the direction is set to GTK_TEXT_DIR_NONE, then the value set by
 ;;; gtk_widget_set_default_direction() will be used.
 ;;; 
 ;;; widget :
@@ -5139,14 +5221,30 @@
 ;;;     the new direction
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; enum GtkTextDirection
+;;; 
+;;; typedef enum {
+;;;   GTK_TEXT_DIR_NONE,
+;;;   GTK_TEXT_DIR_LTR,
+;;;   GTK_TEXT_DIR_RTL
+;;; } GtkTextDirection;
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkTextDirection" gtk-text-direction
+  (:export t
+   :type-initializer "gtk_text_direction_get_type")
+  (:none 0)
+  (:ltr 1)
+  (:rtl 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_direction ()
 ;;; 
 ;;; GtkTextDirection gtk_widget_get_direction (GtkWidget *widget);
 ;;; 
-;;; Gets the reading direction for a particular widget. See 
-;;; gtk_widget_set_direction().
+;;; Gets the reading direction for a particular widget.
+;;; See gtk_widget_set_direction().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5158,14 +5256,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_default_direction ()
 ;;; 
-;;; void gtk_widget_set_default_direction (GtkTextDirection dir)
+;;; void gtk_widget_set_default_direction (GtkTextDirection dir);
 ;;; 
 ;;; Sets the default reading direction for widgets where the direction has not
 ;;; been explicitly set by gtk_widget_set_direction().
 ;;; 
 ;;; dir :
 ;;;     the new default direction. This cannot be GTK_TEXT_DIR_NONE.
-;;;     gtk_widget_get_default_direction ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_set_default_direction" gtk-widget-set-default-direction)
@@ -5175,13 +5272,15 @@
 (export 'gtk-widget-set-default-direction)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_default_direction ()
+;;; 
 ;;; GtkTextDirection gtk_widget_get_default_direction (void);
 ;;; 
-;;; Obtains the current default reading direction. See
-;;; gtk_widget_set_default_direction().
+;;; Obtains the current default reading direction.
+;;; See gtk_widget_set_default_direction().
 ;;; 
 ;;; Returns :
-;;;     the current default direction
+;;;     the current default direction.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_default_direction" gtk-widget-get-default-direction)
@@ -5195,7 +5294,7 @@
 ;;; void gtk_widget_shape_combine_region (GtkWidget *widget,
 ;;;                                       cairo_region_t *region);
 ;;; 
-;;; Sets a shape for this widget's GDK window. This allows for transparent 
+;;; Sets a shape for this widget's GDK window. This allows for transparent
 ;;; windows etc., see gdk_window_shape_combine_region() for more information.
 ;;; 
 ;;; widget :
@@ -5236,7 +5335,7 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_path has been deprecated since version 3.0 and should not be 
+;;; gtk_widget_path has been deprecated since version 3.0 and should not be
 ;;; used in newly-written code. Use gtk_widget_get_path() instead
 ;;; 
 ;;; Obtains the full path to widget. The path is simply the name of a widget
@@ -5254,13 +5353,13 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; path_length :
-;;;     location to store length of the path, or NULL.
+;;;     location to store length of the path, or NULL
 ;;; 
 ;;; path :
-;;;     location to store allocated path string, or NULL.
+;;;     location to store allocated path string, or NULL
 ;;; 
 ;;; path_reversed :
-;;;     location to store allocated reverse path string, or NULL.
+;;;     location to store allocated reverse path string, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_path" %gtk-widget-path) :void
@@ -5292,24 +5391,24 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_class_path has been deprecated since version 3.0 and should not 
+;;; gtk_widget_class_path has been deprecated since version 3.0 and should not
 ;;; be used in newly-written code. Use gtk_widget_get_path() instead
 ;;; 
-;;; Same as gtk_widget_path(), but always uses the name of a widget's type, 
+;;; Same as gtk_widget_path(), but always uses the name of a widget's type,
 ;;; never uses a custom name set with gtk_widget_set_name().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; path_length :
-;;;     location to store the length of the class path, or NULL.
+;;;     location to store the length of the class path, or NULL
 ;;; 
 ;;; path :
-;;;     location to store the class path as an allocated string, or NULL.
+;;;     location to store the class path as an allocated string, or NULL
 ;;; 
 ;;; path_reversed :
-;;;     location to store the reverse class path as an allocated string, or
-;;;     NULL.
+;;;     location to store the reverse class path as an allocated string,
+;;;     or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_class_path" gtk-widget-class-path) :void
@@ -5331,7 +5430,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the composite name of widget, or NULL if widget is not a composite 
+;;;     the composite name of widget, or NULL if widget is not a composite
 ;;;     child. The string should be freed when it is no longer needed.
 ;;; ----------------------------------------------------------------------------
 
@@ -5360,8 +5459,8 @@
 ;;;     the state for which to set the background color
 ;;; 
 ;;; color :
-;;;     the color to assign, or NULL to undo the effect of previous calls to 
-;;;    gtk_widget_override_background_color().
+;;;     the color to assign, or NULL to undo the effect of previous calls to
+;;;     gtk_widget_override_background_color()
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5379,22 +5478,22 @@
 ;;; 
 ;;; Note
 ;;; 
-;;; This API is mostly meant as a quick way for applications to change a 
-;;; widget appearance. If you are developing a widgets library and intend this 
-;;; change to be themeable, it is better done by setting meaningful CSS classes 
-;;; and regions in your widget/container implementation through 
+;;; This API is mostly meant as a quick way for applications to change a widget
+;;; appearance. If you are developing a widgets library and intend this change
+;;; to be themeable, it is better done by setting meaningful CSS classes and
+;;; regions in your widget/container implementation through
 ;;; gtk_style_context_add_class() and gtk_style_context_add_region().
 ;;; 
-;;; This way, your widget library can install a GtkCssProvider with the 
-;;; GTK_STYLE_PROVIDER_PRIORITY_FALLBACK priority in order to provide a default 
+;;; This way, your widget library can install a GtkCssProvider with the
+;;; GTK_STYLE_PROVIDER_PRIORITY_FALLBACK priority in order to provide a default
 ;;; styling for those widgets that need so, and this theming may fully
 ;;; overridden by the user's theme.
 ;;; 
 ;;; Note
 ;;; 
-;;; Note that for complex widgets this may bring in undesired results (such as 
-;;; uniform background color everywhere), in these cases it is better to fully 
-;;; style such widgets through a GtkCssProvider with the 
+;;; Note that for complex widgets this may bring in undesired results (such as
+;;; uniform background color everywhere), in these cases it is better to fully
+;;; style such widgets through a GtkCssProvider with the
 ;;; GTK_STYLE_PROVIDER_PRIORITY_APPLICATION priority.
 ;;; 
 ;;; widget :
@@ -5404,8 +5503,8 @@
 ;;;     the state for which to set the color
 ;;; 
 ;;; color :
-;;;     the color to assign, or NULL to undo the effect of previous calls to 
-;;;     gtk_widget_override_color().
+;;;     the color to assign, or NULL to undo the effect of previous calls to
+;;;     gtk_widget_override_color()
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5416,14 +5515,14 @@
 ;;; void gtk_widget_override_font (GtkWidget *widget,
 ;;;                                const PangoFontDescription *font_desc);
 ;;; 
-;;; Sets the font to use for a widget. All other style values are left 
+;;; Sets the font to use for a widget. All other style values are left
 ;;; untouched. See gtk_widget_override_color().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; font_desc :
-;;;     the font descriptiong to use, or NULL to undo the effect of previous 
+;;;     the font descriptiong to use, or NULL to undo the effect of previous
 ;;;     calls to gtk_widget_override_font()
 ;;; 
 ;;; Since 3.0
@@ -5438,7 +5537,7 @@
 ;;; 
 ;;; Sets a symbolic color for a widget.
 ;;; 
-;;; All other style values are left untouched. See gtk_widget_override_color() 
+;;; All other style values are left untouched. See gtk_widget_override_color()
 ;;; for overriding the foreground or background color.
 ;;; 
 ;;; widget :
@@ -5448,8 +5547,8 @@
 ;;;     the name of the symbolic color to modify
 ;;; 
 ;;; color :
-;;;     the color to assign (does not need to be allocated), or NULL to undo 
-;;;     the effect of previous calls to gtk_widget_override_symbolic_color().
+;;;     the color to assign (does not need to be allocated), or NULL to undo the
+;;;     effect of previous calls to gtk_widget_override_symbolic_color()
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5461,25 +5560,25 @@
 ;;;                                  const GdkRGBA *cursor,
 ;;;                                  const GdkRGBA *secondary_cursor);
 ;;; 
-;;; Sets the cursor color to use in a widget, overriding the "cursor-color" 
-;;; and "secondary-cursor-color" style properties. All other style values are
-;;; left untouched. See also gtk_widget_modify_style().
+;;; Sets the cursor color to use in a widget, overriding the "cursor-color" and
+;;; "secondary-cursor-color" style properties. All other style values are left
+;;; untouched. See also gtk_widget_modify_style().
 ;;; 
-;;; Note that the underlying properties have the GdkColor type, so the alpha 
+;;; Note that the underlying properties have the GdkColor type, so the alpha
 ;;; value in primary and secondary will be ignored.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; cursor :
-;;;     the color to use for primary cursor (does not need to be allocated), 
-;;;     or NULL to undo the effect of previous calls to of 
-;;;     gtk_widget_override_cursor().
+;;;     the color to use for primary cursor (does not need to be allocated), or
+;;;     NULL to undo the effect of previous calls to of
+;;;     gtk_widget_override_cursor()
 ;;; 
 ;;; secondary_cursor :
-;;;     the color to use for secondary cursor (does not need to be allocated), 
-;;;     or NULL to undo the effect of previous calls to of 
-;;;     gtk_widget_override_cursor().
+;;;     the color to use for secondary cursor (does not need to be allocated),
+;;;     or NULL to undo the effect of previous calls to of
+;;;     gtk_widget_override_cursor()
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -5491,13 +5590,13 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_modify_style has been deprecated since version 3.0 and should 
-;;; not be used in newly-written code. Use GtkStyleContext with a custom 
+;;; gtk_widget_modify_style has been deprecated since version 3.0 and should not
+;;; be used in newly-written code. Use GtkStyleContext with a custom
 ;;; GtkStyleProvider instead
 ;;; 
 ;;; Modifies style values on the widget.
 ;;; 
-;;; Modifications made using this technique take precedence over style values 
+;;; Modifications made using this technique take precedence over style values
 ;;; set via an RC file, however, they will be overridden if a style is
 ;;; explicitely set on the widget using gtk_widget_set_style(). The GtkRcStyle
 ;;; structure is designed so each field can either be set or unset, so it is
@@ -5505,13 +5604,13 @@
 ;;; others unchanged.
 ;;; 
 ;;; Note that modifications made with this function are not cumulative with
-;;; previous calls to gtk_widget_modify_style() or with such functions as 
+;;; previous calls to gtk_widget_modify_style() or with such functions as
 ;;; gtk_widget_modify_fg(). If you wish to retain previous values, you must
 ;;; first call gtk_widget_get_modifier_style(), make your modifications to the
 ;;; returned style, then call gtk_widget_modify_style() with that style. On the
-;;; other hand, if you first call gtk_widget_modify_style(), subsequent calls
-;;; to such functions gtk_widget_modify_fg() will have a cumulative effect with
-;;; the initial modifications.
+;;; other hand, if you first call gtk_widget_modify_style(), subsequent calls to
+;;; such functions gtk_widget_modify_fg() will have a cumulative effect with the
+;;; initial modifications.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5527,18 +5626,18 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_get_modifier_style has been deprecated since version 3.0 and 
-;;; should not be used in newly-written code. Use GtkStyleContext with a custom 
-;;; GtkStyleProvider instead
+;;; gtk_widget_get_modifier_style has been deprecated since version 3.0 and
+;;; should not be used in newly-written code. Use GtkStyleContext with a custom
+;;; GtkStyleProvider instead.
 ;;; 
-;;; Returns the current modifier style for the widget. (As set by 
+;;; Returns the current modifier style for the widget. (As set by
 ;;; gtk_widget_modify_style().) If no style has previously set, a new GtkRcStyle
 ;;; will be created with all values unset, and set as the modifier style for the
-;;; widget. If you make changes to this rc style, you must call 
+;;; widget. If you make changes to this rc style, you must call
 ;;; gtk_widget_modify_style(), passing in the returned rc style, to make sure
 ;;; that your changes take effect.
 ;;; 
-;;; Caution: passing the style back to gtk_widget_modify_style() will normally 
+;;; Caution: passing the style back to gtk_widget_modify_style() will normally
 ;;; end up destroying it, because gtk_widget_modify_style() copies the passed-in
 ;;; style and sets the copy as the new modifier style, thus dropping any
 ;;; reference to the old modifier style. Add a reference to the modifier style
@@ -5548,9 +5647,9 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the modifier style for the widget. This rc style is owned by the 
-;;;     widget. If you want to keep a pointer to value this around, you must
-;;;     add a refcount using g_object_ref().
+;;;     the modifier style for the widget. This rc style is owned by the widget.
+;;;     If you want to keep a pointer to value this around, you must add a
+;;;     refcount using g_object_ref()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -5558,17 +5657,17 @@
 ;;; 
 ;;; void gtk_widget_modify_fg (GtkWidget *widget,
 ;;;                            GtkStateType state,
-;;;                            const GdkColor *color)
+;;;                            const GdkColor *color);
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_modify_fg has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use gtk_widget_override_color() instead.
+;;; gtk_widget_modify_fg has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use gtk_widget_override_color() instead
 ;;; 
 ;;; Sets the foreground color for a widget in a particular state.
 ;;; 
-;;; All other style values are left untouched. See also
-;;; gtk_widget_modify_style().
+;;; All other style values are left untouched.
+;;; See also gtk_widget_modify_style().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5577,8 +5676,8 @@
 ;;;     the state for which to set the foreground color
 ;;; 
 ;;; color :
-;;;     the color to assign (does not need to be allocated), or NULL to undo
-;;;     the effect of previous calls to of gtk_widget_modify_fg().
+;;;     the color to assign (does not need to be allocated), or NULL to undo the
+;;;     effect of previous calls to of gtk_widget_modify_fg()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_modify_fg" gtk-widget-modify-fg) :void
@@ -5593,18 +5692,18 @@
 ;;; 
 ;;; void gtk_widget_modify_bg (GtkWidget *widget,
 ;;;                            GtkStateType state,
-;;;                            const GdkColor *color)
+;;;                            const GdkColor *color);
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_modify_bg has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use gtk_widget_override_background_color()
+;;; gtk_widget_modify_bg has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use gtk_widget_override_background_color()
 ;;; instead.
 ;;; 
 ;;; Sets the background color for a widget in a particular state.
 ;;; 
-;;; All other style values are left untouched. See also
-;;; gtk_widget_modify_style().
+;;; All other style values are left untouched.
+;;; See also gtk_widget_modify_style().
 ;;; 
 ;;; Note
 ;;; 
@@ -5625,7 +5724,7 @@
 ;;; 
 ;;; color :
 ;;;     the color to assign (does not need to be allocated), or NULL to undo
-;;;     the effect of previous calls to of gtk_widget_modify_bg().
+;;;     the effect of previous calls to of gtk_widget_modify_bg()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_modify_bg" gtk-widget-modify-bg) :void
@@ -5640,19 +5739,19 @@
 ;;; 
 ;;; void gtk_widget_modify_text (GtkWidget *widget,
 ;;;                              GtkStateType state,
-;;;                              const GdkColor *color)
+;;;                              const GdkColor *color);
 ;;; 
 ;;; Warning
 ;;; 
 ;;; gtk_widget_modify_text has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use gtk_widget_override_color() instead.
+;;; be used in newly-written code. Use gtk_widget_override_color() instead
 ;;; 
 ;;; Sets the text color for a widget in a particular state.
 ;;; 
 ;;; All other style values are left untouched. The text color is the foreground
 ;;; color used along with the base color (see gtk_widget_modify_base()) for
-;;; widgets such as GtkEntry and GtkTextView. See also
-;;; gtk_widget_modify_style().
+;;; widgets such as GtkEntry and GtkTextView.
+;;; See also gtk_widget_modify_style().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5661,8 +5760,8 @@
 ;;;     the state for which to set the text color
 ;;; 
 ;;; color :
-;;;     the color to assign (does not need to be allocated), or NULL to undo
-;;;     the effect of previous calls to of gtk_widget_modify_text().
+;;;     the color to assign (does not need to be allocated), or NULL to undo the
+;;;     effect of previous calls to of gtk_widget_modify_text()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_modify_text" gtk-widget-modify-text) :void
@@ -5677,7 +5776,7 @@
 ;;; 
 ;;; void gtk_widget_modify_base (GtkWidget *widget,
 ;;;                              GtkStateType state,
-;;;                              const GdkColor *color)
+;;;                              const GdkColor *color);
 ;;; 
 ;;; Warning
 ;;; 
@@ -5708,8 +5807,8 @@
 ;;;     the state for which to set the base color
 ;;; 
 ;;; color :
-;;;     the color to assign (does not need to be allocated), or NULL to undo
-;;;     the effect of previous calls to of gtk_widget_modify_base().
+;;;     the color to assign (does not need to be allocated), or NULL to undo the
+;;;     effect of previous calls to of gtk_widget_modify_base()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_modify_base" gtk-widget-modify-base) :void
@@ -5727,20 +5826,20 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_modify_font has been deprecated since version 3.0 and should 
-;;; not be used in newly-written code. Use gtk_widget_override_font() instead
+;;; gtk_widget_modify_font has been deprecated since version 3.0 and should not
+;;; be used in newly-written code. Use gtk_widget_override_font() instead.
 ;;; 
 ;;; Sets the font to use for a widget.
 ;;; 
-;;; All other style values are left untouched. See also 
-;;; gtk_widget_modify_style().
+;;; All other style values are left untouched.
+;;; See also gtk_widget_modify_style().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; font_desc :
-;;;     the font description to use, or NULL to undo the effect of previous 
-;;;     calls to gtk_widget_modify_font().
+;;;     the font description to use, or NULL to undo the effect of previous
+;;;     calls to gtk_widget_modify_font()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -5748,7 +5847,7 @@
 ;;; 
 ;;; void gtk_widget_modify_cursor (GtkWidget *widget,
 ;;;                                const GdkColor *primary,
-;;;                                const GdkColor *secondary)
+;;;                                const GdkColor *secondary);
 ;;; 
 ;;; Warning
 ;;; 
@@ -5758,8 +5857,8 @@
 ;;; Sets the cursor color to use in a widget, overriding the "cursor-color" and
 ;;; "secondary-cursor-color" style properties.
 ;;; 
-;;; All other style values are left untouched. See also
-;;; gtk_widget_modify_style().
+;;; All other style values are left untouched.
+;;; See also gtk_widget_modify_style().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5787,7 +5886,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_create_pango_context ()
 ;;; 
-;;; PangoContext * gtk_widget_create_pango_context (GtkWidget *widget)
+;;; PangoContext * gtk_widget_create_pango_context (GtkWidget *widget);
 ;;; 
 ;;; Creates a new PangoContext with the appropriate font map, font description,
 ;;; and base direction for drawing text for this widget. See also
@@ -5811,15 +5910,15 @@
 ;;; 
 ;;; PangoContext * gtk_widget_get_pango_context (GtkWidget *widget);
 ;;; 
-;;; Gets a PangoContext with the appropriate font map, font description, and 
-;;; base direction for this widget. Unlike the context returned by 
+;;; Gets a PangoContext with the appropriate font map, font description, and
+;;; base direction for this widget. Unlike the context returned by
 ;;; gtk_widget_create_pango_context(), this context is owned by the widget (it
 ;;; can be used until the screen for the widget changes or the widget is removed
 ;;; from its toplevel), and will be updated to match any changes to the widget's
 ;;; attributes.
 ;;; 
-;;; If you create and keep a PangoLayout using this context, you must deal 
-;;; with changes to the context by calling pango_layout_context_changed() on the
+;;; If you create and keep a PangoLayout using this context, you must deal with
+;;; changes to the context by calling pango_layout_context_changed() on the
 ;;; layout in response to the "style-updated" and "direction-changed" signals
 ;;; for the widget.
 ;;; 
@@ -5834,13 +5933,13 @@
 ;;; gtk_widget_create_pango_layout ()
 ;;; 
 ;;; PangoLayout * gtk_widget_create_pango_layout (GtkWidget *widget,
-;;;                                               const gchar *text)
+;;;                                               const gchar *text);
 ;;; 
 ;;; Creates a new PangoLayout with the appropriate font map, font description,
 ;;; and base direction for drawing text for this widget.
 ;;; 
-;;; If you keep a PangoLayout created in this way around, in order to notify
-;;; the layout of changes to the base direction or font of this widget, you must
+;;; If you keep a PangoLayout created in this way around, in order to notify the
+;;; layout of changes to the base direction or font of this widget, you must
 ;;; call pango_layout_context_changed() in response to the "style-updated" and
 ;;; "direction-changed" signals for the widget.
 ;;; 
@@ -5867,7 +5966,7 @@
 ;;; GdkPixbuf * gtk_widget_render_icon (GtkWidget *widget,
 ;;;                                     const gchar *stock_id,
 ;;;                                     GtkIconSize size,
-;;;                                     const gchar *detail)
+;;;                                     const gchar *detail);
 ;;; 
 ;;; Warning
 ;;; 
@@ -5882,8 +5981,8 @@
 ;;; for that widget or code.
 ;;; 
 ;;; The pixels in the returned GdkPixbuf are shared with the rest of the
-;;; application and should not be modified. The pixbuf should be freed after
-;;; use with g_object_unref().
+;;; application and should not be modified. The pixbuf should be freed after use
+;;; with g_object_unref().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5916,7 +6015,7 @@
 ;;; 
 ;;; GdkPixbuf * gtk_widget_render_icon_pixbuf (GtkWidget *widget,
 ;;;                                            const gchar *stock_id,
-;;;                                            GtkIconSize size)
+;;;                                            GtkIconSize size);
 ;;; 
 ;;; A convenience function that uses the theme engine and style settings for
 ;;; widget to look up stock_id and render it to a pixbuf. stock_id should be a
@@ -5924,8 +6023,8 @@
 ;;; such as GTK_ICON_SIZE_MENU.
 ;;; 
 ;;; The pixels in the returned GdkPixbuf are shared with the rest of the
-;;; application and should not be modified. The pixbuf should be freed after
-;;; use with g_object_unref().
+;;; application and should not be modified. The pixbuf should be freed after use
+;;; with g_object_unref().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -5947,7 +6046,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_pop_composite_child ()
 ;;; 
-;;; void gtk_widget_pop_composite_child (void)
+;;; void gtk_widget_pop_composite_child (void);
 ;;; 
 ;;; Cancels the effect of a previous call to gtk_widget_push_composite_child().
 ;;; ----------------------------------------------------------------------------
@@ -5960,7 +6059,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_push_composite_child ()
 ;;; 
-;;; void gtk_widget_push_composite_child (void)
+;;; void gtk_widget_push_composite_child (void);
 ;;; 
 ;;; Makes all newly-created widgets as composite children until the
 ;;; corresponding gtk_widget_pop_composite_child() call.
@@ -5973,14 +6072,14 @@
 ;;; 
 ;;; Here is a simple example:
 ;;; 
-;;;  gtk_widget_push_composite_child ();
-;;;  scrolled_window->hscrollbar
-;;;               = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, hadjustment);
-;;;  gtk_widget_set_composite_name (scrolled_window->hscrollbar, "hscrollbar");
-;;;  gtk_widget_pop_composite_child ();
-;;;  gtk_widget_set_parent (scrolled_window->hscrollbar,
-;;;                         GTK_WIDGET (scrolled_window));
-;;;  g_object_ref (scrolled_window->hscrollbar);
+;;; gtk_widget_push_composite_child ();
+;;; scrolled_window->hscrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL,
+;;;                                                  hadjustment);
+;;; gtk_widget_set_composite_name (scrolled_window->hscrollbar, "hscrollbar");
+;;; gtk_widget_pop_composite_child ();
+;;; gtk_widget_set_parent (scrolled_window->hscrollbar,
+;;;                        GTK_WIDGET (scrolled_window));
+;;; g_object_ref (scrolled_window->hscrollbar);
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_push_composite_child" gtk-widget-push-composite-child)
@@ -5995,15 +6094,15 @@
 ;;;                                  gint x,
 ;;;                                  gint y,
 ;;;                                  gint width,
-;;;                                  gint height)
+;;;                                  gint height);
 ;;; 
-;;; Convenience function that calls gtk_widget_queue_draw_region() on the
-;;; region created from the given coordinates.
+;;; Convenience function that calls gtk_widget_queue_draw_region() on the region
+;;; created from the given coordinates.
 ;;; 
-;;; The region here is specified in widget coordinates. Widget coordinates are
-;;; a bit odd; for historical reasons, they are defined as widget->window
-;;; coordinates for widgets that are not GTK_NO_WINDOW widgets, and are
-;;; relative to widget->allocation.x, widget->allocation.y for widgets that are
+;;; The region here is specified in widget coordinates. Widget coordinates are a
+;;; bit odd; for historical reasons, they are defined as widget->window
+;;; coordinates for widgets that are not GTK_NO_WINDOW widgets, and are relative
+;;; to widget->allocation.x, widget->allocation.y for widgets that are
 ;;; GTK_NO_WINDOW widgets.
 ;;; 
 ;;; widget :
@@ -6035,7 +6134,7 @@
 ;;; gtk_widget_queue_draw_region ()
 ;;; 
 ;;; void gtk_widget_queue_draw_region (GtkWidget *widget,
-;;;                                    const cairo_region_t *region)
+;;;                                    const cairo_region_t *region);
 ;;; 
 ;;; Invalidates the rectangular area of widget defined by region by calling
 ;;; gdk_window_invalidate_region() on the widget's window and all its child
@@ -6060,7 +6159,7 @@
 ;;; gtk_widget_set_app_paintable ()
 ;;; 
 ;;; void gtk_widget_set_app_paintable (GtkWidget *widget,
-;;;                                    gboolean app_paintable)
+;;;                                    gboolean app_paintable);
 ;;; 
 ;;; Sets whether the application intends to draw on the widget in an "draw"
 ;;; handler.
@@ -6092,20 +6191,20 @@
 ;;; gtk_widget_set_double_buffered ()
 ;;; 
 ;;; void gtk_widget_set_double_buffered (GtkWidget *widget,
-;;;                                      gboolean double_buffered)
+;;;                                      gboolean double_buffered);
 ;;; 
 ;;; Widgets are double buffered by default; you can use this function to turn
 ;;; off the buffering. "Double buffered" simply means that
 ;;; gdk_window_begin_paint_region() and gdk_window_end_paint() are called
 ;;; automatically around expose events sent to the widget.
 ;;; gdk_window_begin_paint() diverts all drawing to a widget's window to an
-;;; offscreen buffer, and gdk_window_end_paint() draws the buffer to the
-;;; screen. The result is that users see the window update in one smooth step,
-;;; and don't see individual graphics primitives being rendered.
+;;; offscreen buffer, and gdk_window_end_paint() draws the buffer to the screen.
+;;; The result is that users see the window update in one smooth step, and don't
+;;; see individual graphics primitives being rendered.
 ;;; 
 ;;; In very simple terms, double buffered widgets don't flicker, so you would
-;;; only use this function to turn off double buffering if you had special
-;;; needs and really knew what you were doing.
+;;; only use this function to turn off double buffering if you had special needs
+;;; and really knew what you were doing.
 ;;; 
 ;;; Note: if you turn off double-buffering, you have to handle expose events,
 ;;; since even the clearing to the background color or pixmap will not happen
@@ -6129,7 +6228,7 @@
 ;;; gtk_widget_set_redraw_on_allocate ()
 ;;; 
 ;;; void gtk_widget_set_redraw_on_allocate (GtkWidget *widget,
-;;;                                         gboolean redraw_on_allocate)
+;;;                                         gboolean redraw_on_allocate);
 ;;; 
 ;;; Sets whether the entire widget is queued for drawing when its size
 ;;; allocation changes. By default, this setting is TRUE and the entire widget
@@ -6149,14 +6248,14 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; redraw_on_allocate :
-;;;     if TRUE, the entire widget will be redrawn when it is allocated to a
-;;;     new size. Otherwise, only the new portion of the widget will be redrawn.
+;;;     if TRUE, the entire widget will be redrawn when it is allocated to a new
+;;;     size. Otherwise, only the new portion of the widget will be redrawn.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_composite_name ()
 ;;; 
-;;; void gtk_widget_set_composite_name (GtkWidget *widget, const gchar *name)
+;;; void gtk_widget_set_composite_name (GtkWidget *widget, const gchar *name);
 ;;; 
 ;;; Sets a widgets composite name. The widget must be a composite child of its
 ;;; parent; see gtk_widget_push_composite_child().
@@ -6179,12 +6278,12 @@
 ;;; gtk_widget_mnemonic_activate ()
 ;;; 
 ;;; gboolean gtk_widget_mnemonic_activate (GtkWidget *widget,
-;;;                                        gboolean group_cycling)
+;;;                                        gboolean group_cycling);
 ;;; 
 ;;; Emits the "mnemonic-activate" signal.
 ;;; 
-;;; The default handler for this signal activates the widget if group_cycling
-;;; is FALSE, and just grabs the focus if group_cycling is TRUE.
+;;; The default handler for this signal activates the widget if group_cycling is
+;;; FALSE, and just grabs the focus if group_cycling is TRUE.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -6206,7 +6305,7 @@
 ;;; gtk_widget_class_install_style_property ()
 ;;; 
 ;;; void gtk_widget_class_install_style_property (GtkWidgetClass *klass,
-;;;                                               GParamSpec *pspec)
+;;;                                               GParamSpec *pspec);
 ;;; 
 ;;; Installs a style property on a widget class. The parser for the style
 ;;; property is determined by the value type of pspec.
@@ -6271,7 +6370,7 @@
 ;;; gtk_widget_class_list_style_properties ()
 ;;; 
 ;;; GParamSpec ** gtk_widget_class_list_style_properties (GtkWidgetClass *klass,
-;;;                                                       guint *n_properties)
+;;;                                                       guint *n_properties);
 ;;; 
 ;;; Returns all style properties of a widget class.
 ;;; 
@@ -6315,7 +6414,7 @@
 ;;; gtk_widget_region_intersect ()
 ;;; 
 ;;; cairo_region_t * gtk_widget_region_intersect (GtkWidget *widget,
-;;;                                               const cairo_region_t *region)
+;;;                                               const cairo_region_t *region);
 ;;; 
 ;;; Computes the intersection of a widget's area and region, returning the
 ;;; intersection. The result may be empty, use cairo_region_is_empty() to check.
@@ -6347,14 +6446,14 @@
 ;;; 
 ;;; gint gtk_widget_send_expose (GtkWidget *widget, GdkEvent *event);
 ;;; 
-;;; Very rarely-used function. This function is used to emit an expose event 
-;;; on a widget. This function is not normally used directly. The only time it
-;;; is used is when propagating an expose event to a child NO_WINDOW widget,
-;;; and that is normally done using gtk_container_propagate_draw().
+;;; Very rarely-used function. This function is used to emit an expose event on
+;;; a widget. This function is not normally used directly. The only time it is
+;;; used is when propagating an expose event to a child NO_WINDOW widget, and
+;;; that is normally done using gtk_container_propagate_draw().
 ;;; 
-;;; If you want to force an area of a window to be redrawn, use 
+;;; If you want to force an area of a window to be redrawn, use
 ;;; gdk_window_invalidate_rect() or gdk_window_invalidate_region(). To cause
-;;; the redraw to be done immediately, follow that call with a call to 
+;;; the redraw to be done immediately, follow that call with a call to
 ;;; gdk_window_process_updates().
 ;;; 
 ;;; widget :
@@ -6370,17 +6469,17 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_send_focus_change ()
 ;;; 
-;;; gboolean gtk_widget_send_focus_change (GtkWidget *widget, GdkEvent *event)
+;;; gboolean gtk_widget_send_focus_change (GtkWidget *widget, GdkEvent *event);
 ;;; 
 ;;; Sends the focus change event to widget
 ;;; 
-;;; This function is not meant to be used by applications. The only time it 
+;;; This function is not meant to be used by applications. The only time it
 ;;; should be used is when it is necessary for a GtkWidget to assign focus to a
-;;; widget that is semantically owned by the first widget even though it's not
-;;; a direct child - for instance, a search entry in a floating window similar
-;;; to the quick search in GtkTreeView.
+;;; widget that is semantically owned by the first widget even though it's not a
+;;; direct child - for instance, a search entry in a floating window similar to
+;;; the quick search in GtkTreeView.
 ;;; 
-;;; An example of its usage is:
+;;; An example of its usage is:    
 ;;; 
 ;;; GdkEvent *fevent = gdk_event_new (GDK_FOCUS_CHANGE);
 ;;; 
@@ -6401,7 +6500,7 @@
 ;;;     a GdkEvent of type GDK_FOCUS_CHANGE
 ;;; 
 ;;; Returns :
-;;;     the return value from the event signal emission: TRUE if the event was 
+;;;     the return value from the event signal emission: TRUE if the event was
 ;;;     handled, and FALSE otherwise
 ;;; 
 ;;; Since 2.20
@@ -6423,7 +6522,7 @@
 ;;;     the name of the first property to get
 ;;; 
 ;;; ... :
-;;;     pairs of property names and locations to return the property values, 
+;;;     pairs of property names and locations to return the property values,
 ;;;     starting with the location for first_property_name, terminated by NULL.
 ;;; ----------------------------------------------------------------------------
 
@@ -6432,7 +6531,7 @@
 ;;; 
 ;;; void gtk_widget_style_get_property (GtkWidget *widget,
 ;;;                                     const gchar *property_name,
-;;;                                     GValue *value)
+;;;                                     GValue *value);
 ;;; 
 ;;; Gets the value of a style property of widget.
 ;;; 
@@ -6513,7 +6612,7 @@
 ;;; 
 ;;; void gtk_widget_style_get_valist (GtkWidget *widget,
 ;;;                                   const gchar *first_property_name,
-;;;                                   va_list var_args)
+;;;                                   va_list var_args);
 ;;; 
 ;;; Non-vararg variant of gtk_widget_style_get(). Used primarily by language
 ;;; bindings.
@@ -6532,15 +6631,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_style_attach ()
 ;;; 
-;;; void gtk_widget_style_attach (GtkWidget *widget)
+;;; void gtk_widget_style_attach (GtkWidget *widget);
 ;;; 
 ;;; Warning
 ;;; 
 ;;; gtk_widget_style_attach is deprecated and should not be used in
 ;;; newly-written code. 3.0. This step is unnecessary with GtkStyleContext.
 ;;; 
-;;; This function attaches the widget's GtkStyle to the widget's GdkWindow.
-;;; It is a replacement for
+;;; This function attaches the widget's GtkStyle to the widget's GdkWindow. It
+;;; is a replacement for
 ;;; 
 ;;; widget->style = gtk_style_attach (widget->style, widget->window);
 ;;; 
@@ -6559,7 +6658,7 @@
 ;;; gtk_widget_class_set_accessible_type ()
 ;;; 
 ;;; void gtk_widget_class_set_accessible_type (GtkWidgetClass *widget_class,
-;;;                                            GType type)
+;;;                                            GType type);
 ;;; 
 ;;; Sets the type to be used for creating accessibles for widgets of
 ;;; widget_class. The given type must be a subtype of the type used for
@@ -6580,7 +6679,7 @@
 ;;; gtk_widget_class_set_accessible_role ()
 ;;; 
 ;;; void gtk_widget_class_set_accessible_role (GtkWidgetClass *widget_class,
-;;;                                            AtkRole role)
+;;;                                            AtkRole role);
 ;;; 
 ;;; Sets the default AtkRole to be set on accessibles created for widgets of
 ;;; widget_class. Accessibles may decide to not honor this setting if their role
@@ -6608,14 +6707,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_accessible ()
 ;;; 
-;;; AtkObject * gtk_widget_get_accessible (GtkWidget *widget)
+;;; AtkObject * gtk_widget_get_accessible (GtkWidget *widget);
 ;;; 
 ;;; Returns the accessible object that describes the widget to an assistive
 ;;; technology.
 ;;; 
-;;; If accessibility support is not available, this AtkObject instance may be
-;;; a no-op. Likewise, if no class-specific AtkObject implementation is
-;;; available for the widget instance in question, it will inherit an AtkObject
+;;; If accessibility support is not available, this AtkObject instance may be a
+;;; no-op. Likewise, if no class-specific AtkObject implementation is available
+;;; for the widget instance in question, it will inherit an AtkObject
 ;;; implementation from the first ancestor class for which such an
 ;;; implementation is defined.
 ;;; 
@@ -6633,10 +6732,10 @@
 ;;; gtk_widget_child_focus ()
 ;;; 
 ;;; gboolean gtk_widget_child_focus (GtkWidget *widget,
-;;;                                  GtkDirectionType direction)
+;;;                                  GtkDirectionType direction);
 ;;; 
-;;; This function is used by custom widget implementations; if you're writing
-;;; an app, you'd use gtk_widget_grab_focus() to move the focus to a particular
+;;; This function is used by custom widget implementations; if you're writing an
+;;; app, you'd use gtk_widget_grab_focus() to move the focus to a particular
 ;;; widget, and gtk_container_set_focus_chain() to change the focus tab order.
 ;;; So you may want to investigate those functions instead.
 ;;; 
@@ -6674,7 +6773,7 @@
 ;;; gtk_widget_child_notify ()
 ;;; 
 ;;; void gtk_widget_child_notify (GtkWidget *widget,
-;;;                               const gchar *child_property)
+;;;                               const gchar *child_property);
 ;;; 
 ;;; Emits a "child-notify" signal for the child property child_property on
 ;;; widget.
@@ -6699,7 +6798,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_freeze_child_notify ()
 ;;; 
-;;; void gtk_widget_freeze_child_notify (GtkWidget *widget)
+;;; void gtk_widget_freeze_child_notify (GtkWidget *widget);
 ;;; 
 ;;; Stops emission of "child-notify" signals on widget. The signals are queued
 ;;; until gtk_widget_thaw_child_notify() is called on widget.
@@ -6718,7 +6817,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_child_visible ()
 ;;; 
-;;; gboolean gtk_widget_get_child_visible (GtkWidget *widget)
+;;; gboolean gtk_widget_get_child_visible (GtkWidget *widget);
 ;;; 
 ;;; Gets the value set with gtk_widget_set_child_visible(). If you feel a need
 ;;; to use this function, your code probably needs reorganization.
@@ -6736,7 +6835,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_parent ()
 ;;; 
-;;; GtkWidget * gtk_widget_get_parent (GtkWidget *widget)
+;;; GtkWidget * gtk_widget_get_parent (GtkWidget *widget);
 ;;; 
 ;;; Returns the parent container of widget.
 ;;; 
@@ -6757,19 +6856,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_settings ()
 ;;; 
-;;; GtkSettings * gtk_widget_get_settings (GtkWidget *widget)
+;;; GtkSettings * gtk_widget_get_settings (GtkWidget *widget);
 ;;; 
 ;;; Gets the settings object holding the settings used for this widget.
 ;;; 
-;;; Note that this function can only be called when the GtkWidget is attached
-;;; to a toplevel, since the settings object is specific to a particular
-;;; GdkScreen.
+;;; Note that this function can only be called when the GtkWidget is attached to
+;;; a toplevel, since the settings object is specific to a particular GdkScreen.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the relevant GtkSettings object
+;;;     the relevant GtkSettings object.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_settings" gtk-widget-get-settings) g-object
@@ -6781,7 +6879,7 @@
 ;;; gtk_widget_get_clipboard ()
 ;;; 
 ;;; GtkClipboard * gtk_widget_get_clipboard (GtkWidget *widget,
-;;;                                          GdkAtom selection)
+;;;                                          GdkAtom selection);
 ;;; 
 ;;; Returns the clipboard object for the given selection to be used with widget.
 ;;; widget must have a GdkDisplay associated with it, so must be attached to a
@@ -6798,7 +6896,7 @@
 ;;; Returns :
 ;;;     the appropriate clipboard object. If no clipboard already exists, a new
 ;;;     one will be created. Once a clipboard object has been created, it is
-;;;     persistent for all time
+;;;     persistent for all time.
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -6813,11 +6911,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_display ()
 ;;; 
-;;; GdkDisplay * gtk_widget_get_display (GtkWidget *widget)
+;;; GdkDisplay * gtk_widget_get_display (GtkWidget *widget);
 ;;; 
-;;; Get the GdkDisplay for the toplevel window associated with this widget.
-;;; This function can only be called after the widget has been added to a
-;;; widget hierarchy with a GtkWindow at the top.
+;;; Get the GdkDisplay for the toplevel window associated with this widget. This
+;;; function can only be called after the widget has been added to a widget
+;;; hierarchy with a GtkWindow at the top.
 ;;; 
 ;;; In general, you should only create display specific resources when a widget
 ;;; has been realized, and you should free those resources when the widget is
@@ -6827,7 +6925,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the GdkDisplay for the toplevel for this widget.
+;;;     the GdkDisplay for the toplevel for this widget
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -6840,7 +6938,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_root_window ()
 ;;; 
-;;; GdkWindow * gtk_widget_get_root_window (GtkWidget *widget)
+;;; GdkWindow * gtk_widget_get_root_window (GtkWidget *widget);
 ;;; 
 ;;; Get the root window where this widget is located. This function can only be
 ;;; called after the widget has been added to a widget hierarchy with GtkWindow
@@ -6855,7 +6953,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the GdkWindow root window for the toplevel for this widget.
+;;;     the GdkWindow root window for the toplevel for this widget
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -6868,11 +6966,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_screen ()
 ;;; 
-;;; GdkScreen * gtk_widget_get_screen (GtkWidget *widget)
+;;; GdkScreen * gtk_widget_get_screen (GtkWidget *widget);
 ;;; 
-;;; Get the GdkScreen from the toplevel window associated with this widget.
-;;; This function can only be called after the widget has been added to a
-;;; widget hierarchy with a GtkWindow at the top.
+;;; Get the GdkScreen from the toplevel window associated with this widget. This
+;;; function can only be called after the widget has been added to a widget
+;;; hierarchy with a GtkWindow at the top.
 ;;; 
 ;;; In general, you should only create screen specific resources when a widget
 ;;; has been realized, and you should free those resources when the widget is
@@ -6895,7 +6993,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_screen ()
 ;;; 
-;;; gboolean gtk_widget_has_screen (GtkWidget *widget)
+;;; gboolean gtk_widget_has_screen (GtkWidget *widget);
 ;;; 
 ;;; Checks whether there is a GdkScreen is associated with this widget. All
 ;;; toplevel widgets have an associated screen, and all widgets added into a
@@ -6922,10 +7020,10 @@
 ;;;                                   gint *width,
 ;;;                                   gint *height);
 ;;; 
-;;; Gets the size request that was explicitly set for the widget using 
-;;; gtk_widget_set_size_request(). A value of -1 stored in width or height 
-;;; indicates that that dimension has not been set explicitly and the natural 
-;;; requisition of the widget will be used intead. See 
+;;; Gets the size request that was explicitly set for the widget using
+;;; gtk_widget_set_size_request(). A value of -1 stored in width or height
+;;; indicates that that dimension has not been set explicitly and the natural
+;;; requisition of the widget will be used intead. See
 ;;; gtk_widget_set_size_request(). To get the size a widget will actually
 ;;; request, call gtk_widget_get_preferred_size() instead of this function.
 ;;; 
@@ -6952,21 +7050,21 @@
 ;;; 
 ;;; void gtk_widget_set_child_visible (GtkWidget *widget, gboolean is_visible);
 ;;; 
-;;; Sets whether widget should be mapped along with its when its parent is 
+;;; Sets whether widget should be mapped along with its when its parent is
 ;;; mapped and widget has been shown with gtk_widget_show().
 ;;; 
-;;; The child visibility can be set for widget before it is added to a 
-;;; container with gtk_widget_set_parent(), to avoid mapping children
-;;; unnecessary before immediately unmapping them. However it will be reset to
-;;; its default state of TRUE when the widget is removed from a container.
+;;; The child visibility can be set for widget before it is added to a container
+;;; with gtk_widget_set_parent(), to avoid mapping children unnecessary before
+;;; immediately unmapping them. However it will be reset to its default state of
+;;; TRUE when the widget is removed from a container.
 ;;; 
-;;; Note that changing the child visibility of a widget does not queue a 
-;;; resize on the widget. Most of the time, the size of a widget is computed
-;;; from all visible children, whether or not they are mapped. If this is not
-;;; the case, the container can queue a resize itself.
+;;; Note that changing the child visibility of a widget does not queue a resize
+;;; on the widget. Most of the time, the size of a widget is computed from all
+;;; visible children, whether or not they are mapped. If this is not the case,
+;;; the container can queue a resize itself.
 ;;; 
-;;; This function is only useful for container implementations and never 
-;;; should be called by an application.
+;;; This function is only useful for container implementations and never should
+;;; be called by an application.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -6982,34 +7080,33 @@
 ;;;                                   gint width,
 ;;;                                   gint height);
 ;;; 
-;;; Sets the minimum size of a widget; that is, the widget's size request will 
+;;; Sets the minimum size of a widget; that is, the widget's size request will
 ;;; be width by height. You can use this function to force a widget to be either
 ;;; larger or smaller than it normally would be.
 ;;; 
-;;; In most cases, gtk_window_set_default_size() is a better choice for 
-;;; toplevel windows than this function; setting the default size will still
-;;; allow users to shrink the window. Setting the size request will force them
-;;; to leave the window at least as large as the size request. When dealing
-;;; with window sizes, gtk_window_set_geometry_hints() can be a useful function
-;;; as well.
+;;; In most cases, gtk_window_set_default_size() is a better choice for toplevel
+;;; windows than this function; setting the default size will still allow users
+;;; to shrink the window. Setting the size request will force them to leave the
+;;; window at least as large as the size request. When dealing with window
+;;; sizes, gtk_window_set_geometry_hints() can be a useful function as well.
 ;;; 
-;;; Note the inherent danger of setting any fixed size - themes, translations 
-;;; into other languages, different fonts, and user action can all change the 
+;;; Note the inherent danger of setting any fixed size - themes, translations
+;;; into other languages, different fonts, and user action can all change the
 ;;; appropriate size for a given widget. So, it's basically impossible to
 ;;; hardcode a size that will always be correct.
 ;;; 
-;;; The size request of a widget is the smallest size a widget can accept 
-;;; while still functioning well and drawing itself correctly. However in some 
-;;; strange cases a widget may be allocated less than its requested size, and
-;;; in many cases a widget may be allocated more space than it requested.
+;;; The size request of a widget is the smallest size a widget can accept while
+;;; still functioning well and drawing itself correctly. However in some strange
+;;; cases a widget may be allocated less than its requested size, and in many
+;;; cases a widget may be allocated more space than it requested.
 ;;; 
-;;; If the size request in a given direction is -1 (unset), then the "natural" 
+;;; If the size request in a given direction is -1 (unset), then the "natural"
 ;;; size request of the widget will be used instead.
 ;;; 
-;;; Widgets can't actually be allocated a size less than 1 by 1, but you can 
+;;; Widgets can't actually be allocated a size less than 1 by 1, but you can
 ;;; pass 0,0 to this function to mean "as small as possible."
 ;;; 
-;;; The size request set here does not include any margin from the GtkWidget 
+;;; The size request set here does not include any margin from the GtkWidget
 ;;; properties margin-left, margin-right, margin-top, and margin-bottom, but it
 ;;; does include pretty much all other padding or border properties set by any
 ;;; subclass of GtkWidget.
@@ -7035,7 +7132,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_thaw_child_notify ()
 ;;; 
-;;; void gtk_widget_thaw_child_notify (GtkWidget *widget)
+;;; void gtk_widget_thaw_child_notify (GtkWidget *widget);
 ;;; 
 ;;; Reverts the effect of a previous call to gtk_widget_freeze_child_notify().
 ;;; This causes all queued "child-notify" signals on widget to be emitted.
@@ -7052,7 +7149,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_no_show_all ()
 ;;; 
-;;; void gtk_widget_set_no_show_all (GtkWidget *widget, gboolean no_show_all)
+;;; void gtk_widget_set_no_show_all (GtkWidget *widget, gboolean no_show_all);
 ;;; 
 ;;; Sets the "no-show-all" property, which determines whether calls to
 ;;; gtk_widget_show_all() will affect this widget.
@@ -7081,14 +7178,14 @@
 ;;; 
 ;;; gboolean gtk_widget_get_no_show_all (GtkWidget *widget);
 ;;; 
-;;; Returns the current value of the "no-show-all" property, which determines 
+;;; Returns the current value of the "no-show-all" property, which determines
 ;;; whether calls to gtk_widget_show_all() will affect this widget.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the current value of the "no-show-all" property
+;;;     the current value of the "no-show-all" property.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -7103,7 +7200,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_list_mnemonic_labels ()
 ;;; 
-;;; GList * gtk_widget_list_mnemonic_labels (GtkWidget *widget)
+;;; GList * gtk_widget_list_mnemonic_labels (GtkWidget *widget);
 ;;; 
 ;;; Returns a newly allocated list of the widgets, normally labels, for which
 ;;; this widget is the target of a mnemonic (see for example,
@@ -7112,15 +7209,15 @@
 ;;; The widgets in the list are not individually referenced. If you want to
 ;;; iterate through the list and perform actions involving callbacks that might
 ;;; destroy the widgets, you must call
-;;; g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and then unref
-;;; all the widgets afterwards.
+;;; g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and then unref all
+;;; the widgets afterwards.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the list of mnemonic labels; free this list with g_list_free() when
-;;;     you are done with it
+;;;     the list of mnemonic labels; free this list with g_list_free() when you
+;;;     are done with it
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -7134,13 +7231,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_mnemonic_label ()
 ;;; 
-;;; void gtk_widget_add_mnemonic_label (GtkWidget *widget, GtkWidget *label)
+;;; void gtk_widget_add_mnemonic_label (GtkWidget *widget, GtkWidget *label);
 ;;; 
-;;; Adds a widget to the list of mnemonic labels for this widget.
-;;; (See gtk_widget_list_mnemonic_labels()). Note the list of mnemonic labels
-;;; for the widget is cleared when the widget is destroyed, so the caller must
-;;; make sure to update its internal state at this point as well, by using a
-;;; connection to the "destroy" signal or a weak notifier.
+;;; Adds a widget to the list of mnemonic labels for this widget. (See
+;;; gtk_widget_list_mnemonic_labels()). Note the list of mnemonic labels for the
+;;; widget is cleared when the widget is destroyed, so the caller must make sure
+;;; to update its internal state at this point as well, by using a connection to
+;;; the "destroy" signal or a weak notifier.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -7160,11 +7257,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_remove_mnemonic_label ()
 ;;; 
-;;; void gtk_widget_remove_mnemonic_label (GtkWidget *widget, GtkWidget *label)
+;;; void gtk_widget_remove_mnemonic_label (GtkWidget *widget, GtkWidget *label);
 ;;; 
-;;; Removes a widget from the list of mnemonic labels for this widget.
-;;; (See gtk_widget_list_mnemonic_labels()). The widget must have previously
-;;; been added to the list with gtk_widget_add_mnemonic_label().
+;;; Removes a widget from the list of mnemonic labels for this widget. (See
+;;; gtk_widget_list_mnemonic_labels()). The widget must have previously been
+;;; added to the list with gtk_widget_add_mnemonic_label().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -7186,7 +7283,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_composited ()
 ;;; 
-;;; gboolean gtk_widget_is_composited (GtkWidget *widget)
+;;; gboolean gtk_widget_is_composited (GtkWidget *widget);
 ;;; 
 ;;; Whether widget can rely on having its alpha channel drawn correctly. On X11
 ;;; this function returns whether a compositing manager is running for widget's
@@ -7213,7 +7310,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_error_bell ()
 ;;; 
-;;; void gtk_widget_error_bell (GtkWidget *widget)
+;;; void gtk_widget_error_bell (GtkWidget *widget);
 ;;; 
 ;;; Notifies the user about an input-related error on this widget. If the
 ;;; "gtk-error-bell" setting is TRUE, it calls gdk_window_beep(), otherwise it
@@ -7240,29 +7337,29 @@
 ;;; gboolean gtk_widget_keynav_failed (GtkWidget *widget,
 ;;;                                    GtkDirectionType direction);
 ;;; 
-;;; This function should be called whenever keyboard navigation within a 
-;;; single widget hits a boundary. The function emits the "keynav-failed"
-;;; signal on the widget and its return value should be interpreted in a way
-;;; similar to the return value of gtk_widget_child_focus():
+;;; This function should be called whenever keyboard navigation within a single
+;;; widget hits a boundary. The function emits the "keynav-failed" signal on the
+;;; widget and its return value should be interpreted in a way similar to the
+;;; return value of gtk_widget_child_focus():
 ;;; 
-;;; When TRUE is returned, stay in the widget, the failed keyboard navigation 
-;;; is Ok and/or there is nowhere we can/should move the focus to.
+;;; When TRUE is returned, stay in the widget, the failed keyboard navigation is
+;;; Ok and/or there is nowhere we can/should move the focus to.
 ;;; 
-;;; When FALSE is returned, the caller should continue with keyboard 
-;;; navigation outside the widget, e.g. by calling gtk_widget_child_focus() on
-;;; the widget's toplevel.
+;;; When FALSE is returned, the caller should continue with keyboard navigation
+;;; outside the widget, e.g. by calling gtk_widget_child_focus() on the widget's
+;;; toplevel.
 ;;; 
-;;; The default ::keynav-failed handler returns TRUE for GTK_DIR_TAB_FORWARD 
-;;; and GTK_DIR_TAB_BACKWARD. For the other values of GtkDirectionType, it looks
-;;; at the "gtk-keynav-cursor-only" setting and returns FALSE if the setting is
+;;; The default ::keynav-failed handler returns TRUE for GTK_DIR_TAB_FORWARD and
+;;; GTK_DIR_TAB_BACKWARD. For the other values of GtkDirectionType, it looks at
+;;; the "gtk-keynav-cursor-only" setting and returns FALSE if the setting is
 ;;; TRUE. This way the entire user interface becomes cursor-navigatable on input
 ;;; devices such as mobile phones which only have cursor keys but no tab key.
 ;;; 
-;;; Whenever the default handler returns TRUE, it also calls 
+;;; Whenever the default handler returns TRUE, it also calls
 ;;; gtk_widget_error_bell() to notify the user of the failed keyboard
 ;;; navigation.
 ;;; 
-;;; A use case for providing an own implementation of ::keynav-failed (either 
+;;; A use case for providing an own implementation of ::keynav-failed (either
 ;;; by connecting to it or by overriding it) would be a row of GtkEntry widgets
 ;;; where the user should be able to navigate the entire row with the cursor
 ;;; keys, as e.g. known from user interfaces that require entering license keys.
@@ -7274,7 +7371,7 @@
 ;;;     direction of focus movement
 ;;; 
 ;;; Returns :
-;;;     TRUE if stopping keyboard navigation is fine, FALSE if the emitting 
+;;;     TRUE if stopping keyboard navigation is fine, FALSE if the emitting
 ;;;     widget should try to handle the keyboard navigation attempt in its
 ;;;     parent container(s).
 ;;; 
@@ -7308,12 +7405,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_tooltip_markup ()
 ;;; 
-;;; void gtk_widget_set_tooltip_markup (GtkWidget *widget, const gchar *markup)
+;;; void gtk_widget_set_tooltip_markup (GtkWidget *widget, const gchar *markup);
 ;;; 
-;;; Sets markup as the contents of the tooltip, which is marked up with the 
+;;; Sets markup as the contents of the tooltip, which is marked up with the
 ;;; Pango text markup language.
 ;;; 
-;;; This function will take care of setting "has-tooltip" to TRUE and of the 
+;;; This function will take care of setting "has-tooltip" to TRUE and of the
 ;;; default handler for the "query-tooltip" signal.
 ;;; 
 ;;; See also the "tooltip-markup" property and gtk_tooltip_set_markup().
@@ -7345,7 +7442,7 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the tooltip text, or NULL. You should free the returned string with 
+;;;     the tooltip text, or NULL. You should free the returned string with
 ;;;     g_free() when done.
 ;;; 
 ;;; Since 2.12
@@ -7361,10 +7458,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_tooltip_text ()
 ;;; 
-;;; void gtk_widget_set_tooltip_text (GtkWidget *widget, const gchar *text)
+;;; void gtk_widget_set_tooltip_text (GtkWidget *widget, const gchar *text);
 ;;; 
-;;; Sets text as the contents of the tooltip. This function will take care of 
-;;; setting "has-tooltip" to TRUE and of the default handler for the 
+;;; Sets text as the contents of the tooltip. This function will take care of
+;;; setting "has-tooltip" to TRUE and of the default handler for the
 ;;; "query-tooltip" signal.
 ;;; 
 ;;; See also the "tooltip-text" property and gtk_tooltip_set_text().
@@ -7390,15 +7487,15 @@
 ;;; 
 ;;; GtkWindow * gtk_widget_get_tooltip_window (GtkWidget *widget);
 ;;; 
-;;; Returns the GtkWindow of the current tooltip. This can be the GtkWindow 
-;;; created by default, or the custom tooltip window set using 
+;;; Returns the GtkWindow of the current tooltip. This can be the GtkWindow
+;;; created by default, or the custom tooltip window set using
 ;;; gtk_widget_set_tooltip_window().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the GtkWindow of the current tooltip
+;;;     The GtkWindow of the current tooltip
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -7416,12 +7513,12 @@
 ;;; void gtk_widget_set_tooltip_window (GtkWidget *widget,
 ;;;                                     GtkWindow *custom_window);
 ;;; 
-;;; Replaces the default, usually yellow, window used for displaying tooltips 
+;;; Replaces the default, usually yellow, window used for displaying tooltips
 ;;; with custom_window. GTK+ will take care of showing and hiding custom_window
-;;; at the right moment, to behave likewise as the default tooltip window. If 
+;;; at the right moment, to behave likewise as the default tooltip window. If
 ;;; custom_window is NULL, the default tooltip window will be used.
 ;;; 
-;;; If the custom window should have the default theming it needs to have the 
+;;; If the custom window should have the default theming it needs to have the
 ;;; name "gtk-tooltip", see gtk_widget_set_name().
 ;;; 
 ;;; widget :
@@ -7445,8 +7542,8 @@
 ;;; 
 ;;; gboolean gtk_widget_get_has_tooltip (GtkWidget *widget);
 ;;; 
-;;; Returns the current value of the has-tooltip property. See "has-tooltip" 
-;;; for more information.
+;;; Returns the current value of the has-tooltip property. See "has-tooltip" for
+;;; more information.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -7469,7 +7566,7 @@
 ;;; 
 ;;; void gtk_widget_set_has_tooltip (GtkWidget *widget, gboolean has_tooltip);
 ;;; 
-;;; Sets the has-tooltip property on widget to has_tooltip. See "has-tooltip" 
+;;; Sets the has-tooltip property on widget to has_tooltip. See "has-tooltip"
 ;;; for more information.
 ;;; 
 ;;; widget :
@@ -7491,7 +7588,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_trigger_tooltip_query ()
 ;;; 
-;;; void gtk_widget_trigger_tooltip_query (GtkWidget *widget)
+;;; void gtk_widget_trigger_tooltip_query (GtkWidget *widget);
 ;;; 
 ;;; Triggers a tooltip query on the display where the toplevel of widget is
 ;;; located. See gtk_tooltip_trigger_tooltip_query() for more information.
@@ -7536,14 +7633,13 @@
 ;;; 
 ;;; gboolean gtk_cairo_should_draw_window (cairo_t *cr, GdkWindow *window);
 ;;; 
-;;; This function is supposed to be called in "draw" implementations for 
-;;; widgets that support multiple windows. cr must be untransformed from
-;;; invoking of the draw function. This function will return TRUE if the
-;;; contents of the given window are supposed to be drawn and FALSE otherwise.
-;;; Note that when the drawing was not initiated by the windowing system this
-;;; function will return TRUE for all windows, so you need to draw the
-;;; bottommost window first. Also, do not use "else if" statements to check
-;;; which window should be drawn.
+;;; This function is supposed to be called in "draw" implementations for widgets
+;;; that support multiple windows. cr must be untransformed from invoking of the
+;;; draw function. This function will return TRUE if the contents of the given
+;;; window are supposed to be drawn and FALSE otherwise. Note that when the
+;;; drawing was not initiated by the windowing system this function will return
+;;; TRUE for all windows, so you need to draw the bottommost window first. Also,
+;;; do not use "else if" statements to check which window should be drawn.
 ;;; 
 ;;; cr :
 ;;;     a cairo context
@@ -7564,12 +7660,12 @@
 ;;;                                     GtkWidget *widget,
 ;;;                                     GdkWindow *window);
 ;;; 
-;;; Transforms the given cairo context cr that from widget-relative 
-;;; coordinates to window-relative coordinates. If the widget's window is not
-;;; an ancestor of window, no modification will be applied.
+;;; Transforms the given cairo context cr that from widget-relative coordinates
+;;; to window-relative coordinates. If the widget's window is not an ancestor of
+;;; window, no modification will be applied.
 ;;; 
-;;; This is the inverse to the transformation GTK applies when preparing an 
-;;; expose event to be emitted with the "draw" signal. It is intended to help 
+;;; This is the inverse to the transformation GTK applies when preparing an
+;;; expose event to be emitted with the "draw" signal. It is intended to help
 ;;; porting multiwindow widgets from GTK+ 2 to the rendering architecture of
 ;;; GTK+ 3.
 ;;; 
@@ -7610,8 +7706,8 @@
 ;;; 
 ;;; int gtk_widget_get_allocated_height (GtkWidget *widget);
 ;;; 
-;;; Returns the height that has currently been allocated to widget. This 
-;;; function is intended to be used when implementing handlers for the "draw" 
+;;; Returns the height that has currently been allocated to widget. This
+;;; function is intended to be used when implementing handlers for the "draw"
 ;;; function.
 ;;; 
 ;;; widget :
@@ -7631,7 +7727,7 @@
 ;;; gtk_widget_get_allocation ()
 ;;; 
 ;;; void gtk_widget_get_allocation (GtkWidget *widget,
-;;;                                 GtkAllocation *allocation)
+;;;                                 GtkAllocation *allocation);
 ;;; 
 ;;; Retrieves the widget's allocation.
 ;;; 
@@ -7704,7 +7800,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_app_paintable ()
 ;;; 
-;;; gboolean gtk_widget_get_app_paintable (GtkWidget *widget)
+;;; gboolean gtk_widget_get_app_paintable (GtkWidget *widget);
 ;;; 
 ;;; Determines whether the application intends to draw on the widget in an
 ;;; "draw" handler.
@@ -7730,7 +7826,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_can_default ()
 ;;; 
-;;; gboolean gtk_widget_get_can_default (GtkWidget *widget)
+;;; gboolean gtk_widget_get_can_default (GtkWidget *widget);
 ;;; 
 ;;; Determines whether widget can be a default widget. See
 ;;; gtk_widget_set_can_default().
@@ -7754,16 +7850,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_can_default ()
 ;;; 
-;;; void gtk_widget_set_can_default (GtkWidget *widget, gboolean can_default)
+;;; void gtk_widget_set_can_default (GtkWidget *widget, gboolean can_default);
 ;;; 
-;;; Specifies whether widget can be a default widget.
-;;; See gtk_widget_grab_default() for details about the meaning of "default".
+;;; Specifies whether widget can be a default widget. See
+;;; gtk_widget_grab_default() for details about the meaning of "default".
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; can_default :
-;;;     whether or not widget can be a default widget
+;;;     whether or not widget can be a default widget.
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -7778,7 +7874,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_can_focus ()
 ;;; 
-;;; gboolean gtk_widget_get_can_focus (GtkWidget *widget)
+;;; gboolean gtk_widget_get_can_focus (GtkWidget *widget);
 ;;; 
 ;;; Determines whether widget can own the input focus.
 ;;; See gtk_widget_set_can_focus().
@@ -7804,7 +7900,7 @@
 ;;; 
 ;;; void gtk_widget_set_can_focus (GtkWidget *widget, gboolean can_focus);
 ;;; 
-;;; Specifies whether widget can own the input focus. See 
+;;; Specifies whether widget can own the input focus. See
 ;;; gtk_widget_grab_focus() for actually setting the input focus on a widget.
 ;;; 
 ;;; widget :
@@ -7853,8 +7949,8 @@
 ;;; 
 ;;; gboolean gtk_widget_get_has_window (GtkWidget *widget);
 ;;; 
-;;; Determines whether widget has a GdkWindow of its own. See 
-;;; gtk_widget_set_has_window().
+;;; Determines whether widget has a GdkWindow of its own.
+;;; See gtk_widget_set_has_window().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -7875,14 +7971,14 @@
 ;;; 
 ;;; void gtk_widget_set_has_window (GtkWidget *widget, gboolean has_window);
 ;;; 
-;;; Specifies whether widget has a GdkWindow of its own. Note that all 
-;;; realized widgets have a non-NULL "window" pointer (gtk_widget_get_window() 
-;;; never returns a NULL window when a widget is realized), but for many of them
-;;; it's actually the GdkWindow of one of its parent widgets. Widgets that do
-;;; not create a window for themselves in "realize" must announce this by
-;;; calling this function with has_window = FALSE.
+;;; Specifies whether widget has a GdkWindow of its own. Note that all realized
+;;; widgets have a non-NULL "window" pointer (gtk_widget_get_window() never
+;;; returns a NULL window when a widget is realized), but for many of them it's
+;;; actually the GdkWindow of one of its parent widgets. Widgets that do not
+;;; create a window for themselves in "realize" must announce this by calling
+;;; this function with has_window = FALSE.
 ;;; 
-;;; This function should only be called by widget implementations, and they 
+;;; This function should only be called by widget implementations, and they
 ;;; should call it in their init() function.
 ;;; 
 ;;; widget :
@@ -7905,11 +8001,11 @@
 ;;; 
 ;;; gboolean gtk_widget_get_sensitive (GtkWidget *widget);
 ;;; 
-;;; Returns the widget's sensitivity (in the sense of returning the value that 
+;;; Returns the widget's sensitivity (in the sense of returning the value that
 ;;; has been set using gtk_widget_set_sensitive()).
 ;;; 
-;;; The effective sensitivity of a widget is however determined by both its 
-;;; own and its parent widget's sensitivity. See gtk_widget_is_sensitive().
+;;; The effective sensitivity of a widget is however determined by both its own
+;;; and its parent widget's sensitivity. See gtk_widget_is_sensitive().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -7932,8 +8028,8 @@
 ;;; 
 ;;; gboolean gtk_widget_is_sensitive (GtkWidget *widget);
 ;;; 
-;;; Returns the widget's effective sensitivity, which means it is sensitive 
-;;; itself and also its parent widget is sensitive.
+;;; Returns the widget's effective sensitivity, which means it is sensitive
+;;; itself and also its parent widget is sensitive
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -8056,10 +8152,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_unset_state_flags ()
 ;;; 
-;;; void gtk_widget_unset_state_flags (GtkWidget *widget, GtkStateFlags flags)
+;;; void gtk_widget_unset_state_flags (GtkWidget *widget, GtkStateFlags flags);
 ;;; 
-;;; This function is for use in widget implementations. Turns off flag values 
-;;; for the current widget state (insensitive, prelighted, etc.). See 
+;;; This function is for use in widget implementations. Turns off flag values
+;;; for the current widget state (insensitive, prelighted, etc.). See
 ;;; gtk_widget_set_state_flags().
 ;;; 
 ;;; widget :
@@ -8076,8 +8172,8 @@
 ;;; 
 ;;; GtkStateFlags gtk_widget_get_state_flags (GtkWidget *widget);
 ;;; 
-;;; Returns the widget state as a flag set. It is worth mentioning that the 
-;;; effective GTK_STATE_FLAG_INSENSITIVE state will be returned, that is, also 
+;;; Returns the widget state as a flag set. It is worth mentioning that the
+;;; effective GTK_STATE_FLAG_INSENSITIVE state will be returned, that is, also
 ;;; based on parent insensitivity, even if widget itself is sensitive.
 ;;; 
 ;;; widget :
@@ -8094,15 +8190,15 @@
 ;;; 
 ;;; gboolean gtk_widget_has_default (GtkWidget *widget);
 ;;; 
-;;; Determines whether widget is the current default widget within its 
-;;; toplevel. See gtk_widget_set_can_default().
+;;; Determines whether widget is the current default widget within its toplevel.
+;;; See gtk_widget_set_can_default().
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     TRUE if widget is the current default widget within its toplevel, 
-;;;     FALSE otherwise
+;;;     TRUE if widget is the current default widget within its toplevel, FALSE
+;;;     otherwise
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -8112,10 +8208,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_focus ()
 ;;; 
-;;; gboolean gtk_widget_has_focus (GtkWidget *widget)
+;;; gboolean gtk_widget_has_focus (GtkWidget *widget);
 ;;; 
-;;; Determines if the widget has the global input focus. See 
-;;; gtk_widget_is_focus() for the difference between having the global input 
+;;; Determines if the widget has the global input focus. See
+;;; gtk_widget_is_focus() for the difference between having the global input
 ;;; focus, and only having the focus within a toplevel.
 ;;; 
 ;;; widget :
@@ -8135,11 +8231,10 @@
 ;;; gboolean gtk_widget_has_visible_focus (GtkWidget *widget);
 ;;; 
 ;;; Determines if the widget should show a visible indication that it has the
-;;; global input focus. This is a convenience function for use in
-;;; ::draw handlers that takes into account whether focus indication should
-;;; currently be shown in the toplevel window of widget.
-;;; See gtk_window_get_focus_visible() for more information about focus
-;;; indication.
+;;; global input focus. This is a convenience function for use in ::draw
+;;; handlers that takes into account whether focus indication should currently
+;;; be shown in the toplevel window of widget. See
+;;; gtk_window_get_focus_visible() for more information about focus indication.
 ;;; 
 ;;; To find out if the widget has the global input focus, use
 ;;; gtk_widget_has_focus().
@@ -8179,8 +8274,8 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_has_rc_style has been deprecated since version 3.0 and should 
-;;; not be used in newly-written code. Use GtkStyleContext instead.
+;;; gtk_widget_has_rc_style has been deprecated since version 3.0 and should not
+;;; be used in newly-written code. Use GtkStyleContext instead.
 ;;; 
 ;;; Determines if the widget style has been looked up through the rc mechanism.
 ;;; 
@@ -8188,7 +8283,8 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     TRUE if the widget has been looked up through the rc mechanism, FALSE otherwise.
+;;;     TRUE if the widget has been looked up through the rc mechanism, FALSE
+;;;     otherwise.
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -8198,8 +8294,8 @@
 ;;; 
 ;;; gboolean gtk_widget_is_drawable (GtkWidget *widget);
 ;;; 
-;;; Determines whether widget can be drawn to. A widget can be drawn to if it 
-;;; is mapped and visible.
+;;; Determines whether widget can be drawn to. A widget can be drawn to if it is
+;;; mapped and visible.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -8218,12 +8314,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_toplevel ()
 ;;; 
-;;; gboolean gtk_widget_is_toplevel (GtkWidget *widget)
+;;; gboolean gtk_widget_is_toplevel (GtkWidget *widget);
 ;;; 
 ;;; Determines whether widget is a toplevel widget.
 ;;; 
-;;; Currently only GtkWindow and GtkInvisible (and out-of-process GtkPlugs) 
-;;; are toplevel widgets. Toplevel widgets have no parent widget.
+;;; Currently only GtkWindow and GtkInvisible (and out-of-process GtkPlugs) are
+;;; toplevel widgets. Toplevel widgets have no parent widget.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -8279,7 +8375,7 @@
 ;;; void gtk_widget_set_receives_default (GtkWidget *widget,
 ;;;                                       gboolean receives_default);
 ;;; 
-;;; Specifies whether widget will be treated as the default widget within its 
+;;; Specifies whether widget will be treated as the default widget within its
 ;;; toplevel when it has the focus, even if another widget is the default.
 ;;; 
 ;;; See gtk_widget_grab_default() for details about the meaning of "default".
@@ -8305,7 +8401,7 @@
 ;;; 
 ;;; gboolean gtk_widget_get_receives_default (GtkWidget *widget);
 ;;; 
-;;; Determines whether widget is alyways treated as default widget withing its 
+;;; Determines whether widget is alyways treated as default widget withing its
 ;;; toplevel when it has the focus, even if another widget is the default.
 ;;; 
 ;;; See gtk_widget_set_receives_default().
@@ -8332,9 +8428,9 @@
 ;;; void gtk_widget_set_support_multidevice (GtkWidget *widget,
 ;;;                                          gboolean support_multidevice);
 ;;; 
-;;; Enables or disables multiple pointer awareness. If this setting is TRUE, 
+;;; Enables or disables multiple pointer awareness. If this setting is TRUE,
 ;;; widget will start receiving multiple, per device enter/leave events. Note
-;;; that if custom GdkWindows are created in "realize", 
+;;; that if custom GdkWindows are created in "realize",
 ;;; gdk_window_set_support_multidevice() will have to be called manually on
 ;;; them.
 ;;; 
@@ -8352,7 +8448,7 @@
 ;;; 
 ;;; gboolean gtk_widget_get_support_multidevice (GtkWidget *widget);
 ;;; 
-;;; Returns TRUE if widget is multiple pointer aware. See 
+;;; Returns TRUE if widget is multiple pointer aware. See
 ;;; gtk_widget_set_support_multidevice() for more information.
 ;;; 
 ;;; widget :
@@ -8365,12 +8461,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_realized ()
 ;;; 
-;;; void gtk_widget_set_realized (GtkWidget *widget, gboolean realized)
+;;; void gtk_widget_set_realized (GtkWidget *widget, gboolean realized);
 ;;; 
 ;;; Marks the widget as being realized.
 ;;; 
-;;; This function should only ever be called in a derived widget's "realize"
-;;; or "unrealize" implementation.
+;;; This function should only ever be called in a derived widget's "realize" or
+;;; "unrealize" implementation.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
@@ -8440,15 +8536,15 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_widget_get_requisition has been deprecated since version 3.0 and 
-;;; should not be used in newly-written code. The GtkRequisition cache on the 
-;;; widget was removed, If you need to cache sizes across requests and 
-;;; allocations, add an explicit cache to the widget in question instead.
+;;; gtk_widget_get_requisition has been deprecated since version 3.0 and should
+;;; not be used in newly-written code. The GtkRequisition cache on the widget
+;;; was removed, If you need to cache sizes across requests and allocations, add
+;;; an explicit cache to the widget in question instead.
 ;;; 
 ;;; Retrieves the widget's requisition.
 ;;; 
-;;; This function should only be used by widget implementations in order to 
-;;; figure whether the widget's requisition has actually changed after some 
+;;; This function should only be used by widget implementations in order to
+;;; figure whether the widget's requisition has actually changed after some
 ;;; internal state change (so that they can call gtk_widget_queue_resize()
 ;;; instead of gtk_widget_queue_draw()).
 ;;; 
@@ -8469,8 +8565,8 @@
 ;;; gboolean gtk_widget_device_is_shadowed (GtkWidget *widget,
 ;;;                                         GdkDevice *device);
 ;;; 
-;;; Returns TRUE if device has been shadowed by a GTK+ device grab on another 
-;;; widget, so it would stop sending events to widget. This may be used in the 
+;;; Returns TRUE if device has been shadowed by a GTK+ device grab on another
+;;; widget, so it would stop sending events to widget. This may be used in the
 ;;; "grab-notify" signal to check for specific devices.
 ;;; See gtk_device_grab_add().
 ;;; 
@@ -8488,24 +8584,47 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_modifier_mask ()
+;;; 
+;;; GdkModifierType gtk_widget_get_modifier_mask (GtkWidget *widget,
+;;;                                               GdkModifierIntent intent);
+;;; 
+;;; Returns the modifier mask the widget's windowing system backend uses for a
+;;; particular purpose.
+;;; 
+;;; See gdk_keymap_get_modifier_mask().
+;;; 
+;;; widget :
+;;;     a GtkWidget
+;;; 
+;;; intent :
+;;;     the use case for the modifier mask
+;;; 
+;;; Returns :
+;;;     the modifier mask used for intent.
+;;; 
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_path ()
 ;;; 
 ;;; GtkWidgetPath * gtk_widget_get_path (GtkWidget *widget);
 ;;; 
-;;; Returns the GtkWidgetPath representing widget, if the widget is not 
+;;; Returns the GtkWidgetPath representing widget, if the widget is not
 ;;; connected to a toplevel widget, a partial path will be created.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;;     the GtkWidgetPath representing widget
+;;;     The GtkWidgetPath representing widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_style_context ()
 ;;; 
-;;; GtkStyleContext * gtk_widget_get_style_context (GtkWidget *widget)
+;;; GtkStyleContext * gtk_widget_get_style_context (GtkWidget *widget);
 ;;; 
 ;;; Returns the style context associated to widget.
 ;;; 
@@ -8521,9 +8640,9 @@
 ;;; 
 ;;; void gtk_widget_reset_style (GtkWidget *widget);
 ;;; 
-;;; Updates the style context of widget and all descendents by updating its 
+;;; Updates the style context of widget and all descendents by updating its
 ;;; widget path. GtkContainers may want to use this on a child when reordering
-;;; it in a way that a different style might apply to it. See also 
+;;; it in a way that a different style might apply to it. See also
 ;;; gtk_container_get_path_for_child().
 ;;; 
 ;;; widget :
@@ -8537,12 +8656,12 @@
 ;;; 
 ;;; GtkRequisition * gtk_requisition_new (void);
 ;;; 
-;;; Allocates a new GtkRequisition structure and initializes its elements to 
+;;; Allocates a new GtkRequisition structure and initializes its elements to
 ;;; zero.
 ;;; 
 ;;; Returns :
-;;;     a new empty GtkRequisition. The newly allocated GtkRequisition should 
-;;;     be freed with gtk_requisition_free().
+;;;     a new empty GtkRequisition. The newly allocated GtkRequisition should be
+;;;     freed with gtk_requisition_free().
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -8564,7 +8683,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_requisition_free ()
 ;;; 
-;;; void gtk_requisition_free (GtkRequisition *requisition)
+;;; void gtk_requisition_free (GtkRequisition *requisition);
 ;;; 
 ;;; Frees a GtkRequisition.
 ;;; 
@@ -8581,7 +8700,7 @@
 ;;;   GTK_SIZE_REQUEST_CONSTANT_SIZE
 ;;; } GtkSizeRequestMode;
 ;;; 
-;;; Specifies a preference for height-for-width or width-for-height geometry 
+;;; Specifies a preference for height-for-width or width-for-height geometry
 ;;; management.
 ;;; 
 ;;; GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH
@@ -8603,7 +8722,7 @@
 ;;;   gint     natural_size;
 ;;; };
 ;;; 
-;;; Represents a request of a screen object in a given orientation. These are 
+;;; Represents a request of a screen object in a given orientation. These are
 ;;; primarily used in container implementations when allocating a natural size
 ;;; for children calling. See gtk_distribute_natural_allocation().
 ;;; 
@@ -8630,7 +8749,7 @@
 ;;; 
 ;;; This call is specific to width-for-height requests.
 ;;; 
-;;; The returned request will be modified by the 
+;;; The returned request will be modified by the
 ;;; GtkWidgetClass::adjust_size_request virtual method and by any GtkSizeGroups
 ;;; that have been applied. That is, the returned request is the one that should
 ;;; be used for layout, not necessarily the one returned by the widget itself.
@@ -8660,7 +8779,7 @@
 ;;; 
 ;;; This call is specific to height-for-width requests.
 ;;; 
-;;; The returned request will be modified by the 
+;;; The returned request will be modified by the
 ;;; GtkWidgetClass::adjust_size_request virtual method and by any GtkSizeGroups
 ;;; that have been applied. That is, the returned request is the one that should
 ;;; be used for layout, not necessarily the one returned by the widget itself.
@@ -8685,10 +8804,10 @@
 ;;;                                                 gint *minimum_height,
 ;;;                                                 gint *natural_height);
 ;;; 
-;;; Retrieves a widget's minimum and natural height if it would be given the 
+;;; Retrieves a widget's minimum and natural height if it would be given the
 ;;; specified width.
 ;;; 
-;;; The returned request will be modified by the 
+;;; The returned request will be modified by the
 ;;; GtkWidgetClass::adjust_size_request virtual method and by any GtkSizeGroups
 ;;; that have been applied. That is, the returned request is the one that should
 ;;; be used for layout, not necessarily the one returned by the widget itself.
@@ -8716,10 +8835,10 @@
 ;;;                                                 gint *minimum_width,
 ;;;                                                 gint *natural_width);
 ;;; 
-;;; Retrieves a widget's minimum and natural width if it would be given the 
+;;; Retrieves a widget's minimum and natural width if it would be given the
 ;;; specified height.
 ;;; 
-;;; The returned request will be modified by the 
+;;; The returned request will be modified by the
 ;;; GtkWidgetClass::adjust_size_request virtual method and by any GtkSizeGroups
 ;;; that have been applied. That is, the returned request is the one that should
 ;;; be used for layout, not necessarily the one returned by the widget itself.
@@ -8744,14 +8863,14 @@
 ;;; 
 ;;; GtkSizeRequestMode gtk_widget_get_request_mode (GtkWidget *widget);
 ;;; 
-;;; Gets whether the widget prefers a height-for-width layout or a 
+;;; Gets whether the widget prefers a height-for-width layout or a
 ;;; width-for-height layout.
 ;;; 
 ;;; Note
 ;;; 
-;;; GtkBin widgets generally propagate the preference of their child, 
-;;; container widgets need to request something either in context of their 
-;;; children or in context of their allocation capabilities.
+;;; GtkBin widgets generally propagate the preference of their child, container
+;;; widgets need to request something either in context of their children or in
+;;; context of their allocation capabilities.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget instance
@@ -8769,20 +8888,20 @@
 ;;;                                     GtkRequisition *minimum_size,
 ;;;                                     GtkRequisition *natural_size);
 ;;; 
-;;; Retrieves the minimum and natural size of a widget, taking into account 
-;;; the widget's preference for height-for-width management.
+;;; Retrieves the minimum and natural size of a widget, taking into account the
+;;; widget's preference for height-for-width management.
 ;;; 
-;;; This is used to retrieve a suitable size by container widgets which do not 
-;;; impose any restrictions on the child placement. It can be used to deduce 
-;;; toplevel window and menu sizes as well as child widgets in free-form 
+;;; This is used to retrieve a suitable size by container widgets which do not
+;;; impose any restrictions on the child placement. It can be used to deduce
+;;; toplevel window and menu sizes as well as child widgets in free-form
 ;;; containers such as GtkLayout.
 ;;; 
 ;;; Note
 ;;; 
-;;; Handle with care. Note that the natural height of a height-for-width 
-;;; widget will generally be a smaller size than the minimum height, since the 
-;;; required height for the natural width is generally smaller than the
-;;; required height for the minimum width.
+;;; Handle with care. Note that the natural height of a height-for-width widget
+;;; will generally be a smaller size than the minimum height, since the required
+;;; height for the natural width is generally smaller than the required height
+;;; for the minimum width.
 ;;; 
 ;;; widget :
 ;;;     a GtkWidget instance
@@ -8803,23 +8922,23 @@
 ;;;                                         guint n_requested_sizes,
 ;;;                                         GtkRequestedSize *sizes);
 ;;; 
-;;; Distributes extra_space to child sizes by bringing smaller children up to 
+;;; Distributes extra_space to child sizes by bringing smaller children up to
 ;;; natural size first.
 ;;; 
-;;; The remaining space will be added to the minimum_size member of the 
-;;; GtkRequestedSize struct. If all sizes reach their natural size then the 
+;;; The remaining space will be added to the minimum_size member of the
+;;; GtkRequestedSize struct. If all sizes reach their natural size then the
 ;;; remaining space is returned.
 ;;; 
 ;;; extra_space :
-;;;     Extra space to redistribute among children after subtracting minimum 
+;;;     Extra space to redistribute among children after subtracting minimum
 ;;;     sizes and any child padding from the overall allocation
 ;;; 
 ;;; n_requested_sizes :
 ;;;     Number of requests to fit into the allocation
 ;;; 
 ;;; sizes :
-;;;     An array of structs with a client pointer and a minimum/natural size 
-;;;     in the orientation of the allocation.
+;;;     An array of structs with a client pointer and a minimum/natural size in
+;;;     the orientation of the allocation.
 ;;; 
 ;;; Returns :
 ;;;     The remainder of extra_space after redistributing space to sizes.
@@ -8837,17 +8956,17 @@
 ;;; 
 ;;; Controls how a widget deals with extra space in a single (x or y) dimension.
 ;;; 
-;;; Alignment only matters if the widget receives a "too large" allocation, 
-;;; for example if you packed the widget with the "expand" flag inside a GtkBox,
+;;; Alignment only matters if the widget receives a "too large" allocation, for
+;;; example if you packed the widget with the "expand" flag inside a GtkBox,
 ;;; then the widget might get extra space. If you have for example a 16x16 icon
-;;; inside a 32x32 space, the icon could be scaled and stretched, it could be 
+;;; inside a 32x32 space, the icon could be scaled and stretched, it could be
 ;;; centered, or it could be positioned to one side of the space.
 ;;; 
-;;; Note that in horizontal context GTK_ALIGN_START and GTK_ALIGN_END are 
+;;; Note that in horizontal context GTK_ALIGN_START and GTK_ALIGN_END are
 ;;; interpreted relative to text direction.
 ;;; 
 ;;; GTK_ALIGN_FILL
-;;;     stretch to fill all space if possible, center if no meaningful way to 
+;;;     stretch to fill all space if possible, center if no meaningful way to
 ;;;     stretch
 ;;; 
 ;;; GTK_ALIGN_START
@@ -8892,7 +9011,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_halign ()
 ;;; 
-;;; void gtk_widget_set_halign (GtkWidget *widget, GtkAlign align)
+;;; void gtk_widget_set_halign (GtkWidget *widget, GtkAlign align);
 ;;; 
 ;;; Sets the horizontal alignment of widget. See the "halign" property.
 ;;; 
@@ -8913,7 +9032,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_valign ()
 ;;; 
-;;; GtkAlign gtk_widget_get_valign (GtkWidget *widget)
+;;; GtkAlign gtk_widget_get_valign (GtkWidget *widget);
 ;;; 
 ;;; Gets the value of the "valign" property.
 ;;; 
@@ -9141,17 +9260,16 @@
 ;;; 
 ;;; gboolean gtk_widget_get_hexpand (GtkWidget *widget);
 ;;; 
-;;; Gets whether the widget would like any available extra horizontal space. 
+;;; Gets whether the widget would like any available extra horizontal space.
 ;;; When a user resizes a GtkWindow, widgets with expand=TRUE generally receive
 ;;; the extra space. For example, a list or scrollable area or document in your
 ;;; window would often be set to expand.
 ;;; 
-;;; Containers should use gtk_widget_compute_expand() rather than this 
-;;; function, to see whether a widget, or any of its children, has the expand
-;;; flag set. If any child of a widget wants to expand, the parent may ask to
-;;; expand also.
+;;; Containers should use gtk_widget_compute_expand() rather than this function,
+;;; to see whether a widget, or any of its children, has the expand flag set. If
+;;; any child of a widget wants to expand, the parent may ask to expand also.
 ;;; 
-;;; This function only looks at the widget's own hexpand flag, rather than 
+;;; This function only looks at the widget's own hexpand flag, rather than
 ;;; computing whether the entire widget tree rooted at this widget wants to
 ;;; expand.
 ;;; 
@@ -9174,26 +9292,26 @@
 ;;; 
 ;;; void gtk_widget_set_hexpand (GtkWidget *widget, gboolean expand);
 ;;; 
-;;; Sets whether the widget would like any available extra horizontal space. 
-;;; When a user resizes a GtkWindow, widgets with expand=TRUE generally receive 
-;;; the extra space. For example, a list or scrollable area or document in your 
+;;; Sets whether the widget would like any available extra horizontal space.
+;;; When a user resizes a GtkWindow, widgets with expand=TRUE generally receive
+;;; the extra space. For example, a list or scrollable area or document in your
 ;;; window would often be set to expand.
 ;;; 
-;;; Call this function to set the expand flag if you would like your widget to 
+;;; Call this function to set the expand flag if you would like your widget to
 ;;; become larger horizontally when the window has extra room.
 ;;; 
-;;; By default, widgets automatically expand if any of their children want to 
-;;; expand. (To see if a widget will automatically expand given its current 
+;;; By default, widgets automatically expand if any of their children want to
+;;; expand. (To see if a widget will automatically expand given its current
 ;;; children and state, call gtk_widget_compute_expand(). A container can decide
 ;;; how the expandability of children affects the expansion of the container by
 ;;; overriding the compute_expand virtual method on GtkWidget.).
 ;;; 
-;;; Setting hexpand explicitly with this function will override the automatic 
+;;; Setting hexpand explicitly with this function will override the automatic
 ;;; expand behavior.
 ;;; 
-;;; This function forces the widget to expand or not to expand, regardless of 
-;;; children. The override occurs because gtk_widget_set_hexpand() sets the 
-;;; hexpand-set property (see gtk_widget_set_hexpand_set()) which causes the 
+;;; This function forces the widget to expand or not to expand, regardless of
+;;; children. The override occurs because gtk_widget_set_hexpand() sets the
+;;; hexpand-set property (see gtk_widget_set_hexpand_set()) which causes the
 ;;; widget's hexpand value to be used, rather than looking at children and
 ;;; widget state.
 ;;; 
@@ -9216,14 +9334,14 @@
 ;;; 
 ;;; gboolean gtk_widget_get_hexpand_set (GtkWidget *widget);
 ;;; 
-;;; Gets whether gtk_widget_set_hexpand() has been used to explicitly set the 
+;;; Gets whether gtk_widget_set_hexpand() has been used to explicitly set the
 ;;; expand flag on this widget.
 ;;; 
-;;; If hexpand is set, then it overrides any computed expand value based on 
+;;; If hexpand is set, then it overrides any computed expand value based on
 ;;; child widgets. If hexpand is not set, then the expand value depends on
 ;;; whether any children of the widget would like to expand.
 ;;; 
-;;; There are few reasons to use this function, but it's here for completeness 
+;;; There are few reasons to use this function, but it's here for completeness
 ;;; and consistency.
 ;;; 
 ;;; widget :
@@ -9247,15 +9365,15 @@
 ;;; 
 ;;; Sets whether the hexpand flag (see gtk_widget_get_hexpand()) will be used.
 ;;; 
-;;; The hexpand-set property will be set automatically when you call 
+;;; The hexpand-set property will be set automatically when you call
 ;;; gtk_widget_set_hexpand() to set hexpand, so the most likely reason to use
 ;;; this function would be to unset an explicit expand flag.
 ;;; 
-;;; If hexpand is set, then it overrides any computed expand value based on 
+;;; If hexpand is set, then it overrides any computed expand value based on
 ;;; child widgets. If hexpand is not set, then the expand value depends on
 ;;; whether any children of the widget would like to expand.
 ;;; 
-;;; There are few reasons to use this function, but it's here for completeness 
+;;; There are few reasons to use this function, but it's here for completeness
 ;;; and consistency.
 ;;; 
 ;;; widget :
@@ -9323,7 +9441,7 @@
 ;;; 
 ;;; gboolean gtk_widget_get_vexpand_set (GtkWidget *widget);
 ;;; 
-;;; Gets whether gtk_widget_set_vexpand() has been used to explicitly set the 
+;;; Gets whether gtk_widget_set_vexpand() has been used to explicitly set the
 ;;; expand flag on this widget.
 ;;; 
 ;;; See gtk_widget_get_hexpand_set() for more detail.
@@ -9370,7 +9488,7 @@
 ;;; 
 ;;; void gtk_widget_queue_compute_expand (GtkWidget *widget);
 ;;; 
-;;; Mark widget as needing to recompute its expand flags. Call this function 
+;;; Mark widget as needing to recompute its expand flags. Call this function
 ;;; when setting legacy expand child properties on the child of a container.
 ;;; 
 ;;; See gtk_widget_compute_expand().
@@ -9385,15 +9503,15 @@
 ;;; gboolean gtk_widget_compute_expand (GtkWidget *widget,
 ;;;                                     GtkOrientation orientation);
 ;;; 
-;;; Computes whether a container should give this widget extra space when 
-;;; possible. Containers should check this, rather than looking at 
+;;; Computes whether a container should give this widget extra space when
+;;; possible. Containers should check this, rather than looking at
 ;;; gtk_widget_get_hexpand() or gtk_widget_get_vexpand().
 ;;; 
-;;; This function already checks whether the widget is visible, so visibility 
+;;; This function already checks whether the widget is visible, so visibility
 ;;; does not need to be checked separately. Non-visible widgets are not
 ;;; expanded.
 ;;; 
-;;; The computed expand value uses either the expand setting explicitly set on 
+;;; The computed expand value uses either the expand setting explicitly set on
 ;;; the widget itself, or, if none has been explicitly set, the widget may
 ;;; expand if some of its children do.
 ;;; 
