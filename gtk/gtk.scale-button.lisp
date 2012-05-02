@@ -339,7 +339,7 @@
 
 (declaim (inline gtk-scale-button-set-value))
 
-(defun gtk-scale-button-set-value (button)
+(defun gtk-scale-button-set-value (button value)
   (setf (gtk-scale-button-value button) value))
 
 (export 'gtk-scale-button-set-value)
