@@ -141,9 +141,9 @@
 ;;; Most programs should not need to call this function.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_disable_set_locale" gtk-disable-set-locale) :void)
+(defcfun ("gtk_disable_setlocale" gtk-disable-setlocale) :void)
 
-(export 'gtk-disable-set-locale)
+(export 'gtk-disable-setlocale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_default_language ()
