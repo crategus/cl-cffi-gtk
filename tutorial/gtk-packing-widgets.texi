@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 06.02.2012
-@c Revision : 23.04.2012
+@c Revision : 02.05.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ desired effect.
 To create a new box of the type @code{GtkBox}, the function @code{gtk-box-new}
 or the call @code{(make-instance 'gtk-box)} is used.  The first argument of the
 function @code{gtk-box-new} takes a keyword of the enumeration type
-@code{GtkOrientation}, which is the Lisp binding implemented as
+@code{GtkOrientation}, which is in the Lisp binding implemented as
 @code{gtk-orientation} with the values @code{:horizontal} or @code{:vertical}
 to determine a horizontal or a vertical box.  Because @code{GtkBox} implements
 the interface @code{GtkOrientable} an instance of @code{GtkBox} has the property
@@ -109,11 +109,15 @@ resizing and other nifty things.  A number of options control as to how the
 widgets should be packed into boxes.  This method of packing boxes gives the
 user a quite a bit of flexibility when placing widgets.
 
-@emph{Note}
+@noindent
+@emph{Note:}
 
 The classes @code{GtkHBox} for horizontal and @code{GtkVBox} for vertical
-boxes are deprecated, but still present in GTK 3.2.  In this tutorial deprecated
-classes and functions are not used.
+boxes are deprecated, but still present in GTK 3.4, which is the version used in
+this tutorial.  In this tutorial these classes are not used. In addition a
+single-row or single-column @code{GtkGrid} provides exactly the same
+functionality as @code{GtkBox}.  See @ref {Packing Using Grids} for examples
+to replace @code{GtkBox} with @code{GtkGrid}.
 
 @c -----------------------------------------------------------------------------
 @node Details of Boxes, Packing Using Tables, Packing Boxes, Top
@@ -143,7 +147,7 @@ complete example for creating a box is therefore
 @ifnotinfo
 @float Figure, figure-box-packing
 @caption{Example Box Packing with a spacing of 3}
-@center @image{figures/packing-boxes2-645x352, 430pt}
+@center @image{figures/box-packing629x323, 419pt}
 @end float
 @end ifnotinfo
 
@@ -201,10 +205,10 @@ of the buttons in the boxes.
 The example uses two widgets which are not introduced up to now.  The first
 one is the @code{GtkLabel} widget, which is described in @ref{Labels} and is
 used to display text.  The second one is the @code{GtkSeparator} widget, which
-draws a horizontal or vertical line, depending on the only argument to the
-function @code{gtk-separator-new}, which is of the enumeration type
-@code{GtkOrientation} with the values @code{:horizontal} for a horizontal line
-and @code{:vertical} for a vertical line.
+draws a horizontal or vertical line.  The orientation of the line depends on the
+only argument to the function @code{gtk-separator-new}, which is of the
+enumeration type @code{GtkOrientation} with the values @code{:horizontal} for a
+horizontal line and @code{:vertical} for a vertical line.
 
 @float Example, example-box-packing
 @caption{Example Packing Boxes}
@@ -254,11 +258,9 @@ and @code{:vertical} for a vertical line.
 (defun example-box-packing (&optional (spacing 0))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
-                                 :title "Example Box Packing Box"
+                                 :title "Example Box Packing"
                                  :type :toplevel
-                                 :border-width 12
-                                 :default-height 200
-                                 :default-width 300))
+                                 :border-width 12))
           (vbox (make-instance 'gtk-box
                                :orientation :vertical
                                :spacing 6))
@@ -278,49 +280,47 @@ and @code{:vertical} for a vertical line.
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                          "GtkBox homogeneous nil spacing ~A"
+                                          "GtkBox   ~
+                                           :orientation :horizontal   ~
+                                           :homogeneous nil   ~
+                                           :spacing ~A"
                                           spacing)
-                                         :xalign 0
-                                         :yalign 0)
-                          :expand nil
-                          :fill nil)
+                                         :xalign 0)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing nil nil 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing t nil 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing t t 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                            "GtkBox homogeneous t spacing ~A"
+                                            "GtkBox   ~
+                                             :orientation :horizontal   ~
+                                             :homogeneous t   ~
+                                             :spacing ~A"
                                             spacing)
-                                         :xalign 0
-                                         :yalign 0)
+                                         :xalign 0)
                           :expand nil
-                          :fill nil
                           :padding 6)
       (gtk-box-pack-start vbox
                           (make-box t spacing t nil 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box t spacing t t 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (gtk-separator-new :horizontal)
                           :expand nil
                           :padding 6)
-      (gtk-box-pack-start quitbox button :expand nil :fill nil)
-      (gtk-box-pack-start vbox quitbox :expand nil :fill nil)
+      ;; Align the quit-button on the right side
+      (gtk-box-pack-end quitbox button :expand nil)
+      (gtk-box-pack-start vbox quitbox :expand nil)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 @end verbatim
@@ -480,6 +480,15 @@ functions @code{gtk-table-set-row-spacings} and
 @code{gtk-table-set-col-spacings}.  Both functions take a @code{GtkTable} as the
 first argument and the desired spacing @code{spacing} as the second argument.
 Note that with these calls, the last row and last column do not get any spacing.
+
+@noindent
+@emph{Note:}
+
+@code{GtkTable} has been deprecated since GTK+ 3.4. It is recommended to use
+@code{GtkGrid} instead.  @code{GtkGrid} provides the same capabilities as
+@code{GtkTable} for arranging widgets in a rectangular grid, but does support
+height-for-width geometry management, which is newly introduced for
+widgets in GTK+ 3.  This chapter will vanish in the near future.
 
 @c -----------------------------------------------------------------------------
 @node Table Packing Example, Packing Using Grids, Packing Using Tables, Top

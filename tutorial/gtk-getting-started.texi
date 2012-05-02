@@ -3,7 +3,7 @@
 @c License  : GNU General Public License (GPL)
 @c Author   : Dieter Kaiser
 @c Date     : 26.12.2011
-@c Revision : 17.04.2012
+@c Revision : 02.05.2012
 @c 
 @c Copyright (C) 2011 - 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ install it.  The latest version is available from the repository at
 @url{github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library can be
 loaded with the command @code{(asdf:operate 'asdf:load-op :cl-cffi-gtk)}
 from the Lisp prompt.  The library is developed with the Lisp SBCL 1.0.56 on a
-Linux system and GTK+ 3.2.
+Linux system and GTK+ 3.4.
 
 At this time (April 2012) there is no GTK+ 3 library for Windows available at
 @url{www.gtk.org}.  The current maintained version is GTK+ 2.24.  The
@@ -34,13 +34,14 @@ repository at @url{github.com/crategus/cl-cffi-gtk} has a branch @code{gtk-2-24}
 which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows.
 
 With SBCL an alternative command to load the @code{cl-cffi-gtk} library is
-@code{(asdf:load-system 'cl-cffi-gtk)}.  The libraries GLib, GObject, GDK,
+@code{(asdf:load-system 'cl-cffi-gtk)}.  The libraries GLib, GObject, GDK, GIO,
 Pango, and Cairo are part of GTK+ and loaded in addition with the above command.
 These libraries can be loaded individually with the commands:
 @verbatim
    (asdf:load-system 'cl-cffi-gtk-glib)
    (asdf:load-system 'cl-cffi-gtk-gobject)
    (asdf:load-system 'cl-cffi-gtk-gdk)
+   (asdf:load-system 'cl-cffi-gtk-gio)
    (asdf:load-system 'cl-cffi-gtk-pango)
    (asdf:load-system 'cl-cffi-gtk-cairo)
 @end verbatim
@@ -48,9 +49,9 @@ These libraries can be loaded individually with the commands:
 It is assumed, that the corresponding system definition files
 @code{cl-cffi-gtk.asd} for GTK+, @code{cl-cffi-gtk-glib.asd} for GLib,
 @code{cl-cffi-gtk-gobject.asd} for GObject, @code{cl-cffi-gtk-gdk.asd} for GDK,
-@code{cl-cffi-gtk-pango.asd}, for Pango and @code{cl-cffi-gtk-cairo.asd} for
-Cairo are correctly registered to @code{asdf:*central-registry*} or the
-corresponding symlinks are created.
+@code{cl-cffi-gtk-gio.asd} for GIO, @code{cl-cffi-gtk-pango.asd}, for Pango and
+@code{cl-cffi-gtk-cairo.asd} for Cairo are correctly registered to
+@code{asdf:*central-registry*} or the corresponding symlinks are created.
 
 For example for SBCL on a Linux system the symlinks are added to the directory
 @code{~/.sbcl/systems} with the commands:
@@ -61,6 +62,7 @@ For example for SBCL on a Linux system the symlinks are added to the directory
    ln -s /path-to-cl-cffi-gtk/gdk/cl-cffi-gtk-gdk.asd
    ln -s /path-to-cl-cffi-gtk/gobject/cl-cffi-gtk-gobject.asd
    ln -s /path-to-cl-cffi-gtk/glib/cl-cffi-gtk-glib.asd
+   ln -s /path-to-cl-cffi-gtk/gio/cl-cffi-gtk-gio.asd
    ln -s /path-to-cl-cffi-gtk/pango/cl-cffi-gtk-pango.asd
    ln -s /path-to-cl-cffi-gtk/cairo/cl-cffi-gtk-cairo.asd
 @end verbatim
@@ -102,15 +104,15 @@ the function from the Lisp prompt after loading the library:
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 0.0.0
-cl-cffi-gtk build date: 21:48 4/16/2012
-GTK+ version: 3.2.0
-GLIB version: 2.30.0
-Pango version: 1.29.3
+cl-cffi-gtk build date: 22:35 5/2/2012
+GTK+ version: 3.4.1
+GLIB version: 2.32.1
+Pango version: 1.30.0
 Cairo version: 1.10.2
 Machine type: X86
 Machine version: Intel(R) Pentium(R) M processor 1.73GHz
 Software type: Linux
-Software version: 3.0.0-19-generic
+Software version: 3.2.0-24-generic
 Lisp implementation type: SBCL
 Lisp implementation version: 1.0.56
 @end example
@@ -119,17 +121,17 @@ Lisp implementation version: 1.0.56
 @node A Simple Window, More about the Lisp binding to GTK+, Installation, Top
 @section A Simple Window
 
+@ifnotinfo
+@float Figure, figure-simple-window
+@caption{A Simple Window}
+@center @image{figures/simple-window202x229, 135pt}
+@end float
+@end ifnotinfo
+
 The @code{cl-cffi-gtk} source distribution contains the complete source to all
 of the examples used in this tutorial.  To begin the introduction to GTK+, the
 output of the simplest program possible is shown in @ref{figure-simple-window}
 and the Lisp code in @ref{example-simple-window}.
-
-@ifnotinfo
-@float Figure, figure-simple-window
-@caption{A Simple Window}
-@center @image{figures/simple-window206x226, 137pt}
-@end float
-@end ifnotinfo
 
 The program creates a 200 x 200 pixel window.  In this case the window has the
 default title "sbcl".  The window can be sized and moved.  Because no special
@@ -145,8 +147,7 @@ program is shown in @ref{example-simple-window}.
 @verbatim
 #include <gtk/gtk.h>
 
-int main( int   argc,
-          char *argv[] )
+int main( int argc, char *argv[] )
 {
     GtkWidget *window;
     
@@ -226,6 +227,13 @@ not child widgets.
 @node More about the Lisp binding to GTK+, Hello World in GTK+, A Simple Window, Top
 @section More about the Lisp binding to GTK+
 
+@ifnotinfo
+@float Figure, figure-getting-started
+@caption{Getting started}
+@center @image{figures/getting-started252x229, 168pt}
+@end float
+@end ifnotinfo
+
 @findex GtkWindow
 @findex gtk-window
 @findex window, gtk-window
@@ -245,13 +253,6 @@ list of properties, which are available for an instance of the class
 classes.  The object hierarchy shows, that the class @code{GtkWindow} inherits
 all properties of the classes @code{GtkWidget}, @code{GtkContainer}, and
 @code{GtkBin}.
-
-@ifnotinfo
-@float Figure, figure-getting-started
-@caption{Getting started}
-@center @image{figures/getting-started256x226, 171pt}
-@end float
-@end ifnotinfo
 
 @findex type
 @findex title
@@ -288,7 +289,7 @@ widgets such as menus or tooltips.
 @caption{Getting Started}
 @end float
 @verbatim
-(defun example-simple-window-2 ()
+(defun example-getting-started ()
   (within-main-loop
     (let (;; Create a toplevel window with a title and a default width.
           (window (make-instance 'gtk-window
@@ -301,7 +302,7 @@ widgets such as menus or tooltips.
 
 The @ref{example-getting-started} shows, that the Lisp function
 @code{gtk-window-new} is not really needed.  The function @code{gtk-window-new}
-is internally implemented in the Lisp binding simply as
+is internally implemented in the Lisp binding simply as:
 
 @example
 (defun gtk-window-new (type)
@@ -344,7 +345,7 @@ set the value of a widget property.  The properties @code{default-width} and
 accessor functions @code{gtk-window-default-width} and
 @code{gtk-window-default-height}.  With these accessor functions the C function
 @code{gtk_window_set_default_size()} is implemented the following way in the
-Lisp library
+Lisp library:
 
 @example
 (defun gtk-window-set-default-size (window width height)
@@ -353,7 +354,7 @@ Lisp library
 @end example
 
 As a second example the Lisp implementation of the C function
-@code{gtk_window_get_default_size()} is shown
+@code{gtk_window_get_default_size()} is shown:
 
 @example
 (defun gtk-window-get-default-size (window)
@@ -366,7 +367,8 @@ implemented as
 
 @example
 void gtk_window_get_default_size (GtkWindow *window,
-                                  gint *width, gint *height)
+                                  gint      *width,
+                                  gint      *height)
 @end example
 
 the Lisp implementation does not modify the arguments @code{width} and
@@ -376,17 +378,17 @@ the Lisp implementation does not modify the arguments @code{width} and
 @node Hello World in GTK+, Introduction to Signals and Callbacks, More about the Lisp binding to GTK+, Top
 @section Hello World in GTK+
 
+@ifnotinfo
+@float Figure, figure-hello-world
+@caption{Hello World}
+@center @image{figures/hello-world252x80, 168pt}
+@end float
+@end ifnotinfo
+
 Now a program with a button is presented.  The output is shown in
 @ref{figure-hello-world}.  Again the C program from the GTK+ 2.0 Tutorial is
 shown first in @ref{example-hello-world-C} to learn more about the differences
 between a C and a Lisp implementation.
-
-@ifnotinfo
-@float Figure, figure-hello-world
-@caption{Hello World}
-@center @image{figures/hello-world256x79, 171pt}
-@end float
-@end ifnotinfo
 
 @float Example, example-hello-world-C
 @caption{Hello World in the programing language C}
@@ -396,8 +398,7 @@ between a C and a Lisp implementation.
 
 /* This is a callback function. The data arguments are ignored
  * in this example. More on callbacks below. */
-static void hello( GtkWidget *widget,
-                   gpointer   data )
+static void hello( GtkWidget *widget, gpointer data )
 {
     g_print ("Hello World\n");
 }
@@ -421,14 +422,12 @@ static gboolean delete_event( GtkWidget *widget,
 }
 
 /* Another callback */
-static void destroy( GtkWidget *widget,
-                     gpointer   data )
+static void destroy( GtkWidget *widget, gpointer data )
 {
     gtk_main_quit ();
 }
 
-int main( int   argc,
-          char *argv[] )
+int main( int argc, char *argv[] )
 {
     /* GtkWidget is the storage type for widgets */
     GtkWidget *window;
@@ -578,7 +577,7 @@ widgets.
 @findex main-quit, gtk-main-quit
 @findex container-add, gtk-container-add
 
-Three more functions are used in @ref{example-hello-world}.  The function
+Three more functions are introduced in @ref{example-hello-world}.  The function
 @code{gtk-widget-destroy} takes as an argument any widget and destroys it.  In
 the above example this function is called by the signal handler of the button.
 When the button is clicked by the user, the signal "clicked" is catched by the
@@ -592,9 +591,9 @@ A second signal handler is connected to the toplevel window to catch the
 signal "delete-event".  The signal "delete-event" occurs, when the user or the
 window manager tries to close the window.  In this case, the signal handler
 prints a message on the console.   Because the value @code{T} is returned from
-the signal handler the window is not closed, but the execution of the
-application is continued.  To close the window, the user has to press the button
-in this example.
+the signal handler the handling of the signal is stopped and the window is not
+closed, but the execution of the application is continued.  To close the window,
+the user has to press the button in this example.
 
 At last, the function @code{gtk-container-add} is used to put the button into
 the toplevel window.  @ref{Packing Widgets} shows how it is possible to put more
@@ -615,8 +614,8 @@ are signals that all widgets inherit, such as "destroy", and there are signals
 that are widget specific, such as "toggled" on a toggle button.
 
 To make a button perform an action, a signal handler is set up to catch these
-signals and call the appropriate function.  This is done in the C GTK+ library
-by using a function such as
+signals and to call the appropriate function.  This is done in the C GTK+
+library by using a function such as
 
 @example
 gulong g_signal_connect( gpointer      *object,
@@ -719,17 +718,17 @@ the help of @code{lambda} functions in Lisp.
 @node An Upgraded Hello World, , Introduction to Signals and Callbacks, Top
 @section An Upgraded Hello World
 
+@ifnotinfo
+@float Figure, figure-upgraded-hello-world
+@caption{Upgraded Hello World}
+@center @image{figures/upgraded-hello-world252x104, 168pt}
+@end float
+@end ifnotinfo
+
 @ref{figure-upgraded-hello-world} and @ref{example-upgraded-hello-world} show
 a slightly improved Hello World with better examples of callbacks.  This will
 also introduce the next topic, packing widgets.  First, the C program is shown
 in @ref{example-upgraded-hello-world-C}.
-
-@ifnotinfo
-@float Figure, figure-upgraded-hello-world
-@caption{Upgraded Hello World}
-@center @image{figures/upgraded-hello-world256x101, 171pt}
-@end float
-@end ifnotinfo
 
 @float Example, example-upgraded-hello-world-C
 @caption{An upgraded Hello World in the programing language C}
@@ -739,8 +738,7 @@ in @ref{example-upgraded-hello-world-C}.
 
 /* Our new improved callback.  The data passed to this function
  * is printed to stdout. */
-static void callback( GtkWidget *widget,
-                      gpointer   data )
+static void callback( GtkWidget *widget, gpointer data )
 {
     g_print ("Hello again - %s was pressed\n", (gchar *) data);
 }
@@ -754,8 +752,7 @@ static gboolean delete_event( GtkWidget *widget,
     return FALSE;
 }
 
-int main( int   argc,
-          char *argv[] )
+int main( int argc, char *argv[] )
 {
     /* GtkWidget is the storage type for widgets */
     GtkWidget *window;

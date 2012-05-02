@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 03.02.2012
-@c Revision : 20.03.2012
+@c Revision : 02.05.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -24,10 +24,6 @@ Therefore, the C documentation from @url{www.gtk.org} is included into the Lisp
 files to document the Lisp binding to the GTK+ library.  This way the calling
 conventions are easier to determine and missing functionality is easier to
 detect.
-
-At this time the Lisp library is developed using SBCL 1.0.56 on a Linux system
-with the version GTK+ 3.2 of the C library.  In addition the library is tested
-on windows with SBCL 1.0.54 and the version GTK+ 2.24.
 
 The GTK+ library is called the GIMP toolkit because GTK+ was originally written
 for developing the GNU Image Manipulation Program (GIMP), but GTK+ has now been

@@ -44,7 +44,7 @@
       ;; Show the window.
       (gtk-widget-show-all window))))
 
-(defun example-simple-window-2 ()
+(defun example-getting-started ()
   (within-main-loop
     (let (;; Create a toplevel window with a title and a default width.
           (window (make-instance 'gtk-window
@@ -205,11 +205,9 @@
 (defun example-box-packing (&optional (spacing 0))
   (within-main-loop
     (let ((window (make-instance 'gtk-window
-                                 :title "Example Box Packing Box"
+                                 :title "Example Box Packing"
                                  :type :toplevel
-                                 :border-width 12
-                                 :default-height 200
-                                 :default-width 300))
+                                 :border-width 12))
           (vbox (make-instance 'gtk-box
                                :orientation :vertical
                                :spacing 6))
@@ -229,49 +227,47 @@
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                          "GtkBox homogeneous nil spacing ~A"
+                                          "GtkBox   ~
+                                           :orientation :horizontal   ~
+                                           :homogeneous nil   ~
+                                           :spacing ~A"
                                           spacing)
-                                         :xalign 0
-                                         :yalign 0)
-                          :expand nil
-                          :fill nil)
+                                         :xalign 0)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing nil nil 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing t nil 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box nil spacing t t 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
                                          (format nil
-                                            "GtkBox homogeneous t spacing ~A"
+                                            "GtkBox   ~
+                                             :orientation :horizontal   ~
+                                             :homogeneous t   ~
+                                             :spacing ~A"
                                             spacing)
-                                         :xalign 0
-                                         :yalign 0)
+                                         :xalign 0)
                           :expand nil
-                          :fill nil
                           :padding 6)
       (gtk-box-pack-start vbox
                           (make-box t spacing t nil 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (make-box t spacing t t 0)
-                          :expand nil
-                          :fill nil)
+                          :expand nil)
       (gtk-box-pack-start vbox
                           (gtk-separator-new :horizontal)
                           :expand nil
                           :padding 6)
-      (gtk-box-pack-start quitbox button :expand nil :fill nil)
-      (gtk-box-pack-start vbox quitbox :expand nil :fill nil)
+      ;; Align the quit-button on the right side
+      (gtk-box-pack-end quitbox button :expand nil)
+      (gtk-box-pack-start vbox quitbox :expand nil)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
 
