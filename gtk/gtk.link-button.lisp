@@ -152,8 +152,10 @@
 (define-g-object-class "GtkLinkButton" gtk-link-button
   (:superclass gtk-button
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
-                 "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable"
+                 "GtkActionable"
+                 "GtkActivatable")
     :type-initializer "gtk_link_button_get_type")
   ((uri
     gtk-link-button-uri
@@ -184,9 +186,6 @@
   (make-instance 'gtk-link-button
                  :uri uri
                  :label uri))
-
-;(defcfun ("gtk_link_button_new" gtk-link-button-new) (g-object gtk-widget)
-;  (uri :string))
 
 (export 'gtk-link-button-new)
 

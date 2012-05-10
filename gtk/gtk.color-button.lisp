@@ -181,7 +181,9 @@
 (define-g-object-class "GtkColorButton" gtk-color-button
   (:superclass gtk-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_color_button_get_type")
   ((alpha gtk-color-button-alpha
     "alpha" "guint" t t)

@@ -180,8 +180,10 @@
 (define-g-object-class "GtkToggleButton" gtk-toggle-button
   (:superclass gtk-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
-                "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActionable"
+                "GtkActivatable")
    :type-initializer "gtk_toggle_button_get_type")
   ((active
     gtk-toggle-button-active

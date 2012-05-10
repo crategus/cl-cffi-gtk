@@ -422,8 +422,10 @@
 (define-g-object-class "GtkButton" gtk-button
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
-                "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActionable"
+                "GtkActivatable")
    :type-initializer "gtk_button_get_type")
   ((focus-on-click
     gtk-button-focus-on-click

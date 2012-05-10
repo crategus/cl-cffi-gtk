@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.2. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
@@ -34,7 +34,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkGrid
-;;;
+;;;     
 ;;;     gtk_grid_new
 ;;;     gtk_grid_attach
 ;;;     gtk_grid_attach_next_to
@@ -62,7 +62,6 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkGrid implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
 ;;; Properties
 ;;; 
 ;;;   "column-homogeneous"       gboolean              : Read / Write
@@ -86,7 +85,8 @@
 ;;; 
 ;;; Children are added using gtk_grid_attach(). They can span multiple rows or
 ;;; columns. It is also possible to add a child next to an existing child, using
-;;; gtk_grid_attach_next_to().
+;;; gtk_grid_attach_next_to(). The behaviour of GtkGrid when several children
+;;; occupy the same grid cell is undefined.
 ;;; 
 ;;; GtkGrid can be used like a GtkBox by just using gtk_container_add(), which
 ;;; will place children next to each other in the direction determined by the
@@ -195,7 +195,9 @@
 (define-g-object-class "GtkGrid" gtk-grid
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_grid_get_type")
   ((column-homogeneous
     gtk-grid-column-homogeneous
@@ -317,7 +319,7 @@
 ;;; 
 ;;; sibling :
 ;;;     the child of grid that child will be placed next to, or NULL to place
-;;;     child at the beginning or end.
+;;;     child at the beginning or end
 ;;; 
 ;;; side :
 ;;;     the side of sibling that child is positioned next to
@@ -342,9 +344,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_get_child_at ()
 ;;; 
-;;; GtkWidget * gtk_grid_get_child_at (GtkGrid *grid,
-;;;                                    gint left,
-;;;                                    gint top);
+;;; GtkWidget * gtk_grid_get_child_at (GtkGrid *grid, gint left, gint top);
 ;;; 
 ;;; Gets the child of grid whose area covers the grid cell whose upper left
 ;;; corner is at left, top.

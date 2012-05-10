@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,32 +31,31 @@
 ;;; GtkWindow
 ;;; 
 ;;; Toplevel which can contain other widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;     gtk-window
-;;;
-;;;     gtk-window-new
-;;;     gtk-window-set-title
-;;;
+;;;     GtkWindow
+;;;     
+;;;     gtk_window_new
+;;;     gtk_window_set_title
 ;;;     gtk_window_set_wmclass
-;;;
-;;;     gtk-window-set-resizable
-;;;     gtk-window-get-resizable
-;;;     gtk-window-add-accel-group
-;;;     gtk-window-remove-accel-group
-;;;     gtk-window-activate-focus
-;;;     gtk-window-activate-default
-;;;     gtk-window-set-modal
-;;;     gtk-window-set-default-size
-;;;
+;;;     gtk_window_set_resizable
+;;;     gtk_window_get_resizable
+;;;     gtk_window_add_accel_group
+;;;     gtk_window_remove_accel_group
+;;;     gtk_window_activate_focus
+;;;     gtk_window_activate_default
+;;;     gtk_window_set_modal
+;;;     gtk_window_set_default_size
 ;;;     gtk_window_set_default_geometry
 ;;;     gtk_window_set_geometry_hints
 ;;;     gtk_window_set_gravity
 ;;;     gtk_window_get_gravity
 ;;;     gtk_window_set_position
 ;;;     gtk_window_set_transient_for
+;;;     gtk_window_set_attached_to
 ;;;     gtk_window_set_destroy_with_parent
+;;;     gtk_window_set_hide_titlebar_when_maximized
 ;;;     gtk_window_set_screen
 ;;;     gtk_window_get_screen
 ;;;     gtk_window_is_active
@@ -101,8 +100,8 @@
 ;;;     gtk_window_get_default_icon_list
 ;;;     gtk_window_get_default_icon_name
 ;;;     gtk_window_get_default_size
-;;;
 ;;;     gtk_window_get_destroy_with_parent
+;;;     gtk_window_get_hide_titlebar_when_maximized
 ;;;     gtk_window_get_icon
 ;;;     gtk_window_get_icon_list
 ;;;     gtk_window_get_icon_name
@@ -113,6 +112,7 @@
 ;;;     gtk_window_get_size
 ;;;     gtk_window_get_title
 ;;;     gtk_window_get_transient_for
+;;;     gtk_window_get_attached_to
 ;;;     gtk_window_get_type_hint
 ;;;     gtk_window_get_skip_taskbar_hint
 ;;;     gtk_window_get_skip_pager_hint
@@ -159,6 +159,7 @@
 ;;;                      +----GtkBin
 ;;;                            +----GtkWindow
 ;;;                                  +----GtkDialog
+;;;                                  +----GtkApplicationWindow
 ;;;                                  +----GtkAssistant
 ;;;                                  +----GtkOffscreenWindow
 ;;;                                  +----GtkPlug
@@ -169,55 +170,57 @@
 ;;;
 ;;; Properties
 ;;; 
-;;;   "accept-focus"          gboolean           : Read / Write
-;;;   "application"           GtkApplication*    : Read / Write
-;;;   "decorated"             gboolean           : Read / Write
-;;;   "default-height"        gint               : Read / Write
-;;;   "default-width"         gint               : Read / Write
-;;;   "deletable"             gboolean           : Read / Write
-;;;   "destroy-with-parent"   gboolean           : Read / Write
-;;;   "focus-on-map"          gboolean           : Read / Write
-;;;   "focus-visible"         gboolean           : Read / Write
-;;;   "gravity"               GdkGravity         : Read / Write
-;;;   "has-resize-grip"       gboolean           : Read / Write
-;;;   "has-toplevel-focus"    gboolean           : Read
-;;;   "icon"                  GdkPixbuf*         : Read / Write
-;;;   "icon-name"             gchar*             : Read / Write
-;;;   "is-active"             gboolean           : Read
-;;;   "mnemonics-visible"     gboolean           : Read / Write
-;;;   "modal"                 gboolean           : Read / Write
-;;;   "opacity"               gdouble            : Read / Write
-;;;   "resizable"             gboolean           : Read / Write
-;;;   "resize-grip-visible"   gboolean           : Read
-;;;   "role"                  gchar*             : Read / Write
-;;;   "screen"                GdkScreen*         : Read / Write
-;;;   "skip-pager-hint"       gboolean           : Read / Write
-;;;   "skip-taskbar-hint"     gboolean           : Read / Write
-;;;   "startup-id"            gchar*             : Write
-;;;   "title"                 gchar*             : Read / Write
-;;;   "transient-for"         GtkWindow*         : Read / Write / Construct
-;;;   "type"                  GtkWindowType      : Read / Write / Construct Only
-;;;   "type-hint"             GdkWindowTypeHint  : Read / Write
-;;;   "urgency-hint"          gboolean           : Read / Write
-;;;   "window-position"       GtkWindowPosition  : Read / Write
+;;;   "accept-focus"             gboolean             : Read / Write
+;;;   "application"              GtkApplication*      : Read / Write
+;;;   "attached-to"              GtkWidget*           : Read / Write / Construct
+;;;   "decorated"                gboolean             : Read / Write
+;;;   "default-height"           gint                 : Read / Write
+;;;   "default-width"            gint                 : Read / Write
+;;;   "deletable"                gboolean             : Read / Write
+;;;   "destroy-with-parent"      gboolean             : Read / Write
+;;;   "focus-on-map"             gboolean             : Read / Write
+;;;   "focus-visible"            gboolean             : Read / Write
+;;;   "gravity"                  GdkGravity           : Read / Write
+;;;   "has-resize-grip"          gboolean             : Read / Write
+;;;   "has-toplevel-focus"       gboolean             : Read
+;;;   "hide-titlebar-when-maximized" gboolean         : Read / Write
+;;;   "icon"                     GdkPixbuf*           : Read / Write
+;;;   "icon-name"                gchar*               : Read / Write
+;;;   "is-active"                gboolean             : Read
+;;;   "mnemonics-visible"        gboolean             : Read / Write
+;;;   "modal"                    gboolean             : Read / Write
+;;;   "opacity"                  gdouble              : Read / Write
+;;;   "resizable"                gboolean             : Read / Write
+;;;   "resize-grip-visible"      gboolean             : Read
+;;;   "role"                     gchar*               : Read / Write
+;;;   "screen"                   GdkScreen*           : Read / Write
+;;;   "skip-pager-hint"          gboolean             : Read / Write
+;;;   "skip-taskbar-hint"        gboolean             : Read / Write
+;;;   "startup-id"               gchar*               : Write
+;;;   "title"                    gchar*               : Read / Write
+;;;   "transient-for"            GtkWindow*           : Read / Write / Construct
+;;;   "type"                     GtkWindowType        : Read / Write / Construct
+;;;   "type-hint"                GdkWindowTypeHint    : Read / Write
+;;;   "urgency-hint"             gboolean             : Read / Write
+;;;   "window-position"          GtkWindowPosition    : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
-;;;   "resize-grip-height"    gint               : Read / Write
-;;;   "resize-grip-width"     gint               : Read / Write
+;;;   "resize-grip-height"       gint                 : Read / Write
+;;;   "resize-grip-width"        gint                 : Read / Write
 ;;; 
 ;;; Signals
 ;;; 
-;;;   "activate-default"                         : Action
-;;;   "activate-focus"                           : Action
-;;;   "keys-changed"                             : Run First
-;;;   "set-focus"                                : Run Last
+;;;   "activate-default"                              : Action
+;;;   "activate-focus"                                : Action
+;;;   "keys-changed"                                  : Run First
+;;;   "set-focus"                                     : Run Last
 ;;; 
 ;;; Description
 ;;; 
 ;;; A GtkWindow is a toplevel window which can contain other widgets. Windows
-;;; normally have decorations that are under the control of the windowing
-;;; system and allow the user to manipulate the window (resize it, move it,
+;;; normally have decorations that are under the control of the windowing system
+;;; and allow the user to manipulate the window (resize it, move it,
 ;;; close it, ...).
 ;;; 
 ;;; GTK+ also allows windows to have a resize grip (a small area in the lower
@@ -226,22 +229,22 @@
 ;;; 
 ;;; GtkWindow as GtkBuildable
 ;;; 
-;;; The GtkWindow implementation of the GtkBuildable interface supports a
-;;; custom <accel-groups> element, which supports any number of <group>
-;;; elements representing the GtkAccelGroup objects you want to add to your
-;;; window (synonymous with gtk_window_add_accel_group().
+;;; The GtkWindow implementation of the GtkBuildable interface supports a custom
+;;; <accel-groups> element, which supports any number of <group> elements
+;;; representing the GtkAccelGroup objects you want to add to your window
+;;; (synonymous with gtk_window_add_accel_group().
 ;;; 
 ;;; Example 48. A UI definition fragment with accel groups
 ;;; 
-;;;  <object class="GtkWindow">
-;;;    <accel-groups>
-;;;      <group name="accelgroup1"/>
-;;;    </accel-groups>
-;;;  </object>
-;;;  <!-- -->
-;;;  ...
-;;;  <!-- -->
-;;;  <object class="GtkAccelGroup" id="accelgroup1"/>
+;;; <object class="GtkWindow">
+;;;   <accel-groups>
+;;;     <group name="accelgroup1"/>
+;;;   </accel-groups>
+;;; </object>
+;;; <!-- -->
+;;; ...
+;;; <!-- -->
+;;; <object class="GtkAccelGroup" id="accelgroup1"/>
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -250,7 +253,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "accept-focus" property
 ;;; 
-;;;   "accept-focus" gboolean              : Read / Write
+;;;   "accept-focus"             gboolean              : Read / Write
 ;;; 
 ;;; Whether the window should receive the input focus.
 ;;; 
@@ -261,7 +264,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "application" property
 ;;; 
-;;;   "application" GtkApplication*       : Read / Write
+;;;   "application"              GtkApplication*       : Read / Write
 ;;; 
 ;;; The GtkApplication associated with the window.
 ;;; 
@@ -276,9 +279,23 @@
 ;;; Since 3.0
 ;;;
 ;;; ----------------------------------------------------------------------------
+;;; The "attached-to" property
+;;; 
+;;;   "attached-to"              GtkWidget*           : Read / Write / Construct
+;;; 
+;;; The widget to which this window is attached.
+;;; See gtk_window_set_attached_to().
+;;; 
+;;; Examples of places where specifying this relation is useful are for instance
+;;; a GtkMenu created by a GtkComboBox, a completion popup window created by
+;;; GtkEntry or a typeahead search entry created by GtkTreeView.
+;;; 
+;;; Since 3.4
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "decorated" property
 ;;; 
-;;;   "decorated" gboolean              : Read / Write
+;;;   "decorated"                gboolean              : Read / Write
 ;;; 
 ;;; Whether the window should be decorated by the window manager.
 ;;; 
@@ -390,6 +407,17 @@
 ;;; Default value: FALSE
 ;;;
 ;;; ----------------------------------------------------------------------------
+;;; The "hide-titlebar-when-maximized" property
+;;; 
+;;;   "hide-titlebar-when-maximized" gboolean              : Read / Write
+;;; 
+;;; Whether the titlebar should be hidden during maximization.
+;;; 
+;;; Default value: FALSE
+;;; 
+;;; Since 3.4
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "icon" property
 ;;; 
 ;;;   "icon"                     GdkPixbuf*            : Read / Write
@@ -401,8 +429,8 @@
 ;;; 
 ;;;   "icon-name"                gchar*                : Read / Write
 ;;; 
-;;; The :icon-name property specifies the name of the themed icon to use as
-;;; the window icon. See GtkIconTheme for more details.
+;;; The :icon-name property specifies the name of the themed icon to use as the
+;;; window icon. See GtkIconTheme for more details.
 ;;; 
 ;;; Default value: NULL
 ;;; 
@@ -490,6 +518,8 @@
 ;;;   "screen"                   GdkScreen*            : Read / Write
 ;;; 
 ;;; The screen where this window will be displayed.
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "skip-pager-hint" property
 ;;; 
 ;;;   "skip-pager-hint"          gboolean              : Read / Write
@@ -541,7 +571,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "type" property
 ;;; 
-;;;   "type"                     GtkWindowType   : Read / Write / Construct Only
+;;;   "type"                     GtkWindowType        : Read / Write / Construct
 ;;; 
 ;;; The type of the window.
 ;;; 
@@ -560,7 +590,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "urgency-hint" property
 ;;; 
-;;;   "urgency-hint" gboolean              : Read / Write
+;;;   "urgency-hint"             gboolean              : Read / Write
 ;;; 
 ;;; TRUE if the window should be brought to the user's attention.
 ;;; 
@@ -569,7 +599,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "window-position" property
 ;;; 
-;;;   "window-position" GtkWindowPosition     : Read / Write
+;;;   "window-position"          GtkWindowPosition     : Read / Write
 ;;; 
 ;;; The initial position of the window.
 ;;; 
@@ -593,7 +623,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "resize-grip-width" style property
 ;;; 
-;;;   "resize-grip-width" gint                  : Read / Write
+;;;   "resize-grip-width"        gint                  : Read / Write
 ;;; 
 ;;; Width of resize grip.
 ;;; 
@@ -608,21 +638,23 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "activate-default" signal
 ;;; 
-;;; void user_function (GtkWindow *window, gpointer user_data)      : Action
+;;; void user_function (GtkWindow *window,
+;;;                     gpointer   user_data)      : Action
 ;;; 
-;;; The ::activate-default signal is a keybinding signal which gets emitted
-;;; when the user activates the default widget of window.
+;;; The ::activate-default signal is a keybinding signal which gets emitted when
+;;; the user activates the default widget of window.
 ;;; 
 ;;; window :
 ;;;     the window which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "activate-focus" signal
 ;;; 
-;;; void user_function (GtkWindow *window, gpointer user_data)      : Action
+;;; void user_function (GtkWindow *window,
+;;;                     gpointer   user_data)      : Action
 ;;; 
 ;;; The ::activate-focus signal is a keybinding signal which gets emitted when
 ;;; the user activates the currently focused widget of window.
@@ -631,12 +663,13 @@
 ;;;     the window which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "keys-changed" signal
 ;;; 
-;;; void user_function (GtkWindow *window, gpointer user_data)      : Run First
+;;; void user_function (GtkWindow *window,
+;;;                     gpointer   user_data)      : Run First
 ;;; 
 ;;; The ::keys-changed signal gets emitted when the set of accelerators or
 ;;; mnemonics that are associated with window changes.
@@ -645,14 +678,14 @@
 ;;;     the window which received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "set-focus" signal
 ;;; 
 ;;; void user_function (GtkWindow *window,
 ;;;                     GtkWidget *widget,
-;;;                     gpointer  user_data)      : Run Last
+;;;                     gpointer   user_data)      : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -669,7 +702,8 @@
 (define-g-object-class "GtkWindow" gtk-window
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_window_get_type")
   ((accept-focus
     gtk-window-accept-focus
@@ -677,12 +711,9 @@
    (application
     gtk-window-application
     "application" "GtkApplication" t t)
-;   (allow-grow
-;    gtk-window-allow-grow
-;    "allow-grow" "gboolean" t t)
-;   (allow-shrink
-;    gtk-window-allow-shrink
-;    "allow-shrink" "gboolean" t t)
+   (attached-to
+    gtk-window-attached-to
+    "attached-to" "GtkWidget" t t)
    (decorated
     gtk-window-decorated
     "decorated" "gboolean" t t)
@@ -713,6 +744,9 @@
    (has-toplevel-focus
      gtk-window-has-toplevel-focus
      "has-toplevel-focus" "gboolean" t nil)
+   (hide-titlebar-when-maximized
+    gtk-window-hide-titlebar-when-maximized
+    "hide-titlebar-when-maximized" "gboolean" t t)
    (icon
     gtk-window-icon
     "icon" "GdkPixbuf" t t)
@@ -802,12 +836,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_new ()
 ;;; 
-;;; GtkWidget * gtk_window_new (GtkWindowType type)
+;;; GtkWidget * gtk_window_new (GtkWindowType type);
 ;;; 
 ;;; Creates a new GtkWindow, which is a toplevel window that can contain other
 ;;; widgets. Nearly always, the type of the window should be
-;;; GTK_WINDOW_TOPLEVEL. If you're implementing something like a popup menu
-;;; from scratch (which is a bad idea, just use GtkMenu), you might use
+;;; GTK_WINDOW_TOPLEVEL. If you're implementing something like a popup menu from
+;;; scratch (which is a bad idea, just use GtkMenu), you might use
 ;;; GTK_WINDOW_POPUP. GTK_WINDOW_POPUP is not for dialogs, though in some other
 ;;; toolkits dialogs are called "popups". In GTK+, GTK_WINDOW_POPUP means a
 ;;; pop-up menu or pop-up tooltip. On X11, popup windows are not controlled by
@@ -823,6 +857,8 @@
 ;;;     a new GtkWindow.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-new))
+
 (defun gtk-window-new (type)
   (make-instance 'gtk-window :type type))
 
@@ -831,7 +867,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_title ()
 ;;; 
-;;; void gtk_window_set_title (GtkWindow *window, const gchar *title)
+;;; void gtk_window_set_title (GtkWindow *window, const gchar *title);
 ;;; 
 ;;; Sets the title of the GtkWindow. The title of a window will be displayed in
 ;;; its title bar; on the X Window System, the title bar is rendered by the
@@ -847,6 +883,8 @@
 ;;;     title of the window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-title))
+
 (defun gtk-window-set-title (window title)
   (setf (gtk-window-title window) title))
 
@@ -857,13 +895,13 @@
 ;;; 
 ;;; void gtk_window_set_wmclass (GtkWindow *window,
 ;;;                              const gchar *wmclass_name,
-;;;                              const gchar *wmclass_class)
+;;;                              const gchar *wmclass_class);
 ;;; 
 ;;; Don't use this function. It sets the X Window System "class" and "name"
 ;;; hints for a window. According to the ICCCM, you should always set these to
-;;; the same value for all windows in an application, and GTK+ sets them to
-;;; that value by default, so calling this function is sort of pointless.
-;;; However, you may want to call gtk_window_set_role() on each window in your
+;;; the same value for all windows in an application, and GTK+ sets them to that
+;;; value by default, so calling this function is sort of pointless. However,
+;;; you may want to call gtk_window_set_role() on each window in your
 ;;; application, for the benefit of the session manager. Setting the role allows
 ;;; the window manager to restore window positions when loading a saved session.
 ;;; 
@@ -877,12 +915,10 @@
 ;;;     window class hint
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_resizable ()
 ;;; 
-;;; void gtk_window_set_resizable (GtkWindow *window, gboolean resizable)
+;;; void gtk_window_set_resizable (GtkWindow *window, gboolean resizable);
 ;;; 
 ;;; Sets whether the user can resize a window. Windows are user resizable by
 ;;; default.
@@ -894,6 +930,8 @@
 ;;;     TRUE if the user can resize this window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-resizeable))
+
 (defun gtk-window-set-resizable (window resizable)
   (setf (gtk-window-resizable window) resizable))
 
@@ -902,7 +940,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_resizable ()
 ;;; 
-;;; gboolean gtk_window_get_resizable (GtkWindow *window)
+;;; gboolean gtk_window_get_resizable (GtkWindow *window);
 ;;; 
 ;;; Gets the value set by gtk_window_set_resizable().
 ;;; 
@@ -913,6 +951,8 @@
 ;;;     TRUE if the user can resize the window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-get-resizable))
+
 (defun gtk-window-get-resizable (window)
   (gtk-window-resizable window))
 
@@ -922,7 +962,7 @@
 ;;; gtk_window_add_accel_group ()
 ;;; 
 ;;; void gtk_window_add_accel_group (GtkWindow *window,
-;;;                                  GtkAccelGroup *accel_group)
+;;;                                  GtkAccelGroup *accel_group);
 ;;; 
 ;;; Associate accel_group with window, such that calling
 ;;; gtk_accel_groups_activate() on window will activate accelerators in
@@ -945,14 +985,14 @@
 ;;; gtk_window_remove_accel_group ()
 ;;; 
 ;;; void gtk_window_remove_accel_group (GtkWindow *window,
-;;;                                     GtkAccelGroup *accel_group)
+;;;                                     GtkAccelGroup *accel_group);
 ;;; 
 ;;; Reverses the effects of gtk_window_add_accel_group().
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
 ;;; 
-;;; accel-group :
+;;; accel_group :
 ;;;     a GtkAccelGroup
 ;;; ----------------------------------------------------------------------------
 
@@ -965,7 +1005,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_activate_focus ()
 ;;; 
-;;; gboolean gtk_window_activate_focus (GtkWindow *window)
+;;; gboolean gtk_window_activate_focus (GtkWindow *window);
 ;;; 
 ;;; Activates the current focused widget within the window.
 ;;; 
@@ -973,7 +1013,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if a widget got activated.
+;;;     TRUE if a widget got activated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_activate_focus" gtk-window-activate-focus) :boolean
@@ -984,7 +1024,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_activate_default ()
 ;;; 
-;;; gboolean gtk_window_activate_default (GtkWindow *window)
+;;; gboolean gtk_window_activate_default (GtkWindow *window);
 ;;; 
 ;;; Activates the default widget for the window, unless the current focused
 ;;; widget has been configured to receive the default action (see
@@ -995,7 +1035,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if a widget got activated.
+;;;     TRUE if a widget got activated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_activate_default" gtk-window-activate-default) :boolean
@@ -1006,7 +1046,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_modal ()
 ;;; 
-;;; void gtk_window_set_modal (GtkWindow *window, gboolean modal)
+;;; void gtk_window_set_modal (GtkWindow *window, gboolean modal);
 ;;; 
 ;;; Sets a window modal or non-modal. Modal windows prevent interaction with
 ;;; other windows in the same application. To keep modal dialogs on top of main
@@ -1021,6 +1061,8 @@
 ;;;     whether the window is modal
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-modal))
+
 (defun gtk-window-set-modal (window modal)
   (setf (gtk-window-modal window) modal))
 
@@ -1030,7 +1072,8 @@
 ;;; gtk_window_set_default_size ()
 ;;; 
 ;;; void gtk_window_set_default_size (GtkWindow *window,
-;;;                                   gint width, gint height)
+;;;                                   gint width,
+;;;                                   gint height);
 ;;; 
 ;;; Sets the default size of a window. If the window's "natural" size (its size
 ;;; request) is larger than the default, the default will be ignored. More
@@ -1070,6 +1113,8 @@
 ;;;     height in pixels, or -1 to unset the default height
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-default-size))
+
 (defun gtk-window-set-default-size (window width height)
   (setf (gtk-window-default-width window) width
         (gtk-window-default-height window) height))
@@ -1080,7 +1125,8 @@
 ;;; gtk_window_set_default_geometry ()
 ;;; 
 ;;; void gtk_window_set_default_geometry (GtkWindow *window,
-;;;                                       gint width, gint height)
+;;;                                       gint width,
+;;;                                       gint height);
 ;;; 
 ;;; Like gtk_window_set_default_size(), but width and height are interpreted in
 ;;; terms of the base size and increment set with gtk_window_set_geometry_hints.
@@ -1103,7 +1149,7 @@
 ;;; void gtk_window_set_geometry_hints (GtkWindow *window,
 ;;;                                     GtkWidget *geometry_widget,
 ;;;                                     GdkGeometry *geometry,
-;;;                                     GdkWindowHints geom_mask)
+;;;                                     GdkWindowHints geom_mask);
 ;;; 
 ;;; This function sets up hints about how a window can be resized by the user.
 ;;; You can set a minimum and maximum size; allowed resize increments (e.g. for
@@ -1114,10 +1160,10 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; geometry_widget :
-;;;     widget the geometry hints will be applied to or NULL.
+;;;     widget the geometry hints will be applied to or NULL
 ;;; 
 ;;; geometry :
-;;;     struct containing geometry information or NULL.
+;;;     struct containing geometry information or NULL
 ;;; 
 ;;; geom_mask :
 ;;;     mask indicating which struct fields should be paid attention to
@@ -1134,7 +1180,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_gravity ()
 ;;; 
-;;; void gtk_window_set_gravity (GtkWindow *window, GdkGravity gravity)
+;;; void gtk_window_set_gravity (GtkWindow *window, GdkGravity gravity);
 ;;; 
 ;;; Window gravity defines the meaning of coordinates passed to
 ;;; gtk_window_move(). See gtk_window_move() and GdkGravity for more details.
@@ -1152,7 +1198,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_gravity ()
 ;;; 
-;;; GdkGravity gtk_window_get_gravity (GtkWindow *window)
+;;; GdkGravity          gtk_window_get_gravity              (GtkWindow *window);
 ;;; 
 ;;; Gets the value set by gtk_window_set_gravity().
 ;;; 
@@ -1160,13 +1206,14 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     window gravity.
+;;;     window gravity
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_position ()
 ;;; 
-;;; void gtk_window_set_position (GtkWindow *window, GtkWindowPosition position)
+;;; void gtk_window_set_position (GtkWindow *window,
+;;;                               GtkWindowPosition position);
 ;;; 
 ;;; Sets a position constraint for this window. If the old or new constraint is
 ;;; GTK_WIN_POS_CENTER_ALWAYS, this will also cause the window to be
@@ -1176,7 +1223,7 @@
 ;;;     a GtkWindow.
 ;;; 
 ;;; position :
-;;;     a position constraint.
+;;;     a position constraint
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1199,7 +1246,37 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; parent :
-;;;     parent window, or NULL.
+;;;     parent window, or NULL
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_set_attached_to ()
+;;; 
+;;; void gtk_window_set_attached_to (GtkWindow *window,
+;;;                                  GtkWidget *attach_widget);
+;;; 
+;;; Marks window as attached to attach_widget. This creates a logical binding
+;;; between the window and the widget it belongs to, which is used by GTK+ to
+;;; propagate information such as styling or accessibility to window as if it
+;;; was a children of attach_widget.
+;;; 
+;;; Examples of places where specifying this relation is useful are for instance
+;;; a GtkMenu created by a GtkComboBox, a completion popup window created by
+;;; GtkEntry or a typeahead search entry created by GtkTreeView.
+;;; 
+;;; Note that this function should not be confused with
+;;; gtk_window_set_transient_for(), which specifies a window manager relation
+;;; between two toplevels instead.
+;;; 
+;;; Passing NULL for attach_widget detaches the window.
+;;; 
+;;; window :
+;;;     a GtkWindow
+;;; 
+;;; attach_widget :
+;;;     a GtkWidget, or NULL
+;;; 
+;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1208,16 +1285,36 @@
 ;;; void gtk_window_set_destroy_with_parent (GtkWindow *window,
 ;;;                                          gboolean setting);
 ;;; 
-;;; If setting is TRUE, then destroying the transient parent of window will
-;;; also destroy window itself. This is useful for dialogs that shouldn't
-;;; persist beyond the lifetime of the main window they're associated with,
-;;; for example.
+;;; If setting is TRUE, then destroying the transient parent of window will also
+;;; destroy window itself. This is useful for dialogs that shouldn't persist
+;;; beyond the lifetime of the main window they're associated with, for example.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
 ;;; 
 ;;; setting :
 ;;;     whether to destroy window with its transient parent
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_set_hide_titlebar_when_maximized ()
+;;; 
+;;; void gtk_window_set_hide_titlebar_when_maximized (GtkWindow *window,
+;;;                                                   gboolean setting);
+;;; 
+;;; If setting is TRUE, then window will request that it's titlebar should be
+;;; hidden when maximized. This is useful for windows that don't convey any
+;;; information other than the application name in the titlebar, to put the
+;;; available screen space to better use. If the underlying window system does
+;;; not support the request, the setting will not have any effect.
+;;; 
+;;; window :
+;;;     a GtkWindow
+;;; 
+;;; setting :
+;;;     whether to hide the titlebar when window is maximized
+;;; 
+;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1248,7 +1345,7 @@
 ;;;     a GtkWindow.
 ;;; 
 ;;; Returns :
-;;;     a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -1258,18 +1355,18 @@
 ;;; 
 ;;; gboolean gtk_window_is_active (GtkWindow *window);
 ;;; 
-;;; Returns whether the window is part of the current active toplevel.
-;;; (That is, the toplevel window receiving keystrokes.) The return value is
-;;; TRUE if the window is active toplevel itself, but also if it is, say, a
-;;; GtkPlug embedded in the active toplevel. You might use this function if you
-;;; wanted to draw a widget differently in an active window from a widget in an
-;;; inactive window. See gtk_window_has_toplevel_focus()
+;;; Returns whether the window is part of the current active toplevel. (That is,
+;;; the toplevel window receiving keystrokes.) The return value is TRUE if the
+;;; window is active toplevel itself, but also if it is, say, a GtkPlug embedded
+;;; in the active toplevel. You might use this function if you wanted to draw a
+;;; widget differently in an active window from a widget in an inactive window.
+;;; See gtk_window_has_toplevel_focus()
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if the window part of the current active window.
+;;;     TRUE if the window part of the current active window
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -1297,14 +1394,14 @@
 ;;; 
 ;;; GList * gtk_window_list_toplevels (void);
 ;;; 
-;;; Returns a list of all existing toplevel windows. The widgets in the list
-;;; are not individually referenced. If you want to iterate through the list
-;;; and perform actions involving callbacks that might destroy the widgets, you
-;;; must call g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and
-;;; then unref all the widgets afterwards.
+;;; Returns a list of all existing toplevel windows. The widgets in the list are
+;;; not individually referenced. If you want to iterate through the list and
+;;; perform actions involving callbacks that might destroy the widgets, you must
+;;; call g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and then
+;;; unref all the widgets afterwards.
 ;;; 
 ;;; Returns :
-;;;     list of toplevel widgets.
+;;;     list of toplevel widgets
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_list_toplevels" gtk-window-list-toplevels)
@@ -1369,7 +1466,7 @@
 ;;; 
 ;;; gboolean gtk_window_mnemonic_activate (GtkWindow *window,
 ;;;                                        guint keyval,
-;;;                                        GdkModifierType modifier)
+;;;                                        GdkModifierType modifier);
 ;;; 
 ;;; Activates the targets associated with the mnemonic.
 ;;; 
@@ -1383,7 +1480,7 @@
 ;;;     the modifiers
 ;;; 
 ;;; Returns :
-;;;     TRUE if the activation is done.
+;;;     TRUE if the activation is done
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_mnemonic_activate" gtk-window-mnemonic-activate) :boolean
@@ -1428,8 +1525,8 @@
 ;;;                                          GdkEventKey *event);
 ;;; 
 ;;; Propagate a key press or release event to the focus widget and up the focus
-;;; container chain until a widget handles event. This is normally called by
-;;; the default ::key_press_event and ::key_release_event handlers for toplevel
+;;; container chain until a widget handles event. This is normally called by the
+;;; default ::key_press_event and ::key_release_event handlers for toplevel
 ;;; windows, however in some cases it may be useful to call this directly when
 ;;; overriding the standard key handling for a toplevel window.
 ;;; 
@@ -1466,7 +1563,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     the currently focused widget, or NULL if there is none.
+;;;     the currently focused widget, or NULL if there is none
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1484,8 +1581,8 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; focus :
-;;;     widget to be the new focus widget, or NULL to unset any focus widget
-;;;     for the toplevel window.
+;;;     widget to be the new focus widget, or NULL to unset any focus widget for
+;;;     the toplevel window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1493,14 +1590,14 @@
 ;;; 
 ;;; GtkWidget * gtk_window_get_default_widget (GtkWindow *window);
 ;;; 
-;;; Returns the default widget for window. See gtk_window_set_default() for
-;;; more details.
+;;; Returns the default widget for window. See gtk_window_set_default() for more
+;;; details.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     the default widget, or NULL if there is none.
+;;;     the default widget, or NULL if there is none
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -1523,7 +1620,7 @@
 ;;; 
 ;;; default_widget :
 ;;;     widget to be the default, or NULL to unset the default widget for the
-;;;     toplevel.
+;;;     toplevel
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1561,9 +1658,9 @@
 ;;; 
 ;;; void gtk_window_present_with_time (GtkWindow *window, guint32 timestamp);
 ;;; 
-;;; Presents a window to the user in response to a user interaction. If you
-;;; need to present a window without a timestamp, use gtk_window_present().
-;;; See gtk_window_present() for details.
+;;; Presents a window to the user in response to a user interaction. If you need
+;;; to present a window without a timestamp, use gtk_window_present(). See
+;;; gtk_window_present() for details.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
@@ -1587,9 +1684,9 @@
 ;;; void gtk_window_iconify (GtkWindow *window);
 ;;; 
 ;;; Asks to iconify (i.e. minimize) the specified window. Note that you
-;;; shouldn't assume the window is definitely iconified afterward, because
-;;; other entities (e.g. the user or window manager) could deiconify it again,
-;;; or there may not be a window manager in which case iconification isn't
+;;; shouldn't assume the window is definitely iconified afterward, because other
+;;; entities (e.g. the user or window manager) could deiconify it again, or
+;;; there may not be a window manager in which case iconification isn't
 ;;; possible, etc. But normally the window will end up iconified. Just don't
 ;;; write code that crashes if not.
 ;;; 
@@ -1729,12 +1826,11 @@
 ;;; 
 ;;; void gtk_window_fullscreen (GtkWindow *window);
 ;;; 
-;;; Asks to place window in the fullscreen state. Note that you shouldn't
-;;; assume the window is definitely full screen afterward, because other
-;;; entities (e.g. the user or window manager) could unfullscreen it again, and
-;;; not all window managers honor requests to fullscreen windows. But normally
-;;; the window will end up fullscreen. Just don't write code that crashes if
-;;; not.
+;;; Asks to place window in the fullscreen state. Note that you shouldn't assume
+;;; the window is definitely full screen afterward, because other entities (e.g.
+;;; the user or window manager) could unfullscreen it again, and not all window
+;;; managers honor requests to fullscreen windows. But normally the window will
+;;; end up fullscreen. Just don't write code that crashes if not.
 ;;; 
 ;;; You can track the fullscreen state via the "window-state-event" signal on
 ;;; GtkWidget.
@@ -1793,9 +1889,9 @@
 ;;; You can track the above state via the "window-state-event" signal on
 ;;; GtkWidget.
 ;;; 
-;;; Note that, according to the Extended Window Manager Hints specification,
-;;; the above state is mainly meant for user preferences and should not be used
-;;; by applications e.g. for drawing attention to their dialogs.
+;;; Note that, according to the Extended Window Manager Hints specification, the
+;;; above state is mainly meant for user preferences and should not be used by
+;;; applications e.g. for drawing attention to their dialogs.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
@@ -1846,11 +1942,11 @@
 ;;;                                    gint root_y,
 ;;;                                    guint32 timestamp);
 ;;; 
-;;; Starts resizing a window. This function is used if an application has
-;;; window resizing controls. When GDK can support it, the resize will be done
-;;; using the standard mechanism for the window manager or windowing system.
-;;; Otherwise, GDK will try to emulate window resizing, potentially not all
-;;; that well, depending on the windowing system.
+;;; Starts resizing a window. This function is used if an application has window
+;;; resizing controls. When GDK can support it, the resize will be done using
+;;; the standard mechanism for the window manager or windowing system.
+;;; Otherwise, GDK will try to emulate window resizing, potentially not all that
+;;; well, depending on the windowing system.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
@@ -1894,8 +1990,8 @@
 ;;; Starts moving a window. This function is used if an application has window
 ;;; movement grips. When GDK can support it, the window movement will be done
 ;;; using the standard mechanism for the window manager or windowing system.
-;;; Otherwise, GDK will try to emulate window movement, potentially not all
-;;; that well, depending on the windowing system.
+;;; Otherwise, GDK will try to emulate window movement, potentially not all that
+;;; well, depending on the windowing system.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
@@ -1932,9 +2028,9 @@
 ;;; Some window managers allow GTK+ to disable these decorations, creating a
 ;;; borderless window. If you set the decorated property to FALSE using this
 ;;; function, GTK+ will do its best to convince the window manager not to
-;;; decorate the window. Depending on the system, this function may not have
-;;; any effect when called on a window that is already visible, so you should
-;;; call it before calling gtk_widget_show().
+;;; decorate the window. Depending on the system, this function may not have any
+;;; effect when called on a window that is already visible, so you should call
+;;; it before calling gtk_widget_show().
 ;;; 
 ;;; On Windows, this function always works, since there's no window manager
 ;;; policy involved.
@@ -1953,10 +2049,10 @@
 ;;; 
 ;;; By default, windows have a close button in the window frame. Some window
 ;;; managers allow GTK+ to disable this button. If you set the deletable
-;;; property to FALSE using this function, GTK+ will do its best to convince
-;;; the window manager not to show a close button. Depending on the system,
-;;; this function may not have any effect when called on a window that is
-;;; already visible, so you should call it before calling gtk_window_show().
+;;; property to FALSE using this function, GTK+ will do its best to convince the
+;;; window manager not to show a close button. Depending on the system, this
+;;; function may not have any effect when called on a window that is already
+;;; visible, so you should call it before calling gtk_window_show().
 ;;; 
 ;;; On Windows, this function always works, since there's no window manager
 ;;; policy involved.
@@ -1982,7 +2078,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; modifier :
-;;;     the modifier mask used to activate mnemonics on this window.
+;;;     the modifier mask used to activate mnemonics on this window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1991,8 +2087,8 @@
 ;;; void gtk_window_set_type_hint (GtkWindow *window, GdkWindowTypeHint hint);
 ;;; 
 ;;; By setting the type hint for the window, you allow the window manager to
-;;; decorate and handle the window in a way which is suitable to the function
-;;; of the window in your application.
+;;; decorate and handle the window in a way which is suitable to the function of
+;;; the window in your application.
 ;;; 
 ;;; This function should be called before the window becomes visible.
 ;;; 
@@ -2009,7 +2105,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_skip_taskbar_hint ()
 ;;; 
-;;; void gtk_window_set_skip_taskbar_hint (GtkWindow *window, gboolean setting);
+;;; void gtk_window_set_skip_taskbar_hint (GtkWindow *window, gboolean setting)
 ;;; 
 ;;; Windows may set a hint asking the desktop environment not to display the
 ;;; window in the task bar. This function sets this hint.
@@ -2096,7 +2192,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_startup_id ()
 ;;; 
-;;; void gtk_window_set_startup_id (GtkWindow *window, const gchar *startup_id)
+;;; void gtk_window_set_startup_id (GtkWindow *window, const gchar *startup_id);
 ;;; 
 ;;; Startup notification identifiers are used by desktop environment to track
 ;;; application startup, to provide user feedback and other features. This
@@ -2127,8 +2223,8 @@
 ;;; In combination with the window title, the window role allows a window
 ;;; manager to identify "the same" window when an application is restarted. So
 ;;; for example you might set the "toolbox" role on your app's toolbox window,
-;;; so that when the user restarts their session, the window manager can put
-;;; the toolbox back in the same place.
+;;; so that when the user restarts their session, the window manager can put the
+;;; toolbox back in the same place.
 ;;; 
 ;;; If a window already has a unique title, you don't need to set the role,
 ;;; since the WM can use the title to identify the window when restoring the
@@ -2144,7 +2240,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_decorated ()
 ;;; 
-;;; gboolean gtk_window_get_decorated (GtkWindow *window)
+;;; gboolean gtk_window_get_decorated (GtkWindow *window);
 ;;; 
 ;;; Returns whether the window has been set to have decorations such as a title
 ;;; bar via gtk_window_set_decorated().
@@ -2159,7 +2255,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_deletable ()
 ;;; 
-;;; gboolean gtk_window_get_deletable (GtkWindow *window)
+;;; gboolean gtk_window_get_deletable (GtkWindow *window);
 ;;; 
 ;;; Returns whether the window has been set to have a close button via
 ;;; gtk_window_set_deletable().
@@ -2176,14 +2272,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_default_icon_list ()
 ;;; 
-;;; GList * gtk_window_get_default_icon_list (void)
+;;; GList * gtk_window_get_default_icon_list (void);
 ;;; 
-;;; Gets the value set by gtk_window_set_default_icon_list(). The list is a
-;;; copy and should be freed with g_list_free(), but the pixbufs in the list
-;;; have not had their reference count incremented.
+;;; Gets the value set by gtk_window_set_default_icon_list(). The list is a copy
+;;; and should be freed with g_list_free(), but the pixbufs in the list have not
+;;; had their reference count incremented.
 ;;; 
 ;;; Returns :
-;;;     copy of default icon list.
+;;;     copy of default icon list
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_get_default_icon_list" gtk-window-get-default-icon-list)
@@ -2194,11 +2290,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_default_icon_name ()
 ;;; 
-;;; const gchar * gtk_window_get_default_icon_name (void)
+;;; const gchar * gtk_window_get_default_icon_name (void);
 ;;; 
 ;;; Returns the fallback icon name for windows that has been set with
-;;; gtk_window_set_default_icon_name(). The returned string is owned by GTK+
-;;; and should not be modified. It is only valid until the next call to
+;;; gtk_window_set_default_icon_name(). The returned string is owned by GTK+ and
+;;; should not be modified. It is only valid until the next call to
 ;;; gtk_window_set_default_icon_name().
 ;;; 
 ;;; Returns :
@@ -2216,7 +2312,8 @@
 ;;; gtk_window_get_default_size ()
 ;;; 
 ;;; void gtk_window_get_default_size (GtkWindow *window,
-;;;                                   gint *width, gint *height)
+;;;                                   gint *width,
+;;;                                   gint *height);
 ;;; 
 ;;; Gets the default size of the window. A value of -1 for the width or height
 ;;; indicates that a default size has not been explicitly set for that
@@ -2226,11 +2323,13 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; width :
-;;;     location to store the default width, or NULL. [out][allow-none]
+;;;     location to store the default width, or NULL
 ;;; 
 ;;; height :
-;;;     location to store the default height, or NULL. [out][allow-none]
+;;;     location to store the default height, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-get-default-size))
 
 (defun gtk-window-get-default-size (window)
   (values (gtk-window-default-width window)
@@ -2254,6 +2353,24 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_window_get_hide_titlebar_when_maximized ()
+;;; 
+;;; gboolean gtk_window_get_hide_titlebar_when_maximized (GtkWindow *window);
+;;; 
+;;; Returns whether the window has requested to have its titlebar hidden when
+;;; maximized. See gtk_window_set_hide_titlebar_when_maximized().
+;;; 
+;;; window :
+;;;     a GtkWindow
+;;; 
+;;; Returns :
+;;;     TRUE if the window has requested to have its titlebar hidden when
+;;;     maximized
+;;; 
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_icon ()
 ;;; 
 ;;; GdkPixbuf * gtk_window_get_icon (GtkWindow *window);
@@ -2265,7 +2382,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     icon for window. [transfer none]
+;;;     icon for window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2280,7 +2397,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     copy of window's icon list.
+;;;     copy of window's icon list
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2288,8 +2405,8 @@
 ;;; 
 ;;; const gchar * gtk_window_get_icon_name (GtkWindow *window);
 ;;; 
-;;; Returns the name of the themed icon for the window,
-;;; see gtk_window_set_icon_name().
+;;; Returns the name of the themed icon for the window, see
+;;; gtk_window_set_icon_name().
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
@@ -2332,12 +2449,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_position ()
 ;;; 
-;;; void gtk_window_get_position (GtkWindow *window,
-;;;                               gint *root_x,
-;;;                               gint *root_y);
+;;; void gtk_window_get_position (GtkWindow *window, gint *root_x, gint *root_y)
 ;;; 
-;;; This function returns the position you need to pass to gtk_window_move()
-;;; to keep window in its current position. This means that the meaning of the
+;;; This function returns the position you need to pass to gtk_window_move() to
+;;; keep window in its current position. This means that the meaning of the
 ;;; returned value varies with window gravity. See gtk_window_move() for more
 ;;; details.
 ;;; 
@@ -2347,14 +2462,14 @@
 ;;; gtk_window_move() sets the position of this same top-left corner.
 ;;; 
 ;;; gtk_window_get_position() is not 100% reliable because the X Window System
-;;; does not specify a way to obtain the geometry of the decorations placed on
-;;; a window by the window manager. Thus GTK+ is using a "best guess" that
-;;; works with most window managers.
+;;; does not specify a way to obtain the geometry of the decorations placed on a
+;;; window by the window manager. Thus GTK+ is using a "best guess" that works
+;;; with most window managers.
 ;;; 
-;;; Moreover, nearly all window managers are historically broken with respect
-;;; to their handling of window gravity. So moving a window to its current
-;;; position as returned by gtk_window_get_position() tends to result in moving
-;;; the window slightly. Window managers are slowly getting better over time.
+;;; Moreover, nearly all window managers are historically broken with respect to
+;;; their handling of window gravity. So moving a window to its current position
+;;; as returned by gtk_window_get_position() tends to result in moving the
+;;; window slightly. Window managers are slowly getting better over time.
 ;;; 
 ;;; If a window has gravity GDK_GRAVITY_STATIC the window manager frame is not
 ;;; relevant, and thus gtk_window_get_position() will always produce accurate
@@ -2366,8 +2481,8 @@
 ;;; should know that it's impossible for applications to do this without getting
 ;;; it somewhat wrong because applications do not have sufficient knowledge of
 ;;; window manager state. The Correct Mechanism is to support the session
-;;; management protocol (see the "GnomeClient" object in the GNOME libraries
-;;; for example) and allow the window manager to save your window sizes and
+;;; management protocol (see the "GnomeClient" object in the GNOME libraries for
+;;; example) and allow the window manager to save your window sizes and
 ;;; positions.
 ;;; 
 ;;; window :
@@ -2375,11 +2490,11 @@
 ;;; 
 ;;; root_x :
 ;;;     return location for X coordinate of gravity-determined reference point,
-;;;     or NULL.
+;;;     or NULL
 ;;; 
 ;;; root_y :
 ;;;     return location for Y coordinate of gravity-determined reference point,
-;;;     or NULL.
+;;;     or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_get_position" %gtk-window-get-position) :void
@@ -2392,7 +2507,8 @@
 (defun gtk-window-get-position (window)
   (with-foreign-objects ((x :int) (y :int))
     (%gtk-window-get-position window x y)
-    (values (mem-ref x :int) (mem-ref y :int))))
+    (values (mem-ref x :int)
+            (mem-ref y :int))))
 
 (export 'gtk-window-get-position)
 
@@ -2418,8 +2534,8 @@
 ;;; void gtk_window_get_size (GtkWindow *window, gint *width, gint *height);
 ;;; 
 ;;; Obtains the current size of window. If window is not onscreen, it returns
-;;; the size GTK+ will suggest to the window manager for the initial window
-;;; size (but this is not reliably the same as the size the window manager will
+;;; the size GTK+ will suggest to the window manager for the initial window size
+;;; (but this is not reliably the same as the size the window manager will
 ;;; actually select). The size obtained by gtk_window_get_size() is the last
 ;;; size received in a GdkEventConfigure, that is, GTK+ uses its locally-stored
 ;;; size, rather than querying the X server for the size. As a result, if you
@@ -2429,8 +2545,8 @@
 ;;; configure event, and the size of the window gets updated.
 ;;; 
 ;;; Note 1: Nearly any use of this function creates a race condition, because
-;;; the size of the window may change between the time that you get the size
-;;; and the time that you perform some action assuming that size is the current
+;;; the size of the window may change between the time that you get the size and
+;;; the time that you perform some action assuming that size is the current
 ;;; size. To avoid race conditions, connect to "configure-event" on the window
 ;;; and adjust your size-dependent state to match the size delivered in the
 ;;; GdkEventConfigure.
@@ -2442,14 +2558,13 @@
 ;;; Note 3: If you are getting a window size in order to position the window
 ;;; onscreen, there may be a better way. The preferred way is to simply set the
 ;;; window's semantic type with gtk_window_set_type_hint(), which allows the
-;;; window manager to e.g. center dialogs. Also, if you set the transient
-;;; parent of dialogs with gtk_window_set_transient_for() window managers will
-;;; often center the dialog over its parent window. It's much preferred to let
-;;; the window manager handle these things rather than doing it yourself,
-;;; because all apps will behave consistently and according to user prefs if
-;;; the window manager handles it. Also, the window manager can take the size
-;;; of the window decorations/border into account, while your application
-;;; cannot.
+;;; window manager to e.g. center dialogs. Also, if you set the transient parent
+;;; of dialogs with gtk_window_set_transient_for() window managers will often
+;;; center the dialog over its parent window. It's much preferred to let the
+;;; window manager handle these things rather than doing it yourself, because
+;;; all apps will behave consistently and according to user prefs if the window
+;;; manager handles it. Also, the window manager can take the size of the window
+;;; decorations/border into account, while your application cannot.
 ;;; 
 ;;; In any case, if you insist on application-specified window positioning,
 ;;; there's still a better way than doing it yourself -
@@ -2459,10 +2574,10 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; width :
-;;;     return location for width, or NULL.
+;;;     return location for width, or NULL
 ;;; 
 ;;; height :
-;;;     return location for height, or NULL.
+;;;     return location for height, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_get_size" %gtk-window-get-size) :void
@@ -2490,12 +2605,12 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     the title of the window, or NULL if none has been set explicitely.
-;;;     The returned string is owned by the widget and must not be modified or
-;;;     freed.
+;;;     the title of the window, or NULL if none has been set explicitely. The
+;;;     returned string is owned by the widget and must not be modified or
+;;;     freed
 ;;; ----------------------------------------------------------------------------
 
-;; gtk-window-title is the accessor of the slot title of the class gtk-window.
+(declaim (inline gtk-window-get-title))
 
 (defun gtk-window-get-title (window)
   (gtk-window-title window))
@@ -2514,8 +2629,25 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     the transient parent for this window, or NULL if no transient parent
-;;;     has been set.
+;;;     the transient parent for this window, or NULL if no transient parent has
+;;;     been set
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_get_attached_to ()
+;;; 
+;;; GtkWidget * gtk_window_get_attached_to (GtkWindow *window);
+;;; 
+;;; Fetches the attach widget for this window. See gtk_window_set_attached_to().
+;;; 
+;;; window :
+;;;     a GtkWindow
+;;; 
+;;; Returns :
+;;;     the widget where the window is attached, or NULL if the window is not
+;;;     attached to any widget
+;;; 
+;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2529,7 +2661,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     the type hint for window.
+;;;     the type hint for window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2607,7 +2739,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if window should receive the input focus when mapped.
+;;;     TRUE if window should receive the input focus when mapped
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -2617,14 +2749,14 @@
 ;;; 
 ;;; GtkWindowGroup * gtk_window_get_group (GtkWindow *window);
 ;;; 
-;;; Returns the group for window or the default group, if window is NULL or
-;;; if window does not have an explicit window group.
+;;; Returns the group for window or the default group, if window is NULL or if
+;;; window does not have an explicit window group.
 ;;; 
 ;;; window :
-;;;     a GtkWindow, or NULL.
+;;;     a GtkWindow, or NULL
 ;;; 
 ;;; Returns :
-;;;     the GtkWindowGroup for a window or the default group.
+;;;     the GtkWindowGroup for a window or the default group
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -2669,10 +2801,10 @@
 ;;; initial window positions (instead using a user-defined placement algorithm)
 ;;; and honor requests after the window has already been shown.
 ;;; 
-;;; Note: the position is the position of the gravity-determined reference
-;;; point for the window. The gravity determines two things: first, the
-;;; location of the reference point in root window coordinates; and second,
-;;; which point on the window is positioned at the reference point.
+;;; Note: the position is the position of the gravity-determined reference point
+;;; for the window. The gravity determines two things: first, the location of
+;;; the reference point in root window coordinates; and second, which point on
+;;; the window is positioned at the reference point.
 ;;; 
 ;;; By default the gravity is GDK_GRAVITY_NORTH_WEST, so the reference point is
 ;;; simply the x, y supplied to gtk_window_move(). The top-left corner of the
@@ -2681,14 +2813,14 @@
 ;;; use the default gravity (which is GDK_GRAVITY_NORTH_WEST) and move the
 ;;; window to 0,0.
 ;;; 
-;;; To position a window at the bottom right corner of the screen, you would
-;;; set GDK_GRAVITY_SOUTH_EAST, which means that the reference point is at
-;;; x + the window width and y + the window height, and the bottom-right corner
-;;; of the window border will be placed at that reference point. So, to place a
-;;; window in the bottom right corner you would first set gravity to south
-;;; east, then write: gtk_window_move (window, gdk_screen_width() -
-;;; window_width, gdk_screen_height() - window_height) (note that this example
-;;; does not take multi-head scenarios into account).
+;;; To position a window at the bottom right corner of the screen, you would set
+;;; GDK_GRAVITY_SOUTH_EAST, which means that the reference point is at x + the
+;;; window width and y + the window height, and the bottom-right corner of the
+;;; window border will be placed at that reference point. So, to place a window
+;;; in the bottom right corner you would first set gravity to south east, then
+;;; write: gtk_window_move (window, gdk_screen_width() - window_width,
+;;; gdk_screen_height() - window_height) (note that this example does not take
+;;; multi-head scenarios into account).
 ;;; 
 ;;; The Extended Window Manager Hints specification at
 ;;; http://www.freedesktop.org/Standards/wm-spec has a nice table of gravities
@@ -2719,9 +2851,9 @@
 ;;; gboolean gtk_window_parse_geometry (GtkWindow *window,
 ;;;                                     const gchar *geometry);
 ;;; 
-;;; Parses a standard X Window System geometry string - see the manual page
-;;; for X (type 'man X') for details on this. gtk_window_parse_geometry() does
-;;; work on all GTK+ ports including Win32 but is primarily intended for an X
+;;; Parses a standard X Window System geometry string - see the manual page for
+;;; X (type 'man X') for details on this. gtk_window_parse_geometry() does work
+;;; on all GTK+ ports including Win32 but is primarily intended for an X
 ;;; environment.
 ;;; 
 ;;; If either a size or a position can be extracted from the geometry string,
@@ -2736,52 +2868,52 @@
 ;;; 
 ;;; Note that for gtk_window_parse_geometry() to work as expected, it has to be
 ;;; called when the window has its "final" size, i.e. after calling
-;;; gtk_widget_show_all() on the contents and gtk_window_set_geometry_hints()
-;;; on the window.
+;;; gtk_widget_show_all() on the contents and gtk_window_set_geometry_hints() on
+;;; the window.
 ;;; 
-;;;  1 #include <gtk/gtk.h>
-;;;  2    
-;;;  3 static void
-;;;  4 fill_with_content (GtkWidget *vbox)
-;;;  5 {
-;;;  6   /* fill with content... */
-;;;  7 }
-;;;  8    
-;;;  9 int
-;;; 10 main (int argc, char *argv[])
-;;; 11 {
-;;; 12   GtkWidget *window, *vbox;
-;;; 13   GdkGeometry size_hints = {
-;;; 14     100, 50, 0, 0, 100, 50, 10, 10, 0.0, 0.0, GDK_GRAVITY_NORTH_WEST  
-;;; 15   };
-;;; 16    
-;;; 17   gtk_init (&argc, &argv);
-;;; 18   
-;;; 19   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-;;; 20   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, FALSE, 0);
-;;; 21    
-;;; 22   gtk_container_add (GTK_CONTAINER (window), vbox);
-;;; 23   fill_with_content (vbox);
-;;; 24   gtk_widget_show_all (vbox);
-;;; 25   
-;;; 26   gtk_window_set_geometry_hints (GTK_WINDOW (window),
-;;; 27                     window,
-;;; 28                     &size_hints,
-;;; 29                     GDK_HINT_MIN_SIZE | 
-;;; 30                     GDK_HINT_BASE_SIZE | 
-;;; 31                     GDK_HINT_RESIZE_INC);
-;;; 32   
-;;; 33   if (argc > 1)
-;;; 34     {
-;;; 35       if (!gtk_window_parse_geometry (GTK_WINDOW (window), argv[1]))
-;;; 36         fprintf (stderr, "Failed to parse '%s'\n", argv[1]);
-;;; 37     }
-;;; 38   
-;;; 39   gtk_widget_show_all (window);
-;;; 40   gtk_main ();
-;;; 41    
-;;; 42   return 0;
-;;; 43 }
+;;; #include <gtk/gtk.h>
+;;;    
+;;; static void
+;;; fill_with_content (GtkWidget *vbox)
+;;; {
+;;;   /* fill with content... */
+;;; }
+;;;    
+;;; int
+;;; main (int argc, char *argv[])
+;;; {
+;;;   GtkWidget *window, *vbox;
+;;;   GdkGeometry size_hints = {
+;;;     100, 50, 0, 0, 100, 50, 10, 10, 0.0, 0.0, GDK_GRAVITY_NORTH_WEST  
+;;;   };
+;;;    
+;;;   gtk_init (&argc, &argv);
+;;;   
+;;;   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+;;;   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, FALSE, 0);
+;;;   
+;;;   gtk_container_add (GTK_CONTAINER (window), vbox);
+;;;   fill_with_content (vbox);
+;;;   gtk_widget_show_all (vbox);
+;;;   
+;;;   gtk_window_set_geometry_hints (GTK_WINDOW (window),
+;;;                     window,
+;;;                     &size_hints,
+;;;                     GDK_HINT_MIN_SIZE | 
+;;;                     GDK_HINT_BASE_SIZE | 
+;;;                     GDK_HINT_RESIZE_INC);
+;;;   
+;;;   if (argc > 1)
+;;;     {
+;;;       if (!gtk_window_parse_geometry (GTK_WINDOW (window), argv[1]))
+;;;         fprintf (stderr, "Failed to parse '%s'\n", argv[1]);
+;;;     }
+;;;    
+;;;   gtk_widget_show_all (window);
+;;;   gtk_main ();
+;;;    
+;;;   return 0;
+;;; }
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
@@ -2820,16 +2952,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_resize ()
 ;;; 
-;;; void gtk_window_resize (GtkWindow *window, gint width, gint height)
+;;; void gtk_window_resize (GtkWindow *window, gint width, gint height);
 ;;; 
-;;; Resizes the window as if the user had done so, obeying geometry
-;;; constraints. The default geometry constraint is that windows may not be
-;;; smaller than their size request; to override this constraint, call
+;;; Resizes the window as if the user had done so, obeying geometry constraints.
+;;; The default geometry constraint is that windows may not be smaller than
+;;; their size request; to override this constraint, call
 ;;; gtk_widget_set_size_request() to set the window's request to a smaller
 ;;; value.
 ;;; 
-;;; If gtk_window_resize() is called before showing a window for the first
-;;; time, it overrides any default size set with gtk_window_set_default_size().
+;;; If gtk_window_resize() is called before showing a window for the first time,
+;;; it overrides any default size set with gtk_window_set_default_size().
 ;;; 
 ;;; Windows may not be resized smaller than 1 by 1 pixels.
 ;;; 
@@ -2854,7 +2986,8 @@
 ;;; gtk_window_resize_to_geometry ()
 ;;; 
 ;;; void gtk_window_resize_to_geometry (GtkWindow *window,
-;;;                                     gint width, gint height);
+;;;                                     gint width,
+;;;                                     gint height);
 ;;; 
 ;;; Like gtk_window_resize(), but width and height are interpreted in terms of
 ;;; the base size and increment set with gtk_window_set_geometry_hints.
@@ -2883,8 +3016,8 @@
 ;;; 
 ;;; See gtk_window_set_icon_list() for more details.
 ;;; 
-;;; icon-list :
-;;;     a list of GdkPixbuf.
+;;; list :
+;;;     a list of GdkPixbuf
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_set_default_icon_list" gtk-window-set-default-icon-list)
@@ -2896,7 +3029,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_default_icon ()
 ;;; 
-;;; void gtk_window_set_default_icon (GdkPixbuf *icon)
+;;; void gtk_window_set_default_icon (GdkPixbuf *icon);
 ;;; 
 ;;; Sets an icon to be used as fallback for windows that haven't had
 ;;; gtk_window_set_icon() called on them from a pixbuf.
@@ -2916,17 +3049,17 @@
 ;;; gtk_window_set_default_icon_from_file ()
 ;;; 
 ;;; gboolean gtk_window_set_default_icon_from_file (const gchar *filename,
-;;;                                                 GError **err)
+;;;                                                 GError **err);
 ;;; 
 ;;; Sets an icon to be used as fallback for windows that haven't had
 ;;; gtk_window_set_icon_list() called on them from a file on disk. Warns on
 ;;; failure if err is NULL.
 ;;; 
 ;;; filename :
-;;;     location of icon file.
+;;;     location of icon file
 ;;; 
 ;;; err :
-;;;     location to store error, or NULL.
+;;;     location to store error, or NULL
 ;;; 
 ;;; Returns :
 ;;;     TRUE if setting the icon succeeded.
@@ -2937,7 +3070,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_default_icon_name ()
 ;;; 
-;;; void gtk_window_set_default_icon_name (const gchar *name)
+;;; void gtk_window_set_default_icon_name (const gchar *name);
 ;;; 
 ;;; Sets an icon to be used as fallback for windows that haven't had
 ;;; gtk_window_set_icon_list() called on them from a named themed icon, see
@@ -2983,7 +3116,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; icon :
-;;;     icon image, or NULL. [allow-none]
+;;;     icon image, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3020,7 +3153,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; list :
-;;;     list of GdkPixbuf. [element-type GdkPixbuf]
+;;;     list of GdkPixbuf
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3039,13 +3172,13 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; filename :
-;;;     location of icon file. [type filename]
+;;;     location of icon file
 ;;; 
 ;;; err :
-;;;     location to store error, or NULL.
+;;;     location to store error, or NULL
 ;;; 
 ;;; Returns :
-;;;     TRUE if setting the icon succeeded.
+;;;     TRUE if setting the icon succeeded
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -3053,7 +3186,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_icon_name ()
 ;;; 
-;;; void gtk_window_set_icon_name (GtkWindow *window, const gchar *name)
+;;; void gtk_window_set_icon_name (GtkWindow *window, const gchar *name);
 ;;; 
 ;;; Sets the icon for the window from a named themed icon. See the docs for
 ;;; GtkIconTheme for more details.
@@ -3065,7 +3198,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; name :
-;;;     the name of the themed icon.
+;;;     the name of the themed icon
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -3073,13 +3206,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_auto_startup_notification ()
 ;;; 
-;;; void gtk_window_set_auto_startup_notification (gboolean setting)
+;;; void gtk_window_set_auto_startup_notification (gboolean setting);
 ;;; 
 ;;; By default, after showing the first GtkWindow, GTK+ calls
 ;;; gdk_notify_startup_complete(). Call this function to disable the automatic
 ;;; startup notification. You might do this if your first window is a splash
-;;; screen, and you want to delay notification until after your real main
-;;; window has been shown, for example.
+;;; screen, and you want to delay notification until after your real main window
+;;; has been shown, for example.
 ;;; 
 ;;; In that example, you would disable startup notification temporarily, show
 ;;; your splash screen, then re-enable it so that showing the main window would
@@ -3108,7 +3241,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     the requested opacity for this window.
+;;;     the requested opacity for this window
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -3119,10 +3252,10 @@
 ;;; void gtk_window_set_opacity (GtkWindow *window, gdouble opacity);
 ;;; 
 ;;; Request the windowing system to make window partially transparent, with
-;;; opacity 0 being fully transparent and 1 fully opaque. (Values of the
-;;; opacity parameter are clamped to the [0,1] range.) On X11 this has any
-;;; effect only on X screens with a compositing manager running.
-;;; See gtk_widget_is_composited(). On Windows it should work always.
+;;; opacity 0 being fully transparent and 1 fully opaque. (Values of the opacity
+;;; parameter are clamped to the [0,1] range.) On X11 this has any effect only
+;;; on X screens with a compositing manager running. See
+;;; gtk_widget_is_composited(). On Windows it should work always.
 ;;; 
 ;;; Note that setting a window's opacity after the window has been shown causes
 ;;; it to flicker once on Windows.
@@ -3139,7 +3272,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_mnemonics_visible ()
 ;;; 
-;;; gboolean gtk_window_get_mnemonics_visible (GtkWindow *window)
+;;; gboolean gtk_window_get_mnemonics_visible (GtkWindow *window);
 ;;; 
 ;;; Gets the value of the "mnemonics-visible" property.
 ;;; 
@@ -3147,7 +3280,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     TRUE if mnemonics are supposed to be visible in this window.
+;;;     TRUE if mnemonics are supposed to be visible in this window
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -3155,7 +3288,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_mnemonics_visible ()
 ;;; 
-;;; void gtk_window_set_mnemonics_visible (GtkWindow *window, gboolean setting)
+;;; void gtk_window_set_mnemonics_visible (GtkWindow *window,
+;;;                                        gboolean setting);
 ;;; 
 ;;; Sets the "mnemonics-visible" property.
 ;;; 
@@ -3284,7 +3418,7 @@
 ;;;     a GtkWindow
 ;;; 
 ;;; Returns :
-;;;     a GtkApplication, or NULL.
+;;;     a GtkApplication, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -3297,14 +3431,14 @@
 ;;; 
 ;;; Sets or unsets the GtkApplication associated with the window.
 ;;; 
-;;; The application will be kept alive for at least as long as the window
-;;; is open.
+;;; The application will be kept alive for at least as long as the window is
+;;; open.
 ;;; 
 ;;; window :
 ;;;     a GtkWindow
 ;;; 
 ;;; application :
-;;;     a GtkApplication, or NULL.
+;;;     a GtkApplication, or NULL
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -3312,8 +3446,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_has_user_ref_count ()
 ;;; 
-;;; void gtk_window_set_has_user_ref_count (GtkWindow *window,
-;;;                                         gboolean setting);
+;;; void gtk_window_set_has_user_ref_count (GtkWindow *window, gboolean setting)
 ;;; 
 ;;; Tells GTK+ whether to drop its extra reference to the window when
 ;;; gtk_window_destroy() is called.

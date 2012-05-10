@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.2. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkBox
 ;;; 
 ;;; A container box
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkBox
-;;;
+;;;     
 ;;;     gtk_box_new
 ;;;     gtk_box_pack_start
 ;;;     gtk_box_pack_end
@@ -56,6 +56,7 @@
 ;;;                      +----GtkBox
 ;;;                            +----GtkAppChooserWidget
 ;;;                            +----GtkButtonBox
+;;;                            +----GtkColorChooserWidget
 ;;;                            +----GtkColorSelection
 ;;;                            +----GtkFileChooserButton
 ;;;                            +----GtkFileChooserWidget
@@ -70,7 +71,6 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkBox implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
 ;;; Properties
 ;;; 
 ;;;   "homogeneous"              gboolean              : Read / Write
@@ -128,7 +128,7 @@
 ;;; 
 ;;; Note that a single-row or single-column GtkGrid provides exactly the same
 ;;; functionality as GtkBox.
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -136,7 +136,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "homogeneous" property
 ;;; 
-;;;   "homogeneous" gboolean              : Read / Write
+;;;   "homogeneous"              gboolean              : Read / Write
 ;;; 
 ;;; Whether the children should all be the same size.
 ;;; 
@@ -145,7 +145,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "spacing" property
 ;;; 
-;;;   "spacing" gint                  : Read / Write
+;;;   "spacing"                  gint                  : Read / Write
 ;;; 
 ;;; The amount of space between children.
 ;;; 
@@ -167,8 +167,8 @@
 ;;; Note that the default value for this property is FALSE for GtkBox, but
 ;;; GtkHBox, GtkVBox and other subclasses use the old default of TRUE.
 ;;; 
-;;; Note that the "halign", "valign", "hexpand" and "vexpand" properties are
-;;; the preferred way to influence child size allocation in containers.
+;;; Note that the "halign", "valign", "hexpand" and "vexpand" properties are the
+;;; preferred way to influence child size allocation in containers.
 ;;; 
 ;;; Default value: FALSE
 ;;;
@@ -179,8 +179,8 @@
 ;;; 
 ;;; Whether the child should receive extra space when the parent grows.
 ;;; 
-;;; Note that the "halign", "valign", "hexpand" and "vexpand" properties are
-;;; the preferred way to influence child size allocation in containers.
+;;; Note that the "halign", "valign", "hexpand" and "vexpand" properties are the
+;;; preferred way to influence child size allocation in containers.
 ;;; 
 ;;; Default value: TRUE
 ;;;
@@ -215,6 +215,7 @@
 ;;; Allowed values: >= G_MAXULONG
 ;;; 
 ;;; Default value: 0
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -222,7 +223,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBox
 ;;; 
-;;; struct GtkBox;
+;;; struct GtkBox
 ;;; ----------------------------------------------------------------------------
 
 ;; There is a problem, if the Lisp name of the class corresponds to the
@@ -234,7 +235,9 @@
 (define-g-object-class "GtkBox" gtk-box
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_box_get_type")
   ((homogeneous
     gtk-box-homogeneous
@@ -265,15 +268,15 @@
                        gtk-box-child-position
                        "position" "gint" t t t)
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; gtk_box_new ()
 ;;; 
-;;; GtkWidget * gtk_box_new (GtkOrientation orientation, gint spacing)
+;;; GtkWidget * gtk_box_new (GtkOrientation orientation, gint spacing);
 ;;; 
 ;;; Creates a new GtkBox.
 ;;; 
 ;;; orientation :
-;;;     the box's orientation
+;;;     the box's orientation.
 ;;; 
 ;;; spacing :
 ;;;     the number of pixels to place by default between children
@@ -300,7 +303,7 @@
 ;;;                          GtkWidget *child,
 ;;;                          gboolean expand,
 ;;;                          gboolean fill,
-;;;                          guint padding)
+;;;                          guint padding);
 ;;; 
 ;;; Adds child to box, packed with reference to the start of box. The child is
 ;;; packed after any other child packed with reference to the start of box.
@@ -314,20 +317,20 @@
 ;;; expand :
 ;;;     TRUE if the new child is to be given extra space allocated to box. The
 ;;;     extra space will be divided evenly between all children that use this
-;;;     option.
+;;;     option
 ;;; 
 ;;; fill :
 ;;;     TRUE if space given to child by the expand option is actually allocated
 ;;;     to child, rather than just padding it. This parameter has no effect if
 ;;;     expand is set to FALSE. A child is always allocated the full height of
-;;;     a horizontal GtkBox and the full width of a vertical GtkBox. This
-;;;     option affects the other dimension.
+;;;     a horizontal GtkBox and the full width of a vertical GtkBox. This option
+;;;     affects the other dimension
 ;;; 
 ;;; padding :
-;;;     Extra space in pixels to put between this child and its neighbors, over
+;;;     extra space in pixels to put between this child and its neighbors, over
 ;;;     and above the global amount specified by "spacing" property. If child is
 ;;;     a widget at one of the reference ends of box, then padding pixels are
-;;;     also put between child and the reference edge of box.
+;;;     also put between child and the reference edge of box
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_box_pack_start" %gtk-box-pack-start) :void
@@ -349,11 +352,11 @@
 ;;;                        GtkWidget *child,
 ;;;                        gboolean expand,
 ;;;                        gboolean fill,
-;;;                        guint padding)
+;;;                        guint padding);
 ;;; 
 ;;; Adds child to box, packed with reference to the end of box. The child is
-;;; packed after (away from end of) any other child packed with reference to
-;;; the end of box.
+;;; packed after (away from end of) any other child packed with reference to the
+;;; end of box.
 ;;; 
 ;;; box :
 ;;;     a GtkBox
@@ -364,20 +367,20 @@
 ;;; expand :
 ;;;     TRUE if the new child is to be given extra space allocated to box. The
 ;;;     extra space will be divided evenly between all children of box that use
-;;;     this option.
+;;;     this option
 ;;; 
 ;;; fill :
 ;;;     TRUE if space given to child by the expand option is actually allocated
 ;;;     to child, rather than just padding it. This parameter has no effect if
-;;;     expand is set to FALSE. A child is always allocated the full height of
-;;;     a horizontal GtkBox and the full width of a vertical GtkBox. This
-;;;     option affects the other dimension.
+;;;     expand is set to FALSE. A child is always allocated the full height of a
+;;;     horizontal GtkBox and the full width of a vertical GtkBox. This option
+;;;     affects the other dimension
 ;;; 
 ;;; padding :
-;;;     Extra space in pixels to put between this child and its neighbors, over
+;;;     extra space in pixels to put between this child and its neighbors, over
 ;;;     and above the global amount specified by "spacing" property. If child is
 ;;;     a widget at one of the reference ends of box, then padding pixels are
-;;;     also put between child and the reference edge of box.
+;;;     also put between child and the reference edge of box
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_box_pack_end" %gtk-box-pack-end) :void
@@ -395,10 +398,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_get_homogeneous ()
 ;;; 
-;;; gboolean gtk_box_get_homogeneous (GtkBox *box)
+;;; gboolean gtk_box_get_homogeneous (GtkBox *box);
 ;;; 
-;;; Returns whether the box is homogeneous (all children are the same size).
-;;; See gtk_box_set_homogeneous().
+;;; Returns whether the box is homogeneous (all children are the same size). See
+;;; gtk_box_set_homogeneous().
 ;;; 
 ;;; box :
 ;;;     a GtkBox
@@ -417,7 +420,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_set_homogeneous ()
 ;;; 
-;;; void gtk_box_set_homogeneous (GtkBox *box, gboolean homogeneous)
+;;; void gtk_box_set_homogeneous (GtkBox *box, gboolean homogeneous);
 ;;; 
 ;;; Sets the "homogeneous" property of box, controlling whether or not all
 ;;; children of box are given equal space in the box.
@@ -440,7 +443,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_get_spacing ()
 ;;; 
-;;; gint gtk_box_get_spacing (GtkBox *box)
+;;; gint gtk_box_get_spacing (GtkBox *box);
 ;;; 
 ;;; Gets the value set by gtk_box_set_spacing().
 ;;; 
@@ -457,11 +460,11 @@
   (gtk-box-spacing box))
 
 (export 'gtk-box-get-spacing)
-  
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_set_spacing ()
 ;;; 
-;;; void gtk_box_set_spacing (GtkBox *box, gint spacing)
+;;; void gtk_box_set_spacing (GtkBox *box, gint spacing);
 ;;; 
 ;;; Sets the "spacing" property of box, which is the number of pixels to place
 ;;; between children of box.
@@ -483,17 +486,17 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_reorder_child ()
 ;;; 
-;;; void gtk_box_reorder_child (GtkBox *box, GtkWidget *child, gint position)
+;;; void gtk_box_reorder_child (GtkBox *box, GtkWidget *child, gint position);
 ;;; 
 ;;; Moves child to a new position in the list of box children. The list is the
-;;; children field of GtkBox, and contains both widgets packed GTK_PACK_START
-;;; as well as widgets packed GTK_PACK_END, in the order that these widgets
-;;; were added to box.
+;;; children field of GtkBox, and contains both widgets packed GTK_PACK_START as
+;;; well as widgets packed GTK_PACK_END, in the order that these widgets were
+;;; added to box.
 ;;; 
 ;;; A widget's position in the box children list determines where the widget is
 ;;; packed into box. A child widget at some position in the list will be packed
-;;; just after all other widgets of the same packing type that appear earlier
-;;; in the list.
+;;; just after all other widgets of the same packing type that appear earlier in
+;;; the list.
 ;;; 
 ;;; box :
 ;;;     a GtkBox
@@ -521,7 +524,7 @@
 ;;;                                   gboolean *expand,
 ;;;                                   gboolean *fill,
 ;;;                                   guint *padding,
-;;;                                   GtkPackType *pack_type)
+;;;                                   GtkPackType *pack_type);
 ;;; 
 ;;; Obtains information about how child is packed into box.
 ;;; 
@@ -596,15 +599,14 @@
 (export 'gtk-box-set-child-packing)
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; GtkHBox
 ;;; 
 ;;; A horizontal container box
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkHBox
-;;;
+;;;     
 ;;;     gtk_hbox_new
 ;;; 
 ;;; Object Hierarchy
@@ -637,17 +639,13 @@
 ;;; future-proof, the recommendation is to switch to GtkGrid, since GtkBox is
 ;;; going to be deprecated in favor of the more flexible grid widget eventually.
 ;;; For more information about migrating to GtkGrid, see Migrating from other
-;;; containers to GtkGrid
+;;; containers to GtkGrid.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHBox
 ;;; 
 ;;; struct GtkHBox;
-;;; 
-;;; Warning
-;;; 
-;;; GtkHBox is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -658,7 +656,9 @@
 (define-g-object-class "GtkHBox" gtk-hbox
   (:superclass gtk-box
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_hbox_get_type")
   nil)
 
@@ -687,15 +687,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hbox_new ()
 ;;; 
-;;; GtkWidget * gtk_hbox_new (gboolean homogeneous, gint spacing)
+;;; GtkWidget * gtk_hbox_new (gboolean homogeneous, gint spacing);
 ;;; 
 ;;; Warning
 ;;; 
-;;; gtk_hbox_new has been deprecated since version 3.2 and should not be used
-;;; in newly-written code. You can use gtk_box_new() with
-;;; GTK_ORIENTATION_HORIZONTAL instead, wich is a very quick and easy change.
-;;; But the recommendation is to switch to GtkGrid, since GtkBox is going to go
-;;; away eventually. See Migrating from other containers to GtkGrid.
+;;; gtk_hbox_new has been deprecated since version 3.2 and should not be used in
+;;; newly-written code. You can use gtk_box_new() with
+;;; GTK_ORIENTATION_HORIZONTAL instead, which is a quick and easy change. But
+;;; the recommendation is to switch to GtkGrid, since GtkBox is going to go away
+;;; eventually. See Migrating from other containers to GtkGrid.
 ;;; 
 ;;; Creates a new GtkHBox.
 ;;; 
@@ -709,23 +709,26 @@
 ;;;     a new GtkHBox
 ;;; ----------------------------------------------------------------------------
 
+;; Because GtkHBox is deprecated, gtk-hbox-new creates an instance of GtkBox
+;; with an orientation :horizontal.
+
 (defun gtk-hbox-new (homogeneous spacing)
-  (make-instance 'gtk-hbox
+  (make-instance 'gtk-box
+                 :orientation :horizontal
                  :homogeneous homogeneous
                  :spacing spacing))
 
 (export 'gtk-hbox-new)
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; GtkVBox
 ;;; 
-;;; GtkVBox — A vertical container box
+;;; A vertical container box
 ;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkVBox
-;;;
+;;;     
 ;;;     gtk_vbox_new
 ;;; 
 ;;; Object Hierarchy
@@ -756,8 +759,8 @@
 ;;; set the "orientation" property to GTK_ORIENTATION_VERTICAL in your instance
 ;;; init function, with a call like:
 ;;; 
-;;;  gtk_orientable_set_orientation (GTK_ORIENTABLE (object),
-;;;                                  GTK_ORIENTATION_VERTICAL);
+;;; gtk_orientable_set_orientation (GTK_ORIENTABLE (object),
+;;;                                 GTK_ORIENTATION_VERTICAL);
 ;;; 
 ;;; If you want your code to be future-proof, the recommendation is to switch
 ;;; to GtkGrid, since GtkBox is going to be deprecated in favor of the more
@@ -769,10 +772,6 @@
 ;;; struct GtkVBox
 ;;; 
 ;;; struct GtkVBox;
-;;; 
-;;; Warning
-;;; 
-;;; GtkVBox is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -783,7 +782,9 @@
 (define-g-object-class "GtkVBox" gtk-vbox
   (:superclass gtk-box
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_vbox_get_type")
   nil)
 
@@ -812,13 +813,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vbox_new ()
 ;;; 
-;;; GtkWidget * gtk_vbox_new (gboolean homogeneous, gint spacing)
+;;; GtkWidget * gtk_vbox_new (gboolean homogeneous, gint spacing);
 ;;; 
 ;;; Warning
 ;;; 
 ;;; gtk_vbox_new has been deprecated since version 3.2 and should not be used in
 ;;; newly-written code. You can use gtk_box_new() with GTK_ORIENTATION_VERTICAL
-;;; instead, wich is a very quick and easy change. But the recommendation is to
+;;; instead, which is a quick and easy change. But the recommendation is to
 ;;; switch to GtkGrid, since GtkBox is going to go away eventually. See
 ;;; Migrating from other containers to GtkGrid.
 ;;; 
@@ -834,8 +835,14 @@
 ;;;     a new GtkVBox
 ;;; ----------------------------------------------------------------------------
 
+;; Because GtkVBox is deprecated, gtk-vbox-new creates an instance of GtkBox
+;; with an orientation :vertical.
+
+(declaim (inline gtk-vbox-new))
+
 (defun gtk-vbox-new (homogeneous spacing)
-  (make-instance 'gtk-vbox
+  (make-instance 'gtk-box
+                 :orientation :vertical
                  :homogeneous homogeneous
                  :spacing spacing))
 

@@ -180,8 +180,10 @@
 (define-g-object-class "GtkRadioButton" gtk-radio-button
   (:superclass gtk-check-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
-                "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActionable"
+                "GtkActivatable")
    :type-initializer "gtk_radio_button_get_type")
   ((group
     gtk-radio-button-group

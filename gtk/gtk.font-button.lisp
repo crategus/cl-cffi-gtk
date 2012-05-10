@@ -198,7 +198,9 @@
 (define-g-object-class "GtkFontButton" gtk-font-button
   (:superclass gtk-button
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable"
+                 "GtkActivatable")
     :type-initializer "gtk_font_button_get_type")
   ((font-name
     gtk-font-button-font-name

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.2. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkVolumeButton
 ;;; 
 ;;; A button which pops up a volume control
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;     GtkVolumeButton;
+;;;     GtkVolumeButton
+;;;     
 ;;;     gtk_volume_button_new
 ;;; 
 ;;; Object Hierarchy
@@ -50,8 +51,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkVolumeButton implements AtkImplementorIface, GtkBuildable,
-;;;  GtkActivatable and GtkOrientable.
+;;; GtkVolumeButton implements AtkImplementorIface, GtkBuildable, GtkActionable,
+;;; GtkActivatable and GtkOrientable.
 ;;;
 ;;; Properties
 ;;; 
@@ -89,22 +90,27 @@
 ;;; struct GtkVolumeButton;
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkVolumeButton" volume-button
+(define-g-object-class "GtkVolumeButton" gtk-volume-button
   (:superclass gtk-scale-button
    :export t
-   :interfaces  ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
-                  "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActionable"
+                "GtkActivatable"
+                "GtkOrientable")
    :type-initializer "gtk_volume_button_get_type")
-  nil)
+  ((use-symbolic
+    gtk-volume-button-use-symbolic
+    "use-symbolic" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_volume_button_new ()
 ;;; 
 ;;; GtkWidget * gtk_volume_button_new (void);
 ;;; 
-;;; Creates a GtkVolumeButton, with a range between 0.0 and 1.0, with a
-;;; stepping of 0.02. Volume values can be obtained and modified using the
-;;; functions from GtkScaleButton.
+;;; Creates a GtkVolumeButton, with a range between 0.0 and 1.0, with a stepping
+;;; of 0.02. Volume values can be obtained and modified using the functions from
+;;; GtkScaleButton.
 ;;; 
 ;;; Returns :
 ;;;     a new GtkVolumeButton
@@ -112,5 +118,11 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-volume-button-new))
+
+(defun gtk-volume-button-new ()
+  (make-instance 'gtk-volume-button))
+
+(export 'gtk-volume-button-new)
 
 ;;; --- End of file gtk.volume-button.lisp -------------------------------------

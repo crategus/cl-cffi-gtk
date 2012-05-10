@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.2. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkTable
 ;;; 
 ;;; Pack widgets in regular patterns
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTable
-;;;
+;;;     
 ;;;     gtk_table_new
 ;;;     gtk_table_resize
 ;;;     gtk_table_get_size
@@ -63,7 +63,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkTable implements AtkImplementorIface and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "column-spacing"           guint                 : Read / Write
@@ -106,11 +106,11 @@
 ;;; table will resize themselves to the size of the largest widget in the table.
 ;;; 
 ;;; Note
-;;;
-;;; Note that GtkGrid provides the same capabilities as GtkTable for arranging
-;;; widgets in a rectangular grid, and additionally supports height-for-width
-;;; geometry management.
-;;;
+;;; 
+;;; GtkTable has been deprecated. Use GtkGrid instead. It provides the same
+;;; capabilities as GtkTable for arranging widgets in a rectangular grid, but
+;;; does support height-for-width geometry management.
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -230,8 +230,8 @@
 ;;; 
 ;;;   "x-padding"                guint                 : Read / Write
 ;;; 
-;;; Extra space to put between the child and its left and right neighbors,
-;;; in pixels.
+;;; Extra space to put between the child and its left and right neighbors, in
+;;; pixels.
 ;;; 
 ;;; Allowed values: <= 65535
 ;;; 
@@ -251,8 +251,8 @@
 ;;; 
 ;;;   "y-padding"                guint                 : Read / Write
 ;;; 
-;;; Extra space to put between the child and its upper and lower neighbors,
-;;; in pixels.
+;;; Extra space to put between the child and its upper and lower neighbors, in
+;;; pixels.
 ;;; 
 ;;; Allowed values: <= 65535
 ;;; 
@@ -273,7 +273,8 @@
 (define-g-object-class "GtkTable" gtk-table
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_table_get_type")
   ((column-spacing
     gtk-table-column-spacing
@@ -328,7 +329,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_new ()
 ;;; 
-;;; GtkWidget * gtk_table_new (guint rows, guint columns, gboolean homogeneous)
+;;; GtkWidget * gtk_table_new (guint rows, guint columns, gboolean homogeneous);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_new has been deprecated since version 3.4 and should not be used
+;;; in newly-written code. Use gtk_grid_new().
 ;;; 
 ;;; Used to create a new table widget. An initial size must be given by
 ;;; specifying how many rows and columns the table should have, although this
@@ -350,6 +356,8 @@
 ;;;     A pointer to the the newly created table widget.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-table-new))
+
 (defun gtk-table-new (rows columns homogeneous)
   (make-instance 'gtk-table
                  :rows rows
@@ -361,7 +369,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_resize ()
 ;;; 
-;;; void gtk_table_resize (GtkTable *table, guint rows, guint columns)
+;;; void gtk_table_resize (GtkTable *table, guint rows, guint columns);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_resize has been deprecated since version 3.4 and should not be
+;;; used in newly-written code. GtkGrid resizes automatically.
 ;;; 
 ;;; If you need to change a table's size after it has been created, this
 ;;; function allows you to do so.
@@ -376,6 +389,8 @@
 ;;;     The new number of columns.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-table-resize))
+
 (defun gtk-table-resize (table rows columns)
   (setf (gtk-table-n-rows table) rows
         (gtk-table-n-columns table) columns))
@@ -385,7 +400,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_get_size ()
 ;;; 
-;;; void gtk_table_get_size (GtkTable *table, guint *rows, guint *columns)
+;;; void gtk_table_get_size (GtkTable *table, guint *rows, guint *columns);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_get_size has been deprecated since version 3.4 and should not be
+;;; used in newly-written code. GtkGrid does not expose the number of columns
+;;; and rows.
 ;;; 
 ;;; Gets the number of rows and columns in the table.
 ;;; 
@@ -393,13 +414,15 @@
 ;;;     a GtkTable
 ;;; 
 ;;; rows :
-;;;     return location for the number of rows, or NULL.
+;;;     return location for the number of rows, or NULL
 ;;; 
 ;;; columns :
-;;;     return location for the number of columns, or NULL.
+;;;     return location for the number of columns, or NULL
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-table-get-size))
 
 (defun gtk-table-get-size (table)
   (values (gtk-table-n-rows table)
@@ -419,20 +442,26 @@
 ;;;                        GtkAttachOptions xoptions,
 ;;;                        GtkAttachOptions yoptions,
 ;;;                        guint xpadding,
-;;;                        guint ypadding)
+;;;                        guint ypadding);
 ;;; 
-;;; Adds a widget to a table. The number of 'cells' that a widget will occupy
-;;; is specified by left_attach, right_attach, top_attach and bottom_attach.
-;;; These each represent the leftmost, rightmost, uppermost and lowest column
-;;; and row numbers of the table. (Columns and rows are indexed from zero).
+;;; Warning
+;;; 
+;;; gtk_table_attach has been deprecated since version 3.4 and should not be
+;;; used in newly-written code. Use gtk_grid_attach() with GtkGrid. Note that
+;;; the attach arguments differ between those two functions.
+;;; 
+;;; Adds a widget to a table. The number of 'cells' that a widget will occupy is
+;;; specified by left_attach, right_attach, top_attach and bottom_attach. These
+;;; each represent the leftmost, rightmost, uppermost and lowest column and row
+;;; numbers of the table. (Columns and rows are indexed from zero).
 ;;; 
 ;;; To make a button occupy the lower right cell of a 2x2 table, use
 ;;; 
-;;;  gtk_table_attach (table, button,
-;;;                    1, 2, // left, right attach
-;;;                    1, 2, // top, bottom attach
-;;;                    xoptions, yoptions,
-;;;                    xpadding, ypadding);
+;;; gtk_table_attach (table, button,
+;;;                   1, 2, // left, right attach
+;;;                   1, 2, // top, bottom attach
+;;;                   xoptions, yoptions,
+;;;                   xpadding, ypadding);
 ;;; 
 ;;; If you want to make the button span the entire bottom row, use
 ;;; left_attach == 0 and right_attach = 2 instead.
@@ -460,8 +489,8 @@
 ;;;     resized.
 ;;; 
 ;;; yoptions :
-;;;     The same as xoptions, except this field determines behaviour of
-;;;     vertical resizing.
+;;;     The same as xoptions, except this field determines behaviour of vertical
+;;;     resizing.
 ;;; 
 ;;; xpadding :
 ;;;     An integer value specifying the padding on the left and right of the
@@ -500,16 +529,21 @@
 ;;; 
 ;;; void gtk_table_attach_defaults (GtkTable *table,
 ;;;                                 GtkWidget *widget,
-;;;                                 guint left,
-;;;                                 guint right,
-;;;                                 guint top,
-;;;                                 guint bottom);
+;;;                                 guint left_attach,
+;;;                                 guint right_attach,
+;;;                                 guint top_attach,
+;;;                                 guint bottom_attach);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_attach_defaults has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_grid_attach() with GtkGrid. Note
+;;; that the attach arguments differ between those two functions.
 ;;; 
 ;;; As there are many options associated with gtk_table_attach(), this
-;;; convenience function provides the programmer with a means to add children
-;;; to a table with identical padding and expansion options. The values used
-;;; for the GtkAttachOptions are GTK_EXPAND | GTK_FILL, and the padding is set
-;;; to 0.
+;;; convenience function provides the programmer with a means to add children to
+;;; a table with identical padding and expansion options. The values used for
+;;; the GtkAttachOptions are GTK_EXPAND | GTK_FILL, and the padding is set to 0.
 ;;; 
 ;;; table :
 ;;;     The table to add a new child widget to.
@@ -517,18 +551,20 @@
 ;;; widget :
 ;;;     The child widget to add.
 ;;; 
-;;; left :
+;;; left_attach :
 ;;;     The column number to attach the left side of the child widget to.
 ;;; 
-;;; right :
+;;; right_attach :
 ;;;     The column number to attach the right side of the child widget to.
 ;;; 
-;;; top :
+;;; top_attach :
 ;;;     The row number to attach the top of the child widget to.
 ;;; 
-;;; bottom :
+;;; bottom_attach :
 ;;;     The row number to attach the bottom of the child widget to.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-table-attach-defaults))
 
 (defun gtk-table-attach-defaults (table child left right top bottom)
   (gtk-table-attach table child left right top bottom))
@@ -538,7 +574,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_set_row_spacing ()
 ;;; 
-;;; void gtk_table_set_row_spacing (GtkTable *table, guint row, guint spacing)
+;;; void gtk_table_set_row_spacing (GtkTable *table, guint row, guint spacing);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_set_row_spacing has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_widget_set_margin_top() and
+;;; gtk_widget_set_margin_bottom() on the widgets contained in the row if you
+;;; need this functionality. GtkGrid does not support per-row spacing.
 ;;; 
 ;;; Changes the space between a given table row and the subsequent row.
 ;;; 
@@ -564,7 +607,14 @@
 ;;; 
 ;;; void gtk_table_set_col_spacing (GtkTable *table,
 ;;;                                 guint column,
-;;                                  guint spacing);
+;;;                                 guint spacing);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_set_col_spacing has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_widget_set_margin_left() and
+;;; gtk_widget_set_margin_right() on the widgets contained in the row if you
+;;; need this functionality. GtkGrid does not support per-row spacing.
 ;;; 
 ;;; Alters the amount of space between a given table column and the following
 ;;; column.
@@ -591,6 +641,12 @@
 ;;; 
 ;;; void gtk_table_set_row_spacings (GtkTable *table, guint spacing);
 ;;; 
+;;; Warning
+;;; 
+;;; gtk_table_set_row_spacings has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_grid_set_row_spacing() with
+;;; GtkGrid.
+;;; 
 ;;; Sets the space between every row in table equal to spacing.
 ;;; 
 ;;; table :
@@ -612,14 +668,20 @@
 ;;; 
 ;;; void gtk_table_set_col_spacings (GtkTable *table, guint spacing);
 ;;; 
+;;; Warning
+;;; 
+;;; gtk_table_set_col_spacings has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_grid_set_column_spacing() with
+;;; GtkGrid.
+;;; 
 ;;; Sets the space between every column in table equal to spacing.
 ;;; 
 ;;; table :
 ;;;     a GtkTable.
 ;;; 
 ;;; spacing :
-;;;     the number of pixels of space to place between every column in
-;;;     the table.
+;;;     the number of pixels of space to place between every column in the
+;;;     table.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-table-set-col-spacings))
@@ -634,15 +696,21 @@
 ;;; 
 ;;; void gtk_table_set_homogeneous (GtkTable *table, gboolean homogeneous);
 ;;; 
-;;; Changes the homogenous property of table cells, ie. whether all cells are
-;;; an equal size or not.
+;;; Warning
+;;; 
+;;; gtk_table_set_homogeneous has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_grid_set_row_homogeneous() and
+;;; gtk_grid_set_column_homogeneous() with GtkGrid.
+;;; 
+;;; Changes the homogenous property of table cells, ie. whether all cells are an
+;;; equal size or not.
 ;;; 
 ;;; table :
 ;;;     The GtkTable you wish to set the homogeneous properties of.
 ;;; 
 ;;; homogeneous :
-;;;     Set to TRUE to ensure all table cells are the same size. Set to FALSE
-;;;     if this is not your desired behaviour.
+;;;     Set to TRUE to ensure all table cells are the same size. Set to FALSE if
+;;;     this is not your desired behaviour.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-table-set-homogeneous))
@@ -657,8 +725,14 @@
 ;;; 
 ;;; guint gtk_table_get_default_row_spacing (GtkTable *table);
 ;;; 
-;;; Gets the default row spacing for the table. This is the spacing that will
-;;; be used for newly added rows. (See gtk_table_set_row_spacings())
+;;; Warning
+;;; 
+;;; gtk_table_get_default_row_spacing has been deprecated since version 3.4 and
+;;; should not be used in newly-written code. Use gtk_grid_get_row_spacing()
+;;; with GtkGrid.
+;;; 
+;;; Gets the default row spacing for the table. This is the spacing that will be
+;;; used for newly added rows. (See gtk_table_set_row_spacings())
 ;;; 
 ;;; table :
 ;;;     a GtkTable
@@ -678,6 +752,12 @@
 ;;; gtk_table_get_homogeneous ()
 ;;; 
 ;;; gboolean gtk_table_get_homogeneous (GtkTable *table);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_table_get_homogeneous has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use gtk_grid_get_row_homogeneous() and
+;;; gtk_grid_get_column_homogeneous() with GtkGrid.
 ;;; 
 ;;; Returns whether the table cells are all constrained to the same width and
 ;;; height. (See gtk_table_set_homogenous())
@@ -701,8 +781,14 @@
 ;;; 
 ;;; guint gtk_table_get_row_spacing (GtkTable *table, guint row);
 ;;; 
-;;; Gets the amount of space between row row, and row row + 1.
-;;; See gtk_table_set_row_spacing().
+;;; Warning
+;;; 
+;;; gtk_table_get_row_spacing has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. GtkGrid does not offer a replacement for
+;;; this functionality.
+;;; 
+;;; Gets the amount of space between row row, and row row + 1. See
+;;; gtk_table_set_row_spacing().
 ;;; 
 ;;; table :
 ;;;     a GtkTable
@@ -725,8 +811,14 @@
 ;;; 
 ;;; guint gtk_table_get_col_spacing (GtkTable *table, guint column);
 ;;; 
-;;; Gets the amount of space between column col, and column col + 1.
-;;; See gtk_table_set_col_spacing().
+;;; Warning
+;;; 
+;;; gtk_table_get_col_spacing has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. GtkGrid does not offer a replacement for
+;;; this functionality.
+;;; 
+;;; Gets the amount of space between column col, and column col + 1. See
+;;; gtk_table_set_col_spacing().
 ;;; 
 ;;; table :
 ;;;     a GtkTable
@@ -749,8 +841,14 @@
 ;;; 
 ;;; guint gtk_table_get_default_col_spacing (GtkTable *table);
 ;;; 
-;;; Gets the default column spacing for the table. This is the spacing that
-;;; will be used for newly added columns. (See gtk_table_set_col_spacings())
+;;; Warning
+;;; 
+;;; gtk_table_get_default_col_spacing has been deprecated since version 3.4 and
+;;; should not be used in newly-written code. Use gtk_grid_get_column_spacing()
+;;; with GtkGrid.
+;;; 
+;;; Gets the default column spacing for the table. This is the spacing that will
+;;; be used for newly added columns. (See gtk_table_set_col_spacings())
 ;;; 
 ;;; table :
 ;;;     a GtkTable

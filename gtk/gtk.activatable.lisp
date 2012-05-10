@@ -52,6 +52,7 @@
 ;;; Prerequisites
 ;;; 
 ;;; GtkActivatable requires GObject.
+;;;
 ;;; Known Implementations
 ;;; 
 ;;; GtkActivatable is implemented by GtkButton, GtkCheckButton,

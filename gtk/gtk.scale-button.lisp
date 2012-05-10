@@ -205,8 +205,11 @@
 (define-g-object-class "GtkScaleButton" gtk-scale-button
   (:superclass gtk-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
-                "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActionable"
+                "GtkActivatable"
+                "GtkOrientable")
    :type-initializer "gtk_scale_button_get_type")
   ((adjustment
     gtk-scale-button-adjustment

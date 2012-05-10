@@ -147,7 +147,7 @@
    (:file "gtk.link-button")           ; GtkLinkButton
    (:file "gtk.scale-button")          ; GtkScaleButton
    (:file "gtk.volume-button")         ; GtkVolumeButton
-   ;; GtkSwitch not implemented
+   (:file "gtk.switch")                ; GtkSwitch
    ;; GtkLockButton not implemented
    
    ;; Multiline Text Editor

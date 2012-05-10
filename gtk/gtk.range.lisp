@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.1. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkRange
 ;;; 
 ;;; Base class for widgets which visualize an adjustment
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRange
-;;;
+;;;     
 ;;;     gtk_range_get_fill_level
 ;;;     gtk_range_get_restrict_to_fill_level
 ;;;     gtk_range_get_show_fill_level
@@ -52,9 +52,9 @@
 ;;;     gtk_range_set_range
 ;;;     gtk_range_get_round_digits
 ;;;     gtk_range_set_round_digits
-;;;
+;;;     
 ;;;     GtkSensitivityType
-;;;
+;;;     
 ;;;     gtk_range_set_lower_stepper_sensitivity
 ;;;     gtk_range_get_lower_stepper_sensitivity
 ;;;     gtk_range_set_upper_stepper_sensitivity
@@ -80,35 +80,35 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkRange implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
-;;;   "adjustment"               GtkAdjustment*        : Read / Write /Construct
-;;;   "fill-level"               gdouble               : Read / Write
-;;;   "inverted"                 gboolean              : Read / Write
-;;;   "lower-stepper-sensitivity" GtkSensitivityType   : Read / Write
-;;;   "restrict-to-fill-level"   gboolean              : Read / Write
-;;;   "round-digits"             gint                  : Read / Write
-;;;   "show-fill-level"          gboolean              : Read / Write
-;;;   "upper-stepper-sensitivity" GtkSensitivityType   : Read / Write
+;;;   "adjustment"               GtkAdjustment*       : Read / Write / Construct
+;;;   "fill-level"               gdouble              : Read / Write
+;;;   "inverted"                 gboolean             : Read / Write
+;;;   "lower-stepper-sensitivity" GtkSensitivityType  : Read / Write
+;;;   "restrict-to-fill-level"   gboolean             : Read / Write
+;;;   "round-digits"             gint                 : Read / Write
+;;;   "show-fill-level"          gboolean             : Read / Write
+;;;   "upper-stepper-sensitivity" GtkSensitivityType  : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
-;;;   "arrow-displacement-x"     gint                  : Read
-;;;   "arrow-displacement-y"     gint                  : Read
-;;;   "arrow-scaling"            gfloat                : Read
-;;;   "slider-width"             gint                  : Read
-;;;   "stepper-size"             gint                  : Read
-;;;   "stepper-spacing"          gint                  : Read
-;;;   "trough-border"            gint                  : Read
-;;;   "trough-under-steppers"    gboolean              : Read
+;;;   "arrow-displacement-x"     gint                 : Read
+;;;   "arrow-displacement-y"     gint                 : Read
+;;;   "arrow-scaling"            gfloat               : Read
+;;;   "slider-width"             gint                 : Read
+;;;   "stepper-size"             gint                 : Read
+;;;   "stepper-spacing"          gint                 : Read
+;;;   "trough-border"            gint                 : Read
+;;;   "trough-under-steppers"    gboolean             : Read
 ;;; 
 ;;; Signals
 ;;; 
-;;;   "adjust-bounds"                                  : Run Last
-;;;   "change-value"                                   : Run Last
-;;;   "move-slider"                                    : Action
-;;;   "value-changed"                                  : Run Last
+;;;   "adjust-bounds"                                 : Run Last
+;;;   "change-value"                                  : Run Last
+;;;   "move-slider"                                   : Action
+;;;   "value-changed"                                 : Run Last
 ;;; 
 ;;; Description
 ;;; 
@@ -168,8 +168,8 @@
 ;;;   "restrict-to-fill-level"   gboolean              : Read / Write
 ;;; 
 ;;; The restrict-to-fill-level property controls whether slider movement is
-;;; restricted to an upper boundary set by the fill level.
-;;; See gtk_range_set_restrict_to_fill_level().
+;;; restricted to an upper boundary set by the fill level. See
+;;; gtk_range_set_restrict_to_fill_level().
 ;;; 
 ;;; Default value: TRUE
 ;;; 
@@ -180,8 +180,8 @@
 ;;; 
 ;;;   "round-digits"             gint                  : Read / Write
 ;;; 
-;;; The number of digits to round the value to when it changes, or -1.
-;;; See "change-value".
+;;; The number of digits to round the value to when it changes, or -1. See
+;;; "change-value".
 ;;; 
 ;;; Allowed values: >= G_MAXULONG
 ;;; 
@@ -273,8 +273,8 @@
 ;;; 
 ;;;   "stepper-spacing"          gint                  : Read
 ;;; 
-;;; The spacing between the stepper buttons and thumb. Note that
-;;; stepper-spacing won't have any effect if there are no steppers.
+;;; The spacing between the stepper buttons and thumb. Note that stepper-spacing
+;;; won't have any effect if there are no steppers.
 ;;; 
 ;;; Allowed values: >= 0
 ;;; 
@@ -296,8 +296,8 @@
 ;;; 
 ;;;   "trough-under-steppers"    gboolean              : Read
 ;;; 
-;;; Whether to draw the trough across the full length of the range or to
-;;; exclude the steppers and their spacing.
+;;; Whether to draw the trough across the full length of the range or to exclude
+;;; the steppers and their spacing.
 ;;; 
 ;;; Default value: TRUE
 ;;; 
@@ -314,8 +314,8 @@
 ;;;                     gdouble   value,
 ;;;                     gpointer  user_data)      : Run Last
 ;;; 
-;;; Emitted before clamping a value, to give the application a chance to
-;;; adjust the bounds.
+;;; Emitted before clamping a value, to give the application a chance to adjust
+;;; the bounds.
 ;;; 
 ;;; range :
 ;;;     the GtkRange that received the signal
@@ -324,7 +324,7 @@
 ;;;     the value before we clamp
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "change-value" signal
@@ -358,15 +358,15 @@
 ;;; value :
 ;;;     the new value resulting from the scroll action
 ;;; 
-;;; returns :
+;;; user_data :
+;;;     user data set when the signal handler was connected
+;;; 
+;;; Returns :
 ;;;     TRUE to prevent other handlers from being invoked for the signal, FALSE
 ;;;     to propagate the signal further
 ;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
 ;;; Since 2.6
-;;
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "move-slider" signal
 ;;; 
@@ -383,12 +383,13 @@
 ;;;     how to move the slider
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "value-changed" signal
 ;;; 
-;;; void user_function (GtkRange *range, gpointer  user_data)      : Run Last
+;;; void user_function (GtkRange *range,
+;;;                     gpointer  user_data)      : Run Last
 ;;; 
 ;;; Emitted when the range value changes.
 ;;; 
@@ -396,7 +397,8 @@
 ;;;     the GtkRange that received the signal
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -410,7 +412,9 @@
 (define-g-object-class "GtkRange" gtk-range
   (:superclass gtk-widget
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_range_get_type")
   ((adjustment
     gtk-range-adjustment
@@ -437,7 +441,7 @@
     gtk-range-upper-stepper-sensitivity
     "upper-stepper-sensitivity" "GtkSensitivityType" t t)))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_fill_level ()
 ;;; 
 ;;; gdouble gtk_range_get_fill_level (GtkRange *range);
@@ -548,17 +552,17 @@
 ;;; gtk_range_set_restrict_to_fill_level ()
 ;;; 
 ;;; void gtk_range_set_restrict_to_fill_level (GtkRange *range,
-;;;                                            gboolean restrict_to_fill_level)
+;;;                                            gboolean restrict_to_fill_level);
 ;;; 
 ;;; Sets whether the slider is restricted to the fill level. See
 ;;; gtk_range_set_fill_level() for a general description of the fill level
 ;;; concept.
 ;;; 
 ;;; range :
-;;;     A GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; restrict_to_fill_level :
-;;;     Whether the fill level restricts slider movement.
+;;;     whether the fill level restricts slider movement
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -581,10 +585,10 @@
 ;;; concept.
 ;;; 
 ;;; range :
-;;;     A GtkRange
+;;;     a GtkRange
 ;;; 
 ;;; show_fill_level :
-;;;     Whether a fill level indicator graphics is shown.
+;;;     whether a fill level indicator graphics is shown
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -609,7 +613,7 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     a GtkAdjustment.
+;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-range-get-adjustment))
@@ -622,14 +626,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_adjustment ()
 ;;; 
-;;; void gtk_range_set_adjustment (GtkRange *range, GtkAdjustment *adjustment)
+;;; void gtk_range_set_adjustment (GtkRange *range, GtkAdjustment *adjustment);
 ;;; 
 ;;; Sets the adjustment to be used as the "model" object for this range widget.
 ;;; The adjustment indicates the current range value, the minimum and maximum
 ;;; range values, the step/page increments used for keybindings and scrolling,
 ;;; and the page size. The page size is normally 0 for GtkScale and nonzero for
-;;; GtkScrollbar, and indicates the size of the visible area of the widget
-;;; being scrolled. The page size affects the size of the scrollbar slider.
+;;; GtkScrollbar, and indicates the size of the visible area of the widget being
+;;; scrolled. The page size affects the size of the scrollbar slider.
 ;;; 
 ;;; range :
 ;;;     a GtkRange
@@ -648,7 +652,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_inverted ()
 ;;; 
-;;; gboolean gtk_range_get_inverted (GtkRange *range)
+;;; gboolean gtk_range_get_inverted (GtkRange *range);
 ;;; 
 ;;; Gets the value set by gtk_range_set_inverted().
 ;;; 
@@ -700,7 +704,7 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     current value of the range.
+;;;     current value of the range
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-range-get-value))
@@ -736,7 +740,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_increments ()
 ;;; 
-;;; void gtk_range_set_increments (GtkRange *range, gdouble step, gdouble page)
+;;; void gtk_range_set_increments (GtkRange *range,
+;;;                                gdouble step,
+;;;                                gdouble page);
 ;;; 
 ;;; Sets the step and page sizes for the range. The step size is used when the
 ;;; user clicks the GtkScrollbar arrows or moves GtkScale via arrow keys. The
@@ -844,8 +850,8 @@
 ;;;   GTK_SENSITIVITY_OFF
 ;;; } GtkSensitivityType;
 ;;; 
-;;; Determines how GTK+ handles the sensitivity of stepper arrows at the end
-;;; of range widgets.
+;;; Determines how GTK+ handles the sensitivity of stepper arrows at the end of
+;;; range widgets.
 ;;; 
 ;;; GTK_SENSITIVITY_AUTO
 ;;;     The arrow is made insensitive if the thumb is at the end
@@ -867,7 +873,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_lower_stepper_sensitivity ()
 ;;; 
-;;; void gtk_range_set_lower_stepper_sensitivity(GtkRange *range,
+;;; void gtk_range_set_lower_stepper_sensitivity
+;;;                                             (GtkRange *range,
 ;;;                                              GtkSensitivityType sensitivity)
 ;;; 
 ;;; Sets the sensitivity policy for the stepper that points to the 'lower' end
@@ -892,7 +899,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_lower_stepper_sensitivity ()
 ;;; 
-;;; GtkSensitivityType gtk_range_get_lower_stepper_sensitivity(GtkRange *range)
+;;; GtkSensitivityType gtk_range_get_lower_stepper_sensitivity (GtkRange *range)
 ;;; 
 ;;; Gets the sensitivity policy for the stepper that points to the 'lower' end
 ;;; of the GtkRange's adjustment.
@@ -901,7 +908,7 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     the lower stepper's sensitivity policy
+;;;     The lower stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -916,17 +923,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_upper_stepper_sensitivity ()
 ;;; 
-;;; void gtk_range_set_upper_stepper_sensitivity(GtkRange *range,
+;;; void gtk_range_set_upper_stepper_sensitivity
+;;;                                             (GtkRange *range,
 ;;;                                              GtkSensitivityType sensitivity)
 ;;; 
-;;; Sets the sensitivity policy for the stepper that points to the 'upper'
-;;; end of the GtkRange's adjustment.
+;;; Sets the sensitivity policy for the stepper that points to the 'upper' end
+;;; of the GtkRange's adjustment.
 ;;; 
 ;;; range :
 ;;;     a GtkRange
 ;;; 
 ;;; sensitivity :
-;;;     the upper stepper's sensitivity policy
+;;;     the upper stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -941,16 +949,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_upper_stepper_sensitivity ()
 ;;; 
-;;; GtkSensitivityType gtk_range_get_upper_stepper_sensitivity(GtkRange *range)
+;;; GtkSensitivityType gtk_range_get_upper_stepper_sensitivity (GtkRange *range)
 ;;; 
-;;; Gets the sensitivity policy for the stepper that points to the 'upper'
-;;; end of the GtkRange's adjustment.
+;;; Gets the sensitivity policy for the stepper that points to the 'upper' end
+;;; of the GtkRange's adjustment.
 ;;; 
 ;;; range :
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     the upper stepper's sensitivity policy
+;;;     The upper stepper's sensitivity policy.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1011,7 +1019,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_min_slider_size ()
 ;;; 
-;;; gint gtk_range_get_min_slider_size (GtkRange *range)
+;;; gint gtk_range_get_min_slider_size (GtkRange *range);
 ;;; 
 ;;; This function is useful mainly for GtkRange subclasses.
 ;;; 
@@ -1021,7 +1029,7 @@
 ;;;     a GtkRange
 ;;; 
 ;;; Returns :
-;;;     the minimum size of the range's slider
+;;;     The minimum size of the range's slider.
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -1068,10 +1076,10 @@
 ;;;                                  gint *slider_start,
 ;;;                                  gint *slider_end);
 ;;; 
-;;; This function returns sliders range along the long dimension,
-;;; in widget->window coordinates.
+;;; This function returns sliders range along the long dimension, in
+;;; widget->window coordinates.
 ;;; 
-;;; This function is useful mainly for GtkRange subclasses
+;;; This function is useful mainly for GtkRange subclasses.
 ;;; 
 ;;; range :
 ;;;     a GtkRange
@@ -1139,7 +1147,7 @@
 ;;;     a GtkRange
 ;;; 
 ;;; min_size :
-;;;     the slider's minimum size
+;;;     The slider's minimum size
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -1153,10 +1161,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_set_slider_size_fixed ()
 ;;; 
-;;; void gtk_range_set_slider_size_fixed (GtkRange *range, gboolean size_fixed)
+;;; void gtk_range_set_slider_size_fixed (GtkRange *range, gboolean size_fixed);
 ;;; 
-;;; Sets whether the range's slider has a fixed size, or a size that depends
-;;; on its adjustment's page size.
+;;; Sets whether the range's slider has a fixed size, or a size that depends on
+;;; its adjustment's page size.
 ;;; 
 ;;; This function is useful mainly for GtkRange subclasses.
 ;;; 

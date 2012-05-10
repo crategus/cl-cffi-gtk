@@ -108,8 +108,10 @@
 (define-g-object-class "GtkCheckButton" gtk-check-button
   (:superclass gtk-toggle-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkActionable"
-                "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActionable"
+                "GtkActivatable")
    :type-initializer "gtk_check_button_get_type")
   nil)
 
