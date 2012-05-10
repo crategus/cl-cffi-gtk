@@ -494,7 +494,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 4. The Button Widget
+;;; Chapter 4. Button Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -665,25 +665,74 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;;; Link button
+
 (defun example-link-button ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
+                                 :title "Example Link Button"
+                                 :default-width 270
                                  :border-width 12))
-          (vbox (make-instance 'gtk-box
-                               :type :vertical)))
+          (grid (make-instance 'gtk-grid
+                               :orientation :vertical
+                               :row-spacing 6
+                               :column-homogeneous t)))
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
                                  (gtk-main-quit)))
-      (gtk-box-pack-start vbox
-                          (gtk-link-button-new "http://www.gtk.org/")
-                          :expand nil)
-      (gtk-box-pack-start vbox
-                          (gtk-link-button-new-with-label "http://www.gtk.org/"
-                                                          "Project WebSite")
-                          :expand nil)
-      (gtk-container-add window vbox)
+      (gtk-container-add grid
+                         (make-instance 'gtk-label
+                                        :use-markup t
+                                        :label
+                                        "<b>Link Button with url</b>"))
+      (gtk-container-add grid
+                         (gtk-link-button-new "http://www.gtk.org/"))
+      (gtk-container-add grid
+                         (make-instance 'gtk-label
+                                        :use-markup t
+                                        :label
+                                        "<b>Link Button with Label</b>"))
+      (gtk-container-add grid
+                         (gtk-link-button-new-with-label
+                                                        "http://www.gtk.org/"
+                                                        "Project WebSite"))
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Switch
+
+(defun example-switch ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Switch"
+                                 :default-width 230
+                                 :border-width 12))
+          (switch (make-instance 'gtk-switch
+                                 :active t))
+          (label (make-instance 'gtk-label
+                                :label "The Switch is ON"))
+          (grid (make-instance 'gtk-grid
+                               :orientation :vertical
+                               :row-spacing 6
+                               :column-homogeneous t)))
+      (g-signal-connect window "destroy"
+                               (lambda (widget)
+                                 (declare (ignore widget))
+                                 (gtk-main-quit)))
+      (g-signal-connect switch "notify::active"
+         (lambda (widget param)
+           (declare (ignore param))
+           (if (gtk-switch-get-active widget)
+               (gtk-label-set-label label "The Switch is ON")
+               (gtk-label-set-label label "The Switch is OFF"))))
+      (gtk-container-add grid switch)
+      (gtk-container-add grid label)
+      (gtk-container-add window grid)
       (gtk-widget-show-all window))))
       
 ;;; ----------------------------------------------------------------------------

@@ -107,13 +107,13 @@ the function @code{gtk-box-pack-start}.
 By using boxes, GTK+ knows where to place the widgets so GTK+ can do automatic
 resizing and other nifty things.  A number of options control as to how the
 widgets should be packed into boxes.  This method of packing boxes gives the
-user a quite a bit of flexibility when placing widgets.
+user quite a bit of flexibility when placing widgets.
 
 @noindent
 @emph{Note:}
 
 The classes @code{GtkHBox} for horizontal and @code{GtkVBox} for vertical
-boxes are deprecated, but still present in GTK 3.4, which is the version used in
+boxes are deprecated, but still present in GTK+ 3.4, which is the version used in
 this tutorial.  In this tutorial these classes are not used. In addition a
 single-row or single-column @code{GtkGrid} provides exactly the same
 functionality as @code{GtkBox}.  See @ref {Packing Using Grids} for examples
@@ -155,8 +155,8 @@ complete example for creating a box is therefore
 @findex fill
 @findex padding
 
-@ref{figure-box-packing} shows an examples of packing buttons into horizontal
-boxes.  The buttons have a small spacing of 3.   Each line of the example
+@ref{figure-box-packing} shows an example of packing buttons into horizontal
+boxes.  The buttons have a small spacing of 3.  Each line of the example
 contains one horizontal box with several buttons.  The first button represents
 the call of the function @code{gtk-box-pack-start} and the following buttons
 represent the arguments of the function.  The first two arguments are @code{box}

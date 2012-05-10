@@ -14,6 +14,8 @@
 * Toggle Buttons::
 * Check Buttons::
 * Radio Buttons::
+* Link Buttons::
+* Switches::
 @end menu
 
 @c -----------------------------------------------------------------------------
@@ -286,7 +288,7 @@ button.  @ref{figure-toggle-buttons} shows toggle buttons and
 @ref{example-toggle-buttons} the code to create toggle buttons.
 
 @c -----------------------------------------------------------------------------
-@node Radio Buttons, , Check Buttons, Top
+@node Radio Buttons, Link Buttons, Check Buttons, Top
 @section Radio Buttons
 
 @findex GtkRadioButtons
@@ -440,6 +442,160 @@ becoming active).
                             (gtk-widget-destroy window))))
       ;; Put the vbox in the window widget
       (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Link Buttons, Switches, Radio Buttons, Top
+@section Link Buttons
+
+@findex GtkLinkButton
+@findex gtk-link-button
+@findex link-button, gtk-link-button
+
+@findex gtk-link-button-new
+@findex gtk-link-button-new-with-label
+@findex gtk-link-button-set-uri
+@findex gtk-link-button-get-uri
+
+@findex link-button-new, gtk-link-button-new
+@findex link-button-new-with-label, gtk-link-button-new-with-label
+@findex link-button-set-uri, gtk-link-button-set-uri
+@findex link-button-get-uri, gtk-link-button-get-uri
+
+@ifnotinfo
+@float Figure, figure-link-button
+@caption{Link Buttons}
+@center @image{figures/link-button272x159, 181pt}
+@end float
+@end ifnotinfo
+
+A @code{GtkLinkButton} is a @code{GtkButton} with a hyperlink, similar to the
+one used by web browsers, which triggers an action when clicked.  It is useful
+to show quick links to resources.
+
+A link button is created by calling either @code{gtk-link-button-new} or
+@code{gtk-link-button-new-with-label}.  If using the former, the URI you pass to
+the constructor is used as a label for the widget.
+
+The URI bound to a @code{GtkLinkButton} can be set specifically using
+@code{gtk-link-button-set-uri}, and retrieved using
+@code{gtk-link-button-get-uri}.
+
+By default, @code{GtkLinkButton} calls @code{gtk-show-uri} when the button is
+clicked.  This behaviour can be overridden by connecting to the "activate-link"
+signal and returning @code{T} from the signal handler.
+
+@ref{figure-link-button} shows two different styles of link buttons.  The code
+is shown in @ref{example-link-button}.
+
+@float Example, example-link-button
+@caption{Link Buttons}
+@end float
+@verbatim
+(defun example-link-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Link Button"
+                                 :default-width 270
+                                 :border-width 12))
+          (grid (make-instance 'gtk-grid
+                               :orientation :vertical
+                               :row-spacing 6
+                               :column-homogeneous t)))
+      (g-signal-connect window "destroy"
+                               (lambda (widget)
+                                 (declare (ignore widget))
+                                 (gtk-main-quit)))
+      (gtk-container-add grid
+                         (make-instance 'gtk-label
+                                        :use-markup t
+                                        :label
+                                        "<b>Link Button with url</b>"))
+      (gtk-container-add grid
+                         (gtk-link-button-new "http://www.gtk.org/"))
+      (gtk-container-add grid
+                         (make-instance 'gtk-label
+                                        :use-markup t
+                                        :label
+                                        "<b>Link Button with Label</b>"))
+      (gtk-container-add grid
+                         (gtk-link-button-new-with-label
+                                                        "http://www.gtk.org/"
+                                                        "Project WebSite"))
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Switches, , Link Buttons Top
+@section Switches
+
+@findex GtkSwitch
+@findex gtk-switch
+@findex switch, gtk-switch
+
+@findex gtk-switch-new
+@findex gtk-switch-get-active
+@findex gtk-switch-set-active
+
+@findex switch-new, gtk-switch-new
+@findex switch-get-active, gtk-switch-get-active
+@findex switch-set-active, gtk-switch-set-active
+
+@ifnotinfo
+@float Figure, figure-switch
+@caption{Switch}
+@center @image{figures/switch232x100, 155pt}
+@end float
+@end ifnotinfo
+
+@code{GtkSwitch} is a widget that has two states: on or off.  The user can
+control which state should be active by clicking the empty area, or by dragging
+the handle.  The switch is created with the function @code{gtk-switch-new} or
+the call @code{(make-instance 'gtk-switch)}.
+
+@code{GtkSwitch} has the property @code{active}, which can be set with the
+function @code{gtk-switch-set-active} or retrieved with the function
+@code{gtk-switch-get-active}.
+
+An example of a switch is shown in @ref{figure-switch}.  The code is shown in
+@ref{example-switch}.  Note that in the example the signal "notify::active"
+is connected to the switch to display a label with the state of the switch.
+
+@float Example, example-switch
+@caption{Switches}
+@end float
+@verbatim
+(defun example-switch ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Switch"
+                                 :default-width 230
+                                 :border-width 12))
+          (switch (make-instance 'gtk-switch
+                                 :active t))
+          (label (make-instance 'gtk-label
+                                :label "The Switch is ON"))
+          (grid (make-instance 'gtk-grid
+                               :orientation :vertical
+                               :row-spacing 6
+                               :column-homogeneous t)))
+      (g-signal-connect window "destroy"
+                               (lambda (widget)
+                                 (declare (ignore widget))
+                                 (gtk-main-quit)))
+      (g-signal-connect switch "notify::active"
+         (lambda (widget param)
+           (declare (ignore param))
+           (if (gtk-switch-get-active widget)
+               (gtk-label-set-label label "The Switch is ON")
+               (gtk-label-set-label label "The Switch is OFF"))))
+      (gtk-container-add grid switch)
+      (gtk-container-add grid label)
+      (gtk-container-add window grid)
       (gtk-widget-show-all window))))
 @end verbatim
 
