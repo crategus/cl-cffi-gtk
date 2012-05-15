@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.2. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkAdjustment
 ;;; 
 ;;; A representation of an adjustable bounded value
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkAdjustment
-;;;
+;;;     
 ;;;     gtk_adjustment_new
 ;;;     gtk_adjustment_get_value
 ;;;     gtk_adjustment_set_value
@@ -78,10 +78,10 @@
 ;;; Description
 ;;; 
 ;;; The GtkAdjustment object represents a value which has an associated lower
-;;; and upper bound, together with step and page increments, and a page size.
-;;; It is used within several GTK+ widgets, including GtkSpinButton,
-;;; GtkViewport, and GtkRange (which is a base class for GtkHScrollbar,
-;;; GtkVScrollbar, GtkHScale, and GtkVScale).
+;;; and upper bound, together with step and page increments, and a page size. It
+;;; is used within several GTK+ widgets, including GtkSpinButton, GtkViewport,
+;;; and GtkRange (which is a base class for GtkHScrollbar, GtkVScrollbar,
+;;; GtkHScale, and GtkVScale).
 ;;; 
 ;;; The GtkAdjustment object does not update the value itself. Instead it is
 ;;; left up to the owner of the GtkAdjustment to control the value.
@@ -146,8 +146,8 @@
 ;;; 
 ;;;   "upper"                    gdouble               : Read / Write
 ;;; 
-;;; The maximum value of the adjustment. Note that values will be restricted
-;;; by upper - page-size if the page-size property is nonzero.
+;;; The maximum value of the adjustment. Note that values will be restricted by
+;;; upper - page-size if the page-size property is nonzero.
 ;;; 
 ;;; Default value: 0
 ;;; 
@@ -163,6 +163,7 @@
 ;;; Default value: 0
 ;;; 
 ;;; Since 2.4
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -191,18 +192,19 @@
 ;;; Emitted when the GtkAdjustment value field has been changed.
 ;;; 
 ;;; adjustment :
-;;;     the object which received the signal
+;;;     the object which received the signal.
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkAdjustment
+;;; GtkAdjustment
 ;;; 
-;;; struct GtkAdjustment;
+;;; typedef struct _GtkAdjustment GtkAdjustment;
 ;;; 
 ;;; The GtkAdjustment struct contains only private fields and should not be
 ;;; directly accessed.
@@ -293,7 +295,7 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     the current value of the adjustment
+;;;     The current value of the adjustment
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-adjustment-get-value))
@@ -312,8 +314,8 @@
 ;;; GtkAdjustment.lower and GtkAdjustment.upper.
 ;;; 
 ;;; Note that for adjustments which are used in a GtkScrollbar, the effective
-;;; range of allowed values goes from GtkAdjustment.lower to
-;;; GtkAdjustment.upper - GtkAdjustment.page_size.
+;;; range of allowed values goes from GtkAdjustment.lower to GtkAdjustment.upper
+;;; - GtkAdjustment.page_size.
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
@@ -339,8 +341,8 @@
 ;;; Updates the GtkAdjustment GtkAdjustment.value to ensure that the range
 ;;; between lower and upper is in the current page (i.e. between
 ;;; GtkAdjustment.value and GtkAdjustment.value + GtkAdjustment.page_size). If
-;;; the range is larger than the page size, then only the start of it will be
-;;; in the current page. A "changed" signal will be emitted if the value is
+;;; the range is larger than the page size, then only the start of it will be in
+;;; the current page. A "changed" signal will be emitted if the value is
 ;;; changed.
 ;;; 
 ;;; adjustment :
@@ -365,9 +367,9 @@
 ;;; 
 ;;; void gtk_adjustment_changed (GtkAdjustment *adjustment);
 ;;; 
-;;; Emits a "changed" signal from the GtkAdjustment. This is typically called
-;;; by the owner of the GtkAdjustment after it has changed any of the
-;;; GtkAdjustment fields other than the value.
+;;; Emits a "changed" signal from the GtkAdjustment. This is typically called by
+;;; the owner of the GtkAdjustment after it has changed any of the GtkAdjustment
+;;; fields other than the value.
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
@@ -409,9 +411,9 @@
 ;;; 
 ;;; Sets all properties of the adjustment at once.
 ;;; 
-;;; Use this function to avoid multiple emissions of the "changed" signal.
-;;; See gtk_adjustment_set_lower() for an alternative way of compressing
-;;; multiple emissions of "changed" into one.
+;;; Use this function to avoid multiple emissions of the "changed" signal. See
+;;; gtk_adjustment_set_lower() for an alternative way of compressing multiple
+;;; emissions of "changed" into one.
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
@@ -459,7 +461,7 @@
 ;;;     a GtkAdjustment
 ;;; 
 ;;; Returns :
-;;;     the current minimum value of the adjustment
+;;;     The current minimum value of the adjustment
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -629,8 +631,8 @@
 ;;; 
 ;;; Sets the page increment of the adjustment.
 ;;; 
-;;; See gtk_adjustment_set_lower() about how to compress multiple emissions
-;;; of the "changed" signal when setting multiple adjustment properties.
+;;; See gtk_adjustment_set_lower() about how to compress multiple emissions of
+;;; the "changed" signal when setting multiple adjustment properties.
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
@@ -656,8 +658,8 @@
 ;;; 
 ;;; Sets the page size of the adjustment.
 ;;; 
-;;; See gtk_adjustment_set_lower() about how to compress multiple emissions
-;;; of the "changed" signal when setting multiple adjustment properties.
+;;; See gtk_adjustment_set_lower() about how to compress multiple emissions of
+;;; the "changed" signal when setting multiple adjustment properties.
 ;;; 
 ;;; adjustment :
 ;;;     a GtkAdjustment
