@@ -9,6 +9,113 @@
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
+@c -----------------------------------------------------------------------------
+@section Event Box
+
+@findex GtkEventBox
+@findex gtk-event-box
+
+@findex gtk-event-box-new
+@findex gtk-widget-set-events
+@findex gtk-widget-realize
+@findex gdk-window-set-cursor
+
+@findex event-box-new, gtk-event-box-new
+@findex widget-set-events, gtk-widget-set-events
+@findex widget-realize, gtk-widget-realize
+@findex window-set-cursor, gtk-window-set-cursor
+
+@ifnotinfo
+@float Figure, figure-event-box
+@caption{Event Box}
+@center @image{figures/event-box256x70, 171pt}
+@end float
+@end ifnotinfo
+
+Some GTK+ widgets do not have associated X windows, so these widgets just draw
+on their parents.  Because of this, they cannot receive events and if they are
+incorrectly sized, they do not clip so you can get messy overwriting.  If you
+require more from these widgets, the @code{GtkEventBox} widget is for you.
+
+At first glance, the @code{GtkEventBox} widget might appear to be totally
+useless.  It draws nothing on the screen and responds to no events.  However,
+it does serve a function - it provides an X window for its child widget.  This
+is important as many GTK+ widgets do not have an associated X window.  Not
+having an X window saves memory and improves performance, but also has some
+drawbacks.  A widget without an X window cannot receive events, and does not
+perform any clipping on its contents.  Although the name @code{GtkEventBox}
+emphasizes the event-handling function, the widget can also be used for
+clipping.
+
+To create a new @code{GtkEventBox} widget, use the call
+@code{(make-instance 'gtk-event-box)} or the function @code{gtk-event-box-new}.
+A child widget can then be added to this @code{GtkEventBox} with the function
+@code{gtk-container-add}.  With the function @code{gtk-widget-set-events} the
+events are set for the event box which can be connected to a signal handler.
+To create the resources associated with an event box, the function
+@code{gtk-widget-realize} has to be called explicitly for the @code{GtkEventBox}
+widget.
+
+@ref{example-event-box} demonstrates both uses of a @code{GtkEventBox} widget -
+a label is created that is clipped to a small box, and set up so that a
+mouse-click on the label causes the program to exit.  Resizing the window
+reveals varying amounts of the label.
+
+@findex GdkWindow
+@findex gdk-window
+
+@findex gtk-widget-window
+@findex gdk-window-set-cursor
+@findex gdk-cursor-new
+
+@findex widget-window, gtk-widget-window
+@findex window-set-cursor, gdk-window-set-cursor
+@findex cursor-new, gdk-cursor-new
+
+In addition, @ref{example-event-box} shows how to change the mouse pointer
+over a window.  Every widget has an associated window of type @code{GdkWindow},
+which can be get with the function @code{gtk-widget-window}. The function
+@code{gdk-window-set-cursor} sets a mouse pointer for this @code{GdkWindow}.
+A new mouse pointer is created with the function @code{gdk-cursor-new}.  The
+functions takes one argument, which is a keyword for a predefined mouse pointer.
+In @ref{example-event-box} the mouse pointer @code{:hand1} is choosen.  This
+new mouse pointer is than associated to the @code{GdkWindow} with the function
+@code{gdk-window-set-cursor}.
+
+@float Example, example-event-box
+@caption{Event Box}
+@end float
+@verbatim
+(defun example-event-box ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Event Box"
+                                 :default-width 250
+                                 :border-width 12))
+          (eventbox (make-instance 'gtk-event-box))
+          (label (make-instance 'gtk-label
+                                :width-request 120
+                                :height-request 20
+                                :label
+                                "Click here to quit, and more text, more")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window eventbox)
+      (gtk-container-add eventbox label)
+      (gtk-widget-set-events eventbox :button-press-mask)
+      (g-signal-connect eventbox "button-press-event"
+                        (lambda (widget event)
+                          (declare (ignore widget event))
+                          (gtk-widget-destroy window)))
+      (gtk-widget-realize eventbox)
+      (gdk-window-set-cursor (gtk-widget-window eventbox)
+                             (gdk-cursor-new :hand1))
+      (gtk-widget-show window))))
+@end verbatim
+
 @section Arrows
 
 @findex GtkArrow

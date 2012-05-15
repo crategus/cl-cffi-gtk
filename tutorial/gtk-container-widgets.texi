@@ -9,117 +9,12 @@
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
-@section Event Box
-
-@findex GtkEventBox
-@findex gtk-event-box
-
-@findex gtk-event-box-new
-@findex gtk-widget-set-events
-@findex gtk-widget-realize
-@findex gdk-window-set-cursor
-
-@findex event-box-new, gtk-event-box-new
-@findex widget-set-events, gtk-widget-set-events
-@findex widget-realize, gtk-widget-realize
-@findex window-set-cursor, gtk-window-set-cursor
-
-@ifnotinfo
-@float Figure, figure-event-box
-@caption{Event Box}
-@center @image{figures/event-box256x70, 171pt}
-@end float
-@end ifnotinfo
-
-Some GTK+ widgets do not have associated X windows, so these widgets just draw
-on their parents.  Because of this, they cannot receive events and if they are
-incorrectly sized, they do not clip so you can get messy overwriting.  If you
-require more from these widgets, the @code{GtkEventBox} widget is for you.
-
-At first glance, the @code{GtkEventBox} widget might appear to be totally
-useless.  It draws nothing on the screen and responds to no events.  However,
-it does serve a function - it provides an X window for its child widget.  This
-is important as many GTK+ widgets do not have an associated X window.  Not
-having an X window saves memory and improves performance, but also has some
-drawbacks.  A widget without an X window cannot receive events, and does not
-perform any clipping on its contents.  Although the name @code{GtkEventBox}
-emphasizes the event-handling function, the widget can also be used for
-clipping.
-
-To create a new @code{GtkEventBox} widget, use the call
-@code{(make-instance 'gtk-event-box)} or the function @code{gtk-event-box-new}.
-A child widget can then be added to this @code{GtkEventBox} with the function
-@code{gtk-container-add}.  With the function @code{gtk-widget-set-events} the
-events are set for the event box which can be connected to with a signal
-handler.  To create the resources associated with an event box, the function
-@code{gtk-widget-realize} has to be called explictely for the @code{GtkEventBox}
-widget.
-
-@ref{example-event-box} demonstrates both uses of a @code{GtkEventBox} widget -
-a label is created that is clipped to a small box, and set up so that a
-mouse-click on the label causes the program to exit.  Resizing the window
-reveals varying amounts of the label.
-
-@findex GdkWindow
-@findex gdk-window
-
-@findex gtk-widget-window
-@findex gdk-window-set-cursor
-@findex gdk-cursor-new
-
-@findex widget-window, gtk-widget-window
-@findex window-set-cursor, gdk-window-set-cursor
-@findex cursor-new, gdk-cursor-new
-
-In addition, @ref{example-event-box} shows how to change the mouse pointer
-over a window.  Every widget has an associated window of type @code{GdkWindow},
-which can be get with the function @code{gtk-widget-window}. The function
-@code{gdk-window-set-cursor} sets a mouse pointer for this @code{GdkWindow}.
-A new mouse pointer is created with the function @code{gdk-cursor-new}.  The
-functions takes one argument, which is a keyword for a predefined mouse pointer.
-In @ref{example-event-box} the mouse pointer @code{:hand1} is choosen.  This
-new mouse pointer is than associated to the @code{GdkWindow} with the function
-@code{gdk-window-set-cursor}.
-
-@float Example, example-event-box
-@caption{Event Box}
-@end float
-@verbatim
-(defun example-event-box ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Event Box"
-                                 :default-width 250
-                                 :border-width 12))
-          (eventbox (make-instance 'gtk-event-box))
-          (label (make-instance 'gtk-label
-                                :width-request 120
-                                :height-request 20
-                                :label
-                                "Click here to quit, and more text, more")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-container-add window eventbox)
-      (gtk-container-add eventbox label)
-      (gtk-widget-set-events eventbox :button-press-mask)
-      (g-signal-connect eventbox "button-press-event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
-                          (gtk-widget-destroy window)))
-      (gtk-widget-realize eventbox)
-      (gdk-window-set-cursor (gtk-widget-window eventbox)
-                             (gdk-cursor-new :hand1))
-      (gtk-widget-show window))))
-@end verbatim
-
-
+@c -----------------------------------------------------------------------------
 @section Alignment widget
 
 @findex GtkAlignment
-@findex gkt-alignment
+@findex gtk-alignment
+@findex alignment, gtk-alignment
 
 @findex gtk-alignment-new
 @findex gtk-alignment-set
@@ -130,7 +25,7 @@ new mouse pointer is than associated to the @code{GdkWindow} with the function
 @ifnotinfo
 @float Figure, figure-alignment
 @caption{Alignment Widget}
-@center @image{figures/alignment306x226, 204pt}
+@center @image{figures/alignment302x329, 201pt}
 @end float
 @end ifnotinfo
 
@@ -141,16 +36,40 @@ the window.
 
 The @code{GtkAlignment} widget has the four properties @code{xalign},
 @code{yalign}, @code{xscale}, and @code{yscale}.  The properties are floating
-point numbers, which can range from @code{0.0} to @code{1.0}. The @code{xalign}
-and @code{yalign} properties affect the position of the widget placed within
-the @code{GtkAlignment} widget.  The @code{xscale} and @code{yscale} properties
-affect the amount of space allocated to the widget.
+point numbers.  The align settings are used to place the child widget within the
+available area.  The values range from @code{0.0} (top or left) to @code{1.0}
+(bottom or right).  Of course, if the scale settings are both set to @code{1.0},
+the alignment settings have no effect.  The scale settings are used to specify
+how much the child widget should expand to fill the space allocated to the
+@code{GtkAlignment}. The values can range from @code{0.0} (meaning the child
+doesn't expand at all) to @code{1.0} (meaning the child expands to fill all of
+the available space).
 
 The properties are set when creating the @code{GtkAlignment} widget with the
 function @code{gtk-alignment-new}.  For an existing {GtkAlignment} widget the
 properties can be set with the function @code{gtk-alignemt-set}.  A child widget
 can be added to the @code{GtkAlignment} widget using the function
 @code{gtk-container-add}.
+
+@findex gtk-frame-set-padding
+@findex gtk-frame-get-padding
+
+@findex frame-set-padding, gtk-frame-set-padding
+@findex frame-get-padding, gtk-frame-get-padding
+
+In addition, the @code{GtkAlignment} widget has the properties
+@code{top-padding}, @code{bottom-padding}, @code{left-padding}, and
+@code{right-padding}.  These properties control how many space is added to the
+sides of the widget.  The functions @code{gtk-frame-set-padding} and
+@code{gtk-frame-get-padding} are used to set or to retrieve the padding
+properties.
+
+@noindent
+@emph{Note:}
+
+Note that the desired effect can in most cases be achieved by using the
+"halign", "valign" and "margin" properties on the child widget, so
+@code{GtkAlignment} should not be used in new code.
 
 @float Example, example-alignment
 @caption{Alignment Widget}
@@ -161,25 +80,75 @@ can be added to the @code{GtkAlignment} widget using the function
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Alignment"
-                                 :default-width 300
-                                 :default-height 200
-                                 :border-width 12))
-          (button (make-instance 'gtk-button
-                                 :label "Quit"))
-          (alignment (make-instance 'gtk-alignment
-                                    :xalign 0.25
-                                    :yalign 0.25
-                                    :xscale 0.75
-                                    :yscale 0.50)))
+                                 :border-width 12
+                                 :width-request 300
+                                 :height-request 300))
+          (grid (make-instance 'gtk-grid
+                                :column-spacing 12
+                                :column-homogeneous t
+                                :row-spacing 12
+                                :row-homogeneous t)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-widget-destroy window)))
-      (gtk-container-add alignment button)
-      (gtk-container-add window alignment)
-      (gtk-widget-show window))))
+                          (gtk-main-quit)))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 0, yalign: 0"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 0.00
+                                      :yalign 0.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 0 1 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 0, yalign: 1"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 0.00
+                                      :yalign 1.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 1 1 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 1, yalign: 0"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 1.00
+                                      :yalign 0.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 0 2 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 1, yalign: 1"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 1.00
+                                      :yalign 1.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 1 2 1 1))
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
 @end verbatim
 
+@c -----------------------------------------------------------------------------
 @section Fixed Container
 
 @findex GtkFixed
