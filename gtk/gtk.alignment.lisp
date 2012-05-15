@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkAlignment
 ;;; 
 ;;; A widget which controls the alignment and size of its child
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkAlignment
-;;;
+;;;     
 ;;;     gtk_alignment_new
 ;;;     gtk_alignment_set
 ;;;     gtk_alignment_get_padding
@@ -53,6 +53,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkAlignment implements AtkImplementorIface and GtkBuildable.
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "bottom-padding"           guint                 : Read / Write
@@ -70,21 +71,21 @@
 ;;; It has four settings: xscale, yscale, xalign, and yalign.
 ;;; 
 ;;; The scale settings are used to specify how much the child widget should
-;;; expand to fill the space allocated to the GtkAlignment. The values can
-;;; range from 0 (meaning the child doesn't expand at all) to 1 (meaning the
-;;; child expands to fill all of the available space).
+;;; expand to fill the space allocated to the GtkAlignment. The values can range
+;;; from 0 (meaning the child doesn't expand at all) to 1 (meaning the child
+;;; expands to fill all of the available space).
 ;;; 
 ;;; The align settings are used to place the child widget within the available
 ;;; area. The values range from 0 (top or left) to 1 (bottom or right). Of
-;;; course, if the scale settings are both set to 1, the alignment settings
-;;; have no effect.
+;;; course, if the scale settings are both set to 1, the alignment settings have
+;;; no effect.
 ;;; 
 ;;; Note
 ;;; 
 ;;; Note that the desired effect can in most cases be achieved by using the
 ;;; "halign", "valign" and "margin" properties on the child widget, so
 ;;; GtkAlignment should not be used in new code.
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -146,8 +147,8 @@
 ;;; 
 ;;;   "xalign"                   gfloat                : Read / Write
 ;;; 
-;;; Horizontal position of child in available space. 0.0 is left aligned,
-;;; 1.0 is right aligned.
+;;; Horizontal position of child in available space. 0.0 is left aligned, 1.0 is
+;;; right aligned.
 ;;; 
 ;;; Allowed values: [0,1]
 ;;; 
@@ -170,8 +171,8 @@
 ;;; 
 ;;;   "yalign"                   gfloat                : Read / Write
 ;;; 
-;;; Vertical position of child in available space. 0.0 is top aligned,
-;;; 1.0 is bottom aligned.
+;;; Vertical position of child in available space. 0.0 is top aligned, 1.0 is
+;;; bottom aligned.
 ;;; 
 ;;; Allowed values: [0,1]
 ;;; 
@@ -182,12 +183,13 @@
 ;;; 
 ;;;   "yscale"                   gfloat                : Read / Write
 ;;; 
-;;; If available vertical space is bigger than needed for the child, how much
-;;; of it to use for the child. 0.0 means none, 1.0 means all.
+;;; If available vertical space is bigger than needed for the child, how much of
+;;; it to use for the child. 0.0 means none, 1.0 means all.
 ;;; 
 ;;; Allowed values: [0,1]
 ;;; 
 ;;; Default value: 1
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -201,7 +203,8 @@
 (define-g-object-class "GtkAlignment" gtk-alignment
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_alignment_get_type")
   ((bottom-padding
     gtk-alignment-bottom-padding
@@ -243,21 +246,23 @@
 ;;;     (right).
 ;;; 
 ;;; yalign :
-;;;     the vertical alignment of the child widget, from 0 (top) to 1 (bottom)
+;;;     the vertical alignment of the child widget, from 0 (top) to 1 (bottom).
 ;;; 
 ;;; xscale :
 ;;;     the amount that the child widget expands horizontally to fill up unused
 ;;;     space, from 0 to 1. A value of 0 indicates that the child widget should
 ;;;     never expand. A value of 1 indicates that the child widget will expand
-;;;     to fill all of the space allocated for the GtkAlignment
+;;;     to fill all of the space allocated for the GtkAlignment.
 ;;; 
 ;;; yscale :
 ;;;     the amount that the child widget expands vertically to fill up unused
-;;;     space, from 0 to 1. The values are similar to xscale
+;;;     space, from 0 to 1. The values are similar to xscale.
 ;;; 
 ;;; Returns :
-;;;     the new GtkAlignment
+;;;     the new GtkAlignment.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-alignmnet-new))
 
 (defun gtk-alignment-new (xalign yalign xscale yscale)
   (make-instance 'gtk-alignment
@@ -300,6 +305,8 @@
 ;;;     space, from 0 to 1. The values are similar to xscale.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-alignment-set))
+
 (defun gtk-alignment-set (alignment xalign yalign xscale yscale)
   (setf (gtk-alignment-xalign alignment) xalign
         (gtk-alignment-yalign alignment) yalign
@@ -317,26 +324,28 @@
 ;;;                                 guint *padding_left,
 ;;;                                 guint *padding_right);
 ;;; 
-;;; Gets the padding on the different sides of the widget.
-;;; See gtk_alignment_set_padding().
+;;; Gets the padding on the different sides of the widget. See
+;;; gtk_alignment_set_padding().
 ;;; 
 ;;; alignment :
 ;;;     a GtkAlignment
 ;;; 
 ;;; padding_top :
-;;;     location to store the padding for the top of the widget, or NULL.
+;;;     location to store the padding for the top of the widget, or NULL
 ;;; 
 ;;; padding_bottom :
-;;;     location to store the padding for the bottom of the widget, or NULL.
+;;;     location to store the padding for the bottom of the widget, or NULL
 ;;; 
 ;;; padding_left :
-;;;     location to store the padding for the left of the widget, or NULL.
+;;;     location to store the padding for the left of the widget, or NULL
 ;;; 
 ;;; padding_right :
-;;;     location to store the padding for the right of the widget, or NULL.
+;;;     location to store the padding for the right of the widget, or NULL
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-alignment-get-padding))
 
 (defun gtk-alignment-get-padding (alignment)
   (values (gtk-alignment-top-padding alignment)
@@ -376,6 +385,8 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-alignment-set-padding))
 
 (defun gtk-alignment-set-padding (alignment top bottom left right)
   (setf (gtk-alignment-top-padding alignment) top

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkAspectFrame
 ;;; 
 ;;; A frame that constrains its child to a particular aspect ratio
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkAspectFrame
-;;;
+;;;     
 ;;;     gtk_aspect_frame_new
 ;;;     gtk_aspect_frame_set
 ;;; 
@@ -126,15 +126,20 @@
 (define-g-object-class "GtkAspectFrame" gtk-aspect-frame
   (:superclass gtk-frame
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_aspect_frame_get_type")
-  ((obey-child gtk-aspect-frame-obey-child
+  ((obey-child
+    gtk-aspect-frame-obey-child
     "obey-child" "gboolean" t t)
-   (ratio gtk-aspect-frame-ratio
+   (ratio
+    gtk-aspect-frame-ratio
     "ratio" "gfloat" t t)
-   (xalign gtk-aspect-frame-xalign
+   (xalign
+    gtk-aspect-frame-xalign
     "xalign" "gfloat" t t)
-   (yalign gtk-aspect-frame-yalign
+   (yalign
+    gtk-aspect-frame-yalign
     "yalign" "gfloat" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -153,13 +158,13 @@
 ;;; 
 ;;; xalign :
 ;;;     Horizontal alignment of the child within the allocation of the
-;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0
-;;;    (right aligned)
+;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0 (right
+;;;     aligned)
 ;;; 
 ;;; yalign :
 ;;;     Vertical alignment of the child within the allocation of the
-;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0
-;;;     (right aligned)
+;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0 (right
+;;;     aligned)
 ;;; 
 ;;; ratio :
 ;;;     The desired aspect ratio.
@@ -171,6 +176,8 @@
 ;;; Returns :
 ;;;     the new GtkAspectFrame.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-aspect-frame-new))
 
 (defun gkt-aspect-frame-new (label xalign yalign ratio obey-child)
   (make-instance 'gtk-aspect-frame
@@ -198,13 +205,13 @@
 ;;; 
 ;;; xalign :
 ;;;     Horizontal alignment of the child within the allocation of the
-;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0
-;;;     (right aligned)
+;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0 (right
+;;;     aligned)
 ;;; 
 ;;; yalign :
 ;;;     Vertical alignment of the child within the allocation of the
-;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0
-;;;     (right aligned)
+;;;     GtkAspectFrame. This ranges from 0.0 (left aligned) to 1.0 (right
+;;;     aligned)
 ;;; 
 ;;; ratio :
 ;;;     The desired aspect ratio.
@@ -213,6 +220,8 @@
 ;;;     If TRUE, ratio is ignored, and the aspect ratio is taken from the
 ;;;     requistion of the child.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-aspect-frame-set))
 
 (defun gtk-aspect-frame-set (aspect-frame xalign yalign ratio obey-child)
   (setf (gtk-aspect-frame-xalign aspect-frame) xalign
