@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkMessageDialog
 ;;; 
 ;;; A convenient message window
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkMessageDialog
@@ -61,7 +61,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkMessageDialog implements AtkImplementorIface and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "buttons"                  GtkButtonsType       : Write / Construct Only
@@ -75,7 +75,7 @@
 ;;; 
 ;;; Style Properties
 ;;; 
-;;;   "message-border"           gint                  : Read
+;;;   "message-border"           gint                 : Read
 ;;; 
 ;;; Description
 ;;; 
@@ -84,6 +84,10 @@
 ;;; convenience widget; you could construct the equivalent of GtkMessageDialog
 ;;; from GtkDialog without too much effort, but GtkMessageDialog saves typing.
 ;;; 
+;;; One difference from GtkDialog is that GtkMessageDialog sets the
+;;; "skip-taskbar-hint" property to TRUE, so that the dialog is hidden from the
+;;; taskbar by default.
+;;; 
 ;;; The easiest way to do a modal message dialog is to use gtk_dialog_run(),
 ;;; though you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run()
 ;;; automatically makes the dialog modal and waits for the user to respond to
@@ -91,37 +95,36 @@
 ;;; 
 ;;; Example 46. A modal dialog.
 ;;; 
-;;;  dialog = gtk_message_dialog_new (main_application_window,
-;;;                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                                   GTK_MESSAGE_ERROR,
-;;;                                   GTK_BUTTONS_CLOSE,
-;;;                                   "Error loading file '%s': %s",
-;;;                                   filename, g_strerror (errno));
-;;;  gtk_dialog_run (GTK_DIALOG (dialog));
-;;;  gtk_widget_destroy (dialog);
+;;; dialog = gtk_message_dialog_new (main_application_window,
+;;;                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+;;;                                  GTK_MESSAGE_ERROR,
+;;;                                  GTK_BUTTONS_CLOSE,
+;;;                                  "Error loading file '%s': %s",
+;;;                                  filename, g_strerror (errno));
+;;; gtk_dialog_run (GTK_DIALOG (dialog));
+;;; gtk_widget_destroy (dialog);
 ;;; 
 ;;; You might do a non-modal GtkMessageDialog as follows:
 ;;; 
 ;;; Example 47. A non-modal dialog.
 ;;; 
-;;;  dialog = gtk_message_dialog_new (main_application_window,
-;;;                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                                   GTK_MESSAGE_ERROR,
-;;;                                   GTK_BUTTONS_CLOSE,
-;;;                                   "Error loading file '%s': %s",
-;;;                                   filename, g_strerror (errno));
+;;; dialog = gtk_message_dialog_new (main_application_window,
+;;;                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+;;;                                  GTK_MESSAGE_ERROR,
+;;;                                  GTK_BUTTONS_CLOSE,
+;;;                                  "Error loading file '%s': %s",
+;;;                                  filename, g_strerror (errno));
 ;;; 
-;;;  /* Destroy the dialog when the user responds to it (e.g. clicks a button)*/
-;;;  g_signal_connect_swapped (dialog, "response",
-;;;                            G_CALLBACK (gtk_widget_destroy),
-;;;                            dialog);
-;;; 
+;;; /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
+;;; g_signal_connect_swapped (dialog, "response",
+;;;                           G_CALLBACK (gtk_widget_destroy),
+;;;                           dialog);
 ;;; 
 ;;; GtkMessageDialog as GtkBuildable
 ;;; 
 ;;; The GtkMessageDialog implementation of the GtkBuildable interface exposes
 ;;; the message area as an internal child with the name "message_area".
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -129,7 +132,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "buttons" property
 ;;; 
-;;;   "buttons" GtkButtonsType                          : Write / Construct Only
+;;;   "buttons"                  GtkButtonsType        : Write / Construct Only
 ;;; 
 ;;; The buttons shown in the message dialog.
 ;;; 
@@ -138,7 +141,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "image" property
 ;;; 
-;;;   "image"                    GtkWidget*             : Read / Write
+;;;   "image"                    GtkWidget*            : Read / Write
 ;;; 
 ;;; The image for this dialog.
 ;;; 
@@ -149,9 +152,9 @@
 ;;; 
 ;;;   "message-area"             GtkWidget*            : Read
 ;;; 
-;;; The GtkVBox that corresponds to the message area of this dialog.
-;;; See gtk_message_dialog_get_message_area() for a detailed description of
-;;; this area.
+;;; The GtkVBox that corresponds to the message area of this dialog. See
+;;; gtk_message_dialog_get_message_area() for a detailed description of this
+;;; area.
 ;;; 
 ;;; Since 2.22
 ;;;
@@ -182,8 +185,8 @@
 ;;; 
 ;;;   "secondary-use-markup"     gboolean              : Read / Write
 ;;; 
-;;; TRUE if the secondary text of the dialog includes Pango markup.
-;;; See pango_parse_markup().
+;;; TRUE if the secondary text of the dialog includes Pango markup. See
+;;; pango_parse_markup().
 ;;; 
 ;;; Default value: FALSE
 ;;; 
@@ -206,8 +209,8 @@
 ;;; 
 ;;;   "use-markup"               gboolean              : Read / Write
 ;;; 
-;;; TRUE if the primary text of the dialog includes Pango markup.
-;;; See pango_parse_markup().
+;;; TRUE if the primary text of the dialog includes Pango markup. See
+;;; pango_parse_markup().
 ;;; 
 ;;; Default value: FALSE
 ;;; 
@@ -227,8 +230,6 @@
 ;;; Allowed values: >= 0
 ;;; 
 ;;; Default value: 12
-;;; See Also
-;;; GtkDialog
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -280,7 +281,8 @@
 (define-g-object-class "GtkMessageDialog" gtk-message-dialog
   (:superclass gtk-dialog
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_message_dialog_get_type")
   ((buttons
     gtk-message-dialog-buttons
@@ -304,7 +306,7 @@
     gtk-message-dialog-use-markup
     "use-markup" "gboolean" t t)))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkMessageType
 ;;; 
 ;;; typedef enum {
@@ -402,10 +404,9 @@
 ;;;                                     ...);
 ;;; 
 ;;; Creates a new message dialog, which is a simple dialog with an icon
-;;; indicating the dialog type (error, warning, etc.) and some text the user
-;;; may want to see. When the user clicks a button a "response" signal is
-;;; emitted with response IDs from GtkResponseType. See GtkDialog for more
-;;; details.
+;;; indicating the dialog type (error, warning, etc.) and some text the user may
+;;; want to see. When the user clicks a button a "response" signal is emitted
+;;; with response IDs from GtkResponseType. See GtkDialog for more details.
 ;;; 
 ;;; parent :
 ;;;     transient parent, or NULL for none
@@ -453,14 +454,14 @@
 ;;; can't pass the markup string either as the format (it might contain '%'
 ;;; characters) or as a string argument.
 ;;; 
-;;;  GtkWidget *dialog;
-;;;  dialog = gtk_message_dialog_new (main_application_window,
-;;;                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                                   GTK_MESSAGE_ERROR,
-;;;                                   GTK_BUTTONS_CLOSE,
-;;;                                   NULL);
-;;;  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
-;;;                                 markup);
+;;; GtkWidget *dialog;
+;;; dialog = gtk_message_dialog_new (main_application_window,
+;;;                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+;;;                                  GTK_MESSAGE_ERROR,
+;;;                                  GTK_BUTTONS_CLOSE,
+;;;                                  NULL);
+;;; gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
+;;;                                markup);
 ;;; 
 ;;; parent :
 ;;;     transient parent, or NULL for none
@@ -489,16 +490,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_set_markup ()
 ;;; 
-;;; void gtk_message_dialog_set_markup (GtkMessageDialog *dialog,
-;;;                                     const gchar *text);
+;;; void gtk_message_dialog_set_markup (GtkMessageDialog *message_dialog,
+;;;                                     const gchar *str);
 ;;; 
 ;;; Sets the text of the message dialog to be str, which is marked up with the
 ;;; Pango text markup language.
 ;;; 
-;;; dialog :
+;;; message_dialog :
 ;;;     a GtkMessageDialog
 ;;; 
-;;; text :
+;;; str :
 ;;;     markup string (see Pango markup format)
 ;;; 
 ;;; Since 2.4
@@ -603,11 +604,11 @@
 ;;; contain special XML characters, you should use g_markup_printf_escaped() to
 ;;; escape it.
 ;;; 
-;;;  gchar *msg;
-;;;  
-;;;  msg = g_markup_printf_escaped (message_format, ...);
-;;;  gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
-;;;  g_free (msg);
+;;; gchar *msg;
+;;; 
+;;; msg = g_markup_printf_escaped (message_format, ...);
+;;; gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
+;;; g_free (msg);
 ;;; 
 ;;; message_dialog :
 ;;;     a GtkMessageDialog
@@ -624,7 +625,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_get_message_area ()
 ;;; 
-;;; GtkWidget * gtk_message_dialog_get_message_area (GtkMessageDialog *dialog)
+;;; GtkWidget * gtk_message_dialog_get_message_area
+;;;                                          (GtkMessageDialog *message_dialog);
 ;;; 
 ;;; Returns the message area of the dialog. This is the box where the dialog's
 ;;; primary and secondary labels are packed. You can add your own extra content
@@ -633,11 +635,11 @@
 ;;; gtk_dialog_get_content_area() for the corresponding function in the parent
 ;;; GtkDialog.
 ;;; 
-;;; dialog :
+;;; message_dialog :
 ;;;     a GtkMessageDialog
 ;;; 
 ;;; Returns :
-;;;     a GtkVBox corresponding to the "message area" in the message_dialog
+;;;     A GtkVBox corresponding to the "message area" in the message_dialog.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------

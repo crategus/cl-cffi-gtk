@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,71 +27,68 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkFixed
-;;; 
+;;;
 ;;; A container which allows you to position widgets at fixed coordinates
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkFixed
-;;;     
+;;;
 ;;;     gtk_fixed_new
 ;;;     gtk_fixed_put
 ;;;     gtk_fixed_move
 ;;;
-;;;     From the GTK+ 2 Reference Manual
-;;;
-;;;     gtk_fixed_get_has_window
-;;;     gtk_fixed_set_has_window
-;;; 
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkContainer
 ;;;                      +----GtkFixed
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkFixed implements AtkImplementorIface and GtkBuildable.
 ;;;
 ;;; Child Properties
-;;; 
+;;;
 ;;;   "x"                        gint                  : Read / Write
 ;;;   "y"                        gint                  : Read / Write
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; The GtkFixed widget is a container which can place child widgets at fixed
 ;;; positions and with fixed sizes, given in pixels. GtkFixed performs no
 ;;; automatic layout management.
-;;; 
+;;;
 ;;; For most applications, you should not use this container! It keeps you from
 ;;; having to learn about the other GTK+ containers, but it results in broken
 ;;; applications. With GtkFixed, the following things will result in truncated
 ;;; text, overlapping widgets, and other display bugs:
-;;; 
-;;;     * Themes, which may change widget sizes.
-;;;     * Fonts other than the one you used to write the app will of course
-;;;       change the size of widgets containing text; keep in mind that users
-;;;       may use a larger font because of difficulty reading the default, or
-;;;       they may be using Windows or the framebuffer port of GTK+, where
-;;;       different fonts are available.
-;;;     * Translation of text into other languages changes its size. Also,
-;;;       display of non-English text will use a different font in many cases.
-;;; 
+;;;
+;;;   * Themes, which may change widget sizes.
+;;;
+;;;   * Fonts other than the one you used to write the app will of course
+;;;     change the size of widgets containing text; keep in mind that users may
+;;;     use a larger font because of difficulty reading the default, or they
+;;;     may be using Windows or the framebuffer port of GTK+, where different
+;;;     fonts are available.
+;;;
+;;;   * Translation of text into other languages changes its size. Also,
+;;;     display of non-English text will use a different font in many cases.
+;;;
 ;;; In addition, the fixed widget can't properly be mirrored in right-to-left
 ;;; languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the
 ;;; interface to put labels to the right of the thing they label, but it can't
 ;;; do that with GtkFixed. So your application will not be usable in
 ;;; right-to-left languages.
-;;; 
+;;;
 ;;; Finally, fixed positioning makes it kind of annoying to add/remove GUI
 ;;; elements, since you have to reposition all the other elements. This is a
 ;;; long-term maintenance problem for your application.
-;;; 
+;;;
 ;;; If you know none of these things are an issue for your application, and
 ;;; prefer the simplicity of GtkFixed, by all means use the widget. But you
 ;;; should be aware of the tradeoffs.
@@ -102,20 +99,20 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "x" child property
-;;; 
+;;;
 ;;;   "x"                        gint                  : Read / Write
-;;; 
+;;;
 ;;; X position of child widget.
-;;; 
+;;;
 ;;; Default value: 0
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "y" child property
-;;; 
+;;;
 ;;;   "y"                        gint                  : Read / Write
-;;; 
+;;;
 ;;; Y position of child widget.
-;;; 
+;;;
 ;;; Default value: 0
 ;;; ----------------------------------------------------------------------------
 
@@ -123,7 +120,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFixed
-;;; 
+;;;
 ;;; struct GtkFixed;
 ;;; ----------------------------------------------------------------------------
 
@@ -133,11 +130,10 @@
 (define-g-object-class "GtkFixed" gtk-fixed
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_fixed_get_type")
-  ((:cffi has-window
-          gtk-fixed-has-window :boolean
-          "gtk_fixed_get_has_window" "gtk_fixed_set_has_window")))
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -149,16 +145,18 @@
                        gtk-fixed-child-y
                        "y" "gint" t t t)
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; gtk_fixed_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_fixed_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkFixed.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkFixed.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-fixed-new))
 
 (defun gtk-fixed-new ()
   (make-instance 'gtk-fixed))
@@ -167,20 +165,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_fixed_put ()
-;;; 
+;;;
 ;;; void gtk_fixed_put (GtkFixed *fixed, GtkWidget *widget, gint x, gint y);
-;;; 
+;;;
 ;;; Adds a widget to a GtkFixed container at the given position.
-;;; 
+;;;
 ;;; fixed :
 ;;;     a GtkFixed.
-;;; 
+;;;
 ;;; widget :
 ;;;     the widget to add.
-;;; 
+;;;
 ;;; x :
 ;;;     the horizontal position to place the widget at.
-;;; 
+;;;
 ;;; y :
 ;;;     the vertical position to place the widget at.
 ;;; ----------------------------------------------------------------------------
@@ -195,20 +193,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_fixed_move ()
-;;; 
+;;;
 ;;; void gtk_fixed_move (GtkFixed *fixed, GtkWidget *widget, gint x, gint y);
-;;; 
+;;;
 ;;; Moves a child of a GtkFixed container to the given position.
-;;; 
+;;;
 ;;; fixed :
 ;;;     a GtkFixed.
-;;; 
+;;;
 ;;; widget :
 ;;;     the child widget.
-;;; 
+;;;
 ;;; x :
 ;;;     the horizontal position to move the widget to.
-;;; 
+;;;
 ;;; y :
 ;;;     the vertical position to move the widget to.
 ;;; ----------------------------------------------------------------------------
@@ -220,60 +218,5 @@
   (y :int))
 
 (export 'gtk-fixed-move)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_fixed_get_has_window ()
-;;; 
-;;; gboolean gtk_fixed_get_has_window (GtkFixed *fixed);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_fixed_get_has_window has been deprecated since version 2.20 and should
-;;; not be used in newly-written code. Use gtk_widget_get_has_window() instead.
-;;; 
-;;; Gets whether the GtkFixed has its own GdkWindow. See
-;;; gtk_fixed_set_has_window().
-;;; 
-;;; fixed :
-;;;     a GtkWidget
-;;; 
-;;; Returns :
-;;;     TRUE if fixed has its own window
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-fixed-get-has-window (fixed)
-  (gtk-fixed-has-window fixed))
-
-(export 'gtk-fixed-get-has-window)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_fixed_set_has_window ()
-;;; 
-;;; void gtk_fixed_set_has_window (GtkFixed *fixed, gboolean has_window);
-;;;
-;;; Warning
-;;; 
-;;; gtk_fixed_set_has_window has been deprecated since version 2.20 and should
-;;; not be used in newly-written code. Use gtk_widget_set_has_window() instead.
-;;; 
-;;; Sets whether a GtkFixed widget is created with a separate GdkWindow for
-;;; widget->window or not. (By default, it will be created with no separate
-;;; GdkWindow). This function must be called while the GtkFixed is not realized,
-;;; for instance, immediately after the window is created.
-;;; 
-;;; This function was added to provide an easy migration path for older
-;;; applications which may expect GtkFixed to have a separate window.
-;;; 
-;;; fixed :
-;;;     a GtkFixed
-;;; 
-;;; has_window :
-;;;     TRUE if a separate window should be created
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-fixed-set-has-window (fixed has-window)
-  (setf (gtk-fixed-has-window fixed) has-window))
-
-(export 'gtk-fixed-set-has-wiindow)
 
 ;;; --- End of file gtk.fixed.lisp ---------------------------------------------

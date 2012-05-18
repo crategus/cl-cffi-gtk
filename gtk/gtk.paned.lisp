@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkPaned
 ;;; 
 ;;; A widget with two adjustable panes
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkPaned
@@ -60,7 +60,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "max-position"             gint                  : Read
@@ -115,22 +115,22 @@
 ;;; The application can set the position of the slider as if it were set by the
 ;;; user, by calling gtk_paned_set_position().
 ;;; 
-;;; Example 91. Creating a paned widget with minimum sizes.	
+;;; Example 91. Creating a paned widget with minimum sizes.
 ;;; 
-;;;  GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-;;;  GtkWidget *frame1 = gtk_frame_new (NULL);
-;;;  GtkWidget *frame2 = gtk_frame_new (NULL);
-;;;  gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
-;;;  gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
+;;; GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+;;; GtkWidget *frame1 = gtk_frame_new (NULL);
+;;; GtkWidget *frame2 = gtk_frame_new (NULL);
+;;; gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
+;;; gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
 ;;; 
-;;;  gtk_widget_set_size_request (hpaned, 200, -1);
+;;; gtk_widget_set_size_request (hpaned, 200, -1);
 ;;; 
-;;;  gtk_paned_pack1 (GTK_PANED (hpaned), frame1, TRUE, FALSE);
-;;;  gtk_widget_set_size_request (frame1, 50, -1);
+;;; gtk_paned_pack1 (GTK_PANED (hpaned), frame1, TRUE, FALSE);
+;;; gtk_widget_set_size_request (frame1, 50, -1);
 ;;; 
-;;;  gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
-;;;  gtk_widget_set_size_request (frame2, 50, -1);
-;;;
+;;; gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
+;;; gtk_widget_set_size_request (frame2, 50, -1);
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -256,8 +256,8 @@
 ;;;                         gpointer  user_data)      : Action
 ;;; 
 ;;; The ::cancel-position signal is a keybinding signal which gets emitted to
-;;; cancel moving the position of the handle using key bindings. The position
-;;; of the handle will be reset to the value prior to moving it.
+;;; cancel moving the position of the handle using key bindings. The position of
+;;; the handle will be reset to the value prior to moving it.
 ;;; 
 ;;; The default binding for this signal is Escape.
 ;;; 
@@ -299,8 +299,8 @@
 ;;;                         gboolean  reversed,
 ;;;                         gpointer  user_data)      : Action
 ;;; 
-;;; The ::cycle-handle-focus signal is a keybinding signal which gets emitted
-;;; to cycle whether the paned should grab focus to allow the user to change
+;;; The ::cycle-handle-focus signal is a keybinding signal which gets emitted to
+;;; cycle whether the paned should grab focus to allow the user to change
 ;;; position of the handle by using key bindings.
 ;;; 
 ;;; The default binding for this signal is f8.
@@ -372,16 +372,24 @@
 (define-g-object-class "GtkPaned" gtk-paned
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_paned_get_type")
-  ((max-position gtk-paned-max-position
+  ((max-position
+    gtk-paned-max-position
     "max-position" "gint" t nil)
-   (min-position gtk-paned-min-position
+   (min-position
+    gtk-paned-min-position
     "min-position" "gint" t nil)
-   (position gtk-paned-position
+   (position
+    gtk-paned-position
     "position" "gint" t t)
-   (position-set gtk-paned-position-set
+   (position-set
+    gtk-paned-position-set
     "position-set" "gboolean" t t)))
+
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkPaned"
                        gtk-paned-child-resize "resize" "gboolean" t t t)
@@ -566,8 +574,8 @@
 ;;;     a GtkPaned widget
 ;;; 
 ;;; position :
-;;;     pixel position of divider, a negative value means that the position
-;;;     is unset.
+;;;     pixel position of divider, a negative value means that the position is
+;;;     unset.
 ;;; ----------------------------------------------------------------------------
 
 (defun gkt-paned-set-position (paned position)
@@ -621,8 +629,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GtkHPaned
 ;;; 
-;;; GtkHPaned � A container with two panes arranged horizontally
-;;; 
+;;; A container with two panes arranged horizontally
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkHPaned
@@ -641,7 +649,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkHPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
+;;; 
 ;;; Description
 ;;; 
 ;;; The HPaned widget is a container widget with two children arranged
@@ -655,10 +663,6 @@
 ;;; struct GtkHPaned
 ;;; 
 ;;; struct GtkHPaned;
-;;; 
-;;; Warning
-;;; 
-;;; GtkHPaned is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -670,6 +674,8 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_hpaned_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHPaned"
                        gtk-h-paned-child-resize "resize" "gboolean" t t t)
@@ -702,12 +708,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVPaned
 ;;; 
-;;; GtkVPaned � A container with two panes arranged vertically
-;;; 
+;;; GtkVPaned — A container with two panes arranged vertically
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkVPaned
-;;;
+;;;     
 ;;;     gtk_vpaned_new
 ;;; 
 ;;; Object Hierarchy
@@ -722,6 +728,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkVPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
+;;; 
 ;;; Description
 ;;; 
 ;;; The VPaned widget is a container widget with two children arranged
@@ -735,10 +742,6 @@
 ;;; struct GtkVPaned
 ;;; 
 ;;; struct GtkVPaned;
-;;; 
-;;; Warning
-;;; 
-;;; GtkVPaned is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -750,6 +753,8 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_vpaned_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVPaned"
                        gtk-v-paned-child-resize "resize" "gboolean" t t t)

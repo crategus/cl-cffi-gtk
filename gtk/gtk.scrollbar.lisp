@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkScrollbar
 ;;; 
 ;;; A Scrollbar
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkScrollbar
-;;;
+;;;     
 ;;;     gtk_scrollbar_new
 ;;; 
 ;;; Object Hierarchy
@@ -51,7 +51,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkScrollbar implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
+;;; 
 ;;; Style Properties
 ;;; 
 ;;;   "fixed-slider-length"            gboolean              : Read
@@ -148,7 +148,9 @@
 (define-g-object-class "GtkScrollbar" gtk-scrollbar
   (:superclass gtk-range
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_scrollbar_get_type")
   nil)
 
@@ -161,13 +163,13 @@
 ;;; Creates a new scrollbar with the given orientation.
 ;;; 
 ;;; orientation :
-;;; 	the scrollbar's orientation
+;;;     the scrollbar's orientation.
 ;;; 
 ;;; adjustment :
-;;; 	the GtkAdjustment to use, or NULL to create a new adjustment
+;;;     the GtkAdjustment to use, or NULL to create a new adjustment
 ;;; 
 ;;; Returns :
-;;; 	the new GtkScrollbar
+;;;     the new GtkScrollbar
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -185,11 +187,11 @@
 ;;; GtkHScrollbar
 ;;; 
 ;;; A horizontal scrollbar
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkHScrollbar
-;;;
+;;;     
 ;;;     gtk_hscrollbar_new
 ;;; 
 ;;; Object Hierarchy
@@ -210,10 +212,9 @@
 ;;; 
 ;;; The GtkHScrollbar widget is a widget arranged horizontally creating a
 ;;; scrollbar. See GtkScrollbar for details on scrollbars. GtkAdjustment
-;;; pointers may be added to handle the adjustment of the scrollbar or it may
-;;; be left NULL in which case one will be created for you. See GtkScrollbar
-;;; for a description of what the fields in an adjustment represent for a
-;;; scrollbar.
+;;; pointers may be added to handle the adjustment of the scrollbar or it may be
+;;; left NULL in which case one will be created for you. See GtkScrollbar for a
+;;; description of what the fields in an adjustment represent for a scrollbar.
 ;;; 
 ;;; GtkHScrollbar has been deprecated, use GtkScrollbar instead.
 ;;; ----------------------------------------------------------------------------
@@ -222,11 +223,7 @@
 ;;; struct GtkHScrollbar
 ;;; 
 ;;; struct GtkHScrollbar;
-;;; 
-;;; Warning
-;;; 
-;;; GtkHScrollbar is deprecated and should not be used in newly-written code.
-;;; --------------------------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (register-object-type "GtkHScrollbar" 'gtk-hscrollbar)
@@ -240,7 +237,7 @@
    :type-initializer "gtk_hscrollbar_get_type")
   nil)
 
-;;; --------------------------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 ;;; gtk_hscrollbar_new ()
 ;;; 
 ;;; GtkWidget * gtk_hscrollbar_new (GtkAdjustment *adjustment);
@@ -254,10 +251,10 @@
 ;;; Creates a new horizontal scrollbar.
 ;;; 
 ;;; adjustment :
-;;; 	the GtkAdjustment to use, or NULL to create a new adjustment.
+;;;     the GtkAdjustment to use, or NULL to create a new adjustment
 ;;; 
 ;;; Returns :
-;;; 	the new GtkHScrollbar
+;;;     the new GtkHScrollbar
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hscrollbar-new))
@@ -273,11 +270,11 @@
 ;;; GtkVScrollbar
 ;;; 
 ;;; A vertical scrollbar
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkVScrollbar
-;;;
+;;;     
 ;;;     gtk_vscrollbar_new
 ;;; 
 ;;; Object Hierarchy
@@ -293,15 +290,14 @@
 ;;; 
 ;;; GtkVScrollbar implements AtkImplementorIface, GtkBuildable and
 ;;; GtkOrientable.
-;;;
+;;; 
 ;;; Description
 ;;; 
 ;;; The GtkVScrollbar widget is a widget arranged vertically creating a
 ;;; scrollbar. See GtkScrollbar for details on scrollbars. GtkAdjustment
-;;; pointers may be added to handle the adjustment of the scrollbar or it may
-;;; be left NULL in which case one will be created for you. See GtkScrollbar
-;;; for a description of what the fields in an adjustment represent for a
-;;; scrollbar.
+;;; pointers may be added to handle the adjustment of the scrollbar or it may be
+;;; left NULL in which case one will be created for you. See GtkScrollbar for a
+;;; description of what the fields in an adjustment represent for a scrollbar.
 ;;; 
 ;;; GtkVScrollbar has been deprecated, use GtkScrollbar instead.
 ;;; ----------------------------------------------------------------------------
@@ -310,10 +306,9 @@
 ;;; struct GtkVScrollbar
 ;;; 
 ;;; struct GtkVScrollbar;
-;;; 
-;;; Warning
-;;; 
-;;; GtkVScrollbar is deprecated and should not be used in newly-written code.
+;;;
+;;; The GtkVScrollbar struct contains private data and should be accessed using
+;;; the functions below.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -342,10 +337,10 @@
 ;;; Creates a new vertical scrollbar.
 ;;; 
 ;;; adjustment :
-;;; 	the GtkAdjustment to use, or NULL to create a new adjustment.
+;;;     the GtkAdjustment to use, or NULL to create a new adjustment
 ;;; 
 ;;; Returns :
-;;; 	the new GtkVScrollbar
+;;;     the new GtkVScrollbar
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vscrollbar-new))

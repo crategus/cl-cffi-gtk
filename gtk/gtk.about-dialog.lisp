@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -29,11 +29,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkAboutDialog
-;;; 
+;;;
 ;;; Display information about an application
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkAboutDialog
 ;;;     GtkLicense
 ;;;
@@ -63,15 +63,16 @@
 ;;;     gtk_about_dialog_get_documenters
 ;;;     gtk_about_dialog_set_documenters
 ;;;     gtk_about_dialog_get_translator_credits
-;;;     gtk_about_dialog_set_translator_creditsr_credits
+;;;     gtk_about_dialog_set_translator_credits
 ;;;     gtk_about_dialog_get_logo
 ;;;     gtk_about_dialog_set_logo
 ;;;     gtk_about_dialog_get_logo_icon_name
 ;;;     gtk_about_dialog_set_logo_icon_name
+;;;     gtk_about_dialog_add_credit_section
 ;;;     gtk_show_about_dialog
 ;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
@@ -80,13 +81,13 @@
 ;;;                            +----GtkWindow
 ;;;                                  +----GtkDialog
 ;;;                                        +----GtkAboutDialog
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkAboutDialog implements AtkImplementorIface and GtkBuildable.
 ;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "artists"                  GStrv                 : Read / Write
 ;;;   "authors"                  GStrv                 : Read / Write
 ;;;   "comments"                 gchar*                : Read / Write
@@ -102,261 +103,263 @@
 ;;;   "website"                  gchar*                : Read / Write
 ;;;   "website-label"            gchar*                : Read / Write
 ;;;   "wrap-license"             gboolean              : Read / Write
-;;; 
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "activate-link"                                  : Run Last
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; The GtkAboutDialog offers a simple way to display information about a
 ;;; program like its logo, name, copyright, website and license. It is also
 ;;; possible to give credits to the authors, documenters, translators and
 ;;; artists who have worked on the program. An about dialog is typically opened
 ;;; when the user selects the About option from the Help menu. All parts of the
 ;;; dialog are optional.
-;;; 
+;;;
 ;;; About dialog often contain links and email addresses. GtkAboutDialog
 ;;; displays these as clickable links. By default, it calls gtk_show_uri() when
 ;;; a user clicks one. The behaviour can be overridden with the "activate-link"
 ;;; signal.
-;;; 
+;;;
 ;;; To make constructing a GtkAboutDialog as convenient as possible, you can
-;;; use the function gtk_show_about_dialog() which constructs and shows a
-;;; dialog and keeps it around so that it can be shown again.
-;;; 
+;;; use the function gtk_show_about_dialog() which constructs and shows a dialog
+;;; and keeps it around so that it can be shown again.
+;;;
 ;;; Note that GTK+ sets a default title of _("About %s") on the dialog window
-;;; (where %s is replaced by the name of the application, but in order to
-;;; ensure proper translation of the title, applications should set the title
-;;; property explicitly when constructing a GtkAboutDialog, as shown in the
-;;; following example:
-;;; 
-;;;  gtk_show_about_dialog (NULL,
-;;;                         "program-name", "ExampleCode",
-;;;                         "logo", example_logo,
-;;;                         "title" _("About ExampleCode"),
-;;;                         NULL);
-;;; 
+;;; (where %s is replaced by the name of the application, but in order to ensure
+;;; proper translation of the title, applications should set the title property
+;;; explicitly when constructing a GtkAboutDialog, as shown in the following
+;;; example:
+;;;
+;;; gtk_show_about_dialog (NULL,
+;;;                        "program-name", "ExampleCode",
+;;;                        "logo", example_logo,
+;;;                        "title" _("About ExampleCode"),
+;;;                        NULL);
+;;;
 ;;; It is also possible to show a GtkAboutDialog like any other GtkDialog, e.g.
 ;;; using gtk_dialog_run(). In this case, you might need to know that the
 ;;; 'Close' button returns the GTK_RESPONSE_CANCEL response id.
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "artists" property
-;;; 
+;;;
 ;;;   "artists"                  GStrv                 : Read / Write
-;;; 
+;;;
 ;;; The people who contributed artwork to the program, as a NULL-terminated
 ;;; array of strings. Each string may contain email addresses and URLs, which
 ;;; will be displayed as links, see the introduction for more details.
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "authors" property
-;;; 
+;;;
 ;;;   "authors"                  GStrv                 : Read / Write
-;;; 
+;;;
 ;;; The authors of the program, as a NULL-terminated array of strings. Each
 ;;; string may contain email addresses and URLs, which will be displayed as
 ;;; links, see the introduction for more details.
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "comments" property
-;;; 
+;;;
 ;;;   "comments"                 gchar*                : Read / Write
-;;; 
+;;;
 ;;; Comments about the program. This string is displayed in a label in the main
 ;;; dialog, thus it should be a short explanation of the main purpose of the
 ;;; program, not a detailed list of features.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "copyright" property
-;;; 
+;;;
 ;;;   "copyright"                gchar*                : Read / Write
-;;; 
+;;;
 ;;; Copyright information for the program.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "documenters" property
-;;; 
+;;;
 ;;;   "documenters"              GStrv                 : Read / Write
-;;; 
+;;;
 ;;; The people documenting the program, as a NULL-terminated array of strings.
-;;; Each string may contain email addresses and URLs, which will be displayed
-;;; as links, see the introduction for more details.
-;;; 
+;;; Each string may contain email addresses and URLs, which will be displayed as
+;;; links, see the introduction for more details.
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "license" property
-;;; 
+;;;
 ;;;   "license"                  gchar*                : Read / Write
-;;; 
+;;;
 ;;; The license of the program. This string is displayed in a text view in a
 ;;; secondary dialog, therefore it is fine to use a long multi-paragraph text.
 ;;; Note that the text is only wrapped in the text view if the "wrap-license"
 ;;; property is set to TRUE; otherwise the text itself must contain the
 ;;; intended linebreaks. When setting this property to a non-NULL value, the
 ;;; "license-type" property is set to GTK_LICENSE_CUSTOM as a side effect.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "license-type" property
-;;; 
+;;;
 ;;;   "license-type"             GtkLicense            : Read / Write
-;;; 
+;;;
 ;;; The license of the program, as a value of the GtkLicense enumeration.
-;;; 
+;;;
 ;;; The GtkAboutDialog will automatically fill out a standard disclaimer and
 ;;; link the user to the appropriate online resource for the license text.
-;;; 
+;;;
 ;;; If GTK_LICENSE_UNKNOWN is used, the link used will be the same specified in
 ;;; the "website" property.
-;;; 
+;;;
 ;;; If GTK_LICENSE_CUSTOM is used, the current contents of the "license"
 ;;; property are used.
-;;; 
+;;;
 ;;; For any other GtkLicense value, the contents of the "license" property are
 ;;; also set by this property as a side effect.
-;;; 
+;;;
 ;;; Default value: GTK_LICENSE_UNKNOWN
-;;; 
+;;;
 ;;; Since 3.0
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "logo" property
-;;; 
+;;;
 ;;;   "logo"                     GdkPixbuf*            : Read / Write
-;;; 
+;;;
 ;;; A logo for the about box. If this is not set, it defaults to
 ;;; gtk_window_get_default_icon_list().
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "logo-icon-name" property
-;;; 
+;;;
 ;;;   "logo-icon-name"           gchar*                : Read / Write
-;;; 
+;;;
 ;;; A named icon to use as the logo for the about box. This property overrides
 ;;; the "logo" property.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "program-name" property
-;;; 
+;;;
 ;;;   "program-name"             gchar*                : Read / Write
-;;; 
+;;;
 ;;; The name of the program. If this is not set, it defaults to
 ;;; g_get_application_name().
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.12
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "translator-credits" property
-;;; 
+;;;
 ;;;   "translator-credits"       gchar*                : Read / Write
-;;; 
+;;;
 ;;; Credits to the translators. This string should be marked as translatable.
 ;;; The string may contain email addresses and URLs, which will be displayed as
 ;;; links, see the introduction for more details.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "version" property
-;;; 
+;;;
 ;;;   "version"                  gchar*                : Read / Write
-;;; 
+;;;
 ;;; The version of the program.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "website" property
-;;; 
+;;;
 ;;;   "website"                  gchar*                : Read / Write
-;;; 
+;;;
 ;;; The URL for the link to the website of the program. This should be a string
 ;;; starting with "http://.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "website-label" property
-;;; 
+;;;
 ;;;   "website-label"            gchar*                : Read / Write
-;;; 
+;;;
 ;;; The label for the link to the website of the program.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "wrap-license" property
-;;; 
+;;;
 ;;;   "wrap-license"             gboolean              : Read / Write
-;;; 
+;;;
 ;;; Whether to wrap the text in the license dialog.
-;;; 
+;;;
 ;;; Default value: FALSE
-;;; 
+;;;
 ;;; Since 2.8
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "activate-link" signal
-;;; 
+;;;
 ;;; gboolean user_function (GtkAboutDialog *label,
 ;;;                         gchar          *uri,
 ;;;                         gpointer        user_data)      : Run Last
-;;; 
+;;;
 ;;; The signal which gets emitted to activate a URI. Applications may connect
 ;;; to it to override the default behaviour, which is to call gtk_show_uri().
-;;; 
+;;;
 ;;; label :
 ;;;     The object on which the signal was emitted
-;;; 
+;;;
 ;;; uri :
 ;;;     the URI that is activated
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the link has been activated
-;;; 
+;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
@@ -364,9 +367,9 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkAboutDialog
-;;; 
+;;;
 ;;; struct GtkAboutDialog;
-;;; 
+;;;
 ;;; The GtkAboutDialog struct contains only private fields and should not be
 ;;; directly accessed.
 ;;; ----------------------------------------------------------------------------
@@ -374,7 +377,8 @@
 (define-g-object-class "GtkAboutDialog" gtk-about-dialog
   (:superclass gtk-dialog
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_about_dialog_get_type")
   ((artists
     gtk-about-dialog-artists
@@ -424,54 +428,54 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkLicense
-;;; 
+;;;
 ;;; typedef enum {
 ;;;   GTK_LICENSE_UNKNOWN,
 ;;;   GTK_LICENSE_CUSTOM,
-;;; 
+;;;
 ;;;   GTK_LICENSE_GPL_2_0,
 ;;;   GTK_LICENSE_GPL_3_0,
-;;; 
+;;;
 ;;;   GTK_LICENSE_LGPL_2_1,
 ;;;   GTK_LICENSE_LGPL_3_0,
-;;; 
+;;;
 ;;;   GTK_LICENSE_BSD,
 ;;;   GTK_LICENSE_MIT_X11,
-;;; 
+;;;
 ;;;   GTK_LICENSE_ARTISTIC
 ;;; } GtkLicense;
-;;; 
+;;;
 ;;; The type of license for an application.
-;;; 
+;;;
 ;;; This enumeration can be expanded at later date.
-;;; 
+;;;
 ;;; GTK_LICENSE_UNKNOWN
 ;;;     No license specified
-;;; 
+;;;
 ;;; GTK_LICENSE_CUSTOM
 ;;;     A license text is going to be specified by the developer
-;;; 
+;;;
 ;;; GTK_LICENSE_GPL_2_0
 ;;;     The GNU General Public License, version 2.0
-;;; 
+;;;
 ;;; GTK_LICENSE_GPL_3_0
 ;;;     The GNU General Public License, version 3.0
-;;; 
+;;;
 ;;; GTK_LICENSE_LGPL_2_1
 ;;;     The GNU Lesser General Public License, version 2.1
-;;; 
+;;;
 ;;; GTK_LICENSE_LGPL_3_0
 ;;;     The GNU Lesser General Public License, version 3.0
-;;; 
+;;;
 ;;; GTK_LICENSE_BSD
 ;;;     The BSD standard license
-;;; 
+;;;
 ;;; GTK_LICENSE_MIT_X11
 ;;;     The MIT/X11 standard license
-;;; 
+;;;
 ;;; GTK_LICENSE_ARTISTIC
 ;;;     The Artistic License, version 2.0
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -490,14 +494,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_new ()
-;;; 
-;;; GtkWidget * gtk_about_dialog_new (void)
-;;; 
+;;;
+;;; GtkWidget * gtk_about_dialog_new (void);
+;;;
 ;;; Creates a new GtkAboutDialog.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly created GtkAboutDialog
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -510,18 +514,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_program_name ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_program_name (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_program_name (GtkAboutDialog *about);
+;;;
 ;;; Returns the program name displayed in the about dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The program name. The string is owned by the about dialog and must not
 ;;;     be modified.
-;;; 
+;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
@@ -534,19 +538,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_program_name ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_program_name (GtkAboutDialog *about,
-;;;                                         const gchar *name)
-;;; 
+;;;                                         const gchar *name);
+;;;
 ;;; Sets the name to display in the about dialog. If this is not set, it
 ;;; defaults to g_get_application_name().
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; name :
 ;;;     the program name
-;;; 
+;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
@@ -559,18 +563,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_version ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_version (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_version (GtkAboutDialog *about);
+;;;
 ;;; Returns the version string.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The version string. The string is owned by the about dialog and must
 ;;;     not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -583,18 +587,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_version ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_version (GtkAboutDialog *about,
-;;;                                    const gchar *version)
-;;; 
+;;;                                    const gchar *version);
+;;;
 ;;; Sets the version string to display in the about dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; version :
 ;;;     the version string
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -607,18 +611,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_copyright ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_copyright (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_copyright (GtkAboutDialog *about);
+;;;
 ;;; Returns the copyright string.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The copyright string. The string is owned by the about dialog and must
 ;;;     not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -631,19 +635,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_copyright ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_copyright (GtkAboutDialog *about,
 ;;;                                      const gchar *copyright);
-;;; 
+;;;
 ;;; Sets the copyright string to display in the about dialog. This should be a
 ;;; short string of one or two lines.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; copyright :
 ;;;     (allow-none) the copyright string
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -656,18 +660,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_comments ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_comments (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_comments (GtkAboutDialog *about);
+;;;
 ;;; Returns the comments string.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The comments. The string is owned by the about dialog and must not be
 ;;;     modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -680,19 +684,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_comments ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_comments (GtkAboutDialog *about,
 ;;;                                     const gchar *comments);
-;;; 
+;;;
 ;;; Sets the comments string to display in the about dialog. This should be a
 ;;; short string of one or two lines.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; comments :
 ;;;     a comments string
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -705,18 +709,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_license ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_license (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_license (GtkAboutDialog *about);
+;;;
 ;;; Returns the license information.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The license information. The string is owned by the about dialog and
 ;;;     must not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -729,19 +733,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_license ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_license (GtkAboutDialog *about,
-;;;                                    const gchar *license)
-;;; 
+;;;                                    const gchar *license);
+;;;
 ;;; Sets the license information to be displayed in the secondary license
 ;;; dialog. If license is NULL, the license button is hidden.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; license :
 ;;;     the license information or NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -754,17 +758,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_wrap_license ()
-;;; 
-;;; gboolean gtk_about_dialog_get_wrap_license (GtkAboutDialog *about)
-;;; 
+;;;
+;;; gboolean gtk_about_dialog_get_wrap_license (GtkAboutDialog *about);
+;;;
 ;;; Returns whether the license text in about is automatically wrapped.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the license text is wrapped
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -777,18 +781,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_wrap_license ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_wrap_license (GtkAboutDialog *about,
-;;;                                         gboolean wrap_license)
-;;; 
+;;;                                         gboolean wrap_license);
+;;;
 ;;; Sets whether the license text in about is automatically wrapped.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; wrap_license :
 ;;;     whether to wrap the license
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -801,17 +805,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_license_type ()
-;;; 
-;;; GtkLicense gtk_about_dialog_get_license_type (GtkAboutDialog *about)
-;;; 
-;;; Retrieves the license set using gtk_about_dialog_set_license_type().
-;;; 
+;;;
+;;; GtkLicense gtk_about_dialog_get_license_type (GtkAboutDialog *about);
+;;;
+;;; Retrieves the license set using gtk_about_dialog_set_license_type()
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GtkLicense value
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -824,22 +828,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_license_type ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_license_type (GtkAboutDialog *about,
-;;;                                         GtkLicense license_type)
-;;; 
+;;;                                         GtkLicense license_type);
+;;;
 ;;; Sets the license of the application showing the about dialog from a list of
 ;;; known licenses.
-;;; 
+;;;
 ;;; This function overrides the license set using
 ;;; gtk_about_dialog_set_license().
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; license_type :
 ;;;     the type of license
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -852,18 +856,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_website ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_website (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_website (GtkAboutDialog *about);
+;;;
 ;;; Returns the website URL.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The website URL. The string is owned by the about dialog and must not
 ;;;     be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -876,18 +880,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_website ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_website (GtkAboutDialog *about,
 ;;;                                    const gchar *website);
-;;; 
+;;;
 ;;; Sets the URL to use for the website link.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; website :
 ;;;     a URL string starting with "http://"
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -900,18 +904,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_website_label ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_website_label (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_website_label (GtkAboutDialog *about);
+;;;
 ;;; Returns the label used for the website link.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The label used for the website link. The string is owned by the about
 ;;;     dialog and must not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -924,18 +928,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_website_label ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_website_label (GtkAboutDialog *about,
-;;;                                          const gchar *website_label)
-;;; 
+;;;                                          const gchar *website_label);
+;;;
 ;;; Sets the label to be used for the website link.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; website_label :
 ;;;     the label used for the website link
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -948,19 +952,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_authors ()
-;;; 
-;;; const gchar * const * gtk_about_dialog_get_authors (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * const * gtk_about_dialog_get_authors (GtkAboutDialog *about);
+;;;
 ;;; Returns the string which are displayed in the authors tab of the secondary
 ;;; credits dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     A NULL-terminated string array containing the authors. The array is
 ;;;     owned by the about dialog and must not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -973,19 +977,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_authors ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_authors (GtkAboutDialog *about,
-;;;                                    const gchar **authors)
-;;; 
+;;;                                    const gchar **authors);
+;;;
 ;;; Sets the strings which are displayed in the authors tab of the secondary
 ;;; credits dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; authors :
-;;;     a NULL-terminated array of strings.
-;;; 
+;;;     a NULL-terminated array of strings
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -998,19 +1002,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_artists ()
-;;; 
-;;; const gchar * const * gtk_about_dialog_get_artists (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * const * gtk_about_dialog_get_artists (GtkAboutDialog *about);
+;;;
 ;;; Returns the string which are displayed in the artists tab of the secondary
 ;;; credits dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     A NULL-terminated string array containing the artists. The array is
 ;;;     owned by the about dialog and must not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1023,19 +1027,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_artists ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_artists (GtkAboutDialog *about,
-;;;                                    const gchar **artists)
-;;; 
+;;;                                    const gchar **artists);
+;;;
 ;;; Sets the strings which are displayed in the artists tab of the secondary
 ;;; credits dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; artists :
 ;;;     a NULL-terminated array of strings
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1048,19 +1052,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_documenters ()
-;;; 
-;;; const gchar* const* gtk_about_dialog_get_documenters (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * const * gtk_about_dialog_get_documenters
+;;;                                                     (GtkAboutDialog *about);
+;;;
 ;;; Returns the string which are displayed in the documenters tab of the
 ;;; secondary credits dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     A NULL-terminated string array containing the documenters. The array is
 ;;;     owned by the about dialog and must not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1070,22 +1075,22 @@
   (gtk-about-dialog-documenters about))
 
 (export 'gtk-about-dialog-get-documenters)
-  
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_documenters ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_documenters (GtkAboutDialog *about,
-;;;                                        const gchar **documenters)
-;;; 
-;;; Sets the strings which are displayed in the documenters tab of the
-;;; secondary credits dialog.
-;;; 
+;;;                                        const gchar **documenters);
+;;;
+;;; Sets the strings which are displayed in the documenters tab of the secondary
+;;; credits dialog.
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; documenters :
 ;;;     a NULL-terminated array of strings
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1098,19 +1103,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_translator_credits ()
-;;; 
-;;; const gchar* gtk_about_dialog_get_translator_credits (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_translator_credits
+;;;                                                     (GtkAboutDialog *about);
+;;;
 ;;; Returns the translator credits string which is displayed in the translators
 ;;; tab of the secondary credits dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     The translator credits string. The string is owned by the about dialog
 ;;;     and must not be modified.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1123,30 +1129,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_translator_credits ()
-;;; 
-;;; void gtk_about_dialog_set_translator_credits (GtkAboutDialog *about,
-;;;                                              const gchar translator_credits)
-;;; 
+;;;
+;;; void gtk_about_dialog_set_translator_credits
+;;;                                           (GtkAboutDialog *about,
+;;;                                            const gchar *translator_credits);
+;;;
 ;;; Sets the translator credits string which is displayed in the translators
 ;;; tab of the secondary credits dialog.
-;;; 
+;;;
 ;;; The intended use for this string is to display the translator of the
-;;; language which is currently used in the user interface. Using gettext(),
-;;; a simple way to achieve that is to mark the string for translation:
-;;; 
-;;;  1 gtk_about_dialog_set_translator_credits (about, _("translator-credits"));
-;;; 
+;;; language which is currently used in the user interface. Using gettext(), a
+;;; simple way to achieve that is to mark the string for translation:
+;;;
+;;; gtk_about_dialog_set_translator_credits (about, _("translator-credits"));
+;;;
 ;;; It is a good idea to use the customary msgid "translator-credits" for this
 ;;; purpose, since translators will already know the purpose of that msgid, and
-;;; since GtkAboutDialog will detect if "translator-credits" is untranslated
-;;; and hide the tab.
-;;; 
+;;; since GtkAboutDialog will detect if "translator-credits" is untranslated and
+;;; hide the tab.
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; translator_credits :
 ;;;     the translator credits
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1159,19 +1166,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_logo ()
-;;; 
-;;; GdkPixbuf * gtk_about_dialog_get_logo (GtkAboutDialog *about)
-;;; 
+;;;
+;;; GdkPixbuf * gtk_about_dialog_get_logo (GtkAboutDialog *about);
+;;;
 ;;; Returns the pixbuf displayed as logo in the about dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     the pixbuf displayed as logo. The pixbuf is owned by the about dialog.
 ;;;     If you want to keep a reference to it, you have to call g_object_ref()
 ;;;     on it.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1184,19 +1191,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_logo ()
-;;; 
-;;; void gtk_about_dialog_set_logo (GtkAboutDialog *about,
-;;;                                 GdkPixbuf *logo)
-;;; 
+;;;
+;;; void gtk_about_dialog_set_logo (GtkAboutDialog *about, GdkPixbuf *logo);
+;;;
 ;;; Sets the pixbuf to be displayed as logo in the about dialog. If it is NULL,
 ;;; the default window icon set with gtk_window_set_default_icon() will be used.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; logo :
 ;;;     a GdkPixbuf, or NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1209,18 +1215,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_logo_icon_name ()
-;;; 
-;;; const gchar * gtk_about_dialog_get_logo_icon_name (GtkAboutDialog *about)
-;;; 
+;;;
+;;; const gchar * gtk_about_dialog_get_logo_icon_name (GtkAboutDialog *about);
+;;;
 ;;; Returns the icon name displayed as logo in the about dialog.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; Returns :
 ;;;     the icon name displayed as logo. The string is owned by the dialog. If
 ;;;     you want to keep a reference to it, you have to call g_strdup() on it.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1233,19 +1239,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_set_logo_icon_name ()
-;;; 
+;;;
 ;;; void gtk_about_dialog_set_logo_icon_name (GtkAboutDialog *about,
-;;;                                           const gchar *icon_name)
-;;; 
+;;;                                           const gchar *icon_name);
+;;;
 ;;; Sets the pixbuf to be displayed as logo in the about dialog. If it is NULL,
 ;;; the default window icon set with gtk_window_set_default_icon() will be used.
-;;; 
+;;;
 ;;; about :
 ;;;     a GtkAboutDialog
-;;; 
+;;;
 ;;; icon_name :
 ;;;     an icon name, or NULL
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1257,25 +1263,46 @@
 (export 'gtk-about-dialog-logo-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_about_dialog_add_credit_section ()
+;;;
+;;; void gtk_about_dialog_add_credit_section (GtkAboutDialog *about,
+;;;                                           const gchar *section_name,
+;;;                                           const gchar **people);
+;;;
+;;; Creates a new section in the Credits page.
+;;;
+;;; about :
+;;;     A GtkAboutDialog
+;;;
+;;; section_name :
+;;;     The name of the section
+;;;
+;;; people :
+;;;     The people who belong to that section
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_show_about_dialog ()
-;;; 
+;;;
 ;;; void gtk_show_about_dialog (GtkWindow *parent,
 ;;;                             const gchar *first_property_name,
 ;;;                             ...);
-;;; 
-;;; This is a convenience function for showing an application's about box.
-;;; The constructed dialog is associated with the parent window and reused for
+;;;
+;;; This is a convenience function for showing an application's about box. The
+;;; constructed dialog is associated with the parent window and reused for
 ;;; future invocations of this function.
-;;; 
+;;;
 ;;; parent :
 ;;;     transient parent, or NULL for none
-;;; 
+;;;
 ;;; first_property_name :
 ;;;     the name of the first property
-;;; 
+;;;
 ;;; ... :
 ;;;     value of first property, followed by more properties, NULL-terminated
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 

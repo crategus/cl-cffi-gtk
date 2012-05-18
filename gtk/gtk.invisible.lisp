@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkInvisible
 ;;; 
 ;;; A widget which is not displayed
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkInvisible
+;;;     
 ;;;     gtk_invisible_new
 ;;;     gtk_invisible_new_for_screen
 ;;;     gtk_invisible_set_screen
@@ -50,18 +51,18 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkInvisible implements AtkImplementorIface and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "screen"                   GdkScreen*            : Read / Write
 ;;; 
 ;;; Description
 ;;; 
-;;; The GtkInvisible widget is used internally in GTK+, and is probably not
-;;; very useful for application developers.
+;;; The GtkInvisible widget is used internally in GTK+, and is probably not very
+;;; useful for application developers.
 ;;; 
-;;; It is used for reliable pointer grabs and selection handling in the code
-;;; for drag-and-drop.
+;;; It is used for reliable pointer grabs and selection handling in the code for
+;;; drag-and-drop.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -70,7 +71,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "screen" property
 ;;; 
-;;;   "screen" GdkScreen* : Read / Write
+;;;   "screen"                   GdkScreen*            : Read / Write
 ;;; 
 ;;; The screen where this window will be displayed.
 ;;; ----------------------------------------------------------------------------
@@ -86,9 +87,12 @@
 (define-g-object-class "GtkInvisible" gtk-invisible
   (:superclass gtk-widget
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_invisible_get_type")
-  ((screen gtk-invisible-screen "screen" "GdkScreen" t t)))
+  ((screen
+    gtk-invisible-screen
+    "screen" "GdkScreen" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_new ()
@@ -100,6 +104,13 @@
 ;;; Returns :
 ;;;     a new GtkInvisible.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-invisible-new))
+
+(defun gtk-invisible-new ()
+  (make-instance 'gtk-invisible))
+
+(export 'gtk-invisible-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_new_for_screen ()
@@ -118,6 +129,14 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-invisible-new-for-screen))
+
+(defun gtk-invisible-new-for-screen (screen)
+  (make-instance 'gtk-invisible
+                 :screen screen))
+
+(export 'gtk-invisible-new-for-screen)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_set_screen ()
 ;;; 
@@ -134,6 +153,13 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-invisible-set-screen))
+
+(defun gtk-invisible-set-screen (invisible screen)
+  (setf (gtk-invisible-screen invisible) screen))
+
+(export 'gtk-invisible-set-screen)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_get_screen ()
 ;;; 
@@ -145,10 +171,16 @@
 ;;;     a GtkInvisible.
 ;;; 
 ;;; Returns :
-;;;     the associated GdkScreen.
+;;;     the associated GdkScreen. [transfer none]
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-invisible-get-screen))
+
+(defun gtk-invisible-get-screen (invisible)
+  (gtk-invisible-screen invisible))
+
+(export 'gtk-invisible-get-screen)
 
 ;;; --- End of file gtk.invisible.lisp -----------------------------------------
