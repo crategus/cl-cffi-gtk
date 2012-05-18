@@ -145,19 +145,19 @@ Menu Widgets
 @chapter Adjustments
 @include gtk-adjustments.texi
 
-@node Range Widgets, Miscellaneous Widgets, Adjustments, Top
+@node Range Widgets, Layout Widgets, Adjustments, Top
 @chapter Range Widgets
 @include gtk-range-widgets.texi
 
-@node Miscellaneous Widgets, Container Widgets, Range Widgets
+@node Layout Widgets, Miscellaneous Widgets, Range Widgets, Top
+@chapter Layout Widgets
+@include gtk-container-widgets.texi
+
+@node Miscellaneous Widgets, Menu Widget, Layout Widgets
 @chapter Miscellaneous Widgets
 @include gtk-misc-widgets.texi
 
-@node Container Widgets, Menu Widget, Miscellaneous Widgets, Top
-@chapter Container Widgets
-@include gtk-container-widgets.texi
-
-@node Menu Widget, Reference Widgets, Container Widgets, Top
+@node Menu Widget, Reference of Widgets, Miscellaneous Widgets, Top
 @chapter Menu Widget
 @include gtk-menu-widget.texi
 

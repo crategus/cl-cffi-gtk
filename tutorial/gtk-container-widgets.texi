@@ -152,14 +152,16 @@ Note that the desired effect can in most cases be achieved by using the
 @section Fixed Container
 
 @findex GtkFixed
+@findex gtk-fixed
+@findex fixed, gtk-fixed
+
 @findex gtk-fixed-new
-@findex fixed-new, gtk-fixed-new
 @findex gtk-fixed-put
-@findex fixed-put, gtk-fixed-put
 @findex gtk-fixed-move
+
+@findex fixed-new, gtk-fixed-new
+@findex fixed-put, gtk-fixed-put
 @findex fixed-move, gtk-fixed-move
-@findex gtk-fixed-set-has-window
-@findex fixed-set-has-window, gtk-fixed-set-has-window
 
 @ifnotinfo
 @float Figure, figure-fixed
@@ -179,13 +181,53 @@ The function @code{gtk-fixed-new} creates a new @code{GtkFixed} widget.
 specified by the arguments @code{x} and @code{y}.  The function
 @code{gtk-fixed-move} allows the specified widget to be moved to a new position.
 
-Normally, Fixed widgets do not have have their own X window. Since this is
-different from the behaviour of @code{GtkFixed} widgets in earlier releases of
-GTK+, the function @code{gtk-fixed-set-has-window} allows the creation of
-@code{GtkFixed} widgets with their own X window.  The function has to be called
-before realizing the widget.
+For most applications, you should not use this container.  It keeps you from
+having to learn about the other GTK+ containers, but it results in broken
+applications.  With @code{GtkFixed}, the following things will result in
+truncated text, overlapping widgets, and other display bugs:
 
-The following example illustrates how to use a fixed container.
+@itemize
+@item Themes, which may change widget sizes.
+@item Fonts other than the one you used to write the app will of course
+      change the size of widgets containing text; keep in mind that users may
+      use a larger font because of difficulty reading the default, or they
+      may be using Windows or the framebuffer port of GTK+, where different
+      fonts are available.
+@item Translation of text into other languages changes its size.  Also,
+      display of non-English text will use a different font in many cases.
+@end itemize
+
+In addition, the fixed widget can not properly be mirrored in right-to-left
+languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the
+interface to put labels to the right of the thing they label, but it can't
+do that with @code{GtkFixed}.  So your application will not be usable in
+right-to-left languages.
+
+Finally, fixed positioning makes it kind of annoying to add/remove GUI
+elements, since you have to reposition all the other elements.  This is a
+long-term maintenance problem for your application.
+
+If you know none of these things are an issue for your application, and
+prefer the simplicity of @code{GtkFixed}, by all means use the widget. But you
+should be aware of the tradeoffs.
+
+@findex GtkAllocation
+@findex gtk-allocation
+@findex allocation, gtk-allocation
+
+@findex gdk-rectangle-width
+@findex gdk-rectangle-height
+
+@findex rectangle-width, gdk-rectangle-width
+@findex rectangle-height, gdk-rectangle-height
+
+The following example illustrates how to use a fixed container.  In this example
+three buttons are put into the fixed widget at random positions.  A click on
+a button moves the button to a new random position. To retrieve the size of
+the fixed widget the function @code{gtk-widget-get-allocation} is used, which
+returns a rectangle of type @code{GtkAllocation}. The width and the height of
+the fixed widget are then get with the functions @code{gdk-rectangle-width} and
+@code{gtk-rectangle-height}.
 
 @float Example, example-fixed
 @caption{Fixed Container}

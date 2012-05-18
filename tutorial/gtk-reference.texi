@@ -40,6 +40,40 @@ A representation of an adjustable bounded value
 @end deffn
 
 @c -----------------------------------------------------------------------------
+@anchor{GtkAlignment}
+@deffn {Class} GtkAlignment
+
+A widget which controls the alignment and size of its child
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBin
+                           +----GtkAlignment
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkAlignment} implements @code{AtkImplementorIface} and
+@code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "bottom-padding"         guint              : Read / Write
+  "left-padding"           guint              : Read / Write
+  "right-padding"          guint              : Read / Write
+  "top-padding"            guint              : Read / Write
+  "xalign"                 gfloat             : Read / Write
+  "xscale"                 gfloat             : Read / Write
+  "yalign"                 gfloat             : Read / Write
+  "yscale"                 gfloat             : Read / Write
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkBox}
 @deffn {Class} GtkBox
  
