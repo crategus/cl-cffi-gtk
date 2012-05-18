@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,20 +31,20 @@
 ;;; GtkLayout
 ;;; 
 ;;; Infinite scrollable area containing child widgets and/or custom drawing
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkLayout
-;;;
+;;;     
 ;;;     gtk_layout_new
 ;;;     gtk_layout_put
 ;;;     gtk_layout_move
 ;;;     gtk_layout_set_size
 ;;;     gtk_layout_get_size
-;;;     gtk_layout_get_hadjustment   * deprecated *
-;;;     gtk_layout_get_vadjustment   * deprecated *
-;;;     gtk_layout_set_hadjustment   * deprecated *
-;;;     gtk_layout_set_vadjustment   * deprecated *
+;;;     gtk_layout_get_hadjustment
+;;;     gtk_layout_get_vadjustment
+;;;     gtk_layout_set_hadjustment
+;;;     gtk_layout_set_vadjustment
 ;;;     gtk_layout_get_bin_window
 ;;; 
 ;;; Object Hierarchy
@@ -58,7 +58,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkLayout implements AtkImplementorIface, GtkBuildable and GtkScrollable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "height"                   guint                 : Read / Write
@@ -78,9 +78,9 @@
 ;;; GtkContainer. However if you're just going to draw, a GtkDrawingArea is a
 ;;; better choice since it has lower overhead.
 ;;; 
-;;; When handling expose events on a GtkLayout, you must draw to
-;;; GTK_LAYOUT (layout)->bin_window, rather than to
-;;; GTK_WIDGET (layout)->window, as you would for a drawing area.
+;;; When handling expose events on a GtkLayout, you must draw to GTK_LAYOUT
+;;; (layout)->bin_window, rather than to GTK_WIDGET (layout)->window, as you
+;;; would for a drawing area.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -145,17 +145,16 @@
 (define-g-object-class "GtkLayout" gtk-layout
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkScrollable")
    :type-initializer "gtk_layout_get_type")
   ((height
     gtk-layout-height
     "height" "guint" t t)
    (width
     gtk-layout-width
-    "width" "guint" t t)
-   (:cffi bin-window
-          gtk-layout-bin-window g-object
-          "gtk_layout_get_bin_window" nil)))
+    "width" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -288,8 +287,8 @@
 ;;; 
 ;;; void gtk_layout_get_size (GtkLayout *layout, guint *width, guint *height);
 ;;; 
-;;; Gets the size that has been set on the layout, and that determines the
-;;; total extents of the layout's scrollbar area. See gtk_layout_set_size().
+;;; Gets the size that has been set on the layout, and that determines the total
+;;; extents of the layout's scrollbar area. See gtk_layout_set_size().
 ;;; 
 ;;; layout :
 ;;;     a GtkLayout
@@ -308,6 +307,98 @@
           (gtk-layout-height layout)))
 
 (export 'gtk-layout-get-size)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_layout_get_hadjustment ()
+;;; 
+;;; GtkAdjustment * gtk_layout_get_hadjustment (GtkLayout *layout);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_layout_get_hadjustment has been deprecated since version 3.0 and should
+;;; not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
+;;; 
+;;; This function should only be called after the layout has been placed in a
+;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
+;;; GtkAdjustment used for communication between the horizontal scrollbar and
+;;; layout.
+;;; 
+;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
+;;; 
+;;; layout :
+;;;     a GtkLayout
+;;; 
+;;; Returns :
+;;;     horizontal scroll adjustment
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_layout_get_vadjustment ()
+;;; 
+;;; GtkAdjustment * gtk_layout_get_vadjustment (GtkLayout *layout);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_layout_get_vadjustment has been deprecated since version 3.0 and should
+;;; not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
+;;; 
+;;; This function should only be called after the layout has been placed in a
+;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
+;;; GtkAdjustment used for communication between the vertical scrollbar and
+;;; layout.
+;;; 
+;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
+;;; 
+;;; layout :
+;;;     a GtkLayout
+;;; 
+;;; Returns :
+;;;     vertical scroll adjustment
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_layout_set_hadjustment ()
+;;; 
+;;; void gtk_layout_set_hadjustment (GtkLayout *layout,
+;;;                                  GtkAdjustment *adjustment);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_layout_set_hadjustment has been deprecated since version 3.0 and should
+;;; not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
+;;; 
+;;; Sets the horizontal scroll adjustment for the layout.
+;;; 
+;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
+;;; 
+;;; layout :
+;;;     a GtkLayout
+;;; 
+;;; adjustment :
+;;;     new scroll adjustment
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_layout_set_vadjustment ()
+;;; 
+;;; void gtk_layout_set_vadjustment (GtkLayout *layout,
+;;;                                  GtkAdjustment *adjustment);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_layout_set_vadjustment has been deprecated since version 3.0 and should
+;;; not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
+;;; 
+;;; Sets the vertical scroll adjustment for the layout.
+;;; 
+;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
+;;; 
+;;; layout :
+;;;     a GtkLayout
+;;; 
+;;; adjustment :
+;;;     new scroll adjustment
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_bin_window ()
