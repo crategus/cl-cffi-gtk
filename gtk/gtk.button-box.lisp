@@ -330,7 +330,7 @@
 (declaim (inline gtk-button-box-set-layout))
 
 (defun gtk-button-box-set-layout (widget layout-style)
-  (setf (gtk-button-box-layout widget) layout-style))
+  (setf (gtk-button-box-layout-style widget) layout-style))
 
 (export 'gtk-button-box-set-layout)
 
