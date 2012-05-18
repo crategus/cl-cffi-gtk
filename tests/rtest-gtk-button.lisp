@@ -69,7 +69,7 @@
                   "GtkActivatable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkButton")))
   
-  ;; Query infos about the class "GtkLabel"
+  ;; Query infos about the class "GtkButton"
   (with-foreign-object (query 'g-type-query)
     (g-type-query "GtkButton" query)
     (assert-equal (gtype "GtkButton")

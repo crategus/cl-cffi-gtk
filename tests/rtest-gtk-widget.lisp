@@ -63,8 +63,8 @@
   (assert-false (g-type-is-a "GtkWidget" "gboolean"))
   (assert-false (g-type-is-a "GtkWidget" "GtkWindow"))
   (assert-equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator"
-                  "GtkInvisible" "GtkProgressBar" "GtkCellView" "GtkEntry"
-                  "GtkHSV" "GtkDrawingArea" "GtkCalendar")
+                  "GtkInvisible" "GtkProgressBar" "GtkSwitch" "GtkCellView"
+                  "GtkEntry" "GtkHSV" "GtkDrawingArea" "GtkCalendar")
                 (mapcar #'gtype-name (g-type-children "GtkWidget")))
   (assert-equal '("AtkImplementorIface" "GtkBuildable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkWidget")))
