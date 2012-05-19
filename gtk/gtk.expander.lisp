@@ -4,11 +4,11 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GTK 3.2.3 Reference Manual
-;;; See http://www.gtk.org.
+;;; The documentation has been copied from the GTK+ 3 Reference Manual
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dr. Dieter Kaiser
+;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +31,7 @@
 ;;; GtkExpander
 ;;; 
 ;;; A container which can hide its child
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkExpander
@@ -67,7 +67,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkExpander implements AtkImplementorIface and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "expanded"                 gboolean             : Read / Write / Construct
@@ -94,16 +94,16 @@
 ;;; expander triangle similar to the triangles used in a GtkTreeView.
 ;;; 
 ;;; Normally you use an expander as you would use any other descendant of
-;;; GtkBin; you create the child widget and use gtk_container_add() to add it
-;;; to the expander. When the expander is toggled, it will take care of showing
-;;; and hiding the child automatically.
+;;; GtkBin; you create the child widget and use gtk_container_add() to add it to
+;;; the expander. When the expander is toggled, it will take care of showing and
+;;; hiding the child automatically.
 ;;; 
 ;;; Special Usage
 ;;; 
 ;;; There are situations in which you may prefer to show and hide the expanded
 ;;; widget yourself, such as when you want to actually create the widget at
-;;; expansion time. In this case, create a GtkExpander but do not add a child
-;;; to it. The expander widget has an "expanded" property which can be used to
+;;; expansion time. In this case, create a GtkExpander but do not add a child to
+;;; it. The expander widget has an "expanded" property which can be used to
 ;;; monitor its expansion state. You should watch this property with a signal
 ;;; connection as follows:
 ;;; 
@@ -184,14 +184,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "label-widget" property
 ;;; 
-;;;   "label-widget"             GtkWidget*           : Read / Write
+;;;   "label-widget"             GtkWidget*            : Read / Write
 ;;; 
 ;;; A widget to display in place of the usual expander label.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "resize-toplevel" property
 ;;; 
-;;;   "resize-toplevel"          gboolean             : Read / Write
+;;;   "resize-toplevel"          gboolean              : Read / Write
 ;;; 
 ;;; When this property is TRUE, the expander will resize the toplevel widget
 ;;; containing the expander upon expanding and collapsing.
@@ -225,8 +225,8 @@
 ;;; 
 ;;;   "use-underline"            gboolean             : Read / Write / Construct
 ;;; 
-;;; If set, an underline in the text indicates the next character should be
-;;; used for the mnemonic accelerator key.
+;;; If set, an underline in the text indicates the next character should be used
+;;; for the mnemonic accelerator key.
 ;;; 
 ;;; Default value: FALSE
 ;;;
@@ -278,19 +278,32 @@
 (define-g-object-class "GtkExpander" gtk-expander
   (:superclass gtk-bin
     :export t
-    :interfaces ("AtkImplementorIface" "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable")
     :type-initializer "gtk_expander_get_type")
-  ((expanded gtk-expander-expanded
+  ((expanded
+    gtk-expander-expanded
     "expanded" "gboolean" t t)
-   (label gtk-expander-label
+   (label
+    gtk-expander-label
     "label" "gchararray" t t)
-   (label-widget gtk-expander-label-widget
+   (label-fill
+    gtk-expander-label-fill
+    "label-fill" "gboolean" t t)
+   (label-widget
+    gtk-expander-label-widget
     "label-widget" "GtkWidget" t t)
-   (spacing gtk-expander-spacing
+   (resize-toplevel
+    gtk-expander-resize-toplevel
+    "resize-toplevel" "gboolean" t t)
+   (spacing
+    gtk-expander-spacing
     "spacing" "gint" t t)
-   (use-markup gtk-expander-use-markup
+   (use-markup
+    gtk-expander-use-markup
     "use-markup" "gboolean" t t)
-   (use-underline gtk-expander-use-underline
+   (use-underline
+    gtk-expander-use-underline
     "use-underline" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -308,6 +321,14 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-new))
+
+(defun gtk-expander-new (label)
+  (make-instance 'gtk-expander
+                 :label label))
+
+(export 'gtk-expander-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_new_with_mnemonic ()
@@ -335,8 +356,8 @@
 ;;; 
 ;;; void gtk_expander_set_expanded (GtkExpander *expander, gboolean expanded);
 ;;; 
-;;; Sets the state of the expander. Set to TRUE, if you want the child widget
-;;; to be revealed, and FALSE if you want the child widget to be hidden.
+;;; Sets the state of the expander. Set to TRUE, if you want the child widget to
+;;; be revealed, and FALSE if you want the child widget to be hidden.
 ;;; 
 ;;; expander :
 ;;;     a GtkExpander
@@ -412,7 +433,7 @@
 ;;;     a GtkExpander
 ;;; 
 ;;; label :
-;;;     a string. [allow-none]
+;;;     a string
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -537,14 +558,14 @@
 ;;; 
 ;;; GtkWidget * gtk_expander_get_label_widget (GtkExpander *expander);
 ;;; 
-;;; Retrieves the label widget for the frame.
-;;; See gtk_expander_set_label_widget().
+;;; Retrieves the label widget for the frame. See
+;;; gtk_expander_set_label_widget().
 ;;; 
 ;;; expander :
 ;;;     a GtkExpander
 ;;; 
 ;;; Returns :
-;;;     the label widget, or NULL if there is none. [transfer none]
+;;;     the label widget, or NULL if there is none
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

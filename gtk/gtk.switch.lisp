@@ -7,7 +7,6 @@
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.4.2. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify

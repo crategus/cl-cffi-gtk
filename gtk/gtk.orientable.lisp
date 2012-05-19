@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,13 +31,13 @@
 ;;; GtkOrientable
 ;;; 
 ;;; An interface for flippable widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;    GtkOrientable
-;;;
-;;;    gtk_orientable_get_orientation
-;;;    gtk_orientable_set_orientation
+;;;     GtkOrientable
+;;;     
+;;;     gtk_orientable_get_orientation
+;;;     gtk_orientable_set_orientation
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -47,19 +47,19 @@
 ;;; Prerequisites
 ;;; 
 ;;; GtkOrientable requires GObject.
-;;;
+;;; 
 ;;; Known Implementations
 ;;; 
 ;;; GtkOrientable is implemented by GtkAppChooserWidget, GtkBox, GtkButtonBox,
-;;; GtkCellAreaBox, GtkCellRendererProgress, GtkCellView, GtkColorSelection,
-;;; GtkFileChooserButton, GtkFileChooserWidget, GtkFontChooserWidget,
-;;; GtkFontSelection, GtkGrid, GtkHBox, GtkHButtonBox, GtkHPaned, GtkHScale,
-;;; GtkHScrollbar, GtkHSeparator, GtkInfoBar, GtkPaned, GtkProgressBar,
-;;; GtkRange, GtkRecentChooserWidget, GtkScale, GtkScaleButton, GtkScrollbar,
-;;; GtkSeparator, GtkStatusbar, GtkToolPalette, GtkToolbar, GtkVBox,
-;;; GtkVButtonBox, GtkVPaned, GtkVScale, GtkVScrollbar, GtkVSeparator and
-;;; GtkVolumeButton.
-;;;
+;;; GtkCellAreaBox, GtkCellRendererProgress, GtkCellView, GtkColorChooserWidget,
+;;; GtkColorSelection, GtkFileChooserButton, GtkFileChooserWidget,
+;;; GtkFontChooserWidget, GtkFontSelection, GtkGrid, GtkHBox, GtkHButtonBox,
+;;; GtkHPaned, GtkHScale, GtkHScrollbar, GtkHSeparator, GtkInfoBar, GtkPaned,
+;;; GtkProgressBar, GtkRange, GtkRecentChooserWidget, GtkScale, GtkScaleButton,
+;;; GtkScrollbar, GtkSeparator, GtkStatusbar, GtkToolPalette, GtkToolbar,
+;;; GtkVBox, GtkVButtonBox, GtkVPaned, GtkVScale, GtkVScrollbar, GtkVSeparator
+;;; and GtkVolumeButton.
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "orientation"              GtkOrientation        : Read / Write
@@ -68,8 +68,8 @@
 ;;; 
 ;;; The GtkOrientable interface is implemented by all widgets that can be
 ;;; oriented horizontally or vertically. Historically, such widgets have been
-;;; realized as subclasses of a common base class (e.g GtkBox/GtkHBox/GtkVBox
-;;; or GtkScale/GtkHScale/GtkVScale). GtkOrientable is more flexible in that it
+;;; realized as subclasses of a common base class (e.g GtkBox/GtkHBox/GtkVBox or
+;;; GtkScale/GtkHScale/GtkVScale). GtkOrientable is more flexible in that it
 ;;; allows the orientation to be changed at runtime, allowing the widgets to
 ;;; 'flip'.
 ;;; 
@@ -117,7 +117,7 @@
 ;;;     a GtkOrientable
 ;;; 
 ;;; Returns :
-;;;     the orientation of the orientable
+;;;     the orientation of the orientable.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -141,7 +141,7 @@
 ;;;     a GtkOrientable
 ;;; 
 ;;; orientation :
-;;;     the orientable's new orientation
+;;;     the orientable's new orientation.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
