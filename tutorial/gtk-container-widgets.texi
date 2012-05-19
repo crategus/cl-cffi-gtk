@@ -4,7 +4,7 @@
 @c Language : German
 @c Author   : Dieter Kaiser
 @c Date     : 09.02.2012
-@c Revision : 01.04.2012
+@c Revision : 19.05.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -46,23 +46,23 @@ doesn't expand at all) to @code{1.0} (meaning the child expands to fill all of
 the available space).
 
 The properties are set when creating the @code{GtkAlignment} widget with the
-function @code{gtk-alignment-new}.  For an existing {GtkAlignment} widget the
-properties can be set with the function @code{gtk-alignemt-set}.  A child widget
-can be added to the @code{GtkAlignment} widget using the function
+function @code{gtk-alignment-new}.  For an existing @code{GtkAlignment} widget
+the properties can be set with the function @code{gtk-alignment-set}.  A child
+widget can be added to the @code{GtkAlignment} widget using the function
 @code{gtk-container-add}.
 
-@findex gtk-frame-set-padding
-@findex gtk-frame-get-padding
+@findex gtk-alignment-set-padding
+@findex gtk-alignment-get-padding
 
-@findex frame-set-padding, gtk-frame-set-padding
-@findex frame-get-padding, gtk-frame-get-padding
+@findex alignment-set-padding, gtk-alignment-set-padding
+@findex alignment-get-padding, gtk-alignment-get-padding
 
 In addition, the @code{GtkAlignment} widget has the properties
 @code{top-padding}, @code{bottom-padding}, @code{left-padding}, and
 @code{right-padding}.  These properties control how many space is added to the
-sides of the widget.  The functions @code{gtk-frame-set-padding} and
-@code{gtk-frame-get-padding} are used to set or to retrieve the padding
-properties.
+sides of the widget.  The functions @code{gtk-alignment-set-padding} and
+@code{gtk-alignment-get-padding} are used to set or to retrieve the values of
+the padding properties.
 
 @noindent
 @emph{Note:}
@@ -166,7 +166,7 @@ Note that the desired effect can in most cases be achieved by using the
 @ifnotinfo
 @float Figure, figure-fixed
 @caption{Fixed Container}
-@center @image{figures/fixed339x234, 226pt}
+@center @image{figures/fixed302x254, 201pt}
 @end float
 @end ifnotinfo
 
@@ -176,9 +176,9 @@ hand corner.  The position of the child widgets can be changed dynamically.
 Only a few functions are associated with the @code{GtkFixed} widget
 like @code{gtk-fixed-new}, @code{gtk-fixed-put}, and @code{gtk-fixed-move}.
 
-The function @code{gtk-fixed-new} creates a new @code{GtkFixed} widget.
-@code{gtk-fixed-put} places a widget in the container fixed at the position
-specified by the arguments @code{x} and @code{y}.  The function
+The function @code{gtk-fixed-new} creates a new @code{GtkFixed} widget.  The
+function @code{gtk-fixed-put} places a widget in the container fixed at the
+position specified by the arguments @code{x} and @code{y}.  The function
 @code{gtk-fixed-move} allows the specified widget to be moved to a new position.
 
 For most applications, you should not use this container.  It keeps you from
@@ -188,7 +188,7 @@ truncated text, overlapping widgets, and other display bugs:
 
 @itemize
 @item Themes, which may change widget sizes.
-@item Fonts other than the one you used to write the app will of course
+@item Fonts other than the one you used to write the application will of course
       change the size of widgets containing text; keep in mind that users may
       use a larger font because of difficulty reading the default, or they
       may be using Windows or the framebuffer port of GTK+, where different
@@ -258,7 +258,7 @@ the fixed widget are then get with the functions @code{gdk-rectangle-width} and
           (g-signal-connect button "clicked"
                             (lambda (widget)
                               (move-button widget fixed)))
-          (gtk-fixed-put fixed button (random 300) (random 200))))
+          (gtk-fixed-put fixed button (random 250) (random 150))))
       (gtk-widget-show window))))
 @end verbatim
 
@@ -293,7 +293,7 @@ A layout container is created using @code{gtk-layout-new} which accepts the
 optional arguments @code{hadjustment} and @code{vadjustment} to specify
 adjustment objects that the layout widget will use for its scrolling.
 
-Widgets can be add and move in the Layout container using the functions
+Widgets can be added and moved in the Layout container using the functions
 @code{gtk-layout-put} and @code{gtk-layout-move}.  The size of the layout
 container can be set using the function @code{gtk-layout-set-size}.
 
@@ -309,33 +309,36 @@ are available.
 @ifnotinfo
 @float Figure, figure-frame
 @caption{Frame Widget}
-@center @image{figures/frame256x226, 171pt}
+@center @image{figures/frame252x229, 168pt}
 @end float
 @end ifnotinfo
 
 Frames can be used to enclose one or a group of widgets with a box which can
-optionally be labelled. The position of the label and the style of the box can
+optionally be labelled.  The position of the label and the style of the box can
 be altered to suit.
 
-A Frame can be created with @code{(make-instance 'gtk-frame} or the function
+A frame can be created with @code{(make-instance 'gtk-frame)} or the function
 @code{gtk-frame-new}.  The label is by default placed in the upper left hand
-corner of the frame. A value of Nil for the label argument will result in no
-label being displayed. The text of the label can be changed using the function
-@code{gtk-frame-set-label}.
+corner of the frame. A value of @code{NIL} for the label argument will result in
+no label being displayed.  The text of the label can be changed using the
+function @code{gtk-frame-set-label}.
 
 The position of the label can be changed using the function
-@code{gtk-frame-set-label-align} which has the arguments xalign and yalign
-which take values between 0.0 and 1.0. xalign indicates the position of the
-label along the top horizontal of the frame. yalign is not currently used. The
-default value of xalign is 0.0 which places the label at the left hand end of
-the frame.
+@code{gtk-frame-set-label-align} which has the arguments @code{xalign} and
+@code{yalign} which take values between @code{0.0} and @code{1.0}. @code{xalign}
+indicates the position of the label along the top horizontal of the frame.
+@code{yalign} indicates the vertival position of the label.  With a value of
+@code{0.5} of @code{yalign} the label is positioned in the middle of the line
+of the frame.  The default value of @code{xalign} is @code{0.0} which places the
+label at the left hand end of the frame.
 
 The function @code{gtk-frame-set-shadow-type} alters the style of the box that
 is used to outline the frame.  The second argument is a keyword of the
-enumeration @code{GtkShadowType}.  The possible values are listed in
+enumeration type @code{GtkShadowType}.  The possible values are listed in
 @ref{table-gtk-shadow-type}.
 
-@ref{example-frame} illustrates the use of the frame widget.
+@ref{example-frame} illustrates the use of the frame widget.  The code of this
+example is shown in @ref{example-frame}.
 
 @float Example, example-frame
 @caption{Frame Widget}

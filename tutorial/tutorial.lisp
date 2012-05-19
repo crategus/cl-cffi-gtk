@@ -27,7 +27,7 @@
 (asdf:operate 'asdf:load-op :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp))
+  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp :iter))
 
 (in-package :gtk-tutorial)
 
@@ -1314,6 +1314,476 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
+;;; Chapter 8. Layout Containers
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; Alignment widget
+      
+(defun example-alignment ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Alignment"
+                                 :border-width 12
+                                 :width-request 300
+                                 :height-request 300))
+          (grid (make-instance 'gtk-grid
+                                :column-spacing 12
+                                :column-homogeneous t
+                                :row-spacing 12
+                                :row-homogeneous t)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 0, yalign: 0"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 0.00
+                                      :yalign 0.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 0 1 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 0, yalign: 1"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 0.00
+                                      :yalign 1.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 1 1 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 1, yalign: 0"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 1.00
+                                      :yalign 0.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 0 2 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "xalign: 1, yalign: 1"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"))
+            (alignment (make-instance 'gtk-alignment
+                                      :xalign 1.00
+                                      :yalign 1.00
+                                      :xscale 0.50
+                                      :yscale 0.25)))
+        (gtk-alignment-set-padding alignment 6 6 6 6)
+        (gtk-container-add alignment button)
+        (gtk-container-add frame alignment)
+        (gtk-grid-attach grid frame 1 2 1 1))
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Similiar to example-alignment, but using the child properties "margin",
+;; "valign", and "halign" of the button widget.  In distinction to
+;; example-alignment the scaling of the button is not implemented.
+
+(defun example-alignment-2 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Alignment"
+                                 :border-width 12
+                                 :width-request 300
+                                 :height-request 300))
+          (grid (make-instance 'gtk-grid
+                                :column-spacing 12
+                                :column-homogeneous t
+                                :row-spacing 12
+                                :row-homogeneous t)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "halign: start, valign: start"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"
+                                   :margin 6
+                                   :halign :start
+                                   :valign :start)))
+        (gtk-container-add frame button)
+        (gtk-grid-attach grid frame 0 1 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "halign: start, valign: end"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"
+                                   :margin 6
+                                   :halign :start
+                                   :valign :end)))
+        (gtk-container-add frame button)
+        (gtk-grid-attach grid frame 1 1 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "halign: end, valign: start"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"
+                                   :margin 6
+                                   :halign :end
+                                   :valign :start)))
+        (gtk-container-add frame button)
+        (gtk-grid-attach grid frame 0 2 1 1))
+      (let ((frame (make-instance 'gtk-frame
+                                  :label "halign: end, valign: end"))
+            (button (make-instance 'gtk-button
+                                   :label "Button"
+                                   :margin 6
+                                   :halign :end
+                                   :valign :end)))
+        (gtk-container-add frame button)
+        (gtk-grid-attach grid frame 1 2 1 1))
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Fixed Container
+
+(defun move-button (button fixed)
+  (let* ((allocation (gtk-widget-get-allocation fixed))
+         (width (- (gdk-rectangle-width allocation) 50))
+         (height (- (gdk-rectangle-height allocation) 25)))
+    (gtk-fixed-move fixed button (random width) (random height))))
+
+(defun example-fixed ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Fixed Container"
+                                 :default-width 300
+                                 :default-height 200
+                                 :border-width 12))
+          (fixed (make-instance 'gtk-fixed)))
+      (g-signal-connect window "destroy"
+                        (lambda (window)
+                          (declare (ignore window))
+                          (gtk-main-quit)))
+      (gtk-container-add window fixed)
+      (dotimes (i 3)
+        (let ((button (gtk-button-new-with-label "Press me")))
+          (g-signal-connect button "clicked"
+                            (lambda (widget)
+                              (move-button widget fixed)))
+          (gtk-fixed-put fixed button (random 250) (random 200))))
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Frames
+
+(defun example-frame ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Frame"
+                                 :default-width 250
+                                 :default-height 200
+                                 :border-width 12))
+          (frame (make-instance 'gtk-frame
+                                :label "Gtk Frame Widget"
+                                :label-xalign 1.0
+                                :label-yalign 0.5
+                                :shadow-type :etched-in)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window frame)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Aspect Frames
+
+(defun example-aspect-frame ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Aspect Frame"
+                                 :default-width 250
+                                 :default-heigth 250
+                                 :border-width 12))
+          (frame (make-instance 'gtk-aspect-frame
+                                :label "2 x 1"
+                                :xalign 0.5
+                                :yalign 0.5
+                                :ratio 2
+                                :obey-child nil))
+          (area (make-instance 'gtk-drawing-area
+                               :width-request 200
+                               :hight-request 200)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window frame)
+      (gtk-container-add frame area)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Paned Window Widgets
+
+(defun example-paned-window ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Paned Window"
+                                 :border-width 12))
+          (vpaned (make-instance 'gtk-v-paned))
+          (frame1 (make-instance 'gtk-frame :label "Frame 1"))
+          (frame2 (make-instance 'gtk-frame :label "Frame 2")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-set-size-request window 350 300)
+      (gtk-container-add window vpaned)
+      (gtk-paned-add1 vpaned frame1)
+      (gtk-paned-add2 vpaned frame2)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Scrolled Windows
+
+(defun example-scrolled-window ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-dialog
+                                 :type :toplevel
+                                 :title "Example Scrolled Window"
+                                 :border-width 0
+                                 :width-request 350
+                                 :height-request 300))
+          (scrolled (make-instance 'gtk-scrolled-window
+                                   :border-width 12
+                                   :hscrollbar-policy :automatic
+                                   :vscrollbar-policy :always))
+          (table (make-instance 'gtk-table
+                                :n-rows 10
+                                :n-columns 10
+                                :row-spacing 10
+                                :column-spacing 10
+                                :homogeneous nil)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
+      (gtk-scrolled-window-add-with-viewport scrolled table)
+      (dotimes (i 10)
+        (dotimes (j 10)
+          (gtk-table-attach table
+                            (make-instance 'gtk-button
+                                           :label
+                                           (format nil "(~d, ~d)" i j))
+                            i (+ i 1) j (+ j 1))))
+      (let ((button (make-instance 'gtk-button
+                                   :label "Close"
+                                   :can-default t)))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
+        (gtk-widget-grab-default button))
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Button Boxes
+
+(defun create-bbox (horizontal title spacing layout)
+  (let ((frame (make-instance 'gtk-frame
+                              :label title))
+        (bbox (make-instance (if horizontal
+                                 'gtk-hbutton-box
+                                 'gtk-vbutton-box)
+                             :border-width 6
+                             :layout-style layout
+                             :spacing spacing)))
+  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
+  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
+  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
+  (gtk-container-add frame bbox)
+  frame))
+
+(defun example-button-box ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Button Box"
+                                 :border-width 12))
+          (vbox1 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 0))
+          (vbox2 (make-instance 'gtk-vbox
+                                :homogeneous nil
+                                :spacing 0))
+          (hbox (make-instance 'gtk-hbox
+                               :homogeneous nil
+                               :spacing 0)))
+      ;; Set gtk-button-images to T. This allows buttons with text and image.
+      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)      
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Create Horizontal Button Boxes
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :ypad 6
+                                         :xalign 0
+                                         :use-markup t
+                                         :label
+                                         "<b>Horizontal Button Boxes</b>")
+                          :expand nil
+                          :fill nil)
+      ;; Create the first Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "Spread (spacing 12)" 12 :spread))
+      ;; Create the second Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "Edge (spacing 12)" 12 :edge))
+      ;; Create the third Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "Start (spacing 6)" 6 :start))
+      ;; Create the fourth Horizontal Box
+      (gtk-box-pack-start vbox2
+                          (create-bbox t "End (spacing 6)" 6 :end))
+      (gtk-box-pack-start vbox1 vbox2)
+      ;; Create Vertical Button Boxes
+      (gtk-box-pack-start vbox1
+                          (make-instance 'gtk-label
+                                         :ypad 12
+                                         :xalign 0
+                                         :use-markup t
+                                         :label
+                                         "<b>Vertical Button Boxes</b>")
+                          :expand nil
+                          :fill nil)
+      ;; Create the first Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "Spread (spacing 12)" 12 :spread))
+      ;; Create the second Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "Edge (spacing 12)" 12 :edge))
+      ;; Create the third Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "Start (spacing 6)" 6 :start))
+      ;; Create the fourth Vertical Box
+      (gtk-box-pack-start hbox
+                          (create-bbox nil "End (spacing 6)" 6 :end))
+      (gtk-box-pack-start vbox1 hbox)
+      (gtk-container-add window vbox1)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Toolbar - Example is not finished
+
+(defun example-toolbar ()
+  (within-main-loop
+    (let ((dialog (make-instance 'gtk-dialog
+                                 :title "Example GtkToolbar"
+                                 :width-request 600
+                                 :height-request 300
+                                 :allow-shring t))
+          (handle-box (make-instance 'gtk-handle-box))
+          (toolbar (make-instance 'gtk-toolbar
+                                  :toolbar-style :both
+                                  :border-width 6)))
+      (g-signal-connect dialog "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-realize dialog)
+      (gtk-box-pack-start (gtk-dialog-get-content-area dialog)
+                          handle-box
+                          :expand nil
+                          :fill nil
+                          :padding 6)
+      (gtk-container-add handle-box toolbar)
+      (gtk-toolbar-insert toolbar
+                          (make-instance 'gtk-tool-button
+                                         :label "Close"
+                                         :icon-widget
+                                         (gtk-image-new-from-file "gtk-logo.png"))
+                          0)
+      
+      (gtk-widget-show-all dialog))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Example of GtkNotebook
+
+(defun example-notebook ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Notebook"
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 200))
+          (expander (make-instance 'gtk-expander
+                                   :expanded t
+                                   :label "notebook"))
+          (notebook (make-instance 'gtk-notebook
+                                   :enable-popup t)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (iter (for i from 0 to 5)
+            (for page = (make-instance 'gtk-label
+                                       :label
+                                       (format nil
+                                               "Label for page ~A" i)))
+            (for tab-label = (make-instance 'gtk-label
+                                            :label (format nil "Tab ~A" i)))
+            (for tab-button = (make-instance 'gtk-button
+                                             :image
+                                             (make-instance 'gtk-image
+                                                            :stock
+                                                            "gtk-close"
+                                                            :icon-size 1)
+                                             :relief :none))
+            (g-signal-connect tab-button "clicked"
+               (let ((page page))
+                 (lambda (button)
+                   (declare (ignore button))
+                   (format t "Removing page ~A~%" page)
+                   (gtk-notebook-remove-page notebook page))))
+            (for tab-hbox = (make-instance 'gtk-box
+                                           :orientation :horizontal))
+            (gtk-box-pack-start tab-hbox tab-label)
+            (gtk-box-pack-start tab-hbox tab-button)
+            (gtk-widget-show-all tab-hbox)
+            (gtk-notebook-add-page notebook page tab-hbox))
+      (gtk-container-add expander notebook)
+      (gtk-container-add window expander)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+;;;
 ;;; Chapter 8. Miscellaneous Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -2035,426 +2505,6 @@
              (gtk-widget-destroy dialog))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Chapter 9. Container Widgets
-;;;
-;;; ----------------------------------------------------------------------------
-
-;;; Alignment widget
-      
-(defun example-alignment ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Alignment"
-                                 :border-width 12
-                                 :width-request 300
-                                 :height-request 300))
-          (grid (make-instance 'gtk-grid
-                                :column-spacing 12
-                                :column-homogeneous t
-                                :row-spacing 12
-                                :row-homogeneous t)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "xalign: 0, yalign: 0"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"))
-            (alignment (make-instance 'gtk-alignment
-                                      :xalign 0.00
-                                      :yalign 0.00
-                                      :xscale 0.50
-                                      :yscale 0.25)))
-        (gtk-alignment-set-padding alignment 6 6 6 6)
-        (gtk-container-add alignment button)
-        (gtk-container-add frame alignment)
-        (gtk-grid-attach grid frame 0 1 1 1))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "xalign: 0, yalign: 1"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"))
-            (alignment (make-instance 'gtk-alignment
-                                      :xalign 0.00
-                                      :yalign 1.00
-                                      :xscale 0.50
-                                      :yscale 0.25)))
-        (gtk-alignment-set-padding alignment 6 6 6 6)
-        (gtk-container-add alignment button)
-        (gtk-container-add frame alignment)
-        (gtk-grid-attach grid frame 1 1 1 1))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "xalign: 1, yalign: 0"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"))
-            (alignment (make-instance 'gtk-alignment
-                                      :xalign 1.00
-                                      :yalign 0.00
-                                      :xscale 0.50
-                                      :yscale 0.25)))
-        (gtk-alignment-set-padding alignment 6 6 6 6)
-        (gtk-container-add alignment button)
-        (gtk-container-add frame alignment)
-        (gtk-grid-attach grid frame 0 2 1 1))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "xalign: 1, yalign: 1"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"))
-            (alignment (make-instance 'gtk-alignment
-                                      :xalign 1.00
-                                      :yalign 1.00
-                                      :xscale 0.50
-                                      :yscale 0.25)))
-        (gtk-alignment-set-padding alignment 6 6 6 6)
-        (gtk-container-add alignment button)
-        (gtk-container-add frame alignment)
-        (gtk-grid-attach grid frame 1 2 1 1))
-      (gtk-container-add window grid)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;; Similiar to example-alignment, but using the child properties "margin",
-;; "valign", and "halign" of the button widget.  In distinction to
-;; example-alignment the scaling of the button is not implemented.
-
-(defun example-alignment-2 ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Alignment"
-                                 :border-width 12
-                                 :width-request 300
-                                 :height-request 300))
-          (grid (make-instance 'gtk-grid
-                                :column-spacing 12
-                                :column-homogeneous t
-                                :row-spacing 12
-                                :row-homogeneous t)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "halign: start, valign: start"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"
-                                   :margin 6
-                                   :halign :start
-                                   :valign :start)))
-        (gtk-container-add frame button)
-        (gtk-grid-attach grid frame 0 1 1 1))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "halign: start, valign: end"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"
-                                   :margin 6
-                                   :halign :start
-                                   :valign :end)))
-        (gtk-container-add frame button)
-        (gtk-grid-attach grid frame 1 1 1 1))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "halign: end, valign: start"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"
-                                   :margin 6
-                                   :halign :end
-                                   :valign :start)))
-        (gtk-container-add frame button)
-        (gtk-grid-attach grid frame 0 2 1 1))
-      (let ((frame (make-instance 'gtk-frame
-                                  :label "halign: end, valign: end"))
-            (button (make-instance 'gtk-button
-                                   :label "Button"
-                                   :margin 6
-                                   :halign :end
-                                   :valign :end)))
-        (gtk-container-add frame button)
-        (gtk-grid-attach grid frame 1 2 1 1))
-      (gtk-container-add window grid)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Fixed Container
-
-(defun move-button (button fixed)
-  (let* ((allocation (gtk-widget-get-allocation fixed))
-         (width (- (gdk-rectangle-width allocation) 20))
-         (height (- (gdk-rectangle-height allocation) 10)))
-    (gtk-fixed-move fixed button (random width) (random height))))
-
-(defun example-fixed ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Fixed Container"
-                                 :default-width 300
-                                 :default-height 200
-                                 :border-width 12))
-          (fixed (make-instance 'gtk-fixed)))
-      (g-signal-connect window "destroy"
-                        (lambda (window)
-                          (declare (ignore window))
-                          (gtk-main-quit)))
-      (gtk-container-add window fixed)
-      (dotimes (i 3)
-        (let ((button (gtk-button-new-with-label "Press me")))
-          (g-signal-connect button "clicked"
-                            (lambda (widget)
-                              (move-button widget fixed)))
-          (gtk-fixed-put fixed button (random 300) (random 200))))
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Frames
-
-(defun example-frame ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Frame"
-                                 :default-width 250
-                                 :default-height 200
-                                 :border-width 12))
-          (frame (make-instance 'gtk-frame
-                                :label "Gtk Frame Widget"
-                                :label-xalign 1.0
-                                :label-yalign 0.5
-                                :shadow-type :etched-in)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-container-add window frame)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Aspect Frames
-
-(defun example-aspect-frame ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Aspect Frame"
-                                 :default-width 300
-                                 :default-height 250
-                                 :border-width 12))
-          (frame (make-instance 'gtk-aspect-frame
-                                :label "2 x 1"
-                                :xalign 0.5
-                                :yalign 0.5
-                                :ratio 2
-                                :obey-child nil))
-          (area (make-instance 'gtk-drawing-area
-                               :width-request 200
-                               :hight-request 200)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-container-add window frame)
-      (gtk-container-add frame area)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Paned Window Widgets
-
-(defun example-paned-window ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Paned Window"
-                                 :border-width 12))
-          (vpaned (make-instance 'gtk-v-paned))
-          (frame1 (make-instance 'gtk-frame :label "Frame 1"))
-          (frame2 (make-instance 'gtk-frame :label "Frame 2")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-widget-set-size-request window 350 300)
-      (gtk-container-add window vpaned)
-      (gtk-paned-add1 vpaned frame1)
-      (gtk-paned-add2 vpaned frame2)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Scrolled Windows
-
-(defun example-scrolled-window ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-dialog
-                                 :type :toplevel
-                                 :title "Example Scrolled Window"
-                                 :border-width 0
-                                 :width-request 350
-                                 :height-request 300))
-          (scrolled (make-instance 'gtk-scrolled-window
-                                   :border-width 12
-                                   :hscrollbar-policy :automatic
-                                   :vscrollbar-policy :always))
-          (table (make-instance 'gtk-table
-                                :n-rows 10
-                                :n-columns 10
-                                :row-spacing 10
-                                :column-spacing 10
-                                :homogeneous nil)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
-      (gtk-scrolled-window-add-with-viewport scrolled table)
-      (dotimes (i 10)
-        (dotimes (j 10)
-          (gtk-table-attach table
-                            (make-instance 'gtk-button
-                                           :label
-                                           (format nil "(~d, ~d)" i j))
-                            i (+ i 1) j (+ j 1))))
-      (let ((button (make-instance 'gtk-button
-                                   :label "Close"
-                                   :can-default t)))
-        (g-signal-connect button "clicked"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-widget-destroy window)))
-        (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
-        (gtk-widget-grab-default button))
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Button Boxes
-
-(defun create-bbox (horizontal title spacing layout)
-  (let ((frame (make-instance 'gtk-frame
-                              :label title))
-        (bbox (make-instance (if horizontal
-                                 'gtk-hbutton-box
-                                 'gtk-vbutton-box)
-                             :border-width 6
-                             :layout-style layout
-                             :spacing spacing)))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
-  (gtk-container-add frame bbox)
-  frame))
-
-(defun example-button-box ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Button Box"
-                                 :border-width 12))
-          (vbox1 (make-instance 'gtk-vbox
-                                :homogeneous nil
-                                :spacing 0))
-          (vbox2 (make-instance 'gtk-vbox
-                                :homogeneous nil
-                                :spacing 0))
-          (hbox (make-instance 'gtk-hbox
-                               :homogeneous nil
-                               :spacing 0)))
-      ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)      
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      ;; Create Horizontal Button Boxes
-      (gtk-box-pack-start vbox1
-                          (make-instance 'gtk-label
-                                         :ypad 6
-                                         :xalign 0
-                                         :use-markup t
-                                         :label
-                                         "<b>Horizontal Button Boxes</b>")
-                          :expand nil
-                          :fill nil)
-      ;; Create the first Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox t "Spread (spacing 12)" 12 :spread))
-      ;; Create the second Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox t "Edge (spacing 12)" 12 :edge))
-      ;; Create the third Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox t "Start (spacing 6)" 6 :start))
-      ;; Create the fourth Horizontal Box
-      (gtk-box-pack-start vbox2
-                          (create-bbox t "End (spacing 6)" 6 :end))
-      (gtk-box-pack-start vbox1 vbox2)
-      ;; Create Vertical Button Boxes
-      (gtk-box-pack-start vbox1
-                          (make-instance 'gtk-label
-                                         :ypad 12
-                                         :xalign 0
-                                         :use-markup t
-                                         :label
-                                         "<b>Vertical Button Boxes</b>")
-                          :expand nil
-                          :fill nil)
-      ;; Create the first Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox nil "Spread (spacing 12)" 12 :spread))
-      ;; Create the second Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox nil "Edge (spacing 12)" 12 :edge))
-      ;; Create the third Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox nil "Start (spacing 6)" 6 :start))
-      ;; Create the fourth Vertical Box
-      (gtk-box-pack-start hbox
-                          (create-bbox nil "End (spacing 6)" 6 :end))
-      (gtk-box-pack-start vbox1 hbox)
-      (gtk-container-add window vbox1)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
-
-;;; Toolbar - Example is not finished
-
-(defun example-toolbar ()
-  (within-main-loop
-    (let ((dialog (make-instance 'gtk-dialog
-                                 :title "Example GtkToolbar"
-                                 :width-request 600
-                                 :height-request 300
-                                 :allow-shring t))
-          (handle-box (make-instance 'gtk-handle-box))
-          (toolbar (make-instance 'gtk-toolbar
-                                  :toolbar-style :both
-                                  :border-width 6)))
-      (g-signal-connect dialog "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-widget-realize dialog)
-      (gtk-box-pack-start (gtk-dialog-get-content-area dialog)
-                          handle-box
-                          :expand nil
-                          :fill nil
-                          :padding 6)
-      (gtk-container-add handle-box toolbar)
-      (gtk-toolbar-insert toolbar
-                          (make-instance 'gtk-tool-button
-                                         :label "Close"
-                                         :icon-widget
-                                         (gtk-image-new-from-file "gtk-logo.png"))
-                          0)
-      
-      (gtk-widget-show-all dialog))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
