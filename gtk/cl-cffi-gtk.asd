@@ -99,7 +99,7 @@
    (:file "gtk.im-context")            ; Base class for input contexts
                                        
    ;; Layout Containers
-   (:file "gtk.box")                   ; A container box
+   (:file "gtk.box")                   ; Container box
    (:file "gtk.table")                 ; Pack widgets in regular patterns
    (:file "gtk.grid")                  ; Pack widgets in a rows and columns
    (:file "gtk.layout")                ; Infinite scrollable
@@ -109,6 +109,7 @@
    (:file "gtk.expander")              ; Container which can hide childs
    (:file "gtk.alignment")             ; GtkAlignment
    (:file "gtk.button-box")            ; Container for arranging buttons
+   (:file "gtk.overlay")               ; Container which overlays widgets
                                        
    ;; Ornaments                        
    (:file "gtk.separator")             ; Separator widget
