@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,16 +31,16 @@
 ;;; GtkViewport
 ;;; 
 ;;; An adapter which makes widgets scrollable
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkViewport
-;;;
+;;;     
 ;;;     gtk_viewport_new
-;;;     gtk_viewport_get_hadjustment     * deprecated *
-;;;     gtk_viewport_get_vadjustment     * deprecated *
-;;;     gtk_viewport_set_hadjustment     * deprecated *
-;;;     gtk_viewport_set_vadjustment     * deprecated *
+;;;     gtk_viewport_get_hadjustment
+;;;     gtk_viewport_get_vadjustment
+;;;     gtk_viewport_set_hadjustment
+;;;     gtk_viewport_set_vadjustment
 ;;;     gtk_viewport_set_shadow_type
 ;;;     gtk_viewport_get_shadow_type
 ;;;     gtk_viewport_get_bin_window
@@ -58,7 +58,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkViewport implements AtkImplementorIface, GtkBuildable and GtkScrollable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "shadow-type"              GtkShadowType         : Read / Write
@@ -67,7 +67,7 @@
 ;;; 
 ;;; The GtkViewport widget acts as an adaptor class, implementing scrollability
 ;;; for child widgets that lack their own scrolling capabilities. Use
-;;; GtkViewport to scroll child widgets such as GtkTable, GtkBox, and so on.
+;;; GtkViewport to scroll child widgets such as GtkGrid, GtkBox, and so on.
 ;;; 
 ;;; If a widget has native scrolling abilities, such as GtkTextView, GtkTreeView
 ;;; or GtkIconview, it can be added to a GtkScrolledWindow with
@@ -104,7 +104,9 @@
 (define-g-object-class "GtkViewport" gtk-viewport
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkScrollable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkScrollable")
    :type-initializer "gtk_viewport_get_type")
   ((shadow-type
     gtk-viewport-shadow-type
@@ -128,6 +130,8 @@
 ;;;     a new GtkViewport
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-viewport-new))
+
 (defun gtk-viewport-new (&optional (hadjustment nil) (vadjustment nil))
   (make-instance 'gtk-viewport
                  :hadjustment hadjustment
@@ -136,18 +140,100 @@
 (export 'gtk-viewport-new)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_viewport_get_hadjustment ()
+;;; 
+;;; GtkAdjustment * gtk_viewport_get_hadjustment (GtkViewport *viewport);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_viewport_get_hadjustment has been deprecated since version 3.0 and
+;;; should not be used in newly-written code. Use
+;;; gtk_scrollable_get_hadjustment()
+;;; 
+;;; Returns the horizontal adjustment of the viewport.
+;;; 
+;;; viewport :
+;;;     a GtkViewport.
+;;; 
+;;; Returns :
+;;;     the horizontal adjustment of viewport
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_viewport_get_vadjustment ()
+;;; 
+;;; GtkAdjustment * gtk_viewport_get_vadjustment (GtkViewport *viewport);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_viewport_get_vadjustment has been deprecated since version 3.0 and
+;;; should not be used in newly-written code. Use
+;;; gtk_scrollable_get_vadjustment()
+;;; 
+;;; Returns the vertical adjustment of the viewport.
+;;; 
+;;; viewport :
+;;;     a GtkViewport.
+;;; 
+;;; Returns :
+;;;     the vertical adjustment of viewport
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_viewport_set_hadjustment ()
+;;; 
+;;; void gtk_viewport_set_hadjustment (GtkViewport *viewport,
+;;;                                    GtkAdjustment *adjustment);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_viewport_set_hadjustment has been deprecated since version 3.0 and
+;;; should not be used in newly-written code. Use
+;;; gtk_scrollable_set_hadjustment()
+;;; 
+;;; Sets the horizontal adjustment of the viewport.
+;;; 
+;;; viewport :
+;;;     a GtkViewport.
+;;; 
+;;; adjustment :
+;;;     a GtkAdjustment
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_viewport_set_vadjustment ()
+;;; 
+;;; void gtk_viewport_set_vadjustment (GtkViewport *viewport,
+;;;                                    GtkAdjustment *adjustment);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_viewport_set_vadjustment has been deprecated since version 3.0 and
+;;; should not be used in newly-written code. Use
+;;; gtk_scrollable_set_vadjustment()
+;;; 
+;;; Sets the vertical adjustment of the viewport.
+;;; 
+;;; viewport :
+;;;     a GtkViewport.
+;;; 
+;;; adjustment :
+;;;     a GtkAdjustment
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_shadow_type ()
 ;;; 
-;;; void gtk_viewport_set_shadow_type (GtkViewport   *viewport,
-;;;                                    GtkShadowType  type);
+;;; void gtk_viewport_set_shadow_type (GtkViewport *viewport,
+;;;                                    GtkShadowType type);
 ;;; 
 ;;; Sets the shadow type of the viewport.
 ;;; 
 ;;; viewport :
-;;;     a GtkViewport
+;;;     a GtkViewport.
 ;;; 
 ;;; type :
-;;;     the new shadow type
+;;;     the new shadow type.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-viewport-set-shadow-type))
@@ -162,8 +248,7 @@
 ;;; 
 ;;; GtkShadowType gtk_viewport_get_shadow_type (GtkViewport *viewport);
 ;;; 
-;;; Gets the shadow type of the GtkViewport.
-;;; See gtk_viewport_set_shadow_type().
+;;; Gets the shadow type of the GtkViewport. See gtk_viewport_set_shadow_type().
 ;;; 
 ;;; viewport :
 ;;;     a GtkViewport

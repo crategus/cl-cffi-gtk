@@ -413,6 +413,14 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-paned-new))
+
+(defun gtk-paned-new (orientation)
+  (make-instance 'gtk-paned
+                 :orientation orientation))
+
+(export 'gtk-panded-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_add1 ()
 ;;; 
@@ -578,7 +586,9 @@
 ;;;     unset.
 ;;; ----------------------------------------------------------------------------
 
-(defun gkt-paned-set-position (paned position)
+(declaim (inline gtk-paned-set-position))
+
+(defun gtk-paned-set-position (paned position)
   (setf (gtk-paned-position paned) position))
 
 (export 'gtk-paned-set-position)
@@ -596,6 +606,8 @@
 ;;; Returns :
 ;;;     position of the divider
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-paned-get-position))
 
 (defun gtk-paned-get-position (paned)
   (gtk-paned-position paned))
@@ -700,7 +712,7 @@
 ;;;     the new GtkHPaned
 ;;; ----------------------------------------------------------------------------
 
-(defun gkt-hpaned-new ()
+(defun gtk-hpaned-new ()
   (make-instance 'gtk-h-paned))
   
 (export 'gtk-hpaned-new)

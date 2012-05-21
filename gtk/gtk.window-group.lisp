@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkWindowGroup
 ;;; 
 ;;; Limit the effect of grabs
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkWindowGroup
+;;;     
 ;;;     gtk_window_group_new
 ;;;     gtk_window_group_add_window
 ;;;     gtk_window_group_remove_window
@@ -70,13 +71,14 @@
     :export t
     :interfaces nil
     :type-initializer "gtk_window_group_get_type")
-  ((:cffi windows gtk-window-group-windows (g-list (g-object gtk-window))
+  ((:cffi windows
+          gtk-window-group-windows (g-list (g-object gtk-window))
           "gtk_window_group_list_windows" nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_new ()
 ;;; 
-;;; GtkWindowGroup * gtk_window_group_new (void)
+;;; GtkWindowGroup * gtk_window_group_new (void);
 ;;; 
 ;;; Creates a new GtkWindowGroup object. Grabs added with gtk_grab_add() only
 ;;; affect windows within the same GtkWindowGroup.
@@ -85,11 +87,18 @@
 ;;;     a new GtkWindowGroup.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-group-new))
+
+(defun gtk-window-group-new ()
+  (make-instance 'gtk-window-group))
+
+(export 'gtk-window-group-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_add_window ()
 ;;; 
 ;;; void gtk_window_group_add_window (GtkWindowGroup *window_group,
-;;;                                   GtkWindow *window)
+;;;                                   GtkWindow *window);
 ;;; 
 ;;; Adds a window to a GtkWindowGroup.
 ;;; 
@@ -110,7 +119,7 @@
 ;;; gtk_window_group_remove_window ()
 ;;; 
 ;;; void gtk_window_group_remove_window (GtkWindowGroup *window_group,
-;;;                                      GtkWindow *window)
+;;;                                      GtkWindow *window);
 ;;; 
 ;;; Removes a window from a GtkWindowGroup.
 ;;; 
@@ -130,7 +139,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_list_windows ()
 ;;; 
-;;; GList * gtk_window_group_list_windows (GtkWindowGroup *window_group)
+;;; GList * gtk_window_group_list_windows (GtkWindowGroup *window_group);
 ;;; 
 ;;; Returns a list of the GtkWindows that belong to window_group.
 ;;; 
@@ -152,7 +161,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_get_current_grab ()
 ;;; 
-;;; GtkWidget* gtk_window_group_get_current_grab (GtkWindowGroup *window_group)
+;;; GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group)
 ;;; 
 ;;; Gets the current grab widget of the given group, see gtk_grab_add().
 ;;; 
@@ -160,17 +169,23 @@
 ;;;     a GtkWindowGroup
 ;;; 
 ;;; Returns :
-;;;     the current grab widget of the group. [transfer none]
+;;;     the current grab widget of the group
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_group_get_current_grab" gtk-window-group-get-current-grab)
+    (g-object gtk-widget)
+  (window-group (g-object gtk-window-group)))
+
+(export 'gtk-window-group-get-current-grab)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_get_current_device_grab ()
 ;;; 
 ;;; GtkWidget * gtk_window_group_get_current_device_grab
 ;;;                                               (GtkWindowGroup *window_group,
-;;;                                                GdkDevice *device)
+;;;                                                GdkDevice *device);
 ;;; 
 ;;; Returns the current grab widget for device, or NULL if none.
 ;;; 
@@ -181,9 +196,17 @@
 ;;;     a GdkDevice
 ;;; 
 ;;; Returns :
-;;;     The grab widget, or NULL. [transfer none]
+;;;     The grab widget, or NULL.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-;;; -- End of file gtk.window-group.lisp ---------------------------------------
+(defcfun ("gtk_window_group_get_current_device_grab"
+           gtk-window-group-get-current-device-grab)
+    (g-object gtk-widget)
+  (window-group (g-object gtk-window-group))
+  (device (g-object gdk-device)))
+
+(export 'gtk-window-group-get-current-device-grab)
+
+;;; --- End of file gtk.window-group.lisp --------------------------------------

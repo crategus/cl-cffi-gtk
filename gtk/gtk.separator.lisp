@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkSeparator
 ;;; 
 ;;; A separator widget
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkSeparator
-;;;
+;;;     
 ;;;     gtk_separator_new
 ;;; 
 ;;; Object Hierarchy
@@ -50,7 +50,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkSeparator implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
+;;; 
 ;;; Description
 ;;; 
 ;;; GtkSeparator is a horizontal or vertical separator widget, depending on the
@@ -73,7 +73,9 @@
 (define-g-object-class "GtkSeparator" gtk-separator
   (:superclass gtk-widget
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_separator_get_type")
   nil)
 
@@ -88,7 +90,7 @@
 ;;;     the separator's orientation.
 ;;; 
 ;;; Returns :
-;;;     a new GtkSeparator
+;;;     a new GtkSeparator.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -101,15 +103,15 @@
 
 (export 'gtk-separator-new)
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; GtkHSeparator
 ;;; 
-;;; GtkHSeparator — A horizontal separator
+;;; A horizontal separator
 ;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkHSeparator
-;;;
+;;;     
 ;;;     gtk_hseparator_new
 ;;; 
 ;;; Object Hierarchy
@@ -124,15 +126,15 @@
 ;;; 
 ;;; GtkHSeparator implements AtkImplementorIface, GtkBuildable and
 ;;; GtkOrientable.
-;;;
+;;; 
 ;;; Description
 ;;; 
 ;;; The GtkHSeparator widget is a horizontal separator, used to group the
-;;; widgets within a window. It displays a horizontal line with a shadow to
-;;; make it appear sunken into the interface.
+;;; widgets within a window. It displays a horizontal line with a shadow to make
+;;; it appear sunken into the interface.
 ;;; 
 ;;; Note
-;;;
+;;; 
 ;;; The GtkHSeparator widget is not used as a separator within menus. To create
 ;;; a separator in a menu create an empty GtkSeparatorMenuItem widget using
 ;;; gtk_separator_menu_item_new() and add it to the menu with
@@ -145,10 +147,6 @@
 ;;; struct GtkHSeparator
 ;;; 
 ;;; struct GtkHSeparator;
-;;; 
-;;; Warning
-;;; 
-;;; GtkHSeparator is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -159,7 +157,9 @@
 (define-g-object-class "GtkHSeparator" gtk-hseparator
   (:superclass gtk-separator
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_hseparator_get_type")
   nil)
 
@@ -172,12 +172,12 @@
 ;;; 
 ;;; gtk_hseparator_new has been deprecated since version 3.2 and should not be
 ;;; used in newly-written code. Use gtk_separator_new() with
-;;; GTK_ORIENTATION_HORIZONTAL instead
+;;; GTK_ORIENTATION_HORIZONTAL instead.
 ;;; 
 ;;; Creates a new GtkHSeparator.
 ;;; 
 ;;; Returns :
-;;;     a new GtkHSeparator
+;;;     a new GtkHSeparator.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hseparator-new))
@@ -195,7 +195,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkVSeparator
-;;;
+;;;     
 ;;;     gtk_vseparator_new
 ;;; 
 ;;; Object Hierarchy
@@ -210,12 +210,12 @@
 ;;; 
 ;;; GtkVSeparator implements AtkImplementorIface, GtkBuildable and
 ;;; GtkOrientable.
-;;;
+;;; 
 ;;; Description
 ;;; 
 ;;; The GtkVSeparator widget is a vertical separator, used to group the widgets
-;;; within a window. It displays a vertical line with a shadow to make it
-;;; appear sunken into the interface.
+;;; within a window. It displays a vertical line with a shadow to make it appear
+;;; sunken into the interface.
 ;;; 
 ;;; GtkVSeparator has been deprecated, use GtkSeparator instead.
 ;;; ----------------------------------------------------------------------------
@@ -224,11 +224,7 @@
 ;;; struct GtkVSeparator
 ;;; 
 ;;; struct GtkVSeparator;
-;;; 
-;;; Warning
-;;; 
-;;; GtkVSeparator is deprecated and should not be used in newly-written code.
-;;; 
+;;;
 ;;; The GtkVSeparator struct contains private data only, and should be accessed
 ;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
@@ -241,7 +237,9 @@
 (define-g-object-class "GtkVSeparator" gtk-vseparator
   (:superclass gtk-separator
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_vseparator_get_type")
   nil)
 
@@ -254,12 +252,12 @@
 ;;; 
 ;;; gtk_vseparator_new has been deprecated since version 3.2 and should not be
 ;;; used in newly-written code. Use gtk_separator_new() with
-;;; GTK_ORIENTATION_VERTICAL instead
+;;; GTK_ORIENTATION_VERTICAL instead.
 ;;; 
 ;;; Creates a new GtkVSeparator.
 ;;; 
 ;;; Returns :
-;;;     a new GtkVSeparator
+;;;     a new GtkVSeparator.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vseparator-new))

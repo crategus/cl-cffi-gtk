@@ -2,7 +2,7 @@
 ;;; gtk.scrollable.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;; 
@@ -25,20 +25,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;; 
 ;;; GtkScrollable
-;;;
+;;; 
 ;;; An interface for scrollable widgets
 ;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkScrollable
-;;;
+;;;     
 ;;;     gtk_scrollable_get_hadjustment
 ;;;     gtk_scrollable_set_hadjustment
 ;;;     gtk_scrollable_get_vadjustment
 ;;;     gtk_scrollable_set_vadjustment
-;;;
+;;;     
 ;;;     GtkScrollablePolicy
-;;;
+;;;     
 ;;;     gtk_scrollable_get_hscroll_policy
 ;;;     gtk_scrollable_set_hscroll_policy
 ;;;     gtk_scrollable_get_vscroll_policy
@@ -52,18 +52,18 @@
 ;;; Prerequisites
 ;;; 
 ;;; GtkScrollable requires GObject.
-;;;
+;;; 
 ;;; Known Implementations
 ;;; 
 ;;; GtkScrollable is implemented by GtkIconView, GtkLayout, GtkTextView,
 ;;; GtkToolPalette, GtkTreeView and GtkViewport.
-;;;
+;;; 
 ;;; Properties
 ;;; 
-;;;   "hadjustment"             GtkAdjustment*        : Read / Write / Construct
-;;;   "hscroll-policy"          GtkScrollablePolicy   : Read / Write
-;;;   "vadjustment"             GtkAdjustment*        : Read / Write / Construct
-;;;   "vscroll-policy"          GtkScrollablePolicy   : Read / Write
+;;;   "hadjustment"              GtkAdjustment*       : Read / Write / Construct
+;;;   "hscroll-policy"           GtkScrollablePolicy  : Read / Write
+;;;   "vadjustment"              GtkAdjustment*       : Read / Write / Construct
+;;;   "vscroll-policy"           GtkScrollablePolicy  : Read / Write
 ;;; 
 ;;; Description
 ;;; 
@@ -77,14 +77,14 @@
 ;;; 
 ;;; All scrollable widgets should do the following.
 ;;; 
-;;;     When a parent widget sets the scrollable child widget's adjustments,
-;;;     the widget should populate the adjustments' "lower", "upper",
+;;;     When a parent widget sets the scrollable child widget's adjustments, the
+;;      widget should populate the adjustments' "lower", "upper",
 ;;;     "step-increment", "page-increment" and "page-size" properties and
 ;;;     connect to the "value-changed" signal.
 ;;; 
 ;;;     Because its preferred size is the size for a fully expanded widget, the
-;;;     scrollable widget must be able to cope with underallocations. This
-;;;     means that it must accept any value passed to its
+;;;     scrollable widget must be able to cope with underallocations. This means
+;;;     that it must accept any value passed to its
 ;;;     GtkWidgetClass.size_allocate() function.
 ;;; 
 ;;;     When the parent allocates space to the scrollable child widget, the
@@ -92,7 +92,7 @@
 ;;; 
 ;;;     When any of the adjustments emits the "value-changed" signal, the
 ;;;     scrollable widget should scroll its contents.
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -100,7 +100,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "hadjustment" property
 ;;; 
-;;;   "hadjustment"             GtkAdjustment*        : Read / Write / Construct
+;;;   "hadjustment"              GtkAdjustment*       : Read / Write / Construct
 ;;; 
 ;;; Horizontal GtkAdjustment of the scrollable widget. This adjustment is shared
 ;;; between the scrollable widget and its parent.
@@ -123,7 +123,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "vadjustment" property
 ;;; 
-;;;   "vadjustment"             GtkAdjustment*        : Read / Write / Construct
+;;;   "vadjustment"              GtkAdjustment*       : Read / Write / Construct
 ;;; 
 ;;; Verical GtkAdjustment of the scrollable widget. This adjustment is shared
 ;;; between the scrollable widget and its parent.
@@ -290,7 +290,7 @@
 ;;; gtk_scrollable_get_hscroll_policy ()
 ;;; 
 ;;; GtkScrollablePolicy gtk_scrollable_get_hscroll_policy
-;;;                                                  (GtkScrollable *scrollable)
+;;;                                                 (GtkScrollable *scrollable);
 ;;; 
 ;;; Gets the horizontal GtkScrollablePolicy.
 ;;; 
@@ -298,7 +298,7 @@
 ;;;     a GtkScrollable
 ;;; 
 ;;; Returns :
-;;;     The horizontal GtkScrollablePolicy
+;;;     The horizontal GtkScrollablePolicy.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
@@ -339,7 +339,7 @@
 ;;; gtk_scrollable_get_vscroll_policy ()
 ;;; 
 ;;; GtkScrollablePolicy gtk_scrollable_get_vscroll_policy
-;;;                                                  (GtkScrollable *scrollable)
+;;;                                                 (GtkScrollable *scrollable);
 ;;; 
 ;;; Gets the vertical GtkScrollablePolicy.
 ;;; 
@@ -347,7 +347,7 @@
 ;;;     a GtkScrollable
 ;;; 
 ;;; Returns :
-;;;     The vertical GtkScrollablePolicy
+;;;     The vertical GtkScrollablePolicy.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
