@@ -128,7 +128,7 @@
    (:file "gtk.window-group")          ; GtkWindowGroup
    (:file "gtk.about-dialog")          ; GtkAboutDialog
    (:file "gtk.assistant")             ; GtkAssistant
-   ;; GtkOffscreenWindow not implemented
+   (:file "gtk.offscreen-window")      ; GtkOffscreenWindow
    
    ;; Display Widgets
    (:file "gtk.accel-label")           ; GtkAccelLabel
