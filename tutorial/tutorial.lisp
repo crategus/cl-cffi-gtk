@@ -27,7 +27,7 @@
 (asdf:operate 'asdf:load-op :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp :iter))
+  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -1519,11 +1519,11 @@
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Example Aspect Frame"
-                                 :default-width 250
-                                 :default-heigth 250
+                                 :default-width 300
+                                 :default-height 250
                                  :border-width 12))
           (frame (make-instance 'gtk-aspect-frame
-                                :label "2 x 1"
+                                :label "Ratio 2 x 1"
                                 :xalign 0.5
                                 :yalign 0.5
                                 :ratio 2
@@ -1549,17 +1549,18 @@
                                  :type :toplevel
                                  :title "Example Paned Window"
                                  :border-width 12))
-          (vpaned (make-instance 'gtk-v-paned))
-          (frame1 (make-instance 'gtk-frame :label "Frame 1"))
-          (frame2 (make-instance 'gtk-frame :label "Frame 2")))
+          (paned (make-instance 'gtk-paned
+                                :orientation :vertical))
+          (frame1 (make-instance 'gtk-frame :label "Window 1"))
+          (frame2 (make-instance 'gtk-frame :label "Window 2")))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (gtk-widget-set-size-request window 350 300)
-      (gtk-container-add window vpaned)
-      (gtk-paned-add1 vpaned frame1)
-      (gtk-paned-add2 vpaned frame2)
+      (gtk-widget-set-size-request window 300 250)
+      (gtk-container-add window paned)
+      (gtk-paned-add1 paned frame1)
+      (gtk-paned-add2 paned frame2)
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -1612,12 +1613,11 @@
 
 ;;; Button Boxes
 
-(defun create-bbox (horizontal title spacing layout)
+(defun create-bbox (orientation title spacing layout)
   (let ((frame (make-instance 'gtk-frame
                               :label title))
-        (bbox (make-instance (if horizontal
-                                 'gtk-hbutton-box
-                                 'gtk-vbutton-box)
+        (bbox (make-instance 'gtk-button-box
+                             :orientation orientation
                              :border-width 6
                              :layout-style layout
                              :spacing spacing)))
@@ -1633,17 +1633,20 @@
                                  :type :toplevel
                                  :title "Example Button Box"
                                  :border-width 12))
-          (vbox1 (make-instance 'gtk-vbox
+          (vbox1 (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
-                                :spacing 0))
-          (vbox2 (make-instance 'gtk-vbox
+                                :spacing 12))
+          (vbox2 (make-instance 'gtk-box
+                                :orientation :vertical
                                 :homogeneous nil
-                                :spacing 0))
-          (hbox (make-instance 'gtk-hbox
+                                :spacing 12))
+          (hbox (make-instance 'gtk-box
+                               :orientation :horizontal
                                :homogeneous nil
-                               :spacing 0)))
+                               :spacing 12)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
-      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)      
+      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -1660,16 +1663,28 @@
                           :fill nil)
       ;; Create the first Horizontal Box
       (gtk-box-pack-start vbox2
-                          (create-bbox t "Spread (spacing 12)" 12 :spread))
+                          (create-bbox :horizontal
+                                       "Spread (spacing 12)"
+                                       12
+                                       :spread))
       ;; Create the second Horizontal Box
       (gtk-box-pack-start vbox2
-                          (create-bbox t "Edge (spacing 12)" 12 :edge))
+                          (create-bbox :horizontal
+                                       "Edge (spacing 12)"
+                                       12
+                                       :edge))
       ;; Create the third Horizontal Box
       (gtk-box-pack-start vbox2
-                          (create-bbox t "Start (spacing 6)" 6 :start))
+                          (create-bbox :horizontal
+                                       "Start (spacing 6)"
+                                       6
+                                       :start))
       ;; Create the fourth Horizontal Box
       (gtk-box-pack-start vbox2
-                          (create-bbox t "End (spacing 6)" 6 :end))
+                          (create-bbox :horizontal
+                                       "End (spacing 6)"
+                                       6
+                                       :end))
       (gtk-box-pack-start vbox1 vbox2)
       ;; Create Vertical Button Boxes
       (gtk-box-pack-start vbox1
@@ -1683,16 +1698,28 @@
                           :fill nil)
       ;; Create the first Vertical Box
       (gtk-box-pack-start hbox
-                          (create-bbox nil "Spread (spacing 12)" 12 :spread))
+                          (create-bbox :vertical
+                                       "Spread (spacing 12)"
+                                       12
+                                       :spread))
       ;; Create the second Vertical Box
       (gtk-box-pack-start hbox
-                          (create-bbox nil "Edge (spacing 12)" 12 :edge))
+                          (create-bbox :vertical
+                                       "Edge (spacing 12)"
+                                       12
+                                       :edge))
       ;; Create the third Vertical Box
       (gtk-box-pack-start hbox
-                          (create-bbox nil "Start (spacing 6)" 6 :start))
+                          (create-bbox :vertical
+                                       "Start (spacing 6)"
+                                       6
+                                       :start))
       ;; Create the fourth Vertical Box
       (gtk-box-pack-start hbox
-                          (create-bbox nil "End (spacing 6)" 6 :end))
+                          (create-bbox :vertical
+                                       "End (spacing 6)"
+                                       6
+                                       :end))
       (gtk-box-pack-start vbox1 hbox)
       (gtk-container-add window vbox1)
       (gtk-widget-show-all window))))
@@ -1745,39 +1772,39 @@
                                  :default-height 200))
           (expander (make-instance 'gtk-expander
                                    :expanded t
-                                   :label "notebook"))
+                                   :label "Notebook"))
           (notebook (make-instance 'gtk-notebook
                                    :enable-popup t)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (iter (for i from 0 to 5)
-            (for page = (make-instance 'gtk-label
-                                       :label
-                                       (format nil
-                                               "Label for page ~A" i)))
-            (for tab-label = (make-instance 'gtk-label
-                                            :label (format nil "Tab ~A" i)))
-            (for tab-button = (make-instance 'gtk-button
-                                             :image
-                                             (make-instance 'gtk-image
-                                                            :stock
-                                                            "gtk-close"
-                                                            :icon-size 1)
-                                             :relief :none))
-            (g-signal-connect tab-button "clicked"
-               (let ((page page))
-                 (lambda (button)
-                   (declare (ignore button))
-                   (format t "Removing page ~A~%" page)
-                   (gtk-notebook-remove-page notebook page))))
-            (for tab-hbox = (make-instance 'gtk-box
-                                           :orientation :horizontal))
+      (dotimes (i 5)
+        (let ((page (make-instance 'gtk-label
+                                   :label
+                                   (format nil
+                                           "Text for page ~A" i)))
+              (tab-label (make-instance 'gtk-label
+                                        :label (format nil "Tab ~A" i)))
+              (tab-button (make-instance 'gtk-button
+                                         :image
+                                         (make-instance 'gtk-image
+                                                        :stock
+                                                        "gtk-close"
+                                                        :icon-size 1)
+                                         :relief :none)))
+          (g-signal-connect tab-button "clicked"
+             (let ((page page))
+               (lambda (button)
+                 (declare (ignore button))
+                 (format t "Removing page ~A~%" page)
+                 (gtk-notebook-remove-page notebook page))))
+          (let ((tab-hbox (make-instance 'gtk-box
+                                         :orientation :horizontal)))
             (gtk-box-pack-start tab-hbox tab-label)
             (gtk-box-pack-start tab-hbox tab-button)
             (gtk-widget-show-all tab-hbox)
-            (gtk-notebook-add-page notebook page tab-hbox))
+            (gtk-notebook-add-page notebook page tab-hbox))))
       (gtk-container-add expander notebook)
       (gtk-container-add window expander)
       (gtk-widget-show-all window))))
@@ -1964,7 +1991,8 @@
                                  :title "Example Dialog"
                                  :default-width 250
                                  :border-width 12))
-          (vbox (make-instance 'gtk-vbox
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical
                                :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)

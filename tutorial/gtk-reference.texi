@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 16.04.2012
-@c Revision : 22.04.2012
+@c Revision : 20.05.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -20,6 +20,28 @@ A representation of an adjustable bounded value
   GObject
    +----GInitiallyUnowned
          +----GtkAdjustment
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_adjustment_new
+  gtk_adjustment_get_value
+  gtk_adjustment_set_value
+  gtk_adjustment_clamp_page
+  gtk_adjustment_changed
+  gtk_adjustment_value_changed
+  gtk_adjustment_configure
+  gtk_adjustment_get_lower
+  gtk_adjustment_get_page_increment
+  gtk_adjustment_get_page_size
+  gtk_adjustment_get_step_increment
+  gtk_adjustment_get_minimum_increment
+  gtk_adjustment_get_upper
+  gtk_adjustment_set_lower
+  gtk_adjustment_set_page_increment
+  gtk_adjustment_set_page_size
+  gtk_adjustment_set_step_increment
+  gtk_adjustment_set_upper
 @end verbatim
 
 @b{Properties}
@@ -55,6 +77,14 @@ A widget which controls the alignment and size of its child
                            +----GtkAlignment
 @end verbatim
 
+@b{Functions}
+@verbatim
+  gtk_alignment_new
+  gtk_alignment_set
+  gtk_alignment_get_padding
+  gtk_alignment_set_padding
+@end verbatim
+
 @b{Implemented Interfaces}
 
 @code{GtkAlignment} implements @code{AtkImplementorIface} and
@@ -74,6 +104,43 @@ A widget which controls the alignment and size of its child
 @end deffn
 
 @c -----------------------------------------------------------------------------
+@anchor{GtkAspectFrame}
+@deffn {Class} GtkAspectFrame
+
+A frame that constrains its child to a particular aspect ratio
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBin
+                           +----GtkFrame
+                                 +----GtkAspectFrame
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_aspect_frame_new
+  gtk_aspect_frame_set
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkAspectFrame} implements @code{AtkImplementorIface} and
+@code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "obey-child"             gboolean           : Read / Write
+  "ratio"                  gfloat             : Read / Write
+  "xalign"                 gfloat             : Read / Write
+  "yalign"                 gfloat             : Read / Write
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkBox}
 @deffn {Class} GtkBox
  
@@ -88,6 +155,7 @@ A container box
                      +----GtkBox
                            +----GtkAppChooserWidget
                            +----GtkButtonBox
+                           +----GtkColorChooserWidget
                            +----GtkColorSelection
                            +----GtkFileChooserButton
                            +----GtkFileChooserWidget
@@ -98,6 +166,20 @@ A container box
                            +----GtkRecentChooserWidget
                            +----GtkStatusbar
                            +----GtkVBox
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_box_new
+  gtk_box_pack_start
+  gtk_box_pack_end
+  gtk_box_get_homogeneous
+  gtk_box_set_homogeneous
+  gtk_box_get_spacing
+  gtk_box_set_spacing
+  gtk_box_reorder_child
+  gtk_box_query_child_packing
+  gtk_box_set_child_packing
 @end verbatim
 
 @b{Implemented Interfaces}
@@ -121,6 +203,7 @@ GtkBox implements @code{AtkImplementorIface}, @code{GtkBuildable} and
 @end verbatim
 @end deffn
 
+@c -----------------------------------------------------------------------------
 @anchor{GtkContainer}
 @deffn {Class} GtkContainer
 
@@ -150,6 +233,46 @@ Base class for widgets which contain other widgets.
                      +----GtkTreeView
 @end verbatim
 
+@b{Functions}
+@verbatim
+  gtk_container_add
+  gtk_container_remove
+  gtk_container_add_with_properties
+  gtk_container_get_resize_mode
+  gtk_container_set_resize_mode
+  gtk_container_check_resize
+  gtk_container_foreach
+  gtk_container_get_children
+  gtk_container_get_path_for_child
+  gtk_container_set_reallocate_redraws
+  gtk_container_get_focus_child
+  gtk_container_set_focus_child
+  gtk_container_get_focus_vadjustment
+  gtk_container_set_focus_vadjustment
+  gtk_container_get_focus_hadjustment
+  gtk_container_set_focus_hadjustment
+  gtk_container_resize_children
+  gtk_container_child_type
+  gtk_container_child_get
+  gtk_container_child_set
+  gtk_container_child_get_property
+  gtk_container_child_set_property
+  gtk_container_child_get_valist
+  gtk_container_child_set_valist
+  gtk_container_child_notify
+  gtk_container_forall
+  gtk_container_get_border_width
+  gtk_container_set_border_width
+  gtk_container_propagate_draw
+  gtk_container_get_focus_chain
+  gtk_container_set_focus_chain
+  gtk_container_unset_focus_chain
+  gtk_container_class_find_child_property
+  gtk_container_class_install_child_property
+  gtk_container_class_list_child_properties
+  gtk_container_class_handle_border_width
+@end verbatim
+
 @b{Implemented Interfaces}
  
 GtkContainer implements @code{AtkImplementorIface} and @code{GtkBuildable}.
@@ -170,6 +293,86 @@ GtkContainer implements @code{AtkImplementorIface} and @code{GtkBuildable}.
 @end verbatim
 @end deffn
 
+@c -----------------------------------------------------------------------------
+@anchor{GtkFixed}
+@deffn {Class} GtkFixed
+
+A container which allows you to position widgets at fixed coordinates
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkFixed
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_fixed_new
+  gtk_fixed_put
+  gtk_fixed_move
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkFixed} implements @code{AtkImplementorIface} and @code{GtkBuildable}.
+
+@b{Child Properties}
+@verbatim
+  "x"                      gint               : Read / Write
+  "y"                      gint               : Read / Write
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkFrame}
+@deffn {Class} GtkFrame
+
+A bin with a decorative frame and optional label
+
+@b{Object Hierarchy}
+
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkBin
+                           +----GtkFrame
+                                 +----GtkAspectFrame
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_frame_new
+  gtk_frame_set_label
+  gtk_frame_set_label_widget
+  gtk_frame_set_label_align
+  gtk_frame_set_shadow_type
+  gtk_frame_get_label
+  gtk_frame_get_label_align
+  gtk_frame_get_label_widget
+  gtk_frame_get_shadow_type
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkFrame} implements @code{AtkImplementorIface} and
+@code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "label"                  gchar*             : Read / Write
+  "label-widget"           GtkWidget*         : Read / Write
+  "label-xalign"           gfloat             : Read / Write
+  "label-yalign"           gfloat             : Read / Write
+  "shadow-type"            GtkShadowType      : Read / Write
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkLabel}
 @deffn {Class} GtkLabel
 
@@ -183,6 +386,54 @@ A widget that displays a small to medium amount of text.
                +----GtkMisc
                      +----GtkLabel
                            +----GtkAccelLabel
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_label_new
+  gtk_label_set_text
+  gtk_label_set_attributes
+  gtk_label_set_markup
+  gtk_label_set_markup_with_mnemonic
+  gtk_label_set_pattern
+  gtk_label_set_justify
+  gtk_label_set_ellipsize
+  gtk_label_set_width_chars
+  gtk_label_set_max_width_chars
+  gtk_label_set_line_wrap
+  gtk_label_set_line_wrap_mode
+  gtk_label_get_layout_offsets
+  gtk_label_get_mnemonic_keyval
+  gtk_label_get_selectable
+  gtk_label_get_text
+  gtk_label_new_with_mnemonic
+  gtk_label_select_region
+  gtk_label_set_mnemonic_widget
+  gtk_label_set_selectable
+  gtk_label_set_text_with_mnemonic
+  gtk_label_get_attributes
+  gtk_label_get_justify
+  gtk_label_get_ellipsize
+  gtk_label_get_width_chars
+  gtk_label_get_max_width_chars
+  gtk_label_get_label
+  gtk_label_get_layout
+  gtk_label_get_line_wrap
+  gtk_label_get_line_wrap_mode
+  gtk_label_get_mnemonic_widget
+  gtk_label_get_selection_bounds
+  gtk_label_get_use_markup
+  gtk_label_get_use_underline
+  gtk_label_get_single_line_mode
+  gtk_label_get_angle
+  gtk_label_set_label
+  gtk_label_set_use_markup
+  gtk_label_set_use_underline
+  gtk_label_set_single_line_mode
+  gtk_label_set_angle
+  gtk_label_get_current_uri
+  gtk_label_set_track_visited_links
+  gtk_label_get_track_visited_links
 @end verbatim
 
 @b{Implemented Interfaces}
@@ -223,6 +474,120 @@ A widget that displays a small to medium amount of text.
 @end deffn
 
 @c -----------------------------------------------------------------------------
+@anchor{GtkLayout}
+@deffn {Class} GtkLayout
+
+Infinite scrollable area containing child widgets and/or custom drawing
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkLayout
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_layout_new
+  gtk_layout_put
+  gtk_layout_move
+  gtk_layout_set_size
+  gtk_layout_get_size
+  gtk_layout_get_hadjustment
+  gtk_layout_get_vadjustment
+  gtk_layout_set_hadjustment
+  gtk_layout_set_vadjustment
+  gtk_layout_get_bin_window
+@end verbatim
+
+@need 800
+@b{Implemented Interfaces}
+
+@code{GtkLayout} implements @code{AtkImplementorIface}, @code{GtkBuildable} and
+@code{GtkScrollable}.
+
+@b{Properties}
+@verbatim
+  "height"                 guint              : Read / Write
+  "width"                  guint              : Read / Write
+@end verbatim
+
+@b{Child Properties}
+@verbatim
+  "x"                      gint               : Read / Write
+  "y"                      gint               : Read / Write
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@anchor{GtkPanded}
+@deffn {Class} GtkPaned
+ 
+A widget with two adjustable panes
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkContainer
+                     +----GtkPaned
+                           +----GtkHPaned
+                           +----GtkVPaned
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_paned_new
+  gtk_paned_add1
+  gtk_paned_add2
+  gtk_paned_pack1
+  gtk_paned_pack2
+  gtk_paned_get_child1
+  gtk_paned_get_child2
+  gtk_paned_set_position
+  gtk_paned_get_position
+  gtk_paned_get_handle_window
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkPaned} implements @code{AtkImplementorIface}, @code{GtkBuildable} and
+@code{GtkOrientable}.
+
+@b{Properties}
+@verbatim
+  "max-position"           gint               : Read
+  "min-position"           gint               : Read
+  "position"               gint               : Read / Write
+  "position-set"           gboolean           : Read / Write
+@end verbatim
+
+@b{Child Properties}
+@verbatim
+  "resize"                 gboolean           : Read / Write
+  "shrink"                 gboolean           : Read / Write
+@end verbatim
+
+@b{Style Properties}
+@verbatim
+  "handle-size"            gint               : Read
+@end verbatim
+
+@b{Signals}
+@verbatim
+  "accept-position"                           : Action
+  "cancel-position"                           : Action
+  "cycle-child-focus"                         : Action
+  "cycle-handle-focus"                        : Action
+  "move-handle"                               : Action
+  "toggle-handle-focus"                       : Action
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkProgressBar}
 @deffn {Class} GtkProgressBar
 
@@ -234,6 +599,24 @@ A widget which indicates progress visually
    +----GInitiallyUnowned
          +----GtkWidget
                +----GtkProgressBar
+@end verbatim
+
+@b{functions}
+@verbatim
+  gtk_progress_bar_new
+  gtk_progress_bar_pulse
+  gtk_progress_bar_set_fraction
+  gtk_progress_bar_get_fraction
+  gtk_progress_bar_set_inverted
+  gtk_progress_bar_get_inverted
+  gtk_progress_bar_set_show_text
+  gtk_progress_bar_get_show_text
+  gtk_progress_bar_set_text
+  gtk_progress_bar_get_text
+  gtk_progress_bar_set_ellipsize
+  gtk_progress_bar_get_ellipsize
+  gtk_progress_bar_set_pulse_step
+  gtk_progress_bar_get_pulse_step
 @end verbatim
 
 @b{Implemented Interfaces}
@@ -276,6 +659,39 @@ Base class for widgets which visualize an adjustment
                +----GtkRange
                      +----GtkScale
                      +----GtkScrollbar
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_range_get_fill_level
+  gtk_range_get_restrict_to_fill_level
+  gtk_range_get_show_fill_level
+  gtk_range_set_fill_level
+  gtk_range_set_restrict_to_fill_level
+  gtk_range_set_show_fill_level
+  gtk_range_get_adjustment
+  gtk_range_set_adjustment
+  gtk_range_get_inverted
+  gtk_range_set_inverted
+  gtk_range_get_value
+  gtk_range_set_value
+  gtk_range_set_increments
+  gtk_range_set_range
+  gtk_range_get_round_digits
+  gtk_range_set_round_digits
+  
+  gtk_range_set_lower_stepper_sensitivity
+  gtk_range_get_lower_stepper_sensitivity
+  gtk_range_set_upper_stepper_sensitivity
+  gtk_range_get_upper_stepper_sensitivity
+  gtk_range_get_flippable
+  gtk_range_set_flippable
+  gtk_range_get_min_slider_size
+  gtk_range_get_range_rect
+  gtk_range_get_slider_range
+  gtk_range_get_slider_size_fixed
+  gtk_range_set_min_slider_size
+  gtk_range_set_slider_size_fixed
 @end verbatim
 
 @b{Implemented Interfaces}
@@ -333,6 +749,11 @@ A Scrollbar
                            +----GtkVScrollbar
 @end verbatim
 
+@b{Functions}
+@verbatim
+  gtk_scrollbar_new
+@end verbatim
+
 @b{Implemented Interfaces}
 
 GtkScrollbar implements @code{AtkImplementorIface}, @code{GtkBuildable} and
@@ -365,6 +786,11 @@ A separator widget
                      +----GtkVSeparator
 @end verbatim
 
+@b{Functions}
+@verbatim
+  gtk_separator_new
+@end verbatim
+
 @b{Implemented Interfaces}
 
 GtkSeparator implements @code{AtkImplementorIface}, @code{GtkBuildable} and
@@ -385,6 +811,17 @@ Report messages of minor importance to the user
                +----GtkContainer
                      +----GtkBox
                            +----GtkStatusbar
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_statusbar_new
+  gtk_statusbar_get_context_id
+  gtk_statusbar_push
+  gtk_statusbar_pop
+  gtk_statusbar_remove
+  gtk_statusbar_remove_all
+  gtk_statusbar_get_message_area
 @end verbatim
 
 @b{Implemented Interfaces}
@@ -419,11 +856,129 @@ Toplevel which can contain other widgets.
                      +----GtkBin
                            +----GtkWindow
                                  +----GtkDialog
+                                 +----GtkApplicationWindow
                                  +----GtkAssistant
                                  +----GtkOffscreenWindow
                                  +----GtkPlug
 @end verbatim
- 
+
+@b{Functions}
+@verbatim
+  gtk_window_new
+  gtk_window_set_title
+  gtk_window_set_wmclass
+  gtk_window_set_resizable
+  gtk_window_get_resizable
+  gtk_window_add_accel_group
+  gtk_window_remove_accel_group
+  gtk_window_activate_focus
+  gtk_window_activate_default
+  gtk_window_set_modal
+  gtk_window_set_default_size
+  gtk_window_set_default_geometry
+  gtk_window_set_geometry_hints
+  gtk_window_set_gravity
+  gtk_window_get_gravity
+  gtk_window_set_position
+  gtk_window_set_transient_for
+  gtk_window_set_attached_to
+  gtk_window_set_destroy_with_parent
+  gtk_window_set_hide_titlebar_when_maximized
+  gtk_window_set_screen
+  gtk_window_get_screen
+  gtk_window_is_active
+  gtk_window_has_toplevel_focus
+  gtk_window_list_toplevels
+  gtk_window_add_mnemonic
+  gtk_window_remove_mnemonic
+  gtk_window_mnemonic_activate
+  gtk_window_activate_key
+  gtk_window_propagate_key_event
+  gtk_window_get_focus
+  gtk_window_set_focus
+  gtk_window_get_default_widget
+  gtk_window_set_default
+  gtk_window_present
+  gtk_window_present_with_time
+  gtk_window_iconify
+  gtk_window_deiconify
+  gtk_window_stick
+  gtk_window_unstick
+  gtk_window_maximize
+  gtk_window_unmaximize
+  gtk_window_fullscreen
+  gtk_window_unfullscreen
+  gtk_window_set_keep_above
+  gtk_window_set_keep_below
+  gtk_window_begin_resize_drag
+  gtk_window_begin_move_drag
+  gtk_window_set_decorated
+  gtk_window_set_deletable
+  gtk_window_set_mnemonic_modifier
+  gtk_window_set_type_hint
+  gtk_window_set_skip_taskbar_hint
+  gtk_window_set_skip_pager_hint
+  gtk_window_set_urgency_hint
+  gtk_window_set_accept_focus
+  gtk_window_set_focus_on_map
+  gtk_window_set_startup_id
+  gtk_window_set_role
+  gtk_window_get_decorated
+  gtk_window_get_deletable
+  gtk_window_get_default_icon_list
+  gtk_window_get_default_icon_name
+  gtk_window_get_default_size
+  gtk_window_get_destroy_with_parent
+  gtk_window_get_hide_titlebar_when_maximized
+  gtk_window_get_icon
+  gtk_window_get_icon_list
+  gtk_window_get_icon_name
+  gtk_window_get_mnemonic_modifier
+  gtk_window_get_modal
+  gtk_window_get_position
+  gtk_window_get_role
+  gtk_window_get_size
+  gtk_window_get_title
+  gtk_window_get_transient_for
+  gtk_window_get_attached_to
+  gtk_window_get_type_hint
+  gtk_window_get_skip_taskbar_hint
+  gtk_window_get_skip_pager_hint
+  gtk_window_get_urgency_hint
+  gtk_window_get_accept_focus
+  gtk_window_get_focus_on_map
+  gtk_window_get_group
+  gtk_window_has_group
+  gtk_window_get_window_type
+  gtk_window_move
+  gtk_window_parse_geometry
+  gtk_window_reshow_with_initial_size
+  gtk_window_resize
+  gtk_window_resize_to_geometry
+  gtk_window_set_default_icon_list
+  gtk_window_set_default_icon
+  gtk_window_set_default_icon_from_file
+  gtk_window_set_default_icon_name
+  gtk_window_set_icon
+  gtk_window_set_icon_list
+  gtk_window_set_icon_from_file
+  gtk_window_set_icon_name
+  gtk_window_set_auto_startup_notification
+  gtk_window_get_opacity
+  gtk_window_set_opacity
+  gtk_window_get_mnemonics_visible
+  gtk_window_set_mnemonics_visible
+  gtk_window_get_focus_visible
+  gtk_window_set_focus_visible
+  gtk_window_set_has_resize_grip
+  gtk_window_get_has_resize_grip
+  gtk_window_resize_grip_is_visible
+  gtk_window_get_resize_grip_area
+  gtk_window_get_application
+  gtk_window_set_application
+  gtk_window_set_has_user_ref_count
+@end verbatim
+
 @b{Implemented Interfaces}
 
 GtkWindow implements @code{AtkImplementorIface} and @code{GtkBuildable}.
