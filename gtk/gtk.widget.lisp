@@ -5465,6 +5465,14 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_override_background_color"
+           gtk-widget-override-background-color) :void
+  (widget (g-object gtk-widget))
+  (state gtk-state-flags)
+  (color (g-boxed-foreign gdk-rgba)))
+
+(export 'gtk-widget-override-background-color)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_override_color ()
 ;;; 
@@ -5509,6 +5517,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_override_color" gtk-widget-override-color) :void
+  (widget (g-object gtk-widget))
+  (state gtk-state-flags)
+  (color (g-boxed-foreign gdk-rgba)))
+
+(export 'gtk-widget-override-color)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_override_font ()
 ;;; 
@@ -5522,11 +5537,17 @@
 ;;;     a GtkWidget
 ;;; 
 ;;; font_desc :
-;;;     the font descriptiong to use, or NULL to undo the effect of previous
+;;;     the font description to use, or NULL to undo the effect of previous
 ;;;     calls to gtk_widget_override_font()
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_override_font" gtk-widget-override-font) :void
+  (widget (g-object gtk-widget))
+  (font-desc (g-boxed-foreign pango-font-description)))
+
+(export 'gtk-widget-override-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_override_symbolic_color ()
