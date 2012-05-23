@@ -149,11 +149,15 @@ Menu Widgets
 @chapter Range Widgets
 @include gtk-range-widgets.texi
 
-@node Layout Widgets, Miscellaneous Widgets, Range Widgets, Top
+@node Layout Widgets, Multiline Text Editor, Range Widgets, Top
 @chapter Layout Widgets
 @include gtk-container-widgets.texi
 
-@node Miscellaneous Widgets, Menu Widget, Layout Widgets
+@node Multiline Text Editor, Miscellaneous Widgets, Layout Widgets, Top
+@chapter Multiline Text Editor
+@include gtk-text-view.texi
+
+@node Miscellaneous Widgets, Menu Widget, Multiline Text Editor, Top
 @chapter Miscellaneous Widgets
 @include gtk-misc-widgets.texi
 
