@@ -201,7 +201,14 @@
 ;;; The PangoFontDescription structure represents the description of an ideal
 ;;; font. These structures are used both to list what fonts are available on
 ;;; the system and also for specifying the characteristics of a font to load.
-;;;
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque pango-font-description "PangoFontDescription"
+  :alloc (error "PangoFontDescription can not be created from Lisp side"))
+
+(export (boxed-related-symbols 'pango-font-description))
+
+;;; ----------------------------------------------------------------------------
 ;;; PANGO_TYPE_FONT_DESCRIPTION
 ;;; 
 ;;; #define PANGO_TYPE_FONT_DESCRIPTION (pango_font_description_get_type ())
@@ -1007,6 +1014,13 @@
 ;;;     a new PangoFontDescription.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_font_description_from_string"
+           pango-font-description-from-string)
+    (g-boxed-foreign pango-font-description)
+  (str :string))
+
+(export 'pango-font-description-from-string)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_description_to_string ()
 ;;; 
@@ -1024,6 +1038,12 @@
 ;;; Returns :
 ;;;     a new string that must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_font_description_to_string"
+           pango-font-description-to-string) :string
+  (desc (g-boxed-foreign pango-font-description)))
+
+(export 'pango-font-description-to-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_description_to_filename ()
