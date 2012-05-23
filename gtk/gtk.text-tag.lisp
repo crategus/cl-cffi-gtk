@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,20 +31,20 @@
 ;;; GtkTextTag
 ;;; 
 ;;; A tag that can be applied to text in a GtkTextBuffer
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTextTag
 ;;;     GtkWrapMode
 ;;;     GtkTextAttributes
-;;;
+;;;     
 ;;;     gtk_text_tag_new
 ;;;     gtk_text_tag_get_priority
 ;;;     gtk_text_tag_set_priority
 ;;;     gtk_text_tag_event
-;;;
+;;;     
 ;;;     GtkTextAppearance
-;;;
+;;;     
 ;;;     gtk_text_attributes_new
 ;;;     gtk_text_attributes_copy
 ;;;     gtk_text_attributes_copy_values
@@ -58,74 +58,74 @@
 ;;; 
 ;;; Properties
 ;;; 
-;;;   "accumulative-margin"      gboolean              : Read / Write
-;;;   "background"               gchar*                : Write
-;;;   "background-full-height"   gboolean              : Read / Write
-;;;   "background-full-height-set" gboolean            : Read / Write
-;;;   "background-gdk"           GdkColor*             : Read / Write
-;;;   "background-rgba"          GdkRGBA*              : Read / Write
-;;;   "background-set"           gboolean              : Read / Write
-;;;   "direction"                GtkTextDirection      : Read / Write
-;;;   "editable"                 gboolean              : Read / Write
-;;;   "editable-set"             gboolean              : Read / Write
-;;;   "family"                   gchar*                : Read / Write
-;;;   "family-set"               gboolean              : Read / Write
-;;;   "font"                     gchar*                : Read / Write
-;;;   "font-desc"                PangoFontDescription*  : Read / Write
-;;;   "foreground"               gchar*                : Write
-;;;   "foreground-gdk"           GdkColor*             : Read / Write
-;;;   "foreground-rgba"          GdkRGBA*              : Read / Write
-;;;   "foreground-set"           gboolean              : Read / Write
-;;;   "indent"                   gint                  : Read / Write
-;;;   "indent-set"               gboolean              : Read / Write
-;;;   "invisible"                gboolean              : Read / Write
-;;;   "invisible-set"            gboolean              : Read / Write
-;;;   "justification"            GtkJustification      : Read / Write
-;;;   "justification-set"        gboolean              : Read / Write
-;;;   "language"                 gchar*                : Read / Write
-;;;   "language-set"             gboolean              : Read / Write
-;;;   "left-margin"              gint                  : Read / Write
-;;;   "left-margin-set"          gboolean              : Read / Write
-;;;   "name"                     gchar*                : Read / Write /Construct
-;;;   "paragraph-background"     gchar*                : Write
-;;;   "paragraph-background-gdk" GdkColor*             : Read / Write
-;;;   "paragraph-background-rgba" GdkRGBA*             : Read / Write
-;;;   "paragraph-background-set" gboolean              : Read / Write
-;;;   "pixels-above-lines"       gint                  : Read / Write
-;;;   "pixels-above-lines-set"   gboolean              : Read / Write
-;;;   "pixels-below-lines"       gint                  : Read / Write
-;;;   "pixels-below-lines-set"   gboolean              : Read / Write
-;;;   "pixels-inside-wrap"       gint                  : Read / Write
-;;;   "pixels-inside-wrap-set"   gboolean              : Read / Write
-;;;   "right-margin"             gint                  : Read / Write
-;;;   "right-margin-set"         gboolean              : Read / Write
-;;;   "rise"                     gint                  : Read / Write
-;;;   "rise-set"                 gboolean              : Read / Write
-;;;   "scale"                    gdouble               : Read / Write
-;;;   "scale-set"                gboolean              : Read / Write
-;;;   "size"                     gint                  : Read / Write
-;;;   "size-points"              gdouble               : Read / Write
-;;;   "size-set"                 gboolean              : Read / Write
-;;;   "stretch"                  PangoStretch          : Read / Write
-;;;   "stretch-set"              gboolean              : Read / Write
-;;;   "strikethrough"            gboolean              : Read / Write
-;;;   "strikethrough-set"        gboolean              : Read / Write
-;;;   "style"                    PangoStyle            : Read / Write
-;;;   "style-set"                gboolean              : Read / Write
-;;;   "tabs"                     PangoTabArray*        : Read / Write
-;;;   "tabs-set"                 gboolean              : Read / Write
-;;;   "underline"                PangoUnderline        : Read / Write
-;;;   "underline-set"            gboolean              : Read / Write
-;;;   "variant"                  PangoVariant          : Read / Write
-;;;   "variant-set"              gboolean              : Read / Write
-;;;   "weight"                   gint                  : Read / Write
-;;;   "weight-set"               gboolean              : Read / Write
-;;;   "wrap-mode"                GtkWrapMode           : Read / Write
-;;;   "wrap-mode-set"            gboolean              : Read / Write
+;;;   "accumulative-margin"        gboolean              : Read / Write
+;;;   "background"                 gchar*                : Write
+;;;   "background-full-height"     gboolean              : Read / Write
+;;;   "background-full-height-set" gboolean              : Read / Write
+;;;   "background-gdk"             GdkColor*             : Read / Write
+;;;   "background-rgba"            GdkRGBA*              : Read / Write
+;;;   "background-set"             gboolean              : Read / Write
+;;;   "direction"                  GtkTextDirection      : Read / Write
+;;;   "editable"                   gboolean              : Read / Write
+;;;   "editable-set"               gboolean              : Read / Write
+;;;   "family"                     gchar*                : Read / Write
+;;;   "family-set"                 gboolean              : Read / Write
+;;;   "font"                       gchar*                : Read / Write
+;;;   "font-desc"                  PangoFontDescription* : Read / Write
+;;;   "foreground"                 gchar*                : Write
+;;;   "foreground-gdk"             GdkColor*             : Read / Write
+;;;   "foreground-rgba"            GdkRGBA*              : Read / Write
+;;;   "foreground-set"             gboolean              : Read / Write
+;;;   "indent"                     gint                  : Read / Write
+;;;   "indent-set"                 gboolean              : Read / Write
+;;;   "invisible"                  gboolean              : Read / Write
+;;;   "invisible-set"              gboolean              : Read / Write
+;;;   "justification"              GtkJustification      : Read / Write
+;;;   "justification-set"          gboolean              : Read / Write
+;;;   "language"                   gchar*                : Read / Write
+;;;   "language-set"               gboolean              : Read / Write
+;;;   "left-margin"                gint                  : Read / Write
+;;;   "left-margin-set"            gboolean              : Read / Write
+;;;   "name"                       gchar*                : Read / Write / Constr
+;;;   "paragraph-background"       gchar*                : Write
+;;;   "paragraph-background-gdk"   GdkColor*             : Read / Write
+;;;   "paragraph-background-rgba"  GdkRGBA*              : Read / Write
+;;;   "paragraph-background-set"   gboolean              : Read / Write
+;;;   "pixels-above-lines"         gint                  : Read / Write
+;;;   "pixels-above-lines-set"     gboolean              : Read / Write
+;;;   "pixels-below-lines"         gint                  : Read / Write
+;;;   "pixels-below-lines-set"     gboolean              : Read / Write
+;;;   "pixels-inside-wrap"         gint                  : Read / Write
+;;;   "pixels-inside-wrap-set"     gboolean              : Read / Write
+;;;   "right-margin"               gint                  : Read / Write
+;;;   "right-margin-set"           gboolean              : Read / Write
+;;;   "rise"                       gint                  : Read / Write
+;;;   "rise-set"                   gboolean              : Read / Write
+;;;   "scale"                      gdouble               : Read / Write
+;;;   "scale-set"                  gboolean              : Read / Write
+;;;   "size"                       gint                  : Read / Write
+;;;   "size-points"                gdouble               : Read / Write
+;;;   "size-set"                   gboolean              : Read / Write
+;;;   "stretch"                    PangoStretch          : Read / Write
+;;;   "stretch-set"                gboolean              : Read / Write
+;;;   "strikethrough"              gboolean              : Read / Write
+;;;   "strikethrough-set"          gboolean              : Read / Write
+;;;   "style"                      PangoStyle            : Read / Write
+;;;   "style-set"                  gboolean              : Read / Write
+;;;   "tabs"                       PangoTabArray*        : Read / Write
+;;;   "tabs-set"                   gboolean              : Read / Write
+;;;   "underline"                  PangoUnderline        : Read / Write
+;;;   "underline-set"              gboolean              : Read / Write
+;;;   "variant"                    PangoVariant          : Read / Write
+;;;   "variant-set"                gboolean              : Read / Write
+;;;   "weight"                     gint                  : Read / Write
+;;;   "weight-set"                 gboolean              : Read / Write
+;;;   "wrap-mode"                  GtkWrapMode           : Read / Write
+;;;   "wrap-mode-set"              gboolean              : Read / Write
 ;;; 
 ;;; Signals
 ;;; 
-;;;   "event"                                          : Run Last
+;;;   "event"                                            : Run Last
 ;;; 
 ;;; Description
 ;;; 
@@ -133,8 +133,8 @@
 ;;; gives an overview of all the objects and data types related to the text
 ;;; widget and how they work together.
 ;;; 
-;;; Tags should be in the GtkTextTagTable for a given GtkTextBuffer before
-;;; using them with that buffer.
+;;; Tags should be in the GtkTextTagTable for a given GtkTextBuffer before using
+;;; them with that buffer.
 ;;; 
 ;;; gtk_text_buffer_create_tag() is the best way to create tags. See gtk3-demo
 ;;; for numerous examples.
@@ -172,8 +172,8 @@
 ;;; 
 ;;;   "background-full-height"   gboolean              : Read / Write
 ;;; 
-;;; Whether the background color fills the entire line height or only the
-;;; height of the tagged characters.
+;;; Whether the background color fills the entire line height or only the height
+;;; of the tagged characters.
 ;;; 
 ;;; Default value: FALSE
 ;;;
@@ -190,6 +190,11 @@
 ;;; The "background-gdk" property
 ;;; 
 ;;;   "background-gdk"           GdkColor*             : Read / Write
+;;; 
+;;; Warning
+;;; 
+;;; GtkTextTag:background-gdk has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use "background-rgba" instead.
 ;;; 
 ;;; Background color as a GdkColor.
 ;;;
@@ -288,6 +293,11 @@
 ;;; The "foreground-gdk" property
 ;;; 
 ;;;   "foreground-gdk"           GdkColor*             : Read / Write
+;;; 
+;;; Warning
+;;; 
+;;; GtkTextTag:foreground-gdk has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use "foreground-rgba" instead.
 ;;; 
 ;;; Foreground color as a GdkColor.
 ;;;
@@ -414,7 +424,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "name" property
 ;;; 
-;;;   "name"               gchar*                : Read / Write / Construct Only
+;;;   "name"                     gchar*               : Read / Write / Construct
 ;;; 
 ;;; Name used to refer to the text tag. NULL for anonymous tags.
 ;;; 
@@ -435,6 +445,12 @@
 ;;; The "paragraph-background-gdk" property
 ;;; 
 ;;;   "paragraph-background-gdk" GdkColor*             : Read / Write
+;;; 
+;;; Warning
+;;; 
+;;; GtkTextTag:paragraph-background-gdk has been deprecated since version 3.4
+;;; and should not be used in newly-written code. Use
+;;; "paragraph-background-rgba" instead.
 ;;; 
 ;;; The paragraph background color as a as a GdkColor.
 ;;; 
@@ -562,9 +578,9 @@
 ;;; 
 ;;;   "scale"                    gdouble               : Read / Write
 ;;; 
-;;; Font size as a scale factor relative to the default font size. This
-;;; properly adapts to theme changes etc. so is recommended. Pango predefines
-;;; some scales such as PANGO_SCALE_X_LARGE.
+;;; Font size as a scale factor relative to the default font size. This properly
+;;; adapts to theme changes etc. so is recommended. Pango predefines some scales
+;;; such as PANGO_SCALE_X_LARGE.
 ;;; 
 ;;; Allowed values: >= 0
 ;;; 
@@ -670,6 +686,8 @@
 ;;;   "tabs"                     PangoTabArray*        : Read / Write
 ;;; 
 ;;; Custom tabs for this text.
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "tabs-set" property
 ;;; 
 ;;;   "tabs-set"                 gboolean              : Read / Write
@@ -686,6 +704,8 @@
 ;;; Style of underline for this text.
 ;;; 
 ;;; Default value: PANGO_UNDERLINE_NONE
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "underline-set" property
 ;;; 
 ;;;   "underline-set"            gboolean              : Read / Write
@@ -764,27 +784,27 @@
 ;;;                         GtkTextIter *iter,
 ;;;                         gpointer     user_data)      : Run Last
 ;;; 
-;;; The ::event signal is emitted when an event occurs on a region of the
-;;; buffer marked with this tag.
+;;; The ::event signal is emitted when an event occurs on a region of the buffer
+;;; marked with this tag.
 ;;; 
 ;;; tag :
-;;; 	the GtkTextTag on which the signal is emitted
+;;;     the GtkTextTag on which the signal is emitted
 ;;; 
 ;;; object :
-;;; 	the object the event was fired from (typically a GtkTextView)
+;;;     the object the event was fired from (typically a GtkTextView)
 ;;; 
 ;;; event :
-;;; 	the event which triggered the signal
+;;;     the event which triggered the signal
 ;;; 
 ;;; iter :
-;;; 	a GtkTextIter pointing at the location the event occured
+;;;     a GtkTextIter pointing at the location the event occured
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1012,18 +1032,18 @@
 ;;; Describes a type of line wrapping.
 ;;; 
 ;;; GTK_WRAP_NONE
-;;; 	do not wrap lines; just make the text area wider
+;;;     do not wrap lines; just make the text area wider
 ;;; 
 ;;; GTK_WRAP_CHAR
-;;; 	wrap text, breaking lines anywhere the cursor can appear (between
+;;;     wrap text, breaking lines anywhere the cursor can appear (between
 ;;;     characters, usually - if you want to be technical, between graphemes,
 ;;;     see pango_get_log_attrs())
 ;;; 
 ;;; GTK_WRAP_WORD
-;;; 	wrap text, breaking lines in between words
+;;;     wrap text, breaking lines in between words
 ;;; 
 ;;; GTK_WRAP_WORD_CHAR
-;;; 	wrap text, breaking lines in between words, or if that is not enough,
+;;;     wrap text, breaking lines in between words, or if that is not enough,
 ;;;     also between graphemes
 ;;; ----------------------------------------------------------------------------
 
@@ -1092,10 +1112,10 @@
 ;;; g_object_set().
 ;;; 
 ;;; name :
-;;; 	tag name, or NULL. [allow-none]
+;;;     tag name, or NULL
 ;;; 
 ;;; Returns :
-;;; 	a new GtkTextTag
+;;;     a new GtkTextTag
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1106,10 +1126,10 @@
 ;;; Get the tag priority.
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; 
 ;;; Returns :
-;;; 	The tag's priority
+;;;     The tag's priority.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1117,8 +1137,8 @@
 ;;; 
 ;;; void gtk_text_tag_set_priority (GtkTextTag *tag, gint priority);
 ;;; 
-;;; Sets the priority of a GtkTextTag. Valid priorities are start at 0 and go
-;;; to one less than gtk_text_tag_table_get_size(). Each tag in a table has a
+;;; Sets the priority of a GtkTextTag. Valid priorities are start at 0 and go to
+;;; one less than gtk_text_tag_table_get_size(). Each tag in a table has a
 ;;; unique priority; setting the priority of one tag shifts the priorities of
 ;;; all the other tags in the table to maintain a unique priority for each tag.
 ;;; Higher priority tags "win" if two tags both set the same text attribute.
@@ -1129,10 +1149,10 @@
 ;;; automatically.
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; 
 ;;; priority :
-;;; 	the new priority
+;;;     the new priority
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1146,19 +1166,19 @@
 ;;; Emits the "event" signal on the GtkTextTag.
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; 
 ;;; event_object :
-;;; 	object that received the event, such as a widget
+;;;     object that received the event, such as a widget
 ;;; 
 ;;; event :
-;;; 	the event
+;;;     the event
 ;;; 
 ;;; iter :
-;;; 	location where the event was received
+;;;     location where the event was received
 ;;; 
 ;;; Returns :
-;;; 	result of signal emission (whether the event was handled)
+;;;     result of signal emission (whether the event was handled)
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1190,7 +1210,8 @@
 ;;; 
 ;;;   GdkRGBA *rgba[2];
 ;;; 
-;;; #if __SIZEOF_INT__ == __SIZEOF_POINTER__
+;;; #if (defined(__SIZEOF_INT__) && defined(__SIZEOF_POINTER__))
+;;;                              && (__SIZEOF_INT__ == __SIZEOF_POINTER__)
 ;;;   /* unusable, just for ABI compat */
 ;;;   guint padding[2];
 ;;; #endif
@@ -1206,7 +1227,7 @@
 ;;; text.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkTextAttributes, free with gtk_text_attributes_unref().
+;;;     a new GtkTextAttributes, free with gtk_text_attributes_unref().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1217,10 +1238,10 @@
 ;;; Copies src and returns a new GtkTextAttributes.
 ;;; 
 ;;; src :
-;;; 	a GtkTextAttributes to be copied
+;;;     a GtkTextAttributes to be copied
 ;;; 
 ;;; Returns :
-;;; 	a copy of src, free with gtk_text_attributes_unref()
+;;;     a copy of src, free with gtk_text_attributes_unref()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1233,10 +1254,10 @@
 ;;; Frees existing values in dest.
 ;;; 
 ;;; src :
-;;; 	a GtkTextAttributes
+;;;     a GtkTextAttributes
 ;;; 
 ;;; dest :
-;;; 	another GtkTextAttributes
+;;;     another GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1248,7 +1269,7 @@
 ;;; reference count reaches 0.
 ;;; 
 ;;; values :
-;;; 	a GtkTextAttributes
+;;;     a GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1259,10 +1280,10 @@
 ;;; Increments the reference count on values.
 ;;; 
 ;;; values :
-;;; 	a GtkTextAttributes
+;;;     a GtkTextAttributes
 ;;; 
 ;;; Returns :
-;;; 	the GtkTextAttributes that were passed in
+;;;     the GtkTextAttributes that were passed in
 ;;; ----------------------------------------------------------------------------
 
 

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkTextTagTable
 ;;; 
 ;;; Collection of tags that can be used together
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTextTagTable
-;;;
+;;;     
 ;;;     gtk_text_tag_table_new
 ;;;     gtk_text_tag_table_add
 ;;;     gtk_text_tag_table_remove
@@ -51,7 +51,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkTextTagTable implements GtkBuildable.
-;;;
+;;; 
 ;;; Signals
 ;;; 
 ;;;   "tag-added"                                      : Run Last
@@ -90,13 +90,13 @@
 ;;;                     gpointer         user_data)         : Run Last
 ;;; 
 ;;; texttagtable :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; tag :
-;;; 	the added tag.
+;;;     the added tag.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "tag-changed" signal
@@ -107,16 +107,16 @@
 ;;;                     gpointer         user_data)         : Run Last
 ;;; 
 ;;; texttagtable :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; tag :
-;;; 	the changed tag.
+;;;     the changed tag.
 ;;; 
 ;;; size_changed :
-;;; 	whether the size has been changed.
+;;;     whether the size has been changed.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "tag-removed" signal
@@ -126,13 +126,13 @@
 ;;;                     gpointer         user_data)         : Run Last
 ;;; 
 ;;; texttagtable :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; tag :
-;;; 	the removed tag.
+;;;     the removed tag.
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -163,12 +163,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_table_new ()
 ;;; 
-;;; GtkTextTagTable * gtk_text_tag_table_new (void)
+;;; GtkTextTagTable * gtk_text_tag_table_new (void);
 ;;; 
 ;;; Creates a new GtkTextTagTable. The table contains no tags by default.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkTextTagTable
+;;;     a new GtkTextTagTable
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-text-tag-table-new))
@@ -186,14 +186,14 @@
 ;;; Add a tag to the table. The tag is assigned the highest priority in the
 ;;; table.
 ;;; 
-;;; tag must not be in a tag table already, and may not have the same name as
-;;; an already-added tag.
+;;; tag must not be in a tag table already, and may not have the same name as an
+;;; already-added tag.
 ;;; 
 ;;; table :
-;;; 	a GtkTextTagTable
+;;;     a GtkTextTagTable
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :void
@@ -212,10 +212,10 @@
 ;;; reference to it.
 ;;; 
 ;;; table :
-;;; 	a GtkTextTagTable
+;;;     a GtkTextTagTable
 ;;; 
 ;;; tag :
-;;; 	a GtkTextTag
+;;;     a GtkTextTag
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_tag_table_remove" gtk-text-tag-table-remove) :void
@@ -233,13 +233,13 @@
 ;;; Look up a named tag.
 ;;; 
 ;;; table :
-;;; 	a GtkTextTagTable
+;;;     a GtkTextTagTable
 ;;; 
 ;;; name :
-;;; 	name of a tag
+;;;     name of a tag
 ;;; 
 ;;; Returns :
-;;; 	The tag, or NULL if none by that name is in the table.
+;;;     The tag, or NULL if none by that name is in the table.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_tag_table_lookup" gtk-text-tag-table-lookup)
@@ -260,13 +260,13 @@
 ;;; may not be modified while iterating over it (you can't add/remove tags).
 ;;; 
 ;;; table :
-;;; 	a GtkTextTagTable
+;;;     a GtkTextTagTable
 ;;; 
 ;;; func :
-;;; 	a function to call on each tag.
+;;;     a function to call on each tag
 ;;; 
 ;;; data :
-;;; 	user data
+;;;     user data
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_tag_table_foreach" %gtk-text-tag-table-foreach) :void
@@ -285,15 +285,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_table_get_size ()
 ;;; 
-;;; gint gtk_text_tag_table_get_size (GtkTextTagTable *table)
+;;; gint gtk_text_tag_table_get_size (GtkTextTagTable *table);
 ;;; 
 ;;; Returns the size of the table (number of tags)
 ;;; 
 ;;; table :
-;;; 	a GtkTextTagTable
+;;;     a GtkTextTagTable
 ;;; 
 ;;; Returns :
-;;; 	number of tags in table
+;;;     number of tags in table
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-size) :int
@@ -301,4 +301,4 @@
 
 (export 'gtk-text-tag-table-size)
 
-;;; --- End of file gtk.text-table.lisp ----------------------------------------
+;;; --- End of file gtk.text-tag-table.lisp ------------------------------------

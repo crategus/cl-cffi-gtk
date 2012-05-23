@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkTextMark
 ;;; 
 ;;; A position in the buffer preserved across buffer modifications
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTextMark
-;;;
+;;;     
 ;;;     gtk_text_mark_new
 ;;;     gtk_text_mark_set_visible
 ;;;     gtk_text_mark_get_visible
@@ -51,8 +51,8 @@
 ;;; 
 ;;; Properties
 ;;; 
-;;;   "left-gravity"       gboolean              : Read / Write / Construct Only
-;;;   "name"               gchar*                : Read / Write / Construct Only
+;;;   "left-gravity"             gboolean             : Read / Write / Construct
+;;;   "name"                     gchar*               : Read / Write / Construct
 ;;; 
 ;;; Description
 ;;; 
@@ -88,7 +88,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "left-gravity" property
 ;;; 
-;;;   "left-gravity"       gboolean              : Read / Write / Construct Only
+;;;   "left-gravity"             gboolean             : Read / Write / Construct
 ;;; 
 ;;; Whether the mark has left gravity.
 ;;; 
@@ -97,7 +97,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; The "name" property
 ;;; 
-;;;   "name"               gchar*                : Read / Write / Construct Only
+;;;   "name"                     gchar*               : Read / Write / Construct
 ;;; 
 ;;; Mark name.
 ;;; 
@@ -117,42 +117,56 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_text_mark_get_type")
-  ((left-gravity text-mark-left-gravity
+  ((left-gravity
+    gtk-text-mark-left-gravity
     "left-gravity" "gboolean" t nil)
-   (name text-mark-name
+   (name
+    gtk-text-mark-name
     "name" "gchararray" t nil)
-   (:cffi visible text-mark-visible :boolean
+   (:cffi visible
+          gtk-text-mark-visible :boolean
           "gtk_text_mark_get_visible" "gtk_text_mark_set_visible")
-   (:cffi deleted text-mark-deleted :boolean
+   (:cffi deleted
+          gtk-text-mark-deleted :boolean
           "gtk_text_mark_get_deleted" nil)
-   (:cffi buffer text-mark-buffer (g-object gtk-text-buffer)
+   (:cffi buffer
+          gtk-text-mark-buffer (g-object gtk-text-buffer)
           "gtk_text_mark_get_buffer" nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_new ()
 ;;; 
-;;; GtkTextMark * gtk_text_mark_new (const gchar *name, gboolean left_gravity)
+;;; GtkTextMark * gtk_text_mark_new (const gchar *name, gboolean left_gravity);
 ;;; 
-;;; Creates a text mark. Add it to a buffer using gtk_text_buffer_add_mark().
-;;; If name is NULL, the mark is anonymous; otherwise, the mark can be retrieved
-;;; by name using gtk_text_buffer_get_mark(). If a mark has left gravity, and
-;;; text is inserted at the mark's current location, the mark will be moved to
-;;; the left of the newly-inserted text. If the mark has right gravity
+;;; Creates a text mark. Add it to a buffer using gtk_text_buffer_add_mark(). If
+;;; name is NULL, the mark is anonymous; otherwise, the mark can be retrieved by
+;;; name using gtk_text_buffer_get_mark(). If a mark has left gravity, and text
+;;; is inserted at the mark's current location, the mark will be moved to the
+;;; left of the newly-inserted text. If the mark has right gravity
 ;;; (left_gravity = FALSE), the mark will end up on the right of newly-inserted
 ;;; text. The standard left-to-right cursor is a mark with right gravity (when
 ;;; you type, the cursor stays on the right side of the text you're typing).
 ;;; 
 ;;; name :
-;;; 	mark name or NULL
+;;;     mark name or NULL
 ;;; 
 ;;; left_gravity :
-;;; 	whether the mark should have left gravity
+;;;     whether the mark should have left gravity
 ;;; 
 ;;; Returns :
-;;; 	new GtkTextMark
+;;;     new GtkTextMark
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-mark-new))
+
+(defun gtk-text-mark-new (name left-gravity)
+  (make-instance 'gtk-text-mark
+                 :name name
+                 :left-gravity left-gravity))
+
+(export 'gtk-text-mark-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_set_visible ()
@@ -165,11 +179,18 @@
 ;;; other marks are not visible. Marks are not visible by default.
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; setting :
-;;; 	visibility of mark
+;;;     visibility of mark
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-mark-set-visible))
+
+(defun gtk-text-mark-set-visible (mark setting)
+  (setf (gtk-text-mark-visible mark) setting))
+
+(export 'gtk-text-mark-set-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_get_visible ()
@@ -179,11 +200,18 @@
 ;;; Returns TRUE if the mark is visible (i.e. a cursor is displayed for it).
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; Returns :
-;;; 	TRUE if visible
+;;;     TRUE if visible
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-mark-get-visible))
+
+(defun gtk-text-mark-get-visible (mark)
+  (gtk-text-mark-visible mark))
+
+(export 'gtk-text-mark-get-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_get_deleted ()
@@ -195,25 +223,39 @@
 ;;; add it to a buffer again.
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; Returns :
-;;; 	whether the mark is deleted
+;;;     whether the mark is deleted
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-mark-get-deleted))
+
+(defun gtk-text-mark-get-deleted (mark)
+  (gtk-text-mark-deleted mark))
+
+(export 'gtk-text-mark-get-deleted)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_get_name ()
 ;;; 
-;;; const gchar * gtk_text_mark_get_name (GtkTextMark *mark)
+;;; const gchar * gtk_text_mark_get_name (GtkTextMark *mark);
 ;;; 
 ;;; Returns the mark name; returns NULL for anonymous marks.
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; Returns :
-;;; 	mark name
+;;;     mark name
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-mark-get-name))
+
+(defun gtk-text-mark-get-name (mark)
+  (gtk-text-mark-name mark))
+
+(export 'gtk-text-mark-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_get_buffer ()
@@ -223,25 +265,38 @@
 ;;; Gets the buffer this mark is located inside, or NULL if the mark is deleted.
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; Returns :
-;;; 	the mark's GtkTextBuffer
+;;;     the mark's GtkTextBuffer
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-mark-get-buffer))
+
+(defun gtk-text-mark-get-buffer (mark)
+  (gtk-text-mark-buffer mark))
+
+(export 'gtk-text-mark-get-buffer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_get_left_gravity ()
 ;;; 
-;;; gboolean gtk_text_mark_get_left_gravity (GtkTextMark *mark)
+;;; gboolean gtk_text_mark_get_left_gravity (GtkTextMark *mark);
 ;;; 
 ;;; Determines whether the mark has left gravity.
 ;;; 
 ;;; mark :
-;;; 	a GtkTextMark
+;;;     a GtkTextMark
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the mark has left gravity, FALSE otherwise
+;;;     TRUE if the mark has left gravity, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
 
-;;; --- End of file gtk.text-mark.lisp -----------------------------------------
+(declaim (inline gtk-text-mark-get-left-gravity))
 
+(defun gtk-text-mark-get-left-gravity (mark)
+  (gtk-text-mark-left-gravity mark))
+
+(export 'gtk-text-mark-get-left-gravity)
+
+;;; --- End of file gtk.text-mark.lisp -----------------------------------------
