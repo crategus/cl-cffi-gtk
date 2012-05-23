@@ -43,6 +43,7 @@
                (:file "gdk.screen")           ; Representing a physical screen
                (:file "gdk.visual")           ; Low-level display information
                (:file "gdk.color")            ; Colormaps and Colors
+               (:file "gdk.rgba")             ; RGBA colors
                (:file "gdk.cursor")           ; Standard and pixmap cursors
                
                (:file "gdk.font")             ; Loading and manipulating fonts
