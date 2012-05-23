@@ -869,7 +869,9 @@
   (:active 1)
   (:prelight 2)
   (:selected 3)
-  (:insensitive 4))
+  (:insensitive 4)
+  (:inconsistent 5)
+  (:focused 6))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkStateFlags
@@ -907,6 +909,17 @@
 ;;; GTK_STATE_FLAG_FOCUSED
 ;;;     Widget has the keyboard focus.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkStateFlags" gtk-state-flags
+  (:export t
+   :type-initializer "gtk_state_flags_get_type")
+  (:normal 0)
+  (:active 1)
+  (:prelight 2)
+  (:selected 3)
+  (:insensitive 4)
+  (:inconsistent 5)
+  (:focused 6))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkToolbarStyle
