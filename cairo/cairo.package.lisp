@@ -22,13 +22,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :cairo
-  (:use :cl :cffi :glib :gobject)
-  (:export #:gdk-context
-           #:create-gdk-context
-           #:with-gdk-context
-           #:gdk-cairo-set-source-pixbuf
-           #:gdk-cairo-set-source-pixmap
-           #:gdk-cairo-region
-           #:gdk-cairo-reset-clip))
+  (:use :cl :cffi :glib :gobject))
 
 ;;; --- End of file cairo.package.lisp -----------------------------------------
