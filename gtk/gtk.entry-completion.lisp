@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,15 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkEntryCompletion
 ;;; 
 ;;; Completion functionality for GtkEntry
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkEntryCompletion
-;;;
+;;;     
 ;;;     gtk_entry_completion_new
 ;;;     gtk_entry_completion_new_with_area
 ;;;     gtk_entry_completion_get_entry
@@ -44,6 +44,7 @@
 ;;;     gtk_entry_completion_set_match_func
 ;;;     gtk_entry_completion_set_minimum_key_length
 ;;;     gtk_entry_completion_get_minimum_key_length
+;;;     gtk_entry_completion_compute_prefix
 ;;;     gtk_entry_completion_complete
 ;;;     gtk_entry_completion_get_completion_prefix
 ;;;     gtk_entry_completion_insert_prefix
@@ -71,7 +72,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkEntryCompletion implements GtkCellLayout and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "cell-area"                GtkCellArea*         : Read / Write / Construct
@@ -142,18 +143,17 @@
 ;;; 
 ;;; The GtkCellArea used to layout cell renderers in the treeview column.
 ;;; 
-;;; If no area is specified when creating the entry completion with 
+;;; If no area is specified when creating the entry completion with
 ;;; gtk_entry_completion_new_with_area() a horizontally oriented GtkCellAreaBox
 ;;; will be used.
 ;;; 
 ;;; Since 3.0
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "inline-completion" property
 ;;; 
 ;;;   "inline-completion"        gboolean              : Read / Write
 ;;; 
-;;; Determines whether the common prefix of the possible completions should be 
+;;; Determines whether the common prefix of the possible completions should be
 ;;; inserted automatically in the entry. Note that this requires text-column to
 ;;; be set, even if you are using a custom match function.
 ;;; 
@@ -166,8 +166,8 @@
 ;;; 
 ;;;   "inline-selection"         gboolean              : Read / Write
 ;;; 
-;;; Determines whether the possible completions on the popup will appear in 
-;;; the entry as you navigate through them.
+;;; Determines whether the possible completions on the popup will appear in the
+;;; entry as you navigate through them.
 ;;; 
 ;;; Default value: FALSE
 ;;; 
@@ -196,7 +196,7 @@
 ;;; 
 ;;;   "popup-completion"         gboolean              : Read / Write
 ;;; 
-;;; Determines whether the possible completions should be shown in a popup 
+;;; Determines whether the possible completions should be shown in a popup
 ;;; window.
 ;;; 
 ;;; Default value: TRUE
@@ -208,8 +208,8 @@
 ;;; 
 ;;;   "popup-set-width"          gboolean              : Read / Write
 ;;; 
-;;; Determines whether the completions popup window will be resized to the 
-;;; width of the entry.
+;;; Determines whether the completions popup window will be resized to the width
+;;; of the entry.
 ;;; 
 ;;; Default value: TRUE
 ;;; 
@@ -220,9 +220,9 @@
 ;;; 
 ;;;   "popup-single-match"       gboolean              : Read / Write
 ;;; 
-;;; Determines whether the completions popup window will shown for a single 
-;;; possible completion. You probably want to set this to FALSE if you are
-;;; using inline completion.
+;;; Determines whether the completions popup window will shown for a single
+;;; possible completion. You probably want to set this to FALSE if you are using
+;;; inline completion.
 ;;; 
 ;;; Default value: TRUE
 ;;; 
@@ -233,7 +233,7 @@
 ;;; 
 ;;;   "text-column"              gint                  : Read / Write
 ;;; 
-;;; The column of the model containing the strings. Note that the strings must 
+;;; The column of the model containing the strings. Note that the strings must
 ;;; be UTF-8.
 ;;; 
 ;;; Allowed values: >= G_MAXULONG
@@ -274,11 +274,11 @@
 ;;;                         GtkTreeIter        *iter,
 ;;;                         gpointer            user_data)      : Run Last
 ;;; 
-;;; Gets emitted when a match from the cursor is on a match of the list. The 
+;;; Gets emitted when a match from the cursor is on a match of the list. The
 ;;; default behaviour is to replace the contents of the entry with the contents
 ;;; of the text column in the row pointed to by iter.
 ;;; 
-;;; Note that model is the model that was passed to 
+;;; Note that model is the model that was passed to
 ;;; gtk_entry_completion_set_model().
 ;;; 
 ;;; widget :
@@ -305,9 +305,9 @@
 ;;;                         gchar              *prefix,
 ;;;                         gpointer            user_data)      : Run Last
 ;;; 
-;;; Gets emitted when the inline autocompletion is triggered. The default 
-;;; behaviour is to make the entry display the whole prefix and select the
-;;; newly inserted part.
+;;; Gets emitted when the inline autocompletion is triggered. The default
+;;; behaviour is to make the entry display the whole prefix and select the newly
+;;; inserted part.
 ;;; 
 ;;; Applications may connect to this signal in order to insert only a smaller
 ;;; part of the prefix into the entry - e.g. the entry used in the
@@ -336,8 +336,8 @@
 ;;;                         gpointer            user_data)      : Run Last
 ;;; 
 ;;; Gets emitted when a match from the list is selected. The default behaviour
-;;; is to replace the contents of the entry with the contents of the text
-;;; column in the row pointed to by iter.
+;;; is to replace the contents of the entry with the contents of the text column
+;;; in the row pointed to by iter.
 ;;; 
 ;;; Note that model is the model that was passed to
 ;;; gtk_entry_completion_set_model().
@@ -369,31 +369,46 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkEntryCompletion" gtk-entry-completion
-                       (:superclass g-object :export t :interfaces
-                        ("GtkBuildable" "GtkCellLayout") :type-initializer
-                        "gtk_entry_completion_get_type")
-                       ((inline-completion entry-completion-inline-completion
-                         "inline-completion" "gboolean" t t)
-                        (inline-selection entry-completion-inline-selection
-                         "inline-selection" "gboolean" t t)
-                        (minimum-key-length entry-completion-minimum-key-length
-                         "minimum-key-length" "gint" t t)
-                        (model entry-completion-model "model" "GtkTreeModel" t
-                         t)
-                        (popup-completion entry-completion-popup-completion
-                         "popup-completion" "gboolean" t t)
-                        (popup-set-width entry-completion-popup-set-width
-                         "popup-set-width" "gboolean" t t)
-                        (popup-single-match entry-completion-popup-single-match
-                         "popup-single-match" "gboolean" t t)
-                        (text-column entry-completion-text-column "text-column"
-                         "gint" t t)
-                        (:cffi entry entry-completion-entry (g-object entry)
-                         "gtk_entry_completion_get_entry" nil)
-                        (:cffi match-function entry-completion-match-function
-                          nil nil gtk-entry-completion-set-match-function)))
+  (:superclass g-object
+   :export t
+   :interfaces("GtkBuildable"
+               "GtkCellLayout")
+   :type-initializer "gtk_entry_completion_get_type")
+  ((cell-area
+    gtk-entry-completion-cell-area
+    "cell-area" "GtkCellArea" t t)
+   (inline-completion
+    gtk-entry-completion-inline-completion
+    "inline-completion" "gboolean" t t)
+   (inline-selection
+    gtk-entry-completion-inline-selection
+    "inline-selection" "gboolean" t t)
+   (minimum-key-length
+    gtk-entry-completion-minimum-key-length
+    "minimum-key-length" "gint" t t)
+   (model
+    gtk-entry-completion-model
+    "model" "GtkTreeModel" t t)
+   (popup-completion
+    gtk-entry-completion-popup-completion
+    "popup-completion" "gboolean" t t)
+   (popup-set-width
+    gtk-entry-completion-popup-set-width
+    "popup-set-width" "gboolean" t t)
+   (popup-single-match
+    gtk-entry-completion-popup-single-match
+    "popup-single-match" "gboolean" t t)
+   (text-column
+    gtk-entry-completion-text-column
+    "text-column" "gint" t t)
+   (:cffi entry
+          gtk-entry-completion-entry (g-object entry)
+          "gtk_entry_completion_get_entry" nil)
+   (:cffi match-function
+          gtk-entry-completion-match-function
+          nil nil gtk-entry-completion-set-match-function)))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; GtkEntryCompletionMatchFunc ()
 ;;; 
 ;;; gboolean (*GtkEntryCompletionMatchFunc) (GtkEntryCompletion *completion,
@@ -402,11 +417,11 @@
 ;;;                                          gpointer user_data);
 ;;; 
 ;;; A function which decides whether the row indicated by iter matches a given
-;;; key, and should be displayed as a possible completion for key. Note that
-;;; key is normalized and case-folded (see g_utf8_normalize() and
+;;; key, and should be displayed as a possible completion for key. Note that key
+;;; is normalized and case-folded (see g_utf8_normalize() and
 ;;; g_utf8_casefold()). If this is not appropriate, match functions have access
-;;; to the unmodified key via
-;;; gtk_entry_get_text (GTK_ENTRY (gtk_entry_completion_get_entry ())).
+;;; to the unmodified key via gtk_entry_get_text
+;;; (GTK_ENTRY (gtk_entry_completion_get_entry ())).
 ;;; 
 ;;; completion :
 ;;;     the GtkEntryCompletion
@@ -457,7 +472,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_get_entry ()
 ;;; 
-;;; GtkWidget * gtk_entry_completion_get_entry (GtkEntryCompletion *completion)
+;;; GtkWidget * gtk_entry_completion_get_entry (GtkEntryCompletion *completion);
 ;;; 
 ;;; Gets the entry completion has been attached to.
 ;;; 
@@ -484,7 +499,7 @@
 ;;;     a GtkEntryCompletion
 ;;; 
 ;;; model :
-;;;     the GtkTreeModel. [allow-none]
+;;;     the GtkTreeModel
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -493,7 +508,7 @@
 ;;; gtk_entry_completion_get_model ()
 ;;; 
 ;;; GtkTreeModel * gtk_entry_completion_get_model
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
 ;;; Returns NULL if the model is unset.
 ;;; 
@@ -581,7 +596,7 @@
 ;;; gtk_entry_completion_get_minimum_key_length ()
 ;;; 
 ;;; gint gtk_entry_completion_get_minimum_key_length
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
 ;;; Returns the minimum key length as set for completion.
 ;;; 
@@ -595,9 +610,33 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_entry_completion_compute_prefix ()
+;;; 
+;;; gchar * gtk_entry_completion_compute_prefix (GtkEntryCompletion *completion,
+;;;                                              const char *key);
+;;; 
+;;; Computes the common prefix that is shared by all rows in completion that
+;;; start with key. If no row matches key, NULL will be returned. Note that a
+;;; text column must have been set for this function to work, see
+;;; gtk_entry_completion_set_text_column() for details.
+;;; 
+;;; completion :
+;;;     the entry completion
+;;; 
+;;; key :
+;;;     The text to complete for
+;;; 
+;;; Returns :
+;;;     The common prefix all rows starting with key or NULL if no row matches
+;;;     key.
+;;; 
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_complete ()
 ;;; 
-;;; void gtk_entry_completion_complete (GtkEntryCompletion *completion)
+;;; void gtk_entry_completion_complete (GtkEntryCompletion *completion);
 ;;; 
 ;;; Requests a completion operation, or in other words a refiltering of the
 ;;; current list with completions, using the current key. The completion list
@@ -618,7 +657,7 @@
 ;;; gtk_entry_completion_get_completion_prefix ()
 ;;; 
 ;;; const gchar * gtk_entry_completion_get_completion_prefix
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
 ;;; Get the original text entered by the user that triggered the completion or
 ;;; NULL if there's no completion ongoing.
@@ -641,7 +680,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_insert_prefix ()
 ;;; 
-;;; void gtk_entry_completion_insert_prefix  (GtkEntryCompletion *completion)
+;;; void gtk_entry_completion_insert_prefix (GtkEntryCompletion *completion);
 ;;; 
 ;;; Requests a prefix insertion.
 ;;; 
@@ -660,7 +699,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_insert_action_text ()
 ;;; 
-;;; void gtk_entry_completion_insert_action_text(GtkEntryCompletion *completion,
+;;; void gtk_entry_completion_insert_action_text
+;;;                                             (GtkEntryCompletion *completion,
 ;;;                                              gint index_,
 ;;;                                              const gchar *text);
 ;;; 
@@ -696,8 +736,8 @@
 ;;;                                              gint index_,
 ;;;                                              const gchar *markup);
 ;;; 
-;;; Inserts an action in completion's action item list at position
-;;; index_ with markup markup.
+;;; Inserts an action in completion's action item list at position index_ with
+;;; markup markup.
 ;;; 
 ;;; completion :
 ;;;     a GtkEntryCompletion
@@ -749,12 +789,12 @@
 ;;; void gtk_entry_completion_set_text_column (GtkEntryCompletion *completion,
 ;;;                                            gint column);
 ;;; 
-;;; Convenience function for setting up the most used case of this code: a 
-;;; completion list with just strings. This function will set up completion to 
-;;; have a list displaying all (and just) strings in the completion list, and
-;;; to get those strings from column in the model of completion.
+;;; Convenience function for setting up the most used case of this code: a
+;;; completion list with just strings. This function will set up completion to
+;;; have a list displaying all (and just) strings in the completion list, and to
+;;; get those strings from column in the model of completion.
 ;;; 
-;;; This functions creates and adds a GtkCellRendererText for the selected 
+;;; This functions creates and adds a GtkCellRendererText for the selected
 ;;; column. If you need to set the text column, but don't want the cell
 ;;; renderer, use g_object_set() to set the "text-column" property directly.
 ;;; 
@@ -790,7 +830,7 @@
 ;;;                                             (GtkEntryCompletion *completion,
 ;;;                                              gboolean inline_completion);
 ;;; 
-;;; Sets whether the common prefix of the possible completions should be 
+;;; Sets whether the common prefix of the possible completions should be
 ;;; automatically inserted in the entry.
 ;;; 
 ;;; completion :
@@ -806,9 +846,9 @@
 ;;; gtk_entry_completion_get_inline_completion ()
 ;;; 
 ;;; gboolean gtk_entry_completion_get_inline_completion
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
-;;; Returns whether the common prefix of the possible completions should be 
+;;; Returns whether the common prefix of the possible completions should be
 ;;; automatically inserted in the entry.
 ;;; 
 ;;; completion :
@@ -827,8 +867,8 @@
 ;;;                                             (GtkEntryCompletion *completion,
 ;;;                                              gboolean inline_selection);
 ;;; 
-;;; Sets whether it is possible to cycle through the possible completions 
-;;; inside the entry.
+;;; Sets whether it is possible to cycle through the possible completions inside
+;;; the entry.
 ;;; 
 ;;; completion :
 ;;;     a GtkEntryCompletion
@@ -843,7 +883,7 @@
 ;;; gtk_entry_completion_get_inline_selection ()
 ;;; 
 ;;; gboolean gtk_entry_completion_get_inline_selection
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
 ;;; Returns TRUE if inline-selection mode is turned on.
 ;;; 
@@ -878,7 +918,7 @@
 ;;; gtk_entry_completion_get_popup_completion ()
 ;;; 
 ;;; gboolean gtk_entry_completion_get_popup_completion
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
 ;;; Returns whether the completions should be presented in a popup window.
 ;;; 
@@ -898,7 +938,7 @@
 ;;;                                             (GtkEntryCompletion *completion,
 ;;;                                              gboolean popup_set_width);
 ;;; 
-;;; Sets whether the completion popup window will be resized to be the same 
+;;; Sets whether the completion popup window will be resized to be the same
 ;;; width as the entry.
 ;;; 
 ;;; completion :
@@ -914,10 +954,10 @@
 ;;; gtk_entry_completion_get_popup_set_width ()
 ;;; 
 ;;; gboolean gtk_entry_completion_get_popup_set_width
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
-;;; Returns whether the completion popup window will be resized to the width 
-;;; of the entry.
+;;; Returns whether the completion popup window will be resized to the width of
+;;; the entry.
 ;;; 
 ;;; completion :
 ;;;     a GtkEntryCompletion
@@ -935,8 +975,8 @@
 ;;;                                             (GtkEntryCompletion *completion,
 ;;;                                              gboolean popup_single_match);
 ;;; 
-;;; Sets whether the completion popup window will appear even if there is only 
-;;; a single match. You may want to set this to FALSE if you are using inline 
+;;; Sets whether the completion popup window will appear even if there is only a
+;;; single match. You may want to set this to FALSE if you are using inline
 ;;; completion.
 ;;; 
 ;;; completion :
@@ -952,9 +992,9 @@
 ;;; gtk_entry_completion_get_popup_single_match ()
 ;;; 
 ;;; gboolean gtk_entry_completion_get_popup_single_match
-;;;                                             (GtkEntryCompletion *completion)
+;;;                                            (GtkEntryCompletion *completion);
 ;;; 
-;;; Returns whether the completion popup window will appear even if there is 
+;;; Returns whether the completion popup window will appear even if there is
 ;;; only a single match.
 ;;; 
 ;;; completion :
