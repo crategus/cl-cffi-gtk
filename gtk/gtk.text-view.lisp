@@ -2250,9 +2250,9 @@
 (declaim (inline gtk-text-view-set-right-margin))
 
 (defun gtk-text-view-set-right-margin (text-view right-margin)
-  (setf (gtk-text-view-rigth-margin text-view) rigth-margin))
+  (setf (gtk-text-view-right-margin text-view) right-margin))
 
-(export 'gtk-text-view-set-rigth-margin)
+(export 'gtk-text-view-set-right-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_right_margin ()
@@ -2272,9 +2272,9 @@
 (declaim (inline gtk-text-view-get-right-margin))
 
 (defun gtk-text-view-get-right-margin (text-view)
-  (gtk-text-view-rigth-margin text-view))
+  (gtk-text-view-right-margin text-view))
 
-(export 'gtk-text-view-get-rigth-margin)
+(export 'gtk-text-view-get-right-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_indent ()
