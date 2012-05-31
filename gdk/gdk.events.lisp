@@ -284,7 +284,7 @@
 ;;;     a GdkEvent or NULL
 ;;; 
 ;;; state :
-;;;     return location for state. [out]
+;;;     return location for state
 ;;; 
 ;;; Returns :
 ;;;     TRUE if there was a state field in the event
