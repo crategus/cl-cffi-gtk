@@ -605,7 +605,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pango_layout_get_clip_region" %gdk-pango-layout-get-clip-region)
-    (g-boxed-foreign cairo-region-t :return)
+    cairo-region-t
   (layout (g-object pango-layout))
   (x-origin :int)
   (y-origin :int)
@@ -676,7 +676,7 @@
 
 (defcfun ("gdk_pango_layout_line_get_clip_region"
           %gdk-pango-layout-line-get-clip-region)
-    (g-boxed-foreign cairo-region-t :return)
+    cairo-region-t
   (layout-line (g-boxed-foreign pango-layout-line))
   (x-origin :int)
   (y-origin :int)

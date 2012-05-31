@@ -6456,9 +6456,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_region_intersect" gtk-widget-region-intersect)
-    (g-boxed-foreign cairo-region-t :return)
+    cairo-region-t
   (widget (g-object gtk-widget))
-  (region (g-boxed-foreign cairo-region-t)))
+  (region cairo-region-t))
 
 (export 'gtk-widget-region-intersect)
 

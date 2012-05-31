@@ -2297,7 +2297,7 @@
 
 (defcfun ("gdk_window_move_region" gdk-window-move-region) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign cairo-region-t))
+  (region cairo-region-t)
   (dx :int)
   (dy :int))
 
@@ -2880,7 +2880,7 @@
 
 (defcfun ("gdk_window_begin_paint_region" gdk-window-begin-paint-region) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign cairo-region-t)))
+  (region cairo-region-t))
 
 (export 'gdk-window-begin-paint-region)
 
@@ -2969,7 +2969,7 @@
 
 (defcfun ("gdk_window_invalidate_region" gdk-window-invalidate-region) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign cairo-region-t))
+  (region cairo-region-t)
   (invalidate-children :boolean))
 
 (export 'gdk-window-invalidate-region)
@@ -3015,7 +3015,7 @@
 (defcfun ("gdk_window_invalidate_maybe_recurse"
           %gdk-window-invalidate-maybe-recurse) :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign cairo-region-t))
+  (region cairo-region-t)
   (child-func :pointer)
   (user-data :pointer))
 
@@ -3055,7 +3055,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_update_area" gdk-window-get-update-area)
-    (g-boxed-foreign cairo-region-t :return)
+    cairo-region-t
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-update-area)
@@ -3608,7 +3608,7 @@
 (defcfun ("gdk_window_shape_combine_region" gdk-window-shape-combine-region)
     :void
   (window (g-object gdk-window))
-  (region (g-boxed-foreign cairo-region-t))
+  (region cairo-region-t)
   (offset-x :int)
   (offset-y :int))
 
@@ -3733,7 +3733,7 @@
 (defcfun ("gdk_window_input_shape_combine_region"
            gdk-window-input-shape-combine-region) :void
   (window (g-object gdk-window))
-  (shape-region (g-boxed-foreign cairo-region-t))
+  (shape-region cairo-region-t)
   (offset-x :int)
   (offset-y :int))
 
