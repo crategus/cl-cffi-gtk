@@ -31,6 +31,8 @@
                (:file "cairo.init")
                (:file "cairo.version")
                (:file "cairo.regions")
+               (:file "cairo.surface")
+               (:file "cairo.context")
 ;               (:file "cairo")
 ;               (:file "cairo.demo")
               )
