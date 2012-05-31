@@ -66,6 +66,7 @@
                (:file "gdk.drag-and-drop")    ; Drag and drop handling
                (:file "gdk.app")              ; Notification for applications
                (:file "gdk.pango")            ; Using Pango in GDK
+               (:file "gdk.cairo")            ; Functions to support using cairo
                )
   :depends-on (:cl-cffi-gtk-gobject
                :cl-cffi-gtk-glib
