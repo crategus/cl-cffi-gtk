@@ -186,7 +186,7 @@
    ;; Numeric/Text Data Entry
    (:file "gtk.editable")              ; GtkEditable
    (:file "gtk.entry")                 ; GtkEntry
-   ;; GtkEntryBuffer not implemented
+   (:file "gtk.entry-buffer")          ; GtkEntryBuffer
    (:file "gtk.entry-completion")      ; GtkEntryCompletion
    (:file "gtk.scale")                 ; GtkScale, GtkHScale, GtkVScale
    (:file "gtk.spin-button")           ; GtkSpinButton
