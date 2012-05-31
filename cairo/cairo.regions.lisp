@@ -84,10 +84,9 @@
 ;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-opaque cairo-region-t "cairo_region_t"
-  :alloc (%cairo-region-create))
+(defctype cairo-region-t :pointer)
 
-(export (boxed-related-symbols 'cairo-region-t))
+(export 'cairo-region-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_create ()
@@ -106,10 +105,7 @@
 ;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_region_create" %cairo-region-create) :pointer)
-
-(defcfun ("cairo_region_create" cairo-region-create)
-    (g-boxed-foreign cairo-region-t))
+(defcfun ("cairo_region_create" cairo-region-create) cairo-region-t)
 
 (export 'cairo-region-create)
 
