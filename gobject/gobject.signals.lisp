@@ -158,8 +158,8 @@
 (defun create-signal-handler-closure (object fn)
   (let ((function-id (save-handler-to-object object fn))
         (closure (g-closure-new-simple
-                   (foreign-type-size 'lisp-signal-handler-closure)
-                   (null-pointer))))
+                                (foreign-type-size 'lisp-signal-handler-closure)
+                                (null-pointer))))
     (setf (foreign-slot-value closure 'lisp-signal-handler-closure :function-id)
           function-id
           (foreign-slot-value closure 'lisp-signal-handler-closure :object)
@@ -1094,20 +1094,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-signal-connect (object signal handler &key after)
-  (connect-signal object signal handler :after after))
-
-(export 'g-signal-connect)
-
-(defun signal-connect (object signal handler &key after)
-  (connect-signal object signal handler :after after))
-
-(export 'signal-connect)
-
-(defun connect-signal (object signal handler &key after)
   (g-signal-connect-closure (pointer object)
                             signal
                             (create-signal-handler-closure object handler)
                             after))
+
+(export 'g-signal-connect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_connect_after()
