@@ -15,6 +15,7 @@
 * Hello World in GTK+::
 * Introduction to Signals and Callbacks::
 * An Upgraded Hello World::
+* Drawing::
 @end menu
 
 @c -----------------------------------------------------------------------------
@@ -715,7 +716,7 @@ is not implemented in Lisp.  Again this functionality is already present with
 the help of @code{lambda} functions in Lisp.
 
 @c -----------------------------------------------------------------------------
-@node An Upgraded Hello World, , Introduction to Signals and Callbacks, Top
+@node An Upgraded Hello World, Drawing, Introduction to Signals and Callbacks, Top
 @section An Upgraded Hello World
 
 @ifnotinfo
@@ -924,5 +925,127 @@ no longer presented for comparison.
         (gtk-box-pack-start box button))
       (gtk-container-add window box)
       (gtk-widget-show-all window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Drawing, , An Upgraded Hello World, Top
+@section Drawing
+
+@ifnotinfo
+@float Figure, figure-drawing
+@caption{Drawing in response to input}
+@center @image{figures/drawing278x255, 185pt}
+@end float
+@end ifnotinfo
+
+Many widgets, like buttons, do all their drawing themselves.  You just tell them
+the label you want to see, and they figure out what font to use, draw the button
+outline and focus rectangle, etc.  Sometimes, it is necessary to do some custom
+drawing.  In that case, a @code{GtkDrawingArea} might be the right widget to
+use.  It offers a canvas on which you can draw by connecting to the "draw"
+signal.
+
+The contents of a widget often need to be partially or fully redrawn, e.g. when
+another window is moved and uncovers part of the widget, or when tie window
+containing it is resized.  It is also possible to explicitly cause part or all
+of the widget to be redrawn, by calling @code{gtk-widget-queue-draw} or its
+variants.  GTK+ takes care of most of the details by providing a ready-to-use
+cairo context to the ::draw signal handler.
+
+The following example shows a ::draw signal handler.  It is a bit more
+complicated than the previous examples, since it also demonstrates input event
+handling by means of ::button-press and ::motion-notify handlers.
+
+@float Example, example-drawing
+@caption{Drawing in response to input}
+@end float
+@verbatim
+(let ((surface nil))
+  (defun example-drawing ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :type :toplevel
+                                   :title "Example Drawing"
+                                   :border-width 12))
+            (frame (make-instance 'gtk-frame
+                                  :shadow-type :in))
+            (area (make-instance 'gtk-drawing-area
+                                 :width-request 250
+                                 :height-request 200)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-main-quit)))
+        ;; Signals used to handle the backing surface
+        (g-signal-connect area "draw"
+           (lambda (widget cr)
+             (declare (ignore widget))
+             (cairo-set-source-surface (pointer cr) surface 0.0d0 0.0d0)
+             (cairo-paint (pointer cr))
+             nil))
+        (g-signal-connect area "configure-event"
+           (lambda (widget event)
+             (declare (ignore event))
+             (when surface
+               (cairo-surface-destroy surface))
+             (setq surface
+                   (gdk-window-create-similar-surface
+                                   (gtk-widget-get-window widget)
+                                   :color
+                                   (gtk-widget-get-allocated-width widget)
+                                   (gtk-widget-get-allocated-height widget)))
+             ;; Clear surface
+             (let ((cr (cairo-create surface)))
+               (cairo-set-source-rgb cr 1.0d0 1.0d0 1.0d0)
+               (cairo-paint cr)
+               (cairo-destroy cr))
+             (format t "leave event 'configure-event'~%")
+             t))
+        ;; Event signals
+        (g-signal-connect area "motion-notify-event"
+           (lambda (widget event)
+             (format t "MOTION-NOTIFY-EVENT ~A~%" event)
+             (when (member :button1-mask (event-motion-state event))
+               (let ((cr (cairo-create surface))
+                     (x (event-motion-x event))
+                     (y (event-motion-y event)))
+                 (cairo-rectangle cr (- x 3.0d0) (- y 3.0d0) 6.0d0 6.0d0)
+                 (cairo-fill cr)
+                 (cairo-destroy cr)
+                 (gtk-widget-queue-draw-area widget
+                                             (truncate (- x 3.0d0))
+                                             (truncate (- y 3.0d0))
+                                             6
+                                             6)))
+             ;; We have handled the event, stop processing
+             t))
+        (g-signal-connect area "button-press-event"
+           (lambda (widget event)
+             (format t "BUTTON-PRESS-EVENT ~A~%" event)
+             (if (eql 1 (event-button-button event))
+                 (let ((cr (cairo-create surface))
+                       (x (event-button-x event))
+                       (y (event-button-y event)))
+                   (cairo-rectangle cr (- x 3.0d0) (- y 3.0d0) 6.0d0 6.0d0)
+                   (cairo-fill cr)
+                   (cairo-destroy cr)
+                   (gtk-widget-queue-draw-area widget
+                                               (truncate (- x 3.0d0))
+                                               (truncate (- y 3.0d0))
+                                               6
+                                               6))
+                 ;; Clear surface
+                 (let ((cr (cairo-create surface)))
+                   (cairo-set-source-rgb cr 1.0d0 1.0d0 1.0d0)
+                   (cairo-paint cr)
+                   (cairo-destroy cr)
+                   (gtk-widget-queue-draw widget)))))
+        (gtk-widget-set-events area
+                               (append (gtk-widget-get-events area)
+                                       '(:button-press-mask
+                                         :pointer-motion-mask)))
+        (gtk-container-add frame area)
+        (gtk-container-add window frame)
+        (gtk-widget-show-all window)))))
 @end verbatim
 
