@@ -2,7 +2,7 @@
 ;;; cairo.context.lisp
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.0 . See http://cairographics.org
+;;; for Cairo 1.12.2. See http://cairographics.org
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
@@ -125,16 +125,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cairo)
-
-
-(defcfun ("cairo_rectangle" cairo-rectangle) :void
-  (cr cairo-t)
-  (x :double)
-  (y :double)
-  (width :double)
-  (height :double))
-
-(export 'cairo-rectangle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_t

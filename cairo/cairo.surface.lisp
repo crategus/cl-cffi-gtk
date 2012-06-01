@@ -2,7 +2,7 @@
 ;;; cairo.surface.lisp
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.0 . See http://cairographics.org
+;;; for Cairo 1.12.2. See http://cairographics.org
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
