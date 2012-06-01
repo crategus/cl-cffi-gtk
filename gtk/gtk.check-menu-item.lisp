@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,7 +27,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkCheckMenuItem
 ;;; 
 ;;; A menu item with a check box
@@ -35,7 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkCheckMenuItem
-;;;
+;;;     
 ;;;     gtk_check_menu_item_new
 ;;;     gtk_check_menu_item_new_with_label
 ;;;     gtk_check_menu_item_new_with_mnemonic
@@ -62,7 +62,7 @@
 ;;; 
 ;;; GtkCheckMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "active"                   gboolean              : Read / Write
@@ -165,7 +165,9 @@
 (define-g-object-class "GtkCheckMenuItem" gtk-check-menu-item
   (:superclass gtk-menu-item
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable"
+                 "GtkActivatable")
     :type-initializer "gtk_check_menu_item_get_type")
   ((active
     gtk-check-menu-item-active
@@ -188,6 +190,13 @@
 ;;;     a new GtkCheckMenuItem.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-check-menu-item-new))
+
+(defun gtk-check-menu-item-new ()
+  (make-instance 'gtk-check-menu-item))
+
+(export 'gtk-check-menu-item-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_new_with_label ()
 ;;; 
@@ -199,8 +208,16 @@
 ;;;     the string to use for the label.
 ;;; 
 ;;; Returns :
-;;;     a new GtkCheckMenuItem
+;;;     a new GtkCheckMenuItem.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-check-menu-item-new-with-label))
+
+(defun gtk-check-menu-item-new-with-label (label)
+  (make-instance 'gtk-check-menu-item
+                 :label label))
+
+(export 'gtk-check-menu-item-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_new_with_mnemonic ()
@@ -218,13 +235,22 @@
 ;;;     a new GtkCheckMenuItem
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-check-menu-item-new-with-mnemonic))
+
+(defun gtk-check-menu-item-new-with-mnemonic (label)
+  (make-instance 'gtk-check-menu-item
+                 :label label
+                 :use-underline t))
+
+(export 'gtk-check-menu-item-new-with-mnemonic)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_get_active ()
 ;;; 
-;;; gboolean gtk_check_menu_item_get_active (GtkCheckMenuItem *check_menu_item)
+;;; gboolean gtk_check_menu_item_get_active (GtkCheckMenuItem *check_menu_item);
 ;;; 
-;;; Returns whether the check menu item is active.
-;;; See gtk_check_menu_item_set_active().
+;;; Returns whether the check menu item is active. See
+;;; gtk_check_menu_item_set_active().
 ;;; 
 ;;; check_menu_item :
 ;;;     a GtkCheckMenuItem
@@ -232,6 +258,13 @@
 ;;; Returns :
 ;;;     TRUE if the menu item is checked.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-check-menu-item-get-active))
+
+(defun gtk-check-menu-item-get-active (check-menu-item)
+  (gtk-check-menu-item-active check-menu-item))
+
+(export 'gtk-check-menu-item-get-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_set_active ()
@@ -245,25 +278,37 @@
 ;;;     a GtkCheckMenuItem.
 ;;; 
 ;;; is_active :
-;;;     boolean value indicating whether the check box is active
+;;;     boolean value indicating whether the check box is active.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-check-menu-item-set-active))
+
+(defun gtk-check-menu-item-set-active (check-menu-item is-active)
+  (setf (gtk-check-menu-item-active check-menu-item) is-active))
+
+(export 'gtk-check-menu-item-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_toggled ()
 ;;; 
-;;; void gtk_check_menu_item_toggled (GtkCheckMenuItem *check_menu_item)
+;;; void gtk_check_menu_item_toggled (GtkCheckMenuItem *check_menu_item);
 ;;; 
 ;;; Emits the "toggled" signal.
 ;;; 
 ;;; check_menu_item :
-;;;     a GtkCheckMenuItem
+;;;     a GtkCheckMenuItem.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_check_menu_item_toggled" gtk-check-menu-item-toggled) :void
+  (check-menu-item (g-object gtk-check-menu-item)))
+
+(export 'gtk-check-menu-item-toggled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_get_inconsistent ()
 ;;; 
 ;;; gboolean gtk_check_menu_item_get_inconsistent
-;;;                                          (GtkCheckMenuItem *check_menu_item)
+;;;                                         (GtkCheckMenuItem *check_menu_item);
 ;;; 
 ;;; Retrieves the value set by gtk_check_menu_item_set_inconsistent().
 ;;; 
@@ -273,6 +318,13 @@
 ;;; Returns :
 ;;;     TRUE if inconsistent
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-check-menu-item-get-inconsistent))
+
+(defun gtk-check-menu-item-get-inconsistent (check-menu-item)
+  (gtk-check-menu-item-inconsistent check-menu-item))
+
+(export 'gtk-check-menu-item-get-inconsistent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_set_inconsistent ()
@@ -297,29 +349,43 @@
 ;;;     TRUE to display an "inconsistent" third state check
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-check-menu-item-set-inconsistent))
+
+(defun gtk-check-menu-item-set-inconsistent (check-menu-item setting)
+  (setf (gtk-check-menu-item-inconsistent check-menu-item) setting))
+
+(export 'gtk-check-menu-item-set-inconsistent)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_set_draw_as_radio ()
 ;;; 
 ;;; void gtk_check_menu_item_set_draw_as_radio
 ;;;                                          (GtkCheckMenuItem *check_menu_item,
-;;;                                           gboolean draw_as_radio);
+;;;                                           gboolean setting);
 ;;; 
 ;;; Sets whether check_menu_item is drawn like a GtkRadioMenuItem
 ;;; 
 ;;; check_menu_item :
 ;;;     a GtkCheckMenuItem
 ;;; 
-;;; draw_as_radio :
+;;; setting :
 ;;;     whether check_menu_item is drawn like a GtkRadioMenuItem
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-check-menu-item-set-draw-as-radio))
+
+(defun gtk-check-menu-item-set-draw-as-radio (check-menu-item setting)
+  (setf (gtk-check-menu-item-draw-as-radio check-menu-item) setting))
+
+(export 'gtk-check-menu-item-set-draw-as-radio)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_get_draw_as_radio ()
 ;;; 
 ;;; gboolean gtk_check_menu_item_get_draw_as_radio
-;;;                                          (GtkCheckMenuItem *check_menu_item)
+;;;                                         (GtkCheckMenuItem *check_menu_item);
 ;;; 
 ;;; Returns whether check_menu_item looks like a GtkRadioMenuItem
 ;;; 
@@ -332,5 +398,11 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-check-menu-item-get-draw-as-radio))
+
+(defun gtk-check-menu-item-get-draw-as-radio (check-menu-item)
+  (gtk-check-menu-item-draw-as-radio check-menu-item))
+
+(export 'gtk-check-menu-item-get-draw-as-radio)
 
 ;;; --- End of file gtk.check-menu-item.lisp -----------------------------------

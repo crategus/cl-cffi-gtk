@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,15 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkSeparatorMenuItem
 ;;; 
 ;;; A separator used in menus
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkSeparatorMenuItem
-;;;
+;;;     
 ;;;     gtk_separator_menu_item_new
 ;;; 
 ;;; Object Hierarchy
@@ -71,7 +71,9 @@
 (define-g-object-class "GtkSeparatorMenuItem" gtk-separator-menu-item
   (:superclass gtk-menu-item
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_separator_menu_item_get_type")
   nil)
 
@@ -83,7 +85,7 @@
 ;;; Creates a new GtkSeparatorMenuItem.
 ;;; 
 ;;; Returns :
-;;;     a new GtkSeparatorMenuItem
+;;;     a new GtkSeparatorMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-separator-menu-item-new))

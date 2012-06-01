@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,15 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkRadioMenuItem
 ;;; 
 ;;; A choice from multiple check menu items
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRadioMenuItem
-;;;
+;;;     
 ;;;     gtk_radio_menu_item_new
 ;;;     gtk_radio_menu_item_new_with_label
 ;;;     gtk_radio_menu_item_new_with_mnemonic
@@ -60,7 +60,7 @@
 ;;; 
 ;;; GtkRadioMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "group"                    GtkRadioMenuItem*     : Write
@@ -93,7 +93,7 @@
 ;;;   if (i == 1)
 ;;;     gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
 ;;; }
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -129,7 +129,9 @@
 (define-g-object-class "GtkRadioMenuItem" gtk-radio-menu-item
   (:superclass gtk-check-menu-item
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_radio_menu_item_get_type")
   ((group
     gtk-radio-menu-item-group
@@ -158,7 +160,7 @@
 ;;; Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
 ;;; 
 ;;; group :
-;;;     . [element-type GtkRadioMenuItem][transfer full]
+;;;     .
 ;;; 
 ;;; label :
 ;;;     the text for the label
@@ -199,7 +201,7 @@
 ;;;     An existing GtkRadioMenuItem
 ;;; 
 ;;; Returns :
-;;;     The new GtkRadioMenuItem. [transfer none]
+;;;     The new GtkRadioMenuItem.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -221,7 +223,7 @@
 ;;;     the text for the label
 ;;; 
 ;;; Returns :
-;;;     The new GtkRadioMenuItem. [transfer none]
+;;;     The new GtkRadioMenuItem.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -270,7 +272,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_get_group ()
 ;;; 
-;;; GSList * gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item)
+;;; GSList * gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
 ;;; 
 ;;; Returns the group to which the radio menu item belongs, as a GList of
 ;;; GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.

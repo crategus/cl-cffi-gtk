@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,15 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkMenuItem
 ;;; 
 ;;; The widget used for item in menus
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkMenuItem
-;;;
+;;;     
 ;;;     gtk_menu_item_new
 ;;;     gtk_menu_item_new_with_label
 ;;;     gtk_menu_item_new_with_mnemonic
@@ -73,7 +73,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkMenuItem implements AtkImplementorIface, GtkBuildable and GtkActivatable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "accel-path"               gchar*                : Read / Write
@@ -106,23 +106,23 @@
 ;;; menus. Their function is to correctly handle highlighting, alignment, events
 ;;; and submenus.
 ;;; 
-;;; As it derives from GtkBin it can hold any valid child widget, altough only
-;;; a few are really useful.
+;;; As it derives from GtkBin it can hold any valid child widget, altough only a
+;;; few are really useful.
 ;;; 
 ;;; GtkMenuItem as GtkBuildable
-;;;
+;;; 
 ;;; The GtkMenuItem implementation of the GtkBuildable interface supports adding
 ;;; a submenu by specifying "submenu" as the "type" attribute of a <child>
 ;;; element.
 ;;; 
 ;;; Example 77. A UI definition fragment with submenus
 ;;; 
-;;;  <object class="GtkMenuItem">
-;;;    <child type="submenu">
-;;;      <object class="GtkMenu"/>
-;;;    </child>
-;;;  </object>
-;;;
+;;; <object class="GtkMenuItem">
+;;;   <child type="submenu">
+;;;     <object class="GtkMenu"/>
+;;;   </child>
+;;; </object>
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -156,8 +156,8 @@
 ;;; 
 ;;;   "right-justified"          gboolean              : Read / Write
 ;;; 
-;;; Sets whether the menu item appears justified at the right side of a
-;;; menu bar.
+;;; Sets whether the menu item appears justified at the right side of a menu
+;;; bar.
 ;;; 
 ;;; Default value: FALSE
 ;;; 
@@ -291,20 +291,20 @@
 ;;; 
 ;;; void user_function (GtkMenuItem *menuitem,
 ;;;                     gpointer     user_data)      : Run First
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "select" signal
 ;;; 
 ;;; void user_function (GtkMenuItem *menuitem,
 ;;;                     gpointer     user_data)      : Run First
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "toggle-size-allocate" signal
 ;;; 
 ;;; void user_function (GtkMenuItem *menuitem,
 ;;;                     gint         arg1,
 ;;;                     gpointer     user_data)      : Run First
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "toggle-size-request" signal
 ;;; 
@@ -324,7 +324,9 @@
 (define-g-object-class "GtkMenuItem" gtk-menu-item
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_menu_item_get_type")
   ((accel-path
     gtk-menu-item-accel-path
@@ -421,8 +423,8 @@
 ;;;     a GtkMenuItem.
 ;;; 
 ;;; right_justified :
-;;;     if TRUE the menu item will appear at the far right if added to a
-;;;     menu bar
+;;;     if TRUE the menu item will appear at the far right if added to a menu
+;;;     bar
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -433,18 +435,18 @@
 ;;; Warning
 ;;; 
 ;;; gtk_menu_item_get_right_justified has been deprecated since version 3.2 and
-;;; should not be used in newly-written code.
-;;; See gtk_menu_item_set_right_justified()
+;;; should not be used in newly-written code. See
+;;; gtk_menu_item_set_right_justified()
 ;;; 
-;;; Gets whether the menu item appears justified at the right side of the
-;;; menu bar.
+;;; Gets whether the menu item appears justified at the right side of the menu
+;;; bar.
 ;;; 
 ;;; menu_item :
 ;;;     a GtkMenuItem
 ;;; 
 ;;; Returns :
-;;;     TRUE if the menu item will appear at the far right if added to a
-;;;     menu bar.
+;;;     TRUE if the menu item will appear at the far right if added to a menu
+;;;     bar.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -458,8 +460,8 @@
 ;;;     a GtkMenuItem
 ;;; 
 ;;; Returns :
-;;;     The text in the menu_item label. This is the internal string used by
-;;;     the label, and must not be modified.
+;;;     The text in the menu_item label. This is the internal string used by the
+;;;     label, and must not be modified.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -519,7 +521,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_submenu ()
 ;;; 
-;;; void gtk_menu_item_set_submenu (GtkMenuItem *menu_item, GtkWidget *submenu)
+;;; void gtk_menu_item_set_submenu (GtkMenuItem *menu_item, GtkWidget *submenu);
 ;;; 
 ;;; Sets or replaces the menu item's submenu, or removes it when a NULL submenu
 ;;; is passed.
@@ -543,8 +545,8 @@
 ;;; 
 ;;; GtkWidget * gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
 ;;; 
-;;; Gets the submenu underneath this menu item, if any.
-;;; See gtk_menu_item_set_submenu().
+;;; Gets the submenu underneath this menu item, if any. See
+;;; gtk_menu_item_set_submenu().
 ;;; 
 ;;; menu_item :
 ;;;     a GtkMenuItem
@@ -569,8 +571,8 @@
 ;;; Set the accelerator path on menu_item, through which runtime changes of the
 ;;; menu item's accelerator caused by the user can be identified and saved to
 ;;; persistent storage (see gtk_accel_map_save() on this). To set up a default
-;;; accelerator for this menu item, call gtk_accel_map_add_entry() with the
-;;; same accel_path. See also gtk_accel_map_add_entry() on the specifics of
+;;; accelerator for this menu item, call gtk_accel_map_add_entry() with the same
+;;; accel_path. See also gtk_accel_map_add_entry() on the specifics of
 ;;; accelerator paths, and gtk_menu_set_accel_path() for a more convenient
 ;;; variant of this function.
 ;;; 
@@ -606,8 +608,8 @@
 ;;;     a valid GtkMenuItem
 ;;; 
 ;;; Returns :
-;;;     the accelerator path corresponding to this menu item's functionality,
-;;;     or NULL if not set
+;;;     the accelerator path corresponding to this menu item's functionality, or
+;;;     NULL if not set
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------

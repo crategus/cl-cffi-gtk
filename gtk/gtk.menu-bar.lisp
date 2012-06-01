@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,17 +27,20 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkMenuBar
 ;;; 
 ;;; A subclass of GtkMenuShell which holds GtkMenuItem widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkMenuBar
-;;;     GtkPackDirection
-;;;
+;;;     
 ;;;     gtk_menu_bar_new
+;;;     gtk_menu_bar_new_from_model
+;;;     
+;;;     GtkPackDirection
+;;;     
 ;;;     gtk_menu_bar_set_pack_direction
 ;;;     gtk_menu_bar_get_pack_direction
 ;;;     gtk_menu_bar_set_child_pack_direction
@@ -55,6 +58,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkMenuBar implements AtkImplementorIface and GtkBuildable.
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "child-pack-direction"     GtkPackDirection      : Read / Write
@@ -135,7 +139,8 @@
 (define-g-object-class "GtkMenuBar" gtk-menu-bar
   (:superclass gtk-menu-shell
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_menu_bar_get_type")
   ((child-pack-direction
     gtk-menu-bar-child-pack-direction
@@ -143,6 +148,45 @@
    (pack-direction
     gtk-menu-bar-pack-direction
     "pack-direction" "GtkPackDirection" t t)))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_bar_new ()
+;;; 
+;;; GtkWidget * gtk_menu_bar_new (void);
+;;; 
+;;; Creates a new GtkMenuBar
+;;; 
+;;; Returns :
+;;;     the new menu bar, as a GtkWidget
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-bar-new))
+
+(defun gtk-menu-bar-new ()
+  (make-instance 'gtk-menu-bar))
+
+(export 'gtk-menu-bar-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_bar_new_from_model ()
+;;; 
+;;; GtkWidget * gtk_menu_bar_new_from_model (GMenuModel *model);
+;;; 
+;;; Creates a new GtkMenuBar and populates it with menu items and submenus
+;;; according to model.
+;;; 
+;;; The created menu items are connected to actions found in the
+;;; GtkApplicationWindow to which the menu bar belongs - typically by means of
+;;; being contained within the GtkApplicationWindows widget hierarchy.
+;;; 
+;;; model :
+;;;     a GMenuModel
+;;; 
+;;; Returns :
+;;;     a new GtkMenuBar
+;;; 
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPackDirection
@@ -177,22 +221,6 @@
   (:rtl 1)
   (:ttb 2)
   (:btt 3))
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_bar_new ()
-;;; 
-;;; GtkWidget * gtk_menu_bar_new (void);
-;;; 
-;;; Creates a new GtkMenuBar
-;;; 
-;;; Returns :
-;;;     the new menu bar, as a GtkWidget
-;;; ----------------------------------------------------------------------------
-
-(defun gtk-menu-bar-new ()
-  (make-instance 'gtk-menu-bar))
-
-(export 'gtk-menu-bar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_set_pack_direction ()

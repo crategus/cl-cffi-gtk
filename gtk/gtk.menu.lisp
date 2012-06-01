@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,12 +31,13 @@
 ;;; GtkMenu
 ;;; 
 ;;; A menu widget
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkMenu
-;;;
+;;;     
 ;;;     gtk_menu_new
+;;;     gtk_menu_new_from_model
 ;;;     gtk_menu_set_screen
 ;;;     gtk_menu_reorder_child
 ;;;     gtk_menu_attach
@@ -53,6 +54,7 @@
 ;;;     gtk_menu_get_tearoff_state
 ;;;     gtk_menu_set_reserve_toggle_size
 ;;;     gtk_menu_get_reserve_toggle_size
+;;;     
 ;;;     gtk_menu_popdown
 ;;;     gtk_menu_reposition
 ;;;     gtk_menu_get_active
@@ -76,7 +78,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkMenu implements AtkImplementorIface and GtkBuildable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
 ;;;   "accel-group"              GtkAccelGroup*        : Read / Write
@@ -111,17 +113,17 @@
 ;;; 
 ;;; Description
 ;;; 
-;;; A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of 
-;;; a list of GtkMenuItem objects which can be navigated and activated by the
-;;; user to perform application functions.
+;;; A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of a
+;;; list of GtkMenuItem objects which can be navigated and activated by the user
+;;; to perform application functions.
 ;;; 
-;;; A GtkMenu is most commonly dropped down by activating a GtkMenuItem in a 
+;;; A GtkMenu is most commonly dropped down by activating a GtkMenuItem in a
 ;;; GtkMenuBar or popped up by activating a GtkMenuItem in another GtkMenu.
 ;;; 
-;;; A GtkMenu can also be popped up by activating a GtkOptionMenu. Other 
+;;; A GtkMenu can also be popped up by activating a GtkOptionMenu. Other
 ;;; composite widgets such as the GtkNotebook can pop up a GtkMenu as well.
 ;;; 
-;;; Applications can display a GtkMenu as a popup menu by calling the 
+;;; Applications can display a GtkMenu as a popup menu by calling the
 ;;; gtk_menu_popup() function. The example below shows how an application can
 ;;; pop up a menu when the 3rd mouse button is pressed.
 ;;; 
@@ -130,6 +132,7 @@
 ;;; /* connect our handler which will popup the menu */
 ;;; g_signal_connect_swapped (window, "button_press_event",
 ;;; G_CALLBACK (my_popup_handler), menu);
+;;; 
 ;;; 
 ;;; Example 76. Signal handler which displays a popup menu.
 ;;; 
@@ -151,7 +154,7 @@
 ;;;   if (event->type == GDK_BUTTON_PRESS)
 ;;;     {
 ;;;       event_button = (GdkEventButton *) event;
-;;;       if (event_button->button == 3)
+;;;       if (event_button->button == GDK_BUTTON_SECONDARY)
 ;;;         {
 ;;;           gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 
 ;;;                           event_button->button, event_button->time);
@@ -161,7 +164,7 @@
 ;;; 
 ;;;   return FALSE;
 ;;; }
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -229,10 +232,10 @@
 ;;; 
 ;;;   "reserve-toggle-size"      gboolean              : Read / Write
 ;;; 
-;;; A boolean that indicates whether the menu reserves space for toggles and 
+;;; A boolean that indicates whether the menu reserves space for toggles and
 ;;; icons, regardless of their actual presence.
 ;;; 
-;;; This property should only be changed from its default value for 
+;;; This property should only be changed from its default value for
 ;;; special-purposes such as tabular menus. Regular menus that are connected to
 ;;; a menu bar or context menus should reserve toggle space for consistency.
 ;;; 
@@ -256,7 +259,7 @@
 ;;; 
 ;;;   "tearoff-title"            gchar*                : Read / Write
 ;;; 
-;;; A title that may be displayed by the window manager when this menu is 
+;;; A title that may be displayed by the window manager when this menu is
 ;;; torn-off.
 ;;; 
 ;;; Default value: NULL
@@ -311,7 +314,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Style Property Details
+;;; Style Property Details#
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "arrow-placement" style property
@@ -351,7 +354,7 @@
 ;;; 
 ;;;   "horizontal-offset"        gint                  : Read
 ;;; 
-;;; When the menu is a submenu, position it this number of pixels offset 
+;;; When the menu is a submenu, position it this number of pixels offset
 ;;; horizontally.
 ;;; 
 ;;; Default value: -2
@@ -372,7 +375,7 @@
 ;;; 
 ;;;   "vertical-offset"          gint                  : Read
 ;;; 
-;;; When the menu is a submenu, position it this number of pixels offset 
+;;; When the menu is a submenu, position it this number of pixels offset
 ;;; vertically.
 ;;; 
 ;;; Default value: 0
@@ -423,7 +426,8 @@
 (define-g-object-class "GtkMenu" gtk-menu
   (:superclass gtk-menu-shell
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_menu_get_type")
   ((accel-group
     gtk-menu-accel-group
@@ -493,6 +497,28 @@
 (export 'gtk-menu-new)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_menu_new_from_model ()
+;;; 
+;;; GtkWidget * gtk_menu_new_from_model (GMenuModel *model);
+;;; 
+;;; Creates a GtkMenu and populates it with menu items and submenus according to
+;;; model.
+;;; 
+;;; The created menu items are connected to actions found in the
+;;; GtkApplicationWindow to which the menu belongs - typically by means of being
+;;; attached to a widget (see gtk_menu_attach_to_widget()) that is contained
+;;; within the GtkApplicationWindows widget hierarchy.
+;;; 
+;;; model :
+;;;     a GMenuModel
+;;; 
+;;; Returns :
+;;;     a new GtkMenu
+;;; 
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_screen ()
 ;;; 
 ;;; void gtk_menu_set_screen (GtkMenu *menu, GdkScreen *screen);
@@ -552,8 +578,8 @@
 ;;;                       guint top_attach,
 ;;;                       guint bottom_attach);
 ;;; 
-;;; Adds a new GtkMenuItem to a (table) menu. The number of 'cells' that an
-;;; item will occupy is specified by left_attach, right_attach, top_attach and
+;;; Adds a new GtkMenuItem to a (table) menu. The number of 'cells' that an item
+;;; will occupy is specified by left_attach, right_attach, top_attach and
 ;;; bottom_attach. These each represent the leftmost, rightmost, uppermost and
 ;;; lower column and row numbers of the table. (Columns and rows are indexed
 ;;; from zero).
@@ -606,18 +632,18 @@
 ;;; 
 ;;; Displays a menu and makes it available for selection.
 ;;; 
-;;; Applications can use this function to display context-sensitive menus, and 
+;;; Applications can use this function to display context-sensitive menus, and
 ;;; will typically supply NULL for the parent_menu_shell, parent_menu_item,
 ;;; func, data and destroy parameters. The default menu positioning function
 ;;; will position the menu at the current position of device (or its
 ;;; corresponding pointer).
 ;;; 
-;;; The button parameter should be the mouse button pressed to initiate the 
-;;; menu popup. If the menu popup was initiated by something other than a mouse 
-;;; button press, such as a mouse button release or a keypress, button should
-;;; be 0.
+;;; The button parameter should be the mouse button pressed to initiate the menu
+;;; popup. If the menu popup was initiated by something other than a mouse
+;;; button press, such as a mouse button release or a keypress, button should be
+;;; 0.
 ;;; 
-;;; The activate_time parameter is used to conflict-resolve initiation of 
+;;; The activate_time parameter is used to conflict-resolve initiation of
 ;;; concurrent requests for mouse/keyboard grab requests. To function properly,
 ;;; this needs to be the time stamp of the user event (such as a mouse click or
 ;;; key press) that caused the initiation of the popup. Only if no such event is
@@ -671,28 +697,28 @@
 ;;; and data parameters. The default menu positioning function will position the
 ;;; menu at the current mouse cursor position.
 ;;; 
-;;; The button parameter should be the mouse button pressed to initiate the
-;;; menu popup. If the menu popup was initiated by something other than a mouse
-;;; button press, such as a mouse button release or a keypress, button should
-;;; be 0.
+;;; The button parameter should be the mouse button pressed to initiate the menu
+;;; popup. If the menu popup was initiated by something other than a mouse
+;;; button press, such as a mouse button release or a keypress, button should be
+;;; 0.
 ;;; 
-;;; The activate_time parameter is used to conflict-resolve initiation of 
-;;; concurrent requests for mouse/keyboard grab requests. To function properly, 
+;;; The activate_time parameter is used to conflict-resolve initiation of
+;;; concurrent requests for mouse/keyboard grab requests. To function properly,
 ;;; this needs to be the timestamp of the user event (such as a mouse click or
-;;; key press) that caused the initiation of the popup. Only if no such event
-;;; is available, gtk_get_current_event_time() can be used instead.
+;;; key press) that caused the initiation of the popup. Only if no such event is
+;;; available, gtk_get_current_event_time() can be used instead.
 ;;; 
 ;;; menu :
 ;;;     a GtkMenu
 ;;; 
 ;;; parent_menu_shell :
-;;;     the menu shell containing the triggering menu item, or NULL.
+;;;     the menu shell containing the triggering menu item, or NULL
 ;;; 
 ;;; parent_menu_item :
-;;;     the menu item whose activation triggered the popup, or NULL.
+;;;     the menu item whose activation triggered the popup, or NULL
 ;;; 
 ;;; func :
-;;;     a user supplied function used to position the menu, or NULL.
+;;;     a user supplied function used to position the menu, or NULL
 ;;; 
 ;;; data :
 ;;;     user supplied data to be passed to func.
@@ -758,7 +784,7 @@
 ;;; 
 ;;; void gtk_menu_set_accel_group (GtkMenu *menu, GtkAccelGroup *accel_group);
 ;;; 
-;;; Set the GtkAccelGroup which holds global accelerators for the menu. This 
+;;; Set the GtkAccelGroup which holds global accelerators for the menu. This
 ;;; accelerator group needs to also be added to all windows that this menu is
 ;;; being used in with gtk_window_add_accel_group(), in order for those windows
 ;;; to support all the accelerators contained in this group.
@@ -782,7 +808,7 @@
 ;;; 
 ;;; GtkAccelGroup * gtk_menu_get_accel_group (GtkMenu *menu);
 ;;; 
-;;; Gets the GtkAccelGroup which holds global accelerators for the menu. See 
+;;; Gets the GtkAccelGroup which holds global accelerators for the menu. See
 ;;; gtk_menu_set_accel_group().
 ;;; 
 ;;; menu :
@@ -805,7 +831,7 @@
 ;;; void gtk_menu_set_accel_path (GtkMenu *menu, const gchar *accel_path);
 ;;; 
 ;;; Sets an accelerator path for this menu from which accelerator paths for its
-;;; immediate children, its menu items, can be constructed. The main purpose of 
+;;; immediate children, its menu items, can be constructed. The main purpose of
 ;;; this function is to spare the programmer the inconvenience of having to call
 ;;; gtk_menu_item_set_accel_path() on each menu item that should support runtime
 ;;; user changable accelerators. Instead, by just calling
@@ -813,17 +839,17 @@
 ;;; contains a label describing its purpose, automatically gets an accel path
 ;;; assigned.
 ;;; 
-;;; For example, a menu containing menu items "New" and "Exit", will, after 
-;;; gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File"); has been called, 
-;;; assign its items the accel paths: "<Gnumeric-Sheet>/File/New" and 
+;;; For example, a menu containing menu items "New" and "Exit", will, after
+;;; gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File"); has been called,
+;;; assign its items the accel paths: "<Gnumeric-Sheet>/File/New" and
 ;;; "<Gnumeric-Sheet>/File/Exit".
 ;;; 
-;;; Assigning accel paths to menu items then enables the user to change their 
+;;; Assigning accel paths to menu items then enables the user to change their
 ;;; accelerators at runtime. More details about accelerator paths and their
 ;;; default setups can be found at gtk_accel_map_add_entry().
 ;;; 
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you 
-;;; pass a static string, you can save some memory by interning it first with 
+;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
+;;; pass a static string, you can save some memory by interning it first with
 ;;; g_intern_static_string().
 ;;; 
 ;;; menu :
@@ -851,7 +877,7 @@
 ;;;     a valid GtkMenu
 ;;; 
 ;;; Returns :
-;;;     the accelerator path set on the menu
+;;;     the accelerator path set on the menu.
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -870,9 +896,9 @@
 ;;; 
 ;;; Sets the title string for the menu.
 ;;; 
-;;; The title is displayed when the menu is shown as a tearoff menu. If title 
-;;; is NULL, the menu will see if it is attached to a parent menu item, and if
-;;; so it will try to use the same text as that menu item's label.
+;;; The title is displayed when the menu is shown as a tearoff menu. If title is
+;;; NULL, the menu will see if it is attached to a parent menu item, and if so
+;;; it will try to use the same text as that menu item's label.
 ;;; 
 ;;; menu :
 ;;;     a GtkMenu
@@ -899,7 +925,7 @@
 ;;;     a GtkMenu
 ;;; 
 ;;; Returns :
-;;;     The title of the menu, or NULL if the menu has no title set on it. This 
+;;;     the title of the menu, or NULL if the menu has no title set on it. This
 ;;;     string is owned by GTK+ and should not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
@@ -915,8 +941,8 @@
 ;;; 
 ;;; void gtk_menu_set_monitor (GtkMenu *menu, gint monitor_num);
 ;;; 
-;;; Informs GTK+ on which monitor a menu should be popped up.
-;;; See gdk_screen_get_monitor_geometry().
+;;; Informs GTK+ on which monitor a menu should be popped up. See
+;;; gdk_screen_get_monitor_geometry().
 ;;; 
 ;;; This function should be called from a GtkMenuPositionFunc if the menu should
 ;;; not appear on the same monitor as the pointer. This information can't be
@@ -1015,8 +1041,8 @@
 ;;; 
 ;;; gboolean gtk_menu_get_reserve_toggle_size (GtkMenu *menu);
 ;;; 
-;;; Returns whether the menu reserves space for toggles and icons, regardless
-;;; of their actual presence.
+;;; Returns whether the menu reserves space for toggles and icons, regardless of
+;;; their actual presence.
 ;;; 
 ;;; menu :
 ;;;     a GtkMenu
@@ -1071,7 +1097,7 @@
 ;;; 
 ;;; GtkWidget * gtk_menu_get_active (GtkMenu *menu);
 ;;; 
-;;; Returns the selected menu item from the menu. This is used by the 
+;;; Returns the selected menu item from the menu. This is used by the
 ;;; GtkOptionMenu.
 ;;; 
 ;;; menu :
@@ -1079,7 +1105,7 @@
 ;;; 
 ;;; Returns :
 ;;;     the GtkMenuItem that was last selected in the menu. If a selection has
-;;;     not yet been made, the first menu item is selected
+;;;     not yet been made, the first menu item is selected.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-active))
@@ -1101,7 +1127,7 @@
 ;;;     a GtkMenu
 ;;; 
 ;;; index :
-;;;     The index of the menu item to select. Index values are from 0 to n-1
+;;;     the index of the menu item to select. Iindex values are from 0 to n-1
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-active))
@@ -1116,8 +1142,8 @@
 ;;; 
 ;;; void gtk_menu_set_tearoff_state (GtkMenu *menu, gboolean torn_off);
 ;;; 
-;;; Changes the tearoff state of the menu. A menu is normally displayed as drop 
-;;; down menu which persists as long as the menu is active. It can also be 
+;;; Changes the tearoff state of the menu. A menu is normally displayed as drop
+;;; down menu which persists as long as the menu is active. It can also be
 ;;; displayed as a tearoff menu which persists until it is closed or reattached.
 ;;; 
 ;;; menu :
@@ -1192,7 +1218,7 @@
 ;;; 
 ;;; GList * gtk_menu_get_for_attach_widget (GtkWidget *widget);
 ;;; 
-;;; Returns a list of the menus which are attached to this widget. This list is 
+;;; Returns a list of the menus which are attached to this widget. This list is
 ;;; owned by GTK+ and must not be modified.
 ;;; 
 ;;; widget :
@@ -1219,8 +1245,8 @@
 ;;;                              gboolean *push_in,
 ;;;                              gpointer user_data);
 ;;; 
-;;; A user function supplied when calling gtk_menu_popup() which controls the 
-;;; positioning of the menu when it is displayed. The function sets the x and y 
+;;; A user function supplied when calling gtk_menu_popup() which controls the
+;;; positioning of the menu when it is displayed. The function sets the x and y
 ;;; parameters to the coordinates where the menu is to be drawn. To make the
 ;;; menu appear on a different monitor than the mouse pointer,
 ;;; gtk_menu_set_monitor() must be called.
@@ -1229,24 +1255,23 @@
 ;;;     a GtkMenu.
 ;;; 
 ;;; x :
-;;;     address of the gint representing the horizontal position where the menu 
-;;;     shall be drawn.
+;;;     address of the gint representing the horizontal position where the menu
+;;;     shall be drawn
 ;;; 
 ;;; y :
-;;;     address of the gint representing the vertical position where the menu 
-;;;     shall be drawn. This is an output parameter.
+;;;     address of the gint representing the vertical position where the menu
+;;;     shall be drawn. This is an output parameter
 ;;; 
 ;;; push_in :
-;;;     This parameter controls how menus placed outside the monitor are 
+;;;     This parameter controls how menus placed outside the monitor are
 ;;;     handled. If this is set to TRUE and part of the menu is outside the
-;;;      monitor then GTK+ pushes the window into the visible area, effectively
-;;;      modifying the popup position. Note that moving and possibly resizing
-;;;      the menu around will alter the scroll position to keep the menu items
-;;;      "in place", i.e. at the same monitor position they would have been
-;;;      without resizing. In practice, this behavior is only useful for
-;;;      combobox popups or option menus and cannot be used to simply confine a
-;;;      menu to monitor boundaries. In that case, changing the scroll offset
-;;;      is not desirable.
+;;;     monitor then GTK+ pushes the window into the visible area, effectively
+;;;     modifying the popup position. Note that moving and possibly resizing the
+;;;     menu around will alter the scroll position to keep the menu items "in
+;;;     place", i.e. at the same monitor position they would have been without
+;;;     resizing. In practice, this behavior is only useful for combobox popups
+;;;     or option menus and cannot be used to simply confine a menu to monitor
+;;;     boundaries. In that case, changing the scroll offset is not desirable.
 ;;; 
 ;;; user_data :
 ;;;     the data supplied by the user in the gtk_menu_popup() data parameter.
@@ -1257,8 +1282,8 @@
 ;;; 
 ;;; void (*GtkMenuDetachFunc) (GtkWidget *attach_widget, GtkMenu *menu);
 ;;; 
-;;; A user function supplied when calling gtk_menu_attach_to_widget() which 
-;;; will be called when the menu is later detached from the widget.
+;;; A user function supplied when calling gtk_menu_attach_to_widget() which will
+;;; be called when the menu is later detached from the widget.
 ;;; 
 ;;; attach_widget :
 ;;;     the GtkWidget that the menu is being detached from.

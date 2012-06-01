@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,7 +27,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkImageMenuItem
 ;;; 
 ;;; A menu item with an icon
@@ -35,7 +35,7 @@
 ;;; Synopsis
 ;;; 
 ;;;     GtkImageMenuItem
-;;;
+;;;     
 ;;;     gtk_image_menu_item_set_image
 ;;;     gtk_image_menu_item_get_image
 ;;;     gtk_image_menu_item_new
@@ -62,7 +62,7 @@
 ;;; 
 ;;; GtkImageMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
-;;;
+;:; 
 ;;; Properties
 ;;; 
 ;;;   "accel-group"              GtkAccelGroup*       : Write
@@ -136,7 +136,9 @@
 (define-g-object-class "GtkImageMenuItem" gtk-image-menu-item
   (:superclass gtk-menu-item
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable"
+                 "GtkActivatable")
     :type-initializer "gtk_image_menu_item_get_type")
   ((accel-group
     gtk-image-menu-item-accel-group
@@ -171,10 +173,10 @@
 ;;; gtk_image_menu_item_get_image ()
 ;;; 
 ;;; GtkWidget * gtk_image_menu_item_get_image
-;;;                                          (GtkImageMenuItem *image_menu_item)
+;;;                                         (GtkImageMenuItem *image_menu_item);
 ;;; 
-;;; Gets the widget that is currently set as the image of image_menu_item.
-;;; See gtk_image_menu_item_set_image().
+;;; Gets the widget that is currently set as the image of image_menu_item. See
+;;; gtk_image_menu_item_set_image().
 ;;; 
 ;;; image_menu_item :
 ;;;     a GtkImageMenuItem
@@ -217,7 +219,7 @@
 ;;;     the GtkAccelGroup to add the menu items accelerator to, or NULL
 ;;; 
 ;;; Returns :
-;;;     a new GtkImageMenuItem
+;;;     a new GtkImageMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -255,7 +257,7 @@
 ;;; gtk_image_menu_item_get_use_stock ()
 ;;; 
 ;;; gboolean gtk_image_menu_item_get_use_stock
-;;;                                          (GtkImageMenuItem *image_menu_item)
+;;;                                         (GtkImageMenuItem *image_menu_item);
 ;;; 
 ;;; Checks whether the label set in the menuitem is used as a stock id to select
 ;;; the stock item for the item.
@@ -292,7 +294,7 @@
 ;;; gtk_image_menu_item_get_always_show_image ()
 ;;; 
 ;;; gboolean gtk_image_menu_item_get_always_show_image
-;;;                                          (GtkImageMenuItem *image_menu_item)
+;;;                                         (GtkImageMenuItem *image_menu_item);
 ;;; 
 ;;; Returns whether the menu item will ignore the "gtk-menu-images" setting and
 ;;; always show the image, if available.

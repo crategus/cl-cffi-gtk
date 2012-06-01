@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,15 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkTearoffMenuItem
 ;;; 
 ;;; A menu item used to tear off and reattach its menu
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTearoffMenuItem
-;;;
+;;;     
 ;;;     gtk_tearoff_menu_item_new
 ;;; 
 ;;; Object Hierarchy
@@ -52,7 +52,7 @@
 ;;; 
 ;;; GtkTearoffMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
-;;;
+;;; 
 ;;; Description
 ;;; 
 ;;; A GtkTearoffMenuItem is a special GtkMenuItem which is used to tear off and
@@ -66,6 +66,11 @@
 ;;; a dotted line which has a left pointing arrow graphic indicating that the
 ;;; tearoff menu can be reattached. Activating it will erase the tearoff menu
 ;;; window.
+;;; 
+;;; Note
+;;; 
+;;; GtkTearoffMenuItem is deprecated and should not be used in newly written
+;;; code. Menus are not meant to be torn around.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -79,7 +84,9 @@
 (define-g-object-class "GtkTearoffMenuItem" gtk-tearoff-menu-item
   (:superclass gtk-menu-item
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_tearoff_menu_item_get_type")
   nil)
 
@@ -88,10 +95,16 @@
 ;;; 
 ;;; GtkWidget * gtk_tearoff_menu_item_new (void);
 ;;; 
+;;; Warning
+;;; 
+;;; gtk_tearoff_menu_item_new has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. GtkTearoffMenuItem is deprecated and
+;;; should not be used in newly written code.
+;;; 
 ;;; Creates a new GtkTearoffMenuItem.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkTearoffMenuItem
+;;;     a new GtkTearoffMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-tearoff-menu-item-new))
