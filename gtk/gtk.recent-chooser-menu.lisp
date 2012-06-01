@@ -113,7 +113,9 @@
 (define-g-object-class "GtkRecentChooserMenu" gtk-recent-chooser-menu
   (:superclass gtk-menu
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable"
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable" 
                 "GtkRecentChooser")
    :type-initializer "gtk_recent_chooser_menu_get_type")
   ((show-numbers
