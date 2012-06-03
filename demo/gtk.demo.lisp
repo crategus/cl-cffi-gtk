@@ -25,7 +25,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk)
+(asdf:operate 'asdf:load-op :cl-cffi-gtk)
 
 (defpackage :gtk-demo
   (:use :cl :gtk :gdk :gobject :iter))
@@ -36,6 +36,7 @@
 
 ;; Test various gdk primitives
 
+#|
 (defun gdk-expose (window)
   (let* ((gc (gdk-gc-new window)))
     (multiple-value-bind (w h) (gdk-drawable-get-size window)
@@ -124,11 +125,13 @@
       (gtk-widget-show window)
       (push :pointer-motion-mask
             (gdk-window-events (gtk-widget-window window))))))
+|#
 
 ;;; ----------------------------------------------------------------------------
 
 ;; A simple test of 'on-expose' event
 
+#|
 (defun demo-expose-event ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
@@ -176,6 +179,7 @@
                           (declare (ignore widget event))
                           (gtk-widget-queue-draw area)))
       (gtk-widget-show window))))
+|#
 
 ;;; ----------------------------------------------------------------------------
 
@@ -337,15 +341,20 @@
     (let ((window (make-instance 'gtk-window
                                  :title "Demo Status Bar"
                                  :default-width 300))
-          (v-box (make-instance 'gtk-vbox))
-          (h-box (make-instance 'gtk-hbox))
+          (v-box (make-instance 'gtk-box
+                                :orientation :vertical))
+          (h-box (make-instance 'gtk-box
+                                :orientation :horizontal))
           (label (make-instance 'gtk-label
                                 :label "Push or Pop text on the statusbar" 
                                 :xalign 0.5
                                 :yalign 0.5))
-          (statusbar (make-instance 'gtk-statusbar :has-resize-grip t))
-          (button-push (make-instance 'gtk-button :label "Push"))
-          (button-pop (make-instance 'gtk-button :label "Pop"))
+          (statusbar (make-instance 'gtk-statusbar
+                                    :has-resize-grip t))
+          (button-push (make-instance 'gtk-button
+                                      :label "Push"))
+          (button-pop (make-instance 'gtk-button
+                                     :label "Pop"))
           (entry (make-instance 'gtk-entry))
           (icon (make-instance 'gtk-status-icon
                                :icon-name "applications-development")))
@@ -381,7 +390,7 @@
       (gtk-box-pack-start h-box button-pop :expand nil)
       (gtk-box-pack-start v-box label)
       (gtk-box-pack-start v-box statusbar :expand nil)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
