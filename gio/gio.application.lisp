@@ -526,7 +526,8 @@
 (define-g-object-class "GApplication" g-application
   (:superclass g-object
    :export t
-   :interfaces ("GActionGroup" "GActionMap")
+   :interfaces ("GActionGroup"
+                "GActionMap")
    :type-initializer "g_application_get_type")
   ((action-group
     g-application-action-group
@@ -1244,6 +1245,13 @@
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_run" g-application-run) :int
+  (application (g-object g-application))
+  (argc :int)
+  (argv (:pointer (:pointer :char))))
+
+(export 'g-application-run)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_set_default ()
