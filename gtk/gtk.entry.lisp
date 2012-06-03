@@ -1107,8 +1107,10 @@
 (define-g-object-class "GtkEntry" gtk-entry
   (:superclass gtk-widget
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
-                "GtkEditable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkEditable"
+                "GtkCellEditable")
    :type-initializer "gtk_entry_get_type")
   ((activates-default
     gtk-entry-activates-default
