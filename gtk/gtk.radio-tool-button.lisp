@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkRadioToolButton
 ;;; 
 ;;; A toolbar item that contains a radio button
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRadioToolButton
-;;;     
+;;;
 ;;;     gtk_radio_tool_button_new
 ;;;     gtk_radio_tool_button_new_from_stock
 ;;;     gtk_radio_tool_button_new_from_widget
@@ -57,8 +57,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkRadioToolButton implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
+;;; GtkRadioToolButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActivatable and GtkActionable.
 ;;;
 ;;; Properties
 ;;; 
@@ -102,9 +102,13 @@
 (define-g-object-class "GtkRadioToolButton" gtk-radio-tool-button
   (:superclass gtk-toggle-tool-button
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable"
+                 "GtkActivatable"
+                 "GtkActionable")
     :type-initializer "gtk_radio_tool_button_get_type")
-  ((group gtk-radio-tool-button-group
+  ((group
+    gtk-radio-tool-button-group
     "group" "GtkRadioToolButton" nil t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -149,15 +153,15 @@
 ;;; gtk_radio_tool_button_new_from_widget ()
 ;;; 
 ;;; GtkToolItem * gtk_radio_tool_button_new_from_widget
-;;;                                                  (GtkRadioToolButton *group)
+;;;                                                 (GtkRadioToolButton *group);
 ;;; 
-;;; Creates a new GtkRadioToolButton adding it to the same group as group.
+;;; Creates a new GtkRadioToolButton adding it to the same group as group
 ;;; 
 ;;; group :
-;;;     An existing GtkRadioToolButton, or NULL.
+;;;     An existing GtkRadioToolButton, or NULL
 ;;; 
 ;;; Returns :
-;;;     The new GtkRadioToolButton.
+;;;     The new GtkRadioToolButton
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -174,13 +178,13 @@
 ;;; indicated by stock_id.
 ;;; 
 ;;; group :
-;;;     An existing GtkRadioToolButton.
+;;;     An existing GtkRadioToolButton
 ;;; 
 ;;; stock_id :
 ;;;     the name of a stock item
 ;;; 
 ;;; Returns :
-;;;     A new GtkRadioToolButton.
+;;;     A new GtkRadioToolButton
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -196,7 +200,7 @@
 ;;;     a GtkRadioToolButton
 ;;; 
 ;;; Returns :
-;;;     The group button belongs to.
+;;;     The group button belongs to
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -219,7 +223,7 @@
 ;;;     a GtkRadioToolButton
 ;;; 
 ;;; group :
-;;;     an existing radio button group.
+;;;     an existing radio button group
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkMenuShell
 ;;; 
 ;;; A base class for menu objects
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkMenuShell
-;;;     
+;;;
 ;;;     gtk_menu_shell_append
 ;;;     gtk_menu_shell_prepend
 ;;;     gtk_menu_shell_insert
@@ -274,7 +274,8 @@
 (define-g-object-class "GtkMenuShell" gtk-menu-shell
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_menu_shell_get_type")
   ((take-focus
     gtk-menu-shell-take-focus
@@ -393,14 +394,14 @@
 ;;; void gtk_menu_shell_select_first (GtkMenuShell *menu_shell,
 ;;;                                   gboolean search_sensitive);
 ;;; 
-;;; Select the first visible or selectable child of the menu shell; don't
-;;; select tearoff items unless the only item is a tearoff item.
+;;; Select the first visible or selectable child of the menu shell; don't select
+;;; tearoff items unless the only item is a tearoff item.
 ;;; 
 ;;; menu_shell :
 ;;;     a GtkMenuShell
 ;;; 
 ;;; search_sensitive :
-;;;     If TRUE, search for the first selectable menu item, otherwise select
+;;;     if TRUE, search for the first selectable menu item, otherwise select
 ;;;     nothing if the first item isn't sensitive. This should be FALSE if the
 ;;;     menu is being popped up initially.
 ;;; 
@@ -448,8 +449,8 @@
 ;;;     the GtkMenuItem to activate
 ;;; 
 ;;; force_deactivate :
-;;;     if TRUE, force the deactivation of the menu shell after the menu item
-;;;     is activated
+;;;     if TRUE, force the deactivation of the menu shell after the menu item is
+;;;     activated
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_shell_activate_item" %gtk-menu-shell-activate-item) :void
@@ -502,9 +503,9 @@
 ;;; 
 ;;; Note that setting it to FALSE has side-effects:
 ;;; 
-;;; If the focus is in some other app, it keeps the focus and keynav in the
-;;; menu doesn't work. Consequently, keynav on the menu will only work if the
-;;; focus is on some toplevel owned by the onscreen keyboard.
+;;; If the focus is in some other app, it keeps the focus and keynav in the menu
+;;; doesn't work. Consequently, keynav on the menu will only work if the focus
+;;; is on some toplevel owned by the onscreen keyboard.
 ;;; 
 ;;; To avoid confusing the user, menus with take_focus set to FALSE should not
 ;;; display mnemonics or accelerators, since it cannot be guaranteed that they
@@ -562,7 +563,7 @@
 ;;;     a GtkMenuShell
 ;;; 
 ;;; Returns :
-;;;     the currently selected item. [transfer none]
+;;;     the currently selected item
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------

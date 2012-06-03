@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkToolButton
 ;;; 
 ;;; A GtkToolItem subclass that displays buttons
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkToolButton
-;;;     
+;;;
 ;;;     gtk_tool_button_new
 ;;;     gtk_tool_button_new_from_stock
 ;;;     gtk_tool_button_set_label
@@ -65,8 +65,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkToolButton implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
+;;; GtkToolButton implements AtkImplementorIface, GtkBuildable, GtkActivatable
+;;; and GtkActionable.
 ;;;
 ;;; Properties
 ;;; 
@@ -208,7 +208,9 @@
 (define-g-object-class "GtkToolButton" gtk-tool-button
   (:superclass gtk-tool-item
     :export t
-    :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+    :interfaces ("AtkImplementorIface"
+                 "GtkBuildable"
+                 "GtkActivatable")
     :type-initializer "gtk_tool_button_get_type")
   ((icon-name
     gtk-tool-button-icon-name
@@ -256,8 +258,8 @@
 ;;; GtkToolItem * gtk_tool_button_new_from_stock (const gchar *stock_id);
 ;;; 
 ;;; Creates a new GtkToolButton containing the image and text from a stock item.
-;;; Some stock ids have preprocessor macros like
-;;; GTK_STOCK_OK and GTK_STOCK_APPLY.
+;;; Some stock ids have preprocessor macros like GTK_STOCK_OK and
+;;; GTK_STOCK_APPLY.
 ;;; 
 ;;; It is an error if stock_id is not a name of a stock item.
 ;;; 
@@ -437,7 +439,7 @@
 ;;;     a GtkToolButton
 ;;; 
 ;;; icon_widget :
-;;;     the widget used as icon, or NULL
+;;;     the widget used as icon, or NULL. [allow-none]
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -447,14 +449,14 @@
 ;;; 
 ;;; GtkWidget * gtk_tool_button_get_icon_widget (GtkToolButton *button);
 ;;; 
-;;; Return the widget used as icon widget on button.
-;;; See gtk_tool_button_set_icon_widget().
+;;; Return the widget used as icon widget on button. See
+;;; gtk_tool_button_set_icon_widget().
 ;;; 
 ;;; button :
 ;;;     a GtkToolButton
 ;;; 
 ;;; Returns :
-;;;     The widget used as icon on button, or NULL.
+;;;     The widget used as icon on button, or NULL
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -474,7 +476,7 @@
 ;;;     a GtkToolButton
 ;;; 
 ;;; label_widget :
-;;;     the widget used as label, or NULL
+;;;     the widget used as label, or NULL. [allow-none]
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -484,14 +486,14 @@
 ;;; 
 ;;; GtkWidget * gtk_tool_button_get_label_widget (GtkToolButton *button);
 ;;; 
-;;; Returns the widget used as label on button.
-;;; See gtk_tool_button_set_label_widget().
+;;; Returns the widget used as label on button. See
+;;; gtk_tool_button_set_label_widget().
 ;;; 
 ;;; button :
 ;;;     a GtkToolButton
 ;;; 
 ;;; Returns :
-;;;     The widget used as label on button, or NULL.
+;;;     The widget used as label on button, or NULL
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

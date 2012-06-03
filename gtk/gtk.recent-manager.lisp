@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkRecentManager
 ;;; 
 ;;; Managing recently used files
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRecentManager
@@ -39,7 +39,8 @@
 ;;;     GtkRecentData
 ;;;
 ;;;     GTK_RECENT_MANAGER_ERROR
-;;;     GtkRecentManagerError;
+;;;
+;;;     GtkRecentManagerError
 ;;;
 ;;;     gtk_recent_manager_new
 ;;;     gtk_recent_manager_get_default
@@ -51,6 +52,7 @@
 ;;;     gtk_recent_manager_move_item
 ;;;     gtk_recent_manager_get_items
 ;;;     gtk_recent_manager_purge_items
+;;;     
 ;;;     gtk_recent_info_ref
 ;;;     gtk_recent_info_unref
 ;;;     gtk_recent_info_get_uri
@@ -97,23 +99,23 @@
 ;;; recently used files. Each recently used file is identified by its URI, and
 ;;; has meta-data associated to it, like the names and command lines of the
 ;;; applications that have registered it, the number of time each application
-;;; has registered the same file, the mime type of the file and whether the
-;;; file should be displayed only by the applications that have registered it.
+;;; has registered the same file, the mime type of the file and whether the file
+;;; should be displayed only by the applications that have registered it.
 ;;; 
 ;;; Note
 ;;; 
 ;;; The recently used files list is per user.
 ;;; 
 ;;; The GtkRecentManager acts like a database of all the recently used files.
-;;; You can create new GtkRecentManager objects, but it is more efficient to
-;;; use the default manager created by GTK+.
+;;; You can create new GtkRecentManager objects, but it is more efficient to use
+;;; the default manager created by GTK+.
 ;;; 
 ;;; Adding a new recently used file is as simple as:
 ;;; 
-;;;  GtkRecentManager *manager;
-;;;  
-;;;  manager = gtk_recent_manager_get_default ();
-;;;  gtk_recent_manager_add_item (manager, file_uri);
+;;; GtkRecentManager *manager;
+;;; 
+;;; manager = gtk_recent_manager_get_default ();
+;;; gtk_recent_manager_add_item (manager, file_uri);
 ;;; 
 ;;; The GtkRecentManager will try to gather all the needed information from the
 ;;; file itself through GIO.
@@ -121,22 +123,22 @@
 ;;; Looking up the meta-data associated with a recently used file given its URI
 ;;; requires calling gtk_recent_manager_lookup_item():
 ;;; 
-;;;  GtkRecentManager *manager;
-;;;  GtkRecentInfo *info;
-;;;  GError *error = NULL;
+;;; GtkRecentManager *manager;
+;;; GtkRecentInfo *info;
+;;; GError *error = NULL;
 ;;; 
-;;;  manager = gtk_recent_manager_get_default ();
-;;;  info = gtk_recent_manager_lookup_item (manager, file_uri, &error);
-;;;  if (error)
-;;;    {
-;;;      g_warning ("Could not find the file: %s", error->message);
-;;;      g_error_free (error);
-;;;    }
-;;;  else
+;;; manager = gtk_recent_manager_get_default ();
+;;; info = gtk_recent_manager_lookup_item (manager, file_uri, &error);
+;;; if (error)
 ;;;   {
-;;;     /* Use the info object */
-;;;     gtk_recent_info_unref (info);
+;;;     g_warning ("Could not find the file: %s", error->message);
+;;;     g_error_free (error);
 ;;;   }
+;;; else
+;;;  {
+;;;    /* Use the info object */
+;;;    gtk_recent_info_unref (info);
+;;;  }
 ;;; 
 ;;; In order to retrieve the list of recently used files, you can use
 ;;; gtk_recent_manager_get_items(), which returns a list of GtkRecentInfo
@@ -211,8 +213,8 @@
 ;;; 
 ;;; struct GtkRecentManager;
 ;;; 
-;;; GtkRecentManager contains only private data and should be accessed using
-;;; the provided API.
+;;; GtkRecentManager contains only private data and should be accessed using the
+;;; provided API.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -225,9 +227,6 @@
   ((filename
     gtk-recent-manager-filename
     "filename" "gchararray" t nil)
-   (limit
-    gtk-recent-manager-limit
-    "limit" "gint" t t)
    (size
     gtk-recent-manager-size
     "size" "gint" t nil)))
@@ -282,9 +281,9 @@
 ;;;     resource;
 ;;; 
 ;;; gchar *app_exec;
-;;;     command line used to launch this resource; may contain the "%f" and
-;;;     "%u" escape characters which will be expanded to the resource file path
-;;;     and URI respectively when the command line is retrieved;
+;;;     command line used to launch this resource; may contain the "%f" and "%u"
+;;;     escape characters which will be expanded to the resource file path and
+;;;     URI respectively when the command line is retrieved;
 ;;; 
 ;;; gchar **groups;
 ;;;     a vector of strings containing groups names;
@@ -357,7 +356,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_new ()
 ;;; 
-;;; GtkRecentManager *  gtk_recent_manager_new (void);
+;;; GtkRecentManager * gtk_recent_manager_new (void);
 ;;; 
 ;;; Creates a new recent manager object. Recent manager objects are used to
 ;;; handle the list of recently used resources. A GtkRecentManager object
@@ -376,7 +375,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_get_default ()
 ;;; 
-;;; GtkRecentManager *  gtk_recent_manager_get_default (void);
+;;; GtkRecentManager * gtk_recent_manager_get_default (void);
 ;;; 
 ;;; Gets a unique instance of GtkRecentManager, that you can share in your
 ;;; application without caring about memory management.
@@ -473,7 +472,7 @@
 ;;;     the URI of the item you wish to remove
 ;;; 
 ;;; error :
-;;;     return location for a GError, or NULL. [allow-none]
+;;;     return location for a GError, or NULL
 ;;; 
 ;;; Returns :
 ;;;     TRUE if the item pointed by uri has been successfully removed by the
@@ -654,8 +653,8 @@
 ;;; 
 ;;; const gchar * gtk_recent_info_get_display_name (GtkRecentInfo *info);
 ;;; 
-;;; Gets the name of the resource. If none has been defined, the basename of
-;;; the resource is obtained.
+;;; Gets the name of the resource. If none has been defined, the basename of the
+;;; resource is obtained.
 ;;; 
 ;;; info :
 ;;;     a GtkRecentInfo
@@ -801,13 +800,13 @@
 ;;;     return location for the number of times this item was registered
 ;;; 
 ;;; time_ :
-;;;     return location for the timestamp this item was last registered for
-;;;     this application
+;;;     return location for the timestamp this item was last registered for this
+;;;     application
 ;;; 
 ;;; Returns :
-;;;     TRUE if an application with app_name has registered this resource
-;;;     inside the recently used list, or FALSE otherwise. The app_exec string
-;;;     is owned by the GtkRecentInfo and should not be modified or freed
+;;;     TRUE if an application with app_name has registered this resource inside
+;;;     the recently used list, or FALSE otherwise. The app_exec string is owned
+;;;     by the GtkRecentInfo and should not be modified or freed
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -838,8 +837,8 @@
 ;;; 
 ;;; gchar * gtk_recent_info_last_application (GtkRecentInfo *info);
 ;;; 
-;;; Gets the name of the last application that have registered the recently
-;;; used resource represented by info.
+;;; Gets the name of the last application that have registered the recently used
+;;; resource represented by info.
 ;;; 
 ;;; info :
 ;;;     a GtkRecentInfo
@@ -890,8 +889,8 @@
 ;;;     return location for a GError, or NULL
 ;;; 
 ;;; Returns :
-;;;     the newly created GAppInfo, or NULL. In case of error, error will be
-;;;     set either with a GTK_RECENT_MANAGER_ERROR or a G_IO_ERROR
+;;;     the newly created GAppInfo, or NULL. In case of error, error will be set
+;;;     either with a GTK_RECENT_MANAGER_ERROR or a G_IO_ERROR
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -968,8 +967,8 @@
 ;;;     a GtkRecentInfo
 ;;; 
 ;;; Returns :
-;;;     a GIcon containing the icon, or NULL. Use g_object_unref() when
-;;;     finished using the icon
+;;;     a GIcon containing the icon, or NULL. Use g_object_unref() when finished
+;;;     using the icon
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
@@ -979,9 +978,9 @@
 ;;; 
 ;;; gchar * gtk_recent_info_get_short_name (GtkRecentInfo *info);
 ;;; 
-;;; Computes a valid UTF-8 string that can be used as the name of the item in
-;;; a menu or list. For example, calling this function on an item that refers
-;;; to "file:///foo/bar.txt" will yield "bar.txt".
+;;; Computes a valid UTF-8 string that can be used as the name of the item in a
+;;; menu or list. For example, calling this function on an item that refers to
+;;; "file:///foo/bar.txt" will yield "bar.txt".
 ;;; 
 ;;; info :
 ;;;     an GtkRecentInfo
@@ -1034,14 +1033,14 @@
 ;;; 
 ;;; gboolean gtk_recent_info_is_local (GtkRecentInfo *info);
 ;;; 
-;;; Checks whether the resource is local or not by looking at the scheme of
-;;; its URI.
+;;; Checks whether the resource is local or not by looking at the scheme of its
+;;; URI.
 ;;; 
 ;;; info :
 ;;;     a GtkRecentInfo
 ;;; 
 ;;; Returns :
-;;;     TRUE if the resource is local
+;;;     TRUE if the resource is local.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1067,7 +1066,7 @@
 ;;; gtk_recent_info_match ()
 ;;; 
 ;;; gboolean gtk_recent_info_match (GtkRecentInfo *info_a,
-;;;                                 GtkRecentInfo *info_b)
+;;;                                 GtkRecentInfo *info_b);
 ;;; 
 ;;; Checks whether two GtkRecentInfo structures point to the same resource.
 ;;; 

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkRecentChooserWidget
 ;;; 
 ;;; Displays recently used files
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRecentChooserWidget
@@ -77,15 +77,23 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (register-object-type "GtkRecentChooserWidget" 'gtk-recent-chooser-widget))
 
+;;; GtkRecentChooserWidget implements AtkImplementorIface, GtkBuildable,
+;;; GtkOrientable and GtkRecentChooser.
+
 (define-g-object-class "GtkRecentChooserWidget" gtk-recent-chooser-widget
-  (:superclass gtk-vbox
+  (:superclass gtk-box
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable"
                 "GtkRecentChooser")
    :type-initializer "gtk_recent_chooser_widget_get_type")
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Check the implementation of the child properties. 
+;;       GtkRecentChooserWidget has no documented child properties.
 
 (define-child-property "GtkRecentChooserWidget"
                        gtk-recent-chooser-widget-child-expand
@@ -125,7 +133,7 @@
 ;;; gtk_recent_chooser_widget_new_for_manager ()
 ;;; 
 ;;; GtkWidget * gtk_recent_chooser_widget_new_for_manager
-;;;                                                  (GtkRecentManager *manager)
+;;;                                                 (GtkRecentManager *manager);
 ;;; 
 ;;; Creates a new GtkRecentChooserWidget with a specified recent manager.
 ;;; 
@@ -140,6 +148,5 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.recent-chooser-widget.lisp -----------------------------

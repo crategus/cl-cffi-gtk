@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkRecentFilter
 ;;; 
 ;;; A filter for selecting a subset of recently used files
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRecentFilter
@@ -107,6 +107,7 @@
 ;;;     <application>glade</application>
 ;;;   </applications>
 ;;; </object>
+;;; 
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -115,18 +116,18 @@
 ;;; GtkRecentFilter
 ;;; 
 ;;; typedef struct _GtkRecentFilter GtkRecentFilter;
-;;; 
-;;; struct GtkRecentFilterInfo
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRecentFilter" gtk-recent-filter
   (:superclass g-initially-unowned
    :export t
-   :interfaces nil
+   :interfaces ("GtkBuildable")
    :type-initializer "gtk_recent_filter_get_type")
   nil)
 
 ;;; ----------------------------------------------------------------------------
+;;; struct GtkRecentFilterInfo
+;;; 
 ;;; struct GtkRecentFilterInfo {
 ;;;   GtkRecentFilterFlags contains;
 ;;; 
@@ -219,8 +220,8 @@
 ;;; gtk_recent_filter_add_age(). To create a filter that accepts any recently
 ;;; used resource, use:
 ;;; 
-;;;  GtkRecentFilter *filter = gtk_recent_filter_new ();
-;;;  gtk_recent_filter_add_pattern (filter, "*");
+;;; GtkRecentFilter *filter = gtk_recent_filter_new ();
+;;; gtk_recent_filter_add_pattern (filter, "*");
 ;;; 
 ;;; Returns :
 ;;;     a new GtkRecentFilter
@@ -233,8 +234,8 @@
 ;;; 
 ;;; const gchar * gtk_recent_filter_get_name (GtkRecentFilter *filter);
 ;;; 
-;;; Gets the human-readable name for the filter.
-;;; See gtk_recent_filter_set_name().
+;;; Gets the human-readable name for the filter. See
+;;; gtk_recent_filter_set_name().
 ;;; 
 ;;; filter :
 ;;;     a GtkRecentFilter
@@ -249,7 +250,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_set_name ()
 ;;; 
-;;; void gtk_recent_filter_set_name (GtkRecentFilter *filter, const gchar *name)
+;;; void gtk_recent_filter_set_name (GtkRecentFilter *filter,
+;;;                                  const gchar *name);
 ;;; 
 ;;; Sets the human-readable name of the filter; this is the string that will be
 ;;; displayed in the recently used resources selector user interface if there is
@@ -403,7 +405,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_get_needed ()
 ;;; 
-;;; GtkRecentFilterFlags gtk_recent_filter_get_needed (GtkRecentFilter *filter)
+;;; GtkRecentFilterFlags gtk_recent_filter_get_needed (GtkRecentFilter *filter);
 ;;; 
 ;;; Gets the fields that need to be filled in for the structure passed to
 ;;; gtk_recent_filter_filter()
@@ -443,7 +445,8 @@
 ;;; 
 ;;; Returns :
 ;;;     TRUE if the file should be displayed
+;;; 
+;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-
-;;; --- End of filter gtk.recent-filter.lisp -----------------------------------
+;;; --- End of file gtk.recent-filter.lisp -------------------------------------

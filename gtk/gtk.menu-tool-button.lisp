@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkMenuToolButton
 ;;; 
 ;;; A GtkToolItem containing a button with an additional dropdown menu
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkMenuToolButton
@@ -56,8 +56,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkMenuToolButton implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
+;;; GtkMenuToolButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActivatable and GtkActionable.
 ;;;
 ;;; Properties
 ;;; 
@@ -73,8 +73,8 @@
 ;;; additional button with an arrow. When clicked, the arrow button pops up a
 ;;; dropdown menu.
 ;;; 
-;;; Use gtk_menu_tool_button_new() to create a new GtkMenuToolButton.
-;;; Use gtk_menu_tool_button_new_from_stock() to create a new GtkMenuToolButton
+;;; Use gtk_menu_tool_button_new() to create a new GtkMenuToolButton. Use
+;;; gtk_menu_tool_button_new_from_stock() to create a new GtkMenuToolButton
 ;;; containing a stock item.
 ;;; 
 ;;; GtkMenuToolButton as GtkBuildable
@@ -90,7 +90,7 @@
 ;;;     <object class="GtkMenu"/>
 ;;;   </child>
 ;;; </object>
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -136,10 +136,16 @@
 ;;; struct GtkMenuToolButton;
 ;;; ----------------------------------------------------------------------------
 
+;;; GtkMenuToolButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActivatable and GtkActionable.
+
 (define-g-object-class "GtkMenuToolButton" gtk-menu-tool-button
   (:superclass gtk-tool-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable"
+                "GtkActionable")
    :type-initializer "gtk_menu_tool_button_get_type")
   ((menu
     gtk-menu-tool-button-menu
@@ -161,10 +167,10 @@
 ;;; label.
 ;;; 
 ;;; icon_widget :
-;;;     a widget that will be used as icon widget, or NULL
+;;;     a widget that will be used as icon widget, or NULL. [allow-none]
 ;;; 
 ;;; label :
-;;;     a string that will be used as label, or NULL
+;;;     a string that will be used as label, or NULL. [allow-none]
 ;;; 
 ;;; Returns :
 ;;;     the new GtkMenuToolButton
@@ -175,7 +181,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_new_from_stock ()
 ;;; 
-;;; GtkToolItem * gtk_menu_tool_button_new_from_stock (const gchar *stock_id)
+;;; GtkToolItem * gtk_menu_tool_button_new_from_stock (const gchar *stock_id);
 ;;; 
 ;;; Creates a new GtkMenuToolButton. The new GtkMenuToolButton will contain an
 ;;; icon and label from the stock item indicated by stock_id.
@@ -210,7 +216,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_get_menu ()
 ;;; 
-;;; GtkWidget * gtk_menu_tool_button_get_menu (GtkMenuToolButton *button)
+;;; GtkWidget * gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
 ;;; 
 ;;; Gets the GtkMenu associated with GtkMenuToolButton.
 ;;; 
@@ -218,7 +224,7 @@
 ;;;     a GtkMenuToolButton
 ;;; 
 ;;; Returns :
-;;;     the GtkMenu associated with GtkMenuToolButton. [transfer none]
+;;;     the GtkMenu associated with GtkMenuToolButton
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -250,8 +256,8 @@
 ;;;                                                   const gchar *markup);
 ;;; 
 ;;; Sets the tooltip markup text to be used as tooltip for the arrow button
-;;; which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting
-;;; a tooltip on the whole GtkMenuToolButton.
+;;; which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting a
+;;; tooltip on the whole GtkMenuToolButton.
 ;;; 
 ;;; button :
 ;;;     a GtkMenuToolButton

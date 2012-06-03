@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkToolbar
 ;;; 
 ;;; Create bars of buttons and other widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkToolbar
@@ -64,8 +64,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkToolbar implements AtkImplementorIface, GtkBuildable, GtkToolShell
-;;; and GtkOrientable.
+;;; GtkToolbar implements AtkImplementorIface, GtkBuildable, GtkToolShell and
+;;; GtkOrientable.
 ;;;
 ;;; Properties
 ;;; 
@@ -361,8 +361,10 @@
 (define-g-object-class "GtkToolbar" gtk-toolbar
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable"
-                "GtkToolShell")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkToolShell"
+                "GtkOrientable")
    :type-initializer "gtk_toolbar_get_type")
   ((icon-size
     gtk-toolbar-icon-size
@@ -375,10 +377,7 @@
     "show-arrow" "gboolean" t t)
    (toolbar-style
     gtk-toolbar-toolbar-style
-    "toolbar-style" "GtkToolbarStyle" t t)
-   (tooltips
-    gtk-toolbar-tooltips
-    "tooltips" "gboolean" t t)))
+    "toolbar-style" "GtkToolbarStyle" t t)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -413,8 +412,10 @@
 ;;; Creates a new toolbar.
 ;;; 
 ;;; Returns :
-;;;     the newly-created toolbar
+;;;     the newly-created toolbar.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-new))
 
 (defun gtk-toolbar-new ()
   (make-instance 'gtk-toolbar))
@@ -424,9 +425,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_insert ()
 ;;; 
-;;; void gtk_toolbar_insert (GtkToolbar *toolbar,
-;;;                          GtkToolItem *item,
-;;;                          gint pos);
+;;; void gtk_toolbar_insert (GtkToolbar *toolbar, GtkToolItem *item, gint pos);
 ;;; 
 ;;; Insert a GtkToolItem into the toolbar at position pos. If pos is 0 the item
 ;;; is prepended to the start of the toolbar. If pos is negative, the item is
@@ -454,8 +453,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_item_index ()
 ;;; 
-;;; gint gtk_toolbar_get_item_index (GtkToolbar *toolbar,
-;;;                                  GtkToolItem *item);
+;;; gint gtk_toolbar_get_item_index (GtkToolbar *toolbar, GtkToolItem *item);
 ;;; 
 ;;; Returns the position of item on the toolbar, starting from 0. It is an error
 ;;; if item is not a child of the toolbar.
@@ -494,18 +492,18 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_toolbar_get_n_items" gtk-toolbar-items-count) :int
+(defcfun ("gtk_toolbar_get_n_items" gtk-toolbar-get-n-items) :int
   (toolbar g-object))
 
-(export 'gtk-toolbar-items-count)
+(export 'gtk-toolbar-get-n-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_nth_item ()
 ;;; 
 ;;; GtkToolItem * gtk_toolbar_get_nth_item (GtkToolbar *toolbar, gint n);
 ;;; 
-;;; Returns the n'th item on toolbar, or NULL if the toolbar does not contain
-;;; an n'th item.
+;;; Returns the n'th item on toolbar, or NULL if the toolbar does not contain an
+;;; n'th item.
 ;;; 
 ;;; toolbar :
 ;;;     a GtkToolbar
@@ -628,8 +626,8 @@
 ;;; 
 ;;; gboolean gtk_toolbar_get_show_arrow (GtkToolbar *toolbar);
 ;;; 
-;;; Returns whether the toolbar has an overflow menu.
-;;; See gtk_toolbar_set_show_arrow().
+;;; Returns whether the toolbar has an overflow menu. See
+;;; gtk_toolbar_set_show_arrow().
 ;;; 
 ;;; toolbar :
 ;;;     a GtkToolbar
@@ -645,8 +643,8 @@
 ;;; 
 ;;; GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
 ;;; 
-;;; Retrieves whether the toolbar has text, icons, or both.
-;;; See gtk_toolbar_set_style().
+;;; Retrieves whether the toolbar has text, icons, or both . See
+;;; gtk_toolbar_set_style().
 ;;; 
 ;;; toolbar :
 ;;;     a GtkToolbar

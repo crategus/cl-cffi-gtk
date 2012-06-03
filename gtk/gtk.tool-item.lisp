@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkToolItem
 ;;; 
 ;;; The base class of widgets that can be added to GtkToolShell
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkToolItem
-;;;     
+;;;
 ;;;     gtk_tool_item_new
 ;;;     gtk_tool_item_set_homogeneous
 ;;;     gtk_tool_item_get_homogeneous
@@ -94,8 +94,8 @@
 ;;; Description
 ;;; 
 ;;; GtkToolItems are widgets that can appear on a toolbar. To create a toolbar
-;;; item that contain something else than a button, use gtk_tool_item_new().
-;;; Use gtk_container_add() to add a child widget to the tool item.
+;;; item that contain something else than a button, use gtk_tool_item_new(). Use
+;;; gtk_container_add() to add a child widget to the tool item.
 ;;; 
 ;;; For toolbar items that contain buttons, see the GtkToolButton,
 ;;; GtkToggleToolButton and GtkRadioToolButton classes.
@@ -206,7 +206,7 @@
 ;;; struct GtkToolItem
 ;;; 
 ;;; struct GtkToolItem;
-;;;
+;;; 
 ;;; The GtkToolItem struct contains only private data. It should only be
 ;;; accessed through the functions described below.
 ;;; ----------------------------------------------------------------------------
@@ -214,7 +214,9 @@
 (define-g-object-class "GtkToolItem" gtk-tool-item
   (:superclass gtk-bin
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_tool_item_get_type")
   ((is-important
     gtk-tool-item-is-important
@@ -258,6 +260,8 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tool-item-new))
+
 (defun gtk-tool-item-new ()
   (make-instance 'gtk-tool-item-new))
 
@@ -287,14 +291,14 @@
 ;;; 
 ;;; gboolean gtk_tool_item_get_homogeneous (GtkToolItem *tool_item);
 ;;; 
-;;; Returns whether tool_item is the same size as other homogeneous items.
-;;; See gtk_tool_item_set_homogeneous().
+;;; Returns whether tool_item is the same size as other homogeneous items. See
+;;; gtk_tool_item_set_homogeneous().
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
 ;;; 
 ;;; Returns :
-;;;     TRUE if the item is the same size as other homogeneous items
+;;;     TRUE if the item is the same size as other homogeneous items.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -323,8 +327,8 @@
 ;;; 
 ;;; gboolean gtk_tool_item_get_expand (GtkToolItem *tool_item);
 ;;; 
-;;; Returns whether tool_item is allocated extra space.
-;;; See gtk_tool_item_set_expand().
+;;; Returns whether tool_item is allocated extra space. See
+;;; gtk_tool_item_set_expand().
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
@@ -341,8 +345,8 @@
 ;;; void gtk_tool_item_set_tooltip_text (GtkToolItem *tool_item,
 ;;;                                      const gchar *text);
 ;;; 
-;;; Sets the text to be displayed as tooltip on the item.
-;;; See gtk_widget_set_tooltip_text().
+;;; Sets the text to be displayed as tooltip on the item. See
+;;; gtk_widget_set_tooltip_text().
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
@@ -359,8 +363,8 @@
 ;;; void gtk_tool_item_set_tooltip_markup (GtkToolItem *tool_item,
 ;;;                                        const gchar *markup);
 ;;; 
-;;; Sets the markup text to be displayed as tooltip on the item.
-;;; See gtk_widget_set_tooltip_markup().
+;;; Sets the markup text to be displayed as tooltip on the item. See
+;;; gtk_widget_set_tooltip_markup().
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
@@ -396,8 +400,8 @@
 ;;; 
 ;;; gboolean gtk_tool_item_get_use_drag_window (GtkToolItem *tool_item);
 ;;; 
-;;; Returns whether tool_item has a drag window.
-;;; See gtk_tool_item_set_use_drag_window().
+;;; Returns whether tool_item has a drag window. See
+;;; gtk_tool_item_set_use_drag_window().
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
@@ -505,8 +509,8 @@
 ;;; 
 ;;; gboolean gtk_tool_item_get_is_important (GtkToolItem *tool_item);
 ;;; 
-;;; Returns whether tool_item is considered important.
-;;; See gtk_tool_item_set_is_important()
+;;; Returns whether tool_item is considered important. See
+;;; gtk_tool_item_set_is_important()
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
@@ -548,7 +552,7 @@
 ;;;     a GtkToolItem
 ;;; 
 ;;; Returns :
-;;;     a GtkIconSize indicating the icon size used for tool_item
+;;;     a GtkIconSize indicating the icon size used for tool_item. [type int]
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -582,19 +586,14 @@
 ;;; 
 ;;; Possibilities are:
 ;;; 
-;;; GTK_TOOLBAR_BOTH,
-;;;     meaning the tool item should show both an icon and
-;;;     a label, stacked vertically
-;;;
-;;; GTK_TOOLBAR_ICONS, meaning the toolbar shows only icons
-;;;
-;;; GTK_TOOLBAR_TEXT, meaning the tool item should only show text
-;;;
-;;; GTK_TOOLBAR_BOTH_HORIZ,
-;;;     meaning the tool item should show both an icon and a label, arranged
-;;;     horizontally (however, note the "has_text_horizontally" that makes tool
-;;;     buttons not show labels when the toolbar style is
-;;;     GTK_TOOLBAR_BOTH_HORIZ.
+;;;     GTK_TOOLBAR_BOTH, meaning the tool item should show both an icon and a
+;;;        label, stacked vertically
+;;;     GTK_TOOLBAR_ICONS, meaning the toolbar shows only icons
+;;;     GTK_TOOLBAR_TEXT, meaning the tool item should only show text
+;;;     GTK_TOOLBAR_BOTH_HORIZ, meaning the tool item should show both an icon
+;;;        and a label, arranged horizontally (however, note the
+;;;        "has_text_horizontally" property that makes tool buttons not show
+;;;        labels when the toolbar style is GTK_TOOLBAR_BOTH_HORIZ.
 ;;; 
 ;;; tool_item :
 ;;;     a GtkToolItem
@@ -760,7 +759,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_toolbar_reconfigured ()
 ;;; 
-;;; void gtk_tool_item_toolbar_reconfigured  (GtkToolItem *tool_item);
+;;; void gtk_tool_item_toolbar_reconfigured (GtkToolItem *tool_item);
 ;;; 
 ;;; Emits the signal "toolbar_reconfigured" on tool_item. GtkToolbar and other
 ;;; GtkToolShell implementations use this function to notify children, when some

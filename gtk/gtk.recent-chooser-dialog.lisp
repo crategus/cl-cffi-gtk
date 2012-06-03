@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkRecentChooserDialog
 ;;; 
 ;;; Displays recently used files in a dialog
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRecentChooserDialog
@@ -67,29 +67,28 @@
 ;;; Instead, you should use the functions that work on a GtkRecentChooser.
 ;;; 
 ;;; Example 107. Typical usage
-;;;
 ;;; In the simplest of cases, you can use the following code to use a
 ;;; GtkRecentChooserDialog to select a recently used file:
 ;;; 
 ;;; GtkWidget *dialog;
 ;;; 
-;;; dialog = gtk_recent_chooser_dialog_new("Recent Documents",
-;;;                                        parent_window,
-;;;                                        GTK_STOCK_CANCEL,GTK_RESPONSE_CANCEL,
-;;;                                        GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-;;;                                        NULL);
+;;; dialog = gtk_recent_chooser_dialog_new
+;;;                                      ("Recent Documents",
+;;;                                       parent_window,
+;;;                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+;;;                                       GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+;;;                                       NULL);
 ;;; 
 ;;; if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
 ;;;   {
 ;;;     GtkRecentInfo *info;
 ;;; 
-;;;     info = gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER(dialog));
+;;;     info= gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER (dialog));
 ;;;     open_file (gtk_recent_info_get_uri (info));
 ;;;     gtk_recent_info_unref (info);
 ;;;   }
 ;;; 
 ;;; gtk_widget_destroy (dialog);
-;;; 
 ;;; 
 ;;; 
 ;;; Recently used files are supported since GTK+ 2.10.
@@ -106,7 +105,9 @@
 (define-g-object-class "GtkRecentChooserDialog" gtk-recent-chooser-dialog
   (:superclass gtk-dialog
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkRecentChooser")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkRecentChooser")
    :type-initializer "gtk_recent_chooser_dialog_get_type")
   nil)
 
@@ -122,10 +123,10 @@
 ;;; gtk_dialog_new_with_buttons().
 ;;; 
 ;;; title :
-;;;     title of the dialog, or NULL
+;;;     Title of the dialog, or NULL.
 ;;; 
 ;;; parent :
-;;;     transient parent of the dialog, or NULL
+;;;     Transient parent of the dialog, or NULL,.
 ;;; 
 ;;; first_button_text :
 ;;;     stock ID or text to go in the first button, or NULL
@@ -156,10 +157,10 @@
 ;;; have a customized instance of a GtkRecentManager object.
 ;;; 
 ;;; title :
-;;;     title of the dialog, or NULL
+;;;     Title of the dialog, or NULL
 ;;; 
 ;;; parent :
-;;;     transient parent of the dialog, or NULL
+;;;     Transient parent of the dialog, or NULL,
 ;;; 
 ;;; manager :
 ;;;     a GtkRecentManager
@@ -177,5 +178,4 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-
-;;; --- End of file gtk.recent-chooser-dialog.lisp -----------------------------
+;;; --- End of file gkt.recent-chooser-dialog.lisp -----------------------------

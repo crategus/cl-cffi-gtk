@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkSeparatorToolItem
 ;;; 
 ;;; A toolbar item that separates groups of other toolbar items
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkSeparatorToolItem
@@ -62,12 +62,12 @@
 ;;; Description
 ;;; 
 ;;; A GtkSeparatorItem is a GtkToolItem that separates groups of other
-;;; GtkToolItems. Depending on the theme, a GtkSeparatorToolItem will often
-;;; look like a vertical line on horizontally docked toolbars.
+;;; GtkToolItems. Depending on the theme, a GtkSeparatorToolItem will often look
+;;; like a vertical line on horizontally docked toolbars.
 ;;; 
-;;; If the GtkToolbar child property "expand" is TRUE and the property "draw"
-;;; is FALSE, a GtkSeparatorToolItem will act as a "spring" that forces other
-;;; items to the ends of the toolbar.
+;;; If the GtkToolbar child property "expand" is TRUE and the property "draw" is
+;;; FALSE, a GtkSeparatorToolItem will act as a "spring" that forces other items
+;;; to the ends of the toolbar.
 ;;; 
 ;;; Use gtk_separator_tool_item_new() to create a new GtkSeparatorToolItem.
 ;;;
@@ -96,7 +96,9 @@
 (define-g-object-class "GtkSeparatorToolItem" gtk-separator-tool-item
   (:superclass gtk-tool-item
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable")
    :type-initializer "gtk_separator_tool_item_get_type")
   ((draw
     gtk-separator-tool-item-draw
@@ -115,7 +117,7 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-separator-tool-item-set-draw))
+(declaim (inline gtk-separator-tool-item-new))
 
 (defun gtk-separator-tool-item-new ()
   (make-instance 'gtk-separator-tool-item-new))
@@ -129,8 +131,8 @@
 ;;;                                        gboolean draw);
 ;;; 
 ;;; Whether item is drawn as a vertical line, or just blank. Setting this to
-;;; FALSE along with gtk_tool_item_set_expand() is useful to create an item
-;;; that forces following items to the end of the toolbar.
+;;; FALSE along with gtk_tool_item_set_expand() is useful to create an item that
+;;; forces following items to the end of the toolbar.
 ;;; 
 ;;; item :
 ;;;     a GtkSeparatorToolItem
@@ -153,14 +155,14 @@
 ;;; 
 ;;; gboolean gtk_separator_tool_item_get_draw (GtkSeparatorToolItem *item);
 ;;; 
-;;; Returns whether item is drawn as a line, or just blank.
-;;; See gtk_separator_tool_item_set_draw().
+;;; Returns whether item is drawn as a line, or just blank. See
+;;; gtk_separator_tool_item_set_draw().
 ;;; 
 ;;; item :
 ;;;     a GtkSeparatorToolItem
 ;;; 
 ;;; Returns :
-;;;     TRUE if item is drawn as a line, or just blank
+;;;     TRUE if item is drawn as a line, or just blank.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,12 +31,14 @@
 ;;; GtkRecentChooser
 ;;; 
 ;;; Interface implemented by widgets displaying recently used files
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRecentChooser
 ;;;     GtkRecentChooserIface
+;;;
 ;;;     GTK_RECENT_CHOOSER_ERROR
+;;;
 ;;;     GtkRecentChooserError
 ;;;
 ;;;     gtk_recent_chooser_set_show_private
@@ -287,25 +289,35 @@
 (define-g-interface "GtkRecentChooser" gtk-recent-chooser
   (:export t
    :type-initializer "gtk_recent_chooser_get_type")
-  (filter gtk-recent-chooser-filter
+  (filter
+   gtk-recent-chooser-filter
    "filter" "GtkRecentFilter" t t)
-  (limit gtk-recent-chooser-limit
+  (limit
+   gtk-recent-chooser-limit
    "limit" "gint" t t)
-  (local-only gtk-recent-chooser-local-only
+  (local-only
+   gtk-recent-chooser-local-only
    "local-only" "gboolean" t t)
-  (recent-manager gtk-recent-chooser-recent-manager
+  (recent-manager
+   gtk-recent-chooser-recent-manager
    "recent-manager" "GtkRecentManager" nil nil)
-  (select-multiple gtk-recent-chooser-select-multiple
+  (select-multiple
+   gtk-recent-chooser-select-multiple
    "select-multiple" "gboolean" t t)
-  (show-icons gtk-recent-chooser-show-icons
+  (show-icons
+   gtk-recent-chooser-show-icons
    "show-icons" "gboolean" t t)
-  (show-not-found gtk-recent-chooser-show-not-found
+  (show-not-found
+   gtk-recent-chooser-show-not-found
    "show-not-found" "gboolean" t t)
-  (show-private gtk-recent-chooser-show-private
+  (show-private
+   gtk-recent-chooser-show-private
    "show-private" "gboolean" t t)
-  (show-tips gtk-recent-chooser-show-tips
+  (show-tips
+   gtk-recent-chooser-show-tips
    "show-tips" "gboolean" t t)
-  (sort-type gtk-recent-chooser-sort-type
+  (sort-type
+   gtk-recent-chooser-sort-type
    "sort-type" "GtkRecentSortType" t t))
 
 ;;; ----------------------------------------------------------------------------
@@ -343,8 +355,8 @@
 ;;;   /*
 ;;;    * Signals
 ;;;    */
-;;;   void              (* item_activated)     (GtkRecentChooser  *chooser);
-;;;   void              (* selection_changed)  (GtkRecentChooser  *chooser);
+;;;   void            (* item_activated)     (GtkRecentChooser  *chooser);
+;;;   void            (* selection_changed)  (GtkRecentChooser  *chooser);
 ;;; };
 ;;; ----------------------------------------------------------------------------
 
@@ -406,8 +418,8 @@
 ;;; 
 ;;; gboolean gtk_recent_chooser_get_show_private (GtkRecentChooser *chooser);
 ;;; 
-;;; Returns whether chooser should display recently used resources registered
-;;; as private.
+;;; Returns whether chooser should display recently used resources registered as
+;;; private.
 ;;; 
 ;;; chooser :
 ;;;     a GtkRecentChooser
@@ -508,7 +520,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_get_select_multiple ()
 ;;; 
-;;; gboolean gtk_recent_chooser_get_select_multiple (GtkRecentChooser *chooser)
+;;; gboolean gtk_recent_chooser_get_select_multiple (GtkRecentChooser *chooser);
 ;;; 
 ;;; Gets whether chooser can select multiple items.
 ;;; 
@@ -615,8 +627,8 @@
 ;;; 
 ;;; gboolean gtk_recent_chooser_get_show_tips (GtkRecentChooser *chooser);
 ;;; 
-;;; Gets whether chooser should display tooltips containing the full path of
-;;; a recently user resource.
+;;; Gets whether chooser should display tooltips containing the full path of a
+;;; recently user resource.
 ;;; 
 ;;; chooser :
 ;;;     a GtkRecentChooser
@@ -686,7 +698,7 @@
 ;;; gtk_recent_chooser_get_sort_type ()
 ;;; 
 ;;; GtkRecentSortType gtk_recent_chooser_get_sort_type
-;;;                                                  (GtkRecentChooser *chooser)
+;;;                                                 (GtkRecentChooser *chooser);
 ;;; 
 ;;; Gets the value set by gtk_recent_chooser_set_sort_type().
 ;;; 
@@ -783,7 +795,7 @@
 ;;; gtk_recent_chooser_get_current_item ()
 ;;; 
 ;;; GtkRecentInfo * gtk_recent_chooser_get_current_item
-;;;                                                  (GtkRecentChooser *chooser)
+;;;                                                 (GtkRecentChooser *chooser);
 ;;; 
 ;;; Gets the GtkRecentInfo currently selected by chooser.
 ;;; 
@@ -791,8 +803,8 @@
 ;;;     a GtkRecentChooser
 ;;; 
 ;;; Returns :
-;;;     a GtkRecentInfo. Use gtk_recent_info_unref() when when you have
-;;;     finished using it.
+;;;     a GtkRecentInfo. Use gtk_recent_info_unref() when when you have finished
+;;;     using it.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -872,8 +884,8 @@
 ;;; 
 ;;; Gets the list of recently used resources in form of GtkRecentInfo objects.
 ;;; 
-;;; The return value of this function is affected by the "sort-type" and
-;;; "limit" properties of chooser.
+;;; The return value of this function is affected by the "sort-type" and "limit"
+;;; properties of chooser.
 ;;; 
 ;;; chooser :
 ;;;     a GtkRecentChooser
@@ -894,8 +906,8 @@
 ;;; 
 ;;; Gets the URI of the recently used resources.
 ;;; 
-;;; The return value of this function is affected by the "sort-type" and
-;;; "limit" properties of chooser.
+;;; The return value of this function is affected by the "sort-type" and "limit"
+;;; properties of chooser.
 ;;; 
 ;;; Since the returned array is NULL terminated, length may be NULL.
 ;;; 
@@ -906,8 +918,8 @@
 ;;;     return location for a the length of the URI list, or NULL
 ;;; 
 ;;; Returns :
-;;;     A newly allocated, NULL-terminated array of strings. Use g_strfreev()
-;;;     to free it.
+;;;     A newly allocated, NULL-terminated array of strings. Use g_strfreev() to
+;;;     free it.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -987,7 +999,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_get_filter ()
 ;;; 
-;;; GtkRecentFilter * gtk_recent_chooser_get_filter (GtkRecentChooser *chooser)
+;;; GtkRecentFilter * gtk_recent_chooser_get_filter (GtkRecentChooser *chooser);
 ;;; 
 ;;; Gets the GtkRecentFilter object currently used by chooser to affect the
 ;;; display of the recently used resources.

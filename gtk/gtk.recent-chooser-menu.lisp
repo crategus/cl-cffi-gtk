@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkRecentChooserMenu
 ;;; 
 ;;; Displays recently used files in a menu
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkRecentChooserMenu
@@ -114,15 +114,18 @@
   (:superclass gtk-menu
    :export t
    :interfaces ("AtkImplementorIface"
-                "GtkBuildable"
-                "GtkActivatable" 
-                "GtkRecentChooser")
+                "GtkBuildable" 
+                "GtkRecentChooser"
+                "GtkActivatable")
    :type-initializer "gtk_recent_chooser_menu_get_type")
   ((show-numbers
     gtk-recent-chooser-menu-show-numbers
     "show-numbers" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Check the implementation of the child properties. 
+;;       GtkRecentChooserMenu has no documented child properties.
 
 (define-child-property "GtkRecentChooserMenu"
                        gtk-recent-chooser-menu-child-left-attach
@@ -167,7 +170,7 @@
 ;;; gtk_recent_chooser_menu_new_for_manager ()
 ;;; 
 ;;; GtkWidget * gtk_recent_chooser_menu_new_for_manager
-;;;                                                  (GtkRecentManager *manager)
+;;;                                                 (GtkRecentManager *manager);
 ;;; 
 ;;; Creates a new GtkRecentChooserMenu widget using manager as the underlying
 ;;; recently used resources manager.
@@ -190,7 +193,7 @@
 ;;; gtk_recent_chooser_menu_get_show_numbers ()
 ;;; 
 ;;; gboolean gtk_recent_chooser_menu_get_show_numbers
-;;;                                                 (GtkRecentChooserMenu *menu)
+;;;                                                (GtkRecentChooserMenu *menu);
 ;;; 
 ;;; Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
 ;;; 
@@ -198,7 +201,7 @@
 ;;;     a GtkRecentChooserMenu
 ;;; 
 ;;; Returns :
-;;;     TRUE if numbers should be shown
+;;;     TRUE if numbers should be shown.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------

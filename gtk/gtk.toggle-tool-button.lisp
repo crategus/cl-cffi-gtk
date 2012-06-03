@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkToggleToolButton
 ;;; 
 ;;; A GtkToolItem containing a toggle button
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkToggleToolButton
-;;;     
+;;;
 ;;;     gtk_toggle_tool_button_new
 ;;;     gtk_toggle_tool_button_new_from_stock
 ;;;     gtk_toggle_tool_button_set_active
@@ -55,8 +55,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkToggleToolButton implements AtkImplementorIface, GtkBuildable
-;;; and GtkActivatable.
+;;; GtkToggleToolButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActivatable and GtkActionable.
 ;;;
 ;;; Properties
 ;;; 
@@ -88,6 +88,7 @@
 ;;; Default value: FALSE
 ;;; 
 ;;; Since 2.8
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -118,9 +119,13 @@
 (define-g-object-class "GtkToggleToolButton" gtk-toggle-tool-button
   (:superclass gtk-tool-button
    :export t
-   :interfaces ("AtkImplementorIface" "GtkActivatable" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkActivatable"
+                "GtkActionable")
    :type-initializer "gtk_toggle_tool_button_get_type")
-  ((active gtk-toggle-tool-button-active
+  ((active
+    gtk-toggle-tool-button-active
     "active" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
@@ -142,8 +147,8 @@
 ;;; GtkToolItem * gtk_toggle_tool_button_new_from_stock (const gchar *stock_id);
 ;;; 
 ;;; Creates a new GtkToggleToolButton containing the image and text from a stock
-;;; item. Some stock ids have preprocessor macros like
-;;; GTK_STOCK_OK and GTK_STOCK_APPLY.
+;;; item. Some stock ids have preprocessor macros like GTK_STOCK_OK and
+;;; GTK_STOCK_APPLY.
 ;;; 
 ;;; It is an error if stock_id is not a name of a stock item.
 ;;; 

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,28 +31,30 @@
 ;;; GtkBuilder
 ;;; 
 ;;; Build an interface from an XML UI definition
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;    GtkBuilder
-;;;    GtkBuilderError
+;;;     GtkBuilder
+;;;     GtkBuilderError
 ;;;
-;;;    gtk_builder_new
-;;;    gtk_builder_add_from_file
-;;;    gtk_builder_add_from_string
-;;;    gtk_builder_add_objects_from_file
-;;;    gtk_builder_add_objects_from_string
-;;;    gtk_builder_get_object
-;;;    gtk_builder_get_objects
-;;;    gtk_builder_connect_signals
-;;;    gtk_builder_connect_signals_full
-;;;    gtk_builder_set_translation_domain
-;;;    gtk_builder_get_translation_domain
-;;;    gtk_builder_get_type_from_name
-;;;    gtk_builder_value_from_string
-;;;    gtk_builder_value_from_string_type
-;;;    GTK_BUILDER_WARN_INVALID_CHILD_TYPE
-;;;    GTK_BUILDER_ERROR
+;;;     gtk_builder_new
+;;;     gtk_builder_add_from_file
+;;;     gtk_builder_add_from_resource
+;;;     gtk_builder_add_from_string
+;;;     gtk_builder_add_objects_from_file
+;;;     gtk_builder_add_objects_from_string
+;;;     gtk_builder_get_object
+;;;     gtk_builder_get_objects
+;;;     gtk_builder_connect_signals
+;;;     gtk_builder_connect_signals_full
+;;;     gtk_builder_set_translation_domain
+;;;     gtk_builder_get_translation_domain
+;;;     gtk_builder_get_type_from_name
+;;;     gtk_builder_value_from_string
+;;;     gtk_builder_value_from_string_type
+;;;
+;;;     GTK_BUILDER_WARN_INVALID_CHILD_TYPE
+;;;     GTK_BUILDER_ERROR
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -65,23 +67,23 @@
 ;;; 
 ;;; Description
 ;;; 
-;;; A GtkBuilder is an auxiliary object that reads textual descriptions of a 
+;;; A GtkBuilder is an auxiliary object that reads textual descriptions of a
 ;;; user interface and instantiates the described objects. To pass a description
-;;; to a GtkBuilder, call gtk_builder_add_from_file() or 
+;;; to a GtkBuilder, call gtk_builder_add_from_file() or
 ;;; gtk_builder_add_from_string(). These functions can be called multiple times;
 ;;; the builder merges the content of all descriptions.
 ;;; 
-;;; A GtkBuilder holds a reference to all objects that it has constructed and 
+;;; A GtkBuilder holds a reference to all objects that it has constructed and
 ;;; drops these references when it is finalized. This finalization can cause the
-;;; destruction of non-widget objects or widgets which are not contained in a 
-;;; toplevel window. For toplevel windows constructed by a builder, it is the 
+;;; destruction of non-widget objects or widgets which are not contained in a
+;;; toplevel window. For toplevel windows constructed by a builder, it is the
 ;;; responsibility of the user to call gtk_widget_destroy() to get rid of them
 ;;; and all the widgets they contain.
 ;;; 
-;;; The functions gtk_builder_get_object() and gtk_builder_get_objects() can 
-;;; be used to access the widgets in the interface by the names assigned to
-;;; them inside the UI description. Toplevel windows returned by these
-;;; functions will stay around until the user explicitly destroys them with
+;;; The functions gtk_builder_get_object() and gtk_builder_get_objects() can be
+;;; used to access the widgets in the interface by the names assigned to them
+;;; inside the UI description. Toplevel windows returned by these functions will
+;;; stay around until the user explicitly destroys them with
 ;;; gtk_widget_destroy(). Other widgets will either be part of a larger
 ;;; hierarchy constructed by the builder (in which case you should not have to
 ;;; worry about their lifecycle), or without a parent, in which case they have
@@ -89,50 +91,113 @@
 ;;; to be reffed with g_object_ref() to keep them beyond the lifespan of the
 ;;; builder.
 ;;; 
-;;; The function gtk_builder_connect_signals() and variants thereof can be 
-;;; used to connect handlers to the named signals in the description.
+;;; The function gtk_builder_connect_signals() and variants thereof can be used
+;;; to connect handlers to the named signals in the description.
 ;;; 
 ;;; GtkBuilder UI Definitions
 ;;; 
-;;; GtkBuilder parses textual descriptions of user interfaces which are 
-;;; specified in an XML format which can be roughly described by the DTD below.
-;;; We refer to these descriptions as GtkBuilder UI definitions or just UI 
-;;; definitions if the context is clear. Do not confuse GtkBuilder UI
+;;; GtkBuilder parses textual descriptions of user interfaces which are
+;;; specified in an XML format which can be roughly described by the RELAX NG
+;;; schema below. We refer to these descriptions as GtkBuilder UI definitions or
+;;; just UI definitions if the context is clear. Do not confuse GtkBuilder UI
 ;;; Definitions with GtkUIManager UI Definitions, which are more limited in
 ;;; scope.
 ;;; 
-;;; <!ELEMENT interface (requires|object)* >
-;;; <!ELEMENT object    (property|signal|child|ANY)* >
-;;; <!ELEMENT property  PCDATA >
-;;; <!ELEMENT signal    EMPTY >
-;;; <!ELEMENT requires  EMPTY >
-;;; <!ELEMENT child     (object|ANY*) >
+;;; start = element interface {
+;;;   attribute domain { text } ?,
+;;;   ( requires | object | menu ) *
+;;; }
 ;;; 
-;;; <!ATTLIST interface  domain                     #IMPLIED >
-;;; <!ATTLIST object     id                         #REQUIRED
-;;;                      class                      #REQUIRED
-;;;                      type-func                  #IMPLIED
-;;;                      constructor                #IMPLIED >
-;;; <!ATTLIST requires   lib                        #REQUIRED
-;;;                      version                    #REQUIRED >
-;;; <!ATTLIST property   name                       #REQUIRED
-;;;                      translatable               #IMPLIED
-;;;                      comments                   #IMPLIED
-;;;                      context                    #IMPLIED >
-;;; <!ATTLIST signal     name                       #REQUIRED
-;;;                      handler                    #REQUIRED
-;;;                      after                      #IMPLIED
-;;;                      swapped                    #IMPLIED
-;;;                      object                     #IMPLIED
-;;;                      last_modification_time     #IMPLIED >
-;;; <!ATTLIST child      type                       #IMPLIED
-;;;                      internal-child             #IMPLIED >
+;;; requires = element requires {
+;;;   attribute lib { text },
+;;;   attribute version { text }
+;;; }
 ;;; 
-;;; The toplevel element is <interface>. It optionally takes a "domain" 
-;;; attribute, which will make the builder look for translated strings using 
-;;; dgettext() in the domain specified. This can also be done by calling 
-;;; gtk_builder_set_translation_domain() on the builder. Objects are described
-;;; by <object> elements, which can contain <property> elements to set
+;;; object = element object {
+;;;   attribute id { xsd:ID },
+;;;   attribute class { text },
+;;;   attribute type-func { text } ?,
+;;;   attribute constructor { text } ?,
+;;;   (property | signal | child | ANY) *
+;;; }
+;;; 
+;;; property = element property {
+;;;   attribute name { text },
+;;;   attribute translatable { "yes" | "no" } ?,
+;;;   attribute comments { text } ?,
+;;;   attribute context { text } ?,
+;;;   text ?
+;;; }
+;;; 
+;;; signal = element signal {
+;;;   attribute name { text },
+;;;   attribute handler { text },
+;;;   attribute after { text } ?,
+;;;   attribute swapped { text } ?,
+;;;   attribute object { text } ?,
+;;;   attribute last_modification_time { text } ?,
+;;;   empty
+;;; }
+;;; 
+;;; child = element child {
+;;;   attribute type { text } ?,
+;;;   attribute internal-child { text } ?,
+;;;   (object | ANY)*
+;;; }
+;;; 
+;;; menu = element menu {
+;;;   attribute id { xsd:ID },
+;;;   attribute domain { text } ?,
+;;;   (item | submenu | section) *
+;;; }
+;;; 
+;;; item = element item {
+;;;   attribute id { xsd:ID } ?,
+;;;   (attribute_ | link) *
+;;; }
+;;; 
+;;; attribute_ = element attribute {
+;;;   attribute name { text },
+;;;   attribute type { text } ?,
+;;;   attribute translatable { "yes" | "no" } ?,
+;;;   attribute context { text } ?,
+;;;   attribute comments { text } ?,
+;;;   text ?
+;;; }
+;;; 
+;;; link = element link {
+;;;   attribute id { xsd:ID } ?,
+;;;   attribute name { text },
+;;;   item *
+;;; }
+;;; 
+;;; submenu = element submenu {
+;;;   attribute id { xsd:ID } ?,
+;;;   (attribute_ | item | submenu | section) *
+;;; }
+;;; 
+;;; section = element section {
+;;;   attribute id { xsd:ID } ?,
+;;;   (attribute_ | item | submenu | section) *
+;;; }
+;;; 
+;;; ANY = element * - (interface | requires | object | property | signal 
+;;;                              | child | menu | item | attribute | link
+;;;                              | submenu | section) {
+;;;   attribute * { text } *,
+;;;   (ALL * & text ?)
+;;; }
+;;; ALL = element * {
+;;;   attribute * { text } *,
+;;;   (ALL * & text ?)
+;;; }
+;;; 
+;;; 
+;;; The toplevel element is <interface>. It optionally takes a "domain"
+;;; attribute, which will make the builder look for translated strings using
+;;; dgettext() in the domain specified. This can also be done by
+;;; calling gtk_builder_set_translation_domain() on the builder. Objects are
+;;; described by <object> elements, which can contain <property> elements to set
 ;;; properties, <signal> elements which connect signals to handlers, and <child>
 ;;; elements, which describe child objects (most often widgets inside a
 ;;; container, but also e.g. actions in an action group, or columns in a tree
@@ -140,68 +205,68 @@
 ;;; child object. The target toolkit version(s) are described by <requires>
 ;;; elements, the "lib" attribute specifies the widget library in question
 ;;; (currently the only supported value is "gtk+") and the "version" attribute
-;;; specifies the target version in the form "<major>.<minor>". The builder
-;;; will error out if the version requirements are not met.
+;;; specifies the target version in the form "<major>.<minor>". The builder will
+;;; error out if the version requirements are not met.
 ;;; 
-;;; Typically, the specific kind of object represented by an <object> element 
-;;; is specified by the "class" attribute. If the type has not been loaded yet, 
+;;; Typically, the specific kind of object represented by an <object> element is
+;;; specified by the "class" attribute. If the type has not been loaded yet,
 ;;; GTK+ tries to find the _get_type() from the class name by applying
 ;;; heuristics. This works in most cases, but if necessary, it is possible to
 ;;; specify the name of the _get_type() explictly with the "type-func"
 ;;; attribute. As a special case, GtkBuilder allows to use an object that has
 ;;; been constructed by a GtkUIManager in another part of the UI definition by
-;;; specifying the id of the GtkUIManager in the "constructor" attribute and
-;;; the name of the object in the "id" attribute.
+;;; specifying the id of the GtkUIManager in the "constructor" attribute and the
+;;; name of the object in the "id" attribute.
 ;;; 
-;;; Objects must be given a name with the "id" attribute, which allows the 
+;;; Objects must be given a name with the "id" attribute, which allows the
 ;;; application to retrieve them from the builder with gtk_builder_get_object().
 ;;; An id is also necessary to use the object as property value in other parts
 ;;; of the UI definition.
 ;;;
 ;;; Note
 ;;; 
-;;; Prior to 2.20, GtkBuilder was setting the "name" property of constructed 
-;;; widgets to the "id" attribute. In GTK+ 2.20 or newer, you have to use 
+;;; Prior to 2.20, GtkBuilder was setting the "name" property of constructed
+;;; widgets to the "id" attribute. In GTK+ 2.20 or newer, you have to use
 ;;; gtk_buildable_get_name() instead of gtk_widget_get_name() to obtain the
 ;;; "id", or set the "name" property in your UI definition.
 ;;; 
-;;; Setting properties of objects is pretty straightforward with the 
-;;; <property> element: the "name" attribute specifies the name of the property,
-;;; and the content of the element specifies the value. If the "translatable" 
-;;; attribute is set to a true value, GTK+ uses gettext() (or dgettext() if the 
-;;; builder has a translation domain set) to find a translation for the value. 
-;;; This happens before the value is parsed, so it can be used for properties of
-;;; any type, but it is probably most useful for string properties. It is also 
-;;; possible to specify a context to disambiguate short strings, and comments 
+;;; Setting properties of objects is pretty straightforward with the <property>
+;;; element: the "name" attribute specifies the name of the property, and the
+;;; content of the element specifies the value. If the "translatable" attribute
+;;; is set to a true value, GTK+ uses gettext() (or dgettext() if the builder
+;;; has a translation domain set) to find a translation for the value. This
+;;; happens before the value is parsed, so it can be used for properties of any
+;;; type, but it is probably most useful for string properties. It is also
+;;; possible to specify a context to disambiguate short strings, and comments
 ;;; which may help the translators.
 ;;; 
-;;; GtkBuilder can parse textual representations for the most common property 
-;;; types: characters, strings, integers, floating-point numbers, booleans 
+;;; GtkBuilder can parse textual representations for the most common property
+;;; types: characters, strings, integers, floating-point numbers, booleans
 ;;; (strings like "TRUE", "t", "yes", "y", "1" are interpreted as TRUE, strings
 ;;; like "FALSE, "f", "no", "n", "0" are interpreted as FALSE), enumerations
 ;;; (can be specified by their name, nick or integer value), flags (can be
 ;;; specified by their name, nick, integer value, optionally combined with "|",
-;;; e.g. "GTK_VISIBLE|GTK_REALIZED") and colors (in a format understood by 
+;;; e.g. "GTK_VISIBLE|GTK_REALIZED") and colors (in a format understood by
 ;;; gdk_color_parse()). Objects can be referred to by their name. Pixbufs can be
-;;; specified as a filename of an image file to load. In general, GtkBuilder 
-;;; allows forward references to objects � an object doesn't have to be 
+;;; specified as a filename of an image file to load. In general, GtkBuilder
+;;; allows forward references to objects — an object doesn't have to be
 ;;; constructed before it can be referred to. The exception to this rule is that
-;;; an object has to be constructed before it can be used as the value of a 
+;;; an object has to be constructed before it can be used as the value of a
 ;;; construct-only property.
 ;;; 
-;;; Signal handlers are set up with the <signal> element. The "name" attribute 
+;;; Signal handlers are set up with the <signal> element. The "name" attribute
 ;;; specifies the name of the signal, and the "handler" attribute specifies the
 ;;; function to connect to the signal. By default, GTK+ tries to find the
-;;;  handler using g_module_symbol(), but this can be changed by passing a
-;;; custom GtkBuilderConnectFunc to gtk_builder_connect_signals_full(). The
-;;; remaining attributes, "after", "swapped" and "object", have the same meaning
-;;; as the corresponding parameters of the g_signal_connect_object() or 
-;;; g_signal_connect_data() functions. A "last_modification_time" attribute is 
+;;; handler using g_module_symbol(), but this can be changed by passing a custom
+;;; GtkBuilderConnectFunc to gtk_builder_connect_signals_full(). The remaining
+;;; attributes, "after", "swapped" and "object", have the same meaning as the
+;;; corresponding parameters of the g_signal_connect_object() or
+;;; g_signal_connect_data() functions. A "last_modification_time" attribute is
 ;;; also allowed, but it does not have a meaning to the builder.
 ;;; 
-;;; Sometimes it is necessary to refer to widgets which have implicitly been 
+;;; Sometimes it is necessary to refer to widgets which have implicitly been
 ;;; constructed by GTK+ as part of a composite widget, to set properties on them
-;;; or to add further children (e.g. the vbox of a GtkDialog). This can be 
+;;; or to add further children (e.g. the vbox of a GtkDialog). This can be
 ;;; achieved by setting the "internal-child" propery of the <child> element to a
 ;;; true value. Note that GtkBuilder still requires an <object> element for the
 ;;; internal child, even if it has already been constructed.
@@ -209,8 +274,8 @@
 ;;; A number of widgets have different places where a child can be added (e.g.
 ;;; tabs vs. page content in notebooks). This can be reflected in a UI
 ;;; definition by specifying the "type" attribute on a <child>. The possible
-;;; values for the "type" attribute are described in the sections describing
-;;; the widget-specific portions of UI definitions.
+;;; values for the "type" attribute are described in the sections describing the
+;;; widget-specific portions of UI definitions.
 ;;; 
 ;;; Example 109. A GtkBuilder UI Definition
 ;;; 
@@ -236,19 +301,27 @@
 ;;;   </object>
 ;;; </interface>
 ;;; 
-;;; Beyond this general structure, several object classes define their own XML 
+;;; 
+;;; Beyond this general structure, several object classes define their own XML
 ;;; DTD fragments for filling in the ANY placeholders in the DTD above. Note
 ;;; that a custom element in a <child> element gets parsed by the custom tag
 ;;; handler of the parent object, while a custom element in an <object> element
 ;;; gets parsed by the custom tag handler of the object.
 ;;; 
-;;; These XML fragments are explained in the documentation of the respective 
-;;; objects, see GtkWidget, GtkLabel, GtkWindow, GtkContainer, GtkDialog, 
+;;; These XML fragments are explained in the documentation of the respective
+;;; objects, see GtkWidget, GtkLabel, GtkWindow, GtkContainer, GtkDialog,
 ;;; GtkCellLayout, GtkColorSelectionDialog, GtkFontSelectionDialog, GtkExpander,
 ;;; GtkFrame, GtkListStore, GtkTreeStore, GtkNotebook, GtkSizeGroup,
 ;;; GtkTreeView, GtkUIManager, GtkActionGroup. GtkMenuItem, GtkMenuToolButton,
 ;;; GtkAssistant, GtkScale, GtkComboBoxText, GtkRecentFilter, GtkFileFilter,
 ;;; GtkTextTagTable.
+;;; 
+;;; Embedding other XML
+;;; 
+;;; Apart from the language for UI descriptions that has been explained in the
+;;; previous section, GtkBuilder can also parse XML fragments of GMenu markup.
+;;; The resulting GMenu object and its named submenus are available via
+;;; gtk_builder_get_object() like other constructed objects.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -286,6 +359,15 @@
     "translation-domain" "gchararray" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+(defmethod initialize-instance :after ((builder gtk-builder)
+                                       &key from-file from-string)
+  (when from-file
+    (gtk-builder-add-from-file builder from-file))
+  (when from-string
+    (gtk-builder-add-from-string builder from-string)))
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkBuilderConnectFunc ()
 ;;; 
 ;;; void (*GtkBuilderConnectFunc) (GtkBuilder *builder,
@@ -304,25 +386,25 @@
 ;;; will do nothing.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; object :
-;;; 	object to connect a signal to
+;;;     object to connect a signal to
 ;;; 
 ;;; signal_name :
-;;; 	name of the signal
+;;;     name of the signal
 ;;; 
 ;;; handler_name :
-;;; 	name of the handler
+;;;     name of the handler
 ;;; 
 ;;; connect_object :
-;;; 	a GObject, if non-NULL, use g_signal_connect_object()
+;;;     a GObject, if non-NULL, use g_signal_connect_object()
 ;;; 
 ;;; flags :
-;;; 	GConnectFlags to use
+;;;     GConnectFlags to use
 ;;; 
 ;;; user_data :
-;;; 	user data
+;;;     user data
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -346,31 +428,31 @@
 ;;; GtkBuilder.
 ;;; 
 ;;; GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION
-;;; 	A type-func attribute didn't name a function that returns a GType.
+;;;     A type-func attribute didn't name a function that returns a GType.
 ;;; 
 ;;; GTK_BUILDER_ERROR_UNHANDLED_TAG
-;;; 	The input contained a tag that GtkBuilder can't handle.
+;;;     The input contained a tag that GtkBuilder can't handle.
 ;;; 
 ;;; GTK_BUILDER_ERROR_MISSING_ATTRIBUTE
-;;; 	An attribute that is required by GtkBuilder was missing.
+;;;     An attribute that is required by GtkBuilder was missing.
 ;;; 
 ;;; GTK_BUILDER_ERROR_INVALID_ATTRIBUTE
-;;; 	GtkBuilder found an attribute that it doesn't understand.
+;;;     GtkBuilder found an attribute that it doesn't understand.
 ;;; 
 ;;; GTK_BUILDER_ERROR_INVALID_TAG
-;;; 	GtkBuilder found a tag that it doesn't understand.
+;;;     GtkBuilder found a tag that it doesn't understand.
 ;;; 
 ;;; GTK_BUILDER_ERROR_MISSING_PROPERTY_VALUE
-;;; 	A required property value was missing.
+;;;     A required property value was missing.
 ;;; 
 ;;; GTK_BUILDER_ERROR_INVALID_VALUE
-;;; 	GtkBuilder couldn't parse some attribute value.
+;;;     GtkBuilder couldn't parse some attribute value.
 ;;; 
 ;;; GTK_BUILDER_ERROR_VERSION_MISMATCH
-;;; 	The input file requires a newer version of GTK+.
+;;;     The input file requires a newer version of GTK+.
 ;;; 
 ;;; GTK_BUILDER_ERROR_DUPLICATE_ID
-;;; 	An object id occurred twice.
+;;;     An object id occurred twice.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkBuilderError" gtk-builder-error
@@ -394,17 +476,10 @@
 ;;; Creates a new builder object.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkBuilder object
+;;;     a new GtkBuilder object
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
-
-(defmethod initialize-instance :after ((builder gtk-builder) &key
-                                       from-file from-string)
-  (when from-file
-    (gtk-builder-add-from-file builder from-file))
-  (when from-string
-    (gtk-builder-add-from-string builder from-string)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_add_from_file ()
@@ -420,16 +495,16 @@
 ;;; GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_FILE_ERROR domain.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; filename :
-;;; 	the name of the file to parse
+;;;     the name of the file to parse
 ;;; 
 ;;; error :
-;;; 	return location for an error, or NULL. [allow-none]
+;;;     return location for an error, or NULL
 ;;; 
 ;;; Returns :
-;;; 	A positive value on success, 0 if an error occurred
+;;;     A positive value on success, 0 if an error occurred
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -443,6 +518,34 @@
   (%gtk-builder-add-from-file builder filename (null-pointer)))
 
 (export 'gtk-builder-add-from-file)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_builder_add_from_resource ()
+;;; 
+;;; guint gtk_builder_add_from_resource (GtkBuilder *builder,
+;;;                                      const gchar *resource_path,
+;;;                                      GError **error);
+;;; 
+;;; Parses a resource file containing a GtkBuilder UI definition and merges it
+;;; with the current contents of builder.
+;;; 
+;;; Upon errors 0 will be returned and error will be assigned a GError from the
+;;; GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_RESOURCE_ERROR domain.
+;;; 
+;;; builder :
+;;;     a GtkBuilder
+;;; 
+;;; resource_path :
+;;;     the path of the resource file to parse
+;;; 
+;;; error :
+;;;     return location for an error, or NULL
+;;; 
+;;; Returns :
+;;;     A positive value on success, 0 if an error occurred
+;;; 
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_add_from_string ()
@@ -459,19 +562,19 @@
 ;;; GTK_BUILDER_ERROR or G_MARKUP_ERROR domain.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; buffer :
-;;; 	the string to parse
+;;;     the string to parse
 ;;; 
 ;;; length :
-;;; 	the length of buffer (may be -1 if buffer is nul-terminated)
+;;;     the length of buffer (may be -1 if buffer is nul-terminated)
 ;;; 
 ;;; error :
-;;; 	return location for an error, or NULL.
+;;;     return location for an error, or NULL
 ;;; 
 ;;; Returns :
-;;; 	A positive value on success, 0 if an error occurred
+;;;     A positive value on success, 0 if an error occurred
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -508,25 +611,25 @@
 ;;; explicitely list all of them in object_ids.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; filename :
-;;; 	the name of the file to parse
+;;;     the name of the file to parse
 ;;; 
 ;;; object_ids :
-;;; 	nul-terminated array of objects to build.
+;;;     nul-terminated array of objects to build
 ;;; 
 ;;; error :
-;;; 	return location for an error, or NULL.
+;;;     return location for an error, or NULL
 ;;; 
 ;;; Returns :
-;;; 	A positive value on success, 0 if an error occurred
+;;;     A positive value on success, 0 if an error occurred
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_builder_add_objects_from_file"
-          %gtk-builder-add-objects-from-file):uint
+          %gtk-builder-add-objects-from-file) :uint
   (builder g-object)
   (filename :string)
   (object-ids :pointer)
@@ -570,22 +673,22 @@
 ;;; explicitely list all of them in object_ids.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; buffer :
-;;; 	the string to parse
+;;;     the string to parse
 ;;; 
 ;;; length :
-;;; 	the length of buffer (may be -1 if buffer is nul-terminated)
+;;;     the length of buffer (may be -1 if buffer is nul-terminated)
 ;;; 
 ;;; object_ids :
-;;; 	nul-terminated array of objects to build.
+;;;     nul-terminated array of objects to build
 ;;; 
 ;;; error :
-;;; 	return location for an error, or NULL.
+;;;     return location for an error, or NULL
 ;;; 
 ;;; Returns :
-;;; 	A positive value on success, 0 if an error occurred
+;;;     A positive value on success, 0 if an error occurred
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -621,20 +724,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_object ()
 ;;; 
-;;; GObject * gtk_builder_get_object  (GtkBuilder *builder, const gchar *name)
+;;; GObject * gtk_builder_get_object (GtkBuilder *builder, const gchar *name);
 ;;; 
 ;;; Gets the object named name. Note that this function does not increment the
 ;;; reference count of the returned object.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; name :
-;;; 	name of object to get
+;;;     name of object to get
 ;;; 
 ;;; Returns :
-;;; 	the object named name or NULL if it could not be found in the object
-;;;     tree.
+;;;     the object named name or NULL if it could not be found in the object
+;;;     tree
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -654,11 +757,11 @@
 ;;; function does not increment the reference counts of the returned objects.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; Returns :
-;;; 	a newly-allocated GSList containing all the objects constructed by the
-;;;     GtkBuilder instance. It should be freed by g_slist_free().
+;;;     a newly-allocated GSList containing all the objects constructed by the
+;;;     GtkBuilder instance. It should be freed by g_slist_free()
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -666,7 +769,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_connect_signals ()
 ;;; 
-;;; void gtk_builder_connect_signals (GtkBuilder *builder, gpointer user_data)
+;;; void gtk_builder_connect_signals (GtkBuilder *builder, gpointer user_data);
 ;;; 
 ;;; This method is a simpler variation of gtk_builder_connect_signals_full(). It
 ;;; uses GModule's introspective features (by opening the module NULL) to look
@@ -684,17 +787,21 @@
 ;;; with the -Wl,--export-dynamic CFLAGS, and linked against gmodule-export-2.0.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; user_data :
-;;; 	a pointer to a structure sent in as user data to all signals
+;;;     a pointer to a structure sent in as user data to all signals
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-builder-connect-signals-simple (builder handlers-list)
-  (flet ((connect-func (builder object signal-name handler-name
-                                connect-object flags)
+(defun gtk-builder-connect-signals (builder handlers-list)
+  (flet ((connect-func (builder
+                        object
+                        signal-name
+                        handler-name
+                        connect-object
+                        flags)
            (declare (ignore builder connect-object))
            (let ((handler (find handler-name handlers-list
                                              :key 'first
@@ -706,7 +813,7 @@
                                  :after (member :after flags))))))
     (gtk-builder-connect-signals-full builder #'connect-func)))
 
-(export 'gtk-builder-connect-signals-simple)
+(export 'gtk-builder-connect-signals)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_connect_signals_full ()
@@ -720,22 +827,27 @@
 ;;; function correctly.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; func :
-;;; 	the function used to connect the signals.
+;;;     the function used to connect the signals
 ;;; 
 ;;; user_data :
-;;; 	arbitrary data that will be passed to the connection function
+;;;     arbitrary data that will be passed to the connection function
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defbitfield connect-flags :after :swapped)
+(defbitfield connect-flags
+  :after
+  :swapped)
 
 (defcallback builder-connect-func-callback :void
-    ((builder g-object) (object g-object) (signal-name (:string :free-from-foreign nil))
-     (handler-name (:string :free-from-foreign nil)) (connect-object g-object)
+    ((builder g-object)
+     (object g-object)
+     (signal-name (:string :free-from-foreign nil))
+     (handler-name (:string :free-from-foreign nil))
+     (connect-object g-object)
      (flags connect-flags) (data :pointer))
   (restart-case
       (funcall (get-stable-pointer-value data)
@@ -765,10 +877,10 @@
 ;;; Sets the translation domain of builder. See "translation-domain".
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; domain :
-;;; 	the translation domain or NULL.
+;;;     the translation domain or NULL
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -776,15 +888,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_translation_domain ()
 ;;; 
-;;; const gchar * gtk_builder_get_translation_domain  (GtkBuilder *builder);
+;;; const gchar * gtk_builder_get_translation_domain (GtkBuilder *builder);
 ;;; 
 ;;; Gets the translation domain of builder.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; Returns :
-;;; 	the translation domain. This string is owned by the builder object and
+;;;     the translation domain. This string is owned by the builder object and
 ;;;     must not be modified or freed.
 ;;; 
 ;;; Since 2.12
@@ -801,13 +913,13 @@
 ;;; interface on a type.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; type_name :
-;;; 	type name to lookup
+;;;     type name to lookup
 ;;; 
 ;;; Returns :
-;;; 	the GType found for type_name or G_TYPE_INVALID if no type was found
+;;;     the GType found for type_name or G_TYPE_INVALID if no type was found
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -833,22 +945,22 @@
 ;;; the GTK_BUILDER_ERROR domain.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; pspec :
-;;; 	the GParamSpec for the property
+;;;     the GParamSpec for the property
 ;;; 
 ;;; string :
-;;; 	the string representation of the value
+;;;     the string representation of the value
 ;;; 
 ;;; value :
-;;; 	the GValue to store the result in.
+;;;     the GValue to store the result in
 ;;; 
 ;;; error :
-;;; 	return location for an error, or NULL.
+;;;     return location for an error, or NULL
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success
+;;;     TRUE on success
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -871,22 +983,22 @@
 ;;; the GTK_BUILDER_ERROR domain.
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; type :
-;;; 	the GType of the value
+;;;     the GType of the value
 ;;; 
 ;;; string :
-;;; 	the string representation of the value
+;;;     the string representation of the value
 ;;; 
 ;;; value :
-;;; 	the GValue to store the result in.
+;;;     the GValue to store the result in
 ;;; 
 ;;; error :
-;;; 	return location for an error, or NULL.
+;;;     return location for an error, or NULL
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success
+;;;     TRUE on success
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -900,10 +1012,10 @@
 ;;; in a GtkBuildable add_child implementation.
 ;;; 
 ;;; object :
-;;; 	the GtkBuildable on which the warning ocurred
+;;;     the GtkBuildable on which the warning ocurred
 ;;; 
 ;;; type :
-;;; 	the unexpected type value
+;;;     the unexpected type value
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -911,5 +1023,6 @@
 ;;; 
 ;;; #define GTK_BUILDER_ERROR (gtk_builder_error_quark ())
 ;;; ----------------------------------------------------------------------------
+
 
 ;;; --- End of file gtk.builder.lisp -------------------------------------------

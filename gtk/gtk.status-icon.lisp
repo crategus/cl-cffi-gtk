@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,10 +31,11 @@
 ;;; GtkStatusIcon
 ;;; 
 ;;; Display an icon in the system tray
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkStatusIcon
+;;;     
 ;;;     gtk_status_icon_new
 ;;;     gtk_status_icon_new_from_pixbuf
 ;;;     gtk_status_icon_new_from_file
@@ -123,8 +124,8 @@
 ;;; be found e.g. in the GNOME 2 and KDE panel applications.
 ;;; 
 ;;; Note that a GtkStatusIcon is not a widget, but just a GObject. Making it a
-;;; widget would be impractical, since the system tray on Win32 doesn't allow
-;;; to embed arbitrary widgets.
+;;; widget would be impractical, since the system tray on Win32 doesn't allow to
+;;; embed arbitrary widgets.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -149,8 +150,6 @@
 ;;; Filename to load and display.
 ;;; 
 ;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
 ;;; The "gicon" property
 ;;; 
 ;;;   "gicon"                    GIcon*                : Read / Write
@@ -263,13 +262,13 @@
 ;;; 
 ;;;   "tooltip-markup"           gchar*                : Read / Write
 ;;; 
-;;; Sets the text of tooltip to be the given string, which is marked up with
-;;; the Pango text markup language. Also see gtk_tooltip_set_markup().
+;;; Sets the text of tooltip to be the given string, which is marked up with the
+;;; Pango text markup language. Also see gtk_tooltip_set_markup().
 ;;; 
 ;;; This is a convenience property which will take care of getting the tooltip
 ;;; shown if the given string is not NULL. "has-tooltip" will automatically be
-;;; set to TRUE and the default handler for the "query-tooltip" signal will
-;;; take care of displaying the tooltip.
+;;; set to TRUE and the default handler for the "query-tooltip" signal will take
+;;; care of displaying the tooltip.
 ;;; 
 ;;; On some platforms, embedded markup will be ignored.
 ;;; 
@@ -288,8 +287,8 @@
 ;;; 
 ;;; This is a convenience property which will take care of getting the tooltip
 ;;; shown if the given string is not NULL. "has-tooltip" will automatically be
-;;; set to TRUE and the default handler for the "query-tooltip" signal will
-;;; take care of displaying the tooltip.
+;;; set to TRUE and the default handler for the "query-tooltip" signal will take
+;;; care of displaying the tooltip.
 ;;; 
 ;;; Note that some platforms have limitations on the length of tooltips that
 ;;; they allow on status icons, e.g. Windows only shows the first 64 characters.
@@ -324,10 +323,10 @@
 ;;; applications and should be wrapped by language bindings.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.10
 ;;;
@@ -341,21 +340,21 @@
 ;;; The ::button-press-event signal will be emitted when a button (typically
 ;;; from a mouse) is pressed.
 ;;; 
-;;; Whether this event is emitted is platform-dependent. Use the ::activate
-;;; and ::popup-menu signals in preference.
+;;; Whether this event is emitted is platform-dependent. Use the ::activate and
+;;; ::popup-menu signals in preference.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;; 	the GdkEventButton which triggered this signal. [type Gdk.EventButton]
+;;;     the GdkEventButton which triggered this signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;; 
 ;;; Since 2.14
 ;;;
@@ -369,21 +368,21 @@
 ;;; The ::button-release-event signal will be emitted when a button (typically
 ;;; from a mouse) is released.
 ;;; 
-;;; Whether this event is emitted is platform-dependent. Use the ::activate
-;;; and ::popup-menu signals in preference.
+;;; Whether this event is emitted is platform-dependent. Use the ::activate and
+;;; ::popup-menu signals in preference.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; event :
-;;; 	the GdkEventButton which triggered this signal. [type Gdk.EventButton]
+;;;     the GdkEventButton which triggered this signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;; 
 ;;; Since 2.14
 ;;;
@@ -406,17 +405,17 @@
 ;;; applications and should be wrapped by language bindings.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; button :
-;;; 	the button that was pressed, or 0 if the signal is not emitted in
+;;;     the button that was pressed, or 0 if the signal is not emitted in
 ;;;     response to a button press event
 ;;; 
 ;;; activate_time :
-;;; 	the timestamp of the event that triggered the signal emission
+;;;     the timestamp of the event that triggered the signal emission
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Since 2.10
 ;;;
@@ -435,37 +434,37 @@
 ;;; 
 ;;; Using the given coordinates, the signal handler should determine whether a
 ;;; tooltip should be shown for status_icon. If this is the case TRUE should be
-;;; returned, FALSE otherwise. Note that if keyboard_mode is TRUE, the values
-;;; of x and y are undefined and should not be used.
+;;; returned, FALSE otherwise. Note that if keyboard_mode is TRUE, the values of
+;;; x and y are undefined and should not be used.
 ;;; 
-;;; The signal handler is free to manipulate tooltip with the therefore
-;;; destined function calls.
+;;; The signal handler is free to manipulate tooltip with the therefore destined
+;;; function calls.
 ;;; 
 ;;; Whether this signal is emitted is platform-dependent. For plain text
 ;;; tooltips, use "tooltip-text" in preference.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; x :
-;;; 	the x coordinate of the cursor position where the request has been
+;;;     the x coordinate of the cursor position where the request has been
 ;;;     emitted, relative to status_icon
 ;;; 
 ;;; y :
-;;; 	the y coordinate of the cursor position where the request has been
+;;;     the y coordinate of the cursor position where the request has been
 ;;;     emitted, relative to status_icon
 ;;; 
 ;;; keyboard_mode :
-;;; 	TRUE if the tooltip was trigged using the keyboard
+;;;     TRUE if the tooltip was trigged using the keyboard
 ;;; 
 ;;; tooltip :
-;;; 	a GtkTooltip
+;;;     a GtkTooltip
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if tooltip should be shown right now, FALSE otherwise.
+;;;     TRUE if tooltip should be shown right now, FALSE otherwise.
 ;;; 
 ;;; Since 2.16
 ;;;
@@ -483,17 +482,17 @@
 ;;; Whether this event is emitted is platform-dependent.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal.
+;;;     the object which received the signal.
 ;;; 
 ;;; event :
-;;; 	the GdkEventScroll which triggered this signal.
+;;;     the GdkEventScroll which triggered this signal
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE to stop other handlers from being invoked for the event.
-;;;     FALSE to propagate the event further.
+;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
+;;;     propagate the event further.
 ;;; 
 ;;; Since 2.16
 ;;;
@@ -504,20 +503,20 @@
 ;;;                         gint           size,
 ;;;                         gpointer       user_data)        : Run Last
 ;;; 
-;;; Gets emitted when the size available for the image changes, e.g. because
-;;; the notification area got resized.
+;;; Gets emitted when the size available for the image changes, e.g. because the
+;;; notification area got resized.
 ;;; 
 ;;; status_icon :
-;;; 	the object which received the signal
+;;;     the object which received the signal
 ;;; 
 ;;; size :
-;;; 	the new size
+;;;     the new size
 ;;; 
 ;;; user_data :
-;;; 	user data set when the signal handler was connected.
+;;;     user data set when the signal handler was connected.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the icon was updated for the new size. Otherwise, GTK+ will
+;;;     TRUE if the icon was updated for the new size. Otherwise, GTK+ will
 ;;;     scale the icon as necessary.
 ;;; 
 ;;; Since 2.10
@@ -531,31 +530,63 @@
 ;;; struct GtkStatusIcon;
 ;;; ----------------------------------------------------------------------------
 
+;;;   "title"                    gchar*                : Read / Write
+;;;   "tooltip-markup"           gchar*                : Read / Write
+;;;   "tooltip-text"             gchar*                : Read / Write
+;;;   "visible"                  gboolean              : Read / Write
+
 (define-g-object-class "GtkStatusIcon" gtk-status-icon
   (:superclass g-object
    :export t
    :interfaces nil
    :type-initializer "gtk_status_icon_get_type")
-  ((blinking gtk-status-icon-blinking "blinking" "gboolean" t t)
-   (embedded gtk-status-icon-embedded "embedded" "gboolean" t nil)
-   (file gtk-status-icon-file "file" "gchararray" nil t)
-   (gicon gtk-status-icon-gicon "gicon" "GIcon" t t)
-   (has-tooltip gtk-status-icon-has-tooltip "has-tooltip" "gboolean" t t)
-   (icon-name gtk-status-icon-icon-name "icon-name" "gchararray" t t)
-   (orientation gtk-status-icon-orientation
+  ((embedded
+    gtk-status-icon-embedded
+    "embedded" "gboolean" t nil)
+   (file
+    gtk-status-icon-file
+    "file" "gchararray" nil t)
+   (gicon
+    gtk-status-icon-gicon
+    "gicon" "GIcon" t t)
+   (has-tooltip
+    gtk-status-icon-has-tooltip
+    "has-tooltip" "gboolean" t t)
+   (icon-name
+    gtk-status-icon-icon-name
+    "icon-name" "gchararray" t t)
+   (orientation
+    gtk-status-icon-orientation
     "orientation" "GtkOrientation" t nil)
-   (pixbuf gtk-status-icon-pixbuf "pixbuf" "GdkPixbuf" t t)
-   (screen gtk-status-icon-screen "screen" "GdkScreen" t t)
-   (size gtk-status-icon-size "size" "gint" t nil)
-   (stock gtk-status-icon-stock "stock" "gchararray" t t)
-   (storage-type gtk-status-icon-storage-type
+   (pixbuf
+    gtk-status-icon-pixbuf
+    "pixbuf" "GdkPixbuf" t t)
+   (screen
+    gtk-status-icon-screen
+    "screen" "GdkScreen" t t)
+   (size
+    gtk-status-icon-size
+    "size" "gint" t nil)
+   (stock
+    gtk-status-icon-stock
+    "stock" "gchararray" t t)
+   (storage-type
+    gtk-status-icon-storage-type
     "storage-type" "GtkImageType" t nil)
-   (tooltip-markup gtk-status-icon-tooltip-markup
+   (title
+    gtk-status-icon-title
+    "title" "gchar" t t)
+   (tooltip-markup
+    gtk-status-icon-tooltip-markup
     "tooltip-markup" "gchararray" t t)
-   (tooltip-text gtk-status-icon-tooltip-text "tooltip-text" "gchararray" t t)
-   (visible gtk-status-icon-visible "visible" "gboolean" t t)))
+   (tooltip-text
+    gtk-status-icon-tooltip-text
+    "tooltip-text" "gchararray" t t)
+   (visible
+    gtk-status-icon-visible
+    "visible" "gboolean" t t)))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new ()
 ;;; 
 ;;; GtkStatusIcon * gtk_status_icon_new (void);
@@ -563,7 +594,7 @@
 ;;; Creates an empty status icon object.
 ;;; 
 ;;; Returns :
-;;; 	a new GtkStatusIcon
+;;;     a new GtkStatusIcon
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -579,10 +610,10 @@
 ;;; notification area, if necessary.
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf
+;;;     a GdkPixbuf
 ;;; 
 ;;; Returns :
-;;; 	a new GtkStatusIcon
+;;;     a new GtkStatusIcon
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -598,10 +629,10 @@
 ;;; notification area, if necessary.
 ;;; 
 ;;; filename :
-;;; 	a filename. [type filename]
+;;;     a filename
 ;;; 
 ;;; Returns :
-;;; 	a new GtkStatusIcon
+;;;     a new GtkStatusIcon
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -616,10 +647,10 @@
 ;;; see gtk_icon_factory_add_default() and gtk_icon_factory_add().
 ;;; 
 ;;; stock_id :
-;;; 	a stock icon id
+;;;     a stock icon id
 ;;; 
 ;;; Returns :
-;;; 	a new GtkStatusIcon
+;;;     a new GtkStatusIcon
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -627,16 +658,16 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_icon_name ()
 ;;; 
-;;; GtkStatusIcon * gtk_status_icon_new_from_icon_name (const gchar *icon_name)
+;;; GtkStatusIcon * gtk_status_icon_new_from_icon_name (const gchar *icon_name);
 ;;; 
-;;; Creates a status icon displaying an icon from the current icon theme. If
-;;; the current icon theme is changed, the icon will be updated appropriately.
+;;; Creates a status icon displaying an icon from the current icon theme. If the
+;;; current icon theme is changed, the icon will be updated appropriately.
 ;;; 
 ;;; icon_name :
-;;; 	an icon name
+;;;     an icon name
 ;;; 
 ;;; Returns :
-;;; 	a new GtkStatusIcon
+;;;     a new GtkStatusIcon
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -646,14 +677,14 @@
 ;;; 
 ;;; GtkStatusIcon * gtk_status_icon_new_from_gicon (GIcon *icon);
 ;;; 
-;;; Creates a status icon displaying a GIcon. If the icon is a themed icon,
-;;; it will be updated when the theme changes.
+;;; Creates a status icon displaying a GIcon. If the icon is a themed icon, it
+;;; will be updated when the theme changes.
 ;;; 
 ;;; icon :
-;;; 	a GIcon
+;;;     a GIcon
 ;;; 
 ;;; Returns :
-;;; 	a new GtkStatusIcon
+;;;     a new GtkStatusIcon
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -668,10 +699,10 @@
 ;;; details.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; pixbuf :
-;;; 	a GdkPixbuf or NULL.
+;;;     a GdkPixbuf or NULL
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -686,10 +717,10 @@
 ;;; gtk_status_icon_new_from_file() for details.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; filename :
-;;; 	a filename.
+;;;     a filename
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -704,10 +735,10 @@
 ;;; gtk_status_icon_new_from_stock() for details.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; stock_id :
-;;; 	a stock icon id
+;;;     a stock icon id
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -722,10 +753,10 @@
 ;;; theme. See gtk_status_icon_new_from_icon_name() for details.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; icon_name :
-;;; 	an icon name
+;;;     an icon name
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -740,10 +771,10 @@
 ;;; for details.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; icon :
-;;; 	a GIcon
+;;;     a GIcon
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -754,14 +785,14 @@
 ;;; GtkImageType gtk_status_icon_get_storage_type (GtkStatusIcon *status_icon);
 ;;; 
 ;;; Gets the type of representation being used by the GtkStatusIcon to store
-;;; image data. If the GtkStatusIcon has no image data, the return value will
-;;; be GTK_IMAGE_EMPTY.
+;;; image data. If the GtkStatusIcon has no image data, the return value will be
+;;; GTK_IMAGE_EMPTY.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the image representation being used
+;;;     the image representation being used
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -771,16 +802,16 @@
 ;;; 
 ;;; GdkPixbuf * gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
 ;;; 
-;;; Gets the GdkPixbuf being displayed by the GtkStatusIcon. The storage type
-;;; of the status icon must be GTK_IMAGE_EMPTY or GTK_IMAGE_PIXBUF (see
+;;; Gets the GdkPixbuf being displayed by the GtkStatusIcon. The storage type of
+;;; the status icon must be GTK_IMAGE_EMPTY or GTK_IMAGE_PIXBUF (see
 ;;; gtk_status_icon_get_storage_type()). The caller of this function does not
 ;;; own a reference to the returned pixbuf.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the displayed pixbuf, or NULL if the image is empty.
+;;;     the displayed pixbuf, or NULL if the image is empty
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -796,10 +827,10 @@
 ;;; the GtkStatusIcon and should not be freed or modified.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	stock id of the displayed stock icon, or NULL if the image is empty.
+;;;     stock id of the displayed stock icon, or NULL if the image is empty.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -815,10 +846,10 @@
 ;;; GtkStatusIcon and should not be freed or modified.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	name of the displayed icon, or NULL if the image is empty.
+;;;     name of the displayed icon, or NULL if the image is empty.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -836,10 +867,10 @@
 ;;; If this function fails, icon is left unchanged;
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the displayed icon, or NULL if the image is empty.
+;;;     the displayed icon, or NULL if the image is empty
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
@@ -858,10 +889,10 @@
 ;;; embedded (see gtk_status_icon_is_embedded()).
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the size that is available for the image
+;;;     the size that is available for the image
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -884,6 +915,8 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-status-icon-set-screen))
+
 (defun gtk-status-icon-set-screen (status-icon screen)
   (setf (gtk-status-icon-screen status-icon) screen))
 
@@ -900,10 +933,12 @@
 ;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;;     a GdkScreen.
+;;;     a GdkScreen
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-status-icon-get-screen))
 
 (defun gtk-status-icon-get-screen (status-icon)
   (gtk-status-icon-screen status-icon))
@@ -924,18 +959,18 @@
 ;;; See also the "tooltip-text" property and gtk_tooltip_set_text().
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; text :
-;;; 	the contents of the tooltip for status_icon
+;;;     the contents of the tooltip for status_icon
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_status_icon_set_tooltip_text"
-          gtk-status-icon-set-tooltip-text) :void
-  (status-icon (g-object gtk-status-icon))
-  (tooltip-text :string))
+(declaim (inline gtk-status-icon-set-tooltip-text))
+
+(defun gtk-status-icon-set-tooltip-text (status-icon text)
+  (setf (gtk-status-icon-tooltip-text status-icon) text))
 
 (export 'gtk-status-icon-set-tooltip-text)
 
@@ -947,14 +982,21 @@
 ;;; Gets the contents of the tooltip for status_icon.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the tooltip text, or NULL. You should free the returned string with
+;;;     the tooltip text, or NULL. You should free the returned string with
 ;;;     g_free() when done.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-status-icon-get-tooltip-text))
+
+(defun gtk-status-icon-get-tooltip-text (status-icon)
+  (gtk-status-icon-tooltip-text status-icon))
+
+(export 'gtk-status-icon-get-tooltip-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_tooltip_markup ()
@@ -971,10 +1013,10 @@
 ;;; See also the "tooltip-markup" property and gtk_tooltip_set_markup().
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; markup :
-;;; 	the contents of the tooltip for status_icon, or NULL.
+;;;     the contents of the tooltip for status_icon, or NULL
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -982,15 +1024,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_tooltip_markup ()
 ;;; 
-;;; gchar * gtk_status_icon_get_tooltip_markup  (GtkStatusIcon *status_icon);
+;;; gchar * gtk_status_icon_get_tooltip_markup (GtkStatusIcon *status_icon);
 ;;; 
 ;;; Gets the contents of the tooltip for status_icon.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the tooltip text, or NULL. You should free the returned string with
+;;;     the tooltip text, or NULL. You should free the returned string with
 ;;;     g_free() when done.
 ;;; 
 ;;; Since 2.16
@@ -1006,10 +1048,10 @@
 ;;; "has-tooltip" for more information.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; has_tooltip :
-;;; 	whether or not status_icon has a tooltip
+;;;     whether or not status_icon has a tooltip
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1019,14 +1061,14 @@
 ;;; 
 ;;; gboolean gtk_status_icon_get_has_tooltip (GtkStatusIcon *status_icon);
 ;;; 
-;;; Returns the current value of the has-tooltip property. See "has-tooltip"
-;;; for more information.
+;;; Returns the current value of the has-tooltip property. See "has-tooltip" for
+;;; more information.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	current value of has-tooltip on status_icon.
+;;;     current value of has-tooltip on status_icon.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -1042,10 +1084,10 @@
 ;;; screen readers to render the tray icon.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; title :
-;;; 	the title
+;;;     the title
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1058,10 +1100,10 @@
 ;;; Gets the title of this tray icon. See gtk_status_icon_set_title().
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	the title of the status icon
+;;;     the title of the status icon
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1077,10 +1119,10 @@
 ;;; shown to the user.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; name :
-;;; 	the name
+;;;     the name
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
@@ -1102,6 +1144,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-status-icon-set-visible))
+
 (defun gtk-status-icon-set-visible (status-icon visible)
   (setf (gtk-status-icon-visible status-icon) visible))
 
@@ -1113,8 +1157,8 @@
 ;;; gboolean gtk_status_icon_get_visible (GtkStatusIcon *status_icon);
 ;;; 
 ;;; Returns whether the status icon is visible or not. Note that being visible
-;;; does not guarantee that the user can actually see the icon, see
-;;; also gtk_status_icon_is_embedded().
+;;; does not guarantee that the user can actually see the icon, see also
+;;; gtk_status_icon_is_embedded().
 ;;; 
 ;;; status_icon :
 ;;;     a GtkStatusIcon
@@ -1124,6 +1168,8 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-status-icon-get-visible))
 
 (defun gtk-status-icon-get-visible (status-icon)
   (gtk-status-icon-visible status-icon))
@@ -1138,10 +1184,10 @@
 ;;; Returns whether the status icon is embedded in a notification area.
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the status icon is embedded in a notification area.
+;;;     TRUE if the status icon is embedded in a notification area.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1159,20 +1205,20 @@
 ;;; aligned to the status icon user_data.
 ;;; 
 ;;; menu :
-;;; 	the GtkMenu
+;;;     the GtkMenu
 ;;; 
 ;;; x :
-;;; 	return location for the x position.
+;;;     return location for the x position
 ;;; 
 ;;; y :
-;;; 	return location for the y position.
+;;;     return location for the y position
 ;;; 
 ;;; push_in :
-;;; 	whether the first menu item should be offset (pushed in) to be aligned
-;;;     with the menu popup position (only useful for GtkOptionMenu).
+;;;     whether the first menu item should be offset (pushed in) to be aligned
+;;;     with the menu popup position (only useful for GtkOptionMenu)
 ;;; 
 ;;; user_data :
-;;; 	the status icon to position the menu on.
+;;;     the status icon to position the menu on
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1197,22 +1243,22 @@
 ;;; gtk_status_icon_is_embedded().
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; screen :
-;;; 	return location for the screen, or NULL if the information is not
-;;;     needed.
+;;;     return location for the screen, or NULL if the information is not
+;;;     needed
 ;;; 
 ;;; area :
-;;; 	return location for the area occupied by the status icon, or NULL.
+;;;     return location for the area occupied by the status icon, or NULL
 ;;; 
 ;;; orientation :
-;;; 	return location for the orientation of the panel in which the status
-;;;     icon is embedded, or NULL. A panel at the top or bottom of the screen
-;;;     is horizontal, a panel at the left or right is vertical.
+;;;     return location for the orientation of the panel in which the status
+;;;     icon is embedded, or NULL. A panel at the top or bottom of the screen is
+;;;     horizontal, a panel at the left or right is vertical
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the location information has been filled in
+;;;     TRUE if the location information has been filled in
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -1233,10 +1279,10 @@
 ;;; gtk_status_icon_position_menu().
 ;;; 
 ;;; status_icon :
-;;; 	a GtkStatusIcon
+;;;     a GtkStatusIcon
 ;;; 
 ;;; Returns :
-;;; 	An 32 bit unsigned integer identifier for the underlying X11 Window
+;;;     An 32 bit unsigned integer identifier for the underlying X11 Window
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------

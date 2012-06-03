@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,13 +31,13 @@
 ;;; GtkSpinButton
 ;;; 
 ;;; Retrieve an integer or floating-point number from the user
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkSpinButton
 ;;;     GtkSpinButtonUpdatePolicy
 ;;;     GtkSpinType
-;;;
+;;;     
 ;;;     gtk_spin_button_configure
 ;;;     gtk_spin_button_new
 ;;;     gtk_spin_button_new_with_range
@@ -76,37 +76,37 @@
 ;;; 
 ;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable, GtkEditable and
 ;;; GtkCellEditable.
-;;;
+;;; 
 ;;; Properties
 ;;; 
-;;;   "adjustment"               GtkAdjustment*             : Read / Write
-;;;   "climb-rate"               gdouble                    : Read / Write
-;;;   "digits"                   guint                      : Read / Write
-;;;   "numeric"                  gboolean                   : Read / Write
-;;;   "snap-to-ticks"            gboolean                   : Read / Write
-;;;   "update-policy"            GtkSpinButtonUpdatePolicy  : Read / Write
-;;;   "value"                    gdouble                    : Read / Write
-;;;   "wrap"                     gboolean                   : Read / Write
+;;;   "adjustment"            GtkAdjustment*             : Read / Write
+;;;   "climb-rate"            gdouble                    : Read / Write
+;;;   "digits"                guint                      : Read / Write
+;;;   "numeric"               gboolean                   : Read / Write
+;;;   "snap-to-ticks"         gboolean                   : Read / Write
+;;;   "update-policy"         GtkSpinButtonUpdatePolicy  : Read / Write
+;;;   "value"                 gdouble                    : Read / Write
+;;;   "wrap"                  gboolean                   : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
-;;;   "shadow-type"              GtkShadowType         : Read
+;;;   "shadow-type"           GtkShadowType              : Read
 ;;; 
 ;;; Signals
 ;;; 
-;;;   "change-value"                                   : Action
-;;;   "input"                                          : Run Last
-;;;   "output"                                         : Run Last
-;;;   "value-changed"                                  : Run Last
-;;;   "wrapped"                                        : Run Last
+;;;   "change-value"                                     : Action
+;;;   "input"                                            : Run Last
+;;;   "output"                                           : Run Last
+;;;   "value-changed"                                    : Run Last
+;;;   "wrapped"                                          : Run Last
 ;;; 
 ;;; Description
 ;;; 
 ;;; A GtkSpinButton is an ideal way to allow the user to set the value of some
 ;;; attribute. Rather than having to directly type a number into a GtkEntry,
 ;;; GtkSpinButton allows the user to click on one of two arrows to increment or
-;;; decrement the displayed value. A value can still be typed in, with the
-;;; bonus that it can be checked to ensure it is in a given range.
+;;; decrement the displayed value. A value can still be typed in, with the bonus
+;;; that it can be checked to ensure it is in a given range.
 ;;; 
 ;;; The main properties of a GtkSpinButton are through an adjustment. See the
 ;;; GtkAdjustment section for more details about an adjustment's properties.
@@ -174,7 +174,7 @@
 ;;; 
 ;;;   gtk_widget_show_all (window);
 ;;; }
-;;;
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
@@ -279,7 +279,7 @@
 ;;;                     GtkScrollType  arg1,
 ;;;                     gpointer       user_data)       : Action
 ;;;
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; The "input" signal
 ;;; 
 ;;; gint user_function (GtkSpinButton *spin_button,
@@ -288,8 +288,8 @@
 ;;; 
 ;;; The ::input signal can be used to influence the conversion of the users
 ;;; input into a double value. The signal handler is expected to use
-;;; gtk_entry_get_text() to retrieve the text of the entry and set new_value
-;;; to the new value.
+;;; gtk_entry_get_text() to retrieve the text of the entry and set new_value to
+;;; the new value.
 ;;; 
 ;;; The default conversion uses g_strtod().
 ;;; 
@@ -297,7 +297,7 @@
 ;;;     the object on which the signal was emitted
 ;;; 
 ;;; new_value :
-;;;     return location for the new value.
+;;;     return location for the new value
 ;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
@@ -312,8 +312,8 @@
 ;;; gboolean user_function (GtkSpinButton *spin_button,
 ;;;                         gpointer       user_data)        : Run Last
 ;;; 
-;;; The ::output signal can be used to change to formatting of the value that
-;;; is displayed in the spin buttons entry.
+;;; The ::output signal can be used to change to formatting of the value that is
+;;; displayed in the spin buttons entry.
 ;;; 
 ;;; /* show leading zeros */
 ;;; static gboolean
@@ -346,7 +346,7 @@
 ;;; 
 ;;; void user_function (GtkSpinButton *spinbutton,
 ;;;                     gpointer       user_data)       : Run Last
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "wrapped" signal
 ;;; 
@@ -379,8 +379,10 @@
 (define-g-object-class "GtkSpinButton" gtk-spin-button
   (:superclass gtk-entry
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellEditable"
-                "GtkEditable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkEditable"
+                "GtkCellEditable")
    :type-initializer "gtk_spin_button_get_type")
   ((adjustment
     gtk-spin-button-adjustment
@@ -423,8 +425,8 @@
 ;;;     When refreshing your GtkSpinButton, the value is always displayed
 ;;; 
 ;;; GTK_UPDATE_IF_VALID
-;;;     When refreshing your GtkSpinButton, the value is only displayed if
-;;;     it is valid within the bounds of the spin button's adjustment
+;;;     When refreshing your GtkSpinButton, the value is only displayed if it is
+;;;     valid within the bounds of the spin button's adjustment
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkSpinButtonUpdatePolicy" gtk-spin-button-update-policy
@@ -446,8 +448,8 @@
 ;;;   GTK_SPIN_USER_DEFINED
 ;;; } GtkSpinType;
 ;;; 
-;;; The values of the GtkSpinType enumeration are used to specify the change
-;;; to make in gtk_spin_button_spin().
+;;; The values of the GtkSpinType enumeration are used to specify the change to
+;;; make in gtk_spin_button_spin().
 ;;; 
 ;;; GTK_SPIN_STEP_FORWARD
 ;;;     Increment by the adjustments step increment.
@@ -498,7 +500,7 @@
 ;;;     a GtkSpinButton
 ;;; 
 ;;; adjustment :
-;;;     a GtkAdjustment.
+;;;     a GtkAdjustment
 ;;; 
 ;;; climb_rate :
 ;;;     the new climb rate
@@ -517,7 +519,7 @@
 ;;; Creates a new GtkSpinButton.
 ;;; 
 ;;; adjustment :
-;;;     the GtkAdjustment object that this spin button should use, or NULL.
+;;;     the GtkAdjustment object that this spin button should use, or NULL
 ;;; 
 ;;; climb_rate :
 ;;;     specifies how much the spin button changes when an arrow is clicked on
@@ -543,8 +545,8 @@
 ;;; step.
 ;;; 
 ;;; Note that the way in which the precision is derived works best if step is a
-;;; power of ten. If the resulting precision is not suitable for your needs,
-;;; use gtk_spin_button_set_digits() to correct it.
+;;; power of ten. If the resulting precision is not suitable for your needs, use
+;;; gtk_spin_button_set_digits() to correct it.
 ;;; 
 ;;; min :
 ;;;     Minimum allowable value
@@ -577,7 +579,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_adjustment ()
 ;;; 
-;;; GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button)
+;;; GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
 ;;; 
 ;;; Get the adjustment associated with a GtkSpinButton
 ;;; 
@@ -585,13 +587,13 @@
 ;;;     a GtkSpinButton
 ;;; 
 ;;; Returns :
-;;;     the GtkAdjustment of spin_button.
+;;;     the GtkAdjustment of spin_button
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_digits ()
 ;;; 
-;;; void gtk_spin_button_set_digits (GtkSpinButton *spin_button, guint digits)
+;;; void gtk_spin_button_set_digits (GtkSpinButton *spin_button, guint digits);
 ;;; 
 ;;; Set the precision to be displayed by spin_button. Up to 20 digit precision
 ;;; is allowed.
@@ -603,6 +605,8 @@
 ;;;     the number of digits after the decimal point to be displayed for the
 ;;;     spin button's value
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-set-digits))
 
 (defun gtk-spin-button-set-digits (spin-button digits)
   (setf (gtk-spin-button-digits spin-button) digits))
@@ -638,6 +642,9 @@
 ;;; 
 ;;; Sets the minimum and maximum allowable values for spin_button.
 ;;; 
+;;; If the current value is outside this range, it will be adjusted to fit
+;;; within the range, otherwise it will remain unchanged.
+;;; 
 ;;; spin_button :
 ;;;     a GtkSpinButton
 ;;; 
@@ -670,7 +677,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_value ()
 ;;; 
-;;; void gtk_spin_button_set_value (GtkSpinButton *spin_button, gdouble value)
+;;; void gtk_spin_button_set_value (GtkSpinButton *spin_button, gdouble value);
 ;;; 
 ;;; Sets the value of spin_button.
 ;;; 
@@ -703,8 +710,8 @@
 ;;; void gtk_spin_button_set_numeric (GtkSpinButton *spin_button,
 ;;;                                   gboolean numeric);
 ;;; 
-;;; Sets the flag that determines if non-numeric text can be typed into the
-;;; spin button.
+;;; Sets the flag that determines if non-numeric text can be typed into the spin
+;;; button.
 ;;; 
 ;;; spin_button :
 ;;;     a GtkSpinButton
@@ -712,6 +719,8 @@
 ;;; numeric :
 ;;;     flag indicating if only numeric entry is allowed
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-set-numeric))
 
 (defun gtk-spin-button-set-numeric (spin-button numeric)
   (setf (gtk-spin-button-numeric spin-button) numeric))
@@ -725,8 +734,8 @@
 ;;;                            GtkSpinType direction,
 ;;;                            gdouble increment);
 ;;; 
-;;; Increment or decrement a spin button's value in a specified direction by
-;;; a specified amount.
+;;; Increment or decrement a spin button's value in a specified direction by a
+;;; specified amount.
 ;;; 
 ;;; spin_button :
 ;;;     a GtkSpinButton
@@ -748,7 +757,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_wrap ()
 ;;; 
-;;; void gtk_spin_button_set_wrap (GtkSpinButton *spin_button, gboolean wrap)
+;;; void gtk_spin_button_set_wrap (GtkSpinButton *spin_button, gboolean wrap);
 ;;; 
 ;;; Sets the flag that determines if a spin button value wraps around to the
 ;;; opposite limit when the upper or lower limit of the range is exceeded.
@@ -775,6 +784,8 @@
 ;;; snap_to_ticks :
 ;;;     a flag indicating if invalid values should be corrected
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-set-snap-to-ticks))
 
 (defun gtk-spin-button-set-snap-to-ticks (spin-button snap-to-ticks)
   (setf (gtk-spin-button-snap-to-ticks spin-button) snap-to-ticks))
@@ -825,10 +836,10 @@
 ;;;     a GtkSpinButton
 ;;; 
 ;;; step :
-;;;     location to store step increment, or NULL.
+;;;     location to store step increment, or NULL
 ;;; 
 ;;; page :
-;;;     location to store page increment, or NULL.
+;;;     location to store page increment, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -845,6 +856,8 @@
 ;;; Returns :
 ;;;     TRUE if only numeric text can be entered
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-numeric))
 
 (defun gtk-spin-button-get-numeric (spin-button)
   (gtk-spin-button-numeric spin-button))
@@ -885,6 +898,8 @@
 ;;;     TRUE if values are snapped to the nearest step
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-spin-button-get-snap-to-ticks))
+
 (defun gtk-spin-button-get-snap-to-ticks (spin-button)
   (gtk-spin-button-snap-to-ticks spin-button))
 
@@ -894,7 +909,7 @@
 ;;; gtk_spin_button_get_update_policy ()
 ;;; 
 ;;; GtkSpinButtonUpdatePolicy gtk_spin_button_get_update_policy
-;;;                                                 (GtkSpinButton *spin_button)
+;;;                                                (GtkSpinButton *spin_button);
 ;;; 
 ;;; Gets the update behavior of a spin button. See
 ;;; gtk_spin_button_set_update_policy().
@@ -919,6 +934,8 @@
 ;;; Returns :
 ;;;     the value of spin_button
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-value))
 
 (defun gtk-spin-button-get-value (spin-button)
   (gtk-spin-button-value spin-button))

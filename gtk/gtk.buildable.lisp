@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkBuildable
 ;;; 
 ;;; Interface for objects that can be built by GtkBuilder
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkBuildable
@@ -61,9 +61,10 @@
 ;;; 
 ;;; GtkBuildable is implemented by GtkAboutDialog, GtkAccelLabel, GtkAction,
 ;;; GtkActionGroup, GtkAlignment, GtkAppChooserButton, GtkAppChooserDialog,
-;;; GtkAppChooserWidget, GtkArrow, GtkAspectFrame, GtkAssistant, GtkBin, GtkBox,
-;;; GtkButton, GtkButtonBox, GtkCalendar, GtkCellArea, GtkCellAreaBox,
-;;; GtkCellView, GtkCheckButton, GtkCheckMenuItem, GtkColorButton,
+;;; GtkAppChooserWidget, GtkApplicationWindow, GtkArrow, GtkAspectFrame,
+;;; GtkAssistant, GtkBin, GtkBox, GtkButton, GtkButtonBox, GtkCalendar,
+;;; GtkCellArea, GtkCellAreaBox, GtkCellView, GtkCheckButton, GtkCheckMenuItem,
+;;; GtkColorButton, GtkColorChooserDialog, GtkColorChooserWidget,
 ;;; GtkColorSelection, GtkColorSelectionDialog, GtkComboBox, GtkComboBoxText,
 ;;; GtkContainer, GtkDialog, GtkDrawingArea, GtkEntry, GtkEntryCompletion,
 ;;; GtkEventBox, GtkExpander, GtkFileChooserButton, GtkFileChooserDialog,
@@ -88,7 +89,7 @@
 ;;; GtkTreeViewColumn, GtkUIManager, GtkVBox, GtkVButtonBox, GtkVPaned,
 ;;; GtkVScale, GtkVScrollbar, GtkVSeparator, GtkViewport, GtkVolumeButton,
 ;;; GtkWidget and GtkWindow.
-;;; 
+;;;
 ;;; Description
 ;;; 
 ;;; GtkBuildable allows objects to extend and customize thier deserialization
@@ -115,7 +116,6 @@
 ;;; typedef struct _GtkBuildable GtkBuildable;
 ;;; ----------------------------------------------------------------------------
 
-
 (define-g-interface "GtkBuildable" gtk-buildable
   (:export t
    :type-initializer "gtk_buildable_get_type"))
@@ -127,81 +127,81 @@
 ;;;   GTypeInterface g_iface;
 ;;; 
 ;;;   /* virtual table */
-;;;   void          (* set_name)           (GtkBuildable  *buildable,
-;;;                                         const gchar   *name);
-;;;   const gchar * (* get_name)           (GtkBuildable  *buildable);
-;;;   void          (* add_child)          (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    GObject       *child,
-;;; 					    const gchar   *type);
+;;;   void          (* set_name)               (GtkBuildable  *buildable,
+;;;                                             const gchar   *name);
+;;;   const gchar * (* get_name)               (GtkBuildable  *buildable);
+;;;   void          (* add_child)              (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder,
+;;;                                             GObject       *child,
+;;;                                             const gchar   *type);
 ;;;   void          (* set_buildable_property) (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    const gchar   *name,
-;;; 					    const GValue  *value);
-;;;   GObject *     (* construct_child)    (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    const gchar   *name);
-;;;   gboolean      (* custom_tag_start)   (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    GObject       *child,
-;;; 					    const gchar   *tagname,
-;;; 					    GMarkupParser *parser,
-;;; 					    gpointer      *data);
-;;;   void          (* custom_tag_end)     (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    GObject       *child,
-;;; 					    const gchar   *tagname,
-;;; 					    gpointer      *data);
-;;;   void          (* custom_finished)    (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    GObject       *child,
-;;; 					    const gchar   *tagname,
-;;; 					    gpointer       data);
-;;;   void          (* parser_finished)    (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder);
+;;;                                             GtkBuilder    *builder,
+;;;                                             const gchar   *name,
+;;;                                             const GValue  *value);
+;;;   GObject *     (* construct_child)        (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder,
+;;;                                             const gchar   *name);
+;;;   gboolean      (* custom_tag_start)       (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder,
+;;;                                             GObject       *child,
+;;;                                             const gchar   *tagname,
+;;;                                             GMarkupParser *parser,
+;;;                                             gpointer      *data);
+;;;   void          (* custom_tag_end)         (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder,
+;;;                                             GObject       *child,
+;;;                                             const gchar   *tagname,
+;;;                                             gpointer      *data);
+;;;   void          (* custom_finished)        (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder,
+;;;                                             GObject       *child,
+;;;                                             const gchar   *tagname,
+;;;                                             gpointer       data);
+;;;   void          (* parser_finished)        (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder);
 ;;; 
-;;;   GObject *     (* get_internal_child) (GtkBuildable  *buildable,
-;;; 					    GtkBuilder    *builder,
-;;; 					    const gchar   *childname);
+;;;   GObject *     (* get_internal_child)     (GtkBuildable  *buildable,
+;;;                                             GtkBuilder    *builder,
+;;;                                             const gchar   *childname);
 ;;; };
 ;;; 
 ;;; The GtkBuildableIface interface contains method that are necessary to allow
 ;;; GtkBuilder to construct an object from a GtkBuilder UI definition.
 ;;; 
 ;;; GTypeInterface g_iface;
-;;; 	the parent class
+;;;     the parent class
 ;;; 
 ;;; set_name ()
-;;; 	Stores the name attribute given in the GtkBuilder UI definition.
+;;;     Stores the name attribute given in the GtkBuilder UI definition.
 ;;;     GtkWidget stores the name as object data. Implement this method if your
 ;;;     object has some notion of "name" and it makes sense to map the XML name
 ;;;     attribute to it.
 ;;; 
 ;;; get_name ()
-;;; 	The getter corresponding to set_name. Implement this if you implement
+;;;     The getter corresponding to set_name. Implement this if you implement
 ;;;     set_name.
 ;;; 
 ;;; add_child ()
-;;; 	Adds a child. The type parameter can be used to differentiate the kind
+;;;     Adds a child. The type parameter can be used to differentiate the kind
 ;;;     of child. GtkContainer implements this to add add a child widget to the
 ;;;     container, GtkNotebook uses the type to distinguish between page labels
 ;;;     (of type "page-label") and normal children.
 ;;; 
 ;;; set_buildable_property ()
-;;; 	Sets a property of a buildable object. It is normally not necessary to
+;;;     Sets a property of a buildable object. It is normally not necessary to
 ;;;     implement this, g_object_set_property() is used by default. GtkWindow
 ;;;     implements this to delay showing itself (i.e. setting the "visible"
 ;;;     property) until the whole interface is created.
 ;;; 
 ;;; construct_child ()
-;;; 	Constructs a child of a buildable that has been specified as
+;;;     Constructs a child of a buildable that has been specified as
 ;;;     "constructor" in the UI definition. GtkUIManager implements this to
 ;;;     reference to a widget created in a <ui> tag which is outside of the
 ;;;     normal GtkBuilder UI definition hierarchy. A reference to the
 ;;;     constructed object is returned and becomes owned by the caller.
 ;;; 
 ;;; custom_tag_start ()
-;;; 	Implement this if the buildable needs to parse content below <child>. To
+;;;     Implement this if the buildable needs to parse content below <child>. To
 ;;;     handle an element, the implementation must fill in the parser structure
 ;;;     and user_data and return TRUE. GtkWidget implements this to parse
 ;;;     keyboard accelerators specified in <accelerator> elements. GtkContainer
@@ -210,23 +210,23 @@
 ;;;     custom_finished.
 ;;; 
 ;;; custom_tag_end ()
-;;; 	Called for the end tag of each custom element that is handled by the
+;;;     Called for the end tag of each custom element that is handled by the
 ;;;     buildable (see custom_tag_start).
 ;;; 
 ;;; custom_finished ()
-;;; 	Called for each custom tag handled by the buildable when the builder
+;;;     Called for each custom tag handled by the buildable when the builder
 ;;;     finishes parsing (see custom_tag_start)
 ;;; 
 ;;; parser_finished ()
-;;; 	Called when a builder finishes the parsing of a UI definition. It is
+;;;     Called when a builder finishes the parsing of a UI definition. It is
 ;;;     normally not necessary to implement this, unless you need to perform
 ;;;     special cleanup actions. GtkWindow sets the "visible" property here.
 ;;; 
 ;;; get_internal_child ()
-;;; 	Returns an internal child of a buildable. GtkDialog implements this to
+;;;     Returns an internal child of a buildable. GtkDialog implements this to
 ;;;     give access to its vbox, making it possible to add children to the vbox
 ;;;     in a UI definition. Implement this if the buildable has internal
-;;;     children that may need to be accessed from a UI definition.
+;;      children that may need to be accessed from a UI definition.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -237,10 +237,10 @@
 ;;; Sets the name of the buildable object.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; name :
-;;; 	name to set
+;;;     name to set
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -256,10 +256,10 @@
 ;;; construct the buildable.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; Returns :
-;;; 	the name set with gtk_buildable_set_name()
+;;;     the name set with gtk_buildable_set_name()
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -276,16 +276,16 @@
 ;;; child should be added.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; child :
-;;; 	child to add
+;;;     child to add
 ;;; 
 ;;; type :
-;;; 	kind of child or NULL. [allow-none]
+;;;     kind of child or NULL
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -301,16 +301,16 @@
 ;;; Sets the property name name to value on the buildable object.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; name :
-;;; 	name of property
+;;;     name of property
 ;;; 
 ;;; value :
-;;; 	value of property
+;;;     value of property
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -328,16 +328,16 @@
 ;;; UI definition.
 ;;; 
 ;;; buildable :
-;;; 	A GtkBuildable
+;;;     A GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	GtkBuilder used to construct this object
+;;;     GtkBuilder used to construct this object
 ;;; 
 ;;; name :
-;;; 	name of child to construct
+;;;     name of child to construct
 ;;; 
 ;;; Returns :
-;;; 	the constructed child
+;;;     the constructed child
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -355,26 +355,26 @@
 ;;; This is called for each unknown element under <child>.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder used to construct this object
+;;;     a GtkBuilder used to construct this object
 ;;; 
 ;;; child :
-;;; 	child object or NULL for non-child tags
+;;;     child object or NULL for non-child tags
 ;;; 
 ;;; tagname :
-;;; 	name of tag
+;;;     name of tag
 ;;; 
 ;;; parser :
-;;; 	a GMarkupParser structure to fill in
+;;;     a GMarkupParser structure to fill in
 ;;; 
 ;;; data :
-;;; 	return location for user data that will be passed in to parser
+;;;     return location for user data that will be passed in to parser
 ;;;     functions
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a object has a custom implementation, FALSE if it doesn't
+;;;     TRUE if a object has a custom implementation, FALSE if it doesn't.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -391,19 +391,19 @@
 ;;; This is called at the end of each custom element handled by the buildable.
 ;;; 
 ;;; buildable :
-;;; 	A GtkBuildable
+;;;     A GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	GtkBuilder used to construct this object
+;;;     GtkBuilder used to construct this object
 ;;; 
 ;;; child :
-;;; 	child object or NULL for non-child tags.
+;;;     child object or NULL for non-child tags
 ;;; 
 ;;; tagname :
-;;; 	name of tag
+;;;     name of tag
 ;;; 
 ;;; data :
-;;; 	user data that will be passed in to parser functions.
+;;;     user data that will be passed in to parser functions
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -421,19 +421,19 @@
 ;;; each custom tag handled by the buildable.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; child :
-;;; 	child object or NULL for non-child tags.
+;;;     child object or NULL for non-child tags
 ;;; 
 ;;; tagname :
-;;; 	the name of the tag
+;;;     the name of the tag
 ;;; 
 ;;; data :
-;;; 	user data created in custom_tag_start
+;;;     user data created in custom_tag_start
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -449,10 +449,10 @@
 ;;; or gtk_builder_add_from_string() is called on a builder.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -467,16 +467,16 @@
 ;;; Get the internal child called childname of the buildable object.
 ;;; 
 ;;; buildable :
-;;; 	a GtkBuildable
+;;;     a GtkBuildable
 ;;; 
 ;;; builder :
-;;; 	a GtkBuilder
+;;;     a GtkBuilder
 ;;; 
 ;;; childname :
-;;; 	name of child
+;;;     name of child
 ;;; 
 ;;; Returns :
-;;; 	the internal child of the buildable object.
+;;;     the internal child of the buildable object
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkEditable
 ;;; 
 ;;; Interface for text-editing widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkEditable
-;;;
+;;;     
 ;;;     gtk_editable_select_region
 ;;;     gtk_editable_get_selection_bounds
 ;;;     gtk_editable_insert_text
@@ -68,17 +68,17 @@
 ;;; Description
 ;;; 
 ;;; The GtkEditable interface is an interface which should be implemented by
-;;; text editing widgets, such as GtkEntry and GtkText. It contains functions
-;;; for generically manipulating an editable widget, a large number of action
-;;; signals used for key bindings, and several signals that an application can
-;;; connect to to modify the behavior of a widget.
+;;; text editing widgets, such as GtkEntry and GtkSpinButton. It contains
+;;; functions for generically manipulating an editable widget, a large number of
+;;; action signals used for key bindings, and several signals that an
+;;; application can connect to to modify the behavior of a widget.
 ;;; 
 ;;; As an example of the latter usage, by connecting the following handler to
-;;; "insert_text", an application can convert all entry into a widget into
+;;; "insert-text", an application can convert all entry into a widget into
 ;;; uppercase.
 ;;; 
 ;;; Example 57. Forcing entry to uppercase.
-;;;  
+;;; 
 ;;; #include <ctype.h>
 ;;; 
 ;;; void
@@ -133,12 +133,12 @@
 ;;;                     gint         end_pos,
 ;;;                     gpointer     user_data)      : Run Last
 ;;; 
-;;; This signal is emitted when text is deleted from the widget by the user.
-;;; The default handler for this signal will normally be responsible for
-;;; deleting the text, so by connecting to this signal and then stopping the
-;;; signal with g_signal_stop_emission(), it is possible to modify the range of
-;;; deleted text, or prevent it from being deleted entirely. The start_pos and
-;;; end_pos parameters are interpreted as for gtk_editable_delete_text().
+;;; This signal is emitted when text is deleted from the widget by the user. The
+;;; default handler for this signal will normally be responsible for deleting
+;;; the text, so by connecting to this signal and then stopping the signal with
+;;; g_signal_stop_emission(), it is possible to modify the range of deleted
+;;; text, or prevent it from being deleted entirely. The start_pos and end_pos
+;;; parameters are interpreted as for gtk_editable_delete_text().
 ;;; 
 ;;; editable :
 ;;;     the object which received the signal
@@ -178,12 +178,12 @@
 ;;;     nul-terminated
 ;;; 
 ;;; position :
-;;;     the position, in characters, at which to insert the new text. this is
-;;;     an in-out parameter. After the signal emission is finished, it should
-;;;     point after the newly inserted text.
+;;;     the position, in characters, at which to insert the new text. this is an
+;;;     in-out parameter. After the signal emission is finished, it should point
+;;;     after the newly inserted text
 ;;; 
 ;;; user_data :
-;;;     user data set when the signal handler was connected
+;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -212,9 +212,9 @@
 ;;;                                  gint end_pos);
 ;;; 
 ;;; Selects a region of text. The characters that are selected are those
-;;; characters at positions from start_pos up to, but not including end_pos.
-;;; If end_pos is negative, then the the characters selected are those
-;;; characters from start_pos to the end of the text.
+;;; characters at positions from start_pos up to, but not including end_pos. If
+;;; end_pos is negative, then the the characters selected are those characters
+;;; from start_pos to the end of the text.
 ;;; 
 ;;; Note that positions are specified in characters, not bytes.
 ;;; 
@@ -244,9 +244,9 @@
 ;;;                                             gint *start_pos,
 ;;;                                             gint *end_pos);
 ;;; 
-;;; Retrieves the selection bound of the editable. start_pos will be filled
-;;; with the start of the selection and end_pos with end. If no text was
-;;; selected both will be identical and FALSE will be returned.
+;;; Retrieves the selection bound of the editable. start_pos will be filled with
+;;; the start of the selection and end_pos with end. If no text was selected
+;;; both will be identical and FALSE will be returned.
 ;;; 
 ;;; Note that positions are specified in characters, not bytes.
 ;;; 
@@ -272,7 +272,9 @@
 (defun gtk-editable-selection (editable)
   (with-foreign-objects ((start :int) (end :int))
     (let ((selected-p (gtk-editable-get-selection-bounds editable start end)))
-      (values selected-p (mem-ref start :int) (mem-ref end :int)))))
+      (values selected-p
+              (mem-ref start :int)
+              (mem-ref end :int)))))
 
 (export 'gtk-editable-selection)
 
@@ -327,8 +329,8 @@
 ;;;                                gint end_pos);
 ;;; 
 ;;; Deletes a sequence of characters. The characters that are deleted are those
-;;; characters at positions from start_pos up to, but not including end_pos.
-;;; If end_pos is negative, then the the characters deleted are those from
+;;; characters at positions from start_pos up to, but not including end_pos. If
+;;; end_pos is negative, then the the characters deleted are those from
 ;;; start_pos to the end of the text.
 ;;; 
 ;;; Note that the positions are specified in characters, not bytes.
@@ -364,8 +366,8 @@
 ;;; 
 ;;; Retrieves a sequence of characters. The characters that are retrieved are
 ;;; those characters at positions from start_pos up to, but not including
-;;; end_pos. If end_pos is negative, then the the characters retrieved are
-;;; those characters from start_pos to the end of the text.
+;;; end_pos. If end_pos is negative, then the the characters retrieved are those
+;;; characters from start_pos to the end of the text.
 ;;; 
 ;;; Note that positions are specified in characters, not bytes.
 ;;; 
@@ -381,7 +383,7 @@
 ;;; Returns :
 ;;;     a pointer to the contents of the widget as a string. This string is
 ;;;     allocated by the GtkEditable implementation and should be freed by the
-;;;     caller
+;;;     caller.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_editable_get_chars" %gtk-editable-get-chars) g-string
@@ -433,8 +435,8 @@
 ;;; 
 ;;; void gtk_editable_paste_clipboard (GtkEditable *editable);
 ;;; 
-;;; Pastes the content of the clipboard to the current position of the cursor
-;;; in the editable.
+;;; Pastes the content of the clipboard to the current position of the cursor in
+;;; the editable.
 ;;; 
 ;;; editable :
 ;;;     a GtkEditable
@@ -470,8 +472,8 @@
 ;;; Sets the cursor position in the editable to the given value.
 ;;; 
 ;;; The cursor is displayed before the character with the given (base 0) index
-;;; in the contents of the editable. The value must be less than or equal to
-;;; the number of characters in the editable. A value of -1 indicates that the
+;;; in the contents of the editable. The value must be less than or equal to the
+;;; number of characters in the editable. A value of -1 indicates that the
 ;;; position should be set after the last character of the editable. Note that
 ;;; position is in characters, not in bytes.
 ;;; 
@@ -481,6 +483,8 @@
 ;;; position :
 ;;;     the position of the cursor
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-editable-set-position))
 
 (defun gtk-editable-set-position (editable position)
   (setf (gtk-editable-position editable) position))
@@ -504,6 +508,8 @@
 ;;;     the cursor position
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-editable-get-position))
+
 (defun gtk-editable-get-position (editable)
   (gtk-editable-position editable))
 
@@ -523,6 +529,8 @@
 ;;;     TRUE if the user is allowed to edit the text in the widget
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-editable-set-editable))
+
 (defun gtk-editable-set-editable (editable is-editable)
   (setf (gtk-editable-editable editable) is-editable))
 
@@ -541,6 +549,8 @@
 ;;; Returns :
 ;;;     TRUE if editable is editable.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-editable-get-editable))
 
 (defun gtk-editable-get-editable (editable)
   (gtk-editable-editable editable))

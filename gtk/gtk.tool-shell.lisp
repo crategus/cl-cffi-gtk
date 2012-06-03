@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,12 +31,12 @@
 ;;; GtkToolShell
 ;;; 
 ;;; Interface for containers containing GtkToolItem widgets
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkToolShell
 ;;;     GtkToolShellIface
-;;;     
+;;;
 ;;;     gtk_tool_shell_get_ellipsize_mode
 ;;;     gtk_tool_shell_get_icon_size
 ;;;     gtk_tool_shell_get_orientation
@@ -55,15 +55,15 @@
 ;;; Prerequisites
 ;;; 
 ;;; GtkToolShell requires GtkWidget.
+;;;
 ;;; Known Implementations
 ;;; 
 ;;; GtkToolShell is implemented by GtkToolItemGroup and GtkToolbar.
+;;;
 ;;; Description
 ;;; 
 ;;; The GtkToolShell interface allows container widgets to provide additional
 ;;; information when embedding GtkToolItem widgets.
-;;; 
-;;; see_also: GtkToolbar, GtkToolItem
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -79,13 +79,17 @@
 (define-g-interface "GtkToolShell" gtk-tool-shell
   (:export t
    :type-initializer "gtk_tool_shell_get_type")
-  (:cffi icon-size gtk-tool-shell-icon-size gtk-icon-size
+  (:cffi icon-size
+         gtk-tool-shell-icon-size gtk-icon-size
          "gtk_tool_shell_get_icon_size" nil)
-  (:cffi orientation gtk-tool-shell-orientation gtk-orientation
+  (:cffi orientation
+         gtk-tool-shell-orientation gtk-orientation
          "gtk_tool_shell_get_orientation" nil)
-  (:cffi relief-style gtk-tool-shell-relief-style gtk-relief-style
+  (:cffi relief-style
+         gtk-tool-shell-relief-style gtk-relief-style
          "gtk_tool_shell_get_relief_style" nil)
-  (:cffi style gtk-tool-shell-style gtk-toolbar-style
+  (:cffi style
+         gtk-tool-shell-style gtk-toolbar-style
          "gtk_tool_shell_get_style" nil))
 
 ;;; ----------------------------------------------------------------------------
@@ -136,7 +140,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_ellipsize_mode ()
 ;;; 
-;;; PangoEllipsizeMode  gtk_tool_shell_get_ellipsize_mode   (GtkToolShell *shell);
+;;; PangoEllipsizeMode gtk_tool_shell_get_ellipsize_mode (GtkToolShell *shell);
 ;;; 
 ;;; Retrieves the current ellipsize mode for the tool shell. Tool items must not
 ;;; call this function directly, but rely on gtk_tool_item_get_ellipsize_mode()
@@ -293,7 +297,7 @@
 ;;;     a GtkToolShell
 ;;; 
 ;;; Returns :
-;;;     the current text size group of shell. [transfer none]
+;;;     the current text size group of shell
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
