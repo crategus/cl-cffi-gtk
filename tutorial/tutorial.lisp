@@ -27,7 +27,7 @@
 (asdf:operate 'asdf:load-op :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp))
+  (:use :gtk :gdk :gobject :glib :gio :pango :cairo :cffi :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -1174,8 +1174,51 @@
       (gtk-widget-show-all window))))
 
 
+;;; ----------------------------------------------------------------------------
 
+;;; Info Bar
 
+(defun example-info-bar ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Info bar"
+                                  :border-width 12
+                                  :default-width 250))
+           (grid (make-instance 'gtk-grid))
+           (info-bar (make-instance 'gtk-info-bar
+                                    :no-show-all t))
+           (message (make-instance 'gtk-label
+                                   :label ""))
+           (content (gtk-info-bar-get-content-area info-bar)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-show message)
+      ;; Add a label to the content area of the info bar
+      (gtk-container-add content message)
+      ;; Add a button OK to the action area
+      (gtk-info-bar-add-button info-bar "gtk-ok" 1)
+      ;; Add two more buttons to the action area
+      (gtk-info-bar-add-buttons info-bar "gtk-cancel" 2
+                                         "gtk-no" 3)
+      ;; Connect a handler for the "response" signal of the info bar
+      (g-signal-connect info-bar "response"
+         (lambda (widget response-id)
+           (declare (ignore widget))
+           (format t "response-id is ~A~%" response-id)
+           (gtk-widget-hide info-bar)))
+      (gtk-grid-attach grid info-bar 0 2 1 1)
+      ;; Show the info bar
+      (gtk-label-set-text message "An Info Message in the content area.")
+      (gtk-info-bar-set-message-type info-bar :info)
+      (gtk-widget-show info-bar)
+      ;; Add the container grid to the window and show all
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
 
 ;;;   Accel Labels
 
@@ -3175,5 +3218,29 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
                           (gtk-main-quit)))
       (gtk-container-add window (create-view-and-model))
       (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; GtkApplication
+
+;; Starting the implementation of an application
+
+(defun bloat-pad-new ()
+  (g-set-application-name "Bloatpad")
+  (make-instance 'gtk-application
+                 :application-id "org.gtk.Test.bloatpad"
+                 :flags :handles-open
+                 :inactivity-timeout 30000
+                 :register-session t))
+
+(defun example-application (&optional (argc 0) (argv (null-pointer)))
+  (within-main-loop
+    (let ((bloat-pad (bloat-pad-new)))
+; gtk-application-add-accelerator is not available
+;      (gtk-application-add-accelerator bloat-pad
+;                                       "F11"
+;                                       "win.fullscreen"
+;                                       nil)
+      (g-application-run bloat-pad argc argv))))
 
 ;;; ----------------------------------------------------------------------------
