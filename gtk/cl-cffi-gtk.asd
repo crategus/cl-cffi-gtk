@@ -72,11 +72,11 @@
    (:file "gtk.settings")              ; Sharing settings
    (:file "gtk.selections")            ; Inter-process communication
                                        
-   ;; Interface builder                
+   ;; Interface builder
    (:file "gtk.buildable")             ; GtkBuildable
    (:file "gtk.builder")               ; Build an interface
                                        
-   ;; More Inferfaces                  
+   ;; Inferfaces
    (:file "atk.implementor-iface")     ; AtkImplementorIface
    (:file "gtk.orientable")            ; Interface for flippable widgets
    (:file "gtk.activatable")           ; Interface for activatable widgets
@@ -84,12 +84,12 @@
    (:file "gtk.actionable")            ; Interface for widgets that have actions
    (:file "gtk.recent-chooser")        ; Displaying recently used files
                                        
-   ;; Theming in Gtk+                  
+   ;; Theming in Gtk+
    (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.stock-images")          ; Manipulating stock icons
    (:file "gtk.icon-theme")            ; Looking up icons by name
                                        
-   ;; Abstract Base Classes            
+   ;; Abstract Base Classes
    (:file "gtk.widget")                ; Base class for all widgets
    (:file "gtk.misc")                  ; Base class for alignments
    (:file "gtk.container")             ; GtkContainer
@@ -111,7 +111,7 @@
    (:file "gtk.button-box")            ; Container for arranging buttons
    (:file "gtk.overlay")               ; Container which overlays widgets
                                        
-   ;; Ornaments                        
+   ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
    (:file "gtk.frame")                 ; Decorative frame
    (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
@@ -136,9 +136,9 @@
    (:file "gtk.label")                 ; GtkLabel
    (:file "gtk.progress-bar")          ; GtkProgessBar
    (:file "gtk.statusbar")             ; GTKStatusbar
-   ;; GtkInfoBar not implemented     
+   (:file "gtk.info-bar")              ; GtkInfoBar
    (:file "gtk.status-icon")           ; GtkStatusIcon
-   ;; GtkSpinner not implemented
+   (:file "gtk.spinner")               ; GtkSpinner
    
    ;; Buttons and Toggles
    (:file "gtk.button")                ; GtkButton
@@ -204,7 +204,9 @@
    (:file "gtk.combo-box-text")        ; Simple, text-only combo box
    (:file "gtk.tool-shell")            ; Interface for GtkToolItem
    (:file "gtk.tool-item")             ; GtkToolItem
+   (:file "gtk.tool-item-group")       ; GtkToolItemGroup
    (:file "gtk.toolbar")               ; Create bars of buttons
+   (:file "gtk.tool-palette")          ; Tool palette with categories
    (:file "gtk.separator-tool-item")   ; Toolbar item that separates groups
    (:file "gtk.tool-button")           ; GtkToolButton
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
@@ -267,6 +269,7 @@
    
    ;; Application support
    (:file "gtk.application")           ; Application class
+   (:file "gtk.application-window")    ; GtkApplicationWindow
    
    ;; Deprecated
    (:file "gtk.style")                 ; Functions for drawing widget parts
