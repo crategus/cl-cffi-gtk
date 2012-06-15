@@ -231,6 +231,9 @@
 ;;; implementation and should never be accessed directly.
 ;;; ----------------------------------------------------------------------------
 
+;; %g-object is not needed for the implementation.
+;; It is defined to access the property ref-count for debugging the code.
+
 (defcstruct %g-object
   (:type-instance g-type-instance)
   (:ref-count :uint)
@@ -238,9 +241,7 @@
 
 (export '%g-object)
 
-;;; ----------------------------------------------------------------------------
-
-;; Access the slot ref-count of %g-object
+;; Accessor for the slot ref-count of %g-object
 
 (defun ref-count (pointer)
   (foreign-slot-value (if (pointerp pointer)
@@ -249,6 +250,8 @@
                       '%g-object :ref-count))
 
 ;;; ----------------------------------------------------------------------------
+
+;; Define the base class g-object
 
 (defclass g-object ()
   ((pointer
@@ -263,14 +266,14 @@
    (signal-handlers
     :type (array t *)
     :initform (make-array 0 :adjustable t :fill-pointer t)
-    :reader g-object-signal-handlers))
-  (:documentation
-    "Base class for GObject classes hierarchy."))
+    :reader g-object-signal-handlers)))
 
 (export 'g-object)
-(export 'pointer)
+(export 'pointer) ; TODO: g-object-pointer might be more consistent
 (export 'g-object-has-reference)
 (export 'g-object-signal-handlers)
+
+;; Add g-object to the global Hash table *registered-object-types*
 
 (register-object-type "GObject" 'g-object)
 
@@ -296,20 +299,23 @@
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:value g-value))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; GC for weak pointers
+
+(defvar *gobject-gc-hooks-lock*
+        (make-recursive-lock "gobject-gc-hooks-lock"))
+(defvar *gobject-gc-hooks* nil) ; pointers to objects to be freed
+
 ;;; ----------------------------------------------------------------------------
 
 (defmethod release ((obj g-object))
   (cancel-finalization obj)
   (let ((p (pointer obj)))
     (setf (pointer obj) nil)
-    (g-object-dispose-carefully p)))
+    (dispose-carefully p)))
 
-;;; ----------------------------------------------------------------------------
-
-(defvar *gobject-gc-hooks-lock* (make-recursive-lock "gobject-gc-hooks-lock"))
-(defvar *gobject-gc-hooks* nil) ; pointers to objects to be freed
-
-(defun g-object-dispose-carefully (pointer)
+(defun dispose-carefully (pointer)
   (handler-case
       (register-gobject-for-gc pointer)
     (error (e)
@@ -322,14 +328,12 @@
       (push pointer *gobject-gc-hooks*)
       (unless locks-were-present
         (log-for :gc "adding idle-gc-hook to main loop~%")
-        (%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
+        (glib::%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
 
 (defcallback g-idle-gc-hook :boolean ((data :pointer))
   (declare (ignore data))
   (activate-gc-hooks)
   nil)
-
-;;; ----------------------------------------------------------------------------
 
 (defun activate-gc-hooks ()
   (with-recursive-lock-held (*gobject-gc-hooks-lock*)
@@ -364,7 +368,7 @@
                          pointer
                          (ref-count pointer))
                 (handler-case
-                    (g-object-dispose-carefully pointer)
+                    (dispose-carefully pointer)
                   (error (e)
                     (log-for :gc "Error in finalizer for ~A: ~A~%" s e)
                     (format t "Error in finalizer for ~A: ~A~%" s e))))))
@@ -383,7 +387,8 @@
     (log-for :gc "g_object_ref_sink(~A)~%" (pointer obj))
     (g-object-ref-sink (pointer obj)))
   (setf (g-object-has-reference obj) t)
-  (setf (gethash (pointer-address (pointer obj)) *foreign-gobjects-strong*) obj)
+  (setf (gethash (pointer-address (pointer obj)) *foreign-gobjects-strong*)
+        obj)
   (g-object-add-toggle-ref (pointer obj)
                            (callback gobject-toggle-ref-toggled)
                            (null-pointer))
@@ -402,18 +407,21 @@
            (or (gethash (pointer-address pointer) *foreign-gobjects-strong*)
                (gethash (pointer-address pointer) *foreign-gobjects-weak*)))
   (if is-last-ref
-      (let ((obj (gethash (pointer-address pointer) *foreign-gobjects-strong*)))
+      (let ((obj (gethash (pointer-address pointer)
+                           *foreign-gobjects-strong*)))
         (if obj
             (progn
               (remhash (pointer-address pointer) *foreign-gobjects-strong*)
-              (setf (gethash (pointer-address pointer) *foreign-gobjects-weak*)
+              (setf (gethash (pointer-address pointer)
+                              *foreign-gobjects-weak*)
                     obj))
             (progn
               (log-for :gc "GObject at ~A has no lisp-side (strong) reference"
                         pointer)
               (warn "GObject at ~A has no lisp-side (strong) reference"
                     pointer))))
-      (let ((obj (gethash (pointer-address pointer) *foreign-gobjects-weak*)))
+      (let ((obj (gethash (pointer-address pointer)
+                           *foreign-gobjects-weak*)))
         (unless obj
           (log-for :gc "GObject at ~A has no lisp-side (weak) reference"
                    pointer)
@@ -423,6 +431,8 @@
               obj))))
 
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: This function is not used.
 
 (defcallback gobject-weak-ref-finalized :void
     ((data :pointer) (pointer :pointer))
@@ -511,8 +521,9 @@
   (unless (null-pointer-p pointer)
     (or (gethash (pointer-address pointer) *foreign-gobjects-strong*)
         (gethash (pointer-address pointer) *foreign-gobjects-weak*)
-        (progn (log-for :gc "Now creating object for ~A~%" pointer)
-               (create-gobject-from-pointer pointer)))))
+        (progn
+          (log-for :gc "Now creating object for ~A~%" pointer)
+          (create-gobject-from-pointer pointer)))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -531,7 +542,7 @@
   (setf type (gtype type))
   (iter (while (not (null type)))
         (for lisp-type = (gethash (gtype-name type)
-                                  *registered-object-types*))
+                                   *registered-object-types*))
         (when lisp-type
           (return lisp-type))
         (setf type (g-type-parent type))))
@@ -614,49 +625,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defclass gobject-class (standard-class)
-  ((g-type-name :initform nil
-                :accessor gobject-class-g-type-name)
-   (direct-g-type-name :initform nil
-                       :initarg :g-type-name
-                       :accessor gobject-class-direct-g-type-name)
-   (g-type-initializer :initform nil
-                       :initarg :g-type-initializer
-                       :reader gobject-class-g-type-initializer)
-   (interface-p :initform nil
-                :initarg :g-interface-p
-                :reader gobject-class-interface-p))
-  (:documentation "Metaclass for GObject-based classes."))
-
-(export 'gobject-class)
-(export 'gobject-class-g-type-name)
-(export 'gobject-class-direct-g-type-name)
-(export 'gobject-class-g-type-initializer)
-(export 'gobject-class-interface-p)
-
-;;; ----------------------------------------------------------------------------
-
-(define-condition property-access-error (error)
-  ((property-name :initarg :property-name
-                  :reader property-access-error-property-name)
-   (class-name :initarg :class-name :reader property-access-error-class-name)
-   (message :initarg :message :reader property-access-error-message))
-  (:report (lambda (condition stream)
-             (format stream "Error accessing property '~A' on class '~A': ~A"
-                     (property-access-error-property-name condition)
-                     (property-access-error-class-name condition)
-                     (property-access-error-message condition)))))
-
-(define-condition property-unreadable-error (property-access-error)
-  ()
-  (:default-initargs :message "property is not readable"))
-
-(define-condition property-unwritable-error (property-access-error)
-  ()
-  (:default-initargs :message "property is not writable"))
-
-;;; ----------------------------------------------------------------------------
-
 ;; Structure describing a property of a GObject class.
 
 (defstruct param-spec
@@ -681,6 +649,27 @@
                 (param-spec-writable instance)
                 (param-spec-constructor instance)
                 (param-spec-constructor-only instance)))))
+
+;;; ----------------------------------------------------------------------------
+
+(define-condition property-access-error (error)
+  ((property-name :initarg :property-name
+                  :reader property-access-error-property-name)
+   (class-name :initarg :class-name :reader property-access-error-class-name)
+   (message :initarg :message :reader property-access-error-message))
+  (:report (lambda (condition stream)
+             (format stream "Error accessing property '~A' on class '~A': ~A"
+                     (property-access-error-property-name condition)
+                     (property-access-error-class-name condition)
+                     (property-access-error-message condition)))))
+
+(define-condition property-unreadable-error (property-access-error)
+  ()
+  (:default-initargs :message "property is not readable"))
+
+(define-condition property-unwritable-error (property-access-error)
+  ()
+  (:default-initargs :message "property is not writable"))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -715,13 +704,34 @@
 (defun parse-g-param-spec (param)
   (let ((flags (foreign-slot-value param 'g-param-spec :flags)))
     (make-param-spec
-             :name (foreign-slot-value param 'g-param-spec :name)
-             :type (foreign-slot-value param 'g-param-spec :value-type)
-             :readable (not (null (member :readable flags)))
-             :writable (not (null (member :writable flags)))
-             :constructor (not (null (member :construct flags)))
-             :constructor-only (not (null (member :construct-only flags)))
-             :owner-type (foreign-slot-value param 'g-param-spec :owner-type))))
+        :name (foreign-slot-value param 'g-param-spec :name)
+        :type (foreign-slot-value param 'g-param-spec :value-type)
+        :readable (not (null (member :readable flags)))
+        :writable (not (null (member :writable flags)))
+        :constructor (not (null (member :construct flags)))
+        :constructor-only (not (null (member :construct-only flags)))
+        :owner-type (foreign-slot-value param 'g-param-spec :owner-type))))
+
+
+(defclass gobject-class (standard-class)
+  ((g-type-name :initform nil
+                :accessor gobject-class-g-type-name)
+   (direct-g-type-name :initform nil
+                       :initarg :g-type-name
+                       :accessor gobject-class-direct-g-type-name)
+   (g-type-initializer :initform nil
+                       :initarg :g-type-initializer
+                       :reader gobject-class-g-type-initializer)
+   (interface-p :initform nil
+                :initarg :g-interface-p
+                :reader gobject-class-interface-p))
+  (:documentation "Metaclass for GObject-based classes."))
+
+(export 'gobject-class)
+(export 'gobject-class-g-type-name)
+(export 'gobject-class-direct-g-type-name)
+(export 'gobject-class-g-type-initializer)
+(export 'gobject-class-interface-p)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -782,7 +792,10 @@
   (when (gobject-class-direct-g-type-name object)
     (register-object-type (gobject-class-direct-g-type-name object)
                           (class-name object))
-    (at-init (object) (initialize-gobject-class-g-type object))))
+    (at-init (object)
+             (initialize-gobject-class-g-type object))))
+
+;;; ----------------------------------------------------------------------------
 
 (defun initialize-gobject-class-g-type (class)
   (if (gobject-class-g-type-initializer class)
@@ -804,7 +817,8 @@
                       (gobject-class-direct-g-type-name class)
                       (class-name class)
                       (gobject-class-g-type-initializer class)))
-              (unless (eq (gtype (gobject-class-direct-g-type-name class)) type)
+              (unless (eq (gtype (gobject-class-direct-g-type-name class))
+                      type)
                 (warn "Declared GType name '~A' for class '~A' does not match ~
                       actual GType name '~A'"
                       (gobject-class-direct-g-type-name class)
@@ -820,13 +834,15 @@
 
 (defmethod finalize-inheritance :after ((class gobject-class))
   (iter (for superclass in (class-direct-superclasses class))
-        (unless (class-finalized-p superclass) (finalize-inheritance superclass)))
+        (unless (class-finalized-p superclass)
+                (finalize-inheritance superclass)))
   (setf (gobject-class-g-type-name class)
         (or (gobject-class-direct-g-type-name class)
             (let ((gobject-superclass
                    (iter (for superclass in (class-direct-superclasses class))
-                         (finding superclass such-that (typep superclass
-                                                              'gobject-class)))))
+                         (finding superclass
+                                  such-that (typep superclass
+                                                    'gobject-class)))))
               (assert gobject-superclass)
               (gobject-class-g-type-name gobject-superclass)))))
 
@@ -876,7 +892,8 @@
    (g-setter-fn :initform nil
                 :accessor gobject-fn-effective-slot-definition-g-setter-fn)))
 
-(defmethod validate-superclass ((class gobject-class) (superclass standard-class))
+(defmethod validate-superclass ((class gobject-class)
+                                (superclass standard-class))
   t)
 
 (defmethod direct-slot-definition-class ((class gobject-class) &rest initargs
@@ -889,7 +906,8 @@
 
 (defvar *e-s-d* nil)
 
-(defmethod effective-slot-definition-class ((class gobject-class) &rest initargs)
+(defmethod effective-slot-definition-class ((class gobject-class)
+                                            &rest initargs)
   (declare (ignore initargs))
   (or *e-s-d* (call-next-method)))
 
@@ -1344,7 +1362,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-object (type)
-  (eql (gtype-id (gtype type)) +g-type-object+))
+  (eql (gtype-id (g-type-fundamental (gtype type))) +g-type-object+))
 
 (export 'g-type-is-object)
 
@@ -1366,7 +1384,7 @@
 ;;; G_IS_OBJECT()
 ;;; 
 ;;; #define G_IS_OBJECT(object) (G_TYPE_CHECK_INSTANCE_TYPE ((object),
-;;;                              G_TYPE_OBJECT))
+;;;                                                          G_TYPE_OBJECT))
 ;;; 
 ;;; Checks whether a valid GTypeInstance pointer is of type G_TYPE_OBJECT.
 ;;; 
@@ -1428,6 +1446,11 @@
 ;;;     Type id of object.
 ;;; ----------------------------------------------------------------------------
 
+(defun g-object-type (object)
+  (g-type-from-instance object))
+
+(export 'g-object-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_TYPE_NAME()
 ;;; 
@@ -1442,6 +1465,11 @@
 ;;;     Type name of object. The string is owned by the type system and should
 ;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-object-type-name (object)
+  (g-type-name object))
+
+(export 'g-object-type-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_CLASS_TYPE()
@@ -1479,7 +1507,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-class-name (class)
-  (gtype-name (g-type-from-class class)))
+  (g-type-name (g-type-from-class class)))
 
 (export 'g-object-class-name)
 
@@ -1687,8 +1715,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_override_property"
-          g-object-class-override-property)
-    :void
+           g-object-class-override-property) :void
   (class (:pointer g-object-class))
   (property-id :uint)
   (name :string))
@@ -1726,8 +1753,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_install_property"
-          g-object-interface-install-property)
-    :void
+           g-object-interface-install-property) :void
   (g-iface :pointer)
   (pspec (:pointer g-param-spec)))
 
@@ -1792,8 +1818,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_list_properties"
-          g-object-interface-list-properties)
-    (:pointer g-param-spec)
+           g-object-interface-list-properties) (:pointer g-param-spec)
   (interface :pointer)
   (n-properties (:pointer :uint)))
 

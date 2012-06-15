@@ -137,10 +137,10 @@
 ;;; Check if the closure still needs a marshaller. See g_closure_set_marshal().
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a GClosureMarshal marshaller has not yet been set on closure.
+;;;     TRUE if a GClosureMarshal marshaller has not yet been set on closure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -155,10 +155,10 @@
 ;;; g_closure_add_invalidate_notifier() and g_closure_add_marshal_guards().
 ;;; 
 ;;; cl :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; Returns :
-;;; 	number of notifiers
+;;;     number of notifiers
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -171,10 +171,10 @@
 ;;; parameter to the callback. See g_cclosure_new_swap().
 ;;; 
 ;;; cclosure :
-;;; 	a GCClosure
+;;;     a GCClosure
 ;;; 
 ;;; Returns :
-;;; 	TRUE if data has to be swapped.
+;;;     TRUE if data has to be swapped.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -185,7 +185,7 @@
 ;;; Cast a function pointer to a GCallback.
 ;;; 
 ;;; f :
-;;; 	a function pointer.
+;;;     a function pointer.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -212,11 +212,11 @@
 ;;; A GClosure represents a callback supplied by the programmer.
 ;;; 
 ;;; volatile guint in_marshal : 1;
-;;; 	Indicates whether the closure is currently being invoked with
+;;;     Indicates whether the closure is currently being invoked with
 ;;;     g_closure_invoke()
 ;;; 
 ;;; volatile guint is_invalid : 1;
-;;; 	Indicates whether the closure has been invalidated by
+;;;     Indicates whether the closure has been invalidated by
 ;;;     g_closure_invalidate()
 ;;; ----------------------------------------------------------------------------
 
@@ -251,10 +251,10 @@
 ;;; A GCClosure is a specialization of GClosure for C function callbacks.
 ;;; 
 ;;; GClosure closure;
-;;; 	the GClosure
+;;;     the GClosure
 ;;; 
 ;;; gpointer callback;
-;;; 	the callback function
+;;;     the callback function
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -270,24 +270,24 @@
 ;;; The type used for marshaller functions.
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	a GValue to store the return value. May be NULL if the callback of
+;;;     a GValue to store the return value. May be NULL if the callback of
 ;;;     closure doesn't return a value.
 ;;; 
 ;;; n_param_values :
-;;; 	the length of the param_values array
+;;;     the length of the param_values array
 ;;; 
 ;;; param_values :
-;;; 	an array of GValues holding the arguments on which to invoke the
+;;;     an array of GValues holding the arguments on which to invoke the
 ;;;     callback of closure.
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke().
+;;;     the invocation hint given as the last argument to g_closure_invoke().
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller, see
+;;;     additional data specified when registering the marshaller, see
 ;;;     g_closure_set_marshal() and g_closure_set_meta_marshal().
 ;;; ----------------------------------------------------------------------------
 
@@ -300,10 +300,10 @@
 ;;; registered on closures.
 ;;; 
 ;;; data :
-;;; 	data specified when registering the notification callback
+;;;     data specified when registering the notification callback
 ;;; 
 ;;; closure :
-;;; 	the GClosure on which the notification is emitted
+;;;     the GClosure on which the notification is emitted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -317,16 +317,16 @@
 ;;; last parameter.
 ;;; 
 ;;; callback_func :
-;;; 	the function to invoke
+;;;     the function to invoke
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback_func
+;;;     user data to pass to callback_func
 ;;; 
 ;;; destroy_data :
-;;; 	destroy notify to be called when user_data is no longer used
+;;;     destroy notify to be called when user_data is no longer used
 ;;; 
 ;;; Returns :
-;;; 	a new GCClosure
+;;;     a new GCClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -340,16 +340,16 @@
 ;;; first parameter.
 ;;; 
 ;;; callback_func :
-;;; 	the function to invoke
+;;;     the function to invoke
 ;;; 
 ;;; user_data :
-;;; 	user data to pass to callback_func
+;;;     user data to pass to callback_func
 ;;; 
 ;;; destroy_data :
-;;; 	destroy notify to be called when user_data is no longer used
+;;;     destroy notify to be called when user_data is no longer used
 ;;; 
 ;;; Returns :
-;;; 	a new GCClosure.
+;;;     a new GCClosure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -363,13 +363,13 @@
 ;;; want the callback to no longer run after the object is is freed.
 ;;; 
 ;;; callback_func :
-;;; 	the function to invoke
+;;;     the function to invoke
 ;;; 
 ;;; object :
-;;; 	a GObject pointer to pass to callback_func
+;;;     a GObject pointer to pass to callback_func
 ;;; 
 ;;; Returns :
-;;; 	a new GCClosure
+;;;     a new GCClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -384,13 +384,13 @@
 ;;; want the callback to no longer run after the object is is freed.
 ;;; 
 ;;; callback_func :
-;;; 	the function to invoke
+;;;     the function to invoke
 ;;; 
 ;;; object :
-;;; 	a GObject pointer to pass to callback_func
+;;;     a GObject pointer to pass to callback_func
 ;;; 
 ;;; Returns :
-;;; 	a new GCClosure
+;;;     a new GCClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -406,24 +406,24 @@
 ;;; A generic marshaller function implemented via libffi.
 ;;; 
 ;;; closure :
-;;; 	A GClosure.
+;;;     A GClosure.
 ;;; 
 ;;; return_gvalue :
-;;; 	A GValue to store the return value. May be NULL if the callback of
+;;;     A GValue to store the return value. May be NULL if the callback of
 ;;;     closure doesn't return a value.
 ;;; 
 ;;; n_param_values :
-;;; 	The length of the param_values array.
+;;;     The length of the param_values array.
 ;;; 
 ;;; param_values :
-;;; 	An array of GValues holding the arguments on which to invoke the
+;;;     An array of GValues holding the arguments on which to invoke the
 ;;;     callback of closure.
 ;;; 
 ;;; invocation_hint :
-;;; 	The invocation hint given as the last argument to g_closure_invoke().
+;;;     The invocation hint given as the last argument to g_closure_invoke().
 ;;; 
 ;;; marshal_data :
-;;; 	Additional data specified when registering the marshaller, see
+;;;     Additional data specified when registering the marshaller, see
 ;;;     g_closure_set_marshal() and g_closure_set_meta_marshal()
 ;;; 
 ;;; Since 2.30
@@ -440,15 +440,15 @@
 ;;; closures.
 ;;; 
 ;;; sizeof_closure :
-;;; 	the size of the structure to allocate, must be at least sizeof
+;;;     the size of the structure to allocate, must be at least sizeof
 ;;;     (GClosure)
 ;;; 
 ;;; object :
-;;; 	a GObject pointer to store in the data field of the newly allocated
+;;;     a GObject pointer to store in the data field of the newly allocated
 ;;;     GClosure
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated GClosure.
+;;;     a newly allocated GClosure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -489,7 +489,7 @@
 ;;;  3 g_closure_unref (closure); // XXX GObject doesn't really need this
 ;;; 
 ;;; Because g_source_set_closure() (and similar functions) take ownership of
-;;; the initial reference count, if it is unowned, we instead can write:	
+;;; the initial reference count, if it is unowned, we instead can write:    
 ;;; 
 ;;;  1 g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
 ;;; 
@@ -515,7 +515,7 @@
 ;;; g_closure_ref() should be called prior to this function.
 ;;; 
 ;;; closure :
-;;; 	GClosure to decrement the initial reference count on, if it's still
+;;;     GClosure to decrement the initial reference count on, if it's still
 ;;;     being held
 ;;; ----------------------------------------------------------------------------
 
@@ -534,7 +534,7 @@
 ;;; then the closure will be destroyed and freed.
 ;;; 
 ;;; closure :
-;;; 	GClosure to decrement the reference count on
+;;;     GClosure to decrement the reference count on
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_unref" g-closure-unref) :void
@@ -554,21 +554,21 @@
 ;;; Invokes the closure, i.e. executes the callback represented by the closure.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; return_value :
-;;; 	a GValue to store the return value. May be NULL if the callback of
+;;;     a GValue to store the return value. May be NULL if the callback of
 ;;;     closure doesn't return a value.
 ;;; 
 ;;; n_param_values :
-;;; 	the length of the param_values array
+;;;     the length of the param_values array
 ;;; 
 ;;; param_values :
-;;; 	an array of GValues holding the arguments on which to invoke the
+;;;     an array of GValues holding the arguments on which to invoke the
 ;;;     callback of closure.
 ;;; 
 ;;; invocation_hint :
-;;; 	a context-dependent invocation hint.
+;;;     a context-dependent invocation hint.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -590,7 +590,7 @@
 ;;; before).
 ;;; 
 ;;; closure :
-;;; 	GClosure to invalidate
+;;;     GClosure to invalidate
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_invalidate" g-closure-invalidate) :void
@@ -613,13 +613,13 @@
 ;;; notifiers.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; notify_data :
-;;; 	data to pass to notify_func
+;;;     data to pass to notify_func
 ;;; 
 ;;; notify_func :
-;;; 	the callback function to register
+;;;     the callback function to register
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_add_finalize_notifier" g-closure-add-finalize-notifier)
@@ -642,13 +642,13 @@
 ;;; before finalization notifiers, in an unspecified order.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; notify_data :
-;;; 	data to pass to notify_func
+;;;     data to pass to notify_func
 ;;; 
 ;;; notify_func :
-;;; 	the callback function to register
+;;;     the callback function to register
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_add_invalidate_notifier" g-closure-add-invalidate-notifier)
@@ -671,14 +671,14 @@
 ;;; Notice that notifiers are automatically removed after they are run.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; notify_data :
-;;; 	data which was passed to g_closure_add_finalize_notifier() when
+;;;     data which was passed to g_closure_add_finalize_notifier() when
 ;;;     registering notify_func
 ;;; 
 ;;; notify_func :
-;;; 	the callback function to remove
+;;;     the callback function to remove
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -693,14 +693,14 @@
 ;;; Notice that notifiers are automatically removed after they are run.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; notify_data :
-;;; 	data which was passed to g_closure_add_invalidate_notifier() when
+;;;     data which was passed to g_closure_add_invalidate_notifier() when
 ;;;     registering notify_func
 ;;; 
 ;;; notify_func :
-;;; 	the callback function to remove
+;;;     the callback function to remove
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -772,10 +772,10 @@
 ;;; function to use instead of closure->callback.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; marshal :
-;;; 	a GClosureMarshal function
+;;;     a GClosureMarshal function
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_set_marshal" g-closure-set-marshal) :void
@@ -799,19 +799,19 @@
 ;;; for an example of marshal guards.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; pre_marshal_data :
-;;; 	data to pass to pre_marshal_notify
+;;;     data to pass to pre_marshal_notify
 ;;; 
 ;;; pre_marshal_notify :
-;;; 	a function to call before the closure callback
+;;;     a function to call before the closure callback
 ;;; 
 ;;; post_marshal_data :
-;;; 	data to pass to post_marshal_notify
+;;;     data to pass to post_marshal_notify
 ;;; 
 ;;; post_marshal_notify :
-;;; 	a function to call after the closure callback
+;;;     a function to call after the closure callback
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -835,13 +835,13 @@
 ;;; marshaller as the marshal_data argument.
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; 
 ;;; marshal_data :
-;;; 	context-dependent data to pass to meta_marshal
+;;;     context-dependent data to pass to meta_marshal
 ;;; 
 ;;; meta_marshal :
-;;; 	a GClosureMarshal function
+;;;     a GClosureMarshal function
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -856,10 +856,10 @@
 ;;; filled in with pointers to appropriate functions.
 ;;; 
 ;;; source :
-;;; 	the source
+;;;     the source
 ;;; 
 ;;; closure :
-;;; 	a GClosure
+;;;     a GClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -877,7 +877,7 @@
 ;;; filled in with pointers to appropriate functions.
 ;;; 
 ;;; source :
-;;; 	the source
+;;;     the source
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -894,22 +894,22 @@
 ;;; (gpointer instance, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	1
+;;;     1
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding only the instance
+;;;     a GValue array holding only the instance
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -926,22 +926,22 @@
 ;;; (gpointer instance, gboolean arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gboolean parameter
+;;;     a GValue array holding the instance and the gboolean parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -958,22 +958,22 @@
 ;;; (gpointer instance, gchar arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gchar parameter
+;;;     a GValue array holding the instance and the gchar parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -990,22 +990,22 @@
 ;;; void (*callback) (gpointer instance, guchar arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the guchar parameter
+;;;     a GValue array holding the instance and the guchar parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1022,22 +1022,22 @@
 ;;; void (*callback) (gpointer instance, gint arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gint parameter
+;;;     a GValue array holding the instance and the gint parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1054,22 +1054,22 @@
 ;;; void (*callback) (gpointer instance, guint arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the guint parameter
+;;;     a GValue array holding the instance and the guint parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1086,22 +1086,22 @@
 ;;; void (*callback) (gpointer instance, glong arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the glong parameter
+;;;     a GValue array holding the instance and the glong parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1118,22 +1118,22 @@
 ;;; void (*callback) (gpointer instance, gulong arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gulong parameter
+;;;     a GValue array holding the instance and the gulong parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1151,22 +1151,22 @@
 ;;; the gint parameter denotes an enumeration type..
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the enumeration parameter
+;;;     a GValue array holding the instance and the enumeration parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1184,22 +1184,22 @@
 ;;; where the gint parameter denotes a flags type.
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the flags parameter
+;;;     a GValue array holding the instance and the flags parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1216,22 +1216,22 @@
 ;;; void (*callback) (gpointer instance, gfloat arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gfloat parameter
+;;;     a GValue array holding the instance and the gfloat parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1248,22 +1248,22 @@
 ;;; void (*callback) (gpointer instance, gdouble arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gdouble parameter
+;;;     a GValue array holding the instance and the gdouble parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1280,22 +1280,22 @@
 ;;; void (*callback) (gpointer instance, const gchar *arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gchar* parameter
+;;;     a GValue array holding the instance and the gchar* parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1312,22 +1312,22 @@
 ;;; void (*callback) (gpointer instance, GParamSpec *arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the GParamSpec* parameter
+;;;     a GValue array holding the instance and the GParamSpec* parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1344,22 +1344,22 @@
 ;;; void (*callback) (gpointer instance, GBoxed *arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the GBoxed* parameter
+;;;     a GValue array holding the instance and the GBoxed* parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1376,22 +1376,22 @@
 ;;; void (*callback) (gpointer instance, gpointer arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the gpointer parameter
+;;;     a GValue array holding the instance and the gpointer parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1408,22 +1408,22 @@
 ;;; void (*callback) (gpointer instance, GObject *arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the GObject* parameter
+;;;     a GValue array holding the instance and the GObject* parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1440,22 +1440,22 @@
 ;;; void (*callback) (gpointer instance, GVariant *arg1, gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding the instance and the GVariant* parameter
+;;;     a GValue array holding the instance and the GVariant* parameter
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -1475,22 +1475,22 @@
 ;;;                     gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	a GValue, which can store the returned string
+;;;     a GValue, which can store the returned string
 ;;; 
 ;;; n_param_values :
-;;; 	3
+;;;     3
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding instance, arg1 and arg2
+;;;     a GValue array holding instance, arg1 and arg2
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1508,22 +1508,22 @@
 ;;;                   gpointer user_data).
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	ignored
+;;;     ignored
 ;;; 
 ;;; n_param_values :
-;;; 	3
+;;;     3
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding instance, arg1 and arg2
+;;;     a GValue array holding instance, arg1 and arg2
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1541,22 +1541,22 @@
 ;;; where the gint parameter denotes a flags type.
 ;;; 
 ;;; closure :
-;;; 	the GClosure to which the marshaller belongs
+;;;     the GClosure to which the marshaller belongs
 ;;; 
 ;;; return_value :
-;;; 	a GValue which can store the returned gboolean
+;;;     a GValue which can store the returned gboolean
 ;;; 
 ;;; n_param_values :
-;;; 	2
+;;;     2
 ;;; 
 ;;; param_values :
-;;; 	a GValue array holding instance and arg1
+;;;     a GValue array holding instance and arg1
 ;;; 
 ;;; invocation_hint :
-;;; 	the invocation hint given as the last argument to g_closure_invoke()
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;; 
 ;;; marshal_data :
-;;; 	additional data specified when registering the marshaller
+;;;     additional data specified when registering the marshaller
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

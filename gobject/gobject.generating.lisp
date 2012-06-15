@@ -256,23 +256,24 @@
                           (list superclass))
                       ,@(mapcar #'interface->lisp-class-name interfaces))
        (,@(mapcar (lambda (property)
-                    (meta-property->slot name property))
-                  properties))
+                     (meta-property->slot name property))
+                   properties))
        (:metaclass gobject-class)
        (:g-type-name . ,g-type-name)
        ,@(when type-initializer
            (list `(:g-type-initializer . ,type-initializer))))
      ,@(when export
          (cons `(export ',name
-                        (find-package ,(package-name (symbol-package name))))
+                         (find-package
+                           ,(package-name (symbol-package name))))
                (mapcar (lambda (property)
                          `(export ',(intern (format nil "~A-~A"
-                                                    (symbol-name name)
-                                                    (property-name property))
-                                            (symbol-package name))
-                                  (find-package
-                                    ,(package-name (symbol-package name)))))
-                       properties)))))
+                                                       (symbol-name name)
+                                                       (property-name property))
+                                              (symbol-package name))
+                                   (find-package
+                                     ,(package-name (symbol-package name)))))
+                        properties)))))
 
 ;;; ----------------------------------------------------------------------------
 

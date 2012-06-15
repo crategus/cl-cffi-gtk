@@ -1392,8 +1392,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-from-instance (instance)
-  (g-type-from-class (foreign-slot-value instance
-                                         'g-type-instance :class)))
+  (let ((ptr (if (pointerp instance) instance (pointer instance))))
+    (g-type-from-class (foreign-slot-value ptr
+                                           'g-type-instance :class))))
 
 (export 'g-type-from-instance)
 
@@ -1779,6 +1780,15 @@
       (setf (gtype-%id gtype) n
             (gethash n *id-to-gtype*) gtype)
       n)))
+
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline g-type-name))
+
+(defun g-type-name (type)
+  (gtype-name type))
+
+(export 'g-type-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_qname ()

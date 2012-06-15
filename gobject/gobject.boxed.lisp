@@ -31,7 +31,7 @@
 ;;; Boxed Types
 ;;; 
 ;;; A mechanism to wrap opaque C structures registered by the type system
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     g_boxed_copy
@@ -81,10 +81,10 @@
 ;;; passed in boxed structure.
 ;;; 
 ;;; boxed :
-;;; 	The boxed structure to be copied.
+;;;     The boxed structure to be copied.
 ;;; 
 ;;; Returns :
-;;; 	The newly created copy of the boxed structure.
+;;;     The newly created copy of the boxed structure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -96,7 +96,7 @@
 ;;; passed.
 ;;; 
 ;;; boxed :
-;;; 	The boxed structure to be freed.
+;;;     The boxed structure to be freed.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -107,13 +107,13 @@
 ;;; Provide a copy of a boxed structure src_boxed which is of type boxed_type.
 ;;; 
 ;;; boxed_type :
-;;; 	The type of src_boxed.
+;;;     The type of src_boxed.
 ;;; 
 ;;; src_boxed :
-;;; 	The boxed structure to be copied.
+;;;     The boxed structure to be copied.
 ;;; 
 ;;; Returns :
-;;; 	The newly created copy of the boxed structure.
+;;;     The newly created copy of the boxed structure.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-boxed-copy :pointer
@@ -128,10 +128,10 @@
 ;;; Free the boxed structure boxed which is of type boxed_type.
 ;;; 
 ;;; boxed_type :
-;;; 	The type of boxed.
+;;;     The type of boxed.
 ;;; 
 ;;; boxed :
-;;; 	The boxed structure to be freed.
+;;;     The boxed structure to be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-boxed-free :void
@@ -150,16 +150,16 @@
 ;;; copy and free opaque boxed structures of this type.
 ;;; 
 ;;; name :
-;;; 	Name of the new boxed type.
+;;;     Name of the new boxed type.
 ;;; 
 ;;; boxed_copy :
-;;; 	Boxed structure copy function.
+;;;     Boxed structure copy function.
 ;;; 
 ;;; boxed_free :
-;;; 	Boxed structure free function.
+;;;     Boxed structure free function.
 ;;; 
 ;;; Returns :
-;;; 	New G_TYPE_BOXED derived type id for name.
+;;;     New G_TYPE_BOXED derived type id for name.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-boxed-type-register-static g-type-designator
@@ -176,10 +176,10 @@
 ;;; name name.
 ;;; 
 ;;; name :
-;;; 	the name of the new pointer type.
+;;;     the name of the new pointer type.
 ;;; 
 ;;; Returns :
-;;; 	a new G_TYPE_POINTER derived type id for name.
+;;;     a new G_TYPE_POINTER derived type id for name.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-pointer-type-register-static g-type-designator
@@ -220,23 +220,23 @@
 ;;; 
 ;;; The code fragments in the following example show the use of a property of
 ;;; type G_TYPE_STRV with g_object_class_install_property(), g_object_set() and
-;;; g_object_get().	
+;;; g_object_get().    
 ;;; 
-;;;  1 g_object_class_install_property (object_class,
-;;;  2                                  PROP_AUTHORS,
-;;;  3                                  g_param_spec_boxed("authors",
-;;;  4                                                     _("Authors"),
-;;;  5                                                     _("List of authors"),
-;;;  6                                                     G_TYPE_STRV,
-;;;  7                                                     G_PARAM_READWRITE));
-;;;  8 
-;;;  9 gchar *authors[] = { "Owen", "Tim", NULL };
-;;; 10 g_object_set (obj, "authors", authors, NULL);
-;;; 11 
-;;; 12 gchar *writers[];
-;;; 13 g_object_get (obj, "authors", &writers, NULL);
-;;; 14 /* do something with writers */
-;;; 15 g_strfreev (writers);
+;;; g_object_class_install_property (object_class,
+;;;                                  PROP_AUTHORS,
+;;;                                  g_param_spec_boxed("authors",
+;;;                                                     _("Authors"),
+;;;                                                     _("List of authors"),
+;;;                                                     G_TYPE_STRV,
+;;;                                                     G_PARAM_READWRITE));
+;;; 
+;;; gchar *authors[] = { "Owen", "Tim", NULL };
+;;; g_object_set (obj, "authors", authors, NULL);
+;;; 
+;;; gchar *writers[];
+;;; g_object_get (obj, "authors", &writers, NULL);
+;;; /* do something with writers */
+;;; g_strfreev (writers);
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------

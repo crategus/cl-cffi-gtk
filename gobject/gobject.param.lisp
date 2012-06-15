@@ -31,7 +31,7 @@
 ;;; Parameters and Values
 ;;; 
 ;;; Standard Parameter and Value Types
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     G_IS_PARAM_SPEC_BOOLEAN
@@ -274,10 +274,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_BOOLEAN.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -290,7 +290,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecBoolean.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -302,10 +302,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_BOOLEAN.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -328,10 +328,10 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gboolean default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-boolean
@@ -353,22 +353,22 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_boolean" g-param-spec-boolean)
@@ -389,10 +389,10 @@
 ;;; Set the contents of a G_TYPE_BOOLEAN GValue to v_boolean.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_BOOLEAN
+;;;     a valid GValue of type G_TYPE_BOOLEAN
 ;;; 
 ;;; v_boolean :
-;;; 	boolean value to be set
+;;;     boolean value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_boolean" g-value-set-boolean) :void
@@ -409,10 +409,10 @@
 ;;; Get the contents of a G_TYPE_BOOLEAN GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_BOOLEAN
+;;;     a valid GValue of type G_TYPE_BOOLEAN
 ;;; 
 ;;; Returns :
-;;; 	boolean contents of value
+;;;     boolean contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_boolean" g-value-get-boolean) :boolean
@@ -429,10 +429,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_CHAR.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -445,7 +445,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecChar.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -457,10 +457,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_CHAR.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -485,16 +485,16 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gint8 minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; gint8 maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; gint8 default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-char
@@ -517,28 +517,28 @@
 ;;; Creates a new GParamSpecChar instance specifying a G_TYPE_CHAR property.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_char" g-param-spec-char) (:pointer g-param-spec-char)
@@ -560,10 +560,10 @@
 ;;; Set the contents of a G_TYPE_CHAR GValue to v_char.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_CHAR
+;;;     a valid GValue of type G_TYPE_CHAR
 ;;; 
 ;;; v_char :
-;;; 	character value to be set
+;;;     character value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_char" g-value-set-char) :void
@@ -580,10 +580,10 @@
 ;;; Get the contents of a G_TYPE_CHAR GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_CHAR
+;;;     a valid GValue of type G_TYPE_CHAR
 ;;; 
 ;;; Returns :
-;;; 	character contents of value
+;;;     character contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_char" g-value-get-char) :char
@@ -600,10 +600,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_UCHAR.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -615,7 +615,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecUChar.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -627,10 +627,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_UCHAR.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -655,16 +655,16 @@
 ;;; character properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; guint8 minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; guint8 maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; guint8 default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-uchar
@@ -687,28 +687,28 @@
 ;;; Creates a new GParamSpecUChar instance specifying a G_TYPE_UCHAR property.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_uchar" g-param-spec-uchar) (:pointer g-param-spec-uchar)
@@ -730,10 +730,10 @@
 ;;; Set the contents of a G_TYPE_UCHAR GValue to v_uchar.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_UCHAR
+;;;     a valid GValue of type G_TYPE_UCHAR
 ;;; 
 ;;; v_uchar :
-;;; 	unsigned character value to be set
+;;;     unsigned character value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_uchar" g-value-set-uchar) :void
@@ -750,10 +750,10 @@
 ;;; Get the contents of a G_TYPE_UCHAR GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_UCHAR
+;;;     a valid GValue of type G_TYPE_UCHAR
 ;;; 
 ;;; Returns :
-;;; 	unsigned character contents of value
+;;;     unsigned character contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_uchar" g-value-get-uchar) :uchar
@@ -770,10 +770,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_INT.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -785,7 +785,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecInt.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -797,10 +797,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_INT.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -825,16 +825,16 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gint minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; gint maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; gint default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-int
@@ -859,28 +859,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_int" g-param-spec-int) (:pointer g-param-spec-int)
@@ -902,10 +902,10 @@
 ;;; Set the contents of a G_TYPE_INT GValue to v_int.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_INT
+;;;     a valid GValue of type G_TYPE_INT
 ;;; 
 ;;; v_int :
-;;; 	integer value to be set
+;;;     integer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_int" g-value-set-int) :void
@@ -922,10 +922,10 @@
 ;;; Get the contents of a G_TYPE_INT GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_INT
+;;;     a valid GValue of type G_TYPE_INT
 ;;; 
 ;;; Returns :
-;;; 	integer contents of value
+;;;     integer contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_int" g-value-get-int) :int
@@ -942,10 +942,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_UINT.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -957,7 +957,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecUInt.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -969,10 +969,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_UINT.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -997,16 +997,16 @@
 ;;; integer properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; guint minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; guint maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; guint default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-uint
@@ -1031,28 +1031,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_uint" g-param-spec-uint) (:pointer g-param-spec-uint)
@@ -1074,10 +1074,10 @@
 ;;; Set the contents of a G_TYPE_UINT GValue to v_uint.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_UINT
+;;;     a valid GValue of type G_TYPE_UINT
 ;;; 
 ;;; v_uint :
-;;; 	unsigned integer value to be set
+;;;     unsigned integer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_uint" g-value-set-uint) :void
@@ -1094,10 +1094,10 @@
 ;;; Get the contents of a G_TYPE_UINT GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_UINT
+;;;     a valid GValue of type G_TYPE_UINT
 ;;; 
 ;;; Returns :
-;;; 	unsigned integer contents of value
+;;;     unsigned integer contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_uint" g-value-get-uint) :uint
@@ -1114,10 +1114,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_LONG.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1129,7 +1129,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecLong.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1141,10 +1141,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_LONG.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1169,16 +1169,16 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; glong minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; glong maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; glong default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-long
@@ -1203,28 +1203,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_long" g-param-spec-long) (:pointer g-param-spec-long)
@@ -1246,10 +1246,10 @@
 ;;; Set the contents of a G_TYPE_LONG GValue to v_long.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_LONG
+;;;     a valid GValue of type G_TYPE_LONG
 ;;; 
 ;;; v_long :
-;;; 	long integer value to be set
+;;;     long integer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_long" g-value-set-long) :void
@@ -1266,10 +1266,10 @@
 ;;; Get the contents of a G_TYPE_LONG GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_LONG
+;;;     a valid GValue of type G_TYPE_LONG
 ;;; 
 ;;; Returns :
-;;; 	long integer contents of value
+;;;     long integer contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_long" g-value-get-long) :long
@@ -1286,10 +1286,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_ULONG.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1301,7 +1301,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecULong.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1313,10 +1313,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_ULONG.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1341,16 +1341,16 @@
 ;;; long integer properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gulong minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; gulong maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; gulong default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-ulong
@@ -1375,28 +1375,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_ulong" g-param-spec-ulong) (:pointer g-param-spec-ulong)
@@ -1418,10 +1418,10 @@
 ;;; Set the contents of a G_TYPE_ULONG GValue to v_ulong.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_ULONG
+;;;     a valid GValue of type G_TYPE_ULONG
 ;;; 
 ;;; v_ulong :
-;;; 	unsigned long integer value to be set
+;;;     unsigned long integer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_ulong" g-value-set-ulong) :void
@@ -1438,10 +1438,10 @@
 ;;; Get the contents of a G_TYPE_ULONG GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_ULONG
+;;;     a valid GValue of type G_TYPE_ULONG
 ;;; 
 ;;; Returns :
-;;; 	unsigned long integer contents of value
+;;;     unsigned long integer contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_ulong" g-value-get-ulong) :ulong
@@ -1458,10 +1458,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_INT64.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1473,7 +1473,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecInt64.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1485,10 +1485,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_INT64.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1513,16 +1513,16 @@
 ;;; integer properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gint64 minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; gint64 maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; gint64 default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-int64
@@ -1547,28 +1547,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_int64" g-param-spec-int64) (:pointer g-param-spec-int64)
@@ -1590,10 +1590,10 @@
 ;;; Set the contents of a G_TYPE_INT64 GValue to v_int64.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_INT64
+;;;     a valid GValue of type G_TYPE_INT64
 ;;; 
 ;;; v_int64 :
-;;; 	64bit integer value to be set
+;;;     64bit integer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_int64" g-value-set-int64) :void
@@ -1610,10 +1610,10 @@
 ;;; Get the contents of a G_TYPE_INT64 GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_INT64
+;;;     a valid GValue of type G_TYPE_INT64
 ;;; 
 ;;; Returns :
-;;; 	64bit integer contents of value
+;;;     64bit integer contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_int64" g-value-get-int64) :int64
@@ -1630,10 +1630,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_UINT64.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1645,7 +1645,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecUInt64.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1657,10 +1657,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_UINT64.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1685,16 +1685,16 @@
 ;;; 64bit integer properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; guint64 minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; guint64 maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; guint64 default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-uint64
@@ -1719,28 +1719,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_uint64" g-param-spec-uint64)
@@ -1763,10 +1763,10 @@
 ;;; Set the contents of a G_TYPE_UINT64 GValue to v_uint64.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_UINT64
+;;;     a valid GValue of type G_TYPE_UINT64
 ;;; 
 ;;; v_uint64 :
-;;; 	unsigned 64bit integer value to be set
+;;;     unsigned 64bit integer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_uint64" g-value-set-uint64) :void
@@ -1783,10 +1783,10 @@
 ;;; Get the contents of a G_TYPE_UINT64 GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_UINT64
+;;;     a valid GValue of type G_TYPE_UINT64
 ;;; 
 ;;; Returns :
-;;; 	unsigned 64bit integer contents of value
+;;;     unsigned 64bit integer contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_uint64" g-value-get-uint64) :uint64
@@ -1803,10 +1803,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_FLOAT.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1818,7 +1818,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecFloat.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1830,10 +1830,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_FLOAT.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1859,19 +1859,19 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gfloat minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; gfloat maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; gfloat default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; gfloat epsilon;
-;;; 	values closer than epsilon will be considered identical by
+;;;     values closer than epsilon will be considered identical by
 ;;;     g_param_values_cmp(); the default value is 1e-30.
 ;;; ----------------------------------------------------------------------------
 
@@ -1898,28 +1898,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_float" g-param-spec-float) (:pointer g-param-spec-float)
@@ -1941,10 +1941,10 @@
 ;;; Set the contents of a G_TYPE_FLOAT GValue to v_float.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_FLOAT
+;;;     a valid GValue of type G_TYPE_FLOAT
 ;;; 
 ;;; v_float :
-;;; 	float value to be set
+;;;     float value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_float" g-value-set-float) :void
@@ -1961,10 +1961,10 @@
 ;;; Get the contents of a G_TYPE_FLOAT GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_FLOAT
+;;;     a valid GValue of type G_TYPE_FLOAT
 ;;; 
 ;;; Returns :
-;;; 	float contents of value
+;;;     float contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_float" g-value-get-float) :float
@@ -1981,10 +1981,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_DOUBLE.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1996,7 +1996,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecDouble.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2008,10 +2008,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_DOUBLE.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2037,19 +2037,19 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gdouble minimum;
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; gdouble maximum;
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; gdouble default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; gdouble epsilon;
-;;; 	values closer than epsilon will be considered identical by
+;;;     values closer than epsilon will be considered identical by
 ;;;     g_param_values_cmp(); the default value is 1e-90.
 ;;; ----------------------------------------------------------------------------
 
@@ -2076,28 +2076,28 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; minimum :
-;;; 	minimum value for the property specified
+;;;     minimum value for the property specified
 ;;; 
 ;;; maximum :
-;;; 	maximum value for the property specified
+;;;     maximum value for the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_double" g-param-spec-double)
@@ -2120,10 +2120,10 @@
 ;;; Set the contents of a G_TYPE_DOUBLE GValue to v_double.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_DOUBLE
+;;;     a valid GValue of type G_TYPE_DOUBLE
 ;;; 
 ;;; v_double :
-;;; 	double value to be set
+;;;     double value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_double" g-value-set-double) :void
@@ -2140,10 +2140,10 @@
 ;;; Get the contents of a G_TYPE_DOUBLE GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_DOUBLE
+;;;     a valid GValue of type G_TYPE_DOUBLE
 ;;; 
 ;;; Returns :
-;;; 	double contents of value
+;;;     double contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_double" g-value-get-double) :double
@@ -2160,10 +2160,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_ENUM.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2175,7 +2175,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecEnum.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2188,10 +2188,10 @@
 ;;; G_TYPE_ENUM.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2215,13 +2215,13 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; GEnumClass *enum_class;
-;;; 	the GEnumClass for the enum
+;;;     the GEnumClass for the enum
 ;;; 
 ;;; gint default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-enum
@@ -2244,25 +2244,25 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; enum_type :
-;;; 	a GType derived from G_TYPE_ENUM
+;;;     a GType derived from G_TYPE_ENUM
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_enum" g-param-spec-enum) (:pointer g-param-spec-enum)
@@ -2283,10 +2283,10 @@
 ;;; Set the contents of a G_TYPE_ENUM GValue to v_enum.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_ENUM
+;;;     a valid GValue whose type is derived from G_TYPE_ENUM
 ;;; 
 ;;; v_enum :
-;;; 	enum value to be set
+;;;     enum value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_enum" g-value-set-enum) :void
@@ -2303,10 +2303,10 @@
 ;;; Get the contents of a G_TYPE_ENUM GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_ENUM
+;;;     a valid GValue whose type is derived from G_TYPE_ENUM
 ;;; 
 ;;; Returns :
-;;; 	enum contents of value
+;;;     enum contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_enum" g-value-get-enum) :int
@@ -2323,10 +2323,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_FLAGS.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2338,7 +2338,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecFlags.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2351,10 +2351,10 @@
 ;;; G_TYPE_FLAGS.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2378,13 +2378,13 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; GFlagsClass *flags_class;
-;;; 	the GFlagsClass for the flags
+;;;     the GFlagsClass for the flags
 ;;; 
 ;;; guint default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-flags
@@ -2407,25 +2407,25 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; flags_type :
-;;; 	a GType derived from G_TYPE_FLAGS
+;;;     a GType derived from G_TYPE_FLAGS
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_flags" g-param-spec-flags) (:pointer g-param-spec-flags)
@@ -2446,10 +2446,10 @@
 ;;; Set the contents of a G_TYPE_FLAGS GValue to v_flags.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_FLAGS
+;;;     a valid GValue whose type is derived from G_TYPE_FLAGS
 ;;; 
 ;;; v_flags :
-;;; 	flags value to be set
+;;;     flags value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_flags" g-value-set-flags) :void
@@ -2466,10 +2466,10 @@
 ;;; Get the contents of a G_TYPE_FLAGS GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_FLAGS
+;;;     a valid GValue whose type is derived from G_TYPE_FLAGS
 ;;; 
 ;;; Returns :
-;;; 	flags contents of value
+;;;     flags contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_flags" g-value-get-flags) :int
@@ -2486,10 +2486,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_STRING.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2501,7 +2501,7 @@
 ;;; Casts a GParamSpec instance into a GParamSpecString.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2513,10 +2513,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_STRING.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2544,25 +2544,25 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gchar *default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; gchar *cset_first;
-;;; 	a string containing the allowed values for the first byte
+;;;     a string containing the allowed values for the first byte
 ;;; 
 ;;; gchar *cset_nth;
-;;; 	a string containing the allowed values for the subsequent bytes
+;;;     a string containing the allowed values for the subsequent bytes
 ;;; 
 ;;; gchar substitutor;
-;;; 	the replacement byte for bytes which don't match cset_first or cset_nth.
+;;;     the replacement byte for bytes which don't match cset_first or cset_nth.
 ;;; 
 ;;; guint null_fold_if_empty : 1;
-;;; 	replace empty string by NULL
+;;;     replace empty string by NULL
 ;;; 
 ;;; guint ensure_non_null : 1;
-;;; 	replace NULL strings by an empty string
+;;;     replace NULL strings by an empty string
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-string
@@ -2595,22 +2595,22 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun g-param-spec-string (:pointer g-param-spec-string)
@@ -2628,10 +2628,10 @@
 ;;; Set the contents of a G_TYPE_STRING GValue to v_string.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_STRING
+;;;     a valid GValue of type G_TYPE_STRING
 ;;; 
 ;;; v_string :
-;;; 	caller-owned string to be duplicated for the GValue. [allow-none]
+;;;     caller-owned string to be duplicated for the GValue
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_string" g-value-set-string) :void
@@ -2649,10 +2649,10 @@
 ;;; assumed to be static, and is thus not duplicated when setting the GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_STRING
+;;;     a valid GValue of type G_TYPE_STRING
 ;;; 
 ;;; v_string :
-;;; 	static string to be set. [allow-none]
+;;;     static string to be set
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2663,10 +2663,10 @@
 ;;; Sets the contents of a G_TYPE_STRING GValue to v_string.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_STRING
+;;;     a valid GValue of type G_TYPE_STRING
 ;;; 
 ;;; v_string :
-;;; 	string to take ownership of. [allow-none]
+;;;     string to take ownership of
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2684,10 +2684,10 @@
 ;;; This is an internal function introduced mainly for C marshallers.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_STRING
+;;;     a valid GValue of type G_TYPE_STRING
 ;;; 
 ;;; v_string :
-;;; 	duplicated unowned string to be set. [allow-none]
+;;;     duplicated unowned string to be set
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2698,10 +2698,10 @@
 ;;; Get the contents of a G_TYPE_STRING GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_STRING
+;;;     a valid GValue of type G_TYPE_STRING
 ;;; 
 ;;; Returns :
-;;; 	string content of value
+;;;     string content of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_string" g-value-get-string)
@@ -2718,10 +2718,10 @@
 ;;; Get a copy the contents of a G_TYPE_STRING GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_STRING
+;;;     a valid GValue of type G_TYPE_STRING
 ;;; 
 ;;; Returns :
-;;; 	a newly allocated copy of the string content of value
+;;;     a newly allocated copy of the string content of value
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2733,10 +2733,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_PARAM.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2748,7 +2748,7 @@
 ;;; Casts a GParamSpec instance into a GParamSpecParam.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2761,10 +2761,10 @@
 ;;; G_TYPE_PARAM.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2786,7 +2786,7 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-param
@@ -2806,22 +2806,22 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; param_type :
-;;; 	a GType derived from G_TYPE_PARAM
+;;;     a GType derived from G_TYPE_PARAM
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_param" g-param-spec-param) (:pointer g-param-spec-param)
@@ -2841,10 +2841,10 @@
 ;;; Set the contents of a G_TYPE_PARAM GValue to param.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_PARAM
+;;;     a valid GValue of type G_TYPE_PARAM
 ;;; 
 ;;; param :
-;;; 	the GParamSpec to be set. [allow-none]
+;;;     the GParamSpec to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_param" g-value-set-param) :void
@@ -2863,10 +2863,10 @@
 ;;; unref it any more.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_PARAM
+;;;     a valid GValue of type G_TYPE_PARAM
 ;;; 
 ;;; param :
-;;; 	the GParamSpec to be set. [allow-none]
+;;;     the GParamSpec to be set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -2884,10 +2884,10 @@
 ;;; This is an internal function introduced mainly for C marshallers.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_PARAM
+;;;     a valid GValue of type G_TYPE_PARAM
 ;;; 
 ;;; param :
-;;; 	the GParamSpec to be set. [allow-none]
+;;;     the GParamSpec to be set
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2898,10 +2898,10 @@
 ;;; Get the contents of a G_TYPE_PARAM GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_PARAM
+;;;     a valid GValue whose type is derived from G_TYPE_PARAM
 ;;; 
 ;;; Returns :
-;;; 	GParamSpec content of value. [transfer none]
+;;;     GParamSpec content of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_param" g-value-get-param) (:pointer g-param-spec)
@@ -2917,10 +2917,10 @@
 ;;; Get the contents of a G_TYPE_PARAM GValue, increasing its reference count.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_PARAM
+;;;     a valid GValue whose type is derived from G_TYPE_PARAM
 ;;; 
 ;;; Returns :
-;;; 	GParamSpec content of value, should be unreferenced when no longer needed.
+;;;     GParamSpec content of value, should be unreferenced when no longer needed.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2932,10 +2932,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_BOXED.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2947,7 +2947,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecBoxed.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2960,10 +2960,10 @@
 ;;; G_TYPE_BOXED.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2985,7 +2985,7 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-boxed
@@ -3006,22 +3006,22 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; boxed_type :
-;;; 	G_TYPE_BOXED derived type of this property
+;;;     G_TYPE_BOXED derived type of this property
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_boxed" g-param-spec-boxed) (:pointer g-param-spec-boxed)
@@ -3041,10 +3041,10 @@
 ;;; Set the contents of a G_TYPE_BOXED derived GValue to v_boxed.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_BOXED derived type
+;;;     a valid GValue of G_TYPE_BOXED derived type
 ;;; 
 ;;; v_boxed :
-;;; 	boxed value to be set. [allow-none]
+;;;     boxed value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_boxed" g-value-set-boxed) :void
@@ -3063,10 +3063,10 @@
 ;;; GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_BOXED derived type
+;;;     a valid GValue of G_TYPE_BOXED derived type
 ;;; 
 ;;; v_boxed :
-;;; 	static boxed value to be set. [allow-none]
+;;;     static boxed value to be set
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3079,10 +3079,10 @@
 ;;; have to unref it any more.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_BOXED derived type
+;;;     a valid GValue of G_TYPE_BOXED derived type
 ;;; 
 ;;; v_boxed :
-;;; 	duplicated unowned boxed value to be set. [allow-none]
+;;;     duplicated unowned boxed value to be set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -3106,10 +3106,10 @@
 ;;; This is an internal function introduced mainly for C marshallers.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_BOXED derived type
+;;;     a valid GValue of G_TYPE_BOXED derived type
 ;;; 
 ;;; v_boxed :
-;;; 	duplicated unowned boxed value to be set. [allow-none]
+;;;     duplicated unowned boxed value to be set
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3120,10 +3120,10 @@
 ;;; Get the contents of a G_TYPE_BOXED derived GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_BOXED derived type
+;;;     a valid GValue of G_TYPE_BOXED derived type
 ;;; 
 ;;; Returns :
-;;; 	boxed contents of value. [transfer none]
+;;;     boxed contents of value. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_boxed" g-value-get-boxed) :pointer
@@ -3141,10 +3141,10 @@
 ;;; like: g_boxed_free (G_VALUE_TYPE (value), return_value);
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_BOXED derived type
+;;;     a valid GValue of G_TYPE_BOXED derived type
 ;;; 
 ;;; Returns :
-;;; 	boxed contents of value
+;;;     boxed contents of value
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3156,10 +3156,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_POINTER.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3172,7 +3172,7 @@
 ;;; Casts a GParamSpec instance into a GParamSpecPointer.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3184,10 +3184,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_POINTER.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3209,7 +3209,7 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-pointer
@@ -3228,19 +3228,19 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_pointer" g-param-spec-pointer)
@@ -3260,10 +3260,10 @@
 ;;; Set the contents of a pointer GValue to v_pointer.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_POINTER
+;;;     a valid GValue of G_TYPE_POINTER
 ;;; 
 ;;; v_pointer :
-;;; 	pointer value to be set
+;;;     pointer value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_pointer" g-value-set-pointer) :void
@@ -3280,10 +3280,10 @@
 ;;; Get the contents of a pointer GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_POINTER
+;;;     a valid GValue of G_TYPE_POINTER
 ;;; 
 ;;; Returns :
-;;; 	pointer contents of value. [transfer none]
+;;;     pointer contents of value. [transfer none]
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_pointer" g-value-get-pointer) :pointer
@@ -3300,10 +3300,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_OBJECT.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3315,7 +3315,7 @@
 ;;; Casts a GParamSpec instance into a GParamSpecObject.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3328,10 +3328,10 @@
 ;;; G_TYPE_OBJECT.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3353,7 +3353,7 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-object
@@ -3374,22 +3374,22 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; object_type :
-;;; 	G_TYPE_OBJECT derived type of this property
+;;;     G_TYPE_OBJECT derived type of this property
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_object" g-param-spec-object)
@@ -3419,10 +3419,10 @@
 ;;; the GValue still exists).
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_OBJECT derived type
+;;;     a valid GValue of G_TYPE_OBJECT derived type
 ;;; 
 ;;; v_object :
-;;; 	object value to be set
+;;;     object value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_object" %g-value-set-object) :void
@@ -3448,10 +3448,10 @@
 ;;; g_value_set_object() instead.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_OBJECT derived type
+;;;     a valid GValue of G_TYPE_OBJECT derived type
 ;;; 
 ;;; v_object :
-;;; 	object value to be set. [allow-none]
+;;;     object value to be set
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -3469,10 +3469,10 @@
 ;;; This is an internal function introduced mainly for C marshallers.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_OBJECT derived type
+;;;     a valid GValue of G_TYPE_OBJECT derived type
 ;;; 
 ;;; v_object :
-;;; 	object value to be set.
+;;;     object value to be set.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3483,10 +3483,10 @@
 ;;; Get the contents of a G_TYPE_OBJECT derived GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of G_TYPE_OBJECT derived type
+;;;     a valid GValue of G_TYPE_OBJECT derived type
 ;;; 
 ;;; Returns :
-;;; 	object contents of value.
+;;;     object contents of value.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_object" %g-value-get-object) :pointer
@@ -3511,10 +3511,10 @@
 ;;; count. If the contents of the GValue are NULL, then NULL will be returned.
 ;;; 
 ;;; value :
-;;; 	a valid GValue whose type is derived from G_TYPE_OBJECT
+;;;     a valid GValue whose type is derived from G_TYPE_OBJECT
 ;;; 
 ;;; Returns :
-;;; 	object content of value, should be unreferenced when no longer needed.
+;;;     object content of value, should be unreferenced when no longer needed.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3526,10 +3526,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_UNICHAR.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3541,7 +3541,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecUnichar.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3562,10 +3562,10 @@
 ;;; (unsigned integer) properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; gunichar default_value;
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3584,22 +3584,22 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; default_value :
-;;; 	default value for the property specified
+;;;     default value for the property specified
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3611,10 +3611,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_VALUE_ARRAY.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3627,7 +3627,7 @@
 ;;; Cast a GParamSpec instance into a GParamSpecValueArray.
 ;;; 
 ;;; pspec :
-;;; 	a valid GParamSpec instance
+;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -3644,21 +3644,21 @@
 ;;; struct GParamSpecValueArray {
 ;;;   GParamSpec    parent_instance;
 ;;;   GParamSpec   *element_spec;
-;;;   guint		fixed_n_elements;
+;;;   guint        fixed_n_elements;
 ;;; };
 ;;; 
 ;;; A GParamSpec derived structure that contains the meta data for GValueArray
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; GParamSpec *element_spec;
-;;; 	a GParamSpec describing the elements contained in arrays of this
+;;;     a GParamSpec describing the elements contained in arrays of this
 ;;;     property, may be NULL
 ;;; 
 ;;; guint fixed_n_elements;
-;;; 	if greater than 0, arrays of this property will always have this many
+;;;     if greater than 0, arrays of this property will always have this many
 ;;;     elements
 ;;; ----------------------------------------------------------------------------
 
@@ -3684,23 +3684,23 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; element_spec :
-;;; 	a GParamSpec describing the elements contained in arrays of this
+;;;     a GParamSpec describing the elements contained in arrays of this
 ;;;     property, may be NULL
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_value_array" g-param-spec-value-array)
@@ -3722,10 +3722,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_OVERRIDE.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -3740,7 +3740,7 @@
 ;;; Casts a GParamSpec into a GParamSpecOverride.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -3783,13 +3783,13 @@
 ;;; are implementing a new base type similar to GObject.
 ;;; 
 ;;; name :
-;;; 	the name of the property.
+;;;     the name of the property.
 ;;; 
 ;;; overridden :
-;;; 	The property that is being overridden
+;;;     The property that is being overridden
 ;;; 
 ;;; Returns :
-;;; 	the newly created GParamSpec
+;;;     the newly created GParamSpec
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -3803,10 +3803,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_GTYPE.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3820,7 +3820,7 @@
 ;;; Casts a GParamSpec into a GParamSpecGType.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3834,10 +3834,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_GTYPE.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -3864,10 +3864,10 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; GType is_a_type;
-;;; 	a GType whose subtypes can occur as values
+;;;     a GType whose subtypes can occur as values
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3892,23 +3892,23 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; is_a_type :
-;;; 	a GType whose subtypes are allowed as values of the property
+;;;     a GType whose subtypes are allowed as values of the property
 ;;;     (use G_TYPE_NONE for any type)
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	a newly created parameter specification
+;;;     a newly created parameter specification
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -3933,10 +3933,10 @@
 ;;; Get the contents of a G_TYPE_GTYPE GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_GTYPE
+;;;     a valid GValue of type G_TYPE_GTYPE
 ;;; 
 ;;; Returns :
-;;; 	the GType stored in value
+;;;     the GType stored in value
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -3956,10 +3956,10 @@
 ;;; Set the contents of a G_TYPE_GTYPE GValue to v_gtype.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_GTYPE
+;;;     a valid GValue of type G_TYPE_GTYPE
 ;;; 
 ;;; v_gtype :
-;;; 	GType to be set
+;;;     GType to be set
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -3981,10 +3981,10 @@
 ;;; Checks whether the given GParamSpec is of type G_TYPE_PARAM_VARIANT.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success
+;;;     TRUE on success
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -3999,7 +3999,7 @@
 ;;; Casts a GParamSpec into a GParamSpecVariant.
 ;;; 
 ;;; pspec :
-;;; 	a GParamSpec
+;;;     a GParamSpec
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -4013,10 +4013,10 @@
 ;;; Checks whether the given GValue can hold values of type G_TYPE_VARIANT.
 ;;; 
 ;;; value :
-;;; 	a valid GValue structure
+;;;     a valid GValue structure
 ;;; 
 ;;; Returns :
-;;; 	TRUE on success.
+;;;     TRUE on success.
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -4044,13 +4044,13 @@
 ;;; properties.
 ;;; 
 ;;; GParamSpec parent_instance;
-;;; 	private GParamSpec portion
+;;;     private GParamSpec portion
 ;;; 
 ;;; GVariantType *type;
-;;; 	a GVariantType, or NULL
+;;;     a GVariantType, or NULL
 ;;; 
 ;;; GVariant *default_value;
-;;; 	a GVariant, or NULL
+;;;     a GVariant, or NULL
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -4072,25 +4072,25 @@
 ;;; See g_param_spec_internal() for details on property names.
 ;;; 
 ;;; name :
-;;; 	canonical name of the property specified
+;;;     canonical name of the property specified
 ;;; 
 ;;; nick :
-;;; 	nick name for the property specified
+;;;     nick name for the property specified
 ;;; 
 ;;; blurb :
-;;; 	description of the property specified
+;;;     description of the property specified
 ;;; 
 ;;; type :
-;;; 	a GVariantType
+;;;     a GVariantType
 ;;; 
 ;;; default_value :
-;;; 	a GVariant of type type to use as the default value, or NULL.
+;;;     a GVariant of type type to use as the default value, or NULL.
 ;;; 
 ;;; flags :
-;;; 	flags for the property specified
+;;;     flags for the property specified
 ;;; 
 ;;; Returns :
-;;; 	the newly created GParamSpec
+;;;     the newly created GParamSpec
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -4103,10 +4103,10 @@
 ;;; Get the contents of a variant GValue.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_VARIANT
+;;;     a valid GValue of type G_TYPE_VARIANT
 ;;; 
 ;;; Returns :
-;;; 	variant contents of value
+;;;     variant contents of value
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -4119,10 +4119,10 @@
 ;;; Get the contents of a variant GValue, increasing its refcount.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_VARIANT
+;;;     a valid GValue of type G_TYPE_VARIANT
 ;;; 
 ;;; Returns :
-;;; 	variant contents of value, should be unrefed using g_variant_unref()
+;;;     variant contents of value, should be unrefed using g_variant_unref()
 ;;;     when no longer needed
 ;;; 
 ;;; Since 2.26
@@ -4137,10 +4137,10 @@
 ;;; it is consumed.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_VARIANT
+;;;     a valid GValue of type G_TYPE_VARIANT
 ;;; 
 ;;; variant :
-;;; 	a GVariant, or NULL. [allow-none]
+;;;     a GVariant, or NULL
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
@@ -4164,10 +4164,10 @@
 ;;; This is an internal function introduced mainly for C marshallers.
 ;;; 
 ;;; value :
-;;; 	a valid GValue of type G_TYPE_VARIANT
+;;;     a valid GValue of type G_TYPE_VARIANT
 ;;; 
 ;;; variant :
-;;; 	a GVariant, or NULL. [allow-none]
+;;;     a GVariant, or NULL
 ;;; 
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
