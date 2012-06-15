@@ -3225,9 +3225,249 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
 
 ;; Starting the implementation of an application
 
+(defclass bloat-pad (gtk-application)
+  ()
+  (:metaclass gobject-class)
+  (:g-type-name . "BloatPad"))
+
+(register-object-type-implementation "BloatPad"
+                                     bloat-pad
+                                     "GtkApplication"
+                                     nil
+                                     nil)
+
+(defcallback activate-toggle :void ((action (g-object g-simple-action))
+                                    (parameter :pointer)
+                                    (user-data :pointer))
+  (declare (ignore parameter user-data))
+  (let ((state (g-action-get-state action)))
+    (g-action-change-state
+                  action
+                  (g-variant-new-boolean (not (g-variant-get-boolean state))))))
+
+(defcallback activate-radio :void ((action (g-object g-simple-action))
+                                   (paramenter :pointer)
+                                   (user-data :pointer))
+  (declare (ignore user-data))
+  (g-action-change-state action parameter))
+
+(defcallback change-fullscreen-state :void ((action (g-object g-simple-action))
+                                            (state :pointer)
+                                            (user-data :pointer))
+  (if (g-variant-get-boolean state)
+      (gtk-window-fullscreen user-data)
+      (gtk-window-unfullscreen user-data))
+  (g-simple-action-set-state action state))
+
+(defcallback change-justify-state :void ((action (g-object g-simple-action))
+                                         (state :pointer)
+                                         (user-data :pointer))
+  (let ((view (g-object-get-data user-data "bloatpad-text"))
+        (str (g-variant-get-string state)))
+    (if (equal str "left")
+        (gtk-text-view-set-justification view :left)
+        (if (equal str "center")
+            (gtk-text-view-set-justification view :center)
+            (if (equal str "right")
+                (gtk-text-view-set-justification view :right))))
+    (g-simple-action-set-state action state)))
+
+(defun get-clipboard (widget)
+  (gtk-widget-get-clipboard widget (gdk-atom-intern "CLIPBOARD" nil)))
+
+(defcallback window-copy :void ((action (g-object  g-simple-action))
+                                (parameter :pointer)
+                                (user-data :pointer))
+  (declare (ignore action parameter))
+  (let ((view (g-object-get-data user-data "bloatpad-text")))
+    (gtk-text-buffer-copy-clipboard (gtk-text-view-get-buffer view)
+                                    (get-clipboard view))))
+
+(defcallback window-paste :void ((action (g-object g-simple-action))
+                                 (parameter :pointer)
+                                 (user-data :pointer))
+  (declare (ignore action parameter))
+  (let ((view (g-object-get-data window "bloatpad-text")))
+    (gtk-text-buffer-paste-clipboard (gtk-text-view-get-buffer view)
+                                     (get-clipboard view)
+                                     :default-editable t)))
+
+(defvar *win-entries*
+        (list (make-g-action-entry :name "copy"
+                              :activate (callback window-copy)
+                              :parameter-type nil
+                              :state nil
+                              :change-state (null-pointer))
+         (make-g-action-entry :name "paste"
+                              :activate (callback window-paste)
+                              :parameter-type nil
+                              :state nil
+                              :change-state nil)
+         (make-g-action-entry :name "fullscreen"
+                              :activate (callback activate-toggle)
+                              :parameter-type nil
+                              :state "false"
+                              :change-state (callback change-fullscreen-state))
+         (make-g-action-entry :name "justify"
+                              :activate (callback activate-radio)
+                              :parameter-type "s"
+                              :state "'left'"
+                              :change-state (callback change-justify-state))))
+
+
+(defun new-window (application file)
+  (let ((window (make-instance 'gtk-window
+                               :title "BloatPad"
+                               :default-width 250
+                               :border-width 12))
+        (grid (make-instance 'gtk-grid))
+        (toolbar (make-instance 'gtk-toolbar)))
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+;                        (gtk-main-quit)
+                        (format t "   QUIT ~A~%" application)
+                        (format t "   registered ~A~%"
+                                (g-application-get-is-registered application))
+                        (g-application-quit application)
+                        (format t "   after quit: registered ~A~%"
+                                (g-application-get-is-registered application))
+                        (gtk-main-quit)
+                        ))
+    (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+    (let ((button (make-instance 'gtk-toggle-tool-button
+                                 :stock-id "gtk-justify-left")))
+      (gtk-actionable-set-detailed-action-name button "win.justify::left")
+      (gtk-container-add toolbar button))
+    (let ((button (make-instance 'gtk-toggle-tool-button
+                                 :stock-id "gtk-justify-center")))
+      (gtk-actionable-set-detailed-action-name button "win.justify::center")
+      (gtk-container-add toolbar button))
+    (let ((button (make-instance 'gtk-toggle-tool-button
+                                 :stock-id "gtk-justify-right")))
+      (gtk-actionable-set-detailed-action-name button "win.justify::right")
+      (gtk-container-add toolbar button))
+    (let ((button (make-instance 'gtk-separator-tool-item
+                                 :draw nil)))
+      (gtk-tool-item-set-expand button t)
+      (gtk-container-add toolbar button))
+    (let ((button (make-instance 'gtk-tool-item))
+          (box (make-instance 'gtk-box
+                              :orientation :horizontal
+                              :spacing 6))
+          (label (make-instance 'gtk-label
+                                :label "Fullscreen:"))
+          (switch (make-instance 'gtk-switch)))
+      (gtk-actionable-set-action-name switch "win.fullscreen")
+      (gtk-container-add box label)
+      (gtk-container-add box switch)
+      (gtk-container-add button box)
+      (gtk-container-add toolbar button))
+
+    (gtk-grid-attach grid toolbar 0 0 1 1)
+
+    (let ((scrolled (make-instance 'gtk-scrolled-window
+                                   :hexpand t
+                                   :vexpand t))
+          (view (make-instance 'gtk-text-view)))
+      (g-object-set-data window "bloatpad-text" (pointer view))
+      (gtk-container-add scrolled view)
+      (gtk-grid-attach grid scrolled 0 1 1 1))
+
+    (gtk-container-add window grid)
+    (gtk-widget-show-all window)))
+
+
+
+
+
+(defun bloat-pad-activate (application)
+  (format t "BLOAD-PAD-ACTIVATE is called for ~A.~%" application)
+  (new-window application nil))
+
+(defun bloat-pad-startup (application)
+  (format t "BLOAT-PAD-STARTUP is called for ~A.~%" application)
+  (let ((builder (make-instance 'gtk-builder)))
+    (gtk-builder-add-from-string builder
+      "<interface>~
+        <menu id='app-menu'>~
+         <section>~
+          <item>~
+           <attribute name='label' translatable='yes'>_New Window</attribute>~
+           <attribute name='action'>app.new</attribute>~
+           <attribute name='accel'>&lt;Primary&gt;n</attribute>~
+          </item>~
+         </section>~
+         <section>~
+          <item>~
+           <attribute name='label' translatable='yes'>_About Bloatpad</attribute>~
+           <attribute name='action'>app.about</attribute>~
+          </item>~
+         </section>~
+         <section>~
+          <item>~
+           <attribute name='label' translatable='yes'>_Quit</attribute>~
+           <attribute name='action'>app.quit</attribute>~
+           <attribute name='accel'>&lt;Primary&gt;q</attribute>~
+          </item>~
+         </section>~
+         </menu>~
+        <menu id='menubar'>~
+         <submenu>~
+          <attribute name='label' translatable='yes'>_Edit</attribute>~
+          <section>~
+           <item>~
+            <attribute name='label' translatable='yes'>_Copy</attribute>~
+            <attribute name='action'>win.copy</attribute>~
+            <attribute name='accel'>&lt;Primary&gt;c</attribute>~
+           </item>~
+           <item>~
+            <attribute name='label' translatable='yes'>_Parse</attribute>~
+            <attribute name='action'>win.parse</attribute>~
+            <attribute name='accel'>&lt;Primary&gt;v</attribute>~
+           </item>~
+          </section>~
+         </submenu>~
+         <submenu>~
+          <attribute name='label' translatable='yes'>_View</attribute>~
+          <section>~
+           <item>~
+            <attribute name='label' translatable='yes'>_Fullscreen</attribute>~
+            <attribute name='action'>win.fullscreen</attribute>~
+            <attribute name='accel'>F11</attribute>~
+           </item>~
+          </section>~
+         </submenu>~
+        </menu>~
+       </interface>")
+    (gtk-application-set-app-menu application
+                                  (gtk-builder-get-object builder "app-menu"))
+    (gtk-application-set-menubar application
+                                 (gtk-builder-get-object builder "menubar"))))
+
+(defun bloat-pad-open (application)
+  (declare (ignore application))
+  (format t "BLOAT-PAD-OPEN is called.~%")
+  nil)
+
+(defun bloat-pad-shutdown (application)
+  (format t "BLOAT-PAD-SHUTDOWN is called for ~A.~%" application)
+  nil)
+
+(defmethod initialize-instance :after ((app bloat-pad) &key &allow-other-keys)
+  (g-signal-connect app "activate" #'bloat-pad-activate)
+  (g-signal-connect app "startup" #'bloat-pad-startup)
+  (g-signal-connect app "open" #'bloat-pad-open)
+  (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
+
+
+
 (defun bloat-pad-new ()
-  (g-set-application-name "Bloatpad")
-  (make-instance 'gtk-application
+  (format t "BLOAT-PAD-NEW is called.~%")
+  (unless (equal "Bloatpad" (g-get-application-name))
+    (g-set-application-name "Bloatpad"))
+  (format t "  Application name is ~a~%" (g-get-application-name))
+  (make-instance 'bloat-pad
                  :application-id "org.gtk.Test.bloatpad"
                  :flags :handles-open
                  :inactivity-timeout 30000
@@ -3241,6 +3481,10 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
 ;                                       "F11"
 ;                                       "win.fullscreen"
 ;                                       nil)
-      (g-application-run bloat-pad argc argv))))
+      (format t "call G-APPLICATION-RUN.~%")
+      (g-application-run bloat-pad argc argv)
+      (format t "back from G-APPLICATION-RUN.~%")))
+  (join-gtk-main))
+
 
 ;;; ----------------------------------------------------------------------------
