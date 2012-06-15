@@ -27,27 +27,25 @@
 
 (defsystem :cl-cffi-gtk-glib
   :name :cl-cffi-gtk-glib
-  :version "0.0.0"
+  :version "2.32.3"                          ; Version of the GLib Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components ((:file "glib.package")
-               (:file "glib.init")          ; Lisp Initialization
-               (:file "glib.stable-pointer"); Stable Pointers for callbacks
+               (:file "glib.init")           ; Lisp Initialization
+               (:file "glib.stable-pointer") ; Stable Pointers for callbacks
 
-               (:file "glib.misc")          ; Different Glib Types and Functions
-               (:file "glib.version")       ; Glib Version information
-               (:file "glib.threads")       ; Thread abstraction
-               (:file "glib.main-loop")     ; The Main Event Loop
-               (:file "glib.quark")         ; Association between string and id
-               (:file "glib.error")         ; Error Reporting
-               (:file "glib.utils")         ; Miscellaneous Utility Functions
-               
-               (:file "glib.lisp"))         ; More Lisp support
+               (:file "glib.version")        ; Glib Version information
+               (:file "glib.misc")           ; Various Glib Types and Functions
+               (:file "glib.threads")        ; Thread abstraction
+               (:file "glib.main-loop")      ; The Main Event Loop
+               (:file "glib.quark")          ; Association between string and id
+               (:file "glib.error")          ; Error Reporting
+               (:file "glib.utils")          ; Miscellaneous Utility Functions
+               (:file "glib.variant-type")   ; GVariant type system
+               (:file "glib.variant")        ; Strongly typed value datatype
+              )
   :depends-on (:cffi
-               :trivial-garbage
-               :iterate
-               :bordeaux-threads
-               :closer-mop))
+               :iterate))
 
 ;;; --- End of file cl-cffi-gtk-glib.asd ---------------------------------------

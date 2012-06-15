@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
+;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -40,17 +40,17 @@
 ;;;
 ;;; Only the following types are implemented:
 ;;;
-;;;    g-size
-;;;    g-ssize
-;;;    g-offset
+;;;     gsize
+;;;     gssize
+;;;     goffset
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Memory Allocation
 ;;; 
 ;;; The following functions for the general memory-handling are implemented:
 ;;;
-;;;    g-malloc (n-bytes)
-;;;    g-free (mem)
+;;;     g_malloc
+;;;     g_free
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Date and Time Functions
@@ -59,26 +59,17 @@
 ;;;
 ;;; Only the following struct is implemented:
 ;;;
-;;;    g-time-val
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Spawning Processes - Process launching
-;;;
-;;; The following bitfield is needed:
-;;;
-;;;    g-spawn-flags
+;;;     GTimeVal
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; String Utility Functions - Various string-related functions
 ;;;
 ;;; Implemented is:
 ;;; 
-;;;    g-string
-;;;    g-string-type
-;;;    g-strv
-;;;    g-strv-type
+;;;     GString
+;;;     GStrv
 ;;;
-;;;    g-strdup (str)
+;;;     g_strdup        *not exported*
 ;;; ----------------------------------------------------------------------------
 ;;; 
 ;;; Doubly-Linked Lists
@@ -88,11 +79,10 @@
 ;;;
 ;;; Implemented is:
 ;;;
-;;;    g-list
-;;;    g-list-type
+;;;     GList
 ;;;
-;;;    g-list-free (lst)
-;;;    g-list-next (lst)
+;;;     g_list_free     *not exported*
+;;;     g_list_next     *not exported*
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Singly-Linked Lists
@@ -102,18 +92,17 @@
 ;;;
 ;;; Implemented is:
 ;;;
-;;;    g-slist
-;;;    g-slist-type
+;;;     GSList
 ;;;
-;;;    g-slist-alloc ()
-;;;    g-slist-free (lst)
-;;;    g-slist-next (lst)
+;;;     g_slist_alloc   *not exported*
+;;;     g_slist_free    *not exported*
+;;;     g_slist_next    *not exported*
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-size
+;;; gsize
 ;;; 
 ;;; typedef unsigned long gsize;
 ;;; 
@@ -128,19 +117,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (cond
-    ((cffi-features:cffi-feature-p :x86-64) (defctype g-size :uint64))
-    ((cffi-features:cffi-feature-p :x86)    (defctype g-size :ulong))
-    ((cffi-features:cffi-feature-p :ppc32)  (defctype g-size :uint32))
-    ((cffi-features:cffi-feature-p :ppc64)  (defctype g-size :uint64))
-    (t
-     (error "Can not define 'g-size', unknown CPU architecture ~
-            (known are x86 and x86-64)"))))
+  (cond ((cffi-features:cffi-feature-p :x86-64) (defctype g-size :uint64))
+        ((cffi-features:cffi-feature-p :x86)    (defctype g-size :ulong))
+        ((cffi-features:cffi-feature-p :ppc32)  (defctype g-size :uint32))
+        ((cffi-features:cffi-feature-p :ppc64)  (defctype g-size :uint64))
+        (t
+         (error "Can not define 'g-size', unknown CPU architecture ~
+                (known are x86 and x86-64)"))))
 
 (export 'g-size)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-ssize
+;;; gssize
 ;;; 
 ;;; typedef signed long gssize;
 ;;; 
@@ -156,7 +144,7 @@
 (export 'g-ssize)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-offset
+;;; goffset
 ;;; 
 ;;; typedef gint64 goffset;
 ;;; 
@@ -175,7 +163,7 @@
 (export 'g-offset)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-malloc (n-bytes)
+;;; g_malloc ()
 ;;; 
 ;;; gpointer g_malloc (gsize n_bytes)
 ;;; 
@@ -194,7 +182,7 @@
 (export 'g-malloc)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-free (mem)
+;;; g_free ()
 ;;; 
 ;;; void g_free (gpointer mem)
 ;;; 
@@ -210,7 +198,7 @@
 (export 'g-free)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-time-val
+;;; GTimeVal
 ;;; 
 ;;; struct GTimeVal {
 ;;;   glong tv_sec;
@@ -238,74 +226,12 @@
 (export 'g-time-val)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-spawn-flags
-;;; 
-;;; typedef enum {
-;;;   G_SPAWN_LEAVE_DESCRIPTORS_OPEN = 1 << 0,
-;;;   G_SPAWN_DO_NOT_REAP_CHILD      = 1 << 1,
-;;;   /* look for argv[0] in the path i.e. use execvp() */
-;;;   G_SPAWN_SEARCH_PATH            = 1 << 2,
-;;;   /* Dump output to /dev/null */
-;;;   G_SPAWN_STDOUT_TO_DEV_NULL     = 1 << 3,
-;;;   G_SPAWN_STDERR_TO_DEV_NULL     = 1 << 4,
-;;;   G_SPAWN_CHILD_INHERITS_STDIN   = 1 << 5,
-;;;   G_SPAWN_FILE_AND_ARGV_ZERO     = 1 << 6
-;;; } GSpawnFlags;
-;;; 
-;;; Flags passed to g_spawn_sync(), g_spawn_async() and
-;;; g_spawn_async_with_pipes().
-;;; 
-;;; G_SPAWN_LEAVE_DESCRIPTORS_OPEN
-;;;     the parent's open file descriptors will be inherited by the child;
-;;;     otherwise all descriptors except stdin/stdout/stderr will be closed
-;;;     before calling exec() in the child.
-;;; 
-;;; G_SPAWN_DO_NOT_REAP_CHILD
-;;;     the child will not be automatically reaped; you must use
-;;;     g_child_watch_add() yourself (or call waitpid() or handle SIGCHLD
-;;;     yourself), or the child will become a zombie.
-;;; 
-;;; G_SPAWN_SEARCH_PATH
-;;;     argv[0] need not be an absolute path, it will be looked for in the
-;;;     user's PATH.
-;;; 
-;;; G_SPAWN_STDOUT_TO_DEV_NULL
-;;;     the child's standard output will be discarded, instead of going to the
-;;;     same location as the parent's standard output.
-;;; 
-;;; G_SPAWN_STDERR_TO_DEV_NULL
-;;;     the child's standard error will be discarded.
-;;; 
-;;; G_SPAWN_CHILD_INHERITS_STDIN
-;;;     the child will inherit the parent's standard input (by default, the
-;;;     child's standard input is attached to /dev/null).
-;;; 
-;;; G_SPAWN_FILE_AND_ARGV_ZERO
-;;;     the first element of argv is the file to execute, while the remaining
-;;;     elements are the actual argument vector to pass to the file. Normally
-;;;     g_spawn_async_with_pipes() uses argv[0] as the file to execute, and
-;;;     passes all of argv to the child.
-;;; ----------------------------------------------------------------------------
-
-(defbitfield g-spawn-flags
-  :leave-descriptors-open
-  :do-not-reap-child
-  :search-path
-  :stdout-to-dev-null
-  :stderr-to-dev-null
-  :child-inherits-stdin
-  :file-and-argv-zero)
-
-(export 'g-spawn-flags)
-
-;;; ----------------------------------------------------------------------------
-;;; g-string
-;;; g-string-type
+;;; GString
 ;;; 
 ;;; struct GString {
 ;;;   gchar  *str;
-;;;   gsize len;    
-;;;   gsize allocated_len;
+;;;   gsize   len;    
+;;;   gsize   allocated_len;
 ;;; };
 ;;; 
 ;;; The GString struct contains the public fields of a GString.
@@ -335,22 +261,23 @@
   (:actual-type :pointer))
 
 (define-parse-method g-string (&key (free-from-foreign nil) (free-to-foreign t))
-  (make-instance 'g-string-type :fff free-from-foreign :ftf free-to-foreign))
+  (make-instance 'g-string-type
+                 :fff free-from-foreign
+                 :ftf free-to-foreign))
 
 (defmethod translate-to-foreign (value (type g-string-type))
   (g-strdup value))
 
 (defmethod translate-from-foreign (value (type g-string-type))
   (prog1
-      (convert-from-foreign value '(:string :free-from-foreign nil))
+    (convert-from-foreign value '(:string :free-from-foreign nil))
     (when (g-string-type-fff type)
       (g-free value))))
 
 (export 'g-string)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-strv
-;;; g-strv-type
+;;; GStrv
 ;;; 
 ;;; typedef gchar** GStrv;
 ;;; 
@@ -376,13 +303,13 @@
 (defmethod translate-from-foreign (value (type g-strv-type))
   (unless (null-pointer-p value)
     (prog1
-        (iter (for i from 0)
-              (for str-ptr = (mem-aref value :pointer i))
-              (until (null-pointer-p str-ptr))
-              (collect (convert-from-foreign str-ptr
-                                             '(:string :free-from-foreign nil)))
-              (when (g-strv-type-fff type)
-                (g-free str-ptr)))
+      (iter (for i from 0)
+            (for str-ptr = (mem-aref value :pointer i))
+            (until (null-pointer-p str-ptr))
+            (collect (convert-from-foreign str-ptr
+                                           '(:string :free-from-foreign nil)))
+            (when (g-strv-type-fff type)
+              (g-free str-ptr)))
       (when (g-strv-type-fff type)
         (g-free value)))))
 
@@ -398,7 +325,7 @@
 (export 'g-strv)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-strdup (str)
+;;; g_strdup ()
 ;;; 
 ;;; gchar * g_strdup (const gchar *str)
 ;;; 
@@ -416,13 +343,12 @@
   (str (:string :free-to-foreign t)))
 
 ;;; ----------------------------------------------------------------------------
-;;; g-list
-;;; g-list-type
+;;; GList
 ;;; 
 ;;; struct GList {
 ;;;   gpointer data;
-;;;   GList *next;
-;;;   GList *prev;
+;;;   GList   *next;
+;;;   GList   *prev;
 ;;; };
 ;;; 
 ;;; The GList struct is used for each element in a doubly-linked list.
@@ -447,7 +373,7 @@
   ((type :reader g-list-type-type
          :initarg :type
          :initform :pointer)
-   (free-from-foreign :reader g-list-type-free-from-foreign 
+   (free-from-foreign :reader g-list-type-free-from-foreign
                       :initarg :free-from-foreign
                       :initform t)
    (free-to-foreign :reader g-list-type-free-to-foreign
@@ -464,17 +390,17 @@
 
 (defmethod translate-from-foreign (pointer (type g-list-type))
   (prog1
-      (iter (for c initially pointer then (g-list-next c))
-            (until (null-pointer-p c))
-            (collect (convert-from-foreign (foreign-slot-value c '%g-list 'data)
-                                           (g-list-type-type type))))
+    (iter (for c initially pointer then (g-list-next c))
+          (until (null-pointer-p c))
+          (collect (convert-from-foreign (foreign-slot-value c '%g-list 'data)
+                                         (g-list-type-type type))))
     (when (g-list-type-free-from-foreign type)
       (g-list-free pointer))))
 
 (export 'g-list)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-list-free (lst)
+;;; g_list_free ()
 ;;; 
 ;;; void g_list_free (GList *list)
 ;;; 
@@ -493,10 +419,8 @@
 (defcfun ("g_list_free" g-list-free) :void
   (lst (:pointer %g-list)))
 
-(export 'g-list-free)
-
 ;;; ----------------------------------------------------------------------------
-;;; g-list-next (list)
+;;; g_list_next ()
 ;;; 
 ;;; #define g_list_next(list)
 ;;; 
@@ -514,15 +438,12 @@
       (null-pointer)
       (foreign-slot-value lst '%g-list 'next)))
 
-(export 'g-list-next)
-
 ;;; ----------------------------------------------------------------------------
-;;; g-slist
-;;; g-slist-type
+;;; GSList
 ;;; 
 ;;; struct GSList {
 ;;;   gpointer data;
-;;;   GSList *next;
+;;;   GSList  *next;
 ;;; };
 ;;; 
 ;;; The GSList struct is used for each element in the singly-linked list.
@@ -583,7 +504,7 @@
 (export 'g-slist)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-slist-alloc ()
+;;; g_slist_alloc ()
 ;;; 
 ;;; GSList * g_slist_alloc (void)
 ;;; 
@@ -598,10 +519,8 @@
 (defcfun ("g_slist_alloc" g-slist-alloc)
   (:pointer %g-slist))
 
-(export 'g-slist-alloc)
-
 ;;; ----------------------------------------------------------------------------
-;;; g-slist-free (lst)
+;;; g_slist_free ()
 ;;; 
 ;;; void g_slist_free (GSList *list)
 ;;; 
@@ -620,10 +539,8 @@
 (defcfun ("g_slist_free" g-slist-free) :void
   (lst (:pointer %g-slist)))
 
-(export 'g-slist-free)
-
 ;;; ----------------------------------------------------------------------------
-;;; g_slist_next()
+;;; g_slist_next ()
 ;;; 
 ;;; #define g_slist_next(slist)
 ;;; 
@@ -640,7 +557,5 @@
   (if (null-pointer-p lst)
       (null-pointer)
       (foreign-slot-value lst '%g-slist 'next)))
-
-(export 'g-slist-next)
 
 ;;; --- End of file glib.misc.lisp ---------------------------------------------

@@ -364,6 +364,51 @@
 (export 'g-error)
 
 ;;; ----------------------------------------------------------------------------
+
+;;; Lisp support for GError
+
+(define-condition g-error-condition (error)
+  ((domain  :initarg :domain
+            :initform nil
+            :reader g-error-condition-domain)
+   (code    :initarg :code
+            :initform nil
+            :reader g-error-condition-code)
+   (message :initarg :message
+            :initform nil
+            :reader g-error-condition-message))
+  (:report (lambda (err stream)
+             (format stream
+                     "GError: Domain: ~S, Code: ~S, Message: ~A"
+                     (g-error-condition-domain err)
+                     (g-error-condition-code err)
+                     (g-error-condition-message err)))))
+
+(defun maybe-raise-g-error-condition (err)
+  (unless (null-pointer-p err)
+    (error 'g-error-condition
+           :domain (foreign-slot-value err 'g-error :domain)
+           :code (foreign-slot-value err 'g-error :code)
+           :message (foreign-slot-value err 'g-error :message))))
+
+(defmacro with-g-error ((err) &body body)
+  `(with-foreign-object (,err :pointer)
+     (setf (mem-ref ,err :pointer) (null-pointer))
+     (unwind-protect
+          (progn ,@body)
+       (maybe-raise-g-error-condition (mem-ref ,err :pointer))
+       (g-clear-error ,err))))
+
+(defmacro with-catching-to-g-error ((err) &body body)
+  `(handler-case
+       (progn ,@body)
+     (g-error-condition (e)
+       (g-set-error-literal ,err
+                            (g-error-condition-domain e)
+                            (g-error-condition-code e)
+                            (g-error-condition-message e)))))
+
+;;; ----------------------------------------------------------------------------
 ;;; g_error_new ()
 ;;; 
 ;;; GError * g_error_new (GQuark domain, gint code, const gchar *format, ...)

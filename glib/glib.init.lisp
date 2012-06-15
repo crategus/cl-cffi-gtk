@@ -96,6 +96,10 @@
 (defmacro at-finalize ((&rest keys) &body body)
   `(register-finalizer (list ,@keys ',body) (lambda () ,@body)))
 
+;;; ----------------------------------------------------------------------------
+
+;;; Load the foreign libraries Glib and GThread
+  
 (at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library glib
@@ -116,4 +120,4 @@
       (t "libgthread-2.0")))
   (use-foreign-library gthread))
 
-;;; --- End of file glib.init.lisp --------------------------------------------- 
+;;; --- End of file glib.init.lisp ---------------------------------------------

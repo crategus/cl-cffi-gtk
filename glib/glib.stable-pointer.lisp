@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gobject.stable-pointer.lisp
+;;; glib.stable-pointer.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -27,50 +27,45 @@
 
 (in-package :glib)
 
-(defvar *registered-stable-pointers*
-        (make-array 0 :adjustable t :fill-pointer t))
-
 ;; Allocates the stable pointer for thing. Stable pointer is an integer that
 ;; can be dereferenced with get-stable-pointer-value and freed with
 ;; free-stable-pointer. Stable pointers are used to pass references to lisp
 ;; objects to foreign code. thing is any object. The return value is an integer.
 
-(defun allocate-stable-pointer (thing)
-  (let ((id (find-fresh-id)))
-    (setf (aref *registered-stable-pointers* id) thing)
-    (make-pointer id)))
+(let ((stable-pointers (make-array 0 :adjustable t :fill-pointer t))
+      (stable-pointers-length 0))
 
-;; Frees the stable pointer previously allocated by allocate-stable-pointer
+  (defun allocate-stable-pointer (thing)
+    (flet ((find-fresh-id ()
+             (or ;; Search a free place for the pointer
+                 (position nil stable-pointers)
+                 ;; Add a place for the pointer and increment the array length.
+                 (progn
+                   (vector-push-extend nil stable-pointers)
+                   (1- (incf stable-pointers-length))))))
+      (let ((id (find-fresh-id)))
+        (setf (aref stable-pointers id) thing)
+        (make-pointer id))))
 
-(defun free-stable-pointer (stable-pointer)
-  (setf (aref *registered-stable-pointers* (pointer-address stable-pointer))
-        nil))
+  ;; Frees the stable pointer previously allocated by allocate-stable-pointer
 
-;; Returns the objects that is referenced by stable pointer previously
-;; allocated by allocate-stable-pointer. May be called any number of times.
+  (defun free-stable-pointer (stable-pointer)
+    (setf (aref stable-pointers (pointer-address stable-pointer))
+          nil))
 
-(defun get-stable-pointer-value (stable-pointer)
-  (when (<= 0 (pointer-address stable-pointer)
-              (length *registered-stable-pointers*))
-    (aref *registered-stable-pointers* (pointer-address stable-pointer))))
+  ;; Returns the objects that is referenced by stable pointer previously
+  ;; allocated by allocate-stable-pointer. May be called any number of times.
 
-(defun set-stable-pointer-value (stable-pointer value)
-  (when (<= 0 (pointer-address stable-pointer)
-              (length *registered-stable-pointers*))
-    (setf (aref *registered-stable-pointers* (pointer-address stable-pointer))
-          value)))
+  (defun get-stable-pointer-value (stable-pointer)
+    (let ((ptr-id (pointer-address stable-pointer)))
+      (when (<= 0 ptr-id stable-pointers-length)
+        (aref stable-pointers ptr-id))))
 
-(defun stable-pointer-value (stable-pointer)
-  (get-stable-pointer-value stable-pointer))
-
-(defun (setf stable-pointer-value) (new-value stable-pointer)
-  (set-stable-pointer-value stable-pointer new-value))
-
-(defun find-fresh-id ()
-  (or (position nil *registered-stable-pointers*)
-      (progn
-        (vector-push-extend nil *registered-stable-pointers*)
-        (1- (length *registered-stable-pointers*)))))
+  (defun set-stable-pointer-value (stable-pointer data)
+    (let ((ptr-id (pointer-address stable-pointer)))
+      (when (<= 0 ptr-id stable-pointers-length)
+        (setf (aref stable-pointers ptr-id) data))))
+)
 
 ;; Executes body with ptr bound to the stable pointer to result of evaluating
 ;; expr. ptr is a symbol naming the variable which will hold the stable pointer
@@ -79,12 +74,12 @@
 (defmacro with-stable-pointer ((ptr expr) &body body)
   `(let ((,ptr (allocate-stable-pointer ,expr)))
      (unwind-protect
-          (progn ,@body)
+         (progn ,@body)
        (free-stable-pointer ,ptr))))
 
 ;; Callback function to free a pointer
 
-(defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
+(defcallback stable-pointer-destroy-notify-cb :void ((data :pointer))
   (free-stable-pointer data))
 
-;;; --- End of file gobject.stable-pointer.lisp --------------------------------
+;;; --- End of file glib.stable-pointer.lisp -----------------------------------

@@ -27,20 +27,23 @@
 
 (defpackage :glib
   (:use :cl :cffi :iter)
-  (:export #:at-init
+  (:export ;; Symbols from glib.init.lisp
+           #:at-init
            #:at-finalize
-           #:push-library-version-features
-           #:require-library-version
-           #:with-catching-to-g-error
-           #:with-g-error
            
-           ;; gobject.stable-pointer.lisp
+           ;; Symbols from glib.stable-pointer.lisp
            #:allocate-stable-pointer
            #:free-stable-pointer
            #:get-stable-pointer-value
-           #:stable-pointer-value
            #:with-stable-pointer
-           #:stable-pointer-free-destroy-notify-cb
-     ))
+           #:stable-pointer-destroy-notify-cb
+           
+           ;; Symbols from glib.version.lisp
+           #:push-library-version-features
+           #:require-library-version
+           
+           ;; Symbols from glib.error.lisp
+           #:with-catching-to-g-error
+           #:with-g-error))
 
 ;;; --- End of file glib.package.lisp ------------------------------------------
