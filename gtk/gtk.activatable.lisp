@@ -31,7 +31,7 @@
 ;;; GtkActivatable
 ;;; 
 ;;; An interface for activatable widgets
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkActivatable
@@ -359,9 +359,11 @@
 (define-g-interface "GtkActivatable" gtk-activatable
   (:export t
    :type-initializer "gtk_activatable_get_type")
-  (related-action gtk-activatable-related-action
+  (related-action
+   gtk-activatable-related-action
    "related-action" "GtkAction" t t)
-  (use-action-appearance gtk-activatable-use-action-appearance
+  (use-action-appearance
+   gtk-activatable-use-action-appearance
    "use-action-appearance" "gboolean" t t))
 
 ;;; ----------------------------------------------------------------------------
@@ -372,21 +374,21 @@
 ;;; 
 ;;;   /* virtual table */
 ;;;   void   (* update)                  (GtkActivatable *activatable,
-;;; 		                          GtkAction      *action,
-;;; 		                          const gchar    *property_name);
+;;;                                   GtkAction      *action,
+;;;                                   const gchar    *property_name);
 ;;;   void   (* sync_action_properties)  (GtkActivatable *activatable,
-;;; 		                          GtkAction      *action);
+;;;                                   GtkAction      *action);
 ;;; };
 ;;; 
 ;;; GTypeInterface g_iface;
 ;;; 
 ;;; update ()
-;;; 	Called to update the activatable when its related action's properties
+;;;     Called to update the activatable when its related action's properties
 ;;;     change. You must check the "use-action-appearance" property only apply
 ;;;     action properties that are meant to effect the appearance accordingly.
 ;;; 
 ;;; sync_action_properties ()
-;;; 	Called to update the activatable completely, this is called internally
+;;;     Called to update the activatable completely, this is called internally
 ;;;     when "related-action" property is set or unset and by the implementor
 ;;;     when "use-action-appearance" changes.
 ;;;
@@ -421,10 +423,10 @@
 ;;; the previous action
 ;;; 
 ;;; activatable :
-;;; 	a GtkActivatable
+;;;     a GtkActivatable
 ;;; 
 ;;; action :
-;;; 	the GtkAction to set
+;;;     the GtkAction to set
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -437,10 +439,10 @@
 ;;; Gets the related GtkAction for activatable.
 ;;; 
 ;;; activatable :
-;;; 	a GtkActivatable
+;;;     a GtkActivatable
 ;;; 
 ;;; Returns :
-;;; 	the related GtkAction if one is set. [transfer none]
+;;;     the related GtkAction if one is set. [transfer none]
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -455,10 +457,10 @@
 ;;; setting the related action or when the action changes appearance.
 ;;; 
 ;;; activatable :
-;;; 	a GtkActivatable
+;;;     a GtkActivatable
 ;;; 
 ;;; Returns :
-;;; 	whether activatable uses its actions appearance.
+;;;     whether activatable uses its actions appearance.
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -474,10 +476,10 @@
 ;;; implementing class when "use-action-appearance" changes.
 ;;; 
 ;;; activatable :
-;;; 	a GtkActivatable
+;;;     a GtkActivatable
 ;;; 
 ;;; action :
-;;; 	the related GtkAction or NULL. [allow-none]
+;;;     the related GtkAction or NULL. [allow-none]
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -496,10 +498,10 @@
 ;;; and call gtk_activatable_do_set_related_action() when it changes.
 ;;; 
 ;;; activatable :
-;;; 	a GtkActivatable
+;;;     a GtkActivatable
 ;;; 
 ;;; action :
-;;; 	the GtkAction to set
+;;;     the GtkAction to set
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
@@ -520,10 +522,10 @@
 ;;; activatable if needed.
 ;;; 
 ;;; activatable :
-;;; 	a GtkActivatable
+;;;     a GtkActivatable
 ;;; 
 ;;; use_appearance :
-;;; 	whether to use the actions appearance
+;;;     whether to use the actions appearance
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------

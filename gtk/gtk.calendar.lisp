@@ -786,11 +786,10 @@
   (destroy-notify :pointer))
 
 (defun gtk-calendar-set-detail-func (calendar func)
-  (%gtk-calendar-set-detail-func
-                              calendar
-                              (callback gtk-calendar-detail-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+  (%gtk-calendar-set-detail-func calendar
+                                 (callback gtk-calendar-detail-func-cb)
+                                 (allocate-stable-pointer func)
+                                 (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-calendar-set-detail-func)
 

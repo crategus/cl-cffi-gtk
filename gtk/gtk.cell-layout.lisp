@@ -518,7 +518,7 @@
                               cell
                               (callback gtk-cell-layout-cell-data-func-callback)
                               (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                              (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-cell-layout-set-cell-data-func)
 

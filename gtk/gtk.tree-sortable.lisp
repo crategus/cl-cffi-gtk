@@ -52,6 +52,7 @@
 ;;; Prerequisites
 ;;; 
 ;;; GtkTreeSortable requires GtkTreeModel and GObject.
+;;;
 ;;; Known Implementations
 ;;; 
 ;;; GtkTreeSortable is implemented by GtkListStore, GtkTreeModelSort

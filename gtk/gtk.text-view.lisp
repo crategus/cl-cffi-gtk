@@ -2171,6 +2171,13 @@
 ;;;     justification
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-text-view-set-justification))
+
+(defun gtk-text-view-set-justification (text-view justification)
+  (setf (gtk-text-view-justification text-view) justification))
+
+(export 'gtk-text-view-set-justification)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_justification ()
 ;;; 
@@ -2185,6 +2192,13 @@
 ;;; Returns :
 ;;;     default justification
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-justification))
+
+(defun gtk-text-view-get-justification (text-view)
+  (gtk-text-view-justification text-view))
+
+(export 'gtk-text-view-get-justification)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_left_margin ()

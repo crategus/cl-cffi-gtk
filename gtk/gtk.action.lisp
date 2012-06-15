@@ -371,7 +371,8 @@
 
 (define-g-object-class "GtkAction" gtk-action
   (:superclass g-object
-    :export t :interfaces ("GtkBuildable")
+    :export t
+    :interfaces ("GtkBuildable")
     :type-initializer "gtk_action_get_type")
   ((action-group
     gtk-action-action-group

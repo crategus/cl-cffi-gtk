@@ -1645,10 +1645,10 @@
 
 (defun gtk-tree-view-set-column-drag-fuction (tree-view function)
   (%gtk-tree-view-set-column-drag-function
-                              tree-view
-                              (callback gtk-tree-view-column-drop-func-cb)
-                              (allocate-stable-pointer function)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                                   tree-view
+                                   (callback gtk-tree-view-column-drop-func-cb)
+                                   (allocate-stable-pointer function)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_scroll_to_point ()
@@ -3073,10 +3073,10 @@
 
 (defun gtk-tree-view-set-search-equal-func (tree-view func)
   (%gtk-tree-view-set-search-equal-func
-                              tree-view
-                              (callback gtk-tree-view-search-equal-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                                   tree-view
+                                   (callback gtk-tree-view-search-equal-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-view-set-search-equal-func)
 
@@ -3192,7 +3192,7 @@
                                tree-view
                                (callback gtk-tree-view-set-search-position-func)
                                (allocate-stable-pointer func)
-                               (callback stable-pointer-free-destroy-notify-cb))
+                               (callback stable-pointer-destroy-notify-cb))
       (%gtk-tree-view-set-search-position-func tree-view
                                                (null-pointer)
                                                (null-pointer)
@@ -3430,7 +3430,7 @@
       (%gtk-tree-view-set-row-separator-func tree-view
                             (callback gtk-tree-view-row-separator-func-callback)
                             (allocate-stable-pointer func)
-                            (callback stable-pointer-free-destroy-notify-cb))
+                            (callback stable-pointer-destroy-notify-cb))
       (%gtk-tree-view-set-row-separator-func tree-view
                                              (null-pointer)
                                              (null-pointer)

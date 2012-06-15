@@ -2877,13 +2877,13 @@
   (user-data :pointer)
   (destroy-notify :pointer))
 
-(defun gtk-text-buffer-register-deserialize-format (buffer mime-type function)
+(defun gtk-text-buffer-register-deserialize-format (buffer mime-type func)
   (%gtk-text-buffer-register-deserialize-format
-                        buffer
-                        mime-type
-                        (callback gtk-text-buffer-deserialize-cb)
-                        (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-cb)))
+                                   buffer
+                                   mime-type
+                                   (callback gtk-text-buffer-deserialize-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-text-buffer-register-deserialize-format)
 
@@ -2899,7 +2899,7 @@
      (user-data :pointer)
      (error :pointer))
   (with-catching-to-g-error (error)
-    (let ((fn (stable-pointer-value user-data)))
+    (let ((fn (get-stable-pointer-value user-data)))
       (restart-case
        (let ((bytes (iter (with bytes = (make-array length
                                                     :element-type
@@ -2991,11 +2991,12 @@
   (destroy-notify :pointer))
 
 (defun gtk-text-buffer-register-serialize-format (buffer mime-type function)
-  (%gtk-text-buffer-register-serialize-format buffer
-                        mime-type
-                        (callback gtk-text-buffer-serialize-cb)
-                        (allocate-stable-pointer function)
-                        (callback stable-pointer-free-destroy-notify-cb)))
+  (%gtk-text-buffer-register-serialize-format
+                                   buffer
+                                   mime-type
+                                   (callback gtk-text-buffer-serialize-cb)
+                                   (allocate-stable-pointer function)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-text-buffer-register-serialize-format)
 
@@ -3084,7 +3085,7 @@
      (end-iter (g-boxed-foreign gtk-text-iter))
      (length (:pointer g-size))
      (user-data :pointer))
-  (let ((fn (stable-pointer-value user-data)))
+  (let ((fn (get-stable-pointer-value user-data)))
     (restart-case
      (let* ((bytes (funcall fn
                             register-buffer

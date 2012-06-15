@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,11 +27,11 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;; 
+;;; ﻿
 ;;; Drag and Drop
 ;;; 
 ;;; Functions for controlling drag and drop handling
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkDestDefaults
@@ -53,6 +53,7 @@
 ;;;     gtk_drag_get_source_widget
 ;;;     gtk_drag_highlight
 ;;;     gtk_drag_unhighlight
+;;;     
 ;;;     gtk_drag_begin
 ;;;     gtk_drag_set_icon_widget
 ;;;     gtk_drag_set_icon_pixbuf
@@ -82,8 +83,8 @@
 ;;; protocols.
 ;;; 
 ;;; As well as the functions listed here, applications may need to use some
-;;; facilities provided for Selections. Also, the Drag and Drop API makes use
-;;; of signals in the GtkWidget class.
+;;; facilities provided for Selections. Also, the Drag and Drop API makes use of
+;;; signals in the GtkWidget class.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -102,17 +103,17 @@
 ;;; will be taken on behalf of the user for a drag destination site.
 ;;; 
 ;;; GTK_DEST_DEFAULT_MOTION
-;;; 	If set for a widget, GTK+, during a drag over this widget will check if
+;;;     If set for a widget, GTK+, during a drag over this widget will check if
 ;;;     the drag matches this widget's list of possible targets and actions.
 ;;;     GTK+ will then call gdk_drag_status() as appropriate.
 ;;; 
 ;;; GTK_DEST_DEFAULT_HIGHLIGHT
-;;; 	If set for a widget, GTK+ will draw a highlight on this widget as long
+;;;     If set for a widget, GTK+ will draw a highlight on this widget as long
 ;;;     as a drag is over this widget and the widget drag format and action are
 ;;;     acceptable.
 ;;; 
 ;;; GTK_DEST_DEFAULT_DROP
-;;; 	If set for a widget, when a drop occurs, GTK+ will will check if the
+;;;     If set for a widget, when a drop occurs, GTK+ will will check if the
 ;;;     drag matches this widget's list of possible targets and actions. If so,
 ;;;     GTK+ will call gtk_drag_get_data() on behalf of the widget. Whether or
 ;;;     not the drop is successful, GTK+ will call gtk_drag_finish(). If the
@@ -120,7 +121,7 @@
 ;;;     passed for the delete parameter to gtk_drag_finish().
 ;;; 
 ;;; GTK_DEST_DEFAULT_ALL
-;;; 	If set, specifies that all default actions should be taken.
+;;;     If set, specifies that all default actions should be taken.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkDestDefaults" gtk-dest-defaults
@@ -135,30 +136,30 @@
 ;;; enum GtkTargetFlags
 ;;; 
 ;;; typedef enum {
-;;;   GTK_TARGET_SAME_APP = 1 << 0,    /*< nick=same-app >*/
-;;;   GTK_TARGET_SAME_WIDGET = 1 << 1, /*< nick=same-widget >*/
-;;;   GTK_TARGET_OTHER_APP = 1 << 2,   /*< nick=other-app >*/
-;;;   GTK_TARGET_OTHER_WIDGET = 1 << 3 /*< nick=other-widget >*/
+;;;   GTK_TARGET_SAME_APP     = 1 << 0, /*< nick=same-app >*/
+;;;   GTK_TARGET_SAME_WIDGET  = 1 << 1, /*< nick=same-widget >*/
+;;;   GTK_TARGET_OTHER_APP    = 1 << 2, /*< nick=other-app >*/
+;;;   GTK_TARGET_OTHER_WIDGET = 1 << 3  /*< nick=other-widget >*/
 ;;; } GtkTargetFlags;
 ;;; 
-;;; The GtkTargetFlags enumeration is used to specify constraints on an entry
-;;; in a GtkTargetTable.
+;;; The GtkTargetFlags enumeration is used to specify constraints on an entry in
+;;; a GtkTargetTable.
 ;;; 
 ;;; GTK_TARGET_SAME_APP
-;;; 	If this is set, the target will only be selected for drags within
-;;;     a single application.
+;;;     If this is set, the target will only be selected for drags within a
+;;;     single application.
 ;;; 
 ;;; GTK_TARGET_SAME_WIDGET
-;;; 	If this is set, the target will only be selected for drags within
-;;;     a single widget.
+;;;     If this is set, the target will only be selected for drags within a
+;;;     single widget.
 ;;; 
 ;;; GTK_TARGET_OTHER_APP
-;;; 	If this is set, the target will not be selected for drags within
-;;;     a single application.
+;;;     If this is set, the target will not be selected for drags within a
+;;;     single application.
 ;;; 
 ;;; GTK_TARGET_OTHER_WIDGET
-;;; 	If this is set, the target will not be selected for drags withing
-;;;     a single widget.
+;;;     If this is set, the target will not be selected for drags withing a
+;;;     single widget.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkTargetFlags" gtk-target-flags
@@ -198,7 +199,7 @@
 ;;; 
 ;;; There's no way to set a default action here, you can use the "drag-motion"
 ;;; callback for that. Here's an example which selects the action to use
-;;; depending on whether the control key is pressed or not:	
+;;; depending on whether the control key is pressed or not:
 ;;; 
 ;;; static void
 ;;; drag_motion (GtkWidget *widget,
@@ -218,21 +219,21 @@
 ;;; }
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; flags :
-;;; 	which types of default drag behavior to use
+;;;     which types of default drag behavior to use
 ;;; 
 ;;; targets :
-;;; 	a pointer to an array of GtkTargetEntrys indicating the drop types that
+;;;     a pointer to an array of GtkTargetEntrys indicating the drop types that
 ;;;     this widget will accept, or NULL. Later you can access the list with
-;;;     gtk_drag_dest_get_target_list() and gtk_drag_dest_find_target().
+;;;     gtk_drag_dest_get_target_list() and gtk_drag_dest_find_target()
 ;;; 
 ;;; n_targets :
-;;; 	the number of entries in targets
+;;;     the number of entries in targets
 ;;; 
 ;;; actions :
-;;; 	a bitmask of possible actions for a drop onto this widget.
+;;;     a bitmask of possible actions for a drop onto this widget.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -246,18 +247,18 @@
 ;;; Sets this widget as a proxy for drops to another window.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; proxy_window :
-;;; 	the window to which to forward drag events
+;;;     the window to which to forward drag events
 ;;; 
 ;;; protocol :
-;;; 	the drag protocol which the proxy_window accepts (You can use
+;;;     the drag protocol which the proxy_window accepts (You can use
 ;;;     gdk_drag_get_protocol() to determine this)
 ;;; 
 ;;; use_coordinates :
-;;; 	If TRUE, send the same coordinates to the destination, because it is
-;;;     an embedded subwindow.
+;;;     If TRUE, send the same coordinates to the destination, because it is an
+;;;     embedded subwindow.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -269,7 +270,7 @@
 ;;; The widget will no longer receive notification of drags.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -288,18 +289,17 @@
 ;;; function.
 ;;; 
 ;;; widget :
-;;; 	drag destination widget
+;;;     drag destination widget
 ;;; 
 ;;; context :
-;;; 	drag context
+;;;     drag context
 ;;; 
 ;;; target_list :
-;;; 	list of droppable targets, or NULL to use gtk_drag_dest_get_target_list
-;;;     (widget).
+;;;     list of droppable targets, or NULL to use gtk_drag_dest_get_target_list
+;;;     (widget)
 ;;; 
 ;;; Returns :
-;;; 	first target that the source offers and the dest can accept,
-;;;     or GDK_NONE.
+;;;     first target that the source offers and the dest can accept, or GDK_NONE
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -310,10 +310,10 @@
 ;;; Returns the list of targets this widget can accept from drag-and-drop.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;; 	the GtkTargetList, or NULL if none.
+;;;     the GtkTargetList, or NULL if none
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -326,10 +326,10 @@
 ;;; widget must first be made into a drag destination with gtk_drag_dest_set().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag destination
+;;;     a GtkWidget that's a drag destination
 ;;; 
 ;;; target_list :
-;;; 	list of droppable targets, or NULL for none.
+;;;     list of droppable targets, or NULL for none
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -343,7 +343,7 @@
 ;;; gtk_drag_dest_set_target_list().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag destination
+;;;     a GtkWidget that's a drag destination
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -359,7 +359,7 @@
 ;;; gtk_drag_dest_set_target_list().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag destination
+;;;     a GtkWidget that's a drag destination
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -369,13 +369,12 @@
 ;;; 
 ;;; void gtk_drag_dest_add_uri_targets (GtkWidget *widget);
 ;;; 
-;;; Add the URI targets supported by GtkSelection to the target list of the
-;;; drag destination. The targets are added with info = 0. If you need another
-;;; value, use gtk_target_list_add_uri_targets() and
-;;; gtk_drag_dest_set_target_list().
+;;; Add the URI targets supported by GtkSelection to the target list of the drag
+;;; destination. The targets are added with info = 0. If you need another value,
+;;; use gtk_target_list_add_uri_targets() and gtk_drag_dest_set_target_list().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag destination
+;;;     a GtkWidget that's a drag destination
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -386,17 +385,17 @@
 ;;; void gtk_drag_dest_set_track_motion (GtkWidget *widget,
 ;;;                                      gboolean track_motion);
 ;;; 
-;;; Tells the widget to emit "drag-motion" and "drag-leave" events regardless
-;;; of the targets and the GTK_DEST_DEFAULT_MOTION flag.
+;;; Tells the widget to emit "drag-motion" and "drag-leave" events regardless of
+;;; the targets and the GTK_DEST_DEFAULT_MOTION flag.
 ;;; 
-;;; This may be used when a widget wants to do generic actions regardless of
-;;; the targets that the source offers.
+;;; This may be used when a widget wants to do generic actions regardless of the
+;;; targets that the source offers.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag destination
+;;;     a GtkWidget that's a drag destination
 ;;; 
 ;;; track_motion :
-;;; 	whether to accept all targets
+;;;     whether to accept all targets
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -410,10 +409,10 @@
 ;;; signals.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag destination
+;;;     a GtkWidget that's a drag destination
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the widget always emits "drag-motion" events
+;;;     TRUE if the widget always emits "drag-motion" events
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
@@ -430,17 +429,17 @@
 ;;; drag will no longer be required.
 ;;; 
 ;;; context :
-;;; 	the drag context.
+;;;     the drag context.
 ;;; 
 ;;; success :
-;;; 	a flag indicating whether the drop was successful
+;;;     a flag indicating whether the drop was successful
 ;;; 
 ;;; del :
-;;; 	a flag indicating whether the source should delete the original data.
+;;;     a flag indicating whether the source should delete the original data.
 ;;;     (This should be TRUE for a move)
 ;;; 
 ;;; time_ :
-;;; 	the timestamp from the "drag-drop" signal.
+;;;     the timestamp from the "drag-drop" signal.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_drag_finish" gtk-drag-finish) :void
@@ -467,16 +466,16 @@
 ;;; not receive notification of failed drops.
 ;;; 
 ;;; widget :
-;;; 	the widget that will receive the "drag-data-received" signal.
+;;;     the widget that will receive the "drag-data-received" signal.
 ;;; 
 ;;; context :
-;;; 	the drag context
+;;;     the drag context
 ;;; 
 ;;; target :
-;;; 	the target (form of the data) to retrieve.
+;;;     the target (form of the data) to retrieve.
 ;;; 
 ;;; time_ :
-;;; 	a timestamp for retrieving the data. This will generally be the time
+;;;     a timestamp for retrieving the data. This will generally be the time
 ;;;     received in a "drag-motion"" or "drag-drop"" signal.
 ;;; ----------------------------------------------------------------------------
 
@@ -488,11 +487,11 @@
 ;;; Determines the source widget for a drag.
 ;;; 
 ;;; context :
-;;; 	a (destination side) drag context
+;;;     a (destination side) drag context
 ;;; 
 ;;; Returns :
-;;; 	if the drag is occurring within a single application, a pointer to
-;;;     the source widget. Otherwise, NULL.
+;;;     if the drag is occurring within a single application, a pointer to the
+;;;     source widget. Otherwise, NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -505,7 +504,7 @@
 ;;; called.
 ;;; 
 ;;; widget :
-;;; 	a widget to highlight
+;;;     a widget to highlight
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -516,7 +515,7 @@
 ;;; Removes a highlight set by gtk_drag_highlight() from a widget.
 ;;; 
 ;;; widget :
-;;; 	a widget to remove the highlight from.
+;;;     a widget to remove the highlight from.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -556,22 +555,22 @@
 ;;;    you can really not pass a real event, pass NULL instead.
 ;;; 
 ;;; widget :
-;;; 	the source widget.
+;;;     the source widget.
 ;;; 
 ;;; targets :
-;;; 	The targets (data formats) in which the source can provide the data.
+;;;     The targets (data formats) in which the source can provide the data.
 ;;; 
 ;;; actions :
-;;; 	A bitmask of the allowed drag actions for this drag.
+;;;     A bitmask of the allowed drag actions for this drag.
 ;;; 
 ;;; button :
-;;; 	The button the user clicked to start the drag.
+;;;     The button the user clicked to start the drag.
 ;;; 
 ;;; event :
-;;; 	The event that triggered the start of the drag.
+;;;     The event that triggered the start of the drag.
 ;;; 
 ;;; Returns :
-;;; 	the context for this drag.
+;;;     the context for this drag
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -587,17 +586,17 @@
 ;;; "drag-end" signal and destroy it yourself.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; 
 ;;; widget :
-;;; 	a toplevel window to use as an icon.
+;;;     a toplevel window to use as an icon.
 ;;; 
 ;;; hot_x :
-;;; 	the X offset within widget of the hotspot.
+;;;     the X offset within widget of the hotspot.
 ;;; 
 ;;; hot_y :
-;;; 	the Y offset within widget of the hotspot.
+;;;     the Y offset within widget of the hotspot.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -611,17 +610,17 @@
 ;;; Sets pixbuf as the icon for a given drag.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; 
 ;;; pixbuf :
-;;; 	the GdkPixbuf to use as the drag icon.
+;;;     the GdkPixbuf to use as the drag icon.
 ;;; 
 ;;; hot_x :
-;;; 	the X offset within widget of the hotspot.
+;;;     the X offset within widget of the hotspot.
 ;;; 
 ;;; hot_y :
-;;; 	the Y offset within widget of the hotspot.
+;;;     the Y offset within widget of the hotspot.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -635,17 +634,17 @@
 ;;; Sets the icon for a given drag from a stock ID.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; 
 ;;; stock_id :
-;;; 	the ID of the stock icon to use for the drag.
+;;;     the ID of the stock icon to use for the drag.
 ;;; 
 ;;; hot_x :
-;;; 	the X offset within the icon of the hotspot.
+;;;     the X offset within the icon of the hotspot.
 ;;; 
 ;;; hot_y :
-;;; 	the Y offset within the icon of the hotspot.
+;;;     the Y offset within the icon of the hotspot.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -662,11 +661,11 @@
 ;;; positioned at the (0,0) coordinate of the surface.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; 
 ;;; surface :
-;;; 	the surface to use as icon
+;;;     the surface to use as icon
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -683,17 +682,17 @@
 ;;; hot_x and hot_y have to be used with care.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; 
 ;;; icon_name :
-;;; 	name of icon to use
+;;;     name of icon to use
 ;;; 
 ;;; hot_x :
-;;; 	the X offset of the hotspot within the icon
+;;;     the X offset of the hotspot within the icon
 ;;; 
 ;;; hot_y :
-;;; 	the Y offset of the hotspot within the icon
+;;;     the Y offset of the hotspot within the icon
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -711,17 +710,17 @@
 ;;; drop.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; 
 ;;; icon :
-;;; 	a GIcon
+;;;     a GIcon
 ;;; 
 ;;; hot_x :
-;;; 	the X offset of the hotspot within the icon
+;;;     the X offset of the hotspot within the icon
 ;;; 
 ;;; hot_y :
-;;; 	the Y offset of the hotspot within the icon
+;;;     the Y offset of the hotspot within the icon
 ;;; 
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
@@ -734,7 +733,7 @@
 ;;; Sets the icon for a particular drag to the default icon.
 ;;; 
 ;;; context :
-;;; 	the context for a drag. (This must be called with a context for the
+;;;     the context for a drag. (This must be called with a context for the
 ;;;     source side of a drag)
 ;;; ----------------------------------------------------------------------------
 
@@ -752,22 +751,22 @@
 ;;; trigger the beginning of a drag-and-drop operation.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; start_x :
-;;; 	X coordinate of start of drag
+;;;     X coordinate of start of drag
 ;;; 
 ;;; start_y :
-;;; 	Y coordinate of start of drag
+;;;     Y coordinate of start of drag
 ;;; 
 ;;; current_x :
-;;; 	current X coordinate
+;;;     current X coordinate
 ;;; 
 ;;; current_y :
-;;; 	current Y coordinate
+;;;     current Y coordinate
 ;;; 
 ;;; Returns :
-;;; 	TRUE if the drag threshold has been passed.
+;;;     TRUE if the drag threshold has been passed.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -783,35 +782,35 @@
 ;;; clicks and drags on the widget. The widget must have a window.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; start_button_mask :
-;;; 	the bitmask of buttons that can start the drag
+;;;     the bitmask of buttons that can start the drag
 ;;; 
 ;;; targets :
-;;; 	the table of targets that the drag will support, may be NULL.
+;;;     the table of targets that the drag will support, may be NULL
 ;;; 
 ;;; n_targets :
-;;; 	the number of items in targets
+;;;     the number of items in targets
 ;;; 
 ;;; actions :
-;;; 	the bitmask of possible actions for a drag from this widget
+;;;     the bitmask of possible actions for a drag from this widget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_pixbuf ()
 ;;; 
-;;; void gtk_drag_source_set_icon_pixbuf (GtkWidget *widget, GdkPixbuf *pixbuf)
+;;; void gtk_drag_source_set_icon_pixbuf (GtkWidget *widget, GdkPixbuf *pixbuf);
 ;;; 
 ;;; Sets the icon that will be used for drags from a particular widget from a
 ;;; GdkPixbuf. GTK+ retains a reference for pixbuf and will release it when it
 ;;; is no longer needed.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; pixbuf :
-;;; 	the GdkPixbuf for the drag icon
+;;;     the GdkPixbuf for the drag icon
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -820,14 +819,14 @@
 ;;; void gtk_drag_source_set_icon_stock (GtkWidget *widget,
 ;;;                                      const gchar *stock_id);
 ;;; 
-;;; Sets the icon that will be used for drags from a particular source to
-;;; a stock icon.
+;;; Sets the icon that will be used for drags from a particular source to a
+;;; stock icon.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; stock_id :
-;;; 	the ID of the stock icon to use
+;;;     the ID of the stock icon to use
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -840,10 +839,10 @@
 ;;; themed icon. See the docs for GtkIconTheme for more details.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; icon_name :
-;;; 	name of icon to use
+;;;     name of icon to use
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -857,10 +856,10 @@
 ;;; See the docs for GtkIconTheme for more details.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; icon :
-;;; 	A GIcon
+;;;     A GIcon
 ;;; 
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
@@ -873,7 +872,7 @@
 ;;; Undoes the effects of gtk_drag_source_set().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -886,10 +885,10 @@
 ;;; widget must first be made into a drag source with gtk_drag_source_set().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's a drag source
+;;;     a GtkWidget that's a drag source
 ;;; 
 ;;; target_list :
-;;; 	list of draggable targets, or NULL for none. [allow-none]
+;;;     list of draggable targets, or NULL for none
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -902,10 +901,10 @@
 ;;; Gets the list of targets this widget can provide for drag-and-drop.
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget
+;;;     a GtkWidget
 ;;; 
 ;;; Returns :
-;;; 	the GtkTargetList, or NULL if none. [transfer none]
+;;;     the GtkTargetList, or NULL if none
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -921,7 +920,7 @@
 ;;; gtk_drag_source_set_target_list().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's is a drag source
+;;;     a GtkWidget that's is a drag source
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -937,7 +936,7 @@
 ;;; gtk_drag_source_set_target_list().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's is a drag source
+;;;     a GtkWidget that's is a drag source
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -952,10 +951,9 @@
 ;;; gtk_target_list_add_uri_targets() and gtk_drag_source_set_target_list().
 ;;; 
 ;;; widget :
-;;; 	a GtkWidget that's is a drag source
+;;;     a GtkWidget that's is a drag source
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.drag-and-drop.lisp -------------------------------------

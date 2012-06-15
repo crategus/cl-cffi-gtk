@@ -27,9 +27,6 @@
 
 (in-package :gtk)
 
-(defcallback stable-pointer-free-destroy-notify-cb :void ((data :pointer))
-  (free-stable-pointer data))
-
 (defcallback call-from-main-loop-callback :boolean
     ((data :pointer))
   (restart-case
@@ -41,7 +38,7 @@
   (g-idle-add-full priority
                    (callback call-from-main-loop-callback)
                    (allocate-stable-pointer func)
-                   (callback stable-pointer-free-destroy-notify-cb))
+                   (callback stable-pointer-destroy-notify-cb))
   (ensure-gtk-main))
 
 (export 'call-from-gtk-main-loop)
@@ -57,7 +54,7 @@
                       millisec
                       (callback call-timeout-from-main-loop-callback)
                       (allocate-stable-pointer func)
-                      (callback stable-pointer-free-destroy-notify-cb)))
+                      (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-main-add-timeout)
 

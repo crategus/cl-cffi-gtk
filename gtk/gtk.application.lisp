@@ -867,6 +867,13 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-application-get-app-menu))
+
+(defun gtk-application-get-app-menu (application)
+  (gtk-application-app-menu application))
+
+(export 'gtk-application-get-app-menu)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_set_app_menu ()
 ;;; 
@@ -898,6 +905,13 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-application-set-app-menu))
+
+(defun gtk-application-set-app-menu (application app-menu)
+  (setf (gtk-application-app-menu application) app-menu))
+
+(export 'gtk-application-set-app-menu)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_menubar ()
 ;;; 
@@ -913,6 +927,13 @@
 ;;; 
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-application-get-menubar))
+
+(defun gtk-application-get-menubar (application)
+  (gtk-application-menubar application))
+
+(export 'gtk-application-get-menubar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_set_menubar ()
@@ -947,5 +968,11 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-application-set-menubar))
+
+(defun gtk-application-set-menubar (application menubar)
+  (setf (gtk-application-menubar application) menubar))
+
+(export 'gtk-application-set-menubar)
 
 ;;; --- End of file gtk.application.lisp ---------------------------------------

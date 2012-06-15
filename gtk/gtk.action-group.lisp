@@ -917,10 +917,10 @@
 
 (defun gtk-action-group-set-translate-func (action-group func)
   (%gtk-action-group-set-translate-func
-                              action-group
-                              (callback gtk-translate-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                                   action-group
+                                   (callback gtk-translate-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-action-group-set-translate-func)
 

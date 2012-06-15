@@ -315,7 +315,7 @@
                           tree-model-filter
                           (callback gtk-tree-model-filter-visible-func-callback)
                           (allocate-stable-pointer function)
-                          (callback stable-pointer-free-destroy-notify-cb)))
+                          (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtktree-model-filter-set-visible-function)
 

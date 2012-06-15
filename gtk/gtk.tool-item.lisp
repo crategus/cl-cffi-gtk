@@ -322,6 +322,12 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tool_item_set_expand" gtk-tool-item-set-expand) :void
+  (tool-item (g-object gtk-tool-item))
+  (expand :boolean))
+
+(export 'gtk-tool-item-set-expand)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_get_expand ()
 ;;; 
@@ -338,6 +344,11 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_get_expand" gtk-tool-item-get-expand) :boolean
+  (tool-item (g-object gtk-tool-item)))
+
+(export 'gtk-tool-item-get-expand)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_set_tooltip_text ()

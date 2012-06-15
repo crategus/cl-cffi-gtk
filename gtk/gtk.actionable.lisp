@@ -168,6 +168,13 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-actionable-get-action-name))
+
+(defun gtk-actionable-get-action-name (actionable)
+  (gtk-actionable-action-name actionable))
+
+(export 'gtk-actionable-get-action-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_action_name ()
 ;;; 
@@ -194,13 +201,20 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-actionable-set-action-name))
+
+(defun gtk-actionable-set-action-name (actionable action-name)
+  (setf (gtk-actionable-action-name actionable) action-name))
+
+(export 'gtk-actionable-set-action-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_get_action_target_value ()
 ;;; 
 ;;; GVariant * gtk_actionable_get_action_target_value
 ;;;                                                  (GtkActionable *actionable)
 ;;; 
-;;; Gets the current target value of actionabe.
+;;; Gets the current target value of actionable.
 ;;; 
 ;;; See gtk_actionable_set_target_value() for more information.
 ;;; 
@@ -212,6 +226,13 @@
 ;;; 
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-actionable-get-action-target-value))
+
+(defun gtk-actionable-get-action-target-value (actionable)
+  (gtk-actionable-action-target actionable))
+
+(export 'gtk-actionable-get-action-target-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_action_target_value ()
@@ -245,6 +266,13 @@
 ;;; 
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-actionable-set-action-target-value))
+
+(defun gtk-actionable-set-action-target-value (actionable target-value)
+  (setf (gtk-actionable-action-target actionable) target-value))
+
+(export 'gtk-actionable-set-action-target-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_action_target ()
@@ -299,5 +327,11 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_actionable_set_detailed_action_name"
+           gtk-actionable-set-detailed-action-name) :void
+  (actionable (g-object gtk-actionable))
+  (detailed-action-name :string))
+
+(export 'gtk-actionable-set-detailed-action-name)
 
 ;;; --- End of file gtk.actionable.lisp ----------------------------------------

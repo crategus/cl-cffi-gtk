@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,11 +27,11 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; Settings
 ;;; 
 ;;; Sharing settings between applications
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkSettings
@@ -58,80 +58,82 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkSettings implements GtkStyleProvider.
+;;; GtkSettings implements GtkStyleProvider and GtkStyleProviderPrivate.
 ;;;
 ;;; Properties
 ;;; 
-;;;   "color-hash"               GHashTable*           : Read
-;;;   "gtk-alternative-button-order" gboolean          : Read / Write
-;;;   "gtk-alternative-sort-arrows" gboolean           : Read / Write
-;;;   "gtk-application-prefer-dark-theme" gboolean     : Read / Write
-;;;   "gtk-auto-mnemonics"       gboolean              : Read / Write
-;;;   "gtk-button-images"        gboolean              : Read / Write
-;;;   "gtk-can-change-accels"    gboolean              : Read / Write
-;;;   "gtk-color-palette"        gchar*                : Read / Write
-;;;   "gtk-color-scheme"         gchar*                : Read / Write
-;;;   "gtk-cursor-blink"         gboolean              : Read / Write
-;;;   "gtk-cursor-blink-time"    gint                  : Read / Write
-;;;   "gtk-cursor-blink-timeout" gint                  : Read / Write
-;;;   "gtk-cursor-theme-name"    gchar*                : Read / Write
-;;;   "gtk-cursor-theme-size"    gint                  : Read / Write
-;;;   "gtk-dnd-drag-threshold"   gint                  : Read / Write
-;;;   "gtk-double-click-distance" gint                 : Read / Write
-;;;   "gtk-double-click-time"    gint                  : Read / Write
-;;;   "gtk-enable-accels"        gboolean              : Read / Write
-;;;   "gtk-enable-animations"    gboolean              : Read / Write
-;;;   "gtk-enable-event-sounds"  gboolean              : Read / Write
-;;;   "gtk-enable-input-feedback-sounds" gboolean      : Read / Write
-;;;   "gtk-enable-mnemonics"     gboolean              : Read / Write
-;;;   "gtk-enable-tooltips"      gboolean              : Read / Write
-;;;   "gtk-entry-password-hint-timeout" guint          : Read / Write
-;;;   "gtk-entry-select-on-focus" gboolean             : Read / Write
-;;;   "gtk-error-bell"           gboolean              : Read / Write
-;;;   "gtk-fallback-icon-theme"  gchar*                : Read / Write
-;;;   "gtk-file-chooser-backend" gchar*                : Read / Write
-;;;   "gtk-font-name"            gchar*                : Read / Write
-;;;   "gtk-fontconfig-timestamp" guint                 : Read / Write
-;;;   "gtk-icon-sizes"           gchar*                : Read / Write
-;;;   "gtk-icon-theme-name"      gchar*                : Read / Write
-;;;   "gtk-im-module"            gchar*                : Read / Write
-;;;   "gtk-im-preedit-style"     GtkIMPreeditStyle     : Read / Write
-;;;   "gtk-im-status-style"      GtkIMStatusStyle      : Read / Write
-;;;   "gtk-key-theme-name"       gchar*                : Read / Write
-;;;   "gtk-keynav-cursor-only"   gboolean              : Read / Write
-;;;   "gtk-keynav-wrap-around"   gboolean              : Read / Write
-;;;   "gtk-label-select-on-focus" gboolean             : Read / Write
-;;;   "gtk-menu-bar-accel"       gchar*                : Read / Write
-;;;   "gtk-menu-bar-popup-delay" gint                  : Read / Write
-;;;   "gtk-menu-images"          gboolean              : Read / Write
-;;;   "gtk-menu-popdown-delay"   gint                  : Read / Write
-;;;   "gtk-menu-popup-delay"     gint                  : Read / Write
-;;;   "gtk-modules"              gchar*                : Read / Write
-;;;   "gtk-print-backends"       gchar*                : Read / Write
-;;;   "gtk-print-preview-command" gchar*               : Read / Write
-;;;   "gtk-recent-files-limit"   gint                  : Read / Write
-;;;   "gtk-recent-files-max-age" gint                  : Read / Write
-;;;   "gtk-scrolled-window-placement" GtkCornerType    : Read / Write
-;;;   "gtk-show-input-method-menu" gboolean            : Read / Write
-;;;   "gtk-show-unicode-menu"    gboolean              : Read / Write
-;;;   "gtk-sound-theme-name"     gchar*                : Read / Write
-;;;   "gtk-split-cursor"         gboolean              : Read / Write
-;;;   "gtk-theme-name"           gchar*                : Read / Write
-;;;   "gtk-timeout-expand"       gint                  : Read / Write
-;;;   "gtk-timeout-initial"      gint                  : Read / Write
-;;;   "gtk-timeout-repeat"       gint                  : Read / Write
-;;;   "gtk-toolbar-icon-size"    GtkIconSize           : Read / Write
-;;;   "gtk-toolbar-style"        GtkToolbarStyle       : Read / Write
-;;;   "gtk-tooltip-browse-mode-timeout" gint           : Read / Write
-;;;   "gtk-tooltip-browse-timeout" gint                : Read / Write
-;;;   "gtk-tooltip-timeout"      gint                  : Read / Write
-;;;   "gtk-touchscreen-mode"     gboolean              : Read / Write
-;;;   "gtk-visible-focus"        GtkPolicyType         : Read / Write
-;;;   "gtk-xft-antialias"        gint                  : Read / Write
-;;;   "gtk-xft-dpi"              gint                  : Read / Write
-;;;   "gtk-xft-hinting"          gint                  : Read / Write
-;;;   "gtk-xft-hintstyle"        gchar*                : Read / Write
-;;;   "gtk-xft-rgba"             gchar*                : Read / Write
+;;;   "color-hash"                        GHashTable*           : Read
+;;;   "gtk-alternative-button-order"      gboolean              : Read / Write
+;;;   "gtk-alternative-sort-arrows"       gboolean              : Read / Write
+;;;   "gtk-application-prefer-dark-theme" gboolean              : Read / Write
+;;;   "gtk-auto-mnemonics"                gboolean              : Read / Write
+;;;   "gtk-button-images"                 gboolean              : Read / Write
+;;;   "gtk-can-change-accels"             gboolean              : Read / Write
+;;;   "gtk-color-palette"                 gchar*                : Read / Write
+;;;   "gtk-color-scheme"                  gchar*                : Read / Write
+;;;   "gtk-cursor-blink"                  gboolean              : Read / Write
+;;;   "gtk-cursor-blink-time"             gint                  : Read / Write
+;;;   "gtk-cursor-blink-timeout"          gint                  : Read / Write
+;;;   "gtk-cursor-theme-name"             gchar*                : Read / Write
+;;;   "gtk-cursor-theme-size"             gint                  : Read / Write
+;;;   "gtk-dnd-drag-threshold"            gint                  : Read / Write
+;;;   "gtk-double-click-distance"         gint                  : Read / Write
+;;;   "gtk-double-click-time"             gint                  : Read / Write
+;;;   "gtk-enable-accels"                 gboolean              : Read / Write
+;;;   "gtk-enable-animations"             gboolean              : Read / Write
+;;;   "gtk-enable-event-sounds"           gboolean              : Read / Write
+;;;   "gtk-enable-input-feedback-sounds"  gboolean              : Read / Write
+;;;   "gtk-enable-mnemonics"              gboolean              : Read / Write
+;;;   "gtk-enable-tooltips"               gboolean              : Read / Write
+;;;   "gtk-entry-password-hint-timeout"   guint                 : Read / Write
+;;;   "gtk-entry-select-on-focus"         gboolean              : Read / Write
+;;;   "gtk-error-bell"                    gboolean              : Read / Write
+;;;   "gtk-fallback-icon-theme"           gchar*                : Read / Write
+;;;   "gtk-file-chooser-backend"          gchar*                : Read / Write
+;;;   "gtk-font-name"                     gchar*                : Read / Write
+;;;   "gtk-fontconfig-timestamp"          guint                 : Read / Write
+;;;   "gtk-icon-sizes"                    gchar*                : Read / Write
+;;;   "gtk-icon-theme-name"               gchar*                : Read / Write
+;;;   "gtk-im-module"                     gchar*                : Read / Write
+;;;   "gtk-im-preedit-style"              GtkIMPreeditStyle     : Read / Write
+;;;   "gtk-im-status-style"               GtkIMStatusStyle      : Read / Write
+;;;   "gtk-key-theme-name"                gchar*                : Read / Write
+;;;   "gtk-keynav-cursor-only"            gboolean              : Read / Write
+;;;   "gtk-keynav-wrap-around"            gboolean              : Read / Write
+;;;   "gtk-label-select-on-focus"         gboolean              : Read / Write
+;;;   "gtk-menu-bar-accel"                gchar*                : Read / Write
+;;;   "gtk-menu-bar-popup-delay"          gint                  : Read / Write
+;;;   "gtk-menu-images"                   gboolean              : Read / Write
+;;;   "gtk-menu-popdown-delay"            gint                  : Read / Write
+;;;   "gtk-menu-popup-delay"              gint                  : Read / Write
+;;;   "gtk-modules"                       gchar*                : Read / Write
+;;;   "gtk-print-backends"                gchar*                : Read / Write
+;;;   "gtk-print-preview-command"         gchar*                : Read / Write
+;;;   "gtk-recent-files-limit"            gint                  : Read / Write
+;;;   "gtk-recent-files-max-age"          gint                  : Read / Write
+;;;   "gtk-scrolled-window-placement"     GtkCornerType         : Read / Write
+;;;   "gtk-shell-shows-app-menu"          gboolean              : Read / Write
+;;;   "gtk-shell-shows-menubar"           gboolean              : Read / Write
+;;;   "gtk-show-input-method-menu"        gboolean              : Read / Write
+;;;   "gtk-show-unicode-menu"             gboolean              : Read / Write
+;;;   "gtk-sound-theme-name"              gchar*                : Read / Write
+;;;   "gtk-split-cursor"                  gboolean              : Read / Write
+;;;   "gtk-theme-name"                    gchar*                : Read / Write
+;;;   "gtk-timeout-expand"                gint                  : Read / Write
+;;;   "gtk-timeout-initial"               gint                  : Read / Write
+;;;   "gtk-timeout-repeat"                gint                  : Read / Write
+;;;   "gtk-toolbar-icon-size"             GtkIconSize           : Read / Write
+;;;   "gtk-toolbar-style"                 GtkToolbarStyle       : Read / Write
+;;;   "gtk-tooltip-browse-mode-timeout"   gint                  : Read / Write
+;;;   "gtk-tooltip-browse-timeout"        gint                  : Read / Write
+;;;   "gtk-tooltip-timeout"               gint                  : Read / Write
+;;;   "gtk-touchscreen-mode"              gboolean              : Read / Write
+;;;   "gtk-visible-focus"                 GtkPolicyType         : Read / Write
+;;;   "gtk-xft-antialias"                 gint                  : Read / Write
+;;;   "gtk-xft-dpi"                       gint                  : Read / Write
+;;;   "gtk-xft-hinting"                   gint                  : Read / Write
+;;;   "gtk-xft-hintstyle"                 gchar*                : Read / Write
+;;;   "gtk-xft-rgba"                      gchar*                : Read / Write
 ;;; 
 ;;; Description
 ;;; 
@@ -176,8 +178,8 @@
 ;;; 
 ;;;   "color-hash"               GHashTable*           : Read
 ;;; 
-;;; Holds a hash table representation of the "gtk-color-scheme" setting,
-;;; mapping color names to GdkColors.
+;;; Holds a hash table representation of the "gtk-color-scheme" setting, mapping
+;;; color names to GdkColors.
 ;;; 
 ;;; Since 2.10
 ;;;
@@ -211,18 +213,18 @@
 ;;; Whether the application prefers to use a dark theme. If a GTK+ theme
 ;;; includes a dark variant, it will be used instead of the configured theme.
 ;;; 
-;;; Some applications benefit from minimizing the amount of light pollution
-;;; that interferes with the content. Good candidates for dark themes are photo
-;;; and video editors that make the actual content get all the attention and
+;;; Some applications benefit from minimizing the amount of light pollution that
+;;; interferes with the content. Good candidates for dark themes are photo and
+;;; video editors that make the actual content get all the attention and
 ;;; minimize the distraction of the chrome.
 ;;; 
 ;;; Dark themes should not be used for documents, where large spaces are
-;;; white/light and the dark chrome creates too much contrast (web browser,
-;;; text editor...).
+;;; white/light and the dark chrome creates too much contrast (web browser, text
+;;; editor...).
 ;;; 
 ;;; Default value: FALSE
 ;;; 
-;;; Since 2.22
+;;; Since 3.0
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "gtk-auto-mnemonics" property
@@ -263,8 +265,8 @@
 ;;; Palette to use in the color selector.
 ;;; 
 ;;; Default value: "black:white:gray50:red:purple:blue:light
-;;;                 blue:green:yellow:orange:lavender:brown:goldenrod4:dodger
-;;;                 blue:pink:light green:gray10:gray30:gray75:gray90"
+;;; blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light
+;;; green:gray10:gray30:gray75:gray90"
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "gtk-color-scheme" property
@@ -542,7 +544,8 @@
 ;;; 
 ;;;   "gtk-icon-sizes"           gchar*                : Read / Write
 ;;; 
-;;; A list of icon sizes. The list is separated by colons, and item has the form:
+;;; A list of icon sizes. The list is separated by colons, and item has the
+;;; form:
 ;;; 
 ;;; size-name = width , height
 ;;; 
@@ -569,7 +572,9 @@
 ;;; 
 ;;; Which IM (input method) module should be used by default. This is the input
 ;;; method that will be used if the user has not explicitly chosen another input
-;;; method from the IM context menu.
+;;; method from the IM context menu. This also can be a colon-separated list of
+;;; input methods, which GTK+ will try in turn until it finds one available on
+;;; the system.
 ;;; 
 ;;; See GtkIMContext and see the "gtk-show-input-method-menu" property.
 ;;; 
@@ -670,8 +675,8 @@
 ;;; 
 ;;;   "gtk-menu-popdown-delay"   gint                  : Read / Write
 ;;; 
-;;; The time before hiding a submenu when the pointer is moving towards
-;;; the submenu.
+;;; The time before hiding a submenu when the pointer is moving towards the
+;;; submenu.
 ;;; 
 ;;; Allowed values: >= 0
 ;;; 
@@ -750,8 +755,8 @@
 ;;;   "gtk-recent-files-max-age" gint                  : Read / Write
 ;;; 
 ;;; The maximum age, in days, of the items inside the recently used resources
-;;; list. Items older than this setting will be excised from the list. If set
-;;; to 0, the list will always be empty; if set to -1, no item will be removed.
+;;; list. Items older than this setting will be excised from the list. If set to
+;;; 0, the list will always be empty; if set to -1, no item will be removed.
 ;;; 
 ;;; Allowed values: >= G_MAXULONG
 ;;; 
@@ -770,6 +775,26 @@
 ;;; Default value: GTK_CORNER_TOP_LEFT
 ;;; 
 ;;; Since 2.10
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "gtk-shell-shows-app-menu" property
+;;; 
+;;;   "gtk-shell-shows-app-menu" gboolean              : Read / Write
+;;; 
+;;; Set to TRUE if the desktop environment is displaying the app menu, FALSE if
+;;; the app should display it itself.
+;;; 
+;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "gtk-shell-shows-menubar" property
+;;; 
+;;;   "gtk-shell-shows-menubar"  gboolean              : Read / Write
+;;; 
+;;; Set to TRUE if the desktop environment is displaying the menubar, FALSE if
+;;; the app should display it itself.
+;;; 
+;;; Default value: FALSE
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "gtk-show-input-method-menu" property
@@ -933,6 +958,12 @@
 ;;; 
 ;;;   "gtk-touchscreen-mode"     gboolean              : Read / Write
 ;;; 
+;;; Warning
+;;; 
+;;; GtkSettings:gtk-touchscreen-mode is deprecated and should not be used in
+;;; newly-written code. 3.4. Generally the behavior touchscreen input should be
+;;; performed dynamically based on gdk_event_get_source_device().
+;;; 
 ;;; When TRUE, there are no motion notify events delivered on this screen, and
 ;;; widgets can't use the pointer hovering them for any essential functionality.
 ;;; 
@@ -990,7 +1021,8 @@
 ;;; 
 ;;;   "gtk-xft-hintstyle"        gchar*                : Read / Write
 ;;; 
-;;; What degree of hinting to use; hintnone, hintslight, hintmedium, or hintfull.
+;;; What degree of hinting to use; hintnone, hintslight, hintmedium, or
+;;; hintfull.
 ;;; 
 ;;; Default value: NULL
 ;;;
@@ -1293,8 +1325,8 @@
 ;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
 ;;; gtk_widget_class_install_style_property_parser() which parses a color given
 ;;; either by its name or in the form { red, green, blue } where red, green and
-;;; blue are integers between 0 and 65535 or floating-point numbers between
-;;; 0 and 1.
+;;; blue are integers between 0 and 65535 or floating-point numbers between 0
+;;; and 1.
 ;;; 
 ;;; pspec :
 ;;;     a GParamSpec
@@ -1317,8 +1349,8 @@
 ;;;                                      const GString *gstring,
 ;;;                                      GValue *property_value);
 ;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
-;;; or gtk_widget_class_install_style_property_parser() which parses a single
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
+;;; gtk_widget_class_install_style_property_parser() which parses a single
 ;;; enumeration value.
 ;;; 
 ;;; The enumeration value can be specified by its name, its nickname or its
@@ -1346,8 +1378,8 @@
 ;;;                                       const GString *gstring,
 ;;;                                       GValue *property_value);
 ;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
-;;; or gtk_widget_class_install_style_property_parser() which parses flags.
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
+;;; gtk_widget_class_install_style_property_parser() which parses flags.
 ;;; 
 ;;; Flags can be specified by their name, their nickname or numerically.
 ;;; Multiple flags can be specified in the form "( flag1 | flag2 | ... )".
@@ -1373,9 +1405,9 @@
 ;;;                                             const GString *gstring,
 ;;;                                             GValue *property_value);
 ;;; 
-;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser()
-;;; or gtk_widget_class_install_style_property_parser() which parses a
-;;; requisition in the form "{ width, height }" for integers width and height.
+;;; A GtkRcPropertyParser for use with gtk_settings_install_property_parser() or
+;;; gtk_widget_class_install_style_property_parser() which parses a requisition
+;;; in the form "{ width, height }" for integers width and height.
 ;;; 
 ;;; pspec :
 ;;;     a GParamSpec
