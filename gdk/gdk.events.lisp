@@ -479,7 +479,7 @@
 (defun gdk-event-handler-set (fn)
   (%gdk-event-handler-set (callback gdk-event-func-callback)
                           (allocate-stable-pointer fn)
-                          (callback stable-pointer-free-destroy-notify-cb)))
+                          (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-event-handler-set)
 

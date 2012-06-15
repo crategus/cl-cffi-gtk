@@ -3022,7 +3022,7 @@
 (defcallback gdk-window-invalidate-maybe-recurse-cb :boolean
   ((window (g-object gdk-window))
    (user-data :pointer))
-  (let ((fn (stable-pointer-value user-data)))
+  (let ((fn (get-stable-pointer-value user-data)))
     (funcall fn window)))
 
 (defun gdk-window-invalidate-maybe-recurse (window region child-func)

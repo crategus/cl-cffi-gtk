@@ -250,7 +250,7 @@
 
 (defcallback source-func-cb :boolean
     ((data :pointer))
-  (funcall (stable-pointer-value data)))
+  (funcall (get-stable-pointer-value data)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_init ()
@@ -358,7 +358,7 @@
   (%gdk-threads-add-idle-full +g-priority-default+
                               (callback source-func-cb)
                               (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                              (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-idle)
 
@@ -437,14 +437,14 @@
 ;; The Lisp implementation does not support the arguments data and notify.
 ;; The argument data is used in %gdk-threads-idle-full to pass the Lisp
 ;; function func and the argument notify is used to pass the function
-;; stable-pointer-free-destroy-notify-cb which frees the allocated pointer
+;; stable-pointer-destroy-notify-cb which frees the allocated pointer
 ;; to the Lisp function func.
 
 (defun gdk-threads-add-idle-full (priority func)
   (%gdk-threads-add-idle-full priority
                               (callback source-func-cb)
                               (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                              (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-idle-full)
 
@@ -484,7 +484,7 @@
                               interval
                               (callback source-func-cb)
                               (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                              (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout)
 
@@ -572,12 +572,11 @@
 ;; The Lisp implementation does not support the arguments data and notify.
 
 (defun gdk-threads-add-timeout-full (priority interval func)
-  (%gdk-threads-add-timeout-full
-                              priority
-                              interval
-                              (callback source-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+  (%gdk-threads-add-timeout-full priority
+                                 interval
+                                 (callback source-func-cb)
+                                 (allocate-stable-pointer func)
+                                 (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-full)
 
@@ -612,11 +611,11 @@
 
 (defun gdk-threads-add-timeout-seconds (interval func)
   (%gdk-threads-add-timeout-seconds-full
-                              +g-priority-default+
-                              interval
-                              (callback source-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                                   +g-priority-default+
+                                   interval
+                                   (callback source-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds)
 
@@ -667,11 +666,11 @@
 
 (defun gdk-threads-add-timeout-seconds-full (priority interval func)
   (%gdk-threads-add-timeout-seconds-full
-                              priority
-                              interval
-                              (callback source-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-free-destroy-notify-cb)))
+                                   priority
+                                   interval
+                                   (callback source-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds-full)
 
