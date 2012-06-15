@@ -24,6 +24,7 @@
 (in-package :gtk-tests)
 
 (define-test gtk-widget
+  (assert-true  (g-type-is-object "GtkWidget"))
   (assert-true  (g-type-is-abstract "GtkWidget"))
   (assert-true  (g-type-is-derived "GtkWidget"))
   (assert-false (g-type-is-fundamental "GtkWidget"))
@@ -36,11 +37,13 @@
   (assert-false (g-type-is-interface "GtkWidget"))
   
   (let ((class (g-type-class-ref (gtype "GtkWidget"))))
-    (assert-equal (gtype "GtkWidget")  (g-type-from-class class))
+    (assert-equal (gtype "GtkWidget") (g-type-from-class class))
+    (assert-equal (gtype "GtkWidget") (g-object-class-type class))
+    (assert-equal "GtkWidget" (g-object-class-name class))
     (assert-equal (gtype "GtkWidget")
-                  (g-type-from-class (g-type-class-peek "GtkWidget")))
+                  (g-type-from-class  (g-type-class-peek "GtkWidget")))
     (assert-equal (gtype "GtkWidget")
-                  (g-type-from-class (g-type-class-peek-static "GtkWidget")))
+                  (g-type-from-class  (g-type-class-peek-static "GtkWidget")))
     (g-type-class-unref class))
   
   (let ((class (find-class 'gtk-widget)))
@@ -104,6 +107,9 @@
   ;; Because GtkWidget is abstract, we create a GtkSeparator
   (let* ((widget (gtk-separator-new :horizontal))
          (ptr (pointer widget)))
+    ;; Some general checks of the instance
+    (assert-equal (gtype "GtkSeparator") (g-object-type widget))
+    (assert-equal "GtkSeparator" (g-object-type-name widget))
     ;; Access the properties
     (assert-false    (gtk-widget-app-paintable widget))
     (assert-false    (gtk-widget-can-default widget))
@@ -142,6 +148,7 @@
     (assert-false    (gtk-widget-visible widget))
     (assert-eql -1   (gtk-widget-width-request widget))
     (assert-false    (gtk-widget-window widget))
+    
     ;; Access cffi properties
     (assert-false    (gtk-widget-parent-window widget))
     (assert-equal    (gtype "GtkSeparator")

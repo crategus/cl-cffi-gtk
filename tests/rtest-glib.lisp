@@ -21,35 +21,26 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+(asdf:operate 'asdf:load-op :lisp-unit)
+(asdf:operate 'asdf:load-op :bordeaux-threads)
+(asdf:operate 'asdf:load-op :cl-cffi-gtk-glib)
+
+(defpackage :glib-tests
+  (:use :glib :cffi :common-lisp :lisp-unit))
+
 (in-package :glib-tests)
 
-(defvar *main-thread* nil)
-(defvar *main-thread-level* nil)
-(defvar *main-thread-lock* (bt:make-lock "*main-thread* lock"))
+;;; ----------------------------------------------------------------------------
 
-(defvar *main-loop* (g-main-loop-new (null-pointer) nil))
-
-(defun destroy-main-thread ()
-  (when (and *main-thread*
-             (bt:thread-alive-p *main-thread*))
-    (bt:destroy-thread *main-thread*)
-    (setf *main-thread* nil)))
-
-(defun ensure-main-thread ()
-  (bt:with-lock-held (*main-thread-lock*)
-    (when (and *main-thread*
-               (not (bt:thread-alive-p *main-thread*)))
-      (setf *main-thread* nil))
-    (unless *main-thread*
-      (setf *main-thread*
-            (bt:make-thread (lambda ()
-                              (setq *main-loop*
-                                    (g-main-loop-new (null-pointer) nil))
-                              (g-main-loop-run *main-loop*))
-                            :name "cl-gtk main thread")
-            *main-thread-level* 0))
-    (incf *main-thread-level*))
-  (values))
+(define-test glib-stable-pointer
+  (let* ((func (lambda() 88))
+         (ptr (allocate-stable-pointer func)))
+    (assert-eql 88 (funcall (get-stable-pointer-value ptr)))
+    (assert-false (free-stable-pointer ptr))
+    (assert-false (get-stable-pointer-value ptr)))
+  (let ((func (lambda () 99)))
+    (with-stable-pointer (ptr func)
+      (assert-eql 99 (funcall (get-stable-pointer-value ptr))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -58,19 +49,29 @@
   (assert-eq :long (cffi::canonicalize-foreign-type 'g-ssize))
   (assert-eq :UNSIGNED-LONG-LONG (cffi::canonicalize-foreign-type 'g-offset)))
 
+;;; ----------------------------------------------------------------------------
+
 (define-test glib-version
   (assert-equal    2 *glib-major-version*)
   (assert-equal   32 *glib-minor-version*)
-  (assert-equal    1 *glib-micro-version*)
-  (assert-equal 3201 *glib-binary-age*)
-  (assert-equal    1 *glib-interface-age*)
+  (assert-equal    3 *glib-micro-version*)
+  (assert-equal 3203 *glib-binary-age*)
+  (assert-equal    3 *glib-interface-age*)
   (assert-false (glib-check-version 2 24 0))
   (assert-equal "GLib version too old (micro mismatch)"
                 (glib-check-version 2 34 0)))
 
+;;; ----------------------------------------------------------------------------
+
 (define-test glib-threads
-  (assert-true (g-thread-get-initialized))
-  (assert-true (g-thread-self)))
+  (let* ((func (lambda () (sleep 5)))
+         (start (get-universal-time))
+         (thread (g-thread-new "GTK+" func)))
+  (assert-true (pointerp (g-thread-self)))
+  (assert-true (pointerp (g-thread-join thread)))
+  (assert-eql 5 (- (get-universal-time) start))))
+
+;;; ----------------------------------------------------------------------------
 
 (defvar *started* nil)
 
@@ -82,21 +83,23 @@
   (assert-equal "GTK Application" (g-get-application-name))
   (assert-equal "GTK Program" (g-get-prgname)))
 
+;;; ----------------------------------------------------------------------------
+
 (define-test glib-main-loop
-  ;; Create a thread with a GMainLoop
-  (ensure-main-thread)
-  ;; Wait until the loop is ready
-  (do ()
-      ((and *main-loop*
-            (g-main-loop-is-running *main-loop*))))
-  ;; Do we have a thread and a main loop?
-  (assert-true (bt:thread-alive-p *main-thread*))
-  (assert-true (g-main-loop-is-running *main-loop*)
-  ;; GMainContext is the default context
-  (assert-true (pointer-eq (g-main-loop-get-context *main-loop*)
-                           (g-main-context-default)))
-  ;; Stop the main-loop and destroy the thread
-  (g-main-loop-quit *main-loop*)
-  (destroy-main-thread)))
+  (let* ((loop (g-main-loop-new (null-pointer) nil))
+         (func (lambda () (g-main-loop-run loop)))
+         (context (g-main-context-default)))
+    (g-thread-new "GTK+ thread" func)
+    (sleep 1)
+    (assert-true (g-main-loop-is-running loop))
+    (assert-true (pointer-eq context (g-main-loop-get-context loop)))
+    (assert-false (g-main-context-pending context))
+    (assert-true (null-pointer-p (g-main-current-source)))
+    (let* ((source (g-timeout-source-new 1000)))
+      (g-source-attach source context)
+      (assert-true (pointer-eq context (g-source-get-context source))))
+    (g-main-loop-quit loop)
+    (sleep 1)
+    (assert-false (g-main-loop-is-running loop))))
 
 ;;; --- End of file rtest-glib.lisp --------------------------------------------
