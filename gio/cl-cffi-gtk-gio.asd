@@ -32,8 +32,10 @@
   :serial t
   :components ((:file "gio.package")
                (:file "gio.init")
+               (:file "gio.action")       ; An action interface
                (:file "gio.action-group") ; A group of actions
                (:file "gio.action-map")   ; Interface for action containers
+               (:file "gio.simple-action"); Simple GAction implementation
                (:file "gio.application")  ; Core application class
               )
   :depends-on (:cl-cffi-gtk-glib

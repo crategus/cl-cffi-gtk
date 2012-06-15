@@ -978,6 +978,13 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline g-application-get-is-registered))
+
+(defun g-application-get-is-registered (application)
+  (g-application-is-registered application))
+
+(export 'g-application-get-is-registered)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_get_is_remote ()
 ;;; 
@@ -1104,6 +1111,11 @@
 ;;; 
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_application_quit" g-application-quit) :void
+  (application (g-object g-application)))
+
+(export 'g-application-quit)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_application_activate ()

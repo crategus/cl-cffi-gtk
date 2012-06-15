@@ -126,7 +126,7 @@
 ;;;     the name of an action
 ;;; 
 ;;; Returns :
-;;;     a GAction, or NULL. [transfer none]
+;;;     a GAction, or NULL
 ;;; 
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
@@ -179,6 +179,15 @@
 ;;; change_state ()
 ;;;     the callback to connect to the "change-state" signal of the action
 ;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-cstruct g-action-entry "GActionEntry"
+  (name :string)
+  (activate :pointer)
+  (parameter-type :string)
+  (state :string)
+  (change-state :pointer))
+
+(export (boxed-related-symbols 'g-action-entry))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_map_add_action_entries ()
@@ -263,6 +272,12 @@
 ;;; 
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+;(defcfun ("g_action_map_add_action" g-action-map-add-action) :void
+;  (action-map g-action-map)
+;  (action g-action))
+
+;(export 'g-action-map-add-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_map_remove_action ()
