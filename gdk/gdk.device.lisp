@@ -360,8 +360,10 @@
         (axes (foreign-slot-value (pointer device) '%gdk-device 'axes)))
     (iter (for i from 0 below n)
           (for axis = (convert-from-foreign
-                        (inc-pointer axes (* i
-                                             (foreign-type-size 'gdk-device-axis-cstruct)))
+                        (inc-pointer
+                            axes
+                            (* i
+                               (foreign-type-size 'gdk-device-axis-cstruct)))
                        '(g-boxed-foreign gdk-device-axis)))
           (collect axis))))
 
@@ -371,8 +373,10 @@
         (keys (foreign-slot-value (pointer device) '%gdk-device 'keys)))
     (iter (for i from 0 below n)
           (for key = (convert-from-foreign
-                      (inc-pointer keys (* i
-                                           (foreign-type-size 'gdk-device-key-cstruct)))
+                      (inc-pointer
+                             keys
+                             (* i
+                                (foreign-type-size 'gdk-device-key-cstruct)))
                       '(g-boxed-foreign gdk-device-key)))
           (collect key))))
 

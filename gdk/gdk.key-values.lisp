@@ -206,13 +206,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkKeymap" gdk-keymap
-  (:superclass g-object :export t :interfaces
-               nil :type-initializer "gdk_keymap_get_type")
-  ((:cffi direction gdk-keymap-direction pango:pango-direction
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gdk_keymap_get_type")
+  ((:cffi direction
+          gdk-keymap-direction pango:pango-direction
           "gdk_keymap_get_direction" nil)
-   (:cffi has-bidi-layouts gdk-keymap-has-bidi-layouts :boolean
+   (:cffi has-bidi-layouts
+          gdk-keymap-has-bidi-layouts :boolean
           "gdk_keymap_have_bidi_layouts" nil)
-   (:cffi caps-lock-state gdk-keymap-caps-lock-state :boolean
+   (:cffi caps-lock-state
+          gdk-keymap-caps-lock-state :boolean
           "gdk_keymap_get_caps_lock_state" nil)))
           
 ;;; ----------------------------------------------------------------------------
@@ -481,11 +486,13 @@
             (n-keys (mem-ref n-keys :int)))
         (prog1
           (iter (for i from 0 below n-keys)
-                (for keymap-key = (convert-from-foreign
-                                    (inc-pointer keys
-                                                 (* i
-                                                    (foreign-type-size 'gdk-keymap-key-cstruct)))
-                                   '(g-boxed-foreign gdk-keymap-key)))
+                (for keymap-key = 
+                  (convert-from-foreign
+                    (inc-pointer
+                             keys
+                             (* i
+                                (foreign-type-size 'gdk-keymap-key-cstruct)))
+                    '(g-boxed-foreign gdk-keymap-key)))
                 (collect keymap-key))
           (g-free keys))))))
 
@@ -546,11 +553,13 @@
         (prog1
           (iter (for i from 0 below n-keys)
                 (for keyval = (mem-aref keyvals :uint))
-                (for keymap-key = (convert-from-foreign
-                                    (inc-pointer keys
-                                                 (* i
-                                                    (foreign-type-size 'gdk-keymap-key-cstruct)))
-                                   '(g-boxed-foreign gdk-keymap-key)))
+                (for keymap-key =
+                  (convert-from-foreign
+                    (inc-pointer
+                             keys
+                             (* i
+                                (foreign-type-size 'gdk-keymap-key-cstruct)))
+                    '(g-boxed-foreign gdk-keymap-key)))
                 (collect keymap-key into r-keys)
                 (collect keyval into r-keyvals)
                 (finally (return (values r-keys r-keyvals))))
@@ -730,10 +739,10 @@
 ;;;     a keyval
 ;;; 
 ;;; lower :
-;;;     return location for lowercase version of symbol. [out]
+;;;     return location for lowercase version of symbol
 ;;; 
 ;;; upper :
-;;;     return location for uppercase version of symbol. [out]
+;;;     return location for uppercase version of symbol
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
