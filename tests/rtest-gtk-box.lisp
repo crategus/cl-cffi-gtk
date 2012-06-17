@@ -63,7 +63,7 @@
   (assert-true  (g-type-is-a "GtkBox" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkBox" "gboolean"))
   (assert-false (g-type-is-a "GtkBox" "GtkWindow"))
-  (assert-equal '("GtkHBox" "GtkVBox" "GtkButtonBox" "GtkStatusbar"
+  (assert-equal '("GtkHBox" "GtkVBox" "GtkButtonBox" "GtkStatusbar" "GtkInfoBar"
                   "GtkColorSelection" "GtkFileChooserWidget"
                   "GtkFileChooserButton" "GtkFontSelection"
                   "GtkRecentChooserWidget")
