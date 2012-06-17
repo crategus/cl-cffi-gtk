@@ -29,7 +29,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Enumeration and Flag Types
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     g-enum-value
@@ -165,7 +165,7 @@
 ;;; struct GEnumValue
 ;;; 
 ;;; struct GEnumValue {
-;;;   gint	 value;
+;;;   gint     value;
 ;;;   const gchar *value_name;
 ;;;   const gchar *value_nick;
 ;;; };
@@ -173,13 +173,13 @@
 ;;; A structure which contains a single enum value, its name, and its nickname.
 ;;; 
 ;;; gint value;
-;;; 	the enum value
+;;;     the enum value
 ;;;
 ;;; const gchar *value_name;
-;;; 	the name of the value
+;;;     the name of the value
 ;;;
 ;;; const gchar *value_nick;
-;;; 	the nickname of the value
+;;;     the nickname of the value
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-enum-value
@@ -195,9 +195,9 @@
 ;;; struct GEnumClass {
 ;;;   GTypeClass  g_type_class;
 ;;; 
-;;;   gint	      minimum;
-;;;   gint	      maximum;
-;;;   guint	      n_values;
+;;;   gint          minimum;
+;;;   gint          maximum;
+;;;   guint          n_values;
 ;;;   GEnumValue *values;
 ;;; };
 ;;; 
@@ -205,19 +205,19 @@
 ;;; values.
 ;;; 
 ;;; GTypeClass g_type_class;
-;;; 	the parent class
+;;;     the parent class
 ;;; 
 ;;; gint minimum;
-;;; 	the smallest possible value.
+;;;     the smallest possible value.
 ;;; 
 ;;; gint maximum;
-;;; 	the largest possible value.
+;;;     the largest possible value.
 ;;; 
 ;;; guint n_values;
-;;; 	the number of possible values.
+;;;     the number of possible values.
 ;;; 
 ;;; GEnumValue *values;
-;;; 	an array of GEnumValue structs describing the individual values.
+;;;     an array of GEnumValue structs describing the individual values.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-enum-class
@@ -326,7 +326,7 @@
 ;;; struct GFlagsValue
 ;;; 
 ;;; struct GFlagsValue {
-;;;   guint	 value;
+;;;   guint     value;
 ;;;   const gchar *value_name;
 ;;;   const gchar *value_nick;
 ;;; };
@@ -334,13 +334,13 @@
 ;;; A structure which contains a single flags value, its name, and its nickname.
 ;;; 
 ;;; guint value;
-;;; 	the flags value
+;;;     the flags value
 ;;; 
 ;;; const gchar *value_name;
-;;; 	the name of the value
+;;;     the name of the value
 ;;; 
 ;;; const gchar *value_nick;
-;;; 	the nickname of the value
+;;;     the nickname of the value
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-flags-value
@@ -356,24 +356,24 @@
 ;;; struct GFlagsClass {
 ;;;   GTypeClass   g_type_class;
 ;;;   
-;;;   guint	       mask;
-;;;   guint	       n_values;
+;;;   guint           mask;
+;;;   guint           n_values;
 ;;;   GFlagsValue *values;
 ;;; };
 ;;; 
 ;;; The class of a flags type holds information about its possible values.
 ;;; 
 ;;; GTypeClass g_type_class;
-;;; 	the parent class
+;;;     the parent class
 ;;; 
 ;;; guint mask;
-;;; 	a mask covering all possible values.
+;;;     a mask covering all possible values.
 ;;; 
 ;;; guint n_values;
-;;; 	the number of possible values.
+;;;     the number of possible values.
 ;;; 
 ;;; GFlagsValue *values;
-;;; 	an array of GFlagsValue structs describing the individual values.
+;;;     an array of GFlagsValue structs describing the individual values.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-flags-class
@@ -421,10 +421,10 @@
 ;;; Get the type identifier from a given GEnumClass structure.
 ;;; 
 ;;; class :
-;;; 	a GEnumClass
+;;;     a GEnumClass
 ;;; 
 ;;; Returns :
-;;; 	the GType
+;;;     the GType
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -436,10 +436,10 @@
 ;;; Get the static type name from a given GEnumClass structure.
 ;;; 
 ;;; class :
-;;; 	a GEnumClass
+;;;     a GEnumClass
 ;;; 
 ;;; Returns :
-;;; 	the type name.
+;;;     the type name.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -450,10 +450,10 @@
 ;;; Checks whether type "is a" G_TYPE_ENUM.
 ;;; 
 ;;; type :
-;;; 	a GType ID.
+;;;     a GType ID.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if type "is a" G_TYPE_ENUM.
+;;;     TRUE if type "is a" G_TYPE_ENUM.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -465,7 +465,7 @@
 ;;; Casts a derived GEnumClass structure into a GEnumClass structure.
 ;;; 
 ;;; class :
-;;; 	a valid GEnumClass
+;;;     a valid GEnumClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -478,7 +478,7 @@
 ;;; or derived.
 ;;; 
 ;;; class :
-;;; 	a GEnumClass
+;;;     a GEnumClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -489,10 +489,10 @@
 ;;; Checks whether type "is a" G_TYPE_FLAGS.
 ;;; 
 ;;; type :
-;;; 	a GType ID.
+;;;     a GType ID.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if type "is a" G_TYPE_FLAGS.
+;;;     TRUE if type "is a" G_TYPE_FLAGS.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -504,7 +504,7 @@
 ;;; Casts a derived GFlagsClass structure into a GFlagsClass structure.
 ;;; 
 ;;; class :
-;;; 	a valid GFlagsClass
+;;;     a valid GFlagsClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -517,7 +517,7 @@
 ;;; G_TYPE_FLAGS or derived.
 ;;; 
 ;;; class :
-;;; 	a GFlagsClass
+;;;     a GFlagsClass
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -528,10 +528,10 @@
 ;;; Get the type identifier from a given GFlagsClass structure.
 ;;; 
 ;;; class :
-;;; 	a GFlagsClass
+;;;     a GFlagsClass
 ;;; 
 ;;; Returns :
-;;; 	the GType
+;;;     the GType
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -543,10 +543,10 @@
 ;;; Get the static type name from a given GFlagsClass structure.
 ;;; 
 ;;; class :
-;;; 	a GFlagsClass
+;;;     a GFlagsClass
 ;;; 
 ;;; Returns :
-;;; 	the type name.
+;;;     the type name.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -557,13 +557,13 @@
 ;;; Returns the GEnumValue for a value.
 ;;; 
 ;;; enum_class :
-;;; 	a GEnumClass
+;;;     a GEnumClass
 ;;; 
 ;;; value :
-;;; 	the value to look up
+;;;     the value to look up
 ;;; 
 ;;; Returns :
-;;; 	the GEnumValue for value, or NULL if value is not a member of the
+;;;     the GEnumValue for value, or NULL if value is not a member of the
 ;;;     enumeration
 ;;; ----------------------------------------------------------------------------
 
@@ -598,13 +598,13 @@
 ;;; Looks up a GEnumValue by name.
 ;;; 
 ;;; enum_class :
-;;; 	a GEnumClass
+;;;     a GEnumClass
 ;;; 
 ;;; name :
-;;; 	the name to look up
+;;;     the name to look up
 ;;; 
 ;;; Returns :
-;;; 	the GEnumValue with name name, or NULL if the enumeration doesn't have
+;;;     the GEnumValue with name name, or NULL if the enumeration doesn't have
 ;;;     a member with that name
 ;;; ----------------------------------------------------------------------------
 
@@ -617,13 +617,13 @@
 ;;; Looks up a GEnumValue by nickname.
 ;;; 
 ;;; enum_class :
-;;; 	a GEnumClass
+;;;     a GEnumClass
 ;;; 
 ;;; nick :
-;;; 	the nickname to look up
+;;;     the nickname to look up
 ;;; 
 ;;; Returns :
-;;; 	the GEnumValue with nickname nick, or NULL if the enumeration doesn't
+;;;     the GEnumValue with nickname nick, or NULL if the enumeration doesn't
 ;;;     have a member with that nickname
 ;;; ----------------------------------------------------------------------------
 
@@ -640,15 +640,15 @@
 ;;; write one yourself using g_enum_register_static().
 ;;; 
 ;;; name :
-;;; 	A nul-terminated string used as the name of the new type.
+;;;     A nul-terminated string used as the name of the new type.
 ;;; 
 ;;; static-values :
-;;; 	An array of GEnumValue structs for the possible enumeration values.
+;;;     An array of GEnumValue structs for the possible enumeration values.
 ;;;     The array is terminated by a struct with all members being 0. GObject
 ;;;     keeps a reference to the data, so it cannot be stack-allocated.
 ;;; 
 ;;; Returns :
-;;; 	The new type identifier.
+;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_enum_register_static" g-enum-register-static) g-type-designator
@@ -683,13 +683,13 @@
 ;;;  }
 ;;; 
 ;;; g_enum_type :
-;;; 	the type identifier of the type being completed
+;;;     the type identifier of the type being completed
 ;;; 
 ;;; info :
-;;; 	the GTypeInfo struct to be filled in
+;;;     the GTypeInfo struct to be filled in
 ;;; 
 ;;; const_values :
-;;; 	An array of GEnumValue structs for the possible enumeration values.
+;;;     An array of GEnumValue structs for the possible enumeration values.
 ;;;     The array is terminated by a struct with all members being 0.
 ;;; ----------------------------------------------------------------------------
 
@@ -702,13 +702,13 @@
 ;;; Returns the first GFlagsValue which is set in value.
 ;;; 
 ;;; flags_class :
-;;; 	a GFlagsClass
+;;;     a GFlagsClass
 ;;; 
 ;;; value :
-;;; 	the value
+;;;     the value
 ;;; 
 ;;; Returns :
-;;; 	the first GFlagsValue which is set in value, or NULL if none is set
+;;;     the first GFlagsValue which is set in value, or NULL if none is set
 ;;; ----------------------------------------------------------------------------
 
 ;; parse-g-value-flags replaces the function g_flags_get_value.
@@ -742,13 +742,13 @@
 ;;; Looks up a GFlagsValue by name.
 ;;; 
 ;;; flags_class :
-;;; 	a GFlagsClass
+;;;     a GFlagsClass
 ;;; 
 ;;; name :
-;;; 	the name to look up
+;;;     the name to look up
 ;;; 
 ;;; Returns :
-;;; 	the GFlagsValue with name name, or NULL if there is no flag with that
+;;;     the GFlagsValue with name name, or NULL if there is no flag with that
 ;;;     name
 ;;; ----------------------------------------------------------------------------
 
@@ -761,13 +761,13 @@
 ;;; Looks up a GFlagsValue by nickname.
 ;;; 
 ;;; flags_class :
-;;; 	a GFlagsClass
+;;;     a GFlagsClass
 ;;; 
 ;;; nick :
-;;; 	the nickname to look up
+;;;     the nickname to look up
 ;;; 
 ;;; Returns :
-;;; 	the GFlagsValue with nickname nick, or NULL if there is no flag with
+;;;     the GFlagsValue with nickname nick, or NULL if there is no flag with
 ;;;     that nickname
 ;;; ----------------------------------------------------------------------------
 
@@ -784,15 +784,15 @@
 ;;; write one yourself using g_flags_register_static().
 ;;; 
 ;;; name :
-;;; 	A nul-terminated string used as the name of the new type.
+;;;     A nul-terminated string used as the name of the new type.
 ;;; 
 ;;; static-values :
-;;; 	An array of GFlagsValue structs for the possible flags values. The
+;;;     An array of GFlagsValue structs for the possible flags values. The
 ;;;     array is terminated by a struct with all members being 0. GObject keeps
 ;;;     a reference to the data, so it cannot be stack-allocated.
 ;;; 
 ;;; Returns :
-;;; 	The new type identifier.
+;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_flags_register_static" g-flags-register-static) g-type-designator
@@ -813,13 +813,13 @@
 ;;; g_enum_complete_type_info() above.
 ;;; 
 ;;; g_flags_type :
-;;; 	the type identifier of the type being completed
+;;;     the type identifier of the type being completed
 ;;; 
 ;;; info :
-;;; 	the GTypeInfo struct to be filled in
+;;;     the GTypeInfo struct to be filled in
 ;;; 
 ;;; const_values :
-;;; 	An array of GFlagsValue structs for the possible enumeration values.
+;;;     An array of GFlagsValue structs for the possible enumeration values.
 ;;;     The array is terminated by a struct with all members being 0.
 ;;; ----------------------------------------------------------------------------
 

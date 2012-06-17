@@ -253,19 +253,23 @@
         (for slot-name = (cstruct-slot-description-name slot))
         (cond
           ((cstruct-slot-description-count slot)
-           (iter (with ptr = (foreign-slot-pointer native cstruct-type slot-name))
+           (iter (with ptr = (foreign-slot-pointer native
+                                                   cstruct-type
+                                                   slot-name))
                  (with array = (slot-value proxy slot-name))
                  (for i from 0 below (cstruct-slot-description-count slot))
                  (setf (mem-aref ptr (cstruct-slot-description-type slot) i)
                        (aref array i))))
           ((cstruct-slot-description-inline-p slot)
-           (let ((info (get-g-boxed-foreign-info
-                         (cstruct-inline-slot-description-boxed-type-name slot))))
-             (copy-slots-to-native (slot-value proxy slot-name)
-                                   (foreign-slot-pointer native
-                                                         cstruct-type
-                                                         slot-name)
-                                   (g-boxed-cstruct-wrapper-info-cstruct-description info))))
+           (let ((info
+                  (get-g-boxed-foreign-info
+                       (cstruct-inline-slot-description-boxed-type-name slot))))
+             (copy-slots-to-native
+                      (slot-value proxy slot-name)
+                      (foreign-slot-pointer native
+                                            cstruct-type
+                                            slot-name)
+                      (g-boxed-cstruct-wrapper-info-cstruct-description info))))
           (t
            (setf (foreign-slot-value native cstruct-type slot-name)
                  (slot-value proxy slot-name))))))
@@ -298,11 +302,12 @@
              (setf (slot-value proxy slot-name)
                    (create-structure
                      (cstruct-inline-slot-description-boxed-type-name slot)))
-             (copy-slots-to-proxy (slot-value proxy slot-name)
-                                  (foreign-slot-pointer native
-                                                        cstruct-type
-                                                        slot-name)
-                                  (g-boxed-cstruct-wrapper-info-cstruct-description info))))
+             (copy-slots-to-proxy
+                      (slot-value proxy slot-name)
+                      (foreign-slot-pointer native
+                                            cstruct-type
+                                            slot-name)
+                      (g-boxed-cstruct-wrapper-info-cstruct-description info))))
           (t (setf (slot-value proxy slot-name)
                    (foreign-slot-value native cstruct-type slot-name))))))
 
@@ -312,11 +317,13 @@
   (if (null proxy)
       (null-pointer)
       (let* ((info (g-boxed-foreign-info type))
-             (native-struct-type (generated-cstruct-name (g-boxed-info-name info))))
+             (native-struct-type
+               (generated-cstruct-name (g-boxed-info-name info))))
         (with-foreign-object (native-struct native-struct-type)
-          (copy-slots-to-native proxy
-                                native-struct
-                                (g-boxed-cstruct-wrapper-info-cstruct-description info))
+          (copy-slots-to-native
+                        proxy
+                        native-struct
+                        (g-boxed-cstruct-wrapper-info-cstruct-description info))
           (values (boxed-copy-fn info native-struct)
                   proxy)))))
 
@@ -325,32 +332,36 @@
                                    proxy)
   (when proxy
     (let ((info (g-boxed-foreign-info type)))
-      (copy-slots-to-proxy proxy
-                           native-struct
-                           (g-boxed-cstruct-wrapper-info-cstruct-description info))
+      (copy-slots-to-proxy
+                        proxy
+                        native-struct
+                        (g-boxed-cstruct-wrapper-info-cstruct-description info))
       (boxed-free-fn info native-struct))))
 
-(defmethod translate-from-foreign (native-struct (type boxed-cstruct-foreign-type))
+(defmethod translate-from-foreign
+    (native-struct (type boxed-cstruct-foreign-type))
   (unless (null-pointer-p native-struct)
     (let* ((info (g-boxed-foreign-info type))
            (proxy-struct-type (g-boxed-info-name info))
            (proxy (create-structure proxy-struct-type)))
-      (copy-slots-to-proxy proxy
-                           native-struct
-                           (g-boxed-cstruct-wrapper-info-cstruct-description info))
+      (copy-slots-to-proxy
+                        proxy
+                        native-struct
+                        (g-boxed-cstruct-wrapper-info-cstruct-description info))
       (when (g-boxed-foreign-return-p type)
         (boxed-free-fn info native-struct))
       proxy)))
 
 ;;; ----------------------------------------------------------------------------
 
-(defmethod cleanup-translated-object-for-callback ((type boxed-cstruct-foreign-type)
-                                                   proxy native-structure)
+(defmethod cleanup-translated-object-for-callback
+    ((type boxed-cstruct-foreign-type) proxy native-structure)
   (when proxy
     (let ((info (g-boxed-foreign-info type)))
-      (copy-slots-to-native proxy
-                            native-structure
-                            (g-boxed-cstruct-wrapper-info-cstruct-description info)))))
+      (copy-slots-to-native
+                     proxy
+                     native-structure
+                     (g-boxed-cstruct-wrapper-info-cstruct-description info)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -374,8 +385,8 @@
 
 (defmethod make-foreign-type ((info g-boxed-opaque-wrapper-info) &key return-p)
   (make-instance 'boxed-opaque-foreign-type
-                 :info info
-                 :return-p return-p))
+                   :info info
+                   :return-p return-p))
 
 (defmethod translate-to-foreign (proxy (type boxed-opaque-foreign-type))
   (if (null proxy)
@@ -385,7 +396,8 @@
           (tg:cancel-finalization proxy)
           (setf (g-boxed-opaque-pointer proxy) nil)))))
 
-(defmethod free-translated-object (native (type boxed-opaque-foreign-type) param)
+(defmethod free-translated-object
+    (native (type boxed-opaque-foreign-type) param)
   (declare (ignore native type param)))
 
 (defvar *gboxed-gc-hooks-lock* (make-recursive-lock "gboxed-gc-hooks-lock"))
@@ -416,14 +428,15 @@
 (defun make-boxed-free-finalizer (type pointer)
   (lambda () (register-gboxed-for-gc type pointer)))
 
-(defmethod translate-from-foreign (native (foreign-type boxed-opaque-foreign-type))
+(defmethod translate-from-foreign
+    (native (foreign-type boxed-opaque-foreign-type))
   (let* ((type (g-boxed-foreign-info foreign-type))
          (proxy (make-instance (g-boxed-info-name type)
                                :pointer native)))
     proxy))
 
-(defmethod cleanup-translated-object-for-callback ((type boxed-opaque-foreign-type)
-                                                   proxy native)
+(defmethod cleanup-translated-object-for-callback
+    ((type boxed-opaque-foreign-type) proxy native)
   (declare (ignore native))
   (tg:cancel-finalization proxy)
   (setf (g-boxed-opaque-pointer proxy) nil))
@@ -536,8 +549,6 @@
               (parse-variant-structure-definition variant-name slots parent)))
         (collect variant)))
 
-
-
 (defun generate-cstruct-1 (struct)
   `(defcstruct ,(generated-cstruct-name (cstruct-description-name struct))
      ,@(iter (for slot in (cstruct-description-slots struct))
@@ -636,41 +647,51 @@
   native-type-decision-procedure
   proxy-type-decision-procedure)
 
-(defmethod make-load-form ((object g-boxed-variant-cstruct-info) &optional env)
+(defmethod make-load-form
+    ((object g-boxed-variant-cstruct-info) &optional env)
   (make-load-form-saving-slots object :environment env))
 
-(define-foreign-type boxed-variant-cstruct-foreign-type (g-boxed-foreign-type) ())
+(define-foreign-type boxed-variant-cstruct-foreign-type (g-boxed-foreign-type)
+  ())
 
 (defmethod make-foreign-type ((info g-boxed-variant-cstruct-info) &key return-p)
   (make-instance 'boxed-variant-cstruct-foreign-type
-                 :info info
-                 :return-p return-p))
+                   :info info
+                   :return-p return-p))
 
 (defmacro define-g-boxed-variant-cstruct (name g-type-name &body slots)
   (let* ((structure (parse-variant-structure-definition name slots)))
-    `(progn ,@(generate-c-structures structure)
-            ,(generate-variant-union structure)
-            ,@(generate-structures structure)
-            (eval-when (:compile-toplevel :load-toplevel :execute)
-              (setf (get ',name 'g-boxed-foreign-info)
-                    (make-g-boxed-variant-cstruct-info :name ',name
-                                                       :type ,g-type-name
-                                                       :root ,structure
-                                                       :native-type-decision-procedure
-                                                       ,(generate-native-type-decision-procedure structure)
-                                                       :proxy-type-decision-procedure
-                                                       ,(generate-proxy-type-decision-procedure structure))
-                    (gethash ,g-type-name *g-type-name->g-boxed-foreign-info*)
+    `(progn
+      ,@(generate-c-structures structure)
+      ,(generate-variant-union structure)
+      ,@(generate-structures structure)
+      (eval-when (:compile-toplevel :load-toplevel :execute)
+        (setf (get ',name 'g-boxed-foreign-info)
+                   (make-g-boxed-variant-cstruct-info
+                            :name ',name
+                            :type ,g-type-name
+                            :root ,structure
+                            :native-type-decision-procedure
+                            ,(generate-native-type-decision-procedure structure)
+                            :proxy-type-decision-procedure
+                            ,(generate-proxy-type-decision-procedure structure))
+                    (gethash ,g-type-name
+                              *g-type-name->g-boxed-foreign-info*)
                     (get ',name 'g-boxed-foreign-info))))))
 
 (defun decide-native-type (info proxy)
-  (funcall (g-boxed-variant-cstruct-info-native-type-decision-procedure info) proxy))
+  (funcall (g-boxed-variant-cstruct-info-native-type-decision-procedure info)
+            proxy))
 
 (defmethod boxed-copy-fn ((info g-boxed-variant-cstruct-info) native)
   (if (g-boxed-info-type info)
       (g-boxed-copy (g-boxed-info-type info) native)
-      (let ((copy (foreign-alloc (generated-cunion-name (g-boxed-info-name info)))))
-        (memcpy copy native (foreign-type-size (generated-cunion-name (g-boxed-info-name info))))
+      (let ((copy (foreign-alloc
+                    (generated-cunion-name (g-boxed-info-name info)))))
+        (memcpy copy
+                native
+                (foreign-type-size
+                  (generated-cunion-name (g-boxed-info-name info))))
         copy)))
 
 (defmethod boxed-free-fn ((info g-boxed-variant-cstruct-info) native)
@@ -678,14 +699,16 @@
       (g-boxed-free (g-boxed-info-type info) native)
       (foreign-free native)))
 
-(defmethod translate-to-foreign (proxy (foreign-type boxed-variant-cstruct-foreign-type))
+(defmethod translate-to-foreign
+    (proxy (foreign-type boxed-variant-cstruct-foreign-type))
   (if (null proxy)
       (null-pointer)
       (let* ((type (g-boxed-foreign-info foreign-type))
              (description (decide-native-type type proxy)))
-        (with-foreign-object (native-struct (generated-cunion-name
-                                                (var-structure-name
-                                                 (g-boxed-variant-cstruct-info-root type))))
+        (with-foreign-object
+            (native-struct (generated-cunion-name
+                             (var-structure-name
+                               (g-boxed-variant-cstruct-info-root type))))
           (copy-slots-to-native proxy native-struct description)
           (values (boxed-copy-fn type native-struct) proxy)))))
 
@@ -693,29 +716,35 @@
   (funcall (g-boxed-variant-cstruct-info-proxy-type-decision-procedure info)
   native-struct))
 
-(defmethod free-translated-object (native (foreign-type boxed-variant-cstruct-foreign-type) proxy)
+(defmethod free-translated-object
+    (native (foreign-type boxed-variant-cstruct-foreign-type) proxy)
   (when proxy
     (let ((type (g-boxed-foreign-info foreign-type)))
-      (multiple-value-bind (actual-struct cstruct-description) (decide-proxy-type type native)
+      (multiple-value-bind (actual-struct cstruct-description)
+          (decide-proxy-type type native)
         (unless (eq (type-of proxy) actual-struct)
           (restart-case
-              (error "Expected type of boxed variant structure ~A and actual type ~A do not match"
+              (error "Expected type of boxed variant structure ~A and actual ~
+                       type ~A do not match"
                      (type-of proxy) actual-struct)
             (skip-parsing-values () (return-from free-translated-object))))
         (copy-slots-to-proxy proxy native cstruct-description)
         (boxed-free-fn type native)))))
 
-(defmethod translate-from-foreign (native (foreign-type boxed-variant-cstruct-foreign-type))
+(defmethod translate-from-foreign (native
+                              (foreign-type boxed-variant-cstruct-foreign-type))
   (unless (null-pointer-p native)
     (let ((type (g-boxed-foreign-info foreign-type)))
-      (multiple-value-bind (actual-struct cstruct-description) (decide-proxy-type type native)
+      (multiple-value-bind (actual-struct cstruct-description)
+          (decide-proxy-type type native)
         (let ((proxy (create-structure actual-struct)))
           (copy-slots-to-proxy proxy native cstruct-description)
           (when (g-boxed-foreign-return-p foreign-type)
             (boxed-free-fn type native))
           proxy)))))
 
-(defmethod cleanup-translated-object-for-callback ((foreign-type boxed-variant-cstruct-foreign-type) proxy native)
+(defmethod cleanup-translated-object-for-callback
+    ((foreign-type boxed-variant-cstruct-foreign-type) proxy native)
   (when proxy
     (let ((type (g-boxed-foreign-info foreign-type)))
       (let ((cstruct-description (decide-native-type type proxy)))
@@ -753,27 +782,33 @@
   (translate-from-foreign (g-value-get-boxed gvalue-ptr)
                           (make-foreign-type info :return-p nil)))
 
-(defmethod boxed-set-g-value (gvalue-ptr (info g-boxed-cstruct-wrapper-info) proxy)
+(defmethod boxed-set-g-value (gvalue-ptr
+                              (info g-boxed-cstruct-wrapper-info)
+                              proxy)
   (g-value-take-boxed gvalue-ptr
-                      (translate-to-foreign proxy
-                                            (make-foreign-type info
-                                                               :return-p nil))))
+                     (translate-to-foreign proxy
+                                           (make-foreign-type info
+                                                              :return-p nil))))
 
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-variant-cstruct-info))
   (translate-from-foreign (g-value-get-boxed gvalue-ptr)
                           (make-foreign-type info :return-p nil)))
 
-(defmethod boxed-set-g-value (gvalue-ptr (info g-boxed-variant-cstruct-info) proxy)
+(defmethod boxed-set-g-value (gvalue-ptr
+                              (info g-boxed-variant-cstruct-info)
+                              proxy)
   (g-value-take-boxed gvalue-ptr
-                      (translate-to-foreign proxy
-                                            (make-foreign-type info
-                                                               :return-p nil))))
+                    (translate-to-foreign proxy
+                                          (make-foreign-type info
+                                                             :return-p nil))))
 
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-opaque-wrapper-info))
   (translate-from-foreign (boxed-copy-fn info (g-value-get-boxed gvalue-ptr))
                           (make-foreign-type info :return-p nil)))
 
-(defmethod boxed-set-g-value (gvalue-ptr (info g-boxed-opaque-wrapper-info) proxy)
+(defmethod boxed-set-g-value (gvalue-ptr
+                              (info g-boxed-opaque-wrapper-info)
+                              proxy)
   (g-value-set-boxed gvalue-ptr
                      (translate-to-foreign proxy
                                            (make-foreign-type info

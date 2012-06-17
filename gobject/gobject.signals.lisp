@@ -32,7 +32,7 @@
 ;;; 
 ;;; A means for customization of object behaviour and a general purpose
 ;;; notification mechanism
-;;; 	
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GSignalInvocationHint;
@@ -158,9 +158,10 @@
 (defun create-signal-handler-closure (object fn)
   (let ((function-id (save-handler-to-object object fn))
         (closure (g-closure-new-simple
-                                (foreign-type-size 'lisp-signal-handler-closure)
-                                (null-pointer))))
-    (setf (foreign-slot-value closure 'lisp-signal-handler-closure :function-id)
+                            (foreign-type-size 'lisp-signal-handler-closure)
+                            (null-pointer))))
+    (setf (foreign-slot-value closure
+                              'lisp-signal-handler-closure :function-id)
           function-id
           (foreign-slot-value closure 'lisp-signal-handler-closure :object)
           (pointer object))
@@ -209,9 +210,10 @@
          (function-id (foreign-slot-value closure
                                           'lisp-signal-handler-closure
                                           :function-id))
-         (addr (pointer-address (foreign-slot-value closure
-                                                    'lisp-signal-handler-closure
-                                                    :object)))
+         (addr (pointer-address (foreign-slot-value
+                                                closure
+                                                'lisp-signal-handler-closure
+                                                :object)))
          (object (or (gethash addr *foreign-gobjects-strong*)
                      (gethash addr *foreign-gobjects-weak*)))
          (return-type (and (not (null-pointer-p return-value))
@@ -256,9 +258,10 @@
   (let* ((function-id (foreign-slot-value closure
                                           'lisp-signal-handler-closure
                                           :function-id))
-         (addr (pointer-address (foreign-slot-value closure
-                                                    'lisp-signal-handler-closure
-                                                    :object)))
+         (addr (pointer-address (foreign-slot-value
+                                                closure
+                                                'lisp-signal-handler-closure
+                                                :object)))
          (object (or (gethash addr *foreign-gobjects-strong*)
                      (gethash addr *foreign-gobjects-weak*))))
     (when object
@@ -276,7 +279,7 @@
 ;;; struct GSignalInvocationHint
 ;;; 
 ;;; struct GSignalInvocationHint {
-;;;   guint		signal_id;
+;;;   guint        signal_id;
 ;;;   GQuark detail;
 ;;;   GSignalFlags run_type;
 ;;; };
@@ -285,13 +288,13 @@
 ;;; information to callbacks during a signal emission.
 ;;; 
 ;;; guint signal_id;
-;;; 	The signal id of the signal invoking the callback
+;;;     The signal id of the signal invoking the callback
 ;;; 
 ;;; GQuark detail;
-;;; 	The detail passed on for this emission
+;;;     The detail passed on for this emission
 ;;; 
 ;;; GSignalFlags run_type;
-;;; 	The stage the signal emission is currently in, this field will contain
+;;;     The stage the signal emission is currently in, this field will contain
 ;;;     one of G_SIGNAL_RUN_FIRST, G_SIGNAL_RUN_LAST or G_SIGNAL_RUN_CLEANUP.
 ;;; ----------------------------------------------------------------------------
 
@@ -311,20 +314,20 @@
 ;;; by the last callback.
 ;;; 
 ;;; ihint :
-;;; 	Signal invocation hint, see GSignalInvocationHint.
+;;;     Signal invocation hint, see GSignalInvocationHint.
 ;;; 
 ;;; return_accu :
-;;; 	Accumulator to collect callback return values in, this is the return
+;;;     Accumulator to collect callback return values in, this is the return
 ;;;     value of the current signal emission.
 ;;; 
 ;;; handler_return :
-;;; 	A GValue holding the return value of the signal handler.
+;;;     A GValue holding the return value of the signal handler.
 ;;; 
 ;;; data :
-;;; 	Callback data that was specified when creating the signal.
+;;;     Callback data that was specified when creating the signal.
 ;;; 
 ;;; Returns :
-;;; 	The accumulator function returns whether the signal emission should be
+;;;     The accumulator function returns whether the signal emission should be
 ;;;     aborted. Returning FALSE means to abort the current emission and TRUE is
 ;;;     returned for continuation.
 ;;; ----------------------------------------------------------------------------
@@ -356,21 +359,21 @@
 ;;; You may not attach these to signals created with the G_SIGNAL_NO_HOOKS flag.
 ;;; 
 ;;; ihint :
-;;; 	Signal invocation hint, see GSignalInvocationHint.
+;;;     Signal invocation hint, see GSignalInvocationHint.
 ;;; 
 ;;; n_param_values :
-;;; 	the number of parameters to the function, including the instance on
+;;;     the number of parameters to the function, including the instance on
 ;;;     which the signal was emitted.
 ;;; 
 ;;; param_values :
-;;; 	the instance on which the signal was emitted, followed by the parameters
+;;;     the instance on which the signal was emitted, followed by the parameters
 ;;;     of the emission. [array length=n_param_values]
 ;;; 
 ;;; data :
-;;; 	user data associated with the hook.
+;;;     user data associated with the hook.
 ;;; 
 ;;; Returns :
-;;; 	whether it wants to stay connected. If it returns FALSE, the signal
+;;;     whether it wants to stay connected. If it returns FALSE, the signal
 ;;;  hook is disconnected (and destroyed).
 ;;; ----------------------------------------------------------------------------
 
@@ -393,35 +396,35 @@
 ;;; of a signal emission.
 ;;; 
 ;;; G_SIGNAL_RUN_FIRST
-;;; 	Invoke the object method handler in the first emission stage.
+;;;     Invoke the object method handler in the first emission stage.
 ;;; 
 ;;; G_SIGNAL_RUN_LAST
-;;; 	Invoke the object method handler in the third emission stage.
+;;;     Invoke the object method handler in the third emission stage.
 ;;; 
 ;;; G_SIGNAL_RUN_CLEANUP
-;;; 	Invoke the object method handler in the last emission stage.
+;;;     Invoke the object method handler in the last emission stage.
 ;;; 
 ;;; G_SIGNAL_NO_RECURSE
-;;; 	Signals being emitted for an object while currently being in emission
+;;;     Signals being emitted for an object while currently being in emission
 ;;;     for this very object will not be emitted recursively, but instead cause
 ;;;     the first emission to be restarted.
 ;;; 
 ;;; G_SIGNAL_DETAILED
-;;; 	This signal supports "::detail" appendices to the signal name upon
+;;;     This signal supports "::detail" appendices to the signal name upon
 ;;;     handler connections and emissions.
 ;;; 
 ;;; G_SIGNAL_ACTION
-;;; 	Action signals are signals that may freely be emitted on alive objects
+;;;     Action signals are signals that may freely be emitted on alive objects
 ;;;     from user code via g_signal_emit() and friends, without the need of
 ;;;     being embedded into extra code that performs pre or post emission
 ;;;     adjustments on the object. They can also be thought of as object methods
 ;;;     which can be called generically by third-party code.
 ;;; 
 ;;; G_SIGNAL_NO_HOOKS
-;;; 	No emissions hooks are supported for this signal.
+;;;     No emissions hooks are supported for this signal.
 ;;; 
 ;;; G_SIGNAL_MUST_COLLECT
-;;; 	Varargs signal emission will always collect the arguments, even if there
+;;;     Varargs signal emission will always collect the arguments, even if there
 ;;;     are no signal handlers connected.
 ;;;
 ;;; Since 2.30.
@@ -440,7 +443,7 @@
 ;;; enum GSignalMatchType
 ;;; 
 ;;; typedef enum {
-;;;   G_SIGNAL_MATCH_ID	       = 1 << 0,
+;;;   G_SIGNAL_MATCH_ID           = 1 << 0,
 ;;;   G_SIGNAL_MATCH_DETAIL    = 1 << 1,
 ;;;   G_SIGNAL_MATCH_CLOSURE   = 1 << 2,
 ;;;   G_SIGNAL_MATCH_FUNC      = 1 << 3,
@@ -453,22 +456,22 @@
 ;;; g_signal_handlers_disconnect_matched() match signals by.
 ;;; 
 ;;; G_SIGNAL_MATCH_ID
-;;; 	The signal id must be equal.
+;;;     The signal id must be equal.
 ;;; 
 ;;; G_SIGNAL_MATCH_DETAIL
-;;; 	The signal detail be equal.
+;;;     The signal detail be equal.
 ;;; 
 ;;; G_SIGNAL_MATCH_CLOSURE
-;;; 	The closure must be the same.
+;;;     The closure must be the same.
 ;;; 
 ;;; G_SIGNAL_MATCH_FUNC
-;;; 	The C closure callback must be the same.
+;;;     The C closure callback must be the same.
 ;;; 
 ;;; G_SIGNAL_MATCH_DATA
-;;; 	The closure data must be the same.
+;;;     The closure data must be the same.
 ;;; 
 ;;; G_SIGNAL_MATCH_UNBLOCKED
-;;; 	Only unblocked signals may matched.
+;;;     Only unblocked signals may matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -488,26 +491,26 @@
 ;;; filled in by the g_signal_query() function.
 ;;; 
 ;;; guint signal_id;
-;;; 	The signal id of the signal being queried, or 0 if the signal to be
+;;;     The signal id of the signal being queried, or 0 if the signal to be
 ;;;     queried was unknown.
 ;;; 
 ;;; const gchar *signal_name;
-;;; 	The signal name.
+;;;     The signal name.
 ;;; 
 ;;; GType itype;
-;;; 	The interface/instance type that this signal can be emitted for.
+;;;     The interface/instance type that this signal can be emitted for.
 ;;; 
 ;;; GSignalFlags signal_flags;
-;;; 	The signal flags as passed in to g_signal_new().
+;;;     The signal flags as passed in to g_signal_new().
 ;;; 
 ;;; GType return_type;
-;;; 	The return type for user callbacks.
+;;;     The return type for user callbacks.
 ;;; 
 ;;; guint n_params;
-;;; 	The number of parameters that user callbacks take.
+;;;     The number of parameters that user callbacks take.
 ;;; 
 ;;; const GType *param_types;
-;;; 	The individual parameter types for user callbacks, note that the
+;;;     The individual parameter types for user callbacks, note that the
 ;;;     effective callback signature is:
 ;;;     
 ;;;     @return_type callback (gpointer data1,
@@ -669,44 +672,44 @@
 ;;; marshaller for this signal.
 ;;; 
 ;;; signal_name :
-;;; 	the name for the signal
+;;;     the name for the signal
 ;;; 
 ;;; itype :
-;;; 	the type this signal pertains to. It will also pertain to types which
+;;;     the type this signal pertains to. It will also pertain to types which
 ;;;     are derived from this type.
 ;;; 
 ;;; signal_flags :
-;;; 	a combination of GSignalFlags specifying detail of when the default
+;;;     a combination of GSignalFlags specifying detail of when the default
 ;;;     handler is to be invoked. You should at least specify G_SIGNAL_RUN_FIRST
 ;;;     or G_SIGNAL_RUN_LAST.
 ;;; 
 ;;; class_offset :
-;;; 	The offset of the function pointer in the class structure for this type.
+;;;     The offset of the function pointer in the class structure for this type.
 ;;;     Used to invoke a class method generically. Pass 0 to not associate a
 ;;;     class method slot with this signal.
 ;;; 
 ;;; accumulator :
-;;; 	the accumulator for this signal; may be NULL.
+;;;     the accumulator for this signal; may be NULL.
 ;;; 
 ;;; accu_data :
-;;; 	user data for the accumulator.
+;;;     user data for the accumulator.
 ;;; 
 ;;; c_marshaller :
-;;; 	the function to translate arrays of parameter values to signal emissions
+;;;     the function to translate arrays of parameter values to signal emissions
 ;;;     into C language callback invocations or NULL.
 ;;; 
 ;;; return_type :
-;;; 	the type of return value, or G_TYPE_NONE for a signal without a return
+;;;     the type of return value, or G_TYPE_NONE for a signal without a return
 ;;;     value.
 ;;; 
 ;;; n_params :
-;;; 	the number of parameter types to follow.
+;;;     the number of parameter types to follow.
 ;;; 
 ;;; ... :
-;;; 	a list of types, one for each parameter.
+;;;     a list of types, one for each parameter.
 ;;; 
 ;;; Returns :
-;;; 	the signal id
+;;;     the signal id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -731,42 +734,42 @@
 ;;; marshaller for this signal.
 ;;; 
 ;;; signal_name :
-;;; 	the name for the signal
+;;;     the name for the signal
 ;;; 
 ;;; itype :
-;;; 	the type this signal pertains to. It will also pertain to types which
+;;;     the type this signal pertains to. It will also pertain to types which
 ;;;     are derived from this type
 ;;; 
 ;;; signal_flags :
-;;; 	a combination of GSignalFlags specifying detail of when the default
+;;;     a combination of GSignalFlags specifying detail of when the default
 ;;;     handler is to be invoked. You should at least specify G_SIGNAL_RUN_FIRST
 ;;;     or G_SIGNAL_RUN_LAST
 ;;; 
 ;;; class_closure :
-;;; 	The closure to invoke on signal emission; may be NULL.
+;;;     The closure to invoke on signal emission; may be NULL.
 ;;; 
 ;;; accumulator :
-;;; 	the accumulator for this signal; may be NULL. [allow-none]
+;;;     the accumulator for this signal; may be NULL. [allow-none]
 ;;; 
 ;;; accu_data :
-;;; 	user data for the accumulator
+;;;     user data for the accumulator
 ;;; 
 ;;; c_marshaller :
-;;; 	the function to translate arrays of parameter values to signal emissions
+;;;     the function to translate arrays of parameter values to signal emissions
 ;;;     into C language callback invocations or NULL.
 ;;; 
 ;;; return_type :
-;;; 	the type of return value, or G_TYPE_NONE for a signal without a return
+;;;     the type of return value, or G_TYPE_NONE for a signal without a return
 ;;;     value
 ;;; 
 ;;; n_params :
-;;; 	the length of param_types
+;;;     the length of param_types
 ;;; 
 ;;; param_types :
-;;; 	an array of types, one for each parameter.
+;;;     an array of types, one for each parameter.
 ;;; 
 ;;; Returns :
-;;; 	the signal id
+;;;     the signal id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -791,42 +794,42 @@
 ;;; marshaller for this signal.
 ;;; 
 ;;; signal_name :
-;;; 	the name for the signal
+;;;     the name for the signal
 ;;; 
 ;;; itype :
-;;; 	the type this signal pertains to. It will also pertain to types which
+;;;     the type this signal pertains to. It will also pertain to types which
 ;;;     are derived from this type.
 ;;; 
 ;;; signal_flags :
-;;; 	a combination of GSignalFlags specifying detail of when the default
+;;;     a combination of GSignalFlags specifying detail of when the default
 ;;;     handler is to be invoked. You should at least specify G_SIGNAL_RUN_FIRST
 ;;;     or G_SIGNAL_RUN_LAST.
 ;;; 
 ;;; class_closure :
-;;; 	The closure to invoke on signal emission; may be NULL.
+;;;     The closure to invoke on signal emission; may be NULL.
 ;;; 
 ;;; accumulator :
-;;; 	the accumulator for this signal; may be NULL.
+;;;     the accumulator for this signal; may be NULL.
 ;;; 
 ;;; accu_data :
-;;; 	user data for the accumulator.
+;;;     user data for the accumulator.
 ;;; 
 ;;; c_marshaller :
-;;; 	the function to translate arrays of parameter values to signal
+;;;     the function to translate arrays of parameter values to signal
 ;;;     emissions into C language callback invocations or NULL.
 ;;; 
 ;;; return_type :
-;;; 	the type of return value, or G_TYPE_NONE for a signal without a return
+;;;     the type of return value, or G_TYPE_NONE for a signal without a return
 ;;;     value.
 ;;; 
 ;;; n_params :
-;;; 	the number of parameter types in args.
+;;;     the number of parameter types in args.
 ;;; 
 ;;; args :
-;;; 	va_list of GType, one for each parameter.
+;;;     va_list of GType, one for each parameter.
 ;;; 
 ;;; Returns :
-;;; 	the signal id
+;;;     the signal id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -841,10 +844,10 @@
 ;;; should be considered constant and have to be left untouched.
 ;;; 
 ;;; signal_id :
-;;; 	The signal id of the signal to query information for.
+;;;     The signal id of the signal to query information for.
 ;;; 
 ;;; query :
-;;; 	A user provided structure that is filled in with constant values upon
+;;;     A user provided structure that is filled in with constant values upon
 ;;;     success.
 ;;; ----------------------------------------------------------------------------
 
@@ -868,13 +871,13 @@
 ;;; See g_signal_new() for details on allowed signal names.
 ;;; 
 ;;; name :
-;;; 	the signal's name.
+;;;     the signal's name.
 ;;; 
 ;;; itype :
-;;; 	the type that the signal operates on.
+;;;     the type that the signal operates on.
 ;;; 
 ;;; Returns :
-;;; 	the signal's identifying number, or 0 if no signal was found.
+;;;     the signal's identifying number, or 0 if no signal was found.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_lookup" g-signal-lookup) :uint
@@ -893,10 +896,10 @@
 ;;; Two different signals may have the same name, if they have differing types.
 ;;; 
 ;;; signal_id :
-;;; 	the signal's identifying number.
+;;;     the signal's identifying number.
 ;;; 
 ;;; Returns :
-;;; 	the signal name, or NULL if the signal number was invalid.
+;;;     the signal name, or NULL if the signal number was invalid.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -909,13 +912,13 @@
 ;;; g_signal_query().
 ;;; 
 ;;; itype :
-;;; 	Instance or interface type.
+;;;     Instance or interface type.
 ;;; 
 ;;; n_ids :
-;;; 	Location to store the number of signal ids for itype.
+;;;     Location to store the number of signal ids for itype.
 ;;; 
 ;;; Returns :
-;;; 	Newly allocated array of signal IDs.
+;;;     Newly allocated array of signal IDs.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_list_ids" g-signal-list-ids) (:pointer :uint)
@@ -993,13 +996,13 @@
 ;;; no handlers are connected, in contrast to g_signal_emitv().
 ;;; 
 ;;; instance :
-;;; 	the instance the signal is being emitted on.
+;;;     the instance the signal is being emitted on.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; 
 ;;; ... :
-;;; 	parameters to be passed to the signal, followed by a location for the
+;;;     parameters to be passed to the signal, followed by a location for the
 ;;;     return value. If the return type of the signal is G_TYPE_NONE, the
 ;;;     return value location can be omitted.
 ;;; ----------------------------------------------------------------------------
@@ -1018,18 +1021,18 @@
 ;;; connected, in contrast to g_signal_emit() and g_signal_emit_valist().
 ;;; 
 ;;; instance-and-params :
-;;; 	argument list for the signal emission. The first element in the array
+;;;     argument list for the signal emission. The first element in the array
 ;;;     is a GValue for the instance the signal is being emitted on. The rest
 ;;;     are any arguments to be passed to the signal. [array]
 ;;; 
 ;;; signal-id :
-;;; 	the signal id
+;;;     the signal id
 ;;; 
 ;;; detail :
-;;; 	the detail
+;;;     the detail
 ;;; 
 ;;; return-value :
-;;; 	Location to store the return value of the signal emission.
+;;;     Location to store the return value of the signal emission.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_emitv" g-signal-emitv) :void
@@ -1054,16 +1057,16 @@
 ;;; no handlers are connected, in contrast to g_signal_emitv().
 ;;; 
 ;;; instance :
-;;; 	the instance the signal is being emitted on.
+;;;     the instance the signal is being emitted on.
 ;;; 
 ;;; signal_id :
-;;; 	the signal id
+;;;     the signal id
 ;;; 
 ;;; detail :
-;;; 	the detail
+;;;     the detail
 ;;; 
 ;;; var_args :
-;;; 	a list of parameters to be passed to the signal, followed by a location
+;;;     a list of parameters to be passed to the signal, followed by a location
 ;;;     for the return value. If the return type of the signal is G_TYPE_NONE,
 ;;;     the return value location can be omitted.
 ;;; ----------------------------------------------------------------------------
@@ -1111,19 +1114,19 @@
 ;;; The handler will be called after the default handler of the signal.
 ;;; 
 ;;; instance :
-;;; 	the instance to connect to.
+;;;     the instance to connect to.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; 
 ;;; c_handler :
-;;; 	the GCallback to connect.
+;;;     the GCallback to connect.
 ;;; 
 ;;; data :
-;;; 	data to pass to c_handler calls.
+;;;     data to pass to c_handler calls.
 ;;; 
 ;;; Returns :
-;;; 	the handler id
+;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1137,19 +1140,19 @@
 ;;; calling the handler.
 ;;; 
 ;;; instance :
-;;; 	the instance to connect to.
+;;;     the instance to connect to.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; 
 ;;; c_handler :
-;;; 	the GCallback to connect.
+;;;     the GCallback to connect.
 ;;; 
 ;;; data :
-;;; 	data to pass to c_handler calls.
+;;;     data to pass to c_handler calls.
 ;;; 
 ;;; Returns :
-;;; 	the handler id
+;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1182,22 +1185,22 @@
 ;;;  2   g_signal_handler_disconnect (instance, id);
 ;;; 
 ;;; instance :
-;;; 	the instance to connect to.
+;;;     the instance to connect to.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; 
 ;;; c_handler :
-;;; 	the GCallback to connect.
+;;;     the GCallback to connect.
 ;;; 
 ;;; gobject :
-;;; 	the object to pass as data to c_handler.
+;;;     the object to pass as data to c_handler.
 ;;; 
 ;;; connect_flags :
-;;; 	a combination of GConnectFlags.
+;;;     a combination of GConnectFlags.
 ;;; 
 ;;; Returns :
-;;; 	the handler id.
+;;;     the handler id.
 ;;; enum GConnectFlags
 ;;; 
 ;;; typedef enum {
@@ -1209,11 +1212,11 @@
 ;;; connection.
 ;;; 
 ;;; G_CONNECT_AFTER
-;;; 	whether the handler should be called before or after the default
+;;;     whether the handler should be called before or after the default
 ;;;     handler of the signal.
 ;;; 
 ;;; G_CONNECT_SWAPPED
-;;; 	whether the instance and data should be swapped when calling the
+;;;     whether the instance and data should be swapped when calling the
 ;;;     handler.
 ;;; ----------------------------------------------------------------------------
 
@@ -1234,25 +1237,25 @@
 ;;; variants of this function.
 ;;; 
 ;;; instance :
-;;; 	the instance to connect to.
+;;;     the instance to connect to.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; 
 ;;; c_handler :
-;;; 	the GCallback to connect.
+;;;     the GCallback to connect.
 ;;; 
 ;;; data :
-;;; 	data to pass to c_handler calls.
+;;;     data to pass to c_handler calls.
 ;;; 
 ;;; destroy_data :
-;;; 	a GClosureNotify for data.
+;;;     a GClosureNotify for data.
 ;;; 
 ;;; connect_flags :
-;;; 	a combination of GConnectFlags.
+;;;     a combination of GConnectFlags.
 ;;; 
 ;;; Returns :
-;;; 	the handler id
+;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1266,20 +1269,20 @@
 ;;; Connects a closure to a signal for a particular object.
 ;;; 
 ;;; instance :
-;;; 	the instance to connect to.
+;;;     the instance to connect to.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; 
 ;;; closure :
-;;; 	the closure to connect.
+;;;     the closure to connect.
 ;;; 
 ;;; after :
-;;; 	whether the handler should be called before or after the default
+;;;     whether the handler should be called before or after the default
 ;;;     handler of the signal.
 ;;; 
 ;;; Returns :
-;;; 	the handler id
+;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_connect_closure" g-signal-connect-closure) :ulong
@@ -1302,23 +1305,23 @@
 ;;; Connects a closure to a signal for a particular object.
 ;;; 
 ;;; instance :
-;;; 	the instance to connect to.
+;;;     the instance to connect to.
 ;;; 
 ;;; signal_id :
-;;; 	the id of the signal.
+;;;     the id of the signal.
 ;;; 
 ;;; detail :
-;;; 	the detail.
+;;;     the detail.
 ;;; 
 ;;; closure :
-;;; 	the closure to connect.
+;;;     the closure to connect.
 ;;; 
 ;;; after :
-;;; 	whether the handler should be called before or after the default
+;;;     whether the handler should be called before or after the default
 ;;;     handler of the signal.
 ;;; 
 ;;; Returns :
-;;; 	the handler id
+;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1336,10 +1339,10 @@
 ;;; of instance.
 ;;; 
 ;;; instance :
-;;; 	The instance to block the signal handler of.
+;;;     The instance to block the signal handler of.
 ;;; 
 ;;; handler_id :
-;;; 	Handler id of the handler to be blocked.
+;;;     Handler id of the handler to be blocked.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1361,10 +1364,10 @@
 ;;; to a signal of instance and is currently blocked.
 ;;; 
 ;;; instance :
-;;; 	The instance to unblock the signal handler of.
+;;;     The instance to unblock the signal handler of.
 ;;; 
 ;;; handler_id :
-;;; 	Handler id of the handler to be unblocked.
+;;;     Handler id of the handler to be unblocked.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1409,29 +1412,29 @@
 ;;; to be non-0 for successful matches. If no handler was found, 0 is returned.
 ;;; 
 ;;; instance :
-;;; 	The instance owning the signal handler to be found.
+;;;     The instance owning the signal handler to be found.
 ;;; 
 ;;; mask :
-;;; 	Mask indicating which of signal_id, detail, closure, func and/or data
+;;;     Mask indicating which of signal_id, detail, closure, func and/or data
 ;;;     the handler has to match.
 ;;; 
 ;;; signal_id :
-;;; 	Signal the handler has to be connected to.
+;;;     Signal the handler has to be connected to.
 ;;; 
 ;;; detail :
-;;; 	Signal detail the handler has to be connected to.
+;;;     Signal detail the handler has to be connected to.
 ;;; 
 ;;; closure :
-;;; 	The closure the handler will invoke.
+;;;     The closure the handler will invoke.
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handler (useless for non-C closures).
+;;;     The C closure callback of the handler (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handler's closure.
+;;;     The closure data of the handler's closure.
 ;;; 
 ;;; Returns :
-;;; 	A valid non-0 signal handler id for a successful match.
+;;;     A valid non-0 signal handler id for a successful match.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1454,29 +1457,29 @@
 ;;; otherwise.
 ;;; 
 ;;; instance :
-;;; 	The instance to block handlers from.
+;;;     The instance to block handlers from.
 ;;; 
 ;;; mask :
-;;; 	Mask indicating which of signal_id, detail, closure, func and/or data
+;;;     Mask indicating which of signal_id, detail, closure, func and/or data
 ;;;     the handlers have to match.
 ;;; 
 ;;; signal_id :
-;;; 	Signal the handlers have to be connected to.
+;;;     Signal the handlers have to be connected to.
 ;;; 
 ;;; detail :
-;;; 	Signal detail the handlers have to be connected to.
+;;;     Signal detail the handlers have to be connected to.
 ;;; 
 ;;; closure :
-;;; 	The closure the handlers will invoke. [allow-none]
+;;;     The closure the handlers will invoke. [allow-none]
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handlers (useless for non-C closures).
+;;;     The C closure callback of the handlers (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handlers' closures.
+;;;     The closure data of the handlers' closures.
 ;;; 
 ;;; Returns :
-;;; 	The number of handlers that matched.
+;;;     The number of handlers that matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1500,29 +1503,29 @@
 ;;; currently blocked.
 ;;; 
 ;;; instance :
-;;; 	The instance to unblock handlers from.
+;;;     The instance to unblock handlers from.
 ;;; 
 ;;; mask :
-;;; 	Mask indicating which of signal_id, detail, closure, func and/or data
+;;;     Mask indicating which of signal_id, detail, closure, func and/or data
 ;;;     the handlers have to match.
 ;;; 
 ;;; signal_id :
-;;; 	Signal the handlers have to be connected to.
+;;;     Signal the handlers have to be connected to.
 ;;; 
 ;;; detail :
-;;; 	Signal detail the handlers have to be connected to.
+;;;     Signal detail the handlers have to be connected to.
 ;;; 
 ;;; closure :
-;;; 	The closure the handlers will invoke. [allow-none]
+;;;     The closure the handlers will invoke. [allow-none]
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handlers (useless for non-C closures).
+;;;     The C closure callback of the handlers (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handlers' closures.
+;;;     The closure data of the handlers' closures.
 ;;; 
 ;;; Returns :
-;;; 	The number of handlers that matched.
+;;;     The number of handlers that matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1545,29 +1548,29 @@
 ;;; otherwise.
 ;;; 
 ;;; instance :
-;;; 	The instance to remove handlers from.
+;;;     The instance to remove handlers from.
 ;;; 
 ;;; mask :
-;;; 	Mask indicating which of signal_id, detail, closure, func and/or data
+;;;     Mask indicating which of signal_id, detail, closure, func and/or data
 ;;;     the handlers have to match.
 ;;; 
 ;;; signal_id :
-;;; 	Signal the handlers have to be connected to.
+;;;     Signal the handlers have to be connected to.
 ;;; 
 ;;; detail :
-;;; 	Signal detail the handlers have to be connected to.
+;;;     Signal detail the handlers have to be connected to.
 ;;; 
 ;;; closure :
-;;; 	The closure the handlers will invoke. [allow-none]
+;;;     The closure the handlers will invoke. [allow-none]
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handlers (useless for non-C closures).
+;;;     The C closure callback of the handlers (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handlers' closures.
+;;;     The closure data of the handlers' closures.
 ;;; 
 ;;; Returns :
-;;; 	The number of handlers that matched.
+;;;     The number of handlers that matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1579,13 +1582,13 @@
 ;;; Returns whether handler_id is the id of a handler connected to instance.
 ;;; 
 ;;; instance :
-;;; 	The instance where a signal handler is sought.
+;;;     The instance where a signal handler is sought.
 ;;; 
 ;;; handler_id :
-;;; 	the handler id.
+;;;     the handler id.
 ;;; 
 ;;; Returns :
-;;; 	whether handler_id identifies a handler connected to instance.
+;;;     whether handler_id identifies a handler connected to instance.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1596,16 +1599,16 @@
 ;;; Blocks all handlers on an instance that match func and data.
 ;;; 
 ;;; instance :
-;;; 	The instance to block handlers from.
+;;;     The instance to block handlers from.
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handlers (useless for non-C closures).
+;;;     The C closure callback of the handlers (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handlers' closures.
+;;;     The closure data of the handlers' closures.
 ;;; 
 ;;; Returns :
-;;; 	The number of handlers that matched.
+;;;     The number of handlers that matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1616,16 +1619,16 @@
 ;;; Unblocks all handlers on an instance that match func and data.
 ;;; 
 ;;; instance :
-;;; 	The instance to unblock handlers from.
+;;;     The instance to unblock handlers from.
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handlers (useless for non-C closures).
+;;;     The C closure callback of the handlers (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handlers' closures.
+;;;     The closure data of the handlers' closures.
 ;;; 
 ;;; Returns :
-;;; 	The number of handlers that matched.
+;;;     The number of handlers that matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1636,16 +1639,16 @@
 ;;; Disconnects all handlers on an instance that match func and data.
 ;;; 
 ;;; instance :
-;;; 	The instance to remove handlers from.
+;;;     The instance to remove handlers from.
 ;;; 
 ;;; func :
-;;; 	The C closure callback of the handlers (useless for non-C closures).
+;;;     The C closure callback of the handlers (useless for non-C closures).
 ;;; 
 ;;; data :
-;;; 	The closure data of the handlers' closures.
+;;;     The closure data of the handlers' closures.
 ;;; 
 ;;; Returns :
-;;; 	The number of handlers that matched.
+;;;     The number of handlers that matched.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1665,19 +1668,19 @@
 ;;; arguments.
 ;;; 
 ;;; instance :
-;;; 	the object whose signal handlers are sought.
+;;;     the object whose signal handlers are sought.
 ;;; 
 ;;; signal_id :
-;;; 	the signal id.
+;;;     the signal id.
 ;;; 
 ;;; detail :
-;;; 	the detail.
+;;;     the detail.
 ;;; 
 ;;; may_be_blocked :
-;;; 	whether blocked handlers should count as match.
+;;;     whether blocked handlers should count as match.
 ;;; 
 ;;; Returns :
-;;; 	TRUE if a handler is connected to the signal, FALSE otherwise.
+;;;     TRUE if a handler is connected to the signal, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1696,13 +1699,13 @@
 ;;; Prints a warning if used on a signal which isn't being emitted.
 ;;; 
 ;;; instance :
-;;; 	the object whose signal handlers you wish to stop.
+;;;     the object whose signal handlers you wish to stop.
 ;;; 
 ;;; signal_id :
-;;; 	the signal identifier, as returned by g_signal_lookup().
+;;;     the signal identifier, as returned by g_signal_lookup().
 ;;; 
 ;;; detail :
-;;; 	the detail which the signal was emitted with.
+;;;     the detail which the signal was emitted with.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1717,10 +1720,10 @@
 ;;; signal id for you.
 ;;; 
 ;;; instance :
-;;; 	the object whose signal handlers you wish to stop.
+;;;     the object whose signal handlers you wish to stop.
 ;;; 
 ;;; detailed_signal :
-;;; 	a string of the form "signal-name::detail".
+;;;     a string of the form "signal-name::detail".
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1739,13 +1742,13 @@
 ;;; class closure from inside the overridden one.
 ;;; 
 ;;; signal_id :
-;;; 	the signal id
+;;;     the signal id
 ;;; 
 ;;; instance_type :
-;;; 	the instance type on which to override the class closure for the signal.
+;;;     the instance type on which to override the class closure for the signal.
 ;;; 
 ;;; class_closure :
-;;; 	the closure.
+;;;     the closure.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1759,12 +1762,12 @@
 ;;; g_signal_override_class_closure() and g_signal_override_class_handler().
 ;;; 
 ;;; instance_and_params :
-;;; 	(array) the argument list of the signal emission. The first element in
+;;;     (array) the argument list of the signal emission. The first element in
 ;;;     the array is a GValue for the instance the signal is being emitted on.
 ;;;     The rest are any arguments to be passed to the signal.
 ;;; 
 ;;; return_value :
-;;; 	Location for the return value.
+;;;     Location for the return value.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1798,44 +1801,44 @@
 ;;; marshaller for this signal.
 ;;; 
 ;;; signal_name :
-;;; 	the name for the signal
+;;;     the name for the signal
 ;;; 
 ;;; itype :
-;;; 	the type this signal pertains to. It will also pertain to types which
+;;;     the type this signal pertains to. It will also pertain to types which
 ;;;     are derived from this type.
 ;;; 
 ;;; signal_flags :
-;;; 	a combination of GSignalFlags specifying detail of when the default
+;;;     a combination of GSignalFlags specifying detail of when the default
 ;;;     handler is to be invoked. You should at least specify G_SIGNAL_RUN_FIRST
 ;;;     or G_SIGNAL_RUN_LAST.
 ;;; 
 ;;; class_handler :
-;;; 	a GCallback which acts as class implementation of this signal. Used to
+;;;     a GCallback which acts as class implementation of this signal. Used to
 ;;;     invoke a class method generically. Pass NULL to not associate a class
 ;;;     method with this signal.
 ;;; 
 ;;; accumulator :
-;;; 	the accumulator for this signal; may be NULL.
+;;;     the accumulator for this signal; may be NULL.
 ;;; 
 ;;; accu_data :
-;;; 	user data for the accumulator.
+;;;     user data for the accumulator.
 ;;; 
 ;;; c_marshaller :
-;;; 	the function to translate arrays of parameter values to signal
+;;;     the function to translate arrays of parameter values to signal
 ;;;     emissions into C language callback invocations or NULL. [allow-none]
 ;;; 
 ;;; return_type :
-;;; 	the type of return value, or G_TYPE_NONE for a signal without a
+;;;     the type of return value, or G_TYPE_NONE for a signal without a
 ;;;     return value.
 ;;; 
 ;;; n_params :
-;;; 	the number of parameter types to follow.
+;;;     the number of parameter types to follow.
 ;;; 
 ;;; ... :
-;;; 	a list of types, one for each parameter.
+;;;     a list of types, one for each parameter.
 ;;; 
 ;;; Returns :
-;;; 	the signal id
+;;;     the signal id
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1856,13 +1859,13 @@
 ;;; class closure from inside the overridden one.
 ;;; 
 ;;; signal_name :
-;;; 	the name for the signal
+;;;     the name for the signal
 ;;; 
 ;;; instance_type :
-;;; 	the instance type on which to override the class handler for the signal.
+;;;     the instance type on which to override the class handler for the signal.
 ;;; 
 ;;; class_handler :
-;;; 	the handler.
+;;;     the handler.
 ;;; 
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
@@ -1877,10 +1880,10 @@
 ;;; g_signal_override_class_closure() and g_signal_override_class_handler().
 ;;; 
 ;;; instance :
-;;; 	the instance the signal is being emitted on.
+;;;     the instance the signal is being emitted on.
 ;;; 
 ;;; ... :
-;;; 	parameters to be passed to the parent class closure, followed by a
+;;;     parameters to be passed to the parent class closure, followed by a
 ;;;     location for the return value. If the return type of the signal is
 ;;;     G_TYPE_NONE, the return value location can be omitted.
 ;;; 
@@ -1901,22 +1904,22 @@
 ;;; signals which don't have G_SIGNAL_NO_HOOKS flag set.
 ;;; 
 ;;; signal_id :
-;;; 	the signal identifier, as returned by g_signal_lookup().
+;;;     the signal identifier, as returned by g_signal_lookup().
 ;;; 
 ;;; detail :
-;;; 	the detail on which to call the hook.
+;;;     the detail on which to call the hook.
 ;;; 
 ;;; hook_func :
-;;; 	a GSignalEmissionHook function.
+;;;     a GSignalEmissionHook function.
 ;;; 
 ;;; hook_data :
-;;; 	user data for hook_func.
+;;;     user data for hook_func.
 ;;; 
 ;;; data_destroy :
-;;; 	a GDestroyNotify for hook_data.
+;;;     a GDestroyNotify for hook_data.
 ;;; 
 ;;; Returns :
-;;; 	the hook id, for later use with g_signal_remove_emission_hook().
+;;;     the hook id, for later use with g_signal_remove_emission_hook().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1927,10 +1930,10 @@
 ;;; Deletes an emission hook.
 ;;; 
 ;;; signal_id :
-;;; 	the id of the signal
+;;;     the id of the signal
 ;;; 
 ;;; hook_id :
-;;; 	the id of the emission hook, as returned by g_signal_add_emission_hook()
+;;;     the id of the emission hook, as returned by g_signal_add_emission_hook()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1982,10 +1985,10 @@
 ;;; Returns the invocation hint of the innermost signal emission of instance.
 ;;; 
 ;;; instance :
-;;; 	the instance to query
+;;;     the instance to query
 ;;; 
 ;;; Returns :
-;;; 	the invocation hint of the innermost signal emission.
+;;;     the invocation hint of the innermost signal emission.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1998,14 +2001,14 @@
 ;;; identified by itype.
 ;;; 
 ;;; itype :
-;;; 	the GType identifier of an interface or classed type
+;;;     the GType identifier of an interface or classed type
 ;;; 
 ;;; struct_offset :
-;;; 	the offset of the member function of itype's class structure which is
+;;;     the offset of the member function of itype's class structure which is
 ;;;     to be invoked by the new closure
 ;;; 
 ;;; Returns :
-;;; 	a new GCClosure
+;;;     a new GCClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2028,19 +2031,19 @@
 ;;; handlers (ie: the first handler "wins").
 ;;; 
 ;;; ihint :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; return_accu :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; handler_return :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; dummy :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; Returns :
-;;; 	standard GSignalAccumulator result
+;;;     standard GSignalAccumulator result
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
@@ -2061,19 +2064,19 @@
 ;;; needed.
 ;;; 
 ;;; ihint :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; return_accu :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; handler_return :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; dummy :
-;;; 	standard GSignalAccumulator parameter
+;;;     standard GSignalAccumulator parameter
 ;;; 
 ;;; Returns :
-;;; 	standard GSignalAccumulator result
+;;;     standard GSignalAccumulator result
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
