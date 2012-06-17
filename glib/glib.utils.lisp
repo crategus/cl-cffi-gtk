@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GLib 2.30.2 Reference Manual.  See http://www.gtk.org.
+;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,65 +31,73 @@
 ;;; Miscellaneous Utility Functions
 ;;; 
 ;;; A selection of portable utility functions
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;     g-get-application-name
-;;;     g-set-application-name
-;;;     g-get-prgname
-;;;     g-set-prgname
-;;;
+;;;     g_get_application_name
+;;;     g_set_application_name
+;;;     g_get_prgname
+;;;     g_set_prgname
+;;;     g_get_environ
+;;;     g_environ_getenv
+;;;     g_environ_setenv
+;;;     g_environ_unsetenv
 ;;;     g_getenv
 ;;;     g_setenv
+;;;     g_unsetenv
+;;;     g_listenv
+;;;     g_get_user_name
+;;;     g_get_real_name
+;;;     g_get_user_cache_dir
+;;;     g_get_user_data_dir
+;;;     g_get_user_config_dir
+;;;     g_get_user_runtime_dir
 ;;;
-;;;     g-listenv
-;;;     g-get-user-name
-;;;     g-get-real-name
-;;;     g-get-user-cache-dir
-;;;     g-get-user-data-dir
-;;;     g-get-user-config-dir
+;;;     GUserDirectory
 ;;;
-;;;     g-user-directory
-;;;     g-get-user-special-dir
-;;;     g-get-system-data-dirs
-;;;     g-get-system-config-dirs
-;;;
+;;;     g_get_user_special_dir
+;;;     g_get_system_data_dirs
+;;;     g_get_system_config_dirs
+;;;     g_reload_user_special_dirs_cache
+;;;     
 ;;;     g_get_host_name
 ;;;     g_get_home_dir
 ;;;     g_get_tmp_dir
 ;;;     g_get_current_dir
-;;;
-;;;     g-path-is-absolute
-;;;
-;;;     g-build-filename
-;;;     g-build-filenamev
-;;;
-;;; The following symbols are not implemented:
-;;;
-;;;     g_get_environ
-;;;     g_unsetenv
-;;;     g_get_user_runtime_dir
-;;;     g_reload_user_special_dirs_cache
 ;;;     g_basename
 ;;;     g_dirname
+;;;     g_path_is_absolute
 ;;;     g_path_skip_root
 ;;;     g_path_get_basename
 ;;;     g_path_get_dirname
+;;;     g_build_filename
+;;;     g_build_filenamev
 ;;;     g_build_path
 ;;;     g_build_pathv
+;;;     
 ;;;     g_format_size
+;;;
 ;;;     GFormatSizeFlags
+;;;
 ;;;     g_format_size_full
 ;;;     g_format_size_for_display
+;;;     
 ;;;     g_find_program_in_path
+;;;     
 ;;;     g_bit_nth_lsf
 ;;;     g_bit_nth_msf
 ;;;     g_bit_storage
+;;;     
 ;;;     g_spaced_primes_closest
+;;;     
 ;;;     g_atexit
+;;;     
 ;;;     g_parse_debug_string
+;;;
 ;;;     GDebugKey
+;;;     
 ;;;     g_qsort_with_data
+;;;     
 ;;;     g_nullify_pointer
 ;;; 
 ;;; Description
@@ -102,7 +110,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_application_name ()
 ;;; 
-;;; const gchar * g_get_application_name (void)
+;;; const gchar * g_get_application_name (void);
 ;;; 
 ;;; Gets a human-readable name for the application, as set by
 ;;; g_set_application_name(). This name should be localized if possible, and is
@@ -124,7 +132,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_set_application_name ()
 ;;; 
-;;; void g_set_application_name (const gchar *application_name)
+;;; void g_set_application_name (const gchar *application_name);
 ;;; 
 ;;; Sets a human-readable name for the application. This name should be
 ;;; localized if possible, and is intended for display to the user. Contrast
@@ -151,7 +159,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_prgname ()
 ;;; 
-;;; gchar * g_get_prgname (void)
+;;; gchar * g_get_prgname (void);
 ;;; 
 ;;; Gets the name of the program. This name should not be localized, contrast
 ;;; with g_get_application_name(). (If you are using GDK or GTK+ the program
@@ -190,36 +198,120 @@
 ;;; 
 ;;; gchar ** g_get_environ (void);
 ;;; 
-;;; Gets the list of environment variables for the current process. The list is
-;;; NULL terminated and each item in the list is of the form 'NAME=VALUE'.
+;;; Gets the list of environment variables for the current process.
 ;;; 
-;;; This is equivalent to direct access to the 'environ' global variable,
-;;; except portable.
+;;; The list is NULL terminated and each item in the list is of the form
+;;; 'NAME=VALUE'.
+;;; 
+;;; This is equivalent to direct access to the 'environ' global variable, except
+;;; portable.
 ;;; 
 ;;; The return value is freshly allocated and it should be freed with
 ;;; g_strfreev() when it is no longer needed.
 ;;; 
 ;;; Returns :
-;;;     the list of environment variables.
+;;;     the list of environment variables
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
+;;; ----------------------------------------------------------------------------
+;;; g_environ_getenv ()
+;;; 
+;;; const gchar * g_environ_getenv (gchar **envp, const gchar *variable);
+;;; 
+;;; Returns the value of the environment variable variable in the provided list
+;;; envp.
+;;; 
+;;; The name and value are in the GLib file name encoding. On UNIX, this means
+;;; the actual bytes which might or might not be in some consistent character
+;;; set and encoding. On Windows, it is in UTF-8. On Windows, in case the
+;;; environment variable's value contains references to other environment
+;;; variables, they are expanded.
+;;; 
+;;; envp :
+;;;     an environment list (eg, as returned from g_get_environ())
+;;; 
+;;; variable :
+;;;     the environment variable to get, in the GLib file name encoding
+;;; 
+;;; Returns :
+;;;     the value of the environment variable, or NULL if the environment
+;;;     variable is not set in envp. The returned string is owned by envp, and
+;;;     will be freed if variable is set or unset again.
+;;; 
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_environ_setenv ()
+;;; 
+;;; gchar ** g_environ_setenv (gchar **envp,
+;;;                            const gchar *variable,
+;;;                            const gchar *value,
+;;;                            gboolean overwrite);
+;;; 
+;;; Sets the environment variable variable in the provided list envp to value.
+;;; 
+;;; Both the variable's name and value should be in the GLib file name encoding.
+;;; On UNIX, this means that they can be arbitrary byte strings. On Windows,
+;;; they should be in UTF-8.
+;;; 
+;;; envp :
+;;;     an environment list that can be freed using g_strfreev() (e.g., as
+;;;     returned from g_get_environ())
+;;; 
+;;; variable :
+;;;     the environment variable to set, must not contain '='
+;;; 
+;;; value :
+;;;     the value for to set the variable to
+;;; 
+;;; overwrite :
+;;;     whether to change the variable if it already exists
+;;; 
+;;; Returns :
+;;;     the updated environment list. Free it using g_strfreev()
+;;; 
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_environ_unsetenv ()
+;;; 
+;;; gchar ** g_environ_unsetenv (gchar **envp, const gchar *variable);
+;;; 
+;;; Removes the environment variable variable from the provided environment
+;;; envp.
+;;; 
+;;; envp :
+;;;     an environment list that can be freed using g_strfreev() (e.g., as
+;;;     returned from g_get_environ())
+;;; 
+;;; variable :
+;;;     the environment variable to remove, must not contain '='
+;;; 
+;;; Returns :
+;;;     the updated environment list. Free it using g_strfreev()
+;;; 
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_getenv ()
 ;;; 
 ;;; const gchar * g_getenv (const gchar *variable);
 ;;; 
-;;; Returns the value of an environment variable. The name and value are in the
-;;; GLib file name encoding. On UNIX, this means the actual bytes which might or
-;;; might not be in some consistent character set and encoding. On Windows, it
-;;; is in UTF-8. On Windows, in case the environment variable's value contains
-;;; references to other environment variables, they are expanded.
+;;; Returns the value of an environment variable.
+;;; 
+;;; The name and value are in the GLib file name encoding. On UNIX, this means
+;;; the actual bytes which might or might not be in some consistent character
+;;; set and encoding. On Windows, it is in UTF-8. On Windows, in case the
+;;; environment variable's value contains references to other environment
+;;; variables, they are expanded.
 ;;; 
 ;;; variable :
-;;;     the environment variable to get, in the GLib file name encoding.
+;;;     the environment variable to get, in the GLib file name encoding
 ;;; 
 ;;; Returns :
 ;;;     the value of the environment variable, or NULL if the environment
@@ -240,11 +332,25 @@
 ;;;                    gboolean overwrite);
 ;;; 
 ;;; Sets an environment variable. Both the variable's name and value should be
-;;; in the GLib file name encoding. On UNIX, this means that they can be any
-;;; sequence of bytes. On Windows, they should be in UTF-8.
+;;; in the GLib file name encoding. On UNIX, this means that they can be
+;;; arbitrary byte strings. On Windows, they should be in UTF-8.
 ;;; 
 ;;; Note that on some systems, when variables are overwritten, the memory used
 ;;; for the previous variables and its value isn't reclaimed.
+;;; 
+;;; Warning
+;;; 
+;;; Environment variable handling in UNIX is not thread-safe, and your program
+;;; may crash if one thread calls g_setenv() while another thread is calling
+;;; getenv(). (And note that many functions, such as gettext(), call getenv()
+;;; internally.) This function is only safe to use at the very start of your
+;;; program, before creating any other threads (or creating objects that create
+;;; worker threads of their own).
+;;; 
+;;; If you need to set up the environment for a child process, you can use
+;;; g_get_environ() to get an environment array, modify that with
+;;; g_environ_setenv() and g_environ_unsetenv(), and then pass that array
+;;; directly to execvpe(), g_spawn_async(), or the like.
 ;;; 
 ;;; variable :
 ;;;     the environment variable to set, must not contain '='.
@@ -276,16 +382,27 @@
 ;;; Removes an environment variable from the environment.
 ;;; 
 ;;; Note that on some systems, when variables are overwritten, the memory used
-;;; for the previous variables and its value isn't reclaimed. Furthermore, this
-;;; function can't be guaranteed to operate in a threadsafe way.
+;;; for the previous variables and its value isn't reclaimed.
+;;; 
+;;; Warning
+;;; 
+;;; Environment variable handling in UNIX is not thread-safe, and your program
+;;; may crash if one thread calls g_unsetenv() while another thread is calling
+;;; getenv(). (And note that many functions, such as gettext(), call getenv()
+;;; internally.) This function is only safe to use at the very start of your
+;;; program, before creating any other threads (or creating objects that create
+;;; worker threads of their own).
+;;; 
+;;; If you need to set up the environment for a child process, you can use
+;;; g_get_environ() to get an environment array, modify that with
+;;; g_environ_setenv() and g_environ_unsetenv(), and then pass that array
+;;; directly to execvpe(), g_spawn_async(), or the like.
 ;;; 
 ;;; variable :
-;;;     the environment variable to remove, must not contain '='.
+;;;     the environment variable to remove, must not contain '='
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_listenv ()
@@ -294,14 +411,15 @@
 ;;; 
 ;;; Gets the names of all variables set in the environment.
 ;;; 
+;;; Programs that want to be portable to Windows should typically use this
+;;; function and g_getenv() instead of using the environ array from the C
+;;; library directly. On Windows, the strings in the environ array are in system
+;;; codepage encoding, while in most of the typical use cases for environment
+;;; variables in GLib-using programs you want the UTF-8 encoding that this
+;;; function and g_getenv() provide.
+;;; 
 ;;; Returns :
 ;;;     a NULL-terminated list of strings which must be freed with g_strfreev().
-;;;     Programs that want to be portable to Windows should typically use this
-;;;     function and g_getenv() instead of using the environ array from the C
-;;;     library directly. On Windows, the strings in the environ array are in
-;;;     system codepage encoding, while in most of the typical use cases for
-;;;     environment variables in GLib-using programs you want the UTF-8 encoding
-;;;     that this function and g_getenv() provide.
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
@@ -333,9 +451,9 @@
 ;;; 
 ;;; const gchar * g_get_real_name (void);
 ;;; 
-;;; Gets the real name of the user. This usually comes from the user's entry
-;;; in the passwd file. The encoding of the returned string is system-defined.
-;;; (On Windows, it is, however, always UTF-8.) If the real user name cannot be
+;;; Gets the real name of the user. This usually comes from the user's entry in
+;;; the passwd file. The encoding of the returned string is system-defined. (On
+;;; Windows, it is, however, always UTF-8.) If the real user name cannot be
 ;;; determined, the string "Unknown" is returned.
 ;;; 
 ;;; Returns :
@@ -349,7 +467,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_user_cache_dir ()
 ;;; 
-;;; const gchar * g_get_user_cache_dir (void)
+;;; const gchar * g_get_user_cache_dir (void);
 ;;; 
 ;;; Returns a base directory in which to store non-essential, cached data
 ;;; specific to particular user.
@@ -402,7 +520,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_user_config_dir ()
 ;;; 
-;;; const gchar * g_get_user_config_dir (void)
+;;; const gchar * g_get_user_config_dir (void);
 ;;; 
 ;;; Returns a base directory in which to store user-specific application
 ;;; configuration information such as user preferences and settings.
@@ -448,8 +566,6 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; enum GUserDirectory
 ;;; 
@@ -466,9 +582,9 @@
 ;;;   G_USER_N_DIRECTORIES
 ;;; } GUserDirectory;
 ;;; 
-;;; These are logical ids for special directories which are defined depending
-;;; on the platform used. You should use g_get_user_special_dir() to retrieve
-;;; the full path associated to the logical id.
+;;; These are logical ids for special directories which are defined depending on
+;;; the platform used. You should use g_get_user_special_dir() to retrieve the
+;;; full path associated to the logical id.
 ;;; 
 ;;; The GUserDirectory enumeration can be extended at later date. Not every
 ;;; platform has a directory for every logical id in this enumeration.
@@ -524,8 +640,8 @@
 ;;; Returns the full path of a special directory using its logical id.
 ;;; 
 ;;; On Unix this is done using the XDG special user directories. For
-;;; compatibility with existing practise, G_USER_DIRECTORY_DESKTOP falls back
-;;; to $HOME/Desktop when XDG special user directories have not been set up.
+;;; compatibility with existing practise, G_USER_DIRECTORY_DESKTOP falls back to
+;;; $HOME/Desktop when XDG special user directories have not been set up.
 ;;; 
 ;;; Depending on the platform, the user might be able to change the path of the
 ;;; special directory without requiring the session to restart; GLib will not
@@ -572,16 +688,16 @@
 ;;; for GLib, and in the installation folder for the package the application's
 ;;; .exe file belongs to.
 ;;; 
-;;; The installation folders above are determined by looking up the folder
-;;; where the module (DLL or EXE) in question is located. If the folder's name
-;;; is "bin", its parent is used, otherwise the folder itself.
+;;; The installation folders above are determined by looking up the folder where
+;;; the module (DLL or EXE) in question is located. If the folder's name is
+;;; "bin", its parent is used, otherwise the folder itself.
 ;;; 
 ;;; Note that on Windows the returned list can vary depending on where this
 ;;; function is called.
 ;;; 
 ;;; Returns :
 ;;;     a NULL-terminated array of strings owned by GLib that must not be
-;;;     modified or freed.
+;;;     modified or freed
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -611,7 +727,7 @@
 ;;; 
 ;;; Returns :
 ;;;     a NULL-terminated array of strings owned by GLib that must not be
-;;;     modified or freed.
+;;;     modified or freed
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -631,13 +747,11 @@
 ;;; 
 ;;; Due to threadsafety issues this may cause leaking of strings that were
 ;;; previously returned from g_get_user_special_dir() that can't be freed. We
-;;; ensure to only leak the data for the directories that actually changed
-;;; value though.
+;;; ensure to only leak the data for the directories that actually changed value
+;;; though.
 ;;; 
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_host_name ()
@@ -652,8 +766,8 @@
 ;;; the return value having any specific properties like uniqueness for security
 ;;; purposes. Even if the name of the machine is changed while an application is
 ;;; running, the return value from this function does not change. The returned
-;;; string is owned by GLib and should not be modified or freed. If no name
-;;; can be determined, a default fixed string "localhost" is returned.
+;;; string is owned by GLib and should not be modified or freed. If no name can
+;;; be determined, a default fixed string "localhost" is returned.
 ;;; 
 ;;; Returns :
 ;;;     the host name of the machine.
@@ -675,8 +789,8 @@
 ;;; Note that in contrast to traditional UNIX tools, this function prefers
 ;;; passwd entries over the HOME environment variable.
 ;;; 
-;;; One of the reasons for this decision is that applications in many cases
-;;; need special handling to deal with the case where HOME is
+;;; One of the reasons for this decision is that applications in many cases need
+;;; special handling to deal with the case where HOME is
 ;;;
 ;;; Not owned by the user
 ;;; Not writeable
@@ -687,9 +801,9 @@
 ;;; and to return the real home directory for the user. If applications want to
 ;;; pay attention to HOME, they can do:
 ;;; 
-;;;  const char *homedir = g_getenv ("HOME");
-;;;  if (!homedir)
-;;;      homedir = g_get_home_dir ();
+;;;   const char *homedir = g_getenv ("HOME");
+;;;    if (!homedir)
+;;;       homedir = g_get_home_dir ();
 ;;; 
 ;;; Returns :
 ;;;     the current user's home directory
@@ -723,12 +837,13 @@
 ;;; 
 ;;; gchar * g_get_current_dir (void);
 ;;; 
-;;; Gets the current directory. The returned string should be freed when no
-;;; longer needed. The encoding of the returned string is system defined. On
-;;; Windows, it is always UTF-8.
+;;; Gets the current directory.
+;;; 
+;;; The returned string should be freed when no longer needed. The encoding of
+;;; the returned string is system defined. On Windows, it is always UTF-8.
 ;;; 
 ;;; Returns :
-;;;     the current directory.
+;;;     the current directory
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_current_dir" g-get-current-dir) :string)
@@ -742,8 +857,8 @@
 ;;; 
 ;;; Warning
 ;;; 
-;;; g_basename has been deprecated since version 2.2 and should not be used
-;;; in newly-written code. Use g_path_get_basename() instead, but notice that
+;;; g_basename has been deprecated since version 2.2 and should not be used in
+;;; newly-written code. Use g_path_get_basename() instead, but notice that
 ;;; g_path_get_basename() allocates new memory for the returned string, unlike
 ;;; this function which returns a pointer into the argument.
 ;;; 
@@ -751,13 +866,11 @@
 ;;; returns a pointer into the given file name string.
 ;;; 
 ;;; file_name :
-;;;     the name of the file.
+;;;     the name of the file
 ;;; 
 ;;; Returns :
-;;;     the name of the file without any leading directory components.
+;;;     the name of the file without any leading directory components
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_dirname
@@ -769,9 +882,10 @@
 ;;; g_dirname is deprecated and should not be used in newly-written code. use
 ;;; g_path_get_dirname() instead
 ;;; 
-;;; Gets the directory components of a file name. If the file name has no
-;;; directory components "." is returned. The returned string should be freed
-;;; when no longer needed.
+;;; Gets the directory components of a file name.
+;;; 
+;;; If the file name has no directory components "." is returned. The returned
+;;; string should be freed when no longer needed.
 ;;; 
 ;;; file_name :
 ;;;     the name of the file
@@ -780,15 +894,13 @@
 ;;;     the directory components of the file
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_path_is_absolute ()
 ;;; 
 ;;; gboolean g_path_is_absolute (const gchar *file_name);
 ;;; 
-;;; Returns TRUE if the given file_name is an absolute file name. Note that
-;;; this is a somewhat vague concept on Windows.
+;;; Returns TRUE if the given file_name is an absolute file name. Note that this
+;;; is a somewhat vague concept on Windows.
 ;;; 
 ;;; On POSIX systems, an absolute file name is well-defined. It always starts
 ;;; from the single root directory. For example "/usr/local".
@@ -811,10 +923,10 @@
 ;;; need to be handled using Windows-specific code.
 ;;; 
 ;;; file_name :
-;;;     a file name.
+;;;     a file name
 ;;; 
 ;;; Returns :
-;;;     TRUE if file_name is absolute.
+;;;     TRUE if file_name is absolute
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_path_is_absolute" g-path-is-absolute) :boolean
@@ -828,65 +940,62 @@
 ;;; const gchar * g_path_skip_root (const gchar *file_name);
 ;;; 
 ;;; Returns a pointer into file_name after the root component, i.e. after the
-;;; "/" in UNIX or "C:\" under Windows. If file_name is not an absolute path
-;;; it returns NULL.
+;;; "/" in UNIX or "C:\" under Windows. If file_name is not an absolute path it
+;;; returns NULL.
 ;;; 
 ;;; file_name :
-;;;     a file name.
+;;;     a file name
 ;;; 
 ;;; Returns :
-;;;     a pointer into file_name after the root component.
+;;;     a pointer into file_name after the root component
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_path_get_basename ()
 ;;; 
 ;;; gchar * g_path_get_basename (const gchar *file_name);
 ;;; 
-;;; Gets the last component of the filename. If file_name ends with a directory
-;;; separator it gets the component before the last slash. If file_name consists
-;;; only of directory separators (and on Windows, possibly a drive letter), a
-;;; single separator is returned. If file_name is empty, it gets ".".
+;;; Gets the last component of the filename.
+;;; 
+;;; If file_name ends with a directory separator it gets the component before
+;;; the last slash. If file_name consists only of directory separators (and on
+;;; Windows, possibly a drive letter), a single separator is returned. If
+;;; file_name is empty, it gets ".".
 ;;; 
 ;;; file_name :
-;;;     the name of the file.
+;;;     the name of the file
 ;;; 
 ;;; Returns :
-;;;     a newly allocated string containing the last component of the filename.
+;;;     a newly allocated string containing the last component of the filename
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_path_get_dirname ()
 ;;; 
 ;;; gchar * g_path_get_dirname (const gchar *file_name);
 ;;; 
-;;; Gets the directory components of a file name. If the file name has no
-;;; directory components "." is returned. The returned string should be freed
-;;; when no longer needed.
+;;; Gets the directory components of a file name.
+;;; 
+;;; If the file name has no directory components "." is returned. The returned
+;;; string should be freed when no longer needed.
 ;;; 
 ;;; file_name :
-;;;     the name of the file.
+;;;     the name of the file
 ;;; 
 ;;; Returns :
-;;;     the directory components of the file.
+;;;     the directory components of the file
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_build_filename ()
 ;;; 
-;;; gchar * g_build_filename (const gchar *first_element, ...)
+;;; gchar * g_build_filename (const gchar *first_element, ...);
 ;;; 
-;;; Creates a filename from a series of elements using the correct separator
-;;; for filenames.
+;;; Creates a filename from a series of elements using the correct separator for
+;;; filenames.
 ;;; 
-;;; On Unix, this function behaves identically to
-;;; g_build_path (G_DIR_SEPARATOR_S, first_element, ....).
+;;; On Unix, this function behaves identically to g_build_path
+;;; (G_DIR_SEPARATOR_S, first_element, ....).
 ;;; 
 ;;; On Windows, it takes into account that either the backslash (\ or slash (/)
 ;;; can be used as separator in filenames, but otherwise behaves as on Unix.
@@ -926,14 +1035,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_build_filenamev ()
 ;;; 
-;;; gchar * g_build_filenamev (gchar **args)
+;;; gchar * g_build_filenamev (gchar **args);
 ;;; 
 ;;; Behaves exactly like g_build_filename(), but takes the path elements as a
-;;; string array, instead of varargs. This function is mainly meant for
-;;; language bindings.
+;;; string array, instead of varargs. This function is mainly meant for language
+;;; bindings.
 ;;; 
 ;;; args :
-;;;     NULL-terminated array of strings containing the path elements.
+;;;     NULL-terminated array of strings containing the path elements
 ;;; 
 ;;; Returns :
 ;;;     a newly-allocated string that must be freed with g_free().
@@ -975,8 +1084,8 @@
 ;;; characters in that element not part of the leading or trailing separators,
 ;;; then the result is exactly the original value of that element.
 ;;; 
-;;; Other than for determination of the number of leading and trailing copies
-;;; of the separator, elements consisting only of copies of the separator are
+;;; Other than for determination of the number of leading and trailing copies of
+;;; the separator, elements consisting only of copies of the separator are
 ;;; ignored.
 ;;; 
 ;;; separator :
@@ -992,30 +1101,26 @@
 ;;;     a newly-allocated string that must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_build_pathv ()
 ;;; 
-;;; gchar * g_build_pathv (const gchar *separator, gchar **args)
+;;; gchar * g_build_pathv (const gchar *separator, gchar **args);
 ;;; 
-;;; Behaves exactly like g_build_path(), but takes the path elements as a
-;;; string array, instead of varargs. This function is mainly meant for language
+;;; Behaves exactly like g_build_path(), but takes the path elements as a string
+;;; array, instead of varargs. This function is mainly meant for language
 ;;; bindings.
 ;;; 
 ;;; separator :
 ;;;     a string used to separator the elements of the path.
 ;;; 
 ;;; args :
-;;;     NULL-terminated array of strings containing the path elements.
+;;;     NULL-terminated array of strings containing the path elements
 ;;; 
 ;;; Returns :
 ;;;     a newly-allocated string that must be freed with g_free().
 ;;; 
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_format_size ()
@@ -1038,13 +1143,10 @@
 ;;;     a size in bytes
 ;;; 
 ;;; Returns :
-;;;     a newly-allocated formatted string containing a human readable file
-;;;     size.
+;;;     a newly-allocated formatted string containing a human readable file size
 ;;; 
 ;;; Since 2.30
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GFormatSizeFlags
@@ -1066,22 +1168,20 @@
 ;;; 
 ;;; G_FORMAT_SIZE_IEC_UNITS
 ;;;     use IEC (base 1024) units with "KiB"-style suffixes. IEC units should
-;;;     only be used for reporting things with a strong "power of 2" basis,
-;;;     like RAM sizes or RAID stripe sizes. Network and storage sizes should
-;;;     be reported in the normal SI units.
+;;;     only be used for reporting things with a strong "power of 2" basis, like
+;;;     RAM sizes or RAID stripe sizes. Network and storage sizes should be
+;;;     reported in the normal SI units.
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_format_size_full ()
 ;;; 
-;;; gchar * g_format_size_full (guint64 size, GFormatSizeFlags flags)
+;;; gchar * g_format_size_full (guint64 size, GFormatSizeFlags flags);
 ;;; 
 ;;; Formats a size.
 ;;; 
-;;; This function is similar to g_format_size() but allows for flags that
-;;; modify the output. See GFormatSizeFlags.
+;;; This function is similar to g_format_size() but allows for flags that modify
+;;; the output. See GFormatSizeFlags.
 ;;; 
 ;;; size :
 ;;;     a size in bytes
@@ -1090,18 +1190,15 @@
 ;;;     GFormatSizeFlags to modify the output
 ;;; 
 ;;; Returns :
-;;;     a newly-allocated formatted string containing a human readable file
-;;;     size.
+;;;     a newly-allocated formatted string containing a human readable file size
 ;;; 
 ;;; Since 2.30
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_format_size_for_display ()
 ;;; 
-;;; char * g_format_size_for_display (goffset size)
+;;; gchar * g_format_size_for_display (goffset size);
 ;;; 
 ;;; Warning
 ;;; 
@@ -1119,21 +1216,18 @@
 ;;; This string should be freed with g_free() when not needed any longer.
 ;;; 
 ;;; size :
-;;;     a size in bytes.
+;;;     a size in bytes
 ;;; 
 ;;; Returns :
-;;;     a newly-allocated formatted string containing a human readable file
-;;;     size.
+;;;     a newly-allocated formatted string containing a human readable file size
 ;;; 
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_find_program_in_path ()
 ;;; 
-;;; gchar * g_find_program_in_path (const gchar *program)
+;;; gchar * g_find_program_in_path (const gchar *program);
 ;;; 
 ;;; Locates the first executable named program in the user's path, in the same
 ;;; way that execvp() would locate it. Returns an allocated string with the
@@ -1157,12 +1251,10 @@
 ;;;     absolute path, or NULL
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_bit_nth_lsf ()
 ;;; 
-;;; gint g_bit_nth_lsf (gulong mask, gint nth_bit)
+;;; gint g_bit_nth_lsf (gulong mask, gint nth_bit);
 ;;; 
 ;;; Find the position of the first bit set in mask, searching from (but not
 ;;; including) nth_bit upwards. Bits are numbered from 0 (least significant) to
@@ -1179,12 +1271,10 @@
 ;;;     the index of the first bit set which is higher than nth_bit
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_bit_nth_msf ()
 ;;; 
-;;; gint g_bit_nth_msf (gulong mask, gint nth_bit)
+;;; gint g_bit_nth_msf (gulong mask, gint nth_bit);
 ;;; 
 ;;; Find the position of the first bit set in mask, searching from (but not
 ;;; including) nth_bit downwards. Bits are numbered from 0 (least significant)
@@ -1201,15 +1291,13 @@
 ;;;     the index of the first bit set which is lower than nth_bit
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_bit_storage ()
 ;;; 
-;;; guint g_bit_storage (gulong number)
+;;; guint g_bit_storage (gulong number);
 ;;; 
-;;; Gets the number of bits used to hold number, e.g. if number is 4, 3 bits
-;;; are needed.
+;;; Gets the number of bits used to hold number, e.g. if number is 4, 3 bits are
+;;; needed.
 ;;; 
 ;;; number :
 ;;;     a guint
@@ -1218,12 +1306,10 @@
 ;;;     the number of bits used to hold number
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_spaced_primes_closest ()
 ;;; 
-;;; guint g_spaced_primes_closest (guint num)
+;;; guint g_spaced_primes_closest (guint num);
 ;;; 
 ;;; Gets the smallest prime number from a built-in array of primes which is
 ;;; larger than num. This is used within GLib to calculate the optimum size of a
@@ -1240,12 +1326,15 @@
 ;;;     larger than num
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_atexit ()
 ;;; 
-;;; void g_atexit (GVoidFunc func)
+;;; void g_atexit (GVoidFunc func);
+;;; 
+;;; Warning
+;;; 
+;;; g_atexit has been deprecated since version 2.32 and should not be used in
+;;; newly-written code. It is best to avoid g_atexit().
 ;;; 
 ;;; Specifies a function to be called at normal program termination.
 ;;; 
@@ -1277,30 +1366,32 @@
 ;;; g_atexit() (or atexit()) except in the main executable of a program.
 ;;; 
 ;;; func :
-;;;     the function to call on normal program termination.
+;;;     the function to call on normal program termination
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_parse_debug_string ()
 ;;; 
 ;;; guint g_parse_debug_string (const gchar *string,
 ;;;                             const GDebugKey *keys,
-;;;                             guint nkeys)
+;;;                             guint nkeys);
 ;;; 
 ;;; Parses a string containing debugging options into a guint containing bit
-;;; flags. This is used within GDK and GTK+ to parse the debug options passed
-;;; on the command line or through environment variables.
+;;; flags. This is used within GDK and GTK+ to parse the debug options passed on
+;;; the command line or through environment variables.
 ;;; 
-;;; If string is equal to "all", all flags are set. If string is equal to
-;;; "help", all the available keys in keys are printed out to standard error.
+;;; If string is equal to "all", all flags are set. Any flags specified along
+;;; with "all" in string are inverted; thus, "all,foo,bar" or "foo,bar,all" sets
+;;; all flags except those corresponding to "foo" and "bar".
+;;; 
+;;; If string is equal to "help", all the available keys in keys are printed out
+;;; to standard error.
 ;;; 
 ;;; string :
-;;;     a list of debug options separated by colons, spaces, or commas, or NULL.
+;;;     a list of debug options separated by colons, spaces, or commas, or NULL
 ;;; 
 ;;; keys :
-;;;     pointer to an array of GDebugKey which associate strings with bit flags.
+;;;     pointer to an array of GDebugKey which associate strings with bit flags
 ;;; 
 ;;; nkeys :
 ;;;     the number of GDebugKeys in the array.
@@ -1308,8 +1399,6 @@
 ;;; Returns :
 ;;;     the combined set of bit flags.
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GDebugKey
@@ -1328,12 +1417,14 @@
 ;;;     the flag
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; GVoidFunc ()
 ;;; 
-;;; void (*GVoidFunc) (void)
+;;; void (*GVoidFunc) (void);
+;;; 
+;;; Warning
+;;; 
+;;; GVoidFunc is deprecated and should not be used in newly-written code.
 ;;; 
 ;;; Declares a type of function which takes no arguments and has no return
 ;;; value. It is used to specify the type function passed to g_atexit().
@@ -1342,7 +1433,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GFreeFunc ()
 ;;; 
-;;; void (*GFreeFunc) (gpointer data)
+;;; void (*GFreeFunc) (gpointer data);
 ;;; 
 ;;; Declares a type of function which takes an arbitrary data pointer argument
 ;;; and has no return value. It is not currently used in GLib or GTK+.
@@ -1358,10 +1449,12 @@
 ;;;                         gint total_elems,
 ;;;                         gsize size,
 ;;;                         GCompareDataFunc compare_func,
-;;;                         gpointer user_data)
+;;;                         gpointer user_data);
 ;;; 
 ;;; This is just like the standard C qsort() function, but the comparison
 ;;; routine accepts a user data argument.
+;;; 
+;;; This is guaranteed to be a stable sort since version 2.32.
 ;;; 
 ;;; pbase :
 ;;;     start of array to sort
@@ -1379,19 +1472,15 @@
 ;;;     data to pass to compare_func
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_nullify_pointer ()
 ;;; 
-;;; void g_nullify_pointer (gpointer *nullify_location)
+;;; void g_nullify_pointer (gpointer *nullify_location);
 ;;; 
 ;;; Set the pointer at the specified location to NULL.
 ;;; 
 ;;; nullify_location :
 ;;;     the memory address of the pointer.
 ;;; ----------------------------------------------------------------------------
-
-;;; *** NOT IMPLEMENTED ***
 
 ;;; --- End of file glib.utils.lisp --------------------------------------------
