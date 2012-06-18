@@ -656,7 +656,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_color_selection_palette_to_string"
-          gtk-color-selection-palette-to-string) (g-string :free-from-foreign t)
+          gtk-color-selection-palette-to-string)
+    (g-string :free-from-foreign t)
   (colors :pointer)
   (n-colors :int))
 

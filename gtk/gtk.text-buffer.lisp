@@ -3088,15 +3088,15 @@
   (let ((fn (get-stable-pointer-value user-data)))
     (restart-case
      (let* ((bytes (funcall fn
-                            register-buffer
-                            content-buffer
-                            start-iter
-                            end-iter))
-               (bytes-ptr (g-malloc (length bytes))))
-          (setf (mem-ref length 'g-size) (length bytes))
-          (iter (for i from 0 below (length bytes))
-                (setf (mem-aref bytes-ptr :uint8 i) (aref bytes i)))
-          bytes-ptr)
+                             register-buffer
+                             content-buffer
+                             start-iter
+                             end-iter))
+            (bytes-ptr (g-malloc (length bytes))))
+       (setf (mem-ref length 'g-size) (length bytes))
+       (iter (for i from 0 below (length bytes))
+             (setf (mem-aref bytes-ptr :uint8 i) (aref bytes i)))
+       bytes-ptr)
      (return-from-gtk-text-buffer-serialize-cb () nil))))
 
 ;;; ----------------------------------------------------------------------------
