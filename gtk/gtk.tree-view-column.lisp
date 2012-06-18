@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,12 +31,12 @@
 ;;; GtkTreeViewColumn
 ;;; 
 ;;; A visible column in a GtkTreeView widget
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTreeViewColumnSizing
 ;;;     GtkTreeViewColumn
-;;;     
+;;;
 ;;;     gtk_tree_view_column_new
 ;;;     gtk_tree_view_column_new_with_area
 ;;;     gtk_tree_view_column_new_with_attributes
@@ -103,25 +103,25 @@
 ;;;
 ;;; Properties
 ;;; 
-;;;   "alignment"           gfloat                   : Read / Write
-;;;   "cell-area"           GtkCellArea*             : Read / Write / Construct
-;;;   "clickable"           gboolean                 : Read / Write
-;;;   "expand"              gboolean                 : Read / Write
-;;;   "fixed-width"         gint                     : Read / Write
-;;;   "max-width"           gint                     : Read / Write
-;;;   "min-width"           gint                     : Read / Write
-;;;   "reorderable"         gboolean                 : Read / Write
-;;;   "resizable"           gboolean                 : Read / Write
-;;;   "sizing"              GtkTreeViewColumnSizing  : Read / Write
-;;;   "sort-column-id"      gint                     : Read / Write
-;;;   "sort-indicator"      gboolean                 : Read / Write
-;;;   "sort-order"          GtkSortType              : Read / Write
-;;;   "spacing"             gint                     : Read / Write
-;;;   "title"               gchar*                   : Read / Write
-;;;   "visible"             gboolean                 : Read / Write
-;;;   "widget"              GtkWidget*               : Read / Write
-;;;   "width"               gint                     : Read
-;;;   "x-offset"            gint                     : Read
+;;;   "alignment"             gfloat                  : Read / Write
+;;;   "cell-area"             GtkCellArea*            : Read / Write / Construct
+;;;   "clickable"             gboolean                : Read / Write
+;;;   "expand"                gboolean                : Read / Write
+;;;   "fixed-width"           gint                    : Read / Write
+;;;   "max-width"             gint                    : Read / Write
+;;;   "min-width"             gint                    : Read / Write
+;;;   "reorderable"           gboolean                : Read / Write
+;;;   "resizable"             gboolean                : Read / Write
+;;;   "sizing"                GtkTreeViewColumnSizing : Read / Write
+;;;   "sort-column-id"        gint                    : Read / Write
+;;;   "sort-indicator"        gboolean                : Read / Write
+;;;   "sort-order"            GtkSortType             : Read / Write
+;;;   "spacing"               gint                    : Read / Write
+;;;   "title"                 gchar*                  : Read / Write
+;;;   "visible"               gboolean                : Read / Write
+;;;   "widget"                GtkWidget*              : Read / Write
+;;;   "width"                 gint                    : Read
+;;;   "x-offset"              gint                    : Read
 ;;; 
 ;;; Signals
 ;;; 
@@ -130,8 +130,8 @@
 ;;; Description
 ;;; 
 ;;; The GtkTreeViewColumn object represents a visible column in a GtkTreeView
-;;; widget. It allows to set properties of the column header, and functions as
-;;; a holding pen for the cell renderers which determine how the data in the
+;;; widget. It allows to set properties of the column header, and functions as a
+;;; holding pen for the cell renderers which determine how the data in the
 ;;; column is displayed.
 ;;; 
 ;;; Please refer to the tree widget conceptual overview for an overview of all
@@ -334,7 +334,6 @@
 ;;; Allowed values: >= -2147483647
 ;;; 
 ;;; Default value: 0
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -344,7 +343,6 @@
 ;;; 
 ;;; void user_function (GtkTreeViewColumn *treeviewcolumn,
 ;;;                     gpointer           user_data)           : Run Last
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -363,13 +361,13 @@
 ;;; columns appear choppy.
 ;;; 
 ;;; GTK_TREE_VIEW_COLUMN_GROW_ONLY
-;;; 	Columns only get bigger in reaction to changes in the model
+;;;     Columns only get bigger in reaction to changes in the model
 ;;; 
 ;;; GTK_TREE_VIEW_COLUMN_AUTOSIZE
-;;; 	Columns resize to be the optimal size everytime the model changes.
+;;;     Columns resize to be the optimal size everytime the model changes.
 ;;; 
 ;;; GTK_TREE_VIEW_COLUMN_FIXED
-;;; 	Columns are a fixed numbers of pixels wide.
+;;;     Columns are a fixed numbers of pixels wide.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkTreeViewColumnSizing" gtk-tree-view-column-sizing
@@ -380,38 +378,6 @@
   (:fixed 2))
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkTreeCellDataFunc ()
-;;; 
-;;; void (*GtkTreeCellDataFunc) (GtkTreeViewColumn *tree_column,
-;;;                              GtkCellRenderer *cell,
-;;;                              GtkTreeModel *tree_model,
-;;;                              GtkTreeIter *iter,
-;;;                              gpointer data);
-;;; 
-;;; A function to set the properties of a cell instead of just using the
-;;; straight mapping between the cell and the model. This is useful for
-;;; customizing the cell renderer. For example, a function might get an integer
-;;; from the tree_model, and render it to the "text" attribute of "cell" by
-;;; converting it to its written equivilent. This is set by calling
-;;; gtk_tree_view_column_set_cell_data_func()
-;;; 
-;;; tree_column :
-;;;     A GtkTreeColumn
-;;; 
-;;; cell :
-;;;     The GtkCellRenderer that is being rendered by tree_column
-;;; 
-;;; tree_model :
-;;;     The GtkTreeModel being rendered
-;;; 
-;;; iter :
-;;;     A GtkTreeIter of the current row rendered
-;;; 
-;;; data :
-;;;     user data
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeViewColumn
 ;;; 
 ;;; struct GtkTreeViewColumn;
@@ -420,11 +386,15 @@
 (define-g-object-class "GtkTreeViewColumn" gtk-tree-view-column
   (:superclass g-initially-unowned
     :export t
-    :interfaces ("GtkBuildable" "GtkCellLayout")
+    :interfaces ("GtkBuildable"
+                 "GtkCellLayout")
     :type-initializer "gtk_tree_view_column_get_type")
   ((alignment
     gtk-tree-view-column-alignment
     "alignment" "gfloat" t t)
+   (cell-area
+    gtk-tree-view-column-cell-area
+    "cell-area" "GtkCellArea" t t)
    (clickable
     gtk-tree-view-column-clickable
     "clickable" "gboolean" t t)
@@ -449,6 +419,9 @@
    (sizing
     gtk-tree-view-column-sizing
     "sizing" "GtkTreeViewColumnSizing" t t)
+   (sort-column-id
+    gtk-tree-view-column-sort-column-id
+    "sort-column-id" "gint" t t)
    (sort-indicator
     gtk-tree-view-column-sort-indicator
     "sort-indicator" "gboolean" t t)
@@ -468,18 +441,11 @@
     gtk-tree-view-column-widget
     "widget" "GtkWidget" t t)
    (width
-    gtk-tree-view-column-width "width" "gint" t nil)
-   (:cffi tree-view
-          gtk-tree-view-column-tree-view g-object
-          "gtk_tree_view_column_get_tree_view" nil)
-   (:cffi sort-column-id
-          gtk-tree-view-column-sort-column-id :int
-          "gtk_tree_view_column_get_sort_column_id"
-          "gtk_tree_view_column_set_sort_column_id")
-   (:cffi cell-renderers
-          gtk-tree-view-column-cell-renderers
-          (g-list g-object :free-from-foreign t)
-          "gtk_tree_view_column_get_cell_renderers" nil)))
+    gtk-tree-view-column-width
+    "width" "gint" t nil)
+   (x-offset
+    gtk-tree-view-column-x-offset
+    "x-offset" "gint" t nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_new ()
@@ -491,6 +457,13 @@
 ;;; Returns :
 ;;;     A newly created GtkTreeViewColumn.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-new))
+
+(defun gtk-tree-view-column-new ()
+  (make-instance 'gtk-tree-view-column))
+
+(export 'gtk-tree-view-column-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_new_with_area ()
@@ -508,6 +481,14 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-new-with-area))
+
+(defun gtk-tree-view-column-new-with-area (area)
+  (make-instance 'gtk-tree-view-column
+                 :cell-area area))
+
+(export 'gtk-tree-view-column-new-with-area)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_new_with_attributes ()
@@ -689,6 +670,49 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; GtkTreeCellDataFunc ()
+;;; 
+;;; void (*GtkTreeCellDataFunc) (GtkTreeViewColumn *tree_column,
+;;;                              GtkCellRenderer *cell,
+;;;                              GtkTreeModel *tree_model,
+;;;                              GtkTreeIter *iter,
+;;;                              gpointer data);
+;;; 
+;;; A function to set the properties of a cell instead of just using the
+;;; straight mapping between the cell and the model. This is useful for
+;;; customizing the cell renderer. For example, a function might get an integer
+;;; from the tree_model, and render it to the "text" attribute of "cell" by
+;;; converting it to its written equivilent. This is set by calling
+;;; gtk_tree_view_column_set_cell_data_func()
+;;; 
+;;; tree_column :
+;;;     A GtkTreeColumn
+;;; 
+;;; cell :
+;;;     The GtkCellRenderer that is being rendered by tree_column
+;;; 
+;;; tree_model :
+;;;     The GtkTreeModel being rendered
+;;; 
+;;; iter :
+;;;     A GtkTreeIter of the current row rendered
+;;; 
+;;; data :
+;;;     user data
+;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-tree-cell-data-func-cb :void
+    ((tree-column (g-object gtk-tree-column))
+     (cell (g-object gtk-cell-renderer))
+     (tree-model (g-object gtk-tree-model))
+     (iter (g-boxed-foreign gtk-tree-iter))
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+        (funcall fn tree-column cell tree-model iter)
+      (return-from-gtk-tree-cell-data-func-cb () nil))))
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_cell_data_func ()
 ;;; 
 ;;; void gtk_tree_view_column_set_cell_data_func
@@ -710,7 +734,7 @@
 ;;;     A GtkCellRenderer
 ;;; 
 ;;; func :
-;;;     The GtkTreeViewColumnFunc to use. [allow-none]
+;;;     The GtkTreeViewColumnFunc to use.
 ;;; 
 ;;; func_data :
 ;;;     The user data for func.
@@ -718,20 +742,6 @@
 ;;; destroy :
 ;;;     The destroy notification for func_data
 ;;; ----------------------------------------------------------------------------
-
-(defcallback gtk-tree-cell-data-func-cb :void
-    ((tree-column (g-object gtk-tree-column))
-     (cell (g-object gtk-cell-renderer))
-     (tree-model (g-object gtk-tree-model))
-     (iter (g-boxed-foreign gtk-tree-iter))
-     (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
-    (restart-case
-        (funcall fn tree-column cell tree-model iter)
-      (return-from-tree-cell-data-function () nil))))
-
-(defcallback gtk-tree-cell-data-func-destroy-cb :void ((data :pointer))
-  (free-stable-pointer data))
 
 (defcfun ("gtk_tree_view_column_set_cell_data_func"
           %gtk-tree-view-column-set-cell-data-func) :void
@@ -741,22 +751,21 @@
   (func-data :pointer)
   (destroy-notify :pointer))
 
-(defun gtk-tree-view-column-set-cell-data-function (tree-column cell-renderer
-                                                                func)
+(defun gtk-tree-view-column-set-cell-data-func (tree-column cell-renderer func)
   (%gtk-tree-view-column-set-cell-data-func
-                                 tree-column
-                                 cell-renderer
-                                 (callback gtk-tree-cell-data-func-cb)
-                                 (allocate-stable-pointer func)
-                                 (callback gtk-tree-cell-data-func-destroy-cb)))
+                                   tree-column
+                                   cell-renderer
+                                   (callback gtk-tree-cell-data-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
 
-(export 'gtk-tree-view-column-set-cell-data-function)
+(export 'gtk-tree-view-column-set-cell-data-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_clear_attributes ()
 ;;; 
 ;;; void gtk_tree_view_column_clear_attributes (GtkTreeViewColumn *tree_column,
-;;;                                             GtkCellRenderer *cell_renderer)
+;;;                                             GtkCellRenderer *cell_renderer);
 ;;; 
 ;;; Clears all existing attributes previously set with
 ;;; gtk_tree_view_column_set_attributes().
@@ -791,6 +800,13 @@
 ;;;     distance between cell renderers in pixels.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-spacing))
+
+(defun gtk-tree-view-column-set-spacing (tree-column spacing)
+  (setf (gtk-tree-view-column-spacing tree-column) spacing))
+
+(export 'gtk-tree-view-column-set-spacing)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_spacing ()
 ;;; 
@@ -804,6 +820,13 @@
 ;;; Returns :
 ;;;     the spacing of tree_column.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-spacing))
+
+(defun gtk-tree-view-column-get-spacing (tree-column)
+  (gtk-tree-view-column-spacing tree-column))
+
+(export 'gtk-tree-view-column-get-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_visible ()
@@ -820,6 +843,13 @@
 ;;;     TRUE if the tree_column is visible.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-visible))
+
+(defun gtk-tree-view-column-set-visible (tree-column visible)
+  (setf (gtk-tree-view-column-visible tree-column) visible))
+
+(export 'gtk-tree-view-column-set-visible)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_visible ()
 ;;; 
@@ -834,6 +864,13 @@
 ;;;     whether the column is visible or not. If it is visible, then the tree
 ;;;     will show the column.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-visible))
+
+(defun gtk-tree-view-column-get-visible (tree-column)
+  (gtk-tree-view-column-visible tree-column))
+
+(export 'gtk-tree-view-column-get-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_resizable ()
@@ -853,6 +890,13 @@
 ;;;     TRUE, if the column can be resized
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-resizable))
+
+(defun gtk-tree-view-column-set-resizable (tree-column resizable)
+  (setf (gtk-tree-view-column-resizable tree-column) resizable))
+
+(export 'gtk-tree-view-column-set-resizable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_resizable ()
 ;;; 
@@ -866,6 +910,13 @@
 ;;; Returns :
 ;;;     TRUE, if the tree_column can be resized.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-resizable))
+
+(defun gtk-tree-view-column-get-resizable (tree-column)
+  (gtk-tree-view-column-resizable tree-column))
+
+(export 'gtk-tree-view-column-get-resizable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_sizing ()
@@ -882,11 +933,18 @@
 ;;;     The GtkTreeViewColumnSizing.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-sizing))
+
+(defun gtk-tree-view-column-set-sizing (tree-column type)
+  (setf (gtk-tree-view-column-sizing tree-column) type))
+
+(export 'gtk-tree-view-column-set-sizing)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_sizing ()
 ;;; 
-;;; GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing (GtkTreeViewColumn
-;;; *tree_column);
+;;; GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Returns the current type of tree_column.
 ;;; 
@@ -896,6 +954,13 @@
 ;;; Returns :
 ;;;     The type of tree_column.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-sizing))
+
+(defun gtk-tree-view-column-get-sizing (tree-column)
+  (gtk-tree-view-column-sizing tree-column))
+
+(export 'gtk-tree-view-column-get-sizing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_width ()
@@ -911,6 +976,13 @@
 ;;;     The current width of tree_column.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-get-width))
+
+(defun gtk-tree-view-column-get-width (tree-column)
+  (gtk-tree-view-column-width tree-column))
+
+(export 'gtk-tree-view-column-get-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_fixed_width ()
 ;;; 
@@ -925,6 +997,13 @@
 ;;; Returns :
 ;;;     the fixed width of the column
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-fixed-width))
+
+(defun gtk-tree-view-column-get-fixed-width (tree-column)
+  (gtk-tree-view-column-fixed-width tree-column))
+
+(export 'gtk-tree-view-column-get-fixed-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_fixed_width ()
@@ -945,6 +1024,13 @@
 ;;;     The size to set tree_column to. Must be greater than 0.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-fixed-width))
+
+(defun gtk-tree-view-column-set-fixed-width (tree-column fixed-width)
+  (setf (gtk-tree-view-column-fixed-width tree-column) fixed-width))
+
+(export 'gtk-tree-view-column-set-fixed-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_min_width ()
 ;;; 
@@ -961,6 +1047,13 @@
 ;;;     The minimum width of the column in pixels, or -1.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-min-width))
+
+(defun gtk-tree-view-column-set-min-width (tree-column min-width)
+  (setf (gtk-tree-view-column-min-width tree-column) min-width))
+
+(export 'gtk-tree-view-column-set-min-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_min_width ()
 ;;; 
@@ -976,6 +1069,13 @@
 ;;;     The minimum width of the tree_column.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-get-min-width))
+
+(defun gtk-tree-view-column-get-min-width (tree-column)
+  (gtk-tree-view-column-min-width tree-column))
+
+(export 'gtk-tree-view-column-get-min-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_max_width ()
 ;;; 
@@ -984,8 +1084,8 @@
 ;;; 
 ;;; Sets the maximum width of the tree_column. If max_width is -1, then the
 ;;; maximum width is unset. Note, the column can actually be wider than max
-;;; width if it's the last column in a view. In this case, the column expands
-;;; to fill any extra space.
+;;; width if it's the last column in a view. In this case, the column expands to
+;;; fill any extra space.
 ;;; 
 ;;; tree_column :
 ;;;     A GtkTreeViewColumn.
@@ -993,6 +1093,13 @@
 ;;; max_width :
 ;;;     The maximum width of the column in pixels, or -1.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-set-max-width))
+
+(defun gtk-tree-view-column-set-max-width (tree-column max-width)
+  (setf (gtk-tree-view-column-max-width tree-column) max-width))
+
+(export 'gtk-tree-view-column-set-max-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_max_width ()
@@ -1009,6 +1116,13 @@
 ;;;     The maximum width of the tree_column.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-get-max-width))
+
+(defun gtk-tree-view-column-get-max-width (tree-column)
+  (gtk-tree-view-column-max-width tree-column))
+
+(export 'gtk-tree-view-column-get-max-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_clicked ()
 ;;; 
@@ -1020,6 +1134,11 @@
 ;;; tree_column :
 ;;;     a GtkTreeViewColumn
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_view_column_clicked" gtk-tree-view-column-clicked) :void
+  (tree-column (g-object gtk-tree-view-column)))
+
+(export 'gtk-tree-view-column-clicked)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_title ()
@@ -1037,11 +1156,18 @@
 ;;;     The title of the tree_column.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-title))
+
+(defun gtk-tree-view-column-set-title (tree-column title)
+  (setf (gtk-tree-view-column-title tree-column) title))
+
+(export 'gtk-tree-view-column-set-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_title ()
 ;;; 
 ;;; const gchar * gtk_tree_view_column_get_title
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Returns the title of the widget.
 ;;; 
@@ -1051,6 +1177,13 @@
 ;;; Returns :
 ;;;     the title of the column. This string should not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-title))
+
+(defun gtk-tree-view-column-get-title (tree-column)
+  (gtk-tree-view-column-title tree-column))
+
+(export 'gtk-tree-view-column-get-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_expand ()
@@ -1072,6 +1205,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-expand))
+
+(defun gtk-tree-view-column-set-expand (tree-column expand)
+  (setf (gtk-tree-view-column-expand tree-column) expand))
+
+(export 'gtk-tree-view-column-set-expand)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_expand ()
 ;;; 
@@ -1088,14 +1228,21 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-get-expand))
+
+(defun gtk-tree-view-column-get-expand (tree-column)
+  (gtk-tree-view-column-expand tree-column))
+
+(export 'gtk-tree-view-column-get-expand)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_clickable ()
 ;;; 
 ;;; void gtk_tree_view_column_set_clickable (GtkTreeViewColumn *tree_column,
 ;;;                                          gboolean clickable);
 ;;; 
-;;; Sets the header to be active if active is TRUE. When the header is active,
-;;; then it can take keyboard focus, and can be clicked.
+;;; Sets the header to be active if clickable is TRUE. When the header is
+;;; active, then it can take keyboard focus, and can be clicked.
 ;;; 
 ;;; tree_column :
 ;;;     A GtkTreeViewColumn.
@@ -1103,6 +1250,13 @@
 ;;; clickable :
 ;;;     TRUE if the header is active.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-set-clickable))
+
+(defun gtk-tree-view-column-set-clickable (tree-column clickable)
+  (setf (gtk-tree-view-column-clickable tree-column) clickable))
+
+(export 'gtk-tree-view-column-set-clickable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_clickable ()
@@ -1118,6 +1272,13 @@
 ;;;     TRUE if user can click the column header.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-get-clickable))
+
+(defun gtk-tree-view-column-get-clickable (tree-column)
+  (gtk-tree-view-column-clickable tree-column))
+
+(export 'gtk-tree-view-column-get-clickable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_widget ()
 ;;; 
@@ -1131,8 +1292,15 @@
 ;;;     A GtkTreeViewColumn.
 ;;; 
 ;;; widget :
-;;;     A child GtkWidget, or NULL. [allow-none]
+;;;     A child GtkWidget, or NULL.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-set-widget))
+
+(defun gtk-tree-view-column-set-widget (tree-column widget)
+  (setf (gtk-tree-view-column-widget tree-column) widget))
+
+(export 'gtk-tree-view-column-set-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_widget ()
@@ -1146,8 +1314,15 @@
 ;;;     A GtkTreeViewColumn.
 ;;; 
 ;;; Returns :
-;;;     The GtkWidget in the column header, or NULL. [transfer none]
+;;;     The GtkWidget in the column header, or NULL.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-widget))
+
+(defun gtk-tree-view-column-get-widget (tree-column)
+  (gtk-tree-view-column-widget tree-column))
+
+(export 'gtk-tree-view-column-get-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_button ()
@@ -1160,10 +1335,16 @@
 ;;;     A GtkTreeViewColumn
 ;;; 
 ;;; Returns :
-;;;     The button for the column header. [transfer none]
+;;;     The button for the column header.
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_view_column_get_button" gtk-tree-view-column-get-button)
+    (g-object gtk-widget)
+  (tree-column (g-object gtk-tree-view-column)))
+
+(export 'gtk-tree-view-column-get-button)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_alignment ()
@@ -1182,6 +1363,13 @@
 ;;;     The alignment, which is between [0.0 and 1.0] inclusive.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-alignment))
+
+(defun gtk-tree-view-column-set-alignment (tree-column xalign)
+  (setf (gtk-tree-view-column-alignment tree-column) xalign))
+
+(export 'gtk-tree-view-column-set-alignment)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_alignment ()
 ;;; 
@@ -1196,6 +1384,13 @@
 ;;; Returns :
 ;;;     The current alignent of tree_column.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-alignment))
+
+(defun gtk-tree-view-column-get-alignment (tree-column)
+  (gtk-tree-view-column-alignment tree-column))
+
+(export 'gtk-tree-view-column-get-alignment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_reorderable ()
@@ -1213,11 +1408,18 @@
 ;;;     TRUE, if the column can be reordered.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-reorderable))
+
+(defun gtk-tree-view-column-set-reorderable (tree-column reorderable)
+  (setf (gtk-tree-view-column-reorderable tree-column) reorderable))
+
+(export 'gtk-tree-view-column-set-reorderable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_reorderable ()
 ;;; 
 ;;; gboolean gtk_tree_view_column_get_reorderable
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Returns TRUE if the tree_column can be reordered by the user.
 ;;; 
@@ -1227,6 +1429,13 @@
 ;;; Returns :
 ;;;     TRUE if the tree_column can be reordered by the user.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-reorderable))
+
+(defun gtk-tree-view-column-get-reorderable (tree-column)
+  (gtk-tree-view-column-reorderable tree-column))
+
+(export 'gtk-tree-view-column-get-reorderable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_sort_column_id ()
@@ -1245,11 +1454,18 @@
 ;;;     The sort_column_id of the model to sort on.
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-sort-column-id))
+
+(defun gtk-tree-view-column-set-sort-column-id (tree-column sort-column-id)
+  (setf (gtk-tree-view-column-sort-column-id tree-column) sort-column-id))
+
+(export 'gtk-tree-view-column-set-sort-column-id)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_sort_column_id ()
 ;;; 
 ;;; gint gtk_tree_view_column_get_sort_column_id
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Gets the logical sort_column_id that the model sorts on when this column is
 ;;; selected for sorting. See gtk_tree_view_column_set_sort_column_id().
@@ -1261,6 +1477,13 @@
 ;;;     the current sort_column_id for this column, or -1 if this column can't
 ;;;     be used for sorting.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-sort-column-id))
+
+(defun gtk-tree-view-column-get-sort-column-id (tree-column)
+  (gtk-tree-view-column-sort-column-id tree-column))
+
+(export 'gtk-tree-view-column-get-sort-column-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_sort_indicator ()
@@ -1280,11 +1503,18 @@
 ;;;     TRUE to display an indicator that the column is sorted
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-sort-indicator))
+
+(defun gtk-tree-view-column-set-sort-indicator (tree-column setting)
+  (setf (gtk-tree-view-column-sort-indicator tree-column) setting))
+
+(export 'gtk-tree-view-column-set-sort-indicator)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_sort_indicator ()
 ;;; 
 ;;; gboolean gtk_tree_view_column_get_sort_indicator
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Gets the value set by gtk_tree_view_column_set_sort_indicator().
 ;;; 
@@ -1294,6 +1524,13 @@
 ;;; Returns :
 ;;;     whether the sort indicator arrow is displayed
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-sort-indicator))
+
+(defun gtk-tree-view-column-get-sort-indicator (tree-column)
+  (gtk-tree-view-column-sort-indicator tree-column))
+
+(export 'gtk-tree-view-column-get-sort-indicator)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_set_sort_order ()
@@ -1320,11 +1557,18 @@
 ;;;     sort order that the sort indicator should indicate
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-set-sort-order))
+
+(defun gtk-tree-view-column-set-sort-order (tree-column order)
+  (setf (gtk-tree-view-column-sort-order tree-column) order))
+
+(export 'gtk-tree-view-column-set-sort-order)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_sort_order ()
 ;;; 
 ;;; GtkSortType gtk_tree_view_column_get_sort_order
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Gets the value set by gtk_tree_view_column_set_sort_order().
 ;;; 
@@ -1334,6 +1578,13 @@
 ;;; Returns :
 ;;;     the sort order the sort indicator is indicating
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-column-get-sort-order))
+
+(defun gtk-tree-view-column-get-sort-order (tree-column)
+  (gtk-tree-view-column-sort-order tree-column))
+
+(export 'gtk-tree-view-column-get-sort-order)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_cell_set_cell_data ()
@@ -1374,7 +1625,7 @@
   (is-expander :boolean)
   (is-expanded :boolean))
 
-(export 'gtk-tree-view-column-cell-set-data)
+(export 'gtk-tree-view-column-cell-set-cell-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_cell_get_size ()
@@ -1393,19 +1644,19 @@
 ;;;     A GtkTreeViewColumn.
 ;;; 
 ;;; cell_area :
-;;;     The area a cell in the column will be allocated, or NULL.
+;;;     The area a cell in the column will be allocated, or NULL
 ;;; 
 ;;; x_offset :
-;;;     location to return x offset of a cell relative to cell_area, or NULL.
+;;;     location to return x offset of a cell relative to cell_area, or NULL
 ;;; 
 ;;; y_offset :
-;;;     location to return y offset of a cell relative to cell_area, or NULL.
+;;;     location to return y offset of a cell relative to cell_area, or NULL
 ;;; 
 ;;; width :
-;;;     location to return width needed to render a cell, or NULL.
+;;;     location to return width needed to render a cell, or NULL
 ;;; 
 ;;; height :
-;;;     location to return height needed to render a cell, or NULL.
+;;;     location to return height needed to render a cell, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_view_column_cell_get_size"
@@ -1417,15 +1668,23 @@
   (width (:pointer :int))
   (height (:pointer :int)))
 
-(defun tree-view-column-cell-size (tree-column cell-area)
-  (with-foreign-objects ((x :int) (y :int) (width :int) (height :int))
-    (%gtk-tree-view-column-cell-get-size tree-column cell-area x y width height)
-    (values (mem-ref x :int)
-            (mem-ref y :int)
+(defun tree-view-column-cell-get-size (tree-column cell-area)
+  (with-foreign-objects ((x-offset :int)
+                         (y-offset :int)
+                         (width :int)
+                         (height :int))
+    (%gtk-tree-view-column-cell-get-size tree-column
+                                         cell-area
+                                         x-offset
+                                         y-offset
+                                         width
+                                         height)
+    (values (mem-ref x-offset :int)
+            (mem-ref y-offset :int)
             (mem-ref width :int)
             (mem-ref height :int))))
 
-(export 'gtk-tree-view-column-cell-size)
+(export 'gtk-tree-view-column-cell-get-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_cell_get_position ()
@@ -1448,10 +1707,10 @@
 ;;; 
 ;;; x_offset :
 ;;;     return location for the horizontal position of cell within tree_column,
-;;;     may be NULL.
+;;;     may be NULL
 ;;; 
 ;;; width :
-;;;     return location for the width of cell, may be NULL.
+;;;     return location for the width of cell, may be NULL
 ;;; 
 ;;; Returns :
 ;;;     TRUE if cell belongs to tree_column.
@@ -1461,24 +1720,25 @@
           %gtk-tree-view-column-cell-get-position) :boolean
   (tree-column (g-object gtk-tree-view-column))
   (cell-renderer (g-object gtk-cell-renderer))
-  (start-pos (:pointer :int))
+  (x-offset (:pointer :int))
   (width (:pointer :int)))
 
-(defun gtk-tree-view-column-cell-position (tree-column cell-renderer)
-  (with-foreign-objects ((start :int) (width :int))
+(defun gtk-tree-view-column-cell-get-position (tree-column cell-renderer)
+  (with-foreign-objects ((x-offset :int) (width :int))
     (when (%gtk-tree-view-column-cell-get-position tree-column
                                                    cell-renderer
-                                                   start
+                                                   x-offset
                                                    width)
-      (list (mem-ref start :int) (mem-ref width :int)))))
+      (values (mem-ref x-offset :int)
+              (mem-ref width :int)))))
 
-(export 'gtk-tree-view-column-cell-position)
+(export 'gtk-tree-view-column-cell-get-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_cell_is_visible ()
 ;;; 
 ;;; gboolean gtk_tree_view_column_cell_is_visible
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Returns TRUE if any of the cells packed into the tree_column are visible.
 ;;; For this to be meaningful, you must first initialize the cells with
@@ -1491,6 +1751,12 @@
 ;;;     TRUE, if any of the cells packed into the tree_column are currently
 ;;;     visible
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_view_column_cell_is_visible"
+           gtk-tree-view-column-cell-is-visible) :boolean
+  (tree-column (g-object gtk-tree-view-column)))
+
+(export 'gtk-tree-view-column-cell-is-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_focus_cell ()
@@ -1541,7 +1807,7 @@
 ;;; gtk_tree_view_column_get_tree_view ()
 ;;; 
 ;;; GtkWidget * gtk_tree_view_column_get_tree_view
-;;;                                             (GtkTreeViewColumn *tree_column)
+;;;                                            (GtkTreeViewColumn *tree_column);
 ;;; 
 ;;; Returns the GtkTreeView wherein tree_column has been inserted. If column is
 ;;; currently not inserted in any tree view, NULL is returned.
@@ -1554,6 +1820,12 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_view_column_get_tree_view"
+           gtk-tree-view-column-get-tree-view) (g-object gtk-widget)
+  (tree-column (g-object gtk-tree-view-column)))
+
+(export 'gtk-tree-view-column-get-tree-view)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_get_x_offset ()
@@ -1571,5 +1843,11 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-view-column-get-x-offset))
+
+(defun gtk-tree-view-column-get-x-offset (tree-column)
+  (gtk-tree-view-column-x-offset tree-column))
+
+(export 'gtk-tree-view-column-get-x-offset)
 
 ;;; --- End of file gtk.tree-view-column.lisp ----------------------------------

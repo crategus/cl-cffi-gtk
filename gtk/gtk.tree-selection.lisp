@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -26,12 +26,13 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
-;;;
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkTreeSelection
 ;;; 
 ;;; The selection object for GtkTreeView
+;;;     
+;;; Synopsis
 ;;; 
 ;;;     GtkTreeSelection
 ;;;
@@ -71,8 +72,8 @@
 ;;; 
 ;;; Description
 ;;; 
-;;; The GtkTreeSelection object is a helper object to manage the selection for
-;;; a GtkTreeView widget. The GtkTreeSelection object is automatically created
+;;; The GtkTreeSelection object is a helper object to manage the selection for a
+;;; GtkTreeView widget. The GtkTreeSelection object is automatically created
 ;;; when a new GtkTreeView widget is created, and cannot exist independentally
 ;;; of this widget. The primary reason the GtkTreeSelection objects exists is
 ;;; for cleanliness of code and API. That is, there is no conceptual reason all
@@ -138,18 +139,14 @@
 ;;; typedef struct _GtkTreeSelection GtkTreeSelection;
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkTreeSelection" gt-tree-selection
+(define-g-object-class "GtkTreeSelection" gtk-tree-selection
   (:superclass g-object
     :export t
     :interfaces nil
     :type-initializer "gtk_tree_selection_get_type")
-  ((:cffi mode gtk-tree-selection-mode gtk-selection-mode
-          "gtk_tree_selection_get_mode" "gtk_tree_selection_set_mode")
-   (:cffi select-function gtk-tree-selection-select-function
-          nil gtk-tree-selection-get-selection-function
-          gtk-tree-selection-set-select-function)
-   (:cffi tree-view gtk-tree-selection-tree-view (g-object tree-view)
-          "gtk_tree_selection_get_tree_view" nil)))
+  ((mode
+    gtk-tree-selection-mode
+    "mode" "GtkSelectionMode" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeSelectionFunc ()
@@ -178,11 +175,23 @@
 ;;;     TRUE, if the path is currently selected
 ;;; 
 ;;; data :
-;;;     user data. [closure]
+;;;     user data
 ;;; 
 ;;; Returns :
 ;;;     TRUE, if the selection state of the row can be toggled
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-tree-selection-select-function-cb :boolean
+    ((selection g-object)
+     (model g-object)
+     (path (g-boxed-foreign gtk-tree-path))
+     (path-currently-selected :boolean)
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (restart-case
+        (funcall fn selection model path path-currently-selected)
+      (return-true () t)
+      (return-false () nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeSelectionForeachFunc ()
@@ -192,8 +201,8 @@
 ;;;                                      GtkTreeIter *iter,
 ;;;                                      gpointer data);
 ;;; 
-;;; A function used by gtk_tree_selection_selected_foreach() to map all
-;;; selected rows. It will be called on every selected row in the view.
+;;; A function used by gtk_tree_selection_selected_foreach() to map all selected
+;;; rows. It will be called on every selected row in the view.
 ;;; 
 ;;; model :
 ;;;     The GtkTreeModel being viewed
@@ -207,6 +216,14 @@
 ;;; data :
 ;;;     user data
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-tree-selection-foreach-cb :void
+    ((model g-object)
+     (path (g-boxed-foreign gtk-tree-path))
+     (iter (g-boxed-foreign gtk-tree-iter))
+     (data :pointer))
+  (let ((fn (get-stable-pointer-value data)))
+    (funcall fn model path iter)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_set_mode ()
@@ -225,10 +242,17 @@
 ;;;     The selection mode
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tree-selection-set-mode))
+
+(defun gtk-tree-selection-set-mode (selection type)
+  (setf (gtk-tree-selection-mode selection) type))
+
+(export 'gtk-tree-selection-set-mode)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_get_mode ()
 ;;; 
-;;; GtkSelectionMode gtk_tree_selection_get_mode (GtkTreeSelection *selection)
+;;; GtkSelectionMode gtk_tree_selection_get_mode (GtkTreeSelection *selection);
 ;;; 
 ;;; Gets the selection mode for selection. See gtk_tree_selection_set_mode().
 ;;; 
@@ -238,6 +262,13 @@
 ;;; Returns :
 ;;;     the current selection mode
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-selection-get-mode))
+
+(defun gtk-tree-selection-get-mode (selection type)
+  (gtk-tree-selection-mode selection))
+
+(export 'gtk-tree-selection-get-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_set_select_function ()
@@ -251,8 +282,8 @@
 ;;; 
 ;;; If set, this function is called before any node is selected or unselected,
 ;;; giving some control over which nodes are selected. The select function
-;;; should return TRUE if the state of the node may be toggled, and FALSE if
-;;; the state of the node should be left unchanged.
+;;; should return TRUE if the state of the node may be toggled, and FALSE if the
+;;; state of the node should be left unchanged.
 ;;; 
 ;;; selection :
 ;;;     A GtkTreeSelection.
@@ -267,7 +298,6 @@
 ;;;     The destroy function for user data. May be NULL
 ;;; ----------------------------------------------------------------------------
 
-
 (defcfun ("gtk_tree_selection_set_select_function"
           %gtk-tree-selection-set-select-function) :void
   (selection g-object)
@@ -275,24 +305,12 @@
   (data :pointer)
   (destroy-notify :pointer))
 
-(defcallback gtk-tree-selection-select-function-callback :boolean
-    ((selection g-object)
-     (model g-object)
-     (path (g-boxed-foreign gtk-tree-path))
-     (path-currently-selected :boolean)
-     (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
-    (restart-case
-        (funcall fn selection model path path-currently-selected)
-      (return-true () t)
-      (return-false () nil))))
-
-(defun gtk-tree-selection-set-select-function (tree-selection fn)
+(defun gtk-tree-selection-set-select-function (selection fn)
   (%gtk-tree-selection-set-select-function
-                          tree-selection
-                          (callback gtk-tree-selection-select-function-callback)
-                          (allocate-stable-pointer fn)
-                          (callback stable-pointer-destroy-notify-cb)))
+                                selection
+                                (callback gtk-tree-selection-select-function-cb)
+                                (allocate-stable-pointer fn)
+                                (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-selection-set-select-function)
 
@@ -300,7 +318,7 @@
 ;;; gtk_tree_selection_get_select_function ()
 ;;; 
 ;;; GtkTreeSelectionFunc gtk_tree_selection_get_select_function
-;;;                                                (GtkTreeSelection *selection)
+;;;                                               (GtkTreeSelection *selection);
 ;;; 
 ;;; Returns the current selection function.
 ;;; 
@@ -312,6 +330,15 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+;; The Lisp select-function is stored in user-data
+
+(defun gtk-tree-selection-get-select-function (selection)
+  (let ((ptr (%gtk-tree-selection-get-user-data selection)))
+    (unless (null-pointer-p ptr)
+      (get-stable-pointer-value ptr))))
+
+(export 'gtk-tree-selection-get-select-function)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_get_user_data ()
@@ -327,16 +354,12 @@
 ;;;     The user data.
 ;;; ----------------------------------------------------------------------------
 
+;; The function is not exported, because we do not store user-data, but a
+;; pointer to the select function.
+
 (defcfun ("gtk_tree_selection_get_user_data"
           %gtk-tree-selection-get-user-data) :pointer
-  (tree-selection g-object))
-
-(defun gtk-tree-selection-get-select-function (tree-selection)
-  (let ((ptr (%gtk-tree-selection-get-user-data tree-selection)))
-    (unless (null-pointer-p ptr)
-      (get-stable-pointer-value ptr))))
-
-(export 'gtk-tree-selection-get-select-function)
+  (selection (g-object gtk-tree-selection)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_get_tree_view ()
@@ -351,6 +374,12 @@
 ;;; Returns :
 ;;;     A GtkTreeView
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_selection_get_tree_view" gtk-tree-selection-get-tree-view)
+    (g-object gtk-tree-view)
+  (selection (g-object gtk-tree-selection)))
+
+(export 'gtk-tree-selection-get-tree-view)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_get_selected ()
@@ -384,12 +413,12 @@
   (model :pointer)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
-(defun gtk-tree-selection-selected (tree-selection)
+(defun gtk-tree-selection-get-selected (selection)
   (let ((iter (make-instance 'gtk-tree-iter)))
-    (when (%gtk-tree-selection-get-selected tree-selection (null-pointer) iter)
+    (when (%gtk-tree-selection-get-selected selection (null-pointer) iter)
       iter)))
 
-(export 'gtk-tree-selection-selected)
+(export 'gtk-tree-selection-get-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_selected_foreach ()
@@ -406,7 +435,7 @@
 ;;;     A GtkTreeSelection.
 ;;; 
 ;;; func :
-;;;     The function to call for each selected node. [scope call]
+;;;     The function to call for each selected node.
 ;;; 
 ;;; data :
 ;;;     user data to pass to the function.
@@ -418,22 +447,14 @@
   (func :pointer)
   (data :pointer))
 
-(defcallback gtk-tree-selection-foreach-cb :void
-    ((model g-object)
-     (path (g-boxed-foreign gtk-tree-path))
-     (iter (g-boxed-foreign gtk-tree-iter))
-     (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
-    (funcall fn model path iter)))
-
-(defun gtk-tree-selection-rows (tree-selection fn)
+(defun gtk-tree-selection-selected-foreach (selection fn)
   (with-stable-pointer (ptr fn)
     (%gtk-tree-selection-selected-foreach
-                                        tree-selection
+                                        selection
                                         (callback gtk-tree-selection-foreach-cb)
                                         ptr)))
 
-(export 'gtk-tree-selection-rows)
+(export 'gtk-tree-selection-selected-foreach)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_get_selected_rows ()
@@ -442,14 +463,13 @@
 ;;;                                               GtkTreeModel **model);
 ;;; 
 ;;; Creates a list of path of all selected rows. Additionally, if you are
-;;; planning on modifying the model after calling this function, you may want
-;;; to convert the returned list into a list of GtkTreeRowReferences. To do
-;;; this, you can use gtk_tree_row_reference_new().
+;;; planning on modifying the model after calling this function, you may want to
+;;; convert the returned list into a list of GtkTreeRowReferences. To do this,
+;;; you can use gtk_tree_row_reference_new().
 ;;; 
 ;;; To free the return value, use:
 ;;; 
-;;; g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
-;;; g_list_free (list);
+;;; g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 ;;; 
 ;;; selection :
 ;;;     A GtkTreeSelection.
@@ -469,10 +489,10 @@
   (selection g-object)
   (model :pointer))
 
-(defun gtk-tree-selection-selected-rows (tree-selection)
-  (%gtk-tree-selection-get-selected-rows tree-selection (null-pointer)))
+(defun gtk-tree-selection-get-selected-rows (selection)
+  (%gtk-tree-selection-get-selected-rows selection (null-pointer)))
 
-(export 'gtk-tree-selection-selected-rows)
+(export 'gtk-tree-selection-get-selected-rows)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_count_selected_rows ()
@@ -560,11 +580,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_selection_path_is_selected"
-           gtk-tree-selection-path-selected-p) :boolean
+           gtk-tree-selection-path-is-selected) :boolean
   (selection g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
-(export 'gtk-tree-selection-path-selected-p)
+(export 'gtk-tree-selection-path-is-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_select_iter ()
@@ -628,11 +648,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_selection_iter_is_selected"
-           gtk-tree-selection-iter-selected-p) :boolean
+           gtk-tree-selection-iter-is-selected) :boolean
   (selection g-object)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
-(export 'gtk-tree-selection-iter-selected-p)
+(export 'gtk-tree-selection-iter-is-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_select_all ()

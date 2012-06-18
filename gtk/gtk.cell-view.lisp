@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,11 +31,11 @@
 ;;; GtkCellView
 ;;; 
 ;;; A widget displaying a single row of a GtkTreeModel
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkCellView
-;;;     
+;;;
 ;;;     gtk_cell_view_new
 ;;;     gtk_cell_view_new_with_context
 ;;;     gtk_cell_view_new_with_text
@@ -62,8 +62,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkCellView implements AtkImplementorIface, GtkBuildable, GtkCellLayout
-;;; and GtkOrientable.
+;;; GtkCellView implements AtkImplementorIface, GtkBuildable, GtkCellLayout and
+;;; GtkOrientable.
 ;;;
 ;;; Properties
 ;;; 
@@ -81,8 +81,8 @@
 ;;; 
 ;;; A GtkCellView displays a single row of a GtkTreeModel using a GtkCellArea
 ;;; and GtkCellAreaContext. A GtkCellAreaContext can be provided to the
-;;; GtkCellView at construction time in order to keep the cellview in context
-;;; of a group of cell views, this ensures that the renderers displayed will be
+;;; GtkCellView at construction time in order to keep the cellview in context of
+;;; a group of cell views, this ensures that the renderers displayed will be
 ;;; properly aligned with eachother (like the aligned cells in the menus of
 ;;; GtkComboBox).
 ;;; 
@@ -112,7 +112,12 @@
 ;;; 
 ;;;   "background-gdk"           GdkColor*             : Read / Write
 ;;; 
-;;; Background color as a GdkColor.
+;;; Warning
+;;; 
+;;; GtkCellView:background-gdk has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Use "background-rgba" instead.
+;;; 
+;;; The background color as a GdkColor
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "background-rgba" property
@@ -140,8 +145,8 @@
 ;;; The GtkCellArea rendering cells
 ;;; 
 ;;; If no area is specified when creating the cell view with
-;;; gtk_cell_view_new_with_context() a horizontally oriented GtkCellAreaBox
-;;; will be used.
+;;; gtk_cell_view_new_with_context() a horizontally oriented GtkCellAreaBox will
+;;; be used.
 ;;; 
 ;;; since 3.0
 ;;;
@@ -157,8 +162,8 @@
 ;;; context.
 ;;; 
 ;;; GtkComboBox menus uses this to assign the same context to all cell views in
-;;; the menu items for a single menu (each submenu creates its own context
-;;; since the size of each submenu does not depend on parent or sibling menus).
+;;; the menu items for a single menu (each submenu creates its own context since
+;;; the size of each submenu does not depend on parent or sibling menus).
 ;;; 
 ;;; since 3.0
 ;;;
@@ -167,8 +172,8 @@
 ;;; 
 ;;;   "draw-sensitive"           gboolean              : Read / Write
 ;;; 
-;;; Whether all cells should be draw as sensitive for this view regardless
-;;; of the actual cell properties (used to make menus with submenus appear
+;;; Whether all cells should be draw as sensitive for this view regardless of
+;;; the actual cell properties (used to make menus with submenus appear
 ;;; sensitive when the items in submenus might be insensitive).
 ;;; 
 ;;; since 3.0
@@ -180,9 +185,9 @@
 ;;; 
 ;;;   "fit-model"                gboolean              : Read / Write
 ;;; 
-;;; Whether the view should request enough space to always fit the size of
-;;; every row in the model (used by the combo box to ensure the combo box size
-;;; doesnt change when different items are selected).
+;;; Whether the view should request enough space to always fit the size of every
+;;; row in the model (used by the combo box to ensure the combo box size doesnt
+;;; change when different items are selected).
 ;;; 
 ;;; since 3.0
 ;;; 
@@ -209,21 +214,28 @@
 (define-g-object-class "GtkCellView" gtk-cell-view
   (:superclass gtk-widget
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkCellLayout")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkCellLayout")
    :type-initializer "gtk_cell_view_get_type")
-  ((background gtk-cell-view-background
+  ((background
+    gtk-cell-view-background
     "background" "gchararray" nil t)
-   (background-gdk gtk-cell-view-background-gdk
+   (background-gdk
+    gtk-cell-view-background-gdk
     "background-gdk" "GdkColor" t t)
-   (background-set gtk-cell-view-background-set
+   (background-set
+    gtk-cell-view-background-set
     "background-set" "gboolean" t t)
-   (model gtk-cell-view-model
+   (model
+    gtk-cell-view-model
     "model" "GtkTreeModel" t t)
-   (:cffi displayed-row gtk-cell-view-displayed-row
-          (g-boxed-foreign gtk-tree-path)
+   (:cffi displayed-row
+          gtk-cell-view-displayed-row (g-boxed-foreign gtk-tree-path)
           "gtk_cell_view_get_displayed_row"
           "gtk_cell_view_set_displayed_row")
-   (:cffi cell-renderers gtk-cell-view-cell-renderers
+   (:cffi cell-renderers
+          gtk-cell-view-cell-renderers
           (g-list (g-object gtk-cell-renderer) :free-from-foreign t)
           "gtk_cell_view_get_cell_renderers" nil)))
 
@@ -246,11 +258,11 @@
 ;;; GtkWidget * gtk_cell_view_new_with_context (GtkCellArea *area,
 ;;;                                             GtkCellAreaContext *context);
 ;;; 
-;;; Creates a new GtkCellView widget with a specific GtkCellArea to layout
-;;; cells and a specific GtkCellAreaContext.
+;;; Creates a new GtkCellView widget with a specific GtkCellArea to layout cells
+;;; and a specific GtkCellAreaContext.
 ;;; 
-;;; Specifying the same context for a handfull of cells lets the underlying
-;;; area synchronize the geometry for those cells, in this way alignments with
+;;; Specifying the same context for a handfull of cells lets the underlying area
+;;; synchronize the geometry for those cells, in this way alignments with
 ;;; cellviews for other rows are possible.
 ;;; 
 ;;; area :
@@ -320,7 +332,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_view_set_model ()
 ;;; 
-;;; void gtk_cell_view_set_model (GtkCellView *cell_view, GtkTreeModel *model);
+;;; void gtk_cell_view_set_model (GtkCellView *cell_view,
+;;;                               GtkTreeModel *model);
 ;;; 
 ;;; Sets the model for cell_view. If cell_view already has a model set, it will
 ;;; remove it before setting the new model. If model is NULL, then it will unset
@@ -330,7 +343,7 @@
 ;;;     a GtkCellView
 ;;; 
 ;;; model :
-;;;     a GtkTreeModel. [allow-none]
+;;;     a GtkTreeModel
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
@@ -377,8 +390,8 @@
 ;;; 
 ;;; GtkTreePath * gtk_cell_view_get_displayed_row (GtkCellView *cell_view);
 ;;; 
-;;; Returns a GtkTreePath referring to the currently displayed row. If no row
-;;; is currently displayed, NULL is returned.
+;;; Returns a GtkTreePath referring to the currently displayed row. If no row is
+;;; currently displayed, NULL is returned.
 ;;; 
 ;;; cell_view :
 ;;;     a GtkCellView
@@ -414,7 +427,7 @@
 ;;;     a GtkTreePath
 ;;; 
 ;;; requisition :
-;;;     return location for the size. [out]
+;;;     return location for the size
 ;;; 
 ;;; Returns :
 ;;;     TRUE
@@ -440,6 +453,12 @@
 ;;; 
 ;;; void gtk_cell_view_set_background_color (GtkCellView *cell_view,
 ;;;                                          const GdkColor *color);
+;;; 
+;;; Warning
+;;; 
+;;; gtk_cell_view_set_background_color has been deprecated since version 3.4 and
+;;; should not be used in newly-written code. Use
+;;; gtk_cell_view_set_background_rgba() instead.
 ;;; 
 ;;; Sets the background color of view.
 ;;; 
@@ -493,8 +512,8 @@
 ;;; 
 ;;; gboolean gtk_cell_view_get_draw_sensitive (GtkCellView *cell_view);
 ;;; 
-;;; Gets whether cell_view is configured to draw all of its cells in a
-;;; sensitive state.
+;;; Gets whether cell_view is configured to draw all of its cells in a sensitive
+;;; state.
 ;;; 
 ;;; cell_view :
 ;;;     a GtkCellView

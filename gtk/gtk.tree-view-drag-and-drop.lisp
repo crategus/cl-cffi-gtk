@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,7 +31,7 @@
 ;;; GtkTreeView drag-and-drop
 ;;; 
 ;;; Interfaces for drag-and-drop support in GtkTreeView
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
 ;;;     GtkTreeDragSource
@@ -63,6 +63,7 @@
 ;;; GtkTreeModelSort and GtkTreeStore.
 ;;; 
 ;;; GtkTreeDragDest is implemented by GtkListStore and GtkTreeStore.
+;;;
 ;;; Description
 ;;; 
 ;;; GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
@@ -78,8 +79,8 @@
 ;;; 
 ;;; On the other hand, if you write to the high-level API, then all the
 ;;; bookkeeping of rows is done for you, as well as things like hover-to-open
-;;; and auto-scroll, but your models have to implement the GtkTreeDragSource
-;;; and GtkTreeDragDest interfaces.
+;;; and auto-scroll, but your models have to implement the GtkTreeDragSource and
+;;; GtkTreeDragDest interfaces.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -104,11 +105,11 @@
 ;;; 
 ;;;   gboolean (* row_draggable)    (GtkTreeDragSource *drag_source,
 ;;;                                  GtkTreePath       *path);
-;;; 
+;;;                                 
 ;;;   gboolean (* drag_data_get)    (GtkTreeDragSource *drag_source,
 ;;;                                  GtkTreePath       *path,
 ;;;                                  GtkSelectionData  *selection_data);
-;;; 
+;;;                                 
 ;;;   gboolean (* drag_data_delete) (GtkTreeDragSource *drag_source,
 ;;;                                  GtkTreePath       *path);
 ;;; };
@@ -154,9 +155,9 @@
 ;;; gtk_tree_drag_source_drag_data_get ()
 ;;; 
 ;;; gboolean gtk_tree_drag_source_drag_data_get
-;;;                                           (GtkTreeDragSource *drag_source,
-;;;                                            GtkTreePath *path,
-;;;                                            GtkSelectionData *selection_data)
+;;;                                          (GtkTreeDragSource *drag_source,
+;;;                                           GtkTreePath *path,
+;;;                                           GtkSelectionData *selection_data);
 ;;; 
 ;;; Asks the GtkTreeDragSource to fill in selection_data with a representation
 ;;; of the row at path. selection_data->target gives the required type of the
@@ -169,7 +170,7 @@
 ;;;     row that was dragged
 ;;; 
 ;;; selection_data :
-;;;     a GtkSelectionData to fill with data from the dragged row. [out]
+;;;     a GtkSelectionData to fill with data from the dragged row
 ;;; 
 ;;; Returns :
 ;;;     TRUE if data of the required type was provided
@@ -216,7 +217,7 @@
 ;;;   gboolean (* drag_data_received) (GtkTreeDragDest   *drag_dest,
 ;;;                                    GtkTreePath       *dest,
 ;;;                                    GtkSelectionData  *selection_data);
-;;; 
+;;;            
 ;;;   gboolean (* row_drop_possible)  (GtkTreeDragDest   *drag_dest,
 ;;;                                    GtkTreePath       *dest_path,
 ;;;                                    GtkSelectionData  *selection_data);
@@ -266,9 +267,9 @@
 ;;; gtk_tree_drag_dest_row_drop_possible ()
 ;;; 
 ;;; gboolean gtk_tree_drag_dest_row_drop_possible
-;;;                                           (GtkTreeDragDest *drag_dest,
-;;;                                            GtkTreePath *dest_path,
-;;;                                            GtkSelectionData *selection_data)
+;;;                                          (GtkTreeDragDest *drag_dest,
+;;;                                           GtkTreePath *dest_path,
+;;;                                           GtkSelectionData *selection_data);
 ;;; 
 ;;; Determines whether a drop is possible before the given dest_path, at the
 ;;; same depth as dest_path. i.e., can we drop the data in selection_data at

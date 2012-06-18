@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,12 +31,12 @@
 ;;; GtkCellRendererSpin
 ;;; 
 ;;; Renders a spin button in a cell
-;;; 
+;;;     
 ;;; Synopsis
 ;;; 
-;;;     GtkCellRendererSpin
+;;; GtkCellRendererSpin
 ;;;
-;;;     gtk_cell_renderer_spin_new
+;;; gtk_cell_renderer_spin_new
 ;;; 
 ;;; Object Hierarchy
 ;;; 
@@ -144,6 +144,8 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-cell-renderer-spin-new))
 
 (defun gtk-cell-renderer-spin-new ()
   (make-instance 'gtk-cell-renderer-spin))

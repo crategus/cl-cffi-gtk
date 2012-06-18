@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -29,24 +29,24 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkCellRendererPixbuf
-;;; 
+;;;
 ;;; Renders a pixbuf in a cell
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkCellRendererPixbuf
 ;;;
 ;;;     gtk_cell_renderer_pixbuf_new
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkCellRenderer
 ;;;                +----GtkCellRendererPixbuf
-;;; 
+;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "follow-state"             gboolean              : Read / Write
 ;;;   "gicon"                    GIcon*                : Read / Write
 ;;;   "icon-name"                gchar*                : Read / Write
@@ -56,13 +56,13 @@
 ;;;   "stock-detail"             gchar*                : Read / Write
 ;;;   "stock-id"                 gchar*                : Read / Write
 ;;;   "stock-size"               guint                 : Read / Write
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; A GtkCellRendererPixbuf can be used to render an image in a cell. It allows
 ;;; to render either a given GdkPixbuf (set via the "pixbuf" property) or a
 ;;; stock icon (set via the "stock-id" property).
-;;; 
+;;;
 ;;; To support the tree view, GtkCellRendererPixbuf also supports rendering two
 ;;; alternative pixbufs, when the "is-expander" property is TRUE. If the
 ;;; "is-expanded" property is TRUE and the "pixbuf-expander-open" property is
@@ -76,84 +76,84 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "follow-state" property
-;;; 
+;;;
 ;;;   "follow-state"             gboolean              : Read / Write
-;;; 
+;;;
 ;;; Specifies whether the rendered pixbuf should be colorized according to the
 ;;; GtkCellRendererState.
-;;; 
+;;;
 ;;; Default value: FALSE
-;;; 
+;;;
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "gicon" property
-;;; 
+;;;
 ;;;   "gicon"                    GIcon*                : Read / Write
-;;; 
+;;;
 ;;; The GIcon representing the icon to display. If the icon theme is changed,
 ;;; the image will be updated automatically.
-;;; 
+;;;
 ;;; Since 2.14
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "icon-name" property
-;;; 
+;;;
 ;;;   "icon-name"                gchar*                : Read / Write
-;;; 
+;;;
 ;;; The name of the themed icon to display. This property only has an effect if
 ;;; not overridden by "stock_id" or "pixbuf" properties.
-;;; 
+;;;
 ;;; Default value: NULL
-;;; 
+;;;
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "pixbuf" property
-;;; 
+;;;
 ;;;   "pixbuf"                   GdkPixbuf*            : Read / Write
-;;; 
+;;;
 ;;; The pixbuf to render.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "pixbuf-expander-closed" property
-;;; 
+;;;
 ;;;   "pixbuf-expander-closed"   GdkPixbuf*            : Read / Write
-;;; 
+;;;
 ;;; Pixbuf for closed expander.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "pixbuf-expander-open" property
-;;; 
+;;;
 ;;;   "pixbuf-expander-open"     GdkPixbuf*            : Read / Write
-;;; 
+;;;
 ;;; Pixbuf for open expander.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "stock-detail" property
-;;; 
+;;;
 ;;;   "stock-detail"             gchar*                : Read / Write
-;;; 
+;;;
 ;;; Render detail to pass to the theme engine.
-;;; 
+;;;
 ;;; Default value: NULL
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "stock-id" property
-;;; 
+;;;
 ;;;   "stock-id"                 gchar*                : Read / Write
-;;; 
+;;;
 ;;; The stock ID of the stock icon to render.
-;;; 
+;;;
 ;;; Default value: NULL
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "stock-size" property
-;;; 
+;;;
 ;;;   "stock-size"               guint                 : Read / Write
-;;; 
+;;;
 ;;; The GtkIconSize value that specifies the size of the rendered icon.
-;;; 
+;;;
 ;;; Default value: 1
 ;;; ----------------------------------------------------------------------------
 
@@ -161,7 +161,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRendererPixbuf
-;;; 
+;;;
 ;;; struct GtkCellRendererPixbuf;
 ;;; ----------------------------------------------------------------------------
 
@@ -198,21 +198,23 @@
     gtk-cell-renderer-pixbuf-stock-size
     "stock-size" "guint" t t)))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_pixbuf_new ()
-;;; 
+;;;
 ;;; GtkCellRenderer * gtk_cell_renderer_pixbuf_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkCellRendererPixbuf. Adjust rendering parameters using
 ;;; object properties. Object properties can be set globally (with
 ;;; g_object_set()). Also, with GtkTreeViewColumn, you can bind a property to a
 ;;; value in a GtkTreeModel. For example, you can bind the "pixbuf" property on
 ;;; the cell renderer to a pixbuf value in the model, thus rendering a different
 ;;; image in each row of the GtkTreeView.
-;;; 
+;;;
 ;;; Returns :
-;;;      the new cell renderer
+;;;     the new cell renderer
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-cell-renderer-pixbuf-new))
 
 (defun gtk-cell-renderer-pixbuf-new ()
   (make-instance 'gtk-cell-renderer-pixbuf))
