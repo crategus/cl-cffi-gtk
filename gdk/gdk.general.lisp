@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; Version 2.24.10. See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 3 Reference Manual
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -31,54 +31,69 @@
 ;;; General
 ;;;
 ;;; Library initialization and miscellaneous functions
-;;; 
-;;; SYNOPSIS
-;;; 
+;;;
+;;; Synopsis
+;;;
 ;;;     gdk_init
 ;;;     gdk_init_check
 ;;;     gdk_parse_args
 ;;;     gdk_get_display_arg_name
-;;;     gdk_exit
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
-;;;
+;;;     
 ;;;     gdk_get_program_class
 ;;;     gdk_set_program_class
-;;;
+;;;     
 ;;;     gdk_get_display
-;;;
+;;;     
 ;;;     gdk_flush
-;;;
+;;;     
 ;;;     gdk_screen_width
 ;;;     gdk_screen_height
 ;;;     gdk_screen_width_mm
 ;;;     gdk_screen_height_mm
+;;;     
+;;;     gdk_pointer_grab
 ;;;
 ;;;     GdkGrabStatus
 ;;;
-;;;     gdk_pointer_grab
 ;;;     gdk_pointer_ungrab
 ;;;     gdk_pointer_is_grabbed
 ;;;     gdk_set_double_click_time
-;;;
+;;;     
 ;;;     gdk_keyboard_grab
 ;;;     gdk_keyboard_ungrab
-;;;
+;;;     
 ;;;     gdk_beep
-;;;
-;;;     gdk_get_use_xshm              *deprecated*
-;;;     gdk_set_use_xshm              *deprecated*
-;;;
-;;;     gdk-error-trap-push
-;;;     gdk-error-trap-pop
-;;;
+;;;     
+;;;     gdk_error_trap_push
+;;;     gdk_error_trap_pop
+;;;     gdk_error_trap_pop_ignored
+;;;     
 ;;;     GDK_WINDOWING_X11
 ;;;     GDK_WINDOWING_WIN32
+;;;     
+;;;     GDK_VERSION_3_0
+;;;     GDK_VERSION_3_2
+;;;     GDK_VERSION_3_4
+;;;     GDK_VERSION_MIN_REQUIRED
+;;;     GDK_VERSION_MAX_ALLOWED
 ;;;
-;;; DESCRIPTION
+;;; Description
 ;;;
 ;;; This section describes the GDK initialization functions and miscellaneous
-;;; utility functions.
+;;; utility functions, as well as deprecation facilities.
+;;;
+;;; The GDK and GTK+ headers annotate deprecated APIs in a way that produces
+;;; compiler warnings if these deprecated APIs are used. The warnings can be
+;;; turned off by defining the macro GDK_DISABLE_DEPRECATION_WARNINGS before
+;;; including the glib.h header.
+;;;
+;;; GDK and GTK+ also provide support for building applications against defined
+;;; subsets of deprecated or new APIs. Define the macro GDK_VERSION_MIN_REQUIRED
+;;; to specify up to what version you want to receive warnings about deprecated
+;;; APIs. Define the macro GDK_VERSION_MAX_ALLOWED to specify the newest version
+;;; whose API you want to use.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -86,11 +101,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_init ()
 ;;;
-;;; void gdk_init (gint *argc, gchar ***argv)
+;;; void gdk_init (gint *argc, gchar ***argv);
 ;;;
-;;; Initializes the GDK library and connects to the X server. If initialization
-;;; fails, a warning message is output and the application terminates with a
-;;; call to exit(1).
+;;; Initializes the GDK library and connects to the windowing system. If
+;;; initialization fails, a warning message is output and the application
+;;; terminates with a call to exit(1).
 ;;;
 ;;; Any arguments used by GDK are removed from the array and argc and argv are
 ;;; updated accordingly.
@@ -98,28 +113,20 @@
 ;;; GTK+ initializes GDK in gtk_init() and so this function is not usually
 ;;; needed by GTK+ applications.
 ;;;
-;;; argc : . [inout]
-;;; argv : . [array length=argc][inout]
+;;; argc :
+;;;     the number of command line arguments
 ;;;
+;;; argv :
+;;;     the array of command line arguments
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_init_check ()
 ;;;
-;;; gboolean gdk_init_check (gint *argc, gchar ***argv)
+;;; gboolean gdk_init_check (gint *argc, gchar ***argv);
 ;;;
-;;; Initialize the library for use.
-;;;
-;;; Arguments: "argc" is the number of arguments. "argv" is an array of strings.
-;;;
-;;; Results: "argc" and "argv" are modified to reflect any arguments which were
-;;; not handled. (Such arguments should either be handled by the application or
-;;; dismissed). If initialization fails, returns FALSE, otherwise TRUE.
-;;;
-;;; Side effects: The library is initialized.
-;;;
-;;; Initializes the GDK library and connects to the X server, returning TRUE on
-;;; success.
+;;; Initializes the GDK library and connects to the windowing system, returning
+;;; TRUE on success.
 ;;;
 ;;; Any arguments used by GDK are removed from the array and argc and argv are
 ;;; updated accordingly.
@@ -127,18 +134,20 @@
 ;;; GTK+ initializes GDK in gtk_init() and so this function is not usually
 ;;; needed by GTK+ applications.
 ;;;
-;;; argc : . [inout]
-;;; argv : . [array length=argc][inout]
+;;; argc :
+;;;     the number of command line arguments
+;;;
+;;; argv :
+;;;     the array of command line arguments
 ;;;
 ;;; Returns :
 ;;;     TRUE if initialization succeeded.
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_parse_args ()
 ;;;
-;;; void gdk_parse_args (gint *argc, gchar ***argv)
+;;; void gdk_parse_args (gint *argc, gchar ***argv);
 ;;;
 ;;; Parse command line arguments, and store for future use by calls to
 ;;; gdk_display_open().
@@ -153,7 +162,7 @@
 ;;;     the number of command line arguments.
 ;;;
 ;;; argv :
-;;;     the array of command line arguments. [inout][array length=argc]
+;;;     the array of command line arguments
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
@@ -161,7 +170,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_display_arg_name ()
 ;;;
-;;; const gchar * gdk_get_display_arg_name (void)
+;;; const gchar * gdk_get_display_arg_name (void);
 ;;;
 ;;; Gets the display name specified in the command line arguments passed to
 ;;; gdk_init() or gdk_parse_args(), if any.
@@ -174,51 +183,27 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_exit ()
-;;;
-;;; void gdk_exit (gint error_code)
-;;;
-;;; WARNING
-;;;
-;;; gdk_exit is deprecated and should not be used in newly-written code.
-;;; 
-;;; Exits the application using the exit() system call.
-;;; 
-;;; This routine is provided mainly for backwards compatibility, since it used
-;;; to perform tasks necessary to exit the application cleanly. Those tasks are
-;;; now performed in a function which is automatically called on exit (via the
-;;; use of g_atexit()).
-;;;
-;;; error_code :
-;;;     the error code to pass to the exit() call.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gdk_notify_startup_complete ()
 ;;;
-;;; void gdk_notify_startup_complete (void)
+;;; void gdk_notify_startup_complete (void);
 ;;;
 ;;; Indicates to the GUI environment that the application has finished loading.
 ;;; If the applications opens windows, this function is normally called after
 ;;; opening the application's initial set of windows.
 ;;;
-;;; GTK+ will call this function automatically after opening the first
-;;; GtkWindow unless gtk_window_set_auto_startup_notification() is called to
-;;; disable that feature.
+;;; GTK+ will call this function automatically after opening the first GtkWindow
+;;; unless gtk_window_set_auto_startup_notification() is called to disable that
+;;; feature.
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
-
-;; This function is not exported. It is for internal use.
-;; See the next function which combines the functions
-;; gdk_notifiy_startup_complete and gdk_notifiy_startup_complete_with_id
 
 (defcfun ("gdk_notify_startup_complete" %gdk-notify-startup-complete) :void)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_notify_startup_complete_with_id ()
 ;;;
-;;; void gdk_notify_startup_complete_with_id (const gchar *startup_id)
+;;; void gdk_notify_startup_complete_with_id (const gchar *startup_id);
 ;;;
 ;;; Indicates to the GUI environment that the application has finished loading,
 ;;; using a given identifier.
@@ -229,8 +214,8 @@
 ;;; feature.
 ;;;
 ;;; startup_id :
-;;;     a startup-notification identifier, for which notification process
-;;;     should be completed
+;;;     a startup-notification identifier, for which notification process should
+;;;     be completed
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
@@ -249,12 +234,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_program_class ()
 ;;;
-;;; const char * gdk_get_program_class (void)
+;;; const gchar * gdk_get_program_class (void);
 ;;;
 ;;; Gets the program class. Unless the program class has explicitly been set
 ;;; with gdk_set_program_class() or with the --class commandline option, the
-;;; default value is the program name (determined with g_get_prgname()) with
-;;; the first character converted to uppercase.
+;;; default value is the program name (determined with g_get_prgname()) with the
+;;; first character converted to uppercase.
 ;;;
 ;;; Returns :
 ;;;     the program class.
@@ -268,7 +253,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_set_program_class ()
 ;;;
-;;; void gdk_set_program_class (const char *program_class)
+;;; void gdk_set_program_class (const gchar *program_class);
 ;;;
 ;;; Sets the program class. The X11 backend uses the program class to set the
 ;;; class name part of the WM_CLASS property on toplevel windows; see the ICCCM.
@@ -282,20 +267,10 @@
 
 (export 'gdk-set-program-class)
 
-;; The following is cut out
-
-;(defun program-class ()
-;  (gdk-get-program-class))
-
-;(defun (setf program-class) (new-value)
-;  (gdk-set-program-class new-value))
-
-;(export 'program-class)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_display ()
 ;;;
-;;; gchar * gdk_get_display (void)
+;;; gchar * gdk_get_display (void);
 ;;;
 ;;; Gets the name of the display, which usually comes from the DISPLAY
 ;;; environment variable or the --display command line option.
@@ -311,12 +286,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_flush ()
 ;;;
-;;; void gdk_flush (void)
+;;; void gdk_flush (void);
 ;;;
-;;; Flushes the X output buffer and waits until all requests have been
-;;; processed by the server. This is rarely needed by applications. It's main
-;;; use is for trapping X errors with gdk_error_trap_push() and
-;;; gdk_error_trap_pop().
+;;; Flushes the output buffers of all display connections and waits until all
+;;; requests have been processed. This is rarely needed by applications.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_flush" gdk-flush) :void)
@@ -326,16 +299,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_width ()
 ;;;
-;;; gint gdk_screen_width (void)
+;;; gint gdk_screen_width (void);
 ;;;
 ;;; Returns the width of the default screen in pixels.
 ;;;
 ;;; Returns :
 ;;;     the width of the default screen in pixels.
 ;;; ----------------------------------------------------------------------------
-
-;; Do not use the name gdk-screen-width.
-;; It is an accessor for the class gdk-screen.
 
 (defcfun ("gdk_screen_width" %gdk-screen-width) :int)
 
@@ -344,16 +314,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_height ()
 ;;;
-;;; gint gdk_screen_height (void)
-;;; 
+;;; gint gdk_screen_height (void);
+;;;
 ;;; Returns the height of the default screen in pixels.
 ;;;
 ;;; Returns :
 ;;;     the height of the default screen in pixels.
 ;;; ----------------------------------------------------------------------------
-
-;; Do not use the name gdk-screen-height.
-;; It is an accessor for the class gdk-screen.
 
 (defcfun ("gdk_screen_height" %gdk-screen-height) :int)
 
@@ -362,18 +329,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_width_mm ()
 ;;;
-;;; gint gdk_screen_width_mm (void)
+;;; gint gdk_screen_width_mm (void);
 ;;;
-;;; Returns the width of the default screen in millimeters. Note that on many
-;;; X servers this value will not be correct.
+;;; Returns the width of the default screen in millimeters. Note that on many X
+;;; servers this value will not be correct.
 ;;;
 ;;; Returns :
-;;;     the width of the default screen in millimeters, though it is not
-;;;     always correct.
+;;;     the width of the default screen in millimeters, though it is not always
+;;;     correct.
 ;;; ----------------------------------------------------------------------------
-
-;; Do not use the name gdk-screen-width-mm.
-;; It is an accessor for the class gdk-screen.
 
 (defcfun ("gdk_screen_width_mm" %gdk-screen-width-mm) :int)
 
@@ -382,18 +346,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_height_mm ()
 ;;;
-;;; gint gdk_screen_height_mm (void)
+;;; gint gdk_screen_height_mm (void);
 ;;;
-;;; Returns the height of the default screen in millimeters. Note that on many
-;;; X servers this value will not be correct.
+;;; Returns the height of the default screen in millimeters. Note that on many X
+;;; servers this value will not be correct.
 ;;;
 ;;; Returns :
-;;;     the height of the default screen in millimeters, though it is not
-;;;     always correct.
+;;;     the height of the default screen in millimeters, though it is not always
+;;;     correct.
 ;;; ----------------------------------------------------------------------------
-
-;; Do not use the name gdk-screen-height-mm.
-;; It is an accessor for the class gdk-screen.
 
 (defcfun ("gdk_screen_height_mm" %gdk-screen-height-mm) :int)
 
@@ -402,8 +363,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkGrabStatus
 ;;;
-;;; typedef enum
-;;; {
+;;; typedef enum {
 ;;;   GDK_GRAB_SUCCESS         = 0,
 ;;;   GDK_GRAB_ALREADY_GRABBED = 1,
 ;;;   GDK_GRAB_INVALID_TIME    = 2,
@@ -442,28 +402,33 @@
 ;;; gdk_pointer_grab ()
 ;;;
 ;;; GdkGrabStatus gdk_pointer_grab (GdkWindow *window,
-;;;                                           gboolean owner_events,
-;;;                                           GdkEventMask event_mask,
-;;;                                           GdkWindow *confine_to,
-;;;                                           GdkCursor *cursor,
-;;;                                           guint32 time_)
+;;;                                 gboolean owner_events,
+;;;                                 GdkEventMask event_mask,
+;;;                                 GdkWindow *confine_to,
+;;;                                 GdkCursor *cursor,
+;;;                                 guint32 time_);
+;;;
+;;; Warning
+;;;
+;;; gdk_pointer_grab has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use gdk_device_grab() instead.
 ;;;
 ;;; Grabs the pointer (usually a mouse) so that all events are passed to this
-;;; application until the pointer is ungrabbed with gdk_pointer_ungrab(), or
-;;; the grab window becomes unviewable. This overrides any previous pointer
-;;; grab by this client.
+;;; application until the pointer is ungrabbed with gdk_pointer_ungrab(), or the
+;;; grab window becomes unviewable. This overrides any previous pointer grab by
+;;; this client.
 ;;;
-;;; Pointer grabs are used for operations which need complete control over
-;;; mouse events, even if the mouse leaves the application. For example in GTK+
-;;; it is used for Drag and Drop, for dragging the handle in the GtkHPaned and
-;;; GtkVPaned widgets, and for resizing columns in GtkCList widgets.
+;;; Pointer grabs are used for operations which need complete control over mouse
+;;; events, even if the mouse leaves the application. For example in GTK+ it is
+;;; used for Drag and Drop, for dragging the handle in the GtkHPaned and
+;;; GtkVPaned widgets.
 ;;;
 ;;; Note that if the event mask of an X window has selected both button press
-;;; and button release events, then a button press event will cause an
-;;; automatic pointer grab until the button is released. X does this
-;;; automatically since most applications expect to receive button press and
-;;; release events in pairs. It is equivalent to a pointer grab on the window
-;;; with owner_events set to TRUE.
+;;; and button release events, then a button press event will cause an automatic
+;;; pointer grab until the button is released. X does this automatically since
+;;; most applications expect to receive button press and release events in
+;;; pairs. It is equivalent to a pointer grab on the window with owner_events
+;;; set to TRUE.
 ;;;
 ;;; If you set up anything at the time you take the grab that needs to be
 ;;; cleaned up when the grab ends, you should handle the GdkEventGrabBroken
@@ -472,31 +437,30 @@
 ;;; window :
 ;;;     the GdkWindow which will own the grab (the grab window).
 ;;;
-;;; owner-events :
-;;;     if FALSE then all pointer events are reported with respect to window
-;;;     and are only reported if selected by event-mask. If TRUE then pointer
-;;;     events for this application are reported as normal, but pointer events
-;;;     outside this application are reported with respect to window and only
-;;;     if selected by event_mask. In either mode, unreported events are
-;;;     discarded.
+;;; owner_events :
+;;;     if FALSE then all pointer events are reported with respect to window and
+;;;     are only reported if selected by event_mask. If TRUE then pointer events
+;;;     for this application are reported as normal, but pointer events outside
+;;;     this application are reported with respect to window and only if
+;;;     selected by event_mask. In either mode, unreported events are discarded.
 ;;;
-;;; event-mask :
-;;;     specifies the event mask, which is used in accordance with
-;;;     owner-events. Note that only pointer events (i.e. button and motion
-;;;     events) may be selected.
+;;; event_mask :
+;;;     specifies the event mask, which is used in accordance with owner_events.
+;;;     Note that only pointer events (i.e. button and motion events) may be
+;;;     selected.
 ;;;
-;;; confine-to :
+;;; confine_to :
 ;;;     If non-NULL, the pointer will be confined to this window during the
 ;;;     grab. If the pointer is outside confine_to, it will automatically be
 ;;;     moved to the closest edge of confine_to and enter and leave events will
 ;;;     be generated as necessary.
 ;;;
 ;;; cursor :
-;;;     the cursor to display while the grab is active. If this is NULL then
-;;;     the normal cursors are used for window and its descendants, and the
-;;;     cursor for window is used for all other windows.
+;;;     the cursor to display while the grab is active. If this is NULL then the
+;;;     normal cursors are used for window and its descendants, and the cursor
+;;;     for window is used for all other windows.
 ;;;
-;;; time :
+;;; time_ :
 ;;;     the timestamp of the event which led to this pointer grab. This usually
 ;;;     comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used
 ;;;     if the time isn't known.
@@ -518,12 +482,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pointer_ungrab ()
 ;;;
-;;; void gdk_pointer_ungrab (guint32 time_)
+;;; void gdk_pointer_ungrab (guint32 time_);
+;;;
+;;; Warning
+;;;
+;;; gdk_pointer_ungrab has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use gdk_device_ungrab(), together with
+;;; gdk_device_grab() instead.
 ;;;
 ;;; Ungrabs the pointer on the default display, if it is grabbed by this
 ;;; application.
 ;;;
-;;; time :
+;;; time_ :
 ;;;     a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 ;;;     available.
 ;;; ----------------------------------------------------------------------------
@@ -536,12 +506,17 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pointer_is_grabbed ()
 ;;;
-;;; gboolean gdk_pointer_is_grabbed (void)
+;;; gboolean gdk_pointer_is_grabbed (void);
+;;;
+;;; Warning
+;;;
+;;; gdk_pointer_is_grabbed has been deprecated since version 3.0 and should not
+;;; be used in newly-written code. Use gdk_display_device_is_grabbed() instead.
 ;;;
 ;;; Returns TRUE if the pointer on the default display is currently grabbed by
 ;;; this application.
 ;;;
-;;; Note that this does not take the implicit pointer grab on button presses
+;;; Note that this does not take the inmplicit pointer grab on button presses
 ;;; into account.
 ;;;
 ;;; Returns :
@@ -555,12 +530,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_set_double_click_time ()
 ;;;
-;;; void gdk_set_double_click_time (guint msec)
+;;; void gdk_set_double_click_time (guint msec);
 ;;;
-;;; Set the double click time for the default display.
-;;; See gdk_display_set_double_click_time().
-;;; See also gdk_display_set_double_click_distance(). Applications should not
-;;; set this, it is a global user-configured setting.
+;;; Set the double click time for the default display. See
+;;; gdk_display_set_double_click_time(). See also
+;;; gdk_display_set_double_click_distance(). Applications should not set this,
+;;; it is a global user-configured setting.
 ;;;
 ;;; msec :
 ;;;     double click time in milliseconds (thousandths of a second)
@@ -570,8 +545,13 @@
 ;;; gdk_keyboard_grab ()
 ;;;
 ;;; GdkGrabStatus gdk_keyboard_grab (GdkWindow *window,
-;;;                                            gboolean owner_events,
-;;;                                            guint32 time_)
+;;;                                  gboolean owner_events,
+;;;                                  guint32 time_);
+;;;
+;;; Warning
+;;;
+;;; gdk_keyboard_grab has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use gdk_device_grab() instead.
 ;;;
 ;;; Grabs the keyboard so that all events are passed to this application until
 ;;; the keyboard is ungrabbed with gdk_keyboard_ungrab(). This overrides any
@@ -584,14 +564,14 @@
 ;;; window :
 ;;;     the GdkWindow which will own the grab (the grab window).
 ;;;
-;;; owner-events :
+;;; owner_events :
 ;;;     if FALSE then all keyboard events are reported with respect to window.
 ;;;     If TRUE then keyboard events for this application are reported as
 ;;;     normal, but keyboard events outside this application are reported with
 ;;;     respect to window. Both key press and key release events are always
 ;;;     reported, independant of the event mask set by the application.
 ;;;
-;;; time :
+;;; time_ :
 ;;;     a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 ;;;     available.
 ;;;
@@ -609,12 +589,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyboard_ungrab ()
 ;;;
-;;; void gdk_keyboard_ungrab (guint32 time_)
+;;; void gdk_keyboard_ungrab (guint32 time_);
+;;;
+;;; Warning
+;;;
+;;; gdk_keyboard_ungrab has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use gdk_device_ungrab(), together with
+;;; gdk_device_grab() instead.
 ;;;
 ;;; Ungrabs the keyboard on the default display, if it is grabbed by this
 ;;; application.
 ;;;
-;;; time :
+;;; time_ :
 ;;;     a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 ;;;     available.
 ;;; ----------------------------------------------------------------------------
@@ -627,7 +613,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_beep ()
 ;;;
-;;; void gdk_beep (void)
+;;; void gdk_beep (void);
 ;;;
 ;;; Emits a short beep on the default display.
 ;;; ----------------------------------------------------------------------------
@@ -639,22 +625,34 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_error_trap_push ()
 ;;;
-;;; void gdk_error_trap_push (void)
+;;; void gdk_error_trap_push (void);
 ;;;
 ;;; This function allows X errors to be trapped instead of the normal behavior
 ;;; of exiting the application. It should only be used if it is not possible to
-;;; avoid the X error in any other way.
+;;; avoid the X error in any other way. Errors are ignored on all GdkDisplay
+;;; currently known to the GdkDisplayManager. If you don't care which error
+;;; happens and just want to ignore everything, pop with
+;;; gdk_error_trap_pop_ignored(). If you need the error code, use
+;;; gdk_error_trap_pop() which may have to block and wait for the error to
+;;; arrive from the X server.
+;;;
+;;; This API exists on all platforms but only does anything on X.
+;;;
+;;; You can use gdk_x11_display_error_trap_push() to ignore errors on only a
+;;; single display.
 ;;;
 ;;; Example 1. Trapping an X error
 ;;;
-;;; 1 gdk_error_trap_push ();
-;;; 2 /* ... Call the X function which may cause an error here ... */
-;;; 3 /* Flush the X queue to catch errors now. */
-;;; 4 gdk_flush ();
-;;; 5 if (gdk_error_trap_pop ())
-;;; 6   {
-;;; 7     /* ... Handle the error here ... */
-;;; 8   }
+;;;   gdk_error_trap_push ();
+;;;   
+;;;    // ... Call the X function which may cause an error here ...
+;;;   
+;;;   
+;;;   if (gdk_error_trap_pop ())
+;;;    {
+;;;      // ... Handle the error here ...
+;;;    }
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_error_trap_push" gdk-error-trap-push) :void)
@@ -664,24 +662,46 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_error_trap_pop ()
 ;;;
-;;; gint gdk_error_trap_pop (void)
+;;; gint gdk_error_trap_pop (void);
 ;;;
-;;; Removes the X error trap installed with gdk_error_trap_push().
+;;; Removes an error trap pushed with gdk_error_trap_push(). May block until an
+;;; error has been definitively received or not received from the X server.
+;;; gdk_error_trap_pop_ignored() is preferred if you don't need to know whether
+;;; an error occurred, because it never has to block. If you don't need the
+;;; return value of gdk_error_trap_pop(), use gdk_error_trap_pop_ignored().
+;;;
+;;; Prior to GDK 3.0, this function would not automatically sync for you, so you
+;;; had to gdk_flush() if your last call to Xlib was not a blocking round trip.
 ;;;
 ;;; Returns :
-;;;     the X error code, or 0 if no error occurred.
+;;;     X error code or 0 on success
 ;;; ----------------------------------------------------------------------------
 
-;(defcfun ("gdK_error_trap_pop" gdk-error-trap-pop) :int)
+(defcfun ("gdk_error_trap_pop" gdk-error-trap-pop) :int)
 
-;(export 'gdk-error-trap-pop)
+(export 'gdk-error-trap-pop)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_error_trap_pop_ignored ()
+;;;
+;;; void gdk_error_trap_pop_ignored (void);
+;;;
+;;; Removes an error trap pushed with gdk_error_trap_push(), but without
+;;; bothering to wait and see whether an error occurred. If an error arrives
+;;; later asynchronously that was triggered while the trap was pushed, that
+;;; error will be ignored.
+;;;
+;;; Since 3.0
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_WINDOWING_X11
 ;;;
 ;;; #define GDK_WINDOWING_X11
 ;;;
-;;; This macro is defined if GDK is configured to use the X11 backend.
+;;; The GDK_WINDOWING_X11 macro is defined if the X11 backend is supported.
+;;;
+;;; Use this macro to guard code that is specific to the X11 backend.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -689,7 +709,78 @@
 ;;;
 ;;; #define GDK_WINDOWING_WIN32
 ;;;
-;;; This macro is defined if GDK is configured to use the Win32 backend.
+;;; The GDK_WINDOWING_WIN32 macro is defined if the Win32 backend is supported.
+;;;
+;;; Use this macro to guard code that is specific to the Win32 backend.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GDK_VERSION_3_0
+;;;
+;;; #define GDK_VERSION_3_0 (G_ENCODE_VERSION (3, 0))
+;;;
+;;; A macro that evaluates to the 3.0 version of GDK, in a format that can be
+;;; used by the C pre-processor.
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GDK_VERSION_3_2
+;;;
+;;; #define GDK_VERSION_3_2 (G_ENCODE_VERSION (3, 2))
+;;;
+;;; A macro that evaluates to the 3.2 version of GDK, in a format that can be
+;;; used by the C pre-processor.
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GDK_VERSION_3_4
+;;;
+;;; #define GDK_VERSION_3_4 (G_ENCODE_VERSION (3, 4))
+;;;
+;;; A macro that evaluates to the 3.4 version of GDK, in a format that can be
+;;; used by the C pre-processor.
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GDK_VERSION_MIN_REQUIRED
+;;;
+;;; #define GDK_VERSION_MIN_REQUIRED (GDK_VERSION_PREV_STABLE)
+;;;
+;;; A macro that should be defined by the user prior to including the gdk.h
+;;; header. The definition should be one of the predefined GDK version macros:
+;;; GDK_VERSION_3_0, GDK_VERSION_3_2,...
+;;;
+;;; This macro defines the lower bound for the GLib API to use.
+;;;
+;;; If a function has been deprecated in a newer version of GDK, it is possible
+;;; to use this symbol to avoid the compiler warnings without disabling warning
+;;; for every deprecated function.
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GDK_VERSION_MAX_ALLOWED
+;;;
+;;; #define GDK_VERSION_MAX_ALLOWED GDK_VERSION_MIN_REQUIRED
+;;;
+;;; A macro that should be defined by the user prior to including the gdk.h
+;;; header. The definition should be one of the predefined GDK version macros:
+;;; GDK_VERSION_3_0, GDK_VERSION_3_2,...
+;;;
+;;; This macro defines the upper bound for the GDK API to use.
+;;;
+;;; If a function has been introduced in a newer version of GDK, it is possible
+;;; to use this symbol to get compiler warnings when trying to use that
+;;; function.
+;;;
+;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.general.lisp -------------------------------------------
