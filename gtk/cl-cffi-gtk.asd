@@ -168,7 +168,7 @@
    (:file "gtk.tree-model-filter")     ; GtkTreeModelFilter
    (:file "gtk.tree-view")             ; Displaying both trees and lists
    (:file "gtk.tree-view-column")      ; Visible column in GtkTreeView
-   (:file "gtk.tree-store")            ; A tree-like data structure
+   (:file "gtk.tree-store")            ; Tree-like data structure
    (:file "gtk.tree-selection")        ; Selection object for GtkTreeView
    (:file "gtk.cell-editable")         ; GtkCellEditable
    (:file "gtk.cell-renderer")         ; Object for rendering a cell
@@ -179,9 +179,10 @@
    (:file "gtk.cell-renderer-combo")   ; Renders a combobox in a cell
    (:file "gtk.cell-renderer-spin")    ; Renders a spin button in a cell
    (:file "gtk.cell-renderer-toggle")  ; Renders a toggle button in a cell
+   (:file "gtk.cell-renderer-spinner") ; Renders a spinning animation in a cell
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
-   (:file "gtk.list-store")            ; list-like data structure
+   (:file "gtk.list-store")            ; List-like data structure
    
    ;; Numeric/Text Data Entry
    (:file "gtk.editable")              ; GtkEditable
