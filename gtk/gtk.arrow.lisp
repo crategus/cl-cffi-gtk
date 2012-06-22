@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,53 +27,53 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkArrow
-;;; 
+;;;
 ;;; Displays an arrow
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkArrow
 ;;;
 ;;;     gtk_arrow_new
 ;;;     gtk_arrow_set
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkMisc
 ;;;                      +----GtkArrow
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkArrow implements AtkImplementorIface and GtkBuildable.
 ;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "arrow-type"               GtkArrowType          : Read / Write
 ;;;   "shadow-type"              GtkShadowType         : Read / Write
-;;; 
+;;;
 ;;; Style Properties
-;;; 
+;;;
 ;;;   "arrow-scaling"            gfloat                : Read
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; GtkArrow should be used to draw simple arrows that need to point in one of
 ;;; the four cardinal directions (up, down, left, or right). The style of the
 ;;; arrow can be one of shadow in, shadow out, etched in, or etched out. Note
-;;; that these directions and style types may be ammended in versions of GTK+
-;;; to come.
-;;; 
+;;; that these directions and style types may be ammended in versions of GTK+ to
+;;; come.
+;;;
 ;;; GtkArrow will fill any space alloted to it, but since it is inherited from
 ;;; GtkMisc, it can be padded and/or aligned, to fill exactly the space the
 ;;; programmer desires.
-;;; 
-;;; Arrows are created with a call to gtk_arrow_new(). The direction or style
-;;; of an arrow can be changed after creation by using gtk_arrow_set().
+;;;
+;;; Arrows are created with a call to gtk_arrow_new(). The direction or style of
+;;; an arrow can be changed after creation by using gtk_arrow_set().
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -81,20 +81,20 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "arrow-type" property
-;;; 
+;;;
 ;;;   "arrow-type"               GtkArrowType          : Read / Write
-;;; 
+;;;
 ;;; The direction the arrow should point.
-;;; 
+;;;
 ;;; Default value: GTK_ARROW_RIGHT
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "shadow-type" property
-;;; 
+;;;
 ;;;   "shadow-type"              GtkShadowType         : Read / Write
-;;; 
+;;;
 ;;; Appearance of the shadow surrounding the arrow.
-;;; 
+;;;
 ;;; Default value: GTK_SHADOW_OUT
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -103,13 +103,13 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "arrow-scaling" style property
-;;; 
+;;;
 ;;;   "arrow-scaling"            gfloat                : Read
-;;; 
+;;;
 ;;; Amount of space used up by arrow.
-;;; 
+;;;
 ;;; Allowed values: [0,1]
-;;; 
+;;;
 ;;; Default value: 0.7
 ;;; ----------------------------------------------------------------------------
 
@@ -117,14 +117,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkArrow
-;;; 
+;;;
 ;;; struct GtkArrow;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkArrow" gtk-arrow
   (:superclass gtk-misc
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_arrow_get_type")
   ((arrow-type
     gtk-arrow-arrow-type
@@ -135,21 +136,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_arrow_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_arrow_new (GtkArrowType arrow_type,
 ;;;                            GtkShadowType shadow_type);
-;;; 
+;;;
 ;;; Creates a new GtkArrow widget.
-;;; 
+;;;
 ;;; arrow_type :
-;;;     a valid GtkArrowType
-;;; 
+;;;     a valid GtkArrowType.
+;;;
 ;;; shadow_type :
-;;;     a valid GtkShadowType
-;;; 
+;;;     a valid GtkShadowType.
+;;;
 ;;; Returns :
-;;;     the new GtkArrow widget
+;;;     the new GtkArrow widget.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-arrow-new))
 
 (defun gtk-arrow-new (arrow-type shadow-type)
   (make-instance 'gtk-arrow
@@ -160,22 +163,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_arrow_set ()
-;;; 
+;;;
 ;;; void gtk_arrow_set (GtkArrow *arrow,
 ;;;                     GtkArrowType arrow_type,
 ;;;                     GtkShadowType shadow_type);
-;;; 
+;;;
 ;;; Sets the direction and style of the GtkArrow, arrow.
-;;; 
+;;;
 ;;; arrow :
-;;;     a widget of type GtkArrow
-;;; 
+;;;     a widget of type GtkArrow.
+;;;
 ;;; arrow_type :
-;;;     a valid GtkArrowType
-;;; 
+;;;     a valid GtkArrowType.
+;;;
 ;;; shadow_type :
-;;;     a valid GtkShadowType
+;;;     a valid GtkShadowType.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-arrow-set))
 
 (defun gtk-arrow-set (arrow arrow-type shadow-type)
   (setf (gtk-arrow-arrow-type arrow) arrow-type
