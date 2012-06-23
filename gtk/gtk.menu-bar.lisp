@@ -27,50 +27,50 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GtkMenuBar
-;;; 
+;;;
 ;;; A subclass of GtkMenuShell which holds GtkMenuItem widgets
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkMenuBar
-;;;     
+;;;
 ;;;     gtk_menu_bar_new
 ;;;     gtk_menu_bar_new_from_model
-;;;     
+;;;
 ;;;     GtkPackDirection
-;;;     
+;;;
 ;;;     gtk_menu_bar_set_pack_direction
 ;;;     gtk_menu_bar_get_pack_direction
 ;;;     gtk_menu_bar_set_child_pack_direction
 ;;;     gtk_menu_bar_get_child_pack_direction
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkContainer
 ;;;                      +----GtkMenuShell
 ;;;                            +----GtkMenuBar
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkMenuBar implements AtkImplementorIface and GtkBuildable.
-;;; 
+;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "child-pack-direction"     GtkPackDirection      : Read / Write
 ;;;   "pack-direction"           GtkPackDirection      : Read / Write
-;;; 
+;;;
 ;;; Style Properties
-;;; 
+;;;
 ;;;   "internal-padding"         gint                  : Read
 ;;;   "shadow-type"              GtkShadowType         : Read
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; The GtkMenuBar is a subclass of GtkMenuShell which contains one or more
 ;;; GtkMenuItems. The result is a standard menu bar which can hold many menu
 ;;; items.
@@ -81,26 +81,26 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "child-pack-direction" property
-;;; 
+;;;
 ;;;   "child-pack-direction"     GtkPackDirection      : Read / Write
-;;; 
+;;;
 ;;; The child pack direction of the menubar. It determines how the widgets
 ;;; contained in child menuitems are arranged.
-;;; 
+;;;
 ;;; Default value: GTK_PACK_DIRECTION_LTR
-;;; 
+;;;
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "pack-direction" property
-;;; 
+;;;
 ;;;   "pack-direction"           GtkPackDirection      : Read / Write
-;;; 
+;;;
 ;;; The pack direction of the menubar. It determines how menuitems are arranged
 ;;; in the menubar.
-;;; 
+;;;
 ;;; Default value: GTK_PACK_DIRECTION_LTR
-;;; 
+;;;
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -109,22 +109,22 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "internal-padding" style property
-;;; 
+;;;
 ;;;   "internal-padding"         gint                  : Read
-;;; 
+;;;
 ;;; Amount of border space between the menubar shadow and the menu items.
-;;; 
+;;;
 ;;; Allowed values: >= 0
-;;; 
+;;;
 ;;; Default value: 1
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "shadow-type" style property
-;;; 
+;;;
 ;;;   "shadow-type"              GtkShadowType         : Read
-;;; 
+;;;
 ;;; Style of bevel around the menubar.
-;;; 
+;;;
 ;;; Default value: GTK_SHADOW_OUT
 ;;; ----------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkMenuBar
-;;; 
+;;;
 ;;; struct GtkMenuBar;
 ;;; ----------------------------------------------------------------------------
 
@@ -151,11 +151,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_menu_bar_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkMenuBar
-;;; 
+;;;
 ;;; Returns :
 ;;;     the new menu bar, as a GtkWidget
 ;;; ----------------------------------------------------------------------------
@@ -169,47 +169,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_new_from_model ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_menu_bar_new_from_model (GMenuModel *model);
-;;; 
+;;;
 ;;; Creates a new GtkMenuBar and populates it with menu items and submenus
 ;;; according to model.
-;;; 
+;;;
 ;;; The created menu items are connected to actions found in the
 ;;; GtkApplicationWindow to which the menu bar belongs - typically by means of
 ;;; being contained within the GtkApplicationWindows widget hierarchy.
-;;; 
+;;;
 ;;; model :
 ;;;     a GMenuModel
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkMenuBar
-;;; 
+;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPackDirection
-;;; 
+;;;
 ;;; typedef enum {
 ;;;   GTK_PACK_DIRECTION_LTR,
 ;;;   GTK_PACK_DIRECTION_RTL,
 ;;;   GTK_PACK_DIRECTION_TTB,
 ;;;   GTK_PACK_DIRECTION_BTT
 ;;; } GtkPackDirection;
-;;; 
+;;;
 ;;; Determines how widgets should be packed insided menubars and menuitems
 ;;; contained in menubars.
-;;; 
+;;;
 ;;; GTK_PACK_DIRECTION_LTR
 ;;;     Widgets are packed left-to-right
-;;; 
+;;;
 ;;; GTK_PACK_DIRECTION_RTL
 ;;;     Widgets are packed right-to-left
-;;; 
+;;;
 ;;; GTK_PACK_DIRECTION_TTB
 ;;;     Widgets are packed top-to-bottom
-;;; 
+;;;
 ;;; GTK_PACK_DIRECTION_BTT
 ;;;     Widgets are packed bottom-to-top
 ;;; ----------------------------------------------------------------------------
@@ -224,18 +224,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_set_pack_direction ()
-;;; 
+;;;
 ;;; void gtk_menu_bar_set_pack_direction (GtkMenuBar *menubar,
 ;;;                                       GtkPackDirection pack_dir);
-;;; 
+;;;
 ;;; Sets how items should be packed inside a menubar.
-;;; 
+;;;
 ;;; menubar :
 ;;;     a GtkMenuBar
-;;; 
+;;;
 ;;; pack_dir :
 ;;;     a new GtkPackDirection
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -248,18 +248,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_get_pack_direction ()
-;;; 
+;;;
 ;;; GtkPackDirection gtk_menu_bar_get_pack_direction (GtkMenuBar *menubar);
-;;; 
+;;;
 ;;; Retrieves the current pack direction of the menubar. See
 ;;; gtk_menu_bar_set_pack_direction().
-;;; 
+;;;
 ;;; menubar :
 ;;;     a GtkMenuBar
-;;; 
+;;;
 ;;; Returns :
 ;;;     the pack direction
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -272,18 +272,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_set_child_pack_direction ()
-;;; 
+;;;
 ;;; void gtk_menu_bar_set_child_pack_direction (GtkMenuBar *menubar,
 ;;;                                             GtkPackDirection child_pack_dir)
-;;; 
+;;;
 ;;; Sets how widgets should be packed inside the children of a menubar.
-;;; 
+;;;
 ;;; menubar :
 ;;;     a GtkMenuBar
-;;; 
+;;;
 ;;; child_pack_dir :
 ;;;     a new GtkPackDirection
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -296,18 +296,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_get_child_pack_direction ()
-;;; 
+;;;
 ;;; GtkPackDirection gtk_menu_bar_get_child_pack_direction (GtkMenuBar *menubar)
-;;; 
+;;;
 ;;; Retrieves the current child pack direction of the menubar. See
 ;;; gtk_menu_bar_set_child_pack_direction().
-;;; 
+;;;
 ;;; menubar :
 ;;;     a GtkMenuBar
-;;; 
+;;;
 ;;; Returns :
 ;;;     the child pack direction
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 

@@ -223,7 +223,10 @@
    (:file "gtk.recent-action")         ; List of recently used files
    
    ;; Selectors
+   (:file "gtk.color-chooser")         ; Interface for choosing colors
    (:file "gtk.color-button")          ; Launch a color selection dialog
+   (:file "gtk.color-chooser-widget")  ; Widget for choosing colors
+   (:file "gtk.color-chooser-dialog")  ; Dialog for choosing colors
    (:file "gtk.color-selection")       ; Widget used to select a color
    (:file "gtk.color-selection-dialog"); Widget used to select a color
    (:file "gtk.hsv")                   ; GtkHSV
@@ -237,15 +240,17 @@
    
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value
+   (:file "gtk.arrow")                 ; Displays an arrow
+   (:file "gtk.calendar")              ; Displays a calendar
    (:file "gtk.drawing-area")          ; Custom user interface elements
    (:file "gtk.event-box")             ; Widget used to catch events
-   (:file "gtk.calendar")              ; Displays a calendar
+   (:file "gtk.handle-box")            ; Widget for detachable window portions
+   (:file "gtk.im-context-simple")     ; Table-based input methods
+   (:file "gtk.im-multicontext")       ; Multiple, loadable input methods
    (:file "gtk.size-group")            ; Grouping widgets to the same size
    (:file "gtk.tooltip")               ; Add tips to your widgets
-   (:file "gtk.arrow")                 ; Displays an arrow
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
-   (:file "gtk.handle-box")            ; Widget for detachable window portions
-   
+
    ;; Cross-process Embedding
    (:file "gtk.plug")                  ; Embedding into other processes
    (:file "gtk.socket")                ; For widgets from other processes

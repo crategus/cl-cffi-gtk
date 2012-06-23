@@ -27,19 +27,19 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GtkSeparatorMenuItem
-;;; 
+;;;
 ;;; A separator used in menus
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkSeparatorMenuItem
-;;;     
+;;;
 ;;;     gtk_separator_menu_item_new
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
@@ -47,14 +47,14 @@
 ;;;                      +----GtkBin
 ;;;                            +----GtkMenuItem
 ;;;                                  +----GtkSeparatorMenuItem
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkSeparatorMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
 ;;;
 ;;; Description
-;;; 
+;;;
 ;;; The GtkSeparatorMenuItem is a separator used to group items within a menu.
 ;;; It displays a horizontal line with a shadow to make it appear sunken into
 ;;; the interface.
@@ -64,7 +64,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkSeparatorMenuItem
-;;; 
+;;;
 ;;; struct GtkSeparatorMenuItem;
 ;;; ----------------------------------------------------------------------------
 
@@ -79,11 +79,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_menu_item_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_separator_menu_item_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkSeparatorMenuItem.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkSeparatorMenuItem.
 ;;; ----------------------------------------------------------------------------

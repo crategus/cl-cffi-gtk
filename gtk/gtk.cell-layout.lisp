@@ -346,11 +346,11 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_cell_layout_get_cells" gtk-cell-layout-cells)
+(defcfun ("gtk_cell_layout_get_cells" gtk-cell-layout-get-cells)
     (g-list g-object :free-from-foreign t)
-  (cell-layout g-object))
+  (cell-layout (g-object gtk-cell-layout)))
 
-(export 'gtk-cell-layout-cells)
+(export 'gtk-cell-layout-get-cells)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_layout_reorder ()

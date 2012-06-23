@@ -144,33 +144,33 @@
 ;;;
 ;;; Example 44. Simple GtkDialog usage
 ;;;
-;;; /* Function to open a dialog box displaying the message provided. */
-;;; void
-;;; quick_message (gchar *message)
-;;; {
-;;;    GtkWidget *dialog, *label, *content_area;
-;;;
-;;;    /* Create the widgets */
-;;;    dialog = gtk_dialog_new_with_buttons ("Message",
-;;;                                          main_application_window,
-;;;                                          GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                                          GTK_STOCK_OK,
-;;;                                          GTK_RESPONSE_NONE,
-;;;                                          NULL);
-;;;    content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-;;;    label = gtk_label_new (message);
-;;;
-;;;    /* Ensure that the dialog box is destroyed when the user responds */
-;;;    g_signal_connect_swapped (dialog,
-;;;                              "response",
-;;;                              G_CALLBACK (gtk_widget_destroy),
-;;;                              dialog);
-;;;
-;;;    /* Add the label, and show everything we've added to the dialog */
-;;;
-;;;    gtk_container_add (GTK_CONTAINER (content_area), label);
-;;;    gtk_widget_show_all (dialog);
-;;; }
+;;;   /* Function to open a dialog box displaying the message provided. */
+;;;   void
+;;;   quick_message (gchar *message)
+;;;   {
+;;;      GtkWidget *dialog, *label, *content_area;
+;;;   
+;;;      /* Create the widgets */
+;;;      dialog = gtk_dialog_new_with_buttons ("Message",
+;;;                                            main_application_window,
+;;;                                            GTK_DIALOG_DESTROY_WITH_PARENT,
+;;;                                            GTK_STOCK_OK,
+;;;                                            GTK_RESPONSE_NONE,
+;;;                                            NULL);
+;;;      content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+;;;      label = gtk_label_new (message);
+;;;   
+;;;      /* Ensure that the dialog box is destroyed when the user responds */
+;;;      g_signal_connect_swapped (dialog,
+;;;                                "response",
+;;;                                G_CALLBACK (gtk_widget_destroy),
+;;;                                dialog);
+;;;   
+;;;      /* Add the label, and show everything we've added to the dialog */
+;;;   
+;;;      gtk_container_add (GTK_CONTAINER (content_area), label);
+;;;      gtk_widget_show_all (dialog);
+;;;   }
 ;;;
 ;;; GtkDialog as GtkBuildable
 ;;;
@@ -185,26 +185,26 @@
 ;;;
 ;;; Example 45. A GtkDialog UI definition fragment.
 ;;;
-;;; <object class="GtkDialog" id="dialog1">
-;;;   <child internal-child="vbox">"
-;;;     <object class="GtkVBox" id="vbox">
-;;;       <child internal-child="action_area">
-;;;         <object class="GtkHButtonBox" id="button_box">
-;;;           <child>
-;;;             <object class="GtkButton" id="button_cancel"/>
-;;;           </child>
-;;;           <child>
-;;;             <object class="GtkButton" id="button_ok"/>
-;;;           </child>
-;;;         </object>
-;;;       </child>
-;;;     </object>
-;;;   </child>
-;;;   <action-widgets>
-;;;     <action-widget response="3">button_ok</action-widget>
-;;;     <action-widget response="-5">button_cancel</action-widget>
-;;;   </action-widgets>
-;;; </object>
+;;;   <object class="GtkDialog" id="dialog1">
+;;;     <child internal-child="vbox">"
+;;;       <object class="GtkVBox" id="vbox">
+;;;         <child internal-child="action_area">
+;;;           <object class="GtkHButtonBox" id="button_box">
+;;;             <child>
+;;;               <object class="GtkButton" id="button_cancel"/>
+;;;             </child>
+;;;             <child>
+;;;               <object class="GtkButton" id="button_ok"/>
+;;;             </child>
+;;;           </object>
+;;;         </child>
+;;;       </object>
+;;;     </child>
+;;;     <action-widgets>
+;;;       <action-widget response="3">button_ok</action-widget>
+;;;       <action-widget response="-5">button_cancel</action-widget>
+;;;     </action-widgets>
+;;;   </object>
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -315,18 +315,7 @@
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable")
    :type-initializer "gtk_dialog_get_type")
-  ((has-separator
-    gtk-dialog-has-separator
-    "has-separator" "gboolean" t t)
-   (:cffi content-area
-          gtk-dialog-content-area (g-object gtk-vbox)
-          "gtk_dialog_get_content_area" nil)
-   (:cffi action-area
-          gtk-dialog-action-area (g-object gtk-widget)
-          "gtk_dialog_get_action_area" nil)
-   (:cffi default-response
-          gtk-dialog-default-response gtk-response-type
-          nil "gtk_dialog_set_default_response")))
+ nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkDialogFlags
@@ -684,10 +673,10 @@
 ;;;     a response ID
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-dialog-set-default-response))
-
-(defun gtk-dialog-set-default-response (dialog response-id)
-  (setf (gtk-dialog-default-response dialog) response-id))
+(defcfun ("gtk_dialog_set_default_response" gtk-dialog-set-default-response)
+    :void
+  (dialog (g-object gtk-dialog))
+  (response-id gtk-response-type))
 
 (export 'gtk-dialog-set-default-response)
 
@@ -792,10 +781,9 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-dialog-get-action-area))
-
-(defun gtk-dialog-get-action-area (dialog)
-  (gtk-dialog-action-area dialog))
+(defcfun ("gtk_dialog_get_action_area" gtk-dialog-get-action-area)
+    (g-object gtk-widget)
+  (dialog (g-object gtk-dialog)))
 
 (export 'gtk-dialog-get-action-area)
 
@@ -815,10 +803,9 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-dialog-get-content-area))
-
-(defun gtk-dialog-get-content-area (dialog)
-  (gtk-dialog-content-area dialog))
+(defcfun ("gtk_dialog_get_content_area" gtk-dialog-get-content-area)
+    (g-object gtk-widget)
+  (dialog (g-object gtk-dialog)))
 
 (export 'gtk-dialog-get-content-area)
 

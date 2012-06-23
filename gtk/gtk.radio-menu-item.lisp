@@ -27,15 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GtkRadioMenuItem
-;;; 
+;;;
 ;;; A choice from multiple check menu items
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkRadioMenuItem
-;;;     
+;;;
 ;;;     gtk_radio_menu_item_new
 ;;;     gtk_radio_menu_item_new_with_label
 ;;;     gtk_radio_menu_item_new_with_mnemonic
@@ -44,9 +44,9 @@
 ;;;     gtk_radio_menu_item_new_with_mnemonic_from_widget
 ;;;     gtk_radio_menu_item_set_group
 ;;;     gtk_radio_menu_item_get_group
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
@@ -55,37 +55,37 @@
 ;;;                            +----GtkMenuItem
 ;;;                                  +----GtkCheckMenuItem
 ;;;                                        +----GtkRadioMenuItem
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkRadioMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
-;;; 
+;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "group"                    GtkRadioMenuItem*     : Write
-;;; 
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "group-changed"                                  : Run First
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; A radio menu item is a check menu item that belongs to a group. At each
 ;;; instant exactly one of the radio menu items from a group is selected.
-;;; 
+;;;
 ;;; The group list does not need to be freed, as each GtkRadioMenuItem will
 ;;; remove itself and its list item when it is destroyed.
-;;; 
+;;;
 ;;; The correct way to create a group of radio menu items is approximatively
 ;;; this:
-;;; 
+;;;
 ;;; Example 78. How to create a group of radio menu items.
-;;; 
+;;;
 ;;; GSList *group = NULL;
 ;;; GtkWidget *item;
 ;;; gint i;
-;;; 
+;;;
 ;;; for (i = 0; i < 5; i++)
 ;;; {
 ;;;   item = gtk_radio_menu_item_new_with_label (group, "This is an example");
@@ -100,11 +100,11 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "group" property
-;;; 
+;;;
 ;;;   "group"                    GtkRadioMenuItem*     : Write
-;;; 
+;;;
 ;;; The radio menu item whose group this widget belongs to.
-;;; 
+;;;
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -113,7 +113,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "group-changed" signal
-;;; 
+;;;
 ;;; void user_function (GtkRadioMenuItem *radiomenuitem,
 ;;;                     gpointer          user_data)          : Run First
 ;;; ----------------------------------------------------------------------------
@@ -122,7 +122,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRadioMenuItem
-;;; 
+;;;
 ;;; struct GtkRadioMenuItem;
 ;;; ----------------------------------------------------------------------------
 
@@ -139,147 +139,147 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_radio_menu_item_new (GSList *group);
-;;; 
+;;;
 ;;; Creates a new GtkRadioMenuItem.
-;;; 
+;;;
 ;;; group :
 ;;;     the group to which the radio menu item is to be attached
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRadioMenuItem
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_label ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_radio_menu_item_new_with_label (GSList *group,
 ;;;                                                 const gchar *label);
-;;; 
+;;;
 ;;; Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
-;;; 
+;;;
 ;;; group :
 ;;;     .
-;;; 
+;;;
 ;;; label :
 ;;;     the text for the label
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkRadioMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_mnemonic ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_radio_menu_item_new_with_mnemonic (GSList *group,
 ;;;                                                    const gchar *label);
-;;; 
+;;;
 ;;; Creates a new GtkRadioMenuItem containing a label. The label will be created
 ;;; using gtk_label_new_with_mnemonic(), so underscores in label indicate the
 ;;; mnemonic for the menu item.
-;;; 
+;;;
 ;;; group :
 ;;;     group the radio menu item is inside
-;;; 
+;;;
 ;;; label :
 ;;;     the text of the button, with an underscore in front of the mnemonic
 ;;;     character
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRadioMenuItem
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_from_widget ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
-;;; 
+;;;
 ;;; Creates a new GtkRadioMenuItem adding it to the same group as group.
-;;; 
+;;;
 ;;; group :
 ;;;     An existing GtkRadioMenuItem
-;;; 
+;;;
 ;;; Returns :
 ;;;     The new GtkRadioMenuItem.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_label_from_widget ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_radio_menu_item_new_with_label_from_widget
 ;;;                                                    (GtkRadioMenuItem *group,
 ;;;                                                     const gchar *label);
-;;; 
+;;;
 ;;; Creates a new GtkRadioMenuItem whose child is a simple GtkLabel. The new
 ;;; GtkRadioMenuItem is added to the same group as group.
-;;; 
+;;;
 ;;; group :
 ;;;     an existing GtkRadioMenuItem
-;;; 
+;;;
 ;;; label :
 ;;;     the text for the label
-;;; 
+;;;
 ;;; Returns :
 ;;;     The new GtkRadioMenuItem.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_mnemonic_from_widget ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_radio_menu_item_new_with_mnemonic_from_widget
 ;;;                                                    (GtkRadioMenuItem *group,
 ;;;                                                     const gchar *label);
-;;; 
+;;;
 ;;; Creates a new GtkRadioMenuItem containing a label. The label will be created
 ;;; using gtk_label_new_with_mnemonic(), so underscores in label indicate the
 ;;; mnemonic for the menu item.
-;;; 
+;;;
 ;;; The new GtkRadioMenuItem is added to the same group as group.
-;;; 
+;;;
 ;;; group :
 ;;;     An existing GtkRadioMenuItem
-;;; 
+;;;
 ;;; label :
 ;;;     the text of the button, with an underscore in front of the mnemonic
 ;;;     character
-;;; 
+;;;
 ;;; Returns :
 ;;;     The new GtkRadioMenuItem.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_set_group ()
-;;; 
+;;;
 ;;; void gtk_radio_menu_item_set_group (GtkRadioMenuItem *radio_menu_item,
 ;;;                                     GSList *group);
-;;; 
+;;;
 ;;; Sets the group of a radio menu item, or changes it.
-;;; 
+;;;
 ;;; radio_menu_item :
 ;;;     a GtkRadioMenuItem.
-;;; 
+;;;
 ;;; group :
 ;;;     the new group
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_get_group ()
-;;; 
+;;;
 ;;; GSList * gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
-;;; 
+;;;
 ;;; Returns the group to which the radio menu item belongs, as a GList of
 ;;; GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
-;;; 
+;;;
 ;;; radio_menu_item :
 ;;;     a GtkRadioMenuItem
-;;; 
+;;;
 ;;; Returns :
 ;;;     the group of radio_menu_item
 ;;; ----------------------------------------------------------------------------
