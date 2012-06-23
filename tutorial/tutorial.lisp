@@ -845,7 +845,7 @@
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "GTK+ 3.4 Example Labels"
+                                 :title "Example Labels"
                                  :default-width 250
                                  :border-width 12))
           (vbox1 (make-instance 'gtk-box
@@ -1071,7 +1071,7 @@
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "GTK+ 3.4 Example Progress Bar"
+                                 :title "Example Progress Bar"
                                  :default-width 300))
           (pdata (make-pbar-data :pbar (make-instance 'gtk-progress-bar)))
           (vbox (make-instance 'gtk-box
@@ -1143,7 +1143,7 @@
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
-                                  :title "GTK+ 3.4 Example Status Bar"
+                                  :title "Example Status Bar"
                                   :default-width 300
                                   :border-width 12))
            (vbox (make-instance 'gtk-vbox
@@ -2003,19 +2003,6 @@
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 
-#|
-GtkTextIter start, end;
-GdkRGBA rgba;
-GtkTextTag *tag;
-
-/* Use a tag to change the color for just one part of the widget */
-tag = gtk_text_buffer_create_tag (buffer, "blue_foreground",
-                        "foreground", "blue", NULL);  
-gtk_text_buffer_get_iter_at_offset (buffer, &start, 7);
-gtk_text_buffer_get_iter_at_offset (buffer, &end, 12);
-gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
-|#
-
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Chapter 10. Miscellaneous Widgets
@@ -2129,16 +2116,17 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
     ;; Add a border width to the vbox of the content area
     (gtk-container-set-border-width (gtk-dialog-get-content-area dialog) 12)
     ;; Add a label widget with text to the content area
-    (let ((vbox (make-instance 'gtk-vbox :border-width 12))
+    (let ((vbox (make-instance 'gtk-box
+                               :orientation :vertical
+                               :border-width 12))
           (label (make-instance 'gtk-label
                                 :wrap t
                                 :label
                                 (format nil
                                         "The content area is the place to ~
                                          put in the widgets.~%~% ~
-                                         The action area is separated from ~
-                                         the content area with a horizontal ~
-                                         line."))))
+                                         The action area contains ~
+                                         the buttons."))))
       (gtk-box-pack-start vbox label)
       (gtk-box-pack-start (gtk-dialog-get-content-area dialog) vbox)
       ;; Show the content area of the dialog
@@ -2628,6 +2616,39 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
 
 ;;; ----------------------------------------------------------------------------
 
+;;; Color Button
+
+(let ((color (gdk-rgba-parse "Gray")))
+  (defun example-color-button ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title "Example Color Button"
+                                   :border-width 12
+                                   :default-width 300
+                                   :default-height 250))
+            (area (make-instance 'gtk-drawing-area))
+            (button (make-instance 'gtk-color-button
+                                   :rgba color))
+            (vbox (make-instance 'gtk-box
+                                 :orientation :vertical
+                                 :spacing 12)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-main-quit)))
+        (g-signal-connect button "color-set"
+           (lambda (widget)
+             (let ((rgba (gtk-color-chooser-get-rgba widget)))
+               (gtk-widget-override-background-color area :normal rgba))))
+        (gtk-widget-override-background-color area :normal color)
+        (gtk-box-pack-start vbox area)
+        (gtk-box-pack-start vbox button)
+        (gtk-container-add window vbox)
+        (gtk-widget-show-all window))))
+)
+
+;;; ----------------------------------------------------------------------------
+
 ;;; Color Selection Widget
 
 (let ((color (make-gdk-color :red 0
@@ -2667,7 +2688,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-widget-destroy window)))
+                            (gtk-main-quit)))
         (gtk-widget-modify-bg area :normal color)
         (gtk-widget-set-events area :button-press-mask)
         (g-signal-connect area "event"
