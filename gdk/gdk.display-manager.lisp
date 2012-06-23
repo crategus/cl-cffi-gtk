@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; Version 2.24.10. See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 3 Reference Manual
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -29,59 +29,104 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GdkDisplayManager
-;;;
+;;; 
 ;;; Maintains a list of all open GdkDisplays
-;;;
+;;;     
 ;;; Synopsis
-;;;
+;;; 
 ;;;     GdkDisplayManager
 ;;;
 ;;;     gdk_display_manager_get
 ;;;     gdk_display_manager_get_default_display
 ;;;     gdk_display_manager_set_default_display
 ;;;     gdk_display_manager_list_displays
-;;;     gdk_display_get_core_pointer
-;;;
+;;;     gdk_display_manager_open_display
+;;; 
 ;;; Object Hierarchy
-;;;
-;;;  GObject
-;;;   +----GdkDisplayManager
-;;;
+;;; 
+;;;   GObject
+;;;    +----GdkDisplayManager
+;;; 
+;;; Properties
+;;; 
+;;;   "default-display"          GdkDisplay*           : Read / Write
+;;; 
+;;; Signals
+;;; 
+;;;   "display-opened"                                 : Run Last
+;;; 
 ;;; Description
-;;;
+;;; 
 ;;; The purpose of the GdkDisplayManager singleton object is to offer
 ;;; notification when displays appear or disappear or the default display
 ;;; changes.
+;;; 
+;;; You can use gdk_display_manager_get() to obtain the GdkDisplayManager
+;;; singleton, but that should be rarely necessary. Typically, initializing GTK+
+;;; opens a display that you can work with without ever accessing the
+;;; GdkDisplayManager.
+;;; 
+;;; The GDK library can be built with support for multiple backends. The
+;;; GdkDisplayManager object determines which backend is used at runtime.
+;;; 
+;;; When writing backend-specific code that is supposed to work with multiple
+;;; GDK backends, you have to consider both compile time and runtime. At compile
+;;; time, use the GDK_WINDOWING_X11, GDK_WINDOWING_WIN32 macros, etc. to find
+;;; out which backends are present in the GDK library you are building your
+;;; application against. At runtime, use type-check macros like
+;;; GDK_IS_X11_DISPLAY() to find out which backend is in use:
+;;; 
+;;; Example 2. Backend-specific code
+;;; 
+;;;   #ifdef GDK_WINDOWING_X11
+;;;     if (GDK_IS_X11_DISPLAY (display))
+;;;       {
+;;;         /* make X11-specific calls here */
+;;;       }
+;;;     else
+;;;   #endif
+;;;   #ifdef GDK_WINDOWING_QUARTZ
+;;;     if (GDK_IS_QUARTZ_DISPLAY (display))
+;;;       {
+;;;         /* make Quartz-specific calls here */
+;;;       }
+;;;     else
+;;;   #endif
+;;;     g_error ("Unsupported GDK backend");
+;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Properties
+;;; Property Details
 ;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "default-display" property
-;;;
-;;;  "default-display" GdkDisplay* : Read / Write
-;;;
+;;; 
+;;;   "default-display"          GdkDisplay*           : Read / Write
+;;; 
 ;;; The default display for GDK.
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Signals
+;;; Signal Details
 ;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "display-opened" signal
-;;;
-;;; void user_function (GdkDisplayManager *display_manager,
+;;; 
+;;; void user_function (GdkDisplayManager *manager,
 ;;;                     GdkDisplay        *display,
-;;;                     gpointer           user_data)            : Run Last
-;;;
-;;; The ::display_opened signal is emitted when a display is opened.
-;;;
-;;; display_manager :
+;;;                     gpointer           user_data)      : Run Last
+;;; 
+;;; The ::display-opened signal is emitted when a display is opened.
+;;; 
+;;; manager :
 ;;;     the object on which the signal is emitted
-;;;
+;;; 
 ;;; display :
 ;;;     the opened display
-;;;
+;;; 
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;;
+;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -89,14 +134,10 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkDisplayManager
-;;;
+;;; 
 ;;; typedef struct _GdkDisplayManager GdkDisplayManager;
-;;;
-;;; The GdkDisplayManager struct has no interesting fields.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
-   
+
 (define-g-object-class "GdkDisplayManager" gdk-display-manager
   (:superclass g-object
    :export t
@@ -112,15 +153,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_get ()
-;;;
-;;; GdkDisplayManager * gdk_display_manager_get (void)
-;;;
+;;; 
+;;; GdkDisplayManager * gdk_display_manager_get (void);
+;;; 
 ;;; Gets the singleton GdkDisplayManager object.
-;;;
+;;; 
+;;; When called for the first time, this function consults the GDK_BACKEND
+;;; environment variable to find out which of the supported GDK backends to use
+;;; (in case GDK has been compiled with multiple backends).
+;;; 
 ;;; Returns :
-;;;     The global GdkDisplayManager singleton; gdk_parse_pargs(), gdk_init(),
-;;;     or gdk_init_check() must have been called first.
-;;;
+;;;     The global GdkDisplayManager singleton; gdk_parse_args(), gdk_init(), or
+;;;     gdk_init_check() must have been called first.
+;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -131,18 +176,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_get_default_display ()
-;;;
+;;; 
 ;;; GdkDisplay * gdk_display_manager_get_default_display
-;;;                                         (GdkDisplayManager *display_manager)
-;;;
+;;;                                                (GdkDisplayManager *manager);
+;;; 
 ;;; Gets the default GdkDisplay.
-;;;
-;;; display_manager :
+;;; 
+;;; manager :
 ;;;     a GdkDisplayManager
-;;;
+;;; 
 ;;; Returns :
 ;;;     a GdkDisplay, or NULL if there is no default display
-;;;
+;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -155,19 +200,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_set_default_display ()
-;;;
-;;; void gdk_display_manager_set_default_display
-;;;                                         (GdkDisplayManager *display_manager,
-;;;                                          GdkDisplay *display)
-;;;
+;;; 
+;;; void gdk_display_manager_set_default_display (GdkDisplayManager *manager,
+;;;                                               GdkDisplay *display);
+;;; 
 ;;; Sets display as the default display.
-;;;
-;;; display_manager :
+;;; 
+;;; manager :
 ;;;     a GdkDisplayManager
-;;;
+;;; 
 ;;; display :
 ;;;     a GdkDisplay
-;;;
+;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -180,19 +224,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_list_displays ()
-;;;
-;;; GSList * gdk_display_manager_list_displays
-;;;                                         (GdkDisplayManager *display_manager)
-;;;
+;;; 
+;;; GSList * gdk_display_manager_list_displays (GdkDisplayManager *manager);
+;;; 
 ;;; List all currently open displays.
-;;;
-;;; display_manager :
+;;; 
+;;; manager :
 ;;;     a GdkDisplayManager
-;;;
+;;; 
 ;;; Returns :
-;;;     A newly allocated GSList of GdkDisplay objects. Free this list with
-;;;     g_slist_free() when you are done with it.
-;;;
+;;;     a newly allocated GSList of GdkDisplay objects. Free with g_slist_free()
+;;;     when you are done with it
+;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -204,28 +247,24 @@
 (export 'gdk-display-manager-list-displays)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_display_get_core_pointer ()
-;;;
-;;; GdkDevice * gdk_display_get_core_pointer (GdkDisplay *display)
-;;;
-;;; Returns the core pointer device for the given display.
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
+;;; gdk_display_manager_open_display ()
+;;; 
+;;; GdkDisplay * gdk_display_manager_open_display (GdkDisplayManager *manager,
+;;;                                                const gchar *name);
+;;; 
+;;; Opens a display.
+;;; 
+;;; manager :
+;;;     a GdkDisplayManager
+;;; 
+;;; name :
+;;;     the name of the display to open
+;;; 
 ;;; Returns :
-;;;     the core pointer device; this is owned by the display and should
-;;;     not be freed
-;;;
-;;; Since 2.2
+;;;     a GdkDisplay, or NULL if the display could not be opened
+;;; 
+;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-;; This function is no longer present in Gtk+ 3 !?
-
-;(defcfun ("gdk_display_get_core_pointer" gdk-display-get-core-pointer)
-;    (g-object gdk-device)
-;  (display (g-object gdk-display)))
-
-;(export 'gdk-display-get-core-pointer)
 
 ;;; --- End of file gdk.display-manager.lisp -----------------------------------
