@@ -192,57 +192,66 @@
                                   :title "Demo Entry"
                                   :default-width 250
                                   :border-width 10))
-           (box (make-instance 'gtk-vbox))
+           (box (make-instance 'gtk-box
+                               :orientation :vertical))
            (entry (make-instance 'gtk-entry))
-           (button (make-instance 'gtk-button :label "OK"))
+           (button (make-instance 'gtk-button
+                                  :label "OK"))
            (text-buffer (make-instance 'gtk-text-buffer))
-           (text-view (make-instance 'gtk-text-view :buffer text-buffer))
-           (button-select (make-instance 'gtk-button :label "Select"))
-           (button-insert (make-instance 'gtk-button :label "Insert"))
+           (text-view (make-instance 'gtk-text-view
+                                     :buffer text-buffer))
+           (button-select (make-instance 'gtk-button
+                                         :label "Select"))
+           (button-insert (make-instance 'gtk-button
+                                         :label "Insert"))
            (label (make-instance 'gtk-label
                                  :use-markup t
                                  :label "Enter <b>anything</b> you wish:")))
-      (gtk-box-pack-start box label :expand nil)
-      (gtk-box-pack-start box entry :expand nil)
-      (gtk-box-pack-start box button :expand nil)
-      (gtk-box-pack-start box button-select :expand nil)
-      (gtk-box-pack-start box button-insert :expand nil)
-      (let ((w (make-instance 'gtk-scrolled-window)))
-        (gtk-box-pack-start box w)
-        (gtk-container-add w text-view))
-      (gtk-container-add window box)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
       (g-signal-connect window "delete-event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
-                          (let ((dlg (make-instance 'gtk-message-dialog
-                                                    :title "Confirm Exit"
-                                                    :text "Are you sure?"
-                                                    :buttons :yes-no)))
-                            (let ((response (gtk-dialog-run dlg)))
-                              (gtk-widget-destroy dlg)
-                              (not (eq :yes response))))))
+         (lambda (widget event)
+           (declare (ignore widget event))
+           ;; Show a Message Dialog
+           (let ((dlg (make-instance 'gtk-message-dialog
+                                     :title "Confirm Exit"
+                                     :text "Are you sure?"
+                                     :buttons :yes-no)))
+             (let ((response (gtk-dialog-run dlg)))
+               (gtk-widget-destroy dlg)
+               (not (eq :yes response))))))
       (g-signal-connect button "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (setf (gtk-text-buffer-text text-buffer)
-                                (format nil "~A~%~A"
-                                        (gtk-text-buffer-text text-buffer)
-                                        (gtk-entry-text entry))
-                                (gtk-entry-text entry)
-                                "")))
+         (lambda (button)
+           (declare (ignore button))
+           ;; Update the text buffer
+           (setf (gtk-text-buffer-text text-buffer)
+                 (format nil "~A~%~A"
+                         (gtk-text-buffer-text text-buffer)
+                         (gtk-entry-get-text entry)))
+           ;; Clear the text entry
+           (gtk-entry-set-text entry "")))
       (g-signal-connect button-select "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (gtk-editable-select-region entry 5 10)))
+         (lambda (button)
+           (declare (ignore button))
+           (gtk-editable-select-region entry 5 10)))
       (g-signal-connect button-insert "clicked"
-                        (lambda (button)
-                          (declare (ignore button))
-                          (gtk-editable-insert-text entry "hello" 2)))
-      (gtk-widget-show window))))
+         (lambda (button)
+           (declare (ignore button))
+           (gtk-editable-insert-text entry "hello" 2)))
+      ;; Packing of the widgets
+      (gtk-box-pack-start box label :expand nil)
+      (gtk-box-pack-start box entry :expand nil)
+      (gtk-box-pack-start box button :expand nil)
+      (gtk-box-pack-start box button-select :expand nil)
+      (gtk-box-pack-start box button-insert :expand nil)
+      (let ((scrolled (make-instance 'gtk-scrolled-window)))
+        (gtk-box-pack-start box scrolled)
+        (gtk-container-add scrolled text-view))
+      (gtk-container-add window box)
+      ;; Show all widgets
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -259,13 +268,12 @@
                                  :n-rows 2
                                  :n-columns 2
                                  :homogeneous t))
-           (button-1 (make-instance 'gtk-button :label "Button 1"))
-           (button-2 (make-instance 'gtk-button :label "Button 2"))
-           (button-q (make-instance 'gtk-button :label "Quit")))
-      (gtk-container-add window table)
-      (gtk-table-attach table button-1 0 1 0 1)
-      (gtk-table-attach table button-2 1 2 0 1)
-      (gtk-table-attach table button-q 0 2 1 2)
+           (button-1 (make-instance 'gtk-button
+                                    :label "Button 1"))
+           (button-2 (make-instance 'gtk-button
+                                    :label "Button 2"))
+           (button-q (make-instance 'gtk-button
+                                    :label "Quit")))
       (g-signal-connect window "destroy"
                         (lambda (w)
                           (declare (ignore w))
@@ -274,7 +282,11 @@
                         (lambda (b)
                           (declare (ignore b))
                           (gtk-widget-destroy window)))
-      (gtk-widget-show window))))
+      (gtk-container-add window table)
+      (gtk-table-attach table button-1 0 1 0 1)
+      (gtk-table-attach table button-2 1 2 0 1)
+      (gtk-table-attach table button-q 0 2 1 2)
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -289,48 +301,50 @@
           (image (make-instance 'gtk-image
                                 :icon-name "weather-storm"
                                 :icon-size 6)))
-      (gtk-container-add window image)
       (g-signal-connect window "destroy"
                         (lambda (w)
                           (declare (ignore w))
                           (gtk-main-quit)))
-      (gtk-widget-show window))))
+      (gtk-container-add window image)
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
 ;; Testing progress-bar
 
 (defun demo-progress-bar ()
-  "Testing progress-bar"
   (within-main-loop
     (let ((window (make-instance 'gtk-window
                                  :title "Demo Progress Bar"
                                  :default-width 250))
-          (v-box (make-instance 'gtkv-box))
-          (p-bar (make-instance 'gtk-progress-bar :test "A process"))
-          (button-pulse (make-instance 'gtk-button :label "Pulse"))
-          (button-set (make-instance 'gtk-button :label "Set"))
+          (v-box (make-instance 'gtk-box
+                                :orientation :vertical))
+          (p-bar (make-instance 'gtk-progress-bar
+                                :text "A process"))
+          (button-pulse (make-instance 'gtk-button
+                                       :label "Pulse"))
+          (button-set (make-instance 'gtk-button
+                                     :label "Set"))
           (entry (make-instance 'gtk-entry)))
-      (gtk-container-add window v-box)
-      (gtk-box-pack-start v-box p-bar)
-      (gtk-box-pack-start v-box button-pulse)
-      (gtk-box-pack-start v-box button-set)
-      (gtk-box-pack-start v-box entry)
       (g-signal-connect window "destroy"
                         (lambda (w)
                           (declare (ignore w))
                           (gtk-main-quit)))
       (g-signal-connect button-pulse "clicked"
-                        (lambda (w)
-                         (declare (ignore w))
-                          (gtk-progress-bar-pulse p-bar)))
+         (lambda (w)
+           (declare (ignore w))
+           (gtk-progress-bar-pulse p-bar)))
       (g-signal-connect button-set "clicked"
-                        (lambda (w)
-                          (declare (ignore w))
-                          (setf (gtk-progress-bar-fraction p-bar)
-                                (coerce (read-from-string (gtk-entry-text entry))
-                                        'real))))
-      (gtk-widget-show window))))
+         (lambda (w)
+           (declare (ignore w))
+           (setf (gtk-progress-bar-fraction p-bar)
+                 (coerce (read-from-string (gtk-entry-text entry)) 'real))))
+      (gtk-container-add window v-box)
+      (gtk-box-pack-start v-box p-bar)
+      (gtk-box-pack-start v-box button-pulse)
+      (gtk-box-pack-start v-box button-set)
+      (gtk-box-pack-start v-box entry)
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -421,7 +435,7 @@
                           (declare (ignore w))
                           (gtk-main-quit)))
       (gtk-container-add window button)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -512,7 +526,7 @@
       (gtk-box-pack-start box button-insert :expand nil)
       (gtk-box-pack-start box button-bold :expand nil)
       (gtk-box-pack-start box scrolled)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -521,7 +535,8 @@
 (defstruct tvi
   title
   value)
- 
+
+#+nil
 (defun demo-treeview-list ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
@@ -586,16 +601,105 @@
         (gtk-tree-view-column-pack-start column renderer)
         (gtk-tree-view-column-add-attribute column renderer "text" 0)
         (gtk-tree-view-append-column tv column)
-        (print (gtk-tree-view-column-tree-view column))
-        (print (gtk-tree-view-column-cell-renderers column)))
+        (print (gtk-tree-view-column-get-tree-view column))
+        (print (gtk-cell-layout-get-cells column)))
       (let ((column (make-instance 'gtk-tree-view-column :title "Value"))
             (renderer (make-instance 'gtk-cell-renderer-text :text "A text")))
         (gtk-tree-view-column-pack-start column renderer)
         (gtk-tree-view-column-add-attribute column renderer "text" 1)
         (gtk-tree-view-append-column tv column)
-        (print (gtk-tree-view-column-tree-view column))
-        (print (gtk-tree-view-column-cell-renderers column)))
-      (gtk-widget-show window))))
+        (print (gtk-tree-view-column-get-tree-view column))
+        (print (gtk-cell-layout-get-cells column)))
+      (gtk-widget-show-all window))))
+
+(defun demo-treeview-list ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Demo Treeview"))
+           (model (make-instance 'array-list-store))
+           (scroll (make-instance 'gtk-scrolled-window
+                                  :hscrollbar-policy :automatic
+                                  :vscrollbar-policy :automatic))
+           (tv (make-instance 'gtk-tree-view
+                              :headers-visible t
+                              :width-request 100
+                              :height-request 400
+                              :rules-hint t))
+           (h-box (make-instance 'gtk-box
+                                 :orientation :horizontal))
+           (v-box (make-instance 'gtk-vbox
+                                 :orientation :vertical))
+           (title-entry (make-instance 'gtk-entry))
+           (value-entry (make-instance 'gtk-entry))
+           (button (make-instance 'gtk-button
+                                  :label "Add")))
+      (g-signal-connect window "destroy"
+                        (lambda (w)
+                          (declare (ignore w))
+                          (gtk-main-quit)))
+
+      (store-add-column model "gchararray" #'tvi-title)
+      (store-add-column model "gint" #'tvi-value)
+      (store-add-item model (make-tvi :title "Monday" :value 1))
+      (store-add-item model (make-tvi :title "Tuesday" :value 2))
+      (store-add-item model (make-tvi :title "Wednesday" :value 3))
+      (store-add-item model (make-tvi :title "Thursday" :value 4))
+      (store-add-item model (make-tvi :title "Friday" :value 5))
+      (store-add-item model (make-tvi :title "Saturday" :value 6))
+      (store-add-item model (make-tvi :title "Sunday" :value 7))
+      (setf (gtk-tree-view-model tv) model
+            (gtk-tree-view-tooltip-column tv) 0)
+
+;      (g-signal-connect button "clicked"
+;         (lambda (b)
+;           (declare (ignore b))
+;           (store-add-item model
+;                           (make-tvi :title
+;                                     (gtk-entry-text title-entry)
+;                                     :value
+;                                     (or (parse-integer
+;                                           (gtk-entry-text value-entry) 
+;                                           :junk-allowed t)
+;                                         0)))))
+
+;      (g-signal-connect tv "row-activated"
+;         (lambda (tv path column)
+;           (declare (ignore tv column))
+;           (show-message (format nil "You clicked on row ~A"
+;                                 (gtk-tree-path-get-indices path)))))
+
+
+
+      (let ((column (make-instance 'gtk-tree-view-column
+                                   :title "Title"
+                                   :sort-column-id 0))
+            (renderer (make-instance 'gtk-cell-renderer-text
+                                     :text "A text")))
+        (gtk-tree-view-column-pack-start column renderer)
+        (gtk-tree-view-column-add-attribute column renderer "text" 0)
+        (gtk-tree-view-append-column tv column)
+;        (print (gtk-tree-view-column-get-tree-view column))
+;        (print (gtk-cell-layout-get-cells column))
+         )
+
+;      (let ((column (make-instance 'gtk-tree-view-column :title "Value"))
+;            (renderer (make-instance 'gtk-cell-renderer-text :text "A text")))
+;        (gtk-tree-view-column-pack-start column renderer)
+;        (gtk-tree-view-column-add-attribute column renderer "text" 1)
+;        (gtk-tree-view-append-column tv column)
+;        (print (gtk-tree-view-column-get-tree-view column))
+;        (print (gtk-cell-layout-get-cells column)))
+
+      (gtk-container-add window v-box)
+      (gtk-box-pack-start v-box h-box :expand nil)
+      (gtk-box-pack-start h-box title-entry :expand nil)
+      (gtk-box-pack-start h-box value-entry :expand nil)
+      (gtk-box-pack-start h-box button :expand nil)
+      (gtk-box-pack-start v-box scroll)
+      (gtk-container-add scroll tv)
+
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -670,15 +774,15 @@
         (gtk-tree-view-column-pack-start column renderer)
         (gtk-tree-view-column-add-attribute column renderer "text" 0)
         (gtk-tree-view-append-column tree-view column)
-        (print (gtk-tree-view-column-tree-view column))
-        (print (gtk-tree-view-column-cell-renderers column)))
+        (print (gtk-tree-view-column-get-tree-view column))
+        (print (gtk-cell-layout-get-cells column)))
       (let ((column (make-instance 'gtk-tree-view-column :title "Type"))
             (renderer (make-instance 'gtk-cell-renderer-text :text "A text")))
         (gtk-tree-view-column-pack-start column renderer)
         (gtk-tree-view-column-add-attribute column renderer "text" 1)
         (gtk-tree-view-append-column tree-view column)
-        (print (gtk-tree-view-column-tree-view column))
-        (print (gtk-tree-view-column-cell-renderers column)))
+        (print (gtk-tree-view-column-get-tree-view column))
+        (print (gtk-cell-layout-get-cells column)))
       (g-signal-connect window "destroy"
                         (lambda (w)
                           (declare (ignore w))
