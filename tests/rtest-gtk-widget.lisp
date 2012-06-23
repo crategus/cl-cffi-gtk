@@ -35,6 +35,10 @@
   (assert-true  (g-type-is-derivable "GtkWidget"))
   (assert-true  (g-type-is-deep-derivable "GtkWidget"))
   (assert-false (g-type-is-interface "GtkWidget"))
+
+  ;; Check the registered name
+  (assert-eq 'gtk-widget
+             (registered-object-type-by-name "GtkWidget"))
   
   (let ((class (g-type-class-ref (gtype "GtkWidget"))))
     (assert-equal (gtype "GtkWidget") (g-type-from-class class))
@@ -72,7 +76,7 @@
   (assert-equal '("AtkImplementorIface" "GtkBuildable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkWidget")))
   
-  ;; Query infos about the class "GtkWidget"
+  ;; Query infos about the class
   (with-foreign-object (query 'g-type-query)
     (g-type-query "GtkWidget" query)
     (assert-equal (gtype "GtkWidget")
@@ -110,6 +114,7 @@
     ;; Some general checks of the instance
     (assert-equal (gtype "GtkSeparator") (g-object-type widget))
     (assert-equal "GtkSeparator" (g-object-type-name widget))
+    (assert-true (g-type-is-a "GtkSeparator" (g-type-from-instance ptr)))
     ;; Access the properties
     (assert-false    (gtk-widget-app-paintable widget))
     (assert-false    (gtk-widget-can-default widget))

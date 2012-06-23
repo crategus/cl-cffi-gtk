@@ -85,6 +85,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+nil
 (define-test glib-main-loop
   (let* ((loop (g-main-loop-new (null-pointer) nil))
          (func (lambda () (g-main-loop-run loop)))
@@ -95,9 +96,9 @@
     (assert-true (pointer-eq context (g-main-loop-get-context loop)))
     (assert-false (g-main-context-pending context))
     (assert-true (null-pointer-p (g-main-current-source)))
-    (let* ((source (g-timeout-source-new 1000)))
-      (g-source-attach source context)
-      (assert-true (pointer-eq context (g-source-get-context source))))
+;    (let* ((source (g-timeout-source-new 1000)))
+;      (g-source-attach source context)
+;      (assert-true (pointer-eq context (g-source-get-context source))))
     (g-main-loop-quit loop)
     (sleep 1)
     (assert-false (g-main-loop-is-running loop))))
