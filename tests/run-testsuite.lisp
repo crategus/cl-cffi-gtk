@@ -50,11 +50,16 @@
 (defpackage :gdk-tests
   (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
+(load "rtest-gdk-color.lisp")
+(load "rtest-gdk-cursor.lisp")
 (load "rtest-gdk-device.lisp")
+(load "rtest-gdk-device-manager.lisp")
+(load "rtest-gdk-display.lisp")
+(load "rtest-gdk-display-manager.lisp")
 (load "rtest-gdk-region.lisp")
+(load "rtest-gdk-rgba.lisp")
 (load "rtest-gdk-screen.lisp")
 (load "rtest-gdk-visual.lisp")
-(load "rtest-gdk-display-manager.lisp")
 (load "rtest-gdk-window.lisp")
 
 (in-package :gdk-tests)

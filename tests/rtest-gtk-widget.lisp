@@ -69,9 +69,9 @@
   (assert-true  (g-type-is-a "GtkWidget" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkWidget" "gboolean"))
   (assert-false (g-type-is-a "GtkWidget" "GtkWindow"))
-  (assert-equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator"
-                  "GtkInvisible" "GtkProgressBar" "GtkSwitch" "GtkCellView"
-                  "GtkEntry" "GtkHSV" "GtkDrawingArea" "GtkCalendar")
+  (assert-equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
+         "GtkProgressBar" "GtkSpinner" "GtkSwitch" "GtkCellView" "GtkEntry"
+         "GtkHSV" "GtkCalendar" "GtkDrawingArea")
                 (mapcar #'gtype-name (g-type-children "GtkWidget")))
   (assert-equal '("AtkImplementorIface" "GtkBuildable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkWidget")))
@@ -299,8 +299,7 @@
       (assert-true (gtk-widget-class-find-style-property class "cursor-aspect-ratio"))
       (g-type-class-unref class))
     (assert-true (gtk-widget-class-list-style-properties (gtype "GtkWidget")))
-    (assert-eq 'cairo-region-t 
-               (type-of (gtk-widget-region-intersect widget (cairo-region-create))))
+    (assert-true (gtk-widget-region-intersect widget (cairo-region-create)))
     ;; gtk_widget_send_expose                    not implemented
     ;; gtk_widget_send_focus_change              not implemented
     ;; gtk_widget_style_get                      not implemented    

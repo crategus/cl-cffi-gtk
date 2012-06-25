@@ -41,8 +41,8 @@
       (assert-eql 0 (gdk-rectangle-y rect))
       (assert-eql (%gdk-screen-width)  (gdk-rectangle-width rect))
       (assert-eql (%gdk-screen-height) (gdk-rectangle-height rect)))
-    (assert-eql 304 (gdk-screen-get-monitor-width-mm screen n))
-    (assert-eql 228 (gdk-screen-get-monitor-height-mm screen n))
+    (assert-eql 331 (gdk-screen-get-monitor-width-mm screen n))
+    (assert-eql 207 (gdk-screen-get-monitor-height-mm screen n))
     (assert-equal "LVDS1" (gdk-screen-get-monitor-plug-name screen n))
     
     ;; These are general tests of the class GdkScreen.

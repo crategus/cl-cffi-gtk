@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gdk-visual.lisp
+;;; rtest-gdk-cursor.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -23,13 +23,17 @@
 
 (in-package :gdk-tests)
 
-(define-test gdk-visual
-  (let* ((visual (gdk-visual-get-system))
-         (type (g-type-from-instance (pointer visual))))
-    (assert-equal "GdkX11Visual" (gtype-name type))
-    (assert-eql 'gdk-visual (registered-object-type-by-name "GdkVisual"))
-    (assert-equal "GdkVisual" (gtype-name (g-type-parent type)))
-    (assert-equal '() (mapcar #'gtype-name (g-type-children type)))
-    ))
+(define-test gdk-cursor
+  (let* ((cursor (gdk-cursor-new :hand1))
+         (display (gdk-cursor-get-display cursor))
+         (image (gdk-cursor-get-image cursor)))
+    (assert-eq  :hand1 (gdk-cursor-get-cursor-type cursor))
+    (assert-eql 'gdk-display (type-of (gdk-cursor-get-display cursor)))
+    (assert-eql 'gdk-pixbuf (type-of (gdk-cursor-get-image cursor)))
+    (assert-eql 'gdk-cursor
+                (type-of (gdk-cursor-new-from-pixbuf display image 0 0)))
+    (assert-eql 'gdk-cursor
+                (type-of (gdk-cursor-new-from-name display "hand1")))
+    (assert-eql 'gdk-cursor
+                (type-of (gdk-cursor-new-for-display display :hand1)))))
 
-;;; --- End of file rtest-gdk-visual.lisp --------------------------------------

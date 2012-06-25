@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gdk-visual.lisp
+;;; rtest-gdk-color.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -23,13 +23,13 @@
 
 (in-package :gdk-tests)
 
-(define-test gdk-visual
-  (let* ((visual (gdk-visual-get-system))
-         (type (g-type-from-instance (pointer visual))))
-    (assert-equal "GdkX11Visual" (gtype-name type))
-    (assert-eql 'gdk-visual (registered-object-type-by-name "GdkVisual"))
-    (assert-equal "GdkVisual" (gtype-name (g-type-parent type)))
-    (assert-equal '() (mapcar #'gtype-name (g-type-children type)))
-    ))
+(define-test gdk-color
+  (let ((color (make-gdk-color :red 255)))
+    (assert-eql 'gdk-color (type-of color))
+    (assert-eql 'gdk-color (type-of (gdk-color-copy color)))
+    (assert-eql 'gdk-color (type-of (gdk-color-parse "Red")))
+    (assert-equal "#00ff00000000" (gdk-color-to-string color))
+    (assert-equal "#ffff00000000" (gdk-color-to-string (gdk-color-parse "Red")))
+    (assert-true (gdk-color-equal color (gdk-color-copy color)))
+    (assert-eql 255 (gdk-color-hash color))))
 
-;;; --- End of file rtest-gdk-visual.lisp --------------------------------------

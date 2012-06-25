@@ -91,28 +91,21 @@
       '("default-display")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GdkDisplayManager"))))
-  
+
   (let* ((display-manager (gdk-display-manager-get))
          (display (gdk-display-manager-get-default-display display-manager)))
     ;; Some general checks of the instance
-    (assert-equal (gtype "GdkX11DisplayManager") (g-object-type display-manager))
+    (assert-equal (gtype "GdkX11DisplayManager")
+                  (g-object-type display-manager))
     (assert-equal "GdkX11DisplayManager" (g-object-type-name display-manager))
-    (assert-true
-      (g-type-is-a "GdkX11DisplayManager"
-                   (g-type-from-instance (pointer display-manager))))
-    (assert-true
-      (g-type-is-a "GdkX11Display" (g-type-from-instance (pointer display))))
+    (assert-true (g-type-is-a "GdkX11DisplayManager"
+                              (g-type-from-instance (pointer display-manager))))
+    (assert-true (g-type-is-a "GdkX11Display"
+                              (g-type-from-instance (pointer display))))
     ;; Access the properties
     (assert-eq 'gdk-display
                (type-of (gdk-display-manager-default-display display-manager)))
     ;; Check some functions
-    (assert-eq 'gdk-display
-               (type-of
-                 (gdk-display-manager-get-default-display display-manager)))
-    (gdk-display-manager-set-default-display display-manager display)
-    (assert-true
-      (pointer-eq display
-                  (gdk-display-manager-get-default-display display-manager)))
   ))
 
 ;;; --- End of file gdk.display-manager.lisp -----------------------------------
