@@ -235,8 +235,12 @@
    (:file "gtk.file-chooser-button")   ; Button to launch a file selection
    (:file "gtk.file-chooser-dialog")   ; File chooser dialog
    (:file "gtk.file-filter")           ; Selecting a file subset
+   (:file "gtk.font-chooser")          ; Interface for displaying fonts
    (:file "gtk.font-button")           ; Button to launch a font chooser dialog
+   (:file "gtk.font-chooser-widget")   ; Widget for selecting fonts
+   (:file "gtk.font-chooser-dialog")   ; Dialog for selecting fonts
    (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
+   (:file "gtk.font-selection-dialog") ; Deprecated widget for selecting fonts
    
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value
@@ -280,7 +284,6 @@
    ;; Deprecated
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
-   (:file "gtk.font-selection-dialog") ; Widget for selecting fonts
    
    ;; More definitions. The documentation is not completed.
    (:file "gtk.generated-classes")
