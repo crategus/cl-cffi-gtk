@@ -1467,7 +1467,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-type-name (object)
-  (g-type-name object))
+  (g-type-name (g-object-type object)))
 
 (export 'g-object-type-name)
 
