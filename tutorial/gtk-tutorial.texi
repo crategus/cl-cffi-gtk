@@ -13,7 +13,7 @@
 @ifinfo
 This is a Texinfo GTK+ 3 Tutorial for Lisp
 
-Copyright (C) 2012 Dr. Dieter Kaiser
+Copyright (C) 2012 Dieter Kaiser
 
 @format
 INFO-DIR-SECTION Math
@@ -153,11 +153,15 @@ Menu Widgets
 @chapter Layout Widgets
 @include gtk-container-widgets.texi
 
-@node Multiline Text Editor, Miscellaneous Widgets, Layout Widgets, Top
+@node Multiline Text Editor, Selection Colors Files and Fonts, Layout Widgets, Top
 @chapter Multiline Text Editor
 @include gtk-text-view.texi
 
-@node Miscellaneous Widgets, Menu Widget, Multiline Text Editor, Top
+@node Selecting Colors Files and Fonts, Miscellaneous Widgets, Multiline Text Editor, Top
+@chapter Selecting Colors, Files and Fonts
+@include gtk-selectors.texi
+
+@node Miscellaneous Widgets, Menu Widget, Selecting Colors Files and Fonts, Top
 @chapter Miscellaneous Widgets
 @include gtk-misc-widgets.texi
 
