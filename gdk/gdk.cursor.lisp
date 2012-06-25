@@ -4,8 +4,8 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; Version 2.24.10. See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 3 Reference Manual
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -29,53 +29,88 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Cursors
-;;; 
+;;;
 ;;; Standard and pixmap cursors
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GdkCursor
 ;;;     GdkCursorType
 ;;;
 ;;;     gdk_cursor_new
-;;;     gdk_cursor_new_from_pixmap
 ;;;     gdk_cursor_new_from_pixbuf
 ;;;     gdk_cursor_new_from_name
 ;;;     gdk_cursor_new_for_display
 ;;;     gdk_cursor_get_display
 ;;;     gdk_cursor_get_image
 ;;;     gdk_cursor_get_cursor_type
-;;;     gdk_cursor_ref
-;;;     gdk_cursor_unref
-;;;     gdk_cursor_destroy
-;;; 
+;;;     gdk_cursor_ref                   * deprecated *
+;;;     gdk_cursor_unref                 * deprecated *
+;;;
+;;; Object Hierarchy
+;;;
+;;;   GObject
+;;;    +----GdkCursor
+;;;
+;;; Properties
+;;;
+;;;   "cursor-type"              GdkCursorType        : Read / Write / Construct
+;;;   "display"                  GdkDisplay*          : Read / Write / Construct
+;;;
 ;;; Description
-;;; 
-;;; These functions are used to create and destroy cursors. There is a number
-;;; of standard cursors, but it is also possible to construct new cursors from
-;;; pixmaps and pixbufs. There may be limitations as to what kinds of cursors
-;;; can be constructed on a given display, see
-;;; gdk_display_supports_cursor_alpha(), gdk_display_supports_cursor_color(),
-;;; gdk_display_get_default_cursor_size() and
-;;; gdk_display_get_maximal_cursor_size().
-;;; 
-;;; Cursors by themselves are not very interesting, they must be be bound to a 
+;;;
+;;; These functions are used to create and destroy cursors. There is a number of
+;;; standard cursors, but it is also possible to construct new cursors from
+;;; pixbufs. There may be limitations as to what kinds of cursors can be
+;;; constructed on a given display, see gdk_display_supports_cursor_alpha(),
+;;; gdk_display_supports_cursor_color(), gdk_display_get_default_cursor_size()
+;;; and gdk_display_get_maximal_cursor_size().
+;;;
+;;; Cursors by themselves are not very interesting, they must be be bound to a
 ;;; window for users to see them. This is done with gdk_window_set_cursor() or
 ;;; by setting the cursor member of the GdkWindowAttr struct passed to
 ;;; gdk_window_new().
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "cursor-type" property
+;;;
+;;;   "cursor-type"              GdkCursorType        : Read / Write / Construct
+;;;
+;;; Standard cursor type.
+;;;
+;;; Default value: GDK_X_CURSOR
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "display" property
+;;;
+;;;   "display"                  GdkDisplay*          : Read / Write / Construct
+;;;
+;;; Display of this cursor.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
-(glib:at-init ()
-  (foreign-funcall-pointer (foreign-symbol-pointer "gdk_cursor_get_type")
-                           () :int))
+;;; ----------------------------------------------------------------------------
+;;; GdkCursor
+;;;
+;;; typedef struct _GdkCursor GdkCursor;
+;;;
+;;; The GdkCursor structure represents a cursor. Its contents are private.
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque gdk-cursor "GdkCursor"
+  :alloc (error "GdkCursor can not be created from Lisp side"))
+
+(export (boxed-related-symbols 'gdk-cursor))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkCursorType
-;;; 
-;;; typedef enum
-;;; {
+;;;
+;;; typedef enum {
 ;;;   GDK_X_CURSOR            = 0,
 ;;;   GDK_ARROW               = 2,
 ;;;   GDK_BASED_ARROW_DOWN    = 4,
@@ -157,18 +192,17 @@
 ;;;   GDK_BLANK_CURSOR        = -2,
 ;;;   GDK_CURSOR_IS_PIXMAP    = -1
 ;;; } GdkCursorType;
-;;; 
+;;;
 ;;; The standard cursors available.
-;;; 
+;;;
 ;;; GDK_LAST_CURSOR
 ;;;     last cursor type
-;;; 
+;;;
 ;;; GDK_BLANK_CURSOR
 ;;;     Blank cursor. Since 2.16
-;;; 
+;;;
 ;;; GDK_CURSOR_IS_PIXMAP
-;;;     type of cursors constructed with gdk_cursor_new_from_pixmap() or 
-;;;     gdk_cursor_new_from_pixbuf()
+;;;     type of cursors constructed with gdk_cursor_new_from_pixbuf()
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkCursorType" gdk-cursor-type
@@ -256,41 +290,18 @@
   (:cursor-is-pixmap -1))
 
 ;;; ----------------------------------------------------------------------------
-;;; GdkCursor
-;;; 
-;;; typedef struct {
-;;;   GdkCursorType GSEAL (type);
-;;; } GdkCursor;
-;;; 
-;;; A GdkCursor structure represents a cursor.
-;;; ----------------------------------------------------------------------------
-
-(defcstruct %gdk-cursor
-  (cursor-type gdk-cursor-type))
-
-(define-g-boxed-opaque gdk-cursor "GdkCursor"
-  :alloc (error "GdkCursor can not be created from Lisp side"))
-
-(export (boxed-related-symbols 'gdk-cursor))
-
-(defun gdk-cursor-cursor-type (cursor)
-  (foreign-slot-value (pointer cursor) '%gdk-cursor 'cursor-type))
-
-(export 'gdk-cursor-cursor-type)
-
-;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new ()
-;;; 
+;;;
 ;;; GdkCursor * gdk_cursor_new (GdkCursorType cursor_type);
-;;; 
-;;; Creates a new cursor from the set of builtin cursors for the default 
+;;;
+;;; Creates a new cursor from the set of builtin cursors for the default
 ;;; display. See gdk_cursor_new_for_display().
-;;; 
+;;;
 ;;; To make the cursor invisible, use GDK_BLANK_CURSOR.
-;;; 
+;;;
 ;;; cursor_type :
 ;;;     cursor to create
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GdkCursor
 ;;; ----------------------------------------------------------------------------
@@ -301,119 +312,44 @@
 (export 'gdk-cursor-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_cursor_new_from_pixmap ()
-;;; 
-;;; GdkCursor * gdk_cursor_new_from_pixmap (GdkPixmap *source,
-;;;                                         GdkPixmap *mask,
-;;;                                         const GdkColor *fg,
-;;;                                         const GdkColor *bg,
-;;;                                         gint x,
-;;;                                         gint y);
-;;; 
-;;; Creates a new cursor from a given pixmap and mask. Both the pixmap and mask
-;;; must have a depth of 1 (i.e. each pixel has only 2 values - on or off). The
-;;; standard cursor size is 16 by 16 pixels. You can create a bitmap from inline
-;;; data as in the below example.
-;;; 
-;;; Example 6. Creating a custom cursor
-;;; 
-;;; /* This data is in X bitmap format, and can be created with the 'bitmap'
-;;;    utility. */
-;;; #define cursor1_width 16
-;;; #define cursor1_height 16
-;;; static unsigned char cursor1_bits[] = {
-;;;   0x80, 0x01, 0x40, 0x02, 0x20, 0x04, 0x10, 0x08, 0x08, 0x10, 0x04, 0x20,
-;;;   0x82, 0x41, 0x41, 0x82, 0x41, 0x82, 0x82, 0x41, 0x04, 0x20, 0x08, 0x10,
-;;;   0x10, 0x08, 0x20, 0x04, 0x40, 0x02, 0x80, 0x01};
-;;;  
-;;; static unsigned char cursor1mask_bits[] = {
-;;;   0x80, 0x01, 0xc0, 0x03, 0x60, 0x06, 0x30, 0x0c, 0x18, 0x18, 0x8c, 0x31,
-;;;   0xc6, 0x63, 0x63, 0xc6, 0x63, 0xc6, 0xc6, 0x63, 0x8c, 0x31, 0x18, 0x18,
-;;;   0x30, 0x0c, 0x60, 0x06, 0xc0, 0x03, 0x80, 0x01};
-;;;  
-;;;  
-;;;  GdkCursor *cursor;
-;;;  GdkPixmap *source, *mask;
-;;;  GdkColor fg = { 0, 65535, 0, 0 }; /* Red. */
-;;;  GdkColor bg = { 0, 0, 0, 65535 }; /* Blue. */
-;;;  
-;;;  
-;;;  source = gdk_bitmap_create_from_data (NULL, cursor1_bits,
-;;;                                        cursor1_width, cursor1_height);
-;;;  mask = gdk_bitmap_create_from_data (NULL, cursor1mask_bits,
-;;;                                      cursor1_width, cursor1_height);
-;;;  cursor = gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, 8, 8);
-;;;  g_object_unref (source);
-;;;  g_object_unref (mask);
-;;;  
-;;;  gdk_window_set_cursor (widget->window, cursor);
-;;; 
-;;; 
-;;; source :
-;;;     the pixmap specifying the cursor.
-;;; 
-;;; mask :
-;;;     the pixmap specifying the mask, which must be the same size as source.
-;;; 
-;;; fg :
-;;;     the foreground color, used for the bits in the source which are 1. The
-;;;     color does not have to be allocated first.
-;;; 
-;;; bg :
-;;;     the background color, used for the bits in the source which are 0. The 
-;;;     color does not have to be allocated first.
-;;; 
-;;; x :
-;;;     the horizontal offset of the 'hotspot' of the cursor.
-;;; 
-;;; y :
-;;;     the vertical offset of the 'hotspot' of the cursor.
-;;; 
-;;; Returns :
-;;;     a new GdkCursor.
-;;; ----------------------------------------------------------------------------
-
-;;; *** Not present in GTK 3.2 ***
-
-;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new_from_pixbuf ()
-;;; 
+;;;
 ;;; GdkCursor * gdk_cursor_new_from_pixbuf (GdkDisplay *display,
 ;;;                                         GdkPixbuf *pixbuf,
 ;;;                                         gint x,
 ;;;                                         gint y);
-;;; 
+;;;
 ;;; Creates a new cursor from a pixbuf.
-;;; 
+;;;
 ;;; Not all GDK backends support RGBA cursors. If they are not supported, a
-;;; monochrome approximation will be displayed. The functions 
+;;; monochrome approximation will be displayed. The functions
 ;;; gdk_display_supports_cursor_alpha() and gdk_display_supports_cursor_color()
-;;; can be used to determine whether RGBA cursors are supported; 
+;;; can be used to determine whether RGBA cursors are supported;
 ;;; gdk_display_get_default_cursor_size() and
 ;;; gdk_display_get_maximal_cursor_size() give information about cursor sizes.
-;;; 
+;;;
 ;;; If x or y are -1, the pixbuf must have options named "x_hot" and "y_hot",
-;;; resp., containing integer values between 0 and the width resp. height of
-;;; the pixbuf. Since: 3.0
-;;; 
-;;; On the X backend, support for RGBA cursors requires a sufficently new 
+;;; resp., containing integer values between 0 and the width resp. height of the
+;;; pixbuf. (Since: 3.0)
+;;;
+;;; On the X backend, support for RGBA cursors requires a sufficently new
 ;;; version of the X Render extension.
-;;; 
+;;;
 ;;; display :
 ;;;     the GdkDisplay for which the cursor will be created
-;;; 
+;;;
 ;;; pixbuf :
 ;;;     the GdkPixbuf containing the cursor image
-;;; 
+;;;
 ;;; x :
 ;;;     the horizontal offset of the 'hotspot' of the cursor.
-;;; 
+;;;
 ;;; y :
 ;;;     the vertical offset of the 'hotspot' of the cursor.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GdkCursor.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -428,21 +364,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new_from_name ()
-;;; 
+;;;
 ;;; GdkCursor * gdk_cursor_new_from_name (GdkDisplay *display,
 ;;;                                       const gchar *name);
-;;; 
+;;;
 ;;; Creates a new cursor by looking up name in the current cursor theme.
-;;; 
+;;;
 ;;; display :
 ;;;     the GdkDisplay for which the cursor will be created
-;;; 
+;;;
 ;;; name :
 ;;;     the name of the cursor
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GdkCursor, or NULL if there is no cursor with the given name
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -455,12 +391,12 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new_for_display ()
-;;; 
+;;;
 ;;; GdkCursor * gdk_cursor_new_for_display (GdkDisplay *display,
 ;;;                                         GdkCursorType cursor_type);
-;;; 
+;;;
 ;;; Creates a new cursor from the set of builtin cursors. Some useful ones are:
-;;; 
+;;;
 ;;;     GDK_RIGHT_PTR (right-facing arrow)
 ;;;     GDK_CROSSHAIR (crosshair)
 ;;;     GDK_XTERM (I-beam)
@@ -479,16 +415,16 @@
 ;;;     GDK_SB_H_DOUBLE_ARROW (move vertical splitter)
 ;;;     GDK_SB_V_DOUBLE_ARROW (move horizontal splitter)
 ;;;     GDK_BLANK_CURSOR (Blank cursor). Since 2.16
-;;; 
+;;;
 ;;; display :
 ;;;     the GdkDisplay for which the cursor will be created
-;;; 
+;;;
 ;;; cursor_type :
 ;;;     cursor to create
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GdkCursor
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -501,105 +437,108 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_get_display ()
-;;; 
+;;;
 ;;; GdkDisplay * gdk_cursor_get_display (GdkCursor *cursor);
-;;; 
+;;;
 ;;; Returns the display on which the GdkCursor is defined.
-;;; 
+;;;
 ;;; cursor :
 ;;;     a GdkCursor.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GdkDisplay associated to cursor
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gdk-cursor gdk-cursor-display
+(define-boxed-opaque-accessor gdk-cursor gdk-cursor-get-display
   :type (g-object gdk-display)
   :reader "gdk_cursor_get_display")
 
-(export 'gdk-cursor-display)
-  
+(export 'gdk-cursor-get-display)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_get_image ()
-;;; 
+;;;
 ;;; GdkPixbuf * gdk_cursor_get_image (GdkCursor *cursor);
-;;; 
+;;;
 ;;; Returns a GdkPixbuf with the image used to display the cursor.
-;;; 
+;;;
 ;;; Note that depending on the capabilities of the windowing system and on the
-;;; cursor, GDK may not be able to obtain the image data. In this case, NULL is 
+;;; cursor, GDK may not be able to obtain the image data. In this case, NULL is
 ;;; returned.
-;;; 
+;;;
 ;;; cursor :
 ;;;     a GdkCursor
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GdkPixbuf representing cursor, or NULL
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gdk-cursor gdk-cursor-image
-  :type (g-object gdk-pixbuf)
-  :reader "gdk_cursor_get_image")
+(defcfun ("gdk_cursor_get_image" gdk-cursor-get-image) (g-object gdk-pixbuf)
+  (cursor (g-boxed-foreign gdk-cursor)))
 
-(export 'gdk-cursor-image)
+(export 'gdk-cursor-get-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_get_cursor_type ()
-;;; 
+;;;
 ;;; GdkCursorType gdk_cursor_get_cursor_type (GdkCursor *cursor);
-;;; 
+;;;
 ;;; Returns the cursor type for this cursor.
-;;; 
+;;;
 ;;; cursor :
 ;;;     a GdkCursor
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GdkCursorType
-;;; 
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(define-boxed-opaque-accessor gdk-cursor gdk-cursor-get-cursor-type
+  :type gdk-cursor-type
+  :reader "gdk_cursor_get_cursor_type")
+
+(export 'gdk-cursor-get-cursor-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_ref ()
-;;; 
+;;;
 ;;; GdkCursor * gdk_cursor_ref (GdkCursor *cursor);
-;;; 
+;;;
+;;; Warning
+;;;
+;;; gdk_cursor_ref has been deprecated since version 3.0 and should not be used
+;;; in newly-written code. Use g_object_ref() instead
+;;;
 ;;; Adds a reference to cursor.
-;;; 
+;;;
 ;;; cursor :
 ;;;     a GdkCursor
-;;; 
+;;;
 ;;; Returns :
-;;;     Same cursor that was passed in.
+;;;     Same cursor that was passed in
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_unref ()
-;;; 
+;;;
 ;;; void gdk_cursor_unref (GdkCursor *cursor);
-;;; 
-;;; Removes a reference from cursor, deallocating the cursor if no references 
+;;;
+;;; Warning
+;;;
+;;; gdk_cursor_unref has been deprecated since version 3.0 and should not be
+;;; used in newly-written code. Use g_object_unref() instead
+;;;
+;;; Removes a reference from cursor, deallocating the cursor if no references
 ;;; remain.
-;;; 
+;;;
 ;;; cursor :
 ;;;     a GdkCursor
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gdk_cursor_destroy
-;;; 
-;;; #define gdk_cursor_destroy gdk_cursor_unref
-;;; 
-;;; Warning
-;;; 
-;;; gdk_cursor_destroy is deprecated and should not be used in newly-written 
-;;; code.
-;;; 
-;;; Destroys a cursor, freeing any resources allocated for it.
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.cursor.lisp --------------------------------------------

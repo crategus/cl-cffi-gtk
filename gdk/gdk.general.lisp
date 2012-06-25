@@ -361,44 +361,6 @@
 (export '%gdk-screen-heigth-mm)
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GdkGrabStatus
-;;;
-;;; typedef enum {
-;;;   GDK_GRAB_SUCCESS         = 0,
-;;;   GDK_GRAB_ALREADY_GRABBED = 1,
-;;;   GDK_GRAB_INVALID_TIME    = 2,
-;;;   GDK_GRAB_NOT_VIEWABLE    = 3,
-;;;   GDK_GRAB_FROZEN          = 4
-;;; } GdkGrabStatus;
-;;;
-;;; Returned by gdk_pointer_grab() and gdk_keyboard_grab() to indicate success
-;;; or the reason for the failure of the grab attempt.
-;;;
-;;; GDK_GRAB_SUCCESS
-;;;     the resource was successfully grabbed.
-;;;
-;;; GDK_GRAB_ALREADY_GRABBED
-;;;     the resource is actively grabbed by another client.
-;;;
-;;; GDK_GRAB_INVALID_TIME
-;;;     the resource was grabbed more recently than the specified time.
-;;;
-;;; GDK_GRAB_NOT_VIEWABLE
-;;;     the grab window or the confine_to window are not viewable.
-;;;
-;;; GDK_GRAB_FROZEN
-;;;     the resource is frozen by an active grab of another client.
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GdkGrabStatus" gdk-grab-status
-  ()
-  :success
-  :already-grabbed
-  :invalid-time
-  :not-viewable
-  :frozen)
-
-;;; ----------------------------------------------------------------------------
 ;;; gdk_pointer_grab ()
 ;;;
 ;;; GdkGrabStatus gdk_pointer_grab (GdkWindow *window,

@@ -103,6 +103,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gdk-rgba-copy))
+
+(defun gdk-rgba-copy (rgba)
+  (copy-gdk-rgba rgba))
+
+(export 'gdk-rgba-copy)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_free ()
 ;;; 
@@ -179,6 +186,12 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_rgba_equal" gdk-rgba-equal) :boolean
+  (color1 (g-boxed-foreign gdk-rgba))
+  (color2 (g-boxed-foreign gdk-rgba)))
+
+(export 'gdk-rgba-equal)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_hash ()
 ;;; 
@@ -194,6 +207,11 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_rgba_hash" gdk-rgba-hash) :uint
+  (p (g-boxed-foreign gdk-rgba)))
+
+(export 'gdk-rgba-hash)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_to_string ()

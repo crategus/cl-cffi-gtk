@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; cl-gtk-gdk.asd
+;;; cl-cffi-gtk-gdk.asd
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
@@ -39,28 +39,22 @@
                (:file "gdk.properties")       ; Manipulate properties on windows
                (:file "gdk.event-structures") ; Data structures for events
                
-               (:file "gdk.device")           ; Handling extended input devices
+               (:file "gdk.cursor")           ; Standard and pixmap cursors
+               (:file "gdk.device")           ; Representing an input device
+               (:file "gdk.device-manager")   ; Handling input devices
                (:file "gdk.screen")           ; Representing a physical screen
                (:file "gdk.visual")           ; Low-level display information
                (:file "gdk.color")            ; Colormaps and Colors
                (:file "gdk.rgba")             ; RGBA colors
-               (:file "gdk.cursor")           ; Standard and pixmap cursors
-               
-               (:file "gdk.font")             ; Loading and manipulating fonts
-;               (:file "gdk.gc")               ; Encapsulate drawing properties
-;               (:file "gdk.rgb")              ; Renders RGBto a GdkDrawable
-;               (:file "gdk.drawable")         ; Drawing Primitives
-;               (:file "gdk.pixmap")           ; Offscreen drawables
+
                (:file "gdk.display")          ; Controls the keyboard/mouse
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
                (:file "gdk.pixbuf-structure") ; Implementation of PixBuf
                (:file "gdk.pixbuf-file")      ; Loading and saving PixBuf
-;               (:file "gdk.pixbuf")           ; Gdk functions for PixBuf
                
                (:file "gdk.window")           ; Onscreen display areas
                (:file "gdk.events")           ; Functions for handling events
                (:file "gdk.general")          ; Library initialization
-               
                (:file "gdk.key-values")       ; Manipulating keyboard codes
                (:file "gdk.selections")       ; Transfering data
                (:file "gdk.drag-and-drop")    ; Drag and drop handling
