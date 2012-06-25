@@ -100,7 +100,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; Definition of generic functions to copy and to free an boxed object
+;; Definition of generic functions to copy and to free a boxed object
 
 (defgeneric boxed-copy-fn (type-info native)
   (:method (type-info native)
