@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gtk.orientable.lisp
+;;; gtk.color-chooser.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.4.3. See http://www.gtk.org.

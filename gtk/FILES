@@ -175,24 +175,20 @@ GTK+ Widgets and Objects
     gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.4.3
     gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.4.3
     gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.4.3
-
     gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.2.3*
     gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.2.3*
     gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.2.3*
 
-    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.2.3*
-    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.2.3*
-    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.2.3*
-    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.2.3*
-    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.2.3*
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.4.3
+    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.4.3
+    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.4.3
+    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.4.3
+    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.4.3
 
-    not implemented                  - GtkFontChooser
-
-    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.2.3*
-
-    not implemented                  - GtkFontChooserWidget
-    not implemented                  - GtkFontChooserDialog
-
+    gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.4.3
+    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.4.3
+    gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.4.3
+    gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.4.3
     gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.2.3*
     gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.2.3*
   
@@ -225,7 +221,7 @@ GTK+ Widgets and Objects
 
   Printing
 
-    gtk.print-operations.lisp        - GtkPrintOperation           - GTK+ 3.2.3*
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.2.3*
     gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.2.3*
     gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.2.3*
     gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.2.3*

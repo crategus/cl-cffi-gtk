@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -29,51 +29,45 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkFileChooserWidget
-;;; 
+;;;
 ;;; File chooser widget that can be embedded in other widgets
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkFileChooserWidget
 ;;;
 ;;;     gtk_file_chooser_widget_new
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkContainer
 ;;;                      +----GtkBox
 ;;;                            +----GtkFileChooserWidget
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkFileChooserWidget implements AtkImplementorIface, GtkBuildable,
 ;;; GtkOrientable, GtkFileChooser and GtkFileChooserEmbed.
 ;;;
 ;;; Description
-;;; 
+;;;
 ;;; GtkFileChooserWidget is a widget suitable for selecting files. It is the
 ;;; main building block of a GtkFileChooserDialog. Most applications will only
 ;;; need to use the latter; you can use GtkFileChooserWidget as part of a larger
 ;;; window if you have special needs.
-;;; 
+;;;
 ;;; Note that GtkFileChooserWidget does not have any methods of its own.
 ;;; Instead, you should use the functions that work on a GtkFileChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
-;; The interface GtkFileChooserEmbed seems to be not documented in the
-;; GTK+ documentation. It is implemented by GtkFileChooserWidget.
-
-;(define-g-interface "GtkFileChooserEmbed" gtk-file-chooser-embed
-;    (:export t))
-
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFileChooserWidget
-;;; 
+;;;
 ;;; struct GtkFileChooserWidget;
 ;;; ----------------------------------------------------------------------------
 
@@ -83,9 +77,12 @@
 (define-g-object-class "GtkFileChooserWidget" gtk-file-chooser-widget
   (:superclass gtk-vbox
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable"
+                "GtkFileChooser"
 ;                "GtkFileChooserEmbed" 
-                "GtkOrientable")
+               )
    :type-initializer "gtk_file_chooser_widget_get_type")
   nil)
 
@@ -113,19 +110,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_widget_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_file_chooser_widget_new (GtkFileChooserAction action);
-;;; 
+;;;
 ;;; Creates a new GtkFileChooserWidget. This is a file chooser widget that can
 ;;; be embedded in custom windows, and it is the same widget that is used by
 ;;; GtkFileChooserDialog.
-;;; 
+;;;
 ;;; action :
 ;;;     Open or save mode for the widget
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkFileChooserWidget
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
