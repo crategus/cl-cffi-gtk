@@ -2487,17 +2487,14 @@
 
 ;; Combo Box
 
-(defstruct tvi
-  title
-  value)
-
 (defun example-combo-box ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
                                   :type :toplevel
                                   :border-width 12
                                   :title "Example Combo Box"))
-           (model (make-instance 'array-list-store))
+           (model (make-instance 'gtk-list-store
+                                 :column-types '("gchararray" "gint")))
            (combo-box (make-instance 'gtk-combo-box :model model))
            (title-label (make-instance 'gtk-label :label "Title:"))
            (value-label (make-instance 'gtk-label :label "Value:"))
@@ -2507,17 +2504,14 @@
            (table (make-instance 'gtk-table
                                  :n-rows 3
                                  :n-columns 3)))
-      ;; Define two columns
-      (store-add-column model "gchararray" #'tvi-title)
-      (store-add-column model "gint" #'tvi-value)
       ;; Fill in data into the columns
-      (store-add-item model (make-tvi :title "Monday" :value 1))
-      (store-add-item model (make-tvi :title "Tuesday" :value 2))
-      (store-add-item model (make-tvi :title "Wednesday" :value 3))
-      (store-add-item model (make-tvi :title "Thursday" :value 4))
-      (store-add-item model (make-tvi :title "Friday" :value 5))
-      (store-add-item model (make-tvi :title "Saturday" :value 6))
-      (store-add-item model (make-tvi :title "Sunday" :value 7))
+      (gtk-list-store-set model (gtk-list-store-append model) "Monday" 1)
+      (gtk-list-store-set model (gtk-list-store-append model) "Tuesday" 2)
+      (gtk-list-store-set model (gtk-list-store-append model) "Wednesday" 3)
+      (gtk-list-store-set model (gtk-list-store-append model) "Thursday" 4)
+      (gtk-list-store-set model (gtk-list-store-append model) "Friday" 5)
+      (gtk-list-store-set model (gtk-list-store-append model) "Saturday" 6)
+      (gtk-list-store-set model (gtk-list-store-append model) "Sunday" 7)
       ;; Set the first entry to active
       (gtk-combo-box-set-active combo-box 0)
       ;; Define the signal handlers
@@ -2528,14 +2522,12 @@
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (store-add-item model
-                           (make-tvi :title
-                                     (gtk-entry-text title-entry)
-                                     :value
-                                     (or (parse-integer
-                                           (gtk-entry-text value-entry)
-                                           :junk-allowed t)
-                                         0)))))
+           (gtk-list-store-set model
+                               (gtk-list-store-append model)
+                               (gtk-entry-text title-entry)
+                               (or (parse-integer (gtk-entry-text value-entry)
+                                                  :junk-allowed t)
+                                   0))))
       (g-signal-connect combo-box "changed"
          (lambda (widget)
            (declare (ignore widget))
@@ -3267,7 +3259,7 @@
                   (g-variant-new-boolean (not (g-variant-get-boolean state))))))
 
 (defcallback activate-radio :void ((action (g-object g-simple-action))
-                                   (paramenter :pointer)
+                                   (parameter :pointer)
                                    (user-data :pointer))
   (declare (ignore user-data))
   (g-action-change-state action parameter))
@@ -3308,7 +3300,7 @@
                                  (parameter :pointer)
                                  (user-data :pointer))
   (declare (ignore action parameter))
-  (let ((view (g-object-get-data window "bloatpad-text")))
+  (let ((view (g-object-get-data user-data "bloatpad-text")))
     (gtk-text-buffer-paste-clipboard (gtk-text-view-get-buffer view)
                                      (get-clipboard view)
                                      :default-editable t)))
@@ -3337,6 +3329,7 @@
 
 
 (defun new-window (application file)
+  (declare (ignore file))
   (let ((window (make-instance 'gtk-window
                                :title "BloatPad"
                                :default-width 250
@@ -3355,6 +3348,7 @@
                                 (g-application-get-is-registered application))
                         (gtk-main-quit)
                         ))
+;    (g-action-map-add-action-entries window *win-entries*)
     (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
     (let ((button (make-instance 'gtk-toggle-tool-button
                                  :stock-id "gtk-justify-left")))
@@ -3506,6 +3500,5 @@
       (g-application-run bloat-pad argc argv)
       (format t "back from G-APPLICATION-RUN.~%")))
   (join-gtk-main))
-
 
 ;;; ----------------------------------------------------------------------------
