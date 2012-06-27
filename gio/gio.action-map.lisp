@@ -251,6 +251,22 @@
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_map_add_action_entries" %g-action-map-add-action-entries)
+    :void
+  (action-map (g-object g-action-map))
+  (entries :pointer)
+  (n-entries :int)
+  (user-data :pointer))
+
+(defun g-action-map-add-action-entries (action-map entries)
+  (with-foreign-boxed-array (n-entries entries-ptr g-action-entry entries)
+    (%g-action-map-add-action-entries action-map
+                                      entries-ptr
+                                      n-entries
+                                      (null-pointer))))
+
+(export 'g-action-map-add-action-entries)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_map_add_action ()
 ;;; 
