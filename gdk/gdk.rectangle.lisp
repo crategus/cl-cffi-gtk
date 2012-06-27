@@ -1,11 +1,11 @@
 ;;; ----------------------------------------------------------------------------
-;;; gdk.region.lisp
+;;; gdk.rectangle.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;; 
-;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; Version 2.24.10. See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 3 Reference Manual
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,49 +27,54 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
+;;;﻿
+;;; Points and Rectangles
 ;;;
-;;; Points, Rectangles and Regions
-;;; 
 ;;; Simple graphical data types
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GdkPoint
 ;;;     GdkRectangle
 ;;;
 ;;;     gdk_rectangle_intersect
 ;;;     gdk_rectangle_union
-;;; 
+;;;
 ;;; Description
-;;; 
-;;; GDK provides the GdkPoint, and GdkRectangle data types for representing
-;;; pixels and sets of pixels on the screen.
-;;; 
+;;;
+;;; GDK provides the GdkPoint and GdkRectangle data types for representing
+;;; pixels and sets of pixels on the screen. Together with Cairo's
+;;; cairo_region_t data type, they make up the central types for representing
+;;; graphical data.
+;;;
 ;;; GdkPoint is a simple structure containing an x and y coordinate of a point.
-;;; 
+;;;
 ;;; GdkRectangle is a structure holding the position and size of a rectangle.
 ;;; The intersection of two rectangles can be computed with
 ;;; gdk_rectangle_intersect(). To find the union of two rectangles use
 ;;; gdk_rectangle_union().
+;;;
+;;; cairo_region_t is usually used for managing clipping of graphical
+;;; operations.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkPoint
-;;; 
+;;;
 ;;; struct GdkPoint {
 ;;;   gint x;
 ;;;   gint y;
 ;;; };
-;;; 
+;;;
 ;;; Defines the x and y coordinates of a point.
-;;; 
+;;;
 ;;; gint x;
-;;;     the x coordinate of the point
-;;; 
+;;;     the x coordinate of the point.
+;;;
 ;;; gint y;
-;;;     the y coordinate of the point
+;;;     the y coordinate of the point.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-point "GdkPoint"
@@ -79,28 +84,12 @@
 (export (boxed-related-symbols 'gdk-point))
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GdkRectangle
-;;; 
-;;; struct GdkRectangle {
-;;;   gint x;
-;;;   gint y;
-;;;   gint width;
-;;;   gint height;
-;;; };
-;;; 
-;;; Defines the position and size of a rectangle.
-;;; 
-;;; gint x;
-;;;     the x coordinate of the left edge of the rectangle
-;;; 
-;;; gint y;
-;;;     the y coordinate of the top of the rectangle
-;;; 
-;;; gint width;
-;;;     the width of the rectangle
-;;; 
-;;; gint height;
-;;;     the height of the rectangle
+;;; GdkRectangle
+;;;
+;;; typedef cairo_rectangle_int_t GdkRectangle;
+;;;
+;;; Defines the position and size of a rectangle. It is identical to
+;;; cairo_rectangle_int_t.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-rectangle "GdkRectangle"
@@ -113,28 +102,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rectangle_intersect ()
-;;; 
+;;;
 ;;; gboolean gdk_rectangle_intersect (const GdkRectangle *src1,
 ;;;                                   const GdkRectangle *src2,
 ;;;                                   GdkRectangle *dest);
-;;; 
+;;;
 ;;; Calculates the intersection of two rectangles. It is allowed for dest to be
 ;;; the same as either src1 or src2. If the rectangles do not intersect, dest's
 ;;; width and height is set to 0 and its x and y values are undefined. If you
 ;;; are only interested in whether the rectangles intersect, but not in the
 ;;; intersecting area itself, pass NULL for dest.
-;;; 
+;;;
 ;;; src1 :
 ;;;     a GdkRectangle
-;;; 
+;;;
 ;;; src2 :
 ;;;     a GdkRectangle
-;;; 
+;;;
 ;;; dest :
 ;;;     return location for the intersection of src1 and src2, or NULL
-;;; 
+;;;
 ;;; Returns :
-;;;     TRUE if the rectangles intersect
+;;;     TRUE if the rectangles intersect.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rectangle_intersect" %gdk-rectangle-intersect) :boolean
@@ -151,21 +140,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rectangle_union ()
-;;; 
+;;;
 ;;; void gdk_rectangle_union (const GdkRectangle *src1,
 ;;;                           const GdkRectangle *src2,
 ;;;                           GdkRectangle *dest);
-;;; 
+;;;
 ;;; Calculates the union of two rectangles. The union of rectangles src1 and
 ;;; src2 is the smallest rectangle which includes both src1 and src2 within it.
 ;;; It is allowed for dest to be the same as either src1 or src2.
-;;; 
+;;;
 ;;; src1 :
 ;;;     a GdkRectangle
-;;; 
+;;;
 ;;; src2 :
 ;;;     a GdkRectangle
-;;; 
+;;;
 ;;; dest :
 ;;;     return location for the union of src1 and src2
 ;;; ----------------------------------------------------------------------------
@@ -182,4 +171,4 @@
 
 (export 'gdk-rectangle-union)
 
-;;; --- End of file gdk.region.lisp --------------------------------------------
+;;; --- End of file gdk.rectangle.lisp -----------------------------------------
