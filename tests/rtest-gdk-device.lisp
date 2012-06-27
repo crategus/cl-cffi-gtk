@@ -89,7 +89,32 @@
       ' ("display" "device-manager" "name" "associated-device" "type"
          "input-source" "input-mode" "has-cursor" "n-axes")
      (mapcar #'param-spec-name
-             (g-object-class-list-properties (gtype "GdkDevice")))))
+             (g-object-class-list-properties (gtype "GdkDevice"))))
+
+  ;; Get the class definition
+  (assert-equal
+     '(DEFINE-G-OBJECT-CLASS "GdkDevice" GDK-DEVICE
+                               (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
+                                :TYPE-INITIALIZER "gdk_device_get_type")
+                               ((ASSOCIATED-DEVICE GDK-DEVICE-ASSOCIATED-DEVICE
+                                 "associated-device" "GdkDevice" T NIL)
+                                (DEVICE-MANAGER GDK-DEVICE-DEVICE-MANAGER
+                                 "device-manager" "GdkDeviceManager" T NIL)
+                                (DISPLAY GDK-DEVICE-DISPLAY "display"
+                                 "GdkDisplay" T NIL)
+                                (HAS-CURSOR GDK-DEVICE-HAS-CURSOR "has-cursor"
+                                 "gboolean" T NIL)
+                                (INPUT-MODE GDK-DEVICE-INPUT-MODE "input-mode"
+                                 "GdkInputMode" T T)
+                                (INPUT-SOURCE GDK-DEVICE-INPUT-SOURCE
+                                 "input-source" "GdkInputSource" T NIL)
+                                (N-AXES GDK-DEVICE-N-AXES "n-axes" "guint" T
+                                 NIL)
+                                (NAME GDK-DEVICE-NAME "name" "gchararray" T
+                                 NIL)
+                                (TYPE GDK-DEVICE-TYPE "type" "GdkDeviceType" T
+                                 NIL)))
+     (get-g-class-definition (gtype "GdkDevice"))))
 
 (define-test gdk-x11-device-xi2
   (assert-true  (g-type-is-object "GdkX11DeviceXI2"))
@@ -156,6 +181,16 @@
          "input-source" "input-mode" "has-cursor" "n-axes" "device-id")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GdkX11DeviceXI2"))))
+
+  ;; Get the class definition
+  (assert-equal
+     '(DEFINE-G-OBJECT-CLASS "GdkX11DeviceXI2" GDK-X11-DEVICE-X-I2
+                               (:SUPERCLASS GDK-DEVICE :EXPORT T :INTERFACES
+                                NIL :TYPE-INITIALIZER
+                                "gdk_x11_device_xi2_get_type")
+                               ((DEVICE-ID GDK-X11-DEVICE-X-I2-DEVICE-ID
+                                 "device-id" "gint" T NIL)))
+     (get-g-class-definition (gtype "GdkX11DeviceXI2")))
 
   (let* ((device (make-instance 'gdk-x11-device-xi2))
          (ptr (pointer device)))
