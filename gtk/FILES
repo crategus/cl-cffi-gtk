@@ -131,8 +131,8 @@ GTK+ Widgets and Objects
     gtk.cell-renderer-toggle.lisp    - GtkCellRendererToggle       - GTK+ 3.4.3
     gtk.cell-renderer-spinner.lisp   - GtkCellRendererSpinner      - GTK+ 3.4.3
     
-    gtk.list-store.lisp              - GtkListStore                - GTK+ 3.2.3*
-    gtk.tree-store.lisp              - GtkTreeStore                - GTK+ 3.2.3*
+    gtk.list-store.lisp              - GtkListStore                - GTK+ 3.4.3
+    gtk.tree-store.lisp              - GtkTreeStore                - GTK+ 3.4.3
 
   Menus, Combo Box, Toolbar
     
