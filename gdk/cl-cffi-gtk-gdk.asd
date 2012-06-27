@@ -34,7 +34,7 @@
   :components ((:file "gdk.package")
                (:file "gdk.init")
                
-               (:file "gdk.region")           ; Points, Rectangles and Regions
+               (:file "gdk.rectangle")        ; Points and Rectangles
                (:file "gdk.threads")          ; Using GDK with threads
                (:file "gdk.properties")       ; Manipulate properties on windows
                (:file "gdk.event-structures") ; Data structures for events
@@ -51,6 +51,7 @@
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
                (:file "gdk.pixbuf-structure") ; Implementation of PixBuf
                (:file "gdk.pixbuf-file")      ; Loading and saving PixBuf
+               (:file "gdk.pixbuf")           ; Functions for obtaining pixbufs
                
                (:file "gdk.window")           ; Onscreen display areas
                (:file "gdk.events")           ; Functions for handling events
