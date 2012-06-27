@@ -2934,7 +2934,7 @@
 
 (defcfun ("gtk_tree_view_enable_model_drag_dest"
           %gtk-tree-view-enable-model-drag-dest) :void
-  (tree-view (g-object tree-view))
+  (tree-view (g-object gtk-tree-view))
   (targets :pointer)
   (n-targets :int)
   (actions gdk-drag-action))
