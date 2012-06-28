@@ -221,17 +221,17 @@ GTK+ Widgets and Objects
 
   Printing
 
-    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.2.3*
-    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.2.3*
-    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.2.3*
-    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.2.3*
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.4.3
+    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.4.3
+    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.4.3
+    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.4.3
 
     not implemented                  - GtkPaperSize
     not implemented                  - GtkPrinter
     not implemented                  - GtkPrintJob
 
-    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.2.3*
-    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.2.3*
+    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.4.3
+    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.4.3
   
   Miscellaneous
   
