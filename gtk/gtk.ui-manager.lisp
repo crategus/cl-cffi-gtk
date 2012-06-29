@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,14 +27,15 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkUIManager
-;;; 
+;;;
 ;;; Constructing menus and toolbars from an XML description
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkUIManager
+;;;     GtkUIManagerItemType
 ;;;
 ;;;     gtk_ui_manager_new
 ;;;     gtk_ui_manager_set_add_tearoffs
@@ -50,240 +51,240 @@
 ;;;     gtk_ui_manager_add_ui_from_file
 ;;;     gtk_ui_manager_new_merge_id
 ;;;
-;;;     GtkUIManagerItemType
-;;;
 ;;;     gtk_ui_manager_add_ui
 ;;;     gtk_ui_manager_remove_ui
 ;;;     gtk_ui_manager_get_ui
 ;;;     gtk_ui_manager_ensure_update
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GtkUIManager
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkUIManager implements GtkBuildable.
 ;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "add-tearoffs"             gboolean              : Read / Write
 ;;;   "ui"                       gchar*                : Read
-;;; 
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "actions-changed"                                : No Recursion
 ;;;   "add-widget"                                     : No Recursion
 ;;;   "connect-proxy"                                  : No Recursion
 ;;;   "disconnect-proxy"                               : No Recursion
 ;;;   "post-activate"                                  : No Recursion
 ;;;   "pre-activate"                                   : No Recursion
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; A GtkUIManager constructs a user interface (menus and toolbars) from one or
 ;;; more UI definitions, which reference actions from one or more action groups.
-;;; 
+;;;
 ;;; UI Definitions
-;;; 
+;;;
 ;;; The UI definitions are specified in an XML format which can be roughly
 ;;; described by the following DTD.
-;;; 
+;;;
 ;;; Note
-;;; 
+;;;
 ;;; Do not confuse the GtkUIManager UI Definitions described here with the
 ;;; similarly named GtkBuilder UI Definitions.
-;;; 
-;;; <!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
-;;; <!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
-;;; <!ELEMENT menu        (menuitem|separator|placeholder|menu)* >
-;;; <!ELEMENT popup       (menuitem|separator|placeholder|menu)* >
-;;; <!ELEMENT toolbar     (toolitem|separator|placeholder)* >
-;;; <!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
-;;; <!ELEMENT menuitem     EMPTY >
-;;; <!ELEMENT toolitem     (menu?) >
-;;; <!ELEMENT separator    EMPTY >
-;;; <!ELEMENT accelerator  EMPTY >
-;;; <!ATTLIST menubar      name                      #IMPLIED
-;;;                        action                    #IMPLIED >
-;;; <!ATTLIST toolbar      name                      #IMPLIED
-;;;                        action                    #IMPLIED >
-;;; <!ATTLIST popup        name                      #IMPLIED
-;;;                        action                    #IMPLIED
-;;;                        accelerators (true|false) #IMPLIED >
-;;; <!ATTLIST placeholder  name                      #IMPLIED
-;;;                        action                    #IMPLIED >
-;;; <!ATTLIST separator    name                      #IMPLIED
-;;;                        action                    #IMPLIED
-;;;                        expand       (true|false) #IMPLIED >
-;;; <!ATTLIST menu         name                      #IMPLIED
-;;;                        action                    #REQUIRED
-;;;                        position     (top|bot)    #IMPLIED >
-;;; <!ATTLIST menuitem     name                      #IMPLIED
-;;;                        action                    #REQUIRED
-;;;                        position     (top|bot)    #IMPLIED
-;;;                        always-show-image (true|false) #IMPLIED >
-;;; <!ATTLIST toolitem     name                      #IMPLIED
-;;;                        action                    #REQUIRED
-;;;                        position     (top|bot)    #IMPLIED >
-;;; <!ATTLIST accelerator  name                      #IMPLIED
-;;;                        action                    #REQUIRED >
-;;; 
+;;;
+;;;   <!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
+;;;   <!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
+;;;   <!ELEMENT menu        (menuitem|separator|placeholder|menu)* >
+;;;   <!ELEMENT popup       (menuitem|separator|placeholder|menu)* >
+;;;   <!ELEMENT toolbar     (toolitem|separator|placeholder)* >
+;;;   <!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
+;;;   <!ELEMENT menuitem     EMPTY >
+;;;   <!ELEMENT toolitem     (menu?) >
+;;;   <!ELEMENT separator    EMPTY >
+;;;   <!ELEMENT accelerator  EMPTY >
+;;;   <!ATTLIST menubar      name                      #IMPLIED
+;;;                          action                    #IMPLIED >
+;;;   <!ATTLIST toolbar      name                      #IMPLIED
+;;;                          action                    #IMPLIED >
+;;;   <!ATTLIST popup        name                      #IMPLIED
+;;;                          action                    #IMPLIED
+;;;                          accelerators (true|false) #IMPLIED >
+;;;   <!ATTLIST placeholder  name                      #IMPLIED
+;;;                          action                    #IMPLIED >
+;;;   <!ATTLIST separator    name                      #IMPLIED
+;;;                          action                    #IMPLIED
+;;;                          expand       (true|false) #IMPLIED >
+;;;   <!ATTLIST menu         name                      #IMPLIED
+;;;                          action                    #REQUIRED
+;;;                          position     (top|bot)    #IMPLIED >
+;;;   <!ATTLIST menuitem     name                      #IMPLIED
+;;;                          action                    #REQUIRED
+;;;                          position     (top|bot)    #IMPLIED
+;;;                          always-show-image (true|false) #IMPLIED >
+;;;   <!ATTLIST toolitem     name                      #IMPLIED
+;;;                          action                    #REQUIRED
+;;;                          position     (top|bot)    #IMPLIED >
+;;;   <!ATTLIST accelerator  name                      #IMPLIED
+;;;                          action                    #REQUIRED >
+;;;
 ;;; There are some additional restrictions beyond those specified in the DTD,
 ;;; e.g. every toolitem must have a toolbar in its anchestry and every menuitem
 ;;; must have a menubar or popup in its anchestry. Since a GMarkup parser is
 ;;; used to parse the UI description, it must not only be valid XML, but valid
 ;;; GMarkup.
-;;; 
+;;;
 ;;; If a name is not specified, it defaults to the action. If an action is not
 ;;; specified either, the element name is used. The name and action attributes
 ;;; must not contain '/' characters after parsing (since that would mess up path
 ;;; lookup) and must be usable as XML attributes when enclosed in doublequotes,
 ;;; thus they must not '"' characters or references to the " entity.
-;;; 
+;;;
 ;;; Example 80. A UI definition
-;;; 
-;;; <span style="color: red"><ui>
-;;;   <span style="color: red"><menubar>
-;;;     <span style="color: red"><menu>
-;;;       <span style="color: red"><menuitem></menuitem></span>
-;;;       <span style="color: red"><placeholder></placeholder></span>
-;;;     </menu></span>
-;;;     <span style="color: red"><menu>
-;;;       <span style="color: red"><menuitem></menuitem></span>
-;;;       <span style="color: red"><menuitem></menuitem></span>
-;;;       <span style="color: red"><menuitem></menuitem></span>
-;;;       <span style="color: red"><menuitem></menuitem></span>
-;;;     </menu></span>
-;;;   </menubar></span>
-;;;   <span style="color: red"><toolbar>
-;;;     <span style="color: red"><placeholder>
-;;;       <span style="color: red"><separator></separator></span>
-;;;       <span style="color: red"><toolitem></toolitem></span>
-;;;       <span style="color: red"><toolitem></toolitem></span>
-;;;       <span style="color: red"><toolitem></toolitem></span>
-;;;       <span style="color: red"><toolitem></toolitem></span>
-;;;       <span style="color: red"><separator></separator></span>
-;;;     </placeholder></span>
-;;;   </toolbar></span>
-;;; </ui></span>
-;;; 
+;;;
+;;;   <span style="color: red"><ui>
+;;;     <span style="color: red"><menubar>
+;;;       <span style="color: red"><menu>
+;;;         <span style="color: red"><menuitem></menuitem></span>
+;;;         <span style="color: red"><placeholder></placeholder></span>
+;;;       </menu></span>
+;;;       <span style="color: red"><menu>
+;;;         <span style="color: red"><menuitem></menuitem></span>
+;;;         <span style="color: red"><menuitem></menuitem></span>
+;;;         <span style="color: red"><menuitem></menuitem></span>
+;;;         <span style="color: red"><menuitem></menuitem></span>
+;;;       </menu></span>
+;;;     </menubar></span>
+;;;     <span style="color: red"><toolbar>
+;;;       <span style="color: red"><placeholder>
+;;;         <span style="color: red"><separator></separator></span>
+;;;         <span style="color: red"><toolitem></toolitem></span>
+;;;         <span style="color: red"><toolitem></toolitem></span>
+;;;         <span style="color: red"><toolitem></toolitem></span>
+;;;         <span style="color: red"><toolitem></toolitem></span>
+;;;         <span style="color: red"><separator></separator></span>
+;;;       </placeholder></span>
+;;;     </toolbar></span>
+;;;   </ui></span>
+;;;
+;;;
 ;;; The constructed widget hierarchy is very similar to the element tree of the
 ;;; XML, with the exception that placeholders are merged into their parents. The
 ;;; correspondence of XML elements to widgets should be almost obvious:
-;;; 
+;;;
 ;;; menubar
 ;;;     a GtkMenuBar
-;;; 
+;;;
 ;;; toolbar
 ;;;     a GtkToolbar
-;;; 
+;;;
 ;;; popup
 ;;;     a toplevel GtkMenu
-;;; 
+;;;
 ;;; menu
 ;;;     a GtkMenu attached to a menuitem
-;;; 
+;;;
 ;;; menuitem
 ;;;     a GtkMenuItem subclass, the exact type depends on the action
-;;; 
+;;;
 ;;; toolitem
 ;;;     a GtkToolItem subclass, the exact type depends on the action. Note that
 ;;;     toolitem elements may contain a menu element, but only if their
 ;;;     associated action specifies a GtkMenuToolButton as proxy.
-;;; 
-;;; separator
+;;;
+;;; separator+
 ;;;     a GtkSeparatorMenuItem or GtkSeparatorToolItem
-;;; 
+;;;
 ;;; accelerator
 ;;;     a keyboard accelerator
-;;; 
+;;;
 ;;; The "position" attribute determines where a constructed widget is positioned
 ;;; wrt. to its siblings in the partially constructed tree. If it is "top", the
 ;;; widget is prepended, otherwise it is appended.
-;;; 
+;;;
 ;;; UI Merging
-;;; 
+;;;
 ;;; The most remarkable feature of GtkUIManager is that it can overlay a set of
 ;;; menuitems and toolitems over another one, and demerge them later.
-;;; 
+;;;
 ;;; Merging is done based on the names of the XML elements. Each element is
 ;;; identified by a path which consists of the names of its anchestors,
 ;;; separated by slashes. For example, the menuitem named "Left" in the example
 ;;; above has the path /ui/menubar/JustifyMenu/Left and the toolitem with the
 ;;; same name has path /ui/toolbar1/JustifyToolItems/Left.
-;;; 
+;;;
 ;;; Accelerators
-;;; 
+;;;
 ;;; Every action has an accelerator path. Accelerators are installed together
 ;;; with menuitem proxies, but they can also be explicitly added with
 ;;; <accelerator> elements in the UI definition. This makes it possible to have
 ;;; accelerators for actions even if they have no visible proxies.
-;;; 
+;;;
 ;;; Smart Separators
-;;; 
-;;; The separators created by GtkUIManager are "smart", i.e. they do not show
-;;; up in the UI unless they end up between two visible menu or tool items.
+;;;
+;;; The separators created by GtkUIManager are "smart", i.e. they do not show up
+;;; in the UI unless they end up between two visible menu or tool items.
 ;;; Separators which are located at the very beginning or end of the menu or
 ;;; toolbar containing them, or multiple separators next to each other, are
 ;;; hidden. This is a useful feature, since the merging of UI elements from
 ;;; multiple sources can make it hard or impossible to determine in advance
 ;;; whether a separator will end up in such an unfortunate position.
-;;; 
+;;;
 ;;; For separators in toolbars, you can set expand="true" to turn them from a
 ;;; small, visible separator to an expanding, invisible one. Toolitems following
 ;;; an expanding separator are effectively right-aligned.
-;;; 
+;;;
 ;;; Empty Menus
-;;; 
+;;;
 ;;; Submenus pose similar problems to separators inconnection with merging. It
 ;;; is impossible to know in advance whether they will end up empty after
 ;;; merging. GtkUIManager offers two ways to treat empty submenus:
-;;; 
+;;;
 ;;;     make them disappear by hiding the menu item they're attached to
-;;; 
+;;;
 ;;;     add an insensitive "Empty" item
-;;; 
+;;;
 ;;; The behaviour is chosen based on the "hide_if_empty" property of the action
 ;;; to which the submenu is associated.
-;;; 
+;;;
 ;;; GtkUIManager as GtkBuildable
-;;; 
+;;;
 ;;; The GtkUIManager implementation of the GtkBuildable interface accepts
 ;;; GtkActionGroup objects as <child> elements in UI definitions.
-;;; 
+;;;
 ;;; A GtkUIManager UI definition as described above can be embedded in an
 ;;; GtkUIManager <object> element in a GtkBuilder UI definition.
-;;; 
+;;;
 ;;; The widgets that are constructed by a GtkUIManager can be embedded in other
 ;;; parts of the constructed user interface with the help of the "constructor"
 ;;; attribute. See the example below.
-;;; 
+;;;
 ;;; Example 81. An embedded GtkUIManager UI definition
-;;; 
-;;; <object class="GtkUIManager" id="uiman">
-;;;   <child>
-;;;     <object class="GtkActionGroup" id="actiongroup">
-;;;       <child>
-;;;         <object class="GtkAction" id="file">
-;;;           <property name="label">_File</property>
-;;;         </object>
-;;;       </child>
-;;;     </object>
-;;;   </child>
-;;;   <ui>
-;;;     <menubar name="menubar1">
-;;;       <menu action="file">
-;;;       </menu>
-;;;     </menubar>
-;;;   </ui>
-;;; </object>
-;;; <object class="GtkWindow" id="main-window">
-;;;   <child>
-;;;     <object class="GtkMenuBar" id="menubar1" constructor="uiman"/>
-;;;   </child>
-;;; </object>
+;;;
+;;;   <object class="GtkUIManager" id="uiman">
+;;;     <child>
+;;;       <object class="GtkActionGroup" id="actiongroup">
+;;;         <child>
+;;;           <object class="GtkAction" id="file">
+;;;             <property name="label">_File</property>
+;;;           </object>
+;;;         </child>
+;;;       </object>
+;;;     </child>
+;;;     <ui>
+;;;       <menubar name="menubar1">
+;;;         <menu action="file">
+;;;         </menu>
+;;;       </menubar>
+;;;     </ui>
+;;;   </object>
+;;;   <object class="GtkWindow" id="main-window">
+;;;     <child>
+;;;       <object class="GtkMenuBar" id="menubar1" constructor="uiman"/>
+;;;     </child>
+;;;   </object>
+;;;
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -291,26 +292,32 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "add-tearoffs" property
-;;; 
+;;;
 ;;;   "add-tearoffs"             gboolean              : Read / Write
-;;; 
+;;;
+;;; Warning
+;;;
+;;; GtkUIManager:add-tearoffs has been deprecated since version 3.4 and should
+;;; not be used in newly-written code. Tearoff menus are deprecated and should
+;;; not be used in newly written code.
+;;;
 ;;; The "add-tearoffs" property controls whether generated menus have tearoff
 ;;; menu items.
-;;; 
+;;;
 ;;; Note that this only affects regular menus. Generated popup menus never have
 ;;; tearoff menu items.
-;;; 
+;;;
 ;;; Default value: FALSE
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "ui" property
-;;; 
+;;;
 ;;;   "ui"                       gchar*                : Read
-;;; 
+;;;
 ;;; An XML string describing the merged UI.
-;;; 
+;;;
 ;;; Default value: "<ui>\n</ui>\n"
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -319,139 +326,139 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "actions-changed" signal
-;;; 
+;;;
 ;;; void user_function (GtkUIManager *manager,
 ;;;                     gpointer      user_data)      : No Recursion
-;;; 
+;;;
 ;;; The ::actions-changed signal is emitted whenever the set of actions changes.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "add-widget" signal
-;;; 
+;;;
 ;;; void user_function (GtkUIManager *manager,
 ;;;                     GtkWidget    *widget,
 ;;;                     gpointer      user_data)      : No Recursion
-;;; 
+;;;
 ;;; The ::add-widget signal is emitted for each generated menubar and toolbar.
 ;;; It is not emitted for generated popup menus, which can be obtained by
 ;;; gtk_ui_manager_get_widget().
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; widget :
 ;;;     the added widget
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "connect-proxy" signal
-;;; 
+;;;
 ;;; void user_function (GtkUIManager *manager,
 ;;;                     GtkAction    *action,
 ;;;                     GtkWidget    *proxy,
 ;;;                     gpointer      user_data)      : No Recursion
-;;; 
+;;;
 ;;; The ::connect-proxy signal is emitted after connecting a proxy to an action
 ;;; in the group.
-;;; 
+;;;
 ;;; This is intended for simple customizations for which a custom action class
 ;;; would be too clumsy, e.g. showing tooltips for menuitems in the statusbar.
-;;; 
+;;;
 ;;; manager :
 ;;;     the ui manager
-;;; 
+;;;
 ;;; action :
 ;;;     the action
-;;; 
+;;;
 ;;; proxy :
 ;;;     the proxy
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "disconnect-proxy" signal
-;;; 
+;;;
 ;;; void user_function (GtkUIManager *manager,
 ;;;                     GtkAction    *action,
 ;;;                     GtkWidget    *proxy,
 ;;;                     gpointer      user_data)      : No Recursion
-;;; 
-;;; The ::disconnect-proxy signal is emitted after disconnecting a proxy from
-;;; an action in the group.
-;;; 
+;;;
+;;; The ::disconnect-proxy signal is emitted after disconnecting a proxy from an
+;;; action in the group.
+;;;
 ;;; manager :
 ;;;     the ui manager
-;;; 
+;;;
 ;;; action :
 ;;;     the action
-;;; 
+;;;
 ;;; proxy :
 ;;;     the proxy
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "post-activate" signal
-;;; 
+;;;
 ;;; void user_function (GtkUIManager *manager,
 ;;;                     GtkAction    *action,
 ;;;                     gpointer      user_data)      : No Recursion
-;;; 
+;;;
 ;;; The ::post-activate signal is emitted just after the action is activated.
-;;; 
+;;;
 ;;; This is intended for applications to get notification just after any action
 ;;; is activated.
-;;; 
+;;;
 ;;; manager :
 ;;;     the ui manager
-;;; 
+;;;
 ;;; action :
 ;;;     the action
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "pre-activate" signal
-;;; 
+;;;
 ;;; void user_function (GtkUIManager *manager,
 ;;;                     GtkAction    *action,
 ;;;                     gpointer      user_data)      : No Recursion
-;;; 
+;;;
 ;;; The ::pre-activate signal is emitted just before the action is activated.
-;;; 
-;;; This is intended for applications to get notification just before any
-;;; action is activated.
-;;; 
+;;;
+;;; This is intended for applications to get notification just before any action
+;;; is activated.
+;;;
 ;;; manager :
 ;;;     the ui manager
-;;; 
+;;;
 ;;; action :
 ;;;     the action
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -623,7 +630,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkUIManager
-;;; 
+;;;
 ;;; struct GtkUIManager;
 ;;; ----------------------------------------------------------------------------
 
@@ -631,16 +638,19 @@
   (:superclass g-object
     :export t
     :interfaces ("GtkBuildable"))
-  ((add-tearoffs gtk-ui-manager-add-tearoffs
+  ((add-tearoffs
+    gtk-ui-manager-add-tearoffs
     "add-tearoffs" "gboolean" t t)
-   (ui gtk-ui-manager-ui
+   (ui
+    gtk-ui-manager-ui
     "ui" "gchararray" t nil)
-   (:cffi accel-group gtk-ui-manager-accel-group g-object
+   (:cffi accel-group
+          gtk-ui-manager-accel-group g-object
           "gtk_ui_manager_get_accel_group" nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkUIManagerItemType
-;;; 
+;;;
 ;;; typedef enum {
 ;;;   GTK_UI_MANAGER_AUTO              = 0,
 ;;;   GTK_UI_MANAGER_MENUBAR           = 1 << 0,
@@ -654,40 +664,40 @@
 ;;;   GTK_UI_MANAGER_ACCELERATOR       = 1 << 8,
 ;;;   GTK_UI_MANAGER_POPUP_WITH_ACCELS = 1 << 9
 ;;; } GtkUIManagerItemType;
-;;; 
+;;;
 ;;; These enumeration values are used by gtk_ui_manager_add_ui() to determine
 ;;; what UI element to create.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_AUTO
 ;;;     Pick the type of the UI element according to context.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_MENUBAR
 ;;;     Create a menubar.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_MENU
 ;;;     Create a menu.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_TOOLBAR
 ;;;     Create a toolbar.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_PLACEHOLDER
 ;;;     Insert a placeholder.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_POPUP
 ;;;     Create a popup menu.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_MENUITEM
 ;;;     Create a menuitem.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_TOOLITEM
 ;;;     Create a toolitem.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_SEPARATOR
 ;;;     Create a separator.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_ACCELERATOR
 ;;;     Install an accelerator.
-;;; 
+;;;
 ;;; GTK_UI_MANAGER_POPUP_WITH_ACCELS
 ;;;     Same as GTK_UI_MANAGER_POPUP, but the actions' accelerators are shown.
 ;;; ----------------------------------------------------------------------------
@@ -708,75 +718,90 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_new ()
-;;; 
+;;;
 ;;; GtkUIManager * gtk_ui_manager_new (void);
-;;; 
+;;;
 ;;; Creates a new ui manager object.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new ui manager object.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_set_add_tearoffs ()
-;;; 
+;;;
 ;;; void gtk_ui_manager_set_add_tearoffs (GtkUIManager *manager,
 ;;;                                       gboolean add_tearoffs);
-;;; 
+;;;
+;;; Warning
+;;;
+;;; gtk_ui_manager_set_add_tearoffs has been deprecated since version 3.4 and
+;;; should not be used in newly-written code. Tearoff menus are deprecated and
+;;; should not be used in newly written code.
+;;;
 ;;; Sets the "add_tearoffs" property, which controls whether menus generated by
 ;;; this GtkUIManager will have tearoff menu items.
-;;; 
+;;;
 ;;; Note that this only affects regular menus. Generated popup menus never have
 ;;; tearoff menu items.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; add_tearoffs :
 ;;;     whether tearoff menu items are added
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_add_tearoffs ()
-;;; 
+;;;
 ;;; gboolean gtk_ui_manager_get_add_tearoffs (GtkUIManager *manager);
-;;; 
+;;;
+;;; Warning
+;;;
+;;; gtk_ui_manager_get_add_tearoffs has been deprecated since version 3.4 and
+;;; should not be used in newly-written code. Tearoff menus are deprecated and
+;;; should not be used in newly written code.
+;;;
 ;;; Returns whether menus generated by this GtkUIManager will have tearoff menu
 ;;; items.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether tearoff menu items are added
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_insert_action_group ()
-;;; 
+;;;
 ;;; void gtk_ui_manager_insert_action_group (GtkUIManager *manager,
 ;;;                                          GtkActionGroup *action_group,
 ;;;                                          gint pos);
-;;; 
+;;;
 ;;; Inserts an action group into the list of action groups associated with
-;;; manager. Actions in earlier groups hide actions with the same name in
-;;; later groups.
-;;; 
+;;; manager. Actions in earlier groups hide actions with the same name in later
+;;; groups.
+;;;
+;;; If pos is larger than the number of action groups in manager, or negative,
+;;; action_group will be inserted at the end of the internal list.
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; action_group :
 ;;;     the action group to be inserted
-;;; 
+;;;
 ;;; pos :
 ;;;     the position at which the group will be inserted.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -790,19 +815,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_remove_action_group ()
-;;; 
+;;;
 ;;; void gtk_ui_manager_remove_action_group (GtkUIManager *manager,
 ;;;                                          GtkActionGroup *action_group);
-;;; 
+;;;
 ;;; Removes an action group from the list of action groups associated with
 ;;; manager.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; action_group :
 ;;;     the action group to be removed
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -815,18 +840,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_action_groups ()
-;;; 
+;;;
 ;;; GList * gtk_ui_manager_get_action_groups (GtkUIManager *manager);
-;;; 
+;;;
 ;;; Returns the list of action groups associated with manager.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GList of action groups. The list is owned by GTK+ and should not be
-;;;     modified.
-;;; 
+;;;     modified
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -838,49 +863,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_accel_group ()
-;;; 
+;;;
 ;;; GtkAccelGroup * gtk_ui_manager_get_accel_group (GtkUIManager *manager);
-;;; 
+;;;
 ;;; Returns the GtkAccelGroup associated with manager.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; Returns :
-;;;     the GtkAccelGroup. [transfer none]
-;;; 
+;;;     the GtkAccelGroup
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_widget ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *manager,
 ;;;                                        const gchar *path);
-;;; 
+;;;
 ;;; Looks up a widget by following a path. The path consists of the names
 ;;; specified in the XML description of the UI. separated by '/'. Elements which
 ;;; don't have a name or action attribute in the XML (e.g. <popup>) can be
 ;;; addressed by their XML element name (e.g. "popup"). The root element ("/ui")
 ;;; can be omitted in the path.
-;;; 
+;;;
 ;;; Note that the widget found by following a path that ends in a <menu> element
 ;;; is the menuitem to which the menu is attached, not the menu itmanager.
-;;; 
+;;;
 ;;; Also note that the widgets constructed by a ui manager are not tied to the
 ;;; lifecycle of the ui manager. If you add the widgets returned by this
 ;;; function to some container or explicitly ref them, they will survive the
 ;;; destruction of the ui manager.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; path :
 ;;;     a path
-;;; 
+;;;
 ;;; Returns :
-;;;     the widget found by following the path, or NULL if no widget was found.
-;;; 
+;;;     the widget found by following the path, or NULL if no widget was found
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -892,23 +917,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_toplevels ()
-;;; 
+;;;
 ;;; GSList * gtk_ui_manager_get_toplevels (GtkUIManager *manager,
 ;;;                                        GtkUIManagerItemType types);
-;;; 
+;;;
 ;;; Obtains a list of all toplevel widgets of the requested types.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; types :
 ;;;     specifies the types of toplevel widgets to include. Allowed types are
 ;;;     GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and GTK_UI_MANAGER_POPUP.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly-allocated GSList of all toplevel widgets of the requested types.
 ;;;     Free the returned list with g_slist_free().
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -921,23 +946,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_action ()
-;;; 
+;;;
 ;;; GtkAction * gtk_ui_manager_get_action (GtkUIManager *manager,
 ;;;                                        const gchar *path);
-;;; 
+;;;
 ;;; Looks up an action by following a path. See gtk_ui_manager_get_widget() for
 ;;; more information about paths.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; path :
 ;;;     a path
-;;; 
+;;;
 ;;; Returns :
-;;;     the action whose proxy widget is found by following the path, or NULL
-;;;     if no widget was found. [transfer none]
-;;; 
+;;;     the action whose proxy widget is found by following the path, or NULL if
+;;;     no widget was found
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -949,32 +974,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui_from_string ()
-;;; 
+;;;
 ;;; guint gtk_ui_manager_add_ui_from_string (GtkUIManager *manager,
 ;;;                                          const gchar *buffer,
 ;;;                                          gssize length,
 ;;;                                          GError **error);
-;;; 
+;;;
 ;;; Parses a string containing a UI definition and merges it with the current
 ;;; contents of manager. An enclosing <ui> element is added if it is missing.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; buffer :
 ;;;     the string to parse
-;;; 
+;;;
 ;;; length :
 ;;;     the length of buffer (may be -1 if buffer is nul-terminated)
-;;; 
+;;;
 ;;; error :
 ;;;     return location for an error
-;;; 
+;;;
 ;;; Returns :
 ;;;     The merge id for the merged UI. The merge id can be used to unmerge the
 ;;;     UI with gtk_ui_manager_remove_ui(). If an error occurred, the return
 ;;;     value is 0.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -994,28 +1019,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui_from_file ()
-;;; 
+;;;
 ;;; guint gtk_ui_manager_add_ui_from_file (GtkUIManager *manager,
 ;;;                                        const gchar *filename,
 ;;;                                        GError **error);
-;;; 
+;;;
 ;;; Parses a file containing a UI definition and merges it with the current
 ;;; contents of manager.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; filename :
 ;;;     the name of the file to parse
-;;; 
+;;;
 ;;; error :
 ;;;     return location for an error
-;;; 
+;;;
 ;;; Returns :
 ;;;     The merge id for the merged UI. The merge id can be used to unmerge the
 ;;;     UI with gtk_ui_manager_remove_ui(). If an error occurred, the return
 ;;;     value is 0.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1033,17 +1058,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_new_merge_id ()
-;;; 
+;;;
 ;;; guint gtk_ui_manager_new_merge_id (GtkUIManager *manager);
-;;; 
+;;;
 ;;; Returns an unused merge id, suitable for use with gtk_ui_manager_add_ui().
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; Returns :
 ;;;     an unused merge id.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1054,7 +1079,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui ()
-;;; 
+;;;
 ;;; void gtk_ui_manager_add_ui (GtkUIManager *manager,
 ;;;                             guint merge_id,
 ;;;                             const gchar *path,
@@ -1062,39 +1087,39 @@
 ;;;                             const gchar *action,
 ;;;                             GtkUIManagerItemType type,
 ;;;                             gboolean top);
-;;; 
+;;;
 ;;; Adds a UI element to the current contents of manager.
-;;; 
+;;;
 ;;; If type is GTK_UI_MANAGER_AUTO, GTK+ inserts a menuitem, toolitem or
 ;;; separator if such an element can be inserted at the place determined by
 ;;; path. Otherwise type must indicate an element that can be inserted at the
 ;;; place determined by path.
-;;; 
+;;;
 ;;; If path points to a menuitem or toolitem, the new element will be inserted
 ;;; before or after this item, depending on top.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; merge_id :
 ;;;     the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
-;;; 
+;;;
 ;;; path :
 ;;;     a path
-;;; 
+;;;
 ;;; name :
 ;;;     the name for the added UI element
-;;; 
+;;;
 ;;; action :
 ;;;     the name of the action to be proxied, or NULL to add a separator
-;;; 
+;;;
 ;;; type :
 ;;;     the type of UI element to add.
-;;; 
+;;;
 ;;; top :
 ;;;     if TRUE, the UI element is added before its siblings, otherwise it is
 ;;;     added after its siblings.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1111,17 +1136,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_remove_ui ()
-;;; 
+;;;
 ;;; void gtk_ui_manager_remove_ui (GtkUIManager *manager, guint merge_id);
-;;; 
+;;;
 ;;; Unmerges the part of managers content identified by merge_id.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager object
-;;; 
+;;;
 ;;; merge_id :
 ;;;     a merge id as returned by gtk_ui_manager_add_ui_from_string()
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1133,50 +1158,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_ui ()
-;;; 
+;;;
 ;;; gchar * gtk_ui_manager_get_ui (GtkUIManager *manager);
-;;; 
+;;;
 ;;; Creates a UI definition of the merged UI.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; Returns :
-;;;     A newly allocated string containing an XML representation of the
-;;;     merged UI.
-;;; 
+;;;     A newly allocated string containing an XML representation of the merged
+;;;     UI.
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_ensure_update ()
-;;; 
+;;;
 ;;; void gtk_ui_manager_ensure_update (GtkUIManager *manager);
-;;; 
+;;;
 ;;; Makes sure that all pending updates to the UI have been completed.
-;;; 
+;;;
 ;;; This may occasionally be necessary, since GtkUIManager updates the UI in an
 ;;; idle function. A typical example where this function is useful is to enforce
 ;;; that the menubar and toolbar have been added to the main window before
 ;;; showing it:
-;;; 
-;;; gtk_container_add (GTK_CONTAINER (window), vbox); 
-;;; g_signal_connect (merge, "add-widget", 
-;;;                   G_CALLBACK (add_widget), vbox);
-;;; gtk_ui_manager_add_ui_from_file (merge, "my-menus");
-;;; gtk_ui_manager_add_ui_from_file (merge, "my-toolbars");
-;;; gtk_ui_manager_ensure_update (merge);  
-;;; gtk_widget_show (window);
-;;; 
+;;;
+;;;   gtk_container_add (GTK_CONTAINER (window), vbox);
+;;;   g_signal_connect (merge, "add-widget",
+;;;                     G_CALLBACK (add_widget), vbox);
+;;;   gtk_ui_manager_add_ui_from_file (merge, "my-menus");
+;;;   gtk_ui_manager_add_ui_from_file (merge, "my-toolbars");
+;;;   gtk_ui_manager_ensure_update (merge);
+;;;   gtk_widget_show (window);
+;;;
 ;;; manager :
 ;;;     a GtkUIManager
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_ui_manager_ensure_update" gtk-ui-manager-ensure-update) :void
   (ui-manager g-object))
 
-(export 'gtk-ui-manager-remove-ui)
+(export 'gtk-ui-manager-ensure-update)
 
 ;;; --- End of file gtk.ui-manager.lisp ----------------------------------------

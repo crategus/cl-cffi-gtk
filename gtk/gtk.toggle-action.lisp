@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -27,7 +27,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
+;;;﻿
 ;;; GtkToggleAction
 ;;;
 ;;; An action which can be toggled between two states
@@ -53,6 +53,7 @@
 ;;; Implemented Interfaces
 ;;;
 ;;; GtkToggleAction implements GtkBuildable.
+;;;
 ;;; Properties
 ;;;
 ;;;   "active"                   gboolean              : Read / Write
@@ -127,9 +128,11 @@
     :export t
     :interfaces ("GtkBuildable")
     :type-initializer "gtk_toggle_action_get_type")
-  ((active gtk-toggle-action-active
+  ((active
+    gtk-toggle-action-active
     "active" "gboolean" t t)
-   (draw-as-radio gtk-toggle-action-draw-as-radio
+   (draw-as-radio
+    gtk-toggle-action-draw-as-radio
     "draw-as-radio" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
