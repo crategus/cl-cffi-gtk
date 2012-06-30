@@ -285,5 +285,24 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_color_chooser_add_palette" %gtk-color-chooser-add-palette) :void
+  (chooser (g-object gtk-color-chooser))
+  (orientation gtk-orientation)
+  (colors-per-line :int)
+  (n-colors :int)
+  (colors :pointer))
+
+(defun gtk-color-chooser-add-palette (chooser
+                                      orientation
+                                      colors-per-line
+                                      colors)
+  (with-foreign-boxed-array (n-colors colors-ptr gdk-rgba colors)
+    (%gtk-color-chooser-add-palette chooser
+                                    orientation
+                                    colors-per-line
+                                    n-colors
+                                    colors-ptr)))
+
+(export 'gtk-color-chooser-add-palette)
 
 ;;; --- End of file gtk.color-chooser.lisp -------------------------------------
