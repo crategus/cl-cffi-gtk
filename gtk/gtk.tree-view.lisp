@@ -2979,7 +2979,7 @@
 
 (defcfun ("gtk_tree_view_enable_model_drag_source"
           %gtk-tree-view-enable-model-drag-source) :void
-  (tree-view (g-object tree-view))
+  (tree-view (g-object gtk-tree-view))
   (start-button-mask gdk-modifier-type)
   (targets :pointer)
   (n-targets :int)
