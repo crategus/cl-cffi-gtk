@@ -172,6 +172,12 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_chooser_get_font_family" gtk-font-chooser-get-font-family)
+    (g-object pango-font-family)
+  (fontchooser (g-object gtk-font-chooser)))
+
+(export 'gtk-font-chooser-get-font-family)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_get_font_face ()
 ;;;
@@ -194,6 +200,12 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_chooser_get_font_face" gtk-font-chooser-get-font-face)
+    (g-object pango-font-face)
+  (fontchooser (g-object gtk-font-chooser)))
+
+(export 'gtk-font-chooser-get-font-face)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_get_font_size ()
 ;;;
@@ -205,11 +217,16 @@
 ;;;     a GtkFontChooser
 ;;;
 ;;; Returns :
-;;;     A n integer representing the selected font size, or -1 if no font size
+;;;     An integer representing the selected font size, or -1 if no font size
 ;;;     is selected.
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_font_chooser_get_font_size" gtk-font-chooser-get-font-size) :int
+  (fontchooser (g-object gtk-font-chooser)))
+
+(export 'gtk-font-chooser-get-font-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_get_font ()
@@ -237,6 +254,13 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-chooser-get-font))
+
+(defun gtk-font-chooser-get-font (fontchooser)
+  (gtk-font-chooser-font fontchooser))
+
+(export 'gtk-font-chooser-get-font)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_font ()
 ;;;
@@ -253,6 +277,13 @@
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-chooser-set-font))
+
+(defun gtk-font-chooser-set-font (fontchooser fontname)
+  (setf (gtk-font-chooser-font fontchooser) fontname))
+
+(export 'gtk-font-chooser-set-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_get_font_desc ()
@@ -281,6 +312,13 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-chooser-get-font-desc))
+
+(defun gtk-font-chooser-get-font-desc (fontchooser)
+  (gtk-font-chooser-font-desc fontchooser))
+
+(export 'gtk-font-chooser-get-font-desc)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_font_desc ()
 ;;;
@@ -298,6 +336,13 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-chooser-set-font-desc))
+
+(defun gtk-font-chooser-set-font-desc (fontchooser font-desc)
+  (setf (gtk-font-chooser-font-desc fontchooser) font-desc))
+
+(export 'gtk-font-chooser-set-font-desc)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_get_preview_text ()
 ;;;
@@ -309,10 +354,17 @@
 ;;;     a GtkFontChooser
 ;;;
 ;;; Returns :
-;;;     the text displayed in the preview area. [transfer full]
+;;;     the text displayed in the preview area
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-chooser-get-preview-text))
+
+(defun gtk-font-chooser-get-preview-text (fontchooser)
+  (gtk-font-chooser-preview-text fontchooser))
+
+(export 'gtk-font-chooser-get-preview-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_preview_text ()
@@ -332,6 +384,13 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-chooser-set-preview-text))
+
+(defun gtk-font-chooser-set-preview-text (fontchooser text)
+  (setf (gtk-font-chooser-preview-text fontchooser) text))
+
+(export 'gtk-font-chooser-set-preview-text)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_get_show_preview_entry ()
 ;;;
@@ -349,6 +408,13 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-chooser-get-show-preview-entry))
+
+(defun gtk-font-chooser-get-show-preview-entry (fontchooser)
+  (gtk-font-chooser-show-preview-entry fontchooser))
+
+(export 'gtk-font-chooser-get-show-preview-entry)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_show_preview_entry ()
 ;;;
@@ -365,6 +431,13 @@
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-chooser-set-show-preview-entry))
+
+(defun gtk-font-chooser-set-show-preview-entry (fontchooser show-preview-entry)
+  (setf (gtk-font-chooser-show-preview-entry fontchooser) show-preview-entry))
+
+(export 'gtk-font-chooser-set-show-preview-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFontFilterFunc ()
@@ -388,6 +461,12 @@
 ;;; Returns :
 ;;;     TRUE if the font should be displayed
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-font-filter-func-cb :boolean
+    ((family (g-object pango-font-family))
+     (face (g-object pango-font-face))
+     (data :pointer))
+  (funcall (get-stable-pointer-value data) family face))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_filter_func ()
@@ -415,5 +494,20 @@
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_font_chooser_set_filter_func" %gtk-font-chooser-set-filter-func)
+    :void
+  (fontchooser (g-object gtk-font-chooser))
+  (filter :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-font-chooser-set-filter-func (fontchooser func)
+  (%gtk-font-chooser-set-filter-func
+                                   fontchooser
+                                   (callback gtk-font-filter-func-cb)
+                                   (allocate-stable-pointer func)
+                                   (callback stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-font-chooser-set-filter-func)
 
 ;;; --- End of file gtk.font-chooser.lisp --------------------------------------
