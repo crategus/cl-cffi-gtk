@@ -196,7 +196,8 @@
   ((alpha
     gtk-color-button-alpha
     "alpha" "guint" t t)
-   (color gtk-color-button-color
+   (color
+    gtk-color-button-color
     "color" "GdkColor" t t)
    (rgba
     gtk-color-button-rgba
@@ -479,7 +480,7 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-color-buuton-set-use-alpha))
+(declaim (inline gtk-color-button-set-use-alpha))
 
 (defun gtk-color-button-set-use-alpha (button use-alpha)
   (setf (gtk-color-button-use-alpha button) use-alpha))
