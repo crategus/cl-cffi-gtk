@@ -81,8 +81,8 @@
 ;;;
 ;;; Description
 ;;;
-;;; The GtkFontButton is a button which displays the currently selected font an
-;;; allows to open a font chooser dialog to change the font. It is suitable
+;;; The GtkFontButton is a button which displays the currently selected font and
+;;; allows to open a font chooser dialog to change the font. It is a suitable
 ;;; widget for selecting a font in a preference dialog.
 ;;;
 ;;; ----------------------------------------------------------------------------
@@ -237,6 +237,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-new))
+
+(defun gtk-font-button-new ()
+  (make-instance 'gtk-font-button))
+
+(export 'gtk-font-button-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_new_with_font ()
 ;;;
@@ -252,6 +259,14 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-button-new-with-font))
+
+(defun gtk-font-button-new-with-font (fontname)
+  (make-instance 'gtk-font-button
+                 :font-name fontname))
+
+(export 'gtk-font-button-new-with-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_set_font_name ()
@@ -273,6 +288,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-set-font-name))
+
+(defun gtk-font-button-set-font-name (font-button fontname)
+  (setf (gtk-font-button-font-name font-button) fontname))
+
+(export 'gtk-font-button-set-font-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_get_font_name ()
 ;;;
@@ -293,6 +315,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-get-font-name))
+
+(defun gtk-font-button-get-font-name (font-button)
+  (gtk-font-button-font-name font-button))
+
+(export 'gtk-font-button-get-font-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_set_show_style ()
 ;;;
@@ -311,6 +340,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-set-show-style))
+
+(defun gtk-font-button-set-show-style (font-button show-style)
+  (setf (gtk-font-button-show-style font-button) show-style))
+
+(export 'gtk-font-button-set-show-style)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_get_show_style ()
 ;;;
@@ -326,6 +362,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-button-get-show-style))
+
+(defun gtk-font-button-get-show-style (font-button)
+  (gtk-font-button-show-style font-button))
+
+(export 'gtk-font-button-get-show-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_set_show_size ()
@@ -345,6 +388,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-set-show-size))
+
+(defun gtk-font-button-set-show-size (font-button show-size)
+  (setf (gtk-font-button-show-size font-button) show-size))
+
+(export 'gtk-font-button-set-show-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_get_show_size ()
 ;;;
@@ -360,6 +410,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-button-get-show-size))
+
+(defun gtk-font-button-get-show-size (font-button)
+  (gtk-font-button-show-size font-button))
+
+(export 'gtk-font-button-get-show-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_set_use_font ()
@@ -378,6 +435,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-set-use-font))
+
+(defun gtk-font-button-set-use-font (font-button use-font)
+  (setf (gtk-font-button-use-font font-button) use-font))
+
+(export 'gtk-font-button-set-use-font)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_get_use_font ()
 ;;;
@@ -393,6 +457,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-button-get-use-font))
+
+(defun gtk-font-button-get-use-font (font-button)
+  (gtk-font-button-use-font font-button))
+
+(export 'gtk-font-button-get-use-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_set_use_size ()
@@ -411,6 +482,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-set-use-size))
+
+(defun gtk-font-button-set-use-size (font-button use-size)
+  (setf (gtk-font-button-use-size font-button) use-size))
+
+(export 'gtk-font-button-set-use-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_get_use_size ()
 ;;;
@@ -426,6 +504,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-font-button-get-use-size))
+
+(defun gtk-font-button-get-use-size (font-button)
+  (gtk-font-button-use-size font-button))
+
+(export 'gtk-font-button-get-use-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_set_title ()
@@ -444,6 +529,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-set-title))
+
+(defun gtk-font-button-set-title (font-button title)
+  (setf (gtk-font-button-title font-button) title))
+
+(export 'gtk-font-button-set-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_get_title ()
 ;;;
@@ -460,5 +552,11 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-font-button-get-title))
+
+(defun gtk-font-button-get-title (font-button)
+  (gtk-font-button-title font-button))
+
+(export 'gtk-font-button-get-title)
 
 ;;; --- End of file gtk.font-button.lisp ---------------------------------------
