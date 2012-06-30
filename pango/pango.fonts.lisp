@@ -1442,6 +1442,13 @@
 ;;; weight, width and other aspects.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-object-class "PangoFontFamily" pango-font-family
+  (:superclass g-object
+    :export t
+    :interfaces nil
+    :type-initializer "pango_font_family_get_type")
+  nil)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_family_get_name ()
 ;;; 
@@ -1458,6 +1465,11 @@
 ;;;     the name of the family. This string is owned by the family object and
 ;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_font_family_get_name" pango-font-family-get-name) :string
+  (family (g-object pango-font-family)))
+
+(export 'pango-font-family-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_family_is_monospace ()
@@ -1516,6 +1528,13 @@
 ;;; same family, slant, weight, width, but varying sizes.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-object-class "PangoFontFace" pango-font-face
+  (:superclass g-object
+    :export t
+    :interfaces nil
+    :type-initializer "pango_font_face_get_type")
+  nil)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_face_get_face_name ()
 ;;; 
@@ -1532,6 +1551,11 @@
 ;;;     the face name for the face. This string is owned by the face object and
 ;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_font_face_get_face_name" pango-font-face-get-face-name) :string
+  (face (g-object pango-font-face)))
+
+(export 'pango-font-face-get-face-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_face_list_sizes ()
