@@ -56,6 +56,7 @@
 ;;; implements the GtkFontChooser interface.
 ;;;
 ;;; GtkFontChooserDialog as GtkBuildable
+;;;
 ;;; The GtkFontChooserDialog implementation of the GtkBuildable interface
 ;;; exposes the buttons with the names "select_button" and "cancel_button.
 ;;; ----------------------------------------------------------------------------
