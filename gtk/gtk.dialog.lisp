@@ -149,7 +149,7 @@
 ;;;   quick_message (gchar *message)
 ;;;   {
 ;;;      GtkWidget *dialog, *label, *content_area;
-;;;   
+;;;
 ;;;      /* Create the widgets */
 ;;;      dialog = gtk_dialog_new_with_buttons ("Message",
 ;;;                                            main_application_window,
@@ -159,15 +159,15 @@
 ;;;                                            NULL);
 ;;;      content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 ;;;      label = gtk_label_new (message);
-;;;   
+;;;
 ;;;      /* Ensure that the dialog box is destroyed when the user responds */
 ;;;      g_signal_connect_swapped (dialog,
 ;;;                                "response",
 ;;;                                G_CALLBACK (gtk_widget_destroy),
 ;;;                                dialog);
-;;;   
+;;;
 ;;;      /* Add the label, and show everything we've added to the dialog */
-;;;   
+;;;
 ;;;      gtk_container_add (GTK_CONTAINER (content_area), label);
 ;;;      gtk_widget_show_all (dialog);
 ;;;   }
@@ -626,6 +626,14 @@
 ;;; ... :
 ;;;     response ID for first button, then more text-response_id pairs
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-dialog-add-buttons (dialog &rest buttons)
+  (let ((n (/ (length buttons) 2)))
+    (assert (eql n (truncate (length buttons) 2)))
+    (dotimes (i n)
+      (gtk-dialog-add-button dialog (pop buttons) (pop buttons)))))
+
+(export 'gtk-dialog-add-buttons)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_dialog_add_action_widget ()
