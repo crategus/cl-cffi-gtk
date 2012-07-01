@@ -829,7 +829,7 @@
       
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 4. Display Widgets
+;;; Chapter 5. Display Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -1449,7 +1449,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 8. Layout Containers
+;;; Chapter 8. Layout Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -2005,7 +2005,281 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 10. Miscellaneous Widgets
+;;; Chapter 10. Selecting Colors, Files and Fonts
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; Color Button
+
+(let ((color (gdk-rgba-parse "Gray")))
+  (defun example-color-button ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title "Example Color Button"
+                                   :border-width 12
+                                   :default-width 250
+                                   :default-height 200))
+            (button (make-instance 'gtk-color-button
+                                   :rgba color)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-main-quit)))
+        (g-signal-connect button "color-set"
+           (lambda (widget)
+             (let ((rgba (gtk-color-chooser-get-rgba widget)))
+               (format t "Selected color is ~A~%"
+                       (gdk-rgba-to-string rgba)))))
+        (gtk-container-add window button)
+        (gtk-widget-show-all window)))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Color Chooser Dialog
+
+(let ((color (gdk-rgba-parse "Blue"))
+      ;; Color palette with 4 rgba colors
+      (palette1 (list (gdk-rgba-parse "Red")
+                      (gdk-rgba-parse "Yellow")
+                      (gdk-rgba-parse "Blue")
+                      (gdk-rgba-parse "Green")))
+      ;; Gray palette with 3 rgba grays
+      (palette2 (list (gdk-rgba-parse "White")
+                      (gdk-rgba-parse "Gray")
+                      (gdk-rgba-parse "Black"))))
+  (defun drawing-area-event (widget event area)
+    (declare (ignore widget))
+    (let ((handled nil))
+      (when (eql (gdk-event-type event) :button-press)
+        (let ((dialog (make-instance 'gtk-color-chooser-dialog
+                                      :color color
+                                      :use-alpha nil)))
+          (setq handled t)
+          ;; Add a custom palette to the dialog
+          (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
+          ;; Add a second coustom palette to the dialog
+          (gtk-color-chooser-add-palette dialog :vertical 1 palette2)
+          ;; Run the color chooser dialog
+          (let ((response (gtk-dialog-run dialog)))
+            (when (eql response :ok)
+              (setq color (gtk-color-chooser-get-rgba dialog)))
+            ;; Set the color of the area widget
+            (gtk-widget-override-background-color area :normal color)
+            ;; Destroy the color chooser dialog
+            (gtk-widget-destroy dialog))))
+      handled))
+
+  (defun example-color-chooser-dialog ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title "Example Color Chooser Dialog"
+                                   :default-width 300))
+            (area (make-instance 'gtk-drawing-area)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-main-quit)))
+        (gtk-widget-override-background-color area :normal color)
+        (gtk-widget-set-events area :button-press-mask)
+        (g-signal-connect area "event"
+                          (lambda (widget event)
+                            (drawing-area-event widget event area)))
+        (gtk-container-add window area)
+        (gtk-widget-show-all window)))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Color Selection Widget (deprecated)
+
+(let ((color (make-gdk-color :red 0
+                             :blue 65535
+                             :green 0)))
+  (defun drawing-area-event (widget event area)
+    (declare (ignore widget))
+    (let ((handled nil))
+      (when (eql (gdk-event-type event) :button-press)
+        (let* ((colorseldlg (make-instance 'gtk-color-selection-dialog
+                                           :title "Select Background Color"))
+               (colorsel
+                 (gtk-color-selection-dialog-color-selection colorseldlg)))
+          (setq handled t)
+          (gtk-color-selection-set-previous-color colorsel color)
+          (gtk-color-selection-set-current-color colorsel color)
+          (gtk-color-selection-set-has-palette colorsel t)
+          (g-signal-connect colorsel "color-changed"
+             (lambda (widget)
+               (declare (ignore widget))
+               (let ((color (gtk-color-selection-get-current-color colorsel)))
+                 (gtk-widget-modify-bg area :normal color))))
+          (let ((response (gtk-dialog-run colorseldlg)))
+            (gtk-widget-destroy colorseldlg)
+            (if (eql response :ok)
+                (setq color (gtk-color-selection-get-current-color colorsel))
+                (gtk-widget-modify-bg area :normal color)))))
+      handled))
+
+  (defun example-color-selection ()
+    (within-main-loop
+      (let ((window (make-instance 'gtk-window
+                                   :title "Example Color Selection"
+                                   :default-width 300))
+            (area (make-instance 'gtk-drawing-area)))
+        (g-signal-connect window "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-main-quit)))
+        (gtk-widget-modify-bg area :normal color)
+        (gtk-widget-set-events area :button-press-mask)
+        (g-signal-connect area "event"
+                          (lambda (widget event)
+                            (drawing-area-event widget event area)))
+        (gtk-container-add window area)
+        (gtk-widget-show-all window)))))
+      
+;;; ----------------------------------------------------------------------------
+
+;;; File Chooser Dialog
+
+(defun example-file-chooser-dialog ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Dialog"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-button
+                                 :label "Select a file for save ..."
+                                 :image
+                                 (gtk-image-new-from-stock "gtk-save"
+                                                           :button))))
+      ;; Handle the signal "destroy" for the window.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Handle the signal "clicked" for the button.
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let ((dialog (gtk-file-chooser-dialog-new "Speichern"
+                                                      nil
+                                                      :save
+                                                      "gtk-save" :accept
+                                                      "gtk-cancel" :cancel)))
+             (when (eq (gtk-dialog-run dialog) :accept)
+               (format t "Saved to file ~A~%"
+                       (gtk-file-chooser-filename dialog)))
+             (gtk-widget-destroy dialog))))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+
+#+nil
+(defun example-file-chooser-dialog ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Dialog"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-button
+                                 :label "Select a file for save ..."
+                                 :image
+                                 (gtk-image-new-from-stock "gtk-save"
+                                                           :button))))
+      ;; Handle the signal "destroy" for the window.
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Handle the signal "clicked" for the button.
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let ((dialog (make-instance 'gtk-file-chooser-dialog
+                                        :title "Speichern"
+                                        :action :save)))
+             (gtk-dialog-add-button dialog "gtk-save" :accept)
+             (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
+             (when (eq (gtk-dialog-run dialog) :accept)
+               (format t "Saved to file ~A~%"
+                       (gtk-file-chooser-filename dialog)))
+             (gtk-widget-destroy dialog))))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; File Chooser Button
+
+(defun example-file-chooser-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example File Chooser Button"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-file-chooser-button
+                                 :action :open)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (g-signal-connect button "file-set"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "File set: ~A~%"
+                                  (gtk-file-chooser-filename button))))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Font Chooser Button
+
+(defun font-filter (family face)
+  (declare (ignore face))
+  (member (pango-font-family-get-name family)
+          '("Sans" "Serif")
+          :test #'equal))
+
+(defun example-font-button ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Font Chooser Button"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 100))
+          (button (make-instance 'gtk-font-button)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Set a filter function to select fonts for the font chooser
+      (gtk-font-chooser-set-filter-func button #'font-filter)
+      (g-signal-connect button "font-set"
+         (lambda (widget)
+           (declare (ignore widget))
+           (format t "Font is set:~%")
+           (format t "   Font name   : ~A~%"
+                   (gtk-font-chooser-get-font button))
+           (format t "   Font family : ~A~%"
+                   (pango-font-family-get-name
+                     (gtk-font-chooser-get-font-family button)))
+           (format t "   Font face   : ~A~%"
+                   (pango-font-face-get-face-name
+                     (gtk-font-chooser-get-font-face button)))
+           (format t "   Font size   : ~A~%"
+                   (gtk-font-chooser-get-font-size button))))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Chapter 11. Miscellaneous Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -2607,156 +2881,8 @@
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
-
-;;; Color Button
-
-(let ((color (gdk-rgba-parse "Gray")))
-  (defun example-color-button ()
-    (within-main-loop
-      (let ((window (make-instance 'gtk-window
-                                   :title "Example Color Button"
-                                   :border-width 12
-                                   :default-width 300
-                                   :default-height 250))
-            (area (make-instance 'gtk-drawing-area))
-            (button (make-instance 'gtk-color-button
-                                   :rgba color))
-            (vbox (make-instance 'gtk-box
-                                 :orientation :vertical
-                                 :spacing 12)))
-        (g-signal-connect window "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-main-quit)))
-        (g-signal-connect button "color-set"
-           (lambda (widget)
-             (let ((rgba (gtk-color-chooser-get-rgba widget)))
-               (gtk-widget-override-background-color area :normal rgba))))
-        (gtk-widget-override-background-color area :normal color)
-        (gtk-box-pack-start vbox area)
-        (gtk-box-pack-start vbox button)
-        (gtk-container-add window vbox)
-        (gtk-widget-show-all window))))
-)
-
-;;; ----------------------------------------------------------------------------
-
-;;; Color Selection Widget
-
-(let ((color (make-gdk-color :red 0
-                             :blue 65535
-                             :green 0)))
-
-  (defun drawing-area-event (widget event area)
-    (declare (ignore widget))
-    (let ((handled nil))
-      (when (eql (gdk-event-type event) :button-press)
-        (let* ((colorseldlg (make-instance 'gtk-color-selection-dialog
-                                           :title "Select Background Color"))
-               (colorsel
-                 (gtk-color-selection-dialog-color-selection colorseldlg)))
-          (setq handled t)
-          (gtk-color-selection-set-previous-color colorsel color)
-          (gtk-color-selection-set-current-color colorsel color)
-          (gtk-color-selection-set-has-palette colorsel t)
-          (g-signal-connect colorsel "color-changed"
-             (lambda (widget)
-               (declare (ignore widget))
-               (let ((color (gtk-color-selection-get-current-color colorsel)))
-                 (gtk-widget-modify-bg area :normal color))))
-          (let ((response (gtk-dialog-run colorseldlg)))
-            (gtk-widget-destroy colorseldlg)
-            (if (eql response :ok)
-                (setq color (gtk-color-selection-get-current-color colorsel))
-                (gtk-widget-modify-bg area :normal color)))))
-      handled))
-
-  (defun example-color-selection ()
-    (within-main-loop
-      (let ((window (make-instance 'gtk-window
-                                   :title "Example Color Selection"
-                                   :default-width 300))
-            (area (make-instance 'gtk-drawing-area)))
-        (g-signal-connect window "destroy"
-                          (lambda (widget)
-                            (declare (ignore widget))
-                            (gtk-main-quit)))
-        (gtk-widget-modify-bg area :normal color)
-        (gtk-widget-set-events area :button-press-mask)
-        (g-signal-connect area "event"
-                          (lambda (widget event)
-                            (drawing-area-event widget event area)))
-        (gtk-container-add window area)
-        (gtk-widget-show-all window))))
-)
-
-;;; ----------------------------------------------------------------------------
-
-;;; File Chooser Button
-
-(defun example-file-chooser-button ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example File Chooser Button"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 100))
-          (button (make-instance 'gtk-file-chooser-button
-                                 :action :open)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (g-signal-connect button "file-set"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "File set: ~A~%"
-                                  (gtk-file-chooser-filename button))))
-      (gtk-container-add window button)
-      (gtk-widget-show-all window))))
-      
-;;; ----------------------------------------------------------------------------
-
-;;; File Chooser Dialog
-
-(defun example-file-chooser-dialog ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example File Chooser Dialog"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 100))
-          (button (make-instance 'gtk-button
-                                 :label "Select a file for save ..."
-                                 :image
-                                 (gtk-image-new-from-stock "gtk-save"
-                                                           :button))))
-      ;; Handle the signal "destroy" for the window.
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      ;; Handle the signal "clicked" for the button.
-      (g-signal-connect button "clicked"
-         (lambda (widget)
-           (declare (ignore widget))
-           (let ((dialog (make-instance 'gtk-file-chooser-dialog
-                                        :action :save
-                                        :title "Choose file to save")))
-             (gtk-dialog-add-button dialog "gtk-save" :accept)
-             (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
-             (when (eq (gtk-dialog-run dialog) :accept)
-               (format t "saved to file ~A~%"
-                       (gtk-file-chooser-filename dialog)))
-             (gtk-widget-destroy dialog))))
-      (gtk-container-add window button)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
 ;;;
-;;; Menu Widget
+;;; 12. Menu Widget
 ;;;
 ;;; ----------------------------------------------------------------------------
 
