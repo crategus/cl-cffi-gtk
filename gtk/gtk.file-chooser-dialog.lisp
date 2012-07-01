@@ -244,5 +244,14 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-file-chooser-dialog-new (title parent action &rest buttons)
+  (let ((dialog (make-instance 'gtk-file-chooser-dialog
+                               :title title
+                               :parent parent
+                               :action action)))
+    (apply #'gtk-dialog-add-buttons (cons dialog buttons))
+    dialog))
+
+(export 'gtk-file-chooser-dialog-new)
 
 ;;; --- End of file gtk.file-chooser-dialog.lisp -------------------------------

@@ -568,7 +568,7 @@
 ;;;   {
 ;;;     char *uri;
 ;;;     uri = gtk_file_chooser_get_uri (chooser);
-;;;   
+;;;
 ;;;     if (is_uri_read_only (uri))
 ;;;       {
 ;;;         if (user_wants_to_replace_read_only_file (uri))
@@ -579,20 +579,20 @@
 ;;;         // fall back to the default dialog
 ;;;         return GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM;
 ;;;   }
-;;;   
+;;;
 ;;;   ...
 ;;;
 ;;;   chooser = gtk_file_chooser_dialog_new (...);
-;;;   
+;;;
 ;;;   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
 ;;;                                                   TRUE);
 ;;;   g_signal_connect (chooser, "confirm-overwrite",
 ;;;                     G_CALLBACK (confirm_overwrite_callback), NULL);
-;;;   
+;;;
 ;;;   if (gtk_dialog_run (chooser) == GTK_RESPONSE_ACCEPT)
 ;;;           save_to_file (gtk_file_chooser_get_filename
 ;;;                                                (GTK_FILE_CHOOSER (chooser));
-;;;   
+;;;
 ;;;   gtk_widget_destroy (chooser);
 ;;;
 ;;;
@@ -726,18 +726,6 @@
 ;;; typedef struct _GtkFileChooser GtkFileChooser;
 ;;; ----------------------------------------------------------------------------
 
-;;;   "action"                    GtkFileChooserAction  : Read / Write
-;;;   "create-folders"            gboolean              : Read / Write
-;;;   "do-overwrite-confirmation" gboolean              : Read / Write
-;;;   "extra-widget"              GtkWidget*            : Read / Write
-;;;   "filter"                    GtkFileFilter*        : Read / Write
-;;;   "local-only"                gboolean              : Read / Write
-;;;   "preview-widget"            GtkWidget*            : Read / Write
-;;;   "preview-widget-active"     gboolean              : Read / Write
-;;;   "select-multiple"           gboolean              : Read / Write
-;;;   "show-hidden"               gboolean              : Read / Write
-;;;   "use-preview-label"         gboolean              : Read / Write
-
 (define-g-interface "GtkFileChooser" gtk-file-chooser
   (:export t
    :type-initializer "gtk_file_chooser_get_type")
@@ -774,10 +762,6 @@
   (use-preview-label
    gtk-file-chooser-use-preview-label
    "use-preview-label" "gboolean" t t)
-  (:cffi current-name
-         gtk-file-chooser-current-name
-         (:string :free-to-foreign t :encoding :utf-8) nil
-         "gtk_file_chooser_set_current_name")
   #+win32
   (:cffi filename
          gtk-file-chooser-filename
@@ -964,6 +948,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-set-action))
+
+(defun gtk-file-chooser-set-action (chooser action)
+  (setf (gtk-file-chooser-action chooser) action))
+
+(export 'gtk-file-chooser-set-action)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_action ()
 ;;;
@@ -980,6 +971,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-action))
+
+(defun gtk-file-chooser-get-action (chooser)
+  (gtk-file-chooser-action chooser))
+
+(export 'gtk-file-chooser-get-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_local_only ()
@@ -1003,6 +1001,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-set-local-only))
+
+(defun gtk-file-chooser-set-local-only (chooser local-only)
+  (setf (gtk-file-chooser-local-only chooser) local-only))
+
+(export 'gtk-file-chooser-set-local-only)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_local_only ()
 ;;;
@@ -1019,6 +1024,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-local-only))
+
+(defun gtk-file-chooser-get-local-only (chooser)
+  (gtk-file-chooser-local-only chooser))
+
+(export 'gtk-file-chooser-get-local-only)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_select_multiple ()
@@ -1039,6 +1051,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-set-select-multiple))
+
+(defun gtk-file-chooser-set-select-multiple (chooser select-multiple)
+  (setf (gtk-file-chooser-select-multiple chooser) select-multiple))
+
+(export 'gtk-file-chooser-set-select-multiple)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_select_multiple ()
 ;;;
@@ -1055,6 +1074,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-select-multiple))
+
+(defun gtk-file-chooser-get-select-multiple (chooser)
+  (gtk-file-chooser-select-multiple chooser))
+
+(export 'gtk-file-chooser-get-select-multiple)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_show_hidden ()
@@ -1073,6 +1099,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-set-show-hidden))
+
+(defun gtk-file-chooser-set-show-hidden (chooser show-hidden)
+  (setf (gtk-file-chooser-show-hidden chooser) show-hidden))
+
+(export 'gtk-file-chooser-set-show-hidden)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_show_hidden ()
 ;;;
@@ -1089,6 +1122,13 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-show-hidden))
+
+(defun gtk-file-chooser-get-show-hidden (chooser)
+  (gtk-file-chooser-show-hidden chooser))
+
+(export 'gtk-file-chooser-get-show-hidden)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_do_overwrite_confirmation ()
@@ -1118,6 +1158,13 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-set-do-overwrite-confirmation))
+
+(defun gtk-file-chooser-set-do-overwrite-confirmation (chooser confirmation)
+  (setf (gtk-file-chooser-do-overwrite-confirmation chooser) confirmation))
+
+(export 'gtk-file-chooser-set-do-overwrite-confirmation)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_do_overwrite_confirmation ()
 ;;;
@@ -1137,6 +1184,13 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-get-do-overwrite-confirmation))
+
+(defun gtk-file-chooser-get-do-overwrite-confirmation (chooser)
+  (gtk-file-chooser-do-overwrite-confirmation chooser))
+
+(export 'gtk-file-chooser-get-do-overwrite-confirmation)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_create_folders ()
 ;;;
@@ -1155,6 +1209,13 @@
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-set-create-folders))
+
+(defun gtk-file-chooser-set-create-folders (chooser create-folders)
+  (setf (gtk-file-chooser-create-folders chooser) create-folders))
+
+(export 'gtk-file-chooser-set-create-folders)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_create_folders ()
 ;;;
@@ -1171,6 +1232,13 @@
 ;;;
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-create-folders))
+
+(defun gtk-file-chooser-get-create-folders (chooser)
+  (gtk-file-chooser-create-folders chooser))
+
+(export 'gtk-file-chooser-get-create-folders)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_current_name ()
@@ -1197,6 +1265,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_set_current_name" gtk-file-chooser-set-current-name)
+    :void
+  (chooser (g-object gtk-file-chooser))
+  (name :string :free-to-foreign t :encoding :utf-8))
+
+(export 'gtk-file-chooser-set-current-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_filename ()

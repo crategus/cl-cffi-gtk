@@ -82,7 +82,7 @@
 ;;;
 ;;;   {
 ;;;     GtkWidget *button;
-;;;   
+;;;
 ;;;     button = gtk_file_chooser_button_new (_("Select a file"),
 ;;;                                           GTK_FILE_CHOOSER_ACTION_OPEN);
 ;;;     gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (button),
@@ -96,8 +96,8 @@
 ;;;
 ;;; Important
 ;;;
-;;; The GtkFileChooserButton will ellipsize the label, and thus will thus
-;;; request little horizontal space. To give the button more space, you should
+;;; The GtkFileChooserButton will ellipsize the label, and thus will request
+;;; little horizontal space. To give the button more space, you should
 ;;; call gtk_widget_get_preferred_size(),
 ;;; gtk_file_chooser_button_set_width_chars(), or pack the button in such a way
 ;;; that other interface elements give space to the widget.
@@ -186,10 +186,12 @@
   (register-object-type "GtkFileChooserButton" 'gtk-file-chooser-button))
 
 (define-g-object-class "GtkFileChooserButton" gtk-file-chooser-button
-  (:superclass gtk-hbox
+  (:superclass gtk-box
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkFileChooser"
-                "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable"
+                "GtkFileChooser")
    :type-initializer "gtk_file_chooser_button_get_type")
   ((dialog
     gtk-file-chooser-button-dialog
@@ -246,6 +248,15 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-button-new))
+
+(defun gtk-file-chooser-button-new (title action)
+  (make-instance 'gtk-file-chooser-button
+                 :title title
+                 :action action))
+
+(export 'gtk-file-chooser-button-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_new_with_dialog ()
 ;;;
@@ -271,6 +282,14 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-button-new-with-dialog))
+
+(defun gtk-file-chooser-button-new-with-dialog (dialog)
+  (make-instance 'gtk-file-chooser-button
+                 :dialog dialog))
+
+(export 'gtk-file-chooser-button-new-with-dialog)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_get_title ()
 ;;;
@@ -289,6 +308,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-button-get-title))
+
+(defun gtk-file-chooser-button-get-title (button)
+  (gtk-file-chooser-button-title button))
+
+(export 'gtk-file-chooser-button-get-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_set_title ()
 ;;;
@@ -306,6 +332,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-button-set-title))
+
+(defun gtk-file-chooser-button-set-title (button title)
+  (setf (gtk-file-chooser-button-title button) title))
+
+(export 'gtk-file-chooser-button-set-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_get_width_chars ()
 ;;;
@@ -321,6 +354,13 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-button-get-width-chars))
+
+(defun gtk-file-chooser-button-get-width-chars (button)
+  (gtk-file-chooser-button-width-chars button))
+
+(export 'gtk-file-chooser-button-get-width-chars)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_set_width_chars ()
@@ -339,6 +379,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-button-set-width-chars))
+
+(defun gtk-file-chooser-button-set-width-chars (button n-chars)
+  (setf (gtk-file-chooser-button-width-chars button) n-chars))
+
+(export 'gtk-file-chooser-button-set-width-chars)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_get_focus_on_click ()
 ;;;
@@ -356,6 +403,13 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-button-get-focus-on-click))
+
+(defun gtk-file-chooser-button-get-focus-on-click (button)
+  (gtk-file-chooser-button-focus-on-click button))
+
+(export 'gtk-file-chooser-button-get-focus-on-click)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_button_set_focus_on_click ()
@@ -378,5 +432,11 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-file-chooser-button-set-focus-on-click))
+
+(defun gtk-file-chooser-button-set-focus-on-click (button focus-on-click)
+  (setf (gtk-file-chooser-button-focus-on-click button) focus-on-click))
+
+(export 'gtk-file-chooser-button-set-focus-on-click)
 
 ;;; --- End of file gtk.file-chooser-button.lisp -------------------------------
