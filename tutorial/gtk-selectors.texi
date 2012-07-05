@@ -11,14 +11,15 @@
 
 @menu
 * Selecting Colors::
+* Selecting Files::
+* Selecting Fonts::
 @end menu
 
 @c -----------------------------------------------------------------------------
-@node Selecting Colors
+@node Selecting Colors, Selecting Files, Top, Top
 @section Selecting Colors
 
 @c -----------------------------------------------------------------------------
-@node Representing Colors
 @subsection Representing Colors
 
 Colors are represented as a structure of the type @code{GdkRGBA}, which is
@@ -73,7 +74,6 @@ of type @code{GdkColor}.  The implementation is semilar.  The widgets for
 choosing a color know both representations.
 
 @c -----------------------------------------------------------------------------
-@node Color Chooser Dialog and Color Button
 @subsection Color Button and Color Chooser Dialog
 
 @ifnotinfo
@@ -203,8 +203,8 @@ palette and the default gray palette with the function
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node File Chooser Dialog and File Chooser Button
-@section File Chooser Dialog and File Chooser Button
+@node Selecting Files, Selecting Fonts, Selecting Colors, Top
+@section Selecting Files
 
 @ifnotinfo
 @float Figure, figure-file-chooser-dialog
@@ -428,8 +428,8 @@ to open a file.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node Font Chooser Button and Font Chooser Dialog
-@section Font Chooser Button and Font Chooser Dialog
+@node Selecting Fonts, , Selecting Files, Top
+@section Selecting Fonts
 
 @ifnotinfo
 @float Figure, figure-font-chooser-widget

@@ -3,7 +3,7 @@
 @c License  : GNU General Public License (GPL)
 @c Author   : Dieter Kaiser
 @c Date     : 26.12.2011
-@c Revision : 02.05.2012
+@c Revision : 01.07.2012
 @c 
 @c Copyright (C) 2011 - 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 09.03.2012
-@c Revision : 22.04.2012
+@c Revision : 01.07.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -13,10 +13,7 @@
 * Introduction to Range Widgets::
 * Scrollbar Widgets::
 * Scale Widgets::
-* Creating a Scale Widget::
 * Common Range Functions::
-* Getting and Setting Adjustments::
-* Key and Mouse bindings::
 * Example Range Widgets::
 @end menu
 
@@ -243,7 +240,7 @@ The user can also move the slider all the way to one end or the other of the
 trough using the keyboard.  This is done with the Home and End keys.
 
 @c -----------------------------------------------------------------------------
-@node Example Range Widgets, , Common Range Widgets, Top
+@node Example Range Widgets, , Common Range Functions, Top
 @section Example Range Widgets
 
 @ifnotinfo

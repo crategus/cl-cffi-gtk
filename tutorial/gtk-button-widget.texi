@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 03.02.2012
-@c Revision : 21.04.2012
+@c Revision : 01.07.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -529,7 +529,7 @@ is shown in @ref{example-link-button}.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node Switches, , Link Buttons Top
+@node Switches, , Link Buttons, Top
 @section Switches
 
 @findex GtkSwitch

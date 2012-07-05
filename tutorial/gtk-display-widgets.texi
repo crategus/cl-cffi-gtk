@@ -4,24 +4,24 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 26.04.2012
-@c Revision : 26.04.2012
+@c Revision : 01.07.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
 * Labels::
-* Accelerator Labels::
-* Images::
+@c * Accelerator Labels::
+@c * Images::
 * Progress Bars::
 * Statusbars::
-* Infobars::
-* Status Icon::
-* Spinner::
+* Info Bars::
+@c * Status Icon::
+@c * Spinner::
 @end menu
 
 @c -----------------------------------------------------------------------------
-@node Labels, Accelerator Labels, Top, Top
+@node Labels, Progress Bars, Top, Top
 @section Labels
 
 @findex GtkLabel
@@ -513,11 +513,11 @@ and @ref{example-more-labels}.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node Accelerator Labels, Images, Labels, Top
-@node Images, Progress Bars, Accelerator Labels, Top
+@c @node Accelerator Labels, Images, Labels, Top
+@c @node Images, Progress Bars, Accelerator Labels, Top
 
 @c -----------------------------------------------------------------------------
-@node Progress Bars, Statusbars, Images, Top
+@node Progress Bars, Statusbars, Labels, Top
 @section Progress Bars
 
 @findex gtk-progress-bar-new
@@ -762,7 +762,7 @@ items onto the statusbar, and one for popping the last item back off.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node Info Bars, Status Icon, Statusbars, Top
+@node Info Bars, , Statusbars, Top
 @section Info Bars
 
 @ifnotinfo
@@ -835,6 +835,6 @@ the background color of the message area.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node Status Icon, Spinner, Info Bars, Top
-@node Spinner, , Status Icon, Top
+@c @node Status Icon, Spinner, Info Bars, Top
+@c @node Spinner, , Status Icon, Top
 

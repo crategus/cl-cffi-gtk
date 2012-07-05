@@ -56,11 +56,20 @@ END-INFO-DIR-ENTRY
 * Getting Started::             First steps
 * Packing Widgets::             Packing widgets into boxes
 * Button Widgets::
+* Display Widgets::
 * Adjustments::
 * Range Widgets::
+* Layout Widgets::
+* Multiline Text Editor::
+* Selecting Colors Files and Fonts::
 * Miscellaneous Widgets::
-* Container Widgets::
 * Menu Widget::
+
+Appendix
+* Reference of Widgets::
+* Tables::
+* Figures::
+* Examples::
 
 Index
 * Function and Variable Index:: Index.
@@ -78,6 +87,7 @@ Getting Started
 * Hello World in GTK+::
 * Introduction to Signals and Callbacks::
 * An Upgraded Hello World::
+* Drawing::
 
 Packing Widgets
 * Packing Widgets::
@@ -94,6 +104,14 @@ Button Widgets
 * Toggle Buttons::
 * Check Buttons::
 * Radio Buttons::
+* Link Buttons::
+* Switches::
+
+Display Widgets
+* Labels::
+* Progress Bars::
+* Statusbars::
+* Info Bars::
 
 Adjustments
 * Adjustments::
@@ -110,11 +128,45 @@ Range Widgets
 * Common Range Functions::
 * Example Range Widgets::
 
+Layout Widgets
+* Alignment Widget::
+* Fixed Container::
+* Layout Container::
+* Frames::
+* Aspect Frames::
+* Paned Window Widgets::
+* Viewports::
+* Scrolled Windows::
+* Button Boxes::
+* Toolbar::
+* Notebook::
+
+Multiline Text Editor
+* Multiline Text Editor::
+* Text Widget Overview::
+* Simple Example::
+* Example of Changing Text Attributes::
+
+Selecting Colors, Files, and Fonts
+* Selecting Colors Files and Fonts::
+* Selecting Colors::
+* Selecting Files::
+* Selecting Fonts::
+
 Miscellaneous Widgets
 * Miscellaneous Widgets::
-
-Container Widgets
-* Container Widgets::
+* Event Box::
+* Arrows::
+* Dialogs::
+* General Dialog::
+* Message Dialog::
+* About Dialog::
+* Text Entries::
+* Spin Buttons::
+* Combo Box::
+* General Combo Box::
+* Combo Box Text::
+* Calendar::
 
 Menu Widgets
 * Menu Widget::
@@ -153,7 +205,7 @@ Menu Widgets
 @chapter Layout Widgets
 @include gtk-container-widgets.texi
 
-@node Multiline Text Editor, Selection Colors Files and Fonts, Layout Widgets, Top
+@node Multiline Text Editor, Selecting Colors Files and Fonts, Layout Widgets, Top
 @chapter Multiline Text Editor
 @include gtk-text-view.texi
 
@@ -181,7 +233,7 @@ Menu Widgets
 @appendix Figures
 @listoffloats Figure
 
-@node Examples, Functions and Variable Index, Figures, Top
+@node Examples, Function and Variable Index, Figures, Top
 @appendix Examples
 @listoffloats Example
 

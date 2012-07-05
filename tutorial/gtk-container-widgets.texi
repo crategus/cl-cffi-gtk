@@ -9,8 +9,23 @@
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
+@menu
+* Alignment Widget::
+* Fixed Container::
+* Layout Container::
+* Frames::
+* Aspect Frames::
+* Paned Window Widgets::
+* Viewports::
+* Scrolled Windows::
+* Button Boxes::
+* Toolbar::
+* Notebook::
+@end menu
+
 @c -----------------------------------------------------------------------------
-@section Alignment widget
+@node Alignment Widget, Fixed Container, Top, Top
+@section Alignment Widget
 
 @findex GtkAlignment
 @findex gtk-alignment
@@ -149,6 +164,7 @@ Note that the desired effect can in most cases be achieved by using the
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Fixed Container, Layout Container, Alignment Widget, Top
 @section Fixed Container
 
 @findex GtkFixed
@@ -263,6 +279,7 @@ the fixed widget are then get with the functions @code{gdk-rectangle-width} and
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Layout Container, Frames, Fixed Container, Top
 @section Layout Container
 
 @findex GtkLayout
@@ -304,6 +321,7 @@ manipulating the horizontal and vertical adjustment widgets the functions
 are available.
 
 @c -----------------------------------------------------------------------------
+@node Frames, Aspect Frames, Layout Container, Top
 @section Frames
 
 @findex GtkFrame
@@ -386,6 +404,7 @@ example is shown in @ref{example-frame}.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Aspect Frames, Paned Window Widgets, Frames, Top
 @section Aspect Frames
 
 @findex GtkAspectFrame
@@ -453,6 +472,7 @@ resizes the top-level window.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Paned Window Widgets, Viewports, Aspect Frames, Top
 @section Paned Window Widgets
 
 @findex GtkPaned
@@ -546,6 +566,7 @@ shown in @ref{example-paned-window}
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Viewports, Scrolled Windows, Paned Window Widgets, Top
 @section Viewports
 
 @findex GtkViewport
@@ -603,6 +624,7 @@ alter its appearance.  The second argument is of type @code{GtkShadowType}.
 Possible values are listed in @ref{table-gtk-shadow-type}.
 
 @c -----------------------------------------------------------------------------
+@node Scrolled Windows, Button Boxes, Viewports, Top
 @section Scrolled Windows
 
 @ifnotinfo
@@ -731,6 +753,7 @@ other widgets.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Button Boxes, Toolbar, Scrolled Windows
 @section Button Boxes
 
 @ifnotinfo
@@ -886,6 +909,7 @@ layout settings for button boxes.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
+@node Toolbar, Notebook, Button Boxes, Top
 @section Toolbar
 
 A toolbar is created with a call to @code{gtk-toolbar-new}.
@@ -905,6 +929,7 @@ Creating a context menu for the toolbar can be done by connecting to the
 
 
 @c -----------------------------------------------------------------------------
+@node Notebook, , Button Boxes, Top
 @section Notebook
 
 @ifnotinfo

@@ -4,12 +4,19 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 22.05.2012
-@c Revision : 23.05.2012
+@c Revision : 01.07.2012
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
+@menu
+* Text Widget Overview::
+* Simple Example::
+* Example of Changing Text Attributes::
+@end menu
 
+@c -----------------------------------------------------------------------------
+@node Text Widget Overview, Simple Example, Top, Top
 @section Text Widget Overview
 
 GTK+ has an extremely powerful framework for multiline text editing.  The
@@ -80,6 +87,7 @@ are represented with multiple bytes in UTF-8, and the two-character sequence
 "\r\n" is also considered a line separator.
 
 @c -----------------------------------------------------------------------------
+@node Simple Example, Example of Changing Text Attributes, Text Widget Overview, Top
 @section Simple Example
 
 @ifnotinfo
@@ -120,6 +128,7 @@ In many cases it's also convenient to first create the buffer with
 displays after the widget is created with @code{gtk-text-view-set-buffer}.
 
 @c -----------------------------------------------------------------------------
+@node Example of Changing Text Attributes, , Simple Example, Top
 @section Example of Changing Text Attributes
 
 @ifnotinfo
