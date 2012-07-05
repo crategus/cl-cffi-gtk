@@ -26,19 +26,21 @@
 
 (defsystem :cl-cffi-gtk-gio
   :name :cl-cffi-gtk-gio
-  :version "0.0.0"
+  :version "2.32.3"                  ; Version of GIO
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
-  :components ((:file "gio.package")
-               (:file "gio.init")
-               (:file "gio.action")       ; An action interface
-               (:file "gio.action-group") ; A group of actions
-               (:file "gio.action-map")   ; Interface for action containers
-               (:file "gio.simple-action"); Simple GAction implementation
-               (:file "gio.application")  ; Core application class
-              )
+  :components
+  ((:file "gio.package")
+   (:file "gio.init")
+   (:file "gio.action")              ; An action interface
+   (:file "gio.action-group")        ; A group of actions
+   (:file "gio.action-map")          ; Interface for action containers
+   (:file "gio.simple-action")       ; Simple GAction implementation
+   (:file "gio.simple-action-group") ; Simple GActionGroup implementation
+   (:file "gio.application")         ; Core application class
+  )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject))
 
-;;; --- End of file cl-cffi-gtk-gio.asd ---------------------------------------
+;;; --- End of file cl-cffi-gtk-gio.asd ----------------------------------------
