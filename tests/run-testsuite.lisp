@@ -47,6 +47,18 @@
 
 ;;; ----------------------------------------------------------------------------
 
+(defpackage :gio-tests
+  (:use :gio :gobject :glib :cffi :common-lisp :lisp-unit))
+
+(load "rtest-gio-application.lisp")
+(load "rtest-gio-simple-action.lisp")
+(load "rtest-gio-simple-action-group.lisp")
+
+(in-package :gio-tests)
+(run-all-tests :gio-tests)
+
+;;; ----------------------------------------------------------------------------
+
 (defpackage :gdk-tests
   (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
 
