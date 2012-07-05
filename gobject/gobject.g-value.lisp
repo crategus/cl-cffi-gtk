@@ -221,6 +221,7 @@
       ((gtype +g-type-float+) (g-value-get-float gvalue))
       ((gtype +g-type-double+) (g-value-get-double gvalue))
       ((gtype +g-type-string+) (g-value-get-string gvalue))
+      ((gtype +g-type-variant+) (g-value-get-variant gvalue))
       (t (parse-g-value-for-type gvalue type parse-kind)))))
   
 ;;; ----------------------------------------------------------------------------
@@ -321,6 +322,7 @@
        (unless (realp value) (error "~A is not a real number" value))
        (g-value-set-double gvalue (coerce value 'double-float)))
       ((gtype +g-type-string+) (g-value-set-string gvalue value))
+      ((gtype +g-type-variant+) (g-value-set-variant gvalue value))
       (t (set-gvalue-for-type gvalue type value)))))
 
 ;;; ----------------------------------------------------------------------------
