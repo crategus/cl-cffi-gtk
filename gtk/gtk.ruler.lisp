@@ -29,11 +29,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkRuler
-;;; 
+;;;
 ;;; Base class for horizontal or vertical rulers
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkRuler
 ;;;     GtkRulerMetric
 ;;;
@@ -41,9 +41,9 @@
 ;;;     gtk_ruler_set_range
 ;;;     gtk_ruler_get_metric
 ;;;     gtk_ruler_get_range
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkObject
@@ -51,27 +51,27 @@
 ;;;                      +----GtkRuler
 ;;;                            +----GtkHRuler
 ;;;                            +----GtkVRuler
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkRuler implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; Properties
-;;; 
+;;;
 ;;;   "lower"                    gdouble               : Read / Write
 ;;;   "max-size"                 gdouble               : Read / Write
 ;;;   "metric"                   GtkMetricType         : Read / Write
 ;;;   "position"                 gdouble               : Read / Write
 ;;;   "upper"                    gdouble               : Read / Write
-;;; 
+;;;
 ;;; Description
 ;;; Note
-;;; 
+;;;
 ;;; This widget is considered too specialized/little-used for GTK+, and will be
 ;;; removed in GTK 3. If your application needs this widget, feel free to use
 ;;; it, as the widget is useful in some applications; it's just not of general
 ;;; interest. However, we are not accepting new features for the widget, and it
 ;;; will move out of the GTK+ distribution.
-;;; 
+;;;
 ;;; The GTKRuler widget is a base class for horizontal and vertical rulers.
 ;;; Rulers are used to show the mouse pointer's location in a window. The ruler
 ;;; can either be horizontal or vertical on the window. Within the ruler a small
@@ -85,49 +85,49 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "lower" property
-;;; 
+;;;
 ;;;   "lower"                    gdouble               : Read / Write
-;;; 
+;;;
 ;;; Lower limit of ruler.
-;;; 
+;;;
 ;;; Default value: 0
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "max-size" property
-;;; 
+;;;
 ;;;   "max-size"                 gdouble               : Read / Write
-;;; 
+;;;
 ;;; Maximum size of the ruler.
-;;; 
+;;;
 ;;; Default value: 0
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "metric" property
-;;; 
+;;;
 ;;;   "metric"                   GtkMetricType         : Read / Write
-;;; 
+;;;
 ;;; The metric used for the ruler.
-;;; 
+;;;
 ;;; Default value: GTK_PIXELS
-;;; 
+;;;
 ;;; Since 2.8
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "position" property
-;;; 
+;;;
 ;;;   "position"                 gdouble               : Read / Write
-;;; 
+;;;
 ;;; Position of mark on the ruler.
-;;; 
+;;;
 ;;; Default value: 0
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "upper" property
-;;; 
+;;;
 ;;;   "upper"                    gdouble               : Read / Write
-;;; 
+;;;
 ;;; Upper limit of ruler.
-;;; 
+;;;
 ;;; Default value: 0
 ;;; ----------------------------------------------------------------------------
 
@@ -135,23 +135,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkMetricType
-;;; 
+;;;
 ;;; typedef enum {
 ;;;   GTK_PIXELS,
 ;;;   GTK_INCHES,
 ;;;   GTK_CENTIMETERS
 ;;; } GtkMetricType;
-;;; 
+;;;
 ;;; Used to indicate which metric is used by a GtkRuler.
-;;; 
+;;;
 ;;; GTK_PIXELS
 ;;;     Pixels
-;;; 
+;;;
 ;;; GTK_INCHES
 ;;;     Inches
-;;; 
+;;;
 ;;; GTK_CENTIMETERS
-;;;     Centimeters 
+;;;     Centimeters
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkMetricType" gtk-metric-type
@@ -163,13 +163,13 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRuler
-;;; 
+;;;
 ;;; struct GtkRuler;
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; GtkRuler is deprecated and should not be used in newly-written code.
-;;; 
+;;;
 ;;; All distances are in 1/72nd's of an inch. (According to Adobe thats a point,
 ;;; but points are really 1/72.27 in.)
 ;;; ----------------------------------------------------------------------------
@@ -197,7 +197,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRulerMetric
-;;; 
+;;;
 ;;; struct GtkRulerMetric {
 ;;;   gchar *metric_name;
 ;;;   gchar *abbrev;
@@ -207,70 +207,70 @@
 ;;;   gdouble ruler_scale[10];
 ;;;   gint subdivide[5];        /* five possible modes of subdivision */
 ;;; };
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; GtkRulerMetric has been deprecated since version 2.24 and should not be used
 ;;; in newly-written code. GtkRuler has been removed from GTK 3 for being
 ;;; unmaintained and too specialized. There is no replacement.
-;;; 
+;;;
 ;;; This should be points_per_unit. This is the size of the unit in 1/72nd's of
 ;;; an inch and has nothing to do with screen pixels.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ruler_set_metric ()
-;;; 
+;;;
 ;;; void gtk_ruler_set_metric (GtkRuler *ruler, GtkMetricType metric);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_ruler_set_metric has been deprecated since version 2.24 and should not
 ;;; be used in newly-written code. GtkRuler has been removed from GTK 3 for
 ;;; being unmaintained and too specialized. There is no replacement.
-;;; 
+;;;
 ;;; This calls the GTKMetricType to set the ruler to units defined. Available
 ;;; units are GTK_PIXELS, GTK_INCHES, or GTK_CENTIMETERS. The default unit of
 ;;; measurement is GTK_PIXELS.
-;;; 
+;;;
 ;;; ruler :
 ;;;     the gtkruler
-;;; 
+;;;
 ;;; metric :
 ;;;     the unit of measurement
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ruler_set_range ()
-;;; 
+;;;
 ;;; void gtk_ruler_set_range (GtkRuler *ruler,
 ;;;                           gdouble lower,
 ;;;                           gdouble upper,
 ;;;                           gdouble position,
 ;;;                           gdouble max_size);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_ruler_set_range is deprecated and should not be used in newly-written
 ;;; code.
-;;; 
+;;;
 ;;; This sets the range of the ruler.
-;;; 
+;;;
 ;;; Deprecated: 2.24: GtkRuler has been removed from GTK 3 for being
 ;;; unmaintained and too specialized. There is no replacement.
-;;; 
+;;;
 ;;; ruler :
 ;;;     the gtkruler
-;;; 
+;;;
 ;;; lower :
 ;;;     the lower limit of the ruler
-;;; 
+;;;
 ;;; upper :
 ;;;     the upper limit of the ruler
-;;; 
+;;;
 ;;; position :
 ;;;     the mark on the ruler
-;;; 
+;;;
 ;;; max_size :
 ;;;     the maximum size of the ruler used when calculating the space to leave
 ;;;     for the text
@@ -278,19 +278,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ruler_get_metric ()
-;;; 
+;;;
 ;;; GtkMetricType gtk_ruler_get_metric (GtkRuler *ruler);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_ruler_get_metric is deprecated and should not be used in newly-written
 ;;; code.
-;;; 
+;;;
 ;;; Gets the units used for a GtkRuler. See gtk_ruler_set_metric().
-;;; 
+;;;
 ;;; ruler :
 ;;;     a GtkRuler
-;;; 
+;;;
 ;;; Returns :
 ;;;     the units currently used for ruler Deprecated: 2.24: GtkRuler has been
 ;;;     removed from GTK 3 for being unmaintained and too specialized. There is
@@ -299,36 +299,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ruler_get_range ()
-;;; 
+;;;
 ;;; void gtk_ruler_get_range (GtkRuler *ruler,
 ;;;                           gdouble *lower,
 ;;;                           gdouble *upper,
 ;;;                           gdouble *position,
 ;;;                           gdouble *max_size);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_ruler_get_range is deprecated and should not be used in newly-written
 ;;; code.
-;;; 
+;;;
 ;;; Retrieves values indicating the range and current position of a GtkRuler.
 ;;; See gtk_ruler_set_range().
-;;; 
+;;;
 ;;; Deprecated: 2.24: GtkRuler has been removed from GTK 3 for being
 ;;; unmaintained and too specialized. There is no replacement.
-;;; 
+;;;
 ;;; ruler :
 ;;;     a GtkRuler
-;;; 
+;;;
 ;;; lower :
 ;;;     location to store lower limit of the ruler, or NULL
-;;; 
+;;;
 ;;; upper :
 ;;;     location to store upper limit of the ruler, or NULL
-;;; 
+;;;
 ;;; position :
 ;;;     location to store the current position of the mark on the ruler, or NULL
-;;; 
+;;;
 ;;; max_size :
 ;;;     location to store the maximum size of the ruler used when calculating
 ;;;     the space to leave for the text, or NULL.
@@ -336,38 +336,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkHRuler
-;;; 
-;;; GtkHRuler — A horizontal ruler
-;;; 
+;;;
+;;; A horizontal ruler
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkHRuler
 ;;;
 ;;;     gtk_hruler_new
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkObject
 ;;;                +----GtkWidget
 ;;;                      +----GtkRuler
 ;;;                            +----GtkHRuler
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkHRuler implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;;
 ;;; Description
 ;;;
 ;;; Note
-;;; 
+;;;
 ;;; This widget is considered too specialized/little-used for GTK+, and will be
 ;;; removed in GTK 3. If your application needs this widget, feel free to use
 ;;; it, as the widget is useful in some applications; it's just not of general
 ;;; interest. However, we are not accepting new features for the widget, and it
 ;;; will move out of the GTK+ distribution.
-;;; 
+;;;
 ;;; The HRuler widget is a widget arranged horizontally creating a ruler that
 ;;; is utilized around other widgets such as a text widget. The ruler is used
 ;;; to show the location of the mouse on the window and to show the size of the
@@ -377,13 +377,13 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHRuler
-;;; 
+;;;
 ;;; struct GtkHRuler;
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; GtkHRuler is deprecated and should not be used in newly-written code.
-;;; 
+;;;
 ;;; The GtkHRuler struct contains private data and should be accessed with the
 ;;; functions below.
 ;;; ----------------------------------------------------------------------------
@@ -397,47 +397,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hruler_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_hruler_new (void);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_hruler_new has been deprecated since version 2.24 and should not be used
 ;;; in newly-written code. GtkRuler has been removed from GTK 3 for being
 ;;; unmaintained and too specialized. There is no replacement.
-;;; 
+;;;
 ;;; Creates a new horizontal ruler.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkHRuler.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVRuler
-;;; 
-;;; GtkVRuler — A vertical ruler
-;;; 
+;;;
+;;; A vertical ruler
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkVRuler
 ;;;
 ;;;     gtk_vruler_new
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkObject
 ;;;                +----GtkWidget
 ;;;                      +----GtkRuler
 ;;;                            +----GtkVRuler
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkVRuler implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;;
 ;;; Description
-;;; 
+;;;
 ;;; Note
 ;;;
 ;;; This widget is considered too specialized/little-used for GTK+, and will be
@@ -445,7 +445,7 @@
 ;;; it, as the widget is useful in some applications; it's just not of general
 ;;; interest. However, we are not accepting new features for the widget, and it
 ;;; will move out of the GTK+ distribution.
-;;; 
+;;;
 ;;; The VRuler widget is a widget arranged vertically creating a ruler that is
 ;;; utilized around other widgets such as a text widget. The ruler is used to
 ;;; show the location of the mouse on the window and to show the size of the
@@ -456,11 +456,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkVRuler
-;;; 
+;;;
 ;;; struct GtkVRuler;
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; GtkVRuler is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
@@ -473,15 +473,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vruler_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_vruler_new (void);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_vruler_new is deprecated and should not be used in newly-written code.
-;;; 
+;;;
 ;;; Creates a new vertical ruler
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkVRuler. Deprecated: 2.24: GtkRuler has been removed from GTK 3
 ;;;     for being unmaintained and too specialized. There is no replacement.

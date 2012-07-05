@@ -23,7 +23,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GtkIMContextSimple
 ;;;
 ;;; An input method context supporting table-based input methods

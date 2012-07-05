@@ -27,7 +27,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GtkEventBox
 ;;;
 ;;; A widget used to catch events for widgets which do not have their own window

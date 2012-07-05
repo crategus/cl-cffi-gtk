@@ -249,7 +249,7 @@
 ;;; e.g. "GTK_VISIBLE|GTK_REALIZED") and colors (in a format understood by
 ;;; gdk_color_parse()). Objects can be referred to by their name. Pixbufs can be
 ;;; specified as a filename of an image file to load. In general, GtkBuilder
-;;; allows forward references to objects — an object doesn't have to be
+;;; allows forward references to objects - an object doesn't have to be
 ;;; constructed before it can be referred to. The exception to this rule is that
 ;;; an object has to be constructed before it can be used as the value of a
 ;;; construct-only property.

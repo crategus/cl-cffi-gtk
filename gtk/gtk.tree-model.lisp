@@ -29,18 +29,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTreeModel
-;;; 
+;;;
 ;;; The tree interface used by GtkTreeView
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTreeModel
 ;;;     GtkTreeIter
 ;;;     GtkTreePath
 ;;;     GtkTreeRowReference
 ;;;     GtkTreeModelIface
 ;;;     GtkTreeModelFlags
-;;;     
+;;;
 ;;;     gtk_tree_path_new
 ;;;     gtk_tree_path_new_from_string
 ;;;     gtk_tree_path_new_from_indices
@@ -98,47 +98,47 @@
 ;;;     gtk_tree_model_row_has_child_toggled
 ;;;     gtk_tree_model_row_deleted
 ;;;     gtk_tree_model_rows_reordered
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GInterface
 ;;;    +----GtkTreeModel
-;;; 
+;;;
 ;;;   GBoxed
 ;;;    +----GtkTreeIter
-;;; 
+;;;
 ;;;   GBoxed
 ;;;    +----GtkTreePath
-;;; 
+;;;
 ;;; Prerequisites
-;;; 
+;;;
 ;;; GtkTreeModel requires GObject.
 ;;;
 ;;; Known Derived Interfaces
-;;; 
+;;;
 ;;; GtkTreeModel is required by GtkTreeSortable.
 ;;;
 ;;; Known Implementations
-;;; 
+;;;
 ;;; GtkTreeModel is implemented by GtkListStore, GtkTreeModelFilter,
 ;;; GtkTreeModelSort and GtkTreeStore.
 ;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "row-changed"                                    : Run Last
 ;;;   "row-deleted"                                    : Run First
 ;;;   "row-has-child-toggled"                          : Run Last
 ;;;   "row-inserted"                                   : Run First
 ;;;   "rows-reordered"                                 : Run First
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; The GtkTreeModel interface defines a generic tree interface for use by the
 ;;; GtkTreeView widget. It is an abstract interface, and is designed to be
 ;;; usable with any appropriate data structure. The programmer just has to
 ;;; implement this interface on their own data type for it to be viewable by a
 ;;; GtkTreeView widget.
-;;; 
+;;;
 ;;; The model is represented as a hierarchical tree of strongly-typed, columned
 ;;; data. In other words, the model can be seen as a tree where every node has
 ;;; different values depending on which column is being queried. The type of
@@ -147,21 +147,21 @@
 ;;; per column across all nodes. It is important to note that this interface
 ;;; only provides a way of examining a model and observing changes. The
 ;;; implementation of each individual model decides how and if changes are made.
-;;; 
+;;;
 ;;; In order to make life simpler for programmers who do not need to write their
-;;; own specialized model, two generic models are provided — the GtkTreeStore
+;;; own specialized model, two generic models are provided - the GtkTreeStore
 ;;; and the GtkListStore. To use these, the developer simply pushes data into
 ;;; these models as necessary. These models provide the data structure as well
 ;;; as all appropriate tree interfaces. As a result, implementing drag and drop,
 ;;; sorting, and storing data is trivial. For the vast majority of trees and
 ;;; lists, these two models are sufficient.
-;;; 
+;;;
 ;;; Models are accessed on a node/column level of granularity. One can query for
 ;;; the value of a model at a certain node and a certain column on that node.
 ;;; There are two structures used to reference a particular node in a model.
 ;;; They are the GtkTreePath and the GtkTreeIter[4]. Most of the interface
 ;;; consists of operations on a GtkTreeIter.
-;;; 
+;;;
 ;;; A path is essentially a potential node. It is a location on a model that may
 ;;; or may not actually correspond to a node on a specific model. The
 ;;; GtkTreePath struct can be converted into either an array of unsigned
@@ -169,7 +169,7 @@
 ;;; colon. Each number refers to the offset at that level. Thus, the path “0”
 ;;; refers to the root node and the path “2:4” refers to the fifth child of the
 ;;; third node.
-;;; 
+;;;
 ;;; By contrast, a GtkTreeIter is a reference to a specific node on a specific
 ;;; model. It is a generic struct with an integer and three generic pointers.
 ;;; These are filled in by the model in a model-specific way. One can convert a
@@ -178,7 +178,7 @@
 ;;; used by GtkTextBuffer. They are generally statically allocated on the stack
 ;;; and only used for a short time. The model interface defines a set of
 ;;; operations using them for navigating the model.
-;;; 
+;;;
 ;;; It is expected that models fill in the iterator with private data. For
 ;;; example, the GtkListStore model, which is internally a simple linked list,
 ;;; stores a list node in one of the pointers. The GtkTreeModelSort stores an
@@ -186,7 +186,7 @@
 ;;; integer field. This field is generally filled with a unique stamp per model.
 ;;; This stamp is for catching errors resulting from using invalid iterators
 ;;; with a model.
-;;; 
+;;;
 ;;; The lifecycle of an iterator can be a little confusing at first. Iterators
 ;;; are expected to always be valid for as long as the model is unchanged (and
 ;;; doesn't emit a signal). The model is considered to own all outstanding
@@ -197,72 +197,72 @@
 ;;; for the case where iterators do not persist beyond a signal, some very
 ;;; important performance enhancements were made in the sort model. As a result,
 ;;; the GTK_TREE_MODEL_ITERS_PERSIST flag was added to indicate this behavior.
-;;; 
+;;;
 ;;; To help show some common operation of a model, some examples are provided.
 ;;; The first example shows three ways of getting the iter at the location
 ;;; “3:2:5”. While the first method shown is easier, the second is much more
 ;;; common, as you often get paths from callbacks.
-;;; 
+;;;
 ;;; Example 59. Acquiring a GtkTreeIter
-;;; 
+;;;
 ;;; /* Three ways of getting the iter pointing to the location */
 ;;; GtkTreePath *path;
 ;;; GtkTreeIter iter;
 ;;; GtkTreeIter parent_iter;
-;;; 
+;;;
 ;;; /* get the iterator from a string */
 ;;; gtk_tree_model_get_iter_from_string (model, &iter, "3:2:5");
-;;; 
+;;;
 ;;; /* get the iterator from a path */
 ;;; path = gtk_tree_path_new_from_string ("3:2:5");
 ;;; gtk_tree_model_get_iter (model, &iter, path);
 ;;; gtk_tree_path_free (path);
-;;; 
+;;;
 ;;; /* walk the tree to find the iterator */
 ;;; gtk_tree_model_iter_nth_child (model, &iter, NULL, 3);
 ;;; parent_iter = iter;
 ;;; gtk_tree_model_iter_nth_child (model, &iter, &parent_iter, 2);
 ;;; parent_iter = iter;
 ;;; gtk_tree_model_iter_nth_child (model, &iter, &parent_iter, 5);
-;;; 
+;;;
 ;;;
 ;;; This second example shows a quick way of iterating through a list and
 ;;; getting a string and an integer from each row. The populate_model function
 ;;; used below is not shown, as it is specific to the GtkListStore. For
 ;;; information on how to write such a function, see the GtkListStore
 ;;; documentation.
-;;; 
+;;;
 ;;; Example 60. Reading data from a GtkTreeModel
-;;; 
+;;;
 ;;; enum
 ;;; {
 ;;;   STRING_COLUMN,
 ;;;   INT_COLUMN,
 ;;;   N_COLUMNS
 ;;; };
-;;; 
+;;;
 ;;; ...
-;;; 
+;;;
 ;;; GtkTreeModel *list_store;
 ;;; GtkTreeIter iter;
 ;;; gboolean valid;
 ;;; gint row_count = 0;
-;;; 
+;;;
 ;;; /* make a new list_store */
 ;;; list_store = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_INT);
-;;; 
+;;;
 ;;; /* Fill the list store with data */
 ;;; populate_model (list_store);
-;;; 
+;;;
 ;;; /* Get the first iter in the list */
 ;;; valid = gtk_tree_model_get_iter_first (list_store, &iter);
-;;; 
+;;;
 ;;; while (valid)
 ;;;  {
 ;;;    /* Walk through the list, reading each row */
 ;;;    gchar *str_data;
 ;;;    gint   int_data;
-;;; 
+;;;
 ;;;    /* Make sure you terminate calls to gtk_tree_model_get()
 ;;;     * with a '-1' value
 ;;;     */
@@ -270,16 +270,16 @@
 ;;;                        STRING_COLUMN, &str_data,
 ;;;                        INT_COLUMN, &int_data,
 ;;;                        -1);
-;;; 
+;;;
 ;;;    /* Do something with the data */
 ;;;    g_print ("Row %d: (%s,%d)\n", row_count, str_data, int_data);
 ;;;    g_free (str_data);
-;;; 
+;;;
 ;;;    row_count++;
 ;;;    valid = gtk_tree_model_iter_next (list_store, &iter);
 ;;;  }
-;;; 
-;;; 
+;;;
+;;;
 ;;; The GtkTreeModel interface contains two methods for reference counting:
 ;;; gtk_tree_model_ref_node() and gtk_tree_model_unref_node(). These two methods
 ;;; are optional to implement. The reference counting is meant as a way for
@@ -291,153 +291,153 @@
 ;;; whether or not to cache a node based on the reference count. A file-system
 ;;; based model would not want to keep the entire file hierarchy in memory, but
 ;;; just the folders that are currently expanded in every current view.
-;;; 
+;;;
 ;;; When working with reference counting, the following rules must be taken into
 ;;; account:
-;;; 
+;;;
 ;;;     Never take a reference on a node without owning a reference on its
 ;;;     parent. This means that all parent nodes of a referenced node must be
 ;;;     referenced as well.
-;;; 
+;;;
 ;;;     Outstanding references on a deleted node are not released. This is not
 ;;;     possible because the node has already been deleted by the time the
 ;;;     row-deleted signal is received.
-;;; 
+;;;
 ;;;     Models are not obligated to emit a signal on rows of which none of its
 ;;;     siblings are referenced. To phrase this differently, signals are only
 ;;;     required for levels in which nodes are referenced. For the root level
 ;;;     however, signals must be emitted at all times (however the root level is
 ;;;     always referenced when any view is attached).
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "row-changed" signal
-;;; 
+;;;
 ;;; void user_function (GtkTreeModel *tree_model,
 ;;;                     GtkTreePath  *path,
 ;;;                     GtkTreeIter  *iter,
 ;;;                     gpointer      user_data)       : Run Last
-;;; 
+;;;
 ;;; This signal is emitted when a row in the model has changed.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     the GtkTreeModel on which the signal is emitted
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath identifying the changed row
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the changed row
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "row-deleted" signal
-;;; 
+;;;
 ;;; void user_function (GtkTreeModel *tree_model,
 ;;;                     GtkTreePath  *path,
 ;;;                     gpointer      user_data)       : Run First
-;;; 
+;;;
 ;;; This signal is emitted when a row has been deleted.
-;;; 
+;;;
 ;;; Note that no iterator is passed to the signal handler, since the row is
 ;;; already deleted.
-;;; 
+;;;
 ;;; This should be called by models after a row has been removed. The location
 ;;; pointed to by path should be the location that the row previously was at. It
 ;;; may not be a valid location anymore.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     the GtkTreeModel on which the signal is emitted
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath identifying the row
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "row-has-child-toggled" signal
-;;; 
+;;;
 ;;; void user_function (GtkTreeModel *tree_model,
 ;;;                     GtkTreePath  *path,
 ;;;                     GtkTreeIter  *iter,
 ;;;                     gpointer      user_data)       : Run Last
-;;; 
+;;;
 ;;; This signal is emitted when a row has gotten the first child row or lost its
 ;;; last child row.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     the GtkTreeModel on which the signal is emitted
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath identifying the row
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the row
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "row-inserted" signal
-;;; 
+;;;
 ;;; void user_function (GtkTreeModel *tree_model,
 ;;;                     GtkTreePath  *path,
 ;;;                     GtkTreeIter  *iter,
 ;;;                     gpointer      user_data)       : Run First
-;;; 
+;;;
 ;;; This signal is emitted when a new row has been inserted in the model.
-;;; 
+;;;
 ;;; Note that the row may still be empty at this point, since it is a common
 ;;; pattern to first insert an empty row, and then fill it with the desired
 ;;; values.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     the GtkTreeModel on which the signal is emitted
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath identifying the new row
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the new row
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "rows-reordered" signal
-;;; 
+;;;
 ;;; void user_function (GtkTreeModel *tree_model,
 ;;;                     GtkTreePath  *path,
 ;;;                     GtkTreeIter  *iter,
 ;;;                     gpointer      new_order,
 ;;;                     gpointer      user_data)       : Run First
-;;; 
+;;;
 ;;; This signal is emitted when the children of a node in the GtkTreeModel have
 ;;; been reordered.
-;;; 
+;;;
 ;;; Note that this signal is not emitted when rows are reordered by DND, since
 ;;; this is implemented by removing and then reinserting the row.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     the GtkTreeModel on which the signal is emitted
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath identifying the tree node whose children have been
 ;;;     reordered
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the node whose
-;;; 
+;;;
 ;;; new_order :
 ;;;     an array of integers mapping the current position of each child to its
 ;;;     old position before the re-ordering, i.e. new_order[newpos] = oldpos
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
@@ -446,7 +446,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeModel
-;;; 
+;;;
 ;;; typedef struct _GtkTreeModel GtkTreeModel;
 ;;; ----------------------------------------------------------------------------
 
@@ -456,27 +456,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeIter
-;;; 
+;;;
 ;;; struct GtkTreeIter {
 ;;;   gint stamp;
 ;;;   gpointer user_data;
 ;;;   gpointer user_data2;
 ;;;   gpointer user_data3;
 ;;; };
-;;; 
+;;;
 ;;; The GtkTreeIter is the primary structure for accessing a GtkTreeModel.
 ;;; Models are expected to put a unique integer in the stamp member, and put
 ;;; model-specific data in the three user_data members.
-;;; 
+;;;
 ;;; gint stamp;
 ;;;     a unique stamp to catch invalid iterators
-;;; 
+;;;
 ;;; gpointer user_data;
 ;;;     model-specific data
-;;; 
+;;;
 ;;; gpointer user_data2;
 ;;;     model-specific data
-;;; 
+;;;
 ;;; gpointer user_data3;
 ;;;     model-specific data
 ;;; ----------------------------------------------------------------------------
@@ -506,7 +506,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreePath
-;;; 
+;;;
 ;;; typedef struct _GtkTreePath GtkTreePath;
 ;;; ----------------------------------------------------------------------------
 
@@ -517,7 +517,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeRowReference
-;;; 
+;;;
 ;;; typedef struct _GtkTreeRowReference GtkTreeRowReference;
 ;;; ----------------------------------------------------------------------------
 
@@ -531,21 +531,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTreeModelFlags
-;;; 
+;;;
 ;;; typedef enum {
 ;;;   GTK_TREE_MODEL_ITERS_PERSIST = 1 << 0,
 ;;;   GTK_TREE_MODEL_LIST_ONLY     = 1 << 1
 ;;; } GtkTreeModelFlags;
-;;; 
+;;;
 ;;; These flags indicate various properties of a GtkTreeModel.
-;;; 
+;;;
 ;;; They are returned by gtk_tree_model_get_flags(), and must be static for the
 ;;; lifetime of the object. A more complete description of
 ;;; GTK_TREE_MODEL_ITERS_PERSIST can be found in the overview of this section.
-;;; 
+;;;
 ;;; GTK_TREE_MODEL_ITERS_PERSIST
 ;;;     iterators survive all signals emitted by the tree
-;;; 
+;;;
 ;;; GTK_TREE_MODEL_LIST_ONLY
 ;;;     the model is a list only, and never has children
 ;;; ----------------------------------------------------------------------------
@@ -558,10 +558,10 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeModelIface
-;;; 
+;;;
 ;;; struct GtkTreeModelIface {
 ;;;   GTypeInterface g_iface;
-;;; 
+;;;
 ;;;   /* Signals */
 ;;;   void         (* row_changed)           (GtkTreeModel *tree_model,
 ;;;                                           GtkTreePath  *path,
@@ -578,10 +578,10 @@
 ;;;                                           GtkTreePath  *path,
 ;;;                                           GtkTreeIter  *iter,
 ;;;                                           gint         *new_order);
-;;; 
+;;;
 ;;;   /* Virtual Table */
 ;;;   GtkTreeModelFlags (* get_flags)  (GtkTreeModel *tree_model);
-;;; 
+;;;
 ;;;   gint         (* get_n_columns)   (GtkTreeModel *tree_model);
 ;;;   GType        (* get_column_type) (GtkTreeModel *tree_model,
 ;;;                                     gint          index_);
@@ -679,27 +679,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeModelForeachFunc ()
-;;; 
+;;;
 ;;; gboolean (*GtkTreeModelForeachFunc) (GtkTreeModel *model,
 ;;;                                      GtkTreePath *path,
 ;;;                                      GtkTreeIter *iter,
 ;;;                                      gpointer data);
-;;; 
+;;;
 ;;; Type of the callback passed to gtk_tree_model_foreach() to iterate over the
 ;;; rows in a tree model.
-;;; 
+;;;
 ;;; model :
 ;;;     the GtkTreeModel being iterated
-;;; 
+;;;
 ;;; path :
 ;;;     the current GtkTreePath
-;;; 
+;;;
 ;;; iter :
 ;;;     the current GtkTreeIter
-;;; 
+;;;
 ;;; data :
 ;;;     The user data passed to gtk_tree_model_foreach()
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE to stop iterating, FALSE to continue
 ;;; ----------------------------------------------------------------------------
@@ -717,11 +717,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_path_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkTreePath. This structure refers to a row.
-;;; 
+;;;
 ;;; Returns :
 ;;;     A newly created GtkTreePath.
 ;;; ----------------------------------------------------------------------------
@@ -730,84 +730,84 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new_from_string ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_path_new_from_string (const gchar *path);
-;;; 
+;;;
 ;;; Creates a new GtkTreePath initialized to path.
-;;; 
+;;;
 ;;; path is expected to be a colon separated list of numbers. For example, the
 ;;; string "10:4:0" would create a path of depth 3 pointing to the 11th child of
 ;;; the root node, the 5th child of that 11th child, and the 1st child of that
 ;;; 5th child. If an invalid path string is passed in, NULL is returned.
-;;; 
+;;;
 ;;; path :
 ;;;     The string representation of a path
-;;; 
+;;;
 ;;; Returns :
 ;;;     A newly-created GtkTreePath, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new_from_indices ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_path_new_from_indices (gint first_index, ...);
-;;; 
+;;;
 ;;; Creates a new path with first_index and varargs as indices.
-;;; 
+;;;
 ;;; first_index :
 ;;;     first integer
-;;; 
+;;;
 ;;; ... :
 ;;;     list of integers terminated by -1
-;;; 
+;;;
 ;;; Returns :
 ;;;     A newly created GtkTreePath
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_to_string ()
-;;; 
+;;;
 ;;; gchar * gtk_tree_path_to_string (GtkTreePath *path);
-;;; 
+;;;
 ;;; Generates a string representation of the path.
-;;; 
+;;;
 ;;; This string is a ':' separated list of numbers. For example, "4:10:0:3"
 ;;; would be an acceptable return value for this string.
-;;; 
+;;;
 ;;; path :
 ;;;     A GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     A newly-allocated string. Must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new_first ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_path_new_first (void);
-;;; 
+;;;
 ;;; Creates a new GtkTreePath.
-;;; 
+;;;
 ;;; The string representation of this path is "0".
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkTreePath
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_append_index ()
-;;; 
+;;;
 ;;; void gtk_tree_path_append_index (GtkTreePath *path, gint index_);
-;;; 
+;;;
 ;;; Appends a new index to a path.
-;;; 
+;;;
 ;;; As a result, the depth of the path is increased.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; index_ :
 ;;;     the index
 ;;; ----------------------------------------------------------------------------
@@ -818,30 +818,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_prepend_index ()
-;;; 
+;;;
 ;;; void gtk_tree_path_prepend_index (GtkTreePath *path, gint index_);
-;;; 
+;;;
 ;;; Prepends a new index to a path.
-;;; 
+;;;
 ;;; As a result, the depth of the path is increased.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; index_ :
 ;;;     the index
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_get_depth ()
-;;; 
+;;;
 ;;; gint gtk_tree_path_get_depth (GtkTreePath *path);
-;;; 
+;;;
 ;;; Returns the current depth of path.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     The depth of path
 ;;; ----------------------------------------------------------------------------
@@ -853,19 +853,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_get_indices ()
-;;; 
+;;;
 ;;; gint * gtk_tree_path_get_indices (GtkTreePath *path);
-;;; 
+;;;
 ;;; Returns the current indices of path.
-;;; 
+;;;
 ;;; This is an array of integers, each representing a node in a tree. This value
 ;;; should not be freed.
-;;; 
+;;;
 ;;; The length of the array can be obtained with gtk_tree_path_get_depth().
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     The current indices, or NULL
 ;;; ----------------------------------------------------------------------------
@@ -898,7 +898,7 @@
 
 (defun gtk-tree-path-set-indices (indices path)
   (setf path (pointer path))
-  (loop 
+  (loop
      repeat (gtk-tree-path-get-depth path)
      do (foreign-funcall "gtk_tree_path_up" :pointer path :boolean))
   (loop
@@ -910,34 +910,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_get_indices_with_depth ()
-;;; 
+;;;
 ;;; gint * gtk_tree_path_get_indices_with_depth (GtkTreePath *path, gint *depth)
-;;; 
+;;;
 ;;; Returns the current indices of path.
-;;; 
+;;;
 ;;; This is an array of integers, each representing a node in a tree. It also
 ;;; returns the number of elements in the array. The array should not be freed.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; depth :
 ;;;     return location for number of elements returned in the integer array, or
 ;;;     NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     The current indices, or NULL
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_free ()
-;;; 
+;;;
 ;;; void gtk_tree_path_free (GtkTreePath *path);
-;;; 
+;;;
 ;;; Frees path. If path is NULL, it simply returns.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
 ;;; ----------------------------------------------------------------------------
@@ -949,34 +949,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_copy ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_path_copy (const GtkTreePath *path);
-;;; 
+;;;
 ;;; Creates a new GtkTreePath as a copy of path.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkTreePath
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_compare ()
-;;; 
+;;;
 ;;; gint gtk_tree_path_compare (const GtkTreePath *a, const GtkTreePath *b);
-;;; 
+;;;
 ;;; Compares two paths.
-;;; 
+;;;
 ;;; If a appears before b in a tree, then -1 is returned. If b appears before a,
 ;;; then 1 is returned. If the two nodes are equal, then 0 is returned.
-;;; 
+;;;
 ;;; a :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; b :
 ;;;     a GtkTreePath to compare with
-;;; 
+;;;
 ;;; Returns :
 ;;;     the relative positions of a and b
 ;;; ----------------------------------------------------------------------------
@@ -989,11 +989,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_next ()
-;;; 
+;;;
 ;;; void gtk_tree_path_next (GtkTreePath *path);
-;;; 
+;;;
 ;;; Moves the path to point to the next node at the current depth.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
 ;;; ----------------------------------------------------------------------------
@@ -1005,15 +1005,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_prev ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_path_prev (GtkTreePath *path);
-;;; 
+;;;
 ;;; Moves the path to point to the previous node at the current depth, if it
 ;;; exists.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if path has a previous node, and the move was made
 ;;; ----------------------------------------------------------------------------
@@ -1025,14 +1025,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_up ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_path_up (GtkTreePath *path);
-;;; 
+;;;
 ;;; Moves the path to point to its parent node, if it has a parent.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if path has a parent, and the move was made
 ;;; ----------------------------------------------------------------------------
@@ -1044,11 +1044,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_down ()
-;;; 
+;;;
 ;;; void gtk_tree_path_down (GtkTreePath *path);
-;;; 
+;;;
 ;;; Moves path to point to the first child of the current path.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
 ;;; ----------------------------------------------------------------------------
@@ -1060,18 +1060,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_is_ancestor ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_path_is_ancestor (GtkTreePath *path,
 ;;;                                     GtkTreePath *descendant);
-;;; 
+;;;
 ;;; Returns TRUE if descendant is a descendant of path.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; descendant :
 ;;;     another GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if descendant is contained inside path
 ;;; ----------------------------------------------------------------------------
@@ -1084,18 +1084,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_is_descendant ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_path_is_descendant (GtkTreePath *path,
 ;;;                                       GtkTreePath *ancestor);
-;;; 
+;;;
 ;;; Returns TRUE if path is a descendant of ancestor.
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath
-;;; 
+;;;
 ;;; ancestor :
 ;;;     another GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if ancestor contains path somewhere below it
 ;;; ----------------------------------------------------------------------------
@@ -1108,23 +1108,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_new ()
-;;; 
+;;;
 ;;; GtkTreeRowReference * gtk_tree_row_reference_new (GtkTreeModel *model,
 ;;;                                                   GtkTreePath *path);
-;;; 
+;;;
 ;;; Creates a row reference based on path.
-;;; 
+;;;
 ;;; This reference will keep pointing to the node pointed to by path, so long as
 ;;; it exists. Any changes that occur on model are propagated, and the path is
 ;;; updated appropriately. If path isn't a valid path in model, then NULL is
 ;;; returned.
-;;; 
+;;;
 ;;; model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a valid GtkTreePath to monitor
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly allocated GtkTreeRowReference, or NULL
 ;;; ----------------------------------------------------------------------------
@@ -1138,60 +1138,60 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_new_proxy ()
-;;; 
+;;;
 ;;; GtkTreeRowReference * gtk_tree_row_reference_new_proxy (GObject *proxy,
 ;;;                                                         GtkTreeModel *model,
 ;;;                                                         GtkTreePath *path);
-;;; 
+;;;
 ;;; You do not need to use this function.
-;;; 
+;;;
 ;;; Creates a row reference based on path.
-;;; 
+;;;
 ;;; This reference will keep pointing to the node pointed to by path, so long as
 ;;; it exists. If path isn't a valid path in model, then NULL is returned.
 ;;; However, unlike references created with gtk_tree_row_reference_new(), it
 ;;; does not listen to the model for changes. The creator of the row reference
 ;;; must do this explicitly using gtk_tree_row_reference_inserted(),
 ;;; gtk_tree_row_reference_deleted(), gtk_tree_row_reference_reordered().
-;;; 
+;;;
 ;;; These functions must be called exactly once per proxy when the corresponding
 ;;; signal on the model is emitted. This single call updates all row references
 ;;; for that proxy. Since built-in GTK+ objects like GtkTreeView already use
 ;;; this mechanism internally, using them as the proxy object will produce
 ;;; unpredictable results. Further more, passing the same object as model and
 ;;; proxy doesn't work for reasons of internal implementation.
-;;; 
+;;;
 ;;; This type of row reference is primarily meant by structures that need to
 ;;; carefully monitor exactly when a row reference updates itself, and is not
 ;;; generally needed by most applications.
-;;; 
+;;;
 ;;; proxy :
 ;;;     a proxy GObject
-;;; 
+;;;
 ;;; model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a valid GtkTreePath to monitor
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly allocated GtkTreeRowReference, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_get_model ()
-;;; 
+;;;
 ;;; GtkTreeModel * gtk_tree_row_reference_get_model
 ;;;                                            (GtkTreeRowReference *reference);
-;;; 
+;;;
 ;;; Returns the model that the row reference is monitoring.
-;;; 
+;;;
 ;;; reference :
 ;;;     a GtkTreeRowReference
-;;; 
+;;;
 ;;; Returns :
 ;;;     the model
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -1204,16 +1204,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_get_path ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_row_reference_get_path
 ;;;                                            (GtkTreeRowReference *reference);
-;;; 
+;;;
 ;;; Returns a path that the row reference currently points to, or NULL if the
 ;;; path pointed to is no longer valid.
-;;; 
+;;;
 ;;; reference :
 ;;;     a GtkTreeRowReference
-;;; 
+;;;
 ;;; Returns :
 ;;;     a current path, or NULL
 ;;; ----------------------------------------------------------------------------
@@ -1226,15 +1226,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_valid ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_row_reference_valid (GtkTreeRowReference *reference);
-;;; 
+;;;
 ;;; Returns TRUE if the reference is non-NULL and refers to a current valid
 ;;; path.
-;;; 
+;;;
 ;;; reference :
 ;;;     a GtkTreeRowReference, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if reference points to a valid path
 ;;; ----------------------------------------------------------------------------
@@ -1247,130 +1247,130 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_free ()
-;;; 
+;;;
 ;;; void gtk_tree_row_reference_free (GtkTreeRowReference *reference);
-;;; 
+;;;
 ;;; Free's reference. reference may be NULL
-;;; 
+;;;
 ;;; reference :
 ;;;     a GtkTreeRowReference, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_copy ()
-;;; 
+;;;
 ;;; GtkTreeRowReference * gtk_tree_row_reference_copy
 ;;;                                            (GtkTreeRowReference *reference);
-;;; 
+;;;
 ;;; Copies a GtkTreeRowReference.
-;;; 
+;;;
 ;;; reference :
 ;;;     a GtkTreeRowReference
-;;; 
+;;;
 ;;; Returns :
 ;;;     a copy of reference
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_inserted ()
-;;; 
+;;;
 ;;; void gtk_tree_row_reference_inserted (GObject *proxy, GtkTreePath *path);
-;;; 
+;;;
 ;;; Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
 ;;; know that the model emitted the "row-inserted" signal.
-;;; 
+;;;
 ;;; proxy :
 ;;;     a GObject
-;;; 
+;;;
 ;;; path :
 ;;;     the row position that was inserted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_deleted ()
-;;; 
+;;;
 ;;; void gtk_tree_row_reference_deleted (GObject *proxy, GtkTreePath *path);
-;;; 
+;;;
 ;;; Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
 ;;; know that the model emitted the "row-deleted" signal.
-;;; 
+;;;
 ;;; proxy :
 ;;;     a GObject
-;;; 
+;;;
 ;;; path :
 ;;;     the path position that was deleted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_row_reference_reordered ()
-;;; 
+;;;
 ;;; void gtk_tree_row_reference_reordered (GObject *proxy,
 ;;;                                        GtkTreePath *path,
 ;;;                                        GtkTreeIter *iter,
 ;;;                                        gint *new_order);
-;;; 
+;;;
 ;;; Lets a set of row reference created by gtk_tree_row_reference_new_proxy()
 ;;; know that the model emitted the "rows-reordered" signal.
-;;; 
+;;;
 ;;; proxy :
 ;;;     a GObject
-;;; 
+;;;
 ;;; path :
 ;;;     the parent path of the reordered signal
-;;; 
+;;;
 ;;; iter :
 ;;;     the iter pointing to the parent of the reordered
-;;; 
+;;;
 ;;; new_order :
 ;;;     the new order of rows
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_iter_copy ()
-;;; 
+;;;
 ;;; GtkTreeIter * gtk_tree_iter_copy (GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Creates a dynamically allocated tree iterator as a copy of iter.
-;;; 
+;;;
 ;;; This function is not intended for use in applications, because you can just
 ;;; copy the structs by value (GtkTreeIter new_iter = iter;). You must free this
 ;;; iter with gtk_tree_iter_free().
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly-allocated copy of iter
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_iter_free ()
-;;; 
+;;;
 ;;; void gtk_tree_iter_free (GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Frees an iterator that has been allocated by gtk_tree_iter_copy().
-;;; 
+;;;
 ;;; This function is mainly used for language bindings.
-;;; 
+;;;
 ;;; iter :
 ;;;     a dynamically allocated tree iterator
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_flags ()
-;;; 
+;;;
 ;;; GtkTreeModelFlags gtk_tree_model_get_flags (GtkTreeModel *tree_model);
-;;; 
+;;;
 ;;; Returns a set of flags supported by this interface.
-;;; 
+;;;
 ;;; The flags are a bitwise combination of GtkTreeModelFlags. The flags
 ;;; supported should not change during the lifetime of the tree_model.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; Returns :
 ;;;     the flags supported by this interface
 ;;; ----------------------------------------------------------------------------
@@ -1383,14 +1383,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_n_columns ()
-;;; 
+;;;
 ;;; gint gtk_tree_model_get_n_columns (GtkTreeModel *tree_model);
-;;; 
+;;;
 ;;; Returns the number of columns supported by tree_model.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; Returns :
 ;;;     the number of columns
 ;;; ----------------------------------------------------------------------------
@@ -1402,17 +1402,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_column_type ()
-;;; 
+;;;
 ;;; GType gtk_tree_model_get_column_type (GtkTreeModel *tree_model, gint index_)
-;;; 
+;;;
 ;;; Returns the type of the column.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; index_ :
 ;;;     the column index
-;;; 
+;;;
 ;;; Returns :
 ;;;     the type of the column
 ;;; ----------------------------------------------------------------------------
@@ -1426,23 +1426,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_iter ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_get_iter (GtkTreeModel *tree_model,
 ;;;                                   GtkTreeIter *iter,
 ;;;                                   GtkTreePath *path);
-;;; 
+;;;
 ;;; Sets iter to a valid iterator pointing to path. If path does not exist, iter
 ;;; is set to an invalid iterator and FALSE is returned.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the uninitialized GtkTreeIter
-;;; 
+;;;
 ;;; path :
 ;;;     the GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE, if iter was set
 ;;; ----------------------------------------------------------------------------
@@ -1462,23 +1462,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_iter_from_string ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_get_iter_from_string (GtkTreeModel *tree_model,
 ;;;                                               GtkTreeIter *iter,
 ;;;                                               const gchar *path_string);
-;;; 
+;;;
 ;;; Sets iter to a valid iterator pointing to path_string, if it exists.
 ;;; Otherwise, iter is left invalid and FALSE is returned.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     an uninitialized GtkTreeIter
-;;; 
+;;;
 ;;; path_string :
 ;;;     a string representation of a GtkTreePath
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE, if iter was set
 ;;; ----------------------------------------------------------------------------
@@ -1500,19 +1500,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_iter_first ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_get_iter_first (GtkTreeModel *tree_model,
 ;;;                                         GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Initializes iter with the first iterator in the tree (the one at the path
 ;;; "0") and returns TRUE. Returns FALSE if the tree is empty.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the uninitialized GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE, if iter was set
 ;;; ----------------------------------------------------------------------------
@@ -1532,20 +1532,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_path ()
-;;; 
+;;;
 ;;; GtkTreePath * gtk_tree_model_get_path (GtkTreeModel *tree_model,
 ;;;                                        GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Returns a newly-created GtkTreePath referenced by iter.
-;;; 
+;;;
 ;;; This path should be freed with gtk_tree_path_free().
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly-created GtkTreePath
 ;;; ----------------------------------------------------------------------------
@@ -1559,26 +1559,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_value ()
-;;; 
+;;;
 ;;; void gtk_tree_model_get_value (GtkTreeModel *tree_model,
 ;;;                                GtkTreeIter *iter,
 ;;;                                gint column,
 ;;;                                GValue *value);
-;;; 
+;;;
 ;;; Initializes and sets value to that at column.
-;;; 
+;;;
 ;;; When done with value, g_value_unset() needs to be called to free any
 ;;; allocated memory.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter
-;;; 
+;;;
 ;;; column :
 ;;;     the column to lookup the value at
-;;; 
+;;;
 ;;; value :
 ;;;     an empty GValue to set
 ;;; ----------------------------------------------------------------------------
@@ -1601,20 +1601,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_next ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_iter_next (GtkTreeModel *tree_model,
 ;;;                                    GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Sets iter to point to the node following it at the current level.
-;;; 
+;;;
 ;;; If there is no next iter, FALSE is returned and iter is set to be invalid.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter has been changed to the next node
 ;;; ----------------------------------------------------------------------------
@@ -1627,51 +1627,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_previous ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_iter_previous (GtkTreeModel *tree_model,
 ;;;                                        GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Sets iter to point to the previous node at the current level.
-;;; 
+;;;
 ;;; If there is no previous iter, FALSE is returned and iter is set to be
 ;;; invalid.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter has been changed to the previous node
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_children ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_iter_children (GtkTreeModel *tree_model,
 ;;;                                        GtkTreeIter *iter,
 ;;;                                        GtkTreeIter *parent);
-;;; 
+;;;
 ;;; Sets iter to point to the first child of parent.
-;;; 
+;;;
 ;;; If parent has no children, FALSE is returned and iter is set to be invalid.
 ;;; parent will remain a valid node after this function has been called.
-;;; 
+;;;
 ;;; If parent is NULL returns the first node, equivalent to
 ;;; gtk_tree_model_get_iter_first (tree_model, iter);
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the new GtkTreeIter to be set to the child
-;;; 
+;;;
 ;;; parent :
 ;;;     the GtkTreeIter, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE, if child has been set to the first child
 ;;; ----------------------------------------------------------------------------
@@ -1691,18 +1691,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_has_child ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_iter_has_child (GtkTreeModel *tree_model,
 ;;;                                         GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Returns TRUE if iter has children, FALSE otherwise.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter to test for children
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter has children
 ;;; ----------------------------------------------------------------------------
@@ -1716,21 +1716,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_n_children ()
-;;; 
+;;;
 ;;; gint gtk_tree_model_iter_n_children (GtkTreeModel *tree_model,
 ;;;                                      GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Returns the number of children that iter has.
-;;; 
+;;;
 ;;; As a special case, if iter is NULL, then the number of toplevel nodes is
 ;;; returned.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     the number of children of iter
 ;;; ----------------------------------------------------------------------------
@@ -1743,31 +1743,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_nth_child ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_iter_nth_child (GtkTreeModel *tree_model,
 ;;;                                         GtkTreeIter *iter,
 ;;;                                         GtkTreeIter *parent,
 ;;;                                         gint n);
-;;; 
+;;;
 ;;; Sets iter to be the child of parent, using the given index.
-;;; 
+;;;
 ;;; The first index is 0. If n is too big, or parent has no children, iter is
 ;;; set to an invalid iterator and FALSE is returned. parent will remain a valid
 ;;; node after this function has been called. As a special case, if parent is
 ;;; NULL, then the nth root node is set.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter to set to the nth child
-;;; 
+;;;
 ;;; parent :
 ;;;     the GtkTreeIter to get the child from, or NULL
-;;; 
+;;;
 ;;; n :
 ;;;     the index of the desired child
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE, if parent has an nth child
 ;;; ----------------------------------------------------------------------------
@@ -1789,26 +1789,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_parent ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_model_iter_parent (GtkTreeModel *tree_model,
 ;;;                                      GtkTreeIter *iter,
 ;;;                                      GtkTreeIter *child);
-;;; 
+;;;
 ;;; Sets iter to be the parent of child.
-;;; 
+;;;
 ;;; If child is at the toplevel, and doesn't have a parent, then iter is set to
 ;;; an invalid iterator and FALSE is returned. child will remain a valid node
 ;;; after this function has been called.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the new GtkTreeIter to set to the parent
-;;; 
+;;;
 ;;; child :
 ;;;     the GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE, if iter is set to the parent of child
 ;;; ----------------------------------------------------------------------------
@@ -1828,24 +1828,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_string_from_iter ()
-;;; 
+;;;
 ;;; gchar * gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model,
 ;;;                                              GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Generates a string representation of the iter.
-;;; 
+;;;
 ;;; This string is a ':' separated list of numbers. For example, "4:10:0:3"
 ;;; would be an acceptable return value for this string.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTreeIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly-allocated string. Must be freed with g_free().
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -1859,14 +1859,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_ref_node ()
-;;; 
+;;;
 ;;; void gtk_tree_model_ref_node (GtkTreeModel *tree_model, GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Lets the tree ref the node.
-;;; 
+;;;
 ;;; This is an optional method for models to implement. To be more specific,
 ;;; models may ignore this call as it exists primarily for performance reasons.
-;;; 
+;;;
 ;;; This function is primarily meant as a way for views to let caching models
 ;;; know when nodes are being displayed (and hence, whether or not to cache that
 ;;; node). Being displayed means a node is in an expanded branch, regardless of
@@ -1874,13 +1874,13 @@
 ;;; file-system based model would not want to keep the entire file-hierarchy in
 ;;; memory, just the sections that are currently being displayed by every
 ;;; current view.
-;;; 
+;;;
 ;;; A model should be expected to be able to get an iter independent of its
 ;;; reffed state.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter
 ;;; ----------------------------------------------------------------------------
@@ -1893,21 +1893,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_unref_node ()
-;;; 
+;;;
 ;;; void gtk_tree_model_unref_node (GtkTreeModel *tree_model,
 ;;;                                 GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Lets the tree unref the node.
-;;; 
+;;;
 ;;; This is an optional method for models to implement. To be more specific,
 ;;; models may ignore this call as it exists primarily for performance reasons.
 ;;; For more information on what this means, see gtk_tree_model_ref_node().
-;;; 
+;;;
 ;;; Please note that nodes that are deleted are not unreffed.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     the GtkTreeIter
 ;;; ----------------------------------------------------------------------------
@@ -1920,11 +1920,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get ()
-;;; 
+;;;
 ;;; void gtk_tree_model_get (GtkTreeModel *tree_model,
 ;;;                          GtkTreeIter *iter,
 ;;;                          ...);
-;;; 
+;;;
 ;;; Gets the value of one or more cells in the row referenced by iter. The
 ;;; variable argument list should contain integer column numbers, each column
 ;;; number followed by a place to store the value being retrieved. The list is
@@ -1932,59 +1932,59 @@
 ;;; G_TYPE_STRING, you would write:
 ;;; gtk_tree_model_get (model, iter, 0, &place_string_here, -1), where
 ;;; place_string_here is a gchar* to be filled with the string.
-;;; 
+;;;
 ;;; Returned values with type G_TYPE_OBJECT have to be unreferenced, values with
 ;;; type G_TYPE_STRING or G_TYPE_BOXED have to be freed. Other values are passed
 ;;; by value.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     a row in tree_model
-;;; 
+;;;
 ;;; ... :
 ;;;     pairs of column number and value return locations, terminated by -1
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_get_valist ()
-;;; 
+;;;
 ;;; void gtk_tree_model_get_valist (GtkTreeModel *tree_model,
 ;;;                                 GtkTreeIter *iter,
 ;;;                                 va_list var_args);
-;;; 
+;;;
 ;;; See gtk_tree_model_get(), this version takes a va_list for language bindings
 ;;; to use.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; iter :
 ;;;     a row in tree_model
-;;; 
+;;;
 ;;; var_args :
 ;;;     va_list of column/return location pairs
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_foreach ()
-;;; 
+;;;
 ;;; void gtk_tree_model_foreach (GtkTreeModel *model,
 ;;;                              GtkTreeModelForeachFunc func,
 ;;;                              gpointer user_data);
-;;; 
+;;;
 ;;; Calls func on each node in model in a depth-first fashion.
-;;; 
+;;;
 ;;; If func returns TRUE, then the tree ceases to be walked, and
 ;;; gtk_tree_model_foreach() returns.
-;;; 
+;;;
 ;;; model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; func :
 ;;;     a function to be called on each row
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data to passed to func
 ;;; ----------------------------------------------------------------------------
@@ -2002,107 +2002,107 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_changed ()
-;;; 
+;;;
 ;;; void gtk_tree_model_row_changed (GtkTreeModel *tree_model,
 ;;;                                  GtkTreePath *path,
 ;;;                                  GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Emits the "row-changed" signal on tree_model.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath pointing to the changed row
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the changed row
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_inserted ()
-;;; 
+;;;
 ;;; void gtk_tree_model_row_inserted (GtkTreeModel *tree_model,
 ;;;                                   GtkTreePath *path,
 ;;;                                   GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Emits the "row-inserted" signal on tree_model.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath pointing to the inserted row
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the inserted row
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_has_child_toggled ()
-;;; 
+;;;
 ;;; void gtk_tree_model_row_has_child_toggled (GtkTreeModel *tree_model,
 ;;;                                            GtkTreePath *path,
 ;;;                                            GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Emits the "row-has-child-toggled" signal on tree_model. This should be
 ;;; called by models after the child state of a node changes.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath pointing to the changed row
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the changed row
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_deleted ()
-;;; 
+;;;
 ;;; void gtk_tree_model_row_deleted (GtkTreeModel *tree_model,
 ;;;                                  GtkTreePath *path);
-;;; 
+;;;
 ;;; Emits the "row-deleted" signal on tree_model.
-;;; 
+;;;
 ;;; This should be called by models after a row has been removed. The location
 ;;; pointed to by path should be the location that the row previously was at. It
 ;;; may not be a valid location anymore.
-;;; 
+;;;
 ;;; Nodes that are deleted are not unreffed, this means that any outstanding
 ;;; references on the deleted node should not be released.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath pointing to the previous location of the deleted row
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_rows_reordered ()
-;;; 
+;;;
 ;;; void gtk_tree_model_rows_reordered (GtkTreeModel *tree_model,
 ;;;                                     GtkTreePath *path,
 ;;;                                     GtkTreeIter *iter,
 ;;;                                     gint *new_order);
-;;; 
+;;;
 ;;; Emits the "rows-reordered" signal on tree_model.
-;;; 
+;;;
 ;;; This should be called by models when their rows have been reordered.
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a GtkTreePath pointing to the tree node whose children have been
 ;;;     reordered
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the node whose children have been
 ;;;     reordered, or NULL if the depth of path is 0
-;;; 
+;;;
 ;;; new_order :
 ;;;     an array of integers mapping the current position of each child to its
 ;;;     old position before the re-ordering, i.e. new_order[newpos] = oldpos
@@ -2244,7 +2244,7 @@
 
 (defmethod gtk-tree-model-get-value-impl ((model array-list-store) iter n)
   (let ((n-row (gtk-tree-iter-user-data iter)))
-    (values (funcall (aref (store-getters model) n) 
+    (values (funcall (aref (store-getters model) n)
                      (aref (store-items model) n-row))
             (aref (store-types model) n))))
 

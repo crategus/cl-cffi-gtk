@@ -27,7 +27,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GtkActivatable
 ;;;
 ;;; An interface for activatable widgets
@@ -536,47 +536,6 @@
 ;;;
 ;;; use_appearance :
 ;;;     whether to use the actions appearance
-;;;
-;;; Since 2.16
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "related-action" property
-;;;
-;;;   "related-action"           GtkAction*            : Read / Write
-;;;
-;;; The action that this activatable will activate and receive updates from for
-;;; various states and possibly appearance.
-;;;
-;;; Note
-;;;
-;;; GtkActivatable implementors need to handle the this property and call
-;;; gtk_activatable_do_set_related_action() when it changes.
-;;;
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "use-action-appearance" property
-;;;
-;;;   "use-action-appearance"    gboolean              : Read / Write
-;;;
-;;; Whether this activatable should reset its layout and appearance when setting
-;;; the related action or when the action changes appearance.
-;;;
-;;; See the GtkAction documentation directly to find which properties should be
-;;; ignored by the GtkActivatable when this property is FALSE.
-;;;
-;;; Note
-;;;
-;;; GtkActivatable implementors need to handle this property and call
-;;; gtk_activatable_sync_action_properties() on the activatable widget when it
-;;; changes.
-;;;
-;;; Default value: TRUE
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------

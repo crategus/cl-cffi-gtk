@@ -1314,7 +1314,7 @@
 ;;; for which you already have a file name to which the user may save. For
 ;;; example, when the user opens an existing file and then does File/Save As...
 ;;; on it to save a copy or a modified version. If you don't have a file name
-;;; already — for example, if the user just created a new file and is saving it
+;;; already - for example, if the user just created a new file and is saving it
 ;;; for the first time, do not call this function. Instead, use something
 ;;; similar to this:
 ;;;
@@ -1526,7 +1526,7 @@
 ;;; for which you already have a file name to which the user may save. For
 ;;; example, whenthe user opens an existing file and then does File/Save As...
 ;;; on it to save a copy or a modified version. If you don't have a file name
-;;; already — for example, if the user just created a new file and is saving it
+;;; already - for example, if the user just created a new file and is saving it
 ;;; for the first time, do not call this function. Instead, use something
 ;;; similar to this:
 ;;;
@@ -2252,7 +2252,7 @@
 ;;; If you are implementing a File/Save As... dialog, you should use this
 ;;; function if you already have a file name to which the user may save; for
 ;;; example, when the user opens an existing file and then does File/Save As...
-;;; on it. If you don't have a file name already — for example, if the user just
+;;; on it. If you don't have a file name already - for example, if the user just
 ;;; created a new file and is saving it for the first time, do not call this
 ;;; function. Instead, use something similar to this:
 ;;;
