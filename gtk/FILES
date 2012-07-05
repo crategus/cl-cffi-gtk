@@ -190,7 +190,7 @@ GTK+ Widgets and Objects
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.4.3
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.4.3
     gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.2.3*
-    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.2.3*
+    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.4.3
   
   Layout Containers
   
