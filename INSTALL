@@ -49,4 +49,14 @@ must be installed:
    
    Closer-MOP
    see http://common-lisp.net/project/closer/closer-mop.html
-   
+
+The pdf version of the tutorial is build with the command:
+
+   texi2pdf gtk-tutorial.texi
+
+The html version can be build with the command:
+
+   perl texi2html -split_chapter gtk-tutorial.texi
+
+For generating the documentation it is assumed that a Tex system is installed.
+
