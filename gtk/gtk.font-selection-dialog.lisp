@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -28,97 +28,68 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; GtkFontSelection
-;;; 
-;;; Deprecated widget for selecting fonts
-;;; 
-;;; Synopsis
-;;; 
-;;;     GtkFontSelection
+;;; GtkFontSelectionDialog
 ;;;
-;;;     gtk_font_selection_new
-;;;     gtk_font_selection_get_font_name
-;;;     gtk_font_selection_set_font_name
-;;;     gtk_font_selection_get_preview_text
-;;;     gtk_font_selection_set_preview_text
-;;;     gtk_font_selection_get_face
-;;;     gtk_font_selection_get_face_list
-;;;     gtk_font_selection_get_family
-;;;     gtk_font_selection_get_size
-;;;     gtk_font_selection_get_family_list
-;;;     gtk_font_selection_get_preview_entry
-;;;     gtk_font_selection_get_size_entry
-;;;     gtk_font_selection_get_size_list
-;;; 
+;;; Deprecated dialog box for selecting fonts
+;;;
+;;; Synopsis
+;;;
+;;;     GtkFontSelectionDialog
+;;;
+;;;     gtk_font_selection_dialog_new
+;;;     gtk_font_selection_dialog_get_font_name
+;;;     gtk_font_selection_dialog_set_font_name
+;;;     gtk_font_selection_dialog_get_preview_text
+;;;     gtk_font_selection_dialog_set_preview_text
+;;;     gtk_font_selection_dialog_get_cancel_button
+;;;     gtk_font_selection_dialog_get_ok_button
+;;;     gtk_font_selection_dialog_get_font_selection
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkContainer
-;;;                      +----GtkBox
-;;;                            +----GtkFontSelection
-;;; 
+;;;                      +----GtkBin
+;;;                            +----GtkWindow
+;;;                                  +----GtkDialog
+;;;                                        +----GtkFontSelectionDialog
+;;;
 ;;; Implemented Interfaces
-;;; 
-;;; GtkFontSelection implements AtkImplementorIface, GtkBuildable and
-;;; GtkOrientable.
 ;;;
-;;; Properties
-;;; 
-;;;   "font-name"                gchar*                : Read / Write
-;;;   "preview-text"             gchar*                : Read / Write
-;;; 
+;;; GtkFontSelectionDialog implements AtkImplementorIface and GtkBuildable.
+;;;
 ;;; Description
-;;; 
-;;; The GtkFontSelection widget lists the available fonts, styles and sizes,
-;;; allowing the user to select a font. It is used in the GtkFontSelectionDialog
-;;; widget to provide a dialog box for selecting fonts.
-;;; 
+;;;
+;;; The GtkFontSelectionDialog widget is a dialog box for selecting a font.
+;;;
 ;;; To set the font which is initially selected, use
-;;; gtk_font_selection_set_font_name().
-;;; 
-;;; To get the selected font use gtk_font_selection_get_font_name().
-;;; 
+;;; gtk_font_selection_dialog_set_font_name().
+;;;
+;;; To get the selected font use gtk_font_selection_dialog_get_font_name().
+;;;
 ;;; To change the text which is shown in the preview area, use
-;;; gtk_font_selection_set_preview_text().
-;;; 
-;;; In GTK+ 3.2, GtkFontSelection has been deprecated in favor of
-;;; GtkFontChooser.
+;;; gtk_font_selection_dialog_set_preview_text().
 ;;;
-;;; ----------------------------------------------------------------------------
+;;; In GTK+ 3.2, GtkFontSelectionDialog has been deprecated in favor of
+;;; GtkFontChooserDialog.
 ;;;
-;;; Property Details
+;;; GtkFontSelectionDialog as GtkBuildable
 ;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font-name" property
-;;; 
-;;;   "font-name"                gchar*                : Read / Write
-;;; 
-;;; The string that represents this font.
-;;; 
-;;; Default value: "Sans 10"
+;;; The GtkFontSelectionDialog implementation of the GtkBuildable interface
+;;; exposes the embedded GtkFontSelection as internal child with the name
+;;; "font_selection". It also exposes the buttons with the names "ok_button",
+;;; "cancel_button" and "apply_button".
 ;;;
-;;; ----------------------------------------------------------------------------
-;;; The "preview-text" property
-;;; 
-;;;   "preview-text"             gchar*                : Read / Write
-;;; 
-;;; The text to display in order to demonstrate the selected font.
-;;; 
-;;; Default value: "abcdefghijk ABCDEFGHIJK"
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkFontSelection
-;;; 
-;;; struct GtkFontSelection;
-;;; 
-;;; Warning
-;;; 
-;;; GtkFontSelection is deprecated and should not be used in newly-written code.
+;;; struct GtkFontSelectionDialog
+;;;
+;;; struct GtkFontSelectionDialog;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkFontSelectionDialog" gtk-font-selection-dialog
@@ -146,293 +117,187 @@
           "gtk_font_selection_dialog_get_ok_button" nil)))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_new ()
-;;; 
-;;; GtkWidget * gtk_font_selection_new (void);
-;;; 
+;;; gtk_font_selection_dialog_new ()
+;;;
+;;; GtkWidget * gtk_font_selection_dialog_new (const gchar *title);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_new is deprecated and should not be used in newly-written
-;;; code.
-;;; 
-;;; Creates a new GtkFontSelection.
-;;; 
+;;;
+;;; gtk_font_selection_dialog_new has been deprecated since version 3.2 and
+;;; should not be used in newly-written code. Use GtkFontChooserDialog
+;;;
+;;; Creates a new GtkFontSelectionDialog.
+;;;
+;;; title :
+;;;     the title of the dialog window
+;;;
 ;;; Returns :
-;;;     a new GtkFontSelection
+;;;     a new GtkFontSelectionDialog
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_font_name ()
-;;; 
-;;; gchar * gtk_font_selection_get_font_name (GtkFontSelection *fontsel);
-;;; 
+;;; gtk_font_selection_dialog_get_font_name ()
+;;;
+;;; gchar * gtk_font_selection_dialog_get_font_name
+;;;                                               (GtkFontSelectionDialog *fsd);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_get_font_name has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
+;;;
+;;; gtk_font_selection_dialog_get_font_name has been deprecated since version
+;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;;
 ;;; Gets the currently-selected font name.
-;;; 
+;;;
 ;;; Note that this can be a different string than what you set with
-;;; gtk_font_selection_set_font_name(), as the font selection widget may
+;;; gtk_font_selection_dialog_set_font_name(), as the font selection widget may
 ;;; normalize font names and thus return a string with a different structure.
-;;; For example, "Helvetica Italic Bold 12" could be normalized to
-;;; "Helvetica Bold Italic 12". Use pango_font_description_equal() if you want
-;;; to compare two font descriptions.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;; For example, "Helvetica Italic Bold 12" could be normalized to "Helvetica
+;;; Bold Italic 12". Use pango_font_description_equal() if you want to compare
+;;; two font descriptions.
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; Returns :
 ;;;     A string with the name of the current font, or NULL if no font is
 ;;;     selected. You must free this string with g_free().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_set_font_name ()
-;;; 
-;;; gboolean gtk_font_selection_set_font_name (GtkFontSelection *fontsel,
-;;;                                            const gchar *fontname);
-;;; 
+;;; gtk_font_selection_dialog_set_font_name ()
+;;;
+;;; gboolean gtk_font_selection_dialog_set_font_name
+;;;                                                (GtkFontSelectionDialog *fsd,
+;;;                                                 const gchar *fontname);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_set_font_name has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; Sets the currently-selected font.
-;;; 
-;;; Note that the fontsel needs to know the screen in which it will appear for
-;;; this to work; this can be guaranteed by simply making sure that the fontsel
-;;; is inserted in a toplevel window before you call this function.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;;
+;;; gtk_font_selection_dialog_set_font_name has been deprecated since version
+;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;;
+;;; Sets the currently selected font.
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; fontname :
 ;;;     a font name like "Helvetica 12" or "Times Bold 18"
-;;; 
+;;;
 ;;; Returns :
-;;;     TRUE if the font could be set successfully; FALSE if no such font exists
-;;;     or if the fontsel doesn't belong to a particular screen yet.
+;;;     TRUE if the font selected in fsd is now the fontname specified, FALSE
+;;;     otherwise.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_preview_text ()
-;;; 
-;;; const gchar * gtk_font_selection_get_preview_text
-;;;                                                  (GtkFontSelection *fontsel)
-;;; 
+;;; gtk_font_selection_dialog_get_preview_text ()
+;;;
+;;; const gchar * gtk_font_selection_dialog_get_preview_text
+;;;                                               (GtkFontSelectionDialog *fsd);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_get_preview_text has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Use GtkFontChooser
-;;; 
+;;;
+;;; gtk_font_selection_dialog_get_preview_text has been deprecated since version
+;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;;
 ;;; Gets the text displayed in the preview area.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; Returns :
 ;;;     the text displayed in the preview area. This string is owned by the
 ;;;     widget and should not be modified or freed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_set_preview_text ()
-;;; 
-;;; void gtk_font_selection_set_preview_text (GtkFontSelection *fontsel,
-;;;                                           const gchar *text);
-;;; 
+;;; gtk_font_selection_dialog_set_preview_text ()
+;;;
+;;; void gtk_font_selection_dialog_set_preview_text
+;;;                                                (GtkFontSelectionDialog *fsd,
+;;;                                                 const gchar *text);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_set_preview_text has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; Sets the text displayed in the preview area. The text is used to show how
-;;; the selected font looks.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;;
+;;; gtk_font_selection_dialog_set_preview_text has been deprecated since version
+;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;;
+;;; Sets the text displayed in the preview area.
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; text :
 ;;;     the text to display in the preview area
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_face ()
-;;; 
-;;; PangoFontFace * gtk_font_selection_get_face (GtkFontSelection *fontsel);
-;;; 
+;;; gtk_font_selection_dialog_get_cancel_button ()
+;;;
+;;; GtkWidget * gtk_font_selection_dialog_get_cancel_button
+;;;                                               (GtkFontSelectionDialog *fsd);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_get_face has been deprecated since version 3.2 and should
-;;; not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; Gets the PangoFontFace representing the selected font group details (i.e.
-;;; family, slant, weight, width, etc).
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;;
+;;; gtk_font_selection_dialog_get_cancel_button has been deprecated since
+;;; version 3.2 and should not be used in newly-written code. Use
+;;; GtkFontChooserDialog
+;;;
+;;; Gets the 'Cancel' button.
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; Returns :
-;;;     A PangoFontFace representing the selected font group details. The
-;;;     returned object is owned by fontsel and must not be modified or freed.
-;;; 
+;;;     the GtkWidget used in the dialog for the 'Cancel' button
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_face_list ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_face_list (GtkFontSelection *fontsel);
-;;; 
+;;; gtk_font_selection_dialog_get_ok_button ()
+;;;
+;;; GtkWidget * gtk_font_selection_dialog_get_ok_button
+;;;                                               (GtkFontSelectionDialog *fsd);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_get_face_list has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkTreeView which lists all styles available for the
-;;; selected font. For example, 'Regular', 'Bold', etc.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;;
+;;; gtk_font_selection_dialog_get_ok_button has been deprecated since version
+;;; 3.2 and should not be used in newly-written code. Use GtkFontChooserDialog
+;;;
+;;; Gets the 'OK' button.
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; Returns :
-;;;     A GtkWidget that is part of fontsel.
-;;; 
+;;;     the GtkWidget used in the dialog for the 'OK' button
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_family ()
-;;; 
-;;; PangoFontFamily * gtk_font_selection_get_family (GtkFontSelection *fontsel)
-;;; 
+;;; gtk_font_selection_dialog_get_font_selection ()
+;;;
+;;; GtkWidget * gtk_font_selection_dialog_get_font_selection
+;;;                                               (GtkFontSelectionDialog *fsd);
+;;;
 ;;; Warning
-;;; 
-;;; gtk_font_selection_get_family has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; Gets the PangoFontFamily representing the selected font family.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
+;;;
+;;; gtk_font_selection_dialog_get_font_selection has been deprecated since
+;;; version 3.2 and should not be used in newly-written code. Use
+;;; GtkFontChooserDialog
+;;;
+;;; Retrieves the GtkFontSelection widget embedded in the dialog.
+;;;
+;;; fsd :
+;;;     a GtkFontSelectionDialog
+;;;
 ;;; Returns :
-;;;     A PangoFontFamily representing the selected font family. Font families
-;;;     are a collection of font faces. The returned object is owned by fontsel
-;;;     and must not be modified or freed.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_size ()
-;;; 
-;;; gint gtk_font_selection_get_size (GtkFontSelection *fontsel);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_size has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; The selected font size.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A n integer representing the selected font size, or -1 if no font size
-;;;     is selected.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_family_list ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_family_list  (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_family_list has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkTreeView that lists font families, for example, 'Sans',
-;;; 'Serif', etc.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_preview_entry ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_preview_entry (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_preview_entry has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkEntry used to display the font as a preview.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_size_entry ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_size_entry (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_size_entry has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkEntry used to allow the user to edit the font number
-;;; manually instead of selecting it from the list of font sizes.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_font_selection_get_size_list ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_size_list (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_size_list has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkTreeeView used to list font sizes.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel.
-;;; 
-;;; Since 2.14
+;;;     the embedded GtkFontSelection
+;;;
+;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 
 ;;; --- End of file gtk.font-selection-dialog.lisp -----------------------------
+
