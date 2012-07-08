@@ -216,7 +216,7 @@
   (with-unwind (g-iface (g-type-default-interface-ref type)
                         g-type-default-interface-unref)
     (with-foreign-object (n-props :uint)
-      (with-unwind (params (g-object-interface-list-properties g-iface n-props)
+      (with-unwind (params (%g-object-interface-list-properties g-iface n-props)
                            g-free)
         (loop
            for i from 0 below (mem-ref n-props :uint)

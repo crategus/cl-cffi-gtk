@@ -1818,9 +1818,21 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_list_properties"
-           g-object-interface-list-properties) (:pointer g-param-spec)
+          %g-object-interface-list-properties) (:pointer g-param-spec)
   (interface :pointer)
   (n-properties (:pointer :uint)))
+
+(defun g-object-interface-list-properties (type)
+  (assert (g-type-is-a type +g-type-interface+))
+  (with-unwind (g-iface (g-type-default-interface-ref type)
+                        g-type-default-interface-unref)
+    (with-foreign-object (n-props :uint)
+      (with-unwind (params (%g-object-interface-list-properties g-iface n-props)
+                           g-free)
+        (loop
+           for i from 0 below (mem-ref n-props :uint)
+           for param = (mem-aref params :pointer i)
+           collect (parse-g-param-spec param))))))
 
 (export 'g-object-interface-list-properties)
 
