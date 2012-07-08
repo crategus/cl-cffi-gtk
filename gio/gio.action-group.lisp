@@ -448,6 +448,12 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_group_has_action" g-action-group-has-action) :boolean
+  (action-group (g-object g-action-group))
+  (action-name :string))
+
+(export 'g-action-group-has-action)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_enabled ()
 ;;;
@@ -470,6 +476,13 @@
 ;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_action_group_get_action_enabled" g-action-group-get-action-enabled)
+    :boolean
+  (action-group (g-object g-action-group))
+  (action-name :string))
+
+(export 'g-action-group-get-action-enabled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_parameter_type ()
@@ -546,6 +559,14 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_group_get_action_state_type"
+           g-action-group-get-action-state-type)
+    (g-boxed-foreign g-variant-type)
+  (action-group (g-object g-action-group))
+  (action-name :string))
+
+(export 'g-action-group-get-action-state-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_state_hint ()
 ;;;
@@ -582,6 +603,13 @@
 ;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_action_group_get_action_state_hint"
+           g-action-group-get-action-state-hint) (:pointer g-variant)
+  (action-group (g-object g-action-group))
+  (action-name :string))
+
+(export 'g-action-group-get-action-state-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_state ()
@@ -648,6 +676,14 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_group_change_action_state"
+           g-action-group-change-action-state) :void
+  (action-group (g-object g-action-group))
+  (action-name :string)
+  (value (:pointer g-variant)))
+
+(export 'g-action-group-change-action-state)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_activate_action ()
 ;;;
@@ -699,6 +735,12 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_group_action_added" g-action-group-action-added) :void
+  (action-group (g-object g-action-group))
+  (action-name :string))
+
+(export 'g-action-group-action-added)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_removed ()
 ;;;
@@ -717,6 +759,12 @@
 ;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_action_group_action_removed" g-action-group-action-removed) :void
+  (action-group (g-object g-action-group))
+  (action-name :string))
+
+(export 'g-action-group-action-removed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_enabled_changed ()
@@ -741,6 +789,14 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_group_action_enabled_changed"
+           g-action-group-action-enabled-changed) :void
+  (action-group (g-object g-action-group))
+  (action-name :string)
+  (enabled :boolean))
+
+(export 'g-action-group-action-enabled-changed)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_state_changed ()
 ;;;
@@ -764,5 +820,12 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_action_group_action_state_changed"
+           g-action-group-action-state-changed) :void
+  (action-group (g-object g-action-group))
+  (action-name :string)
+  (state (:pointer g-variant)))
+
+(export 'g-action-group-action-state-changed)
 
 ;;; --- End of file gio.action-group.lisp --------------------------------------
