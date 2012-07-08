@@ -5,10 +5,10 @@ Content from the GTK+ 3.4.3 Reference Manual
 
 GTK+ Core Reference
 
-    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.2.4*
-    gtk.version.lisp                 - Version Information         - GTK+ 3.2.4*
-    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.2.4*
-    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.2.4*
+    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.4.3
+    gtk.version.lisp                 - Version Information         - GTK+ 3.4.3
+    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.4.3
+    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.4.3
     gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.4.3
     gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.4.3
     
@@ -18,15 +18,15 @@ GTK+ Core Reference
     
     not implemented                  - Bindings
 
-    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.2.3*
-    gtk.selections.lisp              - Selections                  - GTK+ 3.2.3*
+    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.4.3
+    gtk.selections.lisp              - Selections                  - GTK+ 3.4.3
     
     not implemented                  - Testing
     not implemented                  - Filesystem utilities
     
 Theming in GTK+
 
-    gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.2.3*
+    gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.4.3
 
     not implemented                  - GtkCssProvider
     not implemented                  - GtkStyleProvider
@@ -290,3 +290,4 @@ GTK+ Widgets and Objects
     gtk.application.lisp             - GtkApplication              - GTK+ 3.4.3
     gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.4.3
     gtk.actionable.lisp              - GtkActionable               - GTK+ 3.4.1
+

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.4. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -77,15 +77,15 @@
 ;;;     accelerator modifiers
 ;;;
 ;;; The accelerator path must consist of
-;;; "<WINDOWTYPE>/Category1/Category2/.../Action", where WINDOWTYPE should be
-;;; a unique application-specific identifier that corresponds to the kind of
+;;; "<WINDOWTYPE>/Category1/Category2/.../Action", where WINDOWTYPE should be a
+;;; unique application-specific identifier that corresponds to the kind of
 ;;; window the accelerator is being used in, e.g. "Gimp-Image",
 ;;; "Abiword-Document" or "Gnumeric-Settings". The "Category1/.../Action"
 ;;; portion is most appropriately chosen by the action the accelerator triggers,
 ;;; i.e. for accelerators on menu items, choose the item's menu path, e.g.
 ;;; "File/Save As", "Image/View/Zoom" or "Edit/Select All". So a full valid
-;;; accelerator path may look like:
-;;; "<Gimp-Toolbox>/File/Dialogs/Tool Options...".
+;;; accelerator path may look like: "<Gimp-Toolbox>/File/Dialogs/Tool
+;;; Options...".
 ;;;
 ;;; All accelerators are stored inside one global GtkAccelMap that can be
 ;;; obtained using gtk_accel_map_get(). See Monitoring changes for additional
@@ -97,24 +97,24 @@
 ;;; specific accelerator, use gtk_accel_map_lookup_entry(). Modifications of
 ;;; existing accelerators should be done using gtk_accel_map_change_entry().
 ;;;
-;;; In order to avoid having some accelerators changed, they can be locked
-;;; using gtk_accel_map_lock_path(). Unlocking is done using
+;;; In order to avoid having some accelerators changed, they can be locked using
+;;; gtk_accel_map_lock_path(). Unlocking is done using
 ;;; gtk_accel_map_unlock_path().
 ;;;
 ;;; Saving and loading accelerator maps
 ;;;
-;;; Accelerator maps can be saved to and loaded from some external resource.
-;;; For simple saving and loading from file, gtk_accel_map_save() and
+;;; Accelerator maps can be saved to and loaded from some external resource. For
+;;; simple saving and loading from file, gtk_accel_map_save() and
 ;;; gtk_accel_map_load() are provided. Saving and loading can also be done by
 ;;; providing file descriptor to gtk_accel_map_save_fd() and
 ;;; gtk_accel_map_load_fd().
 ;;;
 ;;; Monitoring changes
 ;;;
-;;; GtkAccelMap object is only useful for monitoring changes of accelerators.
-;;; By connecting to "changed" signal, one can monitor changes of all
-;;; accelerators. It is also possible to monitor only single accelerator path
-;;; by using it as a detail of the "changed" signal.
+;;; GtkAccelMap object is only useful for monitoring changes of accelerators. By
+;;; connecting to "changed" signal, one can monitor changes of all accelerators.
+;;; It is also possible to monitor only single accelerator path by using it as a
+;;; detail of the "changed" signal.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -129,8 +129,8 @@
 ;;;                     GdkModifierType accel_mods,
 ;;;                     gpointer        user_data)       : Has Details
 ;;;
-;;; Notifies of a change in the global accelerator map. The path is also used
-;;; as the detail for the signal, so it is possible to connect to
+;;; Notifies of a change in the global accelerator map. The path is also used as
+;;; the detail for the signal, so it is possible to connect to
 ;;; changed::accel_path.
 ;;;
 ;;; object :
@@ -165,6 +165,7 @@
    :interfaces nil
    :type-initializer "gtk_accel_map_get_type")
   nil)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkAccelMapForeach ()
 ;;;
@@ -179,17 +180,17 @@
 ;;;     gtk_accel_map_foreach_unfiltered()
 ;;;
 ;;; accel_path :
-;;;     accel path of the current accelerator
+;;;     Accel path of the current accelerator
 ;;;
 ;;; accel_key :
-;;;     key of the current accelerator
+;;;     Key of the current accelerator
 ;;;
 ;;; accel_mods :
-;;;     modifiers of the current accelerator
+;;;     Modifiers of the current accelerator
 ;;;
 ;;; changed :
-;;;     Changed flag of the accelerator (if TRUE, accelerator has changed
-;;;     during runtime and would need to be saved during an accelerator dump)
+;;;     Changed flag of the accelerator (if TRUE, accelerator has changed during
+;;;     runtime and would need to be saved during an accelerator dump)
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -290,8 +291,8 @@
 ;;; void gtk_accel_map_save (const gchar *file_name);
 ;;;
 ;;; Saves current accelerator specifications (accelerator path, key and
-;;; modifiers) to file_name. The file is written in a format suitable to be
-;;; read back in by gtk_accel_map_load().
+;;; modifiers) to file_name. The file is written in a format suitable to be read
+;;; back in by gtk_accel_map_load().
 ;;;
 ;;; file_name :
 ;;;     the name of the file to contain accelerator specifications, in the GLib
@@ -301,11 +302,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_map_foreach ()
 ;;;
-;;; void gtk_accel_map_foreach (gpointer data,
-;;;                             GtkAccelMapForeach foreach_func);
+;;; void gtk_accel_map_foreach (gpointer data, GtkAccelMapForeach foreach_func);
 ;;;
-;;; Loops over the entries in the accelerator map whose accel path doesn't
-;;; match any of the filters added with gtk_accel_map_add_filter(), and execute
+;;; Loops over the entries in the accelerator map whose accel path doesn't match
+;;; any of the filters added with gtk_accel_map_add_filter(), and execute
 ;;; foreach_func on each. The signature of foreach_func is that of
 ;;; GtkAccelMapForeach, the changed parameter indicates whether this accelerator
 ;;; was changed during runtime (thus, would need saving during an accelerator
@@ -363,8 +363,8 @@
 ;;;
 ;;; Adds a filter to the global list of accel path filters.
 ;;;
-;;; Accel map entries whose accel path matches one of the filters are skipped
-;;; by gtk_accel_map_foreach().
+;;; Accel map entries whose accel path matches one of the filters are skipped by
+;;; gtk_accel_map_foreach().
 ;;;
 ;;; This function is intended for GTK+ modules that create their own menus, but
 ;;; don't want them to be saved into the applications accelerator map dump.
@@ -396,9 +396,9 @@
 ;;;
 ;;; GtkAccelMap * gtk_accel_map_get (void);
 ;;;
-;;; Gets the singleton global GtkAccelMap object. This object is useful only
-;;; for notification of changes to the accelerator map via the ::changed signal;
-;;; it isn't a parameter to the other accelerator map functions.
+;;; Gets the singleton global GtkAccelMap object. This object is useful only for
+;;; notification of changes to the accelerator map via the ::changed signal; it
+;;; isn't a parameter to the other accelerator map functions.
 ;;;
 ;;; Returns :
 ;;;     the global GtkAccelMap object
@@ -411,8 +411,8 @@
 ;;;
 ;;; void gtk_accel_map_lock_path (const gchar *accel_path);
 ;;;
-;;; Locks the given accelerator path. If the accelerator map doesn't yet
-;;; contain an entry for accel_path, a new one is created.
+;;; Locks the given accelerator path. If the accelerator map doesn't yet contain
+;;; an entry for accel_path, a new one is created.
 ;;;
 ;;; Locking an accelerator path prevents its accelerator from being changed
 ;;; during runtime. A locked accelerator path can be unlocked by
