@@ -97,7 +97,7 @@
           :TYPE-INITIALIZER "gdk_screen_get_type")
         ((FONT-OPTIONS GDK-SCREEN-FONT-OPTIONS "font-options" "gpointer" T T)
          (RESOLUTION GDK-SCREEN-RESOLUTION "resolution" "gdouble" T T)))
-     (get-g-class-definition (gtype "GdkScreen")))
+     (get-g-type-definition (gtype "GdkScreen")))
 
   (let* ((screen (gdk-screen-get-default))
          (ptr (pointer screen)))

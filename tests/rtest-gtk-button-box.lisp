@@ -130,7 +130,7 @@
                                 :TYPE-INITIALIZER "gtk_button_box_get_type")
                                ((LAYOUT-STYLE GTK-BUTTON-BOX-LAYOUT-STYLE
                                  "layout-style" "GtkButtonBoxStyle" T T)))
-    (get-g-class-definition (gtype "GtkButtonBox")))
+    (get-g-type-definition (gtype "GtkButtonBox")))
 )
 
 (define-test gtk-hbutton-box
@@ -240,7 +240,7 @@
                                  "GtkOrientable")
                                 :TYPE-INITIALIZER "gtk_hbutton_box_get_type")
                                NIL)
-    (get-g-class-definition (gtype "GtkHButtonBox")))
+    (get-g-type-definition (gtype "GtkHButtonBox")))
 )
 
 (define-test gtk-vbutton-box
@@ -350,7 +350,7 @@
                                  "GtkOrientable")
                                 :TYPE-INITIALIZER "gtk_vbutton_box_get_type")
                                NIL)
-    (get-g-class-definition (gtype "GtkVButtonBox")))
+    (get-g-type-definition (gtype "GtkVButtonBox")))
 )
 
 ;;; --- End of the file rtest-gtk-button-box.lisp ------------------------------

@@ -145,7 +145,7 @@
                                 (WINDOW-POSITION GTK-WINDOW-WINDOW-POSITION
                                  "window-position" "GtkWindowPosition" T T)))
 
-     (get-g-class-definition type))
+     (get-g-type-definition type))
     
     ;; Check the expansion of the class definition
     (assert-equal
@@ -311,7 +311,7 @@
          (EXPORT 'GTK-WINDOW-URGENCY-HINT (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-WINDOW-WINDOW-POSITION (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
-     (macroexpand-1 (get-g-class-definition (gtype "GtkWindow"))))
+     (macroexpand-1 (get-g-type-definition (gtype "GtkWindow"))))
       ))
 
 ;;; --- End of the file rtest-gtk-window.lisp ----------------------------------

@@ -115,7 +115,7 @@
                                  "GtkOrientable")
                                 :TYPE-INITIALIZER "gtk_statusbar_get_type")
                                NIL)
-    (get-g-class-definition (gtype "GtkStatusbar")))
+    (get-g-type-definition (gtype "GtkStatusbar")))
 )
 
 ;;; --- End of file rtest-gtk-label.lisp ---------------------------------------

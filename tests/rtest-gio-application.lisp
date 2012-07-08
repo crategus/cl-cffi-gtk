@@ -118,10 +118,51 @@
                                  "is-registered" "gboolean" T NIL)
                                 (IS-REMOTE G-APPLICATION-IS-REMOTE "is-remote"
                                  "gboolean" T NIL)))
-     (get-g-class-definition (gtype "GApplication")))
+     (get-g-type-definition (gtype "GApplication")))
 
   ;; Check functions
   (assert-true (g-application-id-is-valid "org.gtk.TestApplicaton"))
+  (let ((app (make-instance 'g-application
+                            :application-id "org.gtk.TestApplication"
+                            :flags :none
+                            :inactivity-timeout 10000)))
+    (g-signal-connect app "activate"
+       (lambda (application)
+         (format t "~&Signal 'activate' called for ~A~%" application)))
+    (g-signal-connect app "command-line"
+       (lambda (application)
+         (format t "~&Signal 'command-line' called for ~A~%" application)))
+    (g-signal-connect app "open"
+       (lambda (application)
+         (format t "~&Signal 'open' called for ~A~%" application)))
+    (g-signal-connect app "shutdown"
+       (lambda (application)
+         (format t "~&Signal 'shutdown' called for ~A~%" application)))
+    (g-signal-connect app "startup"
+       (lambda (application)
+         (format t "~&Signal 'startup' called for ~A~%" application)))
+
+    (g-application-hold app)
+    (assert-equal "org.gtk.TestApplication"
+                  (g-application-get-application-id app))
+    (assert-eql 10000 (g-application-get-inactivity-timeout app))
+    (assert-equal '(:none) (g-application-get-flags app))
+    (assert-false (g-application-get-is-registered app))
+    ;; Register the application
+    (assert-true (g-application-register app (null-pointer)))
+    ;; Check again if the application is registered
+    (assert-true (g-application-get-is-registered app))
+    ;; The application must be registered before is-remote can be checked
+    (assert-false (g-application-get-is-remote app))
+    (g-application-activate app)
+    (assert-false (g-application-get-default))
+    (g-application-release app)
+
+    (assert-eql 0 (g-application-run app 0 (null-pointer)))
+    (g-application-quit app)
+    (g-object-unref (pointer app))
+
+  ;; GApplication with actions
   (let ((app (make-instance 'g-application
                             :application-id "org.gtk.TestApplication"
                             :flags :none
@@ -143,24 +184,36 @@
          (format t "Signal 'startup' called for ~A~%" application)))
 
     (g-application-hold app)
-    (assert-equal "org.gtk.TestApplication"
-                  (g-application-get-application-id app))
-    (assert-eql 10000 (g-application-get-inactivity-timeout app))
-    (assert-equal '(:none) (g-application-get-flags app))
-    (assert-false (g-application-get-is-registered app))
     ;; Register the application
-    (assert-true (g-application-register app (null-pointer)))
-    ;; Check again if the application is registered
-    (assert-true (g-application-get-is-registered app))
-    ;; The application must be registered before is-remote can be checked
-    (assert-false (g-application-get-is-remote app))
-    (g-application-activate app)
-    (assert-false (g-application-get-default))
+    (g-application-register app (null-pointer))
+    ;; Add an action
+    (let ((action (g-simple-action-new "simple-action" nil)))
+      (g-signal-connect action "activate"
+         (lambda (action)
+           (format t "Signal 'activate' for ~A~%" (g-action-get-name action))))
+      (g-action-map-add-action app action)
+      ;; Get informations about the action
+;      (assert-eq 'g-variant-type
+;                 (type-of (g-action-group-get-action-parameter-type app "simple-action")))
+;      (assert-true (g-action-group-get-action-state app "simple-action"))
+;      (assert-true (g-action-group-get-action-enabled app "simple-action"))
+      (g-action-group-activate-action app "simple-action" nil)
+    )
+    ;; Add a second action
+    (let ((action (g-simple-action-new-stateful "toggle-action"
+                                                (g-variant-type-new "b")
+                                                (g-variant-new-boolean nil))))
+      (g-signal-connect action "activate"
+         (lambda (action)
+           (format t "Signal 'activate' for ~A~%" (g-action-get-name action))))
+      (g-action-map-add-action app action)
+    )
+
     (g-application-release app)
 
-    (assert-eql 0 (g-application-run app 0 (null-pointer)))   
+    (assert-eql 0 (g-application-run app 0 (null-pointer)))
     (g-application-quit app)
     (g-object-unref (pointer app))
-))
+)))
 
 ;;; --- End of file rtest-gio-application.lisp ---------------------------------

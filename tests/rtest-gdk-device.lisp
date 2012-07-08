@@ -114,7 +114,7 @@
                                  NIL)
                                 (TYPE GDK-DEVICE-TYPE "type" "GdkDeviceType" T
                                  NIL)))
-     (get-g-class-definition (gtype "GdkDevice"))))
+     (get-g-type-definition (gtype "GdkDevice"))))
 
 (define-test gdk-x11-device-xi2
   (assert-true  (g-type-is-object "GdkX11DeviceXI2"))
@@ -190,7 +190,7 @@
                                 "gdk_x11_device_xi2_get_type")
                                ((DEVICE-ID GDK-X11-DEVICE-X-I2-DEVICE-ID
                                  "device-id" "gint" T NIL)))
-     (get-g-class-definition (gtype "GdkX11DeviceXI2")))
+     (get-g-type-definition (gtype "GdkX11DeviceXI2")))
 
   (let* ((device (make-instance 'gdk-x11-device-xi2))
          (ptr (pointer device)))

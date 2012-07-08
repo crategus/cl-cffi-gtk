@@ -155,7 +155,7 @@
                                  T)
                                 (YALIGN GTK-BUTTON-YALIGN "yalign" "gfloat" T
                                  T)))
-    (get-g-class-definition (gtype "GtkButton")))
+    (get-g-type-definition (gtype "GtkButton")))
 )
 
 ;;; --- End of the file rtest-gtk-button.lisp ----------------------------------

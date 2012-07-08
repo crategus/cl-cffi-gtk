@@ -116,7 +116,7 @@
                        ((HOMOGENEOUS GTK-BOX-HOMOGENEOUS "homogeneous"
                          "gboolean" T T)
                         (SPACING GTK-BOX-SPACING "spacing" "gint" T T)))
-   (gobject::get-g-class-definition (gtype "GtkBox")))
+   (gobject::get-g-type-definition (gtype "GtkBox")))
   (assert-equal
     '(PROGN
        (DEFCLASS GTK-BOX (GTK-CONTAINER ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
@@ -132,7 +132,7 @@
        (EXPORT 'GTK-BOX (FIND-PACKAGE "GTK"))
        (EXPORT 'GTK-BOX-HOMOGENEOUS (FIND-PACKAGE "GTK"))
        (EXPORT 'GTK-BOX-SPACING (FIND-PACKAGE "GTK")))
-   (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkBox"))))
+   (macroexpand-1 (gobject::get-g-type-definition (gtype "GtkBox"))))
    ;; In Gtk+ 2 we can not create an instance of GtkBox. We use a GtkHBox.
    (let ((hbox (make-instance 'gtk-hbox))
          (button1 (make-instance 'gtk-button))
@@ -262,7 +262,7 @@
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :TYPE-INITIALIZER "gtk_hbox_get_type")
          NIL)
-     (gobject::get-g-class-definition hbox-type))
+     (gobject::get-g-type-definition hbox-type))
     (assert-equal
       '(PROGN
          (DEFCLASS GTK-HBOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
@@ -270,7 +270,7 @@
            (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkHBox")
            (:G-TYPE-INITIALIZER . "gtk_hbox_get_type"))
          (EXPORT 'GTK-HBOX (FIND-PACKAGE "GTK")))
-     (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkHBox"))))
+     (macroexpand-1 (gobject::get-g-type-definition (gtype "GtkHBox"))))
    ;; Check properties of a GtkHBox
    (let ((hbox (make-instance 'gtk-hbox))
          (button1 (make-instance 'gtk-button))
@@ -404,7 +404,7 @@
                         ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                         :TYPE-INITIALIZER "gtk_vbox_get_type")
          NIL)
-     (gobject::get-g-class-definition vbox-type))
+     (gobject::get-g-type-definition vbox-type))
     (assert-equal
       '(PROGN
          (DEFCLASS GTK-VBOX (GTK-BOX ATK-IMPLEMENTOR-IFACE GTK-BUILDABLE
@@ -412,7 +412,7 @@
            (:METACLASS GOBJECT-CLASS) (:G-TYPE-NAME . "GtkVBox")
            (:G-TYPE-INITIALIZER . "gtk_vbox_get_type"))
          (EXPORT 'GTK-VBOX (FIND-PACKAGE "GTK")))
-     (macroexpand-1 (gobject::get-g-class-definition (gtype "GtkVBox"))))
+     (macroexpand-1 (gobject::get-g-type-definition (gtype "GtkVBox"))))
    ;; Check properties of a GtkVBox
    (let ((vbox (make-instance 'gtk-vbox))
          (button1 (make-instance 'gtk-button))

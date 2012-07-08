@@ -50,6 +50,7 @@
 (defpackage :gio-tests
   (:use :gio :gobject :glib :cffi :common-lisp :lisp-unit))
 
+(load "rtest-gio-action.lisp")
 (load "rtest-gio-application.lisp")
 (load "rtest-gio-simple-action.lisp")
 (load "rtest-gio-simple-action-group.lisp")

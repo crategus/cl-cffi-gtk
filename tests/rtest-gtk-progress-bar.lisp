@@ -138,7 +138,7 @@
                                  "show-text" "gboolean" T T)
                                 (TEXT GTK-PROGRESS-BAR-TEXT "text" "gchararray"
                                  T T)))
-    (get-g-class-definition (gtype "GtkProgressBar")))
+    (get-g-type-definition (gtype "GtkProgressBar")))
 )
 
 ;;; --- End of file rtest-gtk-progress-bar.lisp --------------------------------

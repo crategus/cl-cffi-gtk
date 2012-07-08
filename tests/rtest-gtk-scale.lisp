@@ -122,7 +122,7 @@
                                  "gboolean" T T)
                                 (VALUE-POS GTK-SCALE-VALUE-POS "value-pos"
                                  "GtkPositionType" T T)))
-     (get-g-class-definition (gtype "GtkScale")))
+     (get-g-type-definition (gtype "GtkScale")))
     
     ;; Check the expansion of the class definition
     (assert-equal
@@ -150,7 +150,7 @@
          (EXPORT 'GTK::GTK-SCALE-HAS-ORIGIN (FIND-PACKAGE "GTK"))
          (EXPORT 'GTK-SCALE-VALUE-POS (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
-     (macroexpand-1 (get-g-class-definition (gtype "GtkScale"))))))
+     (macroexpand-1 (get-g-type-definition (gtype "GtkScale"))))))
 
 (define-test gtk-hscale
   (assert-false (g-type-is-abstract "GtkHScale"))  
@@ -245,7 +245,7 @@
                                  "GtkOrientable")
                                 :TYPE-INITIALIZER "gtk_hscale_get_type")
                                NIL)
-     (get-g-class-definition (gtype "GtkHScale")))
+     (get-g-type-definition (gtype "GtkHScale")))
     
     ;; Check the expansion of the class definition
     (assert-equal
@@ -257,7 +257,7 @@
                    (:G-TYPE-INITIALIZER . "gtk_hscale_get_type"))
          (EXPORT 'GTK-HSCALE (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
-     (macroexpand-1 (get-g-class-definition (gtype "GtkHScale"))))))
+     (macroexpand-1 (get-g-type-definition (gtype "GtkHScale"))))))
 
 (define-test gtk-vscale
   (assert-false (g-type-is-abstract "GtkVScale"))  
@@ -352,7 +352,7 @@
                                  "GtkOrientable")
                                 :TYPE-INITIALIZER "gtk_vscale_get_type")
                                NIL)
-     (get-g-class-definition (gtype "GtkVScale")))
+     (get-g-type-definition (gtype "GtkVScale")))
     
     ;; Check the expansion of the class definition
     (assert-equal
@@ -364,6 +364,6 @@
                    (:G-TYPE-INITIALIZER . "gtk_vscale_get_type"))
          (EXPORT 'GTK-VSCALE (FIND-PACKAGE "GTK")))
      ;; macroexpand the class definition
-     (macroexpand-1 (get-g-class-definition (gtype "GtkVScale"))))))
+     (macroexpand-1 (get-g-type-definition (gtype "GtkVScale"))))))
 
 ;;; --- End of file rtest-scale.lisp -------------------------------------------

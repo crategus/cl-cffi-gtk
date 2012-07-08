@@ -185,7 +185,7 @@
                                 (WRAP GTK-LABEL-WRAP "wrap" "gboolean" T T)
                                 (WRAP-MODE GTK-LABEL-WRAP-MODE "wrap-mode"
                                  "PangoWrapMode" T T)))
-    (get-g-class-definition (gtype "GtkLabel")))
+    (get-g-type-definition (gtype "GtkLabel")))
 )
 
 ;;; --- End of file rtest-gtk-label.lisp ---------------------------------------

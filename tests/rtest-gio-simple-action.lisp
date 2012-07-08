@@ -33,6 +33,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-test gio-simple-action
+  ;; Type checks
   (assert-true  (g-type-is-object "GSimpleAction"))
   (assert-false (g-type-is-abstract "GSimpleAction"))
   (assert-true  (g-type-is-derived "GSimpleAction"))
@@ -49,6 +50,7 @@
   (assert-eq 'g-simple-action
              (registered-object-type-by-name "GSimpleAction"))
   
+  ;; Check infos about the class
   (let ((class (g-type-class-ref (gtype "GSimpleAction"))))
     (assert-equal (gtype "GSimpleAction")  (g-type-from-class class))
     (assert-equal (gtype "GSimpleAction") (g-object-class-type class))
@@ -114,40 +116,120 @@
                                  T T)
                                 (STATE-TYPE G-SIMPLE-ACTION-STATE-TYPE
                                  "state-type" "GVariantType" T NIL)))
-     (get-g-class-definition (gtype "GSimpleAction")))
+     (get-g-type-definition (gtype "GSimpleAction")))
 
-  ;; Check functions
+  ;; Create an instance
   (let* ((action (make-instance 'g-simple-action
-                                :name "first"
+                                :name "simple"
                                 :parameter-type (g-variant-type-new "b")
                                 :state (g-variant-new-boolean t)))
          (action-ptr (pointer action)))
+    ;; Connect available signals
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (declare (ignore parameter))
-         (format t "~&Signal 'activate' for ~A~%" action)))
+         (format t "~&GSimpleAction: signal 'activate' occured.~%")
+         (format t "~&    action    : ~A~%" action)
+         (format t "~&    name      : ~A~%" (g-action-get-name action))
+         (format t "~&    parameter : ~A~%" parameter)))
     (g-signal-connect action "change-state"
        (lambda (action value)
-         (declare (ignore value))
-         (format t "Signal 'change-state' for ~A~%" action)))
-
+         (g-simple-action-set-state action value)
+         (format t "~&GSimpleAction: signal 'change-state' occured.~%")
+         (format t "~&    action : ~A~%" action)
+         (format t "~&    name   : ~A~%" (g-action-get-name action))
+         (format t "~&    value  : ~A~%" value)))
     ;; Some general checks of the instance
     (assert-equal (gtype "GSimpleAction") (g-object-type action))
     (assert-equal "GSimpleAction" (g-object-type-name action))
-    (assert-true (g-type-is-a "GSimpleAction" (g-type-from-instance action-ptr)))
+    (assert-true  (g-type-is-a "GSimpleAction" (g-type-from-instance action-ptr)))
     ;; Access the properties through the interface GAction
-    (assert-true          (g-action-get-enabled action))
-    (assert-equal "first" (g-action-get-name action))
-    (assert-eq 'g-variant-type (type-of (g-action-get-parameter-type action)))
-    (assert-true (g-variant-get-boolean (g-action-get-state action)))
+    (assert-true  (g-action-get-enabled action))
+    (assert-equal "simple" (g-action-get-name action))
+    (assert-eq    'g-variant-type (type-of (g-action-get-parameter-type action)))
+    (assert-true  (g-variant-get-boolean (g-action-get-state action)))
     (assert-equal "b" (g-variant-get-type-string (g-action-get-state action)))
-    (assert-eq 'g-variant-type (type-of (g-action-get-state-type action)))
-
+    (assert-eq    'g-variant-type (type-of (g-action-get-state-type action)))
+    ;; Change the state
     (g-action-change-state action (g-variant-new-boolean nil))
     (assert-false (g-variant-get-boolean (g-action-get-state action)))
+    ;; Activate the action
+    (g-action-activate action (g-variant-new-boolean nil)))
 
-    (g-action-activate action (g-variant-new-boolean nil))
-    
+  ;; Create a stateless action with g-simple-action-new
+  (let* ((action (g-simple-action-new "second simple" (g-variant-type-new "b")))
+         (action-ptr (pointer action)))
+    ;; Connect available signals
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "~&GSimpleAction: signal 'activate' occured.~%")
+         (format t "~&    action    : ~A~%" action)
+         (format t "~&    name      : ~A~%" (g-action-get-name action))
+         (format t "~&    parameter : ~A~%" parameter)))
+    ;; Some general checks of the instance
+    (assert-equal (gtype "GSimpleAction") (g-object-type action))
+    (assert-equal "GSimpleAction" (g-object-type-name action))
+    (assert-true  (g-type-is-a "GSimpleAction" (g-type-from-instance action-ptr)))
+    ;; Access the properties through the interface GAction
+    (assert-true  (g-action-get-enabled action))
+    (assert-equal "second simple" (g-action-get-name action))
+    (assert-eq    'g-variant-type (type-of (g-action-get-parameter-type action)))
+    ;; Activate the action
+    (g-action-activate action (g-variant-new-boolean nil)))
 
-))
+  ;; Create a stateful action with g-simple-action-new-stateful
+  (let* ((action (g-simple-action-new-stateful "third simple"
+                                               (g-variant-type-new "b")
+                                               (g-variant-new-boolean t)))
+         (action-ptr (pointer action)))
+    ;; Connect available signals
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "~&GSimpleAction: signal 'activate' occured.~%")
+         (format t "~&    action    : ~A~%" action)
+         (format t "~&    name      : ~A~%" (g-action-get-name action))
+         (format t "~&    parameter : ~A~%" parameter)))
+    (g-signal-connect action "change-state"
+       (lambda (action value)
+         (g-simple-action-set-state action value)
+         (format t "~&GSimpleAction: signal 'change-state' occured.~%")
+         (format t "~&    action : ~A~%" action)
+         (format t "~&    name   : ~A~%" (g-action-get-name action))
+         (format t "~&    value  : ~A~%" value)))
+    ;; Some general checks of the instance
+    (assert-equal (gtype "GSimpleAction") (g-object-type action))
+    (assert-equal "GSimpleAction" (g-object-type-name action))
+    (assert-true  (g-type-is-a "GSimpleAction" (g-type-from-instance action-ptr)))
+    ;; Access the properties through the interface GAction
+    (assert-true  (g-action-get-enabled action))
+    (assert-equal "third simple" (g-action-get-name action))
+    (assert-eq    'g-variant-type (type-of (g-action-get-parameter-type action)))
+    (assert-true  (g-variant-get-boolean (g-action-get-state action)))
+    (assert-equal "b" (g-variant-get-type-string (g-action-get-state action)))
+    (assert-eq    'g-variant-type (type-of (g-action-get-state-type action)))
+    ;; Change the state
+    (g-action-change-state action (g-variant-new-boolean nil))
+    (assert-false (g-variant-get-boolean (g-action-get-state action)))
+    ;; Activate the action
+    (g-action-activate action (g-variant-new-boolean nil)))
+
+  ;; Create a stateless action with g-simple-action-new and no parameter-type
+  (let* ((action (g-simple-action-new "fourth simple" nil))
+         (action-ptr (pointer action)))
+    ;; Connect available signals
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "~&GSimpleAction: signal 'activate' occured.~%")
+         (format t "~&    action    : ~A~%" action)
+         (format t "~&    name      : ~A~%" (g-action-get-name action))
+         (format t "~&    parameter : ~A~%" parameter)))
+    ;; Some general checks of the instance
+    (assert-equal (gtype "GSimpleAction") (g-object-type action))
+    (assert-equal "GSimpleAction" (g-object-type-name action))
+    (assert-true  (g-type-is-a "GSimpleAction" (g-type-from-instance action-ptr)))
+    ;; Access the properties through the interface GAction
+    (assert-true  (g-action-get-enabled action))
+    (assert-equal "fourth simple" (g-action-get-name action))
+    ;; Activate the action
+    (g-action-activate action (null-pointer)))
+)
 
