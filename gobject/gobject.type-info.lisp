@@ -1000,7 +1000,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-interface (type)
-  (eql +g-type-interface+ (gtype-id (gtype type))))
+  (eql +g-type-interface+ (gtype-id (g-type-fundamental type))))
   
 (export 'g-type-is-interface)
 
