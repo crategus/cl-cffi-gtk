@@ -299,11 +299,10 @@
 (declaim (inline g-simple-action-new-stateful))
 
 (defun g-simple-action-new-stateful (name parameter-type state)
-  (make-instance 'g-simple-action-new-stateful
+  (make-instance 'g-simple-action
                  :name name
                  :parameter-type parameter-type
-                 :state state
-                 :state-type (g-variant-get-type state)))
+                 :state state))
 
 (export 'g-simple-action-new-stateful)
 
