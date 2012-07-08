@@ -617,6 +617,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_is_container" g-variant-is-container) :boolean
+  (value (:pointer g-variant)))
+
+(export 'g-variant-is-container)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_compare ()
 ;;;
@@ -1099,6 +1104,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_new_uint64" g-variant-new-uint64) (:pointer g-variant)
+  (value :uint64))
+
+(export 'g-variant-new-int64)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_handle ()
 ;;;
@@ -1119,6 +1129,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_new_handle" g-variant-new-handle) (:pointer g-variant)
+  (value :int32))
+
+(export 'g-variant-new-handle)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_double ()
 ;;;
@@ -1134,6 +1149,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_new_double" g-variant-new-double) (:pointer g-variant)
+  (value :double))
+
+(export 'g-variant-new-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_string ()
@@ -1153,6 +1173,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_new_string" g-variant-new-string) (:pointer g-variant)
+  (value :string))
+
+(export 'g-variant-new-string)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_object_path ()
 ;;;
@@ -1170,6 +1195,12 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_new_object_path" g-variant-new-object-path)
+    (:pointer g-variant)
+  (value :string))
+
+(export 'g-variant-new-object-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_object_path ()
@@ -1194,6 +1225,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_is_object_path" g-variant-is-object-path) :boolean
+  (string :string))
+
+(export 'g-variant-is-object-path)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_signature ()
 ;;;
@@ -1211,6 +1247,12 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_new_signature" g-variant-new-signature)
+    (:pointer g-variant)
+  (signature :string))
+
+(export 'g-variant-new-signature)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_signature ()
@@ -1233,6 +1275,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_is_signature" g-variant-is-signature) :boolean
+  (string :string))
+
+(export 'g-variant-is-signature)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_variant ()
 ;;;
@@ -1252,6 +1299,12 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_new_variant" g-variant-new-variant)
+    (:pointer g-variant)
+  (value (:pointer g-variant)))
+
+(export 'g-variant-new-variant)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_strv ()
@@ -1433,6 +1486,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_get_uint16" g-variant-get-uint16) :uint16
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-uint16)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_int32 ()
 ;;;
@@ -1451,6 +1509,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_get_int32" g-variant-get-int32) :int32
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-int32)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_uint32 ()
@@ -1471,6 +1534,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_get_uint32" g-variant-get-uint32) :uint32
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-uint32)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_int64 ()
 ;;;
@@ -1490,6 +1558,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_get_int64" g-variant-get-int64) :int64
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-int64)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_uint64 ()
 ;;;
@@ -1508,6 +1581,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_get_uint64" g-variant-get-uint64) :uint64
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-uint64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_handle ()
@@ -1532,6 +1610,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_get_handle" g-variant-get-handle) :int32
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-int64)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_double ()
 ;;;
@@ -1550,6 +1633,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_get_double" g-variant-get-double) :double
+  (value (:pointer g-variant)))
+
+(export 'g-variant-get-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_string ()

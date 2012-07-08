@@ -288,6 +288,10 @@
 ;;; The type of a value that can be either TRUE or FALSE.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-boolean+ "b")
+
+(export '+g-variant-type-boolean+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BYTE
 ;;;
@@ -296,6 +300,10 @@
 ;;; The type of an integer value that can range from 0 to 255.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-byte+ "y")
+
+(export '+g-variant-type-byte+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_INT16
 ;;;
@@ -303,6 +311,10 @@
 ;;;
 ;;; The type of an integer value that can range from -32768 to 32767.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-int16+ "n")
+
+(export '+g-variant-type-int16+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_UINT16
@@ -313,6 +325,10 @@
 ;;; about this many people living in Toronto in the 1870s.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-uint16+ "q")
+
+(export '+g-variant-type-uint16+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_INT32
 ;;;
@@ -320,6 +336,10 @@
 ;;;
 ;;; The type of an integer value that can range from -2147483648 to 2147483647.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-int32+ "i")
+
+(export '+g-variant-type-int32+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_UINT32
@@ -330,6 +350,10 @@
 ;;; number for everyone who was around in the late 1970s.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-uint32+ "u")
+
+(export '+g-variant-type-uint32+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_INT64
 ;;;
@@ -338,6 +362,10 @@
 ;;; The type of an integer value that can range from -9223372036854775808 to
 ;;; 9223372036854775807.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-int64+ "x")
+
+(export '+g-variant-type-int64+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_UINT64
@@ -348,6 +376,10 @@
 ;;; That's a really big number, but a Rubik's cube can have a bit more than
 ;;; twice as many possible positions.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-uint64+ "t")
+
+(export '+g-variant-type-uint64+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_HANDLE
@@ -362,6 +394,10 @@
 ;;; of this type.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-handle+ "h")
+
+(export '+g-variant-type-handle+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_DOUBLE
 ;;;
@@ -373,6 +409,10 @@
 ;;; fundamental particles in the observable universe.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-double+ "d")
+
+(export '+g-variant-type-double+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_STRING
 ;;;
@@ -380,6 +420,10 @@
 ;;;
 ;;; The type of a string. "" is a string. NULL is not a string.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-string+ "s")
+
+(export '+g-variant-type-string+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_OBJECT_PATH
@@ -394,6 +438,10 @@
 ;;; description of valid object paths.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-object-path+ "o")
+
+(export '+g-variant-type-object-path+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_SIGNATURE
 ;;;
@@ -407,6 +455,10 @@
 ;;; description of valid signature strings.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-signature+ "g")
+
+(export '+g-variant-type-signature+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_VARIANT
 ;;;
@@ -415,6 +467,10 @@
 ;;; The type of a box that contains any other value (including another variant).
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-variant+ "v")
+
+(export '+g-variant-type-variant+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_ANY
 ;;;
@@ -422,6 +478,10 @@
 ;;;
 ;;; An indefinite type that is a supertype of every type (including itself).
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-any+ "*")
+
+(export '+g-variant-type-any+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BASIC
@@ -432,6 +492,10 @@
 ;;; type.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-basic+ "?")
+
+(export '+g-variant-type-basic+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_MAYBE
 ;;;
@@ -440,6 +504,10 @@
 ;;; An indefinite type that is a supertype of every maybe type.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-maybe+ "m*")
+
+(export '+g-variant-type-maybe+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_ARRAY
 ;;;
@@ -447,6 +515,10 @@
 ;;;
 ;;; An indefinite type that is a supertype of every array type.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-array+ "a*")
+
+(export '+g-variant-type-array+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_TUPLE
@@ -457,6 +529,10 @@
 ;;; the number of items in the tuple.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-tuple+ "r")
+
+(export '+g-variant-type-tuple+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_UNIT
 ;;;
@@ -465,6 +541,10 @@
 ;;; The empty tuple type. Has only one instance. Known also as "triv" or "void".
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-unit+ "()")
+
+(export '+g-variant-type-unit+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_DICT_ENTRY
 ;;;
@@ -472,6 +552,10 @@
 ;;;
 ;;; An indefinite type that is a supertype of every dictionary entry type.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-dict-entry+ "{?*}")
+
+(export '+g-variant-type-dict-entry+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_DICTIONARY
@@ -482,6 +566,10 @@
 ;;; any array type that has an element type equal to any dictionary entry type.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-dictionary+ "a{?*}")
+
+(export '+g-variant-type-dictonary+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_STRING_ARRAY
 ;;;
@@ -490,6 +578,10 @@
 ;;; The type of an array of strings.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-string-array+ "as")
+
+(export '+g-variant-type-string-array+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_OBJECT_PATH_ARRAY
 ;;;
@@ -497,6 +589,10 @@
 ;;;
 ;;; The type of an array of object paths.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-object-path-array+ "ao")
+
+(export '+g-variant-type-object-path-array+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BYTESTRING
@@ -509,6 +605,10 @@
 ;;; array.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter +g-variant-type-bytestring+ "ay")
+
+(export '+g-variant-type-bytestring+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BYTESTRING_ARRAY
 ;;;
@@ -516,6 +616,10 @@
 ;;;
 ;;; The type of an array of byte strings (an array of arrays of bytes).
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-bytestring-array+ "aay")
+
+(export '+g-variant-type-bytestring-array+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_VARDICT
@@ -527,6 +631,10 @@
 ;;;
 ;;; Since 2.30
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +g-variant-type-vardict+ "a(sv)")
+
+(export '+g-variant-type-vardict+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE()
@@ -563,6 +671,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_free" g-variant-type-free) :void
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_copy ()
@@ -690,6 +803,12 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_type_get_string_length" g-variant-type-get-string-length)
+    g-size
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-get-string-length)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_peek_string ()
 ;;;
@@ -733,6 +852,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_type_dup_string" g-variant-type-dup-string) :string
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-dup-string)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_definite ()
 ;;;
@@ -757,6 +881,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_type_is_definite" g-variant-type-is-definite) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-definite)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_container ()
 ;;;
@@ -778,6 +907,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_is_container" g-variant-type-is-container) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-container)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_basic ()
@@ -803,6 +937,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_type_is_basic" g-variant-type-is-basic) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-basic)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_maybe ()
 ;;;
@@ -822,6 +961,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_is_maybe" g-variant-type-is-maybe) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-maybe)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_array ()
@@ -843,6 +987,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_type_is_array" g-variant-type-is-array) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-array)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_tuple ()
 ;;;
@@ -862,6 +1011,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_is_tuple" g-variant-type-is-tuple) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-tuple)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_dict_entry ()
@@ -884,6 +1038,11 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_variant_type_is_dict_entry" g-variant-type-is-dict-entry) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-dict-entry)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_variant ()
 ;;;
@@ -899,6 +1058,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_is_variant" g-variant-type-is-variant) :boolean
+  (type (g-boxed-foreign g-variant-type)))
+
+(export 'g-variant-type-is-variant)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_hash ()
