@@ -1396,8 +1396,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_view_append_column" gtk-tree-view-append-column) :int
-  (tree-view g-object)
-  (column g-object))
+  (tree-view (g-object gtk-tree-view))
+  (column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-append-column)
 

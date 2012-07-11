@@ -267,6 +267,14 @@
 ;;;     a new GtkListStore
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-list-store-new))
+
+(defun gtk-list-store-new (&rest column-types)
+  (make-instance 'gtk-list-store
+                 :colums-types column-types))
+
+(export 'gtk-list-store-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_store_newv ()
 ;;;

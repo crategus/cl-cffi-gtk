@@ -385,10 +385,10 @@
 
 (define-g-object-class "GtkTreeViewColumn" gtk-tree-view-column
   (:superclass g-initially-unowned
-    :export t
-    :interfaces ("GtkBuildable"
-                 "GtkCellLayout")
-    :type-initializer "gtk_tree_view_column_get_type")
+   :export t
+   :interfaces ("GtkBuildable"
+                "GtkCellLayout")
+   :type-initializer "gtk_tree_view_column_get_type")
   ((alignment
     gtk-tree-view-column-alignment
     "alignment" "gfloat" t t)
@@ -532,6 +532,16 @@
 ;;;     A newly created GtkTreeViewColumn.
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-tree-view-column-new-with-attributes (title cell &rest attributes)
+  (let ((column (make-instance 'gtk-tree-view-column
+                               :title title)))
+    (gtk-tree-view-column-clear-attributes column cell)
+    (gtk-tree-view-column-set-attributes column cell attributes)
+    (gtk-tree-view-column-pack-start column cell :expand t)
+    column))
+
+(export 'gtk-tree-view-column-new-with-attributes)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_pack_start ()
 ;;; 
@@ -668,6 +678,19 @@
 ;;; ... :
 ;;;     A NULL-terminated list of attributes
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-tree-view-column-set-attributes (tree-column
+                                            cell-renderer
+                                            &rest attributes)
+  (let ((n (/ (length attributes) 2)))
+    (assert (eql n (truncate (length attributes) 2)))
+    (dotimes (i n)
+      (gtk-tree-view-column-add-attribute tree-column
+                                          cell-renderer
+                                          (pop attributes)
+                                          (pop attributes)))))
+
+(export 'gtk-tree-view-column-set-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeCellDataFunc ()

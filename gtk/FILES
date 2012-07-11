@@ -36,8 +36,8 @@ Theming in GTK+
     not implemented                  - GtkSymbolicColor
     not implemented                  - GtkGradient
 
-    gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.2.3*
-    gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.2.3*
+    gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.4.3
+    gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.4.3
 
     not implemented                  - GtkNumerableIcon
 
