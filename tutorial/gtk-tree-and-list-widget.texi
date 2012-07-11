@@ -1,0 +1,34 @@
+@c -----------------------------------------------------------------------------
+@c File     : gtk-text-view.texi
+@c License  : GNU General Public License (GPL)
+@c Language : English
+@c Author   : Dieter Kaiser
+@c Date     : 08.07.2012
+@c Revision : 08.07.2012
+@c 
+@c Copyright (C) 2012 by Dieter Kaiser
+@c -----------------------------------------------------------------------------
+
+@menu
+* Overview::
+* Creating a model::
+* Creating the view component::
+* Simple example::
+@end menu
+
+@c -----------------------------------------------------------------------------
+@node Overview, Creating a model, Top, Top
+@section Overview
+
+@c -----------------------------------------------------------------------------
+@node Creating a model, Creating the view component, Overview, Top
+@section Creating a model
+
+@c -----------------------------------------------------------------------------
+@node Creating the view component, Simple example, Creating a model, Top
+@section Creating the view component
+
+@c -----------------------------------------------------------------------------
+@node Simple example, , Creating the view component, Top
+@section Simple example
+

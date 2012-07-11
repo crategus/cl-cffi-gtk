@@ -2005,7 +2005,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 10. Selecting Colors, Files and Fonts
+;;; Chapter 10. Tree and List Widgets
+;;;
+;;; ----------------------------------------------------------------------------
+
+(defun create-and-fill-model ()
+  (let ((store (gtk-list-store-new "gchararray" "guint")))
+    (gtk-list-store-set store (gtk-list-store-append store) "Heinz El-Mann" 51)
+    (gtk-list-store-set store (gtk-list-store-append store) "Jane Doe" 23)
+    (gtk-list-store-set store (gtk-list-store-append store) "Joe Bungop" 91)
+    store))
+
+(defun create-view-and-model()
+  (let ((view (gtk-tree-view-new-with-model (create-and-fill-model))))
+    ;; Create renderers for the cells
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new)))
+       (gtk-tree-view-column-add-attribute column renderer "text" 0)
+       (gtk-tree-view-insert-column view column -1))
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new)))
+      (gtk-tree-view-column-add-attribute column renderer "text" 1)
+      (gtk-tree-view-insert-column view column -1))
+    view))
+
+(defun example-simple-list-store ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Simple List Store"
+                                 :type :toplevel
+                                 :default-width 250)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window (create-view-and-model))
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Chapter 11. Selecting Colors, Files and Fonts
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -2279,7 +2318,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Chapter 11. Miscellaneous Widgets
+;;; Chapter 12. Miscellaneous Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -2882,7 +2921,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; 12. Menu Widget
+;;; 13. Menu Widget
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -3453,15 +3492,15 @@
                               :state "'left'"
                               :change-state (callback change-justify-state))))
 
-
 (defun new-window (application file)
   (declare (ignore file))
-  (let ((window (make-instance 'gtk-window
-                               :title "BloatPad"
-                               :default-width 250
-                               :border-width 12))
+(within-main-loop
+  (let ((window (gtk-application-window-new application))
         (grid (make-instance 'gtk-grid))
         (toolbar (make-instance 'gtk-toolbar)))
+    (gtk-window-set-title window "BloatPad")
+    (gtk-container-set-border-width window 12)
+    (gtk-window-set-default-size window 640 480)
     (g-signal-connect window "destroy"
                       (lambda (widget)
                         (declare (ignore widget))
@@ -3517,74 +3556,125 @@
 
     (gtk-container-add window grid)
     (gtk-widget-show-all window)))
-
-
-
-
+(join-gtk-main)
+)
 
 (defun bloat-pad-activate (application)
   (format t "BLOAD-PAD-ACTIVATE is called for ~A.~%" application)
   (new-window application nil))
 
+(defun create-about-dialog ()
+  (let ((dialog (make-instance 'gtk-about-dialog
+                               :program-name "Example Dialog"
+                               :version "0.00"
+                               :copyright "(c) Dieter Kaiser"
+                               :website
+                               "github.com/crategus/cl-cffi-gtk"
+                               :website-label "Project web site"
+                               :license "LLGPL"
+                               :authors '("Dieter Kaiser")
+                               :documenters '("Dieter Kaiser")
+                               :artists '("None")
+                               :logo-icon-name
+                               "applications-development"
+                               :wrap-license t)))
+    ;; Run the about dialog
+    (gtk-dialog-run dialog)
+    ;; Destroy the about dialog
+    (gtk-widget-destroy dialog)))
+
+(defvar *menu*
+      "<interface>
+        <menu id='app-menu'>
+         <section>
+          <item>
+           <attribute name='label' translatable='yes'>_New Window</attribute>
+           <attribute name='action'>app.new</attribute>
+           <attribute name='accel'>&lt;Primary&gt;n</attribute>
+          </item>
+         </section>
+         <section>
+          <item>
+           <attribute name='label' translatable='yes'>_About Bloatpad</attribute>
+           <attribute name='action'>app.about</attribute>
+          </item>
+         </section>
+         <section>
+          <item>
+           <attribute name='label' translatable='yes'>_Quit</attribute>
+           <attribute name='action'>app.quit</attribute>
+           <attribute name='accel'>&lt;Primary&gt;q</attribute>
+          </item>
+         </section>
+         </menu>
+        <menu id='menubar'>
+         <submenu>
+          <attribute name='label' translatable='yes'>_Edit</attribute>
+          <section>
+           <item>
+            <attribute name='label' translatable='yes'>_Copy</attribute>
+            <attribute name='action'>win.copy</attribute>
+            <attribute name='accel'>&lt;Primary&gt;c</attribute>
+           </item>
+           <item>
+            <attribute name='label' translatable='yes'>_Parse</attribute>
+            <attribute name='action'>win.parse</attribute>
+            <attribute name='accel'>&lt;Primary&gt;v</attribute>
+           </item>
+          </section>
+         </submenu>
+         <submenu>
+          <attribute name='label' translatable='yes'>_View</attribute>
+          <section>
+           <item>
+            <attribute name='label' translatable='yes'>_Fullscreen</attribute>
+            <attribute name='action'>win.fullscreen</attribute>
+            <attribute name='accel'>F11</attribute>
+           </item>
+          </section>
+         </submenu>
+        </menu>
+       </interface>")
+
 (defun bloat-pad-startup (application)
   (format t "BLOAT-PAD-STARTUP is called for ~A.~%" application)
+
+  (let ((action (g-simple-action-new "new" nil)))
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
+         (g-application-activate application)))
+    (format t "~&ADD action 'new'~%")
+    (g-action-map-add-action application action))
+
+  (let ((action (g-simple-action-new "about" nil)))
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
+         (create-about-dialog)))
+    (format t "~&ADD action 'about'~%")
+    (g-action-map-add-action application action))
+
+  (let ((action (g-simple-action-new "quit" nil)))
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
+         (gtk-main-quit)
+         (g-application-quit application)))
+    (format t "~&ADD action 'quit'~%")
+    (g-action-map-add-action application action))
+
   (let ((builder (make-instance 'gtk-builder)))
-    (gtk-builder-add-from-string builder
-      "<interface>~
-        <menu id='app-menu'>~
-         <section>~
-          <item>~
-           <attribute name='label' translatable='yes'>_New Window</attribute>~
-           <attribute name='action'>app.new</attribute>~
-           <attribute name='accel'>&lt;Primary&gt;n</attribute>~
-          </item>~
-         </section>~
-         <section>~
-          <item>~
-           <attribute name='label' translatable='yes'>_About Bloatpad</attribute>~
-           <attribute name='action'>app.about</attribute>~
-          </item>~
-         </section>~
-         <section>~
-          <item>~
-           <attribute name='label' translatable='yes'>_Quit</attribute>~
-           <attribute name='action'>app.quit</attribute>~
-           <attribute name='accel'>&lt;Primary&gt;q</attribute>~
-          </item>~
-         </section>~
-         </menu>~
-        <menu id='menubar'>~
-         <submenu>~
-          <attribute name='label' translatable='yes'>_Edit</attribute>~
-          <section>~
-           <item>~
-            <attribute name='label' translatable='yes'>_Copy</attribute>~
-            <attribute name='action'>win.copy</attribute>~
-            <attribute name='accel'>&lt;Primary&gt;c</attribute>~
-           </item>~
-           <item>~
-            <attribute name='label' translatable='yes'>_Parse</attribute>~
-            <attribute name='action'>win.parse</attribute>~
-            <attribute name='accel'>&lt;Primary&gt;v</attribute>~
-           </item>~
-          </section>~
-         </submenu>~
-         <submenu>~
-          <attribute name='label' translatable='yes'>_View</attribute>~
-          <section>~
-           <item>~
-            <attribute name='label' translatable='yes'>_Fullscreen</attribute>~
-            <attribute name='action'>win.fullscreen</attribute>~
-            <attribute name='accel'>F11</attribute>~
-           </item>~
-          </section>~
-         </submenu>~
-        </menu>~
-       </interface>")
+    (format t "~&~A~%~%" *menu*)
+    (gtk-builder-add-from-string builder *menu*)
     (gtk-application-set-app-menu application
                                   (gtk-builder-get-object builder "app-menu"))
+    (format t "~&APP-MENU : ~A~%" (gtk-application-get-app-menu application))
+    (format t "~%    type : ~A~%" (g-type-from-instance (gtk-application-get-app-menu application)))
     (gtk-application-set-menubar application
-                                 (gtk-builder-get-object builder "menubar"))))
+                                 (gtk-builder-get-object builder "menubar"))
+    (format t "~&MENUBAR  : ~A~%" (gtk-application-get-menubar application))
+))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))
@@ -3601,11 +3691,10 @@
   (g-signal-connect app "open" #'bloat-pad-open)
   (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
 
-
-
 (defun bloat-pad-new ()
   (format t "BLOAT-PAD-NEW is called.~%")
   (unless (equal "Bloatpad" (g-get-application-name))
+    (g-set-prgname "Bloatpad")
     (g-set-application-name "Bloatpad"))
   (format t "  Application name is ~a~%" (g-get-application-name))
   (make-instance 'bloat-pad
@@ -3615,16 +3704,19 @@
                  :register-session t))
 
 (defun example-application (&optional (argc 0) (argv (null-pointer)))
-  (within-main-loop
-    (let ((bloat-pad (bloat-pad-new)))
+  (let (;; Create an instance of the application Bloat Pad
+        (bloat-pad (bloat-pad-new)))
+; Not fully implemented at this time
 ; gtk-application-add-accelerator is not available
 ;      (gtk-application-add-accelerator bloat-pad
 ;                                       "F11"
 ;                                       "win.fullscreen"
 ;                                       nil)
-      (format t "call G-APPLICATION-RUN.~%")
-      (g-application-run bloat-pad argc argv)
-      (format t "back from G-APPLICATION-RUN.~%")))
-  (join-gtk-main))
+    (format t "call G-APPLICATION-RUN.~%")
+    ;; Run the application
+    (g-application-run bloat-pad argc argv)
+    (format t "back from G-APPLICATION-RUN.~%")
+    ;; Destroy the application
+    (g-object-unref (pointer bloat-pad))))
 
 ;;; ----------------------------------------------------------------------------

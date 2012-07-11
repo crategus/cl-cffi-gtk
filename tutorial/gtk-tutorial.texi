@@ -61,6 +61,7 @@ END-INFO-DIR-ENTRY
 * Range Widgets::
 * Layout Widgets::
 * Multiline Text Editor::
+* Tree and List Widget::
 * Selecting Colors Files and Fonts::
 * Miscellaneous Widgets::
 * Menu Widget::
@@ -147,6 +148,9 @@ Multiline Text Editor
 * Simple Example::
 * Example of Changing Text Attributes::
 
+Tree and List Widget
+* Tree and List Widget::
+
 Selecting Colors, Files, and Fonts
 * Selecting Colors Files and Fonts::
 * Selecting Colors::
@@ -205,11 +209,15 @@ Menu Widgets
 @chapter Layout Widgets
 @include gtk-container-widgets.texi
 
-@node Multiline Text Editor, Selecting Colors Files and Fonts, Layout Widgets, Top
+@node Multiline Text Editor, Tree and List Widgets, Layout Widgets, Top
 @chapter Multiline Text Editor
 @include gtk-text-view.texi
 
-@node Selecting Colors Files and Fonts, Miscellaneous Widgets, Multiline Text Editor, Top
+@node Tree and List Widgets, Selecting Colors Files and Fonts, Multiline Text Editor, Top
+@chapter Tree and List Widgets
+@include gtk-tree-and-list-widget.texi
+
+@node Selecting Colors Files and Fonts, Miscellaneous Widgets, Tree and List Widgets, Top
 @chapter Selecting Colors, Files and Fonts
 @include gtk-selectors.texi
 
