@@ -69,6 +69,7 @@
 (load "rtest-gdk-device-manager.lisp")
 (load "rtest-gdk-display.lisp")
 (load "rtest-gdk-display-manager.lisp")
+(load "rtest-gdk-keymap.lisp")
 (load "rtest-gdk-region.lisp")
 (load "rtest-gdk-rgba.lisp")
 (load "rtest-gdk-screen.lisp")
@@ -81,9 +82,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gtk-tests
-  (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :common-lisp :lisp-unit))
+  (:use :gtk :gdk :gobject :glib :gio :pango :cairo :cffi :common-lisp :lisp-unit))
 
 (load "rtest-gtk-adjustment.lisp")
+(load "rtest-gtk-application.lisp")
 (load "rtest-gtk-border.lisp")
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")

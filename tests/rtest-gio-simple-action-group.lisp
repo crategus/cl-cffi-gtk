@@ -163,12 +163,12 @@
                                              :parameter-type "s"
                                              :state (null-pointer)
                                              :change-state (null-pointer))
-                        (make-g-action-entry :name "quit"
-                                             :activate
-                                             (callback activate-quit)
-                                             :parameter-type (null-pointer)
-                                             :state (null-pointer)
-                                             :change-state (null-pointer))
+;                        (make-g-action-entry :name "quit"
+;                                             :activate
+;                                             (callback activate-quit)
+;                                             :parameter-type (null-pointer)
+;                                             :state (null-pointer)
+;                                             :change-state (null-pointer))
 
      )))
     ;; Connect available signals
