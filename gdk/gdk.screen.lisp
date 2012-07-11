@@ -27,7 +27,7 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;﻿
+;;;
 ;;; GdkScreen
 ;;;
 ;;; Object representing a physical screen
