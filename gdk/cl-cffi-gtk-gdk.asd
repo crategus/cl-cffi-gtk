@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-gdk
   :name :cl-cffi-gtk-gdk
-  :version "0.0.0"
+  :version "3.4.3"                            ; Version of the GDK Libraray
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -49,8 +49,6 @@
 
                (:file "gdk.display")          ; Controls the keyboard/mouse
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
-               (:file "gdk.pixbuf-structure") ; Implementation of PixBuf
-               (:file "gdk.pixbuf-file")      ; Loading and saving PixBuf
                (:file "gdk.pixbuf")           ; Functions for obtaining pixbufs
                
                (:file "gdk.window")           ; Onscreen display areas
@@ -65,6 +63,8 @@
                )
   :depends-on (:cl-cffi-gtk-gobject
                :cl-cffi-gtk-glib
+               :cl-cffi-gtk-gio
+               :cl-cffi-gtk-gdk-pixbuf
                :cl-cffi-gtk-pango
                :cl-cffi-gtk-cairo
                :cffi))

@@ -27,7 +27,7 @@
 
 (in-package :gdk)
 
-(glib:at-init ()
+(at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gdk
       ((:and :unix (:not :darwin))
@@ -35,13 +35,6 @@
       (:darwin (:or "libgdk-x11-2.0.0.dylib" "libgdk-x11-2.0.dylib"))
       (:windows "libgdk-win32-2.0-0.dll")
       (t "libgdk-2.0"))
-    
-    (define-foreign-library gdk-pixbuf
-      ((:and :unix (:not :darwin))
-       (:or "libgdk_pixbuf-2.0.so.0" "libgdk_pixbuf-2.0.so"))
-      (:darwin (:or "libgdk_pixbuf-2.0.0.dylib" "libgdk_pixbuf-2.0.dylib"))
-      (:windows (:or "libgdk_pixbuf-win32-2.0-0" "libgdk_pixbuf-2.0-0.dll"))
-      (t "libgdk_pixbuf-2.0"))
 
     (define-foreign-library gtk
       ((:and :unix (:not :darwin))
@@ -51,7 +44,6 @@
       (t "libgtk-2.0")))
 
   (use-foreign-library gdk)
-  (use-foreign-library gdk-pixbuf)
   (use-foreign-library gtk))
 
 ;;; End of file gdk.init.lisp --------------------------------------------------

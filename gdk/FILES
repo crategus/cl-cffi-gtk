@@ -12,43 +12,18 @@ Content from the GDK 3.4.3 Reference Manual
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.4.3
   gdk.visual.lisp           - Visuals                - GDK 3.4.3
   gdk.cursor.lisp           - Cursors                - GDK 3.4.3
-  gdk.window.lisp           - Windows                - GDK 2.24.10*
-  gdk.event.lisp            - Events                 - GDK 2.24.10*
-  gdk.event-structures.lisp - Event Structures       - GDK 2.24.10*
+  gdk.window.lisp           - Windows                - GDK 3.4.3
+  gdk.event.lisp            - Events                 - GDK 3.4.3
+  gdk.event-structures.lisp - Event Structures       - GDK 3.4.3
   gdk.key-values.lisp       - Key Values             - GDK 3.4.3
-  gdk.selections.lisp       - Selections             - GDK 2.24.10*
-  gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 2.24.10*
-  gdk.properties.lisp       - Properties and Atoms   - GDK 2.24.10*
-  gdk.threads.lisp          - Threads                - GDK 2.24.10*
-  gdk.pango.lisp            - Pango Interaction      - GDK 2.24.10*
+  gdk.selections.lisp       - Selections             - GDK 3.4.3
+  gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.4.3
+  gdk.properties.lisp       - Properties and Atoms   - GDK 3.4.3
+  gdk.threads.lisp          - Threads                - GDK 3.4.3
+  gdk.pango.lisp            - Pango Interaction      - GDK 3.4.3
   gdk.cairo.lisp            - Cairo Interaction      - GDK 3.4.3
 
   not implemented           - X Window System Interaction
 
-  gdk.app.lisp              - Application launching  - GDK 2.24.10*
-
-  Lisp support
-  
-  gdk.package.lisp
-  gdk.init.lisp
-
-
-GDK-PixBuf 2.26.1
-
-  * not implemented * - Initialization and Versions
-
-  gdk.pixbuf-structure.lisp - The GdkPixbuf Structure
-
-  * not implemented * - Reference Counting and Memory Mangement
-  
-  gdk.pixbuf-file.lisp - File Loading
-  
-  * not implemented * - File saving
-  * not implemented * - Image Data in Memory
-  * not implemented * - Inline data
-  * not implemented * - Scaling
-  * not implemented * - Utilities
-  * not implemented * - Animations
-  * not implemented * - GdkPixbufLoader
-  * not implemented * - Module Interface
+  gdk.app.lisp              - Application launching  - GDK 3.4.3
 
