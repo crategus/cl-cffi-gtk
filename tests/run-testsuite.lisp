@@ -102,6 +102,7 @@
 (load "rtest-gtk-statusbar.lisp")
 (load "rtest-gtk-table.lisp")
 (load "rtest-gtk-toggle-button.lisp")
+(load "rtest-gtk-tree-model.lisp")
 (load "rtest-gtk-window.lisp")
 (load "rtest-gtk-widget.lisp")
 
