@@ -2,8 +2,8 @@
 ;;; gio.action-map.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.1 The latest version of this documentation can be found on-line
-;;; at http://library.gnome.org/devel/gio/unstable/.
+;;; for GIO 2.32.1. The latest version of this documentation can be found
+;;; on-line at http://library.gnome.org/devel/gio/unstable/.
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;

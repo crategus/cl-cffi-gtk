@@ -375,12 +375,14 @@
 ;;; Queries all aspects of the named action within an action_group.
 ;;;
 ;;; This function acquires the information available from
+;;;
 ;;;   g_action_group_has_action(),
 ;;;   g_action_group_get_action_enabled(),
 ;;;   g_action_group_get_action_parameter_type(),
 ;;;   g_action_group_get_action_state_type(),
 ;;;   g_action_group_get_action_state_hint() and
 ;;;   g_action_group_get_action_state()
+;;;
 ;;; with a single function call.
 ;;;
 ;;; This provides two main benefits.
