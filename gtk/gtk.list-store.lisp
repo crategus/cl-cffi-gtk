@@ -267,6 +267,8 @@
 ;;;     a new GtkListStore
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: The function does not work as expected.
+
 (declaim (inline gtk-list-store-new))
 
 (defun gtk-list-store-new (&rest column-types)
@@ -345,6 +347,8 @@
 ;;; ... :
 ;;;     pairs of column number and value, terminated with -1
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: The arguments of the function are different from the description
 
 (defun gtk-list-store-set (list-store iter &rest values)
   (let ((n (length values)))

@@ -116,9 +116,9 @@ GTK+ Widgets and Objects
     
     gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.4.3
     
-    not implemented                  - GtkCellArea
-    not implemented                  - GtkCellAreaBox
-    not implemented                  - GtkCellAreaContext
+    gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.4.3
+    gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.4.3
+    gtk.cell-area-context.lisp       - GtkCellAreaContext          - GTK+ 3.4.3
     
     gtk.cell-renderer.lisp           - GtkCellRenderer             - GTK+ 3.4.3
     gtk.cell-editable.lisp           - GtkCellEditable             - GTK+ 3.4.3

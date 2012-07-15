@@ -47,10 +47,10 @@
 ;;;     gtk_tree_view_get_model
 ;;;     gtk_tree_view_set_model
 ;;;     gtk_tree_view_get_selection
-;;;     gtk_tree_view_get_hadjustment
-;;;     gtk_tree_view_set_hadjustment
-;;;     gtk_tree_view_get_vadjustment
-;;;     gtk_tree_view_set_vadjustment
+;;;     gtk_tree_view_get_hadjustment                      * deprecated *
+;;;     gtk_tree_view_set_hadjustment                      * deprecated *
+;;;     gtk_tree_view_get_vadjustment                      * deprecated *
+;;;     gtk_tree_view_set_vadjustment                      * deprecated *
 ;;;     gtk_tree_view_get_headers_visible
 ;;;     gtk_tree_view_set_headers_visible
 ;;;     gtk_tree_view_columns_autosize
@@ -243,25 +243,25 @@
 ;;;
 ;;; Example 61. A UI definition fragment with GtkTreeView
 ;;;
-;;; <object class="GtkTreeView" id="treeview">
-;;;   <property name="model">liststore1</property>
-;;;   <child>
-;;;     <object class="GtkTreeViewColumn" id="test-column">
-;;;       <property name="title">Test</property>
-;;;       <child>
-;;;         <object class="GtkCellRendererText" id="test-renderer"/>
-;;;         <attributes>
-;;;           <attribute name="text">1</attribute>
-;;;         </attributes>
-;;;       </child>
-;;;     </object>
-;;;   </child>
-;;;   <child internal-child="selection">
-;;;     <object class="GtkTreeSelection" id="selection">
-;;;       <signal name="changed" handler="on_treeview_selection_changed"/>
-;;;     </object>
-;;;   </child>
-;;; </object>
+;;;   <object class="GtkTreeView" id="treeview">
+;;;     <property name="model">liststore1</property>
+;;;     <child>
+;;;       <object class="GtkTreeViewColumn" id="test-column">
+;;;         <property name="title">Test</property>
+;;;         <child>
+;;;           <object class="GtkCellRendererText" id="test-renderer"/>
+;;;           <attributes>
+;;;             <attribute name="text">1</attribute>
+;;;           </attributes>
+;;;         </child>
+;;;       </object>
+;;;     </child>
+;;;     <child internal-child="selection">
+;;;       <object class="GtkTreeSelection" id="selection">
+;;;         <signal name="changed" handler="on_treeview_selection_changed"/>
+;;;       </object>
+;;;     </child>
+;;;   </object>
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -383,6 +383,8 @@
 ;;;   "model"                    GtkTreeModel*         : Read / Write
 ;;;
 ;;; The model for the tree view.
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "reorderable" property
 ;;;
 ;;;   "reorderable"              gboolean              : Read / Write

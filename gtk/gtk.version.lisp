@@ -298,6 +298,7 @@
           *glib-major-version*
           *glib-minor-version*
           *glib-micro-version*)
+  (format t "GDK-Pixbuf version: ~a~%" *gdk-pixbuf-version*)
   (format t "Pango version: ~a~%" (pango-version-string))
   (format t "Cairo version: ~a~%" (cairo-version-string))
   (format t "Machine type: ~a~%" (machine-type))

@@ -166,8 +166,8 @@
 ;;; or may not actually correspond to a node on a specific model. The
 ;;; GtkTreePath struct can be converted into either an array of unsigned
 ;;; integers or a string. The string form is a list of numbers separated by a
-;;; colon. Each number refers to the offset at that level. Thus, the path “0”
-;;; refers to the root node and the path “2:4” refers to the fifth child of the
+;;; colon. Each number refers to the offset at that level. Thus, the path '0'
+;;; refers to the root node and the path '2:4' refers to the fifth child of the
 ;;; third node.
 ;;;
 ;;; By contrast, a GtkTreeIter is a reference to a specific node on a specific
@@ -200,30 +200,30 @@
 ;;;
 ;;; To help show some common operation of a model, some examples are provided.
 ;;; The first example shows three ways of getting the iter at the location
-;;; “3:2:5”. While the first method shown is easier, the second is much more
+;;; '3:2:5'. While the first method shown is easier, the second is much more
 ;;; common, as you often get paths from callbacks.
 ;;;
 ;;; Example 59. Acquiring a GtkTreeIter
 ;;;
-;;; /* Three ways of getting the iter pointing to the location */
-;;; GtkTreePath *path;
-;;; GtkTreeIter iter;
-;;; GtkTreeIter parent_iter;
+;;;   /* Three ways of getting the iter pointing to the location */
+;;;   GtkTreePath *path;
+;;;   GtkTreeIter iter;
+;;;   GtkTreeIter parent_iter;
 ;;;
-;;; /* get the iterator from a string */
-;;; gtk_tree_model_get_iter_from_string (model, &iter, "3:2:5");
+;;;   /* get the iterator from a string */
+;;;   gtk_tree_model_get_iter_from_string (model, &iter, "3:2:5");
 ;;;
-;;; /* get the iterator from a path */
-;;; path = gtk_tree_path_new_from_string ("3:2:5");
-;;; gtk_tree_model_get_iter (model, &iter, path);
-;;; gtk_tree_path_free (path);
+;;;   /* get the iterator from a path */
+;;;   path = gtk_tree_path_new_from_string ("3:2:5");
+;;;   gtk_tree_model_get_iter (model, &iter, path);
+;;;   gtk_tree_path_free (path);
 ;;;
-;;; /* walk the tree to find the iterator */
-;;; gtk_tree_model_iter_nth_child (model, &iter, NULL, 3);
-;;; parent_iter = iter;
-;;; gtk_tree_model_iter_nth_child (model, &iter, &parent_iter, 2);
-;;; parent_iter = iter;
-;;; gtk_tree_model_iter_nth_child (model, &iter, &parent_iter, 5);
+;;;   /* walk the tree to find the iterator */
+;;;   gtk_tree_model_iter_nth_child (model, &iter, NULL, 3);
+;;;   parent_iter = iter;
+;;;   gtk_tree_model_iter_nth_child (model, &iter, &parent_iter, 2);
+;;;   parent_iter = iter;
+;;;   gtk_tree_model_iter_nth_child (model, &iter, &parent_iter, 5);
 ;;;
 ;;;
 ;;; This second example shows a quick way of iterating through a list and
@@ -234,50 +234,50 @@
 ;;;
 ;;; Example 60. Reading data from a GtkTreeModel
 ;;;
-;;; enum
-;;; {
-;;;   STRING_COLUMN,
-;;;   INT_COLUMN,
-;;;   N_COLUMNS
-;;; };
+;;;   enum
+;;;   {
+;;;     STRING_COLUMN,
+;;;     INT_COLUMN,
+;;;     N_COLUMNS
+;;;   };
 ;;;
-;;; ...
+;;;   ...
 ;;;
-;;; GtkTreeModel *list_store;
-;;; GtkTreeIter iter;
-;;; gboolean valid;
-;;; gint row_count = 0;
+;;;   GtkTreeModel *list_store;
+;;;   GtkTreeIter iter;
+;;;   gboolean valid;
+;;;   gint row_count = 0;
 ;;;
-;;; /* make a new list_store */
-;;; list_store = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_INT);
+;;;   /* make a new list_store */
+;;;   list_store = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_INT);
 ;;;
-;;; /* Fill the list store with data */
-;;; populate_model (list_store);
+;;;   /* Fill the list store with data */
+;;;   populate_model (list_store);
 ;;;
-;;; /* Get the first iter in the list */
-;;; valid = gtk_tree_model_get_iter_first (list_store, &iter);
+;;;   /* Get the first iter in the list */
+;;;   valid = gtk_tree_model_get_iter_first (list_store, &iter);
 ;;;
-;;; while (valid)
-;;;  {
-;;;    /* Walk through the list, reading each row */
-;;;    gchar *str_data;
-;;;    gint   int_data;
+;;;   while (valid)
+;;;    {
+;;;      /* Walk through the list, reading each row */
+;;;      gchar *str_data;
+;;;      gint   int_data;
 ;;;
-;;;    /* Make sure you terminate calls to gtk_tree_model_get()
-;;;     * with a '-1' value
-;;;     */
-;;;    gtk_tree_model_get (list_store, &iter,
-;;;                        STRING_COLUMN, &str_data,
-;;;                        INT_COLUMN, &int_data,
-;;;                        -1);
+;;;      /* Make sure you terminate calls to gtk_tree_model_get()
+;;;       * with a '-1' value
+;;;       */
+;;;      gtk_tree_model_get (list_store, &iter,
+;;;                          STRING_COLUMN, &str_data,
+;;;                          INT_COLUMN, &int_data,
+;;;                          -1);
 ;;;
-;;;    /* Do something with the data */
-;;;    g_print ("Row %d: (%s,%d)\n", row_count, str_data, int_data);
-;;;    g_free (str_data);
+;;;      /* Do something with the data */
+;;;      g_print ("Row %d: (%s,%d)\n", row_count, str_data, int_data);
+;;;      g_free (str_data);
 ;;;
-;;;    row_count++;
-;;;    valid = gtk_tree_model_iter_next (list_store, &iter);
-;;;  }
+;;;      row_count++;
+;;;      valid = gtk_tree_model_iter_next (list_store, &iter);
+;;;    }
 ;;;
 ;;;
 ;;; The GtkTreeModel interface contains two methods for reference counting:
@@ -513,7 +513,7 @@
 (defctype gtk-tree-path :pointer)
 
 (define-g-boxed-opaque gtk-tree-path "GtkTreePath"
-  :alloc (gtk-tree-path-new))
+  :alloc (%gtk-tree-path-new))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeRowReference
@@ -651,6 +651,9 @@
   (iter-next (:boolean
               (tree-model g-object)
               (iter (g-boxed-foreign gtk-tree-iter))))
+  (iter-previous (:boolean
+                  (tree-model g-object)
+                  (iter (g-boxed-foreign gtk-tree-iter))))
   (iter-children (:boolean
                   (tree-model g-object)
                   (iter (g-boxed-foreign gtk-tree-iter))
@@ -726,7 +729,12 @@
 ;;;     A newly created GtkTreePath.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_new" gtk-tree-path-new) :pointer)
+(defcfun ("gtk_tree_path_new" %gtk-tree-path-new) :pointer)
+
+(defcfun ("gtk_tree_path_new" gtk-tree-path-new)
+    (g-boxed-foreign gtk-tree-path))
+
+(export 'gtk-tree-path-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new_from_string ()
@@ -747,6 +755,12 @@
 ;;;     A newly-created GtkTreePath, or NULL
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tree_path_new_from_string" gtk-tree-path-new-from-string)
+    (g-boxed-foreign gtk-tree-path)
+  (path :string))
+
+(export 'gtk-tree-path-new-from-string)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new_from_indices ()
 ;;;
@@ -766,6 +780,12 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-tree-path-new-from-indices (&rest indices)
+  (gtk-tree-path-new-from-string
+    (string-right-trim ":" (format nil "~{~D:~}" indices))))
+
+(export 'gtk-tree-path-new-from-indices)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_to_string ()
 ;;;
@@ -783,6 +803,11 @@
 ;;;     A newly-allocated string. Must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tree_path_to_string" gtk-tree-path-to-string) :string
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-tree-path-to-string)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_new_first ()
 ;;;
@@ -795,6 +820,11 @@
 ;;; Returns :
 ;;;     A new GtkTreePath
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_path_new_first" gtk-tree-path-new-first)
+    (g-boxed-foreign gtk-tree-path))
+
+(export 'gtk-tree-path-new-first)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_append_index ()
@@ -813,8 +843,17 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_path_append_index" %gtk-tree-path-append-index) :void
-  (path :pointer)
+  (path (g-boxed-foreign gtk-tree-path))
   (index :int))
+
+;; We dot not modify the argument, but return the new value
+
+(defun gtk-tree-path-append-index (path index)
+  (let ((path (gtk-tree-path-copy path)))
+    (%gtk-tree-path-append-index path index)
+    path))
+
+(export 'gtk-tree-path-append-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_prepend_index ()
@@ -832,6 +871,19 @@
 ;;;     the index
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tree_path_prepend_index" %gtk-tree-path-prepend-index) :void
+  (path (g-boxed-foreign gtk-tree-path))
+  (index :int))
+
+;; We dot not modify the argument, but return the new value
+
+(defun gtk-tree-path-prepend-index (path index)
+  (let ((path (gtk-tree-path-copy path)))
+    (%gtk-tree-path-prepend-index path index)
+    path))
+
+(export 'gtk-tree-path-prepend-index)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_get_depth ()
 ;;;
@@ -847,7 +899,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_path_get_depth" gtk-tree-path-get-depth) :int
-  (path gtk-tree-path))
+  (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-path-get-depth)
 
@@ -872,41 +924,16 @@
 
 (defcfun ("gtk_tree_path_get_indices" %gtk-tree-path-get-indices)
     (:pointer :int)
-  (path :pointer))
-
-(defun gtk-tree-path-indices (path)
-  (gtk-tree-path-get-indices path))
-
-(export 'gtk-tree-patch-indices)
+  (path (g-boxed-foreign gtk-tree-path)))
 
 (defun gtk-tree-path-get-indices (path)
-  (setf path (pointer path))
   (let ((n (gtk-tree-path-get-depth path))
         (indices (%gtk-tree-path-get-indices path)))
     (loop
-       for i from 0 below n
-       collect (mem-aref indices :int i))))
+      for i from 0 below n
+      collect (mem-aref indices :int i))))
 
 (export 'gtk-tree-path-get-indices)
-
-;;; ----------------------------------------------------------------------------
-
-;; GTK does not have a function gtk_tree_path_set_indices
-
-(defun (setf gtk-tree-path-indices) (new-value path)
-  (gtk-tree-path-set-indices new-value path))
-
-(defun gtk-tree-path-set-indices (indices path)
-  (setf path (pointer path))
-  (loop
-     repeat (gtk-tree-path-get-depth path)
-     do (foreign-funcall "gtk_tree_path_up" :pointer path :boolean))
-  (loop
-     for index in indices
-     do (foreign-funcall "gtk_tree_path_append_index" :pointer path
-                         :int index :void)))
-
-(export 'gtk-tree-path-set-indices)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_get_indices_with_depth ()
@@ -943,7 +970,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_path_free" gtk-tree-path-free) :void
-  (path :pointer))
+  (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-path-free)
 
@@ -960,6 +987,12 @@
 ;;; Returns :
 ;;;     a new GtkTreePath
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_path_copy" gtk-tree-path-copy)
+    (g-boxed-foreign gtk-tree-path)
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-tree-path-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_compare ()
@@ -998,8 +1031,12 @@
 ;;;     a GtkTreePath
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_next" gtk-tree-path-next) :void
+(defcfun ("gtk_tree_path_next" %gtk-tree-path-next) :void
   (tree-path (g-boxed-foreign gtk-tree-path)))
+
+(defun gtk-tree-path-next (path)
+  (%gtk-tree-path-next path)
+  path)
 
 (export 'gtk-tree-path-next)
 
@@ -1018,8 +1055,12 @@
 ;;;     TRUE if path has a previous node, and the move was made
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_prev" gtk-tree-path-prev) :void
+(defcfun ("gtk_tree_path_prev" %gtk-tree-path-prev) :boolean
   (tree-path (g-boxed-foreign gtk-tree-path)))
+
+(defun gtk-tree-path-prev (path)
+  (when (%gtk-tree-path-prev path)
+    path))
 
 (export 'gtk-tree-path-prev)
 
@@ -1037,8 +1078,12 @@
 ;;;     TRUE if path has a parent, and the move was made
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_up" gtk-tree-path-up) :boolean
+(defcfun ("gtk_tree_path_up" %gtk-tree-path-up) :boolean
   (tree-path (g-boxed-foreign gtk-tree-path)))
+
+(defun gtk-tree-path-up (path)
+  (when (%gtk-tree-path-up path)
+    path))
 
 (export 'gtk-tree-path-up)
 
@@ -1053,8 +1098,12 @@
 ;;;     a GtkTreePath
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_path_down" gtk-tree-path-down) :void
+(defcfun ("gtk_tree_path_down" %gtk-tree-path-down) :void
   (tree-path (g-boxed-foreign gtk-tree-path)))
+
+(defun gtk-tree-path-down (path)
+  (%gtk-tree-path-down path)
+  path)
 
 (export 'gtk-tree-path-down)
 
@@ -1377,7 +1426,7 @@
 
 (defcfun ("gtk_tree_model_get_flags" gtk-tree-model-get-flags)
     gtk-tree-model-flags
-  (tree-model g-object))
+  (tree-model (g-object gtk-tree-model)))
 
 (export 'gtk-tree-model-get-flags)
 
@@ -1396,7 +1445,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_get_n_columns" gtk-tree-model-get-n-columns) :int
-  (tree-model g-object))
+  (tree-model (g-object gtk-tree-model)))
 
 (export 'gtk-tree-model-get-n-columns)
 
@@ -1419,7 +1468,7 @@
 
 (defcfun ("gtk_tree_model_get_column_type" gtk-tree-model-get-column-type)
     g-type-designator
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (index :int))
 
 (export 'gtk-tree-model-get-column-type)
@@ -1519,7 +1568,7 @@
 
 (defcfun ("gtk_tree_model_get_iter_first" %gtk-tree-model-get-iter-first)
     :boolean
-  (model g-object)
+  (model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-model-get-iter-first (tree-model)
@@ -1552,7 +1601,7 @@
 
 (defcfun ("gtk_tree_model_get_path" gtk-tree-model-get-path)
      (g-boxed-foreign gtk-tree-path :return)
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-model-get-path)
@@ -1619,9 +1668,14 @@
 ;;;     TRUE if iter has been changed to the next node
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_iter_next" gtk-tree-model-iter-next) :boolean
-  (tree-model g-object)
+(defcfun ("gtk_tree_model_iter_next" %gtk-tree-model-iter-next) :boolean
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
+
+(defun gtk-tree-model-iter-next (tree-model iter)
+  (let ((iter-new (copy-gtk-tree-iter iter)))
+    (when (%gtk-tree-model-iter-next tree-model iter-new)
+      iter-new)))
 
 (export 'gtk-tree-model-iter-next)
 
@@ -1647,6 +1701,17 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_model_iter_previous" %gtk-tree-model-iter-previous) :boolean
+  (tree-model (g-object gtk-tree-model))
+  (iter (g-boxed-foreign gtk-tree-iter)))
+
+(defun gtk-tree-model-iter-previous (tree-model iter)
+  (let ((iter-new (copy-gtk-tree-iter iter)))
+    (when (%gtk-tree-model-iter-previous tree-model iter-new)
+      iter-new)))
+
+(export 'gtk-tree-model-iter-previous)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_iter_children ()
@@ -1677,15 +1742,14 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_iter_children" %gtk-tree-model-iter-children) :boolean
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-model-iter-children (tree-model parent)
   (let ((iter (make-gtk-tree-iter)))
-    (if (%gtk-tree-model-iter-children tree-model iter parent)
-        iter
-        nil)))
+    (when (%gtk-tree-model-iter-children tree-model iter parent)
+      iter)))
 
 (export 'gtk-tree-model-iter-children)
 
@@ -1709,7 +1773,7 @@
 
 (defcfun ("gtk_tree_model_iter_has_child" gtk-tree-model-iter-has-child)
     :boolean
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-model-iter-has-child)
@@ -1736,7 +1800,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_iter_n_children" gtk-tree-model-iter-n-children) :int
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-model-iter-n-children)
@@ -1774,16 +1838,15 @@
 
 (defcfun ("gtk_tree_model_iter_nth_child" %gtk-tree-model-iter-nth-child)
     :boolean
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter))
   (n :int))
 
 (defun gtk-tree-model-iter-nth-child (tree-model parent n)
   (let ((iter (make-gtk-tree-iter)))
-    (if (%gtk-tree-model-iter-nth-child tree-model iter parent n)
-        iter
-        n)))
+    (when (%gtk-tree-model-iter-nth-child tree-model iter parent n)
+      iter)))
 
 (export 'gtk-tree-model-iter-nth-child)
 
@@ -1820,9 +1883,8 @@
 
 (defun gtk-tree-model-iter-parent (tree-model child)
   (let ((parent (make-gtk-tree-iter)))
-    (if (%gtk-tree-model-iter-parent tree-model parent child)
-        parent
-        nil)))
+    (when (%gtk-tree-model-iter-parent tree-model parent child)
+      parent)))
 
 (export 'gtk-tree-model-iter-parent)
 
@@ -1886,7 +1948,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_ref_node" gtk-tree-model-ref-node) :void
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-model-ref-node)
@@ -1913,7 +1975,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_unref_node" gtk-tree-model-unref-node) :void
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (export 'gtk-tree-model-unref-node)

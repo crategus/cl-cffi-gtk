@@ -33,7 +33,7 @@
 (in-package :cl-user)
 
 (defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
-(defvar *cl-cffi-gtk-version* "0.0.0")
+(defvar *cl-cffi-gtk-version* "1.0.0")
 
 (export '*cl-cffi-gtk-build-time*)
 (export '*cl-cffi-gtk-version*)
@@ -60,7 +60,7 @@
   ((:file "gtk.package")
    (:file "gtk.misc-lisp")
    (:file "gtk.child-properties")
-   
+
    ;; Gtk+ Core
    (:file "gtk.version")               ; Version Information
    (:file "gtk.enumerations")          ; Standard Enumerations
@@ -71,11 +71,11 @@
    (:file "gtk.drag-and-drop")         ; Controlling drag and drop
    (:file "gtk.settings")              ; Sharing settings
    (:file "gtk.selections")            ; Inter-process communication
-                                       
+
    ;; Interface builder
    (:file "gtk.buildable")             ; GtkBuildable
    (:file "gtk.builder")               ; Build an interface
-                                       
+
    ;; Inferfaces
    (:file "atk.implementor-iface")     ; AtkImplementorIface
    (:file "gtk.orientable")            ; Interface for flippable widgets
@@ -83,12 +83,12 @@
    (:file "gtk.scrollable")            ; Interface for scrollable widgets
    (:file "gtk.actionable")            ; Interface for widgets that have actions
    (:file "gtk.recent-chooser")        ; Displaying recently used files
-                                       
+
    ;; Theming in Gtk+
    (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.stock-images")          ; Manipulating stock icons
    (:file "gtk.icon-theme")            ; Looking up icons by name
-                                       
+
    ;; Abstract Base Classes
    (:file "gtk.widget")                ; Base class for all widgets
    (:file "gtk.misc")                  ; Base class for alignments
@@ -97,7 +97,7 @@
    (:file "gtk.range")                 ; Base class for adjustments
    (:file "gtk.menu-shell")            ; Base class for menu objects
    (:file "gtk.im-context")            ; Base class for input contexts
-                                       
+
    ;; Layout Containers
    (:file "gtk.box")                   ; Container box
    (:file "gtk.table")                 ; Pack widgets in regular patterns
@@ -110,16 +110,16 @@
    (:file "gtk.alignment")             ; GtkAlignment
    (:file "gtk.button-box")            ; Container for arranging buttons
    (:file "gtk.overlay")               ; Container which overlays widgets
-                                       
+
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
    (:file "gtk.frame")                 ; Decorative frame
    (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
-   
+
    ;; Scrolling
    (:file "gtk.scrollbar")             ; GtkScrollbar
    (:file "gtk.scrolled-window")       ; Adds scrollbars
-   
+
    ;; Windows
    (:file "gtk.dialog")                ; GtkDialog
    (:file "gtk.invisible")             ; GtkInvisible
@@ -129,7 +129,7 @@
    (:file "gtk.about-dialog")          ; GtkAboutDialog
    (:file "gtk.assistant")             ; GtkAssistant
    (:file "gtk.offscreen-window")      ; GtkOffscreenWindow
-   
+
    ;; Display Widgets
    (:file "gtk.accel-label")           ; GtkAccelLabel
    (:file "gtk.image")                 ; GtkImage
@@ -139,7 +139,7 @@
    (:file "gtk.info-bar")              ; GtkInfoBar
    (:file "gtk.status-icon")           ; GtkStatusIcon
    (:file "gtk.spinner")               ; GtkSpinner
-   
+
    ;; Buttons and Toggles
    (:file "gtk.button")                ; GtkButton
    (:file "gtk.toggle-button")         ; GtkToggleButton
@@ -150,7 +150,7 @@
    (:file "gtk.volume-button")         ; GtkVolumeButton
    (:file "gtk.switch")                ; GtkSwitch
    ;; GtkLockButton not implemented
-   
+
    ;; Multiline Text Editor
    (:file "gtk.text-iter")             ; GtkTextIter
    (:file "gtk.text-mark")             ; GtkTextMark
@@ -158,11 +158,11 @@
    (:file "gtk.text-buffer")           ; GtkTextBuffer
    (:file "gtk.text-tag-table")        ; GtkTextTagTable
    (:file "gtk.text-view")             ; GtkTextView
-   
+
    ;; Tree, List and Icon Grid Widgets
    (:file "gtk.tree-model")            ; Tree interface
    (:file "gtk.cell-layout")           ; Interface for packing cells
-   (:file "gtk.tree-sortable")         
+   (:file "gtk.tree-sortable")
    (:file "gtk.tree-view-drag-and-drop")
    (:file "gtk.tree-model-sort")       ; GtkTreeModelSort
    (:file "gtk.tree-model-filter")     ; GtkTreeModelFilter
@@ -171,6 +171,9 @@
    (:file "gtk.tree-store")            ; Tree-like data structure
    (:file "gtk.tree-selection")        ; Selection object for GtkTreeView
    (:file "gtk.cell-editable")         ; GtkCellEditable
+   (:file "gtk.cell-area")             ; Laying out GtkCellRenderers
+   (:file "gtk.cell-area-box")         ; GtkCellAreaBox
+   (:file "gtk.cell-area-context")     ; gtkCellAreaContext
    (:file "gtk.cell-renderer")         ; Object for rendering a cell
    (:file "gtk.cell-renderer-text")    ; Renders text in a cell
    (:file "gtk.cell-renderer-pixbuf")  ; Renders a pixbuf in a cell
@@ -183,7 +186,7 @@
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
    (:file "gtk.list-store")            ; List-like data structure
-   
+
    ;; Numeric/Text Data Entry
    (:file "gtk.editable")              ; GtkEditable
    (:file "gtk.entry")                 ; GtkEntry
@@ -191,7 +194,7 @@
    (:file "gtk.entry-completion")      ; GtkEntryCompletion
    (:file "gtk.scale")                 ; GtkScale, GtkHScale, GtkVScale
    (:file "gtk.spin-button")           ; GtkSpinButton
-   
+
    ;; Menus, Combo Box, Toolbar
    (:file "gtk.menu-item")             ; Widget used for item in menus
    (:file "gtk.menu")                  ; Menu widget
@@ -213,7 +216,7 @@
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
    (:file "gtk.menu-tool-button")      ; GtkMenuToolButton
-   
+
    ;; Action-based menus and toolbars
    (:file "gtk.ui-manager")            ; Constructing menus and toolbars
    (:file "gtk.action-group")          ; Group of actions
@@ -221,7 +224,7 @@
    (:file "gtk.toggle-action")         ; GtkToggleAction
    (:file "gtk.radio-action")          ; GtkRadioAction
    (:file "gtk.recent-action")         ; List of recently used files
-   
+
    ;; Selectors
    (:file "gtk.color-chooser")         ; Interface for choosing colors
    (:file "gtk.color-button")          ; Launch a color selection dialog
@@ -241,7 +244,7 @@
    (:file "gtk.font-chooser-dialog")   ; Dialog for selecting fonts
    (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
    (:file "gtk.font-selection-dialog") ; Deprecated widget for selecting fonts
-   
+
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value
    (:file "gtk.arrow")                 ; Displays an arrow
@@ -258,14 +261,14 @@
    ;; Cross-process Embedding
    (:file "gtk.plug")                  ; Embedding into other processes
    (:file "gtk.socket")                ; For widgets from other processes
-   
+
    ;; Recently Used Documents
    (:file "gtk.recent-manager")        ; Managing recently used files
    (:file "gtk.recent-chooser-dialog") ; Displays recently used files
    (:file "gtk.recent-chooser-menu")   ; Displays recently used files in a menu
    (:file "gtk.recent-chooser-widget") ; Displays recently used files
    (:file "gtk.recent-filter")         ; Selecting recently used files
-   
+
    ;; Printing
    (:file "gtk.print-operation")       ; High-level Printing API
    (:file "gtk.print-context")         ; Encapsulates context for drawing pages
@@ -276,27 +279,28 @@
    ; GtkPrintJob — Represents a print job
    (:file "gtk.print-unix-dialog")     ; A print dialog
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
-   
+
    ;; Application support
    (:file "gtk.application")           ; Application class
    (:file "gtk.application-window")    ; GtkApplicationWindow
-   
+
    ;; Deprecated
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
-   
+
    ;; More definitions. The documentation is not completed.
    (:file "gtk.generated-classes")
    (:file "gtk.selectors")
    (:file "gtk.timer")
-   
+
    ;; Lisp
    (:file "gtk.high-level")
    (:file "gtk.init"))
   :depends-on (:cl-cffi-gtk-glib
-               :cl-cffi-gtk-gio
                :cl-cffi-gtk-gobject
+               :cl-cffi-gtk-gio
                :cl-cffi-gtk-gdk
+               :cl-cffi-gtk-gdk-pixbuf
                :cl-cffi-gtk-pango
                :cl-cffi-gtk-cairo
                :cffi
