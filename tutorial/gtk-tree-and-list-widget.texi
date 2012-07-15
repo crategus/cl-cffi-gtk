@@ -20,15 +20,179 @@
 @node Overview, Creating a model, Top, Top
 @section Overview
 
+To create a tree or list in GTK+, use the @code{GtkTreeModel} interface in
+conjunction with the @code{GtkTreeView} widget.  This widget is designed around
+a Model/View/Controller design and consists of four major parts:
+
+@itemize
+@item The tree view widget @code{GtkTreeView}
+@item The view column @code{GtkTreeViewColumn}
+@item The cell renderers @code{GtkCellRenderer etc.}
+@item The model interface @code{GtkTreeModel}
+@end itemize
+
+The View is composed of the first three objects, while the last is the Model.
+One of the prime benefits of the MVC design is that multiple views can be
+created of a single model.  For example, a model mapping the file system could
+be created for a file manager.  Many views could be created to display various
+parts of the file system, but only one copy need be kept in memory.
+
+The purpose of the cell renderers is to provide extensibility to the widget and
+to allow multiple ways of rendering the same type of data.  For example,
+consider how to render a boolean variable.  Should it render as a string of
+"True" or "False", "On" or "Off", or should it be rendered as a checkbox?
+
 @c -----------------------------------------------------------------------------
 @node Creating a model, Creating the view component, Overview, Top
 @section Creating a model
+
+GTK+ provides two simple models that can be used: the @code{GtkListStore} and
+the @code{GtkTreeStore}.  @code{GtkListStore} is used to model list widgets,
+while the @code{GtkTreeStore} models trees.  It is possible to develop a new
+type of model, but the existing models should be satisfactory for all but the
+most specialized of situations.  Creating the model is quite simple:
+
+@verbatim
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types '("gchararray" "guint"))))
+    [...]
+  )
+@end verbatim
+
+This creates a list store with two columns: a string column and a boolean
+column.  Adding data to the model is done using @code{gtk-tree-store-set} or
+@code{gtk-list-store-set}, depending upon which sort of model was created.  To
+do this, a @code{GtkTreeIter} must be acquired.  The iterator points to the
+location where data will be added.
+
+Once an iterator has been acquired, @code{gtk-tree-store-set} is used to apply
+data to the part of the model that the iterator points to.  Consider the
+following example:
+
+@verbatim
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types '("gchararray" "guint"))))
+    (let ((iter (gtk-list-store-append model)))
+      (gtk-list-store-set model iter "Klaus-Dieter Mustermann" 51))
+    [...]
+@end verbatim
+
+This can be written more compact as:
+
+@verbatim
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types '("gchararray" "guint"))))
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Klaus-Dieter Mustermann" 51)
+    [...]
+@end verbatim
+
+It can be used to set the data in any or all columns in a given row.
 
 @c -----------------------------------------------------------------------------
 @node Creating the view component, Simple example, Creating a model, Top
 @section Creating the view component
 
+While there are several different models to choose from, there is only one view
+widget to deal with.  It works with either the list or the tree store.  Setting
+up a @code{GtkTreeView} is not a difficult matter.  It needs a
+@code{GtkTreeModel} to know where to retrieve its data from.
+
+@verbatim
+  (let ((model (create-and-fill-model))
+        (view (make-instance 'gtk-tree-view
+                             :model model)))
+    [...]
+@end verbatim
+
+@subheading Columns and cell renderers
+
+Once the @code{GtkTreeView} widget has a model, it will need to know how to
+display the model.  It does this with columns and cell renderers.
+
+Cell renderers are used to draw the data in the tree model in a way.  There are
+a number of cell renderers that come with GTK+, including the
+@code{GtkCellRendererText}, @code{GtkCellRendererPixbuf} and the
+@code{GtkCellRendererToggle}.  It is relatively easy to write a custom renderer.
+
+A @code{GtkTreeViewColumn} is the object that @code{GtkTreeView} uses to
+organize the vertical columns in the tree view.  It needs to know the name of
+the column to label for the user, what type of cell renderer to use, and which
+piece of data to retrieve from the model for a given row.
+
+@verbatim
+  ;; Create renderers for the cells
+  (let* ((renderer (gtk-cell-renderer-text-new))
+         (column (gtk-tree-view-column-new-with-attributes "Name"
+                                                           renderer
+                                                           "text" 0)))
+      (gtk-tree-view-append-column view column))
+@end verbatim
+
+At this point, all the steps in creating a displayable tree have been covered.
+The model is created, data is stored in it, a tree view is created and columns
+are added to it.
+
+@subheading Selection handling
+
+[Extend the documentation]
+
 @c -----------------------------------------------------------------------------
 @node Simple example, , Creating the view component, Top
 @section Simple example
 
+@ifnotinfo
+@float Figure, figure-simple-tree-view
+@caption{Most Simple Text View}
+@center @image{figures/simple-tree-view, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-simple-tree-view
+@caption{A simple Tree View}
+@end float
+@verbatim
+(defun create-and-fill-model ()
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types '("gchararray" "guint"))))
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Klaus-Dieter Mustermann" 51)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Ulrike Langhals" 23)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Marius Kalinowski" 91)
+    model))
+
+(defun create-view-and-model ()
+  (let* ((model (create-and-fill-model))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
+    ;; Create renderers for the cells
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Name"
+                                                             renderer
+                                                             "text" 0)))
+      (gtk-tree-view-append-column view column))
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Age"
+                                                             renderer
+                                                             "text" 1)))
+      (gtk-tree-view-append-column view column))
+    view))
+
+(defun example-simple-tree-view ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Simple Tree View"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 200))
+          (view (create-view-and-model)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
+@end verbatim

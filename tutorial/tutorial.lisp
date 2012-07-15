@@ -2009,37 +2009,50 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(defun create-and-fill-model ()
-  (let ((store (gtk-list-store-new "gchararray" "guint")))
-    (gtk-list-store-set store (gtk-list-store-append store) "Heinz El-Mann" 51)
-    (gtk-list-store-set store (gtk-list-store-append store) "Jane Doe" 23)
-    (gtk-list-store-set store (gtk-list-store-append store) "Joe Bungop" 91)
-    store))
+;; Example Simple Tree View
 
-(defun create-view-and-model()
-  (let ((view (gtk-tree-view-new-with-model (create-and-fill-model))))
+(defun create-and-fill-model ()
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types '("gchararray" "guint"))))
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Klaus-Dieter Mustermann" 51)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Ulrike Langhals" 23)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Marius Kalinowski" 91)
+    model))
+
+(defun create-view-and-model ()
+  (let* ((model (create-and-fill-model))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
     ;; Create renderers for the cells
     (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new)))
-       (gtk-tree-view-column-add-attribute column renderer "text" 0)
-       (gtk-tree-view-insert-column view column -1))
+           (column (gtk-tree-view-column-new-with-attributes "Name"
+                                                             renderer
+                                                             "text" 0)))
+      (gtk-tree-view-append-column view column))
     (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new)))
-      (gtk-tree-view-column-add-attribute column renderer "text" 1)
-      (gtk-tree-view-insert-column view column -1))
+           (column (gtk-tree-view-column-new-with-attributes "Age"
+                                                             renderer
+                                                             "text" 1)))
+      (gtk-tree-view-append-column view column))
     view))
 
-(defun example-simple-list-store ()
+(defun example-simple-tree-view ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
-                                 :title "Simple List Store"
+                                 :title "Example Simple Tree View"
                                  :type :toplevel
-                                 :default-width 250)))
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 200))
+          (view (create-view-and-model)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (gtk-container-add window (create-view-and-model))
+      (gtk-container-add window view)
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -3379,9 +3392,6 @@
     
 ;;; ----------------------------------------------------------------------------
 
-(defun create-view-and-model ()
-  (make-instance 'gtk-tree-view))
-
 (defun example-8 ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
@@ -3394,7 +3404,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (gtk-container-add window (create-view-and-model))
+      (gtk-container-add window (make-instance 'gtk-tree-view))
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -3471,19 +3481,19 @@
                                      :default-editable t)))
 
 (defvar *win-entries*
-        (list (make-g-action-entry :name "copy"
+   (list (make-g-action-entry :name "copy"
                               :activate (callback window-copy)
-                              :parameter-type nil
-                              :state nil
+                              :parameter-type (null-pointer)
+                              :state (null-pointer)
                               :change-state (null-pointer))
          (make-g-action-entry :name "paste"
                               :activate (callback window-paste)
-                              :parameter-type nil
-                              :state nil
-                              :change-state nil)
+                              :parameter-type (null-pointer)
+                              :state (null-pointer)
+                              :change-state (null-pointer))
          (make-g-action-entry :name "fullscreen"
                               :activate (callback activate-toggle)
-                              :parameter-type nil
+                              :parameter-type "s"
                               :state "false"
                               :change-state (callback change-fullscreen-state))
          (make-g-action-entry :name "justify"
@@ -3504,7 +3514,6 @@
     (g-signal-connect window "destroy"
                       (lambda (widget)
                         (declare (ignore widget))
-;                        (gtk-main-quit)
                         (format t "   QUIT ~A~%" application)
                         (format t "   registered ~A~%"
                                 (g-application-get-is-registered application))
@@ -3513,7 +3522,7 @@
                                 (g-application-get-is-registered application))
                         (gtk-main-quit)
                         ))
-;    (g-action-map-add-action-entries window *win-entries*)
+    (g-action-map-add-action-entries window *win-entries*)
     (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
     (let ((button (make-instance 'gtk-toggle-tool-button
                                  :stock-id "gtk-justify-left")))
@@ -3659,7 +3668,9 @@
     (g-signal-connect action "activate"
        (lambda (action parameter)
          (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
-         (gtk-main-quit)
+         (dolist (window (gtk-application-get-windows application))
+           (format t "DESTROY window : ~A~%" window)
+           (gtk-widget-destroy window))
          (g-application-quit application)))
     (format t "~&ADD action 'quit'~%")
     (g-action-map-add-action application action))
