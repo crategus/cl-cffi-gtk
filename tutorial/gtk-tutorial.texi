@@ -159,8 +159,9 @@ Selecting Colors, Files, and Fonts
 
 Miscellaneous Widgets
 * Miscellaneous Widgets::
-* Event Box::
 * Arrows::
+* Calendar::
+* Event Box::
 * Dialogs::
 * General Dialog::
 * Message Dialog::
@@ -170,7 +171,6 @@ Miscellaneous Widgets
 * Combo Box::
 * General Combo Box::
 * Combo Box Text::
-* Calendar::
 
 Menu Widgets
 * Menu Widget::

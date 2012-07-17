@@ -27,7 +27,8 @@
 (asdf:operate 'asdf:load-op :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :gio :pango :cairo :cffi :common-lisp))
+  (:use :gtk :gdk :gdk-pixbuf :gobject
+   :glib :gio :pango :cairo :cffi :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -2335,47 +2336,22 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; The Event Box
-
-(defun example-event-box ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Event Box"
-                                 :default-width 250
-                                 :border-width 12))
-          (eventbox (make-instance 'gtk-event-box))
-          (label (make-instance 'gtk-label
-                                :width-request 120
-                                :height-request 20
-                                :label
-                                "Click here to quit, and more text, more")))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (gtk-container-add window eventbox)
-      (gtk-container-add eventbox label)
-      (gtk-widget-set-events eventbox :button-press-mask)
-      (g-signal-connect eventbox "button-press-event"
-                        (lambda (widget event)
-                          (declare (ignore widget event))
-                          (gtk-widget-destroy window)))
-      (gtk-widget-realize eventbox)
-      (gdk-window-set-cursor (gtk-widget-window eventbox)
-                             (gdk-cursor-new :hand1))
-      (gtk-widget-show-all window))))
-      
-;;; ----------------------------------------------------------------------------
-
 ;;; Arrows
 
 (defun create-arrow-button (arrow-type shadow-type)
-  (let ((button (make-instance 'gtk-button)))
+  (let (;; Create a button
+        (button (make-instance 'gtk-button
+                               ;; Add a small margin around the button
+                               :margin 3
+                               ;; Make big buttons of size 75 x 75
+                               :width-request 75
+                               :height-request 75)))
+    ;; Add an arrow to the button
     (gtk-container-add button
                        (make-instance 'gtk-arrow
                                       :arrow-type arrow-type
                                       :shadow-type shadow-type))
+    ;; Add a tooltip to the button
     (gtk-widget-set-tooltip-text button
                                  (format nil
                                          "Arrow of type ~A"
@@ -2384,32 +2360,107 @@
 
 (defun example-arrows ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
+    (let ((;; Create the main window
+           window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Arrow Buttons"
-                                 :default-width 250
+                                 :title "Example Arrow Buttons"
+                                 :default-width 275
+                                 :default-height 125
                                  :border-width 12))
-          (box (make-instance 'gtk-hbox
-                              :homogeneous t
-                              :spacing 0
-                              :border-width 6)))
+          ;; Create a grid for the buttons
+          (grid (make-instance 'gtk-grid
+                               :orientation :horizontal
+                               :column-homogeneous t)))
+      ;; Connect a signal handler to the window
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      (gtk-box-pack-start box
-                          (create-arrow-button :up :in)
-                          :expand nil :fill nil :padding 3)
-      (gtk-box-pack-start box
-                          (create-arrow-button :down :out)
-                          :expand nil :fill nil :padding 3)
-      (gtk-box-pack-start box
-                          (create-arrow-button :left :etched-in)
-                          :expand nil :fill nil :padding 3)
-      (gtk-box-pack-start box
-                          (create-arrow-button :right :etched-out) 
-                          :expand nil :fill nil :padding 3)
-      (gtk-container-add window box)
+      ;; Create buttons with an arrow and add the buttons to the grid
+      (gtk-container-add grid (create-arrow-button :up :in))
+      (gtk-container-add grid (create-arrow-button :down :out))
+      (gtk-container-add grid (create-arrow-button :left :etched-in))
+      (gtk-container-add grid (create-arrow-button :right :etched-out))
+      ;; Add the grid to the window
+      (gtk-container-add window grid)
+      ;; Show the window
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;; Calendar
+
+(defun calendar-detail (calendar year month day)
+  (declare (ignore calendar year month))
+  (when (= day 12)
+    "This day has a tooltip."))
+
+(defun example-calendar ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Calendar"
+                                 :type :toplevel
+                                 :border-width 24
+                                 :default-width 250
+                                 :default-height 100))
+          (frame (make-instance 'gtk-frame))
+          (calendar (make-instance 'gtk-calendar
+                                   :show-details nil)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Connect a signal handler to print the selected day
+      (g-signal-connect calendar "day-selected"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (format t "selected: year ~A month ~A day ~A~%"
+                                  (gtk-calendar-year calendar)
+                                  (gtk-calendar-month calendar)
+                                  (gtk-calendar-day calendar))))
+      ;; Install a calendar detail function
+      (gtk-calendar-set-detail-func calendar #'calendar-detail)
+      ;; Mark a day
+      (gtk-calendar-mark-day calendar 6)
+      (gtk-container-add frame calendar)
+      (gtk-container-add window frame)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; The Event Box
+
+(defun example-event-box ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Example Event Box"
+                                 :default-height 150
+                                 :border-width 12))
+          (eventbox (make-instance 'gtk-event-box))
+          (label (make-instance 'gtk-label
+                                :label
+                                "Click here to quit, and more text, more")))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      ;; Set the events for the event box
+      (gtk-widget-set-events eventbox :button-press-mask)
+      ;; Connect a signal to the eventbox
+      (g-signal-connect eventbox "button-press-event"
+                        (lambda (widget event)
+                          (declare (ignore widget event))
+                          (gtk-widget-destroy window)))
+      ;; Add the label to the event box and the event box to the window
+      (gtk-container-add eventbox label)
+      (gtk-container-add window eventbox)
+      ;; Realize the event box 
+      (gtk-widget-realize eventbox)
+      ;; Set a new cursor for the event box
+      (gdk-window-set-cursor (gtk-widget-window eventbox)
+                             (gdk-cursor-new :hand1))
+      ;; Show the window
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
@@ -2901,38 +2952,6 @@
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
-
-;; Calendar
-
-(defun calendar-detail (calendar year month day)
-  (declare (ignore calendar year month))
-  (when (= day 23)
-    "!"))
-
-(defun example-calendar ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Calendar"
-                                 :type :toplevel
-                                 :default-width 250
-                                 :default-height 100))
-          (calendar (make-instance 'gtk-calendar
-                                   :detail-function #'calendar-detail)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (gtk-main-quit)))
-      (g-signal-connect calendar "day-selected"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "selected: year ~A month ~A day ~A~%"
-                                  (gtk-calendar-year calendar)
-                                  (gtk-calendar-month calendar)
-                                  (gtk-calendar-day calendar))))
-      (gtk-container-add window calendar)
-      (gtk-widget-show-all window))))
-
-;;; ----------------------------------------------------------------------------
 ;;;
 ;;; 13. Menu Widget
 ;;;
@@ -3411,8 +3430,6 @@
 
 ;; GtkApplication
 
-;; Starting the implementation of an application
-
 (defclass bloat-pad (gtk-application)
   ()
   (:metaclass gobject-class)
@@ -3424,156 +3441,145 @@
                                      nil
                                      nil)
 
-(defcallback activate-toggle :void ((action (g-object g-simple-action))
-                                    (parameter :pointer)
-                                    (user-data :pointer))
-  (declare (ignore parameter user-data))
-  (let ((state (g-action-get-state action)))
-    (g-action-change-state
-                  action
-                  (g-variant-new-boolean (not (g-variant-get-boolean state))))))
-
-(defcallback activate-radio :void ((action (g-object g-simple-action))
-                                   (parameter :pointer)
-                                   (user-data :pointer))
-  (declare (ignore user-data))
-  (g-action-change-state action parameter))
-
-(defcallback change-fullscreen-state :void ((action (g-object g-simple-action))
-                                            (state :pointer)
-                                            (user-data :pointer))
-  (if (g-variant-get-boolean state)
-      (gtk-window-fullscreen user-data)
-      (gtk-window-unfullscreen user-data))
-  (g-simple-action-set-state action state))
-
-(defcallback change-justify-state :void ((action (g-object g-simple-action))
-                                         (state :pointer)
-                                         (user-data :pointer))
-  (let ((view (g-object-get-data user-data "bloatpad-text"))
-        (str (g-variant-get-string state)))
-    (if (equal str "left")
-        (gtk-text-view-set-justification view :left)
-        (if (equal str "center")
-            (gtk-text-view-set-justification view :center)
-            (if (equal str "right")
-                (gtk-text-view-set-justification view :right))))
-    (g-simple-action-set-state action state)))
-
-(defun get-clipboard (widget)
-  (gtk-widget-get-clipboard widget (gdk-atom-intern "CLIPBOARD" nil)))
-
-(defcallback window-copy :void ((action (g-object  g-simple-action))
-                                (parameter :pointer)
-                                (user-data :pointer))
-  (declare (ignore action parameter))
-  (let ((view (g-object-get-data user-data "bloatpad-text")))
-    (gtk-text-buffer-copy-clipboard (gtk-text-view-get-buffer view)
-                                    (get-clipboard view))))
-
-(defcallback window-paste :void ((action (g-object g-simple-action))
-                                 (parameter :pointer)
-                                 (user-data :pointer))
-  (declare (ignore action parameter))
-  (let ((view (g-object-get-data user-data "bloatpad-text")))
-    (gtk-text-buffer-paste-clipboard (gtk-text-view-get-buffer view)
-                                     (get-clipboard view)
-                                     :default-editable t)))
-
-(defvar *win-entries*
-   (list (make-g-action-entry :name "copy"
-                              :activate (callback window-copy)
-                              :parameter-type (null-pointer)
-                              :state (null-pointer)
-                              :change-state (null-pointer))
-         (make-g-action-entry :name "paste"
-                              :activate (callback window-paste)
-                              :parameter-type (null-pointer)
-                              :state (null-pointer)
-                              :change-state (null-pointer))
-         (make-g-action-entry :name "fullscreen"
-                              :activate (callback activate-toggle)
-                              :parameter-type "s"
-                              :state "false"
-                              :change-state (callback change-fullscreen-state))
-         (make-g-action-entry :name "justify"
-                              :activate (callback activate-radio)
-                              :parameter-type "s"
-                              :state "'left'"
-                              :change-state (callback change-justify-state))))
-
 (defun new-window (application file)
   (declare (ignore file))
-(within-main-loop
-  (let ((window (gtk-application-window-new application))
-        (grid (make-instance 'gtk-grid))
-        (toolbar (make-instance 'gtk-toolbar)))
-    (gtk-window-set-title window "BloatPad")
-    (gtk-container-set-border-width window 12)
-    (gtk-window-set-default-size window 640 480)
-    (g-signal-connect window "destroy"
-                      (lambda (widget)
-                        (declare (ignore widget))
-                        (format t "   QUIT ~A~%" application)
-                        (format t "   registered ~A~%"
-                                (g-application-get-is-registered application))
-                        (g-application-quit application)
-                        (format t "   after quit: registered ~A~%"
-                                (g-application-get-is-registered application))
-                        (gtk-main-quit)
-                        ))
-    (g-action-map-add-action-entries window *win-entries*)
-    (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
-    (let ((button (make-instance 'gtk-toggle-tool-button
-                                 :stock-id "gtk-justify-left")))
-      (gtk-actionable-set-detailed-action-name button "win.justify::left")
-      (gtk-container-add toolbar button))
-    (let ((button (make-instance 'gtk-toggle-tool-button
-                                 :stock-id "gtk-justify-center")))
-      (gtk-actionable-set-detailed-action-name button "win.justify::center")
-      (gtk-container-add toolbar button))
-    (let ((button (make-instance 'gtk-toggle-tool-button
-                                 :stock-id "gtk-justify-right")))
-      (gtk-actionable-set-detailed-action-name button "win.justify::right")
-      (gtk-container-add toolbar button))
-    (let ((button (make-instance 'gtk-separator-tool-item
-                                 :draw nil)))
-      (gtk-tool-item-set-expand button t)
-      (gtk-container-add toolbar button))
-    (let ((button (make-instance 'gtk-tool-item))
-          (box (make-instance 'gtk-box
-                              :orientation :horizontal
-                              :spacing 6))
-          (label (make-instance 'gtk-label
-                                :label "Fullscreen:"))
-          (switch (make-instance 'gtk-switch)))
-      (gtk-actionable-set-action-name switch "win.fullscreen")
-      (gtk-container-add box label)
-      (gtk-container-add box switch)
-      (gtk-container-add button box)
-      (gtk-container-add toolbar button))
+    (let (;; Create the application window
+          (window (make-instance 'gtk-application-window
+                                 :application application
+                                 :title "Bloatpad"
+                                 :border-width 12
+                                 :default-width 640
+                                 :default-height 480))
+          (grid (make-instance 'gtk-grid))
+          (toolbar (make-instance 'gtk-toolbar)))
 
-    (gtk-grid-attach grid toolbar 0 0 1 1)
+      ;; Connect signal "destroy" to the application window
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))                          
+                          (leave-gtk-main)
+                          (if (zerop gtk::*main-thread-level*)
+                              (g-application-quit application))))
 
-    (let ((scrolled (make-instance 'gtk-scrolled-window
-                                   :hexpand t
-                                   :vexpand t))
-          (view (make-instance 'gtk-text-view)))
-      (g-object-set-data window "bloatpad-text" (pointer view))
-      (gtk-container-add scrolled view)
-      (gtk-grid-attach grid scrolled 0 1 1 1))
+      ;; Add action "copy" to the application window
+      (let ((action (g-simple-action-new "copy" nil)))
+        (g-action-map-add-action window action)
+        (g-signal-connect action "activate"
+           (lambda (action parameter)
+             (declare (ignore action parameter))
+             (let ((view (gobject::get-g-object-for-pointer
+                           (g-object-get-data window "bloatpad-text"))))
+               (gtk-text-buffer-copy-clipboard
+                                  (gtk-text-view-get-buffer view)
+                                  (gtk-widget-get-clipboard view 
+                                                            "CLIPBOARD"))))))
 
-    (gtk-container-add window grid)
-    (gtk-widget-show-all window)))
-(join-gtk-main)
-)
+      ;; Add action "paste" to the application window
+      (let ((action (g-simple-action-new "paste" nil)))
+        (g-action-map-add-action window action)
+        (g-signal-connect action "activate"
+           (lambda (action parameter)
+             (declare (ignore action parameter))
+             (let ((view (gobject::get-g-object-for-pointer
+                           (g-object-get-data window "bloatpad-text"))))
+               (gtk-text-buffer-paste-clipboard
+                                       (gtk-text-view-get-buffer view)
+                                       (gtk-widget-get-clipboard view
+                                                                 "CLIPBOARD")
+                                       :default-editable t)))))
+
+      ;; Add action "fullscreen" to the application window
+      (let ((action (g-simple-action-new-stateful
+                                               "fullscreen"
+                                               nil
+                                               (g-variant-new-boolean nil))))
+        (g-action-map-add-action window action)
+        (g-signal-connect action "activate"
+           (lambda (action parameter)
+             (declare (ignore parameter))
+             (let* ((state (g-action-get-state action))
+                    (value (g-variant-get-boolean state)))
+               (g-action-change-state action
+                                      (g-variant-new-boolean (not value))))))
+        (g-signal-connect action "change-state"
+           (lambda (action parameter)
+             (if (g-variant-get-boolean parameter)
+                 (gtk-window-fullscreen window)
+                 (gtk-window-unfullscreen window))
+             (g-simple-action-set-state action parameter))))
+
+      ;; Add action "justify" to the application window
+      (let ((action (g-simple-action-new-stateful
+                                             "justify" 
+                                             (g-variant-type-new "s")
+                                             (g-variant-new-string "left"))))
+        (g-action-map-add-action window action)
+        (g-signal-connect action "activate"
+           (lambda (action parameter)
+             (g-action-change-state action parameter)))
+        (g-signal-connect action "change-state"
+           (lambda (action parameter)
+             (let ((view (gobject::get-g-object-for-pointer
+                           (g-object-get-data window "bloatpad-text")))
+                   (str (g-variant-get-string parameter)))
+               (cond ((equal str "left")
+                      (gtk-text-view-set-justification view :left))
+                     ((equal str "center")
+                      (gtk-text-view-set-justification view :center))
+                     (t
+                      (gtk-text-view-set-justification view :right)))
+               (g-simple-action-set-state action parameter)))))
+
+;      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :stock-id "gtk-justify-left")))
+        (gtk-actionable-set-detailed-action-name button "win.justify::left")
+        (gtk-container-add toolbar button))
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :stock-id "gtk-justify-center")))
+        (gtk-actionable-set-detailed-action-name button "win.justify::center")
+        (gtk-container-add toolbar button))
+      (let ((button (make-instance 'gtk-toggle-tool-button
+                                   :stock-id "gtk-justify-right")))
+        (gtk-actionable-set-detailed-action-name button "win.justify::right")
+        (gtk-container-add toolbar button))
+      (let ((button (make-instance 'gtk-separator-tool-item
+                                   :draw nil)))
+        (gtk-tool-item-set-expand button t)
+        (gtk-container-add toolbar button))
+      (let ((button (make-instance 'gtk-tool-item))
+            (box (make-instance 'gtk-box
+                                :orientation :horizontal
+                                :spacing 6))
+            (label (make-instance 'gtk-label
+                                  :label "Fullscreen:"))
+            (switch (make-instance 'gtk-switch)))
+        (gtk-actionable-set-action-name switch "win.fullscreen")
+        (gtk-container-add box label)
+        (gtk-container-add box switch)
+        (gtk-container-add button box)
+        (gtk-container-add toolbar button))
+      (gtk-grid-attach grid toolbar 0 0 1 1)
+      (let ((scrolled (make-instance 'gtk-scrolled-window
+                                     :hexpand t
+                                     :vexpand t))
+            (view (make-instance 'gtk-text-view)))
+        (g-object-set-data window "bloatpad-text" (pointer view))
+        (gtk-container-add scrolled view)
+        (gtk-grid-attach grid scrolled 0 1 1 1))
+      (gtk-container-add window grid)
+      (gtk-widget-show-all window)))
 
 (defun bloat-pad-activate (application)
-  (format t "BLOAD-PAD-ACTIVATE is called for ~A.~%" application)
-  (new-window application nil))
+  ;; Start a main loop and create an application window
+  (within-main-loop
+    (new-window application nil))
+  ;; Wait until the main loop has finished
+  (join-gtk-main))
 
 (defun create-about-dialog ()
-  (let ((dialog (make-instance 'gtk-about-dialog
+  (let (;; Create an about dialog
+        (dialog (make-instance 'gtk-about-dialog
                                :program-name "Example Dialog"
                                :version "0.00"
                                :copyright "(c) Dieter Kaiser"
@@ -3593,121 +3599,129 @@
     (gtk-widget-destroy dialog)))
 
 (defvar *menu*
-      "<interface>
-        <menu id='app-menu'>
-         <section>
-          <item>
-           <attribute name='label' translatable='yes'>_New Window</attribute>
-           <attribute name='action'>app.new</attribute>
-           <attribute name='accel'>&lt;Primary&gt;n</attribute>
-          </item>
-         </section>
-         <section>
-          <item>
-           <attribute name='label' translatable='yes'>_About Bloatpad</attribute>
-           <attribute name='action'>app.about</attribute>
-          </item>
-         </section>
-         <section>
-          <item>
-           <attribute name='label' translatable='yes'>_Quit</attribute>
-           <attribute name='action'>app.quit</attribute>
-           <attribute name='accel'>&lt;Primary&gt;q</attribute>
-          </item>
-         </section>
-         </menu>
-        <menu id='menubar'>
-         <submenu>
-          <attribute name='label' translatable='yes'>_Edit</attribute>
-          <section>
-           <item>
-            <attribute name='label' translatable='yes'>_Copy</attribute>
-            <attribute name='action'>win.copy</attribute>
-            <attribute name='accel'>&lt;Primary&gt;c</attribute>
-           </item>
-           <item>
-            <attribute name='label' translatable='yes'>_Parse</attribute>
-            <attribute name='action'>win.parse</attribute>
-            <attribute name='accel'>&lt;Primary&gt;v</attribute>
-           </item>
-          </section>
-         </submenu>
-         <submenu>
-          <attribute name='label' translatable='yes'>_View</attribute>
-          <section>
-           <item>
-            <attribute name='label' translatable='yes'>_Fullscreen</attribute>
-            <attribute name='action'>win.fullscreen</attribute>
-            <attribute name='accel'>F11</attribute>
-           </item>
-          </section>
-         </submenu>
-        </menu>
-       </interface>")
+  "<interface>
+    <menu id='app-menu'>
+     <section>
+      <item>
+       <attribute name='label' translatable='yes'>_New Window</attribute>
+       <attribute name='action'>app.new</attribute>
+       <attribute name='accel'>&lt;Primary&gt;n</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
+       <attribute name='label' translatable='yes'>_About Bloatpad</attribute>
+       <attribute name='action'>app.about</attribute>
+      </item>
+     </section>
+     <section>
+      <item>
+       <attribute name='label' translatable='yes'>_Quit</attribute>
+       <attribute name='action'>app.quit</attribute>
+       <attribute name='accel'>&lt;Primary&gt;q</attribute>
+      </item>
+     </section>
+     </menu>
+    <menu id='menubar'>
+     <submenu>
+      <attribute name='label' translatable='yes'>_Edit</attribute>
+      <section>
+       <item>
+        <attribute name='label' translatable='yes'>_Copy</attribute>
+        <attribute name='action'>win.copy</attribute>
+        <attribute name='accel'>&lt;Primary&gt;c</attribute>
+       </item>
+       <item>
+        <attribute name='label' translatable='yes'>_Paste</attribute>
+        <attribute name='action'>win.paste</attribute>
+        <attribute name='accel'>&lt;Primary&gt;v</attribute>
+       </item>
+      </section>
+     </submenu>
+     <submenu>
+      <attribute name='label' translatable='yes'>_View</attribute>
+      <section>
+       <item>
+        <attribute name='label' translatable='yes'>_Fullscreen</attribute>
+        <attribute name='action'>win.fullscreen</attribute>
+        <attribute name='accel'>F11</attribute>
+       </item>
+      </section>
+     </submenu>
+    </menu>
+   </interface>")
 
 (defun bloat-pad-startup (application)
-  (format t "BLOAT-PAD-STARTUP is called for ~A.~%" application)
-
+  ;; Add action "new" to the application
   (let ((action (g-simple-action-new "new" nil)))
+    ;; Connect a handler to the signal "activate"
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
-         (g-application-activate application)))
-    (format t "~&ADD action 'new'~%")
+         (declare (ignore action parameter))
+         ;; ensure-gtk-main increases the thread level for the new window
+         (ensure-gtk-main)
+         (new-window application nil)))
+    ;; Add the action to the action map of the application
     (g-action-map-add-action application action))
 
+  ;; Add action "about" to the application
   (let ((action (g-simple-action-new "about" nil)))
+    ;; Connect a handler to the signal "activate"
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
+         (declare (ignore action parameter))
          (create-about-dialog)))
-    (format t "~&ADD action 'about'~%")
+    ;; Add the action to the action map of the application
     (g-action-map-add-action application action))
 
+  ;; Add action "quit" to the application
   (let ((action (g-simple-action-new "quit" nil)))
+    ;; Connect a handler to the signal activate
     (g-signal-connect action "activate"
        (lambda (action parameter)
-         (format t "~&SIGNAL 'ACTIVATE' for ~A with ~A~%" action parameter)
+         (declare (ignore action parameter))
+         ;; Destroy all windows of the application
          (dolist (window (gtk-application-get-windows application))
-           (format t "DESTROY window : ~A~%" window)
            (gtk-widget-destroy window))
+         ;; Quit the main loop
+         (leave-gtk-main)
+         ;; Quit the application
          (g-application-quit application)))
-    (format t "~&ADD action 'quit'~%")
+    ;; Add the action to action map of the application
     (g-action-map-add-action application action))
 
+  ;; Intitialize the application menu and the menubar
   (let ((builder (make-instance 'gtk-builder)))
-    (format t "~&~A~%~%" *menu*)
+    ;; Read the menus from a string
     (gtk-builder-add-from-string builder *menu*)
+    ;; Set the application menu
     (gtk-application-set-app-menu application
-                                  (gtk-builder-get-object builder "app-menu"))
-    (format t "~&APP-MENU : ~A~%" (gtk-application-get-app-menu application))
-    (format t "~%    type : ~A~%" (g-type-from-instance (gtk-application-get-app-menu application)))
+                                  (gtk-builder-get-object builder
+                                                          "app-menu"))
+    ;; Set the menubar
     (gtk-application-set-menubar application
-                                 (gtk-builder-get-object builder "menubar"))
-    (format t "~&MENUBAR  : ~A~%" (gtk-application-get-menubar application))
-))
+                                 (gtk-builder-get-object builder
+                                                         "menubar"))))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))
-  (format t "BLOAT-PAD-OPEN is called.~%")
+  ;; Executed when the application is opened
   nil)
 
 (defun bloat-pad-shutdown (application)
-  (format t "BLOAT-PAD-SHUTDOWN is called for ~A.~%" application)
+  (declare (ignore application))
+  ;; Executed when the application is shut down
   nil)
 
-(defmethod initialize-instance :after ((app bloat-pad) &key &allow-other-keys)
+(defmethod initialize-instance :after
+    ((app bloat-pad) &key &allow-other-keys)
   (g-signal-connect app "activate" #'bloat-pad-activate)
   (g-signal-connect app "startup" #'bloat-pad-startup)
   (g-signal-connect app "open" #'bloat-pad-open)
   (g-signal-connect app "shutdown" #'bloat-pad-shutdown))
 
 (defun bloat-pad-new ()
-  (format t "BLOAT-PAD-NEW is called.~%")
-  (unless (equal "Bloatpad" (g-get-application-name))
-    (g-set-prgname "Bloatpad")
-    (g-set-application-name "Bloatpad"))
-  (format t "  Application name is ~a~%" (g-get-application-name))
+  (g-set-application-name "Bloatpad")
   (make-instance 'bloat-pad
                  :application-id "org.gtk.Test.bloatpad"
                  :flags :handles-open
@@ -3717,12 +3731,6 @@
 (defun example-application (&optional (argc 0) (argv (null-pointer)))
   (let (;; Create an instance of the application Bloat Pad
         (bloat-pad (bloat-pad-new)))
-; Not fully implemented at this time
-; gtk-application-add-accelerator is not available
-;      (gtk-application-add-accelerator bloat-pad
-;                                       "F11"
-;                                       "win.fullscreen"
-;                                       nil)
     (format t "call G-APPLICATION-RUN.~%")
     ;; Run the application
     (g-application-run bloat-pad argc argv)

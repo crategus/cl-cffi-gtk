@@ -104,6 +104,43 @@ A widget which controls the alignment and size of its child
 @end deffn
 
 @c -----------------------------------------------------------------------------
+@anchor{GtkArrow}
+@deffn {Class} GtkArrow
+
+Displays an arrow
+
+@b{Object Hierarchy}
+@verbatim
+  GObject
+   +----GInitiallyUnowned
+         +----GtkWidget
+               +----GtkMisc
+                    +----GtkArrow
+@end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_arrow_new
+  gtk_arrow_set
+@end verbatim
+
+@b{Implemented Interfaces}
+
+@code{GtkArrow} implements @code{AtkImplementorIface} and @code{GtkBuildable}.
+
+@b{Properties}
+@verbatim
+  "arrow-type"             GtkArrowType       : Read / Write
+  "shadow-type"            GtkShadowType      : Read / Write
+@end verbatim
+
+@b{Style Properties}
+@verbatim
+  "arrow-scaling"          gfloat             : Read
+@end verbatim
+@end deffn
+
+@c -----------------------------------------------------------------------------
 @anchor{GtkAspectFrame}
 @deffn {Class} GtkAspectFrame
 
