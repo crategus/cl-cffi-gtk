@@ -426,14 +426,7 @@
     "show-week-numbers" "gboolean" t t)
    (year
     gtk-calendar-year
-    "year" "gint" t t)
-   (:cffi detail-function
-          gtk-calendar-detail-function nil
-          nil gtk-calendar-set-detail-func)
-   (:cffi display-options
-          gtk-calendar-display-options gtk-calendar-display-options
-          "gtk_calendar_get_display_options"
-          "gtk_calendar_set_display_options")))
+    "year" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCalendarDetailFunc ()
@@ -469,6 +462,18 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-calendar-detail-func-cb (g-string :free-to-foreign nil
+                                                   :free-from-foreign nil)
+    ((calendar (g-object gtk-calendar))
+     (year :uint)
+     (month :uint)
+     (day :uint)
+     (data :pointer))
+  (restart-case
+    (or (funcall (get-stable-pointer-value data) calendar year month day)
+        (null-pointer))
+    (return-null () (null-pointer))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCalendarDisplayOptions
@@ -509,7 +514,6 @@
   (:show-day-names 2)
   (:no-month-change 4)
   (:show-week-numbers 8)
-  (:week-start-monday 16)
   (:show-details 32))
 
 ;;; ----------------------------------------------------------------------------
@@ -594,7 +598,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_mark_day" gtk-calendar-mark-day) :boolean
-  (calendar g-object)
+  (calendar (g-object gtk-calendar))
   (day :uint))
 
 (export 'gtk-calendar-mark-day)
@@ -614,7 +618,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_unmark_day" gtk-calendar-unmark-day) :boolean
-  (calendar g-object)
+  (calendar (g-object gtk-calendar))
   (day :uint))
 
 (export 'gtk-calendar-unmark-day)
@@ -657,7 +661,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_clear_marks" gtk-calendar-clear-marks) :void
-  (calendar g-object))
+  (calendar (g-object gtk-calendar)))
 
 (export 'gtk-calendar-clear-marks)
 
@@ -678,10 +682,9 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-calendar-get-display-options))
-
-(defun gtk-calendar-get-display-options (calendar)
-  (gtk-calendar-display-options calendar))
+(defcfun ("gtk_calendar_get_display_options" gtk-calendar-get-display-options)
+    gtk-calendar-display-options
+  (calendar (g-object gtk-calendar)))
 
 (export 'gtk-calendar-get-display-options)
 
@@ -703,10 +706,10 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-calendar-set-display-options))
-
-(defun gtk-calendar-set-display-options (calendar flags)
-  (setf (gtk-calendar-display-options calendar) flags))
+(defcfun ("gtk_calendar_set_display_options" gtk-calendar-set-display-options)
+    :void
+  (calendar (g-object gtk-calendar))
+  (flags gtk-calendar-display-options))
 
 (export 'gtk-calendar-set-display-options)
 
@@ -774,19 +777,11 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
-(defcallback gtk-calendar-detail-func-cb (g-string :free-to-foreign nil
-                                                   :free-from-foreign nil)
-    ((calendar g-object) (year :uint) (month :uint) (day :uint) (data :pointer))
-  (restart-case
-    (or (funcall (get-stable-pointer-value data) calendar year month day)
-        (null-pointer))
-    (return-null () (null-pointer))))
-
 (defcfun ("gtk_calendar_set_detail_func" %gtk-calendar-set-detail-func) :void
   (calendar g-object)
   (func :pointer)
   (data :pointer)
-  (destroy-notify :pointer))
+  (destroy :pointer))
 
 (defun gtk-calendar-set-detail-func (calendar func)
   (%gtk-calendar-set-detail-func calendar
