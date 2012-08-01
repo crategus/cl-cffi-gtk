@@ -2959,12 +2959,17 @@
 
 (defun example-menu ()
   (within-main-loop
+    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+          nil)
+    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+          nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :default-width 200
+                                 :default-width 250
                                  :default-height 200
                                  :title "Example Menu Widget"))
-          (vbox (make-instance 'gtk-vbox)))
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -3064,11 +3069,15 @@
         (gtk-menu-shell-append menubar item-edit)
         (gtk-menu-shell-append menubar item-help)
         ;; Pack the menubar into the vbox.
-        (gtk-box-pack-start vbox menubar))
+        (gtk-box-pack-start vbox menubar :expand nil))
+        ;; Pack a text view into the vbox
+        (gtk-box-pack-start vbox (make-instance 'gtk-text-view))
       ;; Pack the vbox into the window.
       (gtk-container-add window vbox)
       ;; Show the window.
       (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
 
 (defun example-menu-builder ()
   (within-main-loop
@@ -3082,7 +3091,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;;; Multiline Text Editing Widget
+;;; More Examples for the Multiline Text Editing Widget
 
 (defun example-1 ()
   (within-main-loop
@@ -3428,7 +3437,48 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; GtkApplication
+;; Subclassing a GTK widget
+
+(defclass custom-window (gtk-window)
+  ((label :initform (make-instance 'gtk-label
+                                   :label
+                                   "Click the button to show the run time")
+          :reader custom-window-label)
+   (button :initform (make-instance 'gtk-button :label "Show run time")
+           :reader custom-window-button))
+  (:metaclass gobject-class)
+  (:default-initargs :title "Example Custom Window"
+                     :default-width 320
+                     :default-height 240))
+
+(defmethod initialize-instance :after
+    ((window custom-window) &key &allow-other-keys)
+  (let ((box (make-instance 'gtk-box
+                            :orientation :vertical)))
+    (gtk-box-pack-start box (custom-window-label window))
+    (gtk-box-pack-start box (custom-window-button window) :expand nil)
+    (gtk-container-add window box))
+  (g-signal-connect (custom-window-button window) "clicked"
+     (lambda (widget)
+       (declare (ignore widget))
+       (gtk-label-set-label (custom-window-label window)
+                            (format nil "Internal run time is ~A"
+                                        (get-internal-run-time))))))
+
+(defun example-custom-window ()
+  (within-main-loop
+    (let ((window (make-instance 'custom-window)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-main-quit)))
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; 14. Simple Application
+;;;
+;;; ----------------------------------------------------------------------------
 
 (defclass bloat-pad (gtk-application)
   ()
@@ -3448,8 +3498,8 @@
                                  :application application
                                  :title "Bloatpad"
                                  :border-width 12
-                                 :default-width 640
-                                 :default-height 480))
+                                 :default-width 500
+                                 :default-height 400))
           (grid (make-instance 'gtk-grid))
           (toolbar (make-instance 'gtk-toolbar)))
 
@@ -3530,7 +3580,6 @@
                       (gtk-text-view-set-justification view :right)))
                (g-simple-action-set-state action parameter)))))
 
-;      (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
       (let ((button (make-instance 'gtk-toggle-tool-button
                                    :stock-id "gtk-justify-left")))
         (gtk-actionable-set-detailed-action-name button "win.justify::left")
@@ -3722,6 +3771,10 @@
 
 (defun bloat-pad-new ()
   (g-set-application-name "Bloatpad")
+  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+        nil)
+  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+        nil)
   (make-instance 'bloat-pad
                  :application-id "org.gtk.Test.bloatpad"
                  :flags :handles-open
@@ -3739,3 +3792,4 @@
     (g-object-unref (pointer bloat-pad))))
 
 ;;; ----------------------------------------------------------------------------
+

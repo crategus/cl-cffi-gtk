@@ -11,92 +11,118 @@
 
 @section Manual Menu Creation
 
-GtkMenuShell
+@ifnotinfo
+@float Figure, figure-menu-widget
+@caption{Manual Menu Creation}
+@center @image{figures/menu-widget, 168pt}
+@end float
+@end ifnotinfo
 
-A GtkMenuShell is the abstract base class used to derive the GtkMenu and
-GtkMenuBar subclasses.
+GTK+ knows several classes related to the creation of menus.  @ref{example-menu}
+shows how to create the menu manually.  @ref{example-menu-builder} shows
+the UI defintion of a window with a menubar.
 
-A GtkMenuShell is a container of GtkMenuItem objects arranged in a list
-which can be navigated, selected, and activated by the user to perform
-application functions. A GtkMenuItem can have a submenu associated with it,
-allowing for nested hierarchical menus.
+@subheading GtkMenuShell
 
-GtkMenuBar
+A @code{GtkMenuShell} is the abstract base class used to derive the
+@code{GtkMenu} and @code{GtkMenuBar} subclasses.
 
-The GtkMenuBar is a subclass of GtkMenuShell which contains one or more
-GtkMenuItems. The result is a standard menu bar which can hold many menu
-items.
+A @code{GtkMenuShell} is a container of @code{GtkMenuItem} objects arranged in a
+list which can be navigated, selected, and activated by the user to perform
+application functions. A @code{GtkMenuItem} can have a submenu associated with
+it, allowing for nested hierarchical menus.
 
-GtkMenu
+@subheading GtkMenuBar
 
-A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of 
-a list of GtkMenuItem objects which can be navigated and activated by the
-user to perform application functions.
+The @code{GtkMenuBar} is a subclass of @code{GtkMenuShell} which contains one or
+more @code{GtkMenuItems}. The result is a standard menu bar which can hold many
+menu items.
 
-A GtkMenu is most commonly dropped down by activating a GtkMenuItem in a 
-GtkMenuBar or popped up by activating a GtkMenuItem in another GtkMenu.
+@subheading GtkMenu
 
-A GtkMenu can also be popped up by activating a GtkOptionMenu. Other 
-composite widgets such as the GtkNotebook can pop up a GtkMenu as well.
+A @code{GtkMenu} is a @code{GtkMenuShell} that implements a drop down menu
+consisting of  a list of @code{GtkMenuItem} objects which can be navigated and
+activated by the user to perform application functions.
 
-Applications can display a GtkMenu as a popup menu by calling the 
-gtk_menu_popup() function. The example below shows how an application can
-pop up a menu when the 3rd mouse button is pressed.
+A @code{GtkMenu} is most commonly dropped down by activating a
+@code{GtkMenuItem} in a @code{GtkMenuBar} or popped up by activating a
+@code{GtkMenuItem} in another @code{GtkMenu}.
 
-GtkMenuItem
+A @code{GtkMenu} can also be popped up by activating a @code{GtkOptionMenu}.
+Other composite widgets such as the @code{GtkNotebook} can pop up a GtkMenu as
+well.
 
-The GtkMenuItem widget and the derived widgets are the only valid childs for
-menus. Their function is to correctly handle highlighting, alignment, events
-and submenus.
+Applications can display a @code{GtkMenu} as a popup menu by calling the 
+@code{gtk-menu-popup} function.
+
+@c TODO: Implement an example with a signal handler which displays a popup menu
+@c The example below shows how an application can pop up a menu when the
+@c 3rd mouse button is pressed.
+
+@subheading GtkMenuItem
+
+The @code{GtkMenuItem} widget and the derived widgets are the only valid childs
+for menus.  Their function is to correctly handle highlighting, alignment,
+events and submenus.
  
-As it derives from GtkBin it can hold any valid child widget, altough only
-a few are really useful.
+As it derives from @code{GtkBin} it can hold any valid child widget, altough
+only a few are really useful.
 
-GtkCheckMenuItem
+@subheading GtkCheckMenuItem
 
-A GtkCheckMenuItem is a menu item that maintains the state of a boolean
-value in addition to a GtkMenuItem usual role in activating application
+A @code{GtkCheckMenuItem} is a menu item that maintains the state of a boolean
+value in addition to a @code{GtkMenuItem} usual role in activating application
 code.
 
 A check box indicating the state of the boolean value is displayed at the
-left side of the GtkMenuItem. Activating the GtkMenuItem toggles the value.
+left side of the @code{GtkMenuItem}.  Activating the @code{GtkMenuItem} toggles
+the value.
 
-GtkImageMenuItem
+@subheading GtkImageMenuItem
 
-A GtkImageMenuItem is a menu item which has an icon next to the text label.
+A @code{GtkImageMenuItem} is a menu item which has an icon next to the text
+label.
 
 Note that the user can disable display of menu icons, so make sure to still
 fill in the text label.
 
-GtkSeparatorMenuItem
+@subheading GtkSeparatorMenuItem
 
-The GtkSeparatorMenuItem is a separator used to group items within a menu.
-It displays a horizontal line with a shadow to make it appear sunken into
+The @code{GtkSeparatorMenuItem} is a separator used to group items within a
+menu.  It displays a horizontal line with a shadow to make it appear sunken into
 the interface.
 
-GtkTearoffMenuItem
+@subheading GtkTearoffMenuItem
 
-A GtkTearoffMenuItem is a special GtkMenuItem which is used to tear off and
-reattach its menu.
+A @code{GtkTearoffMenuItem} is a special @code{GtkMenuItem} which is used to
+tear off and reattach its menu.
  
-When its menu is shown normally, the GtkTearoffMenuItem is drawn as a dotted
-line indicating that the menu can be torn off. Activating it causes its menu
-to be torn off and displayed in its own window as a tearoff menu.
+When its menu is shown normally, the @code{GtkTearoffMenuItem} is drawn as a
+dotted line indicating that the menu can be torn off.  Activating it causes its
+menu to be torn off and displayed in its own window as a tearoff menu.
  
-When its menu is shown as a tearoff menu, the GtkTearoffMenuItem is drawn as
-dotted line which has a left pointing arrow graphic indicating that the
-tearoff menu can be reattached. Activating it will erase the tearoff menu
+When its menu is shown as a tearoff menu, the @code{GtkTearoffMenuItem} is drawn
+as dotted line which has a left pointing arrow graphic indicating that the
+tearoff menu can be reattached.  Activating it will erase the tearoff menu
 window.
 
+@float Example, example-menu
+@caption{Manual Menu Creation}
+@end float
 @verbatim
 (defun example-menu ()
   (within-main-loop
+    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+          nil)
+    (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+          nil)
     (let ((window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :default-width 200
+                                 :default-width 250
                                  :default-height 200
                                  :title "Example Menu Widget"))
-          (vbox (make-instance 'gtk-vbox)))
+          (vbox (make-instance 'gtk-box
+                               :orientation :vertical)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -196,13 +222,18 @@ window.
         (gtk-menu-shell-append menubar item-edit)
         (gtk-menu-shell-append menubar item-help)
         ;; Pack the menubar into the vbox.
-        (gtk-box-pack-start vbox menubar))
+        (gtk-box-pack-start vbox menubar :expand nil))
+        ;; Pack a text view into the vbox
+        (gtk-box-pack-start vbox (make-instance 'gtk-text-view))
       ;; Pack the vbox into the window.
       (gtk-container-add window vbox)
       ;; Show the window.
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 @end verbatim
 
+@float Example, example-menu-builder
+@caption{UI Definition of a menu}
+@end float
 @verbatim
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -372,9 +403,7 @@ window.
     </child>
   </object>
 </interface>
-@end verbatim
 
-@verbatim
 (defun example-menu-builder ()
   (within-main-loop
     (let ((builder (make-instance 'gtk-builder)))

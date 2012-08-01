@@ -65,6 +65,7 @@ END-INFO-DIR-ENTRY
 * Selecting Colors Files and Fonts::
 * Miscellaneous Widgets::
 * Menu Widget::
+* Application Support::
 
 Appendix
 * Reference of Widgets::
@@ -174,8 +175,12 @@ Miscellaneous Widgets
 
 Menu Widgets
 * Menu Widget::
-@end menu
 
+Application Support
+* Application Class::
+* Application Window::
+* Simple Application::
+@end menu
 
 @node Introduction, Getting Started, Top, Top
 @chapter Introduction
@@ -225,11 +230,15 @@ Menu Widgets
 @chapter Miscellaneous Widgets
 @include gtk-misc-widgets.texi
 
-@node Menu Widget, Reference of Widgets, Miscellaneous Widgets, Top
+@node Menu Widget, Application Support, Miscellaneous Widgets, Top
 @chapter Menu Widget
 @include gtk-menu-widget.texi
 
-@node Reference of Widgets, Tables, Menu Widget, Top
+@node Application Support, Reference of Widgets, Menu Widget, Top
+@chapter Application Support
+@include gtk-application.texi
+
+@node Reference of Widgets, Tables, Application Support, Top
 @appendix Reference of Widgets
 @include gtk-reference.texi
 
