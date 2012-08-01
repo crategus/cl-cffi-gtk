@@ -33,7 +33,7 @@
   (assert-false (g-type-is-fundamental "GtkApplication"))
   (assert-true  (g-type-is-value-type "GtkApplication"))
   (assert-true  (g-type-has-value-table "GtkApplication"))
-  (assert-true  (g-type-is-classed "GApplication"))
+  (assert-true  (g-type-is-classed "GtkApplication"))
   (assert-true  (g-type-is-instantiatable "GtkApplication"))
   (assert-true  (g-type-is-derivable "GtkApplication"))
   (assert-true  (g-type-is-deep-derivable "GtkApplication"))
@@ -68,14 +68,14 @@
   
   (assert-equal (gtype "GApplication") (g-type-parent "GtkApplication"))
   (assert-eql 3 (g-type-depth "GtkApplication"))
-  (assert-eql   (gtype "GtkApplication")
-                (g-type-next-base "GtkApplication" "GApplication"))
+  (assert-eql   (gtype "GApplication")
+                (g-type-next-base "GtkApplication" "GObject"))
   (assert-true  (g-type-is-a "GtkApplication" "GObject"))
   (assert-false (g-type-is-a "GtkApplication" "gboolean"))
   (assert-false (g-type-is-a "GtkApplication" "GtkWindow"))
   (assert-equal '()
                 (mapcar #'gtype-name (g-type-children "GtkApplication")))
-  (assert-equal ' ("GActionGroup" "GActionMap")
+  (assert-equal '("GActionGroup" "GActionMap")
                 (mapcar #'gtype-name (g-type-interfaces "GtkApplication")))
   
   ;; Query infos about the class
