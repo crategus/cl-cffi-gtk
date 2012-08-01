@@ -61,7 +61,7 @@
 ;;;     GtkShadowType
 ;;;     GtkStateType
 ;;;     GtkStateFlags
-;;;     GtkToolbarStye
+;;;     GtkToolbarStyle
 ;;;     GtkWindowPosition
 ;;;     GtkWindowType
 ;;;     GtkSortType
