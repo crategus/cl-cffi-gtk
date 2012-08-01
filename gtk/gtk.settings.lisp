@@ -1058,6 +1058,12 @@
    (gtk-alternative-sort-arrows
     gtk-settings-gtk-alternative-sort-arrows
     "gtk-alternative-sort-arrows" "gboolean" t t)
+   (gtk-application-prefer-dark-theme
+    gtk-settings-gtk-application-prefer-dark-theme
+    "gtk-application-prefer-dark-theme" "gboolean" t t)
+   (gtk-auto-mnemonics
+    gtk-settings-gtk-auto-menemonics
+    "gtk-auto-mnemonics" "gboolean" t t)
    (gtk-button-images
     gtk-settings-gtk-button-images
     "gtk-button-images" "gboolean" t t)
@@ -1142,6 +1148,12 @@
    (gtk-im-module
     gtk-settings-gtk-im-module "gtk-im-module"
     "gchararray" t t)
+   (gtk-im-preedit-style
+    gtk-settings-gtk-im-preedit-style
+    "gtk-im-preedit-style" "GtkIMPreeditStyle" t t)
+   (gtk-im-status-style
+    gtk-settings-gtk-im-status-style
+    "gtk-im-status-style" "GtkIMStatusStyle" t t)
    (gtk-key-theme-name
     gtk-settings-gtk-key-theme-name
     "gtk-key-theme-name" "gchararray" t t)
@@ -1154,7 +1166,8 @@
    (gtk-label-select-on-focus
     gtk-settings-gtk-label-select-on-focus
     "gtk-label-select-on-focus" "gboolean" t t)
-   (gtk-menu-bar-accel gtk-settings-gtk-menu-bar-accel
+   (gtk-menu-bar-accel
+    gtk-settings-gtk-menu-bar-accel
     "gtk-menu-bar-accel" "gchararray" t t)
    (gtk-menu-bar-popup-delay
     gtk-settings-gtk-menu-bar-popup-delay
@@ -1186,6 +1199,12 @@
    (gtk-scrolled-window-placement
     gtk-settings-gtk-scrolled-window-placement
     "gtk-scrolled-window-placement" "GtkCornerType" t t)
+   (gtk-shell-shows-app-menu
+    gtk-settings-gtk-shell-shows-app-menu
+    "gtk-shell-shows-app-menu" "gboolean" t t)
+   (gtk-shell-shows-menubar
+    gtk-settings-gtk-shell-shows-menubar
+    "gtk-shell-shows-menubar" "gboolean" t t)
    (gtk-show-input-method-menu
     gtk-settings-gtk-show-input-method-menu
     "gtk-show-input-method-menu" "gboolean" t t)
@@ -1228,6 +1247,9 @@
    (gtk-touchscreen-mode
     gtk-settings-gtk-touchscreen-mode
     "gtk-touchscreen-mode" "gboolean" t t)
+   (gtk-visible-focus
+    gtk-settings-gtk-visible-focus
+    "gtk-visible-focus" "GtkPolicyType" t t)
    (gtk-xft-antialias
     gtk-settings-gtk-xft-antialias
     "gtk-xft-antialias" "gint" t t)
