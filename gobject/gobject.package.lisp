@@ -30,28 +30,26 @@
   (:use :c2cl :glib :cffi :tg :bordeaux-threads :iter :closer-mop)
   (:export
     #:*lisp-name-exceptions*
-  
+
     #:using*
-    
-    #:connect-signal
-    #:emit-signal
+
     #:parse-g-value
     #:parse-g-param-spec
     #:set-g-value
-    
+
     #:gtype
     #:gtype-id
     #:gtype-from-id
     #:gtype-name
     #:gtype-from-name
-    
-    #:create-fn-ref 
-    
+
+    #:create-fn-ref
+
     #:param-spec-name
     #:param-spec-readable
     #:param-spec-type
     #:param-spec-writable
-    
+
     #:boxed-related-symbols
     #:copy-boxed-slots-to-foreign
     #:define-cb-methods
@@ -69,6 +67,8 @@
     #:register-object-type-implementation
     #:registered-object-type-by-name
     #:with-foreign-boxed-array
+
+    #:list-signals
         ))
 
 ;;; --- End of file gobject.package.lisp ---------------------------------------
