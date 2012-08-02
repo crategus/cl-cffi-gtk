@@ -2211,7 +2211,7 @@
           0
           (gtk-tree-iter-user-data iter)
           (1- (length (store-items store))))
-    (emit-signal store "row-inserted" path iter)))
+    (g-signal-emit store "row-inserted" path iter)))
 
 (export 'store-add-item)
 
@@ -2222,7 +2222,7 @@
       (setf items (delete item items :test test))
       (let ((path (make-instance 'gtk-tree-path)))
         (setf (gtk-tree-path-indices path) (list index))
-        (emit-signal store "row-deleted" path)))))
+        (g-signal-emit store "row-deleted" path)))))
 
 (export 'store-remove-item)
 
@@ -2541,9 +2541,9 @@
       (setf (gtk-tree-path-indices path) (get-node-path child)
             (gtk-tree-iter-stamp iter) 0
             (gtk-tree-iter-user-data iter) (get-assigned-id tree child))
-      (emit-signal tree "row-inserted" path iter)
+      (g-signal-emit tree "row-inserted" path iter)
       (when (plusp (length (tree-node-children child)))
-        (emit-signal tree "row-has-child-toggled" path iter)))))
+        (g-signal-emit tree "row-has-child-toggled" path iter)))))
 
 (defun notice-tree-node-removal (tree node child index)
   (declare (ignore child))
@@ -2551,7 +2551,7 @@
     (let ((path (make-instance 'gtk-tree-path)))
       (setf (gtk-tree-path-indices path)
             (nconc (get-node-path node) (list index)))
-      (emit-signal tree "row-deleted" path))
+      (g-signal-emit tree "row-deleted" path))
     (when (zerop (length (tree-node-children node)))
       (let* ((path (make-instance 'gtk-tree-path))
              (iter (make-gtk-tree-iter)))
@@ -2561,6 +2561,6 @@
               0
               (gtk-tree-iter-user-data iter)
               (get-assigned-id tree node))
-        (emit-signal tree "row-has-child-toggled" path iter)))))
+        (g-signal-emit tree "row-has-child-toggled" path iter)))))
 
 ;;; --- End of file gtk.tree-model.lisp ----------------------------------------
