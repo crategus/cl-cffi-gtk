@@ -193,10 +193,10 @@
 
 (defun gtk-tree-store-set-column-types (tree-store column-types)
   (let ((n (length column-types)))
-    (with-foreign-object (types-ar 'g-type-designator n)
+    (with-foreign-object (types-ar 'g-type n)
       (iter (for i from 0 below n)
             (for type in column-types)
-            (setf (mem-aref types-ar 'g-type-designator i) type))
+            (setf (mem-aref types-ar 'g-type i) type))
       (%gtk-tree-store-set-column-types tree-store n types-ar))))
 
 (export 'gtk-tree-store-set-column-types)

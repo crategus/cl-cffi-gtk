@@ -630,7 +630,7 @@
   ;; methods
   (get-flags (gtk-tree-model-flags (tree-model g-object)))
   (get-n-columns (:int (tree-model g-object)))
-  (get-column-type (g-type-designator (tree-model g-object) (index :int)))
+  (get-column-type (g-type (tree-model g-object) (index :int)))
   (get-iter (:boolean
              (tree-model g-object)
              (iter (g-boxed-foreign gtk-tree-iter))
@@ -1467,7 +1467,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_get_column_type" gtk-tree-model-get-column-type)
-    g-type-designator
+    g-type
   (tree-model (g-object gtk-tree-model))
   (index :int))
 
