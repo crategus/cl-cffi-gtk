@@ -651,7 +651,7 @@
 ;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_enum_register_static" g-enum-register-static) g-type-designator
+(defcfun ("g_enum_register_static" g-enum-register-static) g-type
   (name :string)
   (static-values (:pointer g-enum-value)))
 
@@ -795,7 +795,7 @@
 ;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_flags_register_static" g-flags-register-static) g-type-designator
+(defcfun ("g_flags_register_static" g-flags-register-static) g-type
   (name :string)
   (static-values (:pointer g-flags-value)))
 

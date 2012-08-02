@@ -2269,7 +2269,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (enum-type g-type-designator)
+  (enum-type g-type)
   (default-value :int)
   (flags g-param-flags))
 
@@ -2432,7 +2432,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (flags-type g-type-designator)
+  (flags-type g-type)
   (default-value :int)
   (flags g-param-flags))
 
@@ -2828,7 +2828,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (param-type g-type-designator)
+  (param-type g-type)
   (flags g-param-flags))
 
 (export 'g-param-spec-param)
@@ -3028,7 +3028,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (boxed-type g-type-designator)
+  (boxed-type g-type)
   (flags g-param-flags))
 
 (export 'g-param-spec-boxed)
@@ -3397,7 +3397,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (object-type g-type-designator)
+  (object-type g-type)
   (flags g-param-flags))
 
 (export 'g-param-spec-object)
@@ -3876,7 +3876,7 @@
 
 (defcstruct g-param-spec-g-type
   (:parent-instance g-param-spec)
-  (:types-root g-type-designator))
+  (:types-root g-type))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_gtype ()
@@ -3920,7 +3920,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (types-root g-type-designator)
+  (types-root g-type)
   (flags g-param-flags))
 
 (export 'g-param-spec-g-type)
@@ -3943,7 +3943,7 @@
 
 ;; TODO: The name is changed to g-value-get-g-type !?
 
-(defcfun ("g_value_get_gtype" g-value-get-g-type) g-type-designator
+(defcfun ("g_value_get_gtype" g-value-get-g-type) g-type
   (g-value (:pointer g-value)))
 
 (export 'g-value-get-g-type)
@@ -3968,7 +3968,7 @@
 
 (defcfun ("g_value_set_gtype" g-value-set-g-type) :void
   (value (:pointer g-value))
-  (v-gtype g-type-designator))
+  (v-gtype g-type))
 
 (export 'g-value-set-g-type)
 

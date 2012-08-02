@@ -766,12 +766,12 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; g-type-designator converts automatically between the Lisp type gtype,
+;; g-type converts automatically between the Lisp type gtype,
 ;; an integer or a string and the foreign type GType
 
-(define-foreign-type g-type-designator ()
+(define-foreign-type g-type ()
   ((mangled-p :initarg :mangled-p
-              :reader g-type-designator-mangled-p
+              :reader g-type-mangled-p
               :initform nil
               :documentation
               "Whether the type designator is mangled with
@@ -785,20 +785,20 @@
      Numeric identifier of GType may be different between different program
      runs. But string identifier of GType does not change.")
   (:actual-type %g-type)
-  (:simple-parser g-type-designator))
+  (:simple-parser g-type))
 
 (defun g-type-unmangle (type)
   (logxor type (ldb (byte 1 0) type)))
 
-(defmethod translate-from-foreign (value (type g-type-designator))
-  (gtype (if (g-type-designator-mangled-p type)
+(defmethod translate-from-foreign (value (type g-type))
+  (gtype (if (g-type-mangled-p type)
              (g-type-unmangle value)
              value)))
 
-(defmethod translate-to-foreign (value (type g-type-designator))
+(defmethod translate-to-foreign (value (type g-type))
   (gtype-id (gtype value)))
 
-(export 'g-type-designator)
+(export 'g-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FUNDAMENTAL()
@@ -866,7 +866,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_test_flags" g-type-test-flags) :boolean
-  (type g-type-designator)
+  (type g-type)
   (flag g-type-flags))
 
 (defun g-type-is-abstract (type)
@@ -928,7 +928,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_check_is_value_type" g-type-check-is-value-type) :boolean
-  (type g-type-designator))
+  (type g-type))
 
 (defun g-type-is-value-type (type)
   (g-type-check-is-value-type type))
@@ -971,7 +971,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_test_flags" g-type-test-fundamental-flags) :boolean
-  (type g-type-designator)
+  (type g-type)
   (flag g-type-fundamental-flags))
 
 (defun g-type-is-classed (type)
@@ -1077,8 +1077,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-interface
-  (:type g-type-designator)
-  (:instance-type g-type-designator))
+  (:type g-type)
+  (:instance-type g-type))
 
 (export 'g-type-interface)
 
@@ -1092,7 +1092,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-class
-  (:type g-type-designator))
+  (:type g-type))
 
 (export 'g-type-class)
 
@@ -1839,7 +1839,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_name" %g-type-name) (:string :free-from-foreign nil)
-  (type %g-type)) ; Use %g-type and not g-type-designator
+  (type %g-type)) ; Use %g-type and not g-type
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1898,8 +1898,8 @@
 ;;;     The parent type.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_parent" g-type-parent) g-type-designator
-  (type g-type-designator))
+(defcfun ("g_type_parent" g-type-parent) g-type
+  (type g-type))
 
 (export 'g-type-parent)
 
@@ -1919,7 +1919,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_depth" g-type-depth) :uint
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-type-depth)
 
@@ -1945,9 +1945,9 @@
 ;;;     Immediate child of root_type and anchestor of leaf_type.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_next_base" g-type-next-base) g-type-designator
-  (leaf-type g-type-designator)
-  (root-type g-type-designator))
+(defcfun ("g_type_next_base" g-type-next-base) g-type
+  (leaf-type g-type)
+  (root-type g-type))
 
 (export 'g-type-next-base)
 
@@ -1970,8 +1970,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_is_a" g-type-is-a) :boolean
-  (type g-type-designator)
-  (is-a-type g-type-designator))
+  (type g-type)
+  (is-a-type g-type))
 
 (export 'g-type-is-a)
 
@@ -1991,7 +1991,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_ref" g-type-class-ref) (:pointer g-type-class)
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-type-class-ref)
 
@@ -2014,7 +2014,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_peek" g-type-class-peek) (:pointer g-type-class)
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-type-class-peek)
 
@@ -2038,7 +2038,7 @@
 
 (defcfun ("g_type_class_peek_static" g-type-class-peek-static)
     (:pointer g-type-class)
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-type-class-peek-static)
 
@@ -2243,7 +2243,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_default_interface_ref" g-type-default-interface-ref) :pointer
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-type-default-interface-ref)
 
@@ -2307,7 +2307,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_children" %g-type-children) (:pointer %g-type)
-  (type g-type-designator)
+  (type g-type)
   (n-children (:pointer :uint)))
 
 (defun g-type-children (type)
@@ -2316,7 +2316,7 @@
       (prog1
           (loop
              for i from 0 below (mem-ref n-children :uint)
-             collect (mem-aref g-types-ptr 'g-type-designator i))
+             collect (mem-aref g-types-ptr 'g-type i))
         (g-free g-types-ptr)))))
 
 (export 'g-type-children)
@@ -2341,7 +2341,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interfaces" %g-type-interfaces) (:pointer %g-type)
-  (type g-type-designator)
+  (type g-type)
   (n-interfaces (:pointer :uint)))
 
 (defun g-type-interfaces (type)
@@ -2350,7 +2350,7 @@
       (prog1
           (loop
              for i from 0 below (mem-ref n-interfaces :uint)
-             collect (mem-aref g-types-ptr 'g-type-designator i))
+             collect (mem-aref g-types-ptr 'g-type i))
         (g-free g-types-ptr)))))
 
 (export 'g-type-interfaces)
@@ -2378,7 +2378,7 @@
 
 (defcfun ("g_type_interface_prerequisites" %g-type-interface-prerequisites)
     (:pointer %g-type)
-  (interface-type g-type-designator)
+  (interface-type g-type)
   (n-prerequisites (:pointer :uint)))
 
 (defun g-type-interface-prerequisites (interface-type)
@@ -2388,7 +2388,7 @@
       (prog1
           (loop
              for i from 0 below (mem-ref n-prerequisites :uint)
-             collect (mem-aref g-types-ptr 'g-type-designator i))
+             collect (mem-aref g-types-ptr 'g-type i))
         (g-free g-types-ptr)))))
 
 (export 'g-type-interface-prerequisites)
@@ -2459,7 +2459,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-query
-  (:type g-type-designator)
+  (:type g-type)
   (:type-name (:string :free-from-foreign nil))
   (:class-size :uint)
   (:instance-size :uint))
@@ -2486,7 +2486,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_query" g-type-query) :void
-  (type g-type-designator)
+  (type g-type)
   (query (:pointer g-type-query)))
 
 (export 'g-type-query)
@@ -2749,8 +2749,8 @@
 ;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_register_static" g-type-register-static) g-type-designator
-  (parent-type g-type-designator)
+(defcfun ("g_type_register_static" g-type-register-static) g-type
+  (parent-type g-type)
   (type-name :string)
   (info (:pointer g-type-info))
   (flags g-type-flags))
@@ -2801,8 +2801,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_register_static_simple"
-          g-type-register-static-simple) g-type-designator
-  (parent-type g-type-designator)
+          g-type-register-static-simple) g-type
+  (parent-type g-type)
   (type-name :string)
   (class-size :uint)
   (class-init :pointer)
@@ -2901,8 +2901,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_add_interface_static" g-type-add-interface-static) :void
-  (instance-type g-type-designator)
-  (interface-type g-type-designator)
+  (instance-type g-type)
+  (interface-type g-type)
   (info (:pointer g-interface-info)))
 
 (export 'g-type-add-interface-static)
@@ -2949,8 +2949,8 @@
 
 (defcfun ("g_type_interface_add_prerequisite" g-type-interface-add-prerequisite)
     :void
-  (interface-type g-type-designator)
-  (prerequisite-type g-type-designator))
+  (interface-type g-type)
+  (prerequisite-type g-type))
 
 (export 'g-type-interface-add-prerequisite)
 
@@ -3020,8 +3020,8 @@
 ;;;     fundamental type ID
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_fundamental" g-type-fundamental) g-type-designator
-  (type g-type-designator))
+(defcfun ("g_type_fundamental" g-type-fundamental) g-type
+  (type g-type))
 
 (export 'g-type-fundamental)
 
@@ -3193,7 +3193,7 @@
 
 (defcfun ("g_type_value_table_peek" g-type-value-table-peek)
     (:pointer g-type-value-table)
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-type-value-table-peek)
 

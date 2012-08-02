@@ -529,11 +529,11 @@
 (defcstruct %g-signal-query
   (:signal-id :uint)
   (:signal-name :string)
-  (:owner-type g-type-designator)
+  (:owner-type g-type)
   (:signal-flags g-signal-flags)
-  (:return-type (g-type-designator :mangled-p t))
+  (:return-type (g-type :mangled-p t))
   (:n-params :uint)
-  (:param-types (:pointer (g-type-designator :mangled-p t))))
+  (:param-types (:pointer (g-type :mangled-p t))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -847,7 +847,7 @@
                                                          '%g-signal-query
                                                          :n-params))
                  (for param-type = (mem-aref param-types
-                                             '(g-type-designator :mangled-p t)
+                                             '(g-type :mangled-p t)
                                              i))
                  (collect param-type))))
       (make-signal-info :id signal-id
@@ -892,7 +892,7 @@
 
 (defcfun ("g_signal_lookup" g-signal-lookup) :uint
   (name :string)
-  (type g-type-designator))
+  (type g-type))
 
 (export 'g-signal-lookup)
 
@@ -937,7 +937,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_list_ids" g-signal-list-ids) (:pointer :uint)
-  (type g-type-designator)
+  (type g-type)
   (n-ids (:pointer :uint)))
 
 (export 'g-signal-list-ids)
@@ -2023,7 +2023,7 @@
 
 (defcfun ("g_signal_parse_name" %g-signal-parse-name) :boolean
  (detailed-signal :string)
- (itype g-type-designator)
+ (itype g-type)
  (signal-id-p (:pointer :uint))
  (detail-p (:pointer g-quark))
  (force-detail-quark :boolean))
