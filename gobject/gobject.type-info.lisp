@@ -3021,7 +3021,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_fundamental" g-type-fundamental) g-type
-  (type g-type))
+  (gtype g-type))
 
 (export 'g-type-fundamental)
 

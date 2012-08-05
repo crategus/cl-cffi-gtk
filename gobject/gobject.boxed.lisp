@@ -182,8 +182,11 @@
 ;;;     a new G_TYPE_POINTER derived type id for name.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_pointer_type_regist_static" g-pointer-type-register-static) g-type
+(defcfun ("g_pointer_type_register_static" g-pointer-type-register-static)
+    g-type
   (name :string))
+
+(export 'g-pointer-type-register-static)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_HASH_TABLE

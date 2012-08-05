@@ -68,7 +68,9 @@
     #:registered-object-type-by-name
     #:with-foreign-boxed-array
 
+    ;; Symbols from gobject.signals.lisp
     #:list-signals
+    #:signal-info
         ))
 
 ;;; --- End of file gobject.package.lisp ---------------------------------------
