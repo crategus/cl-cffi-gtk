@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; rtest-gdk-cursor.lisp
+;;; rtest-gdk.lisp
 ;;;
 ;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
@@ -21,19 +21,38 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+#-lisp-unit
+(progn
+  (format t "~&Loading of package lisp-unit ...~%")
+  (asdf:operate 'asdf:load-op :lisp-unit)
+  (format t "Loading of package lisp-unit is finished.~%"))
+
+#-gtk
+(progn
+  (format t "~&Loading of package cl-cffi-gtk ...~%")
+  (asdf:operate 'asdf:load-op :cl-cffi-gtk)
+  (format t "Loading is finished.~%"))
+
+(defpackage :gdk-tests
+  (:use :gdk :gdk-pixbuf :gobject :glib :cffi :common-lisp :lisp-unit))
+
 (in-package :gdk-tests)
 
-(define-test gdk-cursor
-  (let* ((cursor (gdk-cursor-new :hand1))
-         (display (gdk-cursor-get-display cursor))
-         (image (gdk-cursor-get-image cursor)))
-    (assert-eq  :hand1 (gdk-cursor-get-cursor-type cursor))
-    (assert-eql 'gdk-display (type-of (gdk-cursor-get-display cursor)))
-    (assert-eq 'gdk-pixbuf (type-of (gdk-cursor-get-image cursor)))
-    (assert-eql 'gdk-cursor
-                (type-of (gdk-cursor-new-from-pixbuf display image 0 0)))
-    (assert-eql 'gdk-cursor
-                (type-of (gdk-cursor-new-from-name display "hand1")))
-    (assert-eql 'gdk-cursor
-                (type-of (gdk-cursor-new-for-display display :hand1)))))
+(load "rtest-gdk-color.lisp")
+(load "rtest-gdk-cursor.lisp")
+(load "rtest-gdk-device.lisp")
+(load "rtest-gdk-device-manager.lisp")
+(load "rtest-gdk-display.lisp")
+(load "rtest-gdk-display-manager.lisp")
+(load "rtest-gdk-keymap.lisp")
+(load "rtest-gdk-region.lisp")
+(load "rtest-gdk-rgba.lisp")
+(load "rtest-gdk-screen.lisp")
+(load "rtest-gdk-visual.lisp")
+(load "rtest-gdk-window.lisp")
+
+;;; ----------------------------------------------------------------------------
+
+(format t "~&-----------------------------------------------------------------")
+(run-all-tests :gdk-tests)
 

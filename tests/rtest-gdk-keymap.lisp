@@ -23,6 +23,10 @@
 
 (in-package :gdk-tests)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  ;; Initialize the type GdkX11Keymap
+  (foreign-funcall "gdk_x11_keymap_get_type" :int))
+
 (define-test gdk-keymap
   (assert-true  (g-type-is-object "GdkKeymap"))
   (assert-false (g-type-is-abstract "GdkKeymap"))

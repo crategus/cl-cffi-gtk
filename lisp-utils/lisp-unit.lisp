@@ -111,11 +111,11 @@ For more information, see lisp-unit.html.
            #:remove-all-tests #:remove-tests
            #:logically-equal #:set-equal #:unordered-equal
            #:use-debugger
-           #:with-test-listener)
-  )
+           #:with-test-listener))
 
 (in-package #:lisp-unit)
 
+(pushnew (intern (format nil "LISP-UNIT") (find-package :keyword)) *features*)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Globals
@@ -375,8 +375,7 @@ For more information, see lisp-unit.html.
           (incf total-pass-count pass-count)
           (incf total-error-count error-count)))
       (unless (null (cdr test-thunks))
-        (show-summary 'total total-test-count total-pass-count total-error-count)
-        (format t "~&------------------------------------------------------~%"))
+        (show-summary 'total total-test-count total-pass-count total-error-count))
       (values))))
 
 (defun run-test-thunk (*test-name* thunk)

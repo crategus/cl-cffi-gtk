@@ -21,9 +21,17 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :lisp-unit)
-(asdf:operate 'asdf:load-op :bordeaux-threads)
-(asdf:operate 'asdf:load-op :cl-cffi-gtk-glib)
+#-lisp-unit
+(progn
+  (format t "~&Loading of package lisp-unit ...~%")
+  (asdf:operate 'asdf:load-op :lisp-unit)
+  (format t "Loading of package lisp-unit is finished.~%"))
+
+#-gtk
+(progn
+  (format t "~&Loading of package cl-cffi-gtk ...~%")
+  (asdf:operate 'asdf:load-op :cl-cffi-gtk)
+  (format t "Loading is finished.~%"))
 
 (defpackage :glib-tests
   (:use :glib :cffi :common-lisp :lisp-unit))
@@ -64,12 +72,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-test glib-threads
-  (let* ((func (lambda () (sleep 5)))
+  (let* ((func (lambda () (sleep 2)))
          (start (get-universal-time))
-         (thread (g-thread-new "GTK+" func)))
+         (thread nil))
+  (assert-true (pointerp (setq thread (g-thread-new "GTK+" func))))
   (assert-true (pointerp (g-thread-self)))
-  (assert-true (pointerp (g-thread-join thread)))
-  (assert-eql 5 (- (get-universal-time) start))))
+  (g-thread-join thread)
+  (assert-eql 2 (- (get-universal-time) start))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -102,5 +111,10 @@
     (g-main-loop-quit loop)
     (sleep 1)
     (assert-false (g-main-loop-is-running loop))))
+
+;;; ----------------------------------------------------------------------------
+
+(format t "~&-----------------------------------------------------------------")
+(run-all-tests :glib-tests)
 
 ;;; --- End of file rtest-glib.lisp --------------------------------------------

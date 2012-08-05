@@ -21,95 +21,24 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+#-lisp-unit
+(progn
+  (format t "~&Loading of package lisp-unit ...~%")
+  (asdf:operate 'asdf:load-op :lisp-unit)
+  (format t "Loading of package lisp-unit is finished.~%"))
+
+#-gtk
+(progn
+  (format t "~&Loading of package cl-cffi-gtk ...~%")
+  (asdf:operate 'asdf:load-op :cl-cffi-gtk)
+  (format t "Loading is finished.~%"))
+
+(defpackage :gobject-tests
+  (:use :gtk :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
+
 (in-package :gobject-tests)
 
-(define-test gtype-id
-  (assert-eql (ash  1 2) (gtype-id (gtype +g-type-void+)))
-  (assert-eql (ash  2 2) (gtype-id (gtype +g-type-interface+)))
-  (assert-eql (ash  3 2) (gtype-id (gtype +g-type-char+)))
-  (assert-eql (ash  4 2) (gtype-id (gtype +g-type-uchar+)))
-  (assert-eql (ash  5 2) (gtype-id (gtype +g-type-boolean+)))
-  (assert-eql (ash  6 2) (gtype-id (gtype +g-type-int+)))
-  (assert-eql (ash  7 2) (gtype-id (gtype +g-type-uint+)))
-  (assert-eql (ash  8 2) (gtype-id (gtype +g-type-long+)))
-  (assert-eql (ash  9 2) (gtype-id (gtype +g-type-ulong+)))
-  (assert-eql (ash 10 2) (gtype-id (gtype +g-type-int64+)))
-  (assert-eql (ash 11 2) (gtype-id (gtype +g-type-uint64+)))
-  (assert-eql (ash 12 2) (gtype-id (gtype +g-type-enum+)))
-  (assert-eql (ash 13 2) (gtype-id (gtype +g-type-flags+)))
-  (assert-eql (ash 14 2) (gtype-id (gtype +g-type-float+)))
-  (assert-eql (ash 15 2) (gtype-id (gtype +g-type-double+)))
-  (assert-eql (ash 16 2) (gtype-id (gtype +g-type-string+)))
-  (assert-eql (ash 17 2) (gtype-id (gtype +g-type-pointer+)))
-  (assert-eql (ash 18 2) (gtype-id (gtype +g-type-boxed+)))
-  (assert-eql (ash 19 2) (gtype-id (gtype +g-type-param+)))
-  (assert-eql (ash 20 2) (gtype-id (gtype +g-type-object+))))
-
-(define-test gtype-from-id
-  (assert-eql (ash  1 2) (gtype-id (gtype-from-id +g-type-void+)))
-  (assert-eql (ash  2 2) (gtype-id (gtype-from-id +g-type-interface+)))
-  (assert-eql (ash  3 2) (gtype-id (gtype-from-id +g-type-char+)))
-  (assert-eql (ash  4 2) (gtype-id (gtype-from-id +g-type-uchar+)))
-  (assert-eql (ash  5 2) (gtype-id (gtype-from-id +g-type-boolean+)))
-  (assert-eql (ash  6 2) (gtype-id (gtype-from-id +g-type-int+)))
-  (assert-eql (ash  7 2) (gtype-id (gtype-from-id +g-type-uint+)))
-  (assert-eql (ash  8 2) (gtype-id (gtype-from-id +g-type-long+)))
-  (assert-eql (ash  9 2) (gtype-id (gtype-from-id +g-type-ulong+)))
-  (assert-eql (ash 10 2) (gtype-id (gtype-from-id +g-type-int64+)))
-  (assert-eql (ash 11 2) (gtype-id (gtype-from-id +g-type-uint64+)))
-  (assert-eql (ash 12 2) (gtype-id (gtype-from-id +g-type-enum+)))
-  (assert-eql (ash 13 2) (gtype-id (gtype-from-id +g-type-flags+)))
-  (assert-eql (ash 14 2) (gtype-id (gtype-from-id +g-type-float+)))
-  (assert-eql (ash 15 2) (gtype-id (gtype-from-id +g-type-double+)))
-  (assert-eql (ash 16 2) (gtype-id (gtype-from-id +g-type-string+)))
-  (assert-eql (ash 17 2) (gtype-id (gtype-from-id +g-type-pointer+)))
-  (assert-eql (ash 18 2) (gtype-id (gtype-from-id +g-type-boxed+)))
-  (assert-eql (ash 19 2) (gtype-id (gtype-from-id +g-type-param+)))
-  (assert-eql (ash 20 2) (gtype-id (gtype-from-id +g-type-object+))))
-
-(define-test gtype-name
-  (assert-equal "void"       (gtype-name (gtype +g-type-void+)))
-  (assert-equal "GInterface" (gtype-name (gtype +g-type-interface+)))
-  (assert-equal "gchar"      (gtype-name (gtype +g-type-char+)))
-  (assert-equal "guchar"     (gtype-name (gtype +g-type-uchar+)))
-  (assert-equal "gboolean"   (gtype-name (gtype +g-type-boolean+)))
-  (assert-equal "gint"       (gtype-name (gtype +g-type-int+)))
-  (assert-equal "guint"      (gtype-name (gtype +g-type-uint+)))
-  (assert-equal "glong"      (gtype-name (gtype +g-type-long+)))
-  (assert-equal "gulong"     (gtype-name (gtype +g-type-ulong+)))
-  (assert-equal "gint64"     (gtype-name (gtype +g-type-int64+)))
-  (assert-equal "guint64"    (gtype-name (gtype +g-type-uint64+)))
-  (assert-equal "GEnum"      (gtype-name (gtype +g-type-enum+)))
-  (assert-equal "GFlags"     (gtype-name (gtype +g-type-flags+)))
-  (assert-equal "gfloat"     (gtype-name (gtype +g-type-float+)))
-  (assert-equal "gdouble"    (gtype-name (gtype +g-type-double+)))
-  (assert-equal "gchararray" (gtype-name (gtype +g-type-string+)))
-  (assert-equal "gpointer"   (gtype-name (gtype +g-type-pointer+)))
-  (assert-equal "GBoxed"     (gtype-name (gtype +g-type-boxed+)))
-  (assert-equal "GParam"     (gtype-name (gtype +g-type-param+)))
-  (assert-equal "GObject"    (gtype-name (gtype +g-type-object+))))
-
-(define-test gtype-from-name
-  (assert-eql (ash  1 2) (gtype-id (gtype-from-name "void")))
-  (assert-eql (ash  2 2) (gtype-id (gtype-from-name "GInterface")))
-  (assert-eql (ash  3 2) (gtype-id (gtype-from-name "gchar")))
-  (assert-eql (ash  4 2) (gtype-id (gtype-from-name "guchar")))
-  (assert-eql (ash  5 2) (gtype-id (gtype-from-name "gboolean")))
-  (assert-eql (ash  6 2) (gtype-id (gtype-from-name "gint")))
-  (assert-eql (ash  7 2) (gtype-id (gtype-from-name "guint")))
-  (assert-eql (ash  8 2) (gtype-id (gtype-from-name "glong")))
-  (assert-eql (ash  9 2) (gtype-id (gtype-from-name "gulong")))
-  (assert-eql (ash 10 2) (gtype-id (gtype-from-name "gint64")))
-  (assert-eql (ash 11 2) (gtype-id (gtype-from-name "guint64")))
-  (assert-eql (ash 12 2) (gtype-id (gtype-from-name "GEnum")))
-  (assert-eql (ash 13 2) (gtype-id (gtype-from-name "GFlags")))
-  (assert-eql (ash 14 2) (gtype-id (gtype-from-name "gfloat")))
-  (assert-eql (ash 15 2) (gtype-id (gtype-from-name "gdouble")))
-  (assert-eql (ash 16 2) (gtype-id (gtype-from-name "gchararray")))
-  (assert-eql (ash 17 2) (gtype-id (gtype-from-name "gpointer")))
-  (assert-eql (ash 18 2) (gtype-id (gtype-from-name "GBoxed")))
-  (assert-eql (ash 19 2) (gtype-id (gtype-from-name "GParam")))
-  (assert-eql (ash 20 2) (gtype-id (gtype-from-name "GObject"))))
+;;; ----------------------------------------------------------------------------
 
 (define-test %g-type-name
   (assert-equal "void"       (g::%g-type-name +g-type-void+))
@@ -168,22 +97,6 @@
   (assert-true  (g-type-is-a +g-type-long+ (gtype +g-type-long+)))
   (assert-false (g-type-is-a +g-type-long+ (gtype +g-type-string+)))
   (assert-true  (g-type-is-a "gdouble" +g-type-double+)))
-
-(define-test g-type-flags
-  (assert-equal '(:abstract)
-                (cffi:foreign-bitfield-symbols 'g-type-flags (ash 1 4)))
-  (assert-equal '(:value-abstract)
-                (cffi:foreign-bitfield-symbols 'g-type-flags (ash 1 5)))
-  (assert-equal '(:abstract :value-abstract)
-                (cffi:foreign-bitfield-symbols 'g-type-flags
-                                               (+ (ash 1 4) (ash 1 5))))
-  (assert-eql (ash 1 4)
-              (cffi:foreign-bitfield-value 'g-type-flags '(:abstract)))
-  (assert-eql (ash 1 5)
-              (cffi:foreign-bitfield-value 'g-type-flags '(:value-abstract)))
-  (assert-eql (+ (ash 1 4) (ash 1 5))
-              (cffi:foreign-bitfield-value 'g-type-flags
-                                           '(:abstract :value-abstract))))
 
 (define-test g-param-spec-int
   (with-foreign-object (value 'g-value)
@@ -248,5 +161,15 @@
     (assert-eq 'gobject-class (type-of class))
     (assert-eq (find-class 'gobject-class) (class-of class))
   ))
+
+;;; ----------------------------------------------------------------------------
+
+(load "rtest-gobject-type-info.lisp")
+(load "rtest-gobject-signals.lisp")
+
+;;; ----------------------------------------------------------------------------
+
+(format t "~&-----------------------------------------------------------------")
+(run-all-tests :gobject-tests)
 
 ;;; --- End of file rtest-gobject.lisp -----------------------------------------

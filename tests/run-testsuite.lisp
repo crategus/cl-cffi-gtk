@@ -26,24 +26,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defpackage :glib-tests
-  (:use :glib :cffi :common-lisp :lisp-unit))
-
 (load "rtest-glib.lisp")
-
-(in-package :glib-tests)
-(run-all-tests :glib-tests)
-
-;;; ----------------------------------------------------------------------------
-
-(defpackage :gobject-tests
-  (:use :gtk :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
-
 (load "rtest-gobject.lisp")
-(load "rtest-gobject-type-info.lisp")
-
-(in-package :gobject-tests)
-(run-all-tests :gobject-tests)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -60,29 +44,13 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defpackage :gdk-tests
-  (:use :gdk :gobject :glib :cffi :common-lisp :lisp-unit))
-
-(load "rtest-gdk-color.lisp")
-(load "rtest-gdk-cursor.lisp")
-(load "rtest-gdk-device.lisp")
-(load "rtest-gdk-device-manager.lisp")
-(load "rtest-gdk-display.lisp")
-(load "rtest-gdk-display-manager.lisp")
-(load "rtest-gdk-keymap.lisp")
-(load "rtest-gdk-region.lisp")
-(load "rtest-gdk-rgba.lisp")
-(load "rtest-gdk-screen.lisp")
-(load "rtest-gdk-visual.lisp")
-(load "rtest-gdk-window.lisp")
-
-(in-package :gdk-tests)
-(run-all-tests :gdk-tests)
+(load "rtest-gdk.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gtk-tests
-  (:use :gtk :gdk :gobject :glib :gio :pango :cairo :cffi :common-lisp :lisp-unit))
+  (:use :gtk :gdk :gdk-pixbuf :gobject :glib :gio :pango :cairo
+   :cffi :common-lisp :lisp-unit))
 
 (load "rtest-gtk-adjustment.lisp")
 (load "rtest-gtk-application.lisp")
