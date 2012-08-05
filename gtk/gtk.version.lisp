@@ -311,6 +311,9 @@
 
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (pushnew :gtk *features*))
+
 (glib:push-library-version-features gtk
                                     (gtk-get-major-version)
                                     (gtk-get-minor-version)
