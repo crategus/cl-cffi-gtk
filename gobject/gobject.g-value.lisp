@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.30.3. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -34,36 +34,30 @@
 ;;;
 ;;; Synopsis
 ;;;
-;;;     g-value-data
-;;;     g-value
+;;;     GValue
 ;;;
-;;;     G_VALUE_INIT                    *NOT IMPLEMENTED*
+;;;     G_VALUE_INIT
+;;;     G_VALUE_HOLDS
+;;;     G_VALUE_TYPE
+;;;     G_VALUE_TYPE_NAME
+;;;     G_TYPE_IS_VALUE
+;;;     G_TYPE_IS_VALUE_ABSTRACT
+;;;     G_IS_VALUE
+;;;     G_TYPE_VALUE
+;;;     G_TYPE_VALUE_ARRAY
 ;;;
-;;;     g-value-holds
-;;;     g-value-type
-;;;     g-value-type-name
-;;;     g-type-is-value
-;;;
-;;;     G_TYPE_IS_VALUE_ABSTRACT        *NOT IMPLEMENTED*
-;;;     G_IS_VALUE                      *NOT IMPLEMENTED*
-;;;     G_TYPE_VALUE                    *NOT IMPLEMENTED*
-;;;     G_TYPE_VALUE_ARRAY              *NOT IMPLEMENTED*
-;;;
-;;;     g-value-init
-;;;     g-value-copy
-;;;     g-value-reset
-;;;     g-value-unset
-;;;     g-value-set-instance
-;;;
-;;;     g_value_fits_pointer            *NOT IMPLEMENTED*
-;;;     g_value_peek_pointer            *NOT IMPLEMENTED*
-;;;
-;;;     g-value-type-compatible
-;;;     g-value-type-transformable
-;;;     g-value-transform
-;;;
-;;;     g-value-register-transform-func
-;;;     g-strdup-value-contents
+;;;     g_value_init
+;;;     g_value_copy
+;;;     g_value_reset
+;;;     g_value_unset
+;;;     g_value_set_instance
+;;;     g_value_fits_pointer
+;;;     g_value_peek_pointer
+;;;     g_value_type_compatible
+;;;     g_value_type_transformable
+;;;     g_value_transform
+;;;     g_value_register_transform_func
+;;;     g_strdup_value_contents
 ;;;
 ;;; Description
 ;;;
@@ -71,78 +65,75 @@
 ;;; type identifier and a specific value of that type. The type identifier
 ;;; within a GValue structure always determines the type of the associated
 ;;; value. To create a undefined GValue structure, simply create a zero-filled
-;;; GValue structure. To initialize the GValue, use the g-value-init()
-;;; function. A GValue cannot be used until it is initialized. The basic type
-;;; operations (such as freeing and copying) are determined by the
-;;; GTypeValueTable associated with the type ID stored in the GValue. Other
-;;; GValue operations (such as converting values between types) are provided
-;;; by this interface.
+;;; GValue structure. To initialize the GValue, use the g_value_init() function.
+;;; A GValue cannot be used until it is initialized. The basic type operations
+;;; (such as freeing and copying) are determined by the GTypeValueTable
+;;; associated with the type ID stored in the GValue. Other GValue operations
+;;; (such as converting values between types) are provided by this interface.
 ;;;
 ;;; The code in the example program below demonstrates GValue's features.
-;;; See the example in example-g-value.lisp for a translation of these
-;;; features to Lisp.
 ;;;
-;;;  #include <glib-object.h>
+;;;   #include <glib-object.h>
 ;;;
-;;;  static void
-;;;  int2string (const GValue *src_value,
-;;;              GValue       *dest_value)
-;;;  {
-;;;    if (g_value_get_int (src_value) == 42)
-;;;      g_value_set_static_string (dest_value, "An important number");
-;;;    else
-;;;      g_value_set_static_string (dest_value, "What's that?");
-;;;  }
+;;;   static void
+;;;   int2string (const GValue *src_value,
+;;;               GValue       *dest_value)
+;;;   {
+;;;     if (g_value_get_int (src_value) == 42)
+;;;       g_value_set_static_string (dest_value, "An important number");
+;;;     else
+;;;       g_value_set_static_string (dest_value, "What's that?");
+;;;   }
 ;;;
-;;;  int
-;;;  main (int   argc,
-;;;        char *argv[])
-;;;  {
-;;;    /* GValues must be initialized */
-;;;    GValue a = G_VALUE_INIT;
-;;;    GValue b = G_VALUE_INIT;
-;;;    const gchar *message;
+;;;   int
+;;;   main (int   argc,
+;;;         char *argv[])
+;;;   {
+;;;     /* GValues must be initialized */
+;;;     GValue a = G_VALUE_INIT;
+;;;     GValue b = G_VALUE_INIT;
+;;;     const gchar *message;
 ;;;
-;;;    g_type_init ();
+;;;     g_type_init ();
 ;;;
-;;;    /* The GValue starts empty */
-;;;    g_assert (!G_VALUE_HOLDS_STRING (&a));
+;;;     /* The GValue starts empty */
+;;;     g_assert (!G_VALUE_HOLDS_STRING (&a));
 ;;;
-;;;    /* Put a string in it */
-;;;    g_value_init (&a, G_TYPE_STRING);
-;;;    g_assert (G_VALUE_HOLDS_STRING (&a));
-;;;    g_value_set_static_string (&a, "Hello, world!");
-;;;    g_printf ("%s\n", g_value_get_string (&a));
+;;;     /* Put a string in it */
+;;;     g_value_init (&a, G_TYPE_STRING);
+;;;     g_assert (G_VALUE_HOLDS_STRING (&a));
+;;;     g_value_set_static_string (&a, "Hello, world!");
+;;;     g_printf ("%s\n", g_value_get_string (&a));
 ;;;
-;;;    /* Reset it to its pristine state */
-;;;    g_value_unset (&a);
+;;;     /* Reset it to its pristine state */
+;;;     g_value_unset (&a);
 ;;;
-;;;    /* It can then be reused for another type */
-;;;    g_value_init (&a, G_TYPE_INT);
-;;;    g_value_set_int (&a, 42);
+;;;     /* It can then be reused for another type */
+;;;     g_value_init (&a, G_TYPE_INT);
+;;;     g_value_set_int (&a, 42);
 ;;;
-;;;    /* Attempt to transform it into a GValue of type STRING */
-;;;    g_value_init (&b, G_TYPE_STRING);
+;;;     /* Attempt to transform it into a GValue of type STRING */
+;;;     g_value_init (&b, G_TYPE_STRING);
 ;;;
-;;;    /* An INT is transformable to a STRING */
-;;;    g_assert (g_value_type_transformable (G_TYPE_INT, G_TYPE_STRING));
+;;;     /* An INT is transformable to a STRING */
+;;;     g_assert (g_value_type_transformable (G_TYPE_INT, G_TYPE_STRING));
 ;;;
-;;;    g_value_transform (&a, &b);
-;;;    g_printf ("%s\n", g_value_get_string (&b));
+;;;     g_value_transform (&a, &b);
+;;;     g_printf ("%s\n", g_value_get_string (&b));
 ;;;
-;;;    /* Attempt to transform it again using a custom transform function */
-;;;    g_value_register_transform_func(G_TYPE_INT, G_TYPE_STRING, int2string);
-;;;    g_value_transform (&a, &b);
-;;;    g_printf ("%s\n", g_value_get_string (&b));
-;;;    return 0;
-;;;  }
+;;;     /* Attempt to transform it again using a custom transform function */
+;;;     g_value_register_transform_func (G_TYPE_INT, G_TYPE_STRING, int2string);
+;;;     g_value_transform (&a, &b);
+;;;     g_printf ("%s\n", g_value_get_string (&b));
+;;;     return 0;
+;;;   }
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
 
 ;;; ----------------------------------------------------------------------------
 
-;;; A generic function for getting the value of a g-value structure.
+;; A generic function for getting the value of a g-value structure.
 
 (defgeneric parse-g-value-for-type (gvalue-ptr gtype parse-kind))
 
@@ -201,11 +192,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun parse-g-value (gvalue &key (parse-kind :get-property))
-  (let* ((type (g-value-type gvalue))
-         (fundamental-type (g-type-fundamental type)))
+  (let* ((gtype (g-value-type gvalue))
+         (fundamental-type (g-type-fundamental gtype)))
     (ev-case fundamental-type
       ((gtype +g-type-invalid+)
-       (error "GValue is of invalid type (~A)" (gtype-name type)))
+       (error "GValue is of invalid type (~A)" (gtype-name gtype)))
       ((gtype +g-type-void+) nil)
       ((gtype +g-type-char+) (g-value-get-char gvalue))
       ((gtype +g-type-uchar+) (g-value-get-uchar gvalue))
@@ -222,7 +213,7 @@
       ((gtype +g-type-double+) (g-value-get-double gvalue))
       ((gtype +g-type-string+) (g-value-get-string gvalue))
       ((gtype +g-type-variant+) (g-value-get-variant gvalue))
-      (t (parse-g-value-for-type gvalue type parse-kind)))))
+      (t (parse-g-value-for-type gvalue gtype parse-kind)))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -326,9 +317,6 @@
       (t (set-gvalue-for-type gvalue type value)))))
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value
-;;; g-value-data
-;;;
 ;;; GValue
 ;;;
 ;;; typedef struct {
@@ -369,15 +357,13 @@
 ;;; as initializer instead of an explicit { 0 } when declaring a variable, but
 ;;; it cannot be assigned to a variable.
 ;;;
-;;;  1 GValue value = G_VALUE_INIT;
+;;;   GValue value = G_VALUE_INIT;
 ;;;
 ;;; Since 2.30
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
-;;; g-value-holds (value type)
+;;; G_VALUE_HOLDS()
 ;;;
 ;;; #define G_VALUE_HOLDS(value,type)
 ;;;         (G_TYPE_CHECK_VALUE_TYPE ((value), (type)))
@@ -395,13 +381,13 @@
 ;;;     TRUE if value holds the type.
 ;;; ----------------------------------------------------------------------------
 
-(defun g-value-holds (value type)
-  (g-type= type (g-value-type value)))
+(defun g-value-holds (value gtype)
+  (g-type= gtype (g-value-type value)))
 
 (export 'g-value-holds)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-type (value)
+;;; G_VALUE_TYPE()
 ;;;
 ;;; #define G_VALUE_TYPE(value) (((GValue*) (value))->g_type)
 ;;;
@@ -420,7 +406,7 @@
 (export 'g-value-type)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-type-name (value)
+;;; G_VALUE_TYPE_NAME()
 ;;;
 ;;; #define G_VALUE_TYPE_NAME(value) (g_type_name (G_VALUE_TYPE (value)))
 ;;;
@@ -439,13 +425,13 @@
 (export 'g-value-type-name)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-type-is-value (type)
+;;; G_TYPE_IS_VALUE()
 ;;;
 ;;; #define G_TYPE_IS_VALUE(type) (g_type_check_is_value_type (type))
 ;;;
-;;; Checks whether the passed in type ID can be used for g_value_init().
-;;; That is, this macro checks whether this type provides an implementation of
-;;; the GTypeValueTable functions required for a type to create a GValue of.
+;;; Checks whether the passed in type ID can be used for g_value_init(). That
+;;; is, this macro checks whether this type provides an implementation of the
+;;; GTypeValueTable functions required for a type to create a GValue of.
 ;;;
 ;;; type :
 ;;;     A GType value.
@@ -454,8 +440,8 @@
 ;;;     Whether type is suitable as a GValue type.
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-is-value (type)
-  (g-type-check-is-value-type type))
+(defun g-type-is-value (gtype)
+  (g-type-check-is-value-type gtype))
 
 (export 'g-type-is-value)
 
@@ -476,8 +462,6 @@
 ;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; G_IS_VALUE()
 ;;;
@@ -492,8 +476,6 @@
 ;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VALUE
 ;;;
@@ -503,39 +485,40 @@
 ;;; pointers to GValues.
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VALUE_ARRAY
 ;;;
 ;;; #define G_TYPE_VALUE_ARRAY (g_value_array_get_type ())
 ;;;
+;;; Warning
+;;;
+;;; G_TYPE_VALUE_ARRAY has been deprecated since version 2.32 and should not be
+;;; used in newly-written code. Use GArray instead of GValueArray
+;;;
 ;;; The type ID of the "GValueArray" type which is a boxed type, used to pass
 ;;; around pointers to GValueArrays.
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
-;;; g-value-init (value type)
+;;; g_value_init ()
 ;;;
-;;; GValue * g_value_init (GValue *value, GType g_type)
+;;; GValue * g_value_init (GValue *value, GType g_type);
 ;;;
 ;;; Initializes value with the default value of type.
 ;;;
 ;;; value :
 ;;;     A zero-filled (uninitialized) GValue structure.
 ;;;
-;;; type :
+;;; g_type :
 ;;;     Type the GValue should hold values of.
 ;;;
 ;;; Returns :
-;;;     the GValue structure that has been passed in.
+;;;     the GValue structure that has been passed in
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_init" %g-value-init) (:pointer g-value)
   (value (:pointer g-value))
-  (type g-type))
+  (gtype g-type))
 
 ;; Initializes the GValue in 'unset' state.
 ;; This function is called from g-value-init to initialize the GValue
@@ -559,16 +542,16 @@
 (export 'g-value-init)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-copy (src-value dst-value)
+;;; g_value_copy ()
 ;;;
-;;; void g_value_copy (const GValue *src_value, GValue *dest_value)
+;;; void g_value_copy (const GValue *src_value, GValue *dest_value);
 ;;;
 ;;; Copies the value of src_value into dest_value.
 ;;;
-;;; src-value :
+;;; src_value :
 ;;;     An initialized GValue structure.
 ;;;
-;;; dest-value :
+;;; dest_value :
 ;;;     An initialized GValue structure of the same type as src_value.
 ;;; ----------------------------------------------------------------------------
 
@@ -579,12 +562,12 @@
 (export 'g-value-copy)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-reset (value)
+;;; g_value_reset ()
 ;;;
-;;; GValue * g_value_reset (GValue *value)
+;;; GValue * g_value_reset (GValue *value);
 ;;;
-;;; Clears the current value in value and resets it to the default value
-;;; (as if the value had just been initialized).
+;;; Clears the current value in value and resets it to the default value (as if
+;;; the value had just been initialized).
 ;;;
 ;;; value :
 ;;;     An initialized GValue structure.
@@ -599,9 +582,9 @@
 (export 'g-value-reset)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-unset (value)
+;;; g_value_unset ()
 ;;;
-;;; void g_value_unset (GValue *value)
+;;; void g_value_unset (GValue *value);
 ;;;
 ;;; Clears the current value in value and "unsets" the type, this releases all
 ;;; resources associated with this GValue. An unset value is the same as an
@@ -617,9 +600,9 @@
 (export 'g-value-unset)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value_set-instance (value instance)
+;;; g_value_set_instance ()
 ;;;
-;;; void g_value_set_instance (GValue *value, gpointer instance)
+;;; void g_value_set_instance (GValue *value, gpointer instance);
 ;;;
 ;;; Sets value from an instantiatable type via the value_table's collect_value()
 ;;; function.
@@ -628,7 +611,7 @@
 ;;;     An initialized GValue structure.
 ;;;
 ;;; instance :
-;;;     the instance. [allow-none]
+;;;     the instance
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_instance" g-value-set-instance) :void
@@ -640,7 +623,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_fits_pointer ()
 ;;;
-;;; gboolean g_value_fits_pointer (const GValue *value)
+;;; gboolean g_value_fits_pointer (const GValue *value);
 ;;;
 ;;; Determines if value will fit inside the size of a pointer value. This is an
 ;;; internal function introduced mainly for C marshallers.
@@ -652,40 +635,36 @@
 ;;;     TRUE if value will fit inside a pointer value.
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_peek_pointer ()
 ;;;
-;;; gpointer g_value_peek_pointer (const GValue *value)
+;;; gpointer g_value_peek_pointer (const GValue *value);
 ;;;
 ;;; value :
 ;;;     An initialized GValue structure.
 ;;;
 ;;; Returns :
 ;;;     the value contents as pointer. This function asserts that
-;;;     g_value_fits_pointer() returned TRUE for the passed in value.
-;;;     This is an internal function introduced mainly for C marshallers.
+;;;     g_value_fits_pointer() returned TRUE for the passed in value. This is an
+;;;     internal function introduced mainly for C marshallers.
 ;;; ----------------------------------------------------------------------------
 
-;;; *** NOT IMPLEMENTED ***
-
 ;;; ----------------------------------------------------------------------------
-;;; g-value-type-compatible (src-type dest-type)
+;;; g_value_type_compatible ()
 ;;;
-;;; gboolean g_value_type_compatible (GType src_type, GType dest_type)
+;;; gboolean g_value_type_compatible (GType src_type, GType dest_type);
 ;;;
 ;;; Returns whether a GValue of type src_type can be copied into a GValue of
 ;;; type dest_type.
 ;;;
-;;; src-type :
+;;; src_type :
 ;;;     source type to be copied.
 ;;;
-;;; dest-type :
+;;; dest_type :
 ;;;     destination type for copying.
 ;;;
 ;;; Returns :
-;;;     TRUE if g-value-copy() is possible with src-type and dest-type.
+;;;     TRUE if g_value_copy() is possible with src_type and dest_type.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_type_compatible" g-value-type-compatible) :boolean
@@ -695,17 +674,17 @@
 (export 'g-value-type-compatible)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-type-transformable (src-type dest-type)
+;;; g_value_type_transformable ()
 ;;;
-;;; gboolean g_value_type_transformable (GType src_type, GType dest_type)
+;;; gboolean g_value_type_transformable (GType src_type, GType dest_type);
 ;;;
 ;;; Check whether g_value_transform() is able to transform values of type
 ;;; src_type into values of type dest_type.
 ;;;
-;;; src-type :
+;;; src_type :
 ;;;     Source type.
 ;;;
-;;; dest-type :
+;;; dest_type :
 ;;;     Target type.
 ;;;
 ;;; Returns :
@@ -719,9 +698,9 @@
 (export 'g-value-type-transformable)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value_transform (sr-value dest-value)
+;;; g_value_transform ()
 ;;;
-;;; gboolean g_value_transform (const GValue *src_value, GValue *dest_value)
+;;; gboolean g_value_transform (const GValue *src_value, GValue *dest_value);
 ;;;
 ;;; Tries to cast the contents of src_value into a type appropriate to store in
 ;;; dest_value, e.g. to transform a G_TYPE_INT value into a G_TYPE_FLOAT value.
@@ -730,15 +709,15 @@
 ;;; arbitrary results and shouldn't be relied upon for production code (such as
 ;;; rcfile value or object property serialization).
 ;;;
-;;; src-value :
+;;; src_value :
 ;;;     Source value.
 ;;;
-;;; dest-value :
+;;; dest_value :
 ;;;     Target value.
 ;;;
 ;;; Returns :
 ;;;     Whether a transformation rule was found and could be applied. Upon
-;;;     failing transformations, dest-value is left untouched.
+;;;     failing transformations, dest_value is left untouched.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_transform" g-value-transform) :boolean
@@ -750,13 +729,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GValueTransform ()
 ;;;
-;;; void (*GValueTransform) (const GValue *src_value, GValue *dest_value)
+;;; void (*GValueTransform) (const GValue *src_value, GValue *dest_value);
 ;;;
 ;;; The type of value transformation functions which can be registered with
 ;;; g_value_register_transform_func().
-;;;
-;;; A correcponding callback function can be defined in Lisp with
-;;; the function cffi:defcallback. See the example in the header of this file.
 ;;;
 ;;; src_value :
 ;;;     Source value.
@@ -766,25 +742,25 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; g-value-register-transform-func (src-type dest-type transform-func)
+;;; g_value_register_transform_func ()
 ;;;
 ;;; void g_value_register_transform_func (GType src_type,
 ;;;                                       GType dest_type,
-;;;                                       GValueTransform transform_func)
+;;;                                       GValueTransform transform_func);
 ;;;
-;;; Registers a value transformation function for use in g_value_transform().
-;;; A previously registered transformation function for src_type and dest_type
+;;; Registers a value transformation function for use in g_value_transform(). A
+;;; previously registered transformation function for src_type and dest_type
 ;;; will be replaced.
 ;;;
-;;; src-type :
+;;; src_type :
 ;;;     Source type.
 ;;;
-;;; dest-type :
+;;; dest_type :
 ;;;     Target type.
 ;;;
-;;; transform-func :
-;;;     a function which transforms values of type src-type into value of type
-;;;     dest-type
+;;; transform_func :
+;;;     a function which transforms values of type src_type into value of type
+;;;     dest_type
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_register_transform_func" g-value-register-transform-func)
@@ -796,9 +772,9 @@
 (export 'g-value-register-transform-func)
 
 ;;; ----------------------------------------------------------------------------
-;;; g-strdup-value-contents (value)
+;;; g_strdup_value_contents ()
 ;;;
-;;; gchar * g_strdup_value_contents (const GValue *value)
+;;; gchar * g_strdup_value_contents (const GValue *value);
 ;;;
 ;;; Return a newly allocated string, which describes the contents of a GValue.
 ;;; The main purpose of this function is to describe GValue contents for
@@ -817,4 +793,4 @@
 
 (export 'g-strdup-value-contents)
 
-;;; --- End of file gobject.g-value.lisp  --------------------------------------
+;;; --- End of file gobject.g-value.lisp ---------------------------------------
