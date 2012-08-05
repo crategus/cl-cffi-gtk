@@ -76,7 +76,7 @@ it can be expected to inform the user about the negative consequences of ending
 the session while inhibitors are present.
 
 @c -----------------------------------------------------------------------------
-@node Application window, Simple Application , Application Class, Top
+@node Application Window, Simple Application, Application Class, Top
 @section Application Window
 
 @code{GtkApplicationWindow} is a @code{GtkWindow} subclass that offers some
@@ -126,7 +126,6 @@ of this, the @code{GtkBuilder} must have been given the gettext domain to use.
 @c -----------------------------------------------------------------------------
 @node Simple Application, , Application Window, Top
 @section Simple Application
-
 
 @ifnotinfo
 @float Figure, figure-bloatpad

@@ -61,7 +61,7 @@ END-INFO-DIR-ENTRY
 * Range Widgets::
 * Layout Widgets::
 * Multiline Text Editor::
-* Tree and List Widget::
+* Tree and List Widgets::
 * Selecting Colors Files and Fonts::
 * Miscellaneous Widgets::
 * Menu Widget::
@@ -149,8 +149,12 @@ Multiline Text Editor
 * Simple Example::
 * Example of Changing Text Attributes::
 
-Tree and List Widget
-* Tree and List Widget::
+Tree and List Widgets
+* Tree and List Widgets::
+* Overview::
+* Creating a model::
+* Creating the view component::
+* Simple example::
 
 Selecting Colors, Files, and Fonts
 * Selecting Colors Files and Fonts::
