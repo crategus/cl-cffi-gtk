@@ -23,6 +23,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gdk
-  (:use :cl :gobject :glib :gio :cffi :pango :cairo :iter))
+  (:use :gdk-pixbuf :gobject :glib :gio :cffi :pango :cairo :iter :cl))
 
 ;;; --- End of file gdk.package.lisp -------------------------------------------
