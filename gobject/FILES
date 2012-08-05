@@ -2,7 +2,7 @@ Content from the GObject 2.32.4 Reference Manual
 
     *   - needs update
 
-  gobject.type-info.lisp   - Type Information                  - GObject 2.30.3*
+  gobject.type-info.lisp   - Type Information                  - GObject 2.32.4
     
   * not implemented *      - GTypePlugin
   * not implemented *      - GTypeModule
@@ -10,7 +10,7 @@ Content from the GObject 2.32.4 Reference Manual
   gobject.base.lisp        - GObject                           - GObject 2.30.3*
   gobject.enumeration.lisp - Enumeration and Flag Types        - GObject 2.30.3*
   gobject.boxed.lisp       - Boxed Types                       - GObject 2.30.3*
-  gobject.g-value.lisp     - Generic values                    - GObject 2.30.3*
+  gobject.g-value.lisp     - Generic values                    - GObject 2.32.4
   gobject.param.lisp       - Parameters and Values             - GObject 2.30.3*
   gobject.param-spec.lisp  - GParamSpec                        - GObject 2.30.3*
 
