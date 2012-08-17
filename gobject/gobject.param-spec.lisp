@@ -320,6 +320,46 @@
 (export 'g-param-spec)
 
 ;;; ----------------------------------------------------------------------------
+
+;; Corresponding Lisp structure describing a property of a GObject class.
+
+(defstruct param-spec
+  name
+  type
+  readable
+  writable
+  constructor
+  constructor-only
+  owner-type)
+
+(defmethod print-object ((instance param-spec) stream)
+  (if *print-readably*
+      (call-next-method)
+      (print-unreadable-object (instance stream)
+        (format stream
+                "PROPERTY ~A ~A . ~A (flags:~@[~* readable~]~@[~* writable~]~@[~* constructor~]~@[~* constructor-only~])"
+                (gtype-name (param-spec-type instance))
+                (param-spec-owner-type instance)
+                (param-spec-name instance)
+                (param-spec-readable instance)
+                (param-spec-writable instance)
+                (param-spec-constructor instance)
+                (param-spec-constructor-only instance)))))
+
+;; Transform a value of the C type GParamSpec to Lisp type param-spec
+
+(defun parse-g-param-spec (param)
+  (let ((flags (foreign-slot-value param 'g-param-spec :flags)))
+    (make-param-spec
+        :name (foreign-slot-value param 'g-param-spec :name)
+        :type (foreign-slot-value param 'g-param-spec :value-type)
+        :readable (not (null (member :readable flags)))
+        :writable (not (null (member :writable flags)))
+        :constructor (not (null (member :construct flags)))
+        :constructor-only (not (null (member :construct-only flags)))
+        :owner-type (foreign-slot-value param 'g-param-spec :owner-type))))
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecClass
 ;;;
 ;;; struct GParamSpecClass {

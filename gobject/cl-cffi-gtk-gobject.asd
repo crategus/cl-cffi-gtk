@@ -46,6 +46,7 @@
                (:file "glib.variant")        ; Strongly typed value datatype
                (:file "gobject.param-spec")  ; GParamSpec
                (:file "gobject.param")       ; Parameters and Values
+               (:file "gobject.gobject-class")
                (:file "gobject.base")        ; The Base Object Type
                (:file "gobject.closures")    ; Closures
                (:file "gobject.signals")     ; Signals

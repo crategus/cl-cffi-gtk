@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.30.3. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -48,16 +48,19 @@
 ;;;     G_TYPE_ARRAY
 ;;;     G_TYPE_BYTE_ARRAY
 ;;;     G_TYPE_PTR_ARRAY
+;;;     G_TYPE_BYTES
 ;;;     G_TYPE_VARIANT_TYPE
 ;;;     G_TYPE_ERROR
 ;;;     G_TYPE_DATE_TIME
 ;;;     G_TYPE_IO_CHANNEL
 ;;;     G_TYPE_IO_CONDITION
 ;;;     G_TYPE_VARIANT_BUILDER
+;;;     G_TYPE_KEY_FILE
 ;;;     G_TYPE_MAIN_CONTEXT
 ;;;     G_TYPE_MAIN_LOOP
 ;;;     G_TYPE_SOURCE
-;;;     GStrv;
+;;;
+;;;     GStrv
 ;;;
 ;;; Description
 ;;;
@@ -75,7 +78,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GBoxedCopyFunc ()
 ;;;
-;;; gpointer (*GBoxedCopyFunc) (gpointer boxed)
+;;; gpointer (*GBoxedCopyFunc) (gpointer boxed);
 ;;;
 ;;; This function is provided by the user and should produce a copy of the
 ;;; passed in boxed structure.
@@ -90,7 +93,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GBoxedFreeFunc ()
 ;;;
-;;; void (*GBoxedFreeFunc) (gpointer boxed)
+;;; void (*GBoxedFreeFunc) (gpointer boxed);
 ;;;
 ;;; This function is provided by the user and should free the boxed structure
 ;;; passed.
@@ -102,7 +105,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_copy ()
 ;;;
-;;; gpointer g_boxed_copy (GType boxed_type, gconstpointer src_boxed)
+;;; gpointer g_boxed_copy (GType boxed_type, gconstpointer src_boxed);
 ;;;
 ;;; Provide a copy of a boxed structure src_boxed which is of type boxed_type.
 ;;;
@@ -123,7 +126,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_free ()
 ;;;
-;;; void g_boxed_free (GType boxed_type, gpointer boxed)
+;;; void g_boxed_free (GType boxed_type, gpointer boxed);
 ;;;
 ;;; Free the boxed structure boxed which is of type boxed_type.
 ;;;
@@ -143,7 +146,7 @@
 ;;;
 ;;; GType g_boxed_type_register_static (const gchar *name,
 ;;;                                     GBoxedCopyFunc boxed_copy,
-;;;                                     GBoxedFreeFunc boxed_free)
+;;;                                     GBoxedFreeFunc boxed_free);
 ;;;
 ;;; This function creates a new G_TYPE_BOXED derived type id for a new boxed
 ;;; type with name name. Boxed type handling functions have to be provided to
@@ -170,7 +173,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_pointer_type_register_static ()
 ;;;
-;;; GType g_pointer_type_register_static (const gchar *name)
+;;; GType g_pointer_type_register_static (const gchar *name);
 ;;;
 ;;; Creates a new G_TYPE_POINTER derived type id for a new pointer type with
 ;;; name name.
@@ -225,21 +228,21 @@
 ;;; type G_TYPE_STRV with g_object_class_install_property(), g_object_set() and
 ;;; g_object_get().
 ;;;
-;;; g_object_class_install_property (object_class,
-;;;                                  PROP_AUTHORS,
-;;;                                  g_param_spec_boxed("authors",
-;;;                                                     _("Authors"),
-;;;                                                     _("List of authors"),
-;;;                                                     G_TYPE_STRV,
-;;;                                                     G_PARAM_READWRITE));
+;;;   g_object_class_install_property (object_class,
+;;;                                    PROP_AUTHORS,
+;;;                                    g_param_spec_boxed ("authors",
+;;;                                                        _("Authors"),
+;;;                                                        _("List of authors"),
+;;;                                                        G_TYPE_STRV,
+;;;                                                        G_PARAM_READWRITE));
 ;;;
-;;; gchar *authors[] = { "Owen", "Tim", NULL };
-;;; g_object_set (obj, "authors", authors, NULL);
+;;;   gchar *authors[] = { "Owen", "Tim", NULL };
+;;;   g_object_set (obj, "authors", authors, NULL);
 ;;;
-;;; gchar *writers[];
-;;; g_object_get (obj, "authors", &writers, NULL);
-;;; /* do something with writers */
-;;; g_strfreev (writers);
+;;;   gchar *writers[];
+;;;   g_object_get (obj, "authors", &writers, NULL);
+;;;   /* do something with writers */
+;;;   g_strfreev (writers);
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
@@ -301,6 +304,16 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; G_TYPE_BYTES
+;;;
+;;; #define G_TYPE_BYTES (g_bytes_get_type ())
+;;;
+;;; The GType for GBytes.
+;;;
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VARIANT_TYPE
 ;;;
 ;;; #define G_TYPE_VARIANT_TYPE (g_variant_type_get_gtype ())
@@ -357,6 +370,16 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; G_TYPE_KEY_FILE
+;;;
+;;; #define G_TYPE_KEY_FILE (g_key_file_get_type ())
+;;;
+;;; The GType for a boxed type holding a GKeyFile.
+;;;
+;;; Since 2.32
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_MAIN_CONTEXT
 ;;;
 ;;; #define G_TYPE_MAIN_CONTEXT (g_main_context_get_type ())
@@ -384,6 +407,14 @@
 ;;; The GType for a boxed type holding a GSource.
 ;;;
 ;;; Since 2.30
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GStrv
+;;;
+;;; typedef gchar** GStrv;
+;;;
+;;; A C representable type name for G_TYPE_STRV.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gobject.boxed.lisp -----------------------------------------
