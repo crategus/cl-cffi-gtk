@@ -98,29 +98,6 @@
   (assert-false (g-type-is-a +g-type-long+ (gtype +g-type-string+)))
   (assert-true  (g-type-is-a "gdouble" +g-type-double+)))
 
-(define-test g-param-spec-int
-  (with-foreign-object (value 'g-value)
-    (let ((prop (g-param-spec-int "PropertyInteger"
-                                  "PSpecInt"
-                                  "Integer Property"
-                                  0
-                                  100
-                                  50
-                                  '(:readable :writable))))
-    (assert-equal "PropertyInteger"  (g-param-spec-get-name prop))
-    (assert-equal "PSpecInt"         (g-param-spec-get-nick prop))
-    (assert-equal "Integer Property" (g-param-spec-get-blurb prop))
-    (g-value-init value +g-type-int+)
-    (g-param-value-set-default prop value)
-    (assert-eql 50 (g-value-get-int value))
-    (assert-true (g-param-value-defaults prop value))
-    (assert-false (g-param-value-validate prop value))
-    (g-value-set-int value 199)
-    (assert-eql 199 (g-value-get-int value))
-    (assert-true (g-param-value-validate prop value))
-    (assert-eql 100 (g-value-get-int value))
-      )))
-
 (define-test %g-object
   (let* (;; Create a label as an example for an instance of an object
          (label (make-instance 'gtk-label))
@@ -164,8 +141,10 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(load "rtest-gobject-type-info.lisp")
+(load "rtest-gobject-closures.lisp")
+(load "rtest-gobject-param-spec.lisp")
 (load "rtest-gobject-signals.lisp")
+(load "rtest-gobject-type-info.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
