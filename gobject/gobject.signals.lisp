@@ -150,6 +150,8 @@
   (:object :pointer)
   (:function-id :int))
 
+(export 'lisp-closure)
+
 ;;; ----------------------------------------------------------------------------
 
 ;; Called from g-signal-connect to create the callback function
@@ -170,14 +172,15 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; Helper function for create-closure
+;; Helper function for create-closure:
+;; Store the new handler in the array of signal handlers of the GObject and
+;; return the id of the handler in the array.
 
 (defun save-handler-to-object (object handler)
   (flet ((find-free-signal-handler-id (object)
             (iter (with handlers = (g-object-signal-handlers object))
                   (for i from 0 below (length handlers))
                   (finding i such-that (null (aref handlers i))))))
-    (assert handler)
     (let ((id (find-free-signal-handler-id object))
           (handlers (g-object-signal-handlers object)))
       (if id
@@ -546,6 +549,15 @@
   param-types
   detail)
 
+(export 'signal-info)
+(export 'signal-info-id)
+(export 'signal-info-name)
+(export 'signal-info-owner-type)
+(export 'signal-info-flags)
+(export 'signal-info-return-type)
+(export 'signal-info-param-types)
+(export 'signal-info-detail)
+
 (defmethod print-object ((instance signal-info) stream)
   (if *print-readably*
       (call-next-method)
@@ -567,7 +579,7 @@
 (defun list-signals (type &key include-inherited)
   (unless (g-type= type +g-type-invalid+)
     (let ((signals (with-foreign-object (n-ids :uint)
-                     (with-unwind (ids (g-signal-list-ids type n-ids) g-free)
+                     (with-unwind (ids (%g-signal-list-ids type n-ids) g-free)
                        (iter (for i from 0 below (mem-ref n-ids :uint))
                              (collect
                                (g-signal-query (mem-aref ids :uint i))))))))
@@ -837,8 +849,8 @@
   (with-foreign-object (query '%g-signal-query)
     (%g-signal-query signal-id query)
     (assert (not (zerop (foreign-slot-value query
-                                             '%g-signal-query
-                                             :signal-id))))
+                                            '%g-signal-query
+                                            :signal-id))))
     (let ((param-types
            (iter (with param-types = (foreign-slot-value query
                                                          '%g-signal-query
@@ -852,17 +864,17 @@
                  (collect param-type))))
       (make-signal-info :id signal-id
                         :name (foreign-slot-value query
-                                                   '%g-signal-query
-                                                   :signal-name)
+                                                  '%g-signal-query
+                                                  :signal-name)
                         :owner-type (foreign-slot-value query
-                                                         '%g-signal-query
-                                                         :owner-type)
+                                                        '%g-signal-query
+                                                        :owner-type)
                         :flags (foreign-slot-value query
-                                                    '%g-signal-query
-                                                    :signal-flags)
+                                                   '%g-signal-query
+                                                   :signal-flags)
                         :return-type (foreign-slot-value query
-                                                           '%g-signal-query
-                                                           :return-type)
+                                                         '%g-signal-query
+                                                         :return-type)
                         :param-types param-types))))
 
 (export 'g-signal-query)
@@ -892,7 +904,7 @@
 
 (defcfun ("g_signal_lookup" g-signal-lookup) :uint
   (name :string)
-  (type g-type))
+  (itype g-type))
 
 (export 'g-signal-lookup)
 
@@ -936,9 +948,18 @@
 ;;;     Newly allocated array of signal IDs.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_signal_list_ids" g-signal-list-ids) (:pointer :uint)
-  (type g-type)
+(defcfun ("g_signal_list_ids" %g-signal-list-ids) (:pointer :uint)
+  (itype g-type)
   (n-ids (:pointer :uint)))
+
+;; Returns a list of signal ids for itype
+
+(defun g-signal-list-ids (itype)
+  (when (g-type-is-object itype) ; itype must be of type GObject
+    (with-foreign-object (n-ids :uint)
+      (with-unwind (ids (%g-signal-list-ids itype n-ids) g-free)
+        (iter (for i from 0 below (mem-ref n-ids :uint))
+              (collect (mem-aref ids :uint i)))))))
 
 (export 'g-signal-list-ids)
 
@@ -1121,10 +1142,10 @@
 ;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
-(defun g-signal-connect (object signal handler &key after)
-  (g-signal-connect-closure (pointer object)
-                            signal
-                            (create-closure object handler)
+(defun g-signal-connect (instance detailed-signal handler &key after)
+  (g-signal-connect-closure (pointer instance)
+                            detailed-signal
+                            (create-closure instance handler)
                             after))
 
 (export 'g-signal-connect)
@@ -1156,8 +1177,8 @@
 
 (declaim (inline g-signal-connect-after))
 
-(defun g-signal-connect-after (object signal handler)
-  (g-signal-connect object signal handler :after t))
+(defun g-signal-connect-after (instance detailed-signal handler)
+  (g-signal-connect instance detailed-signal handler :after t))
 
 (export 'g-signal-connect-after)
 
@@ -1380,6 +1401,12 @@
 ;;;     Handler id of the handler to be blocked.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_signal_handler_block" g-signal-handler-block) :void
+  (instance g-object)
+  (handler-id :ulong))
+
+(export 'g-signal-handler-block)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_unblock ()
 ;;;
@@ -1404,6 +1431,12 @@
 ;;; handler_id :
 ;;;     Handler id of the handler to be unblocked.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_signal_handler_unblock" g-signal-handler-unblock) :void
+  (instance g-object)
+  (handler-id :ulong))
+
+(export 'g-signal-handler-unblock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_disconnect ()
@@ -1471,6 +1504,34 @@
 ;;; Returns :
 ;;;     A valid non-0 signal handler id for a successful match.
 ;;; ----------------------------------------------------------------------------
+
+;;; gulong g_signal_handler_find (gpointer instance,
+;;;                               GSignalMatchType mask,
+;;;                               guint signal_id,
+;;;                               GQuark detail,
+;;;                               GClosure *closure,
+;;;                               gpointer func,
+;;;                               gpointer data);
+
+(defcfun ("g_signal_handler_find" %g-signal-handler-find) :ulong
+  (instance g-object)
+  (mask g-signal-match-type)
+  (signal-id :uint)
+  (detail g-quark)
+  (closure g-closure)
+  (func :pointer)
+  (data :pointer))
+
+(defun g-signal-handler-find (instance signal-id)
+  (%g-signal-handler-find instance
+                          :id
+                          signal-id
+                          (null-pointer)
+                          (null-pointer)
+                          (null-pointer)
+                          (null-pointer)))
+
+(export 'g-signal-handler-find)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handlers_block_matched ()
@@ -1625,6 +1686,13 @@
 ;;;     whether handler_id identifies a handler connected to instance.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_signal_handler_is_connected" g-signal-handler-is-connected)
+    :boolean
+  (instance g-object)
+  (handler-id :ulong))
+
+(export 'g-signal-handler-is-connected)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handlers_block_by_func()
 ;;;
@@ -1735,6 +1803,14 @@
 ;;; Returns :
 ;;;     TRUE if a handler is connected to the signal, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_signal_has_handler_pending" g-signal-has-handler-pending) :boolean
+  (instance g-object)
+  (signal-id :uint)
+  (detail g-quark)
+  (may-be-blocked :boolean))
+
+(export 'g-signal-has-handler-pending)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_stop_emission ()
@@ -2027,6 +2103,10 @@
  (signal-id-p (:pointer :uint))
  (detail-p (:pointer g-quark))
  (force-detail-quark :boolean))
+
+;; TODO: The Lisp function does not work as documented
+;;       The return value is a complete signal-info structure.
+;;       The function is used in g-signal-emit.
 
 (defun g-signal-parse-name (owner-type signal-name)
   (with-foreign-objects ((signal-id :uint) (detail 'g-quark))

@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.30.3. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -38,9 +38,13 @@
 ;;;     G_CLOSURE_N_NOTIFIERS
 ;;;     G_CCLOSURE_SWAP_DATA
 ;;;     G_CALLBACK
-;;;     GClosure;
+;;;
+;;;     GClosure
+;;;
 ;;;     G_TYPE_CLOSURE
-;;;     GCClosure;
+;;;
+;;;     GCClosure
+;;;
 ;;;     g_cclosure_new
 ;;;     g_cclosure_new_swap
 ;;;     g_cclosure_new_object
@@ -62,6 +66,7 @@
 ;;;     g_closure_set_meta_marshal
 ;;;     g_source_set_closure
 ;;;     g_source_set_dummy_callback
+;;;
 ;;;     g_cclosure_marshal_VOID__VOID
 ;;;     g_cclosure_marshal_VOID__BOOLEAN
 ;;;     g_cclosure_marshal_VOID__CHAR
@@ -106,24 +111,27 @@
 ;;; signals. When a signal is registered, the c_marshaller argument to
 ;;; g_signal_new() specifies the default C marshaller for any closure which is
 ;;; connected to this signal. GObject provides a number of C marshallers for
-;;; this purpose, see the g_cclosure_marshal_*() functions. Additional
-;;; C marshallers can be generated with the glib-genmarshal utility. Closures
-;;; can be explicitly connected to signals with g_signal_connect_closure(), but
-;;; it usually more convenient to let GObject create a closure automatically by
+;;; this purpose, see the g_cclosure_marshal_*() functions. Additional C
+;;; marshallers can be generated with the glib-genmarshal utility. Closures can
+;;; be explicitly connected to signals with g_signal_connect_closure(), but it
+;;; usually more convenient to let GObject create a closure automatically by
 ;;; using one of the g_signal_connect_*() functions which take a callback
 ;;; function/user data pair.
 ;;;
 ;;; Using closures has a number of important advantages over a simple callback
 ;;; function/data pointer combination:
 ;;;
-;;; * Closures allow the callee to get the types of the callback parameters,
-;;;   which means that language bindings don't have to write individual
-;;;   glue for each callback type.
-;;; * The reference counting of GClosure makes it easy to handle reentrancy
-;;;   right; if a callback is removed while it is being invoked, the closure
-;;;   and its parameters won't be freed until the invocation finishes.
-;;; * g_closure_invalidate() and invalidation notifiers allow callbacks to
-;;;   be automatically removed when the objects they point to go away.
+;;;     Closures allow the callee to get the types of the callback parameters,
+;;;     which means that language bindings don't have to write individual glue
+;;;     for each callback type.
+;;;
+;;;     The reference counting of GClosure makes it easy to handle reentrancy
+;;;     right; if a callback is removed while it is being invoked, the closure
+;;;     and its parameters won't be freed until the invocation finishes.
+;;;
+;;;     g_closure_invalidate() and invalidation notifiers allow callbacks to be
+;;;     automatically removed when the objects they point to go away.
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -195,18 +203,17 @@
 ;;;
 ;;; The type used for callback functions in structure definitions and function
 ;;; signatures. This doesn't mean that all callback functions must take no
-;;; parameters and return void. The required signature of a callback function
-;;; is determined by the context in which is used (e.g. the signal to which it
-;;; is connected). Use G_CALLBACK() to cast the callback function to a
-;;; GCallback.
+;;; parameters and return void. The required signature of a callback function is
+;;; determined by the context in which is used (e.g. the signal to which it is
+;;; connected). Use G_CALLBACK() to cast the callback function to a GCallback.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GClosure
 ;;;
 ;;; struct GClosure {
-;;;   volatile guint in_marshal : 1;
-;;;   volatile guint is_invalid : 1;
+;;;   volatile           guint     in_marshal : 1;
+;;;   volatile           guint     is_invalid : 1;
 ;;; };
 ;;;
 ;;; A GClosure represents a callback supplied by the programmer.
@@ -225,6 +232,8 @@
   (:marshal :pointer)
   (:data :pointer)
   (:notifiers :pointer))
+
+(export 'g-closure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CLOSURE
@@ -274,21 +283,21 @@
 ;;;
 ;;; return_value :
 ;;;     a GValue to store the return value. May be NULL if the callback of
-;;;     closure doesn't return a value.
+;;;     closure doesn't return a value
 ;;;
 ;;; n_param_values :
 ;;;     the length of the param_values array
 ;;;
 ;;; param_values :
 ;;;     an array of GValues holding the arguments on which to invoke the
-;;;     callback of closure.
+;;;     callback of closure
 ;;;
 ;;; invocation_hint :
-;;;     the invocation hint given as the last argument to g_closure_invoke().
+;;;     the invocation hint given as the last argument to g_closure_invoke()
 ;;;
 ;;; marshal_data :
 ;;;     additional data specified when registering the marshaller, see
-;;;     g_closure_set_marshal() and g_closure_set_meta_marshal().
+;;;     g_closure_set_marshal() and g_closure_set_meta_marshal()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -296,8 +305,8 @@
 ;;;
 ;;; void (*GClosureNotify) (gpointer data, GClosure *closure);
 ;;;
-;;; The type used for the various notification callbacks which can be
-;;; registered on closures.
+;;; The type used for the various notification callbacks which can be registered
+;;; on closures.
 ;;;
 ;;; data :
 ;;;     data specified when registering the notification callback
@@ -313,8 +322,8 @@
 ;;;                            gpointer user_data,
 ;;;                            GClosureNotify destroy_data);
 ;;;
-;;; Creates a new closure which invokes callback_func with user_data as the
-;;; last parameter.
+;;; Creates a new closure which invokes callback_func with user_data as the last
+;;; parameter.
 ;;;
 ;;; callback_func :
 ;;;     the function to invoke
@@ -349,18 +358,18 @@
 ;;;     destroy notify to be called when user_data is no longer used
 ;;;
 ;;; Returns :
-;;;     a new GCClosure.
+;;;     a new GCClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_cclosure_new_object ()
 ;;;
-;;; GClosure * g_cclosure_new_object (GCallback callback_func, GObject *object)
+;;; GClosure * g_cclosure_new_object (GCallback callback_func, GObject *object);
 ;;;
 ;;; A variant of g_cclosure_new() which uses object as user_data and calls
-;;; g_object_watch_closure() on object and the created closure. This function
-;;; is useful when you have a callback closely associated with a GObject, and
-;;; want the callback to no longer run after the object is is freed.
+;;; g_object_watch_closure() on object and the created closure. This function is
+;;; useful when you have a callback closely associated with a GObject, and want
+;;; the callback to no longer run after the object is is freed.
 ;;;
 ;;; callback_func :
 ;;;     the function to invoke
@@ -379,9 +388,9 @@
 ;;;                                        GObject *object);
 ;;;
 ;;; A variant of g_cclosure_new_swap() which uses object as user_data and calls
-;;; g_object_watch_closure() on object and the created closure. This function
-;;; is useful when you have a callback closely associated with a GObject, and
-;;; want the callback to no longer run after the object is is freed.
+;;; g_object_watch_closure() on object and the created closure. This function is
+;;; useful when you have a callback closely associated with a GObject, and want
+;;; the callback to no longer run after the object is is freed.
 ;;;
 ;;; callback_func :
 ;;;     the function to invoke
@@ -434,8 +443,8 @@
 ;;;
 ;;; GClosure * g_closure_new_object (guint sizeof_closure, GObject *object);
 ;;;
-;;; A variant of g_closure_new_simple() which stores object in the data field
-;;; of the closure and calls g_object_watch_closure() on object and the created
+;;; A variant of g_closure_new_simple() which stores object in the data field of
+;;; the closure and calls g_object_watch_closure() on object and the created
 ;;; closure. This function is mainly useful when implementing new types of
 ;;; closures.
 ;;;
@@ -448,13 +457,13 @@
 ;;;     GClosure
 ;;;
 ;;; Returns :
-;;;     a newly allocated GClosure.
+;;;     a newly allocated GClosure
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_ref ()
 ;;;
-;;; GClosure * g_closure_ref (GClosure *closure)
+;;; GClosure * g_closure_ref (GClosure *closure);
 ;;;
 ;;; Increments the reference count on a closure to force it staying alive while
 ;;; the caller holds a pointer to it.
@@ -463,7 +472,7 @@
 ;;;     GClosure to increment the reference count on
 ;;;
 ;;; Returns :
-;;;     The closure passed in, for convenience. [transfer none]
+;;;     The closure passed in, for convenience
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_ref" g-closure-ref) (:pointer g-closure)
@@ -474,44 +483,44 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_sink ()
 ;;;
-;;; void g_closure_sink (GClosure *closure)
+;;; void g_closure_sink (GClosure *closure);
 ;;;
 ;;; Takes over the initial ownership of a closure. Each closure is initially
-;;; created in a floating state, which means that the initial reference count
-;;; is not owned by any caller. g_closure_sink() checks to see if the object is
+;;; created in a floating state, which means that the initial reference count is
+;;; not owned by any caller. g_closure_sink() checks to see if the object is
 ;;; still floating, and if so, unsets the floating state and decreases the
 ;;; reference count. If the closure is not floating, g_closure_sink() does
 ;;; nothing. The reason for the existence of the floating state is to prevent
 ;;; cumbersome code sequences like:
 ;;;
-;;;  1 closure = g_cclosure_new (cb_func, cb_data);
-;;;  2 g_source_set_closure (source, closure);
-;;;  3 g_closure_unref (closure); // XXX GObject doesn't really need this
+;;;   closure = g_cclosure_new (cb_func, cb_data);
+;;;   g_source_set_closure (source, closure);
+;;;   g_closure_unref (closure); // XXX GObject doesn't really need this
 ;;;
-;;; Because g_source_set_closure() (and similar functions) take ownership of
-;;; the initial reference count, if it is unowned, we instead can write:
+;;; Because g_source_set_closure() (and similar functions) take ownership of the
+;;; initial reference count, if it is unowned, we instead can write:
 ;;;
-;;;  1 g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
+;;;   g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
 ;;;
 ;;; Generally, this function is used together with g_closure_ref(). Ane example
 ;;; of storing a closure for later notification looks like:
 ;;;
-;;;  1 static GClosure *notify_closure = NULL;
-;;;  2 void
-;;;  3 foo_notify_set_closure (GClosure *closure)
-;;;  4 {
-;;;  5   if (notify_closure)
-;;;  6     g_closure_unref (notify_closure);
-;;;  7   notify_closure = closure;
-;;;  8   if (notify_closure)
-;;;  9     {
-;;; 10       g_closure_ref (notify_closure);
-;;; 11       g_closure_sink (notify_closure);
-;;; 12     }
-;;; 13 }
+;;;   static GClosure *notify_closure = NULL;
+;;;   void
+;;;   foo_notify_set_closure (GClosure *closure)
+;;;   {
+;;;     if (notify_closure)
+;;;       g_closure_unref (notify_closure);
+;;;     notify_closure = closure;
+;;;     if (notify_closure)
+;;;       {
+;;;         g_closure_ref (notify_closure);
+;;;         g_closure_sink (notify_closure);
+;;;       }
+;;;   }
 ;;;
-;;; Because g_closure_sink() may decrement the reference count of a closure
-;;; (if it hasn't been called on closure yet) just like g_closure_unref(),
+;;; Because g_closure_sink() may decrement the reference count of a closure (if
+;;; it hasn't been called on closure yet) just like g_closure_unref(),
 ;;; g_closure_ref() should be called prior to this function.
 ;;;
 ;;; closure :
@@ -527,7 +536,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_unref ()
 ;;;
-;;; void g_closure_unref (GClosure *closure)
+;;; void g_closure_unref (GClosure *closure);
 ;;;
 ;;; Decrements the reference count of a closure after it was previously
 ;;; incremented by the same caller. If no other callers are using the closure,
@@ -558,23 +567,23 @@
 ;;;
 ;;; return_value :
 ;;;     a GValue to store the return value. May be NULL if the callback of
-;;;     closure doesn't return a value.
+;;;     closure doesn't return a value
 ;;;
 ;;; n_param_values :
 ;;;     the length of the param_values array
 ;;;
 ;;; param_values :
 ;;;     an array of GValues holding the arguments on which to invoke the
-;;;     callback of closure.
+;;;     callback of closure
 ;;;
 ;;; invocation_hint :
-;;;     a context-dependent invocation hint.
+;;;     a context-dependent invocation hint
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_invalidate ()
 ;;;
-;;; void g_closure_invalidate (GClosure *closure)
+;;; void g_closure_invalidate (GClosure *closure);
 ;;;
 ;;; Sets a flag on the closure to indicate that its calling environment has
 ;;; become invalid, and thus causes any future invocations of g_closure_invoke()
@@ -603,11 +612,11 @@
 ;;;
 ;;; void g_closure_add_finalize_notifier (GClosure *closure,
 ;;;                                       gpointer notify_data,
-;;;                                       GClosureNotify notify_func)
+;;;                                       GClosureNotify notify_func);
 ;;;
 ;;; Registers a finalization notifier which will be called when the reference
-;;; count of closure goes down to 0. Multiple finalization notifiers on a
-;;; single closure are invoked in unspecified order. If a single call to
+;;; count of closure goes down to 0. Multiple finalization notifiers on a single
+;;; closure are invoked in unspecified order. If a single call to
 ;;; g_closure_unref() results in the closure being both invalidated and
 ;;; finalized, then the invalidate notifiers will be run before the finalize
 ;;; notifiers.
@@ -635,7 +644,7 @@
 ;;;
 ;;; void g_closure_add_invalidate_notifier (GClosure *closure,
 ;;;                                         gpointer notify_data,
-;;;                                         GClosureNotify notify_func)
+;;;                                         GClosureNotify notify_func);
 ;;;
 ;;; Registers an invalidation notifier which will be called when the closure is
 ;;; invalidated with g_closure_invalidate(). Invalidation notifiers are invoked
@@ -662,9 +671,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_remove_finalize_notifier ()
 ;;;
-;;; voidg_closure_remove_finalize_notifier (GClosure *closure,
-;;;                                         gpointer notify_data,
-;;;                                         GClosureNotify notify_func);
+;;; void g_closure_remove_finalize_notifier (GClosure *closure,
+;;;                                          gpointer notify_data,
+;;;                                          GClosureNotify notify_func);
 ;;;
 ;;; Removes a finalization notifier.
 ;;;
@@ -706,52 +715,52 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_new_simple ()
 ;;;
-;;; GClosure * g_closure_new_simple (guint sizeof_closure, gpointer data)
+;;; GClosure * g_closure_new_simple (guint sizeof_closure, gpointer data);
 ;;;
 ;;; Allocates a struct of the given size and initializes the initial part as a
 ;;; GClosure. This function is mainly useful when implementing new types of
 ;;; closures.
 ;;;
-;;;  1 typedef struct _MyClosure MyClosure;
-;;;  2 struct _MyClosure
-;;;  3 {
-;;;  4   GClosure closure;
-;;;  5   // extra data goes here
-;;;  6 };
-;;;  7
-;;;  8 static void
-;;;  9 my_closure_finalize (gpointer  notify_data,
-;;; 10                      GClosure *closure)
-;;; 11 {
-;;; 12   MyClosure *my_closure = (MyClosure *)closure;
-;;; 13
-;;; 14   // free extra data here
-;;; 15 }
-;;; 16
-;;; 17 MyClosure *my_closure_new (gpointer data)
-;;; 18 {
-;;; 19   GClosure *closure;
-;;; 20   MyClosure *my_closure;
-;;; 21
-;;; 22   closure = g_closure_new_simple (sizeof (MyClosure), data);
-;;; 23   my_closure = (MyClosure *) closure;
-;;; 24
-;;; 25   // initialize extra data here
-;;; 26
-;;; 27   g_closure_add_finalize_notifier (closure, notify_data,
-;;; 28                                    my_closure_finalize);
-;;; 29   return my_closure;
-;;; 30 }
+;;;   typedef struct _MyClosure MyClosure;
+;;;   struct _MyClosure
+;;;   {
+;;;     GClosure closure;
+;;;     // extra data goes here
+;;;   };
+;;;
+;;;   static void
+;;;   my_closure_finalize (gpointer  notify_data,
+;;;                        GClosure *closure)
+;;;   {
+;;;     MyClosure *my_closure = (MyClosure *)closure;
+;;;
+;;;     // free extra data here
+;;;   }
+;;;
+;;;   MyClosure *my_closure_new (gpointer data)
+;;;   {
+;;;     GClosure *closure;
+;;;     MyClosure *my_closure;
+;;;
+;;;     closure = g_closure_new_simple (sizeof (MyClosure), data);
+;;;     my_closure = (MyClosure *) closure;
+;;;
+;;;     // initialize extra data here
+;;;
+;;;     g_closure_add_finalize_notifier (closure, notify_data,
+;;;                                      my_closure_finalize);
+;;;     return my_closure;
+;;;   }
 ;;;
 ;;; sizeof_closure :
-;;;     the size of the structure to allocate, must be at least
-;;;     sizeof (GClosure)
+;;;     the size of the structure to allocate, must be at least sizeof
+;;;     (GClosure)
 ;;;
 ;;; data :
 ;;;     data to store in the data field of the newly allocated GClosure
 ;;;
 ;;; Returns :
-;;;     a newly allocated GClosure. [transfer full]
+;;;     a newly allocated GClosure
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_new_simple" g-closure-new-simple) (:pointer g-closure)
@@ -763,7 +772,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_set_marshal ()
 ;;;
-;;; void g_closure_set_marshal (GClosure *closure, GClosureMarshal marshal)
+;;; void g_closure_set_marshal (GClosure *closure, GClosureMarshal marshal);
 ;;;
 ;;; Sets the marshaller of closure. The marshal_data of marshal provides a way
 ;;; for a meta marshaller to provide additional information to the marshaller.
@@ -795,8 +804,8 @@
 ;;;
 ;;; Adds a pair of notifiers which get invoked before and after the closure
 ;;; callback, respectively. This is typically used to protect the extra
-;;; arguments for the duration of the callback. See g_object_watch_closure()
-;;; for an example of marshal guards.
+;;; arguments for the duration of the callback. See g_object_watch_closure() for
+;;; an example of marshal guards.
 ;;;
 ;;; closure :
 ;;;     a GClosure
@@ -822,8 +831,8 @@
 ;;;                                  GClosureMarshal meta_marshal);
 ;;;
 ;;; Sets the meta marshaller of closure. A meta marshaller wraps
-;;; closure->marshal and modifies the way it is called in some fashion. The
-;;; most common use of this facility is for C callbacks. The same marshallers
+;;; closure->marshal and modifies the way it is called in some fashion. The most
+;;; common use of this facility is for C callbacks. The same marshallers
 ;;; (generated by glib-genmarshal) are used everywhere, but the way that we get
 ;;; the callback function differs. In most cases we want to use
 ;;; closure->callback, but in other cases we want to use some different
@@ -865,7 +874,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_set_dummy_callback ()
 ;;;
-;;; void g_source_set_dummy_callback (GSource *source)
+;;; void g_source_set_dummy_callback (GSource *source);
 ;;;
 ;;; Sets a dummy callback for source. The callback will do nothing, and if the
 ;;; source expects a gboolean return value, it will return TRUE. (If the source
@@ -890,8 +899,8 @@
 ;;;                                     gpointer invocation_hint,
 ;;;                                     gpointer marshal_data);
 ;;;
-;;; A marshaller for a GCClosure with a callback of type void (*callback)
-;;; (gpointer instance, gpointer user_data).
+;;; A marshaller for a GCClosure with a callback of type
+;;; void (*callback) (gpointer instance, gpointer user_data).
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -922,8 +931,8 @@
 ;;;                                        gpointer invocation_hint,
 ;;;                                        gpointer marshal_data);
 ;;;
-;;; A marshaller for a GCClosure with a callback of type void (*callback)
-;;; (gpointer instance, gboolean arg1, gpointer user_data).
+;;; A marshaller for a GCClosure with a callback of type
+;;; void (*callback) (gpointer instance, gboolean arg1, gpointer user_data).
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -954,8 +963,8 @@
 ;;;                                     gpointer invocation_hint,
 ;;;                                     gpointer marshal_data);
 ;;;
-;;; A marshaller for a GCClosure with a callback of type void (*callback)
-;;; (gpointer instance, gchar arg1, gpointer user_data).
+;;; A marshaller for a GCClosure with a callback of type
+;;; void (*callback) (gpointer instance, gchar arg1, gpointer user_data).
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -1180,8 +1189,8 @@
 ;;;                                      gpointer marshal_data);
 ;;;
 ;;; A marshaller for a GCClosure with a callback of type
-;;; void (*callback) (gpointer instance, gint arg1, gpointer user_data)
-;;; where the gint parameter denotes a flags type.
+;;; void (*callback) (gpointer instance, gint arg1, gpointer user_data) where
+;;; the gint parameter denotes a flags type.
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -1470,9 +1479,8 @@
 ;;;                                                 gpointer invocation_hint,
 ;;;                                                 gpointer marshal_data);
 ;;;
-;;; A marshaller for a GCClosure with a callback of type
-;;; gchar* (*callback) (gpointer instance, GObject *arg1, gpointer arg2,
-;;;                     gpointer user_data).
+;;; A marshaller for a GCClosure with a callback of type gchar* (*callback)
+;;; (gpointer instance, GObject *arg1, gpointer arg2, gpointer user_data).
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -1503,9 +1511,8 @@
 ;;;                                             gpointer invocation_hint,
 ;;;                                             gpointer marshal_data);
 ;;;
-;;; A marshaller for a GCClosure with a callback of type
-;;; void (*callback) (gpointer instance, guint arg1, gpointer arg2,
-;;;                   gpointer user_data).
+;;; A marshaller for a GCClosure with a callback of type void (*callback)
+;;; (gpointer instance, guint arg1, gpointer arg2, gpointer user_data).
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -1536,9 +1543,9 @@
 ;;;                                         gpointer invocation_hint,
 ;;;                                         gpointer marshal_data);
 ;;;
-;;; A marshaller for a GCClosure with a callback of type
-;;; gboolean (*callback) (gpointer instance, gint arg1, gpointer user_data)
-;;; where the gint parameter denotes a flags type.
+;;; A marshaller for a GCClosure with a callback of type gboolean (*callback)
+;;; (gpointer instance, gint arg1, gpointer user_data) where the gint parameter
+;;; denotes a flags type.
 ;;;
 ;;; closure :
 ;;;     the GClosure to which the marshaller belongs
@@ -1577,9 +1584,11 @@
 ;;;                                               gpointer invocation_hint,
 ;;;                                               gpointer marshal_data);
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_cclosure_marshal_BOOL__BOXED_BOXED
 ;;;
 ;;; #define g_cclosure_marshal_BOOL__BOXED_BOXED
 ;;; ----------------------------------------------------------------------------
 
-;;; --- End of file gobject.closure.lisp ---------------------------------------
+;;; --- End of file gobject.closures.lisp --------------------------------------

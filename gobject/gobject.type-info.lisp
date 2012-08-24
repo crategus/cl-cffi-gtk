@@ -758,6 +758,9 @@
 
 ;; Check for equality of types. This is faster than the function g-type-is-a.
 
+;; TODO: There is a bug. The function g-type= is used to check against the type
+;;       +g-type-invalid+. But this does not work.
+
 (defun g-type= (type-1 type-2)
   (eq (gtype type-1) (gtype type-2)))
 
@@ -1674,6 +1677,11 @@
 ;;; Returns :
 ;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-type-check-instance-type (instance gtype)
+  (eql (gtype-id (g-type-from-instance instance)) (gtype-id gtype)))
+
+(export 'g-type-check-instance-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CHECK_CLASS_CAST()
