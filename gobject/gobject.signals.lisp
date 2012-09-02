@@ -762,6 +762,31 @@
 ;;;     the signal id
 ;;; ----------------------------------------------------------------------------
 
+;;; guint g_signal_newv (const gchar *signal_name,
+;;;                      GType itype,
+;;;                      GSignalFlags signal_flags,
+;;;                      GClosure *class_closure,
+;;;                      GSignalAccumulator accumulator,
+;;;                      gpointer accu_data,
+;;;                      GSignalCMarshaller c_marshaller,
+;;;                      GType return_type,
+;;;                      guint n_params,
+;;;                      GType *param_types);
+
+(defcfun ("g_signal_newv" g-signal-newv) :uint
+  (signal-name :string)
+  (itype g-type)
+  (signal-flags g-signal-flags)
+  (class-closure :pointer)
+  (accumulator :pointer)
+  (accu-data :pointer)
+  (marschaller :pointer)
+  (return-type g-type)
+  (n-params :uint)
+  (param-types (:pointer g-type)))
+
+(export 'g-signal-newv)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_new_valist ()
 ;;;

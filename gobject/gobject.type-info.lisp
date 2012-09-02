@@ -225,7 +225,7 @@
 ;;; GType.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-invalid+ (ash 0 +g-type-fundamental-shift+))
+(defconstant +g-type-invalid+ #.(ash 0 +g-type-fundamental-shift+))
 
 (export '+g-type-invalid+)
 
@@ -238,7 +238,7 @@
 ;;; type.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-void+ (ash 1 +g-type-fundamental-shift+))
+(defconstant +g-type-void+ #.(ash 1 +g-type-fundamental-shift+))
 
 (export '+g-type-void+)
 
@@ -250,7 +250,7 @@
 ;;; The fundamental type from which all interfaces are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-interface+ (ash 2 +g-type-fundamental-shift+))
+(defconstant +g-type-interface+ #.(ash 2 +g-type-fundamental-shift+))
 
 (export '+g-type-interface+)
 
@@ -264,7 +264,7 @@
 ;;; be the same type a the C type "gchar".
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-char+ (ash 3 +g-type-fundamental-shift+))
+(defconstant +g-type-char+ #.(ash 3 +g-type-fundamental-shift+))
 
 (export '+g-type-char+)
 
@@ -276,7 +276,7 @@
 ;;; The fundamental type corresponding to guchar.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-uchar+ (ash 4 +g-type-fundamental-shift+))
+(defconstant +g-type-uchar+ #.(ash 4 +g-type-fundamental-shift+))
 
 (export '+g-type-uchar+)
 
@@ -288,7 +288,7 @@
 ;;; The fundamental type corresponding to gboolean.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-boolean+ (ash 5 +g-type-fundamental-shift+))
+(defconstant +g-type-boolean+ #.(ash 5 +g-type-fundamental-shift+))
 
 (export '+g-type-boolean+)
 
@@ -300,7 +300,7 @@
 ;;; The fundamental type corresponding to gint.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-int+ (ash 6 +g-type-fundamental-shift+))
+(defconstant +g-type-int+ #.(ash 6 +g-type-fundamental-shift+))
 
 (export '+g-type-int+)
 
@@ -312,7 +312,7 @@
 ;;; The fundamental type corresponding to guint.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-uint+ (ash 7 +g-type-fundamental-shift+))
+(defconstant +g-type-uint+ #.(ash 7 +g-type-fundamental-shift+))
 
 (export '+g-type-uint+)
 
@@ -324,7 +324,7 @@
 ;;; The fundamental type corresponding to glong.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-long+ (ash 8 +g-type-fundamental-shift+))
+(defconstant +g-type-long+ #.(ash 8 +g-type-fundamental-shift+))
 
 (export '+g-type-long+)
 
@@ -336,7 +336,7 @@
 ;;; The fundamental type corresponding to gulong.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-ulong+ (ash 9 +g-type-fundamental-shift+))
+(defconstant +g-type-ulong+ #.(ash 9 +g-type-fundamental-shift+))
 
 (export '+g-type-ulong+)
 
@@ -348,7 +348,7 @@
 ;;; The fundamental type corresponding to gint64.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-int64+ (ash 10 +g-type-fundamental-shift+))
+(defconstant +g-type-int64+ #.(ash 10 +g-type-fundamental-shift+))
 
 (export '+g-type-int64+)
 
@@ -360,7 +360,7 @@
 ;;; The fundamental type corresponding to guint64.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-uint64+ (ash 11 +g-type-fundamental-shift+))
+(defconstant +g-type-uint64+ #.(ash 11 +g-type-fundamental-shift+))
 
 (export '+g-type-uint64+)
 
@@ -372,7 +372,7 @@
 ;;; The fundamental type from which all enumeration types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-enum+ (ash 12 +g-type-fundamental-shift+))
+(defconstant +g-type-enum+ #.(ash 12 +g-type-fundamental-shift+))
 
 (export '+g-type-enum+)
 
@@ -384,7 +384,7 @@
 ;;; The fundamental type from which all flags types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-flags+ (ash 13 +g-type-fundamental-shift+))
+(defconstant +g-type-flags+ #.(ash 13 +g-type-fundamental-shift+))
 
 (export '+g-type-flags+)
 
@@ -396,7 +396,7 @@
 ;;; The fundamental type corresponding to gfloat.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-float+ (ash 14 +g-type-fundamental-shift+))
+(defconstant +g-type-float+ #.(ash 14 +g-type-fundamental-shift+))
 
 (export '+g-type-float+)
 
@@ -408,7 +408,7 @@
 ;;; The fundamental type corresponding to gdouble.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-double+ (ash 15 +g-type-fundamental-shift+))
+(defconstant +g-type-double+ #.(ash 15 +g-type-fundamental-shift+))
 
 (export '+g-type-double+)
 
@@ -420,7 +420,7 @@
 ;;; The fundamental type corresponding to nul-terminated C strings.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-string+ (ash 16 +g-type-fundamental-shift+))
+(defconstant +g-type-string+ #.(ash 16 +g-type-fundamental-shift+))
 
 (export '+g-type-string+)
 
@@ -432,7 +432,7 @@
 ;;; The fundamental type corresponding to gpointer.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-pointer+ (ash 17 +g-type-fundamental-shift+))
+(defconstant +g-type-pointer+ #.(ash 17 +g-type-fundamental-shift+))
 
 (export '+g-type-pointer+)
 
@@ -444,7 +444,7 @@
 ;;; The fundamental type from which all boxed types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-boxed+ (ash 18 +g-type-fundamental-shift+))
+(defconstant +g-type-boxed+ #.(ash 18 +g-type-fundamental-shift+))
 
 (export '+g-type-boxed+)
 
@@ -456,7 +456,7 @@
 ;;; The fundamental type from which all GParamSpec types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-param+ (ash 19 +g-type-fundamental-shift+))
+(defconstant +g-type-param+ #.(ash 19 +g-type-fundamental-shift+))
 
 (export '+g-type-param+)
 
@@ -468,7 +468,7 @@
 ;;; The fundamental type for GObject.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-object+ (ash 20 +g-type-fundamental-shift+))
+(defconstant +g-type-object+ #.(ash 20 +g-type-fundamental-shift+))
 
 (export '+g-type-object+)
 
@@ -480,7 +480,12 @@
 ;;; The type for GType.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_gtype_get_type" g-type-gtype) g-size)
+(defcfun ("g_gtype_get_type" %g-type-gtype) g-size)
+
+(declaim (inline g-type-gtype))
+
+(defun g-type-gtype ()
+  (gtype (%g-type-gtype)))
 
 (export 'g-type-gtype)
 
@@ -503,7 +508,7 @@
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-variant+ (ash 21 +g-type-fundamental-shift+))
+(defconstant +g-type-variant+ #.(ash 21 +g-type-fundamental-shift+))
 
 (export '+g-type-variant+)
 
@@ -516,7 +521,7 @@
 ;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for GLib.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-glib-first+ (ash 22 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-glib-first+ #.(ash 22 +g-type-fundamental-shift+))
 
 (export '+g-type-reserved-glib-first+)
 
@@ -528,7 +533,7 @@
 ;;; Last fundamental type number reserved for GLib.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-glib-last+ (ash 31 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-glib-last+ #.(ash 31 +g-type-fundamental-shift+))
 
 (export '+g-type-reserved-glib-last+)
 
@@ -541,7 +546,7 @@
 ;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for BSE.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-bse-first+ (ash 32 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-bse-first+ #.(ash 32 +g-type-fundamental-shift+))
 
 (export '+g-type-reserved-bse-first+)
 
@@ -553,7 +558,7 @@
 ;;; Last fundamental type number reserved for BSE.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-bse-last+ (ash 48 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-bse-last+ #.(ash 48 +g-type-fundamental-shift+))
 
 (export '+g-type-reserved-bse-last+)
 
@@ -566,7 +571,7 @@
 ;;; with G_TYPE_MAKE_FUNDAMENTAL().
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-user-first+ (ash 49 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-user-first+ #.(ash 49 +g-type-fundamental-shift+))
 
 (export '+g-type-reserved-user-first+)
 
@@ -720,7 +725,12 @@
       (let ((gtype (gethash id *id-to-gtype*)))
         (if gtype
             gtype
-            (let ((name (%g-type-name id)))
+            (let (;; FIXME: This might cause a bug, because %g-type-name expects
+                  ;; a valid ID. If the ID is not a valid ID the programm might
+                  ;; crash. See the documentation of %g-type-name. Can we expect
+                  ;; that the ID will always be a valid ID? In this case the
+                  ;; check for the return value is unnecessary.
+                  (name (%g-type-name id)))
               (unless name
                 (warn-unknown-gtype id)
                 (return-from gtype-from-id nil))
@@ -1853,8 +1863,8 @@
 
 (declaim (inline g-type-name))
 
-(defun g-type-name (type)
-  (gtype-name type))
+(defun g-type-name (gtype)
+  (gtype-name (gtype gtype)))
 
 (export 'g-type-name)
 
@@ -1871,6 +1881,11 @@
 ;;; Returns :
 ;;;     The type names quark or 0.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_qname" g-type-qname) g-quark
+  (gtype g-type))
+
+(export 'g-type-qname)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_from_name ()
@@ -1890,6 +1905,11 @@
 
 (defcfun ("g_type_from_name" %g-type-from-name) %g-type
   (name :string))
+
+(defun g-type-from-name (name)
+  (gtype name))
+
+(export 'g-type-from-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_parent ()
@@ -1978,7 +1998,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_is_a" g-type-is-a) :boolean
-  (type g-type)
+  (gtype g-type)
   (is-a-type g-type))
 
 (export 'g-type-is-a)
@@ -1999,7 +2019,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_ref" g-type-class-ref) (:pointer g-type-class)
-  (type g-type))
+  (gtype g-type))
 
 (export 'g-type-class-ref)
 
@@ -2046,7 +2066,7 @@
 
 (defcfun ("g_type_class_peek_static" g-type-class-peek-static)
     (:pointer g-type-class)
-  (type g-type))
+  (gtype g-type))
 
 (export 'g-type-class-peek-static)
 
@@ -2065,7 +2085,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_unref" g-type-class-unref) :void
-  (class (:pointer g-type-class)))
+  (g-class (:pointer g-type-class)))
 
 (export 'g-type-class-unref)
 
@@ -2088,6 +2108,12 @@
 ;;; Returns :
 ;;;     The parent class of g_class.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_class_peek_parent" g-type-class-peek-parent)
+    (:pointer g-type-class)
+  (g-class (:pointer g-type-class)))
+
+(export 'g-type-class-peek-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_add_private ()
@@ -2206,6 +2232,13 @@
 ;;;     instance_class, NULL otherwise.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_type_interface_peek" g-type-interface-peek)
+    (:pointer g-type-interface)
+  (instance-class (:pointer g-type-class))
+  (iface-type g-type))
+
+(export 'g-type-interface-peek)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_interface_peek_parent ()
 ;;;
@@ -2251,7 +2284,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_default_interface_ref" g-type-default-interface-ref) :pointer
-  (type g-type))
+  (gtype g-type))
 
 (export 'g-type-default-interface-ref)
 
@@ -2315,7 +2348,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_children" %g-type-children) (:pointer %g-type)
-  (type g-type)
+  (gtype g-type)
   (n-children (:pointer :uint)))
 
 (defun g-type-children (type)
@@ -2418,6 +2451,13 @@
 ;;;     the data
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_type_set_qdata" g-type-set-qdata) :void
+  (gtype g-type)
+  (quark g-quark)
+  (data :pointer))
+
+(export 'g-type-set-qdata)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_get_qdata ()
 ;;;
@@ -2439,6 +2479,12 @@
 ;;; Returns :
 ;;;     the data, or NULL if no data was found
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_get_qdata" g-type-get-qdata) :pointer
+  (gtype g-type)
+  (quark g-quark))
+
+(export 'g-type-get-qdata)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeQuery
@@ -2494,7 +2540,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_query" g-type-query) :void
-  (type g-type)
+  (gtype g-type)
   (query (:pointer g-type-query)))
 
 (export 'g-type-query)

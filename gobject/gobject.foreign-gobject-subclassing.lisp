@@ -64,6 +64,15 @@
   (declare (ignore data))
   (log-for :subclass "class-init for ~A~%"
            (gtype-name (g-type-from-class class)))
+  (let* ((type-name (gtype-name (g-type-from-class class)))
+         (lisp-type-info (gethash type-name *registered-types*))
+         (lisp-class (object-type-class lisp-type-info)))
+    (format t "IN CLASS-INIT:~%")
+    (format t "   name  = ~A~%" type-name)
+    (format t "   class = ~A~%" lisp-class)
+    (register-object-type type-name lisp-class)
+    )
+
   (setf (foreign-slot-value class 'g-object-class :get-property)
         (callback c-object-property-get)
         (foreign-slot-value class 'g-object-class :set-property)
@@ -305,7 +314,7 @@
                                       :methods
                                       (list ,@(mapcar #'make-load-form methods))))
        ,@(iter (for method in methods)
-               (for args = 
+               (for args =
                     (if (vtable-method-info-impl-call method)
                         (first (vtable-method-info-impl-call method))
                         (mapcar #'first (vtable-method-info-args method))))
@@ -442,7 +451,7 @@
                              :properties ',properties))
      (at-init (',class)
        (log-for :subclass
-                "Registering GObject type implementation ~A for type ~A~%" 
+                "Registering GObject type implementation ~A for type ~A~%"
                 ',class ,name)
        (with-foreign-object (query 'g-type-query)
          (g-type-query (gtype ,parent) query)
