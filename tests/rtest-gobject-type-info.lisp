@@ -58,7 +58,7 @@
   (assert-eql (ash 256 2) (g-type-make-fundamental 256))
   
   (assert-equal "GType"      (gtype-name (gtype (g-type-gtype))))
-  (assert-eql (g-type-gtype) (gtype-id (gtype (g-type-gtype))))
+  (assert-eql 134819840 (gtype-id (gtype (g-type-gtype))))
   
   (assert-false (g-type-is-abstract (gtype "gboolean")))
   (assert-false (g-type-is-abstract (gtype "GObject")))
@@ -241,4 +241,278 @@
   (assert-equal "GVariant"   (gtype-name (gtype +g-type-variant+))))
 
 
+(define-test g-type-info-char
+  (let ((id +g-type-char+)
+        (name "gchar")
+        (gtype (gtype +g-type-char+)))
+  ;; gtype-id
+  (assert-eql +g-type-char+ (gtype-id gtype))
+  ;; gtype-name
+  (assert-equal name (gtype-name gtype))
+  ;; gtype-from-id
+  (assert-eql gtype (gtype-from-id id))
+  ;; gtype-from-name
+  (assert-eql gtype (gtype-from-name name))
+  ;; gobject::g-type=
+  (assert-false (gobject::g-type= gtype +g-type-invalid+))
+  ;; gobject::g-type/=
+  (assert-true (gobject::g-type/= gtype +g-type-invalid+))
+  ;; g-type-is-abstract
+  (assert-false (g-type-is-abstract gtype))
+  (assert-false (g-type-is-abstract id))
+  (assert-false (g-type-is-abstract name))
+  ;; g-type-is-derived
+  (assert-false (g-type-is-derived gtype))
+  (assert-false (g-type-is-derived id))
+  (assert-false (g-type-is-derived name))
+  ;; g-type-is-fundamental
+  (assert-true (g-type-is-fundamental gtype))
+  (assert-true (g-type-is-fundamental id))
+  (assert-true (g-type-is-fundamental name))
+  ;; g-type-is-value-type
+  (assert-true (g-type-is-value-type gtype))
+  (assert-true (g-type-is-value-type id))
+  (assert-true (g-type-is-value-type name))
+  ;; g-type-has-value-table
+  (assert-true (g-type-has-value-table gtype))
+  (assert-true (g-type-has-value-table id))
+  (assert-true (g-type-has-value-table name))
+  ;; g-type-is-classed
+  (assert-false (g-type-is-classed gtype))
+  (assert-false (g-type-is-classed id))
+  (assert-false (g-type-is-classed name))
+  ;; g-type-is-instantiatable
+  (assert-false (g-type-is-instantiatable gtype))
+  (assert-false (g-type-is-instantiatable id))
+  (assert-false (g-type-is-instantiatable name))
+  ;; g-type-is-derivable
+  (assert-true (g-type-is-derivable gtype))
+  (assert-true (g-type-is-derivable id))
+  (assert-true (g-type-is-derivable name))
+  ;; g-type-is-deep-derivable
+  (assert-false (g-type-is-deep-derivable gtype))
+  (assert-false (g-type-is-deep-derivable id))
+  (assert-false (g-type-is-deep-derivable name))
+  ;; g-type-is-interface
+  (assert-false (g-type-is-interface gtype))
+  (assert-false (g-type-is-interface id))
+  (assert-false (g-type-is-interface name))
+  ;; g-type-name
+  (assert-equal name (g-type-name gtype))
+  (assert-equal name (g-type-name id))
+  (assert-equal name (g-type-name name))
+  ;; g-type-qname
+  (assert-equal name (g-type-qname gtype))
+  (assert-equal name (g-type-qname id))
+  (assert-equal name (g-type-qname name))  
+  ;; g-type-from-name
+  (assert-eql gtype (g-type-from-name name))
+  ;; g-type-parent
+  (assert-false (g-type-parent gtype))
+  (assert-false (g-type-parent id))
+  (assert-false (g-type-parent name))
+  ;; g-type-depth
+  (assert-eql 1 (g-type-depth gtype))
+  (assert-eql 1 (g-type-depth id))
+  (assert-eql 1 (g-type-depth name))
+  ;; g-type-next-base
+  (assert-false (g-type-next-base gtype gtype))
+  (assert-false (g-type-next-base gtype id))
+  (assert-false (g-type-next-base gtype name))
+  ;; g-type-is-a
+  (assert-false (g-type-is-a gtype +g-type-invalid+))
+  (assert-true (g-type-is-a gtype gtype))
+  (assert-true (g-type-is-a gtype id))
+  (assert-true (g-type-is-a gtype name))
+  ;; g-type-children
+  (assert-false (g-type-children gtype))
+  (assert-false (g-type-children id))
+  (assert-false (g-type-children name))
+  ;; g-type-interfaces
+  (assert-false (g-type-interfaces gtype))
+  (assert-false (g-type-interfaces id))
+  (assert-false (g-type-interfaces name))
+  ;; g-type-interace-prerequisites
+  ;; g-type-set-qdata
+  (g-type-set-qdata gtype "myData" (null-pointer))
+  ;; g-type-get-qdata
+  (assert-true  (null-pointer-p (g-type-get-qdata gtype "myData")))
+  ;; g-type-query
+  (with-foreign-object (query 'g-type-query)
+    (g-type-query name query)
+    (assert-false (foreign-slot-value query 'g-type-query :type))
+    (assert-false (foreign-slot-value query 'g-type-query :type-name))
+    (assert-eql 0 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql 0 (foreign-slot-value query 'g-type-query :instance-size)))
+  ;; g-type-fundamental
+  (assert-eq gtype (g-type-fundamental gtype))
+  (assert-eq gtype (g-type-fundamental id))
+  (assert-eq gtype (g-type-fundamental name))
+  ;; g-type-value-table-peek
+  (with-foreign-object (table 'g-type-value-table)
+    (setq table (g-type-value-table-peek gtype))
+    (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-init)))
+    (assert-true (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-free)))
+    (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-copy)))
+    (assert-true (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-peek-pointer)))
+    (assert-equal "i" (foreign-slot-value table 'g-type-value-table :collect-format))
+    (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :collect-value)))
+    (assert-equal "p" (foreign-slot-value table 'g-type-value-table :lcopy-format))
+    (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))
+  
+))
+
+
+
+(define-test g-type-info-gtk-label
+  (let ((id (gtype-id (gtype "GtkLabel")))
+        (name "GtkLabel")
+        (gtype (gtype "GtkLabel")))
+    ;; gtype-id
+    (assert-eql 134902128 (gtype-id gtype))
+    ;; gtype-name
+    (assert-equal name (gtype-name gtype))
+    ;; gtype-from-id
+    (assert-eql gtype (gtype-from-id id))
+    ;; gtype-from-name
+    (assert-eql gtype (gtype-from-name name))
+    ;; gobject::g-type=
+    (assert-false (gobject::g-type= gtype +g-type-invalid+))
+    (assert-true  (gobject::g-type= gtype name))
+    (assert-true  (gobject::g-type= gtype id))
+    ;; gobject::g-type/=
+    (assert-true  (gobject::g-type/= gtype +g-type-invalid+))
+    (assert-false (gobject::g-type/= gtype name))
+    (assert-false (gobject::g-type/= gtype id))
+    ;; g-type-is-abstract
+    (assert-false (g-type-is-abstract gtype))
+    (assert-false (g-type-is-abstract id))
+    (assert-false (g-type-is-abstract name))
+    ;; g-type-is-derived
+    (assert-true (g-type-is-derived gtype))
+    (assert-true (g-type-is-derived id))
+    (assert-true (g-type-is-derived name))
+    ;; g-type-is-fundamental
+    (assert-false (g-type-is-fundamental gtype))
+    (assert-false (g-type-is-fundamental id))
+    (assert-false (g-type-is-fundamental name))
+    ;; g-type-is-value-type
+    (assert-true (g-type-is-value-type gtype))
+    (assert-true (g-type-is-value-type id))
+    (assert-true (g-type-is-value-type name))
+    ;; g-type-has-value-table
+    (assert-true (g-type-has-value-table gtype))
+    (assert-true (g-type-has-value-table id))
+    (assert-true (g-type-has-value-table name))
+    ;; g-type-is-classed
+    (assert-true (g-type-is-classed gtype))
+    (assert-true (g-type-is-classed id))
+    (assert-true (g-type-is-classed name))
+    ;; g-type-is-instantiatable
+    (assert-true (g-type-is-instantiatable gtype))
+    (assert-true (g-type-is-instantiatable id))
+    (assert-true (g-type-is-instantiatable name))
+    ;; g-type-is-derivable
+    (assert-true (g-type-is-derivable gtype))
+    (assert-true (g-type-is-derivable id))
+    (assert-true (g-type-is-derivable name))
+    ;; g-type-is-deep-derivable
+    (assert-true (g-type-is-deep-derivable gtype))
+    (assert-true (g-type-is-deep-derivable id))
+    (assert-true (g-type-is-deep-derivable name))
+    ;; g-type-is-interface
+    (assert-false (g-type-is-interface gtype))
+    (assert-false (g-type-is-interface id))
+    (assert-false (g-type-is-interface name))
+    ;; g-type-from-instance
+    (let ((label (make-instance 'gtk-label)))
+      (assert-eq gtype (g-type-from-instance label)))
+    ;; g-type-from-class
+    (assert-eq gtype (g-type-from-class (g-type-class-ref name)))
+    ;; g-type-from-interface
+    ;; g-type-name
+    (assert-equal name (g-type-name gtype))
+    (assert-equal name (g-type-name id))
+    (assert-equal name (g-type-name name))
+    ;; g-type-qname
+    (assert-equal name (g-type-qname gtype))
+    (assert-equal name (g-type-qname id))
+    (assert-equal name (g-type-qname name))  
+    ;; g-type-from-name
+    (assert-eql gtype (g-type-from-name name))
+    ;; g-type-parent
+    (assert-true (g-type-is-a "GtkMisc" (g-type-parent gtype)))
+    (assert-true (g-type-is-a "GtkMisc" (g-type-parent id)))
+    (assert-true (g-type-is-a "GtkMisc" (g-type-parent name)))
+    ;; g-type-depth
+    (assert-eql 5 (g-type-depth gtype))
+    (assert-eql 5 (g-type-depth id))
+    (assert-eql 5 (g-type-depth name))
+    ;; g-type-next-base
+    (assert-eq (gtype "GInitiallyUnowned") (g-type-next-base gtype "GObject"))
+    (assert-eq (gtype "GInitiallyUnowned") (g-type-next-base id "GObject"))
+    (assert-eq (gtype "GInitiallyUnowned") (g-type-next-base name "GObject"))
+    ;; g-type-is-a
+    (assert-false (g-type-is-a gtype +g-type-invalid+))
+    (assert-true (g-type-is-a gtype gtype))
+    (assert-true (g-type-is-a gtype id))
+    (assert-true (g-type-is-a gtype name))
+    ;; g-type-class-ref
+    (assert-eq gtype (foreign-slot-value (g-type-class-ref gtype) 'g-type-class :type))
+    ;; g-type-class-peek
+    (assert-eq gtype (foreign-slot-value (g-type-class-peek gtype) 'g-type-class :type))
+    ;; g-type-class-peek-static
+    (assert-eq gtype (foreign-slot-value (g-type-class-peek-static gtype) 'g-type-class :type))
+    ;; g-type-class-unref
+    ;; g-type-class-peek-parent
+    (assert-eq (gtype "GtkMisc")
+               (foreign-slot-value (g-type-class-peek-parent (g-type-class-peek gtype)) 'g-type-class :type))
+    ;; g-type-interface-peek
+    ;; g-type-interface-peek-parent
+    ;; g-type-default-interface-ref
+    ;; g-type-default-interface-peek
+    ;; g-type-default-interface-unref
+    ;; g-type-children
+    (assert-equal '("GtkAccelLabel") (mapcar #'gtype-name (g-type-children gtype)))
+    (assert-equal '("GtkAccelLabel") (mapcar #'gtype-name (g-type-children id)))
+    (assert-equal '("GtkAccelLabel") (mapcar #'gtype-name (g-type-children name)))
+    ;; g-type-interfaces
+    (assert-equal '("AtkImplementorIface" "GtkBuildable")
+                  (mapcar #'gtype-name (g-type-interfaces gtype)))
+    (assert-equal '("AtkImplementorIface" "GtkBuildable")
+                  (mapcar #'gtype-name (g-type-interfaces id)))
+    (assert-equal '("AtkImplementorIface" "GtkBuildable")
+                  (mapcar #'gtype-name (g-type-interfaces name)))
+
+    ;; Hier weiter machen.
+
+    ;; g-type-interace-prerequisites
+    ;; g-type-set-qdata
+    (g-type-set-qdata gtype "myData" (null-pointer))
+    ;; g-type-get-qdata
+    (assert-true  (null-pointer-p (g-type-get-qdata gtype "myData")))
+    ;; g-type-query
+    (with-foreign-object (query 'g-type-query)
+      (g-type-query name query)
+      (assert-eq gtype (foreign-slot-value query 'g-type-query :type))
+      (assert-equal name (foreign-slot-value query 'g-type-query :type-name))
+      (assert-eql 476 (foreign-slot-value query 'g-type-query :class-size))
+      (assert-eql  24 (foreign-slot-value query 'g-type-query :instance-size)))
+    ;; g-type-fundamental
+    (assert-eq (gtype "GObject") (g-type-fundamental gtype))
+    (assert-eq (gtype "GObject") (g-type-fundamental id))
+    (assert-eq (gtype "GObject") (g-type-fundamental name))
+    ;; g-type-value-table-peek
+    (with-foreign-object (table 'g-type-value-table)
+      (setq table (g-type-value-table-peek gtype))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-init)))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-free)))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-copy)))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :value-peek-pointer)))
+      (assert-equal "p" (foreign-slot-value table 'g-type-value-table :collect-format))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :collect-value)))
+      (assert-equal "p" (foreign-slot-value table 'g-type-value-table :lcopy-format))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))
+  
+))
 
