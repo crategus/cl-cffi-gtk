@@ -32,7 +32,7 @@
       ((:and :unix (:not :darwin))
        (:or "libgio-2.0.so.0" "libgio-2.0.so"))
       (:darwin "libgio-2.0.dylib")
-      (:windows "libgio-2.0.dll")
+      (:windows "libgio-2.0-0.dll")
       (t (:default "libgio-2.0"))))
   
   (use-foreign-library glib))
