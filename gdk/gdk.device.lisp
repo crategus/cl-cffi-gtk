@@ -270,7 +270,8 @@
     "type" "GdkDeviceType" t t)))
 
 ;;; ----------------------------------------------------------------------------
-          
+
+#-windows
 (define-g-object-class "GdkX11DeviceXI2" gdk-x11-device-xi2
   (:superclass gdk-device
    :export t

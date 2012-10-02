@@ -246,6 +246,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#-windows
 (define-g-object-class "GdkX11DeviceManagerCore" gdk-x11-device-manager-core
   (:superclass gdk-device-manager
    :export t
@@ -253,6 +254,7 @@
    :type-initializer "gdk_x11_device_manager_core_get_type")
   nil)
 
+#-windows
 (define-g-object-class "GdkX11DeviceManagerXI2" gdk-x11-device-manager-xi2
   (:superclass gdk-x11-device-manager-core
    :export t
