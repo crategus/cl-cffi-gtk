@@ -29,7 +29,7 @@
       ((:and :unix (:not :darwin))
        (:or "libcairo.so.2" "libcairo.so"))
       (:darwin "libcairo.dylib")
-      (:windows "libcariro-2.dll")
+      (:windows "libcairo-2.dll")
       (t (:default "libcairo"))))
 
   (use-foreign-library cairo))
