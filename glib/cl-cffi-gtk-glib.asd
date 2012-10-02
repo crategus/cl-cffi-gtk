@@ -46,6 +46,7 @@
 ;               (:file "glib.variant")        ; Strongly typed value datatype
               )
   :depends-on (:cffi
-               :iterate))
+               :iterate
+               :trivial-features))
 
 ;;; --- End of file cl-cffi-gtk-glib.asd ---------------------------------------
