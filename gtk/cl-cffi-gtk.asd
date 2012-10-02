@@ -259,7 +259,9 @@
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
 
    ;; Cross-process Embedding
+   #-windows
    (:file "gtk.plug")                  ; Embedding into other processes
+   #-windows
    (:file "gtk.socket")                ; For widgets from other processes
 
    ;; Recently Used Documents
@@ -277,7 +279,9 @@
    ; GtkPaperSize — Support for named paper sizes
    ; GtkPrinter — Represents a printer
    ; GtkPrintJob — Represents a print job
+   #-windows
    (:file "gtk.print-unix-dialog")     ; A print dialog
+   #-windows
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
 
    ;; Application support
