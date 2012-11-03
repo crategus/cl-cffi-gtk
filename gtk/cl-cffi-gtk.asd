@@ -259,9 +259,9 @@
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
 
    ;; Cross-process Embedding
-   #-windows
+   #-win32
    (:file "gtk.plug")                  ; Embedding into other processes
-   #-windows
+   #-win32
    (:file "gtk.socket")                ; For widgets from other processes
 
    ;; Recently Used Documents
@@ -279,9 +279,9 @@
    ; GtkPaperSize — Support for named paper sizes
    ; GtkPrinter — Represents a printer
    ; GtkPrintJob — Represents a print job
-   #-windows
+   #-win32
    (:file "gtk.print-unix-dialog")     ; A print dialog
-   #-windows
+   #-win32
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
 
    ;; Application support
@@ -294,7 +294,7 @@
 
    ;; More definitions. The documentation is not completed.
    (:file "gtk.generated-classes")
-   (:file "gtk.selectors")
+   ; (:file "gtk.selectors")
    (:file "gtk.timer")
 
    ;; Lisp
@@ -309,6 +309,7 @@
                :cl-cffi-gtk-cairo
                :cffi
                :bordeaux-threads
-               :iterate))
+               :iterate
+               :trivial-features))
 
 ;;; --- End of file cl-cffi-gtk.asd --------------------------------------------
