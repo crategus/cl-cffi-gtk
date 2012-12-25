@@ -127,6 +127,17 @@
 ;;; } GtkSelectionData;
 ;;; ----------------------------------------------------------------------------
 
+(define-g-boxed-cstruct gtk-selection-data "GtkSelectionData"
+  (selection gdk-atom-as-string :initform nil)
+  (target gdk-atom-as-string :initform nil)
+  (type gdk-atom-as-string :initform nil)
+  (format :int :initform 0)
+  (data :pointer :initform (null-pointer))
+  (length :int :initform 0)
+  (display (g-object gdk-display) :initform nil))
+
+(export (boxed-related-symbols 'gtk-selection-data))
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTargetEntry
 ;;;
