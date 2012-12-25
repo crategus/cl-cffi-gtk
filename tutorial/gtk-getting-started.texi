@@ -24,15 +24,15 @@
 
 The first thing to do is to download the @code{cl-cffi-gtk} source and to
 install it.  The latest version is available from the repository at
-@url{github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library can be
-loaded with the command @code{(asdf:operate 'asdf:load-op :cl-cffi-gtk)}
+@url{http://github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library
+can be loaded with the command @code{(asdf:operate 'asdf:load-op :cl-cffi-gtk)}
 from the Lisp prompt.  The library is developed with the Lisp SBCL 1.0.56 on a
 Linux system and GTK+ 3.4.
 
 At this time (April 2012) there is no GTK+ 3 library for Windows available at
-@url{www.gtk.org}.  The current maintained version is GTK+ 2.24.  The
-repository at @url{github.com/crategus/cl-cffi-gtk} has a branch @code{gtk-2-24}
-which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows.
+@url{http://www.gtk.org}.  The current maintained version is GTK+ 2.24.  The
+repository at @url{http://github.com/crategus/cl-cffi-gtk} has a branch
+@code{gtk-2-24} which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows.
 
 With SBCL an alternative command to load the @code{cl-cffi-gtk} library is
 @code{(asdf:load-system 'cl-cffi-gtk)}.  The libraries GLib, GObject, GDK, GIO,
@@ -78,8 +78,8 @@ which must be installed:
    
 @item Trivial-Garbage
       provides a portable API to finalizers, weak hash-tables
-      and weak pointers on all major CL implementations.
-      @url{See http://www.cliki.net/trivial-garbage}.
+      and weak pointers on all major CL implementations. See
+      @url{http://www.cliki.net/trivial-garbage}.
    
 @item Iterate
       is a lispy and extensible replacement for the LOOP macro.

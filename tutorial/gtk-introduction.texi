@@ -20,10 +20,10 @@ Kalyanov Dmitry and already is a fairly complete Lisp binding to GTK+.  The
 focus of the @code{cl-cffi-gtk} library is to document the Lisp library much
 more complete and to do the implementation as consistent as possible.  Most
 informations about GTK+ can be gained by reading the C documentation.
-Therefore, the C documentation from @url{www.gtk.org} is included into the Lisp
-files to document the Lisp binding to the GTK+ library.  This way the calling
-conventions are easier to determine and missing functionality is easier to
-detect.
+Therefore, the C documentation from @url{http://www.gtk.org} is included into
+the Lisp files to document the Lisp binding to the GTK+ library.  This way the
+calling conventions are easier to determine and missing functionality is easier
+to detect.
 
 The GTK+ library is called the GIMP toolkit because GTK+ was originally written
 for developing the GNU Image Manipulation Program (GIMP), but GTK+ has now been
