@@ -29,10 +29,15 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-glib)
 
+;; Load the documentation of the Libraray GLib
 (load "atdoc-glib.lisp")
 
 (defpackage :atdoc-glib
- (:use :glib :common-lisp))
+  (:use :glib :common-lisp)
+  (:export #:generate-html
+           #:generate-html-single-page
+           #:generate-latex
+           #:generate-info))
 
 (in-package :atdoc-glib)
 
@@ -43,7 +48,9 @@
     (atdoc:generate-html-documentation
       '(:glib)
       output-directory
-      :index-title "cl-cffi-gtk-glib"
+      :author "Crategus"
+      :author-url "http://www.crategus.com"
+      :index-title "cl-cffi-gtk-glib API documentation"
       :heading "cl-cffi-gtk-glib"
       :css "crategus.css"
       :logo nil
@@ -51,4 +58,24 @@
       :include-slot-definitions-p t
       :include-internal-symbols-p nil)))
 
+(defun generate-html-single-page ()
+  (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk-glib)))
+         (output-directory (merge-pathnames "atdoc/single-page/" base)))
+    (ensure-directories-exist output-directory)
+    (atdoc:generate-html-documentation
+      '(:glib)
+      output-directory
+      :author "Crategus"
+      :author-url "http://www.crategus.com"
+      :index-title "cl-cffi-gtk-glib API documentation"
+      :heading "cl-cffi-gtk-glib"
+      :css "crategus.css"
+      :logo nil
+      :single-page-p t
+      :include-slot-definitions-p t
+      :include-internal-symbols-p nil)))
+
 (generate-html)
+(generate-html-single-page)
+
+;;; --- End of file atdoc.lisp -------------------------------------------------
