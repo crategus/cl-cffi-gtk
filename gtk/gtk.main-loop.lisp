@@ -251,6 +251,8 @@
            (error "Cannot initialize Gtk+"))
       (foreign-free (mem-ref argv '(:pointer :string))))))
 
+(export 'gtk-init)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_init_check ()
 ;;;
