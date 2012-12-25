@@ -62,7 +62,7 @@
                               :name "cl-cffi-gtk main thread")
               *main-thread-level* 0))
       (incf *main-thread-level*))
-    (values))
+    (values *main-thread* *main-thread-level*))
 
   (defun join-gtk-main ()
     (when *main-thread*
@@ -72,7 +72,8 @@
     (bt:with-lock-held (*main-thread-lock*)
       (decf *main-thread-level*)
       (when (zerop *main-thread-level*)
-        (gtk-main-quit)))))
+        (gtk-main-quit)))
+    (values *main-thread* *main-thread-level*)))
 
 #-thread-support
 (progn
@@ -82,7 +83,7 @@
 
   (defun leave-gtk-main ()
     (gtk-main-quit))
-  
+
   (defun join-gtk-main ()))
 
 (export 'ensure-gtk-main)
