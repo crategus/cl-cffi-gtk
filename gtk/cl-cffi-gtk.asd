@@ -67,10 +67,10 @@
    (:file "gtk.main-loop")             ; Main event loop, and events
    (:file "gtk.accel-group")           ; Accelerator Groups
    (:file "gtk.accel-map")             ; Loadable keyboard accelerator
-   (:file "gtk.clipboard")             ; Storing data on clipboards
    (:file "gtk.drag-and-drop")         ; Controlling drag and drop
-   (:file "gtk.settings")              ; Sharing settings
    (:file "gtk.selections")            ; Inter-process communication
+   (:file "gtk.clipboard")             ; Storing data on clipboards
+   (:file "gtk.settings")              ; Sharing settings
 
    ;; Interface builder
    (:file "gtk.buildable")             ; GtkBuildable
