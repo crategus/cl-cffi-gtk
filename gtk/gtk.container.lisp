@@ -523,7 +523,7 @@
 (defun gtk-container-get-resize-mode (container)
   (gtk-container-resize-mode container))
 
-(export 'gkt-container-get-resize-mode)
+(export 'gtk-container-get-resize-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_set_resize_mode ()

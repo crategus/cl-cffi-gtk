@@ -359,7 +359,7 @@
 (defun gtk-menu-item-new ()
   (make-instance 'gtk-menu-item))
 
-(export 'gt-menu-item-new)
+(export 'gtk-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new_with_label ()

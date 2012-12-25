@@ -2335,7 +2335,7 @@
   (values (gtk-window-default-width window)
           (gtk-window-default-height window)))
 
-(export 'gkt-window-get-default-size)
+(export 'gtk-window-get-default-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_destroy_with_parent ()

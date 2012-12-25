@@ -353,7 +353,7 @@
           (gtk-alignment-left-padding alignment)
           (gtk-alignment-right-padding alignment)))
 
-(export 'gkt-alignment-get-padding)
+(export 'gtk-alignment-get-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alignment_set_padding ()

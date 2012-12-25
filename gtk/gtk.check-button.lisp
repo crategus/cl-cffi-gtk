@@ -131,7 +131,7 @@
 (defun gtk-check-button-new ()
   (make-instance 'gtk-check-button))
 
-(export 'gkt-check-button-new)
+(export 'gtk-check-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_button_new_with_label ()

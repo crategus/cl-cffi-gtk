@@ -2060,7 +2060,7 @@
   (with-stable-pointer (ptr func)
     (%gtk-tree-model-foreach model (callback gtk-tree-model-foreach-cb) ptr)))
 
-(export 'gk-tree-model-foreach)
+(export 'gtk-tree-model-foreach)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_changed ()

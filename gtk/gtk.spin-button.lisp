@@ -903,7 +903,7 @@
 (defun gtk-spin-button-get-snap-to-ticks (spin-button)
   (gtk-spin-button-snap-to-ticks spin-button))
 
-(export 'gkt-spin-button-get-snap-to-ticks)
+(export 'gtk-spin-button-get-snap-to-ticks)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_update_policy ()

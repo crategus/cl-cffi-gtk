@@ -612,7 +612,7 @@
 (defun gtk-paned-get-position (paned)
   (gtk-paned-position paned))
 
-(export 'gkt-paned-get-position)
+(export 'gtk-paned-get-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_get_handle_window ()
