@@ -1850,7 +1850,8 @@
     @entry[type-name]{the name of the type.}
     @entry[class-size]{the size of the class structure.}
     @entry[instance-size]{the size of the instance structure.}
-  @end{table}")
+  @end{table}
+  @see-function{g-type-query}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1865,7 +1866,8 @@
   This function will fill in a user-provided structure to hold type-specific
   information. If an invalid @class{g-type} is passed in, the type member of the
   @symbol{g-type-query} is 0. All members filled into the @symbol{g-type-query}
-  structure should be considered constant and have to be left untouched.")
+  structure should be considered constant and have to be left untouched.
+  @see-class{g-type-query}")
 
 #|
 ;;; ----------------------------------------------------------------------------

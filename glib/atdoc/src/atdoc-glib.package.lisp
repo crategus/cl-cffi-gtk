@@ -327,9 +327,6 @@
     without returning to the mainloop.
 
     @about-type{g-main-loop}
-    @about-function{GPollFD}
-    @about-function{GSource}
-    @about-function{GSourceFuncs}
     @about-function{g-main-loop-new}
     @about-function{g-main-loop-ref}
     @about-function{g-main-loop-unref}
@@ -397,8 +394,11 @@
     @about-function{g-child-watch-source-new}
     @about-function{g-child-watch-add}
     @about-function{g-child-watch-add-full}
+    @about-type{g-poll-fd}
     @about-function{g-poll}
     @about-function{G_POLLFD_FORMAT}
+    @about-function{GSource}
+    @about-function{GSourceFuncs}
     @about-function{GSourceCallbackFuncs}
     @about-function{g-source-new}
     @about-function{g-source-ref}
@@ -809,236 +809,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; GMainLoop
-
-(setf (documentation 'g-main-loop 'type)
- "@begin{short}
-    The @sym{g-main-loop} struct is an opaque data type representing the main
-    event loop of a GLib or GTK+ application.
-  @end{short}")
-
-(setf (documentation 'g-poll-fd 'type)
- "@begin{short}
-    Represents a file descriptor, which events to poll for, and which events
-    occurred.
-  @end{short}
-  @begin{pre}
-  struct GPollFD {
-  #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
-    gint64 fd;
-  #else
-    gint        fd;
-  #endif
-    gushort     events;
-    gushort     revents;
-  @};
-  @end{pre}
-  @begin{table}
-    @entry[fd]{}
-    @entry[gint64 fd}{the file descriptor to poll (or a HANDLE on Win32)}
-    @entry[gushort events]{a bitwise combination from @code{GIOCondition},
-      specifying which events should be polled for. Typically for reading from a
-      file descriptor you would use @code{G_IO_IN | G_IO_HUP | G_IO_ERR}, and
-      for writing you would use @code{G_IO_OUT | G_IO_ERR}.} 
-    @entry[gushort revents]{a bitwise combination of flags from
-      @code{GIOCondition}, returned from the @code{poll()} function to indicate
-      which events occurred.}
-  @end{table}")
-
-(setf (documentation 'g-source 'type)
- "@begin{short}
-    The @sym{g-source} struct is an opaque data type representing an event
-    source.
-  @end{short}")
-
-(setf (documentation 'g-source-funcs 'type)
- "@begin{short}
-    The @sym{g-source-funcs} struct contains a table of functions used to handle
-    event sources in a generic manner.
-  @end{short}
-
-  For idle sources, the prepare and check functions always return TRUE to
-  indicate that the source is always ready to be processed. The prepare
-  function also returns a timeout value of 0 to ensure that the poll() call
-  doesn't block (since that would be time wasted which could have been spent
-  running the idle function).
-
-  For timeout sources, the prepare and check functions both return TRUE if the
-  timeout interval has expired. The prepare function also returns a timeout
-  value to ensure that the @code{poll()} call doesn't block too long and miss
-  the next timeout.
-
-  For file descriptor sources, the prepare function typically returns FALSE,
-  since it must wait until @code{poll()} has been called before it knows whether
-  any events need to be processed. It sets the returned timeout to -1 to
-  indicate that it doesn't mind how long the @code{poll()} call blocks. In the
-  check function, it tests the results of the @code{poll()} call to see if the
-  required condition has been met, and returns TRUE if so.
-  @begin{pre}
-  struct GSourceFuncs {
-    gboolean (*prepare)  (GSource    *source,
-                          gint       *timeout_);
-    gboolean (*check)    (GSource    *source);
-    gboolean (*dispatch) (GSource    *source,
-                          GSourceFunc callback,
-                          gpointer    user_data);
-    void     (*finalize) (GSource    *source); /* Can be NULL */
-  @};
-  @end{pre}
-  @begin{table}
-    @begin[prepare ()]{entry}
-      Called before all the file descriptors are polled. If the source can
-      determine that it is ready here (without waiting for the results of the
-      poll() call) it should return TRUE. It can also return a timeout_ value
-      which should be the maximum timeout (in milliseconds) which should be
-      passed to the poll() call. The actual timeout used will be -1 if all
-      sources returned -1, or it will be the minimum of all the timeout_
-      values returned which were >= 0.
-    @end{entry}
-    @begin[check ()]{entry}
-      Called after all the file descriptors are polled. The source should
-      return TRUE if it is ready to be dispatched. Note that some time may
-      have passed since the previous prepare function was called, so the
-      source should be checked again here.
-    @end{entry}
-    @begin[dispatch ()]{entry}
-      Called to dispatch the event source, after it has returned TRUE in
-      either its prepare or its check function. The dispatch function is
-      passed in a callback function and data. The callback function may be
-      NULL if the source was never connected to a callback using
-      g_source_set_callback(). The dispatch function should call the callback
-      function with user_data and whatever additional parameters are needed
-      for this type of event source.
-    @end{entry}
-    @begin[finalize ()]{entry}
-      Called when the source is finalized.
-    @end{entry}
-  @end{table}")
-
-(setf (documentation 'g-main-loop-new 'function)
- "@argument[context]{a GMainContext (if NULL, the default context will be used)}
-  @argument[is-running]{set to TRUE to indicate that the loop is running. This
-    is not very important since calling @fun{g-main-loop-run} will set this to
-    TRUE anyway.}
-  @return{a new GMainLoop.}
-  @short{Creates a new GMainLoop structure.}")
-
-(setf (documentation 'g-main-loop-ref 'function)
- "@argument[loop]{a GMainLoop}
-  @return{loop}
-  @short{Increases the reference count on a GMainLoop object by one.}")
-
-(setf (documentation 'g-main-loop-unref 'function)
- "@argument[loop]{a GMainLoop}
-  @short{Decreases the reference count on a GMainLoop object by one.}
-  If the result is zero, free the loop and free all associated memory.")
-
-(setf (documentation 'g-main-loop-run 'function)
- "@argument[loop]{a GMainLoop}
-  @begin{short}
-    Runs a main loop until @fun{g-main-loop-quit} is called on the loop.
-  @end{short}
-  If this is called for the thread of the loop's GMainContext, it will process
-  events from the loop, otherwise it will simply wait.")
-
-(setf (documentation 'g-main-loop-quit 'function)
- "@argument[loop]{a GMainLoop}
-  @short{Stops a GMainLoop from running.}
-  Any calls to @fun{g-main-loop-run} for the loop will return.
-
-  Note that sources that have already been dispatched when
-  @code{g-main-loop-quit} is called will still be executed.")
-
-(setf (documentation 'g-main-loop-is-running 'function)
- "@argument[loop]{a GMainLoop.}
-  @return{TRUE if the mainloop is currently being run.}
-  @begin{short}
-    Checks to see if the main loop is currently being run via
-    @fun{g-main-loop-run}.
-  @end{short}")
-
-(setf (documentation 'g-main-loop-get-context 'function)
- "@argument[loop]{a GMainLoop.}
-  @return{the GMainContext of loop.}
-  @short{Returns the GMainContext of loop.}")
-
-(setf (documentation '+g-priority-high+ 'variable)
- "@short{Use this for high priority event sources.}
-  It is not used within GLib or GTK+.")
-
-(setf (documentation '+g-priority-default+ 'variable)
- "@short{Use this for default priority event sources.}
-
-  In GLib this priority is used when adding timeout functions with
-  g_timeout_add(). In GDK this priority is used for events from the X server.")
-
-(setf (documentation '+g-priority-high-idle+ 'variable)
- "@short{Use this for high priority idle functions.}
-
-  GTK+ uses G_PRIORITY_HIGH_IDLE + 10 for resizing operations, and
-  G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is done to ensure
-  that any pending resizes are processed before any pending redraws, so that
-  widgets are not redrawn twice unnecessarily.)")
-
-(setf (documentation '+g-priority-default-idle+ 'variable)
- "@short{Use this for default priority idle functions.}
-
-  In GLib this priority is used when adding idle functions with g_idle_add().")
-
-(setf (documentation '+g-priority-low+ 'variable)
- "@short{Use this for very low priority background tasks.}
-
-  It is not used within GLib or GTK+.")
-
-;;; ----------------------------------------------------------------------------
-
 ;;; GMainContext
-
-(setf (documentation 'g-main-context 'type)
- "@begin{short}
-    The @sym{g-main-context} struct is an opaque data type representing a set of
-    sources to be handled in a main loop.
-  @end{short}")
-
-(setf (documentation 'g-main-context-new 'function)
- "@return{The new @type{g-main-context}.}
-  @short{Creates a new GMainContext structure.}")
-
-(setf (documentation 'g-main-context-ref 'function)
- "@argument[context]{a @type{g-main-context}}
-  @return{The context that was passed in (since 2.6).}
-  @short{Increases the reference count on a @type{g-main-context} object by
-    one.}")
-
-(setf (documentation 'g-main-context-unref 'function)
- "@argument[context]{a @type{g-main-context}}
-  @begin{short}
-    Decreases the reference count on a GMainContext object by one. If the result
-    is zero, free the context and free all associated memory.
-  @end{short}")
-
-(setf (documentation 'g-main-context-default 'function)
- "@return{the global default main context}
-  Returns the global default main context. This is the main context used for
-  main loop functions when a main loop is not explicitly specified, and
-  corresponds to the \"main\" main loop. See also
-  g_main_context_get_thread_default().")
-
-(setf (documentation 'g-main-context-iteration 'function)
- "@argument[context]{a GMainContext (if NULL, the default context will be used)}
-  @argument[may-block]{whether the call may block.}
-  @return{TRUE if events were dispatched.}
-  Runs a single iteration for the given main loop. This involves checking to
-  see if any event sources are ready to be processed, then if no events
-  sources are ready and may_block is TRUE, waiting for a source to become
-  ready, then dispatching the highest priority events sources that are ready.
-  Otherwise, if may_block is FALSE sources are not waited to become ready,
-  only those highest priority events sources will be dispatched (if any), that
-  are ready at this given moment without further waiting.
-
-  Note that even when may_block is TRUE, it is still possible for
-  g_main_context_iteration() to return FALSE, since the the wait may be
-  interrupted for other reasons than an event source becoming ready.")
 
 (setf (documentation 'g-main-context-pending 'function)
  "@argument[context]{a GMainContext (if NULL, the default context will be used)}

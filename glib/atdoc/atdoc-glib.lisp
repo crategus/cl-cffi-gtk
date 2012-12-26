@@ -33,5 +33,6 @@
 (load "src/atdoc-glib.version.lisp")
 (load "src/atdoc-glib.misc.lisp")
 (load "src/atdoc-glib.threads.lisp")
+(load "src/atdoc-glib.main-loop.lisp")
 
 ;;; --- End of file atdoc-glib.lisp --------------------------------------------
