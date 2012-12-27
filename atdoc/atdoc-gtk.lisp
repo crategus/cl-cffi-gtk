@@ -53,6 +53,7 @@
 
 (load "../gobject/atdoc/src/atdoc-gobject.package.lisp")
 (load "../gobject/atdoc/src/atdoc-gobject.type-info.lisp")
+(load "../gobject/atdoc/src/atdoc-gobject.base.lisp")
 
 ;;; ----------------------------------------------------------------------------
 

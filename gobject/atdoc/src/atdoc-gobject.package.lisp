@@ -199,6 +199,161 @@
     @about-function{G-DEFINE-POINTER-TYPE-WITH-CODE}
   @end{section}
   @begin[GObject]{section}
+    The base object type.
+
+    GObject is the fundamental type providing the common attributes and methods
+    for all object types in GTK+, Pango and other libraries based on GObject.
+    The GObject class provides methods for object construction and destruction,
+    property access methods, and signal support. Signals are described in detail
+    in Signals(3).
+
+    GInitiallyUnowned is derived from GObject. The only difference between the
+    two is that the initial reference of a GInitiallyUnowned is flagged as a
+    floating reference. This means that it is not specifically claimed to be
+    \"owned\" by any code portion. The main motivation for providing floating
+    references is C convenience. In particular, it allows code to be written as:
+    @begin{pre}
+ container = create_container ();
+ container_add_child (container, create_child());
+    @end{pre}   
+    If container_add_child() will g_object_ref_sink() the passed in child, no
+    reference of the newly created child is leaked. Without floating references,
+    container_add_child() can only g_object_ref() the new child, so to implement
+    this code without reference leaks, it would have to be written as:
+    @begin{pre}
+ Child *child;
+ container = create_container ();
+ child = create_child ();
+ container_add_child (container, child);
+ g_object_unref (child);
+    @end{pre}
+    The floating reference can be converted into an ordinary reference by
+    calling g_object_ref_sink(). For already sunken objects (objects that don't
+    have a floating reference anymore), g_object_ref_sink() is equivalent to
+    g_object_ref() and returns a new reference. Since floating references are
+    useful almost exclusively for C convenience, language bindings that provide
+    automated reference and memory ownership maintenance (such as smart pointers
+    or garbage collection) should not expose floating references in their API.
+
+    Some object implementations may need to save an objects floating state
+    across certain code portions (an example is GtkMenu), to achieve this, the
+    following sequence can be used:
+    @begin{pre}
+ /* save floating state */
+ gboolean was_floating = g_object_is_floating (object);
+ g_object_ref_sink (object);
+ /* protected code portion */
+    ...;
+ /* restore floating state */
+ if (was_floating)
+    g_object_force_floating (object);
+ g_object_unref (object); /* release previously acquired reference */
+    @end{pre}
+    @b{Signal Details}
+
+    The \"notify\" signal
+    @begin{pre}
+ void user_function (GObject    *gobject,
+                     GParamSpec *pspec,
+                     gpointer    user_data)      : No Hooks
+    @end{pre}
+    The notify signal is emitted on an object when one of its properties has
+    been changed. Note that getting this signal doesn't guarantee that the value
+    of the property has actually changed, it may also be emitted when the setter
+    for the property is called to reinstate the previous value.
+
+    This signal is typically used to obtain change notification for a single
+    property, by specifying the property name as a detail in the
+    g_signal_connect() call, like this:
+    @begin{pre}
+ g_signal_connect (text_view->buffer, \"notify::paste-target-list\",
+                   G_CALLBACK (gtk_text_view_target_list_notify),
+                   text_view)
+    @end{pre}
+    It is important to note that you must use canonical parameter names as
+    detail strings for the notify signal.
+    @begin{table}
+      @entry[gobject]{the object which received the signal.}
+      @entry[pspec]{the GParamSpec of the property which changed.}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    @about-class{g-object}
+    @about-symbol{g-object-class}
+    @about-symbol{g-object-construct-param}
+
+    @about-function{G_TYPE_IS_OBJECT}
+    @about-function{G_OBJECT}
+    @about-function{G_IS_OBJECT}
+    @about-function{G_OBJECT_CLASS}
+    @about-function{G_IS_OBJECT_CLASS}
+    @about-function{G_OBJECT_GET_CLASS}
+    @about-function{G_OBJECT_TYPE}
+    @about-function{G_OBJECT_TYPE_NAME}
+    @about-function{G_OBJECT_CLASS_TYPE}
+    @about-function{G_OBJECT_CLASS_NAME}
+
+    @about-function{g_object_class_install_property}
+    @about-function{g_object_class_install_properties}
+    @about-function{g_object_class_find_property}
+    @about-function{g_object_class_list_properties}
+    @about-function{g_object_class_override_property}
+    @about-function{g_object_interface_install_property}
+    @about-function{g_object_interface_find_property}
+    @about-function{g_object_interface_list_properties}
+    @about-function{g_object_new}
+    @about-function{g_object_newv}
+
+    @about-class{GParameter}
+    @about-function{g_object_ref}
+    @about-function{g_object_unref}
+    @about-function{g_object_ref_sink}
+    @about-function{g_clear_object}
+
+    @about-function{GInitiallyUnowned}
+    @about-function{GInitiallyUnownedClass}
+
+    @about-function{G_TYPE_INITIALLY_UNOWNED}
+
+    @about-function{g_object_is_floating}
+    @about-function{g_object_force_floating}
+    @about-function{g_object_weak_ref}
+    @about-function{g_object_weak_unref}
+    @about-function{g_object_add_weak_pointer}
+    @about-function{g_object_remove_weak_pointer}
+    @about-function{g_object_add_toggle_ref}
+    @about-function{g_object_remove_toggle_ref}
+    @about-function{g_object_connect}
+    @about-function{g_object_disconnect}
+    @about-function{g_object_set}
+    @about-function{g_object_get}
+    @about-function{g_object_notify}
+    @about-function{g_object_notify_by_pspec}
+    @about-function{g_object_freeze_notify}
+    @about-function{g_object_thaw_notify}
+    @about-function{g_object_get_data}
+    @about-function{g_object_set_data}
+    @about-function{g_object_set_data_full}
+    @about-function{g_object_steal_data}
+    @about-function{g_object_get_qdata}
+    @about-function{g_object_set_qdata}
+    @about-function{g_object_set_qdata_full}
+    @about-function{g_object_steal_qdata}
+    @about-function{g_object_set_property}
+    @about-function{g_object_get_property}
+    @about-function{g_object_new_valist}
+    @about-function{g_object_set_valist}
+    @about-function{g_object_get_valist}
+    @about-function{g_object_watch_closure}
+    @about-function{g_object_run_dispose}
+
+    @about-function{G_OBJECT_WARN_INVALID_PROPERTY_ID}
+
+    @about-function{GWeakRef}
+
+    @about-function{g_weak_ref_init}
+    @about-function{g_weak_ref_clear}
+    @about-function{g_weak_ref_get}
+    @about-function{g_weak_ref_set}
   @end{section}
   @begin[Enumeration and Flag Types]{section}
   @end{section}

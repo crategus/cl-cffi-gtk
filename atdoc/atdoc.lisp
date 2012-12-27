@@ -55,6 +55,7 @@
       :css "crategus.css"
       :logo nil
       :single-page-p nil
+      :paginate-section-p t
       :include-slot-definitions-p t
       :include-internal-symbols-p nil)))
 
