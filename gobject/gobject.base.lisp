@@ -274,7 +274,7 @@
   (:ref-count :uint)
   (:data :pointer))
 
-(export '%g-object)
+;(export '%g-object)
 
 ;; Accessor for the slot ref-count of %g-object
 
