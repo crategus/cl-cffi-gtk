@@ -72,3 +72,8 @@
 /pango/atdoc/lambda.ico
 /pango/atdoc/pages/*
 /pango/atdoc/single-page/*
+/atdoc/single-page/.atdoc.xml
+/atdoc/single-page/header.gif
+/atdoc/single-page/index.css
+/atdoc/single-page/index.html
+/atdoc/single-page/lambda.ico
