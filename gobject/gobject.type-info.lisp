@@ -2541,7 +2541,7 @@
 
 (defcfun ("g_type_query" g-type-query) :void
   (gtype g-type)
-  (query (:pointer g-type-query)))
+  (query (:pointer (:struct g-type-query))))
 
 (export 'g-type-query)
 
