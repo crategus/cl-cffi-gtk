@@ -177,20 +177,20 @@
                 (mapcar #'gtype-name (g-type-interfaces "GtkApplication")))
   
   ;; Query infos about the class
-  (with-foreign-object (query 'g-type-query)
+  (with-foreign-object (query '(:struct g-type-query))
     (g-type-query "GtkApplication" query)
     (assert-equal (gtype "GtkApplication")
-                  (foreign-slot-value query 'g-type-query :type))
+                  (foreign-slot-value query '(:struct g-type-query) :type))
     (assert-equal "GtkApplication"
-                  (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 212 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql  20 (foreign-slot-value query 'g-type-query :instance-size)))
+                  (foreign-slot-value query '(:struct g-type-query) :type-name))
+    (assert-eql 212 (foreign-slot-value query '(:struct g-type-query) :class-size))
+    (assert-eql  20 (foreign-slot-value query '(:struct g-type-query) :instance-size)))
   
   ;; Get the names of the class properties
   (assert-equal
        '("application-id" "flags" "is-registered" "is-remote"
          "inactivity-timeout" "action-group" "register-session" "app-menu"
-         "menubar")
+         "menubar" "active-window")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkApplication"))))
 
@@ -200,7 +200,9 @@
                                (:SUPERCLASS G-APPLICATION :EXPORT T :INTERFACES
                                 ("GActionGroup" "GActionMap") :TYPE-INITIALIZER
                                 "gtk_application_get_type")
-                               ((APP-MENU GTK-APPLICATION-APP-MENU "app-menu"
+                               ((ACTIVE-WINDOW GTK-APPLICATION-ACTIVE-WINDOW
+                                 "active-window" "GtkWindow" T NIL)
+                                (APP-MENU GTK-APPLICATION-APP-MENU "app-menu"
                                  "GMenuModel" T T)
                                 (MENUBAR GTK-APPLICATION-MENUBAR "menubar"
                                  "GMenuModel" T T)

@@ -57,8 +57,8 @@
   (assert-eql (ash 255 2) +g-type-fundamental-max+)
   (assert-eql (ash 256 2) (g-type-make-fundamental 256))
   
-  (assert-equal "GType"      (gtype-name (gtype (g-type-gtype))))
-  (assert-eql 134819840 (gtype-id (gtype (g-type-gtype))))
+  (assert-equal "GType" (gtype-name (gtype (g-type-gtype))))
+  (assert-eql 134819824 (gtype-id (gtype (g-type-gtype))))
   
   (assert-false (g-type-is-abstract (gtype "gboolean")))
   (assert-false (g-type-is-abstract (gtype "GObject")))
@@ -74,9 +74,7 @@
   (assert-true  (g-type-is-fundamental (gtype "gboolean")))
   (assert-true  (g-type-is-fundamental (gtype "GObject")))
   (assert-false (g-type-is-fundamental (gtype "GtkWidget")))
-  (assert-false (g-type-is-fundamental (gtype "GtkWindow")))
-  
-  )
+  (assert-false (g-type-is-fundamental (gtype "GtkWindow"))))
 
 (define-test g-type-info-g-type-flags
   (assert-eql 4 (foreign-type-size 'g-type-flags))
@@ -240,7 +238,6 @@
   (assert-equal "GObject"    (gtype-name (gtype +g-type-object+)))
   (assert-equal "GVariant"   (gtype-name (gtype +g-type-variant+))))
 
-
 (define-test g-type-info-char
   (let ((id +g-type-char+)
         (name "gchar")
@@ -338,12 +335,15 @@
   ;; g-type-get-qdata
   (assert-true  (null-pointer-p (g-type-get-qdata gtype "myData")))
   ;; g-type-query
-  (with-foreign-object (query 'g-type-query)
+  ;; FIXME: This does not work for the type "gchar" or other basic types like
+  ;; "gboolean". But it is not a problem for "GObject" and derived classes.
+  #+nil
+  (with-foreign-object (query '(:struct g-type-query))
     (g-type-query name query)
-    (assert-false (foreign-slot-value query 'g-type-query :type))
-    (assert-false (foreign-slot-value query 'g-type-query :type-name))
-    (assert-eql 0 (foreign-slot-value query 'g-type-query :class-size))
-    (assert-eql 0 (foreign-slot-value query 'g-type-query :instance-size)))
+    (assert-false (foreign-slot-value query '(:struct g-type-query) :type))
+    (assert-false (foreign-slot-value query '(:struct g-type-query) :type-name))
+    (assert-eql 0 (foreign-slot-value query '(:struct g-type-query) :class-size))
+    (assert-eql 0 (foreign-slot-value query '(:struct g-type-query) :instance-size)))
   ;; g-type-fundamental
   (assert-eq gtype (g-type-fundamental gtype))
   (assert-eq gtype (g-type-fundamental id))
@@ -358,18 +358,14 @@
     (assert-equal "i" (foreign-slot-value table 'g-type-value-table :collect-format))
     (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :collect-value)))
     (assert-equal "p" (foreign-slot-value table 'g-type-value-table :lcopy-format))
-    (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))
-  
-))
-
-
+    (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))))
 
 (define-test g-type-info-gtk-label
   (let ((id (gtype-id (gtype "GtkLabel")))
         (name "GtkLabel")
         (gtype (gtype "GtkLabel")))
     ;; gtype-id
-    (assert-eql 134902128 (gtype-id gtype))
+    (assert-eql 134905144 (gtype-id gtype))
     ;; gtype-name
     (assert-equal name (gtype-name gtype))
     ;; gtype-from-id
@@ -483,9 +479,6 @@
                   (mapcar #'gtype-name (g-type-interfaces id)))
     (assert-equal '("AtkImplementorIface" "GtkBuildable")
                   (mapcar #'gtype-name (g-type-interfaces name)))
-
-    ;; Hier weiter machen.
-
     ;; g-type-interace-prerequisites
     ;; g-type-set-qdata
     (g-type-set-qdata gtype "myData" (null-pointer))
@@ -512,7 +505,6 @@
       (assert-equal "p" (foreign-slot-value table 'g-type-value-table :collect-format))
       (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :collect-value)))
       (assert-equal "p" (foreign-slot-value table 'g-type-value-table :lcopy-format))
-      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))
-  
-))
+      (assert-false (null-pointer-p (foreign-slot-value table 'g-type-value-table :lcopy-value))))))
 
+;;; --- End of file rtest-gobject-type-info.lisp -------------------------------

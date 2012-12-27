@@ -35,16 +35,16 @@
                          t))))
     (assert-equal
        (format nil "~a" (list-signals (gtype "GtkButton")))
-"(#<Signal [#154] void GtkButton.activate () [RUN-FIRST, ACTION]>
- #<Signal [#149] void GtkButton.pressed () [RUN-FIRST]>
- #<Signal [#150] void GtkButton.released () [RUN-FIRST]>
- #<Signal [#151] void GtkButton.clicked () [RUN-FIRST, ACTION]>
- #<Signal [#152] void GtkButton.enter () [RUN-FIRST]>
- #<Signal [#153] void GtkButton.leave () [RUN-FIRST]>)")
+"(#<Signal [#174] void GtkButton.activate () [RUN-FIRST, ACTION]>
+ #<Signal [#169] void GtkButton.pressed () [RUN-FIRST]>
+ #<Signal [#170] void GtkButton.released () [RUN-FIRST]>
+ #<Signal [#171] void GtkButton.clicked () [RUN-FIRST, ACTION]>
+ #<Signal [#172] void GtkButton.enter () [RUN-FIRST]>
+ #<Signal [#173] void GtkButton.leave () [RUN-FIRST]>)")
 
     ;; g-signal-query
-    (let ((query (g-signal-query 149)))
-      (assert-eql 149 (signal-info-id query))
+    (let ((query (g-signal-query 169)))
+      (assert-eql 169 (signal-info-id query))
       (assert-equal "pressed" (signal-info-name query))
       (assert-equal "GtkButton" (g-type-name (signal-info-owner-type query)))
       (assert-equal '(:run-first) (signal-info-flags query))
@@ -52,8 +52,8 @@
       (assert-false (signal-info-param-types query))
       (assert-false (signal-info-detail query)))
 
-    (let ((query (g-signal-query 150)))
-      (assert-eql 150 (signal-info-id query))
+    (let ((query (g-signal-query 170)))
+      (assert-eql 170 (signal-info-id query))
       (assert-equal "released" (signal-info-name query))
       (assert-equal "GtkButton" (g-type-name (signal-info-owner-type query)))
       (assert-equal '(:run-first) (signal-info-flags query))
@@ -61,8 +61,8 @@
       (assert-false (signal-info-param-types query))
       (assert-false (signal-info-detail query)))
 
-    (let ((query (g-signal-query 151)))
-      (assert-eql 151 (signal-info-id query))
+    (let ((query (g-signal-query 171)))
+      (assert-eql 171 (signal-info-id query))
       (assert-equal "clicked" (signal-info-name query))
       (assert-equal "GtkButton" (g-type-name (signal-info-owner-type query)))
       (assert-equal '(:RUN-FIRST :ACTION) (signal-info-flags query))
@@ -70,8 +70,8 @@
       (assert-false (signal-info-param-types query))
       (assert-false (signal-info-detail query)))
 
-    (let ((query (g-signal-query 152)))
-      (assert-eql 152 (signal-info-id query))
+    (let ((query (g-signal-query 172)))
+      (assert-eql 172 (signal-info-id query))
       (assert-equal "enter" (signal-info-name query))
       (assert-equal "GtkButton" (g-type-name (signal-info-owner-type query)))
       (assert-equal '(:RUN-FIRST) (signal-info-flags query))
@@ -79,8 +79,8 @@
       (assert-false (signal-info-param-types query))
       (assert-false (signal-info-detail query)))
 
-    (let ((query (g-signal-query 153)))
-      (assert-eql 153 (signal-info-id query))
+    (let ((query (g-signal-query 173)))
+      (assert-eql 173 (signal-info-id query))
       (assert-equal "leave" (signal-info-name query))
       (assert-equal "GtkButton" (g-type-name (signal-info-owner-type query)))
       (assert-equal '(:RUN-FIRST) (signal-info-flags query))
@@ -88,8 +88,8 @@
       (assert-false (signal-info-param-types query))
       (assert-false (signal-info-detail query)))
 
-    (let ((query (g-signal-query 154)))
-      (assert-eql 154 (signal-info-id query))
+    (let ((query (g-signal-query 174)))
+      (assert-eql 174 (signal-info-id query))
       (assert-equal "activate" (signal-info-name query))
       (assert-equal "GtkButton" (g-type-name (signal-info-owner-type query)))
       (assert-equal '(:run-first :action) (signal-info-flags query))
@@ -98,26 +98,28 @@
       (assert-false (signal-info-detail query)))
 
     ;; g-signal-lookup
-    (assert-eql 149 (g-signal-lookup "pressed" "GtkButton"))
-    (assert-eql 150 (g-signal-lookup "released" "GtkButton"))
-    (assert-eql 151 (g-signal-lookup "clicked" "GtkButton"))
-    (assert-eql 152 (g-signal-lookup "enter" "GtkButton"))
-    (assert-eql 153 (g-signal-lookup "leave" "GtkButton"))
-    (assert-eql 154 (g-signal-lookup "activate" "GtkButton"))
+    (assert-eql 169 (g-signal-lookup "pressed" "GtkButton"))
+    (assert-eql 170 (g-signal-lookup "released" "GtkButton"))
+    (assert-eql 171 (g-signal-lookup "clicked" "GtkButton"))
+    (assert-eql 172 (g-signal-lookup "enter" "GtkButton"))
+    (assert-eql 173 (g-signal-lookup "leave" "GtkButton"))
+    (assert-eql 174 (g-signal-lookup "activate" "GtkButton"))
 
     ;; g-signal-name
-    (assert-equal "pressed" (g-signal-name 149))
-    (assert-equal "released" (g-signal-name 150))
-    (assert-equal "clicked" (g-signal-name 151))
-    (assert-equal "enter" (g-signal-name 152))
-    (assert-equal "leave" (g-signal-name 153))
-    (assert-equal "activate" (g-signal-name 154))
+    (assert-equal "pressed" (g-signal-name 169))
+    (assert-equal "released" (g-signal-name 170))
+    (assert-equal "clicked" (g-signal-name 171))
+    (assert-equal "enter" (g-signal-name 172))
+    (assert-equal "leave" (g-signal-name 173))
+    (assert-equal "activate" (g-signal-name 174))
 
     ;; g-signal-list-ids
     (assert-false (g-signal-list-ids "gboolean"))
     (assert-equal '(1) (g-signal-list-ids "GObject"))
-    (assert-equal '(154 149 150 151 152 153) (g-signal-list-ids "GtkButton"))
+    (assert-equal '(174 169 170 171 172 173) (g-signal-list-ids "GtkButton"))
 
+    ;; TODO: This test causes an execution error. Check this.
+    ;; 
     ;; g-signal-emit
     ;; The signal handler writes a message in the global variable *message*.
     ;; We emit the signal and check the value of *message*.
@@ -129,20 +131,19 @@
     (assert-true (g-signal-handler-is-connected button handler-id))
 
     ;; g-signal-has-handler-pending
-    (assert-true (g-signal-has-handler-pending button 151 (null-pointer) t))
-    (assert-true (g-signal-has-handler-pending button 151 (null-pointer) nil))
+    (assert-true (g-signal-has-handler-pending button 171 (null-pointer) t))
+    (assert-true (g-signal-has-handler-pending button 171 (null-pointer) nil))
 
     ;; Block and unblock a signal handler
     (g-signal-handler-block button handler-id)
-    (assert-true (g-signal-has-handler-pending button 151 (null-pointer) t))
-    (assert-false (g-signal-has-handler-pending button 151 (null-pointer) nil))
+    (assert-true (g-signal-has-handler-pending button 171 (null-pointer) t))
+    (assert-false (g-signal-has-handler-pending button 171 (null-pointer) nil))
     (g-signal-handler-unblock button handler-id)
-    (assert-true (g-signal-has-handler-pending button 151 (null-pointer) t))
-    (assert-true (g-signal-has-handler-pending button 151 (null-pointer) nil))
+    (assert-true (g-signal-has-handler-pending button 171 (null-pointer) t))
+    (assert-true (g-signal-has-handler-pending button 171 (null-pointer) nil))
 
     ;; g-signal-handler-find
     (assert-eql handler-id (g-signal-handler-find button signal-id))
-
 
 ;    (assert-true (g-object-signal-handlers button))
 

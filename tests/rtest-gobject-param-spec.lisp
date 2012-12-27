@@ -38,7 +38,7 @@
   ))
 
 (define-test gobject-param-spec-int
-  (with-foreign-object (value 'g-value)
+  (with-foreign-object (value '(:struct g-value))
     (let ((prop (g-param-spec-int "PropertyInteger"
                                   "PSpecInt"
                                   "Integer Property"
