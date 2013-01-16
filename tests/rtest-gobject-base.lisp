@@ -29,16 +29,16 @@
          ;; Get the pointer to the instance of the object
          (ptr (pointer label)))
     ;; Access the slot values of the structure %g-object
-    (assert-true  (pointerp (foreign-slot-value ptr '%g-object :type-instance)))
-    (assert-eql 1 (foreign-slot-value ptr '%g-object :ref-count))
-    (assert-true  (pointerp (foreign-slot-value ptr '%g-object :data)))
+    (assert-true  (pointerp (foreign-slot-value ptr 'gobject::%g-object :type-instance)))
+    (assert-eql 1 (foreign-slot-value ptr 'gobject::%g-object :ref-count))
+    (assert-true  (pointerp (foreign-slot-value ptr 'gobject::%g-object :data)))
     
     ;; Increase and decrease the ref-count with the functions
     ;; g-object-ref and g-object-unref
     (assert-true (pointerp (g-object-ref ptr)))
-    (assert-eql 2 (foreign-slot-value ptr '%g-object :ref-count))
+    (assert-eql 2 (foreign-slot-value ptr 'gobject::%g-object :ref-count))
     (g-object-unref ptr)
-    (assert-eql 1 (foreign-slot-value ptr '%g-object :ref-count))
+    (assert-eql 1 (foreign-slot-value ptr 'gobject::%g-object :ref-count))
     
     ;; ref-count takes an object or an pointer as an argument and
     ;; access the slot value of the structure %g-object to get the ref-count
@@ -63,5 +63,21 @@
     (assert-eq (find-class 'gobject-class) (class-of class))
   ))
 
+(define-test g-object-base
+  (assert-true (g-type-is-object (gtype "GtkButton")))
+  (assert-equal "GtkButton" (g-type-name (g-object-type (make-instance 'gtk-button))))
+  (assert-equal "GtkButton" (g-object-type-name (make-instance 'gtk-button)))
+  (assert-equal "GtkButton" (g-type-name (g-object-class-type (g-type-class-ref (gtype "GtkButton")))))
+  (assert-equal "GtkButton" (g-object-class-name (g-type-class-ref (gtype "GtkButton"))))
+  ;; g-object-class-find-property
+  (let ((param (g-object-class-find-property (g-type-class-ref (gtype "GtkButton")) "label")))
+    (assert-true (pointerp (foreign-slot-value param 'g-param-spec :type-instance)))
+    (assert-equal "label" (foreign-slot-value param 'g-param-spec :name))
+    (assert-equal '(:READABLE :WRITABLE :CONSTRUCT :STATIC-NAME :STATIC-NICK :STATIC-BLURB)
+                  (foreign-slot-value param 'g-param-spec :flags))
+    (assert-equal "gchararray" (g-type-name (foreign-slot-value param 'g-param-spec :value-type)))
+    (assert-equal "GtkButton" (g-type-name (foreign-slot-value param 'g-param-spec :owner-type)))
+  )
+)
 
 ;;; --- End of file rtest-gobject-base.lisp ------------------------------------

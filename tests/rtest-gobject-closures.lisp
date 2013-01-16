@@ -25,56 +25,56 @@
 
 (define-test g-object-closures
  ;; Create a simple closure and check the slots
- (let* ((closure (g-closure-new-simple (foreign-type-size '(:struct lisp-closure))
+ (let* ((closure (g-closure-new-simple (foreign-type-size 'lisp-closure)
                                                           (null-pointer)))
         (parent-instance (foreign-slot-value closure
-                                             '(:struct lisp-closure)
+                                             'lisp-closure
                                              :parent-instance)))
    (assert-true
-     (pointerp (foreign-slot-value closure '(:struct lisp-closure) :parent-instance)))
+     (pointerp (foreign-slot-value closure 'lisp-closure :parent-instance)))
    (assert-true
      (null-pointer-p
-       (foreign-slot-value closure '(:struct lisp-closure) :object)))
+       (foreign-slot-value closure 'lisp-closure :object)))
    (assert-eql 0
-     (foreign-slot-value closure '(:struct lisp-closure) :function-id))
+     (foreign-slot-value closure 'lisp-closure :function-id))
    (assert-true
      (integerp
-       (foreign-slot-value parent-instance '(:struct g-closure) :private-data)))
+       (foreign-slot-value parent-instance 'g-closure :private-data)))
    (assert-true
      (null-pointer-p
-       (foreign-slot-value parent-instance '(:struct g-closure) :marshal)))
+       (foreign-slot-value parent-instance 'g-closure :marshal)))
    (assert-true
      (null-pointer-p
-       (foreign-slot-value parent-instance '(:struct g-closure) :data)))
+       (foreign-slot-value parent-instance 'g-closure :data)))
    (assert-true
      (null-pointer-p
-       (foreign-slot-value parent-instance '(:struct g-closure) :notifiers)))
+       (foreign-slot-value parent-instance 'g-closure :notifiers)))
  )
  ;; Create a closure with the Lisp function create-closure
  (let* ((button (make-instance 'gtk-button))
         (func #'(lambda (x) x))
         (closure (gobject::create-closure button func))
         (parent-instance (foreign-slot-value closure
-                                             '(:struct lisp-closure)
+                                             'lisp-closure
                                              :parent-instance)))
    (assert-true
-     (pointerp (foreign-slot-value closure '(:struct lisp-closure) :parent-instance)))
+     (pointerp (foreign-slot-value closure 'lisp-closure :parent-instance)))
    (assert-equal "GtkButton"
      (g-type-name
        (g-type-from-instance
-         (foreign-slot-value closure '(:struct lisp-closure) :object))))
+         (foreign-slot-value closure 'lisp-closure :object))))
    (assert-eql 0
-     (foreign-slot-value closure '(:struct lisp-closure) :function-id))
+     (foreign-slot-value closure 'lisp-closure :function-id))
    (assert-true
      (integerp
-       (foreign-slot-value parent-instance '(:struct g-closure) :private-data)))
+       (foreign-slot-value parent-instance 'g-closure :private-data)))
    (assert-true
-     (pointerp (foreign-slot-value parent-instance '(:struct g-closure) :marshal)))
+     (pointerp (foreign-slot-value parent-instance 'g-closure :marshal)))
    (assert-true
      (null-pointer-p
-       (foreign-slot-value parent-instance '(:struct g-closure) :data)))
+       (foreign-slot-value parent-instance 'g-closure :data)))
    (assert-true
-     (pointerp (foreign-slot-value parent-instance '(:struct g-closure) :notifiers)))
+     (pointerp (foreign-slot-value parent-instance 'g-closure :notifiers)))
 
 
  )

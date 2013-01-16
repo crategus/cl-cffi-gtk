@@ -23,6 +23,27 @@
 
 (in-package :gobject-tests)
 
+(define-test gobject-param-flags
+  (assert-eql 4 (foreign-type-size 'g-param-flags))
+  (assert-equal '(:readable)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 0)))
+  (assert-equal '(:writable)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 1)))
+  (assert-equal '(:construct)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 2)))
+  (assert-equal '(:construct-only)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 3)))
+  (assert-equal '(:lax-validation)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 4)))
+  (assert-equal '(:static-name)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 5)))
+  (assert-equal '(:static-nick)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 6)))
+  (assert-equal '(:static-blurb)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 7)))
+  (assert-equal '(:deprecated)
+                (foreign-bitfield-symbols 'g-param-flags (ash 1 31))))
+
 (define-test gobject-param-spec
   (let ((param (g-param-spec-boolean "aBoolean" 
                                      "aBool"
@@ -38,7 +59,7 @@
   ))
 
 (define-test gobject-param-spec-int
-  (with-foreign-object (value '(:struct g-value))
+  (with-foreign-object (value 'g-value)
     (let ((prop (g-param-spec-int "PropertyInteger"
                                   "PSpecInt"
                                   "Integer Property"

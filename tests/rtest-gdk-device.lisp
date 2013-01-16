@@ -23,6 +23,7 @@
 
 (in-package :gdk-tests)
 
+#-windows
 (define-test gdk-device
   (assert-true  (g-type-is-object "GdkDevice"))
   (assert-true  (g-type-is-abstract "GdkDevice"))
@@ -116,6 +117,101 @@
                                  NIL)))
      (get-g-type-definition (gtype "GdkDevice"))))
 
+#+windows
+(define-test gdk-device
+  (assert-true  (g-type-is-object "GdkDevice"))
+  (assert-true  (g-type-is-abstract "GdkDevice"))
+  (assert-true  (g-type-is-derived "GdkDevice"))
+  (assert-false (g-type-is-fundamental "GdkDevice"))
+  (assert-true  (g-type-is-value-type "GdkDevice"))
+  (assert-true  (g-type-has-value-table "GdkDevice"))
+  (assert-true  (g-type-is-classed "GdkDevice"))
+  (assert-true  (g-type-is-instantiatable "GdkDevice"))
+  (assert-true  (g-type-is-derivable "GdkDevice"))
+  (assert-true  (g-type-is-deep-derivable "GdkDevice"))
+  (assert-false (g-type-is-interface "GdkDevice"))
+
+  ;; Check the registered name
+  (assert-eq 'gdk-device
+             (registered-object-type-by-name "GdkDevice"))
+  
+  (let ((class (g-type-class-ref (gtype "GdkDevice"))))
+    (assert-equal (gtype "GdkDevice")  (g-type-from-class class))
+    (assert-equal (gtype "GdkDevice") (g-object-class-type class))
+    (assert-equal "GdkDevice" (g-object-class-name class))
+    (assert-equal (gtype "GdkDevice")
+                  (g-type-from-class (g-type-class-peek "GdkDevice")))
+    (assert-equal (gtype "GdkDevice")
+                  (g-type-from-class (g-type-class-peek-static "GdkDevice")))
+    (g-type-class-unref class))
+  
+  (let ((class (find-class 'gdk-device)))
+    ;; Check the class name and type of the class
+    (assert-eq 'gdk-device (class-name class))
+    (assert-eq 'gobject-class (type-of class))
+    (assert-eq (find-class 'gobject-class) (class-of class))
+    ;; Properties of the metaclass gobject-class
+    (assert-equal "GdkDevice" (gobject-class-g-type-name class))
+    (assert-equal "GdkDevice" (gobject-class-direct-g-type-name class))
+    (assert-equal "gdk_device_get_type"
+                  (gobject-class-g-type-initializer class))
+    (assert-false (gobject-class-interface-p class)))
+  
+  (assert-equal (gtype "GObject") (g-type-parent "GdkDevice"))
+  (assert-eql 2 (g-type-depth "GdkDevice"))
+  (assert-eql   (gtype "GdkDevice")
+                (g-type-next-base "GdkDevice" "GObject"))
+  (assert-true  (g-type-is-a "GdkDevice" "GObject"))
+  (assert-false (g-type-is-a "GdkDevice" "gboolean"))
+  (assert-false (g-type-is-a "GdkDevice" "GtkWindow"))
+  (assert-equal '("GdkDeviceVirtual" "GdkDeviceWin32")
+                (mapcar #'gtype-name (g-type-children "GdkDevice")))
+  (assert-equal '()
+                (mapcar #'gtype-name (g-type-interfaces "GdkDevice")))
+  
+  ;; Query infos about the class
+  (with-foreign-object (query 'g-type-query)
+    (g-type-query "GdkDevice" query)
+    (assert-equal (gtype "GdkDevice")
+                  (foreign-slot-value query 'g-type-query :type))
+    (assert-equal "GdkDevice"
+                  (foreign-slot-value query 'g-type-query :type-name))
+    (assert-eql 104 (foreign-slot-value query 'g-type-query :class-size))
+    (assert-eql  60 (foreign-slot-value query 'g-type-query :instance-size)))
+  
+  ;; Get the names of the class properties of "GdkDevice".
+  (assert-equal
+      ' ("display" "device-manager" "name" "associated-device" "type"
+         "input-source" "input-mode" "has-cursor" "n-axes")
+     (mapcar #'param-spec-name
+             (g-object-class-list-properties (gtype "GdkDevice"))))
+
+  ;; Get the class definition
+  (assert-equal
+     '(DEFINE-G-OBJECT-CLASS "GdkDevice" GDK-DEVICE
+                               (:SUPERCLASS G-OBJECT :EXPORT T :INTERFACES NIL
+                                :TYPE-INITIALIZER "gdk_device_get_type")
+                               ((ASSOCIATED-DEVICE GDK-DEVICE-ASSOCIATED-DEVICE
+                                 "associated-device" "GdkDevice" T NIL)
+                                (DEVICE-MANAGER GDK-DEVICE-DEVICE-MANAGER
+                                 "device-manager" "GdkDeviceManager" T NIL)
+                                (DISPLAY GDK-DEVICE-DISPLAY "display"
+                                 "GdkDisplay" T NIL)
+                                (HAS-CURSOR GDK-DEVICE-HAS-CURSOR "has-cursor"
+                                 "gboolean" T NIL)
+                                (INPUT-MODE GDK-DEVICE-INPUT-MODE "input-mode"
+                                 "GdkInputMode" T T)
+                                (INPUT-SOURCE GDK-DEVICE-INPUT-SOURCE
+                                 "input-source" "GdkInputSource" T NIL)
+                                (N-AXES GDK-DEVICE-N-AXES "n-axes" "guint" T
+                                 NIL)
+                                (NAME GDK-DEVICE-NAME "name" "gchararray" T
+                                 NIL)
+                                (TYPE GDK-DEVICE-TYPE "type" "GdkDeviceType" T
+                                 NIL)))
+     (get-g-type-definition (gtype "GdkDevice"))))
+
+#-windows
 (define-test gdk-x11-device-xi2
   (assert-true  (g-type-is-object "GdkX11DeviceXI2"))
   (assert-false (g-type-is-abstract "GdkX11DeviceXI2"))

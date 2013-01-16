@@ -90,7 +90,8 @@
          "margin-top" "margin-bottom" "margin" "hexpand" "vexpand"
          "hexpand-set" "vexpand-set" "expand" "border-width" "resize-mode"
          "child" "label" "image" "relief" "use-underline" "use-stock"
-         "focus-on-click" "xalign" "yalign" "image-position")
+         "focus-on-click" "xalign" "yalign" "image-position"
+         "always-show-image")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkButton"))))
   
@@ -99,10 +100,11 @@
       '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
          "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-         "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "window-dragging" "child-displacement-x"
-         "child-displacement-y" "default-border" "default-outside-border"
-         "displace-focus" "image-spacing" "inner-border")
+         "separator-height" "separator-width" "text-handle-height"
+         "text-handle-width" "visited-link-color" "wide-separators"
+         "window-dragging" "child-displacement-x" "child-displacement-y"
+         "default-border" "default-outside-border" "displace-focus"
+         "image-spacing" "inner-border")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkButton"))))
   
@@ -137,7 +139,9 @@
                                 ("AtkImplementorIface" "GtkActionable"
                                  "GtkActivatable" "GtkBuildable")
                                 :TYPE-INITIALIZER "gtk_button_get_type")
-                               ((FOCUS-ON-CLICK GTK-BUTTON-FOCUS-ON-CLICK
+                               ((ALWAYS-SHOW-IMAGE GTK-BUTTON-ALWAYS-SHOW-IMAGE
+                                 "always-show-image" "gboolean" T T)
+                                (FOCUS-ON-CLICK GTK-BUTTON-FOCUS-ON-CLICK
                                  "focus-on-click" "gboolean" T T)
                                 (IMAGE GTK-BUTTON-IMAGE "image" "GtkWidget" T
                                  T)

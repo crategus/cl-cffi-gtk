@@ -92,7 +92,7 @@
   (assert-equal
        '("application-id" "flags" "is-registered" "is-remote"
          "inactivity-timeout" "action-group" "register-session" "app-menu"
-         "menubar")
+         "menubar" "active-window")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkApplication"))))
 
@@ -102,7 +102,9 @@
                                (:SUPERCLASS G-APPLICATION :EXPORT T :INTERFACES
                                 ("GActionGroup" "GActionMap") :TYPE-INITIALIZER
                                 "gtk_application_get_type")
-                               ((APP-MENU GTK-APPLICATION-APP-MENU "app-menu"
+                               ((ACTIVE-WINDOW GTK-APPLICATION-ACTIVE-WINDOW
+                                 "active-window" "GtkWindow" T NIL)
+                                (APP-MENU GTK-APPLICATION-APP-MENU "app-menu"
                                  "GMenuModel" T T)
                                 (MENUBAR GTK-APPLICATION-MENUBAR "menubar"
                                  "GMenuModel" T T)

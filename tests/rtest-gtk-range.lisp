@@ -97,10 +97,11 @@
       '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
          "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-         "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "window-dragging" "arrow-displacement-x"
-         "arrow-displacement-y" "arrow-scaling" "slider-width" "stepper-size"
-         "stepper-spacing" "trough-border" "trough-under-steppers")
+         "separator-height" "separator-width" "text-handle-height"
+         "text-handle-width" "visited-link-color" "wide-separators"
+         "window-dragging" "arrow-displacement-x" "arrow-displacement-y"
+         "arrow-scaling" "slider-width" "stepper-size" "stepper-spacing"
+         "trough-border" "trough-under-steppers")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkRange"))))
   

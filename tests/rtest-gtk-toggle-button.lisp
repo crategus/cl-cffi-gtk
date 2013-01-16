@@ -89,8 +89,8 @@
          "margin-top" "margin-bottom" "margin" "hexpand" "vexpand"
          "hexpand-set" "vexpand-set" "expand" "border-width" "resize-mode"
          "child" "label" "image" "relief" "use-underline" "use-stock"
-         "focus-on-click" "xalign" "yalign" "image-position" "active"
-         "inconsistent" "draw-indicator")
+         "focus-on-click" "xalign" "yalign" "image-position"
+         "always-show-image" "active" "inconsistent" "draw-indicator")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkToggleButton"))))
   
@@ -99,10 +99,11 @@
       '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
          "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-         "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "window-dragging" "child-displacement-x"
-         "child-displacement-y" "default-border" "default-outside-border"
-         "displace-focus" "image-spacing" "inner-border")
+         "separator-height" "separator-width" "text-handle-height"
+         "text-handle-width" "visited-link-color" "wide-separators"
+         "window-dragging" "child-displacement-x" "child-displacement-y"
+         "default-border" "default-outside-border" "displace-focus"
+         "image-spacing" "inner-border")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkToggleButton"))))
   

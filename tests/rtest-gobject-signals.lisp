@@ -25,7 +25,7 @@
 
 (defvar *message* nil)
 
-(define-test g-object-signals
+(define-test gobject-signals
   (let* ((button (make-instance 'gtk-button))
          (signal-id (g-signal-lookup "clicked" "GtkButton"))
          (handler-id (g-signal-connect button "clicked"

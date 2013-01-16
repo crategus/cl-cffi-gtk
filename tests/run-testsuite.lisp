@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; run-testsuite.lisp
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -21,8 +21,8 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :lisp-unit)
-(asdf:operate 'asdf:load-op :cl-cffi-gtk)
+(asdf:load-system :lisp-unit)
+(asdf:load-system :cl-cffi-gtk)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -48,34 +48,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defpackage :gtk-tests
-  (:use :gtk :gdk :gdk-pixbuf :gobject :glib :gio :pango :cairo
-   :cffi :common-lisp :lisp-unit))
+(load "rtest-gtk.lisp")
 
-(load "rtest-gtk-adjustment.lisp")
-(load "rtest-gtk-application.lisp")
-(load "rtest-gtk-border.lisp")
-(load "rtest-gtk-box.lisp")
-(load "rtest-gtk-button.lisp")
-(load "rtest-gtk-button-box.lisp")
-(load "rtest-gtk-cell-renderer-progress.lisp")
-(load "rtest-gtk-check-button.lisp")
-(load "rtest-gtk-grid.lisp")
-(load "rtest-gtk-label.lisp")
-(load "rtest-gtk-progress-bar.lisp")
-(load "rtest-gtk-radio-button.lisp")
-(load "rtest-gtk-range.lisp")
-(load "rtest-gtk-settings.lisp")
-(load "rtest-gtk-scale.lisp")
-(load "rtest-gtk-scrollbar.lisp")
-(load "rtest-gtk-statusbar.lisp")
-(load "rtest-gtk-table.lisp")
-(load "rtest-gtk-toggle-button.lisp")
-(load "rtest-gtk-tree-model.lisp")
-(load "rtest-gtk-window.lisp")
-(load "rtest-gtk-widget.lisp")
-
-(in-package :gtk-tests)
-(run-all-tests :gtk-tests)
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file run-testsuite.lisp -----------------------------------------

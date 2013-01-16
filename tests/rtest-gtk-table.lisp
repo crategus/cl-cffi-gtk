@@ -98,8 +98,9 @@
       '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
          "focus-line-width" "focus-padding" "interior-focus" "link-color"
          "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-         "separator-height" "separator-width" "visited-link-color"
-         "wide-separators" "window-dragging")
+         "separator-height" "separator-width" "text-handle-height"
+         "text-handle-width" "visited-link-color" "wide-separators"
+         "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkTable")))))
 

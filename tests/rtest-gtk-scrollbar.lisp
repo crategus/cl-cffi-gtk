@@ -95,15 +95,16 @@
   ;; Get the names of the style properties.
   (assert-equal
       '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
-        "focus-line-width" "focus-padding" "interior-focus" "link-color"
-        "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
-        "separator-height" "separator-width" "visited-link-color"
-        "wide-separators" "window-dragging" "arrow-displacement-x"
-        "arrow-displacement-y" "arrow-scaling" "slider-width" "stepper-size"
-        "stepper-spacing" "trough-border" "trough-under-steppers"
-        "fixed-slider-length" "has-backward-stepper" "has-forward-stepper"
-        "has-secondary-backward-stepper" "has-secondary-forward-stepper"
-        "min-slider-length")
+         "focus-line-width" "focus-padding" "interior-focus" "link-color"
+         "scroll-arrow-hlength" "scroll-arrow-vlength" "secondary-cursor-color"
+         "separator-height" "separator-width" "text-handle-height"
+         "text-handle-width" "visited-link-color" "wide-separators"
+         "window-dragging" "arrow-displacement-x" "arrow-displacement-y"
+         "arrow-scaling" "slider-width" "stepper-size" "stepper-spacing"
+         "trough-border" "trough-under-steppers" "fixed-slider-length"
+         "has-backward-stepper" "has-forward-stepper"
+         "has-secondary-backward-stepper" "has-secondary-forward-stepper"
+         "min-slider-length")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkScrollbar"))))
   
@@ -118,8 +119,8 @@
     
     ;; Get the values of style properties
     (assert-false  (gtk-widget-style-get-property ptr "fixed-slider-length"))
-    (assert-true   (gtk-widget-style-get-property ptr "has-backward-stepper"))
-    (assert-true   (gtk-widget-style-get-property ptr "has-forward-stepper"))
+    (assert-false  (gtk-widget-style-get-property ptr "has-backward-stepper"))
+    (assert-false  (gtk-widget-style-get-property ptr "has-forward-stepper"))
     (assert-false  (gtk-widget-style-get-property ptr "has-secondary-backward-stepper"))
     (assert-false  (gtk-widget-style-get-property ptr "has-secondary-forward-stepper"))
     (assert-eql 31 (gtk-widget-style-get-property ptr "min-slider-length"))

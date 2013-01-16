@@ -42,35 +42,114 @@
 
 (define-test glib-stable-pointer
   (let* ((func (lambda() 88))
-         (ptr (allocate-stable-pointer func)))
-    (assert-eql 88 (funcall (get-stable-pointer-value ptr)))
-    (assert-false (free-stable-pointer ptr))
-    (assert-false (get-stable-pointer-value ptr)))
+         (ptr (glib::allocate-stable-pointer func)))
+    (assert-eql 88 (funcall (glib::get-stable-pointer-value ptr)))
+    (assert-false (glib::free-stable-pointer ptr))
+    (assert-false (glib::get-stable-pointer-value ptr)))
   (let ((func (lambda () 99)))
     (with-stable-pointer (ptr func)
-      (assert-eql 99 (funcall (get-stable-pointer-value ptr))))))
+      (assert-eql 99 (funcall (glib::get-stable-pointer-value ptr))))))
 
 ;;; ----------------------------------------------------------------------------
 
-(define-test glib-misc
-  (assert-eq :unsigned-long (cffi::canonicalize-foreign-type 'g-size))
-  (assert-eq :long (cffi::canonicalize-foreign-type 'g-ssize))
-  (assert-eq :UNSIGNED-LONG-LONG (cffi::canonicalize-foreign-type 'g-offset)))
-
-;;; ----------------------------------------------------------------------------
-
+#+sbcl
 (define-test glib-version
-  (assert-equal    2 *glib-major-version*)
-  (assert-equal   34 *glib-minor-version*)
-  (assert-equal    1 *glib-micro-version*)
-  (assert-equal 3401 *glib-binary-age*)
-  (assert-equal    1 *glib-interface-age*)
+  (assert-equal    2 glib-major-version)
+  (assert-equal   34 glib-minor-version)
+  (assert-equal    1 glib-micro-version)
+  (assert-equal 3401 glib-binary-age)
+  (assert-equal    1 glib-interface-age)
+  (assert-false (glib-check-version 2 24 0))
+  (assert-equal "GLib version too old (micro mismatch)"
+                (glib-check-version 2 36 0)))
+
+#+windows
+(define-test glib-version
+  (assert-equal    2 glib-major-version)
+  (assert-equal   32 glib-minor-version)
+  (assert-equal    3 glib-micro-version)
+  (assert-equal 3203 glib-binary-age)
+  (assert-equal    3 glib-interface-age)
   (assert-false (glib-check-version 2 24 0))
   (assert-equal "GLib version too old (micro mismatch)"
                 (glib-check-version 2 36 0)))
 
 ;;; ----------------------------------------------------------------------------
 
+(define-test glib-misc
+  (assert-eq :unsigned-long (cffi::canonicalize-foreign-type 'g-size))
+  (assert-eq :long (cffi::canonicalize-foreign-type 'g-ssize))
+  (assert-eq :unsigned-long-long (cffi::canonicalize-foreign-type 'g-offset))
+
+  (let ((mem nil))
+    (assert-true (pointerp (setq mem (g-malloc 10))))
+    (g-free mem)
+    (assert-true (null-pointer-p (g-malloc 0))))
+
+  (with-foreign-object (ptr 'g-time-val)
+    ;; Initialize the slots.
+    ;; The CStruct is exported, but not the slots.
+    (setf (foreign-slot-value ptr 'g-time-val 'glib::tv-sec) 412776
+          (foreign-slot-value ptr 'g-time-val 'glib::tv-usec) 132423)
+    ;; Return a list with the values
+    (assert-equal
+      (list 412776 132423)
+      (with-foreign-slots ((glib::tv-sec glib::tv-usec) ptr g-time-val)
+        (list glib::tv-sec glib::tv-usec))))
+
+
+)
+
+;;; ----------------------------------------------------------------------------
+
+  (defvar *main-loop* nil)
+  (defvar *main-thread* nil)
+  (defvar *main-thread-level* nil)
+  (defvar *main-thread-lock* (bt:make-lock "*main-thread* lock"))
+
+(define-test glib-main-loop
+  (bt:with-lock-held (*main-thread-lock*)
+    (when (and *main-thread* (not (bt:thread-alive-p *main-thread*)))
+      (setf *main-thread* nil))
+    (unless *main-thread*
+      (setf *main-thread*
+            (bt:make-thread (lambda ()
+                              ;; instead of gtk-main
+                              (setf *main-loop*
+                                    (g-main-loop-new (null-pointer) nil))
+                              (g-main-loop-run *main-loop*))
+                            :name "rtest-glib-thread")
+            *main-thread-level* 0))
+    (incf *main-thread-level*))
+
+    (sleep 1)
+    (assert-true (bt:thread-alive-p *main-thread*))
+    (assert-eql 1 *main-thread-level*)
+    (assert-true (pointerp *main-loop*))
+    (assert-true (g-main-loop-is-running *main-loop*))
+    (assert-eql 0 (g-main-depth))
+    (assert-true (pointer-eq (g-main-context-default)
+                             (g-main-loop-get-context *main-loop*)))
+    (assert-false (g-main-context-is-owner (g-main-context-default)))
+
+    (bt:with-lock-held (*main-thread-lock*)
+      (decf *main-thread-level*)
+      (when (zerop *main-thread-level*)
+        ;; instead of gtk-main-quit
+        (g-main-loop-quit *main-loop*)))
+
+    (sleep 1)
+    (assert-false (bt:thread-alive-p *main-thread*))
+    (assert-eql 0 *main-thread-level*)
+    (assert-true (pointerp *main-loop*))
+    (assert-false (g-main-loop-is-running *main-loop*))
+
+
+)
+
+;;; ----------------------------------------------------------------------------
+
+#+nil
 (define-test glib-threads
   (let* ((func (lambda () (sleep 2)))
          (start (get-universal-time))
@@ -84,6 +163,7 @@
 
 (defvar *started* nil)
 
+#+nil
 (define-test glib-utils
   (when (not *started*)
     (setq *started* t)

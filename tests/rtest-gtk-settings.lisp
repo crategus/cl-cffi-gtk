@@ -110,15 +110,16 @@
          "gtk-fontconfig-timestamp" "gtk-sound-theme-name"
          "gtk-enable-input-feedback-sounds" "gtk-enable-event-sounds"
          "gtk-enable-tooltips" "gtk-toolbar-style" "gtk-toolbar-icon-size"
-         "gtk-auto-mnemonics" "gtk-visible-focus"
-         "gtk-application-prefer-dark-theme" "gtk-button-images"
-         "gtk-entry-select-on-focus" "gtk-entry-password-hint-timeout"
-         "gtk-menu-images" "gtk-menu-bar-popup-delay"
-         "gtk-scrolled-window-placement" "gtk-can-change-accels"
-         "gtk-menu-popup-delay" "gtk-menu-popdown-delay"
-         "gtk-label-select-on-focus" "gtk-color-palette" "gtk-im-preedit-style"
-         "gtk-im-status-style" "gtk-shell-shows-app-menu"
-         "gtk-shell-shows-menubar")
+         "gtk-auto-mnemonics" "gtk-primary-button-warps-slider"
+         "gtk-visible-focus" "gtk-application-prefer-dark-theme"
+         "gtk-button-images" "gtk-entry-select-on-focus"
+         "gtk-entry-password-hint-timeout" "gtk-menu-images"
+         "gtk-menu-bar-popup-delay" "gtk-scrolled-window-placement"
+         "gtk-can-change-accels" "gtk-menu-popup-delay"
+         "gtk-menu-popdown-delay" "gtk-label-select-on-focus"
+         "gtk-color-palette" "gtk-im-preedit-style" "gtk-im-status-style"
+         "gtk-shell-shows-app-menu" "gtk-shell-shows-menubar"
+         "gtk-enable-primary-paste")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkSettings"))))
 
@@ -193,6 +194,9 @@
                                 (GTK-ENABLE-MNEMONICS
                                  GTK-SETTINGS-GTK-ENABLE-MNEMONICS
                                  "gtk-enable-mnemonics" "gboolean" T T)
+                                (GTK-ENABLE-PRIMARY-PASTE
+                                 GTK-SETTINGS-GTK-ENABLE-PRIMARY-PASTE
+                                 "gtk-enable-primary-paste" "gboolean" T T)
                                 (GTK-ENABLE-TOOLTIPS
                                  GTK-SETTINGS-GTK-ENABLE-TOOLTIPS
                                  "gtk-enable-tooltips" "gboolean" T T)
@@ -257,6 +261,10 @@
                                  "gtk-menu-popup-delay" "gint" T T)
                                 (GTK-MODULES GTK-SETTINGS-GTK-MODULES
                                  "gtk-modules" "gchararray" T T)
+                                (GTK-PRIMARY-BUTTON-WARPS-SLIDER
+                                 GTK-SETTINGS-GTK-PRIMARY-BUTTON-WARPS-SLIDER
+                                 "gtk-primary-button-warps-slider" "gboolean" T
+                                 T)
                                 (GTK-PRINT-BACKENDS
                                  GTK-SETTINGS-GTK-PRINT-BACKENDS
                                  "gtk-print-backends" "gchararray" T T)
