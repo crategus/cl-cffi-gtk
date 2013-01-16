@@ -76,8 +76,8 @@
       :include-slot-definitions-p t
       :include-internal-symbols-p nil)))
 
-(generate-html)
-;(generate-html-single-page)
+;(generate-html)
+(generate-html-single-page)
 (room)
 
 ;;; --- End of file atdoc.lisp -------------------------------------------------

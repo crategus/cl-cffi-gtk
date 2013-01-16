@@ -6,8 +6,7 @@
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,7 +42,7 @@
 
 (setf (documentation 'g-main-loop-new 'function)
  "@version{2012-12-25}
-  @argument[context]{a @type{g-main-context} (if a @code{null-pointer}, the
+  @argument[context]{a @type{g-main-context} (if a @code{null}-pointer, the
     default context will be used)}
   @argument[is-running]{set to @code{t} to indicate that the loop is running.
     This is not very important since calling @fun{g-main-loop-run} will set this
@@ -131,8 +130,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (gethash '+g-priority-high+ atdoc:*variable-name-alias*) "Constant")
-(setf (documentation '+g-priority-high+ 'variable)
+(setf (gethash 'g-priority-high atdoc:*variable-name-alias*) "Constant")
+(setf (documentation 'g-priority-high 'variable)
  "@version{2012-12-25}
   @variable-value{-100}
   @short{Use this for high priority event sources.}
@@ -140,8 +139,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (gethash '+g-priority-default+ atdoc:*variable-name-alias*) "Constant")
-(setf (documentation '+g-priority-default+ 'variable)
+(setf (gethash 'g-priority-default atdoc:*variable-name-alias*) "Constant")
+(setf (documentation 'g-priority-default 'variable)
  "@version{2012-12-25}
   @variable-value{0}
   @short{Use this for default priority event sources.}
@@ -153,8 +152,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (gethash '+g-priority-high-idle+ atdoc:*variable-name-alias*) "Constant")
-(setf (documentation '+g-priority-high-idle+ 'variable)
+(setf (gethash 'g-priority-high-idle atdoc:*variable-name-alias*) "Constant")
+(setf (documentation 'g-priority-high-idle 'variable)
  "@version{2012-12-25}
   @variable-value{100}
   @short{Use this for high priority idle functions.}
@@ -166,8 +165,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (gethash '+g-priority-default-idle+ atdoc:*variable-name-alias*) "Constant")
-(setf (documentation '+g-priority-default-idle+ 'variable)
+(setf (gethash 'g-priority-default-idle atdoc:*variable-name-alias*) "Constant")
+(setf (documentation 'g-priority-default-idle 'variable)
  "@version{2012-12-25}
   @variable-value{200}
   @short{Use this for default priority idle functions.}
@@ -178,8 +177,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (gethash '+g-priority-low+ atdoc:*variable-name-alias*) "Constant")
-(setf (documentation '+g-priority-low+ 'variable)
+(setf (gethash 'g-priority-low atdoc:*variable-name-alias*) "Constant")
+(setf (documentation 'g-priority-low 'variable)
  "@version{2012-12-25}
   @variable-value{300}
   @short{Use this for very low priority background tasks.}
@@ -208,14 +207,7 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; GMainContext
-;;; 
-;;; typedef struct _GMainContext GMainContext;
-;;; 
-;;; The GMainContext struct is an opaque data type representing a set of sources
-;;; to be handled in a main loop.
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context ---------------------------------------------------------
 
 (setf (gethash 'g-main-context atdoc:*type-name-alias*) "CStruct")
 (setf (documentation 'g-main-context 'type)
@@ -225,16 +217,7 @@
     sources to be handled in a main loop.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_new ()
-;;; 
-;;; GMainContext * g_main_context_new (void);
-;;; 
-;;; Creates a new GMainContext structure.
-;;; 
-;;; Returns :
-;;;     the new GMainContext
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-new -----------------------------------------------------
 
 (setf (documentation 'g-main-context-new 'function)
  "@version{2012-12-25}
@@ -273,31 +256,31 @@
   @short{Returns the global default main context.}
   This is the main context used for main loop functions when a main loop is not
   explicitly specified, and corresponds to the \"main\" main loop. See also
-  @code{g_main_context_get_thread_default()}.
+  @fun{g-main-context-get-thread-default}.
   @see-type{g-main-context}")
 
 ;;; ----------------------------------------------------------------------------
 
 (setf (documentation 'g-main-context-iteration 'function)
  "@version{2012-12-26}
-  @argument[context]{a @type{g-main-context} (if NULL, the default context will
-    be used)}
+  @argument[context]{a @type{g-main-context} (if @code{null}-pointer, the
+    default context will be used)}
   @argument[may-block]{whether the call may block.}
-  @return{TRUE if events were dispatched.}
+  @return{@arg{true} if events were dispatched.}
   @short{Runs a single iteration for the given main loop.}
   This involves checking to see if any event sources are ready to be processed,
-  then if no events sources are ready and @arg{may-block} is TRUE, waiting for a
-  source to become ready, then dispatching the highest priority events sources
-  that are ready. Otherwise, if @arg{may-block} is FALSE sources are not waited
-  to become ready, only those highest priority events sources will be dispatched
-  (if any), that are ready at this given moment without further waiting.
+  then if no events sources are ready and @arg{may-block} is @arg{true}, waiting
+  for a source to become ready, then dispatching the highest priority events
+  sources that are ready. Otherwise, if @arg{may-block} is @code{nil} sources
+  are not waited to become ready, only those highest priority events sources
+  will be dispatched (if any), that are ready at this given moment without
+  further waiting.
 
-  Note that even when @arg{may-block} is TRUE, it is still possible for
-  @sym{g-main-context-iteration} to return FALSE, since the the wait may be
+  Note that even when @arg{may-block} is @arg{true}, it is still possible for
+  @sym{g-main-context-iteration} to return @code{nil}, since the the wait may be
   interrupted for other reasons than an event source becoming ready.
   @see-type{g-main-context}")
 
-#|
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_iteration()
 ;;; 
@@ -320,24 +303,14 @@
 ;;;     TRUE if more events are pending.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_pending ()
-;;; 
-;;; gboolean g_main_context_pending (GMainContext *context);
-;;; 
-;;; Checks if any sources have pending events for the given context.
-;;; 
-;;; context :
-;;;     a GMainContext (if NULL, the default context will be used)
-;;; 
-;;; Returns :
-;;;     TRUE if events are pending.
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-pending -------------------------------------------------
 
-(defcfun ("g_main_context_pending" g-main-context-pending) :boolean
-  (context (:pointer g-main-context)))
-
-(export 'g-main-context-pending)
+(setf (documentation 'g-main-context-pending 'function)
+ "@version{2013-01-01}
+  @argument[context]{a @type{g-main-context} (if @code{null}-pointer, the
+    default context will be used)}
+  @return{@arg{true} if events are pending.}
+  @short{Checks if any sources have pending events for the given context.}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_pending
@@ -353,370 +326,184 @@
 ;;; Deprected: Since 2.2: Use g_main_context_pending() instead.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_find_source_by_id ()
-;;; 
-;;; GSource * g_main_context_find_source_by_id (GMainContext *context,
-;;;                                             guint source_id);
-;;; 
-;;; Finds a GSource given a pair of context and ID.
-;;; 
-;;; context :
-;;;     a GMainContext (if NULL, the default context will be used)
-;;; 
-;;; source_id :
-;;;     the source ID, as returned by g_source_get_id().
-;;; 
-;;; Returns :
-;;;     the GSource if found, otherwise, NULL
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-find-source-by-id ---------------------------------------
 
-(defcfun ("g_main_context_find_source_by_id" g-main-context-find-source-by-id)
-    (:pointer g-source)
-  (context (:pointer g-main-context))
-  (source-id :uint))
+(setf (documentation 'g-main-context-find-source-by-id 'function)
+ "@version{2013-01-01}
+  @argument[context}{a @type{g-main-context} (if @code{null}-pointer, the
+    default context will be used)}
+  @argument[source-id]{the source ID, as returned by @fun{g-source-get-id}.}
+  @return{The @type{g-source} if found, otherwise, @code{null}-pointer}
+  @short{Finds a @type{g-source} given a pair of context and ID.}")
 
-(export 'g-main-context-find-source-by-id)
+;;; --- g-main-context-find-source-by-user-data --------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_find_source_by_user_data ()
-;;; 
-;;; GSource * g_main_context_find_source_by_user_data (GMainContext *context,
-;;;                                                    gpointer user_data);
-;;; 
-;;; Finds a source with the given user data for the callback. If multiple
-;;; sources exist with the same user data, the first one found will be returned.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; user_data :
-;;;     the user_data for the callback.
-;;; 
-;;; Returns :
-;;;     the source, if one was found, otherwise NULL
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-main-context-find-source-by-user-data 'function)
+ "@version{2013-01-01}
+  @argument[context]{a @type{g-main-context}}
+  @argument[user-data]{the user data for the callback.}
+  @return{The source, if one was found, otherwise @code{null}-pointer.}
+  @begin{short}
+    Finds a source with the given user data for the callback.
+  @end{short}
+  If multiple sources exist with the same user data, the first one found will be
+  returned.")
 
-(defcfun ("g_main_context_find_source_by_user_data"
-          g-main-context-find-source-by-user-data)
-    (:pointer g-source)
-  (context (:pointer g-main-context))
-  (user-data :pointer))
+;;; --- g-main-context-find-source-by-funcs-user-data --------------------------
 
-(export 'g-main-context-find-source-by-user-data)
+(setf (documentation 'g-main-context-find-source-by-funcs-user-data 'function)
+ "@version{2013-01-01}
+  @argument[context]{a @type{g-main-context} (if @code{null}-pointer, the
+    default context will be used)}
+  @argument[funcs]{the source funcs passed to @fun{g-source-new}.}
+  @argument[user-data]{the user data from the callback.}
+  @return{The source, if one was found, otherwise @code{null}-pointer.}
+  @begin{short}
+    Finds a source with the given source functions and user data.
+  @end{short}
+  If multiple sources exist with the same source function and user data, the
+  first one found will be returned.")
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_find_source_by_funcs_user_data ()
-;;; 
-;;; GSource * g_main_context_find_source_by_funcs_user_data
-;;;                                                      (GMainContext *context,
-;;;                                                       GSourceFuncs *funcs,
-;;;                                                       gpointer user_data);
-;;; 
-;;; Finds a source with the given source functions and user data. If multiple
-;;; sources exist with the same source function and user data, the first one
-;;; found will be returned.
-;;; 
-;;; context :
-;;;     a GMainContext (if NULL, the default context will be used)
-;;; 
-;;; funcs :
-;;;     the source_funcs passed to g_source_new().
-;;; 
-;;; user_data :
-;;;     the user data from the callback.
-;;; 
-;;; Returns :
-;;;     the source, if one was found, otherwise NULL
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-wakeup --------------------------------------------------
 
-(defcfun ("g_main_context_find_source_by_funcs_user_data"
-          g-main-context-find-source-by-funcs-user-data)
-    (:pointer g-source)
-  (context (:pointer g-main-context))
-  (funcs (:pointer g-source-funcs))
-  (user-data :pointer))
+(setf (documentation 'g-main-context-wakeup 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @begin{short}
+    If context is currently waiting in a poll(), interrupt the poll(), and
+    continue the iteration process.
+  @end{short}")
 
-(export 'g-main-context-find-source-by-funcs-user-data)
+;;; --- g-main-context-acquire -------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_wakeup ()
-;;; 
-;;; void g_main_context_wakeup (GMainContext *context);
-;;; 
-;;; If context is currently waiting in a poll(), interrupt the poll(), and
-;;; continue the iteration process.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-main-context-acquire 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @return{TRUE if the operation succeeded, and this thread is now the owner of
+    context.}
+  @short{Tries to become the owner of the specified context.}
+  If some other thread is the owner of the context, returns FALSE immediately.
+  Ownership is properly recursive: the owner can require ownership again and
+  will release ownership when g_main_context_release() is called as many times
+  as g_main_context_acquire().
 
-(defcfun ("g_main_context_wakeup" g-main-context-wakeup) :void
-  (context (:pointer g-main-context)))
+  You must be the owner of a context before you can call
+  g_main_context_prepare(), g_main_context_query(), g_main_context_check(),
+  g_main_context_dispatch().")
 
-(export 'g-main-context-wakeup)
+;;; --- g-main-context-release -------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_acquire ()
-;;; 
-;;; gboolean g_main_context_acquire (GMainContext *context);
-;;; 
-;;; Tries to become the owner of the specified context. If some other thread is
-;;; the owner of the context, returns FALSE immediately. Ownership is properly
-;;; recursive: the owner can require ownership again and will release ownership
-;;; when g_main_context_release() is called as many times as
-;;; g_main_context_acquire().
-;;; 
-;;; You must be the owner of a context before you can call
-;;; g_main_context_prepare(), g_main_context_query(), g_main_context_check(),
-;;; g_main_context_dispatch().
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; Returns :
-;;;     TRUE if the operation succeeded, and this thread is now the owner of
-;;;     context.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-main-context-release 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContex}
+  @begin{short}
+    Releases ownership of a context previously acquired by this thread with
+    g_main_context_acquire().
+  @end{short}
+  If the context was acquired multiple times, the ownership will be released
+  only when g_main_context_release() is called as many times as it was
+  acquired.")
 
-(defcfun ("g_main_context_acquire" g-main-context-acquire) :boolean
-  (context (:pointer g-main-context)))
+;;; --- g-main-context-is-owner ------------------------------------------------
 
-(export 'g-main-context-acquire)
+(setf (documentation 'g-main-context-is-owner 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @return{TRUE if current thread is owner of context.}
+  @begin{short}
+    Determines whether this thread holds the (recursive) ownership of this
+    GMainContext.
+  @end{short}
+  This is useful to know before waiting on another thread that may be blocking
+  to get ownership of context.
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_release ()
-;;; 
-;;; void g_main_context_release (GMainContext *context);
-;;; 
-;;; Releases ownership of a context previously acquired by this thread with
-;;; g_main_context_acquire(). If the context was acquired multiple times, the
-;;; ownership will be released only when g_main_context_release() is called as
-;;; many times as it was acquired.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; ----------------------------------------------------------------------------
+ Since 2.10")
 
-(defcfun ("g_main_context_release" g-main-context-release) :void
-  (context (:pointer g-main-context)))
+;;; --- g-main-context-wait ----------------------------------------------------
 
-(export 'g-main-context-release)
+(setf (documentation 'g-main-context-wait 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @argument[cond]{a condition variable}
+  @argument[mutex]{a mutex, currently held}
+  @return{TRUE if the operation succeeded, and this thread is now the owner of
+    context.}
+  @begin{short}
+    Tries to become the owner of the specified context, as with
+    g_main_context_acquire().
+  @end{short}
+  But if another thread is the owner, atomically drop mutex and wait on cond
+  until that owner releases ownership or until cond is signaled, then try again
+  (once) to become the owner.")
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_is_owner ()
-;;; 
-;;; gboolean g_main_context_is_owner (GMainContext *context);
-;;; 
-;;; Determines whether this thread holds the (recursive) ownership of this
-;;; GMainContext. This is useful to know before waiting on another thread that
-;;; may be blocking to get ownership of context.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; Returns :
-;;;     TRUE if current thread is owner of context.
-;;; 
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-prepare -------------------------------------------------
 
-(defcfun ("g_main_context_is_owner" g-main-context-is-owner) :boolean
-  (context (:pointer g-main-context)))
+(setf (documentation 'g-main-context-prepare 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @argument[priority]{location to store priority of highest priority source
+    already ready.}
+  @return{TRUE if some source is ready to be dispatched prior to polling.}
+  @begin{short}
+    Prepares to poll sources within a main loop.
+  @end{short}
+  The resulting information for polling is determined by calling
+  g_main_context_query().")
 
-(export 'g-main-context-is-owner)
+;;; --- g-main-context-query ---------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_wait ()
-;;; 
-;;; gboolean g_main_context_wait (GMainContext *context,
-;;;                               GCond *cond,
-;;;                               GMutex *mutex);
-;;; 
-;;; Tries to become the owner of the specified context, as with
-;;; g_main_context_acquire(). But if another thread is the owner, atomically
-;;; drop mutex and wait on cond until that owner releases ownership or until
-;;; cond is signaled, then try again (once) to become the owner.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; cond :
-;;;     a condition variable
-;;; 
-;;; mutex :
-;;;     a mutex, currently held
-;;; 
-;;; Returns :
-;;;     TRUE if the operation succeeded, and this thread is now the owner of
-;;;     context.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-main-context-query 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @argument[max_priority]{maximum priority source to check}
+  @argument[timeout_]{location to store timeout to be used in polling}
+  @argument[fds]{location to store GPollFD records that need to be polled}
+  @argument[n-fds]{length of fds.}
+  @return{the number of records actually stored in fds, or, if more than n_fds
+    records need to be stored, the number of records that need to be stored.}
+  @short{Determines information necessary to poll this main loop.}")
 
-(defcfun ("g_main_context_wait" g-main-context-wait) :boolean
-  (context (:pointer g-main-context))
-  (cond (:pointer g-cond))
-  (mutex (:pointer g-mutex)))
+;;; --- g-main-context-check ---------------------------------------------------
 
-(export 'g-main-context-wait)
+(setf (documentation 'g-main-context-check 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @argument[max-priority]{the maximum numerical priority of sources to check}
+  @argument[fds]{array of GPollFD's that was passed to the last call to
+    g_main_context_query()}
+  @argument[n_fds]{return value of g_main_context_query()}
+  @return{TRUE if some sources are ready to be dispatched.}
+  @short{Passes the results of polling back to the main loop.}")
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_prepare ()
-;;; 
-;;; gboolean g_main_context_prepare (GMainContext *context, gint *priority);
-;;; 
-;;; Prepares to poll sources within a main loop. The resulting information for
-;;; polling is determined by calling g_main_context_query().
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; priority :
-;;;     location to store priority of highest priority source already ready.
-;;; 
-;;; Returns :
-;;;     TRUE if some source is ready to be dispatched prior to polling.
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-dispatch ------------------------------------------------
 
-(defcfun ("g_main_context_prepare" g-main-context-prepare) :boolean
-  (context (:pointer g-main-context))
-  (priority-ret (:pointer :int)))
+(setf (documentation 'g-main-context-dispatch 'function)
+ "@version{2013-01-01} 
+  @argument[context]{a GMainContext}
+  @short{Dispatches all pending sources.}")
 
-(export 'g-main-context-prepare)
+;;; --- g-main-context-set-poll-func -------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_query ()
-;;; 
-;;; gint g_main_context_query (GMainContext *context,
-;;;                            gint max_priority,
-;;;                            gint *timeout_,
-;;;                            GPollFD *fds,
-;;;                            gint n_fds);
-;;; 
-;;; Determines information necessary to poll this main loop.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; max_priority :
-;;;     maximum priority source to check
-;;; 
-;;; timeout_ :
-;;;     location to store timeout to be used in polling
-;;; 
-;;; fds :
-;;;     location to store GPollFD records that need to be polled
-;;; 
-;;; n_fds :
-;;;     length of fds.
-;;; 
-;;; Returns :
-;;;     the number of records actually stored in fds, or, if more than n_fds
-;;;     records need to be stored, the number of records that need to be stored.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-main-context-set-poll-func 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @argument[func]{the function to call to poll all file descriptors}
+  @begin{short}
+    Sets the function to use to handle polling of file descriptors.
+  @end{short}
+  It will be used instead of the poll() system call (or GLib's replacement
+  function, which is used where poll() isn't available).
 
-(defcfun ("g_main_context_query" g-main-context-query) :int
-  (context (:pointer g-main-context))
-  (max-priority :int)
-  (timeout-ret (:pointer :int))
-  (fds-ret (:pointer g-poll-fd))
-  (n-dfs :int))
+  This function could possibly be used to integrate the GLib event loop with
+  an external event loop.")
 
-(export 'g-main-context-query)
+;;; --- g-main-context-get-poll-func -------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_check ()
-;;; 
-;;; gint g_main_context_check (GMainContext *context,
-;;;                            gint max_priority,
-;;;                            GPollFD *fds,
-;;;                            gint n_fds);
-;;; 
-;;; Passes the results of polling back to the main loop.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; max_priority :
-;;;     the maximum numerical priority of sources to check
-;;; 
-;;; fds :
-;;;     array of GPollFD's that was passed to the last call to
-;;;     g_main_context_query()
-;;; 
-;;; n_fds :
-;;;     return value of g_main_context_query()
-;;; 
-;;; Returns :
-;;;     TRUE if some sources are ready to be dispatched.
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_main_context_check" g-main-context-check) :int
-  (context (:pointer g-main-context))
-  (max-priority :int)
-  (fds (:pointer g-poll-fd))
-  (n-fds :int))
-
-(export 'g-main-context-check)
-
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_dispatch ()
-;;; 
-;;; void g_main_context_dispatch (GMainContext *context);
-;;; 
-;;; Dispatches all pending sources.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_main_context_dispatch" g-main-context-dispatch) :void
-  (context (:pointer g-main-context)))
-
-(export 'g-main-context-dispatch)
-
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_set_poll_func ()
-;;; 
-;;; void g_main_context_set_poll_func (GMainContext *context, GPollFunc func);
-;;; 
-;;; Sets the function to use to handle polling of file descriptors. It will be
-;;; used instead of the poll() system call (or GLib's replacement function,
-;;; which is used where poll() isn't available).
-;;; 
-;;; This function could possibly be used to integrate the GLib event loop with
-;;; an external event loop.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; func :
-;;;     the function to call to poll all file descriptors
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_main_context_set_poll_func" g-main-context-set-poll-func) :void
-  (context (:pointer g-main-context))
-  (func :pointer))
-
-(export 'g-main-context-set-poll-func)
-
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_get_poll_func ()
-;;; 
-;;; GPollFunc g_main_context_get_poll_func (GMainContext *context);
-;;; 
-;;; Gets the poll function set by g_main_context_set_poll_func().
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; Returns :
-;;;     the poll function
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_main_context_get_poll_func" g-main-context-get-poll-func) :pointer
-  (context (:pointer g-main-context)))
-
-(export 'g-main-context-get-poll-func)
+(setf (documentation 'g-main-context-get-poll-func 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @return{the poll function}
+  @short{Gets the poll function set by g_main_context_set_poll_func().}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GPollFunc ()
@@ -741,180 +528,145 @@
 ;;;     -1 if an error occurred.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_add_poll ()
-;;; 
-;;; void g_main_context_add_poll (GMainContext *context,
-;;;                               GPollFD *fd,
-;;;                               gint priority);
-;;; 
-;;; Adds a file descriptor to the set of file descriptors polled for this
-;;; context. This will very seldom be used directly. Instead a typical event
-;;; source will use g_source_add_poll() instead.
-;;; 
-;;; context :
-;;;     a GMainContext (or NULL for the default context)
-;;; 
-;;; fd :
-;;;     a GPollFD structure holding information about a file descriptor to
-;;;     watch.
-;;; 
-;;; priority :
-;;;     the priority for this file descriptor which should be the same as the
-;;;     priority used for g_source_attach() to ensure that the file descriptor
-;;;     is polled whenever the results may be needed.
-;;; ----------------------------------------------------------------------------
+;;; --- g-main-context-add-poll ------------------------------------------------
 
-(defcfun ("g_main_context_add_poll" g-main-context-add-poll) :void
-  (context (:pointer g-main-context))
-  (fd (:pointer g-poll-fd))
-  (priority :int))
+(setf (documentation 'g-main-context-add-poll 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext (or NULL for the default context)}
+  @argument[fd]{a GPollFD structure holding information about a file descriptor
+    to watch.}
+  @argument[priority]{the priority for this file descriptor which should be the
+    same as the priority used for g_source_attach() to ensure that the file
+    descriptor is polled whenever the results may be needed.}
+  @begin{short}
+    Adds a file descriptor to the set of file descriptors polled for this
+    context.
+  @end{short}
+  This will very seldom be used directly. Instead a typical event source will
+  use g_source_add_poll() instead.")
 
-(export 'g-main-context-add-poll)
+;;; --- g-main-context-remove-poll ---------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_context_remove_poll ()
-;;; 
-;;; void g_main_context_remove_poll (GMainContext *context, GPollFD *fd);
-;;; 
-;;; Removes file descriptor from the set of file descriptors to be polled for a
-;;; particular context.
-;;; 
-;;; context :
-;;;     a GMainContext
-;;; 
-;;; fd :
-;;;     a GPollFD descriptor previously added with g_main_context_add_poll()
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-main-context-remove-poll 'function)
+ "@version{2013-01-01}
+  @argument[context]{a GMainContext}
+  @argument[fd]{a GPollFD descriptor previously added with
+    g_main_context_add_poll()}
+  @begin{short}
+    Removes file descriptor from the set of file descriptors to be polled for a
+    particular context.
+  @end{short}")
 
-(defcfun ("g_main_context_remove_poll" g-main-context-remove-poll) :void
-  (context (:pointer g-main-context))
-  (fd (:pointer g-poll-fd)))
+;;; --- g-main-depth -----------------------------------------------------------
 
-(export 'g-main-context-remove-poll)
+(setf (documentation 'g-main-depth 'function)
+ "@version{2013-01-01}
+  @return{The main loop recursion level in the current thread}
+  @begin{short}
+    Returns the depth of the stack of calls to g_main_context_dispatch() on any
+    GMainContext in the current thread.
+  @end{short}
+  That is, when called from the toplevel,
+  it gives 0. When called from within a callback from
+  g_main_context_iteration() (or g_main_loop_run(), etc.) it returns 1. When
+  called from within a callback to a recursive call to
+  g_main_context_iteration(), it returns 2. And so forth.
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_depth ()
-;;; 
-;;; gint g_main_depth (void);
-;;; 
-;;; Returns the depth of the stack of calls to g_main_context_dispatch() on any
-;;; GMainContext in the current thread. That is, when called from the toplevel,
-;;; it gives 0. When called from within a callback from
-;;; g_main_context_iteration() (or g_main_loop_run(), etc.) it returns 1. When
-;;; called from within a callback to a recursive call to
-;;; g_main_context_iteration(), it returns 2. And so forth.
-;;; 
-;;; This function is useful in a situation like the following: Imagine an
-;;; extremely simple "garbage collected" system.
-;;; 
-;;;   static GList *free_list;
-;;;   
-;;;   gpointer
-;;;   allocate_memory (gsize size)
-;;;   { 
-;;;     gpointer result = g_malloc (size);
-;;;     free_list = g_list_prepend (free_list, result);
-;;;     return result;
-;;;   }
-;;;   
-;;;   void
-;;;   free_allocated_memory (void)
-;;;   {
-;;;     GList *l;
-;;;     for (l = free_list; l; l = l->next);
-;;;       g_free (l->data);
-;;;     g_list_free (free_list);
-;;;     free_list = NULL;
-;;;    }
-;;;   
-;;;   [...]
-;;;   
-;;;   while (TRUE); 
-;;;    {
-;;;      g_main_context_iteration (NULL, TRUE);
-;;;      free_allocated_memory();
-;;;     }
-;;; 
-;;; This works from an application, however, if you want to do the same thing
-;;; from a library, it gets more difficult, since you no longer control the main
-;;; loop. You might think you can simply use an idle function to make the call
-;;; to free_allocated_memory(), but that doesn't work, since the idle function
-;;; could be called from a recursive callback. This can be fixed by using
-;;; g_main_depth()
-;;; 
-;;;   gpointer
-;;;   allocate_memory (gsize size)
-;;;   { 
-;;;     FreeListBlock *block = g_new (FreeListBlock, 1);
-;;;     block->mem = g_malloc (size);
-;;;     block->depth = g_main_depth ();   
-;;;     free_list = g_list_prepend (free_list, block);
-;;;     return block->mem;
-;;;   }
-;;;   
-;;;   void
-;;;   free_allocated_memory (void)
-;;;   {
-;;;     GList *l;
-;;;     
-;;;     int depth = g_main_depth ();
-;;;     for (l = free_list; l; );
-;;;       {
-;;;         GList *next = l->next;
-;;;         FreeListBlock *block = l->data;
-;;;         if (block->depth > depth)
-;;;           {
-;;;             g_free (block->mem);
-;;;             g_free (block);
-;;;             free_list = g_list_delete_link (free_list, l);
-;;;           }
-;;;                 
-;;;         l = next;
-;;;       }
-;;;     }
-;;; 
-;;; There is a temptation to use g_main_depth() to solve problems with
-;;; reentrancy. For instance, while waiting for data to be received from the
-;;; network in response to a menu item, the menu item might be selected again.
-;;; It might seem that one could make the menu item's callback return
-;;; immediately and do nothing if g_main_depth() returns a value greater than 1.
-;;; However, this should be avoided since the user then sees selecting the menu
-;;; item do nothing. Furthermore, you'll find yourself adding these checks all
-;;; over your code, since there are doubtless many, many things that the user
-;;; could do. Instead, you can use the following techniques:
-;;; 
-;;;     Use gtk_widget_set_sensitive() or modal dialogs to prevent the user from
-;;;     interacting with elements while the main loop is recursing.
-;;; 
-;;;     Avoid main loop recursion in situations where you can't handle arbitrary
-;;;     callbacks. Instead, structure your code so that you simply return to the
-;;;     main loop and then get called again when there is more work to do.
-;;; 
-;;; Returns :
-;;;     The main loop recursion level in the current thread
-;;; ----------------------------------------------------------------------------
+  This function is useful in a situation like the following: Imagine an
+  extremely simple \"garbage collected\" system.
+  @begin{pre}
+  static GList *free_list;
 
-(defcfun ("g_main_depth" g-main-depth) :int)
+  gpointer
+  allocate_memory (gsize size)
+  {
+    gpointer result = g_malloc (size);
+    free_list = g_list_prepend (free_list, result);
+    return result;
+  @}
 
-(export 'g-main-depth)
+  void
+  free_allocated_memory (void)
+  {
+    GList *l;
+    for (l = free_list; l; l = l->next);
+      g_free (l->data);
+    g_list_free (free_list);
+    free_list = NULL;
+   @}
 
-;;; ----------------------------------------------------------------------------
-;;; g_main_current_source ()
-;;; 
-;;; GSource * g_main_current_source (void);
-;;; 
-;;; Returns the currently firing source for this thread.
-;;; 
-;;; Returns :
-;;;     The currently firing source or NULL.
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+  [...]
 
-(defcfun ("g_main_current_source" g-main-current-source) (:pointer g-source))
+  while (TRUE);
+   {
+     g_main_context_iteration (NULL, TRUE);
+     free_allocated_memory();
+    @}
+  @end{pre}
+  This works from an application, however, if you want to do the same thing
+  from a library, it gets more difficult, since you no longer control the main
+  loop. You might think you can simply use an idle function to make the call
+  to free_allocated_memory(), but that doesn't work, since the idle function
+  could be called from a recursive callback. This can be fixed by using
+  g_main_depth()
+  @begin{pre}
+  gpointer
+  allocate_memory (gsize size)
+  {
+    FreeListBlock *block = g_new (FreeListBlock, 1);
+    block->mem = g_malloc (size);
+    block->depth = g_main_depth ();
+    free_list = g_list_prepend (free_list, block);
+    return block->mem;
+  @}
 
-(export 'g-main-current-source)
+  void
+  free_allocated_memory (void)
+  {
+    GList *l;
+
+    int depth = g_main_depth ();
+    for (l = free_list; l; );
+      {
+        GList *next = l->next;
+        FreeListBlock *block = l->data;
+        if (block->depth > depth)
+          {
+            g_free (block->mem);
+            g_free (block);
+            free_list = g_list_delete_link (free_list, l);
+          @}
+
+        l = next;
+      @}
+    @}
+  @end{pre}
+  There is a temptation to use g_main_depth() to solve problems with
+  reentrancy. For instance, while waiting for data to be received from the
+  network in response to a menu item, the menu item might be selected again.
+  It might seem that one could make the menu item's callback return
+  immediately and do nothing if g_main_depth() returns a value greater than 1.
+  However, this should be avoided since the user then sees selecting the menu
+  item do nothing. Furthermore, you'll find yourself adding these checks all
+  over your code, since there are doubtless many, many things that the user
+  could do. Instead, you can use the following techniques:
+  @begin{itemize}
+    @item{Use gtk_widget_set_sensitive() or modal dialogs to prevent the user
+      from interacting with elements while the main loop is recursing.}
+    @item{Avoid main loop recursion in situations where you can't handle
+      arbitrary callbacks. Instead, structure your code so that you simply
+      return to the main loop and then get called again when there is more work
+      to do.}
+  @end{itemize}")
+
+;;; --- g-main-current-source --------------------------------------------------
+
+(setf (documentation 'g-main-current-source 'function)
+ "@version{2013-01-01}
+  @return{The currently firing source or NULL.}
+  @short{Returns the currently firing source for this thread.}
+
+  Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_set_poll_func()
@@ -1101,418 +853,246 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_timeout_source_new ()
-;;; 
-;;; GSource * g_timeout_source_new (guint interval);
-;;; 
-;;; Creates a new timeout source.
-;;; 
-;;; The source will not initially be associated with any GMainContext and must
-;;; be added to one with g_source_attach() before it will be executed.
-;;; 
-;;; The interval given is in terms of monotonic time, not wall clock time. See
-;;; g_get_monotonic_time().
-;;; 
-;;; interval :
-;;;     the timeout interval in milliseconds.
-;;; 
-;;; Returns :
-;;;     the newly-created timeout source
-;;; ----------------------------------------------------------------------------
+;;; --- g-timeout-source-new ---------------------------------------------------
 
-(defcfun ("g_timeout_source_new" g-timeout-source-new) (:pointer g-source)
-  (interval-milliseconds :int))
+(setf (documentation 'g-timeout-source-new 'function)
+ "@version{2013-01-01}
+  @argument[interval]{the timeout interval in milliseconds.}
+  @return{the newly-created timeout source}
+  @short{Creates a new timeout source.}
 
-(export 'g-timeout-source-new)
+  The source will not initially be associated with any GMainContext and must
+  be added to one with g_source_attach() before it will be executed.
 
-;;; ----------------------------------------------------------------------------
-;;; g_timeout_source_new_seconds ()
-;;; 
-;;; GSource * g_timeout_source_new_seconds (guint interval);
-;;; 
-;;; Creates a new timeout source.
-;;; 
-;;; The source will not initially be associated with any GMainContext and must
-;;; be added to one with g_source_attach() before it will be executed.
-;;; 
-;;; The scheduling granularity/accuracy of this timeout source will be in
-;;; seconds.
-;;; 
-;;; The interval given in terms of monotonic time, not wall clock time. See
-;;; g_get_monotonic_time().
-;;; 
-;;; interval :
-;;;     the timeout interval in seconds
-;;; 
-;;; Returns :
-;;;     the newly-created timeout source
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
+  The interval given is in terms of monotonic time, not wall clock time. See
+  g_get_monotonic_time().")
 
-(defcfun ("g_timeout_source_new_seconds" g-timeout-source-new-seconds)
-    (:pointer g-source)
-  (interval-seconds :int))
+;;; --- g-timeout-source-new-seconds -------------------------------------------
 
-(export 'g-timeout-source-new-seconds)
+(setf (documentation 'g-timeout-source-new-seconds 'function)
+ "@version{2013-01-01}
+  @argument[interval]{the timeout interval in seconds}
+  @return{the newly-created timeout source}
+  @short{Creates a new timeout source.}
 
-;;; ----------------------------------------------------------------------------
-;;; g_timeout_add ()
-;;; 
-;;; guint g_timeout_add (guint interval,
-;;;                      GSourceFunc function,
-;;;                      gpointer data);
-;;; 
-;;; Sets a function to be called at regular intervals, with the default
-;;; priority, G_PRIORITY_DEFAULT. The function is called repeatedly until it
-;;; returns FALSE, at which point the timeout is automatically destroyed and the
-;;; function will not be called again. The first call to the function will be at
-;;; the end of the first interval.
-;;; 
-;;; Note that timeout functions may be delayed, due to the processing of other
-;;; event sources. Thus they should not be relied on for precise timing. After
-;;; each call to the timeout function, the time of the next timeout is
-;;; recalculated based on the current time and the given interval (it does not
-;;; try to 'catch up' time lost in delays).
-;;; 
-;;; If you want to have a timer in the "seconds" range and do not care about the
-;;; exact time of the first call of the timer, use the g_timeout_add_seconds()
-;;; function; this function allows for more optimizations and more efficient
-;;; system power usage.
-;;; 
-;;; This internally creates a main loop source using g_timeout_source_new() and
-;;; attaches it to the main loop context using g_source_attach(). You can do
-;;; these steps manually if you need greater control.
-;;; 
-;;; The interval given is in terms of monotonic time, not wall clock time. See
-;;; g_get_monotonic_time().
-;;; 
-;;; interval :
-;;;     the time between calls to the function, in milliseconds (1/1000ths of a
-;;;     second)
-;;; 
-;;; function :
-;;;     function to call
-;;; 
-;;; data :
-;;;     data to pass to function
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;; ----------------------------------------------------------------------------
+  The source will not initially be associated with any GMainContext and must
+  be added to one with g_source_attach() before it will be executed.
 
-(defcallback call-timeout-from-main-loop-cb :boolean ((data :pointer))
-  (restart-case
-      (progn (funcall (get-stable-pointer-value data)))
-    (return-from-callback () nil)))
+  The scheduling granularity/accuracy of this timeout source will be in
+  seconds.
 
-(defun g-timeout-add (interval func &key (priority +g-priority-default+))
-  (g-timeout-add-full priority
-                      interval
-                      (callback call-timeout-from-main-loop-cb)
-                      (allocate-stable-pointer func)
-                      (callback stable-pointer-destroy-notify-cb)))
+  The interval given in terms of monotonic time, not wall clock time. See
+  g_get_monotonic_time().
 
-(export 'g-timeout-add)
+  Since 2.14")
 
-;;; ----------------------------------------------------------------------------
-;;; g_timeout_add_full ()
-;;; 
-;;; guint g_timeout_add_full (gint priority,
-;;;                           guint interval,
-;;;                           GSourceFunc function,
-;;;                           gpointer data,
-;;;                           GDestroyNotify notify);
-;;; 
-;;; Sets a function to be called at regular intervals, with the given priority.
-;;; The function is called repeatedly until it returns FALSE, at which point the
-;;; timeout is automatically destroyed and the function will not be called
-;;; again. The notify function is called when the timeout is destroyed. The
-;;; first call to the function will be at the end of the first interval.
-;;; 
-;;; Note that timeout functions may be delayed, due to the processing of other
-;;; event sources. Thus they should not be relied on for precise timing. After
-;;; each call to the timeout function, the time of the next timeout is
-;;; recalculated based on the current time and the given interval (it does not
-;;; try to 'catch up' time lost in delays).
-;;; 
-;;; This internally creates a main loop source using g_timeout_source_new() and
-;;; attaches it to the main loop context using g_source_attach(). You can do
-;;; these steps manually if you need greater control.
-;;; 
-;;; The interval given in terms of monotonic time, not wall clock time. See
-;;; g_get_monotonic_time().
-;;; 
-;;; priority :
-;;;     the priority of the timeout source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
-;;; 
-;;; interval :
-;;;     the time between calls to the function, in milliseconds (1/1000ths of a
-;;;     second)
-;;; 
-;;; function :
-;;;     function to call
-;;; 
-;;; data :
-;;;     data to pass to function
-;;; 
-;;; notify :
-;;;     function to call when the timeout is removed, or NULL
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) of the event source. Rename to: g_timeout_add
-;;; ----------------------------------------------------------------------------
+;;; --- g-timeout-add ----------------------------------------------------------
 
-(defcfun ("g_timeout_add_full" g-timeout-add-full) :uint
-  (priority :int)
-  (interval-milliseconds :uint)
-  (function :pointer)
-  (data :pointer)
-  (destroy-notify :pointer))
+(setf (documentation 'g-timeout-add 'function)
+ "@version{2013-01-01}
+  @argument[interval]{the time between calls to the function, in milliseconds
+    (1/1000ths of asecond)}
+  @argument[function]{function to call}
+  @argument[data]{data to pass to function}
+  @return{the ID (greater than 0) of the event source.}
+  @begin{short}
+    Sets a function to be called at regular intervals, with the default
+    priority, G_PRIORITY_DEFAULT.
+  @end{short}
+  The function is called repeatedly until it returns FALSE, at which point the
+  timeout is automatically destroyed and the function will not be called again.
+  The first call to the function will be at the end of the first interval.
 
-(export 'g-timeout-add-full)
+  Note that timeout functions may be delayed, due to the processing of other
+  event sources. Thus they should not be relied on for precise timing. After
+  each call to the timeout function, the time of the next timeout is
+  recalculated based on the current time and the given interval (it does not
+  try to 'catch up' time lost in delays).
 
-;;; ----------------------------------------------------------------------------
-;;; g_timeout_add_seconds ()
-;;; 
-;;; guint g_timeout_add_seconds (guint interval,
-;;;                              GSourceFunc function,
-;;;                              gpointer data);
-;;; 
-;;; Sets a function to be called at regular intervals with the default priority,
-;;; G_PRIORITY_DEFAULT. The function is called repeatedly until it returns
-;;; FALSE, at which point the timeout is automatically destroyed and the
-;;; function will not be called again.
-;;; 
-;;; This internally creates a main loop source using
-;;; g_timeout_source_new_seconds() and attaches it to the main loop context
-;;; using g_source_attach(). You can do these steps manually if you need greater
-;;; control. Also see g_timeout_add_seconds_full().
-;;; 
-;;; Note that the first call of the timer may not be precise for timeouts of one
-;;; second. If you need finer precision and have such a timeout, you may want to
-;;; use g_timeout_add() instead.
-;;; 
-;;; The interval given is in terms of monotonic time, not wall clock time. See
-;;; g_get_monotonic_time().
-;;; 
-;;; interval :
-;;;     the time between calls to the function, in seconds
-;;; 
-;;; function :
-;;;     function to call
-;;; 
-;;; data :
-;;;     data to pass to function
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
+  If you want to have a timer in the \"seconds\" range and do not care about the
+  exact time of the first call of the timer, use the g_timeout_add_seconds()
+  function; this function allows for more optimizations and more efficient
+  system power usage.
 
-(defun g-timeout-add-seconds (interval func
-                                       &key (priority +g-priority-default+))
-  (g-timeout-add-seconds-full priority
-                              interval
-                              (callback call-timeout-from-main-loop-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+  This internally creates a main loop source using g_timeout_source_new() and
+  attaches it to the main loop context using g_source_attach(). You can do
+  these steps manually if you need greater control.
 
-(export 'g-timeout-add-seconds)
+  The interval given is in terms of monotonic time, not wall clock time. See
+  g_get_monotonic_time().")
 
-;;; ----------------------------------------------------------------------------
-;;; g_timeout_add_seconds_full ()
-;;; 
-;;; guint g_timeout_add_seconds_full (gint priority,
-;;;                                   guint interval,
-;;;                                   GSourceFunc function,
-;;;                                   gpointer data,
-;;;                                   GDestroyNotify notify);
-;;; 
-;;; Sets a function to be called at regular intervals, with priority. The
-;;; function is called repeatedly until it returns FALSE, at which point the
-;;; timeout is automatically destroyed and the function will not be called
-;;; again.
-;;; 
-;;; Unlike g_timeout_add(), this function operates at whole second granularity.
-;;; The initial starting point of the timer is determined by the implementation
-;;; and the implementation is expected to group multiple timers together so that
-;;; they fire all at the same time. To allow this grouping, the interval to the
-;;; first timer is rounded and can deviate up to one second from the specified
-;;; interval. Subsequent timer iterations will generally run at the specified
-;;; interval.
-;;; 
-;;; Note that timeout functions may be delayed, due to the processing of other
-;;; event sources. Thus they should not be relied on for precise timing. After
-;;; each call to the timeout function, the time of the next timeout is
-;;; recalculated based on the current time and the given interval
-;;; 
-;;; If you want timing more precise than whole seconds, use g_timeout_add()
-;;; instead.
-;;; 
-;;; The grouping of timers to fire at the same time results in a more power and
-;;; CPU efficient behavior so if your timer is in multiples of seconds and you
-;;; don't require the first timer exactly one second from now, the use of
-;;; g_timeout_add_seconds() is preferred over g_timeout_add().
-;;; 
-;;; This internally creates a main loop source using
-;;; g_timeout_source_new_seconds() and attaches it to the main loop context
-;;; using g_source_attach(). You can do these steps manually if you need greater
-;;; control.
-;;; 
-;;; The interval given is in terms of monotonic time, not wall clock time. See
-;;; g_get_monotonic_time().
-;;; 
-;;; priority :
-;;;     the priority of the timeout source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
-;;; 
-;;; interval :
-;;;     the time between calls to the function, in seconds
-;;; 
-;;; function :
-;;;     function to call
-;;; 
-;;; data :
-;;;     data to pass to function
-;;; 
-;;; notify :
-;;;     function to call when the timeout is removed, or NULL
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) of the event source. Rename to:
-;;;     g_timeout_add_seconds
-;;; 
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
+;;; --- g-timeout-add-full -----------------------------------------------------
 
-(defcfun ("g_timeout_add_seconds_full" g-timeout-add-seconds-full) :uint
-  (priority :int)
-  (interval-seconds :uint)
-  (function :pointer)
-  (data :pointer)
-  (destroy-notify :pointer))
+(setf (documentation 'g-timeout-add-full 'function)
+ "@version{2013-01-01}
+  @argument[priority]{the priority of the timeout source. Typically this will be
+    in the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.}
+  @argument[interval]{the time between calls to the function, in milliseconds
+    (1/1000ths of a second)}
+  @argument[function]{function to call}
+  @argument[data]{data to pass to function}
+  @argument[notify]{function to call when the timeout is removed, or NULL}
+  @return{the ID (greater than 0) of the event source. Rename to: g_timeout_add}
+  @begin{short}
+    Sets a function to be called at regular intervals, with the given priority.
+  @end{short}
+  The function is called repeatedly until it returns FALSE, at which point the
+  timeout is automatically destroyed and the function will not be called
+  again. The notify function is called when the timeout is destroyed. The
+  first call to the function will be at the end of the first interval.
 
-(export 'g-timeout-add-seconds-full)
+  Note that timeout functions may be delayed, due to the processing of other
+  event sources. Thus they should not be relied on for precise timing. After
+  each call to the timeout function, the time of the next timeout is
+  recalculated based on the current time and the given interval (it does not
+  try to 'catch up' time lost in delays).
 
-;;; ----------------------------------------------------------------------------
-;;; g_idle_source_new ()
-;;; 
-;;; GSource * g_idle_source_new (void);
-;;; 
-;;; Creates a new idle source.
-;;; 
-;;; The source will not initially be associated with any GMainContext and must
-;;; be added to one with g_source_attach() before it will be executed. Note that
-;;; the default priority for idle sources is G_PRIORITY_DEFAULT_IDLE, as
-;;; compared to other sources which have a default priority of
-;;; G_PRIORITY_DEFAULT.
-;;; 
-;;; Returns :
-;;;     the newly-created idle source
-;;; ----------------------------------------------------------------------------
+  This internally creates a main loop source using g_timeout_source_new() and
+  attaches it to the main loop context using g_source_attach(). You can do
+  these steps manually if you need greater control.
 
-(defcfun ("g_idle_source_new" g-idle-source-new) (:pointer g-source))
+  The interval given in terms of monotonic time, not wall clock time. See
+  g_get_monotonic_time().")
 
-;;; ----------------------------------------------------------------------------
-;;; g_idle_add ()
-;;; 
-;;; guint g_idle_add (GSourceFunc function, gpointer data);
-;;; 
-;;; Adds a function to be called whenever there are no higher priority events
-;;; pending to the default main loop. The function is given the default idle
-;;; priority, G_PRIORITY_DEFAULT_IDLE. If the function returns FALSE it is
-;;; automatically removed from the list of event sources and will not be called
-;;; again.
-;;; 
-;;; This internally creates a main loop source using g_idle_source_new() and
-;;; attaches it to the main loop context using g_source_attach(). You can do
-;;; these steps manually if you need greater control.
-;;; 
-;;; function :
-;;;     function to call
-;;; 
-;;; data :
-;;;     data to pass to function.
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;; ----------------------------------------------------------------------------
+;;; --- g-timeout-add-seconds --------------------------------------------------
 
-(defcfun ("g_idle_add" %g-idle-add) :uint
-  (function :pointer)
-  (data :pointer))
+(setf (documentation 'g-timeout-add-seconds 'function)
+ "@version{2013-01-01}
+  @argument[interval]{the time between calls to the function, in seconds}
+  @argument[function]{function to call}
+  @argument[data]{data to pass to function}
+  @return{the ID (greater than 0) of the event source.}
+  @begin{short}
+    Sets a function to be called at regular intervals with the default priority,
+    G_PRIORITY_DEFAULT.
+  @end{short}
+  The function is called repeatedly until it returns FALSE, at which point the
+  timeout is automatically destroyed and the function will not be called again.
 
-(defun g-idle-add (func &key (priority +g-priority-default+))
-  (g-idle-add-full priority
-                   (callback call-timeout-from-main-loop-cb)
-                   (allocate-stable-pointer func)
-                   (callback stable-pointer-destroy-notify-cb)))
+  This internally creates a main loop source using
+  g_timeout_source_new_seconds() and attaches it to the main loop context
+  using g_source_attach(). You can do these steps manually if you need greater
+  control. Also see g_timeout_add_seconds_full().
 
-(export 'g-idle-add)
+  Note that the first call of the timer may not be precise for timeouts of one
+  second. If you need finer precision and have such a timeout, you may want to
+  use g_timeout_add() instead.
 
-;;; ----------------------------------------------------------------------------
-;;; g_idle_add_full ()
-;;; 
-;;; guint g_idle_add_full (gint priority,
-;;;                        GSourceFunc function,
-;;;                        gpointer data,
-;;;                        GDestroyNotify notify);
-;;; 
-;;; Adds a function to be called whenever there are no higher priority events
-;;; pending. If the function returns FALSE it is automatically removed from the
-;;; list of event sources and will not be called again.
-;;; 
-;;; This internally creates a main loop source using g_idle_source_new() and
-;;; attaches it to the main loop context using g_source_attach(). You can do
-;;; these steps manually if you need greater control.
-;;; 
-;;; priority :
-;;;     the priority of the idle source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-;;; 
-;;; function :
-;;;     function to call
-;;; 
-;;; data :
-;;;     data to pass to function
-;;; 
-;;; notify :
-;;;     function to call when the idle is removed, or NULL
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) of the event source. Rename to: g_idle_add
-;;; ----------------------------------------------------------------------------
+  The interval given is in terms of monotonic time, not wall clock time. See
+  g_get_monotonic_time().
 
-(defcfun ("g_idle_add_full" g-idle-add-full) :uint
-  (priority :uint)
-  (function :pointer)
-  (data :pointer)
-  (notify :pointer))
+  Since 2.14")
 
-(export 'g-idle-add-full)
+;;; --- g-timeout-add-seconds-full ---------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_idle_remove_by_data ()
-;;; 
-;;; gboolean g_idle_remove_by_data (gpointer data);
-;;; 
-;;; Removes the idle function with the given data.
-;;; 
-;;; data :
-;;;     the data for the idle source's callback.
-;;; 
-;;; Returns :
-;;;     TRUE if an idle source was found and removed.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-timeout-add-seconds-full 'function)
+ "@version{2013-01-01}
+  @argument[priority]{the priority of the timeout source. Typically this will be
+    in the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.}
+  @argument[interval]{the time between calls to the function, in seconds}
+  @argument[function]{function to call}
+  @argument[data]{data to pass to function}
+  @argument[notify]{function to call when the timeout is removed, or NULL}
+  @return{the ID (greater than 0) of the event source. Rename to:
+    g_timeout_add_seconds}
+  @begin{short}
+    Sets a function to be called at regular intervals, with priority.
+  @end{short}
+  The function is called repeatedly until it returns FALSE, at which point the
+  timeout is automatically destroyed and the function will not be called
+  again.
 
-(defcfun ("g_idle_remove_by_data" g-idle-remove-by-data) :boolean
-  (data :pointer))
+  Unlike g_timeout_add(), this function operates at whole second granularity.
+  The initial starting point of the timer is determined by the implementation
+  and the implementation is expected to group multiple timers together so that
+  they fire all at the same time. To allow this grouping, the interval to the
+  first timer is rounded and can deviate up to one second from the specified
+  interval. Subsequent timer iterations will generally run at the specified
+  interval.
 
-(export 'g-idle-remove-by-data)
+  Note that timeout functions may be delayed, due to the processing of other
+  event sources. Thus they should not be relied on for precise timing. After
+  each call to the timeout function, the time of the next timeout is
+  recalculated based on the current time and the given interval
+
+  If you want timing more precise than whole seconds, use g_timeout_add()
+  instead.
+
+  The grouping of timers to fire at the same time results in a more power and
+  CPU efficient behavior so if your timer is in multiples of seconds and you
+  don't require the first timer exactly one second from now, the use of
+  g_timeout_add_seconds() is preferred over g_timeout_add().
+
+  This internally creates a main loop source using
+  g_timeout_source_new_seconds() and attaches it to the main loop context
+  using g_source_attach(). You can do these steps manually if you need greater
+  control.
+
+  The interval given is in terms of monotonic time, not wall clock time. See
+  g_get_monotonic_time().
+
+ Since 2.14")
+
+;;; --- g-idle-source-new ------------------------------------------------------
+
+(setf (documentation 'g-idle-source-new 'function)
+ "@version{2013-01-01}
+  @return{the newly-created idle source}
+  @short{Creates a new idle source.}
+
+  The source will not initially be associated with any GMainContext and must
+  be added to one with g_source_attach() before it will be executed. Note that
+  the default priority for idle sources is G_PRIORITY_DEFAULT_IDLE, as
+  compared to other sources which have a default priority of
+  G_PRIORITY_DEFAULT.")
+
+;;; --- g-idle-add -------------------------------------------------------------
+
+(setf (documentation 'g-idle-add 'function)
+ "@version{2013-01-01}
+  @argument[function]{function to call}
+  @argument[data]{data to pass to function.}
+  @return{the ID (greater than 0) of the event source.}
+  @begin{short}
+    Adds a function to be called whenever there are no higher priority events
+    pending to the default main loop.
+  @end{short}
+  The function is given the default idle priority, G_PRIORITY_DEFAULT_IDLE. If
+  the function returns FALSE it is automatically removed from the list of event
+  sources and will not be called again.
+
+  This internally creates a main loop source using g_idle_source_new() and
+  attaches it to the main loop context using g_source_attach(). You can do
+  these steps manually if you need greater control.")
+
+;;; --- g-idle-add-full --------------------------------------------------------
+
+(setf (documentation 'g-idle-add-full 'function)
+ "@version{2013-01-01}
+  @argument[priority]{the priority of the idle source. Typically this will be in
+    the range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.}
+  @argument[function]{function to call}
+  @argument[data]{data to pass to function}
+  @argument[notify]{function to call when the idle is removed, or NULL}
+  @return{the ID (greater than 0) of the event source. Rename to: g_idle_add}
+  @begin{short}
+    Adds a function to be called whenever there are no higher priority events
+    pending.
+  @end{short}
+  If the function returns FALSE it is automatically removed from the list of
+  event sources and will not be called again.
+
+  This internally creates a main loop source using g_idle_source_new() and
+  attaches it to the main loop context using g_source_attach(). You can do
+  these steps manually if you need greater control.")
+
+;;; --- g-idle-remove-by-data --------------------------------------------------
+
+(setf (documentation 'g-idle-remove-by-data 'function)
+ "@version{2013-01-01}
+  @argument[data]{the data for the idle source's callback.}
+  @return{TRUE if an idle source was found and removed.}
+  @short{Removes the idle function with the given data.}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GPid
@@ -1670,65 +1250,24 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; struct GPollFD
-;;; 
-;;; struct GPollFD {
-;;; #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
-;;;   gint64 fd;
-;;; #else
-;;;   gint        fd;
-;;; #endif
-;;;   gushort     events;
-;;;   gushort     revents;
-;;; };
-;;; 
-;;; Represents a file descriptor, which events to poll for, and which events
-;;; occurred.
-;;; 
-;;; gint64 fd;
-;;;     the file descriptor to poll (or a HANDLE on Win32)
-;;; 
-;;; gint fd;
-;;;     
-;;; 
-;;; gushort events;
-;;;     a bitwise combination from GIOCondition, specifying which events should
-;;;     be polled for. Typically for reading from a file descriptor you would
-;;;     use G_IO_IN | G_IO_HUP | G_IO_ERR, and for writing you would use
-;;;     G_IO_OUT | G_IO_ERR.
-;;; 
-;;; gushort revents;
-;;;     a bitwise combination of flags from GIOCondition, returned from the
-;;;     poll() function to indicate which events occurred.
-;;; ----------------------------------------------------------------------------
+;;; --- g-poll-fd --------------------------------------------------------------
 
-(defcstruct g-poll-fd
-  (fd :int) ; TODO: #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
-  (events :ushort)
-  (revent :ushort))
-
-(export 'g-poll-fd)
-
+(setf (gethash 'g-poll-fd atdoc:*type-name-alias*) "CStruct")
 (setf (documentation 'g-poll-fd 'type)
- "@begin{short}
+ "@version{2013-01-01}
+  @begin{short}
     Represents a file descriptor, which events to poll for, and which events
     occurred.
   @end{short}
   @begin{pre}
-  struct GPollFD {
-  #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
-    gint64 fd;
-  #else
-    gint        fd;
-  #endif
-    gushort     events;
-    gushort     revents;
-  @};
+(defcstruct g-poll-fd
+  (fd :int) ; TODO: #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
+  (events :ushort)
+  (revent :ushort))
   @end{pre}
   @begin{table}
     @entry[fd]{}
-    @entry[gint64 fd}{the file descriptor to poll (or a HANDLE on Win32)}
+    @entry[gint64 fd]{the file descriptor to poll (or a HANDLE on Win32)}
     @entry[gushort events]{a bitwise combination from @code{GIOCondition},
       specifying which events should be polled for. Typically for reading from a
       file descriptor you would use @code{G_IO_IN | G_IO_HUP | G_IO_ERR}, and
@@ -1791,99 +1330,20 @@
 ;;; for dependency reasons.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; struct GSource
-;;; 
-;;; struct GSource {
-;;; };
-;;; 
-;;; The GSource struct is an opaque data type representing an event source.
-;;; ----------------------------------------------------------------------------
+;;; --- g-source ---------------------------------------------------------------
 
-(defcstruct g-source)
-
-(export 'g-source)
-
+(setf (gethash 'g-source atdoc:*type-name-alias*) "CStruct")
 (setf (documentation 'g-source 'type)
  "@begin{short}
     The @sym{g-source} struct is an opaque data type representing an event
     source.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-;;; struct GSourceFuncs
-;;; 
-;;; struct GSourceFuncs {
-;;;   gboolean (*prepare)  (GSource    *source,
-;;;                         gint       *timeout_);
-;;;   gboolean (*check)    (GSource    *source);
-;;;   gboolean (*dispatch) (GSource    *source,
-;;;                         GSourceFunc callback,
-;;;                         gpointer    user_data);
-;;;   void     (*finalize) (GSource    *source); /* Can be NULL */
-;;; };
-;;; 
-;;; The GSourceFuncs struct contains a table of functions used to handle event
-;;; sources in a generic manner.
-;;; 
-;;; For idle sources, the prepare and check functions always return TRUE to
-;;; indicate that the source is always ready to be processed. The prepare
-;;; function also returns a timeout value of 0 to ensure that the poll() call
-;;; doesn't block (since that would be time wasted which could have been spent
-;;; running the idle function).
-;;; 
-;;; For timeout sources, the prepare and check functions both return TRUE if the
-;;; timeout interval has expired. The prepare function also returns a timeout
-;;; value to ensure that the poll() call doesn't block too long and miss the
-;;; next timeout.
-;;; 
-;;; For file descriptor sources, the prepare function typically returns FALSE,
-;;; since it must wait until poll() has been called before it knows whether any
-;;; events need to be processed. It sets the returned timeout to -1 to indicate
-;;; that it doesn't mind how long the poll() call blocks. In the check function,
-;;; it tests the results of the poll() call to see if the required condition has
-;;; been met, and returns TRUE if so.
-;;; 
-;;; prepare ()
-;;;     Called before all the file descriptors are polled. If the source can
-;;;     determine that it is ready here (without waiting for the results of the
-;;;     poll() call) it should return TRUE. It can also return a timeout_ value
-;;;     which should be the maximum timeout (in milliseconds) which should be
-;;;     passed to the poll() call. The actual timeout used will be -1 if all
-;;;     sources returned -1, or it will be the minimum of all the timeout_
-;;;     values returned which were >= 0.
-;;; 
-;;; check ()
-;;;     Called after all the file descriptors are polled. The source should
-;;;     return TRUE if it is ready to be dispatched. Note that some time may
-;;;     have passed since the previous prepare function was called, so the
-;;;     source should be checked again here.
-;;; 
-;;; dispatch ()
-;;;     Called to dispatch the event source, after it has returned TRUE in
-;;;     either its prepare or its check function. The dispatch function is
-;;;     passed in a callback function and data. The callback function may be
-;;;     NULL if the source was never connected to a callback using
-;;;     g_source_set_callback(). The dispatch function should call the callback
-;;;     function with user_data and whatever additional parameters are needed
-;;;     for this type of event source.
-;;; 
-;;; finalize ()
-;;;     Called when the source is finalized.
-;;; ----------------------------------------------------------------------------
-
-(defcstruct g-source-funcs
-  (prepare :pointer)
-  (check :pointer)
-  (dispatch :pointer)
-  (finalize :pointer)
-  (closure-callback :pointer)
-  (closure-marshal :pointer))
-
-(export 'g-source-funcs)
+;;; --- g-source-funcs ---------------------------------------------------------
 
 (setf (documentation 'g-source-funcs 'type)
- "@begin{short}
+ "@version{2013-01-01}
+  @begin{short}
     The @sym{g-source-funcs} struct contains a table of functions used to handle
     event sources in a generic manner.
   @end{short}
@@ -1906,15 +1366,13 @@
   check function, it tests the results of the @code{poll()} call to see if the
   required condition has been met, and returns TRUE if so.
   @begin{pre}
-  struct GSourceFuncs {
-    gboolean (*prepare)  (GSource    *source,
-                          gint       *timeout_);
-    gboolean (*check)    (GSource    *source);
-    gboolean (*dispatch) (GSource    *source,
-                          GSourceFunc callback,
-                          gpointer    user_data);
-    void     (*finalize) (GSource    *source); /* Can be NULL */
-  @};
+(defcstruct g-source-funcs
+  (prepare :pointer)
+  (check :pointer)
+  (dispatch :pointer)
+  (finalize :pointer)
+  (closure-callback :pointer)
+  (closure-marshal :pointer))
   @end{pre}
   @begin{table}
     @begin[prepare ()]{entry}
@@ -1946,401 +1404,256 @@
     @end{entry}
   @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; struct GSourceCallbackFuncs
-;;; 
-;;; struct GSourceCallbackFuncs {
-;;;   void (*ref)   (gpointer     cb_data);
-;;;   void (*unref) (gpointer     cb_data);
-;;;   void (*get)   (gpointer     cb_data,
-;;;                  GSource     *source, 
-;;;                  GSourceFunc *func,
-;;;                  gpointer    *data);
-;;; };
-;;; 
-;;; The GSourceCallbackFuncs struct contains functions for managing callback
-;;; objects.
-;;; 
-;;; ref ()
-;;;     Called when a reference is added to the callback object
-;;; 
-;;; unref ()
-;;;     Called when a reference to the callback object is dropped
-;;; 
-;;; get ()
-;;;     Called to extract the callback function and data from the callback
-;;;     object.
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-callback-funcs ------------------------------------------------
 
+(setf (documentation 'g-source-callback-funcs 'type)
+ "@version{2013-01-01}
+  @begin{short}
+    The GSourceCallbackFuncs struct contains functions for managing callback
+    objects.
+  @end{short}
+  @begin[Lisp Implementation]{dictionary}
+    @begin{pre}
 (defcstruct g-source-callback-funcs
   (ref :pointer)
   (unref :pointer)
   (get :pointer))
+    @end{pre}
+    @begin{table}
+      @entry[ref]{Called when a reference is added to the callback object}
+      @entry[unref]{Called when a reference to the callback object is dropped}
+      @entry[get]{Called to extract the callback function and data from the
+        callback object.}
+    @end{table}
+  @end{dictionary}")
 
-(export 'g-source-callback-funcs)
+;;; --- g-source-new -----------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_new ()
-;;; 
-;;; GSource * g_source_new (GSourceFuncs *source_funcs, guint struct_size);
-;;; 
-;;; Creates a new GSource structure. The size is specified to allow creating
-;;; structures derived from GSource that contain additional data. The size
-;;; passed in must be at least sizeof (GSource).
-;;; 
-;;; The source will not initially be associated with any GMainContext and must
-;;; be added to one with g_source_attach() before it will be executed.
-;;; 
-;;; source_funcs :
-;;;     structure containing functions that implement the sources behavior.
-;;; 
-;;; struct_size :
-;;;     size of the GSource structure to create.
-;;; 
-;;; Returns :
-;;;     the newly-created GSource.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-new 'function)
+ "@version{2013-01-01}
+  @argument[source-funcs]{structure containing functions that implement the
+    sources behavior.}
+  @argument[struct-size]{size of the GSource structure to create.}
+  @return{the newly-created GSource.}
+  @begin{short}
+    Creates a new GSource structure. The size is specified to allow creating
+    structures derived from GSource that contain additional data.
+  @end{short}
+  The size passed in must be at least sizeof (GSource).
 
-(defcfun ("g_source_new" g-source-new) (:pointer g-source)
-  (source-funcs (:pointer g-source-funcs))
-  (struct-size :uint))
+  The source will not initially be associated with any GMainContext and must
+  be added to one with g_source_attach() before it will be executed.")
 
-(export 'g-source-new)
+;;; --- g-source-ref -----------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_ref ()
-;;; 
-;;; GSource * g_source_ref (GSource *source);
-;;; 
-;;; Increases the reference count on a source by one.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     source
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-ref 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{source}
+  @short{Increases the reference count on a source by one.}")
 
-(defcfun ("g_source_ref" g-source-ref) (:pointer g-source)
-  (source (:pointer g-source)))
+;;; --- g-source-unref ---------------------------------------------------------
 
-(export 'g-source-ref)
+(setf (documentation 'g-source-unref 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @begin{short}
+    Decreases the reference count of a source by one.
+  @end{short}
+  If the resulting reference count is zero the source and associated memory will
+  be destroyed.")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_unref ()
-;;; 
-;;; void g_source_unref (GSource *source);
-;;; 
-;;; Decreases the reference count of a source by one. If the resulting reference
-;;; count is zero the source and associated memory will be destroyed.
-;;; 
-;;; source :
-;;;     a GSource
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-set-funcs -----------------------------------------------------
 
-(defcfun ("g_source_unref" g-source-unref) :void
-  (source (:pointer g-source)))
+(setf (documentation 'g-source-set-funcs 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[funcs]{the new GSourceFuncs}
+  @begin{short}
+    Sets the source functions (can be used to override default implementations)
+    of an unattached source.
+  @end{short}
 
-(export 'g-source-unref)
+  Since 2.12")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_set_funcs ()
-;;; 
-;;; void g_source_set_funcs (GSource *source, GSourceFuncs *funcs);
-;;; 
-;;; Sets the source functions (can be used to override default implementations)
-;;; of an unattached source.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; funcs :
-;;;     the new GSourceFuncs
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-attach --------------------------------------------------------
 
-(defcfun ("g_source_set_funcs" g-source-set-funcs) :void
-  (source (:pointer g-source))
-  (funcs (:pointer g-source-funcs)))
+(setf (documentation 'g-source-attach 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[context]{a GMainContext (if NULL, the default context will be used)}
+  @return{the ID (greater than 0) for the source within the GMainContext.}
+  @begin{short}
+    Adds a GSource to a context so that it will be executed within that context.
+  @end{short}
+  Remove it by calling @fun{g-source-destroy}.")
 
-(export 'g-source-set-funcs)
+;;; --- g-source-destroy -------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_attach ()
-;;; 
-;;; guint g_source_attach (GSource *source, GMainContext *context);
-;;; 
-;;; Adds a GSource to a context so that it will be executed within that context.
-;;; Remove it by calling g_source_destroy().
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; context :
-;;;     a GMainContext (if NULL, the default context will be used)
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) for the source within the GMainContext.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-destroy 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @begin{short}
+    Removes a source from its GMainContext, if any, and mark it as destroyed.
+  @end{short}
+  The source cannot be subsequently added to another context.")
 
-(defcfun ("g_source_attach" g-source-attach) :uint
-  (source (:pointer g-source))
-  (context (:pointer g-main-context)))
+;;; --- g-source-is-destroyed --------------------------------------------------
 
-(export 'g-source-attach)
+(setf (documentation 'g-source-is-destroyed 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{TRUE if the source has been destroyed}
+  @begin{short}
+    This is important when you operate upon your objects from within idle
+    handlers, but may have freed the object before the dispatch of your idle
+    handler.
+  @end{short}
+  @begin{pre}
+  static gboolean
+  idle_callback (gpointer data)
+  {
+    SomeWidget *self = data;
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_destroy ()
-;;; 
-;;; void g_source_destroy (GSource *source);
-;;; 
-;;; Removes a source from its GMainContext, if any, and mark it as destroyed.
-;;; The source cannot be subsequently added to another context.
-;;; 
-;;; source :
-;;;     a GSource
-;;; ----------------------------------------------------------------------------
+    GDK_THREADS_ENTER ();
+    /* do stuff with self */
+    self->idle_id = 0;
+    GDK_THREADS_LEAVE ();
 
-(defcfun ("g_source_destroy" g-source-destroy) :void
-  (source (:pointer g-source)))
+    return G_SOURCE_REMOVE;
+  @}
 
-(export 'g-source-destroy)
+  static void
+  some_widget_do_stuff_later (SomeWidget *self)
+  {
+    self->idle_id = g_idle_add (idle_callback, self);
+  @}
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_is_destroyed ()
-;;; 
-;;; gboolean g_source_is_destroyed (GSource *source);
-;;; 
-;;; Returns whether source has been destroyed.
-;;; 
-;;; This is important when you operate upon your objects from within idle
-;;; handlers, but may have freed the object before the dispatch of your idle
-;;; handler.
-;;; 
-;;;   static gboolean 
-;;;   idle_callback (gpointer data)
-;;;   {
-;;;     SomeWidget *self = data;
-;;;      
-;;;     GDK_THREADS_ENTER ();
-;;;     /* do stuff with self */
-;;;     self->idle_id = 0;
-;;;     GDK_THREADS_LEAVE ();
-;;;      
-;;;     return G_SOURCE_REMOVE;
-;;;   }
-;;;    
-;;;   static void 
-;;;   some_widget_do_stuff_later (SomeWidget *self)
-;;;   {
-;;;     self->idle_id = g_idle_add (idle_callback, self);
-;;;   }
-;;;    
-;;;   static void 
-;;;   some_widget_finalize (GObject *object)
-;;;   {
-;;;     SomeWidget *self = SOME_WIDGET (object);
-;;;      
-;;;     if (self->idle_id)
-;;;       g_source_remove (self->idle_id);
-;;;      
-;;;     G_OBJECT_CLASS (parent_class)->finalize (object);
-;;;   }
-;;; 
-;;; This will fail in a multi-threaded application if the widget is destroyed
-;;; before the idle handler fires due to the use after free in the callback. A
-;;; solution, to this particular problem, is to check to if the source has
-;;; already been destroy within the callback.
-;;; 
-;;;   static gboolean 
-;;;   idle_callback (gpointer data)
-;;;   {
-;;;     SomeWidget *self = data;
-;;;     
-;;;     GDK_THREADS_ENTER ();
-;;;     if (!g_source_is_destroyed (g_main_current_source ()))
-;;;       {
-;;;         /* do stuff with self */
-;;;       }
-;;;     GDK_THREADS_LEAVE ();
-;;;     
-;;;     return FALSE;
-;;;   }
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     TRUE if the source has been destroyed
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+  static void
+  some_widget_finalize (GObject *object)
+  {
+    SomeWidget *self = SOME_WIDGET (object);
 
-(defcfun ("g_source_is_destroyed" g-source-is-destroyed) :boolean
-  (source (:pointer g-source)))
+    if (self->idle_id)
+      g_source_remove (self->idle_id);
 
-(export 'g-source-is-destroyed)
+    G_OBJECT_CLASS (parent_class)->finalize (object);
+  @}
+  @end{pre}
+  This will fail in a multi-threaded application if the widget is destroyed
+  before the idle handler fires due to the use after free in the callback. A
+  solution, to this particular problem, is to check to if the source has
+  already been destroy within the callback.
+  @begin{pre}
+  static gboolean
+  idle_callback (gpointer data)
+  {
+    SomeWidget *self = data;
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_set_priority ()
-;;; 
-;;; void g_source_set_priority (GSource *source, gint priority);
-;;; 
-;;; Sets the priority of a source. While the main loop is being run, a source
-;;; will be dispatched if it is ready to be dispatched and no sources at a
-;;; higher (numerically smaller) priority are ready to be dispatched.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; priority :
-;;;     the new priority.
-;;; ----------------------------------------------------------------------------
+    GDK_THREADS_ENTER ();
+    if (!g_source_is_destroyed (g_main_current_source ()))
+      {
+        /* do stuff with self */
+      @}
+    GDK_THREADS_LEAVE ();
 
-(defcfun ("g_source_set_priority" g-source-set-priority) :void
-  (source (:pointer g-source))
-  (priority :int))
+    return FALSE;
+  @}
+  @end{pre}
+  Since 2.12")
 
-(export 'g-source-set-priority)
+;;; --- g-source-set-priority --------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_priority ()
-;;; 
-;;; gint g_source_get_priority (GSource *source);
-;;; 
-;;; Gets the priority of a source.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     the priority of the source
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-set-priority 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[priority]{the new priority.}
+  @begin{short}
+    Sets the priority of a source.
+  @end{short}
+  While the main loop is being run, a source will be dispatched if it is ready
+  to be dispatched and no sources at a higher (numerically smaller) priority are
+  ready to be dispatched.")
 
-(defcfun ("g_source_get_priority" g-source-get-priority) :int
-  (source (:pointer g-source)))
+;;; --- g-source-get-priority --------------------------------------------------
 
-(export 'g-source-get-priority)
+(setf (documentation 'g-source-get-priority 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{the priority of the source}
+  @short{Gets the priority of a source.}")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_set_can_recurse ()
-;;; 
-;;; void g_source_set_can_recurse (GSource *source, gboolean can_recurse);
-;;; 
-;;; Sets whether a source can be called recursively. If can_recurse is TRUE,
-;;; then while the source is being dispatched then this source will be processed
-;;; normally. Otherwise, all processing of this source is blocked until the
-;;; dispatch function returns.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; can_recurse :
-;;;     whether recursion is allowed for this source
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-set-can-recurse -----------------------------------------------
 
-(defcfun ("g_source_set_can_recurse" g-source-set-can-recurse) :void
-  (source (:pointer g-source))
-  (can-recurse :boolean))
+(setf (documentation 'g-source-set-can-recurse 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[can_recurse]{whether recursion is allowed for this source}
+  @begin{short}
+    Sets whether a source can be called recursively.
+  @end{short}
+  If can_recurse is TRUE, then while the source is being dispatched then this
+  source will be processed normally. Otherwise, all processing of this source is
+  blocked until the dispatch function returns.")
 
-(export 'g-source-set-can-recurse)
+;;; --- g-source-get-can-recurse -----------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_can_recurse ()
-;;; 
-;;; gboolean g_source_get_can_recurse (GSource *source);
-;;; 
-;;; Checks whether a source is allowed to be called recursively. See
-;;; g_source_set_can_recurse().
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     whether recursion is allowed.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-get-can-recurse 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{whether recursion is allowed.}
+  @begin{short}
+    Checks whether a source is allowed to be called recursively.
+  @end{short}
+  See g_source_set_can_recurse().")
 
-(defcfun ("g_source_get_can_recurse" g-source-get-can-recurse) :boolean
-  (source (:pointer g-source)))
+;;; --- g-source-get-id --------------------------------------------------------
 
-(export 'g-source-get-can-recurse)
+(setf (documentation 'g-source-get-id 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{the ID (greater than 0) for the source}
+  @begin{short}
+    Returns the numeric ID for a particular source.
+  @end{short}
+  The ID of a source is a positive integer which is unique within a particular
+  main loop context. The reverse mapping from ID to source is done by
+  g_main_context_find_source_by_id().")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_id ()
-;;; 
-;;; guint g_source_get_id (GSource *source);
-;;; 
-;;; Returns the numeric ID for a particular source. The ID of a source is a
-;;; positive integer which is unique within a particular main loop context. The
-;;; reverse mapping from ID to source is done by
-;;; g_main_context_find_source_by_id().
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     the ID (greater than 0) for the source
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-get-name ------------------------------------------------------
 
-(defcfun ("g_source_get_id" g-source-get-id) :uint
-  (source (:pointer g-source)))
+(setf (documentation 'g-source-get-name 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{the name of the source}
+  @begin{short}
+    Gets a name for the source, used in debugging and profiling.
+  @end{short}
+  The name may be NULL if it has never been set with g_source_set_name().
 
-(export 'g-source-get-id)
+  Since 2.26")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_name ()
-;;; 
-;;; const char * g_source_get_name (GSource *source);
-;;; 
-;;; Gets a name for the source, used in debugging and profiling. The name may be
-;;; NULL if it has never been set with g_source_set_name().
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     the name of the source
-;;; 
-;;; Since 2.26
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-set-name ------------------------------------------------------
 
-(defcfun ("g_source_get_name" g-source-get-name) :string
-  (source (:pointer g-source)))
+(setf (documentation 'g-source-set-name 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[name]{debug name for the source}
+  @begin{short}
+    Sets a name for the source, used in debugging and profiling.
+  @end{short}
+  The name defaults to NULL.
 
-(export 'g-source-get-name)
+  The source name should describe in a human-readable way what the source
+  does. For example, \"X11 event queue\" or \"GTK+ repaint idle handler\" or
+  whatever it is.
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_set_name ()
-;;; 
-;;; void g_source_set_name (GSource *source, const char *name);
-;;; 
-;;; Sets a name for the source, used in debugging and profiling. The name
-;;; defaults to NULL.
-;;; 
-;;; The source name should describe in a human-readable way what the source
-;;; does. For example, "X11 event queue" or "GTK+ repaint idle handler" or
-;;; whatever it is.
-;;; 
-;;; It is permitted to call this function multiple times, but is not recommended
-;;; due to the potential performance impact. For example, one could change the
-;;; name in the "check" function of a GSourceFuncs to include details like the
-;;; event type in the source name.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; name :
-;;;     debug name for the source
-;;; 
-;;; Since 2.26
-;;; ----------------------------------------------------------------------------
+  It is permitted to call this function multiple times, but is not recommended
+  due to the potential performance impact. For example, one could change the
+  name in the \"check\" function of a GSourceFuncs to include details like the
+  event type in the source name.
 
-(defcfun ("g_source_set_name" g-source-set-name) :void
-  (source (:pointer g-source))
-  (name :string))
-
-(export 'g-source-set-name)
+  Since 2.26")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_set_name_by_id ()
@@ -2361,64 +1674,36 @@
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_context ()
-;;; 
-;;; GMainContext * g_source_get_context (GSource *source);
-;;; 
-;;; Gets the GMainContext with which the source is associated. Calling this
-;;; function on a destroyed source is an error.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     the GMainContext with which the source is associated, or NULL if the
-;;;     context has not yet been added to a source
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-get-context ---------------------------------------------------
 
-(defcfun ("g_source_get_context" g-source-get-context) (:pointer g-main-context)
-  (source (:pointer g-source)))
+(setf (documentation 'g-source-get-context 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{the GMainContext with which the source is associated, or NULL if the
+    context has not yet been added to a source}
+  @begin{short}
+    Gets the GMainContext with which the source is associated.
+  @end{short}
+  Calling this function on a destroyed source is an error.")
 
-(export 'g-source-get-context)
+;;; --- g-source-set-callback --------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_set_callback ()
-;;; 
-;;; void g_source_set_callback (GSource *source,
-;;;                             GSourceFunc func,
-;;;                             gpointer data,
-;;;                             GDestroyNotify notify);
-;;; 
-;;; Sets the callback function for a source. The callback for a source is called
-;;; from the source's dispatch function.
-;;; 
-;;; The exact type of func depends on the type of source; ie. you should not
-;;; count on func being called with data as its first parameter.
-;;; 
-;;; Typically, you won't use this function. Instead use functions specific to
-;;; the type of source you are using.
-;;; 
-;;; source :
-;;;     the source
-;;; 
-;;; func :
-;;;     a callback function
-;;; 
-;;; data :
-;;;     the data to pass to callback function
-;;; 
-;;; notify :
-;;;     a function to call when data is no longer in use, or NULL
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-set-callback 'function)
+ "@version{2013-01-01}
+  @argument[source]{the source}
+  @argument[func]{a callback function}
+  @argument[data]{the data to pass to callback function}
+  @argument[notify]{a function to call when data is no longer in use, or NULL}
+  @begin{short}
+    Sets the callback function for a source.
+  @end{short}
+  The callback for a source is called from the source's dispatch function.
 
-(defcfun ("g_source_set_callback" g-source-set-callback) :void
-  (source (:pointer g-source))
-  (func :pointer)
-  (data :pointer)
-  (notify :pointer))
+  The exact type of func depends on the type of source; ie. you should not
+  count on func being called with data as its first parameter.
 
-(export 'g-source-set-callback)
+  Typically, you won't use this function. Instead use functions specific to
+  the type of source you are using.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSourceFunc ()
@@ -2460,50 +1745,31 @@
 ;;;     and data
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_add_poll ()
-;;; 
-;;; void g_source_add_poll (GSource *source, GPollFD *fd);
-;;; 
-;;; Adds a file descriptor to the set of file descriptors polled for this
-;;; source. This is usually combined with g_source_new() to add an event source.
-;;; The event source's check function will typically test the revents field in
-;;; the GPollFD struct and return TRUE if events need to be processed.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; fd :
-;;;     a GPollFD structure holding information about a file descriptor to
-;;;     watch.
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-add-poll ------------------------------------------------------
 
-(defcfun ("g_source_add_poll" g-source-add-poll) :void
-  (source (:pointer g-source))
-  (fd (:pointer g-poll-fd)))
+(setf (documentation 'g-source-add-poll 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[fd]{a GPollFD structure holding information about a file descriptor
+   to watch.}
+  @begin{short}
+    Adds a file descriptor to the set of file descriptors polled for this
+    source.
+  @end{short}
+  This is usually combined with g_source_new() to add an event source.
+  The event source's check function will typically test the revents field in
+  the GPollFD struct and return TRUE if events need to be processed.")
 
-(export 'g-source-add-poll)
+;;; --- g-source-remove-poll ---------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_remove_poll ()
-;;; 
-;;; void g_source_remove_poll (GSource *source, GPollFD *fd);
-;;; 
-;;; Removes a file descriptor from the set of file descriptors polled for this
-;;; source.
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; fd :
-;;;     a GPollFD structure previously passed to g_source_add_poll().
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("g_source_remove_poll" g-source-remove-poll) :void
-  (source (:pointer g-source))
-  (fd (:pointer g-poll-fd)))
-
-(export 'g-source-remove-poll)
+(setf (documentation 'g-source-remove-poll 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[fd]{a GPollFD structure previously passed to g_source_add_poll().}
+  @begin{short}
+    Removes a file descriptor from the set of file descriptors polled for this
+    source.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_add_child_source ()
@@ -2549,129 +1815,82 @@
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_time ()
-;;; 
-;;; gint64 g_source_get_time (GSource *source);
-;;; 
-;;; Gets the time to be used when checking this source. The advantage of calling
-;;; this function over calling g_get_monotonic_time() directly is that when
-;;; checking multiple sources, GLib can cache a single value instead of having
-;;; to repeatedly get the system monotonic time.
-;;; 
-;;; The time here is the system monotonic time, if available, or some other
-;;; reasonable alternative otherwise. See g_get_monotonic_time().
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; Returns :
-;;;     the monotonic time in microseconds
-;;; 
-;;; Since 2.28
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-get-time ------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_get_current_time ()
-;;; 
-;;; void g_source_get_current_time (GSource *source, GTimeVal *timeval);
-;;; 
-;;; Warning
-;;; 
-;;; g_source_get_current_time has been deprecated since version 2.28 and should
-;;; not be used in newly-written code. use g_source_get_time() instead
-;;; 
-;;; This function ignores source and is otherwise the same as
-;;; g_get_current_time().
-;;; 
-;;; source :
-;;;     a GSource
-;;; 
-;;; timeval :
-;;;     GTimeVal structure in which to store current time.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'g-source-get-time 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @return{the monotonic time in microseconds}
+  @begin{short}
+    Gets the time to be used when checking this source.
+  @end{short}
+  The advantage of calling this function over calling g_get_monotonic_time()
+  directly is that when checking multiple sources, GLib can cache a single value
+  instead of having to repeatedly get the system monotonic time.
 
-(defcfun ("g_source_get_current_time" g-source-get-current-time) :void
-  (source (:pointer g-source))
-  (timeval-ret (:pointer g-time-val)))
+  The time here is the system monotonic time, if available, or some other
+  reasonable alternative otherwise. See g_get_monotonic_time().
 
-(export 'g-source-get-current-time)
+  Since 2.28")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_remove ()
-;;; 
-;;; gboolean g_source_remove (guint tag);
-;;; 
-;;; Removes the source with the given id from the default main context. The id
-;;; of a GSource is given by g_source_get_id(), or will be returned by the
-;;; functions g_source_attach(), g_idle_add(), g_idle_add_full(),
-;;; g_timeout_add(), g_timeout_add_full(), g_child_watch_add(),
-;;; g_child_watch_add_full(), g_io_add_watch(), and g_io_add_watch_full().
-;;; 
-;;; See also g_source_destroy(). You must use g_source_destroy() for sources
-;;; added to a non-default main context.
-;;; 
-;;; tag :
-;;;     the ID of the source to remove.
-;;; 
-;;; Returns :
-;;;     TRUE if the source was found and removed.
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-get-current-time ----------------------------------------------
 
-(defcfun ("g_source_remove" g-source-remove) :boolean
-  (id :uint))
+(setf (documentation 'g-source-get-current-time 'function)
+ "@version{2013-01-01}
+  @argument[source]{a GSource}
+  @argument[timeval]{GTimeVal structure in which to store current time.}
+  @begin[Warning]{dictionary}
+    @sym{g-source-get-current-time} has been deprecated since version 2.28 and
+    should not be used in newly-written code. Use @fun{g-source-get-time}
+    instead.
 
-(export 'g-source-remove)
+    This function ignores source and is otherwise the same as
+    @fun{g-get-current-time}.
+  @end{dictionary}
+  @see-function{g-source-get-time}")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_remove_by_funcs_user_data ()
-;;; 
-;;; gboolean g_source_remove_by_funcs_user_data (GSourceFuncs *funcs,
-;;;                                              gpointer user_data);
-;;; 
-;;; Removes a source from the default main loop context given the source
-;;; functions and user data. If multiple sources exist with the same source
-;;; functions and user data, only one will be destroyed.
-;;; 
-;;; funcs :
-;;;     The source_funcs passed to g_source_new()
-;;; 
-;;; user_data :
-;;;     the user data for the callback
-;;; 
-;;; Returns :
-;;;     TRUE if a source was found and removed.
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-remove --------------------------------------------------------
 
-(defcfun ("g_source_remove_by_funcs_user_data"
-          g-source-remove-by-funcs-user-data)
-    :boolean
-  (funcs (:pointer g-source-funcs))
-  (data :pointer))
+(setf (documentation 'g-source-remove 'function)
+ "@version{2013-01-01}
+  @argument[tag]{the ID of the source to remove.}
+  @return{TRUE if the source was found and removed.}
+  @begin{short}
+    Removes the source with the given id from the default main context.
+  @end{short}
+  The id of a GSource is given by g_source_get_id(), or will be returned by the
+  functions g_source_attach(), g_idle_add(), g_idle_add_full(),
+  g_timeout_add(), g_timeout_add_full(), g_child_watch_add(),
+  g_child_watch_add_full(), g_io_add_watch(), and g_io_add_watch_full().
 
-(export 'g-source-remove-by-funcs-user-data)
+  See also g_source_destroy(). You must use g_source_destroy() for sources
+  added to a non-default main context.")
 
-;;; ----------------------------------------------------------------------------
-;;; g_source_remove_by_user_data ()
-;;; 
-;;; gboolean g_source_remove_by_user_data (gpointer user_data);
-;;; 
-;;; Removes a source from the default main loop context given the user data for
-;;; the callback. If multiple sources exist with the same user data, only one
-;;; will be destroyed.
-;;; 
-;;; user_data :
-;;;     the user_data for the callback.
-;;; 
-;;; Returns :
-;;;     TRUE if a source was found and removed.
-;;; ----------------------------------------------------------------------------
+;;; --- g-source-remove-by-funcs-user-data -------------------------------------
 
-(defcfun ("g_source_remove_by_user_data" g-source-remove-by-user-data) :boolean
-  (data :pointer))
+(setf (documentation 'g-source-remove-by-funcs-user-data 'function)
+ "@version{2013-01-01}
+  @argument[funcs]{The source_funcs passed to g_source_new()}
+  @argument[user_data]{the user data for the callback}
+  @return{TRUE if a source was found and removed.}
+  @begin{short}
+    Removes a source from the default main loop context given the source
+    functions and user data.
+  @end{short}
+  If multiple sources exist with the same source functions and user data, only
+  one will be destroyed.")
 
-(export 'g-source-remove-by-user-data)
+;;; --- g-source-remove-by-user-data -------------------------------------------
 
-|#
+(setf (documentation 'g-source-remove-by-user-data 'function)
+ "@version{2013-01-01}
+  @argument[user_data]{the user_data for the callback.}
+  @return{TRUE if a source was found and removed.}
+  @begin{short}
+    Removes a source from the default main loop context given the user data for
+    the callback.
+  @end{short}
+  If multiple sources exist with the same user data, only one will be
+  destroyed.")
 
 ;;; --- End of file glib.main-loop.lisp  ---------------------------------------

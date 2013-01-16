@@ -6,7 +6,7 @@
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,77 +28,68 @@
 
 (in-package :glib)
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-size -----------------------------------------------------------------
 
 (setf (documentation 'g-size 'type)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @begin{short}
     An unsigned integer type of the result of the sizeof operator,
-    corresponding to the size_t type defined in C99.
+    corresponding to the @code{size_t} type defined in C99.
   @end{short}
   This type is wide enough to hold the numeric value of a pointer, so it is
   usually 32bit wide on a 32bit platform and 64bit wide on a 64bit platform.
-  Values of this type can range from 0 to G_MAXSIZE.
-  
-  To print or scan values of this type, use G_GSIZE_MODIFIER and/or
-  G_GSIZE_FORMAT.")
+  Values of this type can range from @code{0} to @code{G_MAXSIZE}.")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-ssize ----------------------------------------------------------------
 
 (setf (documentation 'g-ssize 'type)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @begin{short}
-    A signed variant of @type{g-size}, corresponding to the ssize_t defined
-    on most platforms.
+    A signed variant of @type{g-size}, corresponding to the @code{ssize_t}
+    defined on most platforms.
   @end{short}
-  Values of this type can range from G_MINSSIZE to G_MAXSSIZE.
-  
-  To print or scan values of this type, use G_GSIZE_MODIFIER and/or
-  G_GSSIZE_FORMAT.")
+  Values of this type can range from @code{G_MINSSIZE} to @code{G_MAXSSIZE}.")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-offset ---------------------------------------------------------------
 
 (setf (documentation 'g-offset 'type)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @begin{short}
     A signed integer type that is used for file offsets, corresponding to the
-    C99 type off64_t.
+    C99 type @code{off64_t}.
   @end{short}
-  Values of this type can range from G_MINOFFSET to G_MAXOFFSET.
-
-  To print or scan values of this type, use G_GOFFSET_MODIFIER and/or
-  G_GOFFSET_FORMAT.
+  Values of this type can range from @code{G_MINOFFSET} to @code{G_MAXOFFSET}.
 
   Since: 2.14")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-malloc ---------------------------------------------------------------
 
 (setf (documentation 'g-malloc 'function)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @argument[n-bytes]{the number of bytes to allocate}
-  @return{A pointer to the allocated memory.}
+  @return{A foreign pointer to the allocated memory.}
   @begin{short}
-    Allocates @code{n_bytes} bytes of memory. If @code{n_bytes} is 0 it returns
-    NULL.
+    Allocates @arg{n-bytes} bytes of memory. If @arg{n-bytes} is @code{0}
+    @sym{g-malloc} returns a foreign @code{null}-pointer.
   @end{short}
   @see{g-free}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-free -----------------------------------------------------------------
 
 (setf (documentation 'g-free 'function)
- "@version{2012-12-24}
-  @argument[mem]{the memory to free}
+ "@version{2013-1-15}
+  @argument[mem]{a foreign pointer to the memory to free}
   @begin{short}
-    Frees the memory pointed to by @code{mem}. If @code{mem} is NULL it simply
-    returns.
+    Frees the memory pointed to by the foreign pointer @arg{mem}. If @arg{mem}
+    is a @code{null}-pointer @sym{g-free} simply returns.
   @end{short}
   @see{g-malloc}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-time-val -------------------------------------------------------------
 
 (setf (gethash 'g-time-val atdoc:*type-name-alias*) "CStruct")
 (setf (documentation 'g-time-val 'type)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @begin{short}
     Represents a precise time, with seconds and microseconds.
   @end{short}
@@ -108,49 +99,58 @@
   GLib is attempting to unify around the use of 64bit integers to represent
   microsecond-precision time. As such, this type will be removed from a
   future version of GLib.
-  @begin{pre}
+  @begin[Lisp Implementation]{dictionary}
+    @begin{pre}
 (defcstruct g-time-val
   (tv-sec :long)
   (tv-usec :long))
-  @end{pre}
-  @begin{table}
-    @entry[tv-sec]{seconds}
-    @entry[tv-usec]{microseconds}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation 'g-string 'type)
- "@version{2012-12-24}
-  @begin{short}
-    The @sym{g-string} struct contains the public fields of a @code{GString}.
-  @end{short}
-  @begin{pre}
-  struct GString {
-    gchar  *str;
-    gsize   len;
-    gsize   allocated_len;
-  @};
-  @end{pre}
-  @begin{table}
-    @entry[gchar *str]{points to the character data. It may move as text is
-      added. The @arg{str} field is null-terminated and so can be used as an
-      ordinary C string.} 
-    @entry[gsize len]{contains the length of the string, not including the
-      terminating nul byte.}
-    @entry[gsize allocated_len]{the number of bytes that can be stored in the
-      string before it needs to be reallocated. May be larger than len.}
-  @end{table}
-  @begin[Lisp Implementation]{dictionary}
-    A type that it almost like the foreign type @code{:string} but uses
-    @fun{g-malloc} and @fun{g-free}.
+    @end{pre}
+    @begin[code]{table}
+      @entry[tv-sec]{seconds}
+      @entry[tv-usec]{microseconds}
+    @end{table}
   @end{dictionary}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-string ---------------------------------------------------------------
+
+(setf (documentation 'g-string 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    A type that is almost like the foreign CFFI type @code{:string} but uses the
+    GLib functions @fun{g-malloc} and @fun{g-free} to allocate and free memory.
+  @end{short}
+
+  The @sym{g-string} type performs automatic conversion between Lisp and C
+  strings. Note that, in the case of functions the converted C string will
+  have dynamic extent (i.e. it will be automatically freed after the foreign
+  function returns).
+
+  In addition to Lisp strings, this type will accept foreign pointers and pass
+  them unmodified.
+
+  A method for free-translated-object is specialized for this type. So, for
+  example, foreign strings allocated by this type and passed to a foreign
+  function will be freed after the function returns.
+  @see-type{g-strv}")
+
+;;; --- g-strv -----------------------------------------------------------------
 
 (setf (documentation 'g-strv 'type)
- "@version{2012-12-24}
-  @short{A C representable type name for @code{G_TYPE_STRV}.}")
+ "@version{2013-1-15}
+  @begin{short}
+    This type represents and performs automatic conversion between a list of
+    Lisp strings and an array of C strings of type @type{g-string}.
+  @end{short}
+  
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq str (convert-to-foreign (list \"Hello\" \"World\") 'g-strv))
+=> #.(SB-SYS:INT-SAP #X01541998)
+ (convert-from-foreign str 'g-strv)
+=> (\"Hello\" \"World\")
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-string}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -163,26 +163,17 @@
   If @arg{str} is @code{NULL} it returns @code{NULL}. The returned string should
   be freed with @fun{g-free} when no longer needed.")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-list -----------------------------------------------------------------
 
 (setf (documentation 'g-list 'type)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @begin{short}
-    The GList struct is used for each element in a doubly-linked list.
+    The @sym{g-list} type represents a C doubly-linked list with elements of
+    type @code{GList} struct.
   @end{short}
-  @begin{pre}
-  struct GList {
-    gpointer data;
-    GList   *next;
-    GList   *prev;
-  @};
-  @end{pre}
-  @begin{table}
-    @entry[gpointer data]{holds the element's data, which can be a pointer to
-      any kind of data, or any integer value using the Type Conversion Macros.}
-    @entry[GList *next]{contains the link to the next element in the list.} 
-    @entry[GList *prev]{contains the link to the previous element in the list.}
-  @end{table}")
+  The type @sym{g-list} performs automatic conversion from a C list to a Lisp
+  list. The conversion from a Lisp list to a C reprensentation is not
+  implemented.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -210,27 +201,17 @@
   @return{the next element, or NULL if there are no more elements.}
   @short{A convenience macro to get the next element in a GList.}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- g-slist ----------------------------------------------------------------
 
 (setf (documentation 'g-slist 'type)
- "@version{2012-12-24}
+ "@version{2013-1-15}
   @begin{short}
-    The GSList struct is used for each element in the singly-linked list.
+    The @sym{g-slist} type represents a C singly-linked list with elements of
+    type @code{GSList} struct.
   @end{short}
-  @begin{pre}
-  GSList
-
-  struct GSList {
-    gpointer data;
-    GSList  *next;
-  @};
-  @end{pre}
-  @begin{table}
-    @entry[gpointer data]{holds the element's data, which can be a pointer to
-      any kind of data, or any integer value using the Type Conversion Macros.} 
-    @entry[GSList *next]{contains the link to the next element in the list.}
-  @end{table}")
-
+  The type @sym{g-slist} performs automatic conversion from a C list to a Lisp
+  list. The conversion from a Lisp list to a C reprensentation is not
+  implemented.")
 
 ;;; ----------------------------------------------------------------------------
 

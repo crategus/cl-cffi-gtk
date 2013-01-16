@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
-;;; atdoc-glib.lisp
+;;; atdoc.lisp
 ;;;
-;;; Functions for generating the documentation for glib.
+;;; Functions for generating the documentation for GTK+.
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2012 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp

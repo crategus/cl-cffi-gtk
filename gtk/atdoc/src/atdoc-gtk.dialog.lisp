@@ -34,9 +34,125 @@
 (setf (documentation 'gtk-dialog 'type)
  "@version{2012-12-22}
   @begin{short}
-    The @sym{gtk-dialog} struct contains only private fields and should not be
-    directly accessed.
-  @end{short}")
+    Dialog boxes are a convenient way to prompt the user for a small amount of
+    input, e. g. to display a message, ask a question, or anything else that
+    does not require extensive effort on the user's part.
+  @end{short}
+
+  GTK+ treats a dialog as a window split vertically. The top section is a
+  @class{gtk-vbox}, and is where widgets such as a @class{gtk-label} or a
+  @class{gtk-entry} should be packed. The bottom area is known as the
+  @code{action_area}. This is generally used for packing buttons into the
+  dialog which may perform functions such as @code{cancel}, @code{ok}, or
+  @code{apply}.
+
+  @class{gtk-dialog} boxes are created with a call to @fun{gtk-dialog-new} or
+  @code{gtk_dialog_new_with_buttons()}. @code{gtk_dialog_new_with_buttons()}
+  is recommended; it allows you to set the dialog title, some convenient
+  flags, and add simple buttons.
+
+  If 'dialog' is a newly created dialog, the two primary areas of the window
+  can be accessed through @fun{gtk-dialog-get-content-area} and
+  @fun{gtk-dialog-get-action-area}, as can be seen from the example below.
+
+  A 'modal' dialog (that is, one which freezes the rest of the application
+  from user input), can be created by calling @fun{gtk-window-set-modal} on
+  the dialog. Use the @code{GTK_WINDOW()} macro to cast the widget returned
+  from @fun{gtk-dialog-new} into a @class{gtk-window}. When using
+  @code{gtk_dialog_new_with_buttons()} you can also pass the
+  @code{GTK_DIALOG_MODAL} flag to make a dialog modal.
+
+  If you add buttons to @class{gtk-dialog} using
+  @code{gtk_dialog_new_with_buttons()}, @fun{gtk-dialog-add-button},
+  @fun{gtk-dialog-add-buttons}, or @fun{gtk-dialog-add-action-widget},
+  clicking the button will emit a signal called \"response\" with a response
+  ID that you specified. GTK+ will never assign a meaning to positive response
+  IDs; these are entirely user-defined. But for convenience, you can use the
+  response IDs in the @symbol{gtk-response-type} enumeration (these all have
+  values less than zero). If a dialog receives a delete event, the
+  \"response\" signal will be emitted with a response ID of
+  @code{:DELETE_EVENT}.
+
+  If you want to block waiting for a dialog to return before returning
+  control flow to your code, you can call @fun{gtk-dialog-run}. This function
+  enters a recursive main loop and waits for the user to respond to the
+  dialog, returning the response ID corresponding to the button the user
+  clicked.
+
+  For the simple dialog in the following example, in reality you'd probably
+  use @class{gtk-message-dialog} to save yourself some effort. But you'd need
+  to create the dialog contents manually if you had more than a simple message
+  in the dialog.
+
+  Example 44. Simple GtkDialog usage
+  @begin{pre}
+ /* Function to open a dialog box displaying the message provided. */
+ void
+ quick_message (gchar *message)
+ {
+    GtkWidget *dialog, *label, *content_area;
+
+    /* Create the widgets */
+    dialog = gtk_dialog_new_with_buttons (\"Message\",
+                                          main_application_window,
+                                          GTK_DIALOG_DESTROY_WITH_PARENT,
+                                          GTK_STOCK_OK,
+                                          GTK_RESPONSE_NONE,
+                                          NULL);
+    content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+    label = gtk_label_new (message);
+
+    /* Ensure that the dialog box is destroyed when the user responds */
+    g_signal_connect_swapped (dialog,
+                              \"response\",
+                              G_CALLBACK (gtk_widget_destroy),
+                              dialog);
+
+    /* Add the label, and show everything we've added to the dialog */
+
+    gtk_container_add (GTK_CONTAINER (content_area), label);
+    gtk_widget_show_all (dialog);
+ @}
+  @end{pre}
+
+  @b{GtkDialog as GtkBuildable}
+
+  The @class{gtk-dialog} implementation of the @class{gtk-buildable} interface
+  exposes the @code{vbox} and @code{action_area} as internal children with
+  the names \"vbox\" and \"action_area\".
+
+  @class{gtk-dialog} supports a custom @code{<action-widgets>} element, which
+  can contain multiple @code{<action-widget>} elements. The \"response\"
+  attribute specifies a numeric response, and the content of the element is
+  the id of widget (which should be a child of the dialogs
+  @code{action_area}).
+
+  Example 45. A @class{gtk-dialog} UI definition fragment.
+  @begin{pre}
+ <object class=\"GtkDialog\" id=\"dialog1\">
+   <child internal-child=\"vbox\">
+     <object class=\"GtkVBox\" id=\"vbox\">
+       <child internal-child=\"action_area\">
+         <object class=\"GtkHButtonBox\" id=\"button_box\">
+           <child>
+            <object class=\"GtkButton\" id=\"button_cancel\"/>
+           </child>
+           <child>
+             <object class=\"GtkButton\" id=\"button_ok\"/>
+           </child>
+         </object>
+       </child>
+     </object>
+   </child>
+   <action-widgets>
+     <action-widget response=\"3\">button_ok</action-widget>
+     <action-widget response=\"-5\">button_cancel</action-widget>
+   </action-widgets>
+ </object>
+  @end{pre}
+  The @sym{gtk-dialog} struct contains only private fields and should not be
+  directly accessed.
+")
 
 ;;; ----------------------------------------------------------------------------
 

@@ -34,12 +34,26 @@
 (load "../gtk/atdoc/src/atdoc-gtk.dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.about-dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.widget.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.buildable.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.window.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.enumerations.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.container.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.bin.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.misc.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.grid.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.accel-group.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.accel-label.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.accel-map.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
 (load "../gdk/atdoc/src/atdoc-gdk.package.lisp")
+(load "../gdk/atdoc/src/atdoc-gdk.event-structures.lisp")
+(load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -54,6 +68,7 @@
 (load "../gobject/atdoc/src/atdoc-gobject.package.lisp")
 (load "../gobject/atdoc/src/atdoc-gobject.type-info.lisp")
 (load "../gobject/atdoc/src/atdoc-gobject.base.lisp")
+(load "../gobject/atdoc/src/atdoc-gobject.param-spec.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -64,6 +79,9 @@
 (load "../glib/atdoc/src/atdoc-glib.misc.lisp")
 (load "../glib/atdoc/src/atdoc-glib.threads.lisp")
 (load "../glib/atdoc/src/atdoc-glib.main-loop.lisp")
+(load "../glib/atdoc/src/atdoc-glib.utils.lisp")
+(load "../glib/atdoc/src/atdoc-glib.quark.lisp")
+(load "../glib/atdoc/src/atdoc-glib.error.lisp")
 
 ;;; ----------------------------------------------------------------------------
 

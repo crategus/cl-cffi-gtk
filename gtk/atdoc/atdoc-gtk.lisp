@@ -37,8 +37,10 @@
     (load "src/atdoc-gtk.main-loop.lisp")
 #|
     gtk.version.lisp                 - Version Information         - GTK+ 3.4.3
-    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.4.3
-    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.4.3
+|#
+    (load "src/atdoc-gtk.accel-group.lisp")
+    (load "src/atdoc-gtk.accel-map.lisp")
+#|
     gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.4.3
     gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.4.3
     
@@ -47,9 +49,8 @@
     gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.4.3
     
     not implemented                  - Bindings
-
-    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.4.3
 |#
+    (load "src/atdoc-gtk.enumerations.lisp")
     (load "src/atdoc-gtk.selections.lisp")
 #|
     
@@ -74,7 +75,9 @@ Theming in GTK+
     not implemented                  - GtkNumerableIcon
 
     gtk.resource-files.lisp          - Resource Files (**)         - GTK+ 3.2.3*
-    gtk.style.lisp                   - GtkStyle (**)               - GTK+ 3.2.3*
+|#
+    (load "src/atdoc-gtk.style.lisp")
+#|
 
 GTK+ Widgets and Objects
 
@@ -85,7 +88,9 @@ GTK+ Widgets and Objects
 #|
     gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.4.3
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.4.3
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.4.1
+|#
+    (load "src/atdoc-gtk.window.lisp")
+#|
     gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.4.3
 |#
     (load "src/atdoc-gtk.about-dialog.lisp")
@@ -94,8 +99,9 @@ GTK+ Widgets and Objects
     gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.4.3
     
   Display Widgets
-    
-    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.4.3
+|#
+    (load "src/atdoc-gtk.accel-label.lisp")
+#|
     gtk.image.lisp                   - GtkImage                    - GTK+ 3.4.1
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.4.1
     gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.4.1
@@ -229,8 +235,9 @@ GTK+ Widgets and Objects
     gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.4.3
   
   Layout Containers
-  
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.4.2
+|#
+    (load "src/atdoc-gtk.grid.lisp")
+#|
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.4.3
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.4.3
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.4.2
@@ -280,7 +287,9 @@ GTK+ Widgets and Objects
     gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.4.3
     gtk.im-multicontext.lisp         - GtkIMMulticontext           - GTK+ 3.4.3
     gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.4.3
-    gtk.tooltip.lisp                 - GtkTooltip                  - GTK+ 3.4.3
+|#
+    (load "src/atdoc-gtk.tooltip.lisp")
+#|
     gtk.viewport.lisp                - GtkViewport                 - GTK+ 3.4.3
     
     not implemented                  - GtkAccessible
@@ -288,11 +297,13 @@ GTK+ Widgets and Objects
   Abstract Base Classes
 |#
     (load "src/atdoc-gtk.widget.lisp")
+    (load "src/atdoc-gtk.container.lisp")
+    (load "src/atdoc-gtk.bin.lisp")
 #|
-    gtk.container.lisp               - GtkContainer                - GTK+ 3.4.1
-    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.4.1
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.4.3
-    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.4.1
+|#
+    (load "src/atdoc-gtk.misc.lisp")
+#|
     gtk.range.lisp                   - GtkRange                    - GTK+ 3.4.1
     gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.4.3
     
@@ -318,8 +329,9 @@ GTK+ Widgets and Objects
     not implemented                  - GtkAppChooserWidget
   
   Interface builder
-    
-    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.4.3
+|#
+    (load "src/atdoc-gtk.buildable.lisp")
+#|
     gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.4.3
     
   Application support

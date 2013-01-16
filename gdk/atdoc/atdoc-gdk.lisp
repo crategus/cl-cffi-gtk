@@ -30,5 +30,7 @@
 
 ;; Load the documentation of the package GIO
 (load "src/atdoc-gdk.package.lisp")
+(load "src/atdoc-gdk.event-structures.lisp")
+(load "src/atdoc-gdk.window.lisp")
 
 ;;; --- End of file atdoc-gdk.lisp ---------------------------------------------

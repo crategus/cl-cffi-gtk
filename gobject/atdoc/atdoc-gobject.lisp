@@ -31,5 +31,6 @@
 (load "src/atdoc-gobject.package.lisp")
 (load "src/atdoc-gobject.type-info.lisp")
 (load "src/atdoc-gobject.base.lisp")
+(load "src/atdoc-gobject.param-spec.lisp")
 
 ;;; --- End of file atdoc-gobject.lisp -----------------------------------------
