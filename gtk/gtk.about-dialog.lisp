@@ -705,7 +705,7 @@
 (defun gtk-about-dialog-set-comments (about comments)
   (setf (gtk-about-dialog-comments about) comments))
 
-(export 'gtk-about-dialog-sets-comments)
+(export 'gtk-about-dialog-set-comments)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_license ()

@@ -471,7 +471,7 @@
      (day :uint)
      (data :pointer))
   (restart-case
-    (or (funcall (get-stable-pointer-value data) calendar year month day)
+    (or (funcall (glib::get-stable-pointer-value data) calendar year month day)
         (null-pointer))
     (return-null () (null-pointer))))
 
@@ -786,8 +786,8 @@
 (defun gtk-calendar-set-detail-func (calendar func)
   (%gtk-calendar-set-detail-func calendar
                                  (callback gtk-calendar-detail-func-cb)
-                                 (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (glib::allocate-stable-pointer func)
+                                 (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-calendar-set-detail-func)
 

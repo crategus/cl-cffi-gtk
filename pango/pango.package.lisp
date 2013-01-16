@@ -28,4 +28,6 @@
 (defpackage :pango
   (:use :cl :iter :cffi :gobject :glib))
 
+(declaim #+sbcl(sb-ext:muffle-conditions style-warning))
+
 ;;; --- End of file pango.package.lisp -----------------------------------------

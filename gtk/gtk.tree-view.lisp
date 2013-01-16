@@ -1723,7 +1723,7 @@
      (prev-column g-object)
      (next-column g-object)
      (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
+  (let ((fn (glib::get-stable-pointer-value data)))
     (funcall fn tree-view column prev-column next-column)))
 
 ;;; ----------------------------------------------------------------------------
@@ -1768,8 +1768,8 @@
   (%gtk-tree-view-set-column-drag-function
                                    tree-view
                                    (callback gtk-tree-view-column-drop-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_scroll_to_point ()
@@ -2171,7 +2171,7 @@
     ((tree-view g-object)
      (path (g-boxed-foreign gtk-tree-path))
      (data :pointer))
-  (funcall (get-stable-pointer-value data) tree-view path))
+  (funcall (glib::get-stable-pointer-value data) tree-view path))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_map_expanded_rows ()
@@ -3222,7 +3222,7 @@
    (key (:string :free-from-foreign nil))
    (iter (g-boxed-foreign gtk-tree-iter)) (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                model column key iter)
     (return-true () t)
    (return-false () t)))
@@ -3264,8 +3264,8 @@
   (%gtk-tree-view-set-search-equal-func
                                    tree-view
                                    (callback gtk-tree-view-search-equal-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-view-set-search-equal-func)
 
@@ -3318,7 +3318,7 @@
 (defcallback gtk-tree-view-search-position-func :void
     ((tree-view g-object) (search-dialog g-object) (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                tree-view
                search-dialog)
    (return () nil)))
@@ -3379,8 +3379,8 @@
       (%gtk-tree-view-set-search-position-func
                                tree-view
                                (callback gtk-tree-view-set-search-position-func)
-                               (allocate-stable-pointer func)
-                               (callback stable-pointer-destroy-notify-cb))
+                               (glib::allocate-stable-pointer func)
+                               (callback glib::stable-pointer-destroy-notify-cb))
       (%gtk-tree-view-set-search-position-func tree-view
                                                (null-pointer)
                                                (null-pointer)
@@ -3562,7 +3562,7 @@
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                tree-model
                iter)
     (return-true () t)
@@ -3623,8 +3623,8 @@
   (if func
       (%gtk-tree-view-set-row-separator-func tree-view
                             (callback gtk-tree-view-row-separator-func-callback)
-                            (allocate-stable-pointer func)
-                            (callback stable-pointer-destroy-notify-cb))
+                            (glib::allocate-stable-pointer func)
+                            (callback glib::stable-pointer-destroy-notify-cb))
       (%gtk-tree-view-set-row-separator-func tree-view
                                              (null-pointer)
                                              (null-pointer)

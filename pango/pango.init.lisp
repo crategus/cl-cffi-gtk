@@ -27,7 +27,7 @@
 
 (in-package :pango)
 
-(at-init ()
+(glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library pango
       ((:and :unix (:not :darwin)) "libpango-1.0.so.0")

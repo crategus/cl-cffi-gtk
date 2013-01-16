@@ -158,7 +158,7 @@
 
 (defcallback gtk-text-tag-table-foreach-function :void
     ((tag (g-object gtk-text-tag)) (data :pointer))
-  (funcall (get-stable-pointer-value data) tag))
+  (funcall (glib::get-stable-pointer-value data) tag))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_table_new ()

@@ -22,6 +22,8 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+(declaim #+sbcl(sb-ext:muffle-conditions style-warning))
+
 (defpackage :gdk-pixbuf
   (:use :cl :gobject :glib :cffi :iter))
 

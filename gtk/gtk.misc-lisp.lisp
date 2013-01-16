@@ -30,15 +30,15 @@
 (defcallback call-from-main-loop-callback :boolean
     ((data :pointer))
   (restart-case
-      (progn (funcall (get-stable-pointer-value data))
+      (progn (funcall (glib::get-stable-pointer-value data))
              nil)
     (return-from-callback () nil)))
 
-(defun call-from-gtk-main-loop (func &key (priority +g-priority-default-idle+))
+(defun call-from-gtk-main-loop (func &key (priority g-priority-default-idle))
   (g-idle-add-full priority
                    (callback call-from-main-loop-callback)
-                   (allocate-stable-pointer func)
-                   (callback stable-pointer-destroy-notify-cb))
+                   (glib::allocate-stable-pointer func)
+                   (callback glib::stable-pointer-destroy-notify-cb))
   (ensure-gtk-main))
 
 (export 'call-from-gtk-main-loop)
@@ -46,15 +46,15 @@
 (defcallback call-timeout-from-main-loop-callback :boolean
     ((data :pointer))
   (restart-case
-      (progn (funcall (get-stable-pointer-value data)))
+      (progn (funcall (glib::get-stable-pointer-value data)))
     (return-from-callback () nil)))
 
-(defun gtk-main-add-timeout (millisec func &key (priority +g-priority-default+))
+(defun gtk-main-add-timeout (millisec func &key (priority g-priority-default))
   (g-timeout-add-full priority
                       millisec
                       (callback call-timeout-from-main-loop-callback)
-                      (allocate-stable-pointer func)
-                      (callback stable-pointer-destroy-notify-cb)))
+                      (glib::allocate-stable-pointer func)
+                      (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-main-add-timeout)
 

@@ -8,7 +8,7 @@
 ;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -81,16 +81,12 @@
 ;;; struct GtkBin;
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Consider to cut out the cffi property child
-
 (define-g-object-class "GtkBin" gtk-bin
   (:superclass gtk-container
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_bin_get_type")
-  ((:cffi child
-          gtk-bin-child (g-object gtk-widget)
-          "gtk_bin_get_child" nil)))
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_bin_get_child ()
@@ -108,10 +104,8 @@
 ;;;     pointer to child of the GtkBin
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-bin-get-child))
-
-(defun gtk-bin-get-child (bin)
-  (gtk-bin-child bin))
+(defcfun ("gtk_bin_get_child" gtk-bin-get-child) (g-object gtk-widget)
+  (bin (g-object gtk-bin)))
 
 (export 'gtk-bin-get-child)
 

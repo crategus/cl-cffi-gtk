@@ -605,9 +605,9 @@
 ;;; It is not used within GLib or GTK+.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-priority-high+ -100)
+(defconstant g-priority-high -100)
 
-(export '+g-priority-high+)
+(export 'g-priority-high)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_DEFAULT
@@ -620,9 +620,9 @@
 ;;; g_timeout_add(). In GDK this priority is used for events from the X server.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-priority-default+ 0)
+(defconstant g-priority-default 0)
 
-(export '+g-priority-default+)
+(export 'g-priority-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_HIGH_IDLE
@@ -637,9 +637,9 @@
 ;;; widgets are not redrawn twice unnecessarily.)
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-priority-high-idle+ 100)
+(defconstant g-priority-high-idle 100)
 
-(export '+g-priority-high-idle+)
+(export 'g-priority-high-idle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_DEFAULT_IDLE
@@ -651,9 +651,9 @@
 ;;; In GLib this priority is used when adding idle functions with g_idle_add().
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-priority-default-idle+ 200)
+(defconstant g-priority-default-idle 200)
 
-(export '+g-priority-default-idle+)
+(export 'g-priority-default-idle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_LOW
@@ -665,9 +665,9 @@
 ;;; It is not used within GLib or GTK+.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-priority-low+ 300)
+(defconstant g-priority-low 300)
 
-(export '+g-priority-low+)
+(export 'g-priority-low)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_SOURCE_CONTINUE
@@ -1701,15 +1701,15 @@
 
 (defcallback call-timeout-from-main-loop-cb :boolean ((data :pointer))
   (restart-case
-      (progn (funcall (get-stable-pointer-value data)))
+      (progn (funcall (glib::get-stable-pointer-value data)))
     (return-from-callback () nil)))
 
-(defun g-timeout-add (interval func &key (priority +g-priority-default+))
+(defun g-timeout-add (interval func &key (priority g-priority-default))
   (g-timeout-add-full priority
                       interval
                       (callback call-timeout-from-main-loop-cb)
-                      (allocate-stable-pointer func)
-                      (callback stable-pointer-destroy-notify-cb)))
+                      (glib::allocate-stable-pointer func)
+                      (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'g-timeout-add)
 
@@ -1811,12 +1811,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-timeout-add-seconds (interval func
-                                       &key (priority +g-priority-default+))
+                                       &key (priority g-priority-default))
   (g-timeout-add-seconds-full priority
                               interval
                               (callback call-timeout-from-main-loop-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+                              (glib::allocate-stable-pointer func)
+                              (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'g-timeout-add-seconds)
 
@@ -1943,11 +1943,11 @@
   (function :pointer)
   (data :pointer))
 
-(defun g-idle-add (func &key (priority +g-priority-default+))
+(defun g-idle-add (func &key (priority g-priority-default))
   (g-idle-add-full priority
                    (callback call-timeout-from-main-loop-cb)
-                   (allocate-stable-pointer func)
-                   (callback stable-pointer-destroy-notify-cb)))
+                   (glib::allocate-stable-pointer func)
+                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'g-idle-add)
 
@@ -2844,6 +2844,11 @@
 ;;; 
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_source_get_time" g-source-get-time) :void
+  (source (:pointer g-source)))
+
+(export 'g-source-get-time)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_get_current_time ()

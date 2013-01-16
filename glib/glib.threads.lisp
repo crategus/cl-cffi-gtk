@@ -262,7 +262,7 @@
 ;; Try to generalize the implementation.
 
 (defcallback g-thread-func-cb :boolean ((data :pointer))
-  (funcall (get-stable-pointer-value data)))
+  (funcall (glib::get-stable-pointer-value data)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_thread_new ()
@@ -308,7 +308,7 @@
 ;; The pointer must be valid as long as the thread is running.
 
 (defun g-thread-new (name func)
-  (let ((ptr (allocate-stable-pointer func)))
+  (let ((ptr (glib::allocate-stable-pointer func)))
     (%g-thread-new name (callback g-thread-func-cb) ptr)))
 
 (export 'g-thread-new)

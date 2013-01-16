@@ -45,7 +45,7 @@
 ;;;
 ;;;     GdkEventType     <-- gdk.events.lisp
 ;;;     GdkModifierType  <-- gdk.window.lisp
-;;;     GdkEventMask     <-- gdk-events.lisp
+;;;     GdkEventMask     <-- gdk.events.lisp
 ;;;
 ;;;     GdkEvent
 ;;;
@@ -156,7 +156,8 @@
   (:up 0)
   (:down 1)
   (:left 2)
-  (:right 3))
+  (:right 3)
+  (:smooth 4))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkVisibilityState
@@ -240,7 +241,10 @@
   :ungrab
   :gtk-grab
   :gtk-ungrab
-  :state-changed)
+  :state-changed
+  :touch-begin
+  :touch-end
+  :device-switch)
 
 (export 'gdk-crossing-mode)
 
@@ -365,7 +369,8 @@
   (:sticky 8)
   (:fullscreen 16)
   (:above 32)
-  (:below 64))
+  (:below 64)
+  (:focused 128))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkSettingAction
@@ -992,6 +997,8 @@
   (:proximity-out-mask 524288)
   (:substructure-mask 1048576)
   (:scroll-mask 2097152)
+  (:touch-mask #.(ash 1 22))
+  (:smooth-scroll-mask #.(ash 1 23))
   (:all-events-mask 4194302))
 
 ;;; ----------------------------------------------------------------------------
@@ -1056,39 +1063,13 @@
   (window (g-object gdk-window))
   (send-event (:boolean :int8))
   (:variant type
-            ((:key-press :key-release) event-key
-             (time :uint32)
-             (state gdk-modifier-type)
-             (keyval :uint)
-             (length :int)
-             (string (:string :free-from-foreign nil
-                              :free-to-foreign nil))
-             (hardware-keycode :uint16)
-             (group :uint8)
-             (is-modifier :uint))
-            ((:button-press
-              :2button-press
-              :3button-press
-              :button-release) event-button
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state :uint)
-             (button :uint)
-             (device (g-object device))
-             (x-root :double)
-             (y-root :double))
-            ((:scroll) event-scroll
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (state gdk-modifier-type)
-             (direction gdk-scroll-direction)
-             (device (g-object device))
-             (x-root :double)
-             (y-root :double))
-            ((:motion-notify) event-motion
+            ((:expose) gdk-event-expose
+             (area gdk-rectangle :inline t)
+             (region :pointer)
+             (count :int))
+            ((:visibility-notify) gdk-event-visibility
+             (state gdk-visibility-state))
+            ((:motion-notify) gdk-event-motion
              (time :uint32)
              (x :double)
              (y :double)
@@ -1098,13 +1079,54 @@
              (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
-            ((:expose) event-expose
-             (area gdk-rectangle :inline t)
-             (region :pointer)
-             (count :int))
-            ((:visibility-notify) event-visibility
-             (state gdk-visibility-state))
-            ((:enter-notify :leave-notify) event-crossing
+            ((:button-press
+              :2button-press
+              :3button-press
+              :button-release) gdk-event-button
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (axes (fixed-array :double 2))
+             (state :uint)
+             (button :uint)
+             (device (g-object device))
+             (x-root :double)
+             (y-root :double))
+;; Implementation of gdk-event-sequence (since 3.4) is missing
+;            ((:begin
+;              :update
+;              :end
+;              :cancel) gdk-event-touch
+;             (time :uint32)
+;             (x :double)
+;             (y :double)
+;             (axes (:pointer :double))
+;             (state :int)
+;             (sequence gdk-event-sequence)
+;             (emulating-pointer :boolean)
+;             (device (g-object gdk-device))
+;             (x-root :double)
+;             (y-root :double))
+            ((:scroll) gdk-event-scroll
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (state gdk-modifier-type)
+             (direction gdk-scroll-direction)
+             (device (g-object device))
+             (x-root :double)
+             (y-root :double))
+            ((:key-press :key-release) gdk-event-key
+             (time :uint32)
+             (state gdk-modifier-type)
+             (keyval :uint)
+             (length :int)
+             (string (:string :free-from-foreign nil
+                              :free-to-foreign nil))
+             (hardware-keycode :uint16)
+             (group :uint8)
+             (is-modifier :uint))
+            ((:enter-notify :leave-notify) gdk-event-crossing
              (sub-window (g-object gdk-window))
              (time :uint32)
              (x :double)
@@ -1115,65 +1137,67 @@
              (detail gdk-notify-type)
              (focus :boolean)
              (state :uint))
-            ((:focus-change) event-focus
+            ((:focus-change) gdk-event-focus
              (in :int16))
-            ((:configure) event-configure
+            ((:configure) gdk-event-configure
              (x :int)
              (y :int)
              (width :int)
              (height :int))
-            ((:property-notify) event-property
+            ((:property-notify) gdk-event-property
              (atom gdk-atom)
              (time :uint32)
              (state gdk-property-state))
             ((:selection-clear
               :selection-notify
-              :selection-request) event-selection
+              :selection-request) gdk-event-selection
              (selection gdk-atom)
              (target gdk-atom)
              (property gdk-atom)
              (time :uint32)
              ;; TODO: Is it correct to replace GdkNativeWindow with g-object
              (requestor g-object))
-            ((:drag-enter
-              :drag-leave
-              :drag-motion
-              :drag-status
-              :drop-start
-              :drop-finished) event-dnd
-             (drag-context (g-object gdk-drag-context))
-             (time :uint32)
-             (x-root :short)
-             (y-root :short))
-            ((:proximity-in
-              :proximity-out) event-proximity
-             (time :uint32)
-             (device (g-object gdk-device)))
-            ((:client-event) event-client
-             (message-time gdk-atom)
-             (data-format :ushort)
-             (:variant data-format
-                       (8 event-client-8
-                          (data :uchar :count 20))
-                       (16 event-client-16
-                           (data :ushort :count 10))
-                       (32 event-client-32
-                           (data :ulong :count 5))))
-            ((:no-expose) event-no-expose)
-            ((:window-state) event-window-state
-             (changed-mask gdk-window-state)
-             (new-window-state gdk-window-state))
-            ((:setting) event-setting
-             (action gdk-setting-action)
-             (name (:string :free-from-foreign nil :free-to-foreign nil)))
-            ((:owner-change) event-owner-change
+            ((:owner-change) gdk-event-owner-change
              ;; TODO: Is it correct to replace GdkNativeWindow with g-object
              (owner g-object)
              (reason gdk-owner-change)
              (selection gdk-atom)
              (time :uint32)
              (selection-time :uint32))
-            ((:grab-broken) event-grab-broken
+            ((:proximity-in
+              :proximity-out) gdk-event-proximity
+             (time :uint32)
+             (device (g-object gdk-device)))
+            ((:drag-enter
+              :drag-leave
+              :drag-motion
+              :drag-status
+              :drop-start
+              :drop-finished) gdk-event-dnd
+             (drag-context (g-object gdk-drag-context))
+             (time :uint32)
+             (x-root :short)
+             (y-root :short))
+            ((:window-state) gdk-event-window-state
+             (changed-mask gdk-window-state)
+             (new-window-state gdk-window-state))
+
+;            ((:client-event) gdk-event-client
+;             (message-time gdk-atom)
+;             (data-format :ushort)
+;             (:variant data-format
+;                       (8 gdk-event-client-8
+;                          (data :uchar :count 20))
+;                       (16 gdk-event-client-16
+;                           (data :ushort :count 10))
+;                       (32 gdk-event-client-32
+;                           (data :ulong :count 5))))
+;            ((:no-expose) gdk-event-no-expose)
+
+            ((:setting) gdk-event-setting
+             (action gdk-setting-action)
+             (name (:string :free-from-foreign nil :free-to-foreign nil)))
+            ((:grab-broken) gdk-event-grab-broken
              (keyboard :boolean)
              (implicit :boolean)
              (grab-window (g-object gdk-window)))))

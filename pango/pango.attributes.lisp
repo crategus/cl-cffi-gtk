@@ -1294,7 +1294,7 @@
 ;;; should not use a single PangoAttrList for more than one paragraph of text.
 ;;; ----------------------------------------------------------------------------
 
-(at-init () (foreign-funcall "pango_attr_list_get_type" :int))
+(glib::at-init () (foreign-funcall "pango_attr_list_get_type" :int))
 
 (define-g-boxed-opaque pango-attr-list "PangoAttrList"
   :alloc (pango-attr-list-new))

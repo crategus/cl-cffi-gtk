@@ -850,7 +850,7 @@
      (connect-object g-object)
      (flags connect-flags) (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                builder object signal-name handler-name connect-object flags)
     (return () nil)))
 

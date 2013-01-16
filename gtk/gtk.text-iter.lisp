@@ -145,7 +145,7 @@
 
 (in-package :gtk)
 
-(at-init () (foreign-funcall "gtk_text_iter_get_type" :int))
+(glib::at-init () (foreign-funcall "gtk_text_iter_get_type" :int))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2110,7 +2110,7 @@
 
 (defcallback gtk-text-char-predicate :boolean ((char unichar)
                                                (user-data :pointer))
-  (let ((function (get-stable-pointer-value user-data)))
+  (let ((function (glib::get-stable-pointer-value user-data)))
     (funcall function char)))
 
 (export 'gtk-text-char-predicate)

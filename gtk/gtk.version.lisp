@@ -295,9 +295,9 @@
           (gtk-get-minor-version)
           (gtk-get-micro-version))
   (format t "GLIB version: ~a.~a.~a~%"
-          *glib-major-version*
-          *glib-minor-version*
-          *glib-micro-version*)
+          glib-major-version
+          glib-minor-version
+          glib-micro-version)
   (format t "GDK-Pixbuf version: ~a~%" *gdk-pixbuf-version*)
   (format t "Pango version: ~a~%" (pango-version-string))
   (format t "Cairo version: ~a~%" (cairo-version-string))
@@ -314,14 +314,14 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (pushnew :gtk *features*))
 
-(glib:push-library-version-features gtk
+(glib::push-library-version-features gtk
                                     (gtk-get-major-version)
                                     (gtk-get-minor-version)
                                     3 0
                                     3 2
                                     3 4)
 
-(glib:require-library-version "GTK+" 3 4
+(glib::require-library-version "GTK+" 3 4
                               (gtk-get-major-version)
                               (gtk-get-minor-version))
 

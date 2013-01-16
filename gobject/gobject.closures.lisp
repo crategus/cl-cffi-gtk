@@ -247,7 +247,7 @@
 
 (export 'g-type-closure)
 
-(at-init nil (g-type-closure))
+(glib::at-init nil (g-type-closure))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GCClosure

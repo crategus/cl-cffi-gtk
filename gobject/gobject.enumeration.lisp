@@ -143,7 +143,7 @@
          (list `(export ',name
                         (find-package ,(package-name (symbol-package name))))))
      ,@(when type-initializer
-         (list `(at-init () ,(type-initializer-call type-initializer))))))
+         (list `(glib::at-init () ,(type-initializer-call type-initializer))))))
 
 (defun type-initializer-call (type-initializer)
   (etypecase type-initializer
@@ -342,7 +342,7 @@
          (list `(export ',name
                         (find-package ,(package-name (symbol-package name))))))
      ,@(when type-initializer
-         (list `(at-init () ,(type-initializer-call type-initializer))))))
+         (list `(glib::at-init () ,(type-initializer-call type-initializer))))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_ENUM_CLASS_TYPE()

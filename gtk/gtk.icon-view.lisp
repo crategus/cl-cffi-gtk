@@ -1082,7 +1082,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                icon-view
                path)
     (return () nil)))

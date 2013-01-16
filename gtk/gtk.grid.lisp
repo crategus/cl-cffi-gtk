@@ -59,6 +59,7 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkGrid implements AtkImplementorIface, GtkBuildable and GtkOrientable.
+;;;
 ;;; Properties
 ;;; 
 ;;;   "column-homogeneous"       gboolean              : Read / Write

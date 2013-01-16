@@ -730,7 +730,7 @@
      (tree-model (g-object gtk-tree-model))
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
+  (let ((fn (glib::get-stable-pointer-value data)))
     (restart-case
         (funcall fn tree-column cell tree-model iter)
       (return-from-gtk-tree-cell-data-func-cb () nil))))
@@ -779,8 +779,8 @@
                                    tree-column
                                    cell-renderer
                                    (callback gtk-tree-cell-data-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-view-column-set-cell-data-func)
 

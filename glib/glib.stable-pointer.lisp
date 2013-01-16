@@ -72,7 +72,7 @@
 ;; value and expr is an expression
 
 (defmacro with-stable-pointer ((ptr expr) &body body)
-  `(let ((,ptr (allocate-stable-pointer ,expr)))
+  `(let ((,ptr (glib::allocate-stable-pointer ,expr)))
      (unwind-protect
          (progn ,@body)
        (free-stable-pointer ,ptr))))

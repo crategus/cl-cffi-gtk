@@ -466,7 +466,7 @@
     ((family (g-object pango-font-family))
      (face (g-object pango-font-face))
      (data :pointer))
-  (funcall (get-stable-pointer-value data) family face))
+  (funcall (glib::get-stable-pointer-value data) family face))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_set_filter_func ()
@@ -505,8 +505,8 @@
   (%gtk-font-chooser-set-filter-func
                                    fontchooser
                                    (callback gtk-font-filter-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-font-chooser-set-filter-func)
 

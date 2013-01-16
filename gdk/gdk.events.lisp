@@ -129,9 +129,9 @@
 ;;; given in the GLib Main Loop.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gdk-priority-redraw+ (+ +g-priority-high-idle+ 20))
+(defconstant gdk-priority-redraw (+ g-priority-high-idle 20))
 
-(export '+gdk-priority-redraw+)
+(export 'gdk-priority-redraw)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_EVENT_PROPAGATE
@@ -765,7 +765,7 @@
 (defcallback gdk-event-func-callback :void
     ((event (g-boxed-foreign gdk-event)) (user-data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value user-data) event)
+      (funcall (glib::get-stable-pointer-value user-data) event)
     (return-from-callback () nil)))
 
 (defcfun ("gdk_event_handler_set" %gdk-event-handler-set) :void
@@ -775,8 +775,8 @@
 
 (defun gdk-event-handler-set (fn)
   (%gdk-event-handler-set (callback gdk-event-func-callback)
-                          (allocate-stable-pointer fn)
-                          (callback stable-pointer-destroy-notify-cb)))
+                          (glib::allocate-stable-pointer fn)
+                          (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-event-handler-set)
 

@@ -251,7 +251,7 @@
 
 (export 'g-type-strv)
 
-(at-init nil (g-type-strv))
+(glib::at-init nil (g-type-strv))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_REGEX

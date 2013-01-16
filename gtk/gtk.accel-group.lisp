@@ -192,7 +192,6 @@
 ;;; struct GtkAccelGroup;
 ;;;
 ;;; An object representing and maintaining a group of accelerators.
-;;; gtk_accel_group_new ()
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkAccelGroup" gtk-accel-group
@@ -208,6 +207,8 @@
     "modifier-mask" "GdkModifierType" t nil)))
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_accel_group_new ()
+;;;
 ;;; GtkAccelGroup * gtk_accel_group_new (void);
 ;;;
 ;;; Creates a new GtkAccelGroup.

@@ -915,6 +915,8 @@
 ;;;   "parent"                   GtkContainer*         : Read / Write
 ;;;
 ;;; The parent widget of this widget. Must be a Container widget.
+;;
+;;; ----------------------------------------------------------------------------
 ;;; The "receives-default" property
 ;;;
 ;;;   "receives-default"         gboolean              : Read / Write
@@ -2956,7 +2958,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %gtk-widget
-;  (:object %gtk-object)
   (:private-flags :uint16)
   (:state :uint8)
   (:saved-state :uint8)
@@ -3075,41 +3076,7 @@
     "width-request" "gint" t t)
    (window
     gtk-widget-window
-    "window" "GdkWindow" t nil)
-   (:cffi parent-window
-          gtk-widget-parent-window (g-object gdk-window)
-          "gtk_widget_get_parent_window" "gtk_widget_set_parent_window")
-   (:cffi toplevel
-          gtk-widget-toplevel (g-object gtk-widget)
-          "gtk_widget_get_toplevel" nil)
-   (:cffi visual
-          gtk-widget-visual (g-object gdk-visual)
-          "gtk_widget_get_visual" "gtk_widget_set_visual")
-   (:cffi modifier-style
-          gtk-widget-modifier-style (g-object rc-style)
-          "gtk_widget_get_modifier_style" "gtk_widget_modify_style")
-   (:cffi pango-context
-          gtk-widget-pango-context g-object
-          "gtk_widget_get_pango_context" nil)
-   (:cffi child-visible
-          gtk-widget-child-visible :boolean
-          "gtk_widget_get_child_visible" "gtk_widget_set_child_visible")
-   (:cffi direction
-          gtk-widget-direction gtk-text-direction
-          "gtk_widget_get_direction" "gtk_widget_set_direction")
-   (:cffi composite-name
-          gtk-widget-composite-name
-          (g-string :free-from-foreign t :free-to-foreign t)
-          "gtk_widget_get_composite_name" "gtk_widget_set_composite_name")
-   (:cffi redraw-on-allocate
-          gtk-widget-redraw-on-allocate :boolean
-          nil "gtk_widget_set_redraw_on_allocate")
-   (:cffi accessible
-          gtk-widget-accessible g-object
-          "gtk_widget_get_accessible" nil)
-   (:cffi tooltip-window
-          gtk-widget-tooltip-window g-object
-          "gtk_widget_get_tooltip_window" "gtk_widget_set_tooltip_window")))
+    "window" "GdkWindow" t nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkWidgetClass
@@ -4582,10 +4549,9 @@
 ;;;     the new parent window
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-set-parent-window))
-
-(defun gtk-widget-set-parent-window (widget parent-window)
-  (setf (gtk-widget-parent-window widget) parent-window))
+(defcfun ("gtk_widget_set_parent_window" gtk-widget-set-parent-window) :void
+  (widget (g-object gtk-window))
+  (parent-window (g-object gdk-window)))
 
 (export 'gtk-widget-set-parent-window)
 
@@ -4603,10 +4569,9 @@
 ;;;     the parent window of widget
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-get-parent-window))
-
-(defun gtk-widget-get-parent-window (widget)
-  (gtk-widget-parent-window widget))
+(defcfun ("gtk_widget_get_parent_window" gtk-widget-get-parent-window)
+    (g-object gdk-window)
+  (widget (g-object gtk-window)))
 
 (export 'gtk-widget-get-parent-window)
 
@@ -4830,10 +4795,9 @@
 ;;;     the topmost ancestor of widget, or widget itself if there's no ancestor
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-get-toplevel))
-
-(defun gtk-widget-get-toplevel (widget)
-  (gtk-widget-toplevel widget))
+(defcfun ("gtk_widget_get_toplevel" gtk-widget-get-toplevel) 
+    (g-object gtk-widget)
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-toplevel)
 
@@ -4882,10 +4846,8 @@
 ;;;     the visual for widget
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-get-visual))
-
-(defun gtk-widget-get-visual (widget)
-  (gtk-widget-visual widget))
+(defcfun ("gtk_widget_get_visual" gtk-widget-get-visual) (g-object gdk-visual)
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-visual)
 
@@ -4909,10 +4871,9 @@
 ;;;     visual to be used or NULL to unset a previous one
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-set-visual))
-
-(defun gtk-widget-set-visual (widget visual)
-  (setf (gtk-widget-visual widget) visual))
+(defcfun ("gtk_widget_set_visual" gtk-widget-set-visual) :void
+  (widget (g-object gtk-widget))
+  (visual (g-object gdk-visual)))
 
 (export 'gtk-widget-set-visual)
 
@@ -5173,30 +5134,6 @@
 (export 'gtk-widget-default-style)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_direction ()
-;;;
-;;; void gtk_widget_set_direction (GtkWidget *widget, GtkTextDirection dir);
-;;;
-;;; Sets the reading direction on a particular widget. This direction controls
-;;; the primary direction for widgets containing text, and also the direction in
-;;; which the children of a container are packed. The ability to set the
-;;; direction is present in order so that correct localization into languages
-;;; with right-to-left reading directions can be done. Generally, applications
-;;; will let the default reading direction present, except for containers where
-;;; the containers are arranged in an order that is explicitely visual rather
-;;; than logical (such as buttons for text justification).
-;;;
-;;; If the direction is set to GTK_TEXT_DIR_NONE, then the value set by
-;;; gtk_widget_set_default_direction() will be used.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; dir :
-;;;     the new direction
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GtkTextDirection
 ;;;
 ;;; typedef enum {
@@ -5227,6 +5164,42 @@
 ;;; Returns :
 ;;;     the reading direction for the widget.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_direction" gtk-widget-get-direction)
+    gtk-text-direction
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-direction)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_set_direction ()
+;;;
+;;; void gtk_widget_set_direction (GtkWidget *widget, GtkTextDirection dir);
+;;;
+;;; Sets the reading direction on a particular widget. This direction controls
+;;; the primary direction for widgets containing text, and also the direction in
+;;; which the children of a container are packed. The ability to set the
+;;; direction is present in order so that correct localization into languages
+;;; with right-to-left reading directions can be done. Generally, applications
+;;; will let the default reading direction present, except for containers where
+;;; the containers are arranged in an order that is explicitely visual rather
+;;; than logical (such as buttons for text justification).
+;;;
+;;; If the direction is set to GTK_TEXT_DIR_NONE, then the value set by
+;;; gtk_widget_set_default_direction() will be used.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; dir :
+;;;     the new direction
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_set_direction" gtk-widget-set-direction) :void
+  (widget (g-object gkt-widget))
+  (dir gtk-text-direction))
+
+(export 'gtk-widget-set-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_default_direction ()
@@ -5409,10 +5382,8 @@
 ;;;     child. The string should be freed when it is no longer needed.
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-get-composite-name))
-
-(defun gtk-widget-get-composite-name (widget)
-  (gtk-widget-composite-name widget))
+(defcfun ("gtk_widget_get_composite_name" gtk-widget-get-composite-name) :string
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-composite-name)
 
@@ -5925,6 +5896,12 @@
 ;;;     the PangoContext for the widget
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_get_pango_context" gtk-widget-get-pango-context)
+    g-object
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-pango-context)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_create_pango_layout ()
 ;;;
@@ -6248,6 +6225,13 @@
 ;;;     size. Otherwise, only the new portion of the widget will be redrawn.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_set_redraw_on_allocate" gtk-widget-set-redraw-on-allocate)
+    :void
+  (widget (g-object gtk-widget))
+  (redraw-on-allocate :boolean))
+
+(export 'gtk-widget-set-redraw-on-allocate)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_composite_name ()
 ;;;
@@ -6263,10 +6247,9 @@
 ;;;     the name to set
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-set-composite-name))
-
-(defun gtk-widget-set-composite-name (widget name)
-  (setf (gtk-widget-composite-name widget) name))
+(defcfun ("gtk_widget_set_composite_name" gtk-widget-set-composite-name) :void
+  (widget (g-object gtk-widget))
+  (name :string))
 
 (export 'gtk-widget-set-composite-name)
 
@@ -6724,6 +6707,11 @@
 ;;;     the AtkObject associated with widget
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_get_accessible" gtk-widget-get-accessible) g-object
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-accessible)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_child_focus ()
 ;;;
@@ -6827,6 +6815,11 @@
 ;;; Returns :
 ;;;     TRUE if the widget is mapped with the parent.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_child_visible" gtk-widget-get-child-visible) :boolean
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-child-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_parent ()
@@ -7068,6 +7061,12 @@
 ;;; is_visible :
 ;;;     if TRUE, widget should be mapped along with its parent.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_set_child_visible" gtk-widget-set-child-visible) :void
+  (widget (g-object gtk-widget))
+  (is-visible :boolean))
+
+(export 'gtk-widget-set-child-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_size_request ()
@@ -7496,10 +7495,9 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-get-tooltip-window))
-
-(defun gtk-widget-get-tooltip-window (widget)
-  (gtk-widget-tooltip-window widget))
+(defcfun ("gtk_widget_get_tooltip_window" gtk-widget-get-tooltip-window)
+    (g-object gtk-window)
+  (widget (g-object gtk-window)))
 
 (export 'gtk-widget-get-tooltip-window)
 
@@ -7526,10 +7524,9 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-set-tooltip-window))
-
-(defun gtk-widget-set-tooltip-window (widget custom-window)
-  (setf (gtk-widget-tooltip-window widget) custom-window))
+(defcfun ("gtk_widget_set_tooltip_window" gtk-widget-set-tooltip-window) :void
+  (widget (g-object gtk-window))
+  (custom-window (g-object gtk-window)))
 
 (export 'gtk-widget-set-tooltip-window)
 
@@ -8709,6 +8706,13 @@
 ;;;     Dont trade height-for-width or width-for-height
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "GtkSizeRequestMode" gtk-size-request-mode
+  (:export t
+   :type-initializer "gtk_size_request_mode_type_get_type")
+  (:height-for-width 0)
+  (:width-for-height 1)
+  (:constant-size 2))
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRequestedSize
 ;;;
@@ -8731,6 +8735,13 @@
 ;;; gint natural_size;
 ;;;     The natural size for allocation in a given orientation
 ;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-cstruct gtk-requested-size "GtkRequestedSize"
+  (data :pointer)
+  (minimum-size :int)
+  (natural-size :int))
+
+(export (boxed-related-symbols 'gtk-requested-size))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height ()
@@ -8762,6 +8773,20 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_get_preferred_height" %gtk-widget-get-preferred-height)
+    :void
+  (widget (g-object gtk-widget))
+  (minium-height (:pointer :int))
+  (natural-height (:pointer :int)))
+
+(defun gtk-widget-get-preferred-height (widget)
+  (with-foreign-objects ((minimum-height :int) (natural-height :int))
+    (%gtk-widget-get-preferred-height widget minimum-height natural-height)
+    (values (mem-ref minimum-height :int)
+            (mem-ref natural-height :int))))
+
+(export 'gtk-widget-get-preferred-height)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_width ()
 ;;;
@@ -8791,6 +8816,20 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_preferred_width" %gtk-widget-get-preferred-width)
+    :void
+  (widget (g-object gtk-widget))
+  (minium-width (:pointer :int))
+  (natural-width (:pointer :int)))
+
+(defun gtk-widget-get-preferred-width (widget)
+  (with-foreign-objects ((minimum-width :int) (natural-width :int))
+    (%gtk-widget-get-preferred-width widget minimum-width natural-width)
+    (values (mem-ref minimum-width :int)
+            (mem-ref natural-width :int))))
+
+(export 'gtk-widget-get-preferred-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height_for_width ()
@@ -8876,6 +8915,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_request_mode" gtk-widget-get-request-mode)
+    gtk-size-request-mode
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-request-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_size ()

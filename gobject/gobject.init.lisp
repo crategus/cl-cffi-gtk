@@ -30,7 +30,7 @@
 
 (in-package :cl-gtk2-init)
 
-(at-init ()
+(glib::at-init ()
  (eval-when (:compile-toplevel :load-toplevel :execute)
    (cffi:define-foreign-library gobject
      ((:and :unix (:not :darwin))

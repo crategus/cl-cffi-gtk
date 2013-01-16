@@ -299,7 +299,7 @@
 
 (defcallback gtk-tree-model-filter-visible-func-callback :boolean
   ((tree-model g-object) (iter (g-boxed-foreign gtk-tree-iter)) (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
+  (let ((fn (glib::get-stable-pointer-value data)))
     (restart-case
         (funcall fn tree-model iter)
       (return-true () t)
@@ -316,8 +316,8 @@
   (%gtk-tree-model-filter-set-visible-func
                           tree-model-filter
                           (callback gtk-tree-model-filter-visible-func-callback)
-                          (allocate-stable-pointer function)
-                          (callback stable-pointer-destroy-notify-cb)))
+                          (glib::allocate-stable-pointer function)
+                          (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtktree-model-filter-set-visible-function)
 

@@ -747,7 +747,7 @@
      (data :pointer))
   (restart-case
     (multiple-value-bind (rx ry rpush-in)
-        (funcall (get-stable-pointer-value data) menu)
+        (funcall (glib::get-stable-pointer-value data) menu)
       (setf (mem-ref x :int) rx
             (mem-ref y :int) ry
             (mem-ref push-in :boolean) rpush-in))

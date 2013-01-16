@@ -218,7 +218,7 @@
 (defvar *current-object-from-pointer* nil)
 (defvar *currently-making-object-p* nil)
 
-(at-finalize ()
+(glib::at-finalize ()
   (clrhash *foreign-gobjects-weak*)
   (clrhash *foreign-gobjects-strong*)
   (setf *current-creating-object* nil
@@ -607,7 +607,7 @@
   (when (gobject-class-direct-g-type-name object)
     (register-object-type (gobject-class-direct-g-type-name object)
                           (class-name object))
-    (at-init (object)
+    (glib::at-init (object)
              (initialize-gobject-class-g-type object))))
 
 ;;; ----------------------------------------------------------------------------

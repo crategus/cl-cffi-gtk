@@ -339,7 +339,7 @@
 
 (defun interface-init (iface data)
   (destructuring-bind (class-name interface-name)
-      (prog1 (get-stable-pointer-value data) (free-stable-pointer data))
+      (prog1 (glib::get-stable-pointer-value data) (free-stable-pointer data))
     (declare (ignorable class-name))
     (let* ((vtable (gethash interface-name *vtables*))
            (vtable-cstruct (vtable-description-cstruct-name vtable)))
@@ -359,7 +359,7 @@
 
 (defun add-interface (name interface)
   (let* ((interface-info (list name interface))
-         (interface-info-ptr (allocate-stable-pointer interface-info)))
+         (interface-info-ptr (glib::allocate-stable-pointer interface-info)))
     (with-foreign-object (info 'g-interface-info)
       (setf (foreign-slot-value info 'g-interface-info :interface-init)
             (callback c-interface-init)
@@ -449,7 +449,7 @@
                              :parent ,parent
                              :interfaces ',interfaces
                              :properties ',properties))
-     (at-init (',class)
+     (glib::at-init (',class)
        (log-for :subclass
                 "Registering GObject type implementation ~A for type ~A~%"
                 ',class ,name)

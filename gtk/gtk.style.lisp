@@ -109,12 +109,44 @@
 ;;;   GObject
 ;;;    +----GtkStyle
 ;;;
+;;; Properties
+;;;
+;;;   "context"   GtkStyleContext*      : Read / Write / Construct Only
+;;;
 ;;; Signals
 ;;;
-;;;   "realize"                                        : Run First
-;;;   "unrealize"                                      : Run First
+;;;  "realize"                                        : Run First
+;;;  "unrealize"                                      : Run First
 ;;;
 ;;; Description
+;;;
+;;; A GtkStyle object encapsulates the information that provides the look and
+;;; feel for a widget.
+;;;
+;;; Warning
+;;;
+;;; In GTK+ 3.0, GtkStyle has been deprecated and replaced by GtkStyleContext.
+;;;
+;;; Each GtkWidget has an associated GtkStyle object that is used when rendering
+;;; that widget. Also, a GtkStyle holds information for the five possible widget
+;;; states though not every widget supports all five states; see GtkStateType.
+;;;
+;;; Usually the GtkStyle for a widget is the same as the default style that is
+;;; set by GTK+ and modified the theme engine.
+;;;
+;;; Usually applications should not need to use or modify the GtkStyle of their
+;;; widgets.
+;;;
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+;;; The "context" property
+;;;
+;;;  "context"             GtkStyleContext*      : Read / Write / Construct Only
+;;;
+;;; GtkStyleContext to get style from.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -212,7 +244,9 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_style_get_type")
-  nil)
+  ((context
+    gtk-style-context
+    "context" "GtkStyleContext" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_new ()

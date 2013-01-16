@@ -588,7 +588,7 @@
 (defcallback gtk-container-foreach-callback :void
     ((widget g-object) (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                widget)
     (return () nil)))
 

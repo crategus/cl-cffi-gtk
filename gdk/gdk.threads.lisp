@@ -285,7 +285,7 @@
 
 (defcallback source-func-cb :boolean
     ((data :pointer))
-  (funcall (get-stable-pointer-value data)))
+  (funcall (glib::get-stable-pointer-value data)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_THREADS_ENTER
@@ -323,7 +323,7 @@
 
 (defcfun ("gdk_threads_init" gdk-threads-init) :void)
 
-(at-init () (gdk-threads-init))
+(glib::at-init () (gdk-threads-init))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_enter ()
@@ -411,10 +411,10 @@
 ;; The Lisp implementation does not support the argument data.
 
 (defun gdk-threads-add-idle (func)
-  (%gdk-threads-add-idle-full +g-priority-default+
+  (%gdk-threads-add-idle-full g-priority-default
                               (callback source-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+                              (glib::allocate-stable-pointer func)
+                              (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-idle)
 
@@ -500,7 +500,7 @@
 (defun gdk-threads-add-idle-full (priority func)
   (%gdk-threads-add-idle-full priority
                               (callback source-func-cb)
-                              (allocate-stable-pointer func)
+                              (glib::allocate-stable-pointer func)
                               (callback stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-idle-full)
@@ -537,11 +537,11 @@
 
 (defun gdk-threads-add-timeout (interval func)
   (%gdk-threads-add-timeout-full
-                              +g-priority-default+
+                              g-priority-default
                               interval
                               (callback source-func-cb)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+                              (glib::allocate-stable-pointer func)
+                              (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout)
 
@@ -632,8 +632,8 @@
   (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback source-func-cb)
-                                 (allocate-stable-pointer func)
-                                 (callback stable-pointer-destroy-notify-cb)))
+                                 (glib::allocate-stable-pointer func)
+                                 (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-full)
 
@@ -668,11 +668,11 @@
 
 (defun gdk-threads-add-timeout-seconds (interval func)
   (%gdk-threads-add-timeout-seconds-full
-                                   +g-priority-default+
+                                   g-priority-default
                                    interval
                                    (callback source-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds)
 
@@ -726,8 +726,8 @@
                                    priority
                                    interval
                                    (callback source-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds-full)
 

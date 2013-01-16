@@ -187,7 +187,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (path-currently-selected :boolean)
      (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
+  (let ((fn (glib::get-stable-pointer-value data)))
     (restart-case
         (funcall fn selection model path path-currently-selected)
       (return-true () t)
@@ -222,7 +222,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
+  (let ((fn (glib::get-stable-pointer-value data)))
     (funcall fn model path iter)))
 
 ;;; ----------------------------------------------------------------------------
@@ -309,8 +309,8 @@
   (%gtk-tree-selection-set-select-function
                                 selection
                                 (callback gtk-tree-selection-select-function-cb)
-                                (allocate-stable-pointer fn)
-                                (callback stable-pointer-destroy-notify-cb)))
+                                (glib::allocate-stable-pointer fn)
+                                (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-selection-set-select-function)
 
@@ -336,7 +336,7 @@
 (defun gtk-tree-selection-get-select-function (selection)
   (let ((ptr (%gtk-tree-selection-get-user-data selection)))
     (unless (null-pointer-p ptr)
-      (get-stable-pointer-value ptr))))
+      (glib::get-stable-pointer-value ptr))))
 
 (export 'gtk-tree-selection-get-select-function)
 

@@ -23,7 +23,7 @@
 
 (in-package :cairo)
 
-(at-init ()
+(glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library cairo
       ((:and :unix (:not :darwin))

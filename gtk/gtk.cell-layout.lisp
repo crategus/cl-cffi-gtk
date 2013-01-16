@@ -507,7 +507,7 @@
    (iter (g-boxed-foreign gtk-tree-iter))
    (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                cell-layout cell tree-model iter)
     (return () nil)))
 
@@ -524,8 +524,8 @@
                               cell-layout
                               cell
                               (callback gtk-cell-layout-cell-data-func-callback)
-                              (allocate-stable-pointer func)
-                              (callback stable-pointer-destroy-notify-cb)))
+                              (glib::allocate-stable-pointer func)
+                              (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-cell-layout-set-cell-data-func)
 

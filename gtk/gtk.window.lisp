@@ -798,6 +798,7 @@
    (type-hint
     gtk-window-type-hint
     "type-hint" "GdkWindowTypeHint" t t)
+   ;; "ubuntu-no-proxy" is not documented. Special for Ubuntu?
    (ubuntu-no-proxy
     gtk-window-ubuntu-no-proxy
     "ubuntu-no-proxy" "gboolean" t nil)
@@ -806,32 +807,7 @@
     "urgency-hint" "gboolean" t t)
    (window-position
     gtk-window-window-position
-    "window-position" "GtkWindowPosition" t t)
-   (:cffi focus
-          gtk-window-focus (g-object gtk-widget)
-          "gtk_window_get_focus" "gtk_window_set_focus")
-   (:cffi default-widget
-          gtk-window-default-widget (g-object gtk-widget)
-          "gtk_window_get_default_widget" "gtk_window_set_default")
-   (:cffi has-frame
-          gtk-window-has-frame :boolean
-          "gtk_window_get_has_frame" "gtk_window_set_has_frame")
-   (:cffi mnemonic-modifier
-          gtk-window-mnemonic-modifier (g-object gdk-modifier-type)
-          "gtk_window_get_mnemonic_modifier" "gtk_window_set_mnemonic_modifier")
-   (:cffi icon-list
-          gtk-window-icon-list
-          (g-list gdk-pixbuf :free-from-foreign t :free-to-foreign t)
-          "gtk_window_get_icon_list" "gtk_window_set_icon_list")
-   (:cffi group
-          gtk-window-group (g-object gtk-window-group)
-          "gtk_window_get_group" nil)
-   (:cffi keep-above
-          gtk-window-keep-above :boolean
-          nil "gtk_window_set_keep_above")
-   (:cffi keep-below
-          gtk-window-keep-below :boolean
-          nil "gtk_window_set_keep_below")))
+    "window-position" "GtkWindowPosition" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_new ()
@@ -1143,6 +1119,14 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_set_default_geometry" gtk-window-set-default-geometry)
+    :void
+  (window (g-object gtk-window))
+  (width :int)
+  (height :int))
+
+(export 'gtk-window-set-default-geometry)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_geometry_hints ()
 ;;; 
@@ -1195,6 +1179,12 @@
 ;;;     window gravity
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_set_gravity" gtk-window-set-gravity) :void
+  (window (g-object gtk-window))
+  (gravity gdk-gravity))
+
+(export 'gtk-window-set-gravity)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_gravity ()
 ;;; 
@@ -1208,6 +1198,11 @@
 ;;; Returns :
 ;;;     window gravity
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_get_gravity" gtk-window-get-gravity) gdk-gravity
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-get-gravity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_position ()
@@ -1225,6 +1220,13 @@
 ;;; position :
 ;;;     a position constraint
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-set-position))
+
+(defun gtk-window-set-position (window position)
+  (setf (gtk-window-window-position window) position))
+
+(export 'gtk-window-set-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_transient_for ()
@@ -1248,6 +1250,13 @@
 ;;; parent :
 ;;;     parent window, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-set-transient-for))
+
+(defun gtk-window-set-transient-for (window parent)
+  (setf (gtk-window-transient-for window) parent))
+
+(export 'gtk-window-set-transient-for)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_attached_to ()
@@ -1279,6 +1288,13 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-attached-to))
+
+(defun gtk-window-set-attached-to (window attach-widget)
+  (setf (gtk-window-attached-to window) attach-widget))
+
+(export 'gtk-window-set-attached-to)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_destroy_with_parent ()
 ;;; 
@@ -1295,6 +1311,13 @@
 ;;; setting :
 ;;;     whether to destroy window with its transient parent
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-set-destroy-with-parent))
+
+(defun gtk-window-set-destroy-with-parent (window setting)
+  (setf (gtk-window-destroy-with-parent window) setting))
+
+(export 'gtk-window-set-destroy-with-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_hide_titlebar_when_maximized ()
@@ -1317,6 +1340,13 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-hide-titlebar-when-maximized))
+
+(defun gtk-window-set-hide-titlebar-when-maximized (window setting)
+  (setf (gkt-window-hide-titlebar-when-maximized window) setting))
+
+(export 'gtk-window-set-hide-titlebar-when-maximized)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_screen ()
 ;;; 
@@ -1334,6 +1364,13 @@
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-screen))
+
+(defun gtk-window-set-screen (window screen)
+  (setf (gtk-window-screen window) screen))
+
+(export 'gtk-window-set-screen)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_screen ()
 ;;; 
@@ -1349,6 +1386,13 @@
 ;;; 
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-get-screen))
+
+(defun gtk-window-get-screen (window)
+  (gtk-window-screen window))
+
+(export 'gtk-window-get-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_is_active ()
@@ -1371,6 +1415,8 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+;;; Implemented as the accessor of the slot "is-active".
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_has_toplevel_focus ()
 ;;; 
@@ -1388,6 +1434,8 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+;;; Implemented as the accessor of the slot "has-toplevel-focus".
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_list_toplevels ()
@@ -1566,6 +1614,11 @@
 ;;;     the currently focused widget, or NULL if there is none
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_get_focus" gtk-window-get-focus) (g-object gtk-widget)
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-get-focus)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_focus ()
 ;;; 
@@ -1585,6 +1638,12 @@
 ;;;     the toplevel window
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_set_focus" gtk-window-set-focus) :void
+  (window (g-object gtk-window))
+  (focus (g-object gtk-widget)))
+
+(export 'gtk-window-set-focus)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_default_widget ()
 ;;; 
@@ -1601,6 +1660,12 @@
 ;;; 
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_get_default_widget" gtk-window-get-default-widget)
+    (g-object gtk-widget)
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-get-default-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_default ()
@@ -1622,6 +1687,12 @@
 ;;;     widget to be the default, or NULL to unset the default widget for the
 ;;;     toplevel
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_set_default" gtk-window-set-default) :void
+  (window (g-object gtk-window))
+  (default-widget (g-object gtk-widget)))
+
+(export 'gtk-window-set-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_present ()
@@ -1902,6 +1973,12 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_set_keep_above" gtk-window-set-keep-above) :void
+  (window (g-object gtk-window))
+  (setting :boolean))
+
+(export 'gtk-window-set-keep-above)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_keep_below ()
 ;;; 
@@ -1931,6 +2008,12 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_set_keep_below" gtk-window-set-keep-below) :void
+  (window (g-object gtk-window))
+  (setting :boolean))
+
+(export 'gtk-window-set-keep-below)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_begin_resize_drag ()
@@ -2042,6 +2125,13 @@
 ;;;     TRUE to decorate the window
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-decorated))
+
+(defun gtk-window-set-decorated (window setting)
+  (setf (gtk-window-decorated window) setting))
+
+(export 'gtk-window-set-decorated)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_deletable ()
 ;;; 
@@ -2080,6 +2170,13 @@
 ;;; modifier :
 ;;;     the modifier mask used to activate mnemonics on this window
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_set_mnemonic_modifier" gtk-window-set-mnemonic-modifier)
+    :void
+  (window (g-object gtk-window))
+  (modifier gdk-modifier-type))
+
+(export 'gtk-window-set-mnemonic-modifier)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_type_hint ()
@@ -2252,6 +2349,13 @@
 ;;;     TRUE if the window has been set to have decorations
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-get-decorated))
+
+(defun gtk-window-get-decorated (window)
+  (gtk-window-decorated window))
+
+(export 'gtk-window-get-decorated)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_deletable ()
 ;;; 
@@ -2400,6 +2504,12 @@
 ;;;     copy of window's icon list
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_get_icon_list" gtk-window-get-icon-list)
+    (g-list (g-object gdk-pixbuf) :free-from-foreign t)
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-get-icon-list)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_icon_name ()
 ;;; 
@@ -2431,6 +2541,12 @@
 ;;; Returns :
 ;;;     the modifier mask used to activate mnemonics on this window.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_get_mnemonic_modifier" gtk-window-get-mnemnic-modifier)
+    gdk-modifier-type
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-get-mnemonic-modifier)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_modal ()
@@ -2761,6 +2877,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_window_get_group" gtk-window-get-group)
+    (g-object gtk-window-group)
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-get-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_has_group ()
 ;;; 
@@ -2774,6 +2896,11 @@
 ;;; Returns :
 ;;;     TRUE if window has an explicit window group. Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_has_group" gtk-window-has-group) :boolean
+  (window (g-object gtk-window)))
+
+(export 'gtk-window-has-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_window_type ()
@@ -2790,6 +2917,11 @@
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-window-get-window-type (window)
+  (gtk-window-type window))
+
+(export 'gtk-window-get-window-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_move ()
@@ -3021,7 +3153,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_set_default_icon_list" gtk-window-set-default-icon-list)
-    :boolean
+    :void
   (icon-list (g-list (g-object gdk-pixbuf))))
 
 (export 'gtk-window-set-default-icon-list)
@@ -3155,6 +3287,12 @@
 ;;; list :
 ;;;     list of GdkPixbuf
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_window_set_icon_list" gtk-window-set-icon-list) :void
+  (window (g-object gtk-window))
+  (g-list (g-object gdk-pixbuf) :free-to-foreign t))
+
+(export 'gtk-window-set-icon-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_icon_from_file ()

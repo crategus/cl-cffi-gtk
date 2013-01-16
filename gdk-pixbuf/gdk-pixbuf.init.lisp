@@ -30,7 +30,7 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (pushnew :gdk-pixbuf *features*))
 
-(at-init ()
+(glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gdk-pixbuf
       ((:and :unix (:not :darwin))

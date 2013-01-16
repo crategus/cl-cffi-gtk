@@ -521,7 +521,7 @@
 ;;; typedef struct _GtkTreeRowReference GtkTreeRowReference;
 ;;; ----------------------------------------------------------------------------
 
-(at-init ()
+(glib::at-init ()
   (gobject::type-initializer-call "gtk_tree_row_reference_get_type"))
 
 (define-g-boxed-opaque gtk-tree-row-reference "GtkTreeRowReference"
@@ -712,7 +712,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
-  (let ((fn (get-stable-pointer-value data)))
+  (let ((fn (glib::get-stable-pointer-value data)))
     (restart-case
       (funcall fn model path iter)
       (stop-tree-model-iteration () t)

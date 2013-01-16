@@ -878,7 +878,7 @@
                                             :free-from-foreign nil)
     ((path (:string :free-from-foreign nil)) (data :pointer))
   (restart-case
-      (funcall (get-stable-pointer-value data)
+      (funcall (glib::get-stable-pointer-value data)
                path)
    (return-untranslated () path)))
 
@@ -923,8 +923,8 @@
   (%gtk-action-group-set-translate-func
                                    action-group
                                    (callback gtk-translate-func-cb)
-                                   (allocate-stable-pointer func)
-                                   (callback stable-pointer-destroy-notify-cb)))
+                                   (glib::allocate-stable-pointer func)
+                                   (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-action-group-set-translate-func)
 

@@ -667,7 +667,7 @@
     (iter (for (name gtype) in-hashtable *name-to-gtype*)
           (setf (gtype-%id gtype) nil))))
 
-(at-finalize () (invalidate-gtypes))
+(glib::at-finalize () (invalidate-gtypes))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1795,7 +1795,7 @@
 
 (defcfun ("g_type_init" g-type-init) :void)
 
-(at-init () (g-type-init))
+(glib::at-init () (g-type-init))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeDebugFlags
@@ -2541,7 +2541,7 @@
 
 (defcfun ("g_type_query" g-type-query) :void
   (gtype g-type)
-  (query (:pointer (:struct g-type-query))))
+  (query (:pointer g-type-query)))
 
 (export 'g-type-query)
 
