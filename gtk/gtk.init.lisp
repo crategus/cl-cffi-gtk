@@ -43,7 +43,6 @@
 
 #+thread-support
 (progn
-  (defvar *main-loop* nil)
   (defvar *main-thread* nil)
   (defvar *main-thread-level* nil)
   (defvar *main-thread-lock* (bt:make-lock "*main-thread* lock"))
@@ -60,10 +59,7 @@
       (unless *main-thread*
         (setf *main-thread*
               (bt:make-thread (lambda ()
-                                ;; instead of gtk-main
-                                (setf *main-loop*
-                                      (g-main-loop-new (null-pointer) nil))
-                                (g-main-loop-run *main-loop*))
+                                (gtk-main))
                               :name "cl-cffi-gtk main thread")
               *main-thread-level* 0))
       (incf *main-thread-level*))
@@ -77,8 +73,7 @@
     (bt:with-lock-held (*main-thread-lock*)
       (decf *main-thread-level*)
       (when (zerop *main-thread-level*)
-        ;; instead of gtk-main-quit
-        (g-main-loop-quit *main-loop*)))
+        (gtk-main-quit)))
     (values *main-thread* *main-thread-level*)))
 
 #-thread-support
