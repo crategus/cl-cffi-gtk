@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gdk.event-structures.lisp
+;;; atdoc-gdk.event-structures.lisp
 ;;;
 ;;; Documentation strings for the library GDK.
 ;;;
@@ -879,7 +879,7 @@
     Accessor of the slot \"send-event\" of the @class{gdk-event} struct.
   @end{short}")
 
-#|
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkEventAny
 ;;;
@@ -902,71 +902,168 @@
 ;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
 ;;; ----------------------------------------------------------------------------
 
+
+;;; --- gdk-event-key ----------------------------------------------------------
+
+(setf (documentation 'gdk-event-key 'type)
+ "@version{2013-1-11}
+  @short{Describes a key press or key release event.}
+  @begin{pre}
+ struct GdkEventKey {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   guint32 time;
+   guint state;
+   guint keyval;
+   gint length;
+   gchar *string;
+   guint16 hardware_keycode;
+   guint8 group;
+   guint is_modifier : 1;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_KEY_PRESS or 
+      GDK_KEY_RELEASE).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[guint32 time]{the time of the event in milliseconds.}
+    @entry[guint state]{a bit-mask representing the state of the modifier keys
+      (e.g. Control, Shift and Alt) and the pointer buttons.
+      See GdkModifierType.}
+    @entry[guint keyval]{the key that was pressed or released. See the
+      <gdk/gdkkeysyms.h> header file for a complete list of GDK key codes.}
+    @entry[gint length]{the length of string.}
+    @entry[gchar *string]{a string containing the an approximation of the text
+      that would result from this keypress. The only correct way to handle text
+      input of text is using input methods (see GtkIMContext), so this field is
+      deprecated and should never be used. (gdk_unicode_to_keyval() provides a
+      non-deprecated way of getting an approximate translation for a key.) The
+      string is encoded in the encoding of the current locale (Note: this for
+      backwards compatibility: strings in GTK+ and GDK are typically in UTF-8.)
+      and NUL-terminated. In some cases, the translation of the key code will be
+      a single NUL byte, in which case looking at length is necessary to
+      distinguish it from the an empty translation.}
+    @entry[guint16 hardware_keycode]{the raw code of the key that was pressed or
+      released.}
+    @entry[guint8 group]{the keyboard group.}
+    @entry[guint is_modifier : 1]{a flag that indicates if hardware_keycode is
+      mapped to a modifier. Since 2.10}
+  @end{table}
+  @see-slot{gdk-event-key-type}
+  @see-slot{gdk-event-key-window}
+  @see-slot{gdk-event-key-send-event}
+  @see-slot{gdk-event-key-time}
+  @see-slot{gdk-event-key-state}
+  @see-slot{gdk-event-key-keyval}
+  @see-slot{gdk-event-key-length}
+  @see-slot{gdk-event-key-string}
+  @see-slot{gdk-event-key-hardware-keycode}
+  @see-slot{gdk-event-key-group}
+  @see-slot{gdk-event-key-is-modifier}")
+
 ;;; ----------------------------------------------------------------------------
-;;; struct GdkEventKey
-;;;
-;;; struct GdkEventKey {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   guint32 time;
-;;;   guint state;
-;;;   guint keyval;
-;;;   gint length;
-;;;   gchar *string;
-;;;   guint16 hardware_keycode;
-;;;   guint8 group;
-;;;   guint is_modifier : 1;
-;;; };
-;;;
-;;; Describes a key press or key release event.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_KEY_PRESS or GDK_KEY_RELEASE).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; guint32 time;
-;;;     the time of the event in milliseconds.
-;;;
-;;; guint state;
-;;;     a bit-mask representing the state of the modifier keys (e.g. Control,
-;;;     Shift and Alt) and the pointer buttons. See GdkModifierType.
-;;;
-;;; guint keyval;
-;;;     the key that was pressed or released. See the <gdk/gdkkeysyms.h> header
-;;;     file for a complete list of GDK key codes.
-;;;
-;;; gint length;
-;;;     the length of string.
-;;;
-;;; gchar *string;
-;;;     a string containing the an approximation of the text that would result
-;;;     from this keypress. The only correct way to handle text input of text is
-;;;     using input methods (see GtkIMContext), so this field is deprecated and
-;;;     should never be used. (gdk_unicode_to_keyval() provides a non-deprecated
-;;;     way of getting an approximate translation for a key.) The string is
-;;;     encoded in the encoding of the current locale (Note: this for backwards
-;;;     compatibility: strings in GTK+ and GDK are typically in UTF-8.) and
-;;;     NUL-terminated. In some cases, the translation of the key code will be a
-;;;     single NUL byte, in which case looking at length is necessary to
-;;;     distinguish it from the an empty translation.
-;;;
-;;; guint16 hardware_keycode;
-;;;     the raw code of the key that was pressed or released.
-;;;
-;;; guint8 group;
-;;;     the keyboard group.
-;;;
-;;; guint is_modifier : 1;
-;;;     a flag that indicates if hardware_keycode is mapped to a modifier. Since
-;;;     2.10
-;;; ----------------------------------------------------------------------------
-|#
+
+;;; --- gdk-event-key-type -----------------------------------------------------
+
+(setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-type 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"type\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-window ---------------------------------------------------
+
+(setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-window 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"window\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-send-event -----------------------------------------------
+
+(setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-send-event 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"send-event\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-time -----------------------------------------------------
+
+(setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-time 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"time\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-state ----------------------------------------------------
+
+(setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-state 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"state\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-keyval ---------------------------------------------------
+
+(setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-keyval 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"keyval\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-length ---------------------------------------------------
+
+(setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-length 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"length\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-string ---------------------------------------------------
+
+(setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-string 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"string\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-keycode --------------------------------------------------
+
+(setf (gethash 'gdk-event-key-keycode atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-keycode 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"keycode\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-group ----------------------------------------------------
+
+(setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-group 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"group\" of the @class{gdk-event-key} struct.
+  @end{short}")
+
+;;; --- gdk-event-key-is-modifier ----------------------------------------------
+
+(setf (gethash 'gdk-event-key-is-modifier atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-key-is-modifier 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"is-modifier\" of the @class{gdk-event-key} struct.
+  @end{short}")
 
 ;;; --- gdk-event-button -------------------------------------------------------
 
@@ -990,7 +1087,6 @@
       gdouble x_root, y_root;
     @};
   @end{pre}
-
   Double and triple-clicks result in a sequence of events being received. For
   double-clicks the order of events will be:
   @begin{pre}
@@ -1431,128 +1527,341 @@
     Accessor of the slot \"delta-y\" of the @class{gdk-event-scroll} struct.
   @end{short}")
 
-#|
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventMotion
-;;;
-;;; struct GdkEventMotion {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   guint32 time;
-;;;   gdouble x;
-;;;   gdouble y;
-;;;   gdouble *axes;
-;;;   guint state;
-;;;   gint16 is_hint;
-;;;   GdkDevice *device;
-;;;   gdouble x_root, y_root;
-;;; };
-;;;
-;;; Generated when the pointer moves.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event.
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; guint32 time;
-;;;     the time of the event in milliseconds.
-;;;
-;;; gdouble x;
-;;;     the x coordinate of the pointer relative to the window.
-;;;
-;;; gdouble y;
-;;;     the y coordinate of the pointer relative to the window.
-;;;
-;;; gdouble *axes;
-;;;     x, y translated to the axes of device, or NULL if device is the mouse.
-;;;
-;;; guint state;
-;;;     a bit-mask representing the state of the modifier keys (e.g. Control,
-;;;     Shift and Alt) and the pointer buttons. See GdkModifierType.
-;;;
-;;; gint16 is_hint;
-;;;     set to 1 if this event is just a hint, see the
-;;;     GDK_POINTER_MOTION_HINT_MASK value of GdkEventMask.
-;;;
-;;; GdkDevice *device;
-;;;     the device where the event originated.
-;;;
-;;; gdouble x_root;
-;;;     the x coordinate of the pointer relative to the root of the screen.
-;;;
-;;; gdouble y_root;
-;;;     the y coordinate of the pointer relative to the root of the screen.
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-motion -------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventExpose
-;;;
-;;; struct GdkEventExpose {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   GdkRectangle area;
-;;;   cairo_region_t *region;
-;;;   gint count; /* If non-zero, how many more events follow. */
-;;; };
-;;;
-;;; Generated when all or part of a window becomes visible and needs to be
-;;; redrawn.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_EXPOSE or GDK_DAMAGE).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; GdkRectangle area;
-;;;     bounding box of region.
-;;;
-;;; cairo_region_t *region;
-;;;     the region that needs to be redrawn.
-;;;
-;;; gint count;
-;;;     the number of contiguous GDK_EXPOSE events following this one. The only
-;;;     use for this is "exposure compression", i.e. handling all contiguous
-;;;     GDK_EXPOSE events in one go, though GDK performs some exposure
-;;;     compression so this is not normally needed.
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'gdk-event-motion 'type)
+ "@version{2013-1-17}
+  @begin{short}
+    Generated when the pointer moves.
+  @end{short}
+  @begin{pre}
+ struct GdkEventMotion {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   guint32 time;
+   gdouble x;
+   gdouble y;
+   gdouble *axes;
+   guint state;
+   gint16 is_hint;
+   GdkDevice *device;
+   gdouble x_root, y_root;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event.}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[guint32 time]{the time of the event in milliseconds.}
+    @entry[gdouble x]{the x coordinate of the pointer relative to the window.}
+    @entry[gdouble y]{the y coordinate of the pointer relative to the window.}
+    @entry[gdouble *axes]{x, y translated to the axes of device, or NULL if
+      device is the mouse.}
+    @entry[guint state]{a bit-mask representing the state of the modifier keys
+      (e.g. Control, Shift and Alt) and the pointer buttons. See
+      GdkModifierType.}
+    @entry[gint16 is_hint]{set to 1 if this event is just a hint, see the
+      GDK_POINTER_MOTION_HINT_MASK value of GdkEventMask.}
+    @entry[GdkDevice *device]{the device where the event originated.}
+    @entry[gdouble x_root]{the x coordinate of the pointer relative to the root
+      of the screen.}
+    @entry[gdouble y_root]{the y coordinate of the pointer relative to the root
+      of the screen.}
+  @end{table}
+  @see-slot{gdk-event-motion-type}
+  @see-slot{gdk-event-motion-window}
+  @see-slot{gdk-event-motion-send-event}
+  @see-slot{gdk-event-motion-time}
+  @see-slot{gdk-event-motion-x}
+  @see-slot{gdk-event-motion-y}
+  @see-slot{gdk-event-motion-axes}
+  @see-slot{gdk-event-motion-state}
+  @see-slot{gdk-event-motion-is-hint}
+  @see-slot{gdk-event-motion-device}
+  @see-slot{gdk-event-motion-x-root}
+  @see-slot{gdk-event-motion-y-root}")
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventVisibility
-;;;
-;;; struct GdkEventVisibility {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   GdkVisibilityState state;
-;;; };
-;;;
-;;; Generated when the window visibility status has changed.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_VISIBILITY_NOTIFY).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; GdkVisibilityState state;
-;;;     the new visibility state (GDK_VISIBILITY_FULLY_OBSCURED,
-;;;     GDK_VISIBILITY_PARTIAL or GDK_VISIBILITY_UNOBSCURED).
-;;; ----------------------------------------------------------------------------
-|#
+;;; --- gdk-event-motion-type --------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-type 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"motion\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-window ------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-window 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"window\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-send-event --------------------------------------------
+
+(setf (gethash 'gdk-event-motion-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-send-event 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"send-event\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-time --------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-time atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-time 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"time\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-x -----------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-x 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"x\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-y -----------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-y 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"y\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-axes --------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-axes atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-axes 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"axes\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-state -------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-state 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"state\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-is-hint -----------------------------------------------
+
+(setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-is-hint 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"is-hint\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-device ------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-device atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-device 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"device\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-x-root ------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-x-root atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-x-root 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"x-root\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-motion-y-root ------------------------------------------------
+
+(setf (gethash 'gdk-event-motion-y-root atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-motion-y-root 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"y-root\"} of the @class{gdk-event-motion}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-expose -------------------------------------------------------
+
+(setf (documentation 'gdk-event-expose 'type)
+ "@version{2013-1-18}
+  @begin{short}
+    Generated when all or part of a window becomes visible and needs to be
+    redrawn.
+  @end{short}
+  @begin{pre}
+ struct GdkEventExpose {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   GdkRectangle area;
+   cairo_region_t *region;
+   gint count; /* If non-zero, how many more events follow. */
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_EXPOSE or GDK_DAMAGE).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[GdkRectangle area]{bounding box of region.}
+    @entry[cairo_region_t *region]{the region that needs to be redrawn.}
+    @entry[gint count]{the number of contiguous GDK_EXPOSE events following this
+      one. The only use for this is \"exposure compression\", i.e. handling all
+      contiguous GDK_EXPOSE events in one go, though GDK performs some exposure
+      compression so this is not normally needed.}
+  @end{table}
+  @see-slot{gdk-event-expose-type}
+  @see-slot{gdk-event-expose-window}
+  @see-slot{gdk-event-expose-send-event}
+  @see-slot{gdk-event-expose-area}
+  @see-slot{gdk-event-expose-region}
+  @see-slot{gdk-event-expose-count}")
+
+;;; --- gdk-event-expose-type --------------------------------------------------
+
+(setf (gethash 'gdk-event-expose-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-expose-type 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"type\"} of the @class{gdk-event-expose}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-expose-window ------------------------------------------------
+
+(setf (gethash 'gdk-event-expose-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-expose-window 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"window\"} of the @class{gdk-event-expose}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-expose-send-event --------------------------------------------
+
+(setf (gethash 'gdk-event-expose-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-expose-send-event 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"send-event\"} of the @class{gdk-event-expose}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-expose-area --------------------------------------------------
+
+(setf (gethash 'gdk-event-expose-area atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-expose-area 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"area\"} of the @class{gdk-event-expose}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-expose-region ------------------------------------------------
+
+(setf (gethash 'gdk-event-expose-region atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-expose-region 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"region\"} of the @class{gdk-event-expose}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-expose-count -------------------------------------------------
+
+(setf (gethash 'gdk-event-expose-count atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-expose-count 'function)
+ "@version{2013-1-17}
+  @begin{short}
+    Accessor of the slot @arg{\"count\"} of the @class{gdk-event-expose}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-visibility ---------------------------------------------------
+
+(setf (documentation 'gdk-event-visibility 'type)
+ "@version{2013-1-16}
+  @short{Generated when the window visibility status has changed.}
+  @begin{pre}
+ struct GdkEventVisibility {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   GdkVisibilityState state;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (@code{:notify}).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[GdkVisibilityState state]{the new visibility state
+     (@code{:fully-obscured}, @code{:partial} or @code{:unobscured}).}
+  @end{table}
+  @see-slot{gdk-event-visibility-type}
+  @see-slot{gdk-event-visibility-window}
+  @see-slot{gdk-event-visibility-send-event}
+  @see-slot{gdk-event-visibility-state}")
+
+;;; --- gdk-event-visibility-type ----------------------------------------------
+
+(setf (gethash 'gdk-event-visibility-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-visibility-type 'function)
+ "@version{2013-1-16}
+  @begin{short}
+    Accessor of the slot \"type\" of the @class{gdk-event-visibility} struct.
+  @end{short}")
+
+;;; --- gdk-event-visibility-window --------------------------------------------
+
+(setf (gethash 'gdk-event-visibility-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-visibility-window 'function)
+ "@version{2013-1-16}
+  @begin{short}
+    Accessor of the slot \"window\" of the @class{gdk-event-visibility} struct.
+  @end{short}")
+
+;;; --- gdk-event-visibility-send-event ----------------------------------------
+
+(setf (gethash 'gdk-event-visibility-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-visibility-send-event 'function)
+ "@version{2013-1-16}
+  @begin{short}
+    Accessor of the slot \"send-event\" of the @class{gdk-event-visibility}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-visibility-state ---------------------------------------------
+
+(setf (gethash 'gdk-event-visibility-state atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-visibility-state 'function)
+ "@version{2013-1-16}
+  @begin{short}
+    Accessor of the slot \"state\" of the @class{gdk-event-visibility} struct.
+  @end{short}")
 
 ;;; --- gdk-event-crossing -----------------------------------------------------
 
@@ -1614,7 +1923,11 @@
   @see-slot{gdk-event-crossing-is-hint}
   @see-slot{gdk-event-crossing-device}
   @see-slot{gdk-event-crossing-x-root}
-  @see-slot{gdk-event-crossing-y-root}")
+  @see-slot{gdk-event-crossing-y-root}
+  @see-slot{gdk-event-crossing-mode}
+  @see-slot{gdk-event-crossing-detail}
+  @see-slot{gdk-event-crossing-focus}
+  @see-slot{gdk-event-crossing-state}")
 
 ;;; --- gdk-event-crossing-type ------------------------------------------------
 
@@ -1725,32 +2038,103 @@
     Accessor of the slot \"y-root\" of the @class{gdk-event-crossing} struct.
   @end{short}")
 
-#|
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventFocus
-;;;
-;;; struct GdkEventFocus {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   gint16 in;
-;;; };
-;;;
-;;; Describes a change of keyboard focus.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_FOCUS_CHANGE).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; gint16 in;
-;;;     TRUE if the window has gained the keyboard focus, FALSE if it has lost
-;;;     the focus.
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-crossing-mode ------------------------------------------------
+
+(setf (gethash 'gdk-event-crossing-mode atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-crossing-mode 'function)
+ "@version{2013-1-15}
+  @begin{short}
+    Accessor of the slot \"mode\" of the @class{gdk-event-crossing} struct.
+  @end{short}")
+
+;;; --- gdk-event-crossing-detail ----------------------------------------------
+
+(setf (gethash 'gdk-event-crossing-detail atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-crossing-detail 'function)
+ "@version{2013-1-15}
+  @begin{short}
+    Accessor of the slot \"detail\" of the @class{gdk-event-crossing} struct.
+  @end{short}")
+
+;;; --- gdk-event-crossing-focus -----------------------------------------------
+
+(setf (gethash 'gdk-event-crossing-focus atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-crossing-focus 'function)
+ "@version{2013-1-15}
+  @begin{short}
+    Accessor of the slot \"focus\" of the @class{gdk-event-crossing} struct.
+  @end{short}")
+
+;;; --- gdk-event-crossing-state -----------------------------------------------
+
+(setf (gethash 'gdk-event-crossing-state atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-crossing-state 'function)
+ "@version{2013-1-15}
+  @begin{short}
+    Accessor of the slot \"state\" of the @class{gdk-event-crossing} struct.
+  @end{short}")
+
+;;; --- gdk-event-focus --------------------------------------------------------
+
+(setf (documentation 'gdk-event-focus 'type)
+ "@version{2013-1-18}
+  @short{Describes a change of keyboard focus.}
+  @begin{pre}
+ struct GdkEventFocus {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   gint16 in;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_FOCUS_CHANGE).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[gint16 in]{TRUE if the window has gained the keyboard focus, FALSE if
+      it has lost the focus.}
+  @end{table}
+  @see-slot{gdk-event-focus-type}
+  @see-slot{gdk-event-focus-window}
+  @see-slot{gdk-event-focus-send-event}
+  @see-slot{gdk-event-focus-in}")
+
+;;; --- gdk-event-focus-type ---------------------------------------------------
+
+(setf (gethash 'gdk-event-focus-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-focus-type 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"type\" of the @class{gdk-event-focus} struct.
+  @end{short}")
+
+;;; --- gdk-event-focus-window -------------------------------------------------
+
+(setf (gethash 'gdk-event-focus-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-focus-window 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"window\" of the @class{gdk-event-focus} struct.
+  @end{short}")
+
+;;; --- gdk-event-focus-send-event ---------------------------------------------
+
+(setf (gethash 'gdk-event-focus-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-focus-send-event 'function)
+ "@version{2013-1-18}
+  @begin{short}
+    Accessor of the slot \"send-event\" of the @class{gdk-event-focus} struct.
+  @end{short}")
+
+;;; --- gdk-event-focus-in -----------------------------------------------------
+
+(setf (gethash 'gdk-event-focus-in atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-focus-in 'function)
+ "@version{2013-1-15}
+  @begin{short}
+    Accessor of the slot \"in\" of the @class{gdk-event-focus} struct.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkEventConfigure
@@ -2045,47 +2429,108 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventGrabBroken
-;;;
-;;; struct GdkEventGrabBroken {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   gboolean keyboard;
-;;;   gboolean implicit;
-;;;   GdkWindow *grab_window;
-;;; };
-;;;
-;;; Generated when a pointer or keyboard grab is broken. On X11, this happens
-;;; when the grab window becomes unviewable (i.e. it or one of its ancestors is
-;;; unmapped), or if the same application grabs the pointer or keyboard again.
-;;; Note that implicit grabs (which are initiated by button presses) can also
-;;; cause GdkEventGrabBroken events.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_GRAB_BROKEN)
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event, i.e. the window that previously
-;;;     owned the grab
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; gboolean keyboard;
-;;;     TRUE if a keyboard grab was broken, FALSE if a pointer grab was broken
-;;;
-;;; gboolean implicit;
-;;;     TRUE if the broken grab was implicit
-;;;
-;;; GdkWindow *grab_window;
-;;;     If this event is caused by another grab in the same application,
-;;;     grab_window contains the new grab window. Otherwise grab_window is NULL.
-;;;
-;;; Since 2.8
-;;; ----------------------------------------------------------------------------
-|#
+
+;;; --- gdk-event-grab-broken --------------------------------------------------
+
+(setf (documentation 'gdk-event-grab-broken 'type)
+ "@version{2013-1-19}
+  @begin{short}
+    Generated when a pointer or keyboard grab is broken.
+  @end{short}
+  On X11, this happens when the grab window becomes unviewable (i.e. it or one
+  of its ancestors is unmapped), or if the same application grabs the pointer or
+  keyboard again. Note that implicit grabs (which are initiated by button
+  presses) can also cause @sym{gdk-event-grab-broken} events.
+  @begin{pre}
+ struct GdkEventGrabBroken {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   gboolean keyboard;
+   gboolean implicit;
+   GdkWindow *grab_window;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_GRAB_BROKEN)}
+    @entry[GdkWindow *window]{the window which received the event, i.e. the
+      window that previously owned the grab}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[gboolean keyboard]{TRUE if a keyboard grab was broken, FALSE if a
+      pointer grab was broken}
+    @entry[gboolean implicit]{TRUE if the broken grab was implicit}
+    @entry[GdkWindow *grab_window]{If this event is caused by another grab in
+      the same application, grab_window contains the new grab window.
+      Otherwise grab_window is NULL.}
+  @end{table}
+  Since 2.8
+  @see-slot{gdk-event-grab-broken-type}
+  @see-slot{gdk-event-grab-broken-window}
+  @see-slot{gdk-event-grab-broken-send-event}
+  @see-slot{gdk-event-grab-broken-keyboard}
+  @see-slot{gdk-event-grab-broken-implicit}
+  @see-slot{gdk-event-grab-broken-grab-window}")
+
+;;; --- gdk-event-grab-broken-type ---------------------------------------------
+
+(setf (gethash 'gdk-event-grab-broken-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-grab-broken-type 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @arg{\"type\"} of the @class{gdk-event-grab-broken}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-grab-broken-window -------------------------------------------
+
+(setf (gethash 'gdk-event-grab-broken-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-grab-broken-window 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @arg{\"window\"} of the @class{gdk-event-grab-broken}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-grab-broken-send-event ---------------------------------------
+
+(setf (gethash 'gdk-event-grab-broken-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-grab-broken-send-event 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @arg{\"send-event\"} of the
+    @class{gdk-event-grab-broken} struct.
+  @end{short}")
+
+;;; --- gdk-event-grab-broken-keyboard -----------------------------------------
+
+(setf (gethash 'gdk-event-grab-broken-keyboard atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-grab-broken-keyboard 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @arg{\"keyboard\"} of the @class{gdk-event-grab-broken}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-grab-broken-implicit -----------------------------------------
+
+(setf (gethash 'gdk-event-grab-broken-implicit atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-grab-broken-implicit 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @arg{\"implicit\"} of the @class{gdk-event-grab-broken}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-grab-broken-grab-window --------------------------------------
+
+(setf (gethash 'gdk-event-grab-broken-grab-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-grab-broken-grab-window 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @arg{\"grab-window\"} of the
+    @class{gdk-event-grab-broken} struct.
+  @end{short}")
 
 ;;; --- End of file atdoc-gdk.event-structures.lisp ----------------------------
 

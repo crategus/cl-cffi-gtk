@@ -111,8 +111,9 @@ GTK+ Widgets and Objects
     gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.4.3
     
   Buttons and Toggles
-    
-    gtk.button.lisp                  - GtkButton                   - GTK+ 3.4.1
+|#    
+    (load "src/atdoc-gtk.button.lisp")
+#|
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.4.1
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.4.1
     gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.4.1

@@ -59,6 +59,14 @@
   @end{section}
   @begin[Colors]{section}
     Manipulation of colors
+
+    @about-class{gdk-color}
+    @about-function{gdk-color-copy}
+    @about-function{gdk-color-free}
+    @about-function{gdk-color-parse}
+    @about-function{gdk-color-equal}
+    @about-function{gdk-color-hash}
+    @about-function{gdk-color-string}
   @end{section}
   @begin[RGBA Colors]{section}
     RGBA colors

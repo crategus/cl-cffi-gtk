@@ -46,6 +46,7 @@
 (load "../gtk/atdoc/src/atdoc-gtk.accel-map.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.button.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -54,6 +55,7 @@
 (load "../gdk/atdoc/src/atdoc-gdk.package.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.event-structures.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
+(load "../gdk/atdoc/src/atdoc-gdk.color.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -69,6 +71,7 @@
 (load "../gobject/atdoc/src/atdoc-gobject.type-info.lisp")
 (load "../gobject/atdoc/src/atdoc-gobject.base.lisp")
 (load "../gobject/atdoc/src/atdoc-gobject.param-spec.lisp")
+(load "../gobject/atdoc/src/atdoc-gobject.signals.lisp")
 
 ;;; ----------------------------------------------------------------------------
 

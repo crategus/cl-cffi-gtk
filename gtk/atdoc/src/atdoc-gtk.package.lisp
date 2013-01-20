@@ -195,38 +195,38 @@
       @about-symbol{gtk-accel-flags}
       @about-symbol{gtk-arrow-placement}
       @about-symbol{gtk-arrow-type}
-      @about-symbol{GtkAttachOptions}
-      @about-symbol{GtkButtonBoxStyle}
-      @about-symbol{GtkCornerType}
-      @about-symbol{GtkDeleteType}
-      @about-symbol{GtkDirectionType}
-      @about-symbol{GtkExpanderStyle}
-      @about-symbol{GtkIMPreeditStyle}
-      @about-symbol{GtkIMStatusStyle}
-      @about-symbol{GtkJustification}
-      @about-symbol{GtkMovementStep}
-      @about-symbol{GtkOrientation}
-      @about-symbol{GtkPackType}
-      @about-symbol{GtkPathPriorityType}
-      @about-symbol{GtkPathType}
-      @about-symbol{GtkPolicyType}
+      @about-symbol{gtk-attach-options}
+      @about-symbol{gtk-button-box-style}
+      @about-symbol{gtk-corner-type}
+      @about-symbol{gtk-delete-type}
+      @about-symbol{gtk-direction-type}
+      @about-symbol{gtk-expander-style}
+      @about-symbol{gtk-im-preedit-style}
+      @about-symbol{gtk-im-status-style}
+      @about-symbol{gtk-justification}
+      @about-symbol{gtk-movement-step}
+      @about-symbol{gtk-orientation}
+      @about-symbol{gtk-pack-type}
+      @about-symbol{gtk-path-priority-type}
+      @about-symbol{gtk-path-type}
+      @about-symbol{gtk-policy-type}
       @about-symbol{gtk-position-type}
-      @about-symbol{GtkReliefStyle}
-      @about-symbol{GtkResizeMode}
-      @about-symbol{GtkScrollStep}
-      @about-symbol{GtkScrollType}
-      @about-symbol{GtkSelectionMode}
-      @about-symbol{GtkShadowType}
-      @about-symbol{GtkStateType}
-      @about-symbol{GtkStateFlags}
-      @about-symbol{GtkToolbarStyle}
-      @about-symbol{GtkWindowPosition}
+      @about-symbol{gtk-relief-style}
+      @about-symbol{gtk-resize-mode}
+      @about-symbol{gtk-scroll-step}
+      @about-symbol{gtk-scroll-type}
+      @about-symbol{gtk-selection-mode}
+      @about-symbol{gtk-shadow-type}
+      @about-symbol{gtk-state-type}
+      @about-symbol{gtk-state-flags}
+      @about-symbol{gtk-toolbar-style}
+      @about-symbol{gtk-window-position}
       @about-symbol{gtk-window-type}
-      @about-symbol{GtkSortType}
-      @about-symbol{GtkDragResult}
-      @about-symbol{GtkJunctionSides}
-      @about-symbol{GtkBorderStyle}
-      @about-symbol{GtkRegionFlags}
+      @about-symbol{gtk-sort-type}
+      @about-symbol{gtk-drag-result}
+      @about-symbol{gtk-junction-sides}
+      @about-symbol{gtk-border-style}
+      @about-symbol{gtk-region-flags}
     @end{subsection}
     @begin[Selections]{subsection}
     @end{subsection}
@@ -406,6 +406,21 @@
   @end{section}
   @begin[Buttons and Toggles]{section}
     @begin[GtkButton]{subsection}
+      A widget that emits a signal when clicked on
+
+      @about-class{gtk-button}
+      @about-function{gtk-button-new}
+      @about-function{gtk-button-new-with-label}
+      @about-function{gtk-button-new-with-mnemonic}
+      @about-function{gtk-button-new-from-stock}
+      @about-function{gtk-button-pressed}
+      @about-function{gtk-button-released}
+      @about-function{gtk-button-clicked}
+      @about-function{gtk-button-enter}
+      @about-function{gtk-button-leave}
+      @about-function{gtk-button-set-alignment}
+      @about-function{gtk-button-get-alignment}
+      @about-function{gtk-button-get-event-window}
     @end{subsection}
     @begin[GtkCheckButton]{subsection}
     @end{subsection}

@@ -330,7 +330,7 @@
 
 (setf (documentation 'g-main-context-find-source-by-id 'function)
  "@version{2013-01-01}
-  @argument[context}{a @type{g-main-context} (if @code{null}-pointer, the
+  @argument[context]{a @type{g-main-context} (if @code{null}-pointer, the
     default context will be used)}
   @argument[source-id]{the source ID, as returned by @fun{g-source-get-id}.}
   @return{The @type{g-source} if found, otherwise, @code{null}-pointer}
@@ -368,69 +368,69 @@
 
 (setf (documentation 'g-main-context-wakeup 'function)
  "@version{2013-01-01}
-  @argument[context]{a GMainContext}
+  @argument[context]{a @type{g-main-context}}
   @begin{short}
-    If context is currently waiting in a poll(), interrupt the poll(), and
-    continue the iteration process.
+    If context is currently waiting in a @code{poll()}, interrupt the
+    @code{poll()}, and continue the iteration process.
   @end{short}")
 
 ;;; --- g-main-context-acquire -------------------------------------------------
 
 (setf (documentation 'g-main-context-acquire 'function)
  "@version{2013-01-01}
-  @argument[context]{a GMainContext}
-  @return{TRUE if the operation succeeded, and this thread is now the owner of
-    context.}
+  @argument[context]{a @type{g-main-context}}
+  @return{@arg{true} if the operation succeeded, and this thread is now the
+    owner of context.}
   @short{Tries to become the owner of the specified context.}
-  If some other thread is the owner of the context, returns FALSE immediately.
-  Ownership is properly recursive: the owner can require ownership again and
-  will release ownership when g_main_context_release() is called as many times
-  as g_main_context_acquire().
+  If some other thread is the owner of the context, returns @code{nil}
+  immediately. Ownership is properly recursive: the owner can require ownership
+  again and will release ownership when @fun{g-main-context-release} is called
+  as many times as @fun{g-main-context-acquire}.
 
   You must be the owner of a context before you can call
-  g_main_context_prepare(), g_main_context_query(), g_main_context_check(),
-  g_main_context_dispatch().")
+  @fun{g-main-context-prepare}, @fun{g-main-context-query}, 
+  @fun{g-main-context-check}, @fun{g-main-context-dispatch}.")
 
 ;;; --- g-main-context-release -------------------------------------------------
 
 (setf (documentation 'g-main-context-release 'function)
  "@version{2013-01-01}
-  @argument[context]{a GMainContex}
+  @argument[context]{a @type{g-main-context}}
   @begin{short}
     Releases ownership of a context previously acquired by this thread with
-    g_main_context_acquire().
+    @fun{g-main-context-acquire}.
   @end{short}
   If the context was acquired multiple times, the ownership will be released
-  only when g_main_context_release() is called as many times as it was
+  only when @fun{g-main-context-release} is called as many times as it was
   acquired.")
 
 ;;; --- g-main-context-is-owner ------------------------------------------------
 
 (setf (documentation 'g-main-context-is-owner 'function)
  "@version{2013-01-01}
-  @argument[context]{a GMainContext}
-  @return{TRUE if current thread is owner of context.}
+  @argument[context]{a @type{g-main-context}}
+  @return{@arg{true} if current thread is owner of context.}
   @begin{short}
     Determines whether this thread holds the (recursive) ownership of this
-    GMainContext.
+    @type{g-main-context}.
   @end{short}
   This is useful to know before waiting on another thread that may be blocking
   to get ownership of context.
 
- Since 2.10")
+  Since 2.10")
 
 ;;; --- g-main-context-wait ----------------------------------------------------
 
 (setf (documentation 'g-main-context-wait 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
   @argument[cond]{a condition variable}
   @argument[mutex]{a mutex, currently held}
-  @return{TRUE if the operation succeeded, and this thread is now the owner of
-    context.}
+  @return{@arg{true} if the operation succeeded, and this thread is now the
+    owner of context.}
   @begin{short}
     Tries to become the owner of the specified context, as with
-    g_main_context_acquire().
+    @fun{g-main-context-acquire}.
   @end{short}
   But if another thread is the owner, atomically drop mutex and wait on cond
   until that owner releases ownership or until cond is signaled, then try again
@@ -439,60 +439,62 @@
 ;;; --- g-main-context-prepare -------------------------------------------------
 
 (setf (documentation 'g-main-context-prepare 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
   @argument[priority]{location to store priority of highest priority source
     already ready.}
-  @return{TRUE if some source is ready to be dispatched prior to polling.}
+  @return{@arg{true} if some source is ready to be dispatched prior to polling.}
   @begin{short}
     Prepares to poll sources within a main loop.
   @end{short}
   The resulting information for polling is determined by calling
-  g_main_context_query().")
+  @fun{g-main-context-query}.")
 
 ;;; --- g-main-context-query ---------------------------------------------------
 
 (setf (documentation 'g-main-context-query 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
-  @argument[max_priority]{maximum priority source to check}
-  @argument[timeout_]{location to store timeout to be used in polling}
-  @argument[fds]{location to store GPollFD records that need to be polled}
-  @argument[n-fds]{length of fds.}
-  @return{the number of records actually stored in fds, or, if more than n_fds
-    records need to be stored, the number of records that need to be stored.}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
+  @argument[max-priority]{maximum priority source to check}
+  @argument[timeout]{location to store timeout to be used in polling}
+  @argument[fds]{location to store @type{g-poll-fd} records that need to be
+    polled}
+  @argument[n-fds]{length of @arg{fds}.}
+  @return{the number of records actually stored in @arg{fds}, or, if more than
+  @arg{n-fds} records need to be stored, the number of records that need to be
+    stored.}
   @short{Determines information necessary to poll this main loop.}")
 
 ;;; --- g-main-context-check ---------------------------------------------------
 
 (setf (documentation 'g-main-context-check 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
   @argument[max-priority]{the maximum numerical priority of sources to check}
-  @argument[fds]{array of GPollFD's that was passed to the last call to
-    g_main_context_query()}
-  @argument[n_fds]{return value of g_main_context_query()}
-  @return{TRUE if some sources are ready to be dispatched.}
+  @argument[fds]{array of @type{g-poll-fd}'s that was passed to the last call to
+    @fun{g-main-context-query}}
+  @argument[n-fds]{return value of @code{g-main-context-query}}
+  @return{@arg{true} if some sources are ready to be dispatched.}
   @short{Passes the results of polling back to the main loop.}")
 
 ;;; --- g-main-context-dispatch ------------------------------------------------
 
 (setf (documentation 'g-main-context-dispatch 'function)
- "@version{2013-01-01} 
-  @argument[context]{a GMainContext}
+ "@version{2013-01-16} 
+  @argument[context]{a @type{g-main-context}}
   @short{Dispatches all pending sources.}")
 
 ;;; --- g-main-context-set-poll-func -------------------------------------------
 
 (setf (documentation 'g-main-context-set-poll-func 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
   @argument[func]{the function to call to poll all file descriptors}
   @begin{short}
     Sets the function to use to handle polling of file descriptors.
   @end{short}
-  It will be used instead of the poll() system call (or GLib's replacement
-  function, which is used where poll() isn't available).
+  It will be used instead of the @code{poll()} system call (or GLib's
+  replacement function, which is used where @code{poll()} isn't available).
 
   This function could possibly be used to integrate the GLib event loop with
   an external event loop.")
@@ -500,10 +502,10 @@
 ;;; --- g-main-context-get-poll-func -------------------------------------------
 
 (setf (documentation 'g-main-context-get-poll-func 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
   @return{the poll function}
-  @short{Gets the poll function set by g_main_context_set_poll_func().}")
+  @short{Gets the poll function set by @fun{g-main-context-set-poll-func}.}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GPollFunc ()
@@ -531,27 +533,28 @@
 ;;; --- g-main-context-add-poll ------------------------------------------------
 
 (setf (documentation 'g-main-context-add-poll 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext (or NULL for the default context)}
-  @argument[fd]{a GPollFD structure holding information about a file descriptor
-    to watch.}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context} (or @code{null}-pointer for the
+    default context)}
+  @argument[fd]{a @type{g-poll-fd} structure holding information about a file
+    descriptor to watch.}
   @argument[priority]{the priority for this file descriptor which should be the
-    same as the priority used for g_source_attach() to ensure that the file
+    same as the priority used for @fun{g-source-attach} to ensure that the file
     descriptor is polled whenever the results may be needed.}
   @begin{short}
     Adds a file descriptor to the set of file descriptors polled for this
     context.
   @end{short}
   This will very seldom be used directly. Instead a typical event source will
-  use g_source_add_poll() instead.")
+  use @fun{g-source-add-poll} instead.")
 
 ;;; --- g-main-context-remove-poll ---------------------------------------------
 
 (setf (documentation 'g-main-context-remove-poll 'function)
- "@version{2013-01-01}
-  @argument[context]{a GMainContext}
-  @argument[fd]{a GPollFD descriptor previously added with
-    g_main_context_add_poll()}
+ "@version{2013-01-16}
+  @argument[context]{a @type{g-main-context}}
+  @argument[fd]{a @type{g-poll-fd} descriptor previously added with
+    @fun{g-main-context-add-poll}}
   @begin{short}
     Removes file descriptor from the set of file descriptors to be polled for a
     particular context.
@@ -560,99 +563,30 @@
 ;;; --- g-main-depth -----------------------------------------------------------
 
 (setf (documentation 'g-main-depth 'function)
- "@version{2013-01-01}
-  @return{The main loop recursion level in the current thread}
+ "@version{2013-01-16}
+  @return{The main loop recursion level in the current thread.}
   @begin{short}
-    Returns the depth of the stack of calls to g_main_context_dispatch() on any
-    GMainContext in the current thread.
+    Returns the depth of the stack of calls to @fun{g-main-context-dispatch} on
+    any @type{g-main-context} in the current thread.
   @end{short}
-  That is, when called from the toplevel,
-  it gives 0. When called from within a callback from
-  g_main_context_iteration() (or g_main_loop_run(), etc.) it returns 1. When
-  called from within a callback to a recursive call to
-  g_main_context_iteration(), it returns 2. And so forth.
+  That is, when called from the toplevel, it gives @code{0}. When called from
+  within a callback from @fun{g-main-context-iteration} (or
+  @fun{g-main-loop-run}, etc.) it returns @code{1}. When called from within a
+  callback to a recursive call to @fun{g-main-context-iteration}, it returns
+  @code{2}. And so forth.
 
-  This function is useful in a situation like the following: Imagine an
-  extremely simple \"garbage collected\" system.
-  @begin{pre}
-  static GList *free_list;
-
-  gpointer
-  allocate_memory (gsize size)
-  {
-    gpointer result = g_malloc (size);
-    free_list = g_list_prepend (free_list, result);
-    return result;
-  @}
-
-  void
-  free_allocated_memory (void)
-  {
-    GList *l;
-    for (l = free_list; l; l = l->next);
-      g_free (l->data);
-    g_list_free (free_list);
-    free_list = NULL;
-   @}
-
-  [...]
-
-  while (TRUE);
-   {
-     g_main_context_iteration (NULL, TRUE);
-     free_allocated_memory();
-    @}
-  @end{pre}
-  This works from an application, however, if you want to do the same thing
-  from a library, it gets more difficult, since you no longer control the main
-  loop. You might think you can simply use an idle function to make the call
-  to free_allocated_memory(), but that doesn't work, since the idle function
-  could be called from a recursive callback. This can be fixed by using
-  g_main_depth()
-  @begin{pre}
-  gpointer
-  allocate_memory (gsize size)
-  {
-    FreeListBlock *block = g_new (FreeListBlock, 1);
-    block->mem = g_malloc (size);
-    block->depth = g_main_depth ();
-    free_list = g_list_prepend (free_list, block);
-    return block->mem;
-  @}
-
-  void
-  free_allocated_memory (void)
-  {
-    GList *l;
-
-    int depth = g_main_depth ();
-    for (l = free_list; l; );
-      {
-        GList *next = l->next;
-        FreeListBlock *block = l->data;
-        if (block->depth > depth)
-          {
-            g_free (block->mem);
-            g_free (block);
-            free_list = g_list_delete_link (free_list, l);
-          @}
-
-        l = next;
-      @}
-    @}
-  @end{pre}
-  There is a temptation to use g_main_depth() to solve problems with
+  There is a temptation to use @sym{g-main-depth} to solve problems with
   reentrancy. For instance, while waiting for data to be received from the
   network in response to a menu item, the menu item might be selected again.
   It might seem that one could make the menu item's callback return
-  immediately and do nothing if g_main_depth() returns a value greater than 1.
-  However, this should be avoided since the user then sees selecting the menu
-  item do nothing. Furthermore, you'll find yourself adding these checks all
-  over your code, since there are doubtless many, many things that the user
-  could do. Instead, you can use the following techniques:
+  immediately and do nothing if @sym{g-main-depth} returns a value greater than
+  @code{1}. However, this should be avoided since the user then sees selecting
+  the menu item do nothing. Furthermore, you'll find yourself adding these
+  checks all over your code, since there are doubtless many, many things that
+  the user could do. Instead, you can use the following techniques:
   @begin{itemize}
-    @item{Use gtk_widget_set_sensitive() or modal dialogs to prevent the user
-      from interacting with elements while the main loop is recursing.}
+    @item{Use @fun{gtk-widget-set-sensitive} or modal dialogs to prevent the
+      user from interacting with elements while the main loop is recursing.}
     @item{Avoid main loop recursion in situations where you can't handle
       arbitrary callbacks. Instead, structure your code so that you simply
       return to the main loop and then get called again when there is more work
@@ -662,8 +596,8 @@
 ;;; --- g-main-current-source --------------------------------------------------
 
 (setf (documentation 'g-main-current-source 'function)
- "@version{2013-01-01}
-  @return{The currently firing source or NULL.}
+ "@version{2013-01-16}
+  @return{The currently firing source or @code{null}-pointer.}
   @short{Returns the currently firing source for this thread.}
 
   Since 2.12")
@@ -856,52 +790,53 @@
 ;;; --- g-timeout-source-new ---------------------------------------------------
 
 (setf (documentation 'g-timeout-source-new 'function)
- "@version{2013-01-01}
+ "@version{2013-01-16}
   @argument[interval]{the timeout interval in milliseconds.}
   @return{the newly-created timeout source}
   @short{Creates a new timeout source.}
 
-  The source will not initially be associated with any GMainContext and must
-  be added to one with g_source_attach() before it will be executed.
+  The source will not initially be associated with any @type{g-main-context} and
+  must be added to one with @fun{g-source-attach} before it will be executed.
 
   The interval given is in terms of monotonic time, not wall clock time. See
-  g_get_monotonic_time().")
+  @code{g_get_monotonic_time()}.")
 
 ;;; --- g-timeout-source-new-seconds -------------------------------------------
 
 (setf (documentation 'g-timeout-source-new-seconds 'function)
- "@version{2013-01-01}
+ "@version{2013-01-16}
   @argument[interval]{the timeout interval in seconds}
   @return{the newly-created timeout source}
   @short{Creates a new timeout source.}
 
-  The source will not initially be associated with any GMainContext and must
-  be added to one with g_source_attach() before it will be executed.
+  The source will not initially be associated with any @type{g-main-context} and
+  must be added to one with @fun{g-source-attach} before it will be executed.
 
   The scheduling granularity/accuracy of this timeout source will be in
   seconds.
 
   The interval given in terms of monotonic time, not wall clock time. See
-  g_get_monotonic_time().
+  @code{g_get_monotonic_time()}.
 
   Since 2.14")
 
 ;;; --- g-timeout-add ----------------------------------------------------------
 
 (setf (documentation 'g-timeout-add 'function)
- "@version{2013-01-01}
+ "@version{2013-01-16}
   @argument[interval]{the time between calls to the function, in milliseconds
     (1/1000ths of asecond)}
   @argument[function]{function to call}
   @argument[data]{data to pass to function}
-  @return{the ID (greater than 0) of the event source.}
+  @return{The ID (greater than @code{0}) of the event source.}
   @begin{short}
     Sets a function to be called at regular intervals, with the default
-    priority, G_PRIORITY_DEFAULT.
+    priority, @var{g-priority-default}.
   @end{short}
-  The function is called repeatedly until it returns FALSE, at which point the
-  timeout is automatically destroyed and the function will not be called again.
-  The first call to the function will be at the end of the first interval.
+  The function is called repeatedly until it returns @code{nil}, at which point
+  the timeout is automatically destroyed and the function will not be called
+  again. The first call to the function will be at the end of the first
+  interval.
 
   Note that timeout functions may be delayed, due to the processing of other
   event sources. Thus they should not be relied on for precise timing. After
@@ -910,36 +845,37 @@
   try to 'catch up' time lost in delays).
 
   If you want to have a timer in the \"seconds\" range and do not care about the
-  exact time of the first call of the timer, use the g_timeout_add_seconds()
+  exact time of the first call of the timer, use the @fun{g-timeout-add-seconds}
   function; this function allows for more optimizations and more efficient
   system power usage.
 
-  This internally creates a main loop source using g_timeout_source_new() and
-  attaches it to the main loop context using g_source_attach(). You can do
-  these steps manually if you need greater control.
+  This internally creates a main loop source using @fun{g-timeout-source_new}
+  and attaches it to the main loop context using @fun{g-source-attach}. You can
+  do these steps manually if you need greater control.
 
   The interval given is in terms of monotonic time, not wall clock time. See
-  g_get_monotonic_time().")
+  @code{g_get_monotonic_time()}.")
 
 ;;; --- g-timeout-add-full -----------------------------------------------------
 
 (setf (documentation 'g-timeout-add-full 'function)
- "@version{2013-01-01}
+ "@version{2013-01-17}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.}
+    in the range between @var{g-priority-default} and @var{g-priority-high}.}
   @argument[interval]{the time between calls to the function, in milliseconds
     (1/1000ths of a second)}
   @argument[function]{function to call}
-  @argument[data]{data to pass to function}
-  @argument[notify]{function to call when the timeout is removed, or NULL}
-  @return{the ID (greater than 0) of the event source. Rename to: g_timeout_add}
+  @argument[data]{data to pass to @arg{function}}
+  @argument[notify]{function to call when the timeout is removed, or
+    @code{null}-pointer}
+  @return{the ID (greater than @code{0}) of the event source.}
   @begin{short}
     Sets a function to be called at regular intervals, with the given priority.
   @end{short}
-  The function is called repeatedly until it returns FALSE, at which point the
-  timeout is automatically destroyed and the function will not be called
-  again. The notify function is called when the timeout is destroyed. The
-  first call to the function will be at the end of the first interval.
+  The function is called repeatedly until it returns @code{nil}, at which point
+  the timeout is automatically destroyed and the function will not be called
+  again. The @arg{notify} function is called when the timeout is destroyed. The
+  first call to the function will be at the end of the first @arg{interval}.
 
   Note that timeout functions may be delayed, due to the processing of other
   event sources. Thus they should not be relied on for precise timing. After
@@ -947,89 +883,90 @@
   recalculated based on the current time and the given interval (it does not
   try to 'catch up' time lost in delays).
 
-  This internally creates a main loop source using g_timeout_source_new() and
-  attaches it to the main loop context using g_source_attach(). You can do
-  these steps manually if you need greater control.
+  This internally creates a main loop source using @fun{g-timeout-source-new}
+  and attaches it to the main loop context using @fun{g-source-attach}. You can
+  do these steps manually if you need greater control.
 
   The interval given in terms of monotonic time, not wall clock time. See
-  g_get_monotonic_time().")
+  @code{g_get_monotonic_time()}.")
 
 ;;; --- g-timeout-add-seconds --------------------------------------------------
 
 (setf (documentation 'g-timeout-add-seconds 'function)
- "@version{2013-01-01}
+ "@version{2013-01-17}
   @argument[interval]{the time between calls to the function, in seconds}
   @argument[function]{function to call}
-  @argument[data]{data to pass to function}
-  @return{the ID (greater than 0) of the event source.}
+  @argument[data]{data to pass to @arg{function}}
+  @return{the ID (greater than @code{0}) of the event source.}
   @begin{short}
     Sets a function to be called at regular intervals with the default priority,
-    G_PRIORITY_DEFAULT.
+    @var{g-priority-default}.
   @end{short}
-  The function is called repeatedly until it returns FALSE, at which point the
-  timeout is automatically destroyed and the function will not be called again.
+  The function is called repeatedly until it returns @code{nil}, at which point
+  the timeout is automatically destroyed and the function will not be called
+  again.
 
   This internally creates a main loop source using
-  g_timeout_source_new_seconds() and attaches it to the main loop context
-  using g_source_attach(). You can do these steps manually if you need greater
-  control. Also see g_timeout_add_seconds_full().
+  @fun{g-timeout-source-new-seconds} and attaches it to the main loop context
+  using @fun{g-source-attach}. You can do these steps manually if you need
+  greater control. Also see @fun{g-timeout-add-seconds-full}.
 
   Note that the first call of the timer may not be precise for timeouts of one
   second. If you need finer precision and have such a timeout, you may want to
-  use g_timeout_add() instead.
+  use @fun{g-timeout-add} instead.
 
   The interval given is in terms of monotonic time, not wall clock time. See
-  g_get_monotonic_time().
+  @code{g_get_monotonic_time()}.
 
   Since 2.14")
 
 ;;; --- g-timeout-add-seconds-full ---------------------------------------------
 
 (setf (documentation 'g-timeout-add-seconds-full 'function)
- "@version{2013-01-01}
+ "@version{2013-01-17}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.}
+    in the range between @var{g-priority-default} and @var{g-priority-high}.}
   @argument[interval]{the time between calls to the function, in seconds}
   @argument[function]{function to call}
   @argument[data]{data to pass to function}
-  @argument[notify]{function to call when the timeout is removed, or NULL}
-  @return{the ID (greater than 0) of the event source. Rename to:
-    g_timeout_add_seconds}
+  @argument[notify]{function to call when the timeout is removed, or
+    @code{null}-pointer}
+  @return{the ID (greater than @code{0}) of the event source.}
   @begin{short}
-    Sets a function to be called at regular intervals, with priority.
+    Sets a @arg{function} to be called at regular intervals, with priority.
   @end{short}
-  The function is called repeatedly until it returns FALSE, at which point the
-  timeout is automatically destroyed and the function will not be called
-  again.
+  The @arg{function} is called repeatedly until it returns @code{nil}, at which
+  point the timeout is automatically destroyed and the function will not be
+  called again.
 
-  Unlike g_timeout_add(), this function operates at whole second granularity.
-  The initial starting point of the timer is determined by the implementation
-  and the implementation is expected to group multiple timers together so that
-  they fire all at the same time. To allow this grouping, the interval to the
-  first timer is rounded and can deviate up to one second from the specified
-  interval. Subsequent timer iterations will generally run at the specified
-  interval.
+  Unlike @fun{g-timeout-add}, this function operates at whole second
+  granularity. The initial starting point of the timer is determined by the
+  implementation and the implementation is expected to group multiple timers
+  together so that they fire all at the same time. To allow this grouping, the
+  interval to the first timer is rounded and can deviate up to one second from
+  the specified @arg{interval}. Subsequent timer iterations will generally run
+  at the specified interval.
 
   Note that timeout functions may be delayed, due to the processing of other
   event sources. Thus they should not be relied on for precise timing. After
   each call to the timeout function, the time of the next timeout is
   recalculated based on the current time and the given interval
 
-  If you want timing more precise than whole seconds, use g_timeout_add()
+  If you want timing more precise than whole seconds, use @fun{g-timeout-add}
   instead.
 
   The grouping of timers to fire at the same time results in a more power and
   CPU efficient behavior so if your timer is in multiples of seconds and you
   don't require the first timer exactly one second from now, the use of
-  g_timeout_add_seconds() is preferred over g_timeout_add().
+  @fun{g-timeout-add-seconds} is preferred over @fun{g-timeout-add}.
 
   This internally creates a main loop source using
-  g_timeout_source_new_seconds() and attaches it to the main loop context
-  using g_source_attach(). You can do these steps manually if you need greater
-  control.
+  @fun{g-timeout-source-new-seconds} and attaches it to the main loop context
+  using @fun{g-source-attach}. You can do these steps manually if you need
+  greater control.
 
   The interval given is in terms of monotonic time, not wall clock time. See
-  g_get_monotonic_time().
+  @code{g_get_monotonic_time()}.
 
  Since 2.14")
 

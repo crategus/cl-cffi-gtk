@@ -1114,8 +1114,8 @@
 (defcfun ("g_main_context_query" g-main-context-query) :int
   (context (:pointer g-main-context))
   (max-priority :int)
-  (timeout-ret (:pointer :int))
-  (fds-ret (:pointer g-poll-fd))
+  (timeout (:pointer :int))
+  (fds (:pointer g-poll-fd))
   (n-dfs :int))
 
 (export 'g-main-context-query)

@@ -33,18 +33,16 @@
 (setf (gethash 'gtk-accel-flags atdoc:*symbol-name-alias*) "Enum")
 (setf (gethash 'gtk-accel-flags atdoc:*external-symbols*)
  "@version{2013-1-13}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @short{}
+  @begin{pre}
 (define-g-flags \"GtkAccelFlags\" gtk-accel-flags
   (:export t
    :type-initializer \"gtk_accel_flags_get_type\")
   (:visible 1)
   (:locked 2)
   (:mask 7))
-    @end{pre}
-  @end{dictionary}")
+  @end{pre}")
 
-#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkArrowPlacement
 ;;;
@@ -66,172 +64,127 @@
 ;;;     Place both arrows at the bottom of the menu.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkArrowType
-;;;
-;;; typedef enum {
-;;;   GTK_ARROW_UP,
-;;;   GTK_ARROW_DOWN,
-;;;   GTK_ARROW_LEFT,
-;;;   GTK_ARROW_RIGHT,
-;;;   GTK_ARROW_NONE
-;;; } GtkArrowType;
-;;;
-;;; Used to indicate the direction in which a GtkArrow should point.
-;;;
-;;; GTK_ARROW_UP
-;;;     Represents an upward pointing arrow.
-;;;
-;;; GTK_ARROW_DOWN
-;;;     Represents a downward pointing arrow.
-;;;
-;;; GTK_ARROW_LEFT
-;;;     Represents a left pointing arrow.
-;;;
-;;; GTK_ARROW_RIGHT
-;;;     Represents a right pointing arrow.
-;;;
-;;; GTK_ARROW_NONE
-;;;     No arrow. Since 2.10.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-arrow-type ---------------------------------------------------------
 
-(define-g-enum "GtkArrowType" gtk-arrow-type
+(setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-arrow-type atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Used to indicate the direction in which a @class{gtk-arrow} should point.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkArrowType\" gtk-arrow-type
   (:export t
-   :type-initializer "gtk_arrow_type_get_type")
+   :type-initializer \"gtk_arrow_type_get_type\")
   (:up 0)
   (:down 1)
   (:left 2)
   (:right 3)
   (:none 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:up]{Represents an upward pointing arrow.}
+    @entry[:down]{Represents a downward pointing arrow.}
+    @entry[:left]{Represents a left pointing arrow.}
+    @entry[:right]{Represents a right pointing arrow.}
+    @entry[:none]{No arrow. Since 2.10.}
+  @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkAttachOptions
-;;;
-;;; typedef enum {
-;;;   GTK_EXPAND = 1 << 0,
-;;;   GTK_SHRINK = 1 << 1,
-;;;   GTK_FILL   = 1 << 2
-;;; } GtkAttachOptions;
-;;;
-;;; Denotes the expansion properties that a widget will have when it (or its
-;;; parent) is resized.
-;;;
-;;; GTK_EXPAND
-;;;     the widget should expand to take up any extra space in its container
-;;;     that has been allocated.
-;;;
-;;; GTK_SHRINK
-;;;     the widget should shrink as and when possible.
-;;;
-;;; GTK_FILL
-;;;     the widget should fill the space allocated to it.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-attach-options -----------------------------------------------------
 
-(define-g-flags "GtkAttachOptions" gtk-attach-options
+(setf (gethash 'gtk-attach-options atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-attach-options atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Denotes the expansion properties that a widget will have when it (or its
+    parent) is resized.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkAttachOptions\" gtk-attach-options
   (:export t
-   :type-initializer "gtk_attach_options_get_type")
+   :type-initializer \"gtk_attach_options_get_type\")
   (:expand 1)
   (:shrink 2)
   (:fill 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:expand]{the widget should expand to take up any extra space in its
+      container that has been allocated.}
+    @entry[:shrink]{the widget should shrink as and when possible.}
+    @entry[:fill]{the widget should fill the space allocated to it.}
+  @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkButtonBoxStyle
-;;;
-;;; typedef enum {
-;;;   GTK_BUTTONBOX_SPREAD = 1,
-;;;   GTK_BUTTONBOX_EDGE,
-;;;   GTK_BUTTONBOX_START,
-;;;   GTK_BUTTONBOX_END,
-;;;   GTK_BUTTONBOX_CENTER
-;;; } GtkButtonBoxStyle;
-;;;
-;;; Used to dictate the style that a GtkButtonBox uses to layout the buttons it
-;;; contains. (See also: GtkVButtonBox and GtkHButtonBox).
-;;;
-;;; GTK_BUTTONBOX_SPREAD
-;;;     Buttons are evenly spread across the box.
-;;;
-;;; GTK_BUTTONBOX_EDGE
-;;;     Buttons are placed at the edges of the box.
-;;;
-;;; GTK_BUTTONBOX_START
-;;;     Buttons are grouped towards the start of the box, (on the left for a
-;;;     HBox, or the top for a VBox).
-;;;
-;;; GTK_BUTTONBOX_END
-;;;     Buttons are grouped towards the end of the box, (on the right for a
-;;;     HBox, or the bottom for a VBox).
-;;;
-;;; GTK_BUTTONBOX_CENTER
-;;;     Buttons are centered in the box. Since 2.12.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-button-box-style ---------------------------------------------------
 
-(define-g-enum "GtkButtonBoxStyle" gtk-button-box-style
+(setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-button-box-style atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Used to dictate the style that a @class{gtk-button-box} uses to layout the
+    buttons it contains. (See also: @class{gtk-vbutton-box} and
+    @class{gtk-hbutton-box}).
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkButtonBoxStyle\" gtk-button-box-style
   (:export t
-   :type-initializer "gtk_button_box_style_get_type")
+   :type-initializer \"gtk_button_box_style_get_type\")
   (:default-style 0)
   (:spread 1)
   (:edge 2)
   (:start 3)
   (:end 4)
   (:center 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:spread]{Buttons are evenly spread across the box.}
+    @entry[:edge]{Buttons are placed at the edges of the box.}
+    @entry[:start]{Buttons are grouped towards the start of the box, (on the
+      left for a HBox, or the top for a VBox).}
+    @entry[:end]{Buttons are grouped towards the end of the box, (on the right
+      for a HBox, or the bottom for a VBox).}
+    @entry[:center]{Buttons are centered in the box. Since 2.12.}
+  @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkCornerType
-;;;
-;;; typedef enum {
-;;;   GTK_CORNER_TOP_LEFT,
-;;;   GTK_CORNER_BOTTOM_LEFT,
-;;;   GTK_CORNER_TOP_RIGHT,
-;;;   GTK_CORNER_BOTTOM_RIGHT
-;;; } GtkCornerType;
-;;;
-;;; Specifies which corner a child widget should be placed in when packed into a
-;;; GtkScrolledWindow. This is effectively the opposite of where the scroll bars
-;;; are placed.
-;;;
-;;; GTK_CORNER_TOP_LEFT
-;;;     Place the scrollbars on the right and bottom of the widget (default
-;;;     behaviour).
-;;;
-;;; GTK_CORNER_BOTTOM_LEFT
-;;;     Place the scrollbars on the top and right of the widget.
-;;;
-;;; GTK_CORNER_TOP_RIGHT
-;;;     Place the scrollbars on the left and bottom of the widget.
-;;;
-;;; GTK_CORNER_BOTTOM_RIGHT
-;;;     Place the scrollbars on the top and left of the widget.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-corner-type --------------------------------------------------------
 
-(define-g-enum "GtkCornerType" gtk-corner-type
+(setf (gethash 'gtk-corner-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-corner-type atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Specifies which corner a child widget should be placed in when packed into a
+    @class{gtk-scrolled-window}. This is effectively the opposite of where the
+    scroll bars are placed.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkCornerType\" gtk-corner-type
   (:export t
-   :type-initializer "gtk_corner_type_get_type")
+   :type-initializer \"gtk_corner_type_get_type\")
   (:top-left 0)
   (:bottom-left 1)
   (:top-right 2)
   (:bottom-right 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:top-left]{Place the scrollbars on the right and bottom of the widget
+      (default behaviour).}
+    @entry[:bottom-left]{Place the scrollbars on the top and right of the
+      widget.}
+    @entry[:top-right]{Place the scrollbars on the left and bottom of the
+      widget.}
+    @entry[:bottom-right]{Place the scrollbars on the top and left of the
+      widget.}
+  @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkDeleteType
-;;;
-;;; typedef enum {
-;;;   GTK_DELETE_CHARS,
-;;;   GTK_DELETE_WORD_ENDS,       /* delete only the portion of the word to the
-;;;                                * left/right of cursor if we're in the middle
-;;;                                * of a word */
-;;;   GTK_DELETE_WORDS,
-;;;   GTK_DELETE_DISPLAY_LINES,
-;;;   GTK_DELETE_DISPLAY_LINE_ENDS,
-;;;   GTK_DELETE_PARAGRAPH_ENDS,  /* like C-k in Emacs (or its reverse) */
-;;;   GTK_DELETE_PARAGRAPHS,      /* C-k in pico, kill whole line */
-;;;   GTK_DELETE_WHITESPACE       /* M-\ in Emacs */
-;;; } GtkDeleteType;
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-delete-type --------------------------------------------------------
 
-(define-g-enum "GtkDeleteType" gtk-delete-type
+(setf (gethash 'gtk-delete-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-delete-type atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkDeleteType\" gtk-delete-type
   (:export t
-   :type-initializer "gtk_delete_type_get_type")
+   :type-initializer \"gtk_delete_type_get_type\")
   (:chars 0)
   (:word-ends 1)
   (:words 2)
@@ -240,131 +193,106 @@
   (:paragraph-ends 5)
   (:paragraphs 6)
   (:whitespace 7))
+  @end{pre}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkDirectionType
-;;;
-;;; typedef enum {
-;;;   GTK_DIR_TAB_FORWARD,
-;;;   GTK_DIR_TAB_BACKWARD,
-;;;   GTK_DIR_UP,
-;;;   GTK_DIR_DOWN,
-;;;   GTK_DIR_LEFT,
-;;;   GTK_DIR_RIGHT
-;;; } GtkDirectionType;
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-direction-type -----------------------------------------------------
 
-(define-g-enum "GtkDirectionType" gtk-direction-type
+(setf (gethash 'gtk-direction-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-direction-type atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkDirectionType\" gtk-direction-type
   (:export t
-   :type-initializer "gtk_direction_type_get_type")
+   :type-initializer \"gtk_direction_type_get_type\")
   (:tab-forward 0)
   (:tab-backward 1)
   (:up 2)
   (:down 3)
   (:left 4)
   (:right 5))
+  @end{pre}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkExpanderStyle
-;;;
-;;; typedef enum {
-;;;   GTK_EXPANDER_COLLAPSED,
-;;;   GTK_EXPANDER_SEMI_COLLAPSED,
-;;;   GTK_EXPANDER_SEMI_EXPANDED,
-;;;   GTK_EXPANDER_EXPANDED
-;;; } GtkExpanderStyle;
-;;;
-;;; Used to specify the style of the expanders drawn by a GtkTreeView.
-;;;
-;;; GTK_EXPANDER_COLLAPSED
-;;;     The style used for a collapsed subtree.
-;;;
-;;; GTK_EXPANDER_SEMI_COLLAPSED
-;;;     Intermediate style used during animation.
-;;;
-;;; GTK_EXPANDER_SEMI_EXPANDED
-;;;     Intermediate style used during animation.
-;;;
-;;; GTK_EXPANDER_EXPANDED
-;;;     The style used for an expanded subtree.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-expander-style -----------------------------------------------------
 
-(define-g-enum "GtkExpanderStyle" gtk-expander-style
+(setf (gethash 'gtk-expander-style atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-expander-style atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Used to specify the style of the expanders drawn by a @class{gtk-tree-view}.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkExpanderStyle\" gtk-expander-style
   (:export t
-   :type-initializer "gtk_expander_style_get_type")
+   :type-initializer \"gtk_expander_style_get_type\")
   (:collapsed 0)
   (:semi-collapsed 1)
   (:semi-expanded 2)
   (:expanded 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:collapsed]{The style used for a collapsed subtree.}
+    @entry[:semi-collapsed]{Intermediate style used during animation.}
+    @entry[:semi-expanded]{Intermediate style used during animation.}
+    @entry[:expanded]{The style used for an expanded subtree.}
+  @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkIMPreeditStyle
-;;;
-;;; typedef enum {
-;;;   GTK_IM_PREEDIT_NOTHING,
-;;;   GTK_IM_PREEDIT_CALLBACK,
-;;;   GTK_IM_PREEDIT_NONE
-;;; } GtkIMPreeditStyle;
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-im-preedit-style ---------------------------------------------------
 
-(define-g-enum "GtkIMPreeditStyle" gtk-im-preedit-style
+(setf (gethash 'gtk-im-preedit-style atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-im-preedit-style atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkIMPreeditStyle\" gtk-im-preedit-style
   (:export t
-   :type-initializer "gtk_im_preedit_style_get_type")
+   :type-initializer \"gtk_im_preedit_style_get_type\")
   (:nothing 0)
   (:callback 1)
   (:none 2))
+  @end{pre}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkIMStatusStyle
-;;;
-;;; typedef enum {
-;;;   GTK_IM_STATUS_NOTHING,
-;;;   GTK_IM_STATUS_CALLBACK,
-;;;   GTK_IM_STATUS_NONE
-;;; } GtkIMStatusStyle;
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-im-status-style ----------------------------------------------------
 
-(define-g-enum "GtkIMStatusStyle" gtk-im-status-style
+(setf (gethash 'gtk-im-status-style atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-im-status-style atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkIMStatusStyle\" gtk-im-status-style
   (:export t
-   :type-initializer "gtk_im_status_style_get_type")
+   :type-initializer \"gtk_im_status_style_get_type\")
   (:nothing 0)
   (:callback 1)
   (:none 2))
+  @end{pre}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkJustification
-;;;
-;;; typedef enum {
-;;;   GTK_JUSTIFY_LEFT,
-;;;   GTK_JUSTIFY_RIGHT,
-;;;   GTK_JUSTIFY_CENTER,
-;;;   GTK_JUSTIFY_FILL
-;;; } GtkJustification;
-;;;
-;;; Used for justifying the text inside a GtkLabel widget. (See also
-;;; GtkAlignment).
-;;;
-;;; GTK_JUSTIFY_LEFT
-;;;     The text is placed at the left edge of the label.
-;;;
-;;; GTK_JUSTIFY_RIGHT
-;;;     The text is placed at the right edge of the label.
-;;;
-;;; GTK_JUSTIFY_CENTER
-;;;     The text is placed in the center of the label.
-;;;
-;;; GTK_JUSTIFY_FILL
-;;;     The text is placed is distributed across the label.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-justification ------------------------------------------------------
 
-(define-g-enum "GtkJustification" gtk-justification
+(setf (gethash 'gtk-justification atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-justification atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Used for justifying the text inside a GtkLabel widget. (See also
+    @class{gtk-alignment}).
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkJustification\" gtk-justification
   (:export t
-   :type-initializer "gtk_justification_get_type")
+   :type-initializer \"gtk_justification_get_type\")
   (:left 0)
   (:right 1)
   (:center 2)
   (:fill 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:left]{The text is placed at the left edge of the label.}
+    @entry[:right]{The text is placed at the right edge of the label.}
+    @entry[:center]{The text is placed in the center of the label.}
+    @entry[:fill]{The text is placed is distributed across the label.}
+  @end{table}")
 
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkMovementStep
 ;;;
@@ -554,8 +482,7 @@
     the tabs of a @class{gtk-notebook}, the handle of a @class{gtk-handle-box}
     or the label of a @class{gtk-scale}.
   @end{short}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-enum \"GtkPositionType\" gtk-position-type
   (:export t
    :type-initializer \"gtk_position_type_get_type\")
@@ -563,44 +490,35 @@
   (:right 1)
   (:top 2)
   (:bottom 3))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:left]{The feature is at the left edge.}
-      @entry[:right]{The feature is at the right edge.}
-      @entry[:top]{The feature is at the top edge.}
-      @entry[:bottom]{The feature is at the bottom edge.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:left]{The feature is at the left edge.}
+    @entry[:right]{The feature is at the right edge.}
+    @entry[:top]{The feature is at the top edge.}
+    @entry[:bottom]{The feature is at the bottom edge.}
+  @end{table}")
 
-#|
-;;; ----------------------------------------------------------------------------
-;;; enum GtkReliefStyle
-;;;
-;;; typedef enum {
-;;;   GTK_RELIEF_NORMAL,
-;;;   GTK_RELIEF_HALF,
-;;;   GTK_RELIEF_NONE
-;;; } GtkReliefStyle;
-;;;
-;;; Indicated the relief to be drawn around a GtkButton.
-;;;
-;;; GTK_RELIEF_NORMAL
-;;;     Draw a normal relief.
-;;;
-;;; GTK_RELIEF_HALF
-;;;     A half relief.
-;;;
-;;; GTK_RELIEF_NONE
-;;;     No relief.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-relief-style -------------------------------------------------------
 
-(define-g-enum "GtkReliefStyle" gtk-relief-style
+(setf (gethash 'gtk-relief-style atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-relief-style atdoc:*external-symbols*)
+ "@version{2013-1-9}
+  @short{Indicated the relief to be drawn around a GtkButton.}
+  @begin{pre}
+(define-g-enum \"GtkReliefStyle\" gtk-relief-style
   (:export t
-   :type-initializer "gtk_relief_style_get_type")
+   :type-initializer \"gtk_relief_style_get_type\")
   (:normal 0)
   (:half 1)
   (:none 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:normal]{Draw a normal relief.}
+    @entry[:half]{A half relief.}
+    @entry[:none]{No relief.}
+  @end{table}")
 
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkResizeMode
 ;;;

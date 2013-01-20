@@ -237,9 +237,7 @@
     @about-function{g-clear-object}
     @about-class{g-initially-unowned}
     @about-class{g-initially-unownedClass}
-
     @about-function{G_TYPE_INITIALLY_UNOWNED}
-
     @about-function{g_object_is_floating}
     @about-function{g_object_force_floating}
     @about-function{g_object_weak_ref}
@@ -271,11 +269,8 @@
     @about-function{g_object_get_valist}
     @about-function{g_object_watch_closure}
     @about-function{g_object_run_dispose}
-
     @about-function{G_OBJECT_WARN_INVALID_PROPERTY_ID}
-
     @about-function{GWeakRef}
-
     @about-function{g_weak_ref_init}
     @about-function{g_weak_ref_clear}
     @about-function{g_weak_ref_get}
@@ -292,6 +287,105 @@
   @begin[GParamSpec]{section}
   @end{section}
   @begin[Signals]{section}
+    A means for customization of object behaviour and a general purpose
+    notification mechanism.
+
+    The basic concept of the signal system is that of the emission of a signal.
+    Signals are introduced per-type and are identified through strings. Signals
+    introduced for a parent type are available in derived types as well, so
+    basically they are a per-type facility that is inherited. A signal emission
+    mainly involves invocation of a certain set of callbacks in precisely
+    defined manner. There are two main categories of such callbacks, per-object
+    [10] ones and user provided ones. The per-object callbacks are most often
+    referred to as \"object method handler\" or \"default (signal) handler\",
+    while user provided callbacks are usually just called \"signal handler\".
+    The object method handler is provided at signal creation time (this most
+    frequently happens at the end of an object class' creation), while user
+    provided handlers are frequently connected and disconnected to/from a
+    certain signal on certain object instances.
+
+    A signal emission consists of five stages, unless prematurely stopped:
+    @begin{enumerate}
+      @item{Invocation of the object method handler for G_SIGNAL_RUN_FIRST
+        signals}
+      @item{Invocation of normal user-provided signal handlers (after flag
+        FALSE)}
+      @item{Invocation of the object method handler for G_SIGNAL_RUN_LAST
+        signals}
+      @item{Invocation of user provided signal handlers, connected with an after
+        flag of TRUE}
+      @item{Invocation of the object method handler for G_SIGNAL_RUN_CLEANUP
+        signals}
+    @end{enumerate}
+     The user-provided signal handlers are called in the order they were
+     connected in. All handlers may prematurely stop a signal emission, and any
+     number of handlers may be connected, disconnected, blocked or unblocked
+     during a signal emission. There are certain criteria for skipping user
+     handlers in stages 2 and 4 of a signal emission. First, user handlers may
+     be blocked, blocked handlers are omitted during callback invocation, to
+     return from the \"blocked\" state, a handler has to get unblocked exactly
+     the same amount of times it has been blocked before. Second, upon emission
+     of a G_SIGNAL_DETAILED signal, an additional \"detail\" argument passed in
+     to g_signal_emit() has to match the detail argument of the signal handler
+     currently subject to invocation. Specification of no detail argument for
+     signal handlers (omission of the detail part of the signal specification
+     upon connection) serves as a wildcard and matches any detail argument
+     passed in to emission.
+
+    @about-symbol{GSignalInvocationHint}
+    @about-symbol{GSignalCMarshaller}
+    @about-symbol{GSignalFlags}
+    @about-symbol{GSignalMatchType}
+    @about-symbol{GSignalQuery}
+    @about-function{G_SIGNAL_TYPE_STATIC_SCOPE}
+    @about-function{G_SIGNAL_MATCH_MASK}
+    @about-function{G_SIGNAL_FLAGS_MASK}
+    @about-function{g_signal_new}
+    @about-function{g_signal_newv}
+    @about-function{g_signal_new_valist}
+    @about-function{g_signal_query}
+    @about-function{g_signal_lookup}
+    @about-function{g_signal_name}
+    @about-function{g_signal_list_ids}
+    @about-function{g_signal_emit}
+    @about-function{g_signal_emit_by_name}
+    @about-function{g_signal_emitv}
+    @about-function{g_signal_emit_valist}
+    @about-function{g-signal-connect}
+    @about-function{g_signal_connect_after}
+    @about-function{g_signal_connect_swapped}
+    @about-function{g_signal_connect_object}
+    @about-symbol{GConnectFlags}
+    @about-function{g_signal_connect_data}
+    @about-function{g_signal_connect_closure}
+    @about-function{g_signal_connect_closure_by_id}
+    @about-function{g_signal_handler_block}
+    @about-function{g_signal_handler_unblock}
+    @about-function{g_signal_handler_disconnect}
+    @about-function{g_signal_handler_find}
+    @about-function{g_signal_handlers_block_matched}
+    @about-function{g_signal_handlers_unblock_matched}
+    @about-function{g_signal_handlers_disconnect_matched}
+    @about-function{g_signal_handler_is_connected}
+    @about-function{g_signal_handlers_block_by_func}
+    @about-function{g_signal_handlers_unblock_by_func}
+    @about-function{g_signal_handlers_disconnect_by_func}
+    @about-function{g_signal_handlers_disconnect_by_data}
+    @about-function{g_signal_has_handler_pending}
+    @about-function{g_signal_stop_emission}
+    @about-function{g_signal_stop_emission_by_name}
+    @about-function{g_signal_override_class_closure}
+    @about-function{g_signal_chain_from_overridden}
+    @about-function{g_signal_new_class_handler}
+    @about-function{g_signal_override_class_handler}
+    @about-function{g_signal_chain_from_overridden_handler}
+    @about-function{g_signal_add_emission_hook}
+    @about-function{g_signal_remove_emission_hook}
+    @about-function{g_signal_parse_name}
+    @about-function{g_signal_get_invocation_hint}
+    @about-function{g_signal_type_cclosure_new}
+    @about-function{g_signal_accumulator_first_wins}
+    @about-function{g_signal_accumulator_true_handled}
   @end{section}
   @begin[Closures]{section}
   @end{section}

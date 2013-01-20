@@ -349,8 +349,7 @@
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
 
-    @b{Height-for-width Geometry Management}
-
+    @heading{Height-for-width Geometry Management}
     GTK+ uses a height-for-width (and width-for-height) geometry management
     system. Height-for-width means that a widget can change how much vertical
     space it needs, depending on the amount of horizontal space that it is given
@@ -493,8 +492,7 @@
     child of a container, you must use the wrapper APIs. Otherwise, you would
     not properly consider widget margins, @class{gtk-size-group}, and so forth.
 
-   @b{Style Properties}
-
+   @heading{Style Properties}
    @sym{gtk-widget} introduces style properties - these are basically object
    properties that are stored not on the object, but in the style object
    associated to the widget. Style properties are set in resource files. This
@@ -509,8 +507,7 @@
    @fun{gtk-widget-style-get} or @fun{gtk-widget-style-get-valist} to obtain the
    value of a style property.
 
-    @b{gtk-widget as gtk-buildable}
-
+    @heading{gtk-widget as gtk-buildable}
     The @sym{gtk-widget} implementation of the @class{gtk-buildable} interface
     supports a custom @code{<accelerator>} element, which has attributes named
     key, modifiers and signal and allows to specify accelerators.
@@ -557,53 +554,45 @@
  </object>
     @end{pre}
   @begin[Style Property Details]{dictionary}
-    @b{The \"cursor-aspect-ratio\" style property}
-
+    @subheading{The \"cursor-aspect-ratio\" style property}
     @code{\"cursor-aspect-ratio\"} @code{gfloat} (Read)@br{}
     Aspect ratio with which to draw insertion cursor.@br{}
     Allowed values: @code{[0,1]}@br{}
     Default value: @code{0.04}
 
-    @b{The \"cursor-color\" style property}
-
+    @subheading{The \"cursor-color\" style property}
     @code{\"cursor-color\"} @class{gdk-color} (Read).@br{}
     Color with which to draw insertion cursor.
 
-    @b{The \"focus-line-pattern\" style property}
-
+    @subheading{The \"focus-line-pattern\" style property}
     @code{\"focus-line-pattern\"} @code{gchar*} (Read)@br{}
     Dash pattern used to draw the focus indicator.@br{}
     Default value: @code{\"\001\001\"}
 
-    @b{The \"focus-line-width\" style property}
-
+    @subheading{The \"focus-line-width\" style property}
     @code{\"focus-line-width\"} @code{gint} (Read)@br{}
-    Width, in pixels, of the focus indicator line.
-    Allowed values: @code{>= 0}
+    Width, in pixels, of the focus indicator line.@br{}
+    Allowed values: @code{>= 0}@br{}
     Default value: @code{1}
 
-    @b{The \"focus-padding\" style property}
-
+    @subheading{The \"focus-padding\" style property}
     @code{\"focus-padding\"} @code{gint} (Read)@br{}
     Width, in pixels, between focus indicator and the widget 'box'.@br{}
     Allowed values: @code{>= 0}@br{}
     Default value: @code{1}
 
-    @b{The \"interior-focus\" style property}
-
+    @subheading{The \"interior-focus\" style property}
     @code{\"interior-focus\"} @code{gboolean} (Read)@br{}
     Whether to draw the focus indicator inside widgets.@br{}
     Default value: @arg{true}
 
-    @b{The \"link-color\" style property}
-
+    @subheading{The \"link-color\" style property}
     @code{\"link-color\"} @class{gdk-color} (Read)@br{}
     The @code{\"link-color\"} style property defines the color of unvisited
     links.@br{}
     Since 2.10
 
-    @b{The \"scroll-arrow-hlength\" style property}
-
+    @subheading{The \"scroll-arrow-hlength\" style property}
     @code{\"scroll-arrow-hlength\"} @code{gint} (Read)@br{}
     The @code{\"scroll-arrow-hlength\"} style property defines the length of
     horizontal scroll arrows.@br{}
@@ -611,8 +600,7 @@
     Default value: @code{16}@br{}
     Since 2.10
 
-    @b{The \"scroll-arrow-vlength\" style property}
-
+    @subheading{The \"scroll-arrow-vlength\" style property}
     @code{\"scroll-arrow-vlength\"} @code{gint} (Read)@br{}
     The @code{\"scroll-arrow-vlength\"} style property defines the length of
     vertical scroll arrows.@br{}
@@ -620,14 +608,12 @@
     Default value: @code{16}
     Since 2.10
 
-    @b{The \"secondary-cursor-color\" style property}
-
+    @subheading{The \"secondary-cursor-color\" style property}
     @code{\"secondary-cursor-color\"} @class{gdk-color} (Read)@br{}
     Color with which to draw the secondary insertion cursor when editing mixed
     right-to-left and left-to-right text.
 
-    @b{The \"separator-height\" style property}
-
+    @subheading{The \"separator-height\" style property}
     @code{\"separator-height\"} @code{gint} (Read)@br{}
     The @code{\"separator-height\"} style property defines the height of
     separators. This property only takes effect if @code{\"wide-separators\"} is
@@ -636,720 +622,586 @@
     Default value: @code{0}@br{}
     Since 2.10
 
-  @end{dictionary}")
+    @subheading{The \"separator-width\" style property}
+    @code{\"separator-width\"} @code{gint} (Read)@br{}
+    The @code{\"separator-width\"} style property defines the width of
+    separators. This property only takes effect if @code{\"wide-separators\"} is
+    @arg{true}.@br{}
+    Allowed values: @code{>= 0}@br{}
+    Default value: @code{0}@br{}
+    Since 2.10
 
-;;; ----------------------------------------------------------------------------
-;;; The "separator-width" style property
-;;;
-;;;   "separator-width"          gint                  : Read
-;;;
-;;; The "separator-width" style property defines the width of separators. This
-;;; property only takes effect if "wide-separators" is TRUE.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 0
-;;;
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "visited-link-color" style property
-;;;
-;;;   "visited-link-color"       GdkColor*             : Read
-;;;
-;;; The "visited-link-color" style property defines the color of visited links.
-;;;
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wide-separators" style property
-;;;
-;;;   "wide-separators"          gboolean              : Read
-;;;
-;;; The "wide-separators" style property defines whether separators have
-;;; configurable width and should be drawn using a box instead of a line.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "window-dragging" style property
-;;;
-;;;   "window-dragging"          gboolean              : Read
-;;;
-;;; Whether windows can be dragged by clicking on empty areas.
-;;;
-;;; Default value: FALSE
+    @subheading{The \"visited-link-color\" style property}
+    @code{\"visited-link-color\"} @class{gdk-color} (Read)@br{}
+    The @code{\"visited-link-color\"} style property defines the color of
+    visited links.@br{}
+    Since 2.10
 
+    @subheading{The \"wide-separators\" style property}
+    @code{\"wide-separators\"} @code{gboolean} (Read)@br{}
+    The @code{\"wide-separators\"} style property defines whether separators
+    have configurable width and should be drawn using a box instead of a
+    line.@br{}
+    Default value: @code{nil}@br{}
+    Since 2.10
 
+    @subheading{The \"window-dragging\" style property}
+    @code{\"window-dragging\"} @code{gboolean} (Read)@br{}
+    Whether windows can be dragged by clicking on empty areas.@br{}
+    Default value: @code{nil}
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @b{The \"accel-closures-changed\" signal}@br{}
+    @begin{pre}
+ void user_function (GtkWidget *widget, gpointer user_data)
+    @end{pre}
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal.}
+      @entry[user-data]{user data set when the signal handler was connected.}
+    @end{table}
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "accel-closures-changed" signal
-;;;
-;;; void user_function (GtkWidget *widget, gpointer user_data)
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "button-press-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::button-press-event signal will be emitted when a button (typically
-;;; from a mouse) is pressed.
-;;;
-;;; To receive this signal, the GdkWindow associated to the widget needs to
-;;; enable the GDK_BUTTON_PRESS_MASK mask.
-;;;
-;;; This signal will be sent to the grab widget if there is one.
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; event :
-;;;     the GdkEventButton which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "button-release-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::button-release-event signal will be emitted when a button (typically
-;;; from a mouse) is released.
-;;;
-;;; To receive this signal, the GdkWindow associated to the widget needs to
-;;; enable the GDK_BUTTON_RELEASE_MASK mask.
-;;;
-;;; This signal will be sent to the grab widget if there is one.
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; event :
-;;;     the GdkEventButton which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "can-activate-accel" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         guint      signal_id,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; Determines whether an accelerator that activates the signal identified by
-;;; signal_id can currently be activated. This signal is present to allow
-;;; applications and derived widgets to override the default GtkWidget handling
-;;; for determining whether an accelerator can be activated.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; signal_id :
-;;;     the ID of a signal installed on widget
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE if the signal can be activated.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "child-notify" signal
-;;;
-;;; void user_function (GtkWidget  *widget,
-;;;                     GParamSpec *pspec,
-;;;                     gpointer    user_data)      : No Hooks
-;;;
-;;; The ::child-notify signal is emitted for each child property that has
-;;; changed on an object. The signal's detail holds the property name.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; pspec :
-;;;     the GParamSpec of the changed child property
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "composited-changed" signal
-;;;
-;;; void user_function (GtkWidget *widget,
-;;;                     gpointer   user_data)      : Action
-;;;
-;;; The ::composited-changed signal is emitted when the composited status of
-;;; widgets screen changes. See gdk_screen_is_composited().
-;;;
-;;; widget :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "configure-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::configure-event signal will be emitted when the size, position or
-;;; stacking of the widget's window has changed.
-;;;
-;;; To receive this signal, the GdkWindow associated to the widget needs to
-;;; enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask automatically
-;;; for all new windows.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the GdkEventConfigure which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "damage-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; Emitted when a redirected window belonging to widget gets drawn into. The
-;;; region/area members of the event shows what area of the redirected drawable
-;;; was drawn into.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the GdkEventExpose event
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "delete-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::delete-event signal is emitted if a user requests that a toplevel
-;;; window is closed. The default handler for this signal destroys the window.
-;;; Connecting gtk_widget_hide_on_delete() to this signal will cause the window
-;;; to be hidden instead, so that it can later be shown again without
-;;; reconstructing it.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the event which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;; propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "destroy" signal
-;;;
-;;; void user_function (GtkWidget *object,
-;;;                     gpointer   user_data)      : No Hooks
-;;;
-;;; Signals that all holders of a reference to the widget should release the
-;;; reference that they hold. May result in finalization of the widget if all
-;;; references are released.
-;;;
-;;; object :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "destroy-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::destroy-event signal is emitted when a GdkWindow is destroyed. You
-;;; rarely get this signal, because most widgets disconnect themselves from
-;;; their window before they destroy it, so no widget owns the window at destroy
-;;; time.
-;;;
-;;; To receive this signal, the GdkWindow associated to the widget needs to
-;;; enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask automatically
-;;; for all new windows.
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; event :
-;;;     the event which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "direction-changed" signal
-;;;
-;;; void user_function (GtkWidget       *widget,
-;;;                     GtkTextDirection previous_direction,
-;;;                     gpointer         user_data)               : Run First
-;;;
-;;; The ::direction-changed signal is emitted when the text direction of a
-;;; widget changes.
-;;;
-;;; widget :
-;;;     the object on which the signal is emitted
-;;;
-;;; previous_direction :
-;;;     the previous text direction of widget
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-begin" signal
-;;;
-;;; void user_function (GtkWidget      *widget,
-;;;                     GdkDragContext *drag_context,
-;;;                     gpointer        user_data)         : Run Last
-;;;
-;;; The ::drag-begin signal is emitted on the drag source when a drag is
-;;; started. A typical reason to connect to this signal is to set up a custom
-;;; drag icon with gtk_drag_source_set_icon().
-;;;
-;;; Note that some widgets set up a drag icon in the default handler of this
-;;; signal, so you may have to use g_signal_connect_after() to override what the
-;;; default handler did.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-data-delete" signal
-;;;
-;;; void user_function (GtkWidget      *widget,
-;;;                     GdkDragContext *drag_context,
-;;;                     gpointer        user_data)         : Run Last
-;;;
-;;; The ::drag-data-delete signal is emitted on the drag source when a drag with
-;;; the action GDK_ACTION_MOVE is successfully completed. The signal handler is
-;;; responsible for deleting the data that has been dropped. What "delete" means
-;;; depends on the context of the drag operation.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-data-get" signal
-;;;
-;;; void user_function (GtkWidget        *widget,
-;;;                     GdkDragContext   *drag_context,
-;;;                     GtkSelectionData *data,
-;;;                     guint             info,
-;;;                     guint             time,
-;;;                     gpointer          user_data)         : Run Last
-;;;
-;;; The ::drag-data-get signal is emitted on the drag source when the drop site
-;;; requests the data which is dragged. It is the responsibility of the signal
-;;; handler to fill data with the data in the format which is indicated by info.
-;;; See gtk_selection_data_set() and gtk_selection_data_set_text().
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; data :
-;;;     the GtkSelectionData to be filled with the dragged data
-;;;
-;;; info :
-;;;     the info that has been registered with the target in the GtkTargetList
-;;;
-;;; time :
-;;;     the timestamp at which the data was requested
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-data-received" signal
-;;;
-;;; void user_function (GtkWidget        *widget,
-;;;                     GdkDragContext   *drag_context,
-;;;                     gint              x,
-;;;                     gint              y,
-;;;                     GtkSelectionData *data,
-;;;                     guint             info,
-;;;                     guint             time,
-;;;                     gpointer          user_data)         : Run Last
-;;;
-;;; The ::drag-data-received signal is emitted on the drop site when the dragged
-;;; data has been received. If the data was received in order to determine
-;;; whether the drop will be accepted, the handler is expected to call
-;;; gdk_drag_status() and not finish the drag. If the data was received in
-;;; response to a "drag-drop" signal (and this is the last target to be
-;;; received), the handler for this signal is expected to process the received
-;;; data and then call gtk_drag_finish(), setting the success parameter
-;;; depending on whether the data was processed successfully.
-;;;
-;;; The handler may inspect and modify drag_context->action before calling
-;;; gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
-;;; following example:
-;;;
-;;; void
-;;; drag_data_received (GtkWidget          *widget,
-;;;                     GdkDragContext     *drag_context,
-;;;                     gint                x,
-;;;                     gint                y,
-;;;                     GtkSelectionData   *data,
-;;;                     guint               info,
-;;;                     guint               time)
-;;; {
-;;;   if ((data->length >= 0) && (data->format == 8))
-;;;     {
-;;;       if (drag_context->action == GDK_ACTION_ASK)
-;;;         {
-;;;           GtkWidget *dialog;
-;;;           gint response;
-;;;           dialog = gtk_message_dialog_new (NULL,
-;;;                                            GTK_DIALOG_MODAL |
-;;;                                            GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                                            GTK_MESSAGE_INFO,
-;;;                                            GTK_BUTTONS_YES_NO,
-;;;                                            "Move the data ?\n");
-;;;           response = gtk_dialog_run (GTK_DIALOG (dialog));
-;;;           gtk_widget_destroy (dialog);
-;;;
-;;;           if (response == GTK_RESPONSE_YES)
-;;;             drag_context->action = GDK_ACTION_MOVE;
-;;;           else
-;;;             drag_context->action = GDK_ACTION_COPY;
-;;;          }
-;;;
-;;;       gtk_drag_finish (drag_context, TRUE, FALSE, time);
-;;;       return;
-;;;     }
-;;;
-;;;    gtk_drag_finish (drag_context, FALSE, FALSE, time);
-;;;  }
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; x :
-;;;     where the drop happened
-;;;
-;;; y :
-;;;     where the drop happened
-;;;
-;;; data :
-;;;     the received data
-;;;
-;;; info :
-;;;     the info that has been registered with the target in the GtkTargetList
-;;;
-;;; time :
-;;;     the timestamp at which the data was received
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-drop" signal
-;;;
-;;; gboolean user_function (GtkWidget      *widget,
-;;;                         GdkDragContext *drag_context,
-;;;                         gint            x,
-;;;                         gint            y,
-;;;                         guint           time,
-;;;                         gpointer        user_data)         : Run Last
-;;;
-;;; The ::drag-drop signal is emitted on the drop site when the user drops the
-;;; data onto the widget. The signal handler must determine whether the cursor
-;;; position is in a drop zone or not. If it is not in a drop zone, it returns
-;;; FALSE and no further processing is necessary. Otherwise, the handler returns
-;;; TRUE. In this case, the handler must ensure that gtk_drag_finish() is called
-;;; to let the source know that the drop is done. The call to gtk_drag_finish()
-;;; can be done either directly or in a "drag-data-received" handler which gets
-;;; triggered by calling gtk_drag_get_data() to receive the data for one or more
-;;; of the supported targets.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; x :
-;;;     the x coordinate of the current cursor position
-;;;
-;;; y :
-;;;     the y coordinate of the current cursor position
-;;;
-;;; time :
-;;;     the timestamp of the motion event
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     whether the cursor position is in a drop zone
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-end" signal
-;;;
-;;; void user_function (GtkWidget      *widget,
-;;;                     GdkDragContext *drag_context,
-;;;                     gpointer        user_data)         : Run Last
-;;;
-;;; The ::drag-end signal is emitted on the drag source when a drag is finished.
-;;; A typical reason to connect to this signal is to undo things done in
-;;; "drag-begin".
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-failed" signal
-;;;
-;;; gboolean user_function (GtkWidget      *widget,
-;;;                         GdkDragContext *drag_context,
-;;;                         GtkDragResult   result,
-;;;                         gpointer        user_data)         : Run Last
-;;;
-;;; The ::drag-failed signal is emitted on the drag source when a drag has
-;;; failed. The signal handler may hook custom code to handle a failed DND
-;;; operation based on the type of error, it returns TRUE is the failure has
-;;; been already handled (not showing the default "drag operation failed"
-;;; animation), otherwise it returns FALSE.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; result :
-;;;     the result of the drag operation
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE if the failed drag operation has been already handled.
-;;;
-;;; Since 2.12
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-leave" signal
-;;;
-;;; void user_function (GtkWidget      *widget,
-;;;                     GdkDragContext *drag_context,
-;;;                     guint           time,
-;;;                     gpointer        user_data)         : Run Last
-;;;
-;;; The ::drag-leave signal is emitted on the drop site when the cursor leaves
-;;; the widget. A typical reason to connect to this signal is to undo things
-;;; done in "drag-motion", e.g. undo highlighting with gtk_drag_unhighlight()
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; time :
-;;;     the timestamp of the motion event
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "drag-motion" signal
-;;;
-;;; gboolean user_function (GtkWidget      *widget,
-;;;                         GdkDragContext *drag_context,
-;;;                         gint            x,
-;;;                         gint            y,
-;;;                         guint           time,
-;;;                         gpointer        user_data)         : Run Last
-;;;
-;;; The drag-motion signal is emitted on the drop site when the user moves the
-;;; cursor over the widget during a drag. The signal handler must determine
-;;; whether the cursor position is in a drop zone or not. If it is not in a drop
-;;; zone, it returns FALSE and no further processing is necessary. Otherwise,
-;;; the handler returns TRUE. In this case, the handler is responsible for
-;;; providing the necessary information for displaying feedback to the user, by
-;;; calling gdk_drag_status().
-;;;
-;;; If the decision whether the drop will be accepted or rejected can't be made
-;;; based solely on the cursor position and the type of the data, the handler
-;;; may inspect the dragged data by calling gtk_drag_get_data() and defer the
-;;; gdk_drag_status() call to the "drag-data-received" handler. Note that you
-;;; cannot not pass GTK_DEST_DEFAULT_DROP, GTK_DEST_DEFAULT_MOTION or
-;;; GTK_DEST_DEFAULT_ALL to gtk_drag_dest_set() when using the drag-motion
-;;; signal that way.
-;;;
-;;; Also note that there is no drag-enter signal. The drag receiver has to keep
-;;; track of whether he has received any drag-motion signals since the last
-;;; "drag-leave" and if not, treat the drag-motion signal as an "enter" signal.
-;;; Upon an "enter", the handler will typically highlight the drop site with
-;;; gtk_drag_highlight().
-;;;
-;;; static void
-;;; drag_motion (GtkWidget *widget,
-;;;              GdkDragContext *context,
-;;;              gint x,
-;;;              gint y,
-;;;              guint time)
-;;; {
-;;;   GdkAtom target;
-;;;
-;;;   PrivateData *private_data = GET_PRIVATE_DATA (widget);
-;;;
-;;;   if (!private_data->drag_highlight)
-;;;    {
-;;;      private_data->drag_highlight = 1;
-;;;      gtk_drag_highlight (widget);
-;;;    }
-;;;
-;;;   target = gtk_drag_dest_find_target (widget, context, NULL);
-;;;   if (target == GDK_NONE)
-;;;     gdk_drag_status (context, 0, time);
-;;;   else
-;;;    {
-;;;      private_data->pending_status = context->suggested_action;
-;;;      gtk_drag_get_data (widget, context, target, time);
-;;;    }
-;;;
-;;;   return TRUE;
-;;; }
-;;;
-;;; static void
-;;; drag_data_received (GtkWidget        *widget,
-;;;                     GdkDragContext   *context,
-;;;                     gint              x,
-;;;                     gint              y,
-;;;                     GtkSelectionData *selection_data,
-;;;                     guint             info,
-;;;                     guint             time)
-;;; {
-;;;   PrivateData *private_data = GET_PRIVATE_DATA (widget);
-;;;
-;;;   if (private_data->suggested_action)
-;;;    {
-;;;      private_data->suggested_action = 0;
-;;;
-;;;     /* We are getting this data due to a request in drag_motion,
-;;;      * rather than due to a request in drag_drop, so we are just
-;;;      * supposed to call gdk_drag_status (), not actually paste in
-;;;      * the data.
-;;;      */
-;;;      str = gtk_selection_data_get_text (selection_data);
-;;;      if (!data_is_acceptable (str))
-;;;        gdk_drag_status (context, 0, time);
-;;;      else
-;;;        gdk_drag_status (context, private_data->suggested_action, time);
-;;;    }
-;;;   else
-;;;    {
-;;;      /* accept the drop */
-;;;    }
-;;; }
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; drag_context :
-;;;     the drag context
-;;;
-;;; x :
-;;;     the x coordinate of the current cursor position
-;;;
-;;; y :
-;;;     the y coordinate of the current cursor position
-;;;
-;;; time :
-;;;     the timestamp of the motion event
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     whether the cursor position is in a drop zone
-;;;
+    @b{The \"button-press-event\" signal}@br{}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+   The @code{::button-press-event} signal will be emitted when a button
+   (typically from a mouse) is pressed.
+
+    To receive this signal, the GdkWindow associated to the widget needs to
+    enable the GDK_BUTTON_PRESS_MASK mask.
+
+    This signal will be sent to the grab widget if there is one.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal.}
+      @entry[event]{the GdkEventButton which triggered this signal}
+      @entry[user-data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+
+    @b{The \"button-release-event\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    The @code{::button-release-event} signal will be emitted when a button
+    (typically from a mouse) is released.
+
+    To receive this signal, the GdkWindow associated to the widget needs to
+    enable the GDK_BUTTON_RELEASE_MASK mask.
+
+    This signal will be sent to the grab widget if there is one.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal.}
+      @entry[event]{the GdkEventButton which triggered this signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+
+    @b{The \"can-activate-accel\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         guint      signal_id,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    Determines whether an accelerator that activates the signal identified by
+    signal_id can currently be activated. This signal is present to allow
+    applications and derived widgets to override the default GtkWidget handling
+    for determining whether an accelerator can be activated.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[signal_id]{the ID of a signal installed on widget}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE if the signal can be activated.}
+    @end{table}
+
+    @b{The \"child-notify\" signal}
+    @begin{pre}
+ void user_function (GtkWidget  *widget,
+                     GParamSpec *pspec,
+                     gpointer    user_data)      : No Hooks
+    @end{pre}
+    The @code{::child-notify} signal is emitted for each child property that has
+    changed on an object. The signal's detail holds the property name.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[pspec]{the GParamSpec of the changed child property}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"composited-changed\" signal}
+    @begin{pre}
+ void user_function (GtkWidget *widget,
+                     gpointer   user_data)      : Action
+    @end{pre}
+    The ::composited-changed signal is emitted when the composited status of
+    widgets screen changes. See gdk_screen_is_composited().
+    @begin[code]{table}
+      @entry[widget]{the object on which the signal is emitted}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"configure-event\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    The @code{::configure-event} signal will be emitted when the size, position
+    or stacking of the widget's window has changed.
+
+    To receive this signal, the GdkWindow associated to the widget needs to
+    enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask automatically
+    for all new windows.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[event]{the GdkEventConfigure which triggered this signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+
+    @b{The \"damage-event\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    Emitted when a redirected window belonging to widget gets drawn into. The
+    region/area members of the event shows what area of the redirected drawable
+    was drawn into.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[event]{the GdkEventExpose event}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+    Since 2.14
+
+    @b{The \"delete-event\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    The @code{::delete-event} signal is emitted if a user requests that a
+    toplevel window is closed. The default handler for this signal destroys the
+    window. Connecting gtk_widget_hide_on_delete() to this signal will cause the
+    window to be hidden instead, so that it can later be shown again without
+    reconstructing it.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[event]{the event which triggered this signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+
+    @b{The \"destroy\" signal}
+    @begin{pre}
+ void user_function (GtkWidget *object,
+                     gpointer   user_data)      : No Hooks
+    @end{pre}
+    Signals that all holders of a reference to the widget should release the
+    reference that they hold. May result in finalization of the widget if all
+    references are released.
+    @begin[code]{table}
+      @entry[object]{the object which received the signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"destroy-event\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    The ::destroy-event signal is emitted when a GdkWindow is destroyed. You
+    rarely get this signal, because most widgets disconnect themselves from
+    their window before they destroy it, so no widget owns the window at destroy
+    time.
+
+    To receive this signal, the GdkWindow associated to the widget needs to
+    enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask automatically
+    for all new windows.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal.}
+      @entry[event]{the event which triggered this signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+
+    @b{The \"direction-changed\" signal}
+    @begin{pre}
+ void user_function (GtkWidget       *widget,
+                     GtkTextDirection previous_direction,
+                     gpointer         user_data)               : Run First
+    @end{pre}
+    The ::direction-changed signal is emitted when the text direction of a
+    widget changes.
+    @begin[code]{table}
+      @entry[widget]{the object on which the signal is emitted}
+      @entry[previous_direction]{the previous text direction of widget}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-begin\" signal}
+    @begin{pre}
+ void user_function (GtkWidget      *widget,
+                     GdkDragContext *drag_context,
+                     gpointer        user_data)         : Run Last
+    @end{pre}
+    The ::drag-begin signal is emitted on the drag source when a drag is
+    started. A typical reason to connect to this signal is to set up a custom
+    drag icon with gtk_drag_source_set_icon().
+
+    Note that some widgets set up a drag icon in the default handler of this
+    signal, so you may have to use g_signal_connect_after() to override what the
+    default handler did.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-data-delete\" signal}
+    @begin{pre}
+ void user_function (GtkWidget      *widget,
+                     GdkDragContext *drag_context,
+                     gpointer        user_data)         : Run Last
+    @end{pre}
+    The ::drag-data-delete signal is emitted on the drag source when a drag with
+    the action GDK_ACTION_MOVE is successfully completed. The signal handler is
+    responsible for deleting the data that has been dropped. What \"delete\"
+    means depends on the context of the drag operation.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-data-get\" signal}
+    @begin{pre}
+ void user_function (GtkWidget        *widget,
+                     GdkDragContext   *drag_context,
+                     GtkSelectionData *data,
+                     guint             info,
+                     guint             time,
+                     gpointer          user_data)         : Run Last
+    @end{pre}
+    The ::drag-data-get signal is emitted on the drag source when the drop site
+    requests the data which is dragged. It is the responsibility of the signal
+    handler to fill data with the data in the format which is indicated by info.
+    See gtk_selection_data_set() and gtk_selection_data_set_text().
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[data]{the GtkSelectionData to be filled with the dragged data}
+      @entry[info]{the info that has been registered with the target in the
+        GtkTargetList}
+      @entry[time]{the timestamp at which the data was requested}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-data-received\" signal}
+    @begin{pre}
+ void user_function (GtkWidget        *widget,
+                     GdkDragContext   *drag_context,
+                     gint              x,
+                     gint              y,
+                     GtkSelectionData *data,
+                     guint             info,
+                     guint             time,
+                     gpointer          user_data)         : Run Last
+    @end{pre}
+    The ::drag-data-received signal is emitted on the drop site when the dragged
+    data has been received. If the data was received in order to determine
+    whether the drop will be accepted, the handler is expected to call
+    gdk_drag_status() and not finish the drag. If the data was received in
+    response to a \"drag-drop\" signal (and this is the last target to be
+    received), the handler for this signal is expected to process the received
+    data and then call gtk_drag_finish(), setting the success parameter
+    depending on whether the data was processed successfully.
+
+    The handler may inspect and modify drag_context->action before calling
+    gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
+    following example:
+    @begin{pre}
+ void
+ drag_data_received (GtkWidget          *widget,
+                     GdkDragContext     *drag_context,
+                     gint                x,
+                     gint                y,
+                     GtkSelectionData   *data,
+                     guint               info,
+                     guint               time)
+ {
+   if ((data->length >= 0) && (data->format == 8))
+     {
+       if (drag_context->action == GDK_ACTION_ASK)
+         {
+           GtkWidget *dialog;
+           gint response;
+           dialog = gtk_message_dialog_new (NULL,
+                                            GTK_DIALOG_MODAL |
+                                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                                            GTK_MESSAGE_INFO,
+                                            GTK_BUTTONS_YES_NO,
+                                            \"Move the data ?\n\");
+           response = gtk_dialog_run (GTK_DIALOG (dialog));
+           gtk_widget_destroy (dialog);
+
+           if (response == GTK_RESPONSE_YES)
+             drag_context->action = GDK_ACTION_MOVE;
+           else
+             drag_context->action = GDK_ACTION_COPY;
+          @}
+
+       gtk_drag_finish (drag_context, TRUE, FALSE, time);
+       return;
+     @}
+
+    gtk_drag_finish (drag_context, FALSE, FALSE, time);
+  @}
+    @end{pre}
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[x]{where the drop happened}
+      @entry[y]{where the drop happened}
+      @entry[data]{the received data}
+      @entry[info]{the info that has been registered with the target in the
+        GtkTargetList}
+      @entry[time]{the timestamp at which the data was received}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-drop\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget      *widget,
+                         GdkDragContext *drag_context,
+                         gint            x,
+                         gint            y,
+                         guint           time,
+                         gpointer        user_data)         : Run Last
+    @end{pre}
+    The ::drag-drop signal is emitted on the drop site when the user drops the
+    data onto the widget. The signal handler must determine whether the cursor
+    position is in a drop zone or not. If it is not in a drop zone, it returns
+    FALSE and no further processing is necessary. Otherwise, the handler returns
+    TRUE. In this case, the handler must ensure that gtk_drag_finish() is called
+    to let the source know that the drop is done. The call to gtk_drag_finish()
+    can be done either directly or in a \"drag-data-received\" handler which
+    gets triggered by calling gtk_drag_get_data() to receive the data for one or
+    more of the supported targets.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[x]{the x coordinate of the current cursor position}
+      @entry[y]{the y coordinate of the current cursor position}
+      @entry[time]{the timestamp of the motion event}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{whether the cursor position is in a drop zone}
+    @end{table}
+
+    @b{The \"drag-end\" signal}
+    @begin{pre}
+ void user_function (GtkWidget      *widget,
+                     GdkDragContext *drag_context,
+                     gpointer        user_data)         : Run Last
+    @end{pre}
+    The ::drag-end signal is emitted on the drag source when a drag is finished.
+    A typical reason to connect to this signal is to undo things done in
+    \"drag-begin\".
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-failed\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget      *widget,
+                         GdkDragContext *drag_context,
+                         GtkDragResult   result,
+                         gpointer        user_data)         : Run Last
+    @end{pre}
+    The ::drag-failed signal is emitted on the drag source when a drag has
+    failed. The signal handler may hook custom code to handle a failed DND
+    operation based on the type of error, it returns TRUE is the failure has
+    been already handled (not showing the default \"drag operation failed\"
+    animation), otherwise it returns FALSE.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[result]{the result of the drag operation}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE if the failed drag operation has been already
+        handled.}
+    @end{table}
+    Since 2.12
+
+    @b{The \"drag-leave\" signal}
+    @begin{pre}
+ void user_function (GtkWidget      *widget,
+                     GdkDragContext *drag_context,
+                     guint           time,
+                     gpointer        user_data)         : Run Last
+    @end{pre}
+    The ::drag-leave signal is emitted on the drop site when the cursor leaves
+    the widget. A typical reason to connect to this signal is to undo things
+    done in \"drag-motion\", e.g. undo highlighting with gtk_drag_unhighlight()
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal.}
+      @entry[drag_context]{the drag context}
+      @entry[time]{the timestamp of the motion event}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"drag-motion\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget      *widget,
+                         GdkDragContext *drag_context,
+                         gint            x,
+                         gint            y,
+                         guint           time,
+                         gpointer        user_data)         : Run Last
+    @end{pre}
+    The drag-motion signal is emitted on the drop site when the user moves the
+    cursor over the widget during a drag. The signal handler must determine
+    whether the cursor position is in a drop zone or not. If it is not in a drop
+    zone, it returns FALSE and no further processing is necessary. Otherwise,
+    the handler returns TRUE. In this case, the handler is responsible for
+    providing the necessary information for displaying feedback to the user, by
+    calling gdk_drag_status().
+
+    If the decision whether the drop will be accepted or rejected can't be made
+    based solely on the cursor position and the type of the data, the handler
+    may inspect the dragged data by calling gtk_drag_get_data() and defer the
+    gdk_drag_status() call to the \"drag-data-received\" handler. Note that you
+    cannot not pass GTK_DEST_DEFAULT_DROP, GTK_DEST_DEFAULT_MOTION or
+    GTK_DEST_DEFAULT_ALL to gtk_drag_dest_set() when using the drag-motion
+    signal that way.
+
+    Also note that there is no drag-enter signal. The drag receiver has to keep
+    track of whether he has received any drag-motion signals since the last
+    \"drag-leave\" and if not, treat the drag-motion signal as an \"enter\"
+    signal. Upon an \"enter\", the handler will typically highlight the drop
+    site with gtk_drag_highlight().
+    @begin{pre}
+ static void
+ drag_motion (GtkWidget *widget,
+              GdkDragContext *context,
+              gint x,
+              gint y,
+              guint time)
+ {
+   GdkAtom target;
+
+   PrivateData *private_data = GET_PRIVATE_DATA (widget);
+
+   if (!private_data->drag_highlight)
+    {
+      private_data->drag_highlight = 1;
+      gtk_drag_highlight (widget);
+    @}
+
+   target = gtk_drag_dest_find_target (widget, context, NULL);
+   if (target == GDK_NONE)
+     gdk_drag_status (context, 0, time);
+   else
+    {
+      private_data->pending_status = context->suggested_action;
+      gtk_drag_get_data (widget, context, target, time);
+    @}
+
+   return TRUE;
+ @}
+
+ static void
+ drag_data_received (GtkWidget        *widget,
+                     GdkDragContext   *context,
+                     gint              x,
+                     gint              y,
+                     GtkSelectionData *selection_data,
+                     guint             info,
+                     guint             time)
+ {
+   PrivateData *private_data = GET_PRIVATE_DATA (widget);
+
+   if (private_data->suggested_action)
+    {
+      private_data->suggested_action = 0;
+
+     /* We are getting this data due to a request in drag_motion,
+      * rather than due to a request in drag_drop, so we are just
+      * supposed to call gdk_drag_status (), not actually paste in
+      * the data.
+      */
+      str = gtk_selection_data_get_text (selection_data);
+      if (!data_is_acceptable (str))
+        gdk_drag_status (context, 0, time);
+      else
+        gdk_drag_status (context, private_data->suggested_action, time);
+    @}
+   else
+    {
+      /* accept the drop */
+    @}
+ @}
+    @end{pre}
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[drag_context]{the drag context}
+      @entry[x]{the x coordinate of the current cursor position}
+      @entry[y]{the y coordinate of the current cursor position}
+      @entry[time]{the timestamp of the motion event}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{whether the cursor position is in a drop zone}
+    @end{table}
+
+  @end{dictionary}
+  @see-slot{gtk-widget-app-paintable}
+  @see-slot{gtk-widget-can-default}
+  @see-slot{gtk-widget-can-focus}
+  @see-slot{gtk-widget-composite-child}
+  @see-slot{gtk-widget-double-buffered}
+  @see-slot{gtk-widget-events}
+  @see-slot{gtk-widget-expand}
+  @see-slot{gtk-widget-halign}
+  @see-slot{gtk-widget-has-default}
+  @see-slot{gtk-widget-has-focus}
+  @see-slot{gtk-widget-has-tooltip}
+  @see-slot{gtk-widget-height-request}
+  @see-slot{gtk-widget-hexpand}
+  @see-slot{gtk-widget-hexpand-set}
+  @see-slot{gtk-widget-is-focus}
+  @see-slot{gtk-widget-margin}
+  @see-slot{gtk-widget-margin-bottom}
+  @see-slot{gtk-widget-margin-left}
+  @see-slot{gtk-widget-margin-right}
+  @see-slot{gtk-widget-margin-top}
+  @see-slot{gtk-widget-name}
+  @see-slot{gtk-widget-no-show-all}
+  @see-slot{gtk-widget-parent}
+  @see-slot{gtk-widget-receives-default}
+  @see-slot{gtk-widget-sensitive}
+  @see-slot{gtk-widget-style}
+  @see-slot{gtk-widget-tooltip-markup}
+  @see-slot{gtk-widget-tooltip-text}
+  @see-slot{gtk-widget-valign}
+  @see-slot{gtk-widget-vexpand}
+  @see-slot{gtk-widget-vexpand-set}
+  @see-slot{gtk-widget-visible}
+  @see-slot{gtk-widget-width-request}
+  @see-slot{gtk-widget-window}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; The "draw" signal
 ;;;
@@ -3033,7 +2885,7 @@
 
 (setf (documentation 'gtk-widget-unparent 'function)
  "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget}}
+  @argument[widget]{a @class{gtk-widget} instance}
   @short{This function is only for use in widget implementations.}
   Should be called by implementations of the remove method on
   @class{gtk-container}, to dissociate a child from the container.
@@ -3068,7 +2920,7 @@
  "@version{2012-12-23}
   @argument[widget]{a @class{gtk-widget}}
   @short{Shows a widget.}
-  If the @arg{widget} is an unmapped toplevel widget (i. e. a @class{gtk-window}
+  If @arg{widget} is an unmapped toplevel widget (i. e. a @class{gtk-window}
   that has not yet been shown), enter the main loop and wait for the window to
   actually be mapped. Be careful; because the main loop is running, anything can
   happen during this function.
