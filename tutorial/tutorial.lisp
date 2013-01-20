@@ -42,8 +42,83 @@
   (within-main-loop
     (let (;; Create a toplevel window.
           (window (gtk-window-new :toplevel)))
+      ;; Signal handler for the window to handle the signal "destroy".
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
       ;; Show the window.
       (gtk-widget-show-all window))))
+
+(defun example-simple-window-2 ()
+  (within-main-loop
+    (let (;; Create a toplevel window.
+          (window (gtk-window-new :toplevel)))
+      ;; Signal handler for the window to handle the signal "destroy".
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Show the window.
+      (gtk-widget-show-all window)))
+  (join-gtk-main))
+
+(defun example-simple-message ()
+  (let ((response))
+    (within-main-loop
+      (let ((dialog (make-instance 'gtk-message-dialog
+                                   :message-type :info
+                                   :buttons :ok
+                                   :text "Info Message Dialog"
+                                   :secondary-text
+                                   (format nil
+                                           "This is a message dialog of type ~
+                                            :info with a secondary text."))))
+        ;; Signal handler for the dialog to handle the signal "destroy".
+        (g-signal-connect dialog "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (leave-gtk-main)))
+        ;; Signal handler for the dialog to handle the signal "response".
+        (g-signal-connect dialog "response"
+                          (lambda (dialog response-id)
+                            (setf response response-id)
+                            (gtk-widget-destroy dialog)))
+        (gtk-widget-show dialog)))
+    (join-gtk-main)
+    (format t "Back from message dialog with response-id ~A~%" response)))
+
+(defun example-simple-file-chooser-dialog ()
+  (let ((file-name nil))
+    (within-main-loop
+      (let ((dialog (gtk-file-chooser-dialog-new "Open File"
+                                                 nil
+                                                 :open
+                                                 "gtk-cancel" :cancel
+                                                 "gtk-open" :accept)))
+        ;; Signal handler for the dialog to handle the signal "destroy".
+        (g-signal-connect dialog "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            ;; Quit the main loop and destroy the thread
+                            (leave-gtk-main)))
+        ;; Signal handler for the dialog to handle the signal "response".
+        (g-signal-connect dialog "response"
+           (lambda (dialog response-id)
+             ;; Check the response id from the file chooser dialog
+             (when (eql response-id
+                        ;; Convert the symbol :accept to the number value.
+                        (foreign-enum-value 'gtk-response-type :accept))
+               ;; Get the file name and store it.
+               (setf file-name (gtk-file-chooser-filename dialog)))
+             ;; Destroy the dialog.
+             (gtk-widget-destroy dialog)))
+        ;; Show the dialog.
+        (gtk-widget-show dialog)))
+    ;; Wait until the dialog is finished.
+    (join-gtk-main)
+    (when file-name
+      (format t "~A~%" file-name))))
 
 (defun example-getting-started ()
   (within-main-loop
@@ -52,6 +127,11 @@
                                  :type :toplevel
                                  :title "Getting started"
                                  :default-width 250)))
+      ;; Signal handler for the window to handle the signal "destroy".
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
       ;; Show the window.
       (gtk-widget-show-all window))))
 
@@ -79,7 +159,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Signal handler for the window to handle the signal "delete-event".
       (g-signal-connect window "delete-event"
                         (lambda (widget event)
@@ -103,7 +183,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-window-set-title window "Hello Buttons")
       (gtk-window-set-default-size window 250 75)
       (gtk-container-set-border-width window 12)
@@ -138,7 +218,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (let ((button (gtk-button-new-with-label "Button 1")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
@@ -173,7 +253,7 @@
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-main-quit)))
+                            (leave-gtk-main)))
         ;; Signals used to handle the backing surface
         (g-signal-connect area "draw"
            (lambda (widget cr)
@@ -203,10 +283,10 @@
         (g-signal-connect area "motion-notify-event"
            (lambda (widget event)
              (format t "MOTION-NOTIFY-EVENT ~A~%" event)
-             (when (member :button1-mask (event-motion-state event))
+             (when (member :button1-mask (gdk-event-motion-state event))
                (let ((cr (cairo-create surface))
-                     (x (event-motion-x event))
-                     (y (event-motion-y event)))
+                     (x (gdk-event-motion-x event))
+                     (y (gdk-event-motion-y event)))
                  (cairo-rectangle cr (- x 3.0d0) (- y 3.0d0) 6.0d0 6.0d0)
                  (cairo-fill cr)
                  (cairo-destroy cr)
@@ -220,10 +300,10 @@
         (g-signal-connect area "button-press-event"
            (lambda (widget event)
              (format t "BUTTON-PRESS-EVENT ~A~%" event)
-             (if (eql 1 (event-button-button event))
+             (if (eql 1 (gdk-event-button-button event))
                  (let ((cr (cairo-create surface))
-                       (x (event-button-x event))
-                       (y (event-button-y event)))
+                       (x (gdk-event-button-x event))
+                       (y (gdk-event-button-y event)))
                    (cairo-rectangle cr (- x 3.0d0) (- y 3.0d0) 6.0d0 6.0d0)
                    (cairo-fill cr)
                    (cairo-destroy cr)
@@ -2569,7 +2649,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget)) 
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window vbox)
       (let ((button (make-instance 'gtk-button
                                    :label "Open a Dialog Window")))
