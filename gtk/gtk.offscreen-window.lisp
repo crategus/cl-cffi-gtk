@@ -79,7 +79,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkOffscreenWindow" gtk-offscreen-window
-  (:superclass g-object
+  (:superclass gtk-window
     :export t
     :interfaces ("AtkImplementorIface"
                  "GtkBuildable")
@@ -105,7 +105,7 @@
 (defun gtk-offscreen-window-new ()
   (make-instance 'gtk-offscreen-window))
 
-(export 'gtk-offscreen-window)
+(export 'gtk-offscreen-window-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_offscreen_window_get_surface ()
