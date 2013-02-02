@@ -2310,6 +2310,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-set-startup-id))
+
+(defun gtk-window-set-startup-id (window startup-id)
+  (setf (gtk-window-startup-id window) startup-id))
+
+(export 'gtk-window-set-startup-id)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_role ()
 ;;; 
@@ -2748,6 +2755,13 @@
 ;;;     the transient parent for this window, or NULL if no transient parent has
 ;;;     been set
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-get-transient-for))
+
+(defun gtk-window-get-transient-for (window)
+  (gtk-window-transient-for window))
+
+(export 'gtk-window-get-transient-for)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_attached_to ()
@@ -3384,6 +3398,13 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-window-get-opacity))
+
+(defun gtk-window-get-opacity (window)
+  (gtk-window-opacity window))
+
+(export 'gtk-window-get-opacity)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_opacity ()
 ;;; 
@@ -3406,6 +3427,13 @@
 ;;; 
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-set-opacity))
+
+(defun gtk-window-set-opacity (window opacity)
+  (setf (gtk-window-opacity window) opacity))
+
+(export 'gtk-window-set-opacity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_mnemonics_visible ()
