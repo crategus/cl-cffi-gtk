@@ -8,7 +8,7 @@
 ;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1129,6 +1129,21 @@
 ;;;
 ;;; typedef struct _GtkStyleContext GtkStyleContext;
 ;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkStyleContext" gtk-style-context
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_style_context_get_type")
+  ((direction
+    gtk-style-context-direction
+    "direction" "GtkTextDirection" t t)
+   (parent
+    gtk-style-context-parent
+    "parent" "GtkStyleContext" t t)
+   (screen
+    gtk-style-context-screen
+    "screen" "GdkScreen" t t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_new ()
