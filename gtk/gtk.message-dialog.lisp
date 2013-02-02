@@ -290,6 +290,9 @@
    (image
     gtk-message-dialog-image
     "image" "GtkWidget" t t)
+   (message-area
+    gtk-message-dialog-message-area
+    "message-area" "GtkWidget" t nil)
    (message-type
     gtk-message-dialog-message-type
     "message-type" "GtkMessageType" t t)
