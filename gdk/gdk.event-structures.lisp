@@ -5,10 +5,10 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -653,13 +653,17 @@
   (:drop-finished 27)
   (:client-event 28)
   (:visibility-notify 29)
-  (:no-expose 30)
+  (:no-expose 30)   ;; not documented
   (:scroll 31)
   (:window-state 32)
   (:setting 33)
   (:owner-change 34)
   (:grab-broken 35)
-  (:damage 36))
+  (:damage 36)
+  (:touch-begin 37)
+  (:touch-update 38)
+  (:touch-end 39)
+  (:touch-cancel 40))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkModifierType
@@ -832,24 +836,24 @@
 (define-g-flags "GdkModifierType" gdk-modifier-type
   (:export t
    :type-initializer "gdk_modifier_type_get_type")
-  (:shift-mask 1)
-  (:lock-mask 2)
-  (:control-mask 4)
-  (:mod1-mask 8)
-  (:mod2-mask 16)
-  (:mod3-mask 32)
-  (:mod4-mask 64)
-  (:mod5-mask 128)
-  (:button1-mask 256)
-  (:button2-mask 512)
-  (:button3-mask 1024)
-  (:button4-mask 2048)
-  (:button5-mask 4096)
-  (:super-mask 67108864)
-  (:hyper-mask 134217728)
-  (:meta-mask 268435456)
-  (:release-mask 1073741824)
-  (:modifier-mask 1543512063))
+  (:shift-mask   #.(ash 1 0))
+  (:lock-mask    #.(ash 1 1))
+  (:control-mask #.(ash 1 2))
+  (:mod1-mask    #.(ash 1 3))
+  (:mod2-mask    #.(ash 1 4))
+  (:mod3-mask    #.(ash 1 5))
+  (:mod4-mask    #.(ash 1 6))
+  (:mod5-mask    #.(ash 1 7))
+  (:button1-mask #.(ash 1 8))
+  (:button2-mask #.(ash 1 9))
+  (:button3-mask #.(ash 1 10))
+  (:button4-mask #.(ash 1 11))
+  (:button5-mask #.(ash 1 12))
+  (:super-mask   #.(ash 1 26))
+  (:hyper-mask   #.(ash 1 27))
+  (:meta-mask    #.(ash 1 28))
+  (:release-mask #.(ash 1 30))
+  (:modifier-mask #x5c001fff))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkEventMask
@@ -1002,6 +1006,17 @@
   (:all-events-mask 4194302))
 
 ;;; ----------------------------------------------------------------------------
+;;; GdkEventSequence
+;;;
+;;; typedef struct _GdkEventSequence GdkEventSequence;
+;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque gdk-event-sequence "GdkEventSequence"
+  :alloc (error "GdkEventSequence can not be created from Lisp side."))
+
+(export (boxed-related-symbols 'gdk-event-sequence))
+
+;;; ----------------------------------------------------------------------------
 ;;; union GdkEvent
 ;;;
 ;;; union _GdkEvent
@@ -1065,10 +1080,12 @@
   (:variant type
             ((:expose) gdk-event-expose
              (area gdk-rectangle :inline t)
-             (region :pointer)
+             (region cairo-region-t)
              (count :int))
+
             ((:visibility-notify) gdk-event-visibility
              (state gdk-visibility-state))
+
             ((:motion-notify) gdk-event-motion
              (time :uint32)
              (x :double)
@@ -1079,6 +1096,7 @@
              (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
+
             ((:button-press
               :2button-press
               :3button-press
@@ -1089,24 +1107,25 @@
              (axes (fixed-array :double 2))
              (state :uint)
              (button :uint)
-             (device (g-object device))
+             (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
-;; Implementation of gdk-event-sequence (since 3.4) is missing
-;            ((:begin
-;              :update
-;              :end
-;              :cancel) gdk-event-touch
-;             (time :uint32)
-;             (x :double)
-;             (y :double)
-;             (axes (:pointer :double))
-;             (state :int)
-;             (sequence gdk-event-sequence)
-;             (emulating-pointer :boolean)
-;             (device (g-object gdk-device))
-;             (x-root :double)
-;             (y-root :double))
+
+            ((:touch-begin
+              :touch-update
+              :touch-end
+              :touch-canel) gdk-event-touch
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (axes (fixed-array :double 2))
+             (state :uint)
+             (sequence (g-boxed-foreign gdk-event-sequence))
+             (emulating-pointer :boolean)
+             (device (g-object gdk-device))
+             (x-root :double)
+             (y-root :double))
+
             ((:scroll) gdk-event-scroll
              (time :uint32)
              (x :double)
@@ -1115,7 +1134,10 @@
              (direction gdk-scroll-direction)
              (device (g-object device))
              (x-root :double)
-             (y-root :double))
+             (y-root :double)
+             (delta-x :double)
+             (delta-y :double))
+
             ((:key-press :key-release) gdk-event-key
              (time :uint32)
              (state gdk-modifier-type)
@@ -1126,6 +1148,7 @@
              (hardware-keycode :uint16)
              (group :uint8)
              (is-modifier :uint))
+
             ((:enter-notify :leave-notify) gdk-event-crossing
              (sub-window (g-object gdk-window))
              (time :uint32)
@@ -1137,17 +1160,21 @@
              (detail gdk-notify-type)
              (focus :boolean)
              (state :uint))
+
             ((:focus-change) gdk-event-focus
              (in :int16))
+
             ((:configure) gdk-event-configure
              (x :int)
              (y :int)
              (width :int)
              (height :int))
+
             ((:property-notify) gdk-event-property
              (atom gdk-atom)
              (time :uint32)
              (state gdk-property-state))
+
             ((:selection-clear
               :selection-notify
               :selection-request) gdk-event-selection
@@ -1155,48 +1182,39 @@
              (target gdk-atom)
              (property gdk-atom)
              (time :uint32)
-             ;; TODO: Is it correct to replace GdkNativeWindow with g-object
-             (requestor g-object))
+             (requestor (g-object gdk-window)))
+
             ((:owner-change) gdk-event-owner-change
-             ;; TODO: Is it correct to replace GdkNativeWindow with g-object
-             (owner g-object)
+             (owner (g-object gdk-window))
              (reason gdk-owner-change)
              (selection gdk-atom)
              (time :uint32)
              (selection-time :uint32))
+
             ((:proximity-in
               :proximity-out) gdk-event-proximity
              (time :uint32)
              (device (g-object gdk-device)))
+
             ((:drag-enter
               :drag-leave
               :drag-motion
               :drag-status
               :drop-start
               :drop-finished) gdk-event-dnd
-             (drag-context (g-object gdk-drag-context))
+             (context (g-object gdk-drag-context))
              (time :uint32)
              (x-root :short)
              (y-root :short))
+
             ((:window-state) gdk-event-window-state
              (changed-mask gdk-window-state)
              (new-window-state gdk-window-state))
 
-;            ((:client-event) gdk-event-client
-;             (message-time gdk-atom)
-;             (data-format :ushort)
-;             (:variant data-format
-;                       (8 gdk-event-client-8
-;                          (data :uchar :count 20))
-;                       (16 gdk-event-client-16
-;                           (data :ushort :count 10))
-;                       (32 gdk-event-client-32
-;                           (data :ulong :count 5))))
-;            ((:no-expose) gdk-event-no-expose)
-
             ((:setting) gdk-event-setting
              (action gdk-setting-action)
              (name (:string :free-from-foreign nil :free-to-foreign nil)))
+
             ((:grab-broken) gdk-event-grab-broken
              (keyboard :boolean)
              (implicit :boolean)
