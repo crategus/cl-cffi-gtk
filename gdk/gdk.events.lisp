@@ -528,6 +528,19 @@
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_event_get_scroll_deltas" %gdk-event-get-scroll-deltas) :boolean
+  (event (g-boxed-foreign gdk-event))
+  (delta-x (:pointer :double))
+  (delta-y (:pointer :double)))
+
+(defun gdk-event-get-scroll-deltas (event)
+  (with-foreign-objects ((x :double) (y :double))
+    (when (%gdk-event-get-scroll-deltas event x y)
+      (values (mem-ref x :double)
+              (mem-ref y :double)))))
+
+(export 'gdk-event-get-scroll-deltas)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_state ()
 ;;;
@@ -583,6 +596,8 @@
 ;;;
 ;;; typedef struct _GdkEventSequence GdkEventSequence;
 ;;; ----------------------------------------------------------------------------
+
+;;; Implementation moved to gtk.event-structures.lisp
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_event_sequence ()
