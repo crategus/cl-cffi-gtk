@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 03.02.2012
-@c Revision : 01.07.2012
+@c Revision : 01.02.2013
 @c 
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -36,16 +36,27 @@
 @findex button-new-with-mnemonic, gtk-button-new-with-mnemonic
 @findex button-new-from-stock, gtk-button-new-from-stock
 
-We have almost seen all there is to see of the button widget.  The button widget
-is pretty simple.  There is however more than one way to create a button.  You
-can use the the function @code{gtk-button-new-with-label} or
-the function @code{gtk-button-new-with-mnemonic} to create a button with a
-label, use @code{gtk-button-new-from-stock} to create a button containing the
-image and text from a stock item or use @code{gtk-button-new} to create a blank
-button.  It is then up to you to pack a label or pixmap into this new button.
-To do this, create a new box, and then pack your objects into this box using the
-function @code{gtk-box-pack-start}, and then use the function
-@code{gtk-container-add} to pack the box into the button.
+@set GTK-BUTTON http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-button.html
+@set GTK-BUTTON-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new.html
+@set GTK-BUTTON-NEW-WITH-LABEL http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-with-label.html
+@set GTK-BUTTON-NEW-WITH-MNEMONIC http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-with-mnemonic.html
+@set GTK-BUTTON-NEW-FROM-STOCK http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-from-stock.html
+
+We have almost seen all there is to see of the button widget, which is
+represented by the @url{@value{GTK-BUTTON}, @code{gtk-button}} class.  The
+button widget is pretty simple.  There is however more than one way to create a
+button.  You can use the the function @url{@value{GTK-BUTTON-NEW-WITH-LABEL},
+@code{gtk-button-new-with-label}} or the function
+@url{@value{GTK-BUTTON-NEW-WITH-MNEMONIC}, @code{gtk-button-new-with-mnemonic}}
+to create a button with a label, use @url{@value{GTK-BUTTON-NEW-FROM-STOCK},
+@code{gtk-button-new-from-stock}} to create a button containing the image and
+text from a stock item or use @url{@value{GTK-BUTTON-NEW},
+@code{gtk-button-new}} to create a blank button.  It is then up to you to pack a
+label or pixmap into this new button. To do this, create a new box, and then
+pack your objects into this box using the function
+@url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}}, and then use the
+function @url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} to pack the
+box into the button.
 
 @ifnotinfo
 @float Figure, figure-button
@@ -54,11 +65,11 @@ function @code{gtk-box-pack-start}, and then use the function
 @end float
 @end ifnotinfo
 
-@ref{figure-button} is an example of using @code{gtk-button-new} to create a
-button with an image and a label in it.  The code to create a box is shown in
-@ref{example-image-label-box} and breaken up from the rest so you can use it in
-your programs.  The main program which uses this subroutine is shown in 
-@ref{example-button}.
+@ref{figure-button} is an example of using @url{@value{GTK-BUTTON-NEW},
+@code{gtk-button-new}} to create a button with an image and a label in it.  The
+code to create a box is shown in @ref{example-image-label-box} and breaken up
+from the rest so you can use it in your programs.  The main program which uses
+this subroutine is shown in @ref{example-button}.
 
 The @code{image-label-box} function could be used to pack images and labels into
 any widget that can be a container.

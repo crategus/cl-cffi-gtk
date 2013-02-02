@@ -395,7 +395,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
@@ -468,7 +468,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect quit "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -499,7 +499,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button1 "toggled"
          (lambda (widget)
            (if (gtk-toggle-button-get-active widget)
@@ -597,7 +597,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add vbox
                          (make-instance 'gtk-label
                                         :label
@@ -654,7 +654,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect quit "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -695,7 +695,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add button box)
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
@@ -721,7 +721,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
       (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
       ;; These are the standard functions to create a button.
@@ -778,7 +778,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create three radio buttons and put the buttons in a vbox      
       (let ((vbox (make-instance 'gtk-box
                                  :orientation :vertical
@@ -854,7 +854,7 @@
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
-                                 (gtk-main-quit)))
+                                 (leave-gtk-main)))
       (gtk-container-add grid
                          (make-instance 'gtk-label
                                         :use-markup t
@@ -896,7 +896,7 @@
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
-                                 (gtk-main-quit)))
+                                 (leave-gtk-main)))
       (g-signal-connect switch "notify::active"
          (lambda (widget param)
            (declare (ignore param))
@@ -942,7 +942,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create a Normal Label
       (gtk-box-pack-start vbox1
                           (make-heading "Normal Label:")
@@ -1080,7 +1080,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start hbox
                           (make-instance 'gtk-label
                                          :label "Angle 90°"
@@ -1170,7 +1170,7 @@
                           (declare (ignore widget))
                           (g-source-remove (pbar-data-timer pdata))
                           (setf (pbar-data-timer pdata) 0)
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start vbox align)
       (gtk-container-add align (pbar-data-pbar pdata))
       (gtk-box-pack-start vbox table)
@@ -1236,7 +1236,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start vbox statusbar)
       (let ((button (gtk-button-new-with-label "Push Item")))
         (g-signal-connect button "clicked"
@@ -1275,7 +1275,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-show message)
       ;; Add a label to the content area of the info bar
       (gtk-container-add content message)
@@ -1395,7 +1395,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Packing of the global widgets hscale, vscale, and scrollbar
       (gtk-container-add window box1)
       (gtk-box-pack-start box1 box2)
@@ -1552,7 +1552,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (let ((frame (make-instance 'gtk-frame
                                   :label "xalign: 0, yalign: 0"))
             (button (make-instance 'gtk-button
@@ -1630,7 +1630,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (let ((frame (make-instance 'gtk-frame
                                   :label "halign: start, valign: start"))
             (button (make-instance 'gtk-button
@@ -1692,7 +1692,7 @@
       (g-signal-connect window "destroy"
                         (lambda (window)
                           (declare (ignore window))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window fixed)
       (dotimes (i 3)
         (let ((button (gtk-button-new-with-label "Press me")))
@@ -1722,7 +1722,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window frame)
       (gtk-widget-show-all window))))
 
@@ -1750,7 +1750,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window frame)
       (gtk-container-add frame area)
       (gtk-widget-show-all window))))
@@ -1772,7 +1772,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-set-size-request window 300 250)
       (gtk-container-add window paned)
       (gtk-paned-add1 paned frame1)
@@ -1804,7 +1804,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
       (gtk-scrolled-window-add-with-viewport scrolled table)
       (dotimes (i 10)
@@ -1866,7 +1866,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create Horizontal Button Boxes
       (gtk-box-pack-start vbox1
                           (make-instance 'gtk-label
@@ -1958,7 +1958,7 @@
       (g-signal-connect dialog "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-realize dialog)
       (gtk-box-pack-start (gtk-dialog-get-content-area dialog)
                           handle-box
@@ -1994,7 +1994,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (dotimes (i 5)
         (let ((page (make-instance 'gtk-label
                                    :label
@@ -2042,7 +2042,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-text-buffer-set-text buffer "Hello, this is some text.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
@@ -2058,7 +2058,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-text-buffer-set-text buffer "Hello, this is some text.")
       ;; Change default font throughout the widget
       (gtk-widget-override-font
@@ -2132,7 +2132,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 
@@ -2157,7 +2157,7 @@
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-main-quit)))
+                            (leave-gtk-main)))
         (g-signal-connect button "color-set"
            (lambda (widget)
              (let ((rgba (gtk-color-chooser-get-rgba widget)))
@@ -2211,7 +2211,7 @@
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-main-quit)))
+                            (leave-gtk-main)))
         (gtk-widget-override-background-color area :normal color)
         (gtk-widget-set-events area :button-press-mask)
         (g-signal-connect area "event"
@@ -2260,7 +2260,7 @@
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-main-quit)))
+                            (leave-gtk-main)))
         (gtk-widget-modify-bg area :normal color)
         (gtk-widget-set-events area :button-press-mask)
         (g-signal-connect area "event"
@@ -2290,7 +2290,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Handle the signal "clicked" for the button.
       (g-signal-connect button "clicked"
          (lambda (widget)
@@ -2325,7 +2325,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Handle the signal "clicked" for the button.
       (g-signal-connect button "clicked"
          (lambda (widget)
@@ -2359,7 +2359,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "file-set"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2390,7 +2390,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Set a filter function to select fonts for the font chooser
       (gtk-font-chooser-set-filter-func button #'font-filter)
       (g-signal-connect button "font-set"
@@ -2455,7 +2455,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create buttons with an arrow and add the buttons to the grid
       (gtk-container-add grid (create-arrow-button :up :in))
       (gtk-container-add grid (create-arrow-button :down :out))
@@ -2489,7 +2489,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Connect a signal handler to print the selected day
       (g-signal-connect calendar "day-selected"
                         (lambda (widget)
@@ -2524,7 +2524,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Set the events for the event box
       (gtk-widget-set-events eventbox :button-press-mask)
       ;; Connect a signal to the eventbox
@@ -2706,7 +2706,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect entry "activate"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2772,7 +2772,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (let ((vbox (make-instance 'gtk-vbox))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
@@ -2975,7 +2975,7 @@
       (g-signal-connect window "destroy"
                         (lambda (w)
                           (declare (ignore w))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
@@ -3053,7 +3053,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create the menu-bar and the items of the menu-bar.
       (let ((menubar (make-instance 'gtk-menu-bar
                                     :visible t
@@ -3166,7 +3166,7 @@
       (g-signal-connect (gtk-builder-get-object builder "window") "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-show-all (gtk-builder-get-object builder "window")))))
 
 ;;; ----------------------------------------------------------------------------
@@ -3189,7 +3189,7 @@
       (g-signal-connect window "destroy"
                         (lambda (window)
                           (declare (ignore window))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "clicked"
          (lambda (button)
            (declare (ignore button))
@@ -3225,7 +3225,7 @@
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
-                                 (gtk-main-quit)))
+                                 (leave-gtk-main)))
       (gtk-box-pack-start vbox bbox)
       (gtk-box-pack-start vbox text-view)
       (gtk-text-buffer-set-text buffer "Hello World Text View")
@@ -3290,7 +3290,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
@@ -3337,7 +3337,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button-search "clicked"
          (lambda (widget)
            (declare (ignore widget))
@@ -3384,7 +3384,7 @@
     (g-signal-connect window "destroy"
                       (lambda (widget)
                         (declare (ignore widget))
-                        (gtk-main-quit)))
+                        (leave-gtk-main)))
     (g-signal-connect button "clicked"
        (lambda (widget)
          (declare (ignore widget))
@@ -3434,7 +3434,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
@@ -3488,7 +3488,7 @@
     (g-signal-connect window "destroy"
                       (lambda (widget)
                         (declare (ignore widget))
-                        (gtk-main-quit)))
+                        (leave-gtk-main)))
     (g-signal-connect button "clicked"
                       (lambda (widget)
                         (declare (ignore widget))
@@ -3511,7 +3511,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window (make-instance 'gtk-tree-view))
       (gtk-widget-show-all window))))
 
@@ -3551,7 +3551,7 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
