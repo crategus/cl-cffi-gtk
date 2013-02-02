@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; atdoc-gtk.container.lisp
 ;;;
-;;; Documentation strings for the library GTK.
+;;; Documentation strings for the library GTK+.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.4.1. See http://www.gtk.org.
@@ -28,30 +28,6 @@
 
 (in-package :gtk)
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation (atdoc:get-slot-from-name "border-width" 'gtk-container) 't)
- "@version{2013-1-4}
-  The \"border-width\" property of type guint (Read / Write).@br{}
-  The width of the empty border outside the containers children.@br{}
-  Allowed values: <= 65535@br{}
-  Default value: 0")
-
-(setf (documentation (atdoc:get-slot-from-name "child" 'gtk-container) 't)
- "@version{2013-1-4}
-  The \"child\" property of type GtkWidget* (Write).@br{}
-  Can be used to add a new child to the container.")
-
-(setf (documentation (atdoc:get-slot-from-name "resize-mode" 'gtk-container) 't)
- "@version{2013-1-4}
-  The \"resize-mode\" property of type GtkResizeMode (Read / Write).@br{}
-  Specify how resize events are handled.@br{}
-  Default value: GTK_RESIZE_PARENT")
-
 ;;; --- gtk-container ----------------------------------------------------------
 
 (setf (documentation 'gtk-container 'type)
@@ -60,28 +36,27 @@
 
   A GTK+ user interface is constructed by nesting widgets inside widgets.
   Container widgets are the inner nodes in the resulting tree of widgets: they
-  contain other widgets. So, for example, you might have a GtkWindow
-  containing a GtkFrame containing a GtkLabel. If you wanted an image instead
-  of a textual label inside the frame, you might replace the GtkLabel widget
-  with a GtkImage widget.
+  contain other widgets. So, for example, you might have a @class{gtk-window}
+  containing a @class{gtk-frame} containing a @class{gtk-label}. If you wanted
+  an image instead of a textual label inside the frame, you might replace the
+  @class{gtk-label} widget with a @class{gtk-image} widget.
 
   There are two major kinds of container widgets in GTK+. Both are subclasses
-  of the abstract GtkContainer base class.
+  of the abstract @sym{gtk-container} base class.
 
   The first type of container widget has a single child widget and derives
-  from GtkBin. These containers are decorators, which add some kind of
-  functionality to the child. For example, a GtkButton makes its child into a
-  clickable button; a GtkFrame draws a frame around its child and a GtkWindow
-  places its child widget inside a top-level window.
+  from @class{gtk-bin}. These containers are decorators, which add some kind of
+  functionality to the child. For example, a @class{gtk-button} makes its child
+  into a clickable button; a @class{gtk-frame} draws a frame around its child
+  and a @class{gtk-window} places its child widget inside a top-level window.
 
   The second type of container can have more than one child; its purpose is to
   manage layout. This means that these containers assign sizes and positions
-  to their children. For example, a GtkHBox arranges its children in a
-  horizontal row, and a GtkGrid arranges the widgets it contains in a
+  to their children. For example, a @class{gtk-hbox} arranges its children in a
+  horizontal row, and a @class{gtk-grid} arranges the widgets it contains in a
   two-dimensional grid.
 
-  @b{Height for width geometry management}
-
+  @heading{Height for width geometry management}
   GTK+ uses a height-for-width (and width-for-height) geometry management
   system. Height-for-width means that a widget can change how much vertical
   space it needs, depending on the amount of horizontal space that it is given
@@ -91,8 +66,8 @@
   that make use of GTK+'s height for width geometry management system. First,
   it's important to note that a container must prioritize one of its
   dimensions, that is to say that a widget or container can only have a
-  GtkSizeRequestMode that is GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
-  GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT. However, every widget and container must
+  @symbol{gtk-size-request-mode} that is @code{:height-for-width} or
+  @code{:width-for-height}. However, every widget and container must
   be able to respond to the APIs for both dimensions, i.e. even if a widget
   has a request mode that is height-for-width, it is possible that its parent
   will request its sizes using the width-for-height APIs.
@@ -101,12 +76,12 @@
   when implementing height-for-width (or width-for-height) containers.
 
   Each request mode involves 2 virtual methods. Height-for-width apis run
-  through gtk_widget_get_preferred_width() and then through
-  gtk_widget_get_preferred_height_for_width(). When handling requests in the
-  opposite GtkSizeRequestMode it is important that every widget request at
-  least enough space to display all of its content at all times.
+  through @fun{gtk-widget-get-preferred-width} and then through
+  @fun{gtk-widget-get-preferred-height-for-width}. When handling requests in the
+  opposite @symbol{gtk-size-request-mode} it is important that every widget
+  request at least enough space to display all of its content at all times.
 
-  When gtk_widget_get_preferred_height() is called on a container that is
+  When @fun{gtk-widget-get-preferred-height} is called on a container that is
   height-for-width, the container must return the height for its minimum
   width. This is easily achieved by simply calling the reverse apis
   implemented for itself as follows:
@@ -135,8 +110,8 @@
        @}
   @}
   @end{pre}
-  Similarly, when gtk_widget_get_preferred_width_for_height() is called for a
-  container or widget that is height-for-width, it then only needs to return
+  Similarly, when @fun{gtk-widget-get-preferred-width-for-height} is called for
+  a container or widget that is height-for-width, it then only needs to return
   the base minimum width like so:
   @begin{pre}
   static void
@@ -161,66 +136,66 @@
   Height for width requests are generally implemented in terms of a virtual
   allocation of widgets in the input orientation. Assuming an height-for-width
   request mode, a container would implement the
-  get_preferred_height_for_width() virtual function by first calling
-  gtk_widget_get_preferred_width() for each of its children.
+  @code{get_preferred_height_for_width()} virtual function by first calling
+  @fun{gtk-widget-get-preferred-width} for each of its children.
 
   For each potential group of children that are lined up horizontally, the
-  values returned by gtk_widget_get_preferred_width() should be collected in
-  an array of GtkRequestedSize structures. Any child spacing should be removed
-  from the input for_width and then the collective size should be allocated
-  using the gtk_distribute_natural_allocation() convenience function.
+  values returned by @fun{gtk-widget-get-preferred-width} should be collected in
+  an array of @class{gtk-requested-size} structures. Any child spacing should
+  be removed from the input for_width and then the collective size should be
+  allocated using the @code{gtk_distribute_natural_allocation()} convenience
+  function.
 
   The container will then move on to request the preferred height for each
-  child by using gtk_widget_get_preferred_height_for_width() and using the
-  sizes stored in the GtkRequestedSize array.
+  child by using @fun{gtk-widget-get-preferred-height-for-width} and using the
+  sizes stored in the @class{gtk-requested-size} array.
 
   To allocate a height-for-width container, it's again important to consider
   that a container must prioritize one dimension over the other. So if a
   container is a height-for-width container it must first allocate all widgets
-  horizontally using a GtkRequestedSize array and
-  gtk_distribute_natural_allocation() and then add any extra space (if and
-  where appropriate) for the widget to expand.
+  horizontally using a @class{gtk-requested-size} array and
+  @code{gtk_distribute_natural_allocation()} and then add any extra space (if
+  and where appropriate) for the widget to expand.
 
   After adding all the expand space, the container assumes it was allocated
   sufficient height to fit all of its content. At this time, the container
   must use the total horizontal sizes of each widget to request the
   height-for-width of each of its children and store the requests in a
-  GtkRequestedSize array for any widgets that stack vertically (for tabular
-  containers this can be generalized into the heights and widths of rows and
-  columns). The vertical space must then again be distributed using
-  gtk_distribute_natural_allocation() while this time considering the
+  @class{gtk-requested-size} array for any widgets that stack vertically (for
+  tabular containers this can be generalized into the heights and widths of rows
+  and columns). The vertical space must then again be distributed using
+  @code{gtk_distribute_natural_allocation()} while this time considering the
   allocated height of the widget minus any vertical spacing that the container
   adds. Then vertical expand space should be added where appropriate and
   available and the container should go on to actually allocating the child
   widgets.
 
-  See GtkWidget's geometry management section to learn more about implementing
-  height-for-width geometry management for widgets.
+  See @class{gtk-widget}'s geometry management section to learn more about
+  implementing height-for-width geometry management for widgets.
 
-  @b{Child properties}
+  @heading{Child properties}
+  @sym{gtk-container} introduces child properties. These are object properties
+  that are not specific to either the container or the contained widget, but
+  rather to their relation. Typical examples of child properties are the
+  position or pack-type of a widget which is contained in a @class{gtk-box}.
 
-  GtkContainer introduces child properties. These are object properties that
-  are not specific to either the container or the contained widget, but rather
-  to their relation. Typical examples of child properties are the position or
-  pack-type of a widget which is contained in a GtkBox.
-
-  Use gtk_container_class_install_child_property() to install child properties
-  for a container class and gtk_container_class_find_child_property() or
-  gtk_container_class_list_child_properties() to get information about
+  Use @fun{gtk-container-class-install-child-property} to install child
+  properties for a container class and
+  @fun{gtk-container-class-find-child-property} or
+  @fun{gtk-container-class-list-child-properties} to get information about
   existing child properties.
 
   To set the value of a child property, use
-  gtk_container_child_set_property(), gtk_container_child_set() or
-  gtk_container_child_set_valist(). To obtain the value of a child property,
-  use gtk_container_child_get_property(), gtk_container_child_get() or
-  gtk_container_child_get_valist(). To emit notification about child property
-  changes, use gtk_widget_child_notify().
+  @fun{gtk-container-child-set-property}, @fun{gtk-container-child-set} or
+  @fun{gtk-container-child-set-valist}. To obtain the value of a child property,
+  use @fun{gtk-container-child-get-property}, @fun{gtk-container-child-get} or
+  @fun{gtk-container-child-get-valist}. To emit notification about child
+  property changes, use @fun{gtk-widget-child-notify}.
 
-  @b{GtkContainer as GtkBuildable}
-
-  The GtkContainer implementation of the GtkBuildable interface supports a
-  <packing> element for children, which can contain multiple <property>
-  elements that specify child properties for the child.
+  @heading{GtkContainer as GtkBuildable}
+  The @sym{gtk-container} implementation of the @class{gtk-buildable} interface
+  supports a @code{<packing>} element for children, which can contain multiple
+  @code{<property>} elements that specify child properties for the child.
 
   Example 105. Child properties in UI definitions
   @begin{pre}
@@ -263,8 +238,120 @@
   @end{dictionary}
   @see-slot{gtk-container-border-width}
   @see-slot{gtk-container-child}
-  @see-slot{gtk-container-resize-mode}
-")
+  @see-slot{gtk-container-resize-mode}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+(setf (documentation (atdoc:get-slot-from-name "border-width" 'gtk-container) 't)
+ "@version{2013-1-4}
+  The @code{\"border-width\"} property of type @code{guint} (Read / Write).@br{}
+  The width of the empty border outside the containers children.@br{}
+  Allowed values: @code{<= 65535}@br{}
+  Default value: @code{0}")
+
+(setf (documentation (atdoc:get-slot-from-name "child" 'gtk-container) 't)
+ "@version{2013-1-4}
+  The @code{\"child\"} property of type @class{gtk-widget} (Write).@br{}
+  Can be used to add a new child to the container.")
+
+(setf (documentation (atdoc:get-slot-from-name "resize-mode" 'gtk-container) 't)
+ "@version{2013-1-4}
+  The @code{\"resize-mode\"} property of type @symbol{gtk-resize-mode}
+  (Read / Write).@br{}
+  Specify how resize events are handled.@br{}
+  Default value: @code{:parent}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-container-border-width ---------------------------------------------
+
+(setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gtk-container-border-width 'function)
+ "@version{2013-1-4}
+  @begin{short}
+    Accessor of the slot @code{border-width} of the @class{gtk-container} class.
+  @end{short}
+  See the function @fun{gtk-container-set-border-width} for details.
+  @see-function{gtk-container-set-border-width}")
+
+;;; --- gtk-container-get-border-width -----------------------------------------
+
+(setf (documentation 'gtk-container-get-border-width 'function)
+ "@version{2013-1-4}
+  @argument[container]{a @class{gtk-container} instance}
+  @return{the current border width}
+  @short{Retrieves the border width of the container.}
+  See @fun{gtk-container-set-border-width}.
+  @see-function{gtk-container-set-border-width}")
+
+;;; --- gtk-container-set-border-width -----------------------------------------
+
+(setf (documentation 'gtk-container-set-border-width 'function)
+ "@version{2013-1-4}
+  @argument[container]{a @class{gtk-container} instance}
+  @argument[border_width]{amount of blank space to leave outside the container.
+    Valid values are in the range 0-65535 pixels.}
+  @short{Sets the border width of the container.}
+
+  The border width of a container is the amount of space to leave around the
+  outside of the container. The only exception to this is @class{gtk-window};
+  because toplevel windows can't leave space outside, they leave the space
+  inside. The border is added on all sides of the container. To add space to
+  only one side, one approach is to create a @class{gtk-alignment} widget, call
+  @fun{gtk-widget-set-size-request} to give it a size, and place it on the side
+  of the container as a spacer.")
+
+;;; --- gtk-container-child ----------------------------------------------------
+
+(setf (gethash 'gtk-container-child atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gtk-container-child 'function)
+ "@version{2013-1-20}
+  @begin{short}
+    Accessor of the slot @code{child} of the @class{gtk-container} class.
+  @end{short}")
+
+;;; --- gtk-container-resize-mode ----------------------------------------------
+
+(setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gtk-container-resize-mode 'function)
+ "@version{2013-1-4}
+  @begin{short}
+    Accessor of the slot @code{resize-mode} of the @class{gtk-container} class.
+  @end{short}
+  See the function @fun{gtk-container-set-resize-mode} for details.
+  @see-function{gtk-container-set-resize-mode}")
+
+;;; --- gtk-container-get-resize-mode ------------------------------------------
+
+(setf (documentation 'gtk-container-get-resize-mode 'function)
+ "@version{2013-1-4}
+  @argument[container]{a @class{gtk-container} instance}
+  @return{The current resize mode.}
+  @short{Returns the resize mode for the container.}
+  See @fun{gtk-container-set-resize-mode}.
+  @see-function{gtk-container-set-resize-mode}")
+
+;;; --- gtk-container-set-resize-mode ------------------------------------------
+
+(setf (documentation 'gtk-container-set-resize-mode 'function)
+ "@version{2013-1-4}
+  @argument[container]{a @class{gtk-container} instance}
+  @argument[resize-mode]{The new resize mode.}
+  @short{Sets the resize mode for the container.}
+
+  The resize mode of a container determines whether a resize request will be
+  passed to the container's parent, queued for later execution or executed
+  immediately.")
+
+
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_IS_RESIZE_CONTAINER()
@@ -295,33 +382,36 @@
 ;;; --- gtk-container-add ------------------------------------------------------
 
 (setf (documentation 'gtk-container-add 'function)
- "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
-  @argument[widget]{a widget to be placed inside container}
-  @short{Adds widget to container.}
-  Typically used for simple containers such as GtkWindow, GtkFrame, or
-  GtkButton; for more complicated layout containers such as GtkBox or GtkGrid,
-  this function will pick default packing parameters that may not be correct. So
-  consider functions such as gtk_box_pack_start() and gtk_grid_attach() as an
-  alternative to gtk_container_add() in those cases. A widget may be added to
-  only one container at a time; you can't place the same widget inside two
-  different containers.")
+ "@version{2013-1-20}
+  @argument[container]{a @class{gtk-container} instance}
+  @argument[widget]{a @arg{widget} to be placed inside @arg{container}}
+  @short{Adds @arg{widget} to @arg{container}.}
+  Typically used for simple containers such as @class{gtk-window},
+  @class{gtk-frame}, or @class{gtk-button}; for more complicated layout
+  containers such as @class{gtk-box} or @class{gtk-grid}, this function will
+  pick default packing parameters that may not be correct. So consider functions
+  such as @fun{gtk-box-pack-start} and @fun{gtk-grid-attach} as an
+  alternative to @sym{gtk-container-add} in those cases. A widget may be added
+  to only one container at a time; you can't place the same widget inside two
+  different containers.
+  @see-function{gtk-box-pack-start}
+  @see-function{gtk-grid-attach}")
 
 ;;; --- gtk-container-remove ---------------------------------------------------
 
 (setf (documentation 'gtk-container-remove 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
-  @argument[widget]{a current child of container}
+  @argument[container]{a @class{gtk-container} instance}
+  @argument[widget]{a current child of @arg{container}}
   @short{Removes widget from container.}
-  widget must be inside container. Note that container will own a reference to
-  widget, and that this may be the last reference held; so removing a widget
-  from its container can destroy that widget. If you want to use widget again,
-  you need to add a reference to it while it's not inside a container, using
-  g_object_ref(). If you don't want to use widget again it's usually more
-  efficient to simply destroy it directly using gtk_widget_destroy() since this
-  will remove it from the container and help break any circular reference count
-  cycles.")
+  @arg{widget} must be inside @arg{container}. Note that @arg{container} will
+  own a reference to @arg{widget}, and that this may be the last reference held;
+  so removing a widget from its container can destroy that widget. If you want
+  to use @arg{widget} again, you need to add a reference to it while it's not
+  inside a container, using @fun{g-object-ref}. If you don't want to use
+  @arg{widget} again it's usually more efficient to simply destroy it directly
+  using @fun{gtk-widget-destroy} since this will remove it from the
+  @arg{container} and help break any circular reference count cycles.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_add_with_properties ()
@@ -358,7 +448,7 @@
 
 (setf (documentation 'gtk-container-foreach 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @argument[function]{a Lisp function which is passed as a callback to the C
     function @code{gtk_container_foreach()}}
   @begin{short}
@@ -372,7 +462,7 @@
 
 (setf (documentation 'gtk-container-get-children 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @return{a newly-allocated list of the container's non-internal children}
   @short{Returns the container's non-internal children.}
   See gtk_container_forall() for details on what constitutes an \"internal\"
@@ -401,7 +491,7 @@
 
 (setf (documentation 'gtk-container-set-reallocate-redraws 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @argument[needs-redraws]{the new value for the container's reallocate_redraws
     flag}
   @begin{short}
@@ -415,7 +505,7 @@
 
 (setf (documentation 'gtk-container-get-focus-child 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @return{The child widget which will receive the focus inside container when
     the conatiner is focussed, or NULL if none is set.}
   @short{Returns the current focus child widget inside container.}
@@ -429,7 +519,7 @@
 
 (setf (documentation 'gtk-container-set-focus-child 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @argument[child]{a GtkWidget, or NULL}
   @short{Sets, or unsets if child is NULL, the focused child of container.}
 
@@ -444,7 +534,7 @@
 
 (setf (documentation 'gtk-container-get-focus-vadjustment 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @return{the vertical focus adjustment, or NULL if none has been set}
   @short{Retrieves the vertical focus adjustment for the container.}
   See @fun{gtk-container-set-focus-vadjustment}.
@@ -454,7 +544,7 @@
 
 (setf (documentation 'gtk-container-set-focus-vadjustment 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @argument[adjustment]{an adjustment which should be adjusted when the focus is
     moved among the descendents of container}
   @begin{short}
@@ -473,7 +563,7 @@
 
 (setf (documentation 'gtk-container-get-focus-hadjustment 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @return{the horizontal focus adjustment, or NULL if none has been set}
   @short{Retrieves the horizontal focus adjustment for the container.}
   See @fun{gtk-container-set-focus-hadjustment}.")
@@ -482,7 +572,7 @@
 
 (setf (documentation 'gtk-container-set-focus-hadjustment 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @argument[adjustment]{an adjustment which should be adjusted when the focus is
     moved among the descendents of container}
   @begin{short}
@@ -507,7 +597,7 @@
 
 (setf (documentation 'gtk-container-child-type 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @return{a GType}
   @short{Returns the type of the children supported by the container.}
 
@@ -686,7 +776,7 @@
 
 (setf (documentation 'gtk-container-forall 'function)
  "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
+  @argument[container]{a @class{gtk-container} instance}
   @argument[callback]{a callback}
   @arguemnt[callback_data]{callback user data}
   @begin{short}
@@ -864,79 +954,5 @@
 ;;;     the class struct of a GtkContainer subclass
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;;     Accessors
-;;;
-;;; ----------------------------------------------------------------------------
-
-(setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*) "Accessor")
-(setf (documentation 'gtk-container-border-width 'function)
- "@version{2013-1-4}
-  @begin{short}
-    Accessor of the slot @arg{border-width} of the @class{gtk-container} class.
-  @end{short}
-  See the function @fun{gtk-container-set-border-width} for details.
-  @see-function{gtk-container-set-border-width}")
-
-;;; --- gtk-container-get-border-width -----------------------------------------
-
-(setf (documentation 'gtk-container-get-border-width 'function)
- "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
-  @return{the current border width}
-  @short{Retrieves the border width of the container.}
-  See @fun{gtk-container-set-border-width}.
-  @see-function{gtk-container-set-border-width}")
-
-;;; --- gtk-container-set-border-width -----------------------------------------
-
-(setf (documentation 'gtk-container-set-border-width 'function)
- "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
-  @argument[border_width]{amount of blank space to leave outside the container.
-    Valid values are in the range 0-65535 pixels.}
-  @short{Sets the border width of the container.}
-
-  The border width of a container is the amount of space to leave around the
-  outside of the container. The only exception to this is GtkWindow; because
-  toplevel windows can't leave space outside, they leave the space inside. The
-  border is added on all sides of the container. To add space to only one
-  side, one approach is to create a GtkAlignment widget, call
-  gtk_widget_set_size_request() to give it a size, and place it on the side of
-  the container as a spacer.")
-
-;;; --- gtk-container-resize-mode ----------------------------------------------
-
-(setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*) "Accessor")
-(setf (documentation 'gtk-container-resize-mode 'function)
- "@version{2013-1-4}
-  @begin{short}
-    Accessor of the slot @arg{resize-mode} of the @class{gtk-container} class.
-  @end{short}
-  See the function @fun{gtk-container-set-resize-mode} for details.
-  @see-function{gtk-container-set-resize-mode}")
-
-;;; --- gtk-container-get-resize-mode ------------------------------------------
-
-(setf (documentation 'gtk-container-get-resize-mode 'function)
- "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
-  @return{the current resize mode}
-  @short{Returns the resize mode for the container.}
-  See @fun{gtk-container-set-resize-mode}.
-  @see-function{gtk-container-set-resize-mode}")
-
-;;; --- gtk-container-set-resize-mode ------------------------------------------
-
-(setf (documentation 'gtk-container-set-resize-mode 'function)
- "@version{2013-1-4}
-  @argument[container]{a GtkContainer}
-  @argument[resize-mode]{the new resize mode}
-  @short{Sets the resize mode for the container.}
-
-  The resize mode of a container determines whether a resize request will be
-  passed to the container's parent, queued for later execution or executed
-  immediately.")
 
 ;;; --- End of file gtk.container.lisp -----------------------------------------

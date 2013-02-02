@@ -36,31 +36,30 @@
 
 (setf (documentation (atdoc:get-slot-from-name "accept-focus" 'gtk-window) 't)
  "@version{2012-12-30}
-  The @arg{\"accept-focus\"} property of type @code{gboolean} (Read / Write).
-  @br{}
+  The @code{accept-focus} property of type @code{gboolean} (Read / Write).@br{}
   Whether the window should receive the input focus.@br{}
   Default value: @arg{true}@br{}
   Since 2.4")
 
 (setf (documentation (atdoc:get-slot-from-name "application" 'gtk-window) 't)
  "@version{2012-12-30}
-  The @arg{\"application\"} property of type @code{GtkApplication*}
+  The @code{application} property of type @class{gtk-application}
   (Read / Write).@br{}
-  The @code{GtkApplication} associated with the window.@br{}
+  The @class{gtk-application} associated with the window.@br{}
   The application will be kept alive for at least as long as it has any
   windows associated with it (see @code{g_application_hold()} for a way to keep
   it alive without windows).@br{}
   Normally, the connection between the application and the window will remain
   until the window is destroyed, but you can explicitly remove it by setting
-  the @code{::application} property to @code{NULL}.@br{}
+  the @code{application} property to @code{nil}.@br{}
   Since 3.0")
 
 (setf (documentation (atdoc:get-slot-from-name "attached-to" 'gtk-window) 't)
  "@version{2012-12-30}
-  The @arg{\"attached-to\"} property of type @code{GtkWidget*}
+  The @code{attached-to} property of type @class{gtk-widget}
   (Read / Write / Construct).@br{}
   The widget to which this window is attached.
-  See @code{gtk_window_set_attached_to()}.@br{}
+  See @fun{gtk-window-set-attached-to}.@br{}
   Examples of places where specifying this relation is useful are for instance
   a @code{GtkMenu} created by a @code{GtkComboBox}, a completion popup window
   created by @code{GtkEntry} or a typeahead search entry created by
@@ -69,14 +68,14 @@
 
 (setf (documentation (atdoc:get-slot-from-name "decorated" 'gtk-window) 't)
  "@version{2012-12-30}
-  The \"decorated\" property of type @code{gboolean} (Read / Write).@br{}
+  The @code{decorated} property of type @code{gboolean} (Read / Write).@br{}
   Whether the window should be decorated by the window manager.@br{}
   Default value: @arg{true}@br{}
   Since 2.4")
 
 (setf (documentation (atdoc:get-slot-from-name "default-height" 'gtk-window) 't)
  "@version{2012-12-30}
-  The @arg{\"default-height\"} property of type @code{gint} (Read / Write).@br{}
+  The @code{default-height} property of type @code{gint} (Read / Write).@br{}
   The default height of the window, used when initially showing the window.@br{}
   Allowed values: @code{>= G_MAXULONG}@br{}
   Default value: @arg{-1}")
@@ -254,7 +253,7 @@
 
 (setf (documentation (atdoc:get-slot-from-name "transient-for" 'gtk-window) 't)
  "@version{2012-12-30}
-  The @arg{\"transient-for\"} property of type @code{GtkWindow*}
+  The @code{transient-for} property of type @sym{gtk-window}
   (Read / Write / Construct).@br{}
   The transient parent of the window. See @fun{gtk-window-set-transient-for} for
   more details about transient windows.@br{}
@@ -437,6 +436,23 @@
   @see-symbol{gtk-window-type}
   @see-function{gtk-window-set-decorated}")
 
+;;; --- gtk-window-set-title ---------------------------------------------------
+
+(setf (documentation 'gtk-window-set-title 'function)
+ "@version{2012-12-30}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[title]{title of the @arg{window}}
+  @begin{short}
+    Sets the title of @arg{window}.
+  @end{short}
+  The title of a window will be displayed in its title bar; on the X Window
+  System, the title bar is rendered by the window manager, so exactly how the
+  title appears to users may vary according to a user's exact configuration. The
+  title should help a user distinguish this window from other windows they may
+  have open. A good title might include the application name and current
+  document filename, for example.
+  @see-function{gtk-window-get-title}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_wmclass ()
 ;;; 
@@ -461,6 +477,28 @@
 ;;; wmclass_class :
 ;;;     window class hint
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-window-set-resizable -----------------------------------------------
+
+(setf (documentation 'gtk-window-set-resizable 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[resizable]{@arg{true} if the user can resize this @arg{window}}
+  @begin{short}
+    Sets whether the user can resize a window. Windows are user resizable by
+    default.
+  @end{short}")
+
+;;; --- gtk-window-get-resizable -----------------------------------------------
+
+(setf (documentation 'gtk-window-get-resizable 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @return{@arg{true} if the user can resize the @arg{window}.}
+  @begin{short}
+    Gets the value set by @fun{gtk-window-set-resizable}.
+  @end{short}
+  @see-function{gtk-window-set-resizable}")
 
 ;;; --- gtk-window-add-accel-group ---------------------------------------------
 
@@ -508,6 +546,19 @@
     activated.
   @end{short}
   @see-function{gtk-widget-set-receives-default}")
+
+;;; --- gtk-window-set-modal ---------------------------------------------------
+
+(setf (documentation 'gtk-window-set-modal 'function)
+ "@version{2013-1-8}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[modal]{whether the @arg{window} is modal}
+
+  Sets a window modal or non-modal. Modal windows prevent interaction with
+  other windows in the same application. To keep modal dialogs on top of main
+  application windows, use @fun{gtk-window-set-transient-for} to make the dialog
+  transient for the parent; most window managers will then disallow lowering 
+  the dialog below the parent.")
 
 ;;; --- gtk-window-set-default-size --------------------------------------------
 
@@ -614,137 +665,193 @@
   @end{short}
   @see-function{gtk-window-set-gravity}")
 
+;;; --- gtk-window-set-position ------------------------------------------------
+
+(setf (documentation 'gtk-window-set-position 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[position]{a position constraint}
+  @begin{short}
+    Sets a position constraint for this window.
+  @end{short}
+  If the old or new constraint is @code{:center-always}, this will also cause
+  the window to be repositioned to satisfy the new constraint.")
+
+;;; --- gtk-window-set-transient-for -------------------------------------------
+
+(setf (documentation 'gtk-window-set-transient-for 'function)
+ "@version{2013-1-23}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[parent]{parent window, or @code{nil}}
+  @begin{short}
+    Dialog windows should be set transient for the main application window they
+    were spawned from. This allows window managers to e.g. keep the dialog on
+    top of the main window, or center the dialog over the main window.
+  @end{short}
+  @fun{gtk-dialog-new-with-buttons} and other convenience functions in GTK+ will
+  sometimes call @sym{gtk-window-set-transient-for} on your behalf.
+
+  Passing @code{nil} for parent unsets the current transient window.
+
+  On Windows, this function puts the child window on top of the parent, much
+  as the window manager would have done on X.")
+
+;;; --- gtk-window-set-attached-to ---------------------------------------------
+
+(setf (documentation 'gtk-window-set-attached-to 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[attach-widget]{a @class{gtk-widget}, or @code{nil}}
+  @begin{short}
+    Marks window as attached to @arg{attach-widget}.
+  @end{short}
+  This creates a logical binding between the @arg{window} and the widget it
+  belongs to, which is used by GTK+ to propagate information such as styling or
+  accessibility to window as if it was a children of @arg{attach-widget}.
+
+  Examples of places where specifying this relation is useful are for instance
+  a @class{gtk-menu} created by a @class{gtk-combo-box}, a completion popup
+  window created by @class{gtk-entry} or a typeahead search entry created by
+  @class{gtk-tree-view}.
+
+  Note that this function should not be confused with
+  @fun{gtk-window-set-transient-for}, which specifies a window manager relation
+  between two toplevels instead.
+
+  Passing @code{nil} for @arg{attach-widget} detaches the window.
+
+  Since 3.4
+  @see-function{gtk-window-set-transient-for}")
+
+;;; --- gtk-window-set-destroy-with-parent -------------------------------------
+
+(setf (documentation 'gtk-window-set-destroy-with-parent 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[setting]{whether to destroy @arg{window} with its transient parent}
+  @begin{short}
+    If @arg{setting} is @arg{true}, then destroying the transient parent of
+    @arg{window} will also destroy @arg{window} itself.
+  @end{short}
+  This is useful for dialogs that shouldn't persist beyond the lifetime of the
+  main window they're associated with, for example.")
+
+;;; --- gtk-window-set-hide-title-when-maximized ------------------------------- 
+
+(setf (documentation 'gtk-window-set-hide-title-when-maximized 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[setting]{whether to hide the titlebar when @arg{window} is
+    maximized}
+  @begin{short}
+    If @arg{setting} is @arg{true}, then @arg{window} will request that it's
+    titlebar should be hidden when maximized.
+  @end{short}
+  This is useful for windows that don't convey any information other than the
+  application name in the titlebar, to put the available screen space to better
+  use. If the underlying window system does not support the request, the setting
+  will not have any effect.
+
+  Since 3.4")
+
+;;; --- gtk-window-set-screen --------------------------------------------------
+
+(setf (documentation 'gtk-window-set-screen 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[screen]{a @class{gdk-screen} instance}
+  @begin{short}
+    Sets the @class{gdk-screen} where the @arg{window} is displayed; if the
+    @arg{window} is already mapped, it will be unmapped, and then remapped on
+    the new screen.
+  @end{short}
+
+  Since 2.2")
+
+;;; --- gtk-window-get-screen --------------------------------------------------
+
+(setf (documentation 'gtk-window-get-screen 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @return{a @class{gdk-screen} instance}
+  @begin{short}
+    Returns the @class{gdk-screen} associated with @arg{window}.
+  @end{short}
+
+  Since 2.2")
+
+;;; gtk-window-is-active is implemented as the accessor of the slot "is-active".
+
+;;; gtk-window-has-top-level-focus is implemented as the accessor of the slot
+;;; "has-toplevel-focus".
+
+;;; --- gtk-window-lisp-top-levels ---------------------------------------------
+
+(setf (documentation 'gtk-window-list-top-levels 'function)
+ "@version{2013-1-24}
+  @return{list of toplevel widgets}
+  @begin{short}
+    Returns a list of all existing toplevel windows.
+  @end{short}
+  The widgets in the list are not individually referenced. If you want to
+  iterate through the list and perform actions involving callbacks that might
+  destroy the widgets, you must call
+  @code{g_list_foreach (result, (GFunc)g_object_ref, NULL)}
+  first, and then unref all the widgets afterwards.")
+
+;;; --- gtk-window-add-mnemonic ------------------------------------------------
+
+(setf (documentation 'gtk-window-add-mnemonic 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[keyval]{the mnemonic}
+  @argument[target]{the widget that gets activated by the mnemonic}
+  @begin{short}
+    Adds a mnemonic to this @arg{window}.
+  @end{short}")
+
+;;; --- gtk-window-remove-mnemonic ---------------------------------------------
+
+(setf (documentation 'gtk-window-remove-mnemonic 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[keyval]{the mnemonic}
+  @argument[target]{the widget that gets activated by the mnemonic}
+  @begin{short}
+    Removes a mnemonic from this @arg{[window}.
+  @end{short}")
+
+;;; --- gtk-window-mnemonic-activate -------------------------------------------
+
+(setf (documentation 'gtk-window-mnemonic-activate 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[keyval]{the mnemonic}
+  @argument[modifier]{the modifiers}
+  @return{@arg{true} if the activation is done}
+  @begin{short}
+    Activates the targets associated with the mnemonic.
+  @end{short}")
+
+;;; --- gtk-window-activate-key ------------------------------------------------
+
+(setf (documentation 'gtk-window-activate-key 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[event]{a @class{gdk-event-key}}
+  @return{@arg{true} if a mnemonic or accelerator was found and activated.}
+  @begin{short}
+    Activates mnemonics and accelerators for this @arg{window}.
+  @end{short}
+  This is normally called by the default @code{::key_press_event} handler for
+  toplevel windows, however in some cases it may be useful to call this directly
+  when overriding the standard key handling for a toplevel window.
+
+  Since 2.4")
+
+
+
 #|
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_list_toplevels ()
-;;; 
-;;; GList * gtk_window_list_toplevels (void);
-;;; 
-;;; Returns a list of all existing toplevel windows. The widgets in the list are
-;;; not individually referenced. If you want to iterate through the list and
-;;; perform actions involving callbacks that might destroy the widgets, you must
-;;; call g_list_foreach (result, (GFunc)g_object_ref, NULL) first, and then
-;;; unref all the widgets afterwards.
-;;; 
-;;; Returns :
-;;;     list of toplevel widgets
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_window_list_toplevels" gtk-window-list-toplevels)
-    (g-list (g-object gtk-window) :free-from-foreign t))
-
-(export 'gtk-window-list-toplevels)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_add_mnemonic ()
-;;; 
-;;; void gtk_window_add_mnemonic (GtkWindow *window,
-;;;                               guint keyval,
-;;;                               GtkWidget *target);
-;;; 
-;;; Adds a mnemonic to this window.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; keyval :
-;;;     the mnemonic
-;;; 
-;;; target :
-;;;     the widget that gets activated by the mnemonic
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_window_add_mnemonic" gtk-window-add-mnemonic) :void
-  (window (g-object gtk-window))
-  (keyval :uint)
-  (target (g-object gtk-widget)))
-
-(export 'gtk-window-add-mnemonic)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_remove_mnemonic ()
-;;; 
-;;; void gtk_window_remove_mnemonic (GtkWindow *window,
-;;;                                  guint keyval,
-;;;                                  GtkWidget *target);
-;;; 
-;;; Removes a mnemonic from this window.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; keyval :
-;;;     the mnemonic
-;;; 
-;;; target :
-;;;     the widget that gets activated by the mnemonic
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_window_remove_mnemonic" gtk-window-remove-mnemonic) :void
-  (window (g-object gtk-window))
-  (keyval :uint)
-  (target (g-object gtk-widget)))
-
-(export 'gtk-window-remove-mnemonic)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_mnemonic_activate ()
-;;; 
-;;; gboolean gtk_window_mnemonic_activate (GtkWindow *window,
-;;;                                        guint keyval,
-;;;                                        GdkModifierType modifier);
-;;; 
-;;; Activates the targets associated with the mnemonic.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; keyval :
-;;;     the mnemonic
-;;; 
-;;; modifier :
-;;;     the modifiers
-;;; 
-;;; Returns :
-;;;     TRUE if the activation is done
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_window_mnemonic_activate" gtk-window-mnemonic-activate) :boolean
-  (window (g-object gtk-window))
-  (keyval :uint)
-  (modifier gdk-modifier-type))
-
-(export 'gtk-window-mnemonic-activate)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_activate_key ()
-;;; 
-;;; gboolean gtk_window_activate_key (GtkWindow *window, GdkEventKey *event);
-;;; 
-;;; Activates mnemonics and accelerators for this GtkWindow. This is normally
-;;; called by the default ::key_press_event handler for toplevel windows,
-;;; however in some cases it may be useful to call this directly when overriding
-;;; the standard key handling for a toplevel window.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; event :
-;;;     a GdkEventKey
-;;; 
-;;; Returns :
-;;;     TRUE if a mnemonic or accelerator was found and activated.
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gtk_window_activate_key" gtk-window-activate-key) :boolean
-  (window (g-object gtk-window))
-  (event (g-boxed-foreign gdk-event)))
-
-(export 'gtk-window-activate-key)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_propagate_key_event ()
 ;;; 
@@ -1365,31 +1472,30 @@
 ;;; 
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+|#
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_startup_id ()
-;;; 
-;;; void gtk_window_set_startup_id (GtkWindow *window, const gchar *startup_id);
-;;; 
-;;; Startup notification identifiers are used by desktop environment to track
-;;; application startup, to provide user feedback and other features. This
-;;; function changes the corresponding property on the underlying GdkWindow.
-;;; Normally, startup identifier is managed automatically and you should only
-;;; use this function in special cases like transferring focus from other
-;;; processes. You should use this function before calling gtk_window_present()
-;;; or any equivalent function generating a window map event.
-;;; 
-;;; This function is only useful on X11, not with other GTK+ targets.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; startup_id :
-;;;     a string with startup-notification identifier
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-window-set-startup-id ----------------------------------------------
 
+(setf (documentation 'gtk-window-set-startup-id 'function)
+ "@version{2013-1-23}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[startup-id]{a string with startup-notification identifier}
+  @begin{short}
+    Startup notification identifiers are used by desktop environment to track
+    application startup, to provide user feedback and other features.
+  @end{short}
+  This function changes the corresponding property on the underlying
+  @class{gdk-window}. Normally, startup identifier is managed automatically and
+  you should only use this function in special cases like transferring focus
+  from other processes. You should use this function before calling
+  @fun{gtk-window-present} or any equivalent function generating a window map
+  event.
+
+  This function is only useful on X11, not with other GTK+ targets.
+
+  Since 2.12")
+
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_role ()
 ;;; 
@@ -1756,25 +1862,21 @@
     (values (mem-ref width :int) (mem-ref height :int))))
 
 (export 'gtk-window-get-size)
+|#
 
+;;; --- gtk-window-get-transient-for -------------------------------------------
 
+(setf (documentation 'gtk-window-get-transient-for 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @return{The transient parent for this @arg{window}, or @code{nil} if no
+    transient parent has been set}
+  @begin{short}
+    Fetches the transient parent for this window.
+  @end{short}
+  See @fun{gtk-window-set-transient-for}.")
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_get_transient_for ()
-;;; 
-;;; GtkWindow * gtk_window_get_transient_for (GtkWindow *window);
-;;; 
-;;; Fetches the transient parent for this window.
-;;; See gtk_window_set_transient_for().
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     the transient parent for this window, or NULL if no transient parent has
-;;;     been set
-;;; ----------------------------------------------------------------------------
-
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_attached_to ()
 ;;; 
@@ -2351,44 +2453,37 @@
 (export 'gtk-set-window-auto-startup-notification)
 |#
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_get_opacity ()
-;;; 
-;;; gdouble gtk_window_get_opacity (GtkWindow *window);
-;;; 
-;;; Fetches the requested opacity for this window. See gtk_window_set_opacity().
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     the requested opacity for this window
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-window-get-opacity -------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_opacity ()
-;;; 
-;;; void gtk_window_set_opacity (GtkWindow *window, gdouble opacity);
-;;; 
-;;; Request the windowing system to make window partially transparent, with
-;;; opacity 0 being fully transparent and 1 fully opaque. (Values of the opacity
-;;; parameter are clamped to the [0,1] range.) On X11 this has any effect only
-;;; on X screens with a compositing manager running. See
-;;; gtk_widget_is_composited(). On Windows it should work always.
-;;; 
-;;; Note that setting a window's opacity after the window has been shown causes
-;;; it to flicker once on Windows.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; opacity :
-;;;     desired opacity, between 0 and 1
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'gtk-window-get-opacity 'function)
+ "@version{2013-1-23}
+  @argument[window]{a @class{gtk-window} instance}
+  @return{The requested opacity for this window.}
+  @begin{short}
+    Fetches the requested opacity for this window.
+  @end{short}
+  See @fun{gtk-window-set-opacity}.
+
+  Since 2.12")
+
+;;; --- gtk-window-set-opacity -------------------------------------------------
+
+(setf (documentation 'gtk-window-set-opacity 'function)
+ "@version{2013-1-23}
+  @argument[window]{a @class{gtk-window} instance}
+  @argument[opacity]{desired opacity, between @code{0} and @code{1}}
+  @begin{short}
+    Request the windowing system to make window partially transparent, with
+    @arg{opacity} 0 being fully transparent and 1 fully opaque.
+  @end{short}
+  (Values of the @arg{opacity} parameter are clamped to the [0,1] range.) On X11
+  this has any effect only on X screens with a compositing manager running. See
+  @fun{gtk-widget-is-composited}. On Windows it should work always.
+
+  Note that setting a window's opacity after the window has been shown causes
+  it to flicker once on Windows.
+
+  Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_mnemonics_visible ()
@@ -2596,35 +2691,7 @@
 ;;;   "application"              GtkApplication*      : Read / Write
 ;;;   "attached-to"              GtkWidget*           : Read / Write / Construct
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_attached_to ()
-;;; 
-;;; void gtk_window_set_attached_to (GtkWindow *window,
-;;;                                  GtkWidget *attach_widget);
-;;; 
-;;; Marks window as attached to attach_widget. This creates a logical binding
-;;; between the window and the widget it belongs to, which is used by GTK+ to
-;;; propagate information such as styling or accessibility to window as if it
-;;; was a children of attach_widget.
-;;; 
-;;; Examples of places where specifying this relation is useful are for instance
-;;; a GtkMenu created by a GtkComboBox, a completion popup window created by
-;;; GtkEntry or a typeahead search entry created by GtkTreeView.
-;;; 
-;;; Note that this function should not be confused with
-;;; gtk_window_set_transient_for(), which specifies a window manager relation
-;;; between two toplevels instead.
-;;; 
-;;; Passing NULL for attach_widget detaches the window.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; attach_widget :
-;;;     a GtkWidget, or NULL
-;;; 
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
+
 
 ;;; --- gtk-widget-decorated ---------------------------------------------------
 
@@ -2635,7 +2702,7 @@
     Accessor of the slot \"decorated\" of the @class{gtk-window} class.
   @end{short}
   
-  See the function @fun{gtk-widget-set-decorated} for details.
+  See the function @fun{gtk-window-set-decorated} for details.
   @see-function{gtk-window-set-decorated}")
 
 ;;; --- gtk-window-get-decorated -----------------------------------------------
@@ -2705,22 +2772,7 @@
 ;;;   "deletable"                gboolean             : Read / Write
 ;;;   "destroy-with-parent"      gboolean             : Read / Write
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_destroy_with_parent ()
-;;; 
-;;; void gtk_window_set_destroy_with_parent (GtkWindow *window,
-;;;                                          gboolean setting);
-;;; 
-;;; If setting is TRUE, then destroying the transient parent of window will also
-;;; destroy window itself. This is useful for dialogs that shouldn't persist
-;;; beyond the lifetime of the main window they're associated with, for example.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; setting :
-;;;     whether to destroy window with its transient parent
-;;; ----------------------------------------------------------------------------
+
 
 ;;;   "focus-on-map"             gboolean             : Read / Write
 ;;;   "focus-visible"            gboolean             : Read / Write
@@ -2728,46 +2780,23 @@
 ;;;   "has-resize-grip"          gboolean             : Read / Write
 ;;;   "has-toplevel-focus"       gboolean             : Read
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_has_toplevel_focus ()
-;;; 
-;;; gboolean gtk_window_has_toplevel_focus (GtkWindow *window);
-;;; 
-;;; Returns whether the input focus is within this GtkWindow. For real toplevel
-;;; windows, this is identical to gtk_window_is_active(), but for embedded
-;;; windows, like GtkPlug, the results will differ.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     TRUE if the input focus is within this GtkWindow
-;;; 
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-window-has-toplevel-focus ------------------------------------------
+
+(setf (documentation 'gtk-window-has-toplevel-focus 'function)
+ "@version{2013-1-24}
+  @argument[window]{a @class{gtk-window} instance}
+  @return{@arg{true} if the input focus is within this @arg{Window}}
+  @begin{short}
+    Returns whether the input focus is within this @arg{window}.
+  @end{short}
+  For real toplevel windows, this is identical to @fun{gtk-window-is-active},
+  but for embedded windows, like @class{gtk-plug}, the results will differ.
+
+  Since 2.4")
 
 ;;;   "hide-titlebar-when-maximized" gboolean         : Read / Write
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_hide_titlebar_when_maximized ()
-;;; 
-;;; void gtk_window_set_hide_titlebar_when_maximized (GtkWindow *window,
-;;;                                                   gboolean setting);
-;;; 
-;;; If setting is TRUE, then window will request that it's titlebar should be
-;;; hidden when maximized. This is useful for windows that don't convey any
-;;; information other than the application name in the titlebar, to put the
-;;; available screen space to better use. If the underlying window system does
-;;; not support the request, the setting will not have any effect.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; setting :
-;;;     whether to hide the titlebar when window is maximized
-;;; 
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
+
 
 ;;;   "icon"                     GdkPixbuf*           : Read / Write
 ;;;   "icon-name"                gchar*               : Read / Write
@@ -2797,151 +2826,65 @@
 ;;;   "mnemonics-visible"        gboolean             : Read / Write
 ;;;   "modal"                    gboolean             : Read / Write
 
-;;; --- gtk-window-set-modal ---------------------------------------------------
 
-(setf (documentation 'gtk-window-set-modal 'function)
- "@version{2013-1-8}
-  @argument[window]{a @class{gtk-window} instance}
-  @argument[modal]{whether the @arg{window} is modal}
+;;; --- gtk-window-opacity -----------------------------------------------------
 
-  Sets a window modal or non-modal. Modal windows prevent interaction with
-  other windows in the same application. To keep modal dialogs on top of main
-  application windows, use gtk_window_set_transient_for() to make the dialog
-  transient for the parent; most window managers will then disallow lowering 
-  the dialog below the parent.")
-
-;;;   "opacity"                  gdouble              : Read / Write
-
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_resizable ()
-;;; 
-;;; void gtk_window_set_resizable (GtkWindow *window, gboolean resizable);
-;;; 
-;;; Sets whether the user can resize a window. Windows are user resizable by
-;;; default.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; resizable :
-;;;     TRUE if the user can resize this window
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_get_resizable ()
-;;; 
-;;; gboolean gtk_window_get_resizable (GtkWindow *window);
-;;; 
-;;; Gets the value set by gtk_window_set_resizable().
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     TRUE if the user can resize the window
-;;; ----------------------------------------------------------------------------
-
+(setf (gethash 'gtk-window-opacity atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gtk-window-opacity 'function)
+ "@version{2013-1-23}
+  @begin{short}
+    Accessor of the slot @code{opacity} of the @class{gtk-window} class.
+  @end{short}
+  @see-function{gtk-window-get-opacity}
+  @see-function{gtk-window-set-opacity}")
 
 ;;;   "resize-grip-visible"      gboolean             : Read
 ;;;   "role"                     gchar*               : Read / Write
 ;;;   "screen"                   GdkScreen*           : Read / Write
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_screen ()
-;;; 
-;;; void gtk_window_set_screen (GtkWindow *window, GdkScreen *screen);
-;;; 
-;;; Sets the GdkScreen where the window is displayed; if the window is already
-;;; mapped, it will be unmapped, and then remapped on the new screen.
-;;; 
-;;; window :
-;;;     a GtkWindow.
-;;; 
-;;; screen :
-;;;     a GdkScreen.
-;;; 
-;;; Since 2.2
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_get_screen ()
-;;; 
-;;; GdkScreen * gtk_window_get_screen (GtkWindow *window);
-;;; 
-;;; Returns the GdkScreen associated with window.
-;;; 
-;;; window :
-;;;     a GtkWindow.
-;;; 
-;;; Returns :
-;;;     a GdkScreen
-;;; 
-;;; Since 2.2
-;;; ----------------------------------------------------------------------------
 
 ;;;   "skip-pager-hint"          gboolean             : Read / Write
 ;;;   "skip-taskbar-hint"        gboolean             : Read / Write
-;;;   "startup-id"               gchar*               : Write
-;;;   "title"                    gchar*               : Read / Write
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_get_title ()
-;;; 
-;;; const gchar * gtk_window_get_title (GtkWindow *window);
-;;; 
-;;; Retrieves the title of the window. See gtk_window_set_title().
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     the title of the window, or NULL if none has been set explicitely. The
-;;;     returned string is owned by the widget and must not be modified or
-;;;     freed
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-window-startup-id --------------------------------------------------
 
-;;; --- gtk-window-set-title ---------------------------------------------------
-
-(setf (documentation 'gtk-window-set-title 'function)
- "@version{2012-12-30}
-  @argument[window]{a @class{gtk-window} instance}
-  @argument[title]{title of the @arg{window}}
+(setf (gethash 'gtk-window-startup-id atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gtk-window-startup-id 'function)
+ "@version{2013-1-23}
   @begin{short}
-    Sets the title of @arg{window}.
+    Accessor of the slot @code{startup-id} of the @class{gtk-window} class.
   @end{short}
-  The title of a window will be displayed in its title bar; on the X Window
-  System, the title bar is rendered by the window manager, so exactly how the
-  title appears to users may vary according to a user's exact configuration. The
-  title should help a user distinguish this window from other windows they may
-  have open. A good title might include the application name and current
-  document filename, for example.
-  @see-function{gtk-window-get-title}")
+  
+  @see-function{gtk-window-set-startup-id}")
+
+;;; --- gtk-window-get-title ---------------------------------------------------
+
+(setf (documentation 'gtk-window-get-title 'function)
+ "@version{2013-1-23}
+  @argument[window]{a @class{gtk-window} instance}
+  @return{The title of the @arg{window}, or @code{nil} if none has been set
+    explicitely.}
+  @begin{short}
+    Retrieves the title of the @arg{window}.
+  @end{short}
+  See @fun{gtk-window-set-title}.")
+
+;;; --- gtk-window-title -------------------------------------------------------
+
+(setf (gethash 'gtk-window-title atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gtk-window-title 'function)
+ "@version{2013-1-23}
+  @begin{short}
+    Accessor of the slot @code{title} of the @class{gtk-window} class.
+  @end{short}
+  @see-function{gtk-window-get-title}
+  @see-function{gtk-window-set-title}")
+
+
 
 ;;;   "transient-for"            GtkWindow*           : Read / Write / Construct
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_transient_for ()
-;;; 
-;;; void gtk_window_set_transient_for (GtkWindow *window, GtkWindow *parent);
-;;; 
-;;; Dialog windows should be set transient for the main application window they
-;;; were spawned from. This allows window managers to e.g. keep the dialog on
-;;; top of the main window, or center the dialog over the main window.
-;;; gtk_dialog_new_with_buttons() and other convenience functions in GTK+ will
-;;; sometimes call gtk_window_set_transient_for() on your behalf.
-;;; 
-;;; Passing NULL for parent unsets the current transient window.
-;;; 
-;;; On Windows, this function puts the child window on top of the parent, much
-;;; as the window manager would have done on X.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; parent :
-;;;     parent window, or NULL
-;;; ----------------------------------------------------------------------------
+
 
 ;;;   "type"                     GtkWindowType        : Read / Write / Construct
 
@@ -2965,22 +2908,6 @@
 ;;;   "urgency-hint"             gboolean             : Read / Write
 ;;;   "window-position"          GtkWindowPosition    : Read / Write
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_window_set_position ()
-;;; 
-;;; void gtk_window_set_position (GtkWindow *window,
-;;;                               GtkWindowPosition position);
-;;; 
-;;; Sets a position constraint for this window. If the old or new constraint is
-;;; GTK_WIN_POS_CENTER_ALWAYS, this will also cause the window to be
-;;; repositioned to satisfy the new constraint.
-;;; 
-;;; window :
-;;;     a GtkWindow.
-;;; 
-;;; position :
-;;;     a position constraint
-;;; ----------------------------------------------------------------------------
 
 
 

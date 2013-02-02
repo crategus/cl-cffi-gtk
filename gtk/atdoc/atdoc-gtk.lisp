@@ -77,41 +77,35 @@ Theming in GTK+
     gtk.resource-files.lisp          - Resource Files (**)         - GTK+ 3.2.3*
 |#
     (load "src/atdoc-gtk.style.lisp")
-#|
 
-GTK+ Widgets and Objects
+;; GTK+ Widgets and Objects
 
-  Windows
+;;  Windows
 
-|# 
     (load "src/atdoc-gtk.dialog.lisp")
-#|
-    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.4.3
-    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.4.3
-|#
+    (load "src/atdoc-gtk.invisible.lisp")
+    (load "src/atdoc-gtk.message-dialog.lisp")
     (load "src/atdoc-gtk.window.lisp")
-#|
-    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.4.3
-|#
+    (load "src/atdoc-gtk.window-group.lisp")
     (load "src/atdoc-gtk.about-dialog.lisp")
-#|
-    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.4.3
-    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.4.3
+    (load "src/atdoc-gtk.assistant.lisp")
+    (load "src/atdoc-gtk.offscreen-window.lisp")
     
-  Display Widgets
-|#
+;;  Display Widgets
+
     (load "src/atdoc-gtk.accel-label.lisp")
+    (load "src/atdoc-gtk.image.lisp")
+    (load "src/atdoc-gtk.label.lisp")
 #|
-    gtk.image.lisp                   - GtkImage                    - GTK+ 3.4.1
-    gtk.label.lisp                   - GtkLabel                    - GTK+ 3.4.1
     gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.4.1
     gtk.statusbar                    - GtkStatusbar                - GTK+ 3.4.1
     gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.4.3
     gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.4.3
     gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.4.3
-    
-  Buttons and Toggles
-|#    
+|#
+
+;;  Buttons and Toggles
+
     (load "src/atdoc-gtk.button.lisp")
 #|
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.4.1
@@ -234,31 +228,35 @@ GTK+ Widgets and Objects
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.4.3
     gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.2.3*
     gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.4.3
-  
-  Layout Containers
 |#
+;;  Layout Containers
+
     (load "src/atdoc-gtk.grid.lisp")
+    (load "src/atdoc-gtk.alignment.lisp")
+    (load "src/atdoc-gtk.aspect-frame.lisp")
+    (load "src/atdoc-gtk.box.lisp")
 #|
-    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.4.3
-    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.4.3
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.4.2
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.4.3
     gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.4.3
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.4.3
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.4.3
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.4.3
-    gtk.table.lisp                   - GtkTable                    - GTK+ 3.4.2
+|#
+    (load "src/atdoc-gtk.table.lisp")
+#|
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.4.3
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.4.3
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.4.3
+|#
+    (load "src/atdoc-gtk.orientable.lisp")
+
+;;  Ornaments
+    
+    (load "src/atdoc-gtk.frame.lisp")
+    (load "src/atdoc-gtk.separator.lisp")
   
-  Ornaments
-  
-    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.4.3
-    gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.4.3
-  
-  Scrolling
-  
+;;  Scrolling
+
+#|  
     gtk.scrollbar.lisp               - GtkScrollbar, ...           - GTK+ 3.4.3
     gtk.scrolled-window.lisp         - GtkScrolledWindow           - GTK+ 3.4.3    
     gtk.scrollable.lisp              - GtkScrollable               - GTK+ 3.4.3
@@ -281,7 +279,9 @@ GTK+ Widgets and Objects
   
     gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.4.2
     gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.4.3
-    gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.4.3
+|#
+    (load "src/atdoc-gtk.calendar.lisp")
+#|
     gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.4.3
     gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.4.3
     gtk.handle-box.lisp              - GtkHandleBox (**)           - GTK+ 3.4.3

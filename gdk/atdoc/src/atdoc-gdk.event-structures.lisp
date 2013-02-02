@@ -4,7 +4,7 @@
 ;;; Documentation strings for the library GDK.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2013 Dieter Kaiser
 ;;;
@@ -33,9 +33,8 @@
 (setf (gethash 'gdk-scroll-direction atdoc:*symbol-name-alias*) "Enum")
 (setf (gethash 'gdk-scroll-direction atdoc:*external-symbols*)
  "@version{2013-1-12}
-  @short{Specifies the direction for GdkEventScroll.}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @short{Specifies the direction for @class{gdk-event-scroll}.}
+  @begin{pre}
 (define-g-enum \"GdkScrollDirection\" gdk-scroll-direction
   ()
   (:up 0)
@@ -43,46 +42,48 @@
   (:left 2)
   (:right 3)
   (:smooth 4))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:up]{the window is scrolled up.}
-      @entry[:down]{the window is scrolled down.}
-      @entry[:left]{the window is scrolled to the left.}
-      @entry[:right]{the window is scrolled to the right.}
-      @entry[:smooth]{the scrolling is determined by the delta values in
-        GdkEventScroll. See gdk_event_get_scroll_deltas().}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:up]{the window is scrolled up.}
+    @entry[:down]{the window is scrolled down.}
+    @entry[:left]{the window is scrolled to the left.}
+    @entry[:right]{the window is scrolled to the right.}
+    @entry[:smooth]{the scrolling is determined by the delta values in
+      @class{gdk-event-scroll}. See @fun{gdk-event-get-scroll-deltas}.}
+  @end{table}
+  @see-class{gdk-event-scroll}
+  @see-function{gdk-event-get-scroll-delta}")
 
 ;;; --- gdk-visibility-state ---------------------------------------------------
 
 (setf (gethash 'gdk-visibility-state atdoc:*symbol-name-alias*) "Enum")
 (setf (gethash 'gdk-visibility-state atdoc:*external-symbols*)
  "@version{2013-1-12}
-  @short{Specifies the visiblity status of a window for a GdkEventVisibility.}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{short}
+    Specifies the visiblity status of a window for a
+    @class{gdk-event-visibility}.
+  @end{short}
+  @begin{pre}
 (define-g-enum \"GdkVisibilityState\" gdk-visibility-state
   ()
   (:unobscured 0)
   (:partial 1)
   (:fully-obscured 2))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:unobscured]{the window is completely visible.}
-      @entry[:partial]{the window is partially visible.}
-      @entry[:obscured]{the window is not visible at all.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:unobscured]{the window is completely visible.}
+    @entry[:partial]{the window is partially visible.}
+    @entry[:obscured]{the window is not visible at all.}
+  @end{table}
+  @see-class{gdk-event-visibility}")
 
 ;;; --- gdk-crossing-mode ------------------------------------------------------
 
-(setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*) "CEnum")
 (setf (gethash 'gdk-crossing-mode atdoc:*external-symbols*)
  "@version{2013-1-2}
-  @short{Specifies the crossing mode for GdkEventCrossing.}
-  @begin[Lisp Implementaton]{dictionary}
-    @begin{pre}
+  @short{Specifies the crossing mode for @class{gdk-event-crossing}.}
+  @begin{pre}
 (defcenum gdk-crossing-mode
   :normal
   :grab
@@ -93,36 +94,35 @@
   :touch-begin
   :touch-end
   :device-switch)
-    @end{pre}
-    @begin[code]{table}
-      @entry[:normal]{crossing because of pointer motion.}
-      @entry[:grab]{crossing because a grab is activated.}
-      @entry[:ungrab]{crossing because a grab is deactivated.}
-      @entry[:gtk-grab]{crossing because a GTK+ grab is activated.}
-      @entry[:gtk-ungrab]{crossing because a GTK+ grab is deactivated.}
-      @entry[:state-changed]{crossing because a GTK+ widget changed state (e.g.
-        sensitivity).}
-      @entry[:touch-begin]{crossing because a touch sequence has begun, this
-        event is synthetic as the pointer might have not left the window.}
-      @entry[:touch-end]{crossing because a touch sequence has ended, this event
-        is synthetic as the pointer might have not left the window.}
-      @entry[:device-switch]{crossing because of a device switch (i.e. a mouse
-        taking control of the pointer after a touch device), this event is
-        synthetic as the pointer didn't leave the window.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:normal]{crossing because of pointer motion.}
+    @entry[:grab]{crossing because a grab is activated.}
+    @entry[:ungrab]{crossing because a grab is deactivated.}
+    @entry[:gtk-grab]{crossing because a GTK+ grab is activated.}
+    @entry[:gtk-ungrab]{crossing because a GTK+ grab is deactivated.}
+    @entry[:state-changed]{crossing because a GTK+ widget changed state (e.g.
+      sensitivity).}
+    @entry[:touch-begin]{crossing because a touch sequence has begun, this
+      event is synthetic as the pointer might have not left the window.}
+    @entry[:touch-end]{crossing because a touch sequence has ended, this event
+      is synthetic as the pointer might have not left the window.}
+    @entry[:device-switch]{crossing because of a device switch (i.e. a mouse
+      taking control of the pointer after a touch device), this event is
+      synthetic as the pointer didn't leave the window.}
+  @end{table}
+  @see-class{gdk-event-crossing}")
 
 ;;; --- gdk-notify-type --------------------------------------------------------
 
-(setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*) "CEnum")
 (setf (gethash 'gdk-notify-type atdoc:*external-symbols*)
  "@version{2013-1-12}
-  @short{Specifies the kind of crossing for GdkEventCrossing.}
+  @short{Specifies the kind of crossing for @class{gdk-event-crossing}.}
 
   See the X11 protocol specification of LeaveNotify for full details of
   crossing event generation.
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (defcenum gdk-notify-type
   (:ancestor 0)
   :virtual
@@ -130,50 +130,50 @@
   :nonlinear
   :nonlinear-virtual
   :unknown)
-    @end{pre}
-    @begin[code]{table}
-      @entry[:ancestor]{the window is entered from an ancestor or left towards
-        an ancestor.}
-      @entry[:virtual]{the pointer moves between an ancestor and an inferior of
-        the window.}
-      @entry[:inferior]{the window is entered from an inferior or left towards
-        an inferior.}
-      @entry[:nonlinear]{the window is entered from or left towards a window
-        which is neither an ancestor nor an inferior.}
-      @entry[:nonlinear-virtual]{the pointer moves between two windows which are
-        not ancestors of each other and the window is part of the ancestor chain
-        between one of these windows and their least common ancestor.}
-      @entry[:unknown]{an unknown type of enter/leave event occurred.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:ancestor]{the window is entered from an ancestor or left towards
+      an ancestor.}
+    @entry[:virtual]{the pointer moves between an ancestor and an inferior of
+      the window.}
+    @entry[:inferior]{the window is entered from an inferior or left towards
+      an inferior.}
+    @entry[:nonlinear]{the window is entered from or left towards a window
+      which is neither an ancestor nor an inferior.}
+    @entry[:nonlinear-virtual]{the pointer moves between two windows which are
+      not ancestors of each other and the window is part of the ancestor chain
+      between one of these windows and their least common ancestor.}
+    @entry[:unknown]{an unknown type of enter/leave event occurred.}
+  @end{table}
+  @see-class{gdk-event-crossing}")
 
 ;;; --- gdk-property-state -----------------------------------------------------
 
 (setf (gethash 'gdk-property-state atdoc:*symbol-name-alias*) "Enum")
 (setf (gethash 'gdk-property-state atdoc:*external-symbols*)
  "@version{2013-1-12}
-  @short{Specifies the type of a property change for a GdkEventProperty.}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{short}
+    Specifies the type of a property change for a @class{gdk-event-property}.
+  @end{short}
+  @begin{pre}
 (define-g-enum \"GdkPropertyState\" gdk-property-state
   ()
   :new-value
   :delete)
-    @end{pre}
-    @begin[code]{table}
-      @entry[:new-value]{the property value was changed.}
-      @entry[:delete]{the property was deleted.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:new-value]{the property value was changed.}
+    @entry[:delete]{the property was deleted.}
+  @end{table}
+  @see-class{gdk-event-property}")
 
 ;;; --- gdk-window-state -------------------------------------------------------
 
-(setf (gethash 'gdk-window-state atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gdk-window-state atdoc:*symbol-name-alias*) "Flags")
 (setf (gethash 'gdk-window-state atdoc:*external-symbols*)
  "@version{2013-1-12}
   @short{Specifies the state of a toplevel window.}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-flags \"GdkWindowState\" gdk-window-state
   (:export t
    :type-initializer \"gdk_window_state_get_type\")
@@ -185,19 +185,18 @@
   (:above 32)
   (:below 64)
   (:focused 128))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:withdrawn]{the window is not shown.}
-      @entry[:iconified]{the window is minimized.}
-      @entry[:maximized]{the window is maximized.}
-      @entry[:sticky]{the window is sticky.}
-      @entry[:fullscreen]{the window is maximized without decorations.}
-      @entry[:above]{the window is kept above other windows.}
-      @entry[:below]{the window is kept below other windows.}
-      @entry[:focused]{the window is presented as focused (with active
-        decorations).}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:withdrawn]{the window is not shown.}
+    @entry[:iconified]{the window is minimized.}
+    @entry[:maximized]{the window is maximized.}
+    @entry[:sticky]{the window is sticky.}
+    @entry[:fullscreen]{the window is maximized without decorations.}
+    @entry[:above]{the window is kept above other windows.}
+    @entry[:below]{the window is kept below other windows.}
+    @entry[:focused]{the window is presented as focused (with active
+      decorations).}
+  @end{table}")
 
 ;;; --- gdk-setting-action -----------------------------------------------------
 
@@ -206,22 +205,21 @@
  "@version{2013-1-12}
   @begin{short}
     Specifies the kind of modification applied to a setting in a
-    GdkEventSetting.
+    @class{gdk-event-setting}.
   @end{short}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-enum \"GdkSettingAction\" gdk-setting-action
   ()
   (:new 0)
   (:changed 1)
   (:deleted 2))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:new]{a setting was added.}
-      @entry[:changes]{a setting was changed.}
-      @entry[:deleted]{a setting was deleted.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:new]{a setting was added.}
+    @entry[:changes]{a setting was changed.}
+    @entry[:deleted]{a setting was deleted.}
+  @end{table}
+  @see-class{gdk-event-setting}")
 
 ;;; --- gdk-owner-change -------------------------------------------------------
 
@@ -229,20 +227,18 @@
 (setf (gethash 'gdk-owner-change atdoc:*external-symbols*)
  "@version{2013-1-12}
   @short{Specifies why a selection ownership was changed.}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-enum \"GdkOwnerChange\" gdk-owner-change
   ()
   (:new-owner 0)
   (:destroy 1)
   (:close 2))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:owner]{some other app claimed the ownership}
-      @entry[:destroy]{the window was destroyed}
-      @entry[:close]{the client was closed}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:owner]{some other app claimed the ownership}
+    @entry[:destroy]{the window was destroyed}
+    @entry[:close]{the client was closed}
+  @end{table}")
 
 ;;; --- gdk-event-type ---------------------------------------------------------
 
@@ -254,8 +250,7 @@
   Do not confuse these events with the signals that GTK+ widgets emit.
   Although many of these events result in corresponding signals being emitted,
   the events are often transformed or filtered along the way.
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-enum \"GdkEventType\" gdk-event-type
   ()
   (:nothing -1)
@@ -289,279 +284,161 @@
   (:drop-finished 27)
   (:client-event 28)
   (:visibility-notify 29)
-  (:no-expose 30)
+  (:no-expose 30)   ;; not documented
   (:scroll 31)
   (:window-state 32)
   (:setting 33)
   (:owner-change 34)
   (:grab-broken 35)
-  (:damage 36))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:nothing]{a special code to indicate a null event.}
-      @entry[:delete]{the window manager has requested that the toplevel window
-        be hidden or destroyed, usually when the user clicks on a special icon
-        in the title bar.}
-      @entry[:destroy]{the window has been destroyed.}
-      @entry[:expose]{all or part of the window has become visible and needs to
-        be redrawn.}
-      @entry[:motion-notify]{the pointer (usually a mouse) has moved.}
-      @entry[:button-press]{a mouse button has been pressed.}
-      @entry[:2button-press]{a mouse button has been double-clicked (clicked
-        twice within a short period of time). Note that each click also
-        generates a GDK_BUTTON_PRESS event.}
-      @entry[3button-press]{a mouse button has been clicked 3 times in a short
-        period of time. Note that each click also generates a GDK_BUTTON_PRESS
-        event.}
-      @entry[:button-release]{a mouse button has been released.}
-      @entry[:key-press]{a key has been pressed.}
-      @entry[:key-release]{a key has been released.}
-      @entry[:enter-notifiy]{the pointer has entered the window.}
-      @entry[:leave-notify]{the pointer has left the window.}
-      @entry[:focus-change]{the keyboard focus has entered or left the window.}
-      @entry[:configure]{the size, position or stacking order of the window has
-        changed. Note that GTK+ discards these events for GDK_WINDOW_CHILD
-        windows.}
-      @entry[:map]{the window has been mapped.}
-      @entry[:unmap]{the window has been unmapped.}
-      @entry[:property-notify]{a property on the window has been changed or
-        deleted.}
-      @entry[:selection-clear]{the application has lost ownership of a
-        selection.}
-      @entry[:selection-request]{another application has requested a selection.}
-      @entry[:selection-notify]{a selection has been received.}
-      @entry[:proximity-in]{an input device has moved into contact with a
-        sensing surface (e.g. a touchscreen or graphics tablet).}
-      @entry[:proximity-out]{an input device has moved out of contact with a
-        sensing surface.}
-      @entry[:drag-enter]{the mouse has entered the window while a drag is in
-        progress.}
-      @entry[:drag-leave]{the mouse has left the window while a drag is in
-        progress.}
-      @entry[:drag-motion]{the mouse has moved in the window while a drag is in
-        progress.}
-      @entry[:drag-status]{the status of the drag operation initiated by the
-        window has changed.}
-      @entry[:drop-start]{a drop operation onto the window has started.}
-      @entry[:drop-finished]{the drop operation initiated by the window has
-        completed.}
-      @entry[:client-event]{a message has been received from another
-        application.}
-      @entry[:visibility-notify]{the window visibility status has changed.}
-      @entry[:scroll]{the scroll wheel was turned}
-      @entry[:window-state]{the state of a window has changed. See
-        GdkWindowState for the possible window states}
-      @entry[:setting]{a setting has been modified.}
-      @entry[:owner-change]{the owner of a selection has changed. This event
-        type was added in 2.6}
-      @entry[:grab-broken]{a pointer or keyboard grab was broken. This event
-        type was added in 2.8.}
-      @entry[:damage]{the content of the window has been changed. This event
-        type was added in 2.14.}
-      @entry[:touch-begin]{A new touch event sequence has just started. This
-        event type was addedin 3.4.}
-      @entry[:touch-update]{A touch event sequence has been updated. This event
-        type was added in 3.4.}
-      @entry[:toch-end]{A touch event sequence has finished. This event type was
-        added in 3.4.}
-      @entry[:touch-cancel]{A touch event sequence has been canceled. This event
-        type was added in 3.4.}
-      @entry[:event-last]{marks the end of the GdkEventType enumeration. Added
-        in 2.18}
-    @end{table}
-  @end{dictionary}")
+  (:damage 36)
+  (:touch-begin 37)
+  (:touch-update 38)
+  (:touch-end 39)
+  (:touch-cancel 40))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:nothing]{a special code to indicate a null event.}
+    @entry[:delete]{the window manager has requested that the toplevel window
+      be hidden or destroyed, usually when the user clicks on a special icon
+      in the title bar.}
+    @entry[:destroy]{the window has been destroyed.}
+    @entry[:expose]{all or part of the window has become visible and needs to
+      be redrawn.}
+    @entry[:motion-notify]{the pointer (usually a mouse) has moved.}
+    @entry[:button-press]{a mouse button has been pressed.}
+    @entry[:2button-press]{a mouse button has been double-clicked (clicked
+      twice within a short period of time). Note that each click also
+      generates a @code{:button-press} event.}
+    @entry[3button-press]{a mouse button has been clicked 3 times in a short
+      period of time. Note that each click also generates a @code{:button-press}
+      event.}
+    @entry[:button-release]{a mouse button has been released.}
+    @entry[:key-press]{a key has been pressed.}
+    @entry[:key-release]{a key has been released.}
+    @entry[:enter-notifiy]{the pointer has entered the window.}
+    @entry[:leave-notify]{the pointer has left the window.}
+    @entry[:focus-change]{the keyboard focus has entered or left the window.}
+    @entry[:configure]{the size, position or stacking order of the window has
+      changed. Note that GTK+ discards these events for @code{:child} windows.}
+    @entry[:map]{the window has been mapped.}
+    @entry[:unmap]{the window has been unmapped.}
+    @entry[:property-notify]{a property on the window has been changed or
+      deleted.}
+    @entry[:selection-clear]{the application has lost ownership of a
+      selection.}
+    @entry[:selection-request]{another application has requested a selection.}
+    @entry[:selection-notify]{a selection has been received.}
+    @entry[:proximity-in]{an input device has moved into contact with a
+      sensing surface (e.g. a touchscreen or graphics tablet).}
+    @entry[:proximity-out]{an input device has moved out of contact with a
+      sensing surface.}
+    @entry[:drag-enter]{the mouse has entered the window while a drag is in
+      progress.}
+    @entry[:drag-leave]{the mouse has left the window while a drag is in
+      progress.}
+    @entry[:drag-motion]{the mouse has moved in the window while a drag is in
+      progress.}
+    @entry[:drag-status]{the status of the drag operation initiated by the
+      window has changed.}
+    @entry[:drop-start]{a drop operation onto the window has started.}
+    @entry[:drop-finished]{the drop operation initiated by the window has
+      completed.}
+    @entry[:client-event]{a message has been received from another
+      application.}
+    @entry[:visibility-notify]{the window visibility status has changed.}
+    @entry[:scroll]{the scroll wheel was turned}
+    @entry[:window-state]{the state of a window has changed. See
+      @symbol{gdk-window-state} for the possible window states}
+    @entry[:setting]{a setting has been modified.}
+    @entry[:owner-change]{the owner of a selection has changed. This event
+      type was added in 2.6}
+    @entry[:grab-broken]{a pointer or keyboard grab was broken. This event
+      type was added in 2.8.}
+    @entry[:damage]{the content of the window has been changed. This event
+      type was added in 2.14.}
+    @entry[:touch-begin]{A new touch event sequence has just started. This
+      event type was addedin 3.4.}
+    @entry[:touch-update]{A touch event sequence has been updated. This event
+      type was added in 3.4.}
+    @entry[:toch-end]{A touch event sequence has finished. This event type was
+      added in 3.4.}
+    @entry[:touch-cancel]{A touch event sequence has been canceled. This event
+      type was added in 3.4.}
+  @end{table}")
 
-#|
-;;; ----------------------------------------------------------------------------
-;;; enum GdkModifierType
-;;;
-;;; typedef enum {
-;;;   GDK_SHIFT_MASK    = 1 << 0,
-;;;   GDK_LOCK_MASK     = 1 << 1,
-;;;   GDK_CONTROL_MASK  = 1 << 2,
-;;;   GDK_MOD1_MASK     = 1 << 3,
-;;;   GDK_MOD2_MASK     = 1 << 4,
-;;;   GDK_MOD3_MASK     = 1 << 5,
-;;;   GDK_MOD4_MASK     = 1 << 6,
-;;;   GDK_MOD5_MASK     = 1 << 7,
-;;;   GDK_BUTTON1_MASK  = 1 << 8,
-;;;   GDK_BUTTON2_MASK  = 1 << 9,
-;;;   GDK_BUTTON3_MASK  = 1 << 10,
-;;;   GDK_BUTTON4_MASK  = 1 << 11,
-;;;   GDK_BUTTON5_MASK  = 1 << 12,
-;;;
-;;;   GDK_MODIFIER_RESERVED_13_MASK  = 1 << 13,
-;;;   GDK_MODIFIER_RESERVED_14_MASK  = 1 << 14,
-;;;   GDK_MODIFIER_RESERVED_15_MASK  = 1 << 15,
-;;;   GDK_MODIFIER_RESERVED_16_MASK  = 1 << 16,
-;;;   GDK_MODIFIER_RESERVED_17_MASK  = 1 << 17,
-;;;   GDK_MODIFIER_RESERVED_18_MASK  = 1 << 18,
-;;;   GDK_MODIFIER_RESERVED_19_MASK  = 1 << 19,
-;;;   GDK_MODIFIER_RESERVED_20_MASK  = 1 << 20,
-;;;   GDK_MODIFIER_RESERVED_21_MASK  = 1 << 21,
-;;;   GDK_MODIFIER_RESERVED_22_MASK  = 1 << 22,
-;;;   GDK_MODIFIER_RESERVED_23_MASK  = 1 << 23,
-;;;   GDK_MODIFIER_RESERVED_24_MASK  = 1 << 24,
-;;;   GDK_MODIFIER_RESERVED_25_MASK  = 1 << 25,
-;;;
-;;;   /* The next few modifiers are used by XKB, so we skip to the end.
-;;;    * Bits 15 - 25 are currently unused. Bit 29 is used internally.
-;;;    */
-;;;
-;;;   GDK_SUPER_MASK    = 1 << 26,
-;;;   GDK_HYPER_MASK    = 1 << 27,
-;;;   GDK_META_MASK     = 1 << 28,
-;;;
-;;;   GDK_MODIFIER_RESERVED_29_MASK  = 1 << 29,
-;;;
-;;;   GDK_RELEASE_MASK  = 1 << 30,
-;;;
-;;;   /* Combination of GDK_SHIFT_MASK..GDK_BUTTON5_MASK + GDK_SUPER_MASK
-;;;      + GDK_HYPER_MASK + GDK_META_MASK + GDK_RELEASE_MASK */
-;;;   GDK_MODIFIER_MASK = 0x5c001fff
-;;; } GdkModifierType;
-;;;
-;;; A set of bit-flags to indicate the state of modifier keys and mouse buttons
-;;; in various event types. Typical modifier keys are Shift, Control, Meta,
-;;; Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.
-;;;
-;;; Like the X Window System, GDK supports 8 modifier keys and 5 mouse buttons.
-;;;
-;;; Since 2.10, GDK recognizes which of the Meta, Super or Hyper keys are mapped
-;;; to Mod2 - Mod5, and indicates this by setting GDK_SUPER_MASK, GDK_HYPER_MASK
-;;; or GDK_META_MASK in the state field of key events.
-;;;
-;;; Note that GDK may add internal values to events which include reserved
-;;; values such as GDK_MODIFIER_RESERVED_13_MASK. Your code should preserve and
-;;; ignore them. You can use GDK_MODIFIER_MASK to remove all reserved values.
-;;;
-;;; GDK_SHIFT_MASK
-;;;     the Shift key.
-;;;
-;;; GDK_LOCK_MASK
-;;;     a Lock key (depending on the modifier mapping of the X server this may
-;;;     either be CapsLock or ShiftLock).
-;;;
-;;; GDK_CONTROL_MASK
-;;;     the Control key.
-;;;
-;;; GDK_MOD1_MASK
-;;;     the fourth modifier key (it depends on the modifier mapping of the X
-;;;     server which key is interpreted as this modifier, but normally it is the
-;;;     Alt key).
-;;;
-;;; GDK_MOD2_MASK
-;;;     the fifth modifier key (it depends on the modifier mapping of the X
-;;;     server which key is interpreted as this modifier).
-;;;
-;;; GDK_MOD3_MASK
-;;;     the sixth modifier key (it depends on the modifier mapping of the X
-;;;     server which key is interpreted as this modifier).
-;;;
-;;; GDK_MOD4_MASK
-;;;     the seventh modifier key (it depends on the modifier mapping of the X
-;;;     server which key is interpreted as this modifier).
-;;;
-;;; GDK_MOD5_MASK
-;;;     the eighth modifier key (it depends on the modifier mapping of the X
-;;;     server which key is interpreted as this modifier).
-;;;
-;;; GDK_BUTTON1_MASK
-;;;     the first mouse button.
-;;;
-;;; GDK_BUTTON2_MASK
-;;;     the second mouse button.
-;;;
-;;; GDK_BUTTON3_MASK
-;;;     the third mouse button.
-;;;
-;;; GDK_BUTTON4_MASK
-;;;     the fourth mouse button.
-;;;
-;;; GDK_BUTTON5_MASK
-;;;     the fifth mouse button.
-;;;
-;;; GDK_MODIFIER_RESERVED_13_MASK
-;;;     A reserved bit flag; do not use in your own code
-;;;
-;;; GDK_MODIFIER_RESERVED_14_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_15_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_16_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_17_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_18_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_19_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_20_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_21_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_22_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_23_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_24_MASK
-;;;
-;;;
-;;; GDK_MODIFIER_RESERVED_25_MASK
-;;;
-;;;
-;;; GDK_SUPER_MASK
-;;;     the Super modifier. Since 2.10
-;;;
-;;; GDK_HYPER_MASK
-;;;     the Hyper modifier. Since 2.10
-;;;
-;;; GDK_META_MASK
-;;;     the Meta modifier. Since 2.10
-;;;
-;;; GDK_MODIFIER_RESERVED_29_MASK
-;;;
-;;;
-;;; GDK_RELEASE_MASK
-;;;     not used in GDK itself. GTK+ uses it to differentiate between (keyval,
-;;;     modifiers) pairs from key press and release events.
-;;;
-;;; GDK_MODIFIER_MASK
-;;;     a mask covering all modifier types.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-flags "GdkModifierType" gdk-modifier-type
+(setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*) "Flags")
+(setf (gethash 'gdk-modifier-type atdoc:*external-symbols*)
+ "@version{2013-1-21}
+  @begin{short}
+    A set of bit-flags to indicate the state of modifier keys and mouse buttons
+    in various event types.
+  @end{short}
+  Typical modifier keys are Shift, Control, Meta, Super, Hyper, Alt, Compose,
+  Apple, CapsLock or ShiftLock.
+
+  Like the X Window System, GDK supports 8 modifier keys and 5 mouse buttons.
+
+  Since 2.10, GDK recognizes which of the Meta, Super or Hyper keys are mapped
+  to Mod2 - Mod5, and indicates this by setting @code{:super-mask},
+  @code{:hyper-mask} or @code{:meta-mask} in the state field of key events.
+
+  Note that GDK may add internal values to events which include reserved
+  values such as @code{GDK_MODIFIER_RESERVED_13_MASK}. Your code should preserve
+  and ignore them. You can use @code{:modifier-mask} to remove all reserved
+  values.
+  @begin{pre}
+(define-g-flags \"GdkModifierType\" gdk-modifier-type
   (:export t
-   :type-initializer "gdk_modifier_type_get_type")
-  (:shift-mask 1)
-  (:lock-mask 2)
-  (:control-mask 4)
-  (:mod1-mask 8)
-  (:mod2-mask 16)
-  (:mod3-mask 32)
-  (:mod4-mask 64)
-  (:mod5-mask 128)
-  (:button1-mask 256)
-  (:button2-mask 512)
-  (:button3-mask 1024)
-  (:button4-mask 2048)
-  (:button5-mask 4096)
-  (:super-mask 67108864)
-  (:hyper-mask 134217728)
-  (:meta-mask 268435456)
-  (:release-mask 1073741824)
-  (:modifier-mask 1543512063))
-|#
+   :type-initializer \"gdk_modifier_type_get_type\")
+  (:shift-mask   #.(ash 1 0))
+  (:lock-mask    #.(ash 1 1))
+  (:control-mask #.(ash 1 2))
+  (:mod1-mask    #.(ash 1 3))
+  (:mod2-mask    #.(ash 1 4))
+  (:mod3-mask    #.(ash 1 5))
+  (:mod4-mask    #.(ash 1 6))
+  (:mod5-mask    #.(ash 1 7))
+  (:button1-mask #.(ash 1 8))
+  (:button2-mask #.(ash 1 9))
+  (:button3-mask #.(ash 1 10))
+  (:button4-mask #.(ash 1 11))
+  (:button5-mask #.(ash 1 12))
+  (:super-mask   #.(ash 1 26))
+  (:hyper-mask   #.(ash 1 27))
+  (:meta-mask    #.(ash 1 28))
+  (:release-mask #.(ash 1 30))
+  (:modifier-mask #x5c001fff))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:shift-mask]{the Shift key.}
+    @entry[:lock-mask]{a Lock key (depending on the modifier mapping of the X
+      server this may either be CapsLock or ShiftLock).}
+    @entry[:control-mask]{the Control key.}
+    @entry[:mod1-mask]{the fourth modifier key (it depends on the modifier
+      mapping of the X server which key is interpreted as this modifier, but
+      normally it is the Alt key).}
+    @entry[:mod2-mask]{the fifth modifier key (it depends on the modifier
+      mapping of the X server which key is interpreted as this modifier).}
+    @entry[:mod3-mask]{the sixth modifier key (it depends on the modifier
+      mapping of the X server which key is interpreted as this modifier).}
+    @entry[:mod4-mask]{the seventh modifier key (it depends on the modifier
+      mapping of the X server which key is interpreted as this modifier).}
+    @entry[:mod5-mask]{the eighth modifier key (it depends on the modifier
+      mapping of the X server which key is interpreted as this modifier).}
+    @entry[:button1-mask]{the first mouse button.}
+    @entry[:button2-mask]{the second mouse button.}
+    @entry[:button3-mask]{the third mouse button.}
+    @entry[:button4-mask]{the fourth mouse button.}
+    @entry[:button5-mask]{the fifth mouse button.}
+    @entry[:super-mask]{the Super modifier. Since 2.10}
+    @entry[:hyper-mask]{the Hyper modifier. Since 2.10}
+    @entry[:meta-mask]{the Meta modifier. Since 2.10}
+    @entry[:release-mask]{not used in GDK itself. GTK+ uses it to differentiate
+      between (keyval, modifiers) pairs from key press and release events.}
+    @entry[:modifier-mask]{a mask covering all modifier types.}
+  @end{table}")
 
 ;;; --- gdk-event-mask ---------------------------------------------------------
 
@@ -575,24 +452,23 @@
   @end{short}
 
   @code{:pointer-motion-hint-mask} is a special mask which is used to reduce the
-  number of @code{GDK_MOTION_NOTIFY} events received. Normally a
-  @code{GDK_MOTION_NOTIFY} event is received each time the mouse moves. However,
+  number of @code{:motion-notifiy} events received. Normally a
+  @code{:motion-notify} event is received each time the mouse moves. However,
   if the application spends a lot of time processing the event (updating the
   display, for example), it can lag behind the position of the mouse. When using
-  @code{:pointer-motion-hint-mask}, fewer @code{GDK_MOTION_NOTIFY} events will
-  be sent, some of which are marked as a hint (the @code{is_hint member} is
+  @code{:pointer-motion-hint-mask}, fewer @code{:motion-notify} events will
+  be sent, some of which are marked as a hint (the @code{is_hint} member is
   @arg{true}). To receive more motion events after a motion hint event, the
   application needs to asks for more, by calling
   @fun{gdk-event-request-motions}.
 
   If @code{:touch-mask} is enabled, the window will receive touch events from
-  touch-enabled devices. Those will come as sequences of @em{GdkEventTouch}
-  with type @code{GDK_TOUCH_UPDATE}, enclosed by two events with type
-  @code{GDK_TOUCH_BEGIN} and @code{GDK_TOUCH_END} (or @code{GDK_TOUCH_CANCEL}).
+  touch-enabled devices. Those will come as sequences of @class{gdk-event-touch}
+  with type @code{:touch-update}, enclosed by two events with type
+  @code{:touch-begin} and @code{:touch-end} (or @code{:touch-cancel}).
   @code{gdk_event_get_event_sequence()} returns the event sequence for these
   events, so different sequences may be distinguished.
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-flags \"GdkEventMask\" gdk-event-mask
   ()
   (:exposure-mask 2)
@@ -619,40 +495,39 @@
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
   (:all-events-mask 4194302))
-    @end{pre}
-    @begin{table}
-      @entry[:exposure-mask]{receive expose events}
-      @entry[:pointer-motion-mask]{receive all pointer motion events}
-      @entry[:pointer-motion-hint-mask]{see the explanation above}
-      @entry[:button-motion-mask]{receive pointer motion events while any
-        button is pressed}
-      @entry[:button1-motion-mask]{receive pointer motion events while 1
-        button is pressed}
-      @entry[:button2-motion-mask]{receive pointer motion events while 2
-        button is pressed}
-      @entry[:button3-motion-mask]{receive pointer motion events while 3
-        button is pressed}
-      @entry[:button-press-mask]{receive button press events}
-      @entry[:button-release-mask]{receive button release events}
-      @entry[:key-press-mask]{receive key press events}
-      @entry[:key-release-mask]{receive key release events}
-      @entry[:enter-notify-mask]{receive window enter events}
-      @entry[:leave-notify-mask]{receive window leave events}
-      @entry[:focus-change-mask]{receive focus change events}
-      @entry[:structure-mask]{receive events about window configuration
-        change}
-      @entry[:property-change-mask]{receive property change events}
-      @entry[:visibility-notify-mask]{receive visibility change events}
-      @entry[:proximity-in-mask]{receive proximity in events}
-      @entry[:proximity-out-mask]{receive proximity out events}
-      @entry[:substructure-mask]{receive events about window configuration
-        changes of child windows}
-      @entry[:scroll-mask]{receive scroll events}
-      @entry[:touch-mask]{receive touch events}
-      @entry[:smooth-scroll-mask]{receive smooth scrolling events}
-      @entry[:all-events-mask]{the combination of all the above event masks.}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:exposure-mask]{receive expose events}
+    @entry[:pointer-motion-mask]{receive all pointer motion events}
+    @entry[:pointer-motion-hint-mask]{see the explanation above}
+    @entry[:button-motion-mask]{receive pointer motion events while any
+      button is pressed}
+    @entry[:button1-motion-mask]{receive pointer motion events while 1
+      button is pressed}
+    @entry[:button2-motion-mask]{receive pointer motion events while 2
+      button is pressed}
+    @entry[:button3-motion-mask]{receive pointer motion events while 3
+      button is pressed}
+    @entry[:button-press-mask]{receive button press events}
+    @entry[:button-release-mask]{receive button release events}
+    @entry[:key-press-mask]{receive key press events}
+    @entry[:key-release-mask]{receive key release events}
+    @entry[:enter-notify-mask]{receive window enter events}
+    @entry[:leave-notify-mask]{receive window leave events}
+    @entry[:focus-change-mask]{receive focus change events}
+    @entry[:structure-mask]{receive events about window configuration
+      change}
+    @entry[:property-change-mask]{receive property change events}
+    @entry[:visibility-notify-mask]{receive visibility change events}
+    @entry[:proximity-in-mask]{receive proximity in events}
+    @entry[:proximity-out-mask]{receive proximity out events}
+    @entry[:substructure-mask]{receive events about window configuration
+      changes of child windows}
+    @entry[:scroll-mask]{receive scroll events}
+    @entry[:touch-mask]{receive touch events}
+    @entry[:smooth-scroll-mask]{receive smooth scrolling events}
+    @entry[:all-events-mask]{the combination of all the above event masks.}
+  @end{table}")
 
 ;;; --- gdk-event --------------------------------------------------------------
 
@@ -720,137 +595,6 @@
   @see-slot{gdk-event-window}
   @see-slot{gdk-event-send-event}
 ")
-
-;;; ----------------------------------------------------------------------------
-
-#|
-(define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  (type gdk-event-type)
-  (window (g-object gdk-window))
-  (send-event (:boolean :int8))
-  (:variant type
-            ((:key-press :key-release) event-key
-             (time :uint32)
-             (state gdk-modifier-type)
-             (keyval :uint)
-             (length :int)
-             (string (:string :free-from-foreign nil
-                              :free-to-foreign nil))
-             (hardware-keycode :uint16)
-             (group :uint8)
-             (is-modifier :uint))
-            ((:button-press
-              :2button-press
-              :3button-press
-              :button-release) event-button
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state :uint)
-             (button :uint)
-             (device (g-object device))
-             (x-root :double)
-             (y-root :double))
-            ((:scroll) event-scroll
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (state gdk-modifier-type)
-             (direction gdk-scroll-direction)
-             (device (g-object device))
-             (x-root :double)
-             (y-root :double))
-            ((:motion-notify) event-motion
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state gdk-modifier-type)
-             (is-hint :int16)
-             (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double))
-            ((:expose) event-expose
-             (area gdk-rectangle :inline t)
-             (region :pointer)
-             (count :int))
-            ((:visibility-notify) event-visibility
-             (state gdk-visibility-state))
-            ((:enter-notify :leave-notify) event-crossing
-             (sub-window (g-object gdk-window))
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (x-root :double)
-             (y-root :double)
-             (mode gdk-crossing-mode)
-             (detail gdk-notify-type)
-             (focus :boolean)
-             (state :uint))
-            ((:focus-change) event-focus
-             (in :int16))
-            ((:configure) event-configure
-             (x :int)
-             (y :int)
-             (width :int)
-             (height :int))
-            ((:property-notify) event-property
-             (atom gdk-atom)
-             (time :uint32)
-             (state gdk-property-state))
-            ((:selection-clear
-              :selection-notify
-              :selection-request) event-selection
-             (selection gdk-atom)
-             (target gdk-atom)
-             (property gdk-atom)
-             (time :uint32)
-             ;; TODO: Is it correct to replace GdkNativeWindow with g-object
-             (requestor g-object))
-            ((:drag-enter
-              :drag-leave
-              :drag-motion
-              :drag-status
-              :drop-start
-              :drop-finished) event-dnd
-             (drag-context (g-object gdk-drag-context))
-             (time :uint32)
-             (x-root :short)
-             (y-root :short))
-            ((:proximity-in
-              :proximity-out) event-proximity
-             (time :uint32)
-             (device (g-object gdk-device)))
-            ((:client-event) event-client
-             (message-time gdk-atom)
-             (data-format :ushort)
-             (:variant data-format
-                       (8 event-client-8
-                          (data :uchar :count 20))
-                       (16 event-client-16
-                           (data :ushort :count 10))
-                       (32 event-client-32
-                           (data :ulong :count 5))))
-            ((:no-expose) event-no-expose)
-            ((:window-state) event-window-state
-             (changed-mask gdk-window-state)
-             (new-window-state gdk-window-state))
-            ((:setting) event-setting
-             (action gdk-setting-action)
-             (name (:string :free-from-foreign nil :free-to-foreign nil)))
-            ((:owner-change) event-owner-change
-             ;; TODO: Is it correct to replace GdkNativeWindow with g-object
-             (owner g-object)
-             (reason gdk-owner-change)
-             (selection gdk-atom)
-             (time :uint32)
-             (selection-time :uint32))
-            ((:grab-broken) event-grab-broken
-             (keyboard :boolean)
-             (implicit :boolean)
-             (grab-window (g-object gdk-window)))))
-|#
 
 ;;; --- gdk-event-type ---------------------------------------------------------
 
@@ -964,8 +708,6 @@
   @see-slot{gdk-event-key-group}
   @see-slot{gdk-event-key-is-modifier}")
 
-;;; ----------------------------------------------------------------------------
-
 ;;; --- gdk-event-key-type -----------------------------------------------------
 
 (setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*) "Accessor")
@@ -1070,8 +812,8 @@
 (setf (documentation 'gdk-event-button 'type)
  "@version{2013-1-11}
   @short{Used for button press and button release events.}
-  The type field will be one of GDK_BUTTON_PRESS, GDK_2BUTTON_PRESS,
-  GDK_3BUTTON_PRESS or GDK_BUTTON_RELEASE.
+  The type field will be one of @code{:button-press}, @code{:2button-press},
+  @code{3button-press} or @code{:button-release}.
   @begin{pre}
     struct GdkEventButton {
       GdkEventType type;
@@ -1090,39 +832,28 @@
   Double and triple-clicks result in a sequence of events being received. For
   double-clicks the order of events will be:
   @begin{pre}
-      GDK_BUTTON_PRESS
-
-      GDK_BUTTON_RELEASE
- 
-      GDK_BUTTON_PRESS
-
-      GDK_2BUTTON_PRESS
-
-      GDK_BUTTON_RELEASE
+ @code{:button-press}@br{}
+ @code{:button-release}@br{}
+ @code{:button-press}@br{}
+ @code{:2button-press}
+ @code{:button-release}
   @end{pre}
   Note that the first click is received just like a normal button press, while
-  the second click results in a GDK_2BUTTON_PRESS being received just after
-  the GDK_BUTTON_PRESS.
+  the second click results in a @code{:2button-press} being received just after
+  the @code{:button-press}.
 
   Triple-clicks are very similar to double-clicks, except that
-  GDK_3BUTTON_PRESS is inserted after the third click. The order of the events
-  is:
+  @code{:3button-press} is inserted after the third click. The order of the
+  events is:
   @begin{pre}
-      GDK_BUTTON_PRESS
-
-      GDK_BUTTON_RELEASE
-
-      GDK_BUTTON_PRESS
-
-      GDK_2BUTTON_PRESS
-
-      GDK_BUTTON_RELEASE
-
-      GDK_BUTTON_PRESS
-
-      GDK_3BUTTON_PRESS
-
-      GDK_BUTTON_RELEASE
+ @code{:button-press}@br{}
+ @code{:button-release}
+ @code{:button-press}@br{}
+ @code{:2button-press}@br{}
+ @code{:button-release}@br{}
+ @code{:button-press}@br{}
+ @code{:3button-press}@br{}
+ @code{:button-release}
   @end{pre}
   For a double click to occur, the second button press must occur within 1/4
   of a second of the first. For a triple click to occur, the third button
@@ -1171,7 +902,7 @@
 (setf (documentation 'gdk-event-button-type 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"type\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{type} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-window ------------------------------------------------
@@ -1180,7 +911,7 @@
 (setf (documentation 'gdk-event-button-window 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"window\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{window} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-send-event --------------------------------------------
@@ -1189,7 +920,8 @@
 (setf (documentation 'gdk-event-button-send-event 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"send-event\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{send-event} of the @class{gdk-event-button}
+    struct.
   @end{short}")
 
 ;;; --- gdk-event-button-time --------------------------------------------------
@@ -1198,7 +930,7 @@
 (setf (documentation 'gdk-event-button-time 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"time\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{time} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-x -----------------------------------------------------
@@ -1207,7 +939,7 @@
 (setf (documentation 'gdk-event-button-x 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"x\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{x} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-y -----------------------------------------------------
@@ -1216,7 +948,7 @@
 (setf (documentation 'gdk-event-button-y 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"y\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{y} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-axes --------------------------------------------------
@@ -1225,7 +957,7 @@
 (setf (documentation 'gdk-event-button-axes 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"axes\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{axes} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-state -------------------------------------------------
@@ -1234,7 +966,7 @@
 (setf (documentation 'gdk-event-button-state 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"state\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{state} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-button ------------------------------------------------
@@ -1243,7 +975,7 @@
 (setf (documentation 'gdk-event-button-button 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"button\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{button} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-device ------------------------------------------------
@@ -1252,7 +984,7 @@
 (setf (documentation 'gdk-event-button-device 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"device\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{device} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-x-root ------------------------------------------------
@@ -1261,7 +993,7 @@
 (setf (documentation 'gdk-event-button-x-root 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"x-root\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{x-root} of the @class{gdk-event-button} struct.
   @end{short}")
 
 ;;; --- gdk-event-button-y-root ------------------------------------------------
@@ -1270,80 +1002,197 @@
 (setf (documentation 'gdk-event-button-y-root 'function)
  "@version{2013-1-11}
   @begin{short}
-    Accessor of the slot \"y-root\" of the @class{gdk-event-button} struct.
+    Accessor of the slot @code{y-root} of the @class{gdk-event-button} struct.
   @end{short}")
 
-#|
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventTouch
-;;;
-;;; struct GdkEventTouch {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   guint32 time;
-;;;   gdouble x;
-;;;   gdouble y;
-;;;   gdouble *axes;
-;;;   guint state;
-;;;   GdkEventSequence *sequence;
-;;;   gboolean emulating_pointer;
-;;;   GdkDevice *device;
-;;;   gdouble x_root, y_root;
-;;; };
-;;;
-;;; Used for touch events. type field will be one of GDK_TOUCH_BEGIN,
-;;; GDK_TOUCH_UPDATE, GDK_TOUCH_END or GDK_TOUCH_CANCEL.
-;;;
-;;; Touch events are grouped into sequences by means of the sequence field,
-;;; which can also be obtained with gdk_event_get_event_sequence(). Each
-;;; sequence begins with a GDK_TOUCH_BEGIN event, followed by any number of
-;;; GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END (or GDK_TOUCH_CANCEL)
-;;; event. With multitouch devices, there may be several active sequences at the
-;;; same time.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END,
-;;;     GDK_TOUCH_CANCEL)
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent)
-;;;
-;;; guint32 time;
-;;;     the time of the event in milliseconds.
-;;;
-;;; gdouble x;
-;;;     the x coordinate of the pointer relative to the window
-;;;
-;;; gdouble y;
-;;;     the y coordinate of the pointer relative to the window
-;;;
-;;; gdouble *axes;
-;;;     x, y translated to the axes of device, or NULL if device is the mouse
-;;;
-;;; guint state;
-;;;     a bit-mask representing the state of the modifier keys (e.g. Control,
-;;;     Shift and Alt) and the pointer buttons. See GdkModifierType.
-;;;
-;;; GdkEventSequence *sequence;
-;;;     the event sequence that the event belongs to
-;;;
-;;; gboolean emulating_pointer;
-;;;     whether the event should be used for emulating pointer event
-;;;
-;;; GdkDevice *device;
-;;;     the device where the event originated
-;;;
-;;; gdouble x_root;
-;;;     the x coordinate of the pointer relative to the root of the screen
-;;;
-;;; gdouble y_root;
-;;;     the y coordinate of the pointer relative to the root of the screen
-;;; ----------------------------------------------------------------------------
-|#
+;;; --- gdk-event-touch --------------------------------------------------------
+
+(setf (documentation 'gdk-event-touch 'type)
+ "@version{2013-2-2}
+  @begin{short}
+    Used for touch events. type field will be one of GDK_TOUCH_BEGIN,
+    GDK_TOUCH_UPDATE, GDK_TOUCH_END or GDK_TOUCH_CANCEL.
+  @end{short}
+
+  Touch events are grouped into sequences by means of the sequence field,
+  which can also be obtained with gdk_event_get_event_sequence(). Each
+  sequence begins with a GDK_TOUCH_BEGIN event, followed by any number of
+  GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END (or GDK_TOUCH_CANCEL)
+  event. With multitouch devices, there may be several active sequences at the
+  same time.
+  @begin{pre}
+ struct GdkEventTouch
+
+ struct GdkEventTouch {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   guint32 time;
+   gdouble x;
+   gdouble y;
+   gdouble *axes;
+   guint state;
+   GdkEventSequence *sequence;
+   gboolean emulating_pointer;
+   GdkDevice *device;
+   gdouble x_root, y_root;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_TOUCH_BEGIN,
+      GDK_TOUCH_UPDATE, GDK_TOUCH_END, GDK_TOUCH_CANCEL)}
+    @entry[GdkWindow *window]{the window which received the event}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent)}
+    @entry[guint32 time]{the time of the event in milliseconds.}
+    @entry[gdouble x]{the x coordinate of the pointer relative to the window}
+    @entry[gdouble y]{the y coordinate of the pointer relative to the window}
+    @entry[gdouble *axes]{x, y translated to the axes of device, or NULL if
+      device is the mouse}
+    @entry[guint state]{a bit-mask representing the state of the modifier keys
+      (e.g. Control, Shift and Alt) and the pointer buttons. See
+      GdkModifierType.}
+    @entry[GdkEventSequence *sequence]{the event sequence that the event belongs
+      to}
+    @entry[gboolean emulating_pointer]{whether the event should be used for
+      emulating pointer event}
+    @entry[GdkDevice *device]{the device where the event originated}
+    @entry[gdouble x_root]{the x coordinate of the pointer relative to the root
+      of the screen}
+    @entry[gdouble y_root]{the y coordinate of the pointer relative to the root
+      of the screen}
+  @end{table}
+  @see-slot{gdk-event-touch-type}
+  @see-slot{gdk-event-touch-window}
+  @see-slot{gdk-event-touch-send-event}
+  @see-slot{gdk-event-touch-time}
+  @see-slot{gdk-event-touch-x}
+  @see-slot{gdk-event-touch-y}
+  @see-slot{gdk-event-touch-axes}
+  @see-slot{gdk-event-touch-state}
+  @see-slot{gdk-event-touch-sequence}
+  @see-slot{gdk-event-touch-emulating-pointer}
+  @see-slot{gdk-event-touch-device}
+  @see-slot{gdk-event-touch-x-root}
+  @see-slot{gdk-event-touch-y-root}")
+
+;;; --- gdk-event-touch-type ---------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-type 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"type\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-window -------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-window 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"window\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-send-event ---------------------------------------------
+
+(setf (gethash 'gdk-event-touch-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-send-event 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"send-event\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-time ---------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-time atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-time 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"time\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-x ------------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-x atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-x 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"x\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-y ------------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-y atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-y 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"y\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-axes ---------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-axes atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-axes 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"axes\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-state ---------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-state atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-state 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"state\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-sequence -----------------------------------------------
+
+(setf (gethash 'gdk-event-touch-sequence atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-sequence 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"sequence\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-emulating-pointer --------------------------------------
+
+(setf (gethash 'gdk-event-touch-emulating-pointer atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-emulating-pointer 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"emulating-pointer\" of the @class{gdk-event-touch}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-device -------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-device atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-device 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"device\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-x-root -------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-x-root atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-x-root 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"x-root\" of the @class{gdk-event-touch} struct.
+  @end{short}")
+
+;;; --- gdk-event-touch-y-root -------------------------------------------------
+
+(setf (gethash 'gdk-event-touch-y-root atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-touch-y-root 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"y-root\" of the @class{gdk-event-touch} struct.
+  @end{short}")
 
 ;;; --- gdk-event-scroll -------------------------------------------------------
 
@@ -2136,118 +1985,313 @@
     Accessor of the slot \"in\" of the @class{gdk-event-focus} struct.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventConfigure
-;;;
-;;; struct GdkEventConfigure {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   gint x, y;
-;;;   gint width;
-;;;   gint height;
-;;; };
-;;;
-;;; Generated when a window size or position has changed.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_CONFIGURE).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; gint x;
-;;;     the new x coordinate of the window, relative to its parent.
-;;;
-;;; gint y;
-;;;     the new y coordinate of the window, relative to its parent.
-;;;
-;;; gint width;
-;;;     the new width of the window.
-;;;
-;;; gint height;
-;;;     the new height of the window.
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-configure ----------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventProperty
-;;;
-;;; struct GdkEventProperty {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   GdkAtom atom;
-;;;   guint32 time;
-;;;   guint state;
-;;; };
-;;;
-;;; Describes a property change on a window.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_PROPERTY_NOTIFY).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; GdkAtom atom;
-;;;     the property that was changed.
-;;;
-;;; guint32 time;
-;;;     the time of the event in milliseconds.
-;;;
-;;; guint state;
-;;;     whether the property was changed (GDK_PROPERTY_NEW_VALUE) or deleted
-;;;     (GDK_PROPERTY_DELETE).
-;;; ----------------------------------------------------------------------------
+(setf (documentation 'gdk-event-configure 'type)
+ "@version{2013-1-21}
+  @begin{short}
+    Generated when a window size or position has changed.
+  @end{short}
+  @begin{pre}
+ struct GdkEventConfigure {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   gint x, y;
+   gint width;
+   gint height;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_CONFIGURE).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[gint x]{the new x coordinate of the window, relative to its parent.}
+    @entry[gint y]{the new y coordinate of the window, relative to its parent.}
+    @entry[gint width]{the new width of the window.}
+    @entry[gint height]{the new height of the window.}
+  @end{table}
+  @see-slot{gdk-event-configure-type}
+  @see-slot{gdk-event-configure-window}
+  @see-slot{gdk-event-configure-send-event}
+  @see-slot{gdk-event-configure-x}
+  @see-slot{gdk-event-configure-y}
+  @see-slot{gdk-event-configure-width}
+  @see-slot{gdk-event-configure-height}")
 
-;;; ----------------------------------------------------------------------------
-;;; struct GdkEventSelection
-;;;
-;;; struct GdkEventSelection {
-;;;   GdkEventType type;
-;;;   GdkWindow *window;
-;;;   gint8 send_event;
-;;;   GdkAtom selection;
-;;;   GdkAtom target;
-;;;   GdkAtom property;
-;;;   guint32 time;
-;;;   GdkWindow *requestor;
-;;; };
-;;;
-;;; Generated when a selection is requested or ownership of a selection is taken
-;;; over by another client application.
-;;;
-;;; GdkEventType type;
-;;;     the type of the event (GDK_SELECTION_CLEAR, GDK_SELECTION_NOTIFY or
-;;;     GDK_SELECTION_REQUEST).
-;;;
-;;; GdkWindow *window;
-;;;     the window which received the event.
-;;;
-;;; gint8 send_event;
-;;;     TRUE if the event was sent explicitly (e.g. using XSendEvent).
-;;;
-;;; GdkAtom selection;
-;;;     the selection.
-;;;
-;;; GdkAtom target;
-;;;     the target to which the selection should be converted.
-;;;
-;;; GdkAtom property;
-;;;     the property in which to place the result of the conversion.
-;;;
-;;; guint32 time;
-;;;     the time of the event in milliseconds.
-;;;
-;;; GdkWindow *requestor;
-;;;     the window on which to place property or NULL if none.
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-configure-type -----------------------------------------------
+
+(setf (gethash 'gdk-event-configure-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-type 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{type} of the @class{gdk-event-configure} struct.
+  @end{short}")
+
+;;; --- gdk-event-configure-window ---------------------------------------------
+
+(setf (gethash 'gdk-event-configure-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-window 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{window} of the @class{gdk-event-configure}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-configure-send-event -----------------------------------------
+
+(setf (gethash 'gdk-event-configure-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-event-type 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{send-event} of the @class{gdk-event-configure}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-configure-x --------------------------------------------------
+
+(setf (gethash 'gdk-event-configure-x atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-x 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{x} of the @class{gdk-event-configure} struct.
+  @end{short}")
+
+;;; --- gdk-event-configure-y --------------------------------------------------
+
+(setf (gethash 'gdk-event-configure-y atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-y 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{y} of the @class{gdk-event-configure} struct.
+  @end{short}")
+
+;;; --- gdk-event-configure-width ----------------------------------------------
+
+(setf (gethash 'gdk-event-configure-width atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-width 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{width} of the @class{gdk-event-configure} struct.
+  @end{short}")
+
+;;; --- gdk-event-configure-height ---------------------------------------------
+
+(setf (gethash 'gdk-event-configure-height atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-configure-height 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{height} of the @class{gdk-event-configure}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-property -----------------------------------------------------
+
+(setf (documentation 'gdk-event-property 'type)
+ "@version{2013-1-22}
+  @begin{short}
+    Describes a property change on a window.
+  @end{short}
+  @begin{pre}
+ struct GdkEventProperty {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   GdkAtom atom;
+   guint32 time;
+   guint state;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_PROPERTY_NOTIFY).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[GdkAtom atom]{the property that was changed.}
+    @entry[guint32 time]{the time of the event in milliseconds.}
+    @entry[guint state]{whether the property was changed
+      (GDK_PROPERTY_NEW_VALUE) or deleted (GDK_PROPERTY_DELETE).}
+  @end{table}
+  @see-slot{gdk-event-property-type}
+  @see-slot{gdk-event-property-window}
+  @see-slot{gdk-event-property-send-event}
+  @see-slot{gdk-event-property-atom}
+  @see-slot{gdk-event-property-time}
+  @see-slot{gdk-event-property-state}
+")
+
+;;; --- gdk-event-property-type ------------------------------------------------
+
+(setf (gethash 'gdk-event-property-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-property-type 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{type} of the @class{gdk-event-property} struct.
+  @end{short}")
+
+;;; --- gdk-event-property-window ----------------------------------------------
+
+(setf (gethash 'gdk-event-property-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-property-window 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{window} of the @class{gdk-event-property} struct.
+  @end{short}")
+
+;;; --- gdk-event-property-send-event ------------------------------------------
+
+(setf (gethash 'gdk-event-property-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-property-send-event 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{send-event} of the @class{gdk-event-property}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-property-atom ------------------------------------------------
+
+(setf (gethash 'gdk-event-property-atom atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-property-atom 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{atom} of the @class{gdk-event-property} struct.
+  @end{short}")
+
+;;; --- gdk-event-property-time ------------------------------------------------
+
+(setf (gethash 'gdk-event-property-time atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-property-time 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{time} of the @class{gdk-event-property} struct.
+  @end{short}")
+
+;;; --- gdk-event-property-state ------------------------------------------------
+
+(setf (gethash 'gdk-event-property-state atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-property-state 'function)
+ "@version{2013-1-21}
+  @begin{short}
+    Accessor of the slot @code{state} of the @class{gdk-event-property} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection ----------------------------------------------------
+
+(setf (documentation 'gdk-event-selection 'type)
+ "@version{2013-2-2}
+  @begin{short}
+    Generated when a selection is requested or ownership of a selection is taken
+    over by another client application.
+  @end{short}
+  @begin{pre}
+ struct GdkEventSelection {
+   GdkEventType type;
+   GdkWindow *window;
+   gint8 send_event;
+   GdkAtom selection;
+   GdkAtom target;
+   GdkAtom property;
+   guint32 time;
+   GdkWindow *requestor;
+ @};
+  @end{pre}
+  @begin[code]{table}
+    @entry[GdkEventType type]{the type of the event (GDK_SELECTION_CLEAR,
+      GDK_SELECTION_NOTIFY or GDK_SELECTION_REQUEST).}
+    @entry[GdkWindow *window]{the window which received the event.}
+    @enty[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
+      XSendEvent).}
+    @entry[GdkAtom selection]{the selection.}
+    @entry[GdkAtom target]{the target to which the selection should be
+      converted.}
+    @entry[GdkAtom property]{the property in which to place the result of the
+      conversion.}
+    @entry[guint32 time]{the time of the event in milliseconds.}
+    @entry[GdkWindow *requestor]{the window on which to place property or NULL 
+      if none.}
+  @end{table}
+  @see-slot{gdk-event-selection-type}
+  @see-slot{gdk-event-selection-window}
+  @see-slot{gdk-event-selection-send-event}
+  @see-slot{gdk-event-selection-selection}
+  @see-slot{gdk-event-selection-target}
+  @see-slot{gdk-event-selection-property}
+  @see-slot{gdk-event-selection-time}
+  @see-slot{gdk-event-selection-requestor}")
+
+;;; --- gdk-event-selection-type -----------------------------------------------
+
+(setf (gethash 'gdk-event-selection-type atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-type 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{type} of the @class{gdk-event-selection} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-window ---------------------------------------------
+
+(setf (gethash 'gdk-event-selection-window atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-window 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{window} of the @class{gdk-event-selection} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-send-event -----------------------------------------
+
+(setf (gethash 'gdk-event-selection-send-event atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-send-event 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{send-event} of the @class{gdk-event-selection}
+    struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-selection ------------------------------------------
+
+(setf (gethash 'gdk-event-selection-selection atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-selection 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{selection} of the @class{gdk-event-selection} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-target ---------------------------------------------
+
+(setf (gethash 'gdk-event-selection-target atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-target 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{target} of the @class{gdk-event-selection} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-property -------------------------------------------
+
+(setf (gethash 'gdk-event-selection-property atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-property 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{property} of the @class{gdk-event-selection} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-time -----------------------------------------------
+
+(setf (gethash 'gdk-event-selection-time atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-time 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{time} of the @class{gdk-event-selection} struct.
+  @end{short}")
+
+;;; --- gdk-event-selection-requestor ------------------------------------------
+
+(setf (gethash 'gdk-event-selection-requestor atdoc:*function-name-alias*) "Accessor")
+(setf (documentation 'gdk-event-selection-requestor 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot @code{requestor} of the @class{gdk-event-selection} struct.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkEventDND
@@ -2478,7 +2522,7 @@
 (setf (documentation 'gdk-event-grab-broken-type 'function)
  "@version{2013-1-19}
   @begin{short}
-    Accessor of the slot @arg{\"type\"} of the @class{gdk-event-grab-broken}
+    Accessor of the slot @code{type} of the @class{gdk-event-grab-broken}
     struct.
   @end{short}")
 
@@ -2488,7 +2532,7 @@
 (setf (documentation 'gdk-event-grab-broken-window 'function)
  "@version{2013-1-19}
   @begin{short}
-    Accessor of the slot @arg{\"window\"} of the @class{gdk-event-grab-broken}
+    Accessor of the slot @code{window} of the @class{gdk-event-grab-broken}
     struct.
   @end{short}")
 
@@ -2498,8 +2542,8 @@
 (setf (documentation 'gdk-event-grab-broken-send-event 'function)
  "@version{2013-1-19}
   @begin{short}
-    Accessor of the slot @arg{\"send-event\"} of the
-    @class{gdk-event-grab-broken} struct.
+    Accessor of the slot @code{send-event} of the @class{gdk-event-grab-broken}
+    struct.
   @end{short}")
 
 ;;; --- gdk-event-grab-broken-keyboard -----------------------------------------
@@ -2508,7 +2552,7 @@
 (setf (documentation 'gdk-event-grab-broken-keyboard 'function)
  "@version{2013-1-19}
   @begin{short}
-    Accessor of the slot @arg{\"keyboard\"} of the @class{gdk-event-grab-broken}
+    Accessor of the slot @code{keyboard} of the @class{gdk-event-grab-broken}
     struct.
   @end{short}")
 
@@ -2518,7 +2562,7 @@
 (setf (documentation 'gdk-event-grab-broken-implicit 'function)
  "@version{2013-1-19}
   @begin{short}
-    Accessor of the slot @arg{\"implicit\"} of the @class{gdk-event-grab-broken}
+    Accessor of the slot @code{implicit} of the @class{gdk-event-grab-broken}
     struct.
   @end{short}")
 
@@ -2528,8 +2572,8 @@
 (setf (documentation 'gdk-event-grab-broken-grab-window 'function)
  "@version{2013-1-19}
   @begin{short}
-    Accessor of the slot @arg{\"grab-window\"} of the
-    @class{gdk-event-grab-broken} struct.
+    Accessor of the slot @code{grab-window} of the @class{gdk-event-grab-broken}
+    struct.
   @end{short}")
 
 ;;; --- End of file atdoc-gdk.event-structures.lisp ----------------------------

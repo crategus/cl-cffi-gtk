@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; atdoc-gtk.package.lisp
 ;;;
-;;; Documentation strings for the library GTK.
+;;; Documentation strings for the library GTK+.
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
@@ -298,8 +298,26 @@
       @about-function{gtk-dialog-set-alternative-button-order-from-array}
     @end{subsection}
     @begin[GtkInvisible]{subsection}
+      A widget which is not displayed.
+
+      @about-class{gtk-invisible}
+      @about-function{gtk-invisible-new}
+      @about-function{gtk-invisible-new-for-screen}
     @end{subsection}
     @begin[GtkMessageDialog]{subsection}
+      A convenient message window.
+
+      @about-class{gtk-message-dialog}
+      @about-symbol{gtk-message-type}
+      @about-symbol{gtk-buttons-type}
+      @about-function{gtk-message-dialog-new}
+      @about-function{gtk-message-dialog-new-with-markup}
+      @about-function{gtk-message-dialog-set-markup}
+      @about-function{gtk-message-dialog-set-image}
+      @about-function{gtk-message-dialog-get-image}
+      @about-function{gtk-message-dialog-format-secondary-text}
+      @about-function{gtk-message-dialog-format-secondary-markup}
+      @about-function{gtk-message-dialog-get-message-area}
     @end{subsection}
     @begin[GtkWindow]{subsection}
       Toplevel which can contain other widgets.
@@ -366,6 +384,15 @@
       @about-function{gtk-window-set-has-user-ref-count}
     @end{subsection}
     @begin[GtkWindowGroup]{subsection}
+      Limit the effect of grabs.
+
+      @about-class{gtk-window-group}
+      @about-function{gtk-window-group-new}
+      @about-function{gtk-window-group-add-window}
+      @about-function{gtk-window-group-remove-window}
+      @about-function{gtk-window-group-list-windows}
+      @about-function{gtk-window-group-get-current-grab}
+      @about-function{gtk-window-group-get-current-device-grab}
     @end{subsection}
     @begin[GtkAboutDialog]{subsection}
       Display information about an application.
@@ -377,8 +404,44 @@
       @about-function{gtk-show-about-dialog}
     @end{subsection}
     @begin[GtkAssistant]{subsection}
+      A widget used to guide users through multi-step operations.
+
+      @about-class{gtk-assistant}
+      @about-symbol{gtk-assistant-page-type}
+      @about-function{gtk-assistant-new}
+      @about-function{gtk-assistant-get-current-page}
+      @about-function{gtk-assistant-set-current-page}
+      @about-function{gtk-assistant-get-n-pages}
+      @about-function{gtk-assistant-get-nth-page}
+      @about-function{gtk-assistant-prepend-page}
+      @about-function{gtk-assistant-append-page}
+      @about-function{gtk-assistant-insert-page}
+      @about-function{gtk-assistant-remove-page}
+      @about-function{gtk-assistant-set-forward-page-func}
+      @about-function{gtk-assistant-set-page-type}
+      @about-function{gtk-assistant-get-page-type}
+      @about-function{gtk-assistant-set-page-title}
+      @about-function{gtk-assistant-get-page-title}
+      @about-function{gtk-assistant-set-page-header-image}
+      @about-function{gtk-assistant-get-page-header-image}
+      @about-function{gtk-assistant-set-page-side-image}
+      @about-function{gtk-assistant-get-page-side-image}
+      @about-function{gtk-assistant-set-page-complete}
+      @about-function{gtk-assistant-get-page-complete}
+      @about-function{gtk-assistant-add-action-widget}
+      @about-function{gtk-assistant-remove-action-widget}
+      @about-function{gtk-assistant-update-buttons-state}
+      @about-function{gtk-assistant-commit}
+      @about-function{gtk-assistant-next-page}
+      @about-function{gtk-assistant-previous-page}
     @end{subsection}
     @begin[GtkOffscreenWindow]{subsection}
+      A toplevel to manage offscreen rendering of child widgets.
+
+      @about-class{gtk-offscreen-window}
+      @about-function{gtk-offscreen-window-new}
+      @about-function{gtk-offscreen-window-get-surface}
+      @about-function{gtk-offscreen-window-get-pixbuf}
     @end{subsection}
   @end{section}
   @begin[Display Widgets]{section}
@@ -392,6 +455,25 @@
     @begin[GtkImage]{subsection}
     @end{subsection}
     @begin[GtkLabel]{subsection}
+      A widget that displays a small to medium amount of text
+
+      @about-class{gtk-label}
+      @about-function{gtk-label-new}
+      @about-function{gtk-label-text}
+      @about-function{gtk-label-set-markup}
+      @about-function{gtk-label-set-markup-with_mnemonic}
+      @about-function{gtk-label-set-line-wrap}
+      @about-function{gtk-label-set-line-wrap-mode}
+      @about-function{gtk-label-get-layout-offsets}
+      @about-function{gtk-label-get-text}
+      @about-function{gtk-label-new-with-mnemonic}
+      @about-function{gtk-label-select-region}
+      @about-function{gtk-label-set-text-with-mnemonic}
+      @about-function{gtk-label-get-layout}
+      @about-function{gtk-label-get-line-wrap}
+      @about-function{gtk-label-get-line-wrap-mode}
+      @about-function{gtk-label-get-selection-bounds}
+      @about-function{gtk-label-get-current-uri}
     @end{subsection}
     @begin[GtkProgressBar]{subsection}
     @end{subsection}
@@ -632,10 +714,39 @@
       @about-function{gtk-grid-insert-next-to}
     @end{subsection}
     @begin[GtkAlignment]{subsection}
+      A widget which controls the alignment and size of its child.
+
+      @about-class{gtk-alignment}
+      @about-function{gtk-alignment-new}
+      @about-function{gtk-alignment-set}
+      @about-function{gtk-alignment-get-padding}
+      @about-function{gtk-alignment-set-padding}
     @end{subsection}
     @begin[GtkAspectFrame]{subsection}
+      A frame that constrains its child to a particular aspect ratio.
+
+      @about-class{gtk-aspect-frame}
+      @about-function{gtk-aspect-frame-new}
+      @about-function{gtk-aspect-frame-set}
     @end{subsection}
     @begin[GtkBox]{subsection}
+      A container box.
+
+      @about-class{gtk-box}
+      @about-function{gtk-box-new}
+      @about-function{gtk-box-pack-start}
+      @about-function{gtk-box-pack-end}
+      @about-function{gtk-box-reorder-child}
+      @about-function{gtk-box-query-child-packing}
+      @about-function{gtk-box-set-child-packing}
+      A horizontal container box.
+
+      @about-class{gtk-hbox}
+      @about-function{gtk-hbox-new}
+      A vertical container box.
+
+      @about-class{gtk-vbox}
+      @about-function{gtk-vbox-new}
     @end{subsection}
     @begin[GtkButtonBox]{subsection}
     @end{subsection}
@@ -648,18 +759,53 @@
     @begin[GtkNotebook]{subsection}
     @end{subsection}
     @begin[GtkTable]{subsection}
+      Pack widgets in regular patterns
+
+      @about-class{gtk-table}
+      @about-function{gtk-table-new}
+      @about-function{gtk-table-resize}
+      @about-function{gtk-table-get-size}
+      @about-function{gtk-table-attach}
+      @about-function{gtk-table-attach-defaults}
+      @about-function{gtk-table-set-row-spacing}
+      @about-function{gtk-table-set-col-spacing}
+      @about-function{gtk-table-set-row-spacings}
+      @about-function{gtk-table-set-col-spacings}
+      @about-function{gtk-table-set-homogeneous}
+      @about-function{gtk-table-get_default-row-spacing}
+      @about-function{gtk-table-get-homogeneous}
+      @about-function{gtk-table-get-row-spacing}
+      @about-function{gtk-table-get-col-spacing}
+      @about-function{gtk-table-get-default-col-spacing}
     @end{subsection}
     @begin[GtkExpander]{subsection}
     @end{subsection}
     @begin[GtkOverlay]{subsection}
     @end{subsection}
     @begin[GtkOrientable]{subsection}
-    @end{subsection}  
+      An interface for flippable widgets.
+
+      @about-class{gtk-orientable}
+    @end{subsection}
   @end{section}
   @begin[Ornaments]{section}
     @begin[GtkFrame]{subsection}
+      A bin with a decorative frame and optional label.
+
+      @about-class{gtk-frame}
+      @about-function{gtk-frame-new}
+      @about-function{gtk-frame-set-label-align}
+      @about-function{gtk-frame-get-label-align}
     @end{subsection}
     @begin[GtkSeparator]{subsection}
+      A separator widget.
+
+      @about-class{gtk-separator}
+      @about-function{gtk-separator-new}
+      @about-class{gtk-hseparator}
+      @about-function{gtk-hseparator-new}
+      @about-class{gtk-vseparator}
+      @about-function{gtk-vseparator-new}
     @end{subsection}
   @end{section}
   @begin[Scrolling]{section}
@@ -699,6 +845,21 @@
     @begin[GtkArrow]{subsection}
     @end{subsection}
     @begin[GtkCalendar]{subsection}
+      Displays a calendar and allows the user to select a date.
+
+      @about-class{gtk-calendar}
+      @about-symbol{gtk-calendar-display-options}
+      @about-function{gtk-calendar-new}
+      @about-function{gtk-calendar-select-month}
+      @about-function{gtk-calendar-select-day}
+      @about-function{gtk-calendar-mark-day}
+      @about-function{gtk-calendar-unmark-day}
+      @about-function{gtk-calendar-get-day-is-marked}
+      @about-function{gtk-calendar-clear-marks}
+      @about-function{gtk-calendar-get-display-options}
+      @about-function{gtk-calendar-set-display-options}
+      @about-function{gtk-calendar-get-date}
+      @about-function{gtk-calendar-set-detail-func}
     @end{subsection}
     @begin[GtkDrawingArea]{subsection}
     @end{subsection}

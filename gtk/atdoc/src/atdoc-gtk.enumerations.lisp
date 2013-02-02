@@ -353,55 +353,55 @@
   (:pages 7)
   (:buffer-ends 8)
   (:horizontal-pages 9))
+|#
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkOrientation
-;;;
-;;; typedef enum {
-;;;   GTK_ORIENTATION_HORIZONTAL,
-;;;   GTK_ORIENTATION_VERTICAL
-;;; } GtkOrientation;
-;;;
-;;; Represents the orientation of widgets which can be switched between
-;;; horizontal and vertical orientation on the fly, like GtkToolbar.
-;;;
-;;; GTK_ORIENTATION_HORIZONTAL
-;;;     The widget is in horizontal orientation.
-;;;
-;;; GTK_ORIENTATION_VERTICAL
-;;;     The widget is in vertical orientation.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-orientation --------------------------------------------------------
 
-(define-g-enum "GtkOrientation" gtk-orientation
+(setf (gethash 'gtk-orientation atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-orientation atdoc:*external-symbols*)
+ "@version{2013-1-18}
+  @begin{short}
+    Represents the orientation of widgets which can be switched between
+    horizontal and vertical orientation on the fly, like @class{gtk-toolbar}.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkOrientation\" gtk-orientation
   (:export t
-   :type-initializer "gtk_orientation_get_type")
+   :type-initializer \"gtk_orientation_get_type\")
   (:horizontal 0)
   (:vertical 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:horizontal]{The widget is in horizontal orientation.}
+    @entry[:vertical]{The widget is in vertical orientation.}
+  @end{table}")
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkPackType
-;;;
-;;; typedef enum {
-;;;   GTK_PACK_START,
-;;;   GTK_PACK_END
-;;; } GtkPackType;
-;;;
-;;; Represents the packing location GtkBox children. (See: GtkVBox, GtkHBox, and
-;;; GtkButtonBox).
-;;;
-;;; GTK_PACK_START
-;;;     The child is packed into the start of the box
-;;;
-;;; GTK_PACK_END
-;;;     The child is packed into the end of the box
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-pack-type ----------------------------------------------------------
 
-(define-g-enum "GtkPackType" gtk-pack-type
+(setf (gethash 'gtk-pack-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-pack-type atdoc:*external-symbols*)
+ "@version{2013-1-20}
+  @begin{short}
+    Represents the packing location of a @class{gtk-box} children.
+  @end{short}
+  See also @class{gtk-vbox}, @class{gtk-hbox}, and @class{gtk-button-box}.
+  @begin{pre}
+(define-g-enum \"GtkPackType\" gtk-pack-type
   (:export t
-   :type-initializer "gtk_pack_type_get_type")
+   :type-initializer \"gtk_pack_type_get_type\")
   (:start 0)
   (:end 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:start]{The child is packed into the start of the box.}
+    @entry[:end]{The child is packed into the end of the box.}
+  @end{table}
+  @see-class{gtk-box}
+  @see-class{gtk-hbox}
+  @see-class{gtk-vbox}
+  @see-class{gtk-button-box}")
 
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPathPriorityType
 ;;;
@@ -518,33 +518,27 @@
     @entry[:none]{No relief.}
   @end{table}")
 
-#|
-;;; ----------------------------------------------------------------------------
-;;; enum GtkResizeMode
-;;;
-;;; typedef enum {
-;;;   GTK_RESIZE_PARENT,
-;;;   GTK_RESIZE_QUEUE,
-;;;   GTK_RESIZE_IMMEDIATE
-;;; } GtkResizeMode;
-;;;
-;;; GTK_RESIZE_PARENT
-;;;     Pass resize request to the parent
-;;;
-;;; GTK_RESIZE_QUEUE
-;;;     Queue resizes on this widget
-;;;
-;;; GTK_RESIZE_IMMEDIATE
-;;;     Resize immediately. Deprecated.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-resize-mode --------------------------------------------------------
 
-(define-g-enum "GtkResizeMode" gtk-resize-mode
+(setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-resize-mode atdoc:*external-symbols*)
+ "@version{2013-1-20}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkResizeMode\" gtk-resize-mode
   (:export t
-   :type-initializer "gtk_resize_mode_get_type")
+   :type-initializer \"gtk_resize_mode_get_type\")
   (:parent 0)
   (:queue 1)
   (:immediate 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:parent]{Pass resize request to the parent}
+    @entry[:queue]{Queue resizes on this widget}
+    @entry[:immediate]{Resize immediately. Deprecated.}
+  @end{table}")
 
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkScrollStep
 ;;;

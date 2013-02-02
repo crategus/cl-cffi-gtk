@@ -68,7 +68,7 @@
       output-directory
       :author "Crategus"
       :author-url "http://www.crategus.com"
-      :index-title "cl-cffi-gtk API documentation"
+      :index-title "cl-cffi-gtk API documentation (single page)"
       :heading "cl-cffi-gtk"
       :css "crategus.css"
       :logo nil

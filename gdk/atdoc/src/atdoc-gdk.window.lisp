@@ -174,18 +174,6 @@
 
 (in-package :gdk)
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation (atdoc:get-slot-from-name "cursor" 'gdk-window) 't)
- "The @arg{\"cursor\"} property of type @class{gdk-cursor} (Read / Write).@br{}
-  The mouse pointer for a @sym{gdk-window}. See @fun{gdk-window-set-cursor}
-  and @fun{gdk-window-get-cursor} for details.@br{}
-  Since 2.18")
-
 ;;; --- gdk-window -------------------------------------------------------------
 
 (setf (documentation 'gdk-window 'type)
@@ -244,52 +232,48 @@
   @see-slot{gdk-window-cursor}
 ")
 
-#|
 ;;; ----------------------------------------------------------------------------
-;;; enum GdkWindowType
 ;;;
-;;; typedef enum {
-;;;   GDK_WINDOW_ROOT,
-;;;   GDK_WINDOW_TOPLEVEL,
-;;;   GDK_WINDOW_CHILD,
-;;;   GDK_WINDOW_TEMP,
-;;;   GDK_WINDOW_FOREIGN,
-;;;   GDK_WINDOW_OFFSCREEN
-;;; } GdkWindowType;
+;;; Property Details
 ;;;
-;;; Describes the kind of window.
-;;;
-;;; GDK_WINDOW_ROOT
-;;;     root window; this window has no parent, covers the entire screen, and is
-;;;     created by the window system
-;;;
-;;; GDK_WINDOW_TOPLEVEL
-;;;     toplevel window (used to implement GtkWindow)
-;;;
-;;; GDK_WINDOW_CHILD
-;;;     child window (used to implement e.g. GtkEntry)
-;;;
-;;; GDK_WINDOW_TEMP
-;;;     override redirect temporary window (used to implement GtkMenu)
-;;;
-;;; GDK_WINDOW_FOREIGN
-;;;     foreign window (see gdk_window_foreign_new())
-;;;
-;;; GDK_WINDOW_OFFSCREEN
-;;;     offscreen window (see the section called “Offscreen Windows”).
-;;;     Since 2.18
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GdkWindowType" gdk-window-type
+(setf (documentation (atdoc:get-slot-from-name "cursor" 'gdk-window) 't)
+ "The @code{cursor} property of type @class{gdk-cursor} (Read / Write).@br{}
+  The mouse pointer for a @sym{gdk-window}. See @fun{gdk-window-set-cursor}
+  and @fun{gdk-window-get-cursor} for details.@br{}
+  Since 2.18")
+
+;;; --- gdk-window-type --------------------------------------------------------
+
+(setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gdk-window-type atdoc:*external-symbols*)
+ "@version{2013-1-21}
+  @short{Describes the kind of window.}
+  @begin{pre}
+(define-g-enum \"GdkWindowType\" gdk-window-type
   (:export t
-   :type-initializer "gdk_window_type_get_type")
+   :type-initializer \"gdk_window_type_get_type\")
   (:root 0)
   (:toplevel 1)
   (:child 2)
   (:temp 3)
   (:foreign 4)
   (:offscreen 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:root]{root window; this window has no parent, covers the entire
+      screen, and is created by the window system}
+    @entry[:toplevel]{toplevel window (used to implement @class{gtk-window})}
+    @entry[:child]{child window (used to implement e.g. @class{gtk-entry})}
+    @entry[:temp]{override redirect temporary window (used to implement
+      @class{gtk-menu})}
+    @entry[:foreign]{foreign window (see @code{gdk_window_foreign_new()})}
+    @entry[:offscreen]{offscreen window (see the section called
+      \"Offscreen Windows\"). Since 2.18.}
+  @end{table}")
 
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowWindowClass
 ;;;
@@ -1522,7 +1506,7 @@
 ;;; to an offscreen buffer and an expose event is emitted on the parent of the
 ;;; composited window. It is the responsibility of the parent's expose handler
 ;;; to manually merge the off-screen content onto the screen in whatever way it
-;;; sees fit. See Example 4, “Composited windows” for an example.
+;;; sees fit. See Example 4, \"Composited windows\" for an example.
 ;;;
 ;;; It only makes sense for child windows to be composited; see
 ;;; gdk_window_set_opacity() if you need translucent toplevel windows.

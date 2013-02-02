@@ -52,7 +52,17 @@
     Object representing an input device
   @end{section}
   @begin[Points and Rectangles]{section}
-    Simple graphical data types
+    Simple graphical data types.
+
+    GDK provides the @class{gdk-point} and @class{gdk-rectangle} data types for
+    representing pixels and sets of pixels on the screen. Together with Cairo's
+    @symbol{cairo-region-t} data type, they make up the central types for
+    representing graphical data.
+
+    @about-class{gdk-point}
+    @about-class{gdk-rectangle}
+    @about-function{gdk-rectangle-intersect}
+    @about-function{gdk-rectangle-union}
   @end{section}
   @begin[Pixbufs]{section}
     Functions for obtaining pixbufs
@@ -257,25 +267,25 @@
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-modifier-type}
     @about-symbol{gdk-event-mask}
-    @about-symbol{gdk-event}
-    @about-symbol{gdk-event-any}
-    @about-symbol{gdk-event-expose}
-    @about-symbol{gdk-event-visibility}
-    @about-symbol{gdk-event-motion}
-    @about-symbol{gdk-event-touch}
-    @about-symbol{gdk-event-scroll}
-    @about-symbol{gdk-event-key}
-    @about-symbol{gdk-event-crossing}
-    @about-symbol{gdk-event-focus}
-    @about-symbol{gdk-event-configure}
-    @about-symbol{gdk-event-property}
-    @about-symbol{gdk-event-selection}
-    @about-symbol{gdk-event-owner-change}
-    @about-symbol{gdk-event-proximity}
-    @about-symbol{gdk-event-dnd}
-    @about-symbol{gdk-event-window-state}
-    @about-symbol{gdk-event-setting}
-    @about-symbol{gdk-event-grab-broken}
+    @about-class{gdk-event}
+    @about-class{gdk-event-any}
+    @about-class{gdk-event-expose}
+    @about-class{gdk-event-visibility}
+    @about-class{gdk-event-motion}
+    @about-class{gdk-event-touch}
+    @about-class{gdk-event-scroll}
+    @about-class{gdk-event-key}
+    @about-class{gdk-event-crossing}
+    @about-class{gdk-event-focus}
+    @about-class{gdk-event-configure}
+    @about-class{gdk-event-property}
+    @about-class{gdk-event-selection}
+    @about-class{gdk-event-owner-change}
+    @about-class{gdk-event-proximity}
+    @about-class{gdk-event-dnd}
+    @about-class{gdk-event-window-state}
+    @about-class{gdk-event-setting}
+    @about-class{gdk-event-grab-broken}
   @end{section}
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes

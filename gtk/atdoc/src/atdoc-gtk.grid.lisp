@@ -144,7 +144,7 @@
   @sym{gtk-grid} can be used like a @class{gtk-box} by just using
   @fun{gtk-container-add}, which will place children next to each other in the
   direction determined by the \"orientation\" property.
-  @see-slot{gtk-grid_column-homogeneous}
+  @see-slot{gtk-grid-column-homogeneous}
   @see-slot{gtk-grid-column-spacing}
   @see-slot{gtk-grid-row-homogeneous}
   @see-slot{gtk-grid-row-spacing}

@@ -47,6 +47,21 @@
 (load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.button.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.box.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.orientable.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.table.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.label.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.calendar.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.alignment.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.aspect-frame.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.frame.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.separator.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.invisible.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.message-dialog.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.window-group.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.assistant.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.offscreen-window.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.image.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -56,6 +71,7 @@
 (load "../gdk/atdoc/src/atdoc-gdk.event-structures.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.color.lisp")
+(load "../gdk/atdoc/src/atdoc-gdk.rectangle.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
