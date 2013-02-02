@@ -322,12 +322,7 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_assistant_get_type")
-  ((:cffi current-page gtk-assistant-current-page :int
-          "gtk_assistant_get_current_page" "gtk_assistant_set_current_page")
-   (:cffi n-pages gtk-assistant-n-pages :int
-          "gtk_assistant_get_n_pages" nil)
-   (:cffi forward-page-function gtk-assistant-forward-page-function
-          nil nil set-assistant-forward-page-function)))
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -364,6 +359,11 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defun gtk-assistant-new ()
+  (make-instance 'gtk-assistant))
+
+(export 'gtk-assistant-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_current_page ()
 ;;; 
@@ -381,8 +381,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-assistant-get-current-page (assistant)
-  (gtk-assistant-current-page assistant))
+(defcfun ("gtk_assistant_get_current_page" gtk-assistant-get-current-page) :int
+  (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-get-current-page)
 
@@ -407,8 +407,9 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-assistant-set-current-page (assistant page-num)
-  (setf (gtk-assistant-current-page assistant) page-num))
+(defcfun ("gtk_assistant_set_current_page" gtk-assistant-set-current-page) :void
+  (assistant (g-object gtk-assistant))
+  (page-num :int))
 
 (export 'gtk-assistant-set-current-page)
 
@@ -428,8 +429,8 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-assistant-get-n-pages (assistant)
-  (gtk-assistant-n-pages assistant))
+(defcfun ("gtk_assistant_get_n_pages" gtk-assistant-get-n-pages) :int
+  (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-get-n-pages)
 
@@ -453,12 +454,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_assistant_get_nth_page" gtk-assistant-nth-page)
+(defcfun ("gtk_assistant_get_nth_page" gtk-assistant-get-nth-page)
     (g-object gtk-widget)
   (assistant (g-object gtk-assistant))
   (page-num :int))
 
-(export 'gtk-assistant-nth-page)
+(export 'gtk-assistant-get-nth-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_prepend_page ()
@@ -557,6 +558,12 @@
 ;;; 
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_assistant_remove_page" gtk-assistant-remove-page) :void
+  (assistant (g-object gtk-assistant))
+  (page-num :int))
+
+(export 'gtk-assistant-remove-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkAssistantPageFunc ()
@@ -687,7 +694,8 @@
   (:intro    1)
   (:confirm  2)
   (:summary  3)
-  (:progress 4))
+  (:progress 4)
+  (:custom   5))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_type ()
@@ -712,6 +720,13 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_assistant_set_page_type" gtk-assistant-set-page-type) :void
+  (assistant (g-object gtk-assistant))
+  (page (g-object gkt-widget))
+  (type gtk-assistant-page-type))
+
+(export 'gtk-assistant-set-page-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_type ()
 ;;; 
@@ -731,6 +746,13 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_assistant_get_page_type" gtk-assistant-get-page-type)
+    gtk-assistant-page-type
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget)))
+
+(export 'gtk-assistant-get-page-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_title ()
@@ -756,6 +778,13 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_assistant_set_page_title" gtk-assistant-set-page-title) :void
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget))
+  (title :string))
+
+(export 'gtk-assistant-set-page-title)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_title ()
 ;;; 
@@ -775,6 +804,12 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_assistant_get_page_title" gtk-assistant-get-page-title) :string
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget)))
+
+(export 'gtk-assistant-get-page-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_header_image ()
@@ -910,6 +945,14 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_assistant_set_page_complete" gtk-assistant-set-page-complete)
+    :void
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget))
+  (complete :boolean))
+
+(export 'gtk-assistant-set-page-complete)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_complete ()
 ;;; 
@@ -929,6 +972,13 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_assistant_get_page_complete" gtk-assistant-get-page-complete)
+    :boolean
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget)))
+
+(export 'gtk-assistant-get-page-complete)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_add_action_widget ()
@@ -1024,6 +1074,11 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_assistant_commit" gtk-assistant-commit) :void
+  (assistant (g-object gtk-assistant)))
+
+(export 'gtk-assistant-commit)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_next_page ()
 ;;; 
@@ -1041,6 +1096,11 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_assistant_next_page" gtk-assistant-next-page) :void
+  (assistant (g-object gtk-assistant)))
+
+(export 'gtk-assistant-next-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_previous_page ()
@@ -1061,5 +1121,9 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_assistant_previous_page" gtk-assistant-previous-page) :void
+  (assistant (g-object gtk-assistant)))
+
+(export 'gtk-assistant-previous-page)
 
 ;;; --- End of file gtk.assistant.lisp -----------------------------------------
