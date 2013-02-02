@@ -5321,10 +5321,10 @@
   (with-foreign-object (path :pointer)
     (ecase path-type
       (:name (%gtk-widget-path widget (null-pointer) path (null-pointer)))
-      (:class (gtk-widget-class-path widget
-                                     (null-pointer)
-                                     path
-                                     (null-pointer))))
+      (:class (%gtk-widget-class-path widget
+                                      (null-pointer)
+                                      path
+                                      (null-pointer))))
     (mem-ref path '(g-string :free-from-foreign t))))
 
 (export 'gtk-widget-path)
@@ -5359,13 +5359,13 @@
 ;;;     or NULL
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_class_path" gtk-widget-class-path) :void
+;;; Implemented only for use of gtk-widget-path and not exported
+
+(defcfun ("gtk_widget_class_path" %gtk-widget-class-path) :void
   (widget g-object)
   (path-length (:pointer :uint))
   (path (:pointer (:pointer :char)))
   (path-reversed (:pointer (:pointer :char))))
-
-(export 'gtk-widget-class-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_composite_name ()
@@ -8600,6 +8600,29 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_insert_action_group ()
+;;;
+;;; void gtk_widget_insert_action_group (GtkWidget *widget,
+;;;                                      const gchar *name,
+;;;                                      GActionGroup *group);
+;;;
+;;; Inserts group into widget. Children of widget that implement GtkActionable
+;;; can then be associated with actions in group by setting their 'action-name'
+;;; to prefix.action-name.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; name :
+;;;     the prefix for actions in group
+;;;
+;;; group :
+;;;     a GActionGroup
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_path ()
 ;;;
 ;;; GtkWidgetPath * gtk_widget_get_path (GtkWidget *widget);
@@ -8862,6 +8885,25 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_get_preferred_height_for_width" 
+          %gtk-widget-get-preferred-height-for-width)
+    :void
+  (widget (g-object gtk-widget))
+  (width :int)
+  (minium-height (:pointer :int))
+  (natural-height (:pointer :int)))
+
+(defun gtk-widget-get-preferred-height-for-width (widget width)
+  (with-foreign-objects ((minimum-height :int) (natural-height :int))
+    (%gtk-widget-get-preferred-height-for-width widget
+                                                width
+                                                minimum-height
+                                                natural-height)
+    (values (mem-ref minimum-height :int)
+            (mem-ref natural-height :int))))
+
+(export 'gtk-widget-get-preferred-height-for-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_width_for_height ()
 ;;;
@@ -8892,6 +8934,25 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_preferred_width_for_height" 
+          %gtk-widget-get-preferred-width-for-height)
+    :void
+  (widget (g-object gtk-widget))
+  (height :int)
+  (minium-width (:pointer :int))
+  (natural-width (:pointer :int)))
+
+(defun gtk-widget-get-preferred-width-for-height (widget height)
+  (with-foreign-objects ((minimum-width :int) (natural-width :int))
+    (%gtk-widget-get-preferred-width-for-heigth widget
+                                                height
+                                                minimum-width
+                                                natural-width)
+    (values (mem-ref minimum-width :int)
+            (mem-ref natural-width :int))))
+
+(export 'gtk-widget-get-preferred-width-for-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_request_mode ()
