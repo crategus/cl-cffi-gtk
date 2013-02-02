@@ -474,6 +474,8 @@
 ;;; If set, wrap lines if the text becomes too wide.
 ;;;
 ;;; Default value: FALSE
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "wrap-mode" property
 ;;;
 ;;;   "wrap-mode"                PangoWrapMode         : Read / Write
@@ -685,22 +687,22 @@
     "wrap" "gboolean" t t)
    (wrap-mode
     gtk-label-wrap-mode
-    "wrap-mode" "PangoWrapMode" t t)
-   (:cffi line-wrap
-          gtk-label-line-wrap :boolean
-          "gtk_label_get_line_wrap" "gtk_label_set_line_wrap")
-   (:cffi line-wrap-mode
-          gtk-label-line-wrap-mode pango-wrap-mode
-          "gtk_label_get_line_wrap_mode" "gtk_label_set_line_wrap_mode")
-   (:cffi layout
-          gtk-label-layout g-object
-          "gtk_label_get_layout" nil)
-   (:cffi selection-bounds
-          gtk-label-selection-bounds nil
-          gtk-label-get-selection-bounds nil)
-   (:cffi layout-offsets
-          gtk-label-layout-offsets nil
-          gtk-label-get-layout-offsets nil)))
+    "wrap-mode" "PangoWrapMode" t t)))
+;   (:cffi line-wrap
+;          gtk-label-line-wrap :boolean
+;          "gtk_label_get_line_wrap" "gtk_label_set_line_wrap")
+;   (:cffi line-wrap-mode
+;          gtk-label-line-wrap-mode pango-wrap-mode
+;          "gtk_label_get_line_wrap_mode" "gtk_label_set_line_wrap_mode")
+;   (:cffi layout
+;          gtk-label-layout g-object
+;          "gtk_label_get_layout" nil)
+;   (:cffi selection-bounds
+;          gtk-label-selection-bounds nil
+;          gtk-label-get-selection-bounds nil)
+;   (:cffi layout-offsets
+;          gtk-label-layout-offsets nil
+;          gtk-label-get-layout-offsets nil)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_new ()
@@ -976,10 +978,9 @@
 ;;;     the setting
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-label-set-line-wrap))
-
-(defun gtk-label-set-line-wrap (label wrap)
-  (setf (gtk-label-wrap label) wrap))
+(defcfun ("gtk_label_set_line_wrap" gtk-label-set-line-wrap) :void
+  (label (g-object gtk-label))
+  (wrap :boolean))
 
 (export 'gtk-label-set-line-wrap)
 
@@ -1002,10 +1003,9 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-label-set-line-wrap-mode))
-
-(defun gtk-label-set-line-wrap-mode (label wrap-mode)
-  (setf (gtk-label-wrap-mode label) wrap-mode))
+(defcfun ("gtk_label_set_line_wrap_mode" gtk-label-set-line-wrap-mode) :void
+  (label (g-object gtk-label))
+  (wrap-mode pango-wrap-mode))
 
 (export 'gtk-label-set-line-wrap-mode)
 
