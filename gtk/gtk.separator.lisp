@@ -185,7 +185,7 @@
 (defun gtk-hseparator-new ()
   (make-instance 'gtk-hseparator))
 
-(export 'gtk-hseparator)
+(export 'gtk-hseparator-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVSeparator
@@ -265,6 +265,6 @@
 (defun gtk-vseparator-new ()
   (make-instance 'gtk-vseparator))
 
-(export 'gtk-vseparator)
+(export 'gtk-vseparator-new)
 
 ;;; --- End of file gtk.separator.lisp -----------------------------------------
