@@ -520,8 +520,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_parameter_type"
-           g-action-group-get-action-parameter-type)
-    (g-boxed-foreign g-variant-type)
+           g-action-group-get-action-parameter-type) g-variant-type
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -562,8 +561,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state_type"
-           g-action-group-get-action-state-type)
-    (g-boxed-foreign g-variant-type)
+           g-action-group-get-action-state-type) g-variant-type
   (action-group (g-object g-action-group))
   (action-name :string))
 
