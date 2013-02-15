@@ -79,3 +79,11 @@
 /atdoc/single-page/lambda.ico
 /glib/atdoc/.atdoc-cleanup.xml
 /glib/atdoc/.atdoc-html.xml
+/atdoc/.atdoc-cleanup.xml
+/atdoc/.atdoc-html.xml
+/atdoc/single-page/.atdoc-cleanup.xml
+/atdoc/single-page/.atdoc-html.xml
+/gdk/atdoc/.atdoc-cleanup.xml
+/gdk/atdoc/.atdoc-html.xml
+/gtk/atdoc/.atdoc-html.xml
+/gtk/atdoc/.atdoc-cleanup.xml
