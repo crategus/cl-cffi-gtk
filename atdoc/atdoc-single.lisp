@@ -26,6 +26,8 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+(push :cl-cffi-gtk-documentation *features*)
+
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk)
 
