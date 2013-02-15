@@ -6,7 +6,7 @@
 ;;; The documentation of this file has been copied from the
 ;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,36 +32,30 @@
 (load "../gtk/atdoc/src/atdoc-gtk.main-loop.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.selections.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.dialog.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.about-dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.widget.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.buildable.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.window.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.enumerations.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.container.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.bin.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.misc.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.grid.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.accel-group.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.accel-label.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.accel-map.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.button.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.box.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.orientable.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.table.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.label.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.calendar.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.alignment.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.aspect-frame.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.frame.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.separator.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.invisible.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.message-dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.window-group.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.assistant.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.offscreen-window.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.image.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.progress-bar.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.statusbar.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.info-bar.lisp")
+(load "../gtk/atdoc/src/atdoc-gtk.status-icon.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -84,9 +78,8 @@
 (in-package :gobject)
 
 (load "../gobject/atdoc/src/atdoc-gobject.package.lisp")
-(load "../gobject/atdoc/src/atdoc-gobject.type-info.lisp")
+
 (load "../gobject/atdoc/src/atdoc-gobject.base.lisp")
-(load "../gobject/atdoc/src/atdoc-gobject.param-spec.lisp")
 (load "../gobject/atdoc/src/atdoc-gobject.signals.lisp")
 
 ;;; ----------------------------------------------------------------------------
