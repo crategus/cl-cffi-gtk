@@ -8,7 +8,7 @@
 ;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -65,253 +65,12 @@
 ;;;     gtk_assistant_commit
 ;;;     gtk_assistant_next_page
 ;;;     gtk_assistant_previous_page
-;;;     
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkAssistant
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkAssistant implements AtkImplementorIface and GtkBuildable.
-;;; 
-;;; Child Properties
-;;; 
-;;;   "complete"                 gboolean              : Read / Write
-;;;   "header-image"             GdkPixbuf*            : Read / Write
-;;;   "page-type"                GtkAssistantPageType  : Read / Write
-;;;   "sidebar-image"            GdkPixbuf*            : Read / Write
-;;;   "title"                    gchar*                : Read / Write
-;;; 
-;;; Style Properties
-;;; 
-;;;   "content-padding"          gint                  : Read
-;;;   "header-padding"           gint                  : Read
-;;; 
-;;; Signals
-;;; 
-;;;   "apply"                                          : Run Last
-;;;   "cancel"                                         : Run Last
-;;;   "close"                                          : Run Last
-;;;   "prepare"                                        : Run Last
-;;; 
-;;; Description
-;;; 
-;;; A GtkAssistant is a widget used to represent a generally complex operation
-;;; splitted in several steps, guiding the user through its pages and
-;;; controlling the page flow to collect the necessary data.
-;;; 
-;;; The design of GtkAssistant is that it controls what buttons to show and to
-;;; make sensitive, based on what it knows about the page sequence and the type
-;;; of each page, in addition to state information like the page completion and
-;;; committed status.
-;;; 
-;;; If you have a case that doesn't quite fit in GtkAssistants way of handling
-;;; buttons, you can use the GTK_ASSISTANT_PAGE_CUSTOM page type and handle
-;;; buttons yourself.
-;;; 
-;;; GtkAssistant as GtkBuildable
-;;; 
-;;; The GtkAssistant implementation of the GtkBuildable interface exposes the
-;;; action_area as internal children with the name "action_area".
-;;; 
-;;; To add pages to an assistant in GtkBuilder, simply add it as a <child> to
-;;; the GtkAssistant object, and set its child properties as necessary.
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "complete" child property
-;;; 
-;;;   "complete"                 gboolean              : Read / Write
-;;; 
-;;; Setting the "complete" child property to TRUE marks a page as complete
-;;; (i.e.: all the required fields are filled out). GTK+ uses this information
-;;; to control the sensitivity of the navigation buttons.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "header-image" child property
-;;; 
-;;;   "header-image"             GdkPixbuf*            : Read / Write
-;;; 
-;;; Warning
-;;; 
-;;; GtkAssistant:header-image has been deprecated since version 3.2 and should
-;;; not be used in newly-written code. Since GTK+ 3.2, a header is no longer
-;;; shown; add your header decoration to the page content instead.
-;;; 
-;;; This image used to be displayed in the page header.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "page-type" child property
-;;; 
-;;;   "page-type"                GtkAssistantPageType  : Read / Write
-;;; 
-;;; The type of the assistant page.
-;;; 
-;;; Default value: GTK_ASSISTANT_PAGE_CONTENT
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "sidebar-image" child property
-;;; 
-;;;   "sidebar-image"            GdkPixbuf*            : Read / Write
-;;; 
-;;; Warning
-;;; 
-;;; GtkAssistant:sidebar-image has been deprecated since version 3.2 and should
-;;; not be used in newly-written code. Since GTK+ 3.2, the sidebar image is no
-;;; longer shown.
-;;; 
-;;; This image used to be displayed in the 'sidebar'.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "title" child property
-;;; 
-;;;   "title"                    gchar*                : Read / Write
-;;; 
-;;; The title of the page.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "content-padding" style property
-;;; 
-;;;   "content-padding"          gint                  : Read
-;;; 
-;;; Number of pixels around the content pages.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "header-padding" style property
-;;; 
-;;;   "header-padding"           gint                  : Read
-;;; 
-;;; Number of pixels around the header.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 6
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "apply" signal
-;;; 
-;;; void user_function (GtkAssistant *assistant,
-;;;                     gpointer      user_data)      : Run Last
-;;; 
-;;; The ::apply signal is emitted when the apply button is clicked.
-;;; 
-;;; The default behavior of the GtkAssistant is to switch to the page after the
-;;; current page, unless the current page is the last one.
-;;; 
-;;; A handler for the ::apply signal should carry out the actions for which the
-;;; wizard has collected data. If the action takes a long time to complete, you
-;;; might consider putting a page of type GTK_ASSISTANT_PAGE_PROGRESS after the
-;;; confirmation page and handle this operation within the "prepare" signal of
-;;; the progress page.
-;;; 
-;;; assistant :
-;;;     the GtkAssistant
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cancel" signal
-;;; 
-;;; void user_function (GtkAssistant *assistant,
-;;;                     gpointer      user_data)      : Run Last
-;;; 
-;;; The ::cancel signal is emitted when then the cancel button is clicked.
-;;; 
-;;; assistant :
-;;;     the GtkAssistant
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "close" signal
-;;; 
-;;; void user_function (GtkAssistant *assistant,
-;;;                     gpointer      user_data)      : Run Last
-;;; 
-;;; The ::close signal is emitted either when the close button of a summary page
-;;; is clicked, or when the apply button in the last page in the flow (of type
-;;; GTK_ASSISTANT_PAGE_CONFIRM) is clicked.
-;;; 
-;;; assistant :
-;;;     the GtkAssistant
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "prepare" signal
-;;; 
-;;; void user_function (GtkAssistant *assistant,
-;;;                     GtkWidget    *page,
-;;;                     gpointer      user_data)      : Run Last
-;;; 
-;;; The ::prepare signal is emitted when a new page is set as the assistant's
-;;; current page, before making the new page visible.
-;;; 
-;;; A handler for this signal can do any preparations which are necessary before
-;;; showing page.
-;;; 
-;;; assistant :
-;;;     the GtkAssistant
-;;; 
-;;; page :
-;;;     the current page
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkAssistant
-;;; 
-;;; struct GtkAssistant;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -323,6 +82,153 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_assistant_get_type")
   nil)
+
+;;; --- gtk-assistant ----------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-assistant 'type)
+ "@version{2013-1-31}
+  @begin{short}
+    A @sym{gtk-assistant} is a widget used to represent a generally complex
+    operation splitted in several steps, guiding the user through its pages and
+    controlling the page flow to collect the necessary data.
+  @end{short}
+
+  The design of @sym{gtk-assistant} is that it controls what buttons to show and
+  to make sensitive, based on what it knows about the page sequence and the type
+  of each page, in addition to state information like the page completion and
+  committed status.
+
+  If you have a case that doesn't quite fit in @sym{gtk-assistant}'s way of
+  handling buttons, you can use the @code{:custom} page type and handle
+  buttons yourself.
+
+  @heading{GtkAssistant as GtkBuildable}
+  The @sym{gtk-assistant} implementation of the @class{gtk-buildable} interface
+  exposes the @code{\"action-area\"} as internal children with the name
+  \"action-area\".
+
+  To add pages to an assistant in @class{gtk-builder}, simply add it as a
+  @code{<child>} to the @sym{gtk-assistant} object, and set its child properties
+  as necessary.
+  @begin[Child Property Details]{dictionary}
+    @subheading{The \"complete\" child property}
+    @code{\"complete\"} of type @code{gboolean} (Read / Write)@br{}
+    Setting the @code{\"complete\"} child property to @arg{true} marks a page as
+    complete (i.e.: all the required fields are filled out). GTK+ uses this
+    information to control the sensitivity of the navigation buttons.@br{}
+    Default value: @code{nil}@br{}
+    Since 2.10
+
+    @subheading{The \"header-image\" child property}
+    @code{\"header-image\"} of type @class{gdk-pixbuf} (Read / Write)@br{}
+    @b{Warning:}
+    @code{GtkAssistant:header-image} has been deprecated since version 3.2 and
+    should not be used in newly-written code. Since GTK+ 3.2, a header is no
+    longer shown; add your header decoration to the page content instead.@br{}
+    This image used to be displayed in the page header.@br{}
+    Since 2.10
+
+    @subheading{The \"page-type\" child property}
+    @code{\"page-type\"} of type @symbol{gtk-assistant-page-type}
+    (Read / Write)@br{}
+    The type of the assistant page.@br{}
+    Default value: @code{:content}@br{}
+    Since 2.10
+
+    @subheading{The \"sidebar-image\" child property}
+    @code{\"sidebar-image\"} of type @class{gdk-pixbuf} (Read / Write)@br{}
+    @b{Warning:} @code{GtkAssistant:sidebar-image} has been deprecated since
+    version 3.2 and should not be used in newly-written code. Since GTK+ 3.2,
+    the sidebar image is no longer shown.@br{}
+    This image used to be displayed in the \"sidebar\".@br{}
+    Since 2.10
+
+    @subheading{The \"title\" child property}
+    @code{\"title\"} of type @code{gchar*} (Read / Write)@br{}
+    The title of the page.@br{}
+    Default value: @code{nil}@br{}
+    Since 2.10
+  @end{dictionary}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"content-padding\" style property}
+    @code{\"content-padding\"} of type @code{gint} (Read)@br{}
+    Number of pixels around the content pages.@br{}
+    Allowed values: @code{>= 0}@br{}
+    Default value: @code{1}
+
+    @subheading{The \"header-padding\" style property}
+    @code{\"header-padding\"} of type @code{gint} (Read)@br{}
+    Number of pixels around the header.@br{}
+    Allowed values: @code{>= 0}@br{}
+    Default value: @code{6}
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @b{The \"apply\" signal}
+    @begin{pre}
+ void user_function (GtkAssistant *assistant,
+                     gpointer      user_data)      : Run Last
+    @end{pre}
+    The \"apply\" signal is emitted when the apply button is clicked.
+
+    The default behavior of the GtkAssistant is to switch to the page after the
+    current page, unless the current page is the last one.
+ 
+    A handler for the ::apply signal should carry out the actions for which the
+    wizard has collected data. If the action takes a long time to complete, you
+    might consider putting a page of type GTK_ASSISTANT_PAGE_PROGRESS after the
+    confirmation page and handle this operation within the \"prepare\" signal of
+    the progress page.
+    @begin[code]{table}
+      @entry[assistant]{the GtkAssistant}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    Since 2.10
+
+    @b{The \"cancel\" signal}
+    @begin{pre}
+ void user_function (GtkAssistant *assistant,
+                     gpointer      user_data)      : Run Last
+    @end{pre}
+    The ::cancel signal is emitted when then the cancel button is clicked.
+    @begin[code]{table}
+      @entry[assistant]{the GtkAssistant}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    Since 2.10
+
+    @b{The \"close\" signal}
+    @begin{pre}
+ void user_function (GtkAssistant *assistant,
+                     gpointer      user_data)      : Run Last
+    @end{pre}
+    The ::close signal is emitted either when the close button of a summary page
+    is clicked, or when the apply button in the last page in the flow (of type
+    GTK_ASSISTANT_PAGE_CONFIRM) is clicked.
+    @begin[code]{table}
+      @entry[assistant]{the GtkAssistant}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    Since 2.10
+
+    @b{The \"prepare\" signal}
+    @begin{pre}
+ void user_function (GtkAssistant *assistant,
+                     GtkWidget    *page,
+                     gpointer      user_data)      : Run Last
+    @end{pre}
+    The ::prepare signal is emitted when a new page is set as the assistant's
+    current page, before making the new page visible.
+
+    A handler for this signal can do any preparations which are necessary before
+    showing page.
+    @begin[code]{table}
+      @enty[assistant]{the GtkAssistant}
+      @entry[page]{the current page}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    Since 2.10
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -346,68 +252,118 @@
   gtk-assistant-child-complete
   "complete" "gboolean" t t t)
 
+;;; --- Accessors of the Child Properties --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-assistant-child-page-type 'function)
+ "@version{2013-2-1}
+  @argument[container]{a @class{gtk-assistant} widget}
+  @argument[child]{a page of assistant}
+  @begin{short}
+    Accessor of the child property @code{\"page-type\"} of the
+    @class{gtk-assistant} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-assistant-child-title 'function)
+ "@version{2013-2-1}
+  @argument[container]{a @class{gtk-assistant} widget}
+  @argument[child]{a page of assistant}
+  @begin{short}
+    Accessor of the child property @code{\"title\"} of the
+    @class{gtk-assistant} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-child-header-image atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-assistant-child-header-image 'function)
+ "@version{2013-2-1}
+  @argument[container]{a @class{gtk-assistant} widget}
+  @argument[child]{a page of assistant}
+  @begin{short}
+    Accessor of the child property @code{\"header-image\"} of the
+    @class{gtk-assistant} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-child-sidebar-image atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-assistant-child-sidebar-image 'function)
+ "@version{2013-2-1}
+  @argument[container]{a @class{gtk-assistant} widget}
+  @argument[child]{a page of assistant}
+  @begin{short}
+    Accessor of the child property @code{\"sidebar-image\"} of the
+    @class{gtk-assistant} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-assistant-child-complete 'function)
+ "@version{2013-2-1}
+  @argument[container]{a @class{gtk-assistant} widget}
+  @argument[child]{a page of assistant}
+  @begin{short}
+    Accessor of the child property @code{\"complete\"} of the
+    @class{gtk-assistant} class.
+  @end{short}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_new ()
-;;; 
-;;; GtkWidget * gtk_assistant_new (void);
-;;; 
-;;; Creates a new GtkAssistant.
-;;; 
-;;; Returns :
-;;;     a newly created GtkAssistant
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-assistant-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @return{a @class{gtk-assistant} widget}
+  @begin{short}
+    Creates a new @class{gtk-assistant}.
+  @end{short}
+
+  Since 2.10"
   (make-instance 'gtk-assistant))
 
 (export 'gtk-assistant-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_current_page ()
-;;; 
-;;; gint gtk_assistant_get_current_page (GtkAssistant *assistant);
-;;; 
-;;; Returns the page number of the current page.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; Returns :
-;;;     The index (starting from 0) of the current page in the assistant, or -1
-;;;     if the assistant has no pages, or no current page.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_get_current_page" gtk-assistant-get-current-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-31}
+  @argument[assistant]{a GtkAssistant}
+  @return{The index (starting from 0) of the current page in the assistant,
+    or -1 if the assistant has no pages, or no current page.}
+  @begin{short}
+    Returns the page number of the current page.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-get-current-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_current_page ()
-;;; 
-;;; void gtk_assistant_set_current_page (GtkAssistant *assistant, gint page_num)
-;;; 
-;;; Switches the page to page_num.
-;;; 
-;;; Note that this will only be necessary in custom buttons, as the assistant
-;;; flow can be set with gtk_assistant_set_forward_page_func().
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page_num :
-;;;     index of the page to switch to, starting from 0. If negative, the last
-;;;     page will be used. If greater than the number of pages in the assistant,
-;;;     nothing will be done.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_set_current_page" gtk-assistant-set-current-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-31}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page_num]{index of the page to switch to, starting from 0. If
+    negative, the last page will be used. If greater than the number of pages in
+    the assistant, nothing will be done.}
+  @begin{short}
+    Switches the page to page_num.
+  @end{short}
+
+  Note that this will only be necessary in custom buttons, as the assistant
+  flow can be set with gtk_assistant_set_forward_page_func().
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page-num :int))
 
@@ -415,47 +371,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_n_pages ()
-;;; 
-;;; gint gtk_assistant_get_n_pages (GtkAssistant *assistant);
-;;; 
-;;; Returns the number of pages in the assistant
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; Returns :
-;;;     the number of pages in the assistant
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_get_n_pages" gtk-assistant-get-n-pages) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-31}
+  @argument[assistant]{a GtkAssistant}
+  @return{the number of pages in the assistant}
+  @begin{short}
+    Returns the number of pages in the assistant
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-get-n-pages)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_nth_page ()
-;;; 
-;;; GtkWidget * gtk_assistant_get_nth_page (GtkAssistant *assistant,
-;;;                                         gint page_num);
-;;; 
-;;; Returns the child widget contained in page number page_num.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page_num :
-;;;     the index of a page in the assistant, or -1 to get the last page
-;;; 
-;;; Returns :
-;;;     the child widget, or NULL if page_num is out of bounds
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_get_nth_page" gtk-assistant-get-nth-page)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-31}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page_num]{the index of a page in the assistant, or -1 to get the
+    last page}
+  @return{the child widget, or NULL if page_num is out of bounds}
+  @begin{short}
+    Returns the child widget contained in page number page_num.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page-num :int))
 
@@ -463,24 +411,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_prepend_page ()
-;;; 
-;;; gint gtk_assistant_prepend_page (GtkAssistant *assistant, GtkWidget *page);
-;;; 
-;;; Prepends a page to the assistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a GtkWidget
-;;; 
-;;; Returns :
-;;;     the index (starting at 0) of the inserted page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_prepend_page" gtk-assistant-prepend-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-31}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a GtkWidget}
+  @return{the index (starting at 0) of the inserted page}
+  @begin{short}
+    Prepends a page to the assistant.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
 
@@ -488,24 +431,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_append_page ()
-;;; 
-;;; gint gtk_assistant_append_page (GtkAssistant *assistant, GtkWidget *page);
-;;; 
-;;; Appends a page to the assistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a GtkWidget
-;;; 
-;;; Returns :
-;;;     the index (starting at 0) of the inserted page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_append_page" gtk-assistant-append-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a GtkWidget}
+  @return{the index (starting at 0) of the inserted page}
+  @begin{short}
+    Appends a page to the assistant.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
 
@@ -513,30 +451,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_insert_page ()
-;;; 
-;;; gint gtk_assistant_insert_page (GtkAssistant *assistant,
-;;;                                 GtkWidget *page,
-;;;                                 gint position);
-;;; 
-;;; Inserts a page in the assistant at a given position.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a GtkWidget
-;;; 
-;;; position :
-;;;     the index (starting at 0) at which to insert the page, or -1 to append
-;;;     the page to the assistant
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the inserted page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_insert_page" gtk-assistant-insert-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a GtkWidget}
+  @argument[position]{the index (starting at 0) at which to insert the page, or
+    -1 to append the page to the assistant}
+  @return{the index (starting from 0) of the inserted page}
+  @begin{short}
+    Inserts a page in the assistant at a given position.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget))
   (position :int))
@@ -545,21 +474,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_remove_page ()
-;;; 
-;;; void gtk_assistant_remove_page (GtkAssistant *assistant, gint page_num);
-;;; 
-;;; Removes the page_num's page from assistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page_num :
-;;;     the index of a page in the assistant, or -1 to remove the last page
-;;; 
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_remove_page" gtk-assistant-remove-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page_num]{the index of a page in the assistant, or -1 to remove the
+    last page}
+  @begin{short}
+    Removes the page_num's page from assistant.
+  @end{short}
+
+  Since 3.2"
   (assistant (g-object gtk-assistant))
   (page-num :int))
 
@@ -625,6 +552,22 @@
 (define-cb-methods assistant-page-func :int ((current-page :int)))
 
 (defun gtk-assistant-set-forward-page-func (assistant func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page_func]{the GtkAssistantPageFunc, or NULL to use the default one}
+  @argument[data]{user data for page_func}
+  @argument[destroy]{destroy notifier for data}
+  @begin{short}
+    Sets the page forwarding function to be page_func.
+  @end{short}
+
+  This function will be used to determine what will be the next page when the
+  user presses the forward button. Setting page_func to NULL will make the
+  assistant to use the default forward function, which just goes to the next
+  visible page.
+
+  Since 2.10"
   (if func
       (%gtk-assistant-set-forward-page-func
                                   assistant
@@ -640,51 +583,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkAssistantPageType
-;;; 
-;;; typedef enum {
-;;;   GTK_ASSISTANT_PAGE_CONTENT,
-;;;   GTK_ASSISTANT_PAGE_INTRO,
-;;;   GTK_ASSISTANT_PAGE_CONFIRM,
-;;;   GTK_ASSISTANT_PAGE_SUMMARY,
-;;;   GTK_ASSISTANT_PAGE_PROGRESS,
-;;;   GTK_ASSISTANT_PAGE_CUSTOM
-;;; } GtkAssistantPageType;
-;;; 
-;;; An enum for determining the page role inside the GtkAssistant. It's used to
-;;; handle buttons sensitivity and visibility.
-;;; 
-;;; Note that an assistant needs to end its page flow with a page of type
-;;; GTK_ASSISTANT_PAGE_CONFIRM, GTK_ASSISTANT_PAGE_SUMMARY or
-;;; GTK_ASSISTANT_PAGE_PROGRESS to be correct.
-;;; 
-;;; The Cancel button will only be shown if the page isn't "committed". See
-;;; gtk_assistant_commit() for details.
-;;; 
-;;; GTK_ASSISTANT_PAGE_CONTENT
-;;;     The page has regular contents. Both the Back and forward buttons will be
-;;;     shown.
-;;; 
-;;; GTK_ASSISTANT_PAGE_INTRO
-;;;     The page contains an introduction to the assistant task. Only the
-;;;     Forward button will be shown if there is a next page.
-;;; 
-;;; GTK_ASSISTANT_PAGE_CONFIRM
-;;;     The page lets the user confirm or deny the changes. The Back and Apply
-;;;     buttons will be shown.
-;;; 
-;;; GTK_ASSISTANT_PAGE_SUMMARY
-;;;     The page informs the user of the changes done. Only the Close button
-;;;     will be shown.
-;;; 
-;;; GTK_ASSISTANT_PAGE_PROGRESS
-;;;     Used for tasks that take a long time to complete, blocks the assistant
-;;;     until the page is marked as complete. Only the back button will be
-;;;     shown.
-;;; 
-;;; GTK_ASSISTANT_PAGE_CUSTOM
-;;;     Used for when other page types are not appropriate. No buttons will be
-;;;     shown, and the application must add its own buttons through
-;;;     gtk_assistant_add_action_widget().
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkAssistantPageType" gtk-assistant-page-type
@@ -698,29 +596,67 @@
   (:custom   5))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-assistant-page-type atdoc:*external-symbols*)
+ "@version{2013-2-1}
+  @begin{short}
+    An enum for determining the page role inside the GtkAssistant. It's used to
+   handle buttons sensitivity and visibility.
+  @end{short}
+
+  Note that an assistant needs to end its page flow with a page of type
+  GTK_ASSISTANT_PAGE_CONFIRM, GTK_ASSISTANT_PAGE_SUMMARY or
+  GTK_ASSISTANT_PAGE_PROGRESS to be correct.
+
+  The Cancel button will only be shown if the page isn't \"committed\". See
+  gtk_assistant_commit() for details.
+  @begin{pre}
+(define-g-enum \"GtkAssistantPageType\" gtk-assistant-page-type
+  (:export t
+   :type-initializer \"gtk_assistant_page_type_get_type\")
+  (:content  0)
+  (:intro    1)
+  (:confirm  2)
+  (:summary  3)
+  (:progress 4)
+  (:custom 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:content]{The page has regular contents. Both the Back and forward
+      buttons will be shown.}
+    @entry[:intro]{The page contains an introduction to the assistant task. Only
+      the Forward button will be shown if there is a next page.}
+    @entry[:confirm]{The page lets the user confirm or deny the changes. The
+      Back and Apply buttons will be shown.}
+    @entry[:summary]{The page informs the user of the changes done. Only the
+      Close button will be shown.}
+    @entry[:progress]{Used for tasks that take a long time to complete, blocks
+      the assistant until the page is marked as complete. Only the back button
+      will be shown.}
+    @entry[:custom]{Used for when other page types are not appropriate. No
+      buttons will be shown, and the application must add its own buttons
+      through gtk_assistant_add_action_widget().}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_type ()
-;;; 
-;;; void gtk_assistant_set_page_type (GtkAssistant *assistant,
-;;;                                   GtkWidget *page,
-;;;                                   GtkAssistantPageType type);
-;;; 
-;;; Sets the page type for page.
-;;; 
-;;; The page type determines the page behavior in the assistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a page of assistant
-;;; 
-;;; type :
-;;;     the new type for page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_set_page_type" gtk-assistant-set-page-type) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a page of assistant}
+  @argument[type]{the new type for page}
+  @begin{short}
+    Sets the page type for page.
+  @end{short}
+
+  The page type determines the page behavior in the assistant.
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gkt-widget))
   (type gtk-assistant-page-type))
@@ -729,26 +665,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_type ()
-;;; 
-;;; GtkAssistantPageType gtk_assistant_get_page_type (GtkAssistant *assistant,
-;;;                                                   GtkWidget *page);
-;;; 
-;;; Gets the page type of page.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a page of assistant
-;;; 
-;;; Returns :
-;;;     the page type of page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_get_page_type" gtk-assistant-get-page-type)
     gtk-assistant-page-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a page of assistant}
+  @return{the page type of page}
+  @begin{short}
+    Gets the page type of page.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
 
@@ -756,29 +686,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_title ()
-;;; 
-;;; void gtk_assistant_set_page_title (GtkAssistant *assistant,
-;;;                                    GtkWidget *page,
-;;;                                    const gchar *title);
-;;; 
-;;; Sets a title for page.
-;;; 
-;;; The title is displayed in the header area of the assistant when page is the
-;;; current page.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a page of assistant
-;;; 
-;;; title :
-;;;     the new title for page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_set_page_title" gtk-assistant-set-page-title) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a page of assistant}
+  @argument[title]{the new title for page}
+  @begin{short}
+    Sets a title for page.
+  @end{short}
+
+  The title is displayed in the header area of the assistant when page is the
+  current page.
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget))
   (title :string))
@@ -787,25 +710,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_title ()
-;;; 
-;;; const gchar * gtk_assistant_get_page_title (GtkAssistant *assistant,
-;;;                                             GtkWidget *page);
-;;; 
-;;; Gets the title for page.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a page of assistant
-;;; 
-;;; Returns :
-;;;     the title for page
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_get_page_title" gtk-assistant-get-page-title) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a page of assistant}
+  @return{the title for page}
+  @begin{short}
+    Gets the title for page.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
 
@@ -947,6 +864,19 @@
 
 (defcfun ("gtk_assistant_set_page_complete" gtk-assistant-set-page-complete)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a page of assistant}
+  @argument[complete]{the completeness status of the page}
+  @begin{short}
+    Sets whether page contents are complete.
+  @end{short}
+
+  This will make assistant update the buttons state to be able to continue the
+  task.
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget))
   (complete :boolean))
@@ -955,26 +885,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_complete ()
-;;; 
-;;; gboolean gtk_assistant_get_page_complete (GtkAssistant *assistant,
-;;;                                           GtkWidget *page);
-;;; 
-;;; Gets whether page is complete.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; page :
-;;;     a page of assistant
-;;; 
-;;; Returns :
-;;;     TRUE if page is complete.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_get_page_complete" gtk-assistant-get-page-complete)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[page]{a page of assistant}
+  @return{TRUE if page is complete.}
+  @begin{short}
+    Gets whether page is complete.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
 
@@ -982,23 +906,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_add_action_widget ()
-;;; 
-;;; void gtk_assistant_add_action_widget (GtkAssistant *assistant,
-;;;                                       GtkWidget *child);
-;;; 
-;;; Adds a widget to the action area of a GtkAssistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; child :
-;;;     a GtkWidget
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_add_action_widget" gtk-assistant-add-action-widget)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[child]{a GtkWidget}
+  @begin{short}
+    Adds a widget to the action area of a GtkAssistant.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (widget (g-object gtk-widget)))
 
@@ -1006,23 +926,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_remove_action_widget ()
-;;; 
-;;; void gtk_assistant_remove_action_widget (GtkAssistant *assistant,
-;;;                                          GtkWidget *child);
-;;; 
-;;; Removes a widget from the action area of a GtkAssistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; child :
-;;;     a GtkWidget
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_remove_action_widget" assistant-remove-action-widget)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @argument[child]{a GtkWidget}
+  @begin{short}
+    Removes a widget from the action area of a GtkAssistant.
+  @end{short}
+
+  Since 2.10"
   (assistant (g-object gtk-assistant))
   (widget (g-object gtk-widget)))
 
@@ -1030,98 +946,94 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_update_buttons_state ()
-;;; 
-;;; void gtk_assistant_update_buttons_state (GtkAssistant *assistant);
-;;; 
-;;; Forces assistant to recompute the buttons state.
-;;; 
-;;; GTK+ automatically takes care of this in most situations, e.g. when the user
-;;; goes to a different page, or when the visibility or completeness of a page
-;;; changes.
-;;; 
-;;; One situation where it can be necessary to call this function is when
-;;; changing a value on the current page affects the future page flow of the
-;;; assistant.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_update_buttons_state"
           gtk-assistant-update-buttons-state) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @begin{short}
+    Forces assistant to recompute the buttons state.
+  @end{short}
+
+  GTK+ automatically takes care of this in most situations, e.g. when the user
+  goes to a different page, or when the visibility or completeness of a page
+  changes.
+
+  One situation where it can be necessary to call this function is when
+  changing a value on the current page affects the future page flow of the
+  assistant.
+
+  Since 2.10"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-update-buttons-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_commit ()
-;;; 
-;;; void gtk_assistant_commit (GtkAssistant *assistant);
-;;; 
-;;; Erases the visited page history so the back button is not shown on the
-;;; current page, and removes the cancel button from subsequent pages.
-;;; 
-;;; Use this when the information provided up to the current page is hereafter
-;;; deemed permanent and cannot be modified or undone. For example, showing a
-;;; progress page to track a long-running, unreversible operation after the user
-;;; has clicked apply on a confirmation page.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_commit" gtk-assistant-commit) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @begin{short}
+    Erases the visited page history so the back button is not shown on the
+    current page, and removes the cancel button from subsequent pages.
+  @end{short}
+
+  Use this when the information provided up to the current page is hereafter
+  deemed permanent and cannot be modified or undone. For example, showing a
+  progress page to track a long-running, unreversible operation after the user
+  has clicked apply on a confirmation page.
+
+  Since 2.22"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-commit)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_next_page ()
-;;; 
-;;; void gtk_assistant_next_page (GtkAssistant *assistant);
-;;; 
-;;; Navigate to the next page.
-;;; 
-;;; It is a programming error to call this function when there is no next page.
-;;; 
-;;; This function is for use when creating pages of the
-;;; GTK_ASSISTANT_PAGE_CUSTOM type.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_next_page" gtk-assistant-next-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @begin{short}
+    Navigate to the next page.
+  @end{short}
+
+  It is a programming error to call this function when there is no next page.
+
+  This function is for use when creating pages of the
+  GTK_ASSISTANT_PAGE_CUSTOM type.
+
+  Since 3.0"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-next-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_previous_page ()
-;;; 
-;;; void gtk_assistant_previous_page (GtkAssistant *assistant);
-;;; 
-;;; Navigate to the previous visited page.
-;;; 
-;;; It is a programming error to call this function when no previous page is
-;;; available.
-;;; 
-;;; This function is for use when creating pages of the
-;;; GTK_ASSISTANT_PAGE_CUSTOM type.
-;;; 
-;;; assistant :
-;;;     a GtkAssistant
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_assistant_previous_page" gtk-assistant-previous-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-1}
+  @argument[assistant]{a GtkAssistant}
+  @begin{short}
+    Navigate to the previous visited page.
+  @end{short}
+
+  It is a programming error to call this function when no previous page is
+  available.
+
+  This function is for use when creating pages of the
+  GTK_ASSISTANT_PAGE_CUSTOM type.
+
+  Since 3.0"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-previous-page)
