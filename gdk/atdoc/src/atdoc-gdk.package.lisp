@@ -59,8 +59,8 @@
     @symbol{cairo-region-t} data type, they make up the central types for
     representing graphical data.
 
-    @about-class{gdk-point}
-    @about-class{gdk-rectangle}
+    @about-struct{gdk-point}
+    @about-struct{gdk-rectangle}
     @about-function{gdk-rectangle-intersect}
     @about-function{gdk-rectangle-union}
   @end{section}
@@ -70,13 +70,13 @@
   @begin[Colors]{section}
     Manipulation of colors
 
-    @about-class{gdk-color}
+    @about-struct{gdk-color}
     @about-function{gdk-color-copy}
     @about-function{gdk-color-free}
     @about-function{gdk-color-parse}
     @about-function{gdk-color-equal}
     @about-function{gdk-color-hash}
-    @about-function{gdk-color-string}
+    @about-function{gdk-color-to-string}
   @end{section}
   @begin[RGBA Colors]{section}
     RGBA colors
@@ -291,7 +291,38 @@
     Functions for manipulating keyboard codes
   @end{section}
   @begin[Selections]{section}
-    Functions for transfering data via the X selection mechanism
+    Functions for transfering data via the X selection mechanism.
+
+    The X selection mechanism provides a way to transfer arbitrary chunks of
+    data between programs. A selection is a essentially a named clipboard,
+    identified by a string interned as a @symol{gdk-atom}. By claiming ownership
+    of a selection, an application indicates that it will be responsible for
+    supplying its contents. The most common selections are \"PRIMARY\" and
+    \"CLIPBOARD\".
+
+    The contents of a selection can be represented in a number of formats,
+    called targets. Each target is identified by an atom. A list of all possible
+    targets supported by the selection owner can be retrieved by requesting the
+    special target \"TARGETS\". When a selection is retrieved, the data is
+    accompanied by a type (an atom), and a format (an integer, representing the
+    number of bits per item). See Properties and Atoms for more information.
+
+    The functions in this section only contain the lowlevel parts of the
+    selection protocol. A considerably more complicated implementation is needed
+    on top of this. GTK+ contains such an implementation in the functions in
+    @code{gtkselection.h} and programmers should use those functions instead of
+    the ones presented here. If you plan to implement selection handling
+    directly on top of the functions here, you should refer to the X
+    Inter-client Communication Conventions Manual (ICCCM).
+
+    @about-function{gdk-selection-owner-set}
+    @about-function{gdk-selection-owner-set-for-display}
+    @about-function{gdk-selection-owner-get}
+    @about-function{gdk-selection-owner-get-for-display}
+    @about-function{gdk-selection-convert}
+    @about-function{gdk-selection-property-get}
+    @about-function{gdk-selection-send-notify}
+    @about-function{gdk-selection-send-notify-for-display}
   @end{section}
   @begin[Drag And Drop]{section}
     Functions for controlling drag and drop handling

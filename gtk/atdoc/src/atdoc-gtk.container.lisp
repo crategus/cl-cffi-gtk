@@ -93,7 +93,7 @@
      if (i_am_in_height_for_width_mode)
        {
          gint min_width;
- 
+
          GTK_WIDGET_GET_CLASS (widget)->
                     get_preferred_width (widget, &min_width, NULL);
          GTK_WIDGET_GET_CLASS (widget)->
@@ -179,18 +179,19 @@
   rather to their relation. Typical examples of child properties are the
   position or pack-type of a widget which is contained in a @class{gtk-box}.
 
-  Use @fun{gtk-container-class-install-child-property} to install child
+  Use @code{gtk_container_class_install_child_property()} to install child
   properties for a container class and
   @fun{gtk-container-class-find-child-property} or
-  @fun{gtk-container-class-list-child-properties} to get information about
+  @code{gtk_container_class_list_child_properties()} to get information about
   existing child properties.
 
   To set the value of a child property, use
-  @fun{gtk-container-child-set-property}, @fun{gtk-container-child-set} or
-  @fun{gtk-container-child-set-valist}. To obtain the value of a child property,
-  use @fun{gtk-container-child-get-property}, @fun{gtk-container-child-get} or
-  @fun{gtk-container-child-get-valist}. To emit notification about child
-  property changes, use @fun{gtk-widget-child-notify}.
+  @fun{gtk-container-child-set-property}, @code{gtk_container_child_set()} or
+  @code{gtk_container_child_set_valist()}. To obtain the value of a child
+  property, use @fun{gtk-container-child-get-property},
+  @code{gtk_container_child_get()} or @code{gtk_container_child_get_valist()}.
+  To emit notification about child property changes, use
+  @fun{gtk-widget-child-notify}.
 
   @heading{GtkContainer as GtkBuildable}
   The @sym{gtk-container} implementation of the @class{gtk-buildable} interface

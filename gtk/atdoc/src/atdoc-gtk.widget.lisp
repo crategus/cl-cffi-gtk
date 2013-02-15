@@ -192,8 +192,8 @@
    for a widget class, @fun{gtk-widget-class-find-style-property} or
    @fun{gtk-widget-class-list-style-properties} to get information about
    existing style properties and @fun{gtk-widget-style-get-property},
-   @fun{gtk-widget-style-get} or @fun{gtk-widget-style-get-valist} to obtain the
-   value of a style property.
+   @code{gtk_widget_style_get()} or @code{gtk_widget_style_get_valist()} to
+   obtain the value of a style property.
 
     @heading{gtk-widget as gtk-buildable}
     The @sym{gtk-widget} implementation of the @class{gtk-buildable} interface
@@ -1201,6 +1201,213 @@
         event. FALSE to propagate the event further.}
     @end{table}
 
+    @b{The \"move-focus\" signal}
+    @begin{pre}
+ void user_function (GtkWidget       *widget,
+                     GtkDirectionType direction,
+                     gpointer         user_data)      : Action
+    @end{pre}
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal.}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"parent-set\" signal}
+    @begin{pre}
+ void user_function (GtkWidget *widget,
+                     GtkWidget *old_parent,
+                     gpointer   user_data)       : Run First
+    @end{pre}
+    The ::parent-set signal is emitted when a new parent has been set on a
+    widget.
+    @begin[code]{table}
+      @entry[widget]{the object on which the signal is emitted}
+      @entry[old_parent]{the previous parent, or NULL if the widget just got its
+        initial parent.}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+
+    @b{The \"popup-menu\" signal}
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         gpointer   user_data)      : Action
+    @end{pre}
+    This signal gets emitted whenever a widget should pop up a context menu.
+    This usually happens through the standard key binding mechanism; by pressing
+    a certain key while a widget is focused, the user can cause the widget to
+    pop up a menu. For example, the GtkEntry widget creates a menu with
+    clipboard commands. See the section called
+    \"Implement GtkWidget::popup_menu\" for an example of how to use this
+    signal.
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE if a menu was activated}
+    @end{table}
+
+    @subheading{The \"property-notify-event\" signal}
+    The @code{\"property-notify-event\"} signal will be emitted when a property
+    on the @arg{widget}'s window has been changed or deleted.@br{}
+    To receive this signal, the @class{gdk-window} associated to the widget
+    needs to enable the GDK_PROPERTY_CHANGE_MASK mask.
+    @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+    @end{pre}
+    @begin[code]{table}
+      @entry[widget]{the object which received the signal}
+      @entry[event]{the GdkEventProperty which triggered this signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[Returns]{TRUE to stop other handlers from being invoked for the
+        event. FALSE to propagate the event further.}
+    @end{table}
+
+    @subheading{The \"proximity-in-event\" signal}
+      To receive this signal the @class{gdk-window} associated to the widget
+      needs to enable the @code{:proximity-in-mask}.@br{}
+      This signal will be sent to the grab @arg{widget} if there is one.
+      @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object which received the signal}
+        @entry[event]{the @class{gdk-event-proximity} which triggered this
+          signal}
+        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[Returns]{@arg{true} to stop other handlers from being invoked for
+          the event. @code{nil} to propagate the event further.}
+      @end{table}
+
+    @subheading{The \"proximity-out-event\" signal}
+      To receive this signal the GdkWindow associated to the widget needs to
+      enable the @code{:proximity-out-mask} mask.@br{}
+      This signal will be sent to the grab widget if there is one.
+      @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object which received the signal}
+        @entry[event]{the GdkEventProximity which triggered this signal}
+        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[Returns]{TRUE to stop other handlers from being invoked for the
+          event. FALSE to propagate the event further.}
+     @end{table}
+
+   @subheading{The \"query-tooltip\" signal}
+     Emitted when \"has-tooltip\" is @arg{true} and the \"gtk-tooltip-timeout\"
+     has expired with the cursor hovering \"above\" widget; or emitted when
+     widget got focus in keyboard mode.@br{}
+     Using the given coordinates, the signal handler should determine whether a
+     tooltip should be shown for widget. If this is the case @arg{true} should
+     be returned, @code{nil} otherwise. Note that if keyboard_mode is
+     @arg{true}, the values of @arg{x} and @arg{y} are undefined and should not
+     be used.@br{}
+     The signal handler is free to manipulate tooltip with the therefore
+     destined function calls.@br{}
+     Since 2.12
+     @begin{pre}
+ gboolean user_function (GtkWidget  *widget,
+                         gint        x,
+                         gint        y,
+                         gboolean    keyboard_mode,
+                         GtkTooltip *tooltip,
+                         gpointer    user_data)          : Run Last
+     @end{pre}
+     @begin[code]{table}
+       @entry[widget]{the object which received the signal}
+       @entry[x]{the x coordinate of the cursor position where the request has
+         been emitted, relative to widget's left side}
+       @entry[y]{the y coordinate of the cursor position where the request has
+         been emitted, relative to widget's top}
+       @entry[keyboard_mode]{@arg{true} if the tooltip was trigged using the
+         keyboard}
+       @entry[tooltip]{a @class{gtk-tooltip}}
+       @entry[user_data]{user data set when the signal handler was connected.}
+       @entry[Returns]{@arg{true} if tooltip should be shown right now,
+         @code{nil} otherwise.}
+     @end{table}
+
+    @subheading{The \"realize\" signal}
+      @begin{pre}
+ void user_function (GtkWidget *widget,
+                     gpointer   user_data)      : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object which received the signal.}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+
+    @subheading{The \"screen-changed\" signal}
+      The ::screen-changed signal gets emitted when the screen of a widget has
+      changed.
+      @begin{pre}
+ void user_function (GtkWidget *widget,
+                     GdkScreen *previous_screen,
+                     gpointer   user_data)            : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object on which the signal is emitted}
+        @entry[previous_screen]{the previous screen, or NULL if the widget was
+          not associated with a screen before}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+
+    @subheading{The \"scroll-event\" signal}
+      The ::scroll-event signal is emitted when a button in the 4 to 7 range is
+      pressed. Wheel mice are usually configured to generate button press events
+      for buttons 4 and 5 when the wheel is turned.
+
+      To receive this signal, the GdkWindow associated to the widget needs to
+      enable the GDK_BUTTON_PRESS_MASK mask.
+
+      This signal will be sent to the grab widget if there is one.
+      @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object which received the signal.}
+        @entry[event]{the GdkEventScroll which triggered this signal}
+        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[Returns]{TRUE to stop other handlers from being invoked for the
+          event. FALSE to propagate the event further.}
+      @end{table}
+
+    @subheading{The \"selection-clear-event\" signal}
+      The ::selection-clear-event signal will be emitted when the the widget's
+      window has lost ownership of a selection.
+      @begin{pre}
+ gboolean user_function (GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   user_data)      : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object which received the signal}
+        @entry[event]{the GdkEventSelection which triggered this signal}
+        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[Returns]{TRUE to stop other handlers from being invoked for the
+          event. FALSE to propagate the event further.}
+      @end{table}
+
+    @subheading{The \"selection-get\" signal}
+      @begin{pre}
+ void user_function (GtkWidget        *widget,
+                     GtkSelectionData *data,
+                     guint             info,
+                     guint             time,
+                     gpointer          user_data)      : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{the object which received the signal.}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+
   @end{dictionary}
   @see-slot{gtk-widget-app-paintable}
   @see-slot{gtk-widget-can-default}
@@ -1237,284 +1444,6 @@
   @see-slot{gtk-widget-width-request}
   @see-slot{gtk-widget-window}")
 
-
-;;; ----------------------------------------------------------------------------
-;;; The "move-focus" signal
-;;;
-;;; void user_function (GtkWidget       *widget,
-;;;                     GtkDirectionType direction,
-;;;                     gpointer         user_data)      : Action
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "parent-set" signal
-;;;
-;;; void user_function (GtkWidget *widget,
-;;;                     GtkWidget *old_parent,
-;;;                     gpointer   user_data)       : Run First
-;;;
-;;; The ::parent-set signal is emitted when a new parent has been set on a
-;;; widget.
-;;;
-;;; widget :
-;;;     the object on which the signal is emitted
-;;;
-;;; old_parent :
-;;;     the previous parent, or NULL if the widget just got its initial parent.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "popup-menu" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         gpointer   user_data)      : Action
-;;;
-;;; This signal gets emitted whenever a widget should pop up a context menu.
-;;; This usually happens through the standard key binding mechanism; by pressing
-;;; a certain key while a widget is focused, the user can cause the widget to
-;;; pop up a menu. For example, the GtkEntry widget creates a menu with
-;;; clipboard commands. See the section called
-;;; \"Implement GtkWidget::popup_menu\" for an example of how to use this
-;;; signal.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE if a menu was activated
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "property-notify-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::property-notify-event signal will be emitted when a property on the
-;;; widget's window has been changed or deleted.
-;;;
-;;; To receive this signal, the GdkWindow associated to the widget needs to
-;;; enable the GDK_PROPERTY_CHANGE_MASK mask.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the GdkEventProperty which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "proximity-in-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; To receive this signal the GdkWindow associated to the widget needs to
-;;; enable the GDK_PROXIMITY_IN_MASK mask.
-;;;
-;;; This signal will be sent to the grab widget if there is one.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the GdkEventProximity which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "proximity-out-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; To receive this signal the GdkWindow associated to the widget needs to
-;;; enable the GDK_PROXIMITY_OUT_MASK mask.
-;;;
-;;; This signal will be sent to the grab widget if there is one.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the GdkEventProximity which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "query-tooltip" signal
-;;;
-;;; gboolean user_function (GtkWidget  *widget,
-;;;                         gint        x,
-;;;                         gint        y,
-;;;                         gboolean    keyboard_mode,
-;;;                         GtkTooltip *tooltip,
-;;;                         gpointer    user_data)          : Run Last
-;;;
-;;; Emitted when "has-tooltip" is TRUE and the "gtk-tooltip-timeout" has expired
-;;; with the cursor hovering "above" widget; or emitted when widget got focus in
-;;; keyboard mode.
-;;;
-;;; Using the given coordinates, the signal handler should determine whether a
-;;; tooltip should be shown for widget. If this is the case TRUE should be
-;;; returned, FALSE otherwise. Note that if keyboard_mode is TRUE, the values of
-;;; x and y are undefined and should not be used.
-;;;
-;;; The signal handler is free to manipulate tooltip with the therefore destined
-;;; function calls.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; x :
-;;;     the x coordinate of the cursor position where the request has been
-;;;     emitted, relative to widget's left side
-;;;
-;;; y :
-;;;     the y coordinate of the cursor position where the request has been
-;;;     emitted, relative to widget's top
-;;;
-;;; keyboard_mode :
-;;;     TRUE if the tooltip was trigged using the keyboard
-;;;
-;;; tooltip :
-;;;     a GtkTooltip
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE if tooltip should be shown right now, FALSE otherwise.
-;;;
-;;; Since 2.12
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "realize" signal
-;;;
-;;; void user_function (GtkWidget *widget,
-;;;                     gpointer   user_data)      : Run First
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "screen-changed" signal
-;;;
-;;; void user_function (GtkWidget *widget,
-;;;                     GdkScreen *previous_screen,
-;;;                     gpointer   user_data)            : Run Last
-;;;
-;;; The ::screen-changed signal gets emitted when the screen of a widget has
-;;; changed.
-;;;
-;;; widget :
-;;;     the object on which the signal is emitted
-;;;
-;;; previous_screen :
-;;;     the previous screen, or NULL if the widget was not associated with a
-;;;     screen before
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scroll-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::scroll-event signal is emitted when a button in the 4 to 7 range is
-;;; pressed. Wheel mice are usually configured to generate button press events
-;;; for buttons 4 and 5 when the wheel is turned.
-;;;
-;;; To receive this signal, the GdkWindow associated to the widget needs to
-;;; enable the GDK_BUTTON_PRESS_MASK mask.
-;;;
-;;; This signal will be sent to the grab widget if there is one.
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; event :
-;;;     the GdkEventScroll which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "selection-clear-event" signal
-;;;
-;;; gboolean user_function (GtkWidget *widget,
-;;;                         GdkEvent  *event,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; The ::selection-clear-event signal will be emitted when the the widget's
-;;; window has lost ownership of a selection.
-;;;
-;;; widget :
-;;;     the object which received the signal
-;;;
-;;; event :
-;;;     the GdkEventSelection which triggered this signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "selection-get" signal
-;;;
-;;; void user_function (GtkWidget        *widget,
-;;;                     GtkSelectionData *data,
-;;;                     guint             info,
-;;;                     guint             time,
-;;;                     gpointer          user_data)      : Run Last
-;;;
-;;; widget :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "selection-notify-event" signal
 ;;;
@@ -2256,486 +2185,10 @@
   (:whats-this 1))
   @end{pre}")
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_new ()
-;;;
-;;; GtkWidget * gtk_widget_new (GType type,
-;;;                             const gchar *first_property_name,
-;;;                             ...);
-;;;
-;;; This is a convenience function for creating a widget and setting its
-;;; properties in one go. For example you might write:
-;;; gtk_widget_new (GTK_TYPE_LABEL, "label", "Hello World", "xalign", 0.0, NULL)
-;;; to create a left-aligned label. Equivalent to g_object_new(), but returns a
-;;; widget so you don't have to cast the object yourself.
-;;;
-;;; type :
-;;;     type ID of the widget to create
-;;;
-;;; first_property_name :
-;;;     name of first property to set
-;;;
-;;; ... :
-;;;     value of first property, followed by more properties, NULL-terminated
-;;;
-;;; Returns :
-;;;     a new GtkWidget of type widget_type
-;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-widget-destroy -----------------------------------------------------
 
-(setf (documentation 'gtk-widget-destroy 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @short{Destroys a widget.}
 
-  When a widget is destroyed, it will break any references it holds to other
-  objects. If the widget is inside a container, the widget will be removed
-  from the container. If the widget is a toplevel (derived from
-  @class{gtk-window}), it will be removed from the list of toplevels, and the
-  reference GTK+ holds to it will be removed. Removing a widget from its
-  container or the list of toplevels results in the widget being finalized,
-  unless you've added additional references to the widget with
-  @fun{g-object-ref}.
 
-  In most cases, only toplevel widgets (windows) require explicit destruction,
-  because when you destroy a toplevel its children will be destroyed as well.
-  @see-class{gtk-widget}
-  @see-class{gtk-window}
-  @see-function{g-object-ref}")
-
-;;; --- gtk-widget-in-destruction ----------------------------------------------
-
-(setf (documentation 'gtk-widget-in-destruction 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@arg{true} if @arg{widget} is being destroyed.}
-  @short{Returns whether the @arg{widget} is currently being destroyed.}
-  This information can sometimes be used to avoid doing unnecessary work.
-  @see-class{gtk-widget}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_destroyed ()
-;;;
-;;; void gtk_widget_destroyed (GtkWidget *widget, GtkWidget **widget_pointer);
-;;;
-;;; This function sets *widget_pointer to NULL if widget_pointer != NULL. It's
-;;; intended to be used as a callback connected to the "destroy" signal of a
-;;; widget. You connect gtk_widget_destroyed() as a signal handler, and pass the
-;;; address of your widget variable as user data. Then when the widget is
-;;; destroyed, the variable will be set to NULL. Useful for example to avoid
-;;; multiple copies of the same dialog.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; widget_pointer :
-;;;     address of a variable that contains widget
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-widget-unparent ----------------------------------------------------
-
-(setf (documentation 'gtk-widget-unparent 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @short{This function is only for use in widget implementations.}
-  Should be called by implementations of the remove method on
-  @class{gtk-container}, to dissociate a child from the container.
-  @see-class{gtk-widget}
-  @see-class{gtk-container}")
-
-;;; --- gtk-widget-show --------------------------------------------------------
-
-(setf (documentation 'gtk-widget-show 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    Flags a @arg{widget} to be displayed.
-  @end{short}
-  Any @arg{widget} that isn't shown will not appear on the screen. If you want
-  to show all the widgets in a container, it's easier to call
-  @fun{gtk-widget-show-all} on the container, instead of individually showing
-  the widgets.
-
-  Remember that you have to show the containers containing a widget, in
-  addition to the @arg{widget} itself, before it will appear onscreen.
-
-  When a toplevel container is shown, it is immediately realized and mapped;
-  other shown widgets are realized and mapped when their toplevel container is
-  realized and mapped.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-show-all}")
-
-;;; --- gtk-widget-show-now ----------------------------------------------------
-
-(setf (documentation 'gtk-widget-show-now 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @short{Shows a widget.}
-  If @arg{widget} is an unmapped toplevel widget (i. e. a @class{gtk-window}
-  that has not yet been shown), enter the main loop and wait for the window to
-  actually be mapped. Be careful; because the main loop is running, anything can
-  happen during this function.
-  @see-class{gtk-widget}
-  @see-class{gtk-window}")
-
-;;; --- gtk-widget-hide --------------------------------------------------------
-
-(setf (documentation 'gtk-widget-hide 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    Reverses the effects of @fun{gtk-widget-show}, causing the @arg{widget} to
-    be hidden (invisible to the user).
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-show}")
-
-;;; --- gtk-widget-show-all ----------------------------------------------------
-
-(setf (documentation 'gtk-widget-show-all 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    Recursively shows a @arg{widget}, and any child widgets (if the @arg{widget}
-    is a container).
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-show}")
-
-;;; --- gtk-widget-map ---------------------------------------------------------
-
-(setf (documentation 'gtk-widget-map 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    This function is only for use in widget implementations.
-  @end{short}
-  Causes a widget to be mapped if it isn't already.
-  @see-class{gtk-widget}")
-
-;;; --- gtk-widget-unmap -------------------------------------------------------
-
-(setf (documentation 'gtk-widget-unmap 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @short{This function is only for use in widget implementations.}
-  Causes a widget to be unmapped if it's currently mapped.
-  @see-class{gtk-widget}")
-
-;;; --- gtk-widget-realize -----------------------------------------------------
-
-(setf (documentation 'gtk-widget-realize 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @short{Creates the GDK (windowing system) resources associated with a widget.}
-  For example, @code{widget->window} will be created when a widget is realized.
-  Normally realization happens implicitly; if you show a widget and all its
-  parent containers, then the widget will be realized and mapped automatically.
-
-  Realizing a widget requires all the widget's parent widgets to be realized;
-  calling @sym{gtk-widget-realize} realizes the widget's parents in addition to
-  widget itself. If a widget is not yet inside a toplevel window when you
-  realize it, bad things will happen.
-
-  This function is primarily used in widget implementations, and isn't very
-  useful otherwise. Many times when you think you might need it, a better
-  approach is to connect to a signal that will be called after the widget is
-  realized automatically, such as \"draw\". Or simply @fun{g-signal-connect} to
-  the \"realize\" signal.
-  @see-class{gtk-widget}
-  @see-function{g-signal-connect}")
-
-;;; --- gtk-widget-unrealize ---------------------------------------------------
-
-(setf (documentation 'gtk-widget-unrealize 'function)
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    This function is only useful in widget implementations.
-  @end{short}
-  Causes a @arg{widget} to be unrealized (frees all GDK resources associated
-  with the @arg{widget}, such as @code{widget->window}).
-  @see-class{gtk-widget}")
-
-;;; --- gtk-widget-draw --------------------------------------------------------
-
-(setf (documentation 'gtk-widget-queue-draw 'function)
- "@version{2012-12-23}
-  @argument[widget]{the @arg{widget} to draw. It must be drawable (see
-    @fun{gtk-widget-is-drawable}) and a size must have been allocated.}
-  @argument[cr]{a cairo context to draw to}
-  @begin{short}
-    Draws @arg{widget} to a cairo context @arg{cr}.
-  @end{short}
-  The top left corner of the @arg{widget} will be drawn to the currently set
-  origin point of the cairo context @arg{cr}.
-
-  You should pass a cairo context as @arg{cr} argument that is in an original
-  state. Otherwise the resulting drawing is undefined. For example changing the
-  operator using cairo_set_operator() or the line width using
-  @code{cairo_set_line_width()} might have unwanted side effects. You may
-  however change the context's transform matrix - like with
-  @code{cairo_scale()}, @code{cairo_translate()} or @code{cairo_set_matrix()}
-  and clip region with @code{cairo_clip()} prior to calling this function. Also,
-  it is fine to modify the context with @code{cairo_save()} and
-  @code{cairo_push_group()} prior to calling this function.
-
-  @begin[Note]{dictionary}
-    Special purpose widgets may contain special code for rendering to the screen
-    and might appear differently on screen and when rendered using
-    @fun{gtk-widget-draw}.
-  @end{dictionary}
-  Since 3.0")
-
-;;; --- gtk-widget-queue-draw --------------------------------------------------
-
-(setf (documentation 'gtk-widget-queue-draw 'function)
- "@argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    Equivalent to calling @fun{gtk-widget-queue-draw-area} for the entire area
-    of a @arg{widget}.
-  @end{short}")
-
-;;; --- gtk-widget-queue-resize ------------------------------------------------
-
-(setf (documentation 'gtk-widget-queue-resize 'function)
- "@argument[widget]{a @class{GtkWidget} instance}
-  @begin{short}
-    This function is only for use in widget implementations.
-  @end{short}
-  Flags a @arg{widget} to have its size renegotiated; should be called when a
-  widget for some reason has a new size request. For example, when you change
-  the text in a @class{gtk-label}, @class{gtk-label} queues a resize to ensure
-  there's enough space for the new text.
-  @begin[Note]{dictionary}
-    You cannot call @sym{gtk-widget-queue-resize} on a widget from inside its
-    implementation of the @code{GtkWidgetClass::size_allocate} virtual method.
-    Calls to @sym{gtk-widget-queue-resize} from inside
-    @code{GtkWidgetClass::size_allocate} will be silently ignored.
-  @end{dictionary}")
-
-;;; --- gtk-widget-queue-resize-no-redraw --------------------------------------
-
-(setf (documentation 'gtk-widget-queue-resize-no-redraw 'function)
- "@argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    This function works like @fun{gtk-widget-queue-resize}, except that the
-    widget is not invalidated.
-  @end{short}
-  Since 2.4.
-  @see-function{gtk-widget-queue-resize}")
-
-;;; --- gtk-widget-size-request ------------------------------------------------
-
-(setf (documentation 'gtk-widget-size-request 'function)
- "@argument[widget]{a @class{gtk-widget} instance}
-  @argument[requisition]{a @class{gtk-requisition} to be filled in}
-  @heading{Warning}
-  @begin{short}
-    @sym{gtk-widget-size-request} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
-  @end{short}
-  Use @fun{gtk-widget-get-preferred-size} instead.
-
-  This function is typically used when implementing a @class{gtk-container}
-  subclass. Obtains the preferred size of a @arg{widget}. The container uses
-  this information to arrange its child widgets and decide what size allocations
-  to give them with @fun{gtk-widget-size-allocate}.
-
-  You can also call this function from an application, with some caveats. Most
-  notably, getting a size request requires the widget to be associated with a
-  screen, because font information may be needed. Multihead-aware applications
-  should keep this in mind.
-
-  Also remember that the size request is not necessarily the size a widget
-  will actually be allocated.
-  @see-function{gtk-widget-get-preferred-size}
-  @see-function{gtk-widget-size-allocate}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_child_requisition ()
-;;;
-;;; void gtk_widget_get_child_requisition (GtkWidget *widget,
-;;;                                        GtkRequisition *requisition);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_get_child_requisition has been deprecated since version 3.0 and
-;;; should not be used in newly-written code.
-;;; Use gtk_widget_get_preferred_size() instead.
-;;;
-;;; This function is only for use in widget implementations. Obtains
-;;; widget->requisition, unless someone has forced a particular geometry on the
-;;; widget (e.g. with gtk_widget_set_size_request()), in which case it returns
-;;; that geometry instead of the widget's requisition.
-;;;
-;;; This function differs from gtk_widget_size_request() in that it retrieves
-;;; the last size request value from widget->requisition, while
-;;; gtk_widget_size_request() actually calls the "size_request" method on widget
-;;; to compute the size request and fill in widget->requisition, and only then
-;;; returns widget->requisition.
-;;;
-;;; Because this function does not call the "size_request" method, it can only
-;;; be used when you know that widget->requisition is up-to-date, that is,
-;;; gtk_widget_size_request() has been called since the last time a resize was
-;;; queued. In general, only container implementations have this information;
-;;; applications should use gtk_widget_size_request().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; requisition :
-;;;     a GtkRequisition to be filled in
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_size_allocate ()
-;;;
-;;; void gtk_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
-;;;
-;;; This function is only used by GtkContainer subclasses, to assign a size and
-;;; position to their child widgets.
-;;;
-;;; In this function, the allocation may be adjusted. It will be forced to a 1x1
-;;; minimum size, and the adjust_size_allocation virtual method on the child
-;;; will be used to adjust the allocation. Standard adjustments include removing
-;;; the widget's margins, and applying the widget's "halign" and "valign"
-;;; properties.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; allocation :
-;;;     position and size to be allocated to widget
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-widget-add-accelerator ---------------------------------------------
-
-(setf (documentation 'gtk-widget-add-accelerator 'function)
- "@argument[widget]{widget to install an accelerator on}
-  @argument[accel-signal]{widget signal to emit on accelerator activation}
-  @argument[accel-group]{accel group for this @arg{widget}, added to its
-    toplevel}
-  @argument[accel-key]{GDK keyval of the accelerator}
-  @argument[accel-mods]{modifier key combination of the accelerator}
-  @argument[accel-flags]{flag accelerators, e.g. @code{:visible}}
-  @begin{short}
-    Installs an accelerator for this widget in @arg{accel-group} that causes
-    @arg{accel-signal} to be emitted if the accelerator is activated.
-  @end{short}
-  The @arg{accel-group} needs to be added to the widget's toplevel via
-  @fun{gtk-window-add-accel-group}, and the signal must be of type
-  @code{G_RUN_ACTION}. Accelerators added through this function are not user
-  changeable during runtime. If you want to support accelerators that can be
-  changed by the user, use @fun{gtk-accel-map-add-entry} and
-  @fun{gtk-widget-set-accel-path} or @fun{gtk-menu-item-set-accel-path}
-  instead.
-  @see-function{gtk-window-add-accel-group}
-  @see-function{gtk-accel-map-add-entry}
-  @see-function{gtk-widget-set-accel-path}
-  @see-function{gtk-menu-item-set-accel-path}")
-
-;;; --- gtk-widget-remove-accelerator ------------------------------------------
-
-(setf (documentation 'gtk-widget-remove-accelerator 'function)
- "@argument[widget]{@arg{widget} to remove an accelerator from}
-  @argument[accel-group]{accel group for this @arg{widget}}
-  @argument[accel-key]{GDK keyval of the accelerator}
-  @argument[accel-mods]{modifier key combination of the accelerator}
-  @return{Whether an accelerator was installed and could be removed.}
-  @begin{short}
-    Removes an accelerator from @arg{widget}, previously installed with
-    @fun{gtk-widget-add-accelerator}.
-  @end{short}
-  @see-function{gtk-widget-add-accelerator}")
-
-;;; --- gtk-widget-set-accel-path ----------------------------------------------
-
-(setf (documentation 'gtk-widget-set-accel-path 'function)
- "@argument[widget]{a @class{gtk-widget} instance}
-  @argument[accel-path]{path used to look up the accelerator}
-  @argument[accel-group]{a @class{gtk-accel-group}}
-  @begin{short}
-    Given an accelerator group, @arg{accel-group}, and an accelerator path,
-    @arg{accel-path}, sets up an accelerator in @arg{accel-group} so whenever
-    the key binding that is defined for @arg{accel-path} is pressed, widget will
-    be activated.
-  @end{short}
-  This removes any accelerators (for any accelerator group) installed by
-  previous calls to @sym{gtk-widget-set-accel-path}. Associating accelerators
-  with paths allows them to be modified by the user and the modifications to be
-  saved for future use. (See @fun{gtk-accel-map-save}.)
-
-  This function is a low level function that would most likely be used by a
-  menu creation system like @class{gtk-ui-manager}. If you use
-  @class{gtk-ui-manager}, setting up accelerator paths will be done
-  automatically.
-
-  Even when you you aren't using @class{gtk-ui-manager}, if you only want to set
-  up accelerators on menu items @fun{gtk-menu-item-set-accel-path} provides a
-  somewhat more convenient interface.
-
-  Note that @arg{accel-path} string will be stored in a @type{g-quark}.
-  Therefore, if you pass a static string, you can save some memory by interning
-  it first with @code{g_intern_static_string()}.
-  @see-function{gtk-accel-map-save}
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-menu-item-set-accel-path}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_list_accel_closures ()
-;;;
-;;; GList * gtk_widget_list_accel_closures (GtkWidget *widget);
-;;;
-;;; Lists the closures used by widget for accelerator group connections with
-;;; gtk_accel_group_connect_by_path() or gtk_accel_group_connect(). The closures
-;;; can be used to monitor accelerator changes on widget, by connecting to the
-;;; GtkAccelGroup::accel-changed signal of the GtkAccelGroup of a closure which
-;;; can be found out with gtk_accel_group_from_accel_closure().
-;;;
-;;; widget :
-;;;     widget to list accelerator closures for
-;;;
-;;; Returns :
-;;;     a newly allocated GList of closures
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-widget-can-activate-accel ------------------------------------------
-
-(setf (documentation 'gtk-widget-can-activate-accel 'function)
- "@argument[widget]{a @class{gtk-widget} instance}
-  @argument[signal-id]{the ID of a signal installed on @arg{widget}}
-  @return{@arg{true} if the accelerator can be activated.}
-  @begin{short}
-    Determines whether an accelerator that activates the signal identified by
-    @arg{signal-id} can currently be activated.
-  @end{short}
-  This is done by emitting the \"can-activate-accel\" signal on widget; if the
-  signal isn't overridden by a handler or in a derived widget, then the default
-  check is that the widget must be sensitive, and the widget and all its
-  ancestors mapped.
-
-  Since 2.4")
-
-;;; --- gtk-widget-event -------------------------------------------------------
-
-(setf (documentation 'gtk-widget-event 'function)
- "@argument[widget]{a @class{gtk-widget} instance}
-  @argument[event]{a @class{gdk-event}}
-  @return{Return from the event signal emission (@arg{true} if the event was
-    handled).}
-  @begin{short}
-    Rarely used function. This function is used to emit the event signals on a
-    widget (those signals should never be emitted without using this function to
-    do so).
-  @end{short}
-  If you want to synthesize an event though, don't use this function;
-  instead, use @fun{gtk-main-do-event} so the event will behave as if it were in
-  the event queue. Don't synthesize expose events; instead, use
-  @fun{gdk-window-invalidate-rect} to invalidate a region of the window.
-  @see-function{gtk-main-do-event}
-  @see-function{gdk-window-invalidate-rect}")
 
 ;;; --- gtk-widget-activate ----------------------------------------------------
 

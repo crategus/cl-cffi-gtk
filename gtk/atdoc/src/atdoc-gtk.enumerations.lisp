@@ -645,46 +645,36 @@
   (:browse 2)
   (:multiple 3)
   (:extended 3))
+|#
 
-;;; ----------------------------------------------------------------------------
-;;; enum GtkShadowType
-;;;
-;;; typedef enum {
-;;;   GTK_SHADOW_NONE,
-;;;   GTK_SHADOW_IN,
-;;;   GTK_SHADOW_OUT,
-;;;   GTK_SHADOW_ETCHED_IN,
-;;;   GTK_SHADOW_ETCHED_OUT
-;;; } GtkShadowType;
-;;;
-;;; Used to change the appearance of an outline typically provided by a
-;;; GtkFrame.
-;;;
-;;; GTK_SHADOW_NONE
-;;;     No outline.
-;;;
-;;; GTK_SHADOW_IN
-;;;     The outline is bevelled inwards.
-;;;
-;;; GTK_SHADOW_OUT
-;;;     The outline is bevelled outwards like a button.
-;;;
-;;; GTK_SHADOW_ETCHED_IN
-;;;     The outline has a sunken 3d appearance.
-;;;
-;;; GTK_SHADOW_ETCHED_OUT
-;;;     The outline has a raised 3d appearance.
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-shadow-type --------------------------------------------------------
 
-(define-g-enum "GtkShadowType" gtk-shadow-type
+(setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*) "Enum")
+(setf (gethash 'gtk-shadow-type atdoc:*external-symbols*)
+ "@version{2013-2-3}
+  @begin{short}
+    Used to change the appearance of an outline typically provided by a
+    @class{gtk-frame} widget.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkShadowType\" gtk-shadow-type
   (:export t
-   :type-initializer "gtk_shadow_type_get_type")
+   :type-initializer \"gtk_shadow_type_get_type\")
   (:none 0)
   (:in 1)
   (:out 2)
   (:etched-in 3)
   (:etched-out 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No outline.}
+    @entry[:in]{The outline is bevelled inwards.}
+    @entry[:out]{The outline is bevelled outwards like a button.}
+    @entry[:etched-in]{The outline has a sunken 3d appearance.}
+    @entry[:etched-out]{The outline has a raised 3d appearance.}
+  @end{table}")
 
+#|
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkStateType
 ;;;

@@ -38,59 +38,17 @@
     event loop of a GLib or GTK+ application.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
 
-(setf (documentation 'g-main-loop-new 'function)
- "@version{2012-12-25}
-  @argument[context]{a @type{g-main-context} (if a @code{null}-pointer, the
-    default context will be used)}
-  @argument[is-running]{set to @code{t} to indicate that the loop is running.
-    This is not very important since calling @fun{g-main-loop-run} will set this
-    to @code{t} anyway.}
-  @return{A new @type{g-main-loop}.}
-  @short{Creates a new @type{g-main-loop} structure.}
-  @begin[Example]{dictionary}
-    Create a running main loop with a default context and quit the main loop.
-    @begin{pre}
- (setq main-loop (g-main-loop-new (null-pointer) t))
-=> #.(SB-SYS:INT-SAP #X0808DF88)
- (g-main-loop-is-running main-loop) => T
- (g-main-loop-quit main-loop)
- (g-main-loop-is-running main-loop) => NIL
-    @end{pre}
-  @end{dictionary}
-  @see-type{g-main-loop}
-  @see-function{g-main-loop-run}")
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (documentation 'g-main-loop-ref 'function)
- "@version{2012-12-25}
-  @argument[loop]{a @type{g-main-loop}}
-  @return{The argument @arg{loop}.}
-  @short{Increases the reference count on a @type{g-main-loop} object by one.}
-  @see-type{g-main-loop}")
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (documentation 'g-main-loop-unref 'function)
- "@version{2012-12-25}
-  @argument[loop]{a @type{g-main-loop}}
-  @short{Decreases the reference count on a @type{g-main-loop} object by one.}
-  If the result is zero, free the @arg{loop} and free all associated memory.
-  @see-type{g-main-loop}")
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (documentation 'g-main-loop-run 'function)
- "@version{2012-12-25}
-  @argument[loop]{a @type{g-main-loop}}
-  @begin{short}
-    Runs a main @arg{loop} until @fun{g-main-loop-quit} is called on the
-    @arg{loop}.
-  @end{short}
-  If this is called for the thread of the @arg{loop}'s @type{g-main-context}, it
-  will process events from the @arg{loop}, otherwise it will simply wait.")
+
 
 ;;; ----------------------------------------------------------------------------
 
@@ -187,23 +145,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_SOURCE_CONTINUE
-;;; 
+;;;
 ;;; #define G_SOURCE_CONTINUE TRUE
-;;; 
+;;;
 ;;; Use this macro as the return value of a GSourceFunc to leave the GSource in
 ;;; the main loop.
-;;; 
+;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_SOURCE_REMOVE
-;;; 
+;;;
 ;;; #define G_SOURCE_REMOVE FALSE
-;;; 
+;;;
 ;;; Use this macro as the return value of a GSourceFunc to remove the GSource
 ;;; from the main loop.
-;;; 
+;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
@@ -251,12 +209,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (setf (documentation 'g-main-context-default 'function)
- "@version{2012-12-26}
+ "@version{2013-2-12}
   @return{The global default main context.}
   @short{Returns the global default main context.}
   This is the main context used for main loop functions when a main loop is not
   explicitly specified, and corresponds to the \"main\" main loop. See also
-  @fun{g-main-context-get-thread-default}.
+  @code{g_main_context_get_thread_default()}.
   @see-type{g-main-context}")
 
 ;;; ----------------------------------------------------------------------------
@@ -283,22 +241,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_iteration()
-;;; 
+;;;
 ;;; #define g_main_iteration(may_block)
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; g_main_iteration has been deprecated since version 2.2 and should not be
 ;;; used in newly-written code. Use g_main_context_iteration() instead.
-;;; 
+;;;
 ;;; Runs a single iteration for the default GMainContext.
-;;; 
+;;;
 ;;; may_block :
 ;;;     set to TRUE if it should block (i.e. wait) until an event source becomes
 ;;;     ready. It will return after an event source has been processed. If set
 ;;;     to FALSE it will return immediately if no event source is ready to be
 ;;;     processed.
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if more events are pending.
 ;;; ----------------------------------------------------------------------------
@@ -314,12 +272,12 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_pending
-;;; 
+;;;
 ;;; #define g_main_pending()
-;;; 
+;;;
 ;;; Checks if any events are pending for the default GMainContext (i.e. ready to
 ;;; be processed).
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if any events are pending.
 ;;;
@@ -388,7 +346,7 @@
   as many times as @fun{g-main-context-acquire}.
 
   You must be the owner of a context before you can call
-  @fun{g-main-context-prepare}, @fun{g-main-context-query}, 
+  @fun{g-main-context-prepare}, @fun{g-main-context-query},
   @fun{g-main-context-check}, @fun{g-main-context-dispatch}.")
 
 ;;; --- g-main-context-release -------------------------------------------------
@@ -480,7 +438,7 @@
 ;;; --- g-main-context-dispatch ------------------------------------------------
 
 (setf (documentation 'g-main-context-dispatch 'function)
- "@version{2013-01-16} 
+ "@version{2013-01-16}
   @argument[context]{a @type{g-main-context}}
   @short{Dispatches all pending sources.}")
 
@@ -509,22 +467,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GPollFunc ()
-;;; 
+;;;
 ;;; gint (*GPollFunc) (GPollFD *ufds, guint nfsd, gint timeout_);
-;;; 
+;;;
 ;;; Specifies the type of function passed to g_main_context_set_poll_func(). The
 ;;; semantics of the function should match those of the poll() system call.
-;;; 
+;;;
 ;;; ufds :
 ;;;     an array of GPollFD elements
-;;; 
+;;;
 ;;; nfsd :
 ;;;     the number of elements in ufds
-;;; 
+;;;
 ;;; timeout_ :
 ;;;     the maximum time to wait for an event of the file descriptors. A
 ;;;     negative value indicates an infinite timeout.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the number of GPollFD elements which have events or errors reported, or
 ;;;     -1 if an error occurred.
@@ -604,102 +562,102 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_set_poll_func()
-;;; 
+;;;
 ;;; #define g_main_set_poll_func(func)
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; g_main_set_poll_func has been deprecated since version 2.2 and should not be
 ;;; used in newly-written code. Use g_main_context_set_poll_func() again
-;;; 
+;;;
 ;;; Sets the function to use for the handle polling of file descriptors for the
 ;;; default main context.
-;;; 
+;;;
 ;;; func :
 ;;;     the function to call to poll all file descriptors
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_invoke ()
-;;; 
+;;;
 ;;; void g_main_context_invoke (GMainContext *context,
 ;;;                             GSourceFunc function,
 ;;;                             gpointer data);
-;;; 
+;;;
 ;;; Invokes a function in such a way that context is owned during the invocation
 ;;; of function.
-;;; 
+;;;
 ;;; If context is NULL then the global default main context - as returned by
 ;;; g_main_context_default() - is used.
-;;; 
+;;;
 ;;; If context is owned by the current thread, function is called directly.
 ;;; Otherwise, if context is the thread-default main context of the current
 ;;; thread and g_main_context_acquire() succeeds, then function is called and
 ;;; g_main_context_release() is called afterwards.
-;;; 
+;;;
 ;;; In any other case, an idle source is created to call function and that
 ;;; source is attached to context (presumably to be run in another thread). The
 ;;; idle source is attached with G_PRIORITY_DEFAULT priority. If you want a
 ;;; different priority, use g_main_context_invoke_full().
-;;; 
+;;;
 ;;; Note that, as with normal idle functions, function should probably return
 ;;; FALSE. If it returns TRUE, it will be continuously run in a loop (and may
 ;;; prevent this call from returning).
-;;; 
+;;;
 ;;; context :
 ;;;     a GMainContext, or NULL
-;;; 
+;;;
 ;;; function :
 ;;;     function to call
-;;; 
+;;;
 ;;; data :
 ;;;     data to pass to function
-;;; 
+;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_invoke_full ()
-;;; 
+;;;
 ;;; void g_main_context_invoke_full (GMainContext *context,
 ;;;                                  gint priority,
 ;;;                                  GSourceFunc function,
 ;;;                                  gpointer data,
 ;;;                                  GDestroyNotify notify);
-;;; 
+;;;
 ;;; Invokes a function in such a way that context is owned during the invocation
 ;;; of function.
-;;; 
+;;;
 ;;; This function is the same as g_main_context_invoke() except that it lets you
 ;;; specify the priority incase function ends up being scheduled as an idle and
 ;;; also lets you give a GDestroyNotify for data.
-;;; 
+;;;
 ;;; notify should not assume that it is called from any particular thread or
 ;;; with any particular context acquired.
-;;; 
+;;;
 ;;; context :
 ;;;     a GMainContext, or NULL
-;;; 
+;;;
 ;;; priority :
 ;;;     the priority at which to run function
-;;; 
+;;;
 ;;; function :
 ;;;     function to call
-;;; 
+;;;
 ;;; data :
 ;;;     data to pass to function
-;;; 
+;;;
 ;;; notify :
 ;;;     a function to call when data is no longer in use, or NULL
-;;; 
+;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_get_thread_default ()
-;;; 
+;;;
 ;;; GMainContext * g_main_context_get_thread_default (void);
-;;; 
+;;;
 ;;; Gets the thread-default GMainContext for this thread. Asynchronous
 ;;; operations that want to be able to be run in contexts other than the default
 ;;; one should call this method or g_main_context_ref_thread_default() to get a
@@ -707,41 +665,41 @@
 ;;; programs applications may sometimes want to temporarily push a non-default
 ;;; context, so it is not safe to assume that this will always return NULL if
 ;;; you are running in the default thread.)
-;;; 
+;;;
 ;;; If you need to hold a reference on the context, use
 ;;; g_main_context_ref_thread_default() instead.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the thread-default GMainContext, or NULL if the thread-default context
 ;;;     is the global default context
-;;; 
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_ref_thread_default ()
-;;; 
+;;;
 ;;; GMainContext * g_main_context_ref_thread_default (void);
-;;; 
+;;;
 ;;; Gets the thread-default GMainContext for this thread, as with
 ;;; g_main_context_get_thread_default(), but also adds a reference to it with
 ;;; g_main_context_ref(). In addition, unlike
 ;;; g_main_context_get_thread_default(), if the thread-default context is the
 ;;; global default context, this will return that GMainContext (with a ref added
 ;;; to it) rather than returning NULL.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the thread-default GMainContext. Unref with g_main_context_unref() when
 ;;;     you are done with it
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_push_thread_default ()
-;;; 
+;;;
 ;;; void g_main_context_push_thread_default (GMainContext *context);
-;;; 
+;;;
 ;;; Acquires context and sets it as the thread-default context for the current
 ;;; thread. This will cause certain asynchronous operations (such as most
 ;;; gio-based I/O) which are started in this thread to run under context and
@@ -750,7 +708,7 @@
 ;;; the context returned by g_main_context_get_thread_default(), not the one
 ;;; returned by g_main_context_default(), so it does not affect the context used
 ;;; by functions like g_idle_add().
-;;; 
+;;;
 ;;; Normally you would call this function shortly after creating a new thread,
 ;;; passing it a GMainContext which will be run by a GMainLoop in that thread,
 ;;; to set a new default context for all async operations in that thread. (In
@@ -762,28 +720,28 @@
 ;;; g_main_context_pop_thread_default() pair, but it is up to you to ensure that
 ;;; no other asynchronous operations accidentally get started while the
 ;;; non-default context is active.
-;;; 
+;;;
 ;;; Beware that libraries that predate this function may not correctly handle
 ;;; being used from a thread with a thread-default context. Eg, see
 ;;; g_file_supports_thread_contexts().
-;;; 
+;;;
 ;;; context :
 ;;;     a GMainContext, or NULL for the global default context
-;;; 
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_pop_thread_default ()
-;;; 
+;;;
 ;;; void g_main_context_pop_thread_default (GMainContext *context);
-;;; 
+;;;
 ;;; Pops context off the thread-default context stack (verifying that it was on
 ;;; the top of the stack).
-;;; 
+;;;
 ;;; context :
 ;;;     a GMainContext object, or NULL
-;;; 
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
@@ -1033,157 +991,157 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GPid
-;;; 
+;;;
 ;;; typedef int GPid;
-;;; 
+;;;
 ;;; A type which is used to hold a process identification.
-;;; 
+;;;
 ;;; On UNIX, processes are identified by a process id (an integer), while
 ;;; Windows uses process handles (which are pointers).
-;;; 
+;;;
 ;;; GPid is used in GLib only for descendant processes spawned with the g_spawn
 ;;; functions.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GChildWatchFunc ()
-;;; 
+;;;
 ;;; void (*GChildWatchFunc) (GPid pid, gint status, gpointer user_data);
-;;; 
+;;;
 ;;; The type of functions to be called when a child exists.
-;;; 
+;;;
 ;;; pid :
 ;;;     the process id of the child process
-;;; 
+;;;
 ;;; status :
 ;;;     Status information about the child process, see waitpid(2) for more
 ;;;     information about this field
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data passed to g_child_watch_add()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_child_watch_source_new ()
-;;; 
+;;;
 ;;; GSource * g_child_watch_source_new (GPid pid);
-;;; 
+;;;
 ;;; Creates a new child_watch source.
-;;; 
+;;;
 ;;; The source will not initially be associated with any GMainContext and must
 ;;; be added to one with g_source_attach() before it will be executed.
-;;; 
+;;;
 ;;; Note that child watch sources can only be used in conjunction with
 ;;; g_spawn... when the G_SPAWN_DO_NOT_REAP_CHILD flag is used.
-;;; 
+;;;
 ;;; Note that on platforms where GPid must be explicitly closed (see
 ;;; g_spawn_close_pid()) pid must not be closed while the source is still
 ;;; active. Typically, you will want to call g_spawn_close_pid() in the callback
 ;;; function for the source.
-;;; 
+;;;
 ;;; Note further that using g_child_watch_source_new() is not compatible with
 ;;; calling waitpid(-1) in the application. Calling waitpid() for individual
 ;;; pids will still work fine.
-;;; 
+;;;
 ;;; pid :
 ;;;     process to watch. On POSIX the pid of a child process. On Windows a
 ;;;     handle for a process (which doesn't have to be a child).
-;;; 
+;;;
 ;;; Returns :
 ;;;     the newly-created child watch source
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_child_watch_add ()
-;;; 
+;;;
 ;;; guint g_child_watch_add (GPid pid,
 ;;;                          GChildWatchFunc function,
 ;;;                          gpointer data);
-;;; 
+;;;
 ;;; Sets a function to be called when the child indicated by pid exits, at a
 ;;; default priority, G_PRIORITY_DEFAULT.
-;;; 
+;;;
 ;;; If you obtain pid from g_spawn_async() or g_spawn_async_with_pipes() you
 ;;; will need to pass G_SPAWN_DO_NOT_REAP_CHILD as flag to the spawn function
 ;;; for the child watching to work.
-;;; 
+;;;
 ;;; Note that on platforms where GPid must be explicitly closed (see
 ;;; g_spawn_close_pid()) pid must not be closed while the source is still
 ;;; active. Typically, you will want to call g_spawn_close_pid() in the callback
 ;;; function for the source.
-;;; 
+;;;
 ;;; GLib supports only a single callback per process id.
-;;; 
+;;;
 ;;; This internally creates a main loop source using g_child_watch_source_new()
 ;;; and attaches it to the main loop context using g_source_attach(). You can do
 ;;; these steps manually if you need greater control.
-;;; 
+;;;
 ;;; pid :
 ;;;     process id to watch. On POSIX the pid of a child process. On Windows a
 ;;;     handle for a process (which doesn't have to be a child).
-;;; 
+;;;
 ;;; function :
 ;;;     function to call
-;;; 
+;;;
 ;;; data :
 ;;;     data to pass to function
-;;; 
+;;;
 ;;; Returns :
 ;;;     the ID (greater than 0) of the event source.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_child_watch_add_full ()
-;;; 
+;;;
 ;;; guint g_child_watch_add_full (gint priority,
 ;;;                               GPid pid,
 ;;;                               GChildWatchFunc function,
 ;;;                               gpointer data,
 ;;;                               GDestroyNotify notify);
-;;; 
+;;;
 ;;; Sets a function to be called when the child indicated by pid exits, at the
 ;;; priority priority.
-;;; 
+;;;
 ;;; If you obtain pid from g_spawn_async() or g_spawn_async_with_pipes() you
 ;;; will need to pass G_SPAWN_DO_NOT_REAP_CHILD as flag to the spawn function
 ;;; for the child watching to work.
-;;; 
+;;;
 ;;; Note that on platforms where GPid must be explicitly closed (see
 ;;; g_spawn_close_pid()) pid must not be closed while the source is still
 ;;; active. Typically, you will want to call g_spawn_close_pid() in the callback
 ;;; function for the source.
-;;; 
+;;;
 ;;; GLib supports only a single callback per process id.
-;;; 
+;;;
 ;;; This internally creates a main loop source using g_child_watch_source_new()
 ;;; and attaches it to the main loop context using g_source_attach(). You can do
 ;;; these steps manually if you need greater control.
-;;; 
+;;;
 ;;; priority :
 ;;;     the priority of the idle source. Typically this will be in the range
 ;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-;;; 
+;;;
 ;;; pid :
 ;;;     process to watch. On POSIX the pid of a child process. On Windows a
 ;;;     handle for a process (which doesn't have to be a child).
-;;; 
+;;;
 ;;; function :
 ;;;     function to call
-;;; 
+;;;
 ;;; data :
 ;;;     data to pass to function
-;;; 
+;;;
 ;;; notify :
 ;;;     function to call when the idle is removed, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     the ID (greater than 0) of the event source. Rename to:
 ;;;     g_child_watch_add
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1208,7 +1166,7 @@
     @entry[gushort events]{a bitwise combination from @code{GIOCondition},
       specifying which events should be polled for. Typically for reading from a
       file descriptor you would use @code{G_IO_IN | G_IO_HUP | G_IO_ERR}, and
-      for writing you would use @code{G_IO_OUT | G_IO_ERR}.} 
+      for writing you would use @code{G_IO_OUT | G_IO_ERR}.}
     @entry[gushort revents]{a bitwise combination of flags from
       @code{GIOCondition}, returned from the @code{poll()} function to indicate
       which events occurred.}
@@ -1216,53 +1174,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_poll ()
-;;; 
+;;;
 ;;; gint g_poll (GPollFD *fds, guint nfds, gint timeout);
-;;; 
+;;;
 ;;; Polls fds, as with the poll() system call, but portably. (On systems that
 ;;; don't have poll(), it is emulated using select().) This is used internally
 ;;; by GMainContext, but it can be called directly if you need to block until a
 ;;; file descriptor is ready, but don't want to run the full main loop.
-;;; 
+;;;
 ;;; Each element of fds is a GPollFD describing a single file descriptor to
 ;;; poll. The fd field indicates the file descriptor, and the events field
 ;;; indicates the events to poll for. On return, the revents fields will be
 ;;; filled with the events that actually occurred.
-;;; 
+;;;
 ;;; On POSIX systems, the file descriptors in fds can be any sort of file
 ;;; descriptor, but the situation is much more complicated on Windows. If you
 ;;; need to use g_poll() in code that has to run on Windows, the easiest
 ;;; solution is to construct all of your GPollFDs with
 ;;; g_io_channel_win32_make_pollfd().
-;;; 
+;;;
 ;;; fds :
 ;;;     file descriptors to poll
-;;; 
+;;;
 ;;; nfds :
 ;;;     the number of file descriptors in fds
-;;; 
+;;;
 ;;; timeout :
 ;;;     amount of time to wait, in milliseconds, or -1 to wait forever
-;;; 
+;;;
 ;;; Returns :
 ;;;     the number of entries in fds whose revents fields were filled in, or 0
 ;;;     if the operation timed out, or -1 on error or if the call was
 ;;;     interrupted.
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_POLLFD_FORMAT
-;;; 
+;;;
 ;;; #define G_POLLFD_FORMAT "%#I64x"
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSourceDummyMarshal ()
-;;; 
+;;;
 ;;; void (*GSourceDummyMarshal) (void);
-;;; 
+;;;
 ;;; This is just a placeholder for GClosureMarshal, which cannot be used here
 ;;; for dependency reasons.
 ;;; ----------------------------------------------------------------------------
@@ -1594,20 +1552,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_set_name_by_id ()
-;;; 
+;;;
 ;;; void g_source_set_name_by_id (guint tag, const char *name);
-;;; 
+;;;
 ;;; Sets the name of a source using its ID.
-;;; 
+;;;
 ;;; This is a convenience utility to set source names from the return value of
 ;;; g_idle_add(), g_timeout_add(), etc.
-;;; 
+;;;
 ;;; tag :
 ;;;     a GSource ID
-;;; 
+;;;
 ;;; name :
 ;;;     debug name for the source
-;;; 
+;;;
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
@@ -1644,39 +1602,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSourceFunc ()
-;;; 
+;;;
 ;;; gboolean (*GSourceFunc) (gpointer user_data);
-;;; 
+;;;
 ;;; Specifies the type of function passed to g_timeout_add(),
 ;;; g_timeout_add_full(), g_idle_add(), and g_idle_add_full().
-;;; 
+;;;
 ;;; user_data :
 ;;;     data passed to the function, set when the source was created with one of
 ;;;     the above functions
-;;; 
+;;;
 ;;; Returns :
 ;;;     FALSE if the source should be removed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_set_callback_indirect ()
-;;; 
+;;;
 ;;; void g_source_set_callback_indirect (GSource *source,
 ;;;                                      gpointer callback_data,
 ;;;                                      GSourceCallbackFuncs *callback_funcs);
-;;; 
+;;;
 ;;; Sets the callback function storing the data as a refcounted callback
 ;;; "object". This is used internally. Note that calling
 ;;; g_source_set_callback_indirect() assumes an initial reference count on
 ;;; callback_data, and thus callback_funcs->unref will eventually be called once
 ;;; more than callback_funcs->ref.
-;;; 
+;;;
 ;;; source :
 ;;;     the source
-;;; 
+;;;
 ;;; callback_data :
 ;;;     pointer to callback data "object"
-;;; 
+;;;
 ;;; callback_funcs :
 ;;;     functions for reference counting callback_data and getting the callback
 ;;;     and data
@@ -1710,45 +1668,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_add_child_source ()
-;;; 
+;;;
 ;;; void g_source_add_child_source (GSource *source, GSource *child_source);
-;;; 
+;;;
 ;;; Adds child_source to source as a "polled" source; when source is added to a
 ;;; GMainContext, child_source will be automatically added with the same
 ;;; priority, when child_source is triggered, it will cause source to dispatch
 ;;; (in addition to calling its own callback), and when source is destroyed, it
 ;;; will destroy child_source as well. (source will also still be dispatched if
 ;;; its own prepare/check functions indicate that it is ready.)
-;;; 
+;;;
 ;;; If you don't need child_source to do anything on its own when it triggers,
 ;;; you can call g_source_set_dummy_callback() on it to set a callback that does
 ;;; nothing (except return TRUE if appropriate).
-;;; 
+;;;
 ;;; source will hold a reference on child_source while child_source is attached
 ;;; to it.
-;;; 
+;;;
 ;;; source :
 ;;;     a GSource
-;;; 
+;;;
 ;;; child_source :
 ;;;     a second GSource that source should "poll"
-;;; 
+;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_source_remove_child_source ()
-;;; 
+;;;
 ;;; void g_source_remove_child_source (GSource *source, GSource *child_source);
-;;; 
+;;;
 ;;; Detaches child_source from source and destroys it.
-;;; 
+;;;
 ;;; source :
 ;;;     a GSource
-;;; 
+;;;
 ;;; child_source :
 ;;;     a GSource previously passed to g_source_add_child_source().
-;;; 
+;;;
 ;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 

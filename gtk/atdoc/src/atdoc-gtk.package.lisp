@@ -37,7 +37,7 @@
   written, including C++, Objective-C, Guile/Scheme, Perl, Python, TOM, Ada95,
   Free Pascal, and Eiffel.
   
-  This is the documention of a Lisp binding to GTK+.
+  This is the documentation of a Lisp binding to GTK+ 3.
   @begin[GTK+ Core Reference]{section}
     @begin[Main loop and Events]{subsection}
       Library initialization, main event loop, and events.
@@ -161,7 +161,7 @@
     @begin[Accelerator Maps]{subsection}
       Loadable keyboard accelerator specifications.
 
-      @about{gtk-accel-map}
+      @about-class{gtk-accel-map}
       @about-function{gtk-accel-map-add-entry}
       @about-function{gtk-accel-map-lookup-entry}
       @about-function{gtk-accel-map-change-entry}
@@ -453,9 +453,30 @@
       @about-function{gtk-accel-label-refetch}
     @end{subsection}
     @begin[GtkImage]{subsection}
+      A widget displaying an image.
+
+      @about-class{gtk-image}
+      @about-symbol{gtk-image-type}
+      @about-function{gtk-image-get-animation}
+      @about-function{gtk-image-new-from-file}
+      @about-function{gtk-image-new-from-icon-set}
+      @about-function{gtk-image-new-from-pixbuf}
+      @about-function{gtk-image-new-from-stock}
+      @about-function{gtk-image-new-from-animation}
+      @about-function{gtk-image-new-from-icon-name}
+      @about-function{gtk-image-new-from-gicon}
+      @about-function{gtk-image-set-from-file}
+      @about-function{gtk-image-set-from-icon-set}
+      @about-function{gtk-image-set-from-pixbuf}
+      @about-function{gtk-image-set-from-stock}
+      @about-function{gtk-image-set-from-animation}
+      @about-function{gtk-image-set-from-icon-name}
+      @about-function{gtk-image-set-from-gicon}
+      @about-function{gtk-image-clear}
+      @about-function{gtk-image-new}
     @end{subsection}
     @begin[GtkLabel]{subsection}
-      A widget that displays a small to medium amount of text
+      A widget that displays a small to medium amount of text.
 
       @about-class{gtk-label}
       @about-function{gtk-label-new}
@@ -476,14 +497,66 @@
       @about-function{gtk-label-get-current-uri}
     @end{subsection}
     @begin[GtkProgressBar]{subsection}
+      A widget which indicates progress visually.
+
+      @about-class{gtk-progress-bar}
+      @about-function{gtk-progress-bar-new}
+      @about-function{gtk-progress-bar-pulse}
     @end{subsection}
     @begin[GtkStatusbar]{subsection}
+      Report messages of minor importance to the user.
+ 
+      @about-class{gtk-statusbar}
+      @about-function{gtk-statusbar-new}
+      @about-function{gtk-statusbar-get-context-id}
+      @about-function{gtk-statusbar-push}
+      @about-function{gtk-statusbar-pop}
+      @about-function{gtk-statusbar-remove}
+      @about-function{gtk-statusbar-remove-all}
+      @about-function{gtk-statusbar-get-message-area}
     @end{subsection}
     @begin[GtkInfoBar]{subsection}
+      Report important messages to the user.
+
+      @about-class{gtk-info-bar}
+      @about-function{gtk-info-bar-new}
+      @about-function{gtk-info-bar-new-with-buttons}
+      @about-function{gtk-info-bar-add-action-widget}
+      @about-function{gtk-info-bar-add-button}
+      @about-function{gtk-info-bar-add-buttons}
+      @about-function{gtk-info-bar-set-response-sensitive}
+      @about-function{gtk-info-bar-set-default-response}
+      @about-function{gtk-info-bar-response}
+      @about-function{gtk-info-bar-get-action-area}
+      @about-function{gtk-info-bar-get-content-area}
     @end{subsection}
     @begin[GtkStatusIcon]{subsection}
+      Display an icon in the system tray.
+
+      @about-class{gtk-status-icon}
+      @about-function{gtk-status-icon-new}
+      @about-function{gtk-status-new-from-pixbuf}
+      @about-function{gtk-status-new-from-file}
+      @about-function{gtk-status-new-from-stock}
+      @about-function{gtk-status-new-from-icon-name}
+      @about-function{gtk-status-new-from-gicon}
+      @about-function{gtk-status-set-from-pixbuf}
+      @about-function{gtk-status-set-from-file}
+      @about-function{gtk-status-set-from-stock}
+      @about-function{gtk-status-set-from-icon-name}
+      @about-function{gtk-status-set-from-gicon}
+      @about-function{gtk-status-is-embedded}
+      @about-function{gtk-status-position-menu}
+      @about-function{gtk-status-get-geometry}
+      @about-function{gtk-status-get-x11-window-id}
     @end{subsection}
     @begin[GtkSpinner]{subsection}
+      Show a spinner animation.
+
+      @about-class{gtk-spinner}
+      @about-function{gtk-spinner-new}
+      @about-function{gtk-spinner-start}
+      @about-function{gtk-spinner-stop}
     @end{subsection}
   @end{section}
   @begin[Buttons and Toggles]{section}
@@ -505,12 +578,41 @@
       @about-function{gtk-button-get-event-window}
     @end{subsection}
     @begin[GtkCheckButton]{subsection}
+      Create widgets with a discrete toggle button.
+
+      @about-class{gtk-check-button}
+      @about-function{gtk-check-button-new}
+      @about-function{gtk-check-button-new-with-label}
+      @about-function{gtk-check-button-new-with-mnemonic}
     @end{subsection}
     @begin[GtkRadioButton]{subsection}
+      A choice from multiple check buttons.
+
+      @about-class{gtk-radio-button}
+      @about-function{gtk-radio-button-new}
+      @about-function{gtk-radio-button-new-from-widget}
+      @about-function{gtk-radio-button-new-with-label}
+      @about-function{gtk-radio-button-new-with-label-from-widget}
+      @about-function{gtk-radio-button-new-with-mnemonic}
+      @about-function{gtk-radio-button-with-mnemonic-from-widget}
+      @about-function{gtk-radio-button-join-group}
     @end{subsection}
     @begin[GtkToggleButton]{subsection}
+      Create buttons which retain their state.
+
+      @about-class{gtk-toggle-button}
+      @about-function{gtk-toggle-button-new}
+      @about-function{gtk-toggle-button-new-with-label}
+      @about-function{gtk-toggle-button-new-with-mnemonic}
+      @about-function{gtk-toggle-button-set-mode}
+      @about-function{gtk-toggle-button-get-mode}
+      @about-function{gtk-toggle-button-toggled}
     @end{subsection}
     @begin[GtkLinkButton]{subsection}
+      Create buttons bound to a URL.
+      @about-class{gtk-link-button}
+      @about-function{gtk-link-button-new}
+      @about-function{gtk-link-button-new-with-label}
     @end{subsection}
     @begin[GtkScaleButton]{subsection}
     @end{subsection}
@@ -650,8 +752,49 @@
     @begin[GtkUIManager]{subsection}
     @end{subsection}
     @begin[GtkActionGroup]{subsection}
+      A group of actions.
+
+      @about-class{gtk-action-group}
+      @about-function{gtk-action-group-new}
+      @about-function{gtk-action-group-get-action}
+      @about-function{gtk-action-group-list-actions}
+      @about-function{gtk-action-group-add-action}
+      @about-function{gtk-action-group-add-action-with-accel}
+      @about-function{gtk-action-group-remove-action}
+      @about-class{gtk-action-entry}
+      @about-function{gtk-action-group-add-actions}
+      @about-function{gtk-action-group-add-actions-full}
+      @about-class{gtk-toggle-action-entry}
+      @about-function{gtk-action-group-add-toggle-actions}
+      @about-function{gtk-action-group-add-toggle-actions-full}
+      @about-class{gtk-radio-action-entry}
+      @about-function{gtk-action-group-add-radio-actions}
+      @about-function{gtk-action-group-add-radio-actions-full}
+      @about-function{gtk-action-group-set-translate-func}
+      @about-function{gtk-action-group-set-translation-domain}
+      @about-function{gtk-action-group-translate-string}
     @end{subsection}
     @begin[GtkAction]{subsection}
+      An action which can be triggered by a menu or toolbar item.
+
+      @about-class{gtk-action}
+      @about-function{gtk-action-new}
+      @about-function{gtk-action-is-sensitive}
+      @about-function{gtk-action-is-visible}
+      @about-function{gtk-action-activate}
+      @about-function{gtk-action-create-icon}
+      @about-function{gtk-action-create-menu-item}
+      @about-function{gtk-action-create-tool-item}
+      @about-function{gtk-action-create-menu}
+      @about-function{gtk-action-get-proxies}
+      @about-function{gtk-action-connect-accelerator}
+      @about-function{gtk-action-disconnect-accelerator}
+      @about-function{gtk-action-block-activate}
+      @about-function{gtk-action-unblock-activate}
+      @about-function{gtk-action-get-accel-path}
+      @about-function{gtk-action-set-accel-path}
+      @about-function{gtk-action-get-accel-closure}
+      @about-function{gtk-action-set-accel-group}
     @end{subsection}
     @begin[GtkToogleAction]{subsection}
     @end{subsection}
@@ -749,6 +892,30 @@
       @about-function{gtk-vbox-new}
     @end{subsection}
     @begin[GtkButtonBox]{subsection}
+      A container for arranging buttons
+
+      @about-class{gtk-button-box}
+      @about-function{gtk-button-box-new}
+      @about-function{gtk-button-box-get-layout}
+      @about-function{gtk-button-box-get-child-secondary}
+      @about-function{gtk-button-box-child-non-homogeneous}
+      @about-function{gtk-button-box-set-layout}
+      @about-function{gtk-button-box-set-child-secondary}
+      @about-function{gtk-button-box-set-child-non-homogeneous}
+
+      @b{GtkHButtonBox}
+
+      A container for arranging buttons horizontally
+
+      @about-class{gtk-hbutton-box}
+      @about-function{gtk-hbutton-box-new}
+
+      @b{GtkVButtonBox}
+
+      A container for arranging buttons vertically
+
+      @about-class{gtk-vbutton-box}
+      @about-function{gtk-vbutton-box-new}
     @end{subsection}
     @begin[GtkFixed]{subsection}
     @end{subsection}
@@ -841,8 +1008,22 @@
   @end{section}
   @begin[Miscellaneous]{section}
     @begin[GtkAdjustment]{subsection}
+      A representation of an adjustable bounded value.
+
+      @about-class{gtk-adjustment}
+      @about-function{gtk-adjustment-new}
+      @about-function{gtk-adjustment-clamp-page}
+      @about-function{gtk-adjustment-changed}
+      @about-function{gtk-adjustment-value-changed}
+      @about-function{gtk-adjustment-configure}
+      @about-function{gtk-adjustment-get-minimum-increment}
     @end{subsection}
     @begin[GtkArrow]{subsection}
+      Displays an arrow.
+
+      @about-class{gtk-arrow}
+      @about-function{gtk-arrow-new}
+      @about-function{gtk-arrow-set}
     @end{subsection}
     @begin[GtkCalendar]{subsection}
       Displays a calendar and allows the user to select a date.
@@ -1171,10 +1352,36 @@
   @end{section}
   @begin[Application support]{section}
     @begin[GtkApplication]{subsection}
+      Application class
+
+      @about-class{gtk-application}
+      @about-class{gtk-application-inhibit-flags}
+      @about-function{gtk-application-new}
+      @about-function{gtk-application-add-window}
+      @about-function{gtk-application-remove-window}
+      @about-function{gtk-application-get-windows}
+      @about-function{gtk-application-inhibit}
+      @about-function{gtk-application-uninhibit}
+      @about-function{gtk-application-is_inhibited}
+      @about-function{gtk-application-get-app-menu}
+      @about-function{gtk-application-set-app_menu}
+      @about-function{gtk-application-get-menubar}
+      @about-function{gtk-application-set-menubar}
     @end{subsection}
     @begin[GtkApplicationWindow]{subsection}
+      GtkWindow subclass with GtkApplication support
+
+      @about-class{gtk-application-window}
+      @about-function{gtk-application-window-new}
     @end{subsection}
     @begin[GtkActionable]{subsection}
+      An interface for widgets that can be associated with actions.
+
+      @about-class{gtk-actionable}
+      @about-class{gtk-actionable-interface}
+      @about-function{gtk-actionable-get-action-target-value}
+      @about-function{gtk-actionable-set-action-target-value}
+      @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
   @end{section}
 ")

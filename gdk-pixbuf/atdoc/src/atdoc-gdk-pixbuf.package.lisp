@@ -28,6 +28,7 @@
 
 (in-package :gdk-pixbuf)
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk-pixbuf) t)
  "@em{gdk-pixbuf} is a library for image loading and manipulation. The
   @em{gdk-pixbuf} documentation contains both the programmer's guide and the API

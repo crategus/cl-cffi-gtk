@@ -600,7 +600,7 @@
 
 ;;; --- gtk-button-get-user-underline ------------------------------------------
 
-(setf (documentation 'gtk-button-get-user-underline 'function)
+(setf (documentation 'gtk-button-get-use-underline 'function)
  "@version{2013-1-18}
   @argument[button]{a @class{gtk-button}}
   @return{TRUE if an embedded underline in the button label indicates the

@@ -26,40 +26,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; GtkImage
-;;; 
-;;; A widget displaying an image
-;;;     
-;;; Synopsis
-;;; 
-;;;     GtkImage
-;;;     GtkImageType
-;;;
-;;;     gtk_image_get_icon_set
-;;;     gtk_image_get_pixbuf
-;;;     gtk_image_get_stock
-;;;     gtk_image_get_animation
-;;;     gtk_image_get_icon_name
-;;;     gtk_image_get_gicon
-;;;     gtk_image_get_storage_type
-;;;     gtk_image_new_from_file
-;;;     gtk_image_new_from_icon_set
-;;;     gtk_image_new_from_pixbuf
-;;;     gtk_image_new_from_stock
-;;;     gtk_image_new_from_animation
-;;;     gtk_image_new_from_icon_name
-;;;     gtk_image_new_from_gicon
-;;;     gtk_image_set_from_file
-;;;     gtk_image_set_from_icon_set
-;;;     gtk_image_set_from_pixbuf
-;;;     gtk_image_set_from_stock
-;;;     gtk_image_set_from_animation
-;;;     gtk_image_set_from_icon_name
-;;;     gtk_image_set_from_gicon
-;;;     gtk_image_clear
-;;;     gtk_image_new
-;;;     gtk_image_set_pixel_size
-;;;     gtk_image_get_pixel_size
 ;;; 
 ;;; 
 ;;;

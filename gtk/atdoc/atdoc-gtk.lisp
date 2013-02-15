@@ -35,21 +35,6 @@
 ;;; GTK+ Core Reference
 
     (load "src/atdoc-gtk.main-loop.lisp")
-#|
-    gtk.version.lisp                 - Version Information         - GTK+ 3.4.3
-|#
-    (load "src/atdoc-gtk.accel-group.lisp")
-    (load "src/atdoc-gtk.accel-map.lisp")
-#|
-    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.4.3
-    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.4.3
-    
-    not implemented                  - Stock Items
-    
-    gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.4.3
-    
-    not implemented                  - Bindings
-|#
     (load "src/atdoc-gtk.enumerations.lisp")
     (load "src/atdoc-gtk.selections.lisp")
 #|
@@ -87,22 +72,18 @@ Theming in GTK+
     (load "src/atdoc-gtk.message-dialog.lisp")
     (load "src/atdoc-gtk.window.lisp")
     (load "src/atdoc-gtk.window-group.lisp")
-    (load "src/atdoc-gtk.about-dialog.lisp")
-    (load "src/atdoc-gtk.assistant.lisp")
     (load "src/atdoc-gtk.offscreen-window.lisp")
     
 ;;  Display Widgets
 
-    (load "src/atdoc-gtk.accel-label.lisp")
     (load "src/atdoc-gtk.image.lisp")
     (load "src/atdoc-gtk.label.lisp")
-#|
-    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.4.1
-    gtk.statusbar                    - GtkStatusbar                - GTK+ 3.4.1
-    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.4.3
-    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.4.3
-    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.4.3
-|#
+    (load "src/atdoc-gtk.progress-bar.lisp")
+    (load "src/atdoc-gtk.statusbar.lisp")
+    (load "src/atdoc-gtk.info-bar.lisp")
+    (load "src/atdoc-gtk.status-icon.lisp")
+;;  gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.4.3
+
 
 ;;  Buttons and Toggles
 
@@ -232,9 +213,6 @@ Theming in GTK+
 ;;  Layout Containers
 
     (load "src/atdoc-gtk.grid.lisp")
-    (load "src/atdoc-gtk.alignment.lisp")
-    (load "src/atdoc-gtk.aspect-frame.lisp")
-    (load "src/atdoc-gtk.box.lisp")
 #|
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.4.3
     gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.4.3
@@ -299,7 +277,6 @@ Theming in GTK+
 |#
     (load "src/atdoc-gtk.widget.lisp")
     (load "src/atdoc-gtk.container.lisp")
-    (load "src/atdoc-gtk.bin.lisp")
 #|
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.4.3
 |#
@@ -330,9 +307,7 @@ Theming in GTK+
     not implemented                  - GtkAppChooserWidget
   
   Interface builder
-|#
-    (load "src/atdoc-gtk.buildable.lisp")
-#|
+
     gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.4.3
     
   Application support
