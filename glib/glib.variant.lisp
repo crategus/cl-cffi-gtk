@@ -156,206 +156,9 @@
 ;;;     g_variant_new_parsed_va
 ;;;     g_variant_new_parsed
 ;;;
-;;; Description
-;;;
-;;; GVariant is a variant datatype; it stores a value along with information
-;;; about the type of that value. The range of possible values is determined by
-;;; the type. The type system used by GVariant is GVariantType.
-;;;
-;;; GVariant instances always have a type and a value (which are given at
-;;; construction time). The type and value of a GVariant instance can never
-;;; change other than by the GVariant itself being destroyed. A GVariant cannot
-;;; contain a pointer.
-;;;
-;;; GVariant is reference counted using g_variant_ref() and g_variant_unref().
-;;; GVariant also has floating reference counts -- see g_variant_ref_sink().
-;;;
-;;; GVariant is completely threadsafe. A GVariant instance can be concurrently
-;;; accessed in any way from any number of threads without problems.
-;;;
-;;; GVariant is heavily optimised for dealing with data in serialised form. It
-;;; works particularly well with data located in memory-mapped files. It can
-;;; perform nearly all deserialisation operations in a small constant time,
-;;; usually touching only a single memory page. Serialised GVariant data can
-;;; also be sent over the network.
-;;;
-;;; GVariant is largely compatible with D-Bus. Almost all types of GVariant
-;;; instances can be sent over D-Bus. See GVariantType for exceptions. (However,
-;;; GVariant's serialisation format is not the same as the serialisation format
-;;; of a D-Bus message body: use GDBusMessage, in the gio library, for those.)
-;;;
-;;; For space-efficiency, the GVariant serialisation format does not
-;;; automatically include the variant's type or endianness, which must either be
-;;; implied from context (such as knowledge that a particular file format always
-;;; contains a little-endian G_VARIANT_TYPE_VARIANT) or supplied out-of-band
-;;; (for instance, a type and/or endianness indicator could be placed at the
-;;; beginning of a file, network message or network stream).
-;;;
-;;; A GVariant's size is limited mainly by any lower level operating system
-;;; constraints, such as the number of bits in gsize. For example, it is
-;;; reasonable to have a 2GB file mapped into memory with GMappedFile, and call
-;;; g_variant_new_from_data() on it.
-;;;
-;;; For convenience to C programmers, GVariant features powerful varargs-based
-;;; value construction and destruction. This feature is designed to be embedded
-;;; in other libraries.
-;;;
-;;; There is a Python-inspired text language for describing GVariant values.
-;;; GVariant includes a printer for this language and a parser with type
-;;; inferencing.
-;;;
-;;; Memory Use
-;;;
-;;; GVariant tries to be quite efficient with respect to memory use. This
-;;; section gives a rough idea of how much memory is used by the current
-;;; implementation. The information here is subject to change in the future.
-;;;
-;;; The memory allocated by GVariant can be grouped into 4 broad purposes:
-;;; memory for serialised data, memory for the type information cache, buffer
-;;; management memory and memory for the GVariant structure itself.
-;;;
-;;; Serialised Data Memory
-;;;
-;;; This is the memory that is used for storing GVariant data in serialised
-;;; form. This is what would be sent over the network or what would end up on
-;;; disk.
-;;;
-;;; The amount of memory required to store a boolean is 1 byte. 16, 32 and 64
-;;; bit integers and double precision floating point numbers use their "natural"
-;;; size. Strings (including object path and signature strings) are stored with
-;;; a nul terminator, and as such use the length of the string plus 1 byte.
-;;;
-;;; Maybe types use no space at all to represent the null value and use the same
-;;; amount of space (sometimes plus one byte) as the equivalent non-maybe-typed
-;;; value to represent the non-null case.
-;;;
-;;; Arrays use the amount of space required to store each of their members,
-;;; concatenated. Additionally, if the items stored in an array are not of a
-;;; fixed-size (ie: strings, other arrays, etc) then an additional framing
-;;; offset is stored for each item. The size of this offset is either 1, 2 or 4
-;;; bytes depending on the overall size of the container. Additionally, extra
-;; padding bytes are added as required for alignment of child values.
-;;;
-;;; Tuples (including dictionary entries) use the amount of space required to
-;;; store each of their members, concatenated, plus one framing offset (as per
-;;; arrays) for each non-fixed-sized item in the tuple, except for the last one.
-;;; Additionally, extra padding bytes are added as required for alignment of
-;;; child values.
-;;;
-;;; Variants use the same amount of space as the item inside of the variant,
-;;; plus 1 byte, plus the length of the type string for the item inside the
-;;; variant.
-;;;
-;;; As an example, consider a dictionary mapping strings to variants. In the
-;;; case that the dictionary is empty, 0 bytes are required for the
-;;; serialisation.
-;;;
-;;; If we add an item "width" that maps to the int32 value of 500 then we will
-;;; use 4 byte to store the int32 (so 6 for the variant containing it) and 6
-;;; bytes for the string. The variant must be aligned to 8 after the 6 bytes of
-;;; the string, so that's 2 extra bytes. 6 (string) + 2 (padding) + 6 (variant)
-;;; is 14 bytes used for the dictionary entry. An additional 1 byte is added to
-;;; the array as a framing offset making a total of 15 bytes.
-;;;
-;;; If we add another entry, "title" that maps to a nullable string that happens
-;;; to have a value of null, then we use 0 bytes for the null value (and 3 bytes
-;;; for the variant to contain it along with its type string) plus 6 bytes for
-;;; the string. Again, we need 2 padding bytes. That makes a total of 6 + 2 + 3
-;;; = 11 bytes.
-;;;
-;;; We now require extra padding between the two items in the array. After the
-;;; 14 bytes of the first item, that's 2 bytes required. We now require 2
-;;; framing offsets for an extra two bytes. 14 + 2 + 11 + 2 = 29 bytes to encode
-;;; the entire two-item dictionary.
-;;;
-;;; Type Information Cache
-;;;
-;;; For each GVariant type that currently exists in the program a type
-;;; information structure is kept in the type information cache. The type
-;;; information structure is required for rapid deserialisation.
-;;;
-;;; Continuing with the above example, if a GVariant exists with the type
-;;; "a{sv}" then a type information struct will exist for "a{sv}", "{sv}", "s",
-;;; and "v". Multiple uses of the same type will share the same type
-;;; information. Additionally, all single-digit types are stored in read-only
-;;; static memory and do not contribute to the writable memory footprint of a
-;;; program using GVariant.
-;;;
-;;; Aside from the type information structures stored in read-only memory, there
-;;; are two forms of type information. One is used for container types where
-;;; there is a single element type: arrays and maybe types. The other is used
-;;; for container types where there are multiple element types: tuples and
-;;; dictionary entries.
-;;;
-;;; Array type info structures are 6 * sizeof (void *), plus the memory required
-;;; to store the type string itself. This means that on 32bit systems, the cache
-;;; entry for "a{sv}" would require 30 bytes of memory (plus malloc overhead).
-;;;
-;;; Tuple type info structures are 6 * sizeof (void *), plus 4 * sizeof (void *)
-;;; for each item in the tuple, plus the memory required to store the type
-;;; string itself. A 2-item tuple, for example, would have a type information
-;;; structure that consumed writable memory in the size of 14 * sizeof (void *)
-;;; (plus type string) This means that on 32bit systems, the cache entry for
-;;; "{sv}" would require 61 bytes of memory (plus malloc overhead).
-;;;
-;;; This means that in total, for our "a{sv}" example, 91 bytes of type
-;;; information would be allocated.
-;;;
-;;; The type information cache, additionally, uses a GHashTable to store and
-;;; lookup the cached items and stores a pointer to this hash table in static
-;;; storage. The hash table is freed when there are zero items in the type
-;;; cache.
-;;;
-;;; Although these sizes may seem large it is important to remember that a
-;;; program will probably only have a very small number of different types of
-;;; values in it and that only one type information structure is required for
-;;; many different values of the same type.
-;;;
-;;; Buffer Management Memory
-;;;
-;;; GVariant uses an internal buffer management structure to deal with the
-;;; various different possible sources of serialised data that it uses. The
-;;; buffer is responsible for ensuring that the correct call is made when the
-;;; data is no longer in use by GVariant. This may involve a g_free() or a
-;;; g_slice_free() or even g_mapped_file_unref().
-;;;
-;;; One buffer management structure is used for each chunk of serialised data.
-;;; The size of the buffer management structure is 4 * (void *). On 32bit
-;;; systems, that's 16 bytes.
-;;;
-;;; GVariant structure
-;;;
-;;; The size of a GVariant structure is 6 * (void *). On 32 bit systems, that's
-;;; 24 bytes.
-;;;
-;;; GVariant structures only exist if they are explicitly created with API
-;;; calls. For example, if a GVariant is constructed out of serialised data for
-;;; the example given above (with the dictionary) then although there are 9
-;;; individual values that comprise the entire dictionary (two keys, two values,
-;;; two variants containing the values, two dictionary entries, plus the
-;;; dictionary itself), only 1 GVariant instance exists -- the one referring to
-;;; the dictionary.
-;;;
-;;; If calls are made to start accessing the other values then GVariant
-;;; instances will exist for those values only for as long as they are in use
-;;; (ie: until you call g_variant_unref()). The type information is shared. The
-;;; serialised data and the buffer management structure for that serialised data
-;;; is shared by the child.
-;;;
-;;; Summary
-;;;
-;;; To put the entire example together, for our dictionary mapping strings to
-;;; variants (with two entries, as given above), we are using 91 bytes of memory
-;;; for type information, 29 byes of memory for the serialised data, 16 bytes
-;;; for buffer management and 24 bytes for the GVariant instance, or a total of
-;;; 160 bytes, plus malloc overhead. If we were to use
-;;; g_variant_get_child_value() to access the two dictionary entries, we would
-;;; use an additional 48 bytes. If we were to have other dictionaries of the
-;;; same type, we would use more memory for the serialised data and buffer
-;;; management for those dictionaries, but the type information would be shared.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gobject)
+(in-package :glib)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GVariant
@@ -373,292 +176,442 @@
 (export 'g-variant)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-variant atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-variant atdoc:*external-symbols*)
+ "@version{2013-2-7}
+  @begin{short}
+    GVariant is a variant datatype; it stores a value along with information
+    about the type of that value. The range of possible values is determined by
+    the type. The type system used by GVariant is GVariantType.
+  @end{short}
+
+  GVariant instances always have a type and a value (which are given at
+  construction time). The type and value of a GVariant instance can never
+  change other than by the GVariant itself being destroyed. A GVariant cannot
+  contain a pointer.
+
+  GVariant is reference counted using g_variant_ref() and g_variant_unref().
+  GVariant also has floating reference counts -- see g_variant_ref_sink().
+
+  GVariant is completely threadsafe. A GVariant instance can be concurrently
+  accessed in any way from any number of threads without problems.
+
+  GVariant is heavily optimised for dealing with data in serialised form. It
+  works particularly well with data located in memory-mapped files. It can
+  perform nearly all deserialisation operations in a small constant time,
+  usually touching only a single memory page. Serialised GVariant data can
+  also be sent over the network.
+
+  GVariant is largely compatible with D-Bus. Almost all types of GVariant
+  instances can be sent over D-Bus. See GVariantType for exceptions. (However,
+  GVariant's serialisation format is not the same as the serialisation format
+  of a D-Bus message body: use GDBusMessage, in the gio library, for those.)
+
+  For space-efficiency, the GVariant serialisation format does not
+  automatically include the variant's type or endianness, which must either be
+  implied from context (such as knowledge that a particular file format always
+  contains a little-endian G_VARIANT_TYPE_VARIANT) or supplied out-of-band
+  (for instance, a type and/or endianness indicator could be placed at the
+  beginning of a file, network message or network stream).
+
+  A GVariant's size is limited mainly by any lower level operating system
+  constraints, such as the number of bits in gsize. For example, it is
+  reasonable to have a 2GB file mapped into memory with GMappedFile, and call
+  g_variant_new_from_data() on it.
+
+  For convenience to C programmers, GVariant features powerful varargs-based
+  value construction and destruction. This feature is designed to be embedded
+  in other libraries.
+
+  There is a Python-inspired text language for describing GVariant values.
+  GVariant includes a printer for this language and a parser with type
+  inferencing.
+
+  Memory Use
+
+  GVariant tries to be quite efficient with respect to memory use. This
+  section gives a rough idea of how much memory is used by the current
+  implementation. The information here is subject to change in the future.
+
+  The memory allocated by GVariant can be grouped into 4 broad purposes:
+  memory for serialised data, memory for the type information cache, buffer
+  management memory and memory for the GVariant structure itself.
+
+  Serialised Data Memory
+
+  This is the memory that is used for storing GVariant data in serialised
+  form. This is what would be sent over the network or what would end up on
+  disk.
+
+  The amount of memory required to store a boolean is 1 byte. 16, 32 and 64
+  bit integers and double precision floating point numbers use their \"natural\"
+  size. Strings (including object path and signature strings) are stored with
+  a nul terminator, and as such use the length of the string plus 1 byte.
+
+  Maybe types use no space at all to represent the null value and use the same
+  amount of space (sometimes plus one byte) as the equivalent non-maybe-typed
+  value to represent the non-null case.
+
+  Arrays use the amount of space required to store each of their members,
+  concatenated. Additionally, if the items stored in an array are not of a
+  fixed-size (ie: strings, other arrays, etc) then an additional framing
+  offset is stored for each item. The size of this offset is either 1, 2 or 4
+  bytes depending on the overall size of the container. Additionally, extra
+  padding bytes are added as required for alignment of child values.
+
+  Tuples (including dictionary entries) use the amount of space required to
+  store each of their members, concatenated, plus one framing offset (as per
+  arrays) for each non-fixed-sized item in the tuple, except for the last one.
+  Additionally, extra padding bytes are added as required for alignment of
+  child values.
+
+  Variants use the same amount of space as the item inside of the variant,
+  plus 1 byte, plus the length of the type string for the item inside the
+  variant.
+
+  As an example, consider a dictionary mapping strings to variants. In the
+  case that the dictionary is empty, 0 bytes are required for the
+  serialisation.
+
+  If we add an item \"width\" that maps to the int32 value of 500 then we will
+  use 4 byte to store the int32 (so 6 for the variant containing it) and 6
+  bytes for the string. The variant must be aligned to 8 after the 6 bytes of
+  the string, so that's 2 extra bytes. 6 (string) + 2 (padding) + 6 (variant)
+  is 14 bytes used for the dictionary entry. An additional 1 byte is added to
+  the array as a framing offset making a total of 15 bytes.
+
+  If we add another entry, \"title\" that maps to a nullable string that happens
+  to have a value of null, then we use 0 bytes for the null value (and 3 bytes
+  for the variant to contain it along with its type string) plus 6 bytes for
+  the string. Again, we need 2 padding bytes. That makes a total of 6 + 2 + 3
+  = 11 bytes.
+
+  We now require extra padding between the two items in the array. After the
+  14 bytes of the first item, that's 2 bytes required. We now require 2
+  framing offsets for an extra two bytes. 14 + 2 + 11 + 2 = 29 bytes to encode
+  the entire two-item dictionary.
+
+  Type Information Cache
+
+  For each GVariant type that currently exists in the program a type
+  information structure is kept in the type information cache. The type
+  information structure is required for rapid deserialisation.
+
+  Continuing with the above example, if a GVariant exists with the type
+  \"a{sv@}\" then a type information struct will exist for \"a{sv@}\",
+  \"{sv@}\", \"s\", and \"v\". Multiple uses of the same type will share the
+  same type information. Additionally, all single-digit types are stored in
+  read-only static memory and do not contribute to the writable memory footprint
+  of a program using GVariant.
+
+  Aside from the type information structures stored in read-only memory, there
+  are two forms of type information. One is used for container types where
+  there is a single element type: arrays and maybe types. The other is used
+  for container types where there are multiple element types: tuples and
+  dictionary entries.
+
+  Array type info structures are 6 * sizeof (void *), plus the memory required
+  to store the type string itself. This means that on 32bit systems, the cache
+  entry for \"a{sv@}\" would require 30 bytes of memory (plus malloc overhead).
+
+  Tuple type info structures are 6 * sizeof (void *), plus 4 * sizeof (void *)
+  for each item in the tuple, plus the memory required to store the type
+  string itself. A 2-item tuple, for example, would have a type information
+  structure that consumed writable memory in the size of 14 * sizeof (void *)
+  (plus type string) This means that on 32bit systems, the cache entry for
+  \"{sv@}\" would require 61 bytes of memory (plus malloc overhead).
+
+  This means that in total, for our \"a{sv@}\" example, 91 bytes of type
+  information would be allocated.
+
+  The type information cache, additionally, uses a GHashTable to store and
+  lookup the cached items and stores a pointer to this hash table in static
+  storage. The hash table is freed when there are zero items in the type
+  cache.
+
+  Although these sizes may seem large it is important to remember that a
+  program will probably only have a very small number of different types of
+  values in it and that only one type information structure is required for
+  many different values of the same type.
+
+  Buffer Management Memory
+
+  GVariant uses an internal buffer management structure to deal with the
+  various different possible sources of serialised data that it uses. The
+  buffer is responsible for ensuring that the correct call is made when the
+  data is no longer in use by GVariant. This may involve a g_free() or a
+  g_slice_free() or even g_mapped_file_unref().
+
+  One buffer management structure is used for each chunk of serialised data.
+  The size of the buffer management structure is 4 * (void *). On 32bit
+  systems, that's 16 bytes.
+
+  GVariant structure
+
+  The size of a GVariant structure is 6 * (void *). On 32 bit systems, that's
+  24 bytes.
+
+  GVariant structures only exist if they are explicitly created with API
+  calls. For example, if a GVariant is constructed out of serialised data for
+  the example given above (with the dictionary) then although there are 9
+  individual values that comprise the entire dictionary (two keys, two values,
+  two variants containing the values, two dictionary entries, plus the
+  dictionary itself), only 1 GVariant instance exists -- the one referring to
+  the dictionary.
+
+  If calls are made to start accessing the other values then GVariant
+  instances will exist for those values only for as long as they are in use
+  (ie: until you call g_variant_unref()). The type information is shared. The
+  serialised data and the buffer management structure for that serialised data
+  is shared by the child.
+
+  Summary
+
+  To put the entire example together, for our dictionary mapping strings to
+  variants (with two entries, as given above), we are using 91 bytes of memory
+  for type information, 29 byes of memory for the serialised data, 16 bytes
+  for buffer management and 24 bytes for the GVariant instance, or a total of
+  160 bytes, plus malloc overhead. If we were to use
+  g_variant_get_child_value() to access the two dictionary entries, we would
+  use an additional 48 bytes. If we were to have other dictionaries of the
+  same type, we would use more memory for the serialised data and buffer
+  management for those dictionaries, but the type information would be shared.")
+
+;;; ----------------------------------------------------------------------------
 ;;; g_variant_unref ()
-;;;
-;;; void g_variant_unref (GVariant *value);
-;;;
-;;; Decreases the reference count of value. When its reference count drops to 0,
-;;; the memory used by the variant is freed.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_unref" g-variant-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @begin{short}
+    Decreases the reference count of value. When its reference count drops to 0,
+   the memory used by the variant is freed.
+  @end{short}@break{}
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_ref ()
-;;;
-;;; GVariant * g_variant_ref (GVariant *value);
-;;;
-;;; Increases the reference count of value.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     the same value
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_ref" g-variant-ref) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @return{the same value}
+  @short{Increases the reference count of value.}@break{}
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_ref_sink ()
-;;;
-;;; GVariant * g_variant_ref_sink (GVariant *value);
-;;;
-;;; GVariant uses a floating reference count system. All functions with names
-;;; starting with g_variant_new_ return floating references.
-;;;
-;;; Calling g_variant_ref_sink() on a GVariant with a floating reference will
-;;; convert the floating reference into a full reference. Calling
-;;; g_variant_ref_sink() on a non-floating GVariant results in an additional
-;;; normal reference being added.
-;;;
-;;; In other words, if the value is floating, then this call "assumes ownership"
-;;; of the floating reference, converting it to a normal reference. If the value
-;;; is not floating, then this call adds a new normal reference increasing the
-;;; reference count by one.
-;;;
-;;; All calls that result in a GVariant instance being inserted into a container
-;;; will call g_variant_ref_sink() on the instance. This means that if the value
-;;; was just created (and has only its floating reference) then the container
-;;; will assume sole ownership of the value at that point and the caller will
-;;; not need to unreference it. This makes certain common styles of programming
-;;; much easier while still maintaining normal refcounting semantics in
-;;; situations where values are not floating.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     the same value
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_ref_sink" g-variant-ref-sink) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @return{the same value}
+  @begin{short}
+    GVariant uses a floating reference count system. All functions with names
+    starting with g_variant_new_ return floating references.
+  @end{short}@break{}
+  Calling g_variant_ref_sink() on a GVariant with a floating reference will
+  convert the floating reference into a full reference. Calling
+  g_variant_ref_sink() on a non-floating GVariant results in an additional
+  normal reference being added.@break{}
+  In other words, if the value is floating, then this call \"assumes ownership\"
+  of the floating reference, converting it to a normal reference. If the value
+  is not floating, then this call adds a new normal reference increasing the
+  reference count by one.@break{}
+  All calls that result in a GVariant instance being inserted into a container
+  will call g_variant_ref_sink() on the instance. This means that if the value
+  was just created (and has only its floating reference) then the container
+  will assume sole ownership of the value at that point and the caller will
+  not need to unreference it. This makes certain common styles of programming
+  much easier while still maintaining normal refcounting semantics in
+  situations where values are not floating.@break{}
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-ref-sink)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_floating ()
-;;;
-;;; gboolean g_variant_is_floating (GVariant *value);
-;;;
-;;; Checks whether value has a floating reference count.
-;;;
-;;; This function should only ever be used to assert that a given variant is or
-;;; is not floating, or for debug purposes. To acquire a reference to a variant
-;;; that might be floating, always use g_variant_ref_sink() or
-;;; g_variant_take_ref().
-;;;
-;;; See g_variant_ref_sink() for more information about floating reference
-;;; counts.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     whether value is floating
-;;;
-;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_is_floating" g-variant-is-floating) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @return{whether value is floating}
+  @begin{short}
+    Checks whether value has a floating reference count.
+  @end{short}@break{}
+  This function should only ever be used to assert that a given variant is or
+  is not floating, or for debug purposes. To acquire a reference to a variant
+  that might be floating, always use g_variant_ref_sink() or
+  g_variant_take_ref().@break{}
+  See g_variant_ref_sink() for more information about floating reference
+  counts.@break{}
+  Since 2.26"
   (value (:pointer g-variant)))
 
 (export 'g-variant-is-floating)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_take_ref ()
-;;;
-;;; GVariant * g_variant_take_ref (GVariant *value);
-;;;
-;;; If value is floating, sink it. Otherwise, do nothing.
-;;;
-;;; Typically you want to use g_variant_ref_sink() in order to automatically do
-;;; the correct thing with respect to floating or non-floating references, but
-;;; there is one specific scenario where this function is helpful.
-;;;
-;;; The situation where this function is helpful is when creating an API that
-;;; allows the user to provide a callback function that returns a GVariant. We
-;;; certainly want to allow the user the flexibility to return a non-floating
-;;; reference from this callback (for the case where the value that is being
-;;; returned already exists).
-;;;
-;;; At the same time, the style of the GVariant API makes it likely that for
-;;; newly-created GVariant instances, the user can be saved some typing if they
-;;; are allowed to return a GVariant with a floating reference.
-;;;
-;;; Using this function on the return value of the user's callback allows the
-;;; user to do whichever is more convenient for them. The caller will alway
-;;; receives exactly one full reference to the value: either the one that was
-;;; returned in the first place, or a floating reference that has been converted
-;;; to a full reference.
-;;;
-;;; This function has an odd interaction when combined with g_variant_ref_sink()
-;;; running at the same time in another thread on the same GVariant instance. If
-;;; g_variant_ref_sink() runs first then the result will be that the floating
-;;; reference is converted to a hard reference. If g_variant_take_ref() runs
-;;; first then the result will be that the floating reference is converted to a
-;;; hard reference and an additional reference on top of that one is added. It
-;;; is best to avoid this situation.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     the same value
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_take_ref" g-variant-takge-ref)
-    (g-boxed-foreign g-variant-type)
+(defcfun ("g_variant_take_ref" g-variant-takge-ref) g-variant-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @return{the same value}
+  @begin{short}
+    If value is floating, sink it. Otherwise, do nothing.
+  @end{short}@break{}
+  Typically you want to use g_variant_ref_sink() in order to automatically do
+  the correct thing with respect to floating or non-floating references, but
+  there is one specific scenario where this function is helpful.@break{}
+  The situation where this function is helpful is when creating an API that
+  allows the user to provide a callback function that returns a GVariant. We
+  certainly want to allow the user the flexibility to return a non-floating
+  reference from this callback (for the case where the value that is being
+  returned already exists).@break{}
+  At the same time, the style of the GVariant API makes it likely that for
+  newly-created GVariant instances, the user can be saved some typing if they
+  are allowed to return a GVariant with a floating reference.@break{}
+  Using this function on the return value of the user's callback allows the
+  user to do whichever is more convenient for them. The caller will alway
+  receives exactly one full reference to the value: either the one that was
+  returned in the first place, or a floating reference that has been converted
+  to a full reference.@break{}
+  This function has an odd interaction when combined with g_variant_ref_sink()
+  running at the same time in another thread on the same GVariant instance. If
+  g_variant_ref_sink() runs first then the result will be that the floating
+  reference is converted to a hard reference. If g_variant_take_ref() runs
+  first then the result will be that the floating reference is converted to a
+  hard reference and an additional reference on top of that one is added. It
+  is best to avoid this situation."
   (value (:pointer g-variant)))
 
 (export 'g-variant-take-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_type ()
-;;;
-;;; const GVariantType * g_variant_get_type (GVariant *value);
-;;;
-;;; Determines the type of value.
-;;;
-;;; The return value is valid for the lifetime of value and must not be freed.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     a GVariantType
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_type" g-variant-get-type)
-    (g-boxed-foreign g-variant-type)
+(defcfun ("g_variant_get_type" g-variant-get-type) g-variant-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @return{a GVariantType}
+  @begin{short}
+    Determines the type of value.
+  @end{short}@break{}
+  The return value is valid for the lifetime of value and must not be
+  freed.@break{}
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_type_string ()
-;;;
-;;; const gchar * g_variant_get_type_string (GVariant *value);
-;;;
-;;; Returns the type string of value. Unlike the result of calling
-;;; g_variant_type_peek_string(), this string is nul-terminated. This string
-;;; belongs to GVariant and must not be freed.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     the type string for the type of value
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_type_string" g-variant-get-type-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant}
+  @return{the type string for the type of value}
+  @begin{short}
+    Returns the type string of value.
+  @end{short}
+  Unlike the result of calling g_variant_type_peek_string(), this string is
+  nul-terminated. This string belongs to GVariant and must not be freed.@break{}
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-type-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_of_type ()
-;;;
-;;; gboolean g_variant_is_of_type (GVariant *value, const GVariantType *type);
-;;;
-;;; Checks if a value has a type matching the provided type.
-;;;
-;;; value :
-;;;     a GVariant instance
-;;;
-;;; type :
-;;;     a GVariantType
-;;;
-;;; Returns :
-;;;     TRUE if the type of value matches type
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_is_of_type" g-variant-is-of-type) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant instance}
+  @argument[type]{a GVariantType}
+  @return{TRUE if the type of value matches type}
+  @begin{short}
+    Checks if a value has a type matching the provided type.
+  @end{short}@break{}
+  Since 2.24"
   (value (:pointer g-variant))
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-is-of-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_container ()
-;;;
-;;; gboolean g_variant_is_container (GVariant *value);
-;;;
-;;; Checks if value is a container.
-;;;
-;;; value :
-;;;     a GVariant instance
-;;;
-;;; Returns :
-;;;     TRUE if value is a container
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_is_container" g-variant-is-container) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a GVariant instance}
+  @return{TRUE if value is a container}
+  @begin{short}
+    Checks if value is a container.
+  @end{short}@break{}
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-is-container)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_compare ()
-;;;
-;;; gint g_variant_compare (gconstpointer one, gconstpointer two);
-;;;
-;;; Compares one and two.
-;;;
-;;; The types of one and two are gconstpointer only to allow use of this
-;;; function with GTree, GPtrArray, etc. They must each be a GVariant.
-;;;
-;;; Comparison is only defined for basic types (ie: booleans, numbers, strings).
-;;; For booleans, FALSE is less than TRUE. Numbers are ordered in the usual way.
-;;; Strings are in ASCII lexographical order.
-;;;
-;;; It is a programmer error to attempt to compare container values or two
-;;; values that have types that are not exactly equal. For example, you cannot
-;;; compare a 32-bit signed integer with a 32-bit unsigned integer. Also note
-;;; that this function is not particularly well-behaved when it comes to
-;;; comparison of doubles; in particular, the handling of incomparable values
-;;; (ie: NaN) is undefined.
-;;;
-;;; If you only require an equality comparison, g_variant_equal() is more
-;;; general.
-;;;
-;;; one :
-;;;     a basic-typed GVariant instance
-;;;
-;;; two :
-;;;     a GVariant instance of the same type
-;;;
-;;; Returns :
-;;;     negative value if a < b; zero if a = b; positive value if a > b.
-;;;
-;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_compare" g-variant-compare) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[one]{a basic-typed GVariant instance}
+  @argument[two]{a GVariant instance of the same type}
+  @return{negative value if a < b; zero if a = b; positive value if a > b.}
+  @begin{short}
+    Compares one and two.
+  @end{short}
+
+  The types of one and two are gconstpointer only to allow use of this
+  function with GTree, GPtrArray, etc. They must each be a GVariant.
+
+  Comparison is only defined for basic types (ie: booleans, numbers, strings).
+  For booleans, FALSE is less than TRUE. Numbers are ordered in the usual way.
+  Strings are in ASCII lexographical order.
+
+  It is a programmer error to attempt to compare container values or two
+  values that have types that are not exactly equal. For example, you cannot
+  compare a 32-bit signed integer with a 32-bit unsigned integer. Also note
+  that this function is not particularly well-behaved when it comes to
+  comparison of doubles; in particular, the handling of incomparable values
+  (ie: NaN) is undefined.
+
+  If you only require an equality comparison, g_variant_equal() is more
+  general.
+
+  Since 2.26"
   (one :pointer)
   (two :pointer))
 
@@ -666,85 +619,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GVariantClass
-;;;
-;;; typedef enum {
-;;;   G_VARIANT_CLASS_BOOLEAN       = 'b',
-;;;   G_VARIANT_CLASS_BYTE          = 'y',
-;;;   G_VARIANT_CLASS_INT16         = 'n',
-;;;   G_VARIANT_CLASS_UINT16        = 'q',
-;;;   G_VARIANT_CLASS_INT32         = 'i',
-;;;   G_VARIANT_CLASS_UINT32        = 'u',
-;;;   G_VARIANT_CLASS_INT64         = 'x',
-;;;   G_VARIANT_CLASS_UINT64        = 't',
-;;;   G_VARIANT_CLASS_HANDLE        = 'h',
-;;;   G_VARIANT_CLASS_DOUBLE        = 'd',
-;;;   G_VARIANT_CLASS_STRING        = 's',
-;;;   G_VARIANT_CLASS_OBJECT_PATH   = 'o',
-;;;   G_VARIANT_CLASS_SIGNATURE     = 'g',
-;;;   G_VARIANT_CLASS_VARIANT       = 'v',
-;;;   G_VARIANT_CLASS_MAYBE         = 'm',
-;;;   G_VARIANT_CLASS_ARRAY         = 'a',
-;;;   G_VARIANT_CLASS_TUPLE         = '(',
-;;;   G_VARIANT_CLASS_DICT_ENTRY    = '{'
-;;; } GVariantClass;
-;;;
-;;; The range of possible top-level types of GVariant instances.
-;;;
-;;; G_VARIANT_CLASS_BOOLEAN
-;;;     The GVariant is a boolean.
-;;;
-;;; G_VARIANT_CLASS_BYTE
-;;;     The GVariant is a byte.
-;;;
-;;; G_VARIANT_CLASS_INT16
-;;;     The GVariant is a signed 16 bit integer.
-;;;
-;;; G_VARIANT_CLASS_UINT16
-;;;     The GVariant is an unsigned 16 bit integer.
-;;;
-;;; G_VARIANT_CLASS_INT32
-;;;     The GVariant is a signed 32 bit integer.
-;;;
-;;; G_VARIANT_CLASS_UINT32
-;;;     The GVariant is an unsigned 32 bit integer.
-;;;
-;;; G_VARIANT_CLASS_INT64
-;;;     The GVariant is a signed 64 bit integer.
-;;;
-;;; G_VARIANT_CLASS_UINT64
-;;;     The GVariant is an unsigned 64 bit integer.
-;;;
-;;; G_VARIANT_CLASS_HANDLE
-;;;     The GVariant is a file handle index.
-;;;
-;;; G_VARIANT_CLASS_DOUBLE
-;;;     The GVariant is a double precision floating point value.
-;;;
-;;; G_VARIANT_CLASS_STRING
-;;;     The GVariant is a normal string.
-;;;
-;;; G_VARIANT_CLASS_OBJECT_PATH
-;;;     The GVariant is a D-Bus object path string.
-;;;
-;;; G_VARIANT_CLASS_SIGNATURE
-;;;     The GVariant is a D-Bus signature string.
-;;;
-;;; G_VARIANT_CLASS_VARIANT
-;;;     The GVariant is a variant.
-;;;
-;;; G_VARIANT_CLASS_MAYBE
-;;;     The GVariant is a maybe-typed value.
-;;;
-;;; G_VARIANT_CLASS_ARRAY
-;;;     The GVariant is an array.
-;;;
-;;; G_VARIANT_CLASS_TUPLE
-;;;     The GVariant is a tuple.
-;;;
-;;; G_VARIANT_CLASS_DICT_ENTRY
-;;;     The GVariant is a dictionary entry.
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcenum g-variant-class
@@ -770,22 +644,68 @@
 (export 'g-variant-class)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-variant-class atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'g-variant-class atdoc:*external-symbols*)
+ "@version{2013-2-7}
+  @short{The range of possible top-level types of @symbol{g-variant} instances.}
+  Since 2.24.
+  @begin{pre}
+(defcenum g-variant-class
+  (:boolean     #.(char-code #\b))
+  (:byte        #.(char-code #\y))
+  (:int16       #.(char-code #\n))
+  (:uint16      #.(char-code #\q))
+  (:int32       #.(char-code #\i))
+  (:uint32      #.(char-code #\u))
+  (:int64       #.(char-code #\x))
+  (:uint64      #.(char-code #\t))
+  (:handle      #.(char-code #\h))
+  (:double      #.(char-code #\d))
+  (:string      #.(char-code #\s))
+  (:object-path #.(char-code #\o))
+  (:signature   #.(char-code #\g))
+  (:variant     #.(char-code #\v))
+  (:maybe       #.(char-code #\m))
+  (:array       #.(char-code #\a))
+  (:tuple       #.(char-code #\())
+  (:dict-entry  #.(char-code #\{)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:boolean]{The @symbol{g-variant} is a boolean.}
+    @entry[:byte]{The @symbol{g-variant} is a byte.}
+    @entry[:int16]{The @symbol{g-variant} is a signed 16 bit integer.}
+    @entry[:uint16]{The @symbol{g-variant} is an unsigned 16 bit integer.}
+    @entry[:int32]{The @symbol{g-variant} is a signed 32 bit integer.}
+    @entry[:unit32]{The @symbol{g-variant} is an unsigned 32 bit integer.}
+    @entry[:int64]{The @symbol{g-variant} is a signed 64 bit integer.}
+    @entry[:uint64]{The @symbol{g-variant} is an unsigned 64 bit integer.}
+    @entry[:handle]{The @symbol{g-variant} is a file handle index.}
+    @entry[:double]{The @symbol{g-variant} is a double precision floating point value.}
+    @entry[:string]{The @symbol{g-variant} is a normal string.}
+    @entry[:object-path]{The @symbol{g-variant} is a D-Bus object path string.}
+    @entry[:signature]{The @symbol{g-variant} is a D-Bus signature string.}
+    @entry[:variant]{The @symbol{g-variant} is a variant.}
+    @entry[:maybe]{The @symbol{g-variant} is a maybe-typed value.}
+    @entry[:array]{The @symbol{g-variant} is an array.}
+    @entry[:tuple]{The @symbol{g-variant} is a tuple.}
+    @entry[:dict-entry]{The @symbol{g-variant} is a dictionary entry.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; g_variant_classify ()
-;;;
-;;; GVariantClass g_variant_classify (GVariant *value);
-;;;
-;;; Classifies value according to its top-level type.
-;;;
-;;; value :
-;;;     a GVariant
-;;;
-;;; Returns :
-;;;     the GVariantClass of value
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_classify" g-variant-classify) g-variant-class
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a @symbol{g-variant} instance}
+  @return{The @symbol{g-variant-class} of value.}
+  @begin{short}
+    Classifies value according to its top-level type.
+  @end{short}
+  Since 2.24."
   (value (:pointer g-variant)))
 
 (export 'g-variant-classify)
@@ -943,313 +863,239 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_boolean ()
-;;;
-;;; GVariant * g_variant_new_boolean (gboolean value);
-;;;
-;;; Creates a new boolean GVariant instance -- either TRUE or FALSE.
-;;;
-;;; value :
-;;;     a gboolean value
-;;;
-;;; Returns :
-;;;     a floating reference to a new boolean GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_boolean" g-variant-new-boolean) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a gboolean value}
+  @return{a floating reference to a new boolean GVariant instance}
+  @begin{short}
+    Creates a new boolean GVariant instance -- either TRUE or FALSE.
+  @end{short}@break{}
+  Since 2.24"
   (value :boolean))
 
 (export 'g-variant-new-boolean)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_byte ()
-;;;
-;;; GVariant * g_variant_new_byte (guchar value);
-;;;
-;;; Creates a new byte GVariant instance.
-;;;
-;;; value :
-;;;     a guint8 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new byte GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_byte" g-variant-new-byte) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a guint8 value}
+  @return{a floating reference to a new byte GVariant instance}
+  @short{Creates a new byte GVariant instance.}@break{}
+  Since 2.24"
   (value :uchar))
 
 (export 'g-variant-new-byte)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_int16 ()
-;;;
-;;; GVariant * g_variant_new_int16 (gint16 value);
-;;;
-;;; Creates a new int16 GVariant instance.
-;;;
-;;; value :
-;;;     a gint16 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new int16 GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_int16" g-variant-new-int16) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a gint16 value}
+  @return{a floating reference to a new int16 GVariant instance}
+  @short{Creates a new int16 GVariant instance.}@break{}
+  Since 2.24"
   (value :int16))
 
 (export 'g-variant-new-int16)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_uint16 ()
-;;;
-;;; GVariant * g_variant_new_uint16 (guint16 value);
-;;;
-;;; Creates a new uint16 GVariant instance.
-;;;
-;;; value :
-;;;     a guint16 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new uint16 GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_uint16" g-variant-new-uint16) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a guint16 value}
+  @return{a floating reference to a new uint16 GVariant instance}
+  @short{Creates a new uint16 GVariant instance.}@break{}
+  Since 2.24"
   (value :uint16))
 
 (export 'g-variant-new-uint16)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_int32 ()
-;;;
-;;; GVariant * g_variant_new_int32 (gint32 value);
-;;;
-;;; Creates a new int32 GVariant instance.
-;;;
-;;; value :
-;;;     a gint32 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new int32 GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_int32" g-variant-new-int32) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a @code{gint32} value}
+  @return{A floating reference to a new @code{int32} @symbol{g-variant}
+    instance.}
+  @short{Creates a new @code{int32} @symbol{g-variant} instance.}
+  Since 2.24."
   (value :int32))
 
 (export 'g-variant-new-int32)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_uint32 ()
-;;;
-;;; GVariant * g_variant_new_uint32 (guint32 value);
-;;;
-;;; Creates a new uint32 GVariant instance.
-;;;
-;;; value :
-;;;     a guint32 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new uint32 GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_uint32" g-variant-new-uint32) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a guint32 value}
+  @return{a floating reference to a new uint32 GVariant instance}
+  @short{Creates a new uint32 GVariant instance.}@break{}
+  Since 2.24"
   (value :uint32))
 
 (export 'g-variant-new-uint32)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_int64 ()
-;;;
-;;; GVariant * g_variant_new_int64 (gint64 value);
-;;;
-;;; Creates a new int64 GVariant instance.
-;;;
-;;; value :
-;;;     a gint64 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new int64 GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_int64" g-variant-new-int64) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a gint64 value}
+  @return{a floating reference to a new int64 GVariant instance}
+  @short{Creates a new int64 GVariant instance.}@break{}
+  Since 2.24"
   (value :int64))
 
 (export 'g-variant-new-int64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_uint64 ()
-;;;
-;;; GVariant * g_variant_new_uint64 (guint64 value);
-;;;
-;;; Creates a new uint64 GVariant instance.
-;;;
-;;; value :
-;;;     a guint64 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new uint64 GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_uint64" g-variant-new-uint64) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a guint64 value}
+  @return{a floating reference to a new uint64 GVariant instance}
+  @short{Creates a new uint64 GVariant instance.}@break{}
+  Since 2.24"
   (value :uint64))
 
 (export 'g-variant-new-int64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_handle ()
-;;;
-;;; GVariant * g_variant_new_handle (gint32 value);
-;;;
-;;; Creates a new handle GVariant instance.
-;;;
-;;; By convention, handles are indexes into an array of file descriptors that
-;;; are sent alongside a D-Bus message. If you're not interacting with D-Bus,
-;;; you probably don't need them.
-;;;
-;;; value :
-;;;     a gint32 value
-;;;
-;;; Returns :
-;;;     a floating reference to a new handle GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_handle" g-variant-new-handle) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a gint32 value}
+  @return{a floating reference to a new handle GVariant instance}
+  @short{Creates a new handle GVariant instance.}@break{}
+  By convention, handles are indexes into an array of file descriptors that
+  are sent alongside a D-Bus message. If you're not interacting with D-Bus,
+  you probably don't need them.@brea{}
+
+  Since 2.24"
   (value :int32))
 
 (export 'g-variant-new-handle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_double ()
-;;;
-;;; GVariant * g_variant_new_double (gdouble value);
-;;;
-;;; Creates a new double GVariant instance.
-;;;
-;;; value :
-;;;     a gdouble floating point value
-;;;
-;;; Returns :
-;;;     a floating reference to a new double GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_double" g-variant-new-double) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a gdouble floating point value}
+  @return{a floating reference to a new double GVariant instance}
+  @short{Creates a new double GVariant instance.}@break{}
+  Since 2.24"
   (value :double))
 
 (export 'g-variant-new-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_string ()
-;;;
-;;; GVariant * g_variant_new_string (const gchar *string);
-;;;
-;;; Creates a string GVariant with the contents of string.
-;;;
-;;; string must be valid utf8.
-;;;
-;;; string :
-;;;     a normal utf8 nul-terminated string
-;;;
-;;; Returns :
-;;;     a floating reference to a new string GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_string" g-variant-new-string) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[string]{a normal utf8 nul-terminated string}
+  @return{a floating reference to a new string GVariant instance}
+  @short{Creates a string GVariant with the contents of string.}
+  string must be valid utf8.@break{}
+  Since 2.24"
   (value :string))
 
 (export 'g-variant-new-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_object_path ()
-;;;
-;;; GVariant * g_variant_new_object_path (const gchar *object_path);
-;;;
-;;; Creates a D-Bus object path GVariant with the contents of string. string
-;;; must be a valid D-Bus object path. Use g_variant_is_object_path() if you're
-;;; not sure.
-;;;
-;;; object_path :
-;;;     a normal C nul-terminated string
-;;;
-;;; Returns :
-;;;     a floating reference to a new object path GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_object_path" g-variant-new-object-path)
     (:pointer g-variant)
-  (value :string))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[object-path]{a string}
+  @return{a floating reference to a new object path @symbol{g-variant} instance}
+  @begin{short}
+    Creates a D-Bus object path @symbol{g-variant} with the contents of
+    @arg{string}.
+  @end{short}
+  @arg{string} must be a valid D-Bus object path. Use
+  @fun{g-variant-is-object-path} if you're not sure.
+  Since 2.24."
+  (object-path :string))
 
 (export 'g-variant-new-object-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_object_path ()
-;;;
-;;; gboolean g_variant_is_object_path (const gchar *string);
-;;;
-;;; Determines if a given string is a valid D-Bus object path. You should ensure
-;;; that a string is a valid D-Bus object path before passing it to
-;;; g_variant_new_object_path().
-;;;
-;;; A valid object path starts with '/' followed by zero or more sequences of
-;;; characters separated by '/' characters. Each sequence must contain only the
-;;; characters "[A-Z][a-z][0-9]_". No sequence (including the one following the
-;;; final '/' character) may be empty.
-;;;
-;;; string :
-;;;     a normal C nul-terminated string
-;;;
-;;; Returns :
-;;;     TRUE if string is a D-Bus object path
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_is_object_path" g-variant-is-object-path) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[string]{a string}
+  @return{@arg{true} if @arg{string} is a D-Bus object path}
+  @begin{short}
+    Determines if a given @arg{string} is a valid D-Bus object path.
+  @end{short}
+  You should ensure that a @arg{string} is a valid D-Bus object path before
+  passing it to @fun{g-variant-new-object-path}.
+
+  A valid object path starts with '/' followed by zero or more sequences of
+  characters separated by '/' characters. Each sequence must contain only the
+  characters \"[A-Z][a-z][0-9]_\". No sequence (including the one following the
+  final '/' character) may be empty.
+
+  Since 2.24"
   (string :string))
 
 (export 'g-variant-is-object-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_signature ()
-;;;
-;;; GVariant * g_variant_new_signature (const gchar *signature);
-;;;
-;;; Creates a D-Bus type signature GVariant with the contents of string. string
-;;; must be a valid D-Bus type signature. Use g_variant_is_signature() if you're
-;;; not sure.
-;;;
-;;; signature :
-;;;     a normal C nul-terminated string
-;;;
-;;; Returns :
-;;;     a floating reference to a new signature GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_signature" g-variant-new-signature)
     (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[signature]{a string}
+  @return{A floating reference to a new signature GVariant instance.}
+  @begin{short}
+    Creates a D-Bus type signature GVariant with the contents of string.
+  @end{short}
+  string must be a valid D-Bus type signature. Use g_variant_is_signature() if
+  you're not sure.
+  Since 2.24."
   (signature :string))
 
 (export 'g-variant-new-signature)

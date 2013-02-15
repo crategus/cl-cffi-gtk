@@ -261,7 +261,7 @@
 ;;; valid type string.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gobject)
+(in-package :glib)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GVariantType
@@ -275,10 +275,9 @@
 ;;; and freed using g_variant_type_free().
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-opaque g-variant-type "GVariantType"
-  :alloc (error "GVariantType can not be created from Lisp side."))
+(defcstruct g-variant-type)
 
-(export (boxed-related-symbols 'g-variant-type))
+(export 'g-variant-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BOOLEAN
@@ -673,7 +672,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_free" g-variant-type-free) :void
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-free)
 
@@ -694,9 +693,8 @@
 ;;; Since 2.24.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_copy" g-variant-type-copy)
-    (g-boxed-foreign g-variant-type)
-  (type (g-boxed-foreign g-variant-type)))
+(defcfun ("g_variant_type_copy" g-variant-type-copy) g-variant-type
+  (type g-variant-type))
 
 (export 'g-variant-type-copy)
 
@@ -721,8 +719,7 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_new" g-variant-type-new)
-    (g-boxed-foreign g-variant-type)
+(defcfun ("g_variant_type_new" g-variant-type-new) g-variant-type
   (type-string :string))
 
 (export 'g-variant-type-new)
@@ -805,7 +802,7 @@
 
 (defcfun ("g_variant_type_get_string_length" g-variant-type-get-string-length)
     g-size
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-get-string-length)
 
@@ -830,7 +827,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_peek_string" g-variant-type-peek-string) :string
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-peek-string)
 
@@ -853,7 +850,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_dup_string" g-variant-type-dup-string) :string
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-dup-string)
 
@@ -882,7 +879,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_definite" g-variant-type-is-definite) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-definite)
 
@@ -909,7 +906,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_container" g-variant-type-is-container) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-container)
 
@@ -938,7 +935,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_basic" g-variant-type-is-basic) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-basic)
 
@@ -963,7 +960,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_maybe" g-variant-type-is-maybe) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-maybe)
 
@@ -988,7 +985,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_array" g-variant-type-is-array) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-array)
 
@@ -1013,7 +1010,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_tuple" g-variant-type-is-tuple) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-tuple)
 
@@ -1039,7 +1036,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_dict_entry" g-variant-type-is-dict-entry) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-dict-entry)
 
@@ -1060,7 +1057,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_is_variant" g-variant-type-is-variant) :boolean
-  (type (g-boxed-foreign g-variant-type)))
+  (type g-variant-type))
 
 (export 'g-variant-type-is-variant)
 
