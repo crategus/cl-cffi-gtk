@@ -71,6 +71,7 @@
    (:file "gtk.selections")            ; Inter-process communication
    (:file "gtk.clipboard")             ; Storing data on clipboards
    (:file "gtk.settings")              ; Sharing settings
+   (:file "gtk.mount-operation")       ; Filesystem utilities
 
    ;; Interface builder
    (:file "gtk.buildable")             ; GtkBuildable

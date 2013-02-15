@@ -22,7 +22,7 @@ GTK+ Core Reference
     gtk.selections.lisp              - Selections                  - GTK+ 3.4.3
     
     not implemented                  - Testing
-    not implemented                  - Filesystem utilities
+    gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4
     
 Theming in GTK+
 
