@@ -70,34 +70,6 @@
     to be a letter (a-z or A-Z) or an underscore '_'. Subsequent characters can
     be letters, numbers or any of '-_+'.
 
-    @about-variable{+g-type-invalid+}
-    @about-variable{+g-type-none+}
-    @about-variable{+g-type-void+}
-    @about-variable{+g-type-interface+}
-    @about-variable{+g-type-char+}
-    @about-variable{+g-type-uchar+}
-    @about-variable{+g-type-boolean+}
-    @about-variable{+g-type-int+}
-    @about-variable{+g-type-unit+}
-    @about-variable{+g-type-long+}
-    @about-variable{+g-type-ulong+}
-    @about-variable{+g-type-int64+}
-    @about-variable{+g-type-uint64+}
-    @about-variable{+g-type-enum+}
-    @about-variable{+g-type-flags+}
-    @about-variable{+g-type-float+}
-    @about-variable{+g-type-double+}
-    @about-variable{+g-type-string+}
-    @about-variable{+g-type-pointer+}
-    @about-variable{+g-type-boxed+}
-    @about-variable{+g-type-param+}
-    @about-variable{+g-type-object+}
-    @about-variable{+g-type-variant+}
-    @about-variable{+g-type-reserved-glib-first+}
-    @about-variable{+g-type-reserved-glib-last+}
-    @about-variable{+g-type-reserved-bse-first+}
-    @about-variable{+g-type-reserved-bse-last+}
-    @about-variable{+g-type-reserved-user-first+}
     @about-function{g-type-gtype}
     @about-symbol{g-type-flags}
     @about-symbol{g-type-fundamental-flags}
@@ -277,14 +249,120 @@
     @about-function{g_weak_ref_set}
   @end{section}
   @begin[Enumeration and Flag Types]{section}
+    The GLib type system provides fundamental types for enumeration and flags
+    types. (Flags types are like enumerations, but allow their values to be
+    combined by bitwise or). A registered enumeration or flags type associates a
+    name and a nickname with each allowed value, and the methods
+    @fun{g-enum-get-value-by-name}, @fun{g-enum-get-value-by-nick},
+    @fun{g-flags-get-value-by-name} and @fun{g-flags-get-value-by-nick} can look
+    up values by their name or nickname. When an enumeration or flags type is
+    registered with the GLib type system, it can be used as value type for
+    object properties, using @fun{g-param-spec-enum} or
+    @fun{g-param-spec-flags}.
+
+    GObject ships with a utility called @code{glib-mkenums} that can construct
+    suitable type registration functions from C enumeration definitions.
+
+    @about-symbol{g-enum-value}
+    @about-symbol{g-enum-class}
+    @about-symbol{g-flags-value}
+    @about-symbol{g-flags-class}
+    @about-function{g-enum-class-type}
+    @about-function{g-enum-class-type-name}
+    @about-function{g-type-is-enum}
+    @about-function{g-enum-class}
+    @about-function{g-is-enum-class}
+    @about-function{g-type-is-flags}
+    @about-function{g-flags-class}
+    @about-function{g-is-flags-class}
+    @about-function{g-flags-class-type}
+    @about-function{g-flags-class-type-name}
+    @about-function{g-enum-get-value}
+    @about-function{g-enum-get-value-by-name}
+    @about-function{g-enum-get-value-by-nick}
+    @about-function{g-flags-get-first-value}
+    @about-function{g-flags-get-value-by-name}
+    @about-function{g-flags-get-value-by-nick}
+    @about-function{g-enum-register-static}
+    @about-function{g-flags-register-static}
+    @about-function{g-enum-complete-type-info}
+    @about-function{g-flags-complete-type-info}
   @end{section}
   @begin[Boxed Types]{section}
   @end{section}
   @begin[Generic Values]{section}
+    A polymorphic type that can hold values of any other type
+
+    @about-symbol{g-value}
+    @about-function{g-value-holds}
+    @about-function{g-value-type}
+    @about-function{g-value-type-name}
+    @about-function{g-type-is-value}
+    @about-function{g-type-is-value-abstract}
+    @about-function{g-is-value}
+    @about-function{g-type-value}
+    @about-function{g-type-value-array}
+    @about-function{g-value-init}
+    @about-function{g-value-copy}
+    @about-function{g-value-reset}
+    @about-function{g-value-unset}
+    @about-function{g-value-set-instance}
+    @about-function{g-value-fits-pointer}
+    @about-function{g-value-peek-pointer}
+    @about-function{g-value-type-compatible}
+    @about-function{g-value-type-transformable}
+    @about-function{g-value-transform}
+    @about-function{g-value-register-transform-func}
+    @about-function{g-strdup-value-contents}
   @end{section}
   @begin[Parameters and Values]{section}
   @end{section}
   @begin[GParamSpec]{section}
+    Metadata for parameter specifications.
+
+    @about-symbol{g-param-flags}
+    @about-symbol{g-param-spec}
+    @about-symbol{g-param-spec-class}
+    @about-function{g-type-is-param}
+    @about-function{g-param-spec}
+    @about-function{g-is-param-spec}
+    @about-function{g-param-spec-class}
+    @about-function{g-is-param-spec-class}
+    @about-function{g-param-spec-get-class}
+    @about-function{g-param-spec-type}
+    @about-function{g-param-spec-type-name}
+    @about-function{g-param-spec-value-type}
+    @about-function{g-param-readwrite}
+    @about-function{g-param-static-strings}
+    @about-function{g-param-mask}
+    @about-function{g-param-user-shift}
+    @about-function{g-param-spec-ref}
+    @about-function{g-param-spec-unref}
+    @about-function{g-param-spec-sink}
+    @about-function{g-param-spec-ref-sink}
+    @about-function{g-param-value-set-default}
+    @about-function{g-param-value-defaults}
+    @about-function{g-param-value-validate}
+    @about-function{g-param-value-convert}
+    @about-function{g-param-values-cmp}
+    @about-function{g-param-spec-get-name}
+    @about-function{g-param-spec-get-nick}
+    @about-function{g-param-spec-get-blurb}
+    @about-function{g-param-spec-get-qdata}
+    @about-function{g-param-spec-set-qdata}
+    @about-function{g-param-spec-set-qdata-full}
+    @about-function{g-param-spec-steal-qdata}
+    @about-function{g-param-spec-get-redirect-target}
+    @about-function{g-param-spec-internal}
+    @about-symbol{g-param-spec-type-info}
+    @about-function{g-param-type-register-static}
+    @about-symbol{g-param-spec-pool}
+    @about-function{g-param-spec-pool-new}
+    @about-function{g-param-spec-pool-insert}
+    @about-function{g-param-spec-pool-remove}
+    @about-function{g-param-spec-pool-lookup}
+    @about-function{g-param-spec-pool-list}
+    @about-function{g-param-spec-pool-list-owned}
   @end{section}
   @begin[Signals]{section}
     A means for customization of object behaviour and a general purpose

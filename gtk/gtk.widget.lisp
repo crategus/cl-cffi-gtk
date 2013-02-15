@@ -3606,48 +3606,43 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_destroy ()
-;;;
-;;; void gtk_widget_destroy (GtkWidget *widget);
-;;;
-;;; Destroys a widget.
-;;;
-;;; When a widget is destroyed, it will break any references it holds to other
-;;; objects. If the widget is inside a container, the widget will be removed
-;;; from the container. If the widget is a toplevel (derived from GtkWindow),
-;;; it will be removed from the list of toplevels, and the reference GTK+ holds
-;;; to it will be removed. Removing a widget from its container or the list of
-;;; toplevels results in the widget being finalized, unless you've added
-;;; additional references to the widget with g_object_ref().
-;;;
-;;; In most cases, only toplevel widgets (windows) require explicit destruction,
-;;; because when you destroy a toplevel its children will be destroyed as well.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-destroy
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_destroy" gtk-widget-destroy) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{Destroys a @arg{widget}.}@break{}
+  When a @arg{widget} is destroyed, it will break any references it holds to
+  other objects. If the @arg{widget} is inside a container, the @arg{widget}
+  will be removed from the container. If the @arg{widget} is a toplevel (derived
+  from @class{gtk-window}), it will be removed from the list of toplevels, and
+  the reference GTK+ holds to it will be removed. Removing a @arg{widget} from
+  its container or the list of toplevels results in the @arg{widget} being
+  finalized, unless you've added additional references to the @arg{widget} with
+  @fun{g-object-ref}.@break{}
+  In most cases, only toplevel widgets (windows) require explicit destruction,
+  because when you destroy a toplevel its children will be destroyed as well.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-function{g-object-ref}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-destroy)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_in_destruction ()
-;;;
-;;; gboolean gtk_widget_in_destruction (GtkWidget *widget);
-;;;
-;;; Returns whether the widget is currently being destroyed. This information
-;;; can sometimes be used to avoid doing unnecessary work.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     TRUE if widget is being destroyed
+;;; gtk-widget-in-destruction
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_in_destruction" gtk-widget-in-destruction) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @return{@arg{true} if @arg{widget} is being destroyed.}
+  @short{Returns whether the @arg{widget} is currently being destroyed.}
+  This information can sometimes be used to avoid doing unnecessary work.
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-in-destruction)
@@ -3672,181 +3667,177 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_unparent ()
-;;;
-;;; void gtk_widget_unparent (GtkWidget *widget);
-;;;
-;;; This function is only for use in widget implementations. Should be called by
-;;; implementations of the remove method on GtkContainer, to dissociate a child
-;;; from the container.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-unparent
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_unparent" gtk-widget-unparent) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{This function is only for use in widget implementations.}
+  Should be called by implementations of the remove method on
+  @class{gtk-container}, to dissociate a child from the container.
+  @see-class{gtk-widget}
+  @see-class{gtk-container}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unparent)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_show ()
-;;;
-;;; void gtk_widget_show (GtkWidget *widget);
-;;;
-;;; Flags a widget to be displayed. Any widget that isn't shown will not appear
-;;; on the screen. If you want to show all the widgets in a container, it's
-;;; easier to call gtk_widget_show_all() on the container, instead of
-;;; individually showing the widgets.
-;;;
-;;; Remember that you have to show the containers containing a widget, in
-;;; addition to the widget itself, before it will appear onscreen.
-;;;
-;;; When a toplevel container is shown, it is immediately realized and mapped;
-;;; other shown widgets are realized and mapped when their toplevel container is
-;;; realized and mapped.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-show
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_show" gtk-widget-show) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{Flags a @arg{widget} to be displayed.}
+  Any @arg{widget} that isn't shown will not appear on the screen. If you want
+  to show all the widgets in a container, it's easier to call
+  @fun{gtk-widget-show-all} on the container, instead of individually showing
+  the widgets.
+
+  Remember that you have to show the containers containing a widget, in
+  addition to the @arg{widget} itself, before it will appear onscreen.
+
+  When a toplevel container is shown, it is immediately realized and mapped;
+  other shown widgets are realized and mapped when their toplevel container is
+  realized and mapped.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-show-all}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-show)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_show_now ()
-;;;
-;;; void gtk_widget_show_now (GtkWidget *widget);
-;;;
-;;; Shows a widget. If the widget is an unmapped toplevel widget (i.e. a
-;;; GtkWindow that has not yet been shown), enter the main loop and wait for the
-;;; window to actually be mapped. Be careful; because the main loop is running,
-;;; anything can happen during this function.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-show-now
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_show_now" gtk-widget-show-now) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{Shows a widget.}
+  If @arg{widget} is an unmapped toplevel widget (i. e. a @class{gtk-window}
+  that has not yet been shown), enter the main loop and wait for the window to
+  actually be mapped. Be careful; because the main loop is running, anything can
+  happen during this function.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-show-now)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_hide ()
-;;;
-;;; void gtk_widget_hide (GtkWidget *widget);
-;;;
-;;; Reverses the effects of gtk_widget_show(), causing the widget to be hidden
-;;; (invisible to the user).
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-hide
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_hide" gtk-widget-hide) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @begin{short}
+    Reverses the effects of @fun{gtk-widget-show}, causing the @arg{widget} to
+    be hidden (invisible to the user).
+  @end{short}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-show}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-hide)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_show_all ()
-;;;
-;;; void gtk_widget_show_all (GtkWidget *widget);
-;;;
-;;; Recursively shows a widget, and any child widgets (if the widget is a
-;;; container).
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-show-all
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_show_all" gtk-widget-show-all) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @begin{short}
+    Recursively shows a @arg{widget}, and any child widgets (if the @arg{widget}
+    is a container).
+  @end{short}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-show}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-show-all)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_map ()
-;;;
-;;; void gtk_widget_map (GtkWidget *widget);
-;;;
-;;; This function is only for use in widget implementations. Causes a widget to
-;;; be mapped if it isn't already.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-map
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_map" gtk-widget-map) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{This function is only for use in widget implementations.}
+  Causes a @arg{widget} to be mapped if it isn't already.
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-map)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_unmap ()
-;;;
-;;; void gtk_widget_unmap (GtkWidget *widget);
-;;;
-;;; This function is only for use in widget implementations. Causes a widget to
-;;; be unmapped if it's currently mapped.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-unmap
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_unmap" gtk-widget-unmap ) :void
-  (widget g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{This function is only for use in widget implementations.}
+  Causes a @arg{widget} to be unmapped if it's currently mapped.
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unmap)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_realize ()
-;;;
-;;; void gtk_widget_realize (GtkWidget *widget);
-;;;
-;;; Creates the GDK (windowing system) resources associated with a widget. For
-;;; example, widget->window will be created when a widget is realized. Normally
-;;; realization happens implicitly; if you show a widget and all its parent
-;;; containers, then the widget will be realized and mapped automatically.
-;;;
-;;; Realizing a widget requires all the widget's parent widgets to be realized;
-;;; calling gtk_widget_realize() realizes the widget's parents in addition to
-;;; widget itself. If a widget is not yet inside a toplevel window when you
-;;; realize it, bad things will happen.
-;;;
-;;; This function is primarily used in widget implementations, and isn't very
-;;; useful otherwise. Many times when you think you might need it, a better
-;;; approach is to connect to a signal that will be called after the widget is
-;;; realized automatically, such as "draw". Or simply g_signal_connect() to the
-;;; "realize" signal.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-realize
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_realize" gtk-widget-realize) :void
-  (width g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @begin{short}
+    Creates the GDK (windowing system) resources associated with a @arg{widget}.
+  @end{short}
+  For example, @code{widget->window} will be created when a widget is realized.
+  Normally realization happens implicitly; if you show a widget and all its
+  parent containers, then the widget will be realized and mapped automatically.
+
+  Realizing a @arg{widget} requires all the widget's parent widgets to be
+  realized; calling @sym{gtk-widget-realize} realizes the widget's parents in
+  addition to @arg{widget} itself. If a widget is not yet inside a toplevel
+  window when you realize it, bad things will happen.
+
+  This function is primarily used in widget implementations, and isn't very
+  useful otherwise. Many times when you think you might need it, a better
+  approach is to connect to a signal that will be called after the widget is
+  realized automatically, such as \"draw\". Or simply @fun{g-signal-connect} to
+  the \"realize\" signal.
+  @see-class{gtk-widget}
+  @see-function{g-signal-connect}"
+  (width (g-object gtk-widget)))
 
 (export 'gtk-widget-realize)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_unrealize ()
-;;;
-;;; void gtk_widget_unrealize (GtkWidget *widget);
-;;;
-;;; This function is only useful in widget implementations. Causes a widget to
-;;; be unrealized (frees all GDK resources associated with the widget, such as
-;;; widget->window).
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-unrealize
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_unrealize" gtk-widget-unrealize) :void
-  (width g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-23}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @short{This function is only useful in widget implementations.}
+  Causes a @arg{widget} to be unrealized (frees all GDK resources associated
+  with the @arg{widget}, such as @code{widget->window}).
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unrealize)
 
@@ -3884,97 +3875,67 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_queue_draw ()
-;;;
-;;; void gtk_widget_queue_draw (GtkWidget *widget);
-;;;
-;;; Equivalent to calling gtk_widget_queue_draw_area() for the entire area of
-;;; a widget.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-queue-draw
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_draw" gtk-widget-queue-draw) :void
+#+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @begin{short}
+    Equivalent to calling @fun{gtk-widget-queue-draw-area} for the entire area
+    of a @arg{widget}.
+  @end{short}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-draw)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_queue_resize ()
-;;;
-;;; void gtk_widget_queue_resize (GtkWidget *widget);
-;;;
-;;; This function is only for use in widget implementations. Flags a widget to
-;;; have its size renegotiated; should be called when a widget for some reason
-;;; has a new size request. For example, when you change the text in a GtkLabel,
-;;; GtkLabel queues a resize to ensure there's enough space for the new text.
-;;;
-;;; Note
-;;;
-;;; You cannot call gtk_widget_queue_resize() on a widget from inside its
-;;; implementation of the GtkWidgetClass::size_allocate virtual method. Calls to
-;;; gtk_widget_queue_resize() from inside GtkWidgetClass::size_allocate will be
-;;; silently ignored.
-;;;
-;;; widget :
-;;;     a GtkWidget
+;;; gtk-widget-queue-resize
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_resize" gtk-widget-queue-resize) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{GtkWidget} instance}
+  @begin{short}
+    This function is only for use in widget implementations.
+  @end{short}
+  Flags a @arg{widget} to have its size renegotiated; should be called when a
+  widget for some reason has a new size request. For example, when you change
+  the text in a @class{gtk-label}, @class{gtk-label} queues a resize to ensure
+  there's enough space for the new text.
+  @begin[Note]{dictionary}
+    You cannot call @sym{gtk-widget-queue-resize} on a widget from inside its
+    implementation of the @code{GtkWidgetClass::size_allocate} virtual method.
+    Calls to @sym{gtk-widget-queue-resize} from inside
+    @code{GtkWidgetClass::size_allocate} will be silently ignored.
+  @end{dictionary}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_queue_resize_no_redraw ()
-;;;
-;;; void gtk_widget_queue_resize_no_redraw (GtkWidget *widget);
-;;;
-;;; This function works like gtk_widget_queue_resize(), except that the widget
-;;; is not invalidated.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Since 2.4
+;;; gtk-widget-queue-resize-no-redraw
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_resize_no_redraw" gtk-widget-queue-resize-no-redraw)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{GtkWidget} instance}
+  @begin{short}
+    This function works like @fun{gtk-widget-queue-resize}, except that the
+    widget is not invalidated.
+  @end{short}
+  Since 2.4.
+  @see-function{gtk-widget-queue-resize}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize-no-redraw)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_size_request ()
-;;;
-;;; void gtk_widget_size_request (GtkWidget *widget,
-;;;                               GtkRequisition *requisition);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_size_request has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use gtk_widget_get_preferred_size() instead.
-;;;
-;;; This function is typically used when implementing a GtkContainer subclass.
-;;; Obtains the preferred size of a widget. The container uses this information
-;;; to arrange its child widgets and decide what size allocations to give them
-;;; with gtk_widget_size_allocate().
-;;;
-;;; You can also call this function from an application, with some caveats. Most
-;;; notably, getting a size request requires the widget to be associated with a
-;;; screen, because font information may be needed. Multihead-aware applications
-;;; should keep this in mind.
-;;;
-;;; Also remember that the size request is not necessarily the size a widget
-;;; will actually be allocated.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; requisition :
-;;;     a GtkRequisition to be filled in
+;;; gtk-widget-size-request
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_size_request" %gtk-widget-size-request) :void
@@ -3982,6 +3943,28 @@
   (requisition (g-boxed-foreign gtk-requisition)))
 
 (defun gtk-widget-size-request (widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{GtkWidget} instance}
+  @return{A @class{gtk-requisition} struct.}
+  @heading{Warning}
+  @begin{short}
+    @sym{gtk-widget-size-request} has been deprecated since version 3.0 and
+    should not be used in newly-written code.
+  @end{short}
+  Use @fun{gtk-widget-get-preferred-size} instead.@break{}
+  This function is typically used when implementing a @class{gtk-container}
+  subclass. Obtains the preferred size of a @arg{widget}. The container uses
+  this information to arrange its child widgets and decide what size allocations
+  to give them with @fun{gtk-widget-size-allocate}.@break{}
+  You can also call this function from an application, with some caveats. Most
+  notably, getting a size request requires the widget to be associated with a
+  screen, because font information may be needed. Multihead-aware applications
+  should keep this in mind.@break{}
+  Also remember that the size request is not necessarily the size a widget
+  will actually be allocated.
+  @see-function{gtk-widget-get-preferred-size}
+  @see-function{gtk-widget-size-allocate}"
   (let ((requisition (make-gtk-requisition)))
     (%gtk-widget-size-request widget requisition)
     requisition))
@@ -4046,43 +4029,34 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_add_accelerator ()
-;;;
-;;; void gtk_widget_add_accelerator (GtkWidget *widget,
-;;;                                  const gchar *accel_signal,
-;;;                                  GtkAccelGroup *accel_group,
-;;;                                  guint accel_key,
-;;;                                  GdkModifierType accel_mods,
-;;;                                  GtkAccelFlags accel_flags);
-;;;
-;;; Installs an accelerator for this widget in accel_group that causes
-;;; accel_signal to be emitted if the accelerator is activated. The accel_group
-;;; needs to be added to the widget's toplevel via gtk_window_add_accel_group(),
-;;; and the signal must be of type G_RUN_ACTION. Accelerators added through this
-;;; function are not user changeable during runtime. If you want to support
-;;; accelerators that can be changed by the user, use gtk_accel_map_add_entry()
-;;; and gtk_widget_set_accel_path() or gtk_menu_item_set_accel_path() instead.
-;;;
-;;; widget :
-;;;     widget to install an accelerator on
-;;;
-;;; accel_signal :
-;;;     widget signal to emit on accelerator activation
-;;;
-;;; accel_group :
-;;;     accel group for this widget, added to its toplevel
-;;;
-;;; accel_key :
-;;;     GDK keyval of the accelerator
-;;;
-;;; accel_mods :
-;;;     modifier key combination of the accelerator
-;;;
-;;; accel_flags :
-;;;     flag accelerators, e.g. GTK_ACCEL_VISIBLE
+;;; gtk-widget-add-accelerator
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_add_accelerator" gtk-widget-add-accelerator) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{widget to install an accelerator on}
+  @argument[accel-signal]{widget signal to emit on accelerator activation}
+  @argument[accel-group]{accel group for this @arg{widget}, added to its
+    toplevel}
+  @argument[accel-key]{GDK keyval of the accelerator}
+  @argument[accel-mods]{modifier key combination of the accelerator}
+  @argument[accel-flags]{flag accelerators, e.g. @code{:visible}}
+  @begin{short}
+    Installs an accelerator for this widget in @arg{accel-group} that causes
+    @arg{accel-signal} to be emitted if the accelerator is activated.
+  @end{short}
+  The @arg{accel-group} needs to be added to the widget's toplevel via
+  @fun{gtk-window-add-accel-group}, and the signal must be of type
+  @code{G_RUN_ACTION}. Accelerators added through this function are not user
+  changeable during runtime. If you want to support accelerators that can be
+  changed by the user, use @fun{gtk-accel-map-add-entry} and
+  @fun{gtk-widget-set-accel-path} or @fun{gtk-menu-item-set-accel-path}
+  instead.
+  @see-function{gtk-window-add-accel-group}
+  @see-function{gtk-accel-map-add-entry}
+  @see-function{gtk-widget-set-accel-path}
+  @see-function{gtk-menu-item-set-accel-path}"
   (widget g-object)
   (accel-signal :string)
   (accel-group g-object)
@@ -4093,33 +4067,22 @@
 (export 'gtk-widget-add-accelerator)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_remove_accelerator ()
-;;;
-;;; gboolean gtk_widget_remove_accelerator (GtkWidget *widget,
-;;;                                         GtkAccelGroup *accel_group,
-;;;                                         guint accel_key,
-;;;                                         GdkModifierType accel_mods);
-;;;
-;;; Removes an accelerator from widget, previously installed with
-;;; gtk_widget_add_accelerator().
-;;;
-;;; widget :
-;;;     widget to install an accelerator on
-;;;
-;;; accel_group :
-;;;     accel group for this widget
-;;;
-;;; accel_key :
-;;;     GDK keyval of the accelerator
-;;;
-;;; accel_mods :
-;;;     modifier key combination of the accelerator
-;;;
-;;; Returns :
-;;;     whether an accelerator was installed and could be removed
+;;; gtk-widget-remove-accelerator
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_remove_accelerator" gtk-widget-remove-accelerator) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{@arg{widget} to remove an accelerator from}
+  @argument[accel-group]{accel group for this @arg{widget}}
+  @argument[accel-key]{GDK keyval of the accelerator}
+  @argument[accel-mods]{modifier key combination of the accelerator}
+  @return{Whether an accelerator was installed and could be removed.}
+  @begin{short}
+    Removes an accelerator from @arg{widget}, previously installed with
+    @fun{gtk-widget-add-accelerator}.
+  @end{short}
+  @see-function{gtk-widget-add-accelerator}"
   (widget g-object)
   (accel-group g-object)
   (accel-key :uint)
@@ -4128,43 +4091,41 @@
 (export 'gtk-widget-remove-accelerator)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_accel_path ()
-;;;
-;;; void gtk_widget_set_accel_path (GtkWidget *widget,
-;;;                                 const gchar *accel_path,
-;;;                                 GtkAccelGroup *accel_group);
-;;;
-;;; Given an accelerator group, accel_group, and an accelerator path,
-;;; accel_path, sets up an accelerator in accel_group so whenever the key
-;;; binding that is defined for accel_path is pressed, widget will be activated.
-;;; This removes any accelerators (for any accelerator group) installed by
-;;; previous calls to gtk_widget_set_accel_path(). Associating accelerators with
-;;; paths allows them to be modified by the user and the modifications to be
-;;; saved for future use. (See gtk_accel_map_save().)
-;;;
-;;; This function is a low level function that would most likely be used by a
-;;; menu creation system like GtkUIManager. If you use GtkUIManager, setting up
-;;; accelerator paths will be done automatically.
-;;;
-;;; Even when you you aren't using GtkUIManager, if you only want to set up
-;;; accelerators on menu items gtk_menu_item_set_accel_path() provides a
-;;; somewhat more convenient interface.
-;;;
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
-;;; pass a static string, you can save some memory by interning it first with
-;;; g_intern_static_string().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; accel_path :
-;;;     path used to look up the accelerator
-;;;
-;;; accel_group :
-;;;     a GtkAccelGroup
+;;; gtk-widget-set-accel-path
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_set_accel_path" gtk-widget-set-accel-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @argument[accel-path]{path used to look up the accelerator}
+  @argument[accel-group]{a @class{gtk-accel-group}}
+  @begin{short}
+    Given an accelerator group, @arg{accel-group}, and an accelerator path,
+    @arg{accel-path}, sets up an accelerator in @arg{accel-group} so whenever
+    the key binding that is defined for @arg{accel-path} is pressed, widget will
+    be activated.
+  @end{short}
+  This removes any accelerators (for any accelerator group) installed by
+  previous calls to @sym{gtk-widget-set-accel-path}. Associating accelerators
+  with paths allows them to be modified by the user and the modifications to be
+  saved for future use. (See @fun{gtk-accel-map-save}.)
+
+  This function is a low level function that would most likely be used by a
+  menu creation system like @class{gtk-ui-manager}. If you use
+  @class{gtk-ui-manager}, setting up accelerator paths will be done
+  automatically.
+
+  Even when you you aren't using @class{gtk-ui-manager}, if you only want to set
+  up accelerators on menu items @fun{gtk-menu-item-set-accel-path} provides a
+  somewhat more convenient interface.
+
+  Note that @arg{accel-path} string will be stored in a @type{g-quark}.
+  Therefore, if you pass a static string, you can save some memory by interning
+  it first with @code{g_intern_static_string()}.
+  @see-function{gtk-accel-map-save}
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-menu-item-set-accel-path}"
   (widget g-object)
   (accel-path :string)
   (accel-group g-object))
@@ -4191,26 +4152,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_can_activate_accel ()
-;;;
-;;; gboolean gtk_widget_can_activate_accel (GtkWidget *widget,
-;;;                                         guint signal_id);
-;;;
-;;; Determines whether an accelerator that activates the signal identified by
-;;; signal_id can currently be activated. This is done by emitting the
-;;; "can-activate-accel" signal on widget; if the signal isn't overridden by a
-;;; handler or in a derived widget, then the default check is that the widget
-;;; must be sensitive, and the widget and all its ancestors mapped.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; signal_id :
-;;;     the ID of a signal installed on widget
-;;;
-;;; Returns :
-;;;     TRUE if the accelerator can be activated.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_can_activate_accel" %gtk-widget-can-activate-accel)
@@ -4219,6 +4160,20 @@
   (signal-id :uint))
 
 (defun gtk-widget-can-activate-accel (widget signal)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @argument[signal]{the ID or the name of a signal installed on @arg{widget}}
+  @return{@arg{true} if the accelerator can be activated.}
+  @begin{short}
+    Determines whether an accelerator that activates the signal identified by
+    @arg{signal-id} can currently be activated.
+  @end{short}
+  This is done by emitting the \"can-activate-accel\" signal on widget; if the
+  signal isn't overridden by a handler or in a derived widget, then the default
+  check is that the widget must be sensitive, and the widget and all its
+  ancestors mapped.@break{}
+  Since 2.4"
   (when (stringp signal)
     (setf signal (g-signal-lookup signal (g-type-from-instance widget))))
   (%gtk-widget-can-activate-accel widget signal))
@@ -4226,28 +4181,27 @@
 (export 'gtk-widget-can-activate-accel)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_event ()
-;;;
-;;; gboolean gtk_widget_event (GtkWidget *widget, GdkEvent *event);
-;;;
-;;; Rarely-used function. This function is used to emit the event signals on a
-;;; widget (those signals should never be emitted without using this function to
-;;; do so). If you want to synthesize an event though, don't use this function;
-;;; instead, use gtk_main_do_event() so the event will behave as if it were in
-;;; the event queue. Don't synthesize expose events; instead, use
-;;; gdk_window_invalidate_rect() to invalidate a region of the window.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; Returns :
-;;;     return from the event signal emission (TRUE if the event was handled)
+;;; gtk-widget-event
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_event" gtk-widget-event) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @argument[event]{a @class{gdk-event}}
+  @return{Return from the event signal emission (@arg{true} if the event was
+    handled).}
+  @begin{short}
+    Rarely used function. This function is used to emit the event signals on a
+    widget (those signals should never be emitted without using this function to
+    do so).
+  @end{short}
+  If you want to synthesize an event though, don't use this function;
+  instead, use @fun{gtk-main-do-event} so the event will behave as if it were in
+  the event queue. Don't synthesize expose events; instead, use
+  @fun{gdk-window-invalidate-rect} to invalidate a region of the window.
+  @see-function{gtk-main-do-event}
+  @see-function{gdk-window-invalidate-rect}"
   (widget (g-object gtk-widget))
   (event (g-boxed-foreign gdk-event)))
 

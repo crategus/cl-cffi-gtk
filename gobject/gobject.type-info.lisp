@@ -8,7 +8,7 @@
 ;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -218,53 +218,56 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INVALID
-;;;
-;;; #define G_TYPE_INVALID G_TYPE_MAKE_FUNDAMENTAL (0)
-;;;
-;;; An invalid GType used as error return value in some functions which return a
-;;; GType.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-invalid+ #.(ash 0 +g-type-fundamental-shift+))
+(defconstant +g-type-invalid+ #.(ash 0 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 0)}}
+  An invalid @class{g-type} used as error return value in some functions which
+  return a @class{g-type}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-invalid+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_NONE
-;;;
-;;; #define G_TYPE_NONE G_TYPE_MAKE_FUNDAMENTAL (1)
-;;;
-;;; A fundamental type which is used as a replacement for the C void return
-;;; type.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-void+ #.(ash 1 +g-type-fundamental-shift+))
+(defconstant +g-type-void+ #.(ash 1 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 1)}}
+  A fundamental type which is used as a replacement for the C void return type.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-void+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INTERFACE
-;;;
-;;; #define G_TYPE_INTERFACE G_TYPE_MAKE_FUNDAMENTAL (2)
-;;;
-;;; The fundamental type from which all interfaces are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-interface+ #.(ash 2 +g-type-fundamental-shift+))
+(defconstant +g-type-interface+ #.(ash 2 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 2)}}
+  The fundamental type from which all interfaces are derived.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-interface+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CHAR
-;;;
-;;; #define G_TYPE_CHAR G_TYPE_MAKE_FUNDAMENTAL (3)
-;;;
-;;; The fundamental type corresponding to gchar. The type designated by
-;;; G_TYPE_CHAR is unconditionally an 8-bit signed integer. This may or may not
-;;; be the same type a the C type "gchar".
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-char+ #.(ash 3 +g-type-fundamental-shift+))
+(defconstant +g-type-char+ #.(ash 3 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 3)}}
+  The fundamental type corresponding to @code{gchar}. The type designated by
+  @code{G_TYPE_CHAR} is unconditionally an 8-bit signed integer. This may or may
+  not be the same type a the C type \"@code{gchar}\".
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-char+)
 
@@ -276,208 +279,225 @@
 ;;; The fundamental type corresponding to guchar.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-uchar+ #.(ash 4 +g-type-fundamental-shift+))
+(defconstant +g-type-uchar+ #.(ash 4 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 4)}}
+  The fundamental type corresponding to @code{guchar}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-uchar+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_BOOLEAN
-;;;
-;;; #define G_TYPE_BOOLEAN G_TYPE_MAKE_FUNDAMENTAL (5)
-;;;
-;;; The fundamental type corresponding to gboolean.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-boolean+ #.(ash 5 +g-type-fundamental-shift+))
+(defconstant +g-type-boolean+ #.(ash 5 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 5)}}
+  The fundamental type corresponding to @code{gboolean}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-boolean+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INT
-;;;
-;;; #define G_TYPE_INT G_TYPE_MAKE_FUNDAMENTAL (6)
-;;;
-;;; The fundamental type corresponding to gint.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-int+ #.(ash 6 +g-type-fundamental-shift+))
+(defconstant +g-type-int+ #.(ash 6 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 6)}}
+  The fundamental type corresponding to @code{gint}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-int+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_UINT
-;;;
-;;; #define G_TYPE_UINT G_TYPE_MAKE_FUNDAMENTAL (7)
-;;;
-;;; The fundamental type corresponding to guint.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-uint+ #.(ash 7 +g-type-fundamental-shift+))
+(defconstant +g-type-uint+ #.(ash 7 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 7)}}
+  The fundamental type corresponding to @code{guint}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-uint+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_LONG
-;;;
-;;; #define G_TYPE_LONG G_TYPE_MAKE_FUNDAMENTAL (8)
-;;;
-;;; The fundamental type corresponding to glong.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-long+ #.(ash 8 +g-type-fundamental-shift+))
+(defconstant +g-type-long+ #.(ash 8 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 8)}}
+  The fundamental type corresponding to @code{glong}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-long+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_ULONG
-;;;
-;;; #define G_TYPE_ULONG G_TYPE_MAKE_FUNDAMENTAL (9)
-;;;
-;;; The fundamental type corresponding to gulong.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-ulong+ #.(ash 9 +g-type-fundamental-shift+))
+(defconstant +g-type-ulong+ #.(ash 9 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 9)}}
+  The fundamental type corresponding to @code{gulong}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-ulong+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INT64
-;;;
-;;; #define G_TYPE_INT64 G_TYPE_MAKE_FUNDAMENTAL (10)
-;;;
-;;; The fundamental type corresponding to gint64.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-int64+ #.(ash 10 +g-type-fundamental-shift+))
+(defconstant +g-type-int64+ #.(ash 10 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 10)}}
+  The fundamental type corresponding to @code{gint64}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-int64+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_UINT64
-;;;
-;;; #define G_TYPE_UINT64 G_TYPE_MAKE_FUNDAMENTAL (11)
-;;;
-;;; The fundamental type corresponding to guint64.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-uint64+ #.(ash 11 +g-type-fundamental-shift+))
+(defconstant +g-type-uint64+ #.(ash 11 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 11)}}
+  The fundamental type corresponding to @code{guint64}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-uint64+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_ENUM
-;;;
-;;; #define G_TYPE_ENUM G_TYPE_MAKE_FUNDAMENTAL (12)
-;;;
-;;; The fundamental type from which all enumeration types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-enum+ #.(ash 12 +g-type-fundamental-shift+))
+(defconstant +g-type-enum+ #.(ash 12 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 12)}}
+  The fundamental type from which all enumeration types are derived.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-enum+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FLAGS
-;;;
-;;; #define G_TYPE_FLAGS G_TYPE_MAKE_FUNDAMENTAL (13)
-;;;
-;;; The fundamental type from which all flags types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-flags+ #.(ash 13 +g-type-fundamental-shift+))
+(defconstant +g-type-flags+ #.(ash 13 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 13)}}
+  The fundamental type from which all flags types are derived.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-flags+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FLOAT
-;;;
-;;; #define G_TYPE_FLOAT G_TYPE_MAKE_FUNDAMENTAL (14)
-;;;
-;;; The fundamental type corresponding to gfloat.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-float+ #.(ash 14 +g-type-fundamental-shift+))
+(defconstant +g-type-float+ #.(ash 14 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 14)}}
+  The fundamental type corresponding to @code{gfloat}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-float+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_DOUBLE
-;;;
-;;; #define G_TYPE_DOUBLE G_TYPE_MAKE_FUNDAMENTAL (15)
-;;;
-;;; The fundamental type corresponding to gdouble.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-double+ #.(ash 15 +g-type-fundamental-shift+))
+(defconstant +g-type-double+ #.(ash 15 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 15)}}
+  The fundamental type corresponding to @code{gdouble}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-double+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_STRING
-;;;
-;;; #define G_TYPE_STRING G_TYPE_MAKE_FUNDAMENTAL (16)
-;;;
-;;; The fundamental type corresponding to nul-terminated C strings.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-string+ #.(ash 16 +g-type-fundamental-shift+))
+(defconstant +g-type-string+ #.(ash 16 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 16)}}
+  The fundamental type corresponding to nul-terminated C strings.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-string+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_POINTER
-;;;
-;;; #define G_TYPE_POINTER G_TYPE_MAKE_FUNDAMENTAL (17)
-;;;
-;;; The fundamental type corresponding to gpointer.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-pointer+ #.(ash 17 +g-type-fundamental-shift+))
+(defconstant +g-type-pointer+ #.(ash 17 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 17)}}
+  The fundamental type corresponding to @code{gpointer}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-pointer+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_BOXED
-;;;
-;;; #define G_TYPE_BOXED G_TYPE_MAKE_FUNDAMENTAL (18)
-;;;
-;;; The fundamental type from which all boxed types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-boxed+ #.(ash 18 +g-type-fundamental-shift+))
+(defconstant +g-type-boxed+ #.(ash 18 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 18)}}
+  The fundamental type from which all boxed types are derived.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-boxed+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_PARAM
-;;;
-;;; #define G_TYPE_PARAM G_TYPE_MAKE_FUNDAMENTAL (19)
-;;;
-;;; The fundamental type from which all GParamSpec types are derived.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-param+ #.(ash 19 +g-type-fundamental-shift+))
+(defconstant +g-type-param+ #.(ash 19 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 19)}}
+  The fundamental type from which all @code{GParamSpec} types are derived.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-param+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_OBJECT
-;;;
-;;; #define G_TYPE_OBJECT G_TYPE_MAKE_FUNDAMENTAL (20)
-;;;
-;;; The fundamental type for GObject.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-object+ #.(ash 20 +g-type-fundamental-shift+))
+(defconstant +g-type-object+ #.(ash 20 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 20)}}
+  The fundamental type for @code{GObject}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-object+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_GTYPE
-;;;
-;;; #define G_TYPE_GTYPE (g_gtype_get_type())
-;;;
-;;; The type for GType.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_gtype_get_type" %g-type-gtype) g-size)
@@ -485,113 +505,107 @@
 (declaim (inline g-type-gtype))
 
 (defun g-type-gtype ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  The type for @code{GType}."
   (gtype (%g-type-gtype)))
 
 (export 'g-type-gtype)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VARIANT
-;;;
-;;; #define G_TYPE_VARIANT G_TYPE_MAKE_FUNDAMENTAL (21)
-;;;
-;;; The fundamental type corresponding to GVariant.
-;;;
-;;; All floating GVariant instances passed through the GType system are
-;;; consumed.
-;;;
-;;; Note that callbacks in closures, and signal handlers for signals of return
-;;; type G_TYPE_VARIANT, must never return floating variants.
-;;;
-;;; Note: GLib 2.24 did include a boxed type with this name. It was replaced
-;;; with this fundamental type in 2.26.
-;;;
-;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-variant+ #.(ash 21 +g-type-fundamental-shift+))
+(defconstant +g-type-variant+ #.(ash 21 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 21)}}
+  @short{The fundamental type corresponding to @code{GVariant}.}
+
+  All floating @code{GVariant} instances passed through the @code{GType} system
+  are consumed.
+
+  Note that callbacks in closures, and signal handlers for signals of return
+  type @code{G_TYPE_VARIANT}, must never return floating variants.
+ 
+  Note: GLib 2.24 did include a boxed type with this name. It was replaced
+  with this fundamental type in 2.26.
+
+  Since 2.26
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-variant+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_RESERVED_GLIB_FIRST
-;;;
-;;; #define G_TYPE_RESERVED_GLIB_FIRST (22)
-;;;
-;;; First fundamental type number to create a new fundamental type id with
-;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for GLib.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-glib-first+ #.(ash 22 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-glib-first+ #.(ash 22 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 22)}}
+  First fundamental type number to create a new fundamental type id with
+  @fun{g-type-make-fundamental} reserved for GLib.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-reserved-glib-first+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_RESERVED_GLIB_LAST
-;;;
-;;; #define G_TYPE_RESERVED_GLIB_LAST (31)
-;;;
-;;; Last fundamental type number reserved for GLib.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-glib-last+ #.(ash 31 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-glib-last+ #.(ash 31 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 31)}}
+  Last fundamental type number reserved for GLib.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-reserved-glib-last+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_RESERVED_BSE_FIRST
-;;;
-;;; #define G_TYPE_RESERVED_BSE_FIRST (32)
-;;;
-;;; First fundamental type number to create a new fundamental type id with
-;;; G_TYPE_MAKE_FUNDAMENTAL() reserved for BSE.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-bse-first+ #.(ash 32 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-bse-first+ #.(ash 32 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 32)}}
+  First fundamental type number to create a new fundamental type id with
+  @fun{g-type-make-fundamental} reserved for BSE.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-reserved-bse-first+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_RESERVED_BSE_LAST
-;;;
-;;; #define G_TYPE_RESERVED_BSE_LAST (48)
-;;;
-;;; Last fundamental type number reserved for BSE.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-bse-last+ #.(ash 48 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-bse-last+ #.(ash 48 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 48)}}
+  Last fundamental type number reserved for BSE.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-reserved-bse-last+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_RESERVED_USER_FIRST
-;;;
-;;; #define G_TYPE_RESERVED_USER_FIRST (49)
-;;;
-;;; First available fundamental type number to create new fundamental type id
-;;; with G_TYPE_MAKE_FUNDAMENTAL().
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-reserved-user-first+ #.(ash 49 +g-type-fundamental-shift+))
+(defconstant +g-type-reserved-user-first+ #.(ash 49 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{@code{(g-type-make-fundamental 49)}}
+  First available fundamental type number to create new fundamental type id
+  with @fun{g-type-make-fundamental}.
+  @see-function{g-type-make-fundamental}")
 
 (export '+g-type-reserved-user-first+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeFlags
-;;;
-;;; typedef enum {
-;;;   G_TYPE_FLAG_ABSTRACT       = (1 << 4),
-;;;   G_TYPE_FLAG_VALUE_ABSTRACT = (1 << 5)
-;;; } GTypeFlags;
-;;;
-;;; Bit masks used to check or determine characteristics of a type.
-;;;
-;;; G_TYPE_FLAG_ABSTRACT
-;;;     Indicates an abstract type. No instances can be created for an abstract
-;;;     type.
-;;;
-;;; G_TYPE_FLAG_VALUE_ABSTRACT
-;;;     Indicates an abstract value type, i.e. a type that introduces a value
-;;;     table, but can't be used for g_value_init().
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield g-type-flags
@@ -601,29 +615,25 @@
 (export 'g-type-flags)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-flags atdoc:*symbol-name-alias*) "Bitfield"
+      (gethash 'g-type-flags atdoc:*external-symbols*)
+ "@version{2012-12-16}
+  @short{Bit masks used to check or determine characteristics of a type.}
+  @begin{table}
+    @begin[:abstract]{entry}
+      Indicates an abstract type. No instances can be created for an abstract
+      type.
+    @end{entry}
+    @begin[:value-abstract]{entry}
+      Indicates an abstract value type, i.e. a type that introduces a value
+      table, but can't be used for @fun{g-value-init}.
+    @end{entry}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GTypeFundamentalFlags
-;;;
-;;; typedef enum {
-;;;   G_TYPE_FLAG_CLASSED           = (1 << 0),
-;;;   G_TYPE_FLAG_INSTANTIATABLE    = (1 << 1),
-;;;   G_TYPE_FLAG_DERIVABLE         = (1 << 2),
-;;;   G_TYPE_FLAG_DEEP_DERIVABLE    = (1 << 3)
-;;; } GTypeFundamentalFlags;
-;;;
-;;; Bit masks used to check or determine specific characteristics of a
-;;; fundamental type.
-;;;
-;;; G_TYPE_FLAG_CLASSED
-;;;     Indicates a classed type.
-;;;
-;;; G_TYPE_FLAG_INSTANTIATABLE
-;;;     Indicates an instantiable type (implies classed).
-;;;
-;;; G_TYPE_FLAG_DERIVABLE
-;;;     Indicates a flat derivable type.
-;;;
-;;; G_TYPE_FLAG_DEEP_DERIVABLE
-;;;     Indicates a deep derivable type (implies derivable).
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield g-type-fundamental-flags
@@ -633,6 +643,24 @@
   :deep-derivable)
 
 (export 'g-type-fundamental-flags)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-fundamental-flags atdoc:*symbol-name-alias*) "Bitfield"
+      (gethash 'g-type-fundamental-flags atdoc:*external-symbols*)
+ "@version{2012-12-16}
+  @begin{short}
+    Bit masks used to check or determine specific characteristics of a
+   fundamental type.
+  @end{short}
+  @begin{table}
+    @entry[:classed]{Indicates a classed type.}
+    @entry[:instantiatable]{Indicates an instantiable type (implies classed).}
+    @entry[:derivable]{Indicates a flat derivable type.}
+    @entry[:deep-derivable]{Indicates a deep derivable type (implies
+      derivable).}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GType
@@ -828,159 +856,119 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FUNDAMENTAL_MAX
-;;;
-;;; #define G_TYPE_FUNDAMENTAL_MAX (255 << G_TYPE_FUNDAMENTAL_SHIFT)
-;;;
-;;; An integer constant that represents the number of identifiers reserved for
-;;; types that are assigned at compile-time.
 ;;; ----------------------------------------------------------------------------
 
 (defconstant +g-type-fundamental-max+
-             #.(ash 255 +g-type-fundamental-shift+))
+             #.(ash 255 +g-type-fundamental-shift+)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @variable-value{120}
+  An integer constant that represents the number of identifiers reserved for
+  types that are assigned at compile-time.")
 
 (export '+g-type-fundamental-max+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_MAKE_FUNDAMENTAL()
-;;;
-;;; #define G_TYPE_MAKE_FUNDAMENTAL(x)
-;;;         ((GType) ((x) << G_TYPE_FUNDAMENTAL_SHIFT))
-;;;
-;;; Get the type ID for the fundamental type number x. Use
-;;; g_type_fundamental_next() instead of this macro to create new fundamental
-;;; types.
-;;;
-;;; x :
-;;;     the fundamental type number.
-;;;
-;;; Returns :
-;;;     the GType
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-make-fundamental (x)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-12}
+  @argument[x]{the fundamental type number.}
+  @return{the GType}
+  Get the type ID for the fundamental type number @arg{x}. Use
+  @code{g_type_fundamental_next()} instead of this macro to create new
+  fundamental types."
   (ash x +g-type-fundamental-shift+))
 
 (export 'g-type-make-fundamental)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_ABSTRACT()
-;;;
-;;; #define G_TYPE_IS_ABSTRACT(type) (g_type_test_flags ((type),
-;;;                                   G_TYPE_FLAG_ABSTRACT))
-;;;
-;;; Checks if type is an abstract type. An abstract type cannot be instantiated
-;;; and is normally used as an abstract base class for derived classes.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_test_flags" g-type-test-flags) :boolean
   (type g-type)
   (flag g-type-flags))
 
-(defun g-type-is-abstract (type)
-  (g-type-test-flags type :abstract))
+(defun g-type-is-abstract (gtype)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-12}
+  @argument[gtype]{A @class{g-type} value.}
+  @return{@arg{true} on success.}
+  Checks if @arg{gtype} is an abstract type. An abstract type cannot be
+  instantiated and is normally used as an abstract base class for derived
+  classes."
+  (g-type-test-flags gtype :abstract))
 
 (export 'g-type-is-abstract)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_DERIVED()
-;;;
-;;; #define G_TYPE_IS_DERIVED(type) ((type) > G_TYPE_FUNDAMENTAL_MAX)
-;;;
-;;; Checks if type is derived (or in object-oriented terminology: inherited)
-;;; from another type (this holds true for all non-fundamental types).
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-derived (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-12}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  Checks if type is derived (or in object-oriented terminology: inherited)
+  from another type (this holds true for all non-fundamental types)."
   (> (gtype-id (gtype type)) +g-type-fundamental-max+))
 
 (export 'g-type-is-derived)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_FUNDAMENTAL()
-;;;
-;;; #define G_TYPE_IS_FUNDAMENTAL(type) ((type) <= G_TYPE_FUNDAMENTAL_MAX)
-;;;
-;;; Checks if type is a fundamental type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-fundamental (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-12}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  Checks if type is a fundamental type."
   (<= (gtype-id (gtype type)) +g-type-fundamental-max+))
 
 (export 'g-type-is-fundamental)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_VALUE_TYPE()
-;;;
-;;; #define G_TYPE_IS_VALUE_TYPE(type) (g_type_check_is_value_type (type))
-;;;
-;;; Checks if type is a value type and can be used with g_value_init().
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_check_is_value_type" g-type-check-is-value-type) :boolean
   (type g-type))
 
-(defun g-type-is-value-type (type)
-  (g-type-check-is-value-type type))
+(defun g-type-is-value-type (gtype)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argumentg[gtype]{A @class{g-type} value.}
+  @return{@arg{true} on success.}
+  @begin{short}
+    Checks if @arg{gtype} is a value type and can be used with
+    @fun{g-value-init}.
+  @end{short}"
+  (g-type-check-is-value-type gtype))
 
 (export 'g-type-is-value-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_HAS_VALUE_TABLE()
-;;;
-;;; #define G_TYPE_HAS_VALUE_TABLE(type)
-;;;         (g_type_value_table_peek (type) != NULL)
-;;;
-;;; Checks if type has a GTypeValueTable.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-has-value-table (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  Checks if type has a @code{GTypeValueTable}."
   (not (null-pointer-p (g-type-value-table-peek type))))
 
 (export 'g-type-has-value-table)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_CLASSED()
-;;;
-;;; #define G_TYPE_IS_CLASSED(type) (g_type_test_flags ((type),
-;;;                                  G_TYPE_FLAG_CLASSED))
-;;;
-;;; Checks if type is a classed type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_test_flags" g-type-test-fundamental-flags) :boolean
@@ -988,105 +976,84 @@
   (flag g-type-fundamental-flags))
 
 (defun g-type-is-classed (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argument[type]{A GType value.}
+  @return{@arg{true} on success.}
+  Checks if type is a classed type."
   (g-type-test-fundamental-flags type :classed))
 
 (export 'g-type-is-classed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_INSTANTIATABLE()
-;;;
-;;; #define G_TYPE_IS_INSTANTIATABLE(type) (g_type_test_flags ((type),
-;;;                                         G_TYPE_FLAG_INSTANTIATABLE))
-;;;
-;;; Checks if type can be instantiated. Instantiation is the process of creating
-;;; an instance (object) of this type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-instantiatable (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  Checks if type can be instantiated. Instantiation is the process of creating
+  an instance (object) of this type."
   (g-type-test-fundamental-flags type :instantiatable))
 
 (export 'g-type-is-instantiatable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_DERIVABLE()
-;;;
-;;; #define G_TYPE_IS_DERIVABLE(type) (g_type_test_flags ((type),
-;;;                                    G_TYPE_FLAG_DERIVABLE))
-;;;
-;;; Checks if type is a derivable type. A derivable type can be used as the base
-;;; class of a flat (single-level) class hierarchy.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-derivable (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  Checks if type is a derivable type. A derivable type can be used as the base
+  class of a flat (single-level) class hierarchy."
   (g-type-test-fundamental-flags type :derivable))
 
 (export 'g-type-is-derivable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_DEEP_DERIVABLE()
-;;;
-;;; #define G_TYPE_IS_DEEP_DERIVABLE(type) (g_type_test_flags ((type),
-;;;                                         G_TYPE_FLAG_DEEP_DERIVABLE))
-;;;
-;;; Checks if type is a deep derivable type. A deep derivable type can be used
-;;; as the base class of a deep (multi-level) class hierarchy.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-deep-derivable (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  Checks if type is a deep derivable type. A deep derivable type can be used
+  as the base class of a deep (multi-level) class hierarchy."
   (g-type-test-fundamental-flags type :deep-derivable))
 
 (export 'g-type-is-deep-derivable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_INTERFACE()
-;;;
-;;; #define G_TYPE_IS_INTERFACE(type)
-;;;         (G_TYPE_FUNDAMENTAL (type) == G_TYPE_INTERFACE)
-;;;
-;;; Checks if type is an interface type. An interface type provides a pure API,
-;;; the implementation of which is provided by another type (which is then said
-;;; to conform to the interface). GLib interfaces are somewhat analogous to Java
-;;; interfaces and C++ classes containing only pure virtual functions, with the
-;;; difference that GType interfaces are not derivable (but see
-;;; g_type_interface_add_prerequisite() for an alternative).
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-is-interface (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-16}
+  @argument[type]{A GType value.}
+  @return{TRUE on success.}
+  @begin{short}
+    Checks if type is an interface type.
+  @end{short}
+  An interface type provides a pure API, the implementation of which is provided
+  by another type (which is then said to conform to the interface). GLib
+  interfaces are somewhat analogous to Java interfaces and C++ classes
+  containing only pure virtual functions, with the difference that GType
+  interfaces are not derivable (but see g_type_interface_add_prerequisite() for
+  an alternative)."
   (eql +g-type-interface+ (gtype-id (g-type-fundamental type))))
 
 (export 'g-type-is-interface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeInterface
-;;;
-;;; struct GTypeInterface {
-;;; };
-;;;
-;;; An opaque structure used as the base of all interface types.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-interface
@@ -1096,12 +1063,21 @@
 (export 'g-type-interface)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-interface atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-interface atdoc:*external-symbols*)
+ "@version{2012-12-16}
+  @short{An opaque structure used as the base of all interface types.}
+
+  @begin{pre}
+(defcstruct g-type-interface
+  (:type g-type)
+  (:instance-type g-type))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GTypeClass
-;;;
-;;; struct GTypeClass {
-;;; };
-;;;
-;;; An opaque structure used as the base of all classes.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-class
@@ -1110,12 +1086,20 @@
 (export 'g-type-class)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-class atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-class atdoc:*external-symbols*)
+ "@version{2013-2-6}
+  @short{An opaque structure used as the base of all classes.}
+
+  @begin{pre}
+(defcstruct g-type-class
+  (:type g-type))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GTypeInstance
-;;;
-;;; struct GTypeInstance {
-;;; };
-;;;
-;;; An opaque structure used as the base of all type instances.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-instance
@@ -1124,79 +1108,20 @@
 (export 'g-type-instance)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-instance atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-instance atdoc:*external-symbols*)
+ "@version{2012-12-16}
+  @short{An opaque structure used as the base of all type instances.}
+
+  @begin{pre}
+(defcstruct g-type-instance
+  (:class (:pointer g-type-class)))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GTypeInfo
-;;;
-;;; struct GTypeInfo {
-;;;   /* interface types, classed types, instantiated types */
-;;;   guint16                class_size;
-;;;
-;;;   GBaseInitFunc          base_init;
-;;;   GBaseFinalizeFunc      base_finalize;
-;;;
-;;;   /* interface types, classed types, instantiated types */
-;;;   GClassInitFunc         class_init;
-;;;   GClassFinalizeFunc     class_finalize;
-;;;   gconstpointer          class_data;
-;;;
-;;;   /* instantiated types */
-;;;   guint16                instance_size;
-;;;   guint16                n_preallocs;
-;;;   GInstanceInitFunc      instance_init;
-;;;
-;;;   /* value handling */
-;;;   const GTypeValueTable *value_table;
-;;; };
-;;;
-;;; This structure is used to provide the type system with the information
-;;; required to initialize and destruct (finalize) a type's class and its
-;;; instances. The initialized structure is passed to the
-;;; g_type_register_static() function (or is copied into the provided GTypeInfo
-;;; structure in the g_type_plugin_complete_type_info()). The type system will
-;;; perform a deep copy of this structure, so its memory does not need to be
-;;; persistent across invocation of g_type_register_static().
-;;;
-;;; guint16 class_size;
-;;;     Size of the class structure (required for interface, classed and
-;;;     instantiatable types).
-;;;
-;;; GBaseInitFunc base_init;
-;;;     Location of the base initialization function (optional).
-;;;
-;;; GBaseFinalizeFunc base_finalize;
-;;;     Location of the base finalization function (optional).
-;;;
-;;; GClassInitFunc class_init;
-;;;     Location of the class initialization function for classed and
-;;;     instantiatable types. Location of the default vtable inititalization
-;;;     function for interface types. (optional) This function is used both to
-;;;     fill in virtual functions in the class or default vtable, and to do
-;;;     type-specific setup such as registering signals and object properties.
-;;;
-;;; GClassFinalizeFunc class_finalize;
-;;;     Location of the class finalization function for classed and
-;;;     instantiatable types. Location fo the default vtable finalization
-;;;     function for interface types. (optional)
-;;;
-;;; gconstpointer class_data;
-;;;     User-supplied data passed to the class init/finalize functions.
-;;;
-;;; guint16 instance_size;
-;;;     Size of the instance (object) structure (required for instantiatable
-;;;     types only).
-;;;
-;;; guint16 n_preallocs;
-;;;     Prior to GLib 2.10, it specified the number of pre-allocated (cached)
-;;;     instances to reserve memory for (0 indicates no caching). Since
-;;;     GLib 2.10, it is ignored, since instances are allocated with the slice
-;;;     allocator now.
-;;;
-;;; GInstanceInitFunc instance_init;
-;;;     Location of the instance initialization function (optional, for
-;;;     instantiatable types only).
-;;;
-;;; const GTypeValueTable *value_table;
-;;;     A GTypeValueTable function table for generic handling of GValues of this
-;;;     type (usually only useful for fundamental types).
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-info
@@ -1214,18 +1139,83 @@
 (export 'g-type-info)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-info atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-info atdoc:*external-symbols*)
+ "@version{2012-12-21}
+  @begin{short}
+    This structure is used to provide the type system with the information
+    required to initialize and destruct (finalize) a type's class and its
+    instances.
+  @end{short}
+  The initialized structure is passed to the @fun{g-type-register-static}
+  function (or is copied into the provided @sym{g-type-info} structure in the
+  @code{g_type_plugin_complete_type_info()}). The type system will perform a
+  deep copy of this structure, so its memory does not need to be persistent
+  across invocation of @fun{g-type-register-static}.
+  @begin{pre}
+(defcstruct g-type-info
+  (:class-size :uint16)
+  (:base-init-fn :pointer)
+  (:base-finalize-fn :pointer)
+  (:class-init-fn :pointer)
+  (:class-finalize-fn :pointer)
+  (:class-data :pointer)
+  (:instance-size :uint16)
+  (:n-preallocs :uint16)
+  (:instance-init-fn :pointer)
+  (:value-table :pointer))
+  @end{pre}
+  @begin{table}
+    @begin[guint16 class_size]{entry}
+      Size of the class structure (required for interface, classed and
+      instantiatable types).
+    @end{entry}
+    @begin[GBaseInitFunc base_init]{entry}
+      Location of the base initialization function (optional).
+    @end{entry}
+    @begin[GBaseFinalizeFunc base_finalize]{entry}
+      Location of the base finalization function (optional).
+    @end{entry}
+    @begin[GClassInitFunc class_init]{entry}
+      Location of the class initialization function for classed and
+      instantiatable types. Location of the default vtable inititalization
+      function for interface types. (optional) This function is used both to
+      fill in virtual functions in the class or default vtable, and to do
+      type-specific setup such as registering signals and object properties.
+    @end{entry}
+    @begin[GClassFinalizeFunc class_finalize]{entry}
+      Location of the class finalization function for classed and
+      instantiatable types. Location fo the default vtable finalization
+      function for interface types. (optional)
+    @end{entry}
+    @begin[gconstpointer class_data]{entry}
+      User-supplied data passed to the class init/finalize functions.
+    @end{entry}
+    @begin[guint16 instance_size]{entry}
+      Size of the instance (object) structure (required for instantiatable
+      types only).
+    @end{entry}
+    @begin[guint16 n_preallocs]{entry}
+      Prior to GLib 2.10, it specified the number of pre-allocated (cached)
+      instances to reserve memory for (0 indicates no caching). Since
+      GLib 2.10, it is ignored, since instances are allocated with the slice
+      allocator now.
+    @end{entry}
+    @begin[GInstanceInitFunc instance_init]{entry}
+      Location of the instance initialization function (optional, for
+      instantiatable types only).
+    @end{entry}
+    @begin[const GTypeValueTable *value_table]{entry}
+      A GTypeValueTable function table for generic handling of GValues of this
+      type (usually only useful for fundamental types).
+    @end{entry}
+  @end{table}
+  @see-function{g-type-register-static}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GTypeFundamentalInfo
-;;;
-;;; struct GTypeFundamentalInfo {
-;;;   GTypeFundamentalFlags  type_flags;
-;;; };
-;;;
-;;; A structure that provides information to the type system which is used
-;;; specifically for managing fundamental types.
-;;;
-;;; GTypeFundamentalFlags type_flags;
-;;;     GTypeFundamentalFlags describing the characteristics of the fundamental
-;;;     type
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-fundamental-info
@@ -1234,25 +1224,26 @@
 (export 'g-type-fundamental-info)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-fundamental-info atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-fundamental-info atdoc:*external-symbols*)
+ "@version{2012-12-21}
+  @begin{short}
+    A structure that provides information to the type system which is used
+    specifically for managing fundamental types.
+  @end{short}
+  @begin{pre}
+(defcstruct g-type-fundamental-info
+  (:type-flags g-type-fundamental-flags))
+  @end{pre}
+  @begin{table}
+    @entry[GTypeFundamentalFlags type_flags]{GTypeFundamentalFlags describing
+      the characteristics of the fundamental type}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GInterfaceInfo
-;;;
-;;; struct GInterfaceInfo {
-;;;   GInterfaceInitFunc     interface_init;
-;;;   GInterfaceFinalizeFunc interface_finalize;
-;;;   gpointer               interface_data;
-;;; };
-;;;
-;;; A structure that provides information to the type system which is used
-;;; specifically for managing interface types.
-;;;
-;;; GInterfaceInitFunc interface_init;
-;;;     location of the interface initialization function
-;;;
-;;; GInterfaceFinalizeFunc interface_finalize;
-;;;     location of the interface finalization function
-;;;
-;;; gpointer interface_data;
-;;;     user-supplied data passed to the interface init/finalize functions
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-interface-info
@@ -1263,185 +1254,32 @@
 (export 'g-interface-info)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-interface-info atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-interface-info atdoc:*external-symbols*)
+ "@version{2012-12-21}
+  @begin{short}
+    A structure that provides information to the type system which is used
+    specifically for managing interface types.
+  @end{short}
+  @begin{pre}
+(defcstruct g-interface-info
+  (:interface-init :pointer)
+  (:interface-finalize :pointer)
+  (:interface-data :pointer))
+  @end{pre}
+  @begin{table}
+    @entry[GInterfaceInitFunc interface_init]{location of the interface
+      initialization function}
+    @entry[GInterfaceFinalizeFunc interface_finalize]{location of the interface
+      finalization function}
+    @entry[gpointer interface_data]{user-supplied data passed to the interface
+      init/finalize functions}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GTypeValueTable
-;;;
-;;; struct GTypeValueTable {
-;;;   void     (*value_init)         (GValue       *value);
-;;;   void     (*value_free)         (GValue       *value);
-;;;   void     (*value_copy)         (const GValue *src_value,
-;;;                                   GValue       *dest_value);
-;;;   /* varargs functionality (optional) */
-;;;   gpointer (*value_peek_pointer) (const GValue *value);
-;;;   const gchar *collect_format;
-;;;   gchar*   (*collect_value)      (GValue       *value,
-;;;                                   guint         n_collect_values,
-;;;                                   GTypeCValue  *collect_values,
-;;;                                   guint        collect_flags);
-;;;   const gchar *lcopy_format;
-;;;   gchar*   (*lcopy_value)        (const GValue *value,
-;;;                                   guint         n_collect_values,
-;;;                                   GTypeCValue  *collect_values,
-;;;                                   guint         collect_flags);
-;;; };
-;;;
-;;; The GTypeValueTable provides the functions required by the GValue
-;;; implementation, to serve as a container for values of a type.
-;;;
-;;; value_init ()
-;;;     Default initialize values contents by poking values directly into the
-;;;     value->data array. The data array of the GValue passed into this
-;;;     function was zero-filled with memset(), so no care has to be taken to
-;;;     free any old contents. E.g. for the implementation of a string value
-;;;     that may never be NULL, the implementation might look like:
-;;;
-;;;     value->data[0].v_pointer = g_strdup ("");
-;;;
-;;; value_free ()
-;;;     Free any old contents that might be left in the data array of the passed
-;;;     in value. No resources may remain allocated through the GValue contents
-;;;     after this function returns. E.g. for our above string type:
-;;;
-;;;     // only free strings without a specific flag for static storage
-;;;     if (!(value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS))
-;;;     g_free (value->data[0].v_pointer);
-;;;
-;;; value_copy ()
-;;;     dest_value is a GValue with zero-filled data section and src_value is a
-;;;     properly setup GValue of same or derived type. The purpose of this
-;;;     function is to copy the contents of src_value into dest_value in a way,
-;;;     that even after src_value has been freed, the contents of dest_value
-;;;     remain valid. String type example:
-;;;
-;;;     dest_value->data[0].v_pointer = g_strdup (src_value->data[0].v_pointer);
-;;;
-;;; value_peek_pointer ()
-;;;     If the value contents fit into a pointer, such as objects or strings,
-;;;     return this pointer, so the caller can peek at the current contents. To
-;;;     extend on our above string example:
-;;;
-;;;     return value->data[0].v_pointer;
-;;;
-;;; const gchar *collect_format;
-;;;     A string format describing how to collect the contents of this value
-;;;     bit-by-bit. Each character in the format represents an argument to be
-;;;     collected, and the characters themselves indicate the type of the
-;;;     argument. Currently supported arguments are:
-;;;
-;;;     'i' - Integers. passed as collect_values[].v_int.
-;;;
-;;;     'l' - Longs. passed as collect_values[].v_long.
-;;;
-;;;     'd' - Doubles. passed as collect_values[].v_double.
-;;;
-;;;     'p' - Pointers. passed as collect_values[].v_pointer.
-;;;
-;;;     It should be noted that for variable argument list construction, ANSI C
-;;;     promotes every type smaller than an integer to an int, and floats to
-;;;     doubles. So for collection of short int or char, 'i' needs to be used,
-;;;     and for collection of floats 'd'.
-;;;
-;;; collect_value ()
-;;;     The collect_value() function is responsible for converting the values
-;;;     collected from a variable argument list into contents suitable for
-;;;     storage in a GValue. This function should setup value similar to
-;;;     value_init(); e.g. for a string value that does not allow NULL pointers,
-;;;     it needs to either spew an error, or do an implicit conversion by
-;;;     storing an empty string. The value passed in to this function has a
-;;;     zero-filled data array, so just like for value_init() it is guaranteed
-;;;     to not contain any old contents that might need freeing.
-;;;     n_collect_values is exactly the string length of collect_format, and
-;;;     collect_values is an array of unions GTypeCValue with length
-;;;     n_collect_values, containing the collected values according to
-;;;     collect_format. collect_flags is an argument provided as a hint by the
-;;;     caller. It may contain the flag G_VALUE_NOCOPY_CONTENTS indicating, that
-;;;     the collected value contents may be considered "static" for the duration
-;;;     of the value lifetime. Thus an extra copy of the contents stored in
-;;;     collect_values is not required for assignment to value. For our above
-;;;     string example, we continue with:
-;;;
-;;;     if (!collect_values[0].v_pointer)
-;;;     value->data[0].v_pointer = g_strdup ("");
-;;;     else if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
-;;;     {
-;;;      value->data[0].v_pointer = collect_values[0].v_pointer;
-;;;      // keep a flag for the value_free() implementation to not free this
-;;;      // string
-;;;      value->data[1].v_uint = G_VALUE_NOCOPY_CONTENTS;
-;;;     }
-;;;     else
-;;;      value->data[0].v_pointer = g_strdup (collect_values[0].v_pointer);
-;;;     return NULL;
-;;;
-;;;     It should be noted, that it is generally a bad idea to follow the
-;;;     G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to
-;;;     reentrancy requirements and reference count assertions performed by the
-;;;     signal emission code, reference counts should always be incremented for
-;;;     reference counted contents stored in the value->data array. To deviate
-;;;     from our string example for a moment, and taking a look at an exemplary
-;;;     implementation for collect_value() of GObject:
-;;;
-;;;     if (collect_values[0].v_pointer)
-;;;     {
-;;;      GObject *object = G_OBJECT (collect_values[0].v_pointer);
-;;;      // never honour G_VALUE_NOCOPY_CONTENTS for ref-counted types
-;;;      value->data[0].v_pointer = g_object_ref (object);
-;;;      return NULL;
-;;;     }
-;;;     else
-;;;      return g_strdup_printf ("Object passed as invalid NULL pointer");
-;;;     }
-;;;
-;;;     The reference count for valid objects is always incremented, regardless
-;;;     of collect_flags. For invalid objects, the example returns a newly
-;;;     allocated string without altering value. Upon success, collect_value()
-;;;     needs to return NULL. If, however, an error condition occurred,
-;;;     collect_value() may spew an error by returning a newly allocated
-;;;     non-NULL string, giving a suitable description of the error condition.
-;;;     The calling code makes no assumptions about the value contents being
-;;;     valid upon error returns, value is simply thrown away without further
-;;;     freeing. As such, it is a good idea to not allocate GValue contents,
-;;;     prior to returning an error, however, collect_values() is not obliged to
-;;;     return a correctly setup value for error returns, simply because any
-;;;     non-NULL return is considered a fatal condition so further program
-;;;     behaviour is undefined.
-;;;
-;;; const gchar *lcopy_format;
-;;;     Format description of the arguments to collect for lcopy_value,
-;;;     analogous to collect_format. Usually, lcopy_format string consists only
-;;;     of 'p's to provide lcopy_value() with pointers to storage locations.
-;;;
-;;; lcopy_value ()
-;;;     This function is responsible for storing the value contents into
-;;;     arguments passed through a variable argument list which got collected
-;;;     into collect_values according to lcopy_format. n_collect_values equals
-;;;     the string length of lcopy_format, and collect_flags may contain
-;;;     G_VALUE_NOCOPY_CONTENTS. In contrast to collect_value(), lcopy_value()
-;;;     is obliged to always properly support G_VALUE_NOCOPY_CONTENTS. Similar
-;;;     to collect_value() the function may prematurely abort by returning a
-;;;     newly allocated string describing an error condition. To complete the
-;;;     string example:
-;;;
-;;;     gchar **string_p = collect_values[0].v_pointer;
-;;;     if (!string_p)
-;;;      return g_strdup_printf ("string location passed as NULL");
-;;;     if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
-;;;      *string_p = value->data[0].v_pointer;
-;;;     else
-;;;      *string_p = g_strdup (value->data[0].v_pointer);
-;;;
-;;;     And an illustrative version of lcopy_value() for reference-counted
-;;;     types:
-;;;
-;;;     GObject **object_p = collect_values[0].v_pointer;
-;;;     if (!object_p)
-;;;      return g_strdup_printf ("object location passed as NULL");
-;;;     if (!value->data[0].v_pointer)
-;;;      *object_p = NULL;
-;;;     else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) /* always honour */
-;;;      *object_p = value->data[0].v_pointer;
-;;;     else
-;;;      *object_p = g_object_ref (value->data[0].v_pointer);
-;;;     return NULL;
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-value-table
@@ -1457,23 +1295,199 @@
 (export 'g-type-value-table)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-value-table atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-value-table atdoc:*external-symbols*)
+ "@version{2012-12-21}
+  @begin{short}
+    The GTypeValueTable provides the functions required by the GValue
+    implementation, to serve as a container for values of a type.
+  @end{short}
+  @begin{pre}
+(defcstruct g-type-value-table
+  (:value-init :pointer)
+  (:value-free :pointer)
+  (:value-copy :pointer)
+  (:value-peek-pointer :pointer)
+  (:collect-format (:string :free-from-foreign nil :free-to-foreign nil))
+  (:collect-value :pointer)
+  (:lcopy-format (:string :free-from-foreign nil :free-to-foreign nil))
+  (:lcopy-value :pointer))
+  @end{pre}
+  @begin{table}
+    @begin[value_init ()]{entry}
+      Default initialize values contents by poking values directly into the
+      value->data array. The data array of the GValue passed into this
+      function was zero-filled with memset(), so no care has to be taken to
+      free any old contents. E.g. for the implementation of a string value
+      that may never be NULL, the implementation might look like:
+      @begin{pre}
+ value->data[0].v_pointer = g_strdup (\"\");
+      @end{pre}
+    @end{entry}
+    @begin[value_free ()]{entry}
+      Free any old contents that might be left in the data array of the passed
+      in value. No resources may remain allocated through the GValue contents
+      after this function returns. E.g. for our above string type:
+      @begin{pre}
+ // only free strings without a specific flag for static storage
+ if (!(value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS))
+ g_free (value->data[0].v_pointer);
+      @end{pre}
+    @end{entry}
+    @begin[value_copy ()]{entry}
+      dest_value is a GValue with zero-filled data section and src_value is a
+      properly setup GValue of same or derived type. The purpose of this
+      function is to copy the contents of src_value into dest_value in a way,
+      that even after src_value has been freed, the contents of dest_value
+      remain valid. String type example:
+      @begin{pre}
+ dest_value->data[0].v_pointer = g_strdup (src_value->data[0].v_pointer);
+      @end{pre}
+    @end{entry}
+    @begin[value_peek_pointer ()]{entry}
+      If the value contents fit into a pointer, such as objects or strings,
+      return this pointer, so the caller can peek at the current contents. To
+      extend on our above string example:
+      @begin{pre}
+ return value->data[0].v_pointer;
+      @end{pre}
+    @end{entry}
+    @begin[const gchar *collect_format]{entry}
+      A string format describing how to collect the contents of this value
+      bit-by-bit. Each character in the format represents an argument to be
+      collected, and the characters themselves indicate the type of the
+      argument. Currently supported arguments are:
+      @begin{table}
+        @entry['i']{Integers. passed as collect_values[].v_int.}
+        @entry['l']{Longs. passed as collect_values[].v_long.}
+        @entry['d']{Doubles. passed as collect_values[].v_double.}
+        @entry['p']{Pointers. passed as collect_values[].v_pointer.}
+      @end{table}
+      It should be noted that for variable argument list construction, ANSI C
+      promotes every type smaller than an integer to an int, and floats to
+      doubles. So for collection of short int or char, 'i' needs to be used,
+      and for collection of floats 'd'.
+    @end{entry}
+    @begin[collect_value ()]{entry}
+      The collect_value() function is responsible for converting the values
+      collected from a variable argument list into contents suitable for
+      storage in a GValue. This function should setup value similar to
+      value_init(); e.g. for a string value that does not allow NULL pointers,
+      it needs to either spew an error, or do an implicit conversion by
+      storing an empty string. The value passed in to this function has a
+      zero-filled data array, so just like for value_init() it is guaranteed
+      to not contain any old contents that might need freeing.
+      n_collect_values is exactly the string length of collect_format, and
+      collect_values is an array of unions GTypeCValue with length
+      n_collect_values, containing the collected values according to
+      collect_format. collect_flags is an argument provided as a hint by the
+      caller. It may contain the flag G_VALUE_NOCOPY_CONTENTS indicating, that
+      the collected value contents may be considered \"static\" for the duration
+      of the value lifetime. Thus an extra copy of the contents stored in
+      collect_values is not required for assignment to value. For our above
+      string example, we continue with:
+      @begin{pre}
+ if (!collect_values[0].v_pointer)
+     value->data[0].v_pointer = g_strdup (\"\");
+ else if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
+   {
+     value->data[0].v_pointer = collect_values[0].v_pointer;
+     // keep a flag for the value_free() implementation to not free this
+     // string
+     value->data[1].v_uint = G_VALUE_NOCOPY_CONTENTS;
+   @}
+   else
+     value->data[0].v_pointer = g_strdup (collect_values[0].v_pointer);
+   return NULL;
+      @end{pre}
+      It should be noted, that it is generally a bad idea to follow the
+      G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to
+      reentrancy requirements and reference count assertions performed by the
+      signal emission code, reference counts should always be incremented for
+      reference counted contents stored in the value->data array. To deviate
+      from our string example for a moment, and taking a look at an exemplary
+      implementation for collect_value() of GObject:
+      @begin{pre}
+ if (collect_values[0].v_pointer)
+ {
+     GObject *object = G_OBJECT (collect_values[0].v_pointer);
+     // never honour G_VALUE_NOCOPY_CONTENTS for ref-counted types
+     value->data[0].v_pointer = g_object_ref (object);
+     return NULL;
+ @}
+ else
+     return g_strdup_printf (\"Object passed as invalid NULL pointer\");
+ @}
+      @end{pre}
+      The reference count for valid objects is always incremented, regardless
+      of collect_flags. For invalid objects, the example returns a newly
+      allocated string without altering value. Upon success, collect_value()
+      needs to return NULL. If, however, an error condition occurred,
+      collect_value() may spew an error by returning a newly allocated
+      non-NULL string, giving a suitable description of the error condition.
+      The calling code makes no assumptions about the value contents being
+      valid upon error returns, value is simply thrown away without further
+      freeing. As such, it is a good idea to not allocate GValue contents,
+      prior to returning an error, however, collect_values() is not obliged to
+      return a correctly setup value for error returns, simply because any
+      non-NULL return is considered a fatal condition so further program
+      behaviour is undefined.
+    @end{entry}
+    @begin[const gchar *lcopy_format]{entry}
+      Format description of the arguments to collect for lcopy_value,
+      analogous to collect_format. Usually, lcopy_format string consists only
+      of 'p's to provide lcopy_value() with pointers to storage locations.
+    @end{entry}
+    @begin[lcopy_value ()]{entry}
+      This function is responsible for storing the value contents into
+      arguments passed through a variable argument list which got collected
+      into collect_values according to lcopy_format. n_collect_values equals
+      the string length of lcopy_format, and collect_flags may contain
+      G_VALUE_NOCOPY_CONTENTS. In contrast to collect_value(), lcopy_value()
+      is obliged to always properly support G_VALUE_NOCOPY_CONTENTS. Similar
+      to collect_value() the function may prematurely abort by returning a
+      newly allocated string describing an error condition. To complete the
+      string example:
+      @begin{pre}
+ gchar **string_p = collect_values[0].v_pointer;
+ if (!string_p)
+   return g_strdup_printf (\"string location passed as NULL\");
+ if (collect_flags & G_VALUE_NOCOPY_CONTENTS)
+   *string_p = value->data[0].v_pointer;
+ else
+   *string_p = g_strdup (value->data[0].v_pointer);
+      @end{pre}
+      And an illustrative version of lcopy_value() for reference-counted
+      types:
+      @begin{pre}
+ GObject **object_p = collect_values[0].v_pointer;
+ if (!object_p)
+   return g_strdup_printf (\"object location passed as NULL\");
+ if (!value->data[0].v_pointer)
+   *object_p = NULL;
+ else if (collect_flags & G_VALUE_NOCOPY_CONTENTS) /* always honour */
+   *object_p = value->data[0].v_pointer;
+ else
+   *object_p = g_object_ref (value->data[0].v_pointer);
+ return NULL;
+      @end{pre}
+    @end{entry}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FROM_INSTANCE()
-;;;
-;;; #define G_TYPE_FROM_INSTANCE(instance)
-;;;         (G_TYPE_FROM_CLASS (((GTypeInstance*) (instance))->g_class))
-;;;
-;;; Get the type identifier from a given instance structure.
-;;;
-;;; This macro should only be used in type implementations.
-;;;
-;;; instance :
-;;;     Location of a valid GTypeInstance structure.
-;;;
-;;; Returns :
-;;;     the GType
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-from-instance (instance)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[instance]{Location of a valid GTypeInstance structure.}
+  @return{the GType}
+  @short{Get the type identifier from a given instance structure.}
+
+  This macro should only be used in type implementations."
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
     (g-type-from-class (foreign-slot-value ptr
                                            'g-type-instance :class))))
@@ -1482,43 +1496,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FROM_CLASS()
-;;;
-;;; #define G_TYPE_FROM_CLASS(g_class) (((GTypeClass*) (g_class))->g_type)
-;;;
-;;; Get the type identifier from a given class structure.
-;;;
-;;; This macro should only be used in type implementations.
-;;;
-;;; g_class :
-;;;     Location of a valid GTypeClass structure.
-;;;
-;;; Returns :
-;;;     the GType
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-from-class (class)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[g_class]{Location of a valid GTypeClass structure.}
+  @return{the GType}
+  @short{Get the type identifier from a given class structure.}
+
+  This macro should only be used in type implementations."
   (foreign-slot-value class 'g-type-class :type))
 
 (export 'g-type-from-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FROM_INTERFACE()
-;;;
-;;; #define G_TYPE_FROM_INTERFACE(g_iface)
-;;;         (((GTypeInterface*) (g_iface))->g_type)
-;;;
-;;; Get the type identifier from a given interface structure.
-;;;
-;;; This macro should only be used in type implementations.
-;;;
-;;; g_iface :
-;;;     Location of a valid GTypeInterface structure.
-;;;
-;;; Returns :
-;;;     the GType
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-from-interface (interface)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[g_iface]{Location of a valid GTypeInterface structure.}
+  @return{the GType}
+  @short{Get the type identifier from a given interface structure.}
+
+  This macro should only be used in type implementations."
   (foreign-slot-value interface 'g-type-interface :type))
 
 (export 'g-type-from-interface)
@@ -1670,25 +1673,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CHECK_INSTANCE_TYPE()
-;;;
-;;; #define G_TYPE_CHECK_INSTANCE_TYPE(instance, g_type)
-;;;         (_G_TYPE_CIT ((instance), (g_type)))
-;;;
-;;; Checks if instance is an instance of the type identified by g_type.
-;;;
-;;; This macro should only be used in type implementations.
-;;;
-;;; instance :
-;;;     Location of a GTypeInstance structure.
-;;;
-;;; g_type :
-;;;     The type to be checked
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-check-instance-type (instance gtype)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[instance]{Location of a GTypeInstance structure.}
+  @argument[g-type]{The type to be checked}
+  @return{TRUE on success.}
+  @begin{short}
+    Checks if instance is an instance of the type identified by g_type.
+  @end{short}
+
+  This macro should only be used in type implementations."
   (eql (gtype-id (g-type-from-instance instance)) (gtype-id gtype)))
 
 (export 'g-type-check-instance-type)
@@ -1840,140 +1837,118 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_name ()
-;;;
-;;; const gchar * g_type_name (GType type);
-;;;
-;;; Get the unique name that is assigned to a type ID. Note that this function
-;;; (like all other GType API) cannot cope with invalid type IDs. G_TYPE_INVALID
-;;; may be passed to this function, as may be any other validly registered type
-;;; ID, but randomized type IDs should not be passed in and will most likely
-;;; lead to a crash.
-;;;
-;;; type :
-;;;     Type to return name for.
-;;;
-;;; Returns :
-;;;     Static type name or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_name" %g-type-name) (:string :free-from-foreign nil)
   (type %g-type)) ; Use %g-type and not g-type
 
-;;; ----------------------------------------------------------------------------
-
 (declaim (inline g-type-name))
 
 (defun g-type-name (gtype)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[gtype]{Type to return name for.}
+  @return{Static type name or NULL.}
+  @begin{short}
+    Get the unique name that is assigned to a type ID.
+  @end{short}
+  Note that this function (like all other GType API) cannot cope with invalid
+  type IDs. G_TYPE_INVALID may be passed to this function, as may be any other
+  validly registered type ID, but randomized type IDs should not be passed in
+  and will most likely lead to a crash."
   (gtype-name (gtype gtype)))
 
 (export 'g-type-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_qname ()
-;;;
-;;; GQuark g_type_qname (GType type);
-;;;
-;;; Get the corresponding quark of the type IDs name.
-;;;
-;;; type :
-;;;     Type to return quark of type name for.
-;;;
-;;; Returns :
-;;;     The type names quark or 0.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_qname" g-type-qname) g-quark
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{Type to return quark of type name for.}
+  @return{The type names quark or 0.}
+  @begin{short}
+    Get the corresponding quark of the type IDs name.
+  @end{short}"
   (gtype g-type))
 
 (export 'g-type-qname)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_from_name ()
-;;;
-;;; GType g_type_from_name (const gchar *name);
-;;;
-;;; Lookup the type ID from a given type name, returning 0 if no type has been
-;;; registered under this name (this is the preferred method to find out by name
-;;; whether a specific type has been registered yet).
-;;;
-;;; name :
-;;;     Type name to lookup.
-;;;
-;;; Returns :
-;;;     Corresponding type ID or 0.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_from_name" %g-type-from-name) %g-type
   (name :string))
 
 (defun g-type-from-name (name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[name]{Type name to lookup.}
+  @return{Corresponding type ID or 0.}
+  @begin{short}
+    Lookup the type ID from a given type name, returning 0 if no type has been
+    registered under this name (this is the preferred method to find out by name
+    whether a specific type has been registered yet).
+  @end{short}"
   (gtype name))
 
 (export 'g-type-from-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_parent ()
-;;;
-;;; GType g_type_parent (GType type);
-;;;
-;;; Return the direct parent type of the passed in type. If the passed in type
-;;; has no parent, i.e. is a fundamental type, 0 is returned.
-;;;
-;;; type :
-;;;     The derived type.
-;;;
-;;; Returns :
-;;;     The parent type.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_parent" g-type-parent) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{The derived type.}
+  @return{The parent type.}
+  @begin{short}
+    Return the direct parent type of the passed in type. If the passed in type
+    has no parent, i.e. is a fundamental type, 0 is returned.
+  @end{short}"
   (type g-type))
 
 (export 'g-type-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_depth ()
-;;;
-;;; guint g_type_depth (GType type);
-;;;
-;;; Returns the length of the ancestry of the passed in type. This includes the
-;;; type itself, so that e.g. a fundamental type has depth 1.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     The depth of type.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_depth" g-type-depth) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{A GType value.}
+  @return{The depth of type.}
+  @begin{short}
+    Returns the length of the ancestry of the passed in type. This includes the
+    type itself, so that e.g. a fundamental type has depth 1.
+  @end{short}"
   (type g-type))
 
 (export 'g-type-depth)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_next_base ()
-;;;
-;;; GType g_type_next_base (GType leaf_type, GType root_type);
-;;;
-;;; Given a leaf_type and a root_type which is contained in its anchestry,
-;;; return the type that root_type is the immediate parent of. In other words,
-;;; this function determines the type that is derived directly from root_type
-;;; which is also a base class of leaf_type. Given a root type and a leaf type,
-;;; this function can be used to determine the types and order in which the leaf
-;;; type is descended from the root type.
-;;;
-;;; leaf_type :
-;;;     Descendant of root_type and the type to be returned.
-;;;
-;;; root_type :
-;;;     Immediate parent of the returned type.
-;;;
-;;; Returns :
-;;;     Immediate child of root_type and anchestor of leaf_type.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_next_base" g-type-next-base) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[leaf_type]{Descendant of root_type and the type to be returned.}
+  @argument[root_type]{Immediate parent of the returned type.}
+  @return{Immediate child of root_type and anchestor of leaf_type.}
+  @begin{short}
+    Given a leaf_type and a root_type which is contained in its anchestry,
+    return the type that root_type is the immediate parent of.
+  @end{short}
+  In other words, this function determines the type that is derived directly
+  from root_type which is also a base class of leaf_type. Given a root type and
+  a leaf type, this function can be used to determine the types and order in
+  which the leaf type is descended from the root type."
   (leaf-type g-type)
   (root-type g-type))
 
@@ -1981,23 +1956,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_is_a ()
-;;;
-;;; gboolean g_type_is_a (GType type, GType is_a_type);
-;;;
-;;; If is_a_type is a derivable type, check whether type is a descendant of
-;;; is_a_type. If is_a_type is an interface, check whether type conforms to it.
-;;;
-;;; type :
-;;;     Type to check anchestry for.
-;;;
-;;; is_a_type :
-;;;     Possible anchestor of type or interface type could conform to.
-;;;
-;;; Returns :
-;;;     TRUE if type is_a is_a_type holds true.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_is_a" g-type-is-a) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{Type to check anchestry for.}
+  @argument[is_a_type]{Possible anchestor of type or interface type could
+    conform to.}
+  @return{TRUE if type is_a is_a_type holds true.}
+  @begin{short}
+    If is_a_type is a derivable type, check whether type is a descendant of
+    is_a_type. If is_a_type is an interface, check whether type conforms to it.
+  @end{short}"
   (gtype g-type)
   (is-a-type g-type))
 
@@ -2005,188 +1976,173 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_ref ()
-;;;
-;;; gpointer g_type_class_ref (GType type);
-;;;
-;;; Increments the reference count of the class structure belonging to type.
-;;; This function will demand-create the class if it doesn't exist already.
-;;;
-;;; type :
-;;;     Type ID of a classed type.
-;;;
-;;; Returns :
-;;;     The GTypeClass structure for the given type ID.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_ref" g-type-class-ref) (:pointer g-type-class)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{Type ID of a classed type.}
+  @return{The GTypeClass structure for the given type ID.}
+  @begin{short}
+    Increments the reference count of the class structure belonging to type.
+    This function will demand-create the class if it doesn't exist already.
+  @end{short}"
   (gtype g-type))
 
 (export 'g-type-class-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_peek ()
-;;;
-;;; gpointer g_type_class_peek (GType type);
-;;;
-;;; This function is essentially the same as g_type_class_ref(), except that the
-;;; classes reference count isn't incremented. As a consequence, this function
-;;; may return NULL if the class of the type passed in does not currently exist
-;;; (hasn't been referenced before).
-;;;
-;;; type :
-;;;     Type ID of a classed type.
-;;;
-;;; Returns :
-;;;     The GTypeClass structure for the given type ID or NULL if the class does
-;;;     not currently exist.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_peek" g-type-class-peek) (:pointer g-type-class)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{Type ID of a classed type.}
+  @return{The GTypeClass structure for the given type ID or NULL if the class
+    does not currently exist.}
+  @begin{short}
+    This function is essentially the same as g_type_class_ref(), except that the
+    classes reference count isn't incremented. As a consequence, this function
+    may return NULL if the class of the type passed in does not currently exist
+    (hasn't been referenced before).
+  @end{short}"
   (type g-type))
 
 (export 'g-type-class-peek)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_peek_static ()
-;;;
-;;; gpointer g_type_class_peek_static (GType type);
-;;;
-;;; A more efficient version of g_type_class_peek() which works only for static
-;;; types.
-;;;
-;;; type :
-;;;     Type ID of a classed type.
-;;;
-;;; Returns :
-;;;     The GTypeClass structure for the given type ID or NULL if the class does
-;;;     not currently exist or is dynamically loaded.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_peek_static" g-type-class-peek-static)
     (:pointer g-type-class)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{Type ID of a classed type.}
+  @return{The GTypeClass structure for the given type ID or NULL if the class
+    does not currently exist or is dynamically loaded.}
+  @begin{short}
+    A more efficient version of g_type_class_peek() which works only for static
+    types.
+  @end{short}@break{}
+  Since 2.4"
   (gtype g-type))
 
 (export 'g-type-class-peek-static)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_unref ()
-;;;
-;;; void g_type_class_unref (gpointer g_class);
-;;;
-;;; Decrements the reference count of the class structure being passed in. Once
-;;; the last reference count of a class has been released, classes may be
-;;; finalized by the type system, so further dereferencing of a class pointer
-;;; after g_type_class_unref() are invalid.
-;;;
-;;; g_class :
-;;;     The GTypeClass structure to unreference.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_unref" g-type-class-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[g_class]{The GTypeClass structure to unreference.}
+  @begin{short}
+    Decrements the reference count of the class structure being passed in.
+  @end{short}
+  Once the last reference count of a class has been released, classes may be
+  finalized by the type system, so further dereferencing of a class pointer
+  after g_type_class_unref() are invalid."
   (g-class (:pointer g-type-class)))
 
 (export 'g-type-class-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_peek_parent ()
-;;;
-;;; gpointer g_type_class_peek_parent (gpointer g_class);
-;;;
-;;; This is a convenience function often needed in class initializers. It
-;;; returns the class structure of the immediate parent type of the class passed
-;;; in. Since derived classes hold a reference count on their parent classes as
-;;; long as they are instantiated, the returned class will always exist. This
-;;; function is essentially equivalent to:
-;;;
-;;;   g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)));
-;;;
-;;; g_class :
-;;;     The GTypeClass structure to retrieve the parent class for.
-;;;
-;;; Returns :
-;;;     The parent class of g_class.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_peek_parent" g-type-class-peek-parent)
     (:pointer g-type-class)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[g_class]{The GTypeClass structure to retrieve the parent class for.}
+  @return{The parent class of g_class.}
+  @begin{short}
+    This is a convenience function often needed in class initializers. It
+    returns the class structure of the immediate parent type of the class passed
+    in.
+  @end{short}
+  Since derived classes hold a reference count on their parent classes as long
+  as they are instantiated, the returned class will always exist. This function
+  is essentially equivalent to:
+  @begin{pre}
+ g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)));
+  @end{pre}"
   (g-class (:pointer g-type-class)))
 
 (export 'g-type-class-peek-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_class_add_private ()
-;;;
-;;; void g_type_class_add_private (gpointer g_class, gsize private_size);
-;;;
-;;; Registers a private structure for an instantiatable type.
-;;;
-;;; When an object is allocated, the private structures for the type and all of
-;;; its parent types are allocated sequentially in the same memory block as the
-;;; public structures.
-;;;
-;;; Note that the accumulated size of the private structures of a type and all
-;;; its parent types cannot excced 64 KiB.
-;;;
-;;; This function should be called in the type's class_init() function. The
-;;; private structure can be retrieved using the G_TYPE_INSTANCE_GET_PRIVATE()
-;;; macro.
-;;;
-;;; The following example shows attaching a private structure MyObjectPrivate to
-;;; an object MyObject defined in the standard GObject fashion. type's
-;;; class_init() function. Note the use of a structure member "priv" to avoid
-;;; the overhead of repeatedly calling MY_OBJECT_GET_PRIVATE().
-;;;
-;;;   typedef struct _MyObject        MyObject;
-;;;   typedef struct _MyObjectPrivate MyObjectPrivate;
-;;;
-;;;   struct _MyObject {
-;;;    GObject parent;
-;;;
-;;;    MyObjectPrivate *priv;
-;;;   };
-;;;
-;;;   struct _MyObjectPrivate {
-;;;     int some_field;
-;;;   };
-;;;
-;;;   static void
-;;;   my_object_class_init (MyObjectClass *klass)
-;;;   {
-;;;     g_type_class_add_private (klass, sizeof (MyObjectPrivate));
-;;;   }
-;;;
-;;;   static void
-;;;   my_object_init (MyObject *my_object)
-;;;   {
-;;;     my_object->priv = G_TYPE_INSTANCE_GET_PRIVATE (my_object,
-;;;                                                    MY_TYPE_OBJECT,
-;;;                                                    MyObjectPrivate);
-;;;   }
-;;;
-;;;   static int
-;;;   my_object_get_some_field (MyObject *my_object)
-;;;   {
-;;;     MyObjectPrivate *priv;
-;;;
-;;;     g_return_val_if_fail (MY_IS_OBJECT (my_object), 0);
-;;;
-;;;     priv = my_object->priv;
-;;;
-;;;     return priv->some_field;
-;;;   }
-;;;
-;;; g_class :
-;;;     class structure for an instantiatable type
-;;;
-;;; private_size :
-;;;     size of private structure.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_add_private" g-type-class-add-private) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[g-class]{Class structure for an instantiatable type.}
+  @argument[private-size]{Size of private structure.}
+  @begin{short}
+    Registers a private structure for an instantiatable type.
+  @end{short}
+
+  When an object is allocated, the private structures for the type and all of
+  its parent types are allocated sequentially in the same memory block as the
+  public structures.
+
+  Note that the accumulated size of the private structures of a type and all
+  its parent types cannot excced 64 KiB.
+
+  This function should be called in the type's class_init() function. The
+  private structure can be retrieved using the G_TYPE_INSTANCE_GET_PRIVATE()
+  macro.
+
+  The following example shows attaching a private structure MyObjectPrivate to
+  an object MyObject defined in the standard GObject fashion. type's
+  class_init() function. Note the use of a structure member \"priv\" to avoid
+  the overhead of repeatedly calling MY_OBJECT_GET_PRIVATE().
+  @begin{pre}
+ typedef struct _MyObject        MyObject;
+ typedef struct _MyObjectPrivate MyObjectPrivate;
+
+ struct _MyObject {
+  GObject parent;
+
+  MyObjectPrivate *priv;
+ @};
+
+ struct _MyObjectPrivate {
+   int some_field;
+ @};
+
+ static void
+ my_object_class_init (MyObjectClass *klass)
+ {
+   g_type_class_add_private (klass, sizeof (MyObjectPrivate));
+ @}
+
+ static void
+ my_object_init (MyObject *my_object)
+ {
+   my_object->priv = G_TYPE_INSTANCE_GET_PRIVATE (my_object,
+                                                  MY_TYPE_OBJECT,
+                                                  MyObjectPrivate);
+ @}
+
+ static int
+ my_object_get_some_field (MyObject *my_object)
+ {
+   MyObjectPrivate *priv;
+
+   g_return_val_if_fail (MY_IS_OBJECT (my_object), 0);
+
+   priv = my_object->priv;
+
+   return priv->some_field;
+ @}
+  @end{pre}
+  Since 2.4"
   (class (:pointer g-type-class))
   (private-size g-size))
 
@@ -2215,25 +2171,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_interface_peek ()
-;;;
-;;; gpointer g_type_interface_peek (gpointer instance_class, GType iface_type);
-;;;
-;;; Returns the GTypeInterface structure of an interface to which the passed in
-;;; class conforms.
-;;;
-;;; instance_class :
-;;;     A GTypeClass structure.
-;;;
-;;; iface_type :
-;;;     An interface ID which this class conforms to.
-;;;
-;;; Returns :
-;;;     The GTypeInterface structure of iface_type if implemented by
-;;;     instance_class, NULL otherwise.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interface_peek" g-type-interface-peek)
     (:pointer g-type-interface)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[instance_class]{A GTypeClass structure.}
+  @argument[iface_type]{An interface ID which this class conforms to.}
+  @return{The GTypeInterface structure of iface_type if implemented by
+    instance_class, NULL otherwise.}
+  @begin{short}
+    Returns the GTypeInterface structure of an interface to which the passed in
+    class conforms.
+  @end{short}"
   (instance-class (:pointer g-type-class))
   (iface-type g-type))
 
@@ -2260,30 +2211,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_default_interface_ref ()
-;;;
-;;; gpointer g_type_default_interface_ref (GType g_type);
-;;;
-;;; Increments the reference count for the interface type g_type, and returns
-;;; the default interface vtable for the type.
-;;;
-;;; If the type is not currently in use, then the default vtable for the type
-;;; will be created and initalized by calling the base interface init and
-;;; default vtable init functions for the type (the @base_init and class_init
-;;; members of GTypeInfo). Calling g_type_default_interface_ref() is useful when
-;;; you want to make sure that signals and properties for an interface have been
-;;; installed.
-;;;
-;;; g_type :
-;;;     an interface type
-;;;
-;;; Returns :
-;;;     the default vtable for the interface; call
-;;;     g_type_default_interface_unref() when you are done using the interface.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_default_interface_ref" g-type-default-interface-ref) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[g_type]{an interface type}
+  @return{the default vtable for the interface; call
+    g_type_default_interface_unref() when you are done using the interface.}
+  @begin{short}
+    Increments the reference count for the interface type g_type, and returns
+    the default interface vtable for the type.
+  @end{short}
+
+  If the type is not currently in use, then the default vtable for the type
+  will be created and initalized by calling the base interface init and
+  default vtable init functions for the type (the @code{base_init} and
+  @code{class_init} members of GTypeInfo). Calling
+  g_type_default_interface_ref() is useful when you want to make sure that
+  signals and properties for an interface have been installed.@break{}
+  Since 2.4"
   (gtype g-type))
 
 (export 'g-type-default-interface-ref)
@@ -2308,43 +2255,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_default_interface_unref ()
-;;;
-;;; void g_type_default_interface_unref (gpointer g_iface);
-;;;
-;;; Decrements the reference count for the type corresponding to the interface
-;;; default vtable g_iface. If the type is dynamic, then when no one is using
-;;; the interface and all references have been released, the finalize function
-;;; for the interface's default vtable (the class_finalize member of GTypeInfo)
-;;; will be called.
-;;;
-;;; g_iface :
-;;;     the default vtable structure for a interface, as returned by
-;;;     g_type_default_interface_ref()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_default_interface_unref" g-type-default-interface-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[g_iface]{the default vtable structure for a interface, as returned
+    by}
+  @begin{pre}
+    Decrements the reference count for the type corresponding to the interface
+    default vtable g_iface.
+  @end{pre}
+  If the type is dynamic, then when no one is using the interface and all
+  references have been released, the finalize function for the interface's
+  default vtable (the class_finalize member of GTypeInfo) will be
+  called.@break{}
+  Since 2.4"
   (interface :pointer))
 
 (export 'g-type-default-interface-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_children ()
-;;;
-;;; GType * g_type_children (GType type, guint *n_children);
-;;;
-;;; Return a newly allocated and 0-terminated array of type IDs, listing the
-;;; child types of type. The return value has to be g_free()ed after use.
-;;;
-;;; type :
-;;;     The parent type.
-;;;
-;;; n_children :
-;;;     Optional guint pointer to contain the number of child types.
-;;;
-;;; Returns :
-;;;     Newly allocated and 0-terminated array of child types.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_children" %g-type-children) (:pointer %g-type)
@@ -2352,6 +2284,16 @@
   (n-children (:pointer :uint)))
 
 (defun g-type-children (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{The parent type.}
+  @argument[n_children]{Optional guint pointer to contain the number of child
+    types.}
+  @return{Newly allocated and 0-terminated array of child types.}
+  @begin{short}
+    Return a newly allocated and 0-terminated array of type IDs, listing the
+   child types of type. The return value has to be g_free()ed after use.
+  @end{short}"
   (with-foreign-object (n-children :uint)
     (let ((g-types-ptr (%g-type-children type n-children)))
       (prog1
@@ -2364,21 +2306,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_interfaces ()
-;;;
-;;; GType * g_type_interfaces (GType type, guint *n_interfaces);
-;;;
-;;; Return a newly allocated and 0-terminated array of type IDs, listing the
-;;; interface types that type conforms to. The return value has to be g_free()ed
-;;; after use.
-;;;
-;;; type :
-;;;     The type to list interface types for.
-;;;
-;;; n_interfaces :
-;;;     Optional guint pointer to contain the number of interface types.
-;;;
-;;; Returns :
-;;;     Newly allocated and 0-terminated array of interface types.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interfaces" %g-type-interfaces) (:pointer %g-type)
@@ -2386,6 +2313,17 @@
   (n-interfaces (:pointer :uint)))
 
 (defun g-type-interfaces (type)
+ #+cl-cffi-gtk-documetation
+ "@version{2013-2-6}
+  @argument[type]{The type to list interface types for.}
+  @argument[n_interfaces]{Optional guint pointer to contain the number of
+    interface types.}
+  @return{Newly allocated and 0-terminated array of interface types.}
+  @begin{short}
+    Return a newly allocated and 0-terminated array of type IDs, listing the
+    interface types that type conforms to. The return value has to be g_free()ed
+    after use.
+  @end{pre}"
   (with-foreign-object (n-interfaces :uint)
     (let ((g-types-ptr (%g-type-interfaces type n-interfaces)))
       (prog1
@@ -2398,23 +2336,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_interface_prerequisites ()
-;;;
-;;; GType * g_type_interface_prerequisites (GType interface_type,
-;;;                                         guint *n_prerequisites);
-;;;
-;;; Returns the prerequisites of an interfaces type.
-;;;
-;;; interface_type :
-;;;     an interface type
-;;;
-;;; n_prerequisites :
-;;;     location to return the number of prerequisites, or NULL
-;;;
-;;; Returns :
-;;;     a newly-allocated zero-terminated array of GType containing the
-;;;     prerequisites of interface_type
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interface_prerequisites" %g-type-interface-prerequisites)
@@ -2423,6 +2344,17 @@
   (n-prerequisites (:pointer :uint)))
 
 (defun g-type-interface-prerequisites (interface-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[interface_type]{an interface type}
+  @argument[n_prerequisites]{location to return the number of prerequisites,
+    or @code{nil}}
+  @return{a newly-allocated zero-terminated array of GType containing the
+    prerequisites of interface_type}
+  @begin{short}
+    Returns the prerequisites of an interfaces type.
+  @end{short}@break{}
+  Since 2.2"
   (with-foreign-object (n-prerequisites :uint)
     (let ((g-types-ptr (%g-type-interface-prerequisites interface-type
                                                         n-prerequisites)))
@@ -2436,22 +2368,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_set_qdata ()
-;;;
-;;; void g_type_set_qdata (GType type, GQuark quark, gpointer data);
-;;;
-;;; Attaches arbitrary data to a type.
-;;;
-;;; type :
-;;;     a GType
-;;;
-;;; quark :
-;;;     a GQuark id to identify the data
-;;;
-;;; data :
-;;;     the data
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_set_qdata" g-type-set-qdata) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{a GType}
+  @argument[quark]{a GQuark id to identify the data}
+  @argument[data]{the data}
+  @short{Attaches arbitrary data to a type.}"
   (gtype g-type)
   (quark g-quark)
   (data :pointer))
@@ -2460,27 +2385,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_get_qdata ()
-;;;
-;;; gpointer g_type_get_qdata (GType type, GQuark quark);
-;;;
-;;; Obtains data which has previously been attached to type with
-;;; g_type_set_qdata().
-;;;
-;;; Note that this does not take subtyping into account; data attached to one
-;;; type with g_type_set_qdata() cannot be retrieved from a subtype using
-;;; g_type_get_qdata().
-;;;
-;;; type :
-;;;     a GType
-;;;
-;;; quark :
-;;;     a GQuark id to identify the data
-;;;
-;;; Returns :
-;;;     the data, or NULL if no data was found
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_get_qdata" g-type-get-qdata) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{a GType}
+  @argument[quark]{a GQuark id to identify the data}
+  @return{the data, or NULL if no data was found}
+  @begin{short}
+    Obtains data which has previously been attached to type with
+    g_type_set_qdata().
+  @end{short}
+
+  Note that this does not take subtyping into account; data attached to one
+  type with g_type_set_qdata() cannot be retrieved from a subtype using
+  g_type_get_qdata()."
   (gtype g-type)
   (quark g-quark))
 
@@ -2488,28 +2408,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeQuery
-;;;
-;;; struct GTypeQuery {
-;;;   GType        type;
-;;;   const gchar  *type_name;
-;;;   guint        class_size;
-;;;   guint        instance_size;
-;;; };
-;;;
-;;; A structure holding information for a specific type. It is filled in by the
-;;; g_type_query() function.
-;;;
-;;; GType type;
-;;;     the GType value of the type.
-;;;
-;;; const gchar *type_name;
-;;;     the name of the type.
-;;;
-;;; guint class_size;
-;;;     the size of the class structure.
-;;;
-;;; guint instance_size;
-;;;     the size of the instance structure.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-query
@@ -2521,25 +2419,48 @@
 (export 'g-type-query)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-type-query atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-type-query atdoc:*external-symbols*)
+ "@version{2012-12-21}
+  @begin{short}
+    A structure holding information for a specific type.
+  @end{short}
+  It is filled in by the @fun{g-type-query} function.
+  @begin{pre}
+(defcstruct g-type-query
+  (:type g-type)
+  (:type-name (:string :free-from-foreign nil))
+  (:class-size :uint)
+  (:instance-size :uint))
+  @end{pre}
+  @begin{table}
+    @entry[type]{the @class{g-type} value of the type.}
+    @entry[type-name]{the name of the type.}
+    @entry[class-size]{the size of the class structure.}
+    @entry[instance-size]{the size of the instance structure.}
+  @end{table}
+  @see-function{g-type-query}")
+
+;;; ----------------------------------------------------------------------------
 ;;; g_type_query ()
-;;;
-;;; void g_type_query (GType type, GTypeQuery *query);
-;;;
-;;; Queries the type system for information about a specific type. This function
-;;; will fill in a user-provided structure to hold type-specific information. If
-;;; an invalid GType is passed in, the type member of the GTypeQuery is 0. All
-;;; members filled into the GTypeQuery structure should be considered constant
-;;; and have to be left untouched.
-;;;
-;;; type :
-;;;     the GType value of a static, classed type.
-;;;
-;;; query :
-;;;     A user provided structure that is filled in with constant values upon
-;;;     success.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_query" g-type-query) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[type]{the @class{g-type} value of a static, classed type.}
+  @argument[query]{A user provided structure that is filled in with constant
+    values upon success.}
+  @begin{short}
+    Queries the type system for information about a specific type.
+  @end{short}
+  This function will fill in a user-provided structure to hold type-specific
+  information. If an invalid @class{g-type} is passed in, the type member of the
+  @symbol{g-type-query} is 0. All members filled into the @symbol{g-type-query}
+  structure should be considered constant and have to be left untouched.
+  @see-class{g-type-query}"
   (gtype g-type)
   (query (:pointer g-type-query)))
 
@@ -2775,35 +2696,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_register_static ()
-;;;
-;;; GType g_type_register_static (GType parent_type,
-;;;                               const gchar *type_name,
-;;;                               const GTypeInfo *info,
-;;;                               GTypeFlags flags);
-;;;
-;;; Registers type_name as the name of a new static type derived from
-;;; parent_type. The type system uses the information contained in the GTypeInfo
-;;; structure pointed to by info to manage the type and its instances (if not
-;;; abstract). The value of flags determines the nature (e.g. abstract or not)
-;;; of the type.
-;;;
-;;; parent_type :
-;;;     Type from which this type will be derived.
-;;;
-;;; type_name :
-;;;     0-terminated string used as the name of the new type.
-;;;
-;;; info :
-;;;     The GTypeInfo structure for this type.
-;;;
-;;; flags :
-;;;     Bitwise combination of GTypeFlags values.
-;;;
-;;; Returns :
-;;;     The new type identifier.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_register_static" g-type-register-static) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[parent-type]{Type from which this type will be derived.}
+  @argument[type-name]{String used as the name of the new type.}
+  @argument[info]{The @symbol{g-type-info} structure for this type.}
+  @argument[flags]{Bitwise combination of @symbol{g-type-flags} values.}
+  @return{The new type identifier.}
+  @begin{short}
+    Registers @arg{type-name} as the name of a new static type derived from
+    @arg{parent-type}.
+  @end{short}
+  The type system uses the information contained in the @symbol{g-type-info}
+  structure pointed to by @arg{info} to manage the type and its instances (if
+  not abstract). The value of @arg{flags} determines the nature (e. g. abstract
+  or not) of the type.
+  @see-symbol{g-type-info}
+  @see-symbol{g-type-flags}"
   (parent-type g-type)
   (type-name :string)
   (info (:pointer g-type-info))
@@ -2813,49 +2725,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_register_static_simple ()
-;;;
-;;; GType g_type_register_static_simple (GType parent_type,
-;;;                                      const gchar *type_name,
-;;;                                      guint class_size,
-;;;                                      GClassInitFunc class_init,
-;;;                                      guint instance_size,
-;;;                                      GInstanceInitFunc instance_init,
-;;;                                      GTypeFlags flags);
-;;;
-;;; Registers type_name as the name of a new static type derived from
-;;; parent_type. The value of flags determines the nature (e.g. abstract or not)
-;;; of the type. It works by filling a GTypeInfo struct and calling
-;;; g_type_register_static().
-;;;
-;;; parent_type :
-;;;     Type from which this type will be derived.
-;;;
-;;; type_name :
-;;;     0-terminated string used as the name of the new type.
-;;;
-;;; class_size :
-;;;     Size of the class structure (see GTypeInfo)
-;;;
-;;; class_init :
-;;;     Location of the class initialization function (see GTypeInfo)
-;;;
-;;; instance_size :
-;;;     Size of the instance structure (see GTypeInfo)
-;;;
-;;; instance_init :
-;;;     Location of the instance initialization function (see GTypeInfo)
-;;;
-;;; flags :
-;;;     Bitwise combination of GTypeFlags values.
-;;;
-;;; Returns :
-;;;     The new type identifier.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_register_static_simple"
           g-type-register-static-simple) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[parent_type]{Type from which this type will be derived.}
+  @argument[type_name]{0-terminated string used as the name of the new type.}
+  @argument[class_size]{Size of the class structure (see GTypeInfo)}
+  @argument[class_init]{Location of the class initialization function (see
+    GTypeInfo)}
+  @argument[instance_size]{Size of the instance structure (see GTypeInfo)}
+  @argument[instance_init]{Location of the instance initialization function
+    (see GTypeInfo)}
+  @argument[flags]{Bitwise combination of GTypeFlags values.}
+  @return{The new type identifier.}
+  @begin{short}
+    Registers type_name as the name of a new static type derived from
+    parent_type. The value of flags determines the nature (e.g. abstract or not)
+    of the type. It works by filling a GTypeInfo struct and calling
+    g_type_register_static().
+  @end{short}@break{}
+  Since 2.12"
   (parent-type g-type)
   (type-name :string)
   (class-size :uint)
@@ -2934,27 +2826,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_add_interface_static ()
-;;;
-;;; void g_type_add_interface_static (GType instance_type,
-;;;                                   GType interface_type,
-;;;                                   const GInterfaceInfo *info);
-;;;
-;;; Adds the static interface_type to instantiable_type. The information
-;;; contained in the GInterfaceInfo structure pointed to by info is used to
-;;; manage the relationship.
-;;;
-;;; instance_type :
-;;;     GType value of an instantiable type.
-;;;
-;;; interface_type :
-;;;     GType value of an interface type.
-;;;
-;;; info :
-;;;     The GInterfaceInfo structure for this (instance_type, interface_type)
-;;;     combination.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_add_interface_static" g-type-add-interface-static) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[instance_type]{GType value of an instantiable type.}
+  @argument[interface_type]{GType value of an interface type.}
+  @argument[info]{The GInterfaceInfo structure for this (instance_type,
+    interface_type) combination.}
+  @begin{short}
+    Adds the static interface_type to instantiable_type. The information
+    contained in the GInterfaceInfo structure pointed to by info is used to
+    manage the relationship.
+  @end{short}"
   (instance-type g-type)
   (interface-type g-type)
   (info (:pointer g-interface-info)))
@@ -2984,25 +2869,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_interface_add_prerequisite ()
-;;;
-;;; void g_type_interface_add_prerequisite (GType interface_type,
-;;;                                         GType prerequisite_type);
-;;;
-;;; Adds prerequisite_type to the list of prerequisites of interface_type. This
-;;; means that any type implementing interface_type must also implement
-;;; prerequisite_type. Prerequisites can be thought of as an alternative to
-;;; interface derivation (which GType doesn't support). An interface can have at
-;;; most one instantiatable prerequisite type.
-;;;
-;;; interface_type :
-;;;     GType value of an interface type.
-;;;
-;;; prerequisite_type :
-;;;     GType value of an interface or instantiatable type.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interface_add_prerequisite" g-type-interface-add-prerequisite)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[interface_type]{GType value of an interface type.}
+  @argument[prerequisite_type]{GType value of an interface or instantiatable
+    type.}
+  @begin{short}
+    Adds prerequisite_type to the list of prerequisites of interface_type.
+  @end{short}
+  This means that any type implementing interface_type must also implement
+  prerequisite_type. Prerequisites can be thought of as an alternative to
+  interface derivation (which GType doesn't support). An interface can have at
+  most one instantiatable prerequisite type."
   (interface-type g-type)
   (prerequisite-type g-type))
 
@@ -3061,20 +2943,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_fundamental ()
-;;;
-;;; GType g_type_fundamental (GType type_id);
-;;;
-;;; Internal function, used to extract the fundamental type ID portion. Use
-;;; G_TYPE_FUNDAMENTAL() instead.
-;;;
-;;; type_id :
-;;;     valid type ID
-;;;
-;;; Returns :
-;;;     fundamental type ID
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_fundamental" g-type-fundamental) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type_id]{valid type ID}
+  @return{fundamental type ID}
+  @begin{short}
+    Internal function, used to extract the fundamental type ID portion.
+  @end{short}"
   (gtype g-type))
 
 (export 'g-type-fundamental)
@@ -3230,23 +3108,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_value_table_peek ()
-;;;
-;;; GTypeValueTable * g_type_value_table_peek (GType type);
-;;;
-;;; Returns the location of the GTypeValueTable associated with type. Note that
-;;; this function should only be used from source code that implements or has
-;;; internal knowledge of the implementation of type.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     Location of the GTypeValueTable associated with type or NULL if there is
-;;;     no GTypeValueTable associated with type.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_value_table_peek" g-type-value-table-peek)
     (:pointer g-type-value-table)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-6}
+  @argument[type]{A GType value.}
+  @return{Location of the GTypeValueTable associated with type or NULL if there
+    is no GTypeValueTable associated with type.}
+  @begin{short}
+    Returns the location of the GTypeValueTable associated with type.
+  @end{short}
+  Note that this function should only be used from source code that implements
+  or has internal knowledge of the implementation of type."
   (type g-type))
 
 (export 'g-type-value-table-peek)

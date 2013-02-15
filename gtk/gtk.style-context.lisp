@@ -2270,28 +2270,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBorder
-;;;
-;;; struct GtkBorder {
-;;;   gint16 left;
-;;;   gint16 right;
-;;;   gint16 top;
-;;;   gint16 bottom;
-;;; };
-;;;
-;;; A struct that specifies a border around a rectangular area that can be of
-;;; different width on each side.
-;;;
-;;; gint16 left;
-;;;     The width of the left border
-;;;
-;;; gint16 right;
-;;;     The width of the right border
-;;;
-;;; gint16 top;
-;;;     The width of the top border
-;;;
-;;; gint16 bottom;
-;;;     The width of the bottom border
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gtk-border "GtkBorder"
@@ -2304,6 +2282,83 @@
 (glib::at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))
 
 (export (boxed-related-symbols 'gtk-border))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-border 'type)
+ "@version{2013-2-12}
+  @begin{short}
+    A struct that specifies a border around a rectangular area that can be of
+    different width on each side.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-cstruct gtk-border \"GtkBorder\"
+  (left   :int16 :initform 0)
+  (right  :int16 :initform 0)
+  (top    :int16 :initform 0)
+  (bottom :int16 :initform 0))
+  @end{pre}
+  @begin[code]{table}
+    @entry[left]{The width of the left border}
+    @entry[right]{The width of the right border}
+    @entry[top]{The width of the top border}
+    @entry[bottom]{The width of the bottom border}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-border-left --------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-border-left atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-border-left 'function)
+ "@version{2013-2-12}
+  @begin{short}
+    Accessor of the slot @code{\"left\"} of the @class{gtk-border}
+    struct.
+  @end{short}")
+
+;;; --- gtk-border-right -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-border-right atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-border-right 'function)
+ "@version{2013-2-12}
+  @begin{short}
+    Accessor of the slot @code{\"right\"} of the @class{gtk-border}
+    struct.
+  @end{short}")
+
+;;; --- gtk-border-top ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-border-top atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-border-top 'function)
+ "@version{2013-2-12}
+  @begin{short}
+    Accessor of the slot @code{\"top\"} of the @class{gtk-border}
+    struct.
+  @end{short}")
+
+;;; --- gtk-border-bottom ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-border-bottom atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-border-bottom 'function)
+ "@version{2013-2-12}
+  @begin{short}
+    Accessor of the slot @code{\"bottom\"} of the @class{gtk-border}
+    struct.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_border_new ()

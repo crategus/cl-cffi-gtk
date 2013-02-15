@@ -4,7 +4,7 @@
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -25,88 +25,26 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkActionable
-;;; 
+;;;
 ;;; An interface for widgets that can be associated with actions
-;;;     
+;;;
 ;;; Synopsis
-;;; 
-;;;     GtkActionable
-;;;     GtkActionableInterface
-;;;     
-;;;     gtk_actionable_get_action_name
-;;;     gtk_actionable_set_action_name
-;;;     gtk_actionable_get_action_target_value
-;;;     gtk_actionable_set_action_target_value
-;;;     gtk_actionable_set_action_target
-;;;     gtk_actionable_set_detailed_action_name
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GInterface
-;;;    +----GtkActionable
-;;; 
-;;; Prerequisites
-;;; 
-;;; GtkActionable requires GtkWidget.
 ;;;
-;;; Known Implementations
-;;; 
-;;; GtkActionable is implemented by GtkButton, GtkCheckButton, GtkColorButton,
-;;; GtkFontButton, GtkLinkButton, GtkLockButton, GtkMenuToolButton,
-;;; GtkRadioButton, GtkRadioToolButton, GtkScaleButton, GtkSwitch,
-;;; GtkToggleButton, GtkToggleToolButton, GtkToolButton and GtkVolumeButton.
+;;;    GtkActionable
+;;;    GtkActionableInterface
 ;;;
-;;; Properties
-;;; 
-;;;   "action-name"              gchar*                : Read / Write
-;;;   "action-target"            GVariant*             : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; This interface provides a convenient way of associating widgets with actions
-;;; on a GtkApplicationWindow or GtkApplication.
-;;; 
-;;; It primarily consists of two properties: "action-name" and "action-target".
-;;; There are also some convenience APIs for setting these properties.
-;;; 
-;;; This interface is presently only meaningful if used on a widget that is (or
-;;; will be) located inside of a GtkApplicationWindow and can only be used to
-;;; associate the widget with actions on that window, or its associated
-;;; GtkApplication.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "action-name" property
-;;; 
-;;;   "action-name"              gchar*                : Read / Write
-;;; 
-;;; The name of the associated action, like 'app.quit'.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "action-target" property
-;;; 
-;;;   "action-target"            GVariant*             : Read / Write
-;;; 
-;;; The parameter for action invocations.
-;;; 
-;;; Allowed values: GVariant<*>
-;;; 
-;;; Default value: NULL
+;;;    gtk_actionable_get_action_name
+;;;    gtk_actionable_set_action_name
+;;;    gtk_actionable_get_action_target_value
+;;;    gtk_actionable_set_action_target_value
+;;;    gtk_actionable_set_action_target
+;;;    gtk_actionable_set_detailed_action_name
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkActionable
-;;; 
-;;; typedef struct _GtkActionable GtkActionable;
-;;; 
-;;; An opaque pointer type.
+;;; Interface gtk-actionable
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GtkActionable" gtk-actionable
@@ -118,6 +56,78 @@
   (action-target
    gtk-actionable-action-target
    "action-target" "GVariant" t t))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-actionable atdoc:*class-name-alias*) "Interface"
+      (documentation 'gtk-actionable 'type)
+ "@version{2013-2-5}
+  @begin{short}
+    This interface provides a convenient way of associating widgets with actions
+    on a @class{gtk-application-window} or @class{gtk-application}.
+  @end{short}
+
+  It primarily consists of two properties: @code{\"action-name\"} and
+  @code{\"action-target\"}. There are also some convenience APIs for setting
+  these properties.
+
+  This interface is presently only meaningful if used on a widget that is (or
+  will be) located inside of a @class{gtk-application-window} and can only be
+  used to associate the widget with actions on that window, or its associated
+  @class{gtk-application}.
+
+  @see-slot{gtk-actionable-action-name}
+  @see-slot{gtk-actionable-action-target}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "action-name" 'gtk-actionable) 't)
+ "The @code{\"action-name\"} property of type @code{gchar*} (Read / Write)@br{}
+  The name of the associated action, like \"app.quit\".@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "action-target" 'gtk-actionable) 't)
+ "The @code{\"action-target\"} property of type @symbol{g-variant}
+  (Read / Write)@br{}
+  The parameter for action invocations.@br{}
+  Allowed values: a @symbol{g-variant}@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-actionable-action-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-actionable-action-name 'function)
+ "@version{2013-2-5}
+  @begin{short}
+    Accessor of the slot @code{\"action-name\"} of the @class{gtk-actionable}
+    inferface.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-actionable-action-target atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-actionable-action-target 'function)
+ "@version{2013-2-5}
+  @begin{short}
+    Accessor of the slot @code{\"action-target\"} of the @class{gtk-actionable}
+    inferface.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkActionableInterface
@@ -152,124 +162,112 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_get_action_name ()
-;;; 
-;;; const gchar * gtk_actionable_get_action_name (GtkActionable *actionable);
-;;; 
-;;; Gets the action name for actionable.
-;;; 
-;;; See gtk_actionable_set_action_name() for more information.
-;;; 
-;;; actionable :
-;;;     a GtkActionable widget
-;;; 
-;;; Returns :
-;;;     the action name, or NULL if none is set
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-actionable-get-action-name))
 
 (defun gtk-actionable-get-action-name (actionable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-9}
+  @argument[actionable]{a @class{gtk-actionable} widget}
+  @return{The action name, or @code{nil} if none is set.}
+  @begin{short}
+    Gets the action name for actionable.
+  @end{short}
+
+  See @fun{gtk-actionable-set-action-name} for more information.
+
+  Since 3.4"
   (gtk-actionable-action-name actionable))
 
 (export 'gtk-actionable-get-action-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_action_name ()
-;;; 
-;;; void gtk_actionable_set_action_name (GtkActionable *actionable,
-;;;                                      const gchar *action_name);
-;;; 
-;;; Specifies the name of the action with which this widget should be
-;;; associated. If action_name is NULL then the widget will be unassociated from
-;;; any previous action.
-;;; 
-;;; Usually this function is used when the widget is located (or will be
-;;; located) within the hierarchy of a GtkApplicationWindow.
-;;; 
-;;; Names are of the form "win.save" or "app.quit" for actions on the containing
-;;; GtkApplicationWindow or its associated GtkApplication, respectively. This is
-;;; the same form used for actions in the GMenu associated with the window.
-;;; 
-;;; actionable :
-;;;     a GtkActionable widget
-;;; 
-;;; action_name :
-;;;     an action name, or NULL
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-actionable-set-action-name))
 
 (defun gtk-actionable-set-action-name (actionable action-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-9}
+  @argument[actionable]{a @class{gtk-actionable} widget}
+  @argument[action-name]{an action name, or @code{nil}}
+  @begin{short}
+    Specifies the name of the action with which this widget should be
+    associated.
+  @end{short}
+  If action_name is NULL then the widget will be unassociated from
+  any previous action.
+
+  Usually this function is used when the widget is located (or will be
+  located) within the hierarchy of a @class{gtk-application-window}.
+
+  Names are of the form \"win.save\" or \"app.quit\" for actions on the
+  containing @class{gtk-application-window} or its associated
+  @class{gtk-application}, respectively. This is the same form used for actions
+  in the @class{g-menu} associated with the window.
+
+  Since 3.4"
   (setf (gtk-actionable-action-name actionable) action-name))
 
 (export 'gtk-actionable-set-action-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_get_action_target_value ()
-;;; 
-;;; GVariant * gtk_actionable_get_action_target_value
-;;;                                                  (GtkActionable *actionable)
-;;; 
-;;; Gets the current target value of actionable.
-;;; 
-;;; See gtk_actionable_set_target_value() for more information.
-;;; 
-;;; actionable :
-;;;     a GtkActionable widget
-;;; 
-;;; Returns :
-;;;     the current target value
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-actionable-get-action-target-value))
 
 (defun gtk-actionable-get-action-target-value (actionable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-9}
+  @argument[actionable]{a @class{gtk-actionable} widget}
+  @return{The current target value.}
+  @begin{short}
+    Gets the current target value of actionable.
+  @end{short}
+
+  See @fun{gtk-actionable-set-target-value} for more information.
+
+  Since 3.4"
   (gtk-actionable-action-target actionable))
 
 (export 'gtk-actionable-get-action-target-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_action_target_value ()
-;;; 
-;;; void gtk_actionable_set_action_target_value (GtkActionable *actionable,
-;;;                                              GVariant *target_value);
-;;; 
-;;; Sets the target value of an actionable widget.
-;;; 
-;;; If target_value is NULL then the target value is unset.
-;;; 
-;;; The target value has two purposes. First, it is used as the parameter to
-;;; activation of the action associated with the GtkActionable widget. Second,
-;;; it is used to determine if the widget should be rendered as "active" - the
-;;; widget is active if the state is equal to the given target.
-;;; 
-;;; Consider the example of associating a set of buttons with a GAction with
-;;; string state in a typical "radio button" situation. Each button will be
-;;; associated with the same action, but with a different target value for that
-;;; action. Clicking on a particular button will activate the action with the
-;;; target of that button, which will typically cause the action's state to
-;;; change to that value. Since the action's state is now equal to the target
-;;; value of the button, the button will now be rendered as active (and the
-;;; other buttons, with different targets, rendered inactive).
-;;; 
-;;; actionable :
-;;;     a GtkActionable widget
-;;; 
-;;; target_value :
-;;;     a GVariant to set as the target value, or NULL
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-actionable-set-action-target-value))
 
 (defun gtk-actionable-set-action-target-value (actionable target-value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-9}
+  @argument[actionable]{a @class{gtk-actionable} widget}
+  @argument[target-value]{a @symbol{g-variant} to set as the target value,
+    or @code{nil}}
+  @begin{short}
+    Sets the target value of an actionable widget.
+  @end{short}
+
+  If target_value is @code{nil} then the target value is unset.
+
+  The target value has two purposes. First, it is used as the parameter to
+  activation of the action associated with the @class{gtk-actionable} widget.
+  Second, it is used to determine if the widget should be rendered as \"active\"
+  - the widget is active if the state is equal to the given target.
+
+  Consider the example of associating a set of buttons with a GAction with
+  string state in a typical \"radio button\" situation. Each button will be
+  associated with the same action, but with a different target value for that
+  action. Clicking on a particular button will activate the action with the
+  target of that button, which will typically cause the action's state to
+  change to that value. Since the action's state is now equal to the target
+  value of the button, the button will now be rendered as active (and the
+  other buttons, with different targets, rendered inactive).
+
+  Since 3.4"
   (setf (gtk-actionable-action-target actionable) target-value))
 
 (export 'gtk-actionable-set-action-target-value)
@@ -303,32 +301,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_detailed_action_name ()
-;;; 
-;;; void gtk_actionable_set_detailed_action_name
-;;;                                          (GtkActionable *actionable,
-;;;                                           const gchar *detailed_action_name)
-;;; 
-;;; Sets the action-name and associated string target value of an actionable
-;;; widget.
-;;; 
-;;; This allows for the effect of both gtk_actionable_set_action_name() and
-;;; gtk_actionable_set_target() in the common case that the target is
-;;; string-valued.
-;;; 
-;;; detailed_action_name is a string of the form "action::target" where action
-;;; is the action name and target is the string to use as the target.
-;;; 
-;;; actionable :
-;;;     a GtkActionable widget
-;;; 
-;;; detailed_action_name :
-;;;     the detailed action name
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_actionable_set_detailed_action_name"
            gtk-actionable-set-detailed-action-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-9}
+  @argument[actionable]{a @class{gtk-actionable} widget}
+  @argument[detailed-action-name]{the detailed action name}
+  @begin{short}
+    Sets the action-name and associated string target value of an actionable
+    widget.
+  @end{short}
+
+  This allows for the effect of both @fun{gtk-actionable-set-action-name} and
+  @fun{gtk-actionable-set-target} in the common case that the target is
+  string-valued.
+
+  @arg{detailed-action-name} is a string of the form \"action::target\" where
+  action is the action name and target is the string to use as the target.
+
+  Since 3.4"
   (actionable (g-object gtk-actionable))
   (detailed-action-name :string))
 

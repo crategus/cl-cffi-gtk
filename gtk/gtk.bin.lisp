@@ -37,48 +37,12 @@
 ;;;     GtkBin
 ;;;     
 ;;;     gtk_bin_get_child
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                            +----GtkAlignment
-;;;                            +----GtkComboBox
-;;;                            +----GtkFrame
-;;;                            +----GtkButton
-;;;                            +----GtkMenuItem
-;;;                            +----GtkEventBox
-;;;                            +----GtkExpander
-;;;                            +----GtkHandleBox
-;;;                            +----GtkToolItem
-;;;                            +----GtkOverlay
-;;;                            +----GtkScrolledWindow
-;;;                            +----GtkViewport
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkBin implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Description
-;;; 
-;;; The GtkBin widget is a container with just one child. It is not very useful
-;;; itself, but it is useful for deriving subclasses, since it provides common
-;;; code needed for handling a single child widget.
-;;; 
-;;; Many GTK+ widgets are subclasses of GtkBin, including GtkWindow, GtkButton,
-;;; GtkFrame, GtkHandleBox or GtkScrolledWindow.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBin
-;;; 
-;;; struct GtkBin;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkBin" gtk-bin
@@ -89,22 +53,33 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-bin 'type)
+ "@version{2013-2-12}
+  @short{The @class{gtk-bin} widget is a container with just one child.}
+  It is not very useful itself, but it is useful for deriving subclasses, since
+  it provides common code needed for handling a single child widget.
+
+  Many GTK+ widgets are subclasses of @class{gtk-bin}, including
+  @class{gtk-window}, @class{gtk-button}, @class{gtk-frame},
+  @class{gtk-handle-box} or @class{gtk-scroll-window}.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_bin_get_child ()
-;;; 
-;;; GtkWidget * gtk_bin_get_child (GtkBin *bin);
-;;; 
-;;; Gets the child of the GtkBin, or NULL if the bin contains no child widget.
-;;; The returned widget does not have a reference added, so you do not need to
-;;; unref it.
-;;; 
-;;; bin :
-;;;     a GtkBin
-;;; 
-;;; Returns :
-;;;     pointer to child of the GtkBin
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_bin_get_child" gtk-bin-get-child) (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[bin]{a @class{gtk-bin} widget}
+  @return{pointer to child of the @class{gtk-bin}}
+  @begin{short}
+    Gets the child of the @class{gtk-bin}, or @code{nil} if the bin contains no
+    child widget.
+  @end{short}
+  The returned widget does not have a reference added, so you do not need to
+  unref it."
   (bin (g-object gtk-bin)))
 
 (export 'gtk-bin-get-child)

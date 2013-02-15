@@ -4,7 +4,7 @@
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -191,7 +191,7 @@
 ;;; typedef struct _GtkCellAreaContext GtkCellAreaContext;
 ;;; ----------------------------------------------------------------------------
 
-(define-g-object-class "GtkCellArea" gtk-cell-area
+(define-g-object-class "GtkCellAreaContext" gtk-cell-area-context
   (:superclass g-object
    :export t
    :interfaces nil

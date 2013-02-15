@@ -2,9 +2,10 @@
 ;;; gtk.cell-area-box.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org The API documentation of the
+;;; Lisp Binding is available at http://www.crategus.com/books/cl-cffi-gtk/
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -50,9 +51,6 @@
 ;;;
 ;;; GtkCellAreaBox implements GtkCellLayout, GtkBuildable and GtkOrientable.
 ;;;
-;;; Properties
-;;;
-;;;   "spacing"                  gint                  : Read / Write
 ;;;
 ;;; Child Properties
 ;;;
@@ -61,99 +59,12 @@
 ;;;   "fixed-size"               gboolean              : Read / Write
 ;;;   "pack-type"                GtkPackType           : Read / Write
 ;;;
-;;; Description
-;;;
-;;; The GtkCellAreaBox renders cell renderers into a row or a column depending
-;;; on its GtkOrientation.
-;;;
-;;; GtkCellAreaBox uses a notion of packing. Packing refers to adding cell
-;;; renderers with reference to a particular position in a GtkCellAreaBox. There
-;;; are two reference positions: the start and the end of the box. When the
-;;; GtkCellAreaBox is oriented in the GTK_ORIENTATION_VERTICAL orientation, the
-;;; start is defined as the top of the box and the end is defined as the bottom.
-;;; In the GTK_ORIENTATION_HORIZONTAL orientation start is defined as the left
-;;; side and the end is defined as the right side.
-;;;
-;;; Alignments of GtkCellRenderers rendered in adjacent rows can be configured
-;;; by configuring the "align" child cell property with
-;;; gtk_cell_area_cell_set_property() or by specifying the "align" argument to
-;;; gtk_cell_area_box_pack_start() and gtk_cell_area_box_pack_end().
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "spacing" property
-;;;
-;;;   "spacing"                  gint                  : Read / Write
-;;;
-;;; The amount of space to reserve between cells.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 0
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "align" child property
-;;;
-;;;   "align"                    gboolean              : Read / Write
-;;;
-;;; Whether the cell renderer should be aligned in adjacent rows.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "expand" child property
-;;;
-;;;   "expand"                   gboolean              : Read / Write
-;;;
-;;; Whether the cell renderer should receive extra space when the area receives
-;;; more than its natural size.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "fixed-size" child property
-;;;
-;;;   "fixed-size"               gboolean              : Read / Write
-;;;
-;;; Whether the cell renderer should require the same size for all rows for
-;;; which it was requested.
-;;;
-;;; Default value: TRUE
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pack-type" child property
-;;;
-;;;   "pack-type"                GtkPackType           : Read / Write
-;;;
-;;; A GtkPackType indicating whether the cell renderer is packed with reference
-;;; to the start or end of the area.
-;;;
-;;; Default value: GTK_PACK_START
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellAreaBox
-;;;
-;;; struct GtkCellAreaBox;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellAreaBox" gtk-cell-area-box
@@ -166,6 +77,90 @@
   ((spacing
     gtk-cell-area-box-spacing
     "spacing" "gint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-area-box 'type)
+ "@version{2013-2-15}
+  @begin{short}
+    The GtkCellAreaBox renders cell renderers into a row or a column depending
+    on its GtkOrientation.
+  @end{short}
+
+  GtkCellAreaBox uses a notion of packing. Packing refers to adding cell
+  renderers with reference to a particular position in a GtkCellAreaBox. There
+  are two reference positions: the start and the end of the box. When the
+  GtkCellAreaBox is oriented in the GTK_ORIENTATION_VERTICAL orientation, the
+  start is defined as the top of the box and the end is defined as the bottom.
+  In the GTK_ORIENTATION_HORIZONTAL orientation start is defined as the left
+  side and the end is defined as the right side.
+
+  Alignments of GtkCellRenderers rendered in adjacent rows can be configured
+  by configuring the \"align\" child cell property with
+  gtk_cell_area_cell_set_property() or by specifying the \"align\" argument to
+  gtk_cell_area_box_pack_start() and gtk_cell_area_box_pack_end().
+  @begin[Child Property Details]{dictionary}
+    @subheading{The \"align\" child property}
+      @code{\"align\"} of type @code{gboolean} (Read / Write)@br{}
+      Whether the cell renderer should be aligned in adjacent rows.@br{}
+      Default value: @code{nil}@br{}
+      Since 3.0
+
+    @subheading{The \"expand\" child property}
+      @code{\"expand\"} of type @code{gboolean} (Read / Write)@br{}
+      Whether the cell renderer should receive extra space when the area
+      receives more than its natural size.@br{}
+      Default value: @code{nil}@br{}
+      Since 3.0
+
+    @subheading{The \"fixed-size\" child property}
+      @code{\"fixed-size\"} of type @code{gboolean} (Read / Write)@br{}
+      Whether the cell renderer should require the same size for all rows for
+      which it was requested.@br{}
+      Default value: @code{true}@br{}
+      Since 3.0
+
+    @subheading{The \"pack-type\" child property}
+      @code{\"pack-type\"} of type @code{GtkPackType} (Read / Write)@br{}
+      A GtkPackType indicating whether the cell renderer is packed with
+      reference to the start or end of the area.@br{}
+      Default value: @code{:start}@br{}
+      Since 3.0
+  @end{dictionary}
+  @see-slot{gtk-cell-area-box-spacing}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-cell-area-box) 't)
+ "The @code{\"spacing\"} property of type @code{gint} (Read / Write)@br{}
+  The amount of space to reserve between cells.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: @code{0}@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-area-box-spacing ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-area-box-spacing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-area-box-spacing 'function)
+ "@version{2013-2-15}
+  @begin{short}
+    Accessor of the slot @code{\"spacing\"} of the @class{gtk-cell-area-box}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellAreaBoxClass

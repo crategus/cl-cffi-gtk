@@ -26,7 +26,7 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
-;;; ---------------------------------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkProgressBar
 ;;; 
@@ -175,6 +175,8 @@
 ;;; Default value: FALSE
 ;;; 
 ;;; Since 3.0
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "text" property
 ;;; 
 ;;;   "text"                     gchar*                : Read / Write

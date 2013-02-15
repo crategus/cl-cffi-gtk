@@ -8,7 +8,7 @@
 ;;; Version 3.4.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,82 +27,11 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; GtkCheckButton
-;;; 
-;;; Create widgets with a discrete toggle button
-;;;     
-;;; Synopsis
-;;; 
-;;;     GtkCheckButton
-;;;
-;;;     gtk_check_button_new
-;;;     gtk_check_button_new_with_label
-;;;     gtk_check_button_new_with_mnemonic
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkButton
-;;;                                  +----GtkToggleButton
-;;;                                        +----GtkCheckButton
-;;;                                              +----GtkRadioButton
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkCheckButton implements AtkImplementorIface, GtkBuildable, GtkActionable
-;;; and GtkActivatable.
-;;;
-;;; Style Properties
-;;; 
-;;;   "indicator-size"           gint                  : Read
-;;;   "indicator-spacing"        gint                  : Read
-;;; 
-;;; Description
-;;; 
-;;; A GtkCheckButton places a discrete GtkToggleButton next to a widget,
-;;; (usually a GtkLabel). See the section on GtkToggleButton widgets for more
-;;; information about toggle/check buttons.
-;;; 
-;;; The important signal ( "toggled" ) is also inherited from GtkToggleButton.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "indicator-size" style property
-;;; 
-;;;   "indicator-size"           gint                  : Read
-;;; 
-;;; Size of check or radio indicator.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "indicator-spacing" style property
-;;; 
-;;;   "indicator-spacing"        gint                  : Read
-;;; 
-;;; Spacing around check or radio indicator.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 2
-;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkCheckButton
-;;; 
-;;; struct GtkCheckButton;
+;;; Class gtk-check-button
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCheckButton" gtk-check-button
@@ -116,65 +45,84 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_check_button_new ()
-;;; 
-;;; GtkWidget * gtk_check_button_new (void);
-;;; 
-;;; Creates a new GtkCheckButton.
-;;; 
-;;; Returns :
-;;;     a GtkWidget
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-check-button 'type)
+ "@version{2013-2-4}
+  @begin{short}
+    A @sym{gtk-check-button} places a discrete @class{gtk-toggle-button} next to
+    a widget, (usually a @class{gtk-label}). See the section on
+    @class{gtk-toggle-button} widgets for more information about toggle/check
+    buttons.
+  @end{short}@break{}
+  The important signal \"toggled\" is also inherited from
+  @class{gtk-toggle-button}.
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"indicator-size\" style property}
+      @code{\"indicator-size\"} of type @code{gint} (Read)@br{}
+      Size of check or radio indicator.@br{}
+      Allowed values: @code{>= 0}
+      Default value: @code{16}
+
+    @subheading{The \"indicator-spacing\" style property}
+      @code{\"indicator-spacing\"} of type @code{gint} (Read)@br{}
+      Spacing around check or radio indicator.@br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{2}
+  @end{dictionary}")
+
+;;; ----------------------------------------------------------------------------
+;;; gtk-check-button-new
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-button-new))
 
 (defun gtk-check-button-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @return{A @class{gtk-check-button} widget.}
+  @short{Creates a new GtkCheckButton.}"
   (make-instance 'gtk-check-button))
 
 (export 'gtk-check-button-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_check_button_new_with_label ()
-;;; 
-;;; GtkWidget * gtk_check_button_new_with_label (const gchar *label);
-;;; 
-;;; Creates a new GtkCheckButton with a GtkLabel to the right of it.
-;;; 
-;;; label :
-;;;     the text for the check button.
-;;; 
-;;; Returns :
-;;;     a GtkWidget
+;;; gtk-check-button-new-with-label
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-button-new-with-label))
 
 (defun gtk-check-button-new-with-label (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[label]{the text for the check button.}
+  @return{A @class{gtk-check-button} widget.}
+  @begin{short}
+    Creates a new @class{gtk-check-button} widget with a @class{gtk-label} to
+    the right of it.
+  @end{short}"
   (make-instance 'gtk-check-button
                  :label label))
 
 (export 'gtk-check-button-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_check_button_new_with_mnemonic ()
-;;; 
-;;; GtkWidget * gtk_check_button_new_with_mnemonic (const gchar *label);
-;;; 
-;;; Creates a new GtkCheckButton containing a label. The label will be created
-;;; using gtk_label_new_with_mnemonic(), so underscores in label indicate the
-;;; mnemonic for the check button.
-;;; 
-;;; label :
-;;;     The text of the button, with an underscore in front of the mnemonic
-;;;     character
-;;; 
-;;; Returns :
-;;;     a new GtkCheckButton
+;;; gtk-check-button-new-with-mnemonic
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Rewrite the implementation in terms of the function make-instance
 
 (defcfun ("gtk_check_button_new_with_mnemonic"
            gtk-check-button-new-with-mnemonic)
     (g-object gtk-widget)
+#+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[label]{The text of the button, with an underscore in front of the
+    mnemonic character.}
+  @return{A @class{gtk-check-button} widget.}
+  @short{Creates a new @class{gtk-check-button} widget containing a label.}
+  The label will be created using @fun{gtk-label-new-with-mnemonic}, so
+  underscores in label indicate the mnemonic for the check button."
   (label :string))
 
 (export 'gtk-check-button-new-with-mnemonic)

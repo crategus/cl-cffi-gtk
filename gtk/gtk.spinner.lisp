@@ -23,63 +23,11 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; GtkSpinner
-;;; 
-;;; Show a spinner animation
-;;;     
-;;; Synopsis
-;;; 
-;;;     GtkSpinner
-;;;     
-;;;     gtk_spinner_new
-;;;     gtk_spinner_start
-;;;     gtk_spinner_stop
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkSpinner
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkSpinner implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Properties
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; A GtkSpinner widget displays an icon-size spinning animation. It is often
-;;; used as an alternative to a GtkProgressBar for displaying indefinite
-;;; activity, instead of actual progress.
-;;; 
-;;; To start the animation, use gtk_spinner_start(), to stop it use
-;;; gtk_spinner_stop().
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;; 
-;;; Whether the spinner is active.
-;;; 
-;;; Default value: FALSE
-;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkSpinner
-;;; 
-;;; struct GtkSpinner;
+;;; Class gtk-spinner
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkSpinner" gtk-spinner
@@ -93,57 +41,84 @@
     "active" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_spinner_new ()
-;;; 
-;;; GtkWidget * gtk_spinner_new (void);
-;;; 
-;;; Returns a new spinner widget. Not yet started.
-;;; 
-;;; Returns :
-;;;     a new GtkSpinner
-;;; 
-;;; Since 2.20
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-spinner 'type)
+ "@version{2013-2-4}
+  @begin{short}
+    A @sym{gtk-spinner} widget displays an icon size spinning animation. It is
+    often used as an alternative to a @class{gtk-progress-bar} widget for
+    displaying indefinite activity, instead of actual progress.
+  @end{short}
+
+  To start the animation, use @fun{gtk-spinner-start}, to stop it use
+  @fun{gtk-spinner-stop}.
+  @see-slot{gtk-spinner-active}")
+
+;;; ----------------------------------------------------------------------------
+;;; Property Details
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-spinner) 't)
+ "The @code{\"active\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether the spinner is active.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;; Accessors
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-spinner-active -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-spinner-active atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-spinner-active 'function)
+ "@version{2013-2-4}
+  @begin{short}
+    Accessor of the slot \"active\" of the @class{gtk-spinner} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+;;; gtk-spinner-new
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-spinner-new))
 
 (defun gtk-spinner-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @return{A new @class{gtk-spinner} widget.}
+  @short{Returns a new spinner widget. Not yet started.}@break{}
+  Since 2.20"
   (make-instance 'gtk-spinner))
 
 (export 'gtk-spinner-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_spinner_start ()
-;;; 
-;;; void gtk_spinner_start (GtkSpinner *spinner);
-;;; 
-;;; Starts the animation of the spinner.
-;;; 
-;;; spinner :
-;;;     a GtkSpinner
-;;; 
-;;; Since 2.20
+;;; gtk-spinner-start
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_spinner_start" gtk-spinner-start) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[spinner]{a @class{gtk-spinner} widget.}
+  @short{Starts the animation of the spinner.}@break{}
+  Since 2.20"
   (spinner (g-object gtk-spinner)))
 
 (export 'gtk-spinner-start)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_spinner_stop ()
-;;; 
-;;; void gtk_spinner_stop (GtkSpinner *spinner);
-;;; 
-;;; Stops the animation of the spinner.
-;;; 
-;;; spinner :
-;;;     a GtkSpinner
-;;; 
-;;; Since 2.20
+;;; gtk-spinner-stop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_spinner_stop" gtk-spinner-stop) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-4}
+  @argument[spinner]{a @class{gtk-spinner} widget.}
+  @short{Stops the animation of the spinner.}@break{}
+  Since 2.20"
   (spinner (g-object gtk-spinner)))
 
 (export 'gtk-spinner-stop)

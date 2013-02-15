@@ -372,23 +372,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_loop_new ()
-;;; 
-;;; GMainLoop * g_main_loop_new (GMainContext *context, gboolean is_running);
-;;; 
-;;; Creates a new GMainLoop structure.
-;;; 
-;;; context :
-;;;     a GMainContext (if NULL, the default context will be used)
-;;; 
-;;; is_running :
-;;;     set to TRUE to indicate that the loop is running. This is not very
-;;;     important since calling g_main_loop_run() will set this to TRUE anyway.
-;;; 
-;;; Returns :
-;;;     a new GMainLoop.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_new" g-main-loop-new) (:pointer g-main-loop)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-25}
+  @argument[context]{a @type{g-main-context} (if a @code{null}-pointer, the
+    default context will be used)}
+  @argument[is-running]{set to @code{t} to indicate that the loop is running.
+    This is not very important since calling @fun{g-main-loop-run} will set this
+    to @code{t} anyway.}
+  @return{A new @type{g-main-loop}.}
+  @short{Creates a new @type{g-main-loop} structure.}
+  @begin[Example]{dictionary}
+    Create a running main loop with a default context and quit the main loop.
+    @begin{pre}
+ (setq main-loop (g-main-loop-new (null-pointer) t))
+=> #.(SB-SYS:INT-SAP #X0808DF88)
+ (g-main-loop-is-running main-loop) => T
+ (g-main-loop-quit main-loop)
+ (g-main-loop-is-running main-loop) => NIL
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-main-loop}
+  @see-function{g-main-loop-run}"
   (context (:pointer g-main-context))
   (is-running :boolean))
 
@@ -396,36 +403,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_loop_ref ()
-;;; 
-;;; GMainLoop * g_main_loop_ref (GMainLoop *loop);
-;;; 
-;;; Increases the reference count on a GMainLoop object by one.
-;;; 
-;;; loop :
-;;;     a GMainLoop
-;;; 
-;;; Returns :
-;;;     loop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_ref" g-main-loop-ref) (:pointer g-main-loop)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-25}
+  @argument[loop]{a @type{g-main-loop}}
+  @return{The argument @arg{loop}.}
+  @short{Increases the reference count on a @type{g-main-loop} object by one.}
+  @see-type{g-main-loop}"
   (loop (:pointer g-main-loop)))
 
 (export 'g-main-loop-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_loop_unref ()
-;;; 
-;;; void g_main_loop_unref (GMainLoop *loop);
-;;; 
-;;; Decreases the reference count on a GMainLoop object by one. If the result is
-;;; zero, free the loop and free all associated memory.
-;;; 
-;;; loop :
-;;;     a GMainLoop
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_unref" g-main-loop-unref) (:pointer g-main-loop)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-25}
+  @argument[loop]{a @type{g-main-loop}}
+  @short{Decreases the reference count on a @type{g-main-loop} object by one.}
+  If the result is zero, free the @arg{loop} and free all associated memory.
+  @see-type{g-main-loop}"
   (loop (:pointer g-main-loop)))
 
 (export 'g-main-loop-unref)
@@ -444,6 +445,15 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_run" g-main-loop-run) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-25}
+  @argument[loop]{a @type{g-main-loop}}
+  @begin{short}
+    Runs a main @arg{loop} until @fun{g-main-loop-quit} is called on the
+    @arg{loop}.
+  @end{short}
+  If this is called for the thread of the @arg{loop}'s @type{g-main-context}, it
+  will process events from the @arg{loop}, otherwise it will simply wait."
   (loop (:pointer g-main-loop)))
 
 (export 'g-main-loop-run)
@@ -1897,22 +1907,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_idle_source_new ()
-;;; 
-;;; GSource * g_idle_source_new (void);
-;;; 
-;;; Creates a new idle source.
-;;; 
-;;; The source will not initially be associated with any GMainContext and must
-;;; be added to one with g_source_attach() before it will be executed. Note that
-;;; the default priority for idle sources is G_PRIORITY_DEFAULT_IDLE, as
-;;; compared to other sources which have a default priority of
-;;; G_PRIORITY_DEFAULT.
-;;; 
-;;; Returns :
-;;;     the newly-created idle source
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_idle_source_new" g-idle-source-new) (:pointer g-source))
+(defcfun ("g_idle_source_new" g-idle-source-new) (:pointer g-source)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @return{The newly created idle source.}
+  @begin{short}
+    Creates a new idle source.
+  @end{short}@break{}
+  The source will not initially be associated with any @type{g-main-context} and
+  must be added to one with @fun{g-source-attach} before it will be executed.
+  Note that the default priority for idle sources is
+  @variable{g-priority-default-idle}, as compared to other sources which have a
+  default priority of @variable{g-priority-default}.")
+
+(export 'g-idle-source-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_idle_add ()

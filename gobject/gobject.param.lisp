@@ -8,7 +8,7 @@
 ;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -366,21 +366,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecBoolean
-;;;
-;;; struct GParamSpecBoolean {
-;;;   GParamSpec    parent_instance;
-;;;
-;;;   gboolean      default_value;
-;;; };
-;;;
-;;; A GParamSpec derived structure that contains the meta data for boolean
-;;; properties.
-;;;
-;;; GParamSpec parent_instance;
-;;;     private GParamSpec portion
-;;;
-;;; gboolean default_value;
-;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-boolean
@@ -390,40 +375,44 @@
 (export 'g-param-spec-boolean)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-param-spec-boolean atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-param-spec-boolean atdoc:*external-symbols*)
+ "@version{2013-2-7}
+  @begin{short}
+    A GParamSpec derived structure that contains the meta data for boolean
+    properties.
+  @end{short}
+  @begin{pre}
+(defcstruct g-param-spec-boolean
+  (:parent-instance g-param-spec)
+  (:default-value :boolean))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:parent-instance]{private GParamSpec portion}
+    @entry[:default-value]{default value for the property specified}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_boolean ()
-;;;
-;;; GParamSpec * g_param_spec_boolean (const gchar *name,
-;;;                                    const gchar *nick,
-;;;                                    const gchar *blurb,
-;;;                                    gboolean default_value,
-;;;                                    GParamFlags flags);
-;;;
-;;; Creates a new GParamSpecBoolean instance specifying a G_TYPE_BOOLEAN
-;;; property.
-;;;
-;;; See g_param_spec_internal() for details on property names.
-;;;
-;;; name :
-;;;     canonical name of the property specified
-;;;
-;;; nick :
-;;;     nick name for the property specified
-;;;
-;;; blurb :
-;;;     description of the property specified
-;;;
-;;; default_value :
-;;;     default value for the property specified
-;;;
-;;; flags :
-;;;     flags for the property specified
-;;;
-;;; Returns :
-;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_boolean" g-param-spec-boolean)
     (:pointer g-param-spec-boolean)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[name]{canonical name of the property specified}
+  @argument[nick]{nick name for the property specified}
+  @argument[blurb]{description of the property specified}
+  @argument[default_value]{default value for the property specified}
+  @argument[flags]{flags for the property specified}
+  @return{A newly created parameter specification.}
+  @begin{short}
+    Creates a new GParamSpecBoolean instance specifying a G_TYPE_BOOLEAN
+    property.
+  @end{short}
+  See g_param_spec_internal() for details on property names."
   (name :string)
   (nick :string)
   (blurb :string)
@@ -434,19 +423,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_set_boolean ()
-;;;
-;;; void g_value_set_boolean (GValue *value, gboolean v_boolean);
-;;;
-;;; Set the contents of a G_TYPE_BOOLEAN GValue to v_boolean.
-;;;
-;;; value :
-;;;     a valid GValue of type G_TYPE_BOOLEAN
-;;;
-;;; v_boolean :
-;;;     boolean value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_boolean" g-value-set-boolean) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a valid GValue of type G_TYPE_BOOLEAN}
+  @argument[v_boolean]{boolean value to be set}
+  @begin{short}
+    Set the contents of a G_TYPE_BOOLEAN GValue to v_boolean.
+  @end{short}"
   (value (:pointer g-value))
   (v-boolean :boolean))
 
@@ -454,19 +440,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_get_boolean ()
-;;;
-;;; gboolean g_value_get_boolean (const GValue *value);
-;;;
-;;; Get the contents of a G_TYPE_BOOLEAN GValue.
-;;;
-;;; value :
-;;;     a valid GValue of type G_TYPE_BOOLEAN
-;;;
-;;; Returns :
-;;;     boolean contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_boolean" g-value-get-boolean) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-7}
+  @argument[value]{a valid GValue of type G_TYPE_BOOLEAN}
+  @return{boolean contents of value}
+  @short{Get the contents of a G_TYPE_BOOLEAN GValue.}"
   (value (:pointer g-value)))
 
 (export 'g-value-get-boolean)

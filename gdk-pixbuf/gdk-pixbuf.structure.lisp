@@ -8,7 +8,7 @@
 ;;; Version 2.26.1. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -53,177 +53,6 @@
 ;;;     gdk_pixbuf_get_rowstride
 ;;;     gdk_pixbuf_get_byte_length
 ;;;     gdk_pixbuf_get_option
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GdkPixbuf
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GdkPixbuf implements GIcon.
-;;;
-;;; Properties
-;;;
-;;;   "bits-per-sample"    gint                : Read / Write / Construct Only
-;;;   "colorspace"         GdkColorspace       : Read / Write / Construct Only
-;;;   "has-alpha"          gboolean            : Read / Write / Construct Only
-;;;   "height"             gint                : Read / Write / Construct Only
-;;;   "n-channels"         gint                : Read / Write / Construct Only
-;;;   "pixels"             gpointer            : Read / Write / Construct Only
-;;;   "rowstride"          gint                : Read / Write / Construct Only
-;;;   "width"              gint                : Read / Write / Construct Only
-;;;
-;;; Description
-;;;
-;;; The GdkPixbuf structure contains information that describes an image in
-;;; memory.
-;;;
-;;; Image Data
-;;;
-;;; Image data in a pixbuf is stored in memory in uncompressed, packed format.
-;;; Rows in the image are stored top to bottom, and in each row pixels are
-;;; stored from left to right. There may be padding at the end of a row. The
-;;; "rowstride" value of a pixbuf, as returned by gdk_pixbuf_get_rowstride(),
-;;; indicates the number of bytes between rows.
-;;;
-;;; Example 1. put_pixel() example
-;;;
-;;; The following code illustrates a simple put_pixel() function for RGB pixbufs
-;;; with 8 bits per channel with an alpha channel. It is not included in the
-;;; gdk-pixbuf library for performance reasons; rather than making several
-;;; function calls for each pixel, your own code can take shortcuts.
-;;;
-;;;   static void
-;;;   put_pixel (GdkPixbuf *pixbuf, int x, int y, guchar red, guchar green,
-;;;                                               guchar blue, guchar alpha)
-;;;   {
-;;;     int width, height, rowstride, n_channels;
-;;;     guchar *pixels, *p;
-;;;
-;;;     n_channels = gdk_pixbuf_get_n_channels (pixbuf);
-;;;
-;;;     g_assert (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB);
-;;;     g_assert (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8);
-;;;     g_assert (gdk_pixbuf_get_has_alpha (pixbuf));
-;;;     g_assert (n_channels == 4);
-;;;
-;;;     width = gdk_pixbuf_get_width (pixbuf);
-;;;     height = gdk_pixbuf_get_height (pixbuf);
-;;;
-;;;     g_assert (x >= 0 && x < width);
-;;;     g_assert (y >= 0 && y < height);
-;;;
-;;;     rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-;;;     pixels = gdk_pixbuf_get_pixels (pixbuf);
-;;;
-;;;     p = pixels + y * rowstride + x * n_channels;
-;;;     p[0] = red;
-;;;     p[1] = green;
-;;;     p[2] = blue;
-;;;     p[3] = alpha;
-;;;   }
-;;;
-;;; This function will not work for pixbufs with images that are other than
-;;; 8 bits per sample or channel, but it will work for most of the pixbufs that
-;;; GTK+ uses.
-;;;
-;;; Note
-;;;
-;;; If you are doing memcpy() of raw pixbuf data, note that the last row in the
-;;; pixbuf may not be as wide as the full rowstride, but rather just as wide as
-;;; the pixel data needs to be. That is, it is unsafe to do memcpy (dest,
-;;; pixels, rowstride * height) to copy a whole pixbuf. Use gdk_pixbuf_copy()
-;;; instead, or compute the width in bytes of the last row as
-;;; width * ((n_channels * bits_per_sample + 7) / 8).
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "bits-per-sample" property
-;;;
-;;;   "bits-per-sample" gint                  : Read / Write / Construct Only
-;;;
-;;; The number of bits per sample. Currently only 8 bit per sample are
-;;; supported.
-;;;
-;;; Allowed values: [1,16]
-;;;
-;;; Default value: 8
-;;
-;;; ----------------------------------------------------------------------------
-;;; The "colorspace" property
-;;;
-;;;   "colorspace" GdkColorspace         : Read / Write / Construct Only
-;;;
-;;; The colorspace in which the samples are interpreted.
-;;;
-;;; Default value: GDK_COLORSPACE_RGB
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-alpha" property
-;;;
-;;;   "has-alpha" gboolean              : Read / Write / Construct Only
-;;;
-;;; Whether the pixbuf has an alpha channel.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "height" property
-;;;
-;;;   "height" gint                  : Read / Write / Construct Only
-;;;
-;;; The number of rows of the pixbuf.
-;;;
-;;; Allowed values: >= 1
-;;;
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "n-channels" property
-;;;
-;;;   "n-channels" gint                  : Read / Write / Construct Only
-;;;
-;;; The number of samples per pixel. Currently, only 3 or 4 samples per pixel
-;;; are supported.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 3
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels" property
-;;;
-;;;   "pixels" gpointer              : Read / Write / Construct Only
-;;;
-;;; A pointer to the pixel data of the pixbuf.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "rowstride" property
-;;;
-;;;   "rowstride" gint                  : Read / Write / Construct Only
-;;;
-;;; The number of bytes between the start of a row and the start of the next
-;;; row. This number must (obviously) be at least as large as the width of the
-;;; pixbuf.
-;;;
-;;; Allowed values: >= 1
-;;;
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "width" property
-;;;
-;;;   "width" gint                  : Read / Write / Construct Only
-;;;
-;;; The number of columns of the pixbuf.
-;;;
-;;; Allowed values: >= 1
-;;;
-;;; Default value: 1
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk-pixbuf)
@@ -331,13 +160,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkPixbuf
-;;;
-;;; typedef struct _GdkPixbuf GdkPixbuf;
-;;;
-;;; This is the main structure in the &gdk-pixbuf; library. It is used to
-;;; represent images. It contains information about the image's pixel data, its
-;;; color space, bits per sample, width and height, and the rowstride (the
-;;; number of bytes between the start of one row and the start of the next).
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkPixbuf" gdk-pixbuf
@@ -369,6 +191,260 @@
    (width
     gdk-pixbuf-width
     "width" "gint" t nil)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-pixbuf 'type)
+ "@version{2013-2-8}
+  @begin{short}
+    This is the main structure in the @sym{gdk-pixbuf} library. It is used to
+    represent images. It contains information about the image's pixel data, its
+    color space, bits per sample, width and height, and the rowstride (the
+    number of bytes between the start of one row and the start of the next).
+  @end{short}
+
+  @heading{Image Data}
+  Image data in a pixbuf is stored in memory in uncompressed, packed format.
+  Rows in the image are stored top to bottom, and in each row pixels are
+  stored from left to right. There may be padding at the end of a row. The
+  \"rowstride\" value of a pixbuf, as returned by
+  @fun{gdk-pixbuf-get-rowstride}, indicates the number of bytes between rows.
+
+  @subheading{Example 1. put_pixel() example}
+  The following code illustrates a simple @code{put_pixel()} function for RGB
+  pixbufs with 8 bits per channel with an alpha channel. It is not included in
+  the @sym{gdk-pixbuf} library for performance reasons; rather than making
+  several function calls for each pixel, your own code can take shortcuts.
+  @begin{pre}
+ static void
+ put_pixel (GdkPixbuf *pixbuf, int x, int y, guchar red, guchar green,
+                                             guchar blue, guchar alpha)
+ {
+   int width, height, rowstride, n_channels;
+   guchar *pixels, *p;
+
+   n_channels = gdk_pixbuf_get_n_channels (pixbuf);
+
+   g_assert (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB);
+   g_assert (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8);
+   g_assert (gdk_pixbuf_get_has_alpha (pixbuf));
+   g_assert (n_channels == 4);
+
+   width = gdk_pixbuf_get_width (pixbuf);
+   height = gdk_pixbuf_get_height (pixbuf);
+
+   g_assert (x >= 0 && x < width);
+   g_assert (y >= 0 && y < height);
+
+   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+   pixels = gdk_pixbuf_get_pixels (pixbuf);
+
+   p = pixels + y * rowstride + x * n_channels;
+   p[0] = red;
+   p[1] = green;
+   p[2] = blue;
+   p[3] = alpha;
+  @}
+  @end{pre}
+  This function will not work for pixbufs with images that are other than
+  8 bits per sample or channel, but it will work for most of the pixbufs that
+  GTK+ uses.
+
+  @heading{Note}
+  If you are doing @code{memcpy()} of raw pixbuf data, note that the last row in
+  the pixbuf may not be as wide as the full rowstride, but rather just as wide
+  as the pixel data needs to be. That is, it is unsafe to do
+  @code{memcpy (dest, pixels, rowstride * height)} to copy a whole pixbuf. Use
+  @fun{gdk-pixbuf-copy} instead, or compute the width in bytes of the last row
+  as @code{width * ((n_channels * bits_per_sample + 7) / 8)}.
+  @see-slot{gdk-pixbuf-bits-per-sample}
+  @see-slot{gdk-pixbuf-colorspace}
+  @see-slot{gdk-pixbuf-has-alpha}
+  @see-slot{gdk-pixbuf-height}
+  @see-slot{gdk-pixbuf-n-channels}
+  @see-slot{gdk-pixbuf-pixels}
+  @see-slot{gdk-pixbuf-rowstride}
+  @see-slot{gdk-pixbuf-width}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "bits-per-sample" 'gdk-pixbuf) 't)
+ "The @code{\"bits-per-sample\"} property of type @code{gint}
+  (Read / Write / Construct Only)@br{}
+  The number of bits per sample. Currently only 8 bit per sample are
+  supported.@br{}
+  Allowed values: @code{[1,16]}@br{}
+  Default value: @code{8}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "colorspace" 'gdk-pixbuf) 't)
+ "The @code{\"colorspace\"} property of type @symbol{gdk-colorspace}
+  (Read / Write / Construct Only)@br{}
+  The colorspace in which the samples are interpreted.@br{}
+  Default value: @code{:rgb}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-alpha" 'gdk-pixbuf) 't)
+ "The @code{\"has-alpha\"} property of type @code{gboolean}
+  (Read / Write / Construct Only)@br{}
+  Whether the pixbuf has an alpha channel.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "height" 'gdk-pixbuf) 't)
+ "The @code{\"height\"} property of type @code{gint}
+  (Read / Write / Construct Only)@br{}
+  The number of rows of the pixbuf.@br{}
+  Allowed values: @code{>= 1}@br{}
+  Default value: @code{1}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "n-channels" 'gdk-pixbuf) 't)
+ "The @code{\"n-channels\"} property of type @code{gint}
+  (Read / Write / Construct Only)@br{}
+  The number of samples per pixel. Currently, only 3 or 4 samples per pixel
+  are supported.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: @code{3}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels" 'gdk-pixbuf) 't)
+ "The @code{\"pixels\"} property of type @code{gpointer}
+  (Read / Write / Construct Only)@br{}
+  A pointer to the pixel data of the pixbuf.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rowstride" 'gdk-pixbuf) 't)
+ "The @code{\"rowstride\"} property of type @code{gint}
+  (Read / Write / Construct Only)@br{}
+  The number of bytes between the start of a row and the start of the next
+  row. This number must (obviously) be at least as large as the width of the
+  pixbuf.@br{}
+  Allowed values: @code{>= 1}@br{}
+  Default value: @code{1}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width" 'gdk-pixbuf) 't)
+ "The @code{\"width\"} property of type @code{gint}
+  (Read / Write / Construct Only)@br{}
+  The number of columns of the pixbuf.@br{}
+  Allowed values: @code{>= 1}@br{}
+  Default value: @code{1}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gdk-pixbuf-bits-per-sample ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-bits-per-sample atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-bits-per-sample 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"bits-per-sample\"} of the @class{gdk-pixbuf}
+    class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-colorspace --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-colorspace atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-colorspace 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"colorspace\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-has-alpha ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-has-alpha atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-has-alpha 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"has-alpha\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-height ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-height 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"height\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-n-channels --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-n-channels atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-n-channels 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"n-channels\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-pixels ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-pixels atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-pixels 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"pixels\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-rowstride ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-rowstride atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-rowstride 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"rowstride\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
+
+;;; --- gdk-pixbuf-width -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-width 'function)
+ "@version{2013-2-8}
+  @begin{short}
+    Accessor of the slot @code{\"width\"} of the @class{gdk-pixbuf} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_colorspace ()

@@ -47,78 +47,43 @@
 ;;;     gtk_buildable_custom_finished
 ;;;     gtk_buildable_parser_finished
 ;;;     gtk_buildable_get_internal_child
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GInterface
-;;;    +----GtkBuildable
-;;; 
-;;; Prerequisites
-;;; 
-;;; GtkBuildable requires GObject.
-;;;
-;;; Known Implementations
-;;; 
-;;; GtkBuildable is implemented by GtkAboutDialog, GtkAccelLabel, GtkAction,
-;;; GtkActionGroup, GtkAlignment, GtkAppChooserButton, GtkAppChooserDialog,
-;;; GtkAppChooserWidget, GtkApplicationWindow, GtkArrow, GtkAspectFrame,
-;;; GtkAssistant, GtkBin, GtkBox, GtkButton, GtkButtonBox, GtkCalendar,
-;;; GtkCellArea, GtkCellAreaBox, GtkCellView, GtkCheckButton, GtkCheckMenuItem,
-;;; GtkColorButton, GtkColorChooserDialog, GtkColorChooserWidget,
-;;; GtkColorSelection, GtkColorSelectionDialog, GtkComboBox, GtkComboBoxText,
-;;; GtkContainer, GtkDialog, GtkDrawingArea, GtkEntry, GtkEntryCompletion,
-;;; GtkEventBox, GtkExpander, GtkFileChooserButton, GtkFileChooserDialog,
-;;; GtkFileChooserWidget, GtkFileFilter, GtkFixed, GtkFontButton,
-;;; GtkFontChooserDialog, GtkFontChooserWidget, GtkFontSelection,
-;;; GtkFontSelectionDialog, GtkFrame, GtkGrid, GtkHBox, GtkHButtonBox,
-;;; GtkHPaned, GtkHSV, GtkHScale, GtkHScrollbar, GtkHSeparator, GtkHandleBox,
-;;; GtkIconFactory, GtkIconView, GtkImage, GtkImageMenuItem, GtkInfoBar,
-;;; GtkInvisible, GtkLabel, GtkLayout, GtkLinkButton, GtkListStore,
-;;; GtkLockButton, GtkMenu, GtkMenuBar, GtkMenuItem, GtkMenuShell,
-;;; GtkMenuToolButton, GtkMessageDialog, GtkMisc, GtkNotebook,
-;;; GtkOffscreenWindow, GtkOverlay, GtkPageSetupUnixDialog, GtkPaned, GtkPlug,
-;;; GtkPrintUnixDialog, GtkProgressBar, GtkRadioAction, GtkRadioButton,
-;;; GtkRadioMenuItem, GtkRadioToolButton, GtkRange, GtkRecentAction,
-;;; GtkRecentChooserDialog, GtkRecentChooserMenu, GtkRecentChooserWidget,
-;;; GtkRecentFilter, GtkScale, GtkScaleButton, GtkScrollbar, GtkScrolledWindow,
-;;; GtkSeparator, GtkSeparatorMenuItem, GtkSeparatorToolItem, GtkSizeGroup,
-;;; GtkSocket, GtkSpinButton, GtkSpinner, GtkStatusbar, GtkSwitch, GtkTable,
-;;; GtkTearoffMenuItem, GtkTextTagTable, GtkTextView, GtkToggleAction,
-;;; GtkToggleButton, GtkToggleToolButton, GtkToolButton, GtkToolItem,
-;;; GtkToolItemGroup, GtkToolPalette, GtkToolbar, GtkTreeStore, GtkTreeView,
-;;; GtkTreeViewColumn, GtkUIManager, GtkVBox, GtkVButtonBox, GtkVPaned,
-;;; GtkVScale, GtkVScrollbar, GtkVSeparator, GtkViewport, GtkVolumeButton,
-;;; GtkWidget and GtkWindow.
-;;;
-;;; Description
-;;; 
-;;; GtkBuildable allows objects to extend and customize thier deserialization
-;;; from GtkBuilder UI descriptions. The interface includes methods for setting
-;;; names and properties of objects, parsing custom tags and constructing child
-;;; objects.
-;;; 
-;;; The GtkBuildable interface is implemented by all widgets and many of the
-;;; non-widget objects that are provided by GTK+. The main user of this
-;;; interface is GtkBuilder. There should be very little need for applications
-;;; to call any gtk_buildable_... functions.
-;;; 
-;;; Note
-;;; 
-;;; An object only needs to implement this interface if it needs to extend the
-;;; GtkBuilder format or run any extra routines at deserialization time
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkBuildable
-;;; 
-;;; typedef struct _GtkBuildable GtkBuildable;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GtkBuildable" gtk-buildable
   (:export t
    :type-initializer "gtk_buildable_get_type"))
+
+;;; --- gtk-buildable ----------------------------------------------------------
+
+(setf (documentation 'gtk-buildable 'type)
+ "@short{Interface for objects that can be built by GtkBuilder.}
+
+  GtkBuildable allows objects to extend and customize thier deserialization
+  from GtkBuilder UI descriptions. The interface includes methods for setting
+  names and properties of objects, parsing custom tags and constructing child
+  objects.
+ 
+  The GtkBuildable interface is implemented by all widgets and many of the
+  non-widget objects that are provided by GTK+. The main user of this
+  interface is GtkBuilder. There should be very little need for applications
+  to call any gtk_buildable_... functions.
+  @begin[Note]{dictionary}
+    An object only needs to implement this interface if it needs to extend the
+    GtkBuilder format or run any extra routines at deserialization time
+  @end{dictionary}
+  @begin[Lisp Implemenation]{dictionary}
+    @begin{pre}
+(define-g-interface \"GtkBuildable\" gtk-buildable
+  (:export t
+   :type-initializer \"gtk_buildable_get_type\"))
+    @end{pre}
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBuildableIface

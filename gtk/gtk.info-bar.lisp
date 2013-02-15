@@ -4,7 +4,7 @@
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.4.3. See http://www.gtk.org.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -275,79 +275,64 @@
     "message-type" "GtkMessageType" t t)))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_new ()
-;;; 
-;;; GtkWidget * gtk_info_bar_new (void);
-;;; 
-;;; Creates a new GtkInfoBar object.
-;;; 
-;;; Returns :
-;;;     a new GtkInfoBar object
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-new
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-info-bar-new))
 
 (defun gtk-info-bar-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @return{A new @class{gtk-info-bar} widget.}
+  @begin{short}
+    Creates a new @class{gtk-info-bar} widget.
+  @end{short}@break{}
+  Since 2.18"
   (make-instance 'gtk-info-bar))
 
 (export 'gtk-info-bar-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_new_with_buttons ()
-;;; 
-;;; GtkWidget * gtk_info_bar_new_with_buttons (const gchar *first_button_text,
-;;;                                            ...);
-;;; 
-;;; Creates a new GtkInfoBar with buttons. Button text/response ID pairs should
-;;; be listed, with a NULL pointer ending the list. Button text can be either a
-;;; stock ID such as GTK_STOCK_OK, or some arbitrary text. A response ID can be
-;;; any positive number, or one of the values in the GtkResponseType
-;;; enumeration. If the user clicks one of these dialog buttons, GtkInfoBar will
-;;; emit the "response" signal with the corresponding response ID.
-;;; 
-;;; first_button_text :
-;;;     stock ID or text to go in first button, or NULL
-;;; 
-;;; ... :
-;;;     response ID for first button, then additional buttons, ending with NULL
-;;; 
-;;; Returns :
-;;;     a new GtkInfoBar
+;;; gtk-info-bar-new-with-buttons
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-info-bar-new-with-buttons (&rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[args]{first the stock ID or text and second the response ID for
+    each button, then more pairs for each button}
+  @return{A new @class{gtk-info-bar} widget.}
+  @begin{short}
+    Creates a new @class{gtk-info-bar} with buttons.
+  @end{short}
+  Button text/response ID pairs should be listed. Button text can be either a
+  stock ID such as @code{GTK_STOCK_OK}, or some arbitrary text. A response ID
+  can be any positive number, or one of the values in the 
+  @symbol{gtk-response-type} enumeration. If the user clicks one of these dialog
+  buttons, @class{gtk-info-bar} will emit the \"response\" signal with the
+  corresponding response ID."
   (let ((info-bar (make-instance 'gtk-info-bar-new)))
     (gtk-info-bar-add-buttons info-bar args)))
 
 (export 'gtk-info-bar-new-with-buttons)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_add_action_widget ()
-;;; 
-;;; void gtk_info_bar_add_action_widget (GtkInfoBar *info_bar,
-;;;                                      GtkWidget *child,
-;;;                                      gint response_id);
-;;; 
-;;; Add an activatable widget to the action area of a GtkInfoBar, connecting a
-;;; signal handler that will emit the "response" signal on the message area when
-;;; the widget is activated. The widget is appended to the end of the message
-;;; areas action area.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; child :
-;;;     an activatable widget
-;;; 
-;;; response_id :
-;;;     response ID for child
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-add-action-widget
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_add_action_widget" gtk-info-bar-add-action-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[child]{an activatable widget}
+  @argument[response-id]{response ID for @arg{child}}
+  @begin{short}
+    Add an activatable widget to the action area of a @class{gtk-info-bar},
+    connecting a signal handler that will emit the \"response\" signal on the
+    message area when the widget is activated.
+  @end{short}
+  The widget is appended to the end of the message areas action area.@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (child (g-object gtk-widget))
   (response-id :int))
@@ -355,35 +340,25 @@
 (export 'gtk-info-bar-add-action-widget)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_add_button ()
-;;; 
-;;; GtkWidget * gtk_info_bar_add_button (GtkInfoBar *info_bar,
-;;;                                      const gchar *button_text,
-;;;                                      gint response_id);
-;;; 
-;;; Adds a button with the given text (or a stock button, if button_text is a
-;;; stock ID) and sets things up so that clicking the button will emit the
-;;; "response" signal with the given response_id. The button is appended to the
-;;; end of the info bars's action area. The button widget is returned, but
-;;; usually you don't need it.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; button_text :
-;;;     text of button, or stock ID
-;;; 
-;;; response_id :
-;;;     response ID for the button
-;;; 
-;;; Returns :
-;;;     the GtkButton widget that was added
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-add-button
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_add_button" gtk-info-bar-add-button)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[button-text]{text of button, or stock ID}
+  @argument[response-id]{response ID for the button}
+  @return{The @class{gtk-button} widget that was added.}
+  @begin{short}
+    Adds a button with the given text (or a stock button, if @arg{button-text}
+    is a stock ID) and sets things up so that clicking the button will emit the
+    \"response\" signal with the given @arg{response-id}.
+  @end{short}
+  The button is appended to the end of the info bars's action area. The button
+  widget is returned, but usually you don't need it.@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (button-text :string)
   (response-id :int))
@@ -391,31 +366,20 @@
 (export 'gtk-info-bar-add-button)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_add_buttons ()
-;;; 
-;;; void gtk_info_bar_add_buttons (GtkInfoBar *info_bar,
-;;;                                const gchar *first_button_text,
-;;;                                ...);
-;;; 
-;;; Adds more buttons, same as calling gtk_info_bar_add_button() repeatedly. The
-;;; variable argument list should be NULL-terminated as with
-;;; gtk_info_bar_new_with_buttons(). Each button must have both text and
-;;; response ID.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; first_button_text :
-;;;     button text or stock ID
-;;; 
-;;; ... :
-;;;     response ID for first button, then more text-response_id pairs, ending
-;;;     with NULL
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-add-buttons
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-info-bar-add-buttons (info-bar &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[args]{first a button text or stock ID and second a response ID,
+    then more pairs for each button}
+  @begin{short}
+    Adds more buttons, same as calling @fun{gtk-info-bar-add-button} repeatedly.
+  @end{short}
+  Each button must have both text and response ID.@break{}
+  Since 2.18"
   (let ((n (/ (length args) 2)))
     (assert (eql n (truncate (length args) 2)))
     (dotimes (i n)
@@ -424,30 +388,22 @@
 (export 'gtk-info-bar-add-buttons)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_set_response_sensitive ()
-;;; 
-;;; void gtk_info_bar_set_response_sensitive (GtkInfoBar *info_bar,
-;;;                                           gint response_id,
-;;;                                           gboolean setting);
-;;; 
-;;; Calls gtk_widget_set_sensitive (widget, setting) for each widget in the info
-;;; bars's action area with the given response_id. A convenient way to
-;;; sensitize/desensitize dialog buttons.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; response_id :
-;;;     a response ID
-;;; 
-;;; setting :
-;;;     TRUE for sensitive
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-set-response-sensitive
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_set_response_sensitive"
            gtk-info-bar-set-response-sensitive) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[response-id]{a response ID}
+  @argument[setting]{@arg{true} for sensitive}
+  @begin{short}
+    Calls @code{(@fun{gtk-widget-set-sensitive} widget @arg{setting})} for each
+    widget in the info bars's action area with the given @arg{response-id}.
+  @end{short}
+  A convenient way to sensitize/desensitize dialog buttons.@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (response-id :int)
   (setting :boolean))
@@ -455,144 +411,117 @@
 (export 'gtk-info-bar-set-response-sensitive)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_set_default_response ()
-;;; 
-;;; void gtk_info_bar_set_default_response (GtkInfoBar *info_bar,
-;;;                                         gint response_id);
-;;; 
-;;; Sets the last widget in the info bar's action area with the given
-;;; response_id as the default widget for the dialog. Pressing "Enter" normally
-;;; activates the default widget.
-;;; 
-;;; Note that this function currently requires info_bar to be added to a widget
-;;; hierarchy.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; response_id :
-;;;     a response ID
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-set-default-response
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_set_default_response" gtk-info-bar-set-default-response)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[response-id]{a response ID}
+  @begin{short}
+    Sets the last widget in the info bar's action area with the given
+    @arg{response-id} as the default widget for the dialog. Pressing \"Enter\"
+    normally activates the default widget.
+  @end{short}@break{}
+  Note that this function currently requires @arg{info-bar} to be added to a
+  widget hierarchy.@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (response-id :int))
 
 (export 'gtk-info-bar-set-default-response)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_response ()
-;;; 
-;;; void gtk_info_bar_response (GtkInfoBar *info_bar, gint response_id);
-;;; 
-;;; Emits the 'response' signal with the given response_id.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; response_id :
-;;;     a response ID
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-response
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_response" gtk-info-bar-response) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[response-id]{a response ID}
+  @begin{short}
+    Emits the \"response\" signal with the given @arg{response-id}.
+  @end{short}@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (response-id :int))
 
 (export 'gtk-info-bar-response)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_set_message_type ()
-;;; 
-;;; void gtk_info_bar_set_message_type (GtkInfoBar *info_bar,
-;;;                                     GtkMessageType message_type);
-;;; 
-;;; Sets the message type of the message area. GTK+ uses this type to determine
-;;; what color to use when drawing the message area.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; message_type :
-;;;     a GtkMessageType
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-set-message-type
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-info-bar-set-message-type))
 
 (defun gtk-info-bar-set-message-type (info-bar message-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @argument[message-type]{a @symbol{gtk-message-type}}
+  @begin{short}
+    Sets the message type of the message area. GTK+ uses this type to determine
+    what color to use when drawing the message area.
+  @end{short}@break{}
+  Since 2.18"
   (setf (gtk-info-bar-message-type info-bar) message-type))
 
 (export 'gtk-info-bar-set-message-type)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_get_message_type ()
-;;; 
-;;; GtkMessageType gtk_info_bar_get_message_type (GtkInfoBar *info_bar);
-;;; 
-;;; Returns the message type of the message area.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; Returns :
-;;;     the message type of the message area.
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-get-message-type
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-info-bar-get-message-type))
 
 (defun gtk-info-bar-get-message-type (info-bar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @return{The message type of the message area.}
+  @begin{short}
+    Returns the message type of the message area.
+  @end{short}@break{}
+  Since 2.18"
   (gtk-info-bar-message-type info-bar))
 
 (export 'gtk-info-bar-get-message-type)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_get_action_area ()
-;;; 
-;;; GtkWidget * gtk_info_bar_get_action_area (GtkInfoBar *info_bar);
-;;; 
-;;; Returns the action area of info_bar.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; Returns :
-;;;     the action area
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-get-action-area
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_get_action_area" gtk-info-bar-get-action-area)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @return{The action area.}
+  @begin{short}
+    Returns the action area of @arg{info-bar}.
+  @end{short}@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar)))
 
 (export 'gtk-info-bar-get-action-area)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_info_bar_get_content_area ()
-;;; 
-;;; GtkWidget * gtk_info_bar_get_content_area (GtkInfoBar *info_bar);
-;;; 
-;;; Returns the content area of info_bar.
-;;; 
-;;; info_bar :
-;;;     a GtkInfoBar
-;;; 
-;;; Returns :
-;;;     the content area
-;;; 
-;;; Since 2.18
+;;; gtk-info-bar-get-content-area
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_get_content_area" gtk-info-bar-get-content-area)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[info-bar]{a @class{gtk-info-bar} widget}
+  @return{The content area.}
+  @begin{short}
+    Returns the content area of @arg{info-bar}.
+  @end{short}@break{}
+  Since 2.18"
   (info-bar (g-object gtk-info-bar)))
 
 (export 'gtk-info-bar-get-content-area)

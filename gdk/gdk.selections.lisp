@@ -59,258 +59,221 @@
 ;;;     gdk_selection_property_get
 ;;;     gdk_selection_send_notify
 ;;;     gdk_selection_send_notify_for_display
-;;;
-;;; Description
-;;;
-;;; The X selection mechanism provides a way to transfer arbitrary chunks of
-;;; data between programs. A selection is a essentially a named clipboard,
-;;; identified by a string interned as a GdkAtom. By claiming ownership of a
-;;; selection, an application indicates that it will be responsible for
-;;; supplying its contents. The most common selections are PRIMARY and
-;;; CLIPBOARD.
-;;;
-;;; The contents of a selection can be represented in a number of formats,
-;;; called targets. Each target is identified by an atom. A list of all possible
-;;; targets supported by the selection owner can be retrieved by requesting the
-;;; special target TARGETS. When a selection is retrieved, the data is
-;;; accompanied by a type (an atom), and a format (an integer, representing the
-;;; number of bits per item). See Properties and Atoms for more information.
-;;;
-;;; The functions in this section only contain the lowlevel parts of the
-;;; selection protocol. A considerably more complicated implementation is needed
-;;; on top of this. GTK+ contains such an implementation in the functions in
-;;; gtkselection.h and programmers should use those functions instead of the
-;;; ones presented here. If you plan to implement selection handling directly on
-;;; top of the functions here, you should refer to the X Inter-client
-;;; Communication Conventions Manual (ICCCM).
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_PRIMARY
-;;;
-;;; #define GDK_SELECTION_PRIMARY _GDK_MAKE_ATOM (1)
-;;;
-;;; A GdkAtom representing the PRIMARY selection.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-primary* "PRIMARY")
+(defparameter *selection-primary* "PRIMARY"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"PRIMARY\"}
+  @short{A GdkAtom representing the PRIMARY selection.}")
 
 (export '*selection-primary*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_SECONDARY
-;;;
-;;; #define GDK_SELECTION_SECONDARY _GDK_MAKE_ATOM (2)
-;;;
-;;; A GdkAtom representing the SECONDARY selection.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-secondary* "SECONDARY")
+(defparameter *selection-secondary* "SECONDARY"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"SECONDARY\"}
+  @short{A GdkAtom representing the \"SECONDARY\" selection.}")
 
 (export '*selection-secondary*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_CLIPBOARD
-;;;
-;;; #define GDK_SELECTION_CLIPBOARD _GDK_MAKE_ATOM (69)
-;;;
-;;; A GdkAtom representing the CLIPBOARD selection.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-clipboard* "CLIPBOARD")
+(defparameter *selection-clipboard* "CLIPBOARD"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"CLIPBOARD\"}
+  @short{A GdkAtom representing the CLIPBOARD selection.}")
 
 (export '*selection-clipboard*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_BITMAP
-;;;
-;;; #define GDK_TARGET_BITMAP _GDK_MAKE_ATOM (5)
-;;;
-;;; A GdkAtom representing the BITMAP selection target.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *target-bitmap* "BITMAP")
+(defparameter *target-bitmap* "BITMAP"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"BITMAP\"}
+  @short{A GdkAtom representing the BITMAP selection target.}")
 
 (export '*target-bitmap*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_COLORMAP
-;;;
-;;; #define GDK_TARGET_COLORMAP _GDK_MAKE_ATOM (7)
-;;;
-;;; A GdkAtom representing the COLORMAP selection target.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *target-colormap* "COLORMAP")
+(defparameter *target-colormap* "COLORMAP"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"COLORMAP\"}
+  @short{A GdkAtom representing the COLORMAP selection target.}")
 
 (export '*target-colormap*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_DRAWABLE
-;;;
-;;; #define GDK_TARGET_DRAWABLE _GDK_MAKE_ATOM (17)
-;;;
-;;; A GdkAtom representing the DRAWABLE selection target.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *target-drawable* "DRAWABLE")
+(defparameter *target-drawable* "DRAWABLE"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"DRAWABLE\"}
+  @short{A GdkAtom representing the DRAWABLE selection target.}")
 
 (export '*target-drawable*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_PIXMAP
-;;;
-;;; #define GDK_TARGET_PIXMAP _GDK_MAKE_ATOM (20)
-;;;
-;;; A GdkAtom representing the PIXMAP selection target.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *target-pixmap* "PIXMAP")
+(defparameter *target-pixmap* "PIXMAP"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"PIXMAP\"}
+  @short{A GdkAtom representing the PIXMAP selection target.}")
 
 (export '*target-pixmap*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_TARGET_STRING
-;;;
-;;; #define GDK_TARGET_STRING _GDK_MAKE_ATOM (31)
-;;;
-;;; A GdkAtom representing the STRING selection target.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *target-string* "STRING")
+(defparameter *target-string* "STRING"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"STRING\"}
+  @short{A GdkAtom representing the STRING selection target.}")
 
 (export '*target-string*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_ATOM
-;;;
-;;; #define GDK_SELECTION_TYPE_ATOM _GDK_MAKE_ATOM (4)
-;;;
-;;; A GdkAtom representing the ATOM selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-atom* "ATOM")
+(defparameter *selection-type-atom* "ATOM"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"ATOM\"}
+  @short{A GdkAtom representing the ATOM selection type.}")
 
 (export '*selection-type-atom*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_BITMAP
-;;;
-;;; #define GDK_SELECTION_TYPE_BITMAP _GDK_MAKE_ATOM (5)
-;;;
-;;; A GdkAtom representing the BITMAP selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-bitmap* "BITMAP")
+(defparameter *selection-type-bitmap* "BITMAP"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"BITMAP\"}
+  @short{A GdkAtom representing the BITMAP selection type.}")
 
 (export '*selection-type-bitmap*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_COLORMAP
-;;;
-;;; #define GDK_SELECTION_TYPE_COLORMAP _GDK_MAKE_ATOM (7)
-;;;
-;;; A GdkAtom representing the COLORMAP selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-colormap* "COLORMAP")
+(defparameter *selection-type-colormap* "COLORMAP"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"COLORMAP\"}
+  @short{A GdkAtom representing the COLORMAP selection type.}")
 
 (export '*selection-type-colormap*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_DRAWABLE
-;;;
-;;; #define GDK_SELECTION_TYPE_DRAWABLE _GDK_MAKE_ATOM (17)
-;;;
-;;; A GdkAtom representing the DRAWABLE selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-drawable* "DRAWABLE")
+(defparameter *selection-type-drawable* "DRAWABLE"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"DRAWABLE\"}
+  @short{A GdkAtom representing the DRAWABLE selection type.}")
 
 (export '*selection-type-drawable*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_INTEGER
-;;;
-;;; #define GDK_SELECTION_TYPE_INTEGER _GDK_MAKE_ATOM (19)
-;;;
-;;; A GdkAtom representing the INTEGER selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-integer* "INTEGER")
+(defparameter *selection-type-integer* "INTEGER"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"INTEGER\"}
+  @short{A GdkAtom representing the INTEGER selection type.}")
 
 (export '*selection-type-integer*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_PIXMAP
-;;;
-;;; #define GDK_SELECTION_TYPE_PIXMAP _GDK_MAKE_ATOM (20)
-;;;
-;;; A GdkAtom representing the PIXMAP selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-pixmap* "PIXMAP")
+(defparameter *selection-type-pixmap* "PIXMAP"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"PIXMAP\"}
+  @short{A GdkAtom representing the PIXMAP selection type.}")
 
 (export '*selection-type-pixmap*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_WINDOW
-;;;
-;;; #define GDK_SELECTION_TYPE_WINDOW _GDK_MAKE_ATOM (33)
-;;;
-;;; A GdkAtom representing the WINDOW selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-window* "WINDOW")
+(defparameter *selection-type-window* "WINDOW"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"WINDOW\"}
+  @short{A GdkAtom representing the WINDOW selection type.}")
 
 (export '*selection-type-window*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_SELECTION_TYPE_STRING
-;;;
-;;; #define GDK_SELECTION_TYPE_STRING _GDK_MAKE_ATOM (31)
-;;;
-;;; A GdkAtom representing the STRING selection type.
 ;;; ----------------------------------------------------------------------------
 
-(defparameter *selection-type-string* "STRING")
+(defparameter *selection-type-string* "STRING"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @variable-value{\"WINDOW\"}
+  @short{A GdkAtom representing the STRING selection type.}")
 
 (export '*selection-type-string*)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_owner_set ()
-;;;
-;;; gboolean gdk_selection_owner_set (GdkWindow *owner,
-;;;                                   GdkAtom selection,
-;;;                                   guint32 time_,
-;;;                                   gboolean send_event);
-;;;
-;;; Sets the owner of the given selection.
-;;;
-;;; owner :
-;;;     a GdkWindow or NULL to indicate that the the owner for the given should
-;;;     be unset.
-;;;
-;;; selection :
-;;;     an atom identifying a selection.
-;;;
-;;; time_ :
-;;;     timestamp to use when setting the selection. If this is older than the
-;;;     timestamp given last time the owner was set for the given selection, the
-;;;     request will be ignored.
-;;;
-;;; send_event :
-;;;     if TRUE, and the new owner is different from the current owner, the
-;;;     current owner will be sent a SelectionClear event.
-;;;
-;;; Returns :
-;;;     TRUE if the selection owner was successfully changed to owner, otherwise
-;;;     FALSE.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_owner_set" gdk-selection-owner-set) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[owner]{a @class{gdk-window} or @code{nil} to indicate that the the
+    owner for the given should be unset.}
+  @argument[selection]{an atom identifying a selection.}
+  @argument[time]{timestamp to use when setting the selection. If this is older
+    than the timestamp given last time the owner was set for the given
+    selection, the request will be ignored.}
+  @argument[send-event]{if @arg{true}, and the new owner is different from the
+    current owner, the current owner will be sent a @code{SelectionClear}
+    event.}
+  @return{@arg{true} if the selection owner was successfully changed to owner,
+    otherwise @arg{nil}.}
+  @short{Sets the owner of the given selection.}"
   (owner (g-object gdk-window))
   (selection gdk-atom-as-string)
   (time :uint32)
@@ -320,43 +283,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_owner_set_for_display ()
-;;;
-;;; gboolean gdk_selection_owner_set_for_display (GdkDisplay *display,
-;;;                                               GdkWindow *owner,
-;;;                                               GdkAtom selection,
-;;;                                               guint32 time_,
-;;;                                               gboolean send_event);
-;;;
-;;; Sets the GdkWindow owner as the current owner of the selection selection.
-;;;
-;;; display :
-;;;     the GdkDisplay
-;;;
-;;; owner :
-;;;     a GdkWindow or NULL to indicate that the owner for the given should be
-;;;     unset
-;;;
-;;; selection :
-;;;     an atom identifying a selection
-;;;
-;;; time_ :
-;;;     timestamp to use when setting the selection If this is older than the
-;;;     timestamp given last time the owner was set for the given selection, the
-;;;     request will be ignored
-;;;
-;;; send_event :
-;;;     if TRUE, and the new owner is different from the current owner, the
-;;;     current owner will be sent a SelectionClear event
-;;;
-;;; Returns :
-;;;     TRUE if the selection owner was successfully changed to owner, otherwise
-;;;     FALSE.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_owner_set_for_display"
           gdk-selection-owner-set-for-display) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[display]{the GdkDisplay}
+  @argument[owner]{a GdkWindow or NULL to indicate that the owner for the given
+    should be unset}
+  @argument[selection]{an atom identifying a selection}
+  @argument[time_]{timestamp to use when setting the selection If this is older
+    than the timestamp given last time the owner was set for the given
+    selection, the request will be ignored}
+  @argument[send_event]{if TRUE, and the new owner is different from the current
+    owner, the current owner will be sent a SelectionClear event}
+  @return{TRUE if the selection owner was successfully changed to owner,
+    otherwise FALSE.}
+  @short{Sets the GdkWindow owner as the current owner of the selection
+    selection.}
+
+  Since 2.2"
   (display (g-object gdk-display))
   (owner (g-object gdk-window))
   (selection gdk-atom-as-string)
@@ -367,56 +314,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_owner_get ()
-;;;
-;;; GdkWindow * gdk_selection_owner_get (GdkAtom selection);
-;;;
-;;; Determines the owner of the given selection.
-;;;
-;;; selection :
-;;;     an atom indentifying a selection.
-;;;
-;;; Returns :
-;;;     if there is a selection owner for this window, and it is a window known
-;;;     to the current process, the GdkWindow that owns the selection, otherwise
-;;;     NULL. Note that the return value may be owned by a different process if
-;;;     a foreign window was previously created for that window, but a new
-;;;     foreign window will never be created by this call.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_owner_get" gdk-selection-owner-get)
     (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[selection]{an atom indentifying a selection.}
+  @return{if there is a selection owner for this window, and it is a window
+    known to the current process, the GdkWindow that owns the selection,
+    otherwise NULL. Note that the return value may be owned by a different
+    process if a foreign window was previously created for that window, but a
+    new foreign window will never be created by this call.}
+  @short{Determines the owner of the given selection.}"
   (selection gdk-atom-as-string))
 
 (export 'gdk-selection-owner-get)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_owner_get_for_display ()
-;;;
-;;; GdkWindow * gdk_selection_owner_get_for_display (GdkDisplay *display,
-;;;                                                  GdkAtom selection);
-;;;
-;;; Determine the owner of the given selection.
-;;;
-;;; Note that the return value may be owned by a different process if a foreign
-;;; window was previously created for that window, but a new foreign window will
-;;; never be created by this call.
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; selection :
-;;;     an atom indentifying a selection
-;;;
-;;; Returns :
-;;;     if there is a selection owner for this window, and it is a window known
-;;;     to the current process, the GdkWindow that owns the selection, otherwise
-;;;     NULL.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_owner_get_for_display"
           gdk-selection-owner-get-for-display) (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[display]{a GdkDisplay}
+  @argument[selection]{an atom indentifying a selection}
+  @return{if there is a selection owner for this window, and it is a window
+    known to the current process, the GdkWindow that owns the selection,
+    otherwise NULL.}
+  @short{Determine the owner of the given selection.}
+
+  Note that the return value may be owned by a different process if a foreign
+  window was previously created for that window, but a new foreign window will
+  never be created by this call.
+
+  Since 2.2"
   (display (g-object gdk-display))
   (selection gdk-atom-as-string))
 
@@ -424,30 +358,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_convert ()
-;;;
-;;; void gdk_selection_convert (GdkWindow *requestor,
-;;;                             GdkAtom selection,
-;;;                             GdkAtom target,
-;;;                             guint32 time_);
-;;;
-;;; Retrieves the contents of a selection in a given form.
-;;;
-;;; requestor :
-;;;     a GdkWindow.
-;;;
-;;; selection :
-;;;     an atom identifying the selection to get the contents of.
-;;;
-;;; target :
-;;;     the form in which to retrieve the selection.
-;;;
-;;; time_ :
-;;;     the timestamp to use when retrieving the selection. The selection owner
-;;;     may refuse the request if it did not own the selection at the time
-;;;     indicated by the timestamp.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_convert" gdk-selection-convert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[requestor]{a GdkWindow.}
+  @argument[selection]{an atom identifying the selection to get the contents
+    of.}
+  @argument[target]{the form in which to retrieve the selection.}
+  @argument[time_]{the timestamp to use when retrieving the selection. The
+    selection owner may refuse the request if it did not own the selection at
+    the time indicated by the timestamp.}
+  @short{Retrieves the contents of a selection in a given form.}"
   (requestor (g-object gdk-window))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)
@@ -457,38 +380,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_property_get ()
-;;;
-;;; gint gdk_selection_property_get (GdkWindow *requestor,
-;;;                                  guchar **data,
-;;;                                  GdkAtom *prop_type,
-;;;                                  gint *prop_format);
-;;;
-;;; Retrieves selection data that was stored by the selection data in response
-;;; to a call to gdk_selection_convert(). This function will not be used by
-;;; applications, who should use the GtkClipboard API instead.
-;;;
-;;; requestor :
-;;;     the window on which the data is stored
-;;;
-;;; data :
-;;;     location to store a pointer to the retrieved data. If the retrieval
-;;;     failed, NULL we be stored here, otherwise, it will be non-NULL and the
-;;;     returned data should be freed with g_free() when you are finished using
-;;;     it. The length of the allocated memory is one more than the length of
-;;;     the returned data, and the final byte will always be zero, to ensure
-;;;     nul-termination of strings
-;;;
-;;; prop_type :
-;;;     location to store the type of the property
-;;;
-;;; prop_format :
-;;;     location to store the format of the property
-;;;
-;;; Returns :
-;;;     the length of the retrieved data.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_property_get" gdk-selection-property-get) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[requestor]{the window on which the data is stored}
+  @argument[data]{location to store a pointer to the retrieved data. If the
+    retrieval failed, NULL we be stored here, otherwise, it will be non-NULL and
+    the returned data should be freed with g_free() when you are finished using
+    it. The length of the allocated memory is one more than the length of
+    the returned data, and the final byte will always be zero, to ensure
+    nul-termination of strings}
+  @argument[prop_type]{location to store the type of the property}
+  @argument[prop_format]{location to store the format of the property}
+  @return{the length of the retrieved data.}
+  @begin{short}
+    Retrieves selection data that was stored by the selection data in response
+    to a call to gdk_selection_convert().
+  @end{short}
+  This function will not be used by applications, who should use the
+  GtkClipboard API instead."
   (requestor (g-object gdk-window))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)
@@ -498,33 +410,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_send_notify ()
-;;;
-;;; void gdk_selection_send_notify (GdkWindow *requestor,
-;;;                                 GdkAtom selection,
-;;;                                 GdkAtom target,
-;;;                                 GdkAtom property,
-;;;                                 guint32 time_);
-;;;
-;;; Sends a response to SelectionRequest event.
-;;;
-;;; requestor :
-;;;     window to which to deliver response.
-;;;
-;;; selection :
-;;;     selection that was requested.
-;;;
-;;; target :
-;;;     target that was selected.
-;;;
-;;; property :
-;;;     property in which the selection owner stored the data, or GDK_NONE to
-;;;     indicate that the request was rejected.
-;;;
-;;; time_ :
-;;;     timestamp.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_send_notify" gdk-selection-send-notify) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[requestor]{window to which to deliver response.}
+  @argument[selection]{selection that was requested.}
+  @argument[target]{target that was selected.}
+  @argument[property]{property in which the selection owner stored the data, or
+    GDK_NONE to indicate that the request was rejected.}
+  @argument[time_]{timestamp.}
+  @short{Sends a response to SelectionRequest event.}"
   (requestor (g-object gdk-window))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)
@@ -535,40 +432,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_selection_send_notify_for_display ()
-;;;
-;;; void gdk_selection_send_notify_for_display (GdkDisplay *display,
-;;;                                             GdkWindow *requestor,
-;;;                                             GdkAtom selection,
-;;;                                             GdkAtom target,
-;;;                                             GdkAtom property,
-;;;                                             guint32 time_);
-;;;
-;;; Send a response to SelectionRequest event.
-;;;
-;;; display :
-;;;     the GdkDisplay where requestor is realized
-;;;
-;;; requestor :
-;;;     window to which to deliver response
-;;;
-;;; selection :
-;;;     selection that was requested
-;;;
-;;; target :
-;;;     target that was selected
-;;;
-;;; property :
-;;;     property in which the selection owner stored the data, or GDK_NONE to
-;;;     indicate that the request was rejected
-;;;
-;;; time_ :
-;;;     timestamp
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_selection_send_notify_for_display"
           gdk-selection-send-notify-for-display) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-12}
+  @argument[display]{the GdkDisplay where requestor is realized}
+  @argument[requestor]{window to which to deliver response}
+  @argument[selection]{selection that was requested}
+  @argument[target]{target that was selected}
+  @argument[property]{property in which the selection owner stored the data, or
+    GDK_NONE to indicate that the request was rejected}
+  @argument[time_]{timestamp}
+  @short{Send a response to SelectionRequest event.}
+
+  Since 2.2"
   (display (g-object gdk-display))
   (requestor (g-object gdk-window))
   (selection gdk-atom-as-string)

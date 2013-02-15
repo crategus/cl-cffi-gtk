@@ -150,6 +150,8 @@
 ;;; Filename to load and display.
 ;;; 
 ;;; Default value: NULL
+;;;
+;;; ----------------------------------------------------------------------------
 ;;; The "gicon" property
 ;;; 
 ;;;   "gicon"                    GIcon*                : Read / Write
@@ -530,11 +532,6 @@
 ;;; struct GtkStatusIcon;
 ;;; ----------------------------------------------------------------------------
 
-;;;   "title"                    gchar*                : Read / Write
-;;;   "tooltip-markup"           gchar*                : Read / Write
-;;;   "tooltip-text"             gchar*                : Read / Write
-;;;   "visible"                  gboolean              : Read / Write
-
 (define-g-object-class "GtkStatusIcon" gtk-status-icon
   (:superclass g-object
    :export t
@@ -898,49 +895,41 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_set_screen ()
-;;; 
-;;; void gtk_status_icon_set_screen (GtkStatusIcon *status_icon,
-;;;                                  GdkScreen *screen);
-;;; 
-;;; Sets the GdkScreen where status_icon is displayed; if the icon is already
-;;; mapped, it will be unmapped, and then remapped on the new screen.
-;;; 
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;; 
-;;; screen :
-;;;     a GdkScreen
-;;; 
-;;; Since 2.12
+;;; gtk-status-icon-set-screen
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-status-icon-set-screen))
 
 (defun gtk-status-icon-set-screen (status-icon screen)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[screen]{a @class{gdk-screen}}
+  @begin{short}
+    Sets the @class{gdk-screen} where @arg{status-icon} is displayed; if the
+    icon is already mapped, it will be unmapped, and then remapped on the new
+    screen.
+  @end{short}@break{}
+  Since 2.12"
   (setf (gtk-status-icon-screen status-icon) screen))
 
 (export 'gtk-status-icon-set-screen)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_screen ()
-;;; 
-;;; GdkScreen * gtk_status_icon_get_screen (GtkStatusIcon *status_icon);
-;;; 
-;;; Returns the GdkScreen associated with status_icon.
-;;; 
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;; 
-;;; Returns :
-;;;     a GdkScreen
-;;; 
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
+;;; gtk-status-icon-get-screen
+;;; ---------------------------------------------------------------------------- 
 
 (declaim (inline gtk-status-icon-get-screen))
 
 (defun gtk-status-icon-get-screen (status-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-3}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @return{a @class{gdk-screen}}
+  @begin{short}
+    Returns the @class{gdk-screen} associated with @arg{status_icon}.
+  @end{short}@break{}
+  Since 2.12"
   (gtk-status-icon-screen status-icon))
 
 (export 'gtk-status-icon-get-screen)
