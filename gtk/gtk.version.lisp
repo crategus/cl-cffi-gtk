@@ -2,13 +2,14 @@
 ;;; gtk.version.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,153 +60,133 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_major_version ()
-;;;
-;;; guint gtk_get_major_version (void);
-;;;
-;;; Returns the major version number of the GTK+ library. (e.g. in GTK+ version
-;;; 3.1.5 this is 3.)
-;;;
-;;; This function is in the library, so it represents the GTK+ library your code
-;;; is running against. Contrast with the GTK_MAJOR_VERSION macro, which
-;;; represents the major version of the GTK+ headers you have included when
-;;; compiling your code.
-;;;
-;;; Returns :
-;;;     the major version number of the GTK+ library
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_major_version" gtk-get-major-version) :int)
+(defcfun ("gtk_get_major_version" gtk-get-major-version) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{The major version number of the GTK+ library.}
+  @begin{short}
+    Returns the major version number of the GTK+ library. (e.g. in GTK+ version
+    3.1.5 this is 3.)
+  @end{short}
+
+  This function is in the library, so it represents the GTK+ library your code
+  is running against.
+
+  Since 3.0")
 
 (export 'gtk-get-major-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_minor_version ()
-;;;
-;;; guint gtk_get_minor_version (void);
-;;;
-;;; Returns the minor version number of the GTK+ library. (e.g. in GTK+ version
-;;; 3.1.5 this is 1.)
-;;;
-;;; This function is in the library, so it represents the GTK+ library your code
-;;; is are running against. Contrast with the GTK_MINOR_VERSION macro, which
-;;; represents the minor version of the GTK+ headers you have included when
-;;; compiling your code.
-;;;
-;;; Returns :
-;;;     the minor version number of the GTK+ library
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_minor_version" gtk-get-minor-version) :int)
+(defcfun ("gtk_get_minor_version" gtk-get-minor-version) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{The minor version number of the GTK+ library.}
+  @begin{short}
+    Returns the minor version number of the GTK+ library. (e.g. in GTK+ version
+    3.1.5 this is 1.)
+  @end{short}
+
+  This function is in the library, so it represents the GTK+ library your code
+  is are running against.
+
+  Since 3.0")
 
 (export 'gtk-get-minor-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_micro_version ()
-;;;
-;;; guint gtk_get_micro_version (void);
-;;;
-;;; Returns the micro version number of the GTK+ library. (e.g. in GTK+ version
-;;; 3.1.5 this is 5.)
-;;;
-;;; This function is in the library, so it represents the GTK+ library your code
-;;; is are running against. Contrast with the GTK_MICRO_VERSION macro, which
-;;; represents the micro version of the GTK+ headers you have included when
-;;; compiling your code.
-;;;
-;;; Returns :
-;;;     the micro version number of the GTK+ library
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_micro_version" gtk-get-micro-version) :int)
+(defcfun ("gtk_get_micro_version" gtk-get-micro-version) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{The micro version number of the GTK+ library.}
+  @begin{short}
+    Returns the micro version number of the GTK+ library. (e.g. in GTK+ version
+    3.1.5 this is 5.)
+  @end{short}
+
+  This function is in the library, so it represents the GTK+ library your code
+  is are running against.
+
+  Since 3.0")
 
 (export 'gtk-get-micro-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_binary_age ()
-;;;
-;;; guint gtk_get_binary_age (void);
-;;;
-;;; Returns the binary age as passed to libtool when building the GTK+ library
-;;; the process is running against. If libtool means nothing to you, don't worry
-;;; about it.
-;;;
-;;; Returns :
-;;;     the binary age of the GTK+ library
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_binary_age" gtk-get-binary-age) :int)
+(defcfun ("gtk_get_binary_age" gtk-get-binary-age) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{The binary age of the GTK+ library.}
+  @begin{short}
+    Returns the binary age as passed to libtool when building the GTK+ library
+    the process is running against.
+  @end{short}
+  If libtool means nothing to you, don't worry about it.
+
+  Since 3.0")
 
 (export 'gtk-get-binary-age)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_interface_age ()
-;;;
-;;; guint gtk_get_interface_age (void);
-;;;
-;;; Returns the interface age as passed to libtool when building the GTK+
-;;; library the process is running against. If libtool means nothing to you,
-;;; don't worry about it.
-;;;
-;;; Returns :
-;;;     the interface age of the GTK+ library
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_get_interface_age" gtk-get-interface-age) :int)
+(defcfun ("gtk_get_interface_age" gtk-get-interface-age) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{The interface age of the GTK+ library.}
+  @begin{short}
+    Returns the interface age as passed to libtool when building the GTK+
+    library the process is running against.
+  @end{short}
+  If libtool means nothing to you, don't worry about it.
+
+  Since 3.0")
 
 (export 'gtk-get-interface-age)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_version ()
-;;;
-;;; const gchar * gtk_check_version (guint required_major,
-;;;                                  guint required_minor,
-;;;                                  guint required_micro);
-;;;
-;;; Checks that the GTK+ library in use is compatible with the given version.
-;;; Generally you would pass in the constants GTK_MAJOR_VERSION,
-;;; GTK_MINOR_VERSION, GTK_MICRO_VERSION as the three arguments to this
-;;; function; that produces a check that the library in use is compatible with
-;;; the version of GTK+ the application or module was compiled against.
-;;;
-;;; Compatibility is defined by two things: first the version of the running
-;;; library is newer than the version
-;;; required_major.required_minor.required_micro. Second the running library
-;;; must be binary compatible with the version
-;;; required_major.required_minor.required_micro (same major version.)
-;;;
-;;; This function is primarily for GTK+ modules; the module can call this
-;;; function to check that it wasn't loaded into an incompatible version of
-;;; GTK+. However, such a check isn't completely reliable, since the module may
-;;; be linked against an old version of GTK+ and calling the old version of
-;;; gtk_check_version(), but still get loaded into an application using a newer
-;;; version of GTK+.
-;;;
-;;; required_major :
-;;;     the required major version
-;;;
-;;; required_minor :
-;;;     the required minor version
-;;;
-;;; required_micro :
-;;;     the required micro version
-;;;
-;;; Returns :
-;;;     NULL if the GTK+ library is compatible with the given version, or a
-;;;     string describing the version mismatch. The returned string is owned by
-;;;     GTK+ and should not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_check_version" gtk-check-version) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[required_major]{the required major version}
+  @argument[required_minor]{the required minor version}
+  @argument[required_micro]{the required micro version}
+  @return{NULL if the GTK+ library is compatible with the given version, or a
+    string describing the version mismatch. The returned string is owned by
+    GTK+ and should not be modified or freed.}
+  @begin{short}
+    Checks that the GTK+ library in use is compatible with the given version.
+  @end{short}
+  Generally you would pass in the constants GTK_MAJOR_VERSION,
+  GTK_MINOR_VERSION, GTK_MICRO_VERSION as the three arguments to this
+  function; that produces a check that the library in use is compatible with
+  the version of GTK+ the application or module was compiled against.
+
+  Compatibility is defined by two things: first the version of the running
+  library is newer than the version
+  required_major.required_minor.required_micro. Second the running library
+  must be binary compatible with the version
+  required_major.required_minor.required_micro (same major version.)
+
+  This function is primarily for GTK+ modules; the module can call this
+  function to check that it wasn't loaded into an incompatible version of
+  GTK+. However, such a check isn't completely reliable, since the module may
+  be linked against an old version of GTK+ and calling the old version of
+  gtk_check_version(), but still get loaded into an application using a newer
+  version of GTK+."
   (required-major :uint)
   (required-minor :uint)
   (required-micro :uint))
@@ -283,6 +264,42 @@
 ;;; Lisp functions
 
 (defun cl-cffi-gtk-build-info ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-15}
+  @begin{short}
+    Provides informations about the installation and the versions of the
+    loaded libraries.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+* (cl-cffi-gtk-build-info)
+
+cl-cffi-gtk version: 1.0.0
+cl-cffi-gtk build date: 20:18 2/16/2013
+GTK+ version: 3.6.0
+GLIB version: 2.34.1
+GDK-Pixbuf version: 2.26.4
+Pango version: 1.30.1
+Cairo version: 1.12.2
+Machine type: X86
+Machine version: Intel(R) Core(TM)2 Duo CPU T7250 @@ 2.00GHz
+Software type: Linux
+Software version: 3.5.0-24-generic
+Lisp implementation type: SBCL
+Lisp implementation version: 1.0.57
+
+NIL
+    @end{pre}
+  @end{dictionary}
+  @see-function{gtk-get-major-version}
+  @see-function{gtk-get-minor-version}
+  @see-function{gtk-get-micro-version}
+  @see-function{glib-major-version}
+  @see-function{glib-minor-version}
+  @see-function{glib-micro-version}
+  @see-symbol{*gdk-pixbuf-version*}
+  @see-function{pango-version-string}
+  @see-function{cairo-version-string}"
   (format t "~%cl-cffi-gtk version: ~a~%" *cl-cffi-gtk-version*)
   (format t "cl-cffi-gtk build date: ~a:~a ~a/~a/~a~%"
           (third cl-user:*cl-cffi-gtk-build-time*)
@@ -298,9 +315,9 @@
           glib-major-version
           glib-minor-version
           glib-micro-version)
-  (format t "GDK-Pixbuf version: ~a~%" *gdk-pixbuf-version*)
+  (format t "GDK-Pixbuf version: ~a~%" +gdk-pixbuf-version+)
   (format t "Pango version: ~a~%" (pango-version-string))
-  (format t "Cairo version: ~a~%" (cairo-version-string))
+  (format t "Cairo version: ~a~%}" (cairo-version-string))
   (format t "Machine type: ~a~%" (machine-type))
   (format t "Machine version: ~a~%" (machine-version))
   (format t "Software type: ~a~%" (software-type))
