@@ -2,7 +2,8 @@
 ;;; gtk.cell-area-context.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -43,105 +44,6 @@
 ;;;     gtk_cell_area_context_get_allocation
 ;;;     gtk_cell_area_context_push_preferred_width
 ;;;     gtk_cell_area_context_push_preferred_height
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkCellAreaContext
-;;;
-;;; Properties
-;;;
-;;;   "area"                     GtkCellArea*         : Read / Write / Construct
-;;;   "minimum-height"           gint                 : Read
-;;;   "minimum-width"            gint                 : Read
-;;;   "natural-height"           gint                 : Read
-;;;   "natural-width"            gint                 : Read
-;;;
-;;; Description
-;;;
-;;; The GtkCellAreaContext object is created by a given GtkCellArea
-;;; implementation via its GtkCellAreaClass.create_context() virtual method and
-;;; is used to store cell sizes and alignments for a series of GtkTreeModel rows
-;;; that are requested and rendered in the same context.
-;;;
-;;; GtkCellLayout widgets can create any number of contexts in which to request
-;;; and render groups of data rows. However its important that the same context
-;;; which was used to request sizes for a given GtkTreeModel row also be used
-;;; for the same row when calling other GtkCellArea APIs such as
-;;; gtk_cell_area_render() and gtk_cell_area_event().
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "area" property
-;;;
-;;;   "area"                     GtkCellArea*         : Read / Write / Construct
-;;;
-;;; The GtkCellArea this context was created by
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "minimum-height" property
-;;;
-;;;   "minimum-height"           gint                  : Read
-;;;
-;;; The minimum height for the GtkCellArea in this context for all GtkTreeModel
-;;; rows that this context was requested for using
-;;; gtk_cell_area_get_preferred_height().
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "minimum-width" property
-;;;
-;;;   "minimum-width"            gint                  : Read
-;;;
-;;; The minimum width for the GtkCellArea in this context for all GtkTreeModel
-;;; rows that this context was requested for using
-;;; gtk_cell_area_get_preferred_width().
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "natural-height" property
-;;;
-;;;   "natural-height"           gint                  : Read
-;;;
-;;; The natural height for the GtkCellArea in this context for all GtkTreeModel
-;;; rows that this context was requested for using
-;;; gtk_cell_area_get_preferred_height().
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "natural-width" property
-;;;
-;;;   "natural-width"            gint                  : Read
-;;;
-;;; The natural width for the GtkCellArea in this context for all GtkTreeModel
-;;; rows that this context was requested for using
-;;; gtk_cell_area_get_preferred_width().
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -187,8 +89,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCellAreaContext
-;;;
-;;; typedef struct _GtkCellAreaContext GtkCellAreaContext;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellAreaContext" gtk-cell-area-context
@@ -211,6 +111,158 @@
    (natural-width
     gtk-cell-area-context-natural-width
     "natural-width" "gint" t nil)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-area-context 'type)
+ "@version{2013-2-17}
+  @begin{short}
+    The @sym{gtk-cell-area-context} object is created by a given
+    @class{gtk-cell-area} implementation via its
+    @code{GtkCellAreaClass.create_context()} virtual method and is used to
+    store cell sizes and alignments for a series of @class{gtk-tree-model} rows
+    that are requested and rendered in the same context.
+  @end{short}
+
+  @class{gtk-cell-layout} widgets can create any number of contexts in which to
+  request and render groups of data rows. However its important that the same
+  context which was used to request sizes for a given @class{gtk-tree-model} row
+  also be used for the same row when calling other @class{gtk-cell-area} APIs
+  such as @fun{gtk-cell-area-render} and @fun{gtk-cell-area-event}.
+  @see-slot{gtk-cell-area-context-area}
+  @see-slot{gtk-cell-area-context-minimum-height}
+  @see-slot{gtk-cell-area-context-minimum-width}
+  @see-slot{gtk-cell-area-context-natural-height}
+  @see-slot{gtk-cell-area-context-natural-width}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "area" 'gtk-cell-area-context) 't)
+ "The @code{\"area\"} property of type @class{gtk-cell-area}
+  (Read / Write / Construct)@br{}
+  The @class{gtk-cell-area} this context was created by.@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "minimum-height" 'gtk-cell-area-context) 't)
+ "The @code{\"minimum-height\"} property of type @code{gint} (Read)@br{}
+  The minimum height for the @class{gtk-cell-area} in this context for all
+  @class{gtk-tree-model} rows that this context was requested for using
+  @fun{gtk-cell-area-get-preferred-height}.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "minimum-width" 'gtk-cell-area-context) 't)
+ "The @code{\"minimum-width\"} property of type @code{gint} (Read)@br{}
+  The minimum width for the @class{gtk-cell-area} in this context for all
+  @class{gtk-tree-model} rows that this context was requested for using
+  @fun{gtk-cell-area-get-preferred-width}.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "natural-height" 'gtk-cell-area-context) 't)
+ "The @code{\"natural-height\"} property of type @code{gint} (Read)@br{}
+  The natural height for the @class{gtk-cell-area} in this context for all
+  @class{gtk-tree-model} rows that this context was requested for using
+  @fun{gtk-cell-area-get-preferred-height}.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "natural-width" 'gtk-cell-area-context) 't)
+ "The @code{\"natural-width\"} property of type @code{gint} (Read)@br{}
+  The natural width for the @class{gtk-cell-area} in this context for all
+  @class{gtk-tree-model} rows that this context was requested for using
+  @fun{gtk-cell-area-get-preferred-width}.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-area-context-area ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-area-context-area atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-area-context-area 'function)
+ "@version{2013-2-17}
+  @begin{short}
+    Accessor of the slot @code{\"area\"} of the @class{gtk-cell-area-context}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-area-context-minimum-height -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-area-context-minimum-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-area-context-minimum-height 'function)
+ "@version{2013-2-17}
+  @begin{short}
+    Accessor of the slot @code{\"minimum-height\"} of the
+    @class{gtk-cell-area-context} class.
+  @end{short}")
+
+;;; --- gtk-cell-area-context-minimum-width ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-area-context-minimum-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-area-context-minimum-width 'function)
+ "@version{2013-2-17}
+  @begin{short}
+    Accessor of the slot @code{\"minimum-width\"} of the
+    @class{gtk-cell-area-context} class.
+  @end{short}")
+
+;;; --- gtk-cell-area-context-natural-height -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-area-context-natural-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-area-context-natural-height 'function)
+ "@version{2013-2-17}
+  @begin{short}
+    Accessor of the slot @code{\"natural-height\"} of the
+    @class{gtk-cell-area-context} class.
+  @end{short}")
+
+;;; --- gtk-cell-area-context-natural-width ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-area-context-natural-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-area-context-natural-width 'function)
+ "@version{2013-2-17}
+  @begin{short}
+    Accessor of the slot @code{\"natural-width\"} of the
+    @class{gtk-cell-area-context} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_context_get_area ()
