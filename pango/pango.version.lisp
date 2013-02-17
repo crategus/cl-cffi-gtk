@@ -2,9 +2,10 @@
 ;;; pango.version.lisp
 ;;;
 ;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.30.0. See http://www.gtk.org.
+;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -131,87 +132,76 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_version ()
-;;; 
-;;; int pango_version (void);
-;;; 
-;;; This is similar to the macro PANGO_VERSION except that it returns the
-;;; encoded version of Pango available at run-time, as opposed to the version
-;;; available at compile-time.
-;;; 
-;;; A version number can be encoded into an integer using
-;;; PANGO_VERSION_ENCODE().
-;;; 
-;;; Returns :
-;;;     The encoded version of Pango library available at run time.
-;;; 
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_version" pango-version) :int)
+(defcfun ("pango_version" pango-version) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{The encoded version of Pango library available at run time.}
+  @begin{short}
+    This is similar to the macro PANGO_VERSION except that it returns the
+    encoded version of Pango available at run-time, as opposed to the version
+    available at compile-time.
+  @end{short}
+
+  A version number can be encoded into an integer using
+  PANGO_VERSION_ENCODE().
+
+  Since 1.16")
 
 (export 'pango-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_version_string ()
-;;; 
-;;; const char * pango_version_string (void);
-;;; 
-;;; This is similar to the macro PANGO_VERSION_STRING except that it returns
-;;; the version of Pango available at run-time, as opposed to the version
-;;; available at compile-time.
-;;; 
-;;; Returns :
-;;;     A string containing the version of Pango library available at run time.
-;;;     The returned string is owned by Pango and should not be modified or
-;;;     freed.
-;;; 
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_version_string" pango-version-string) :string)
+(defcfun ("pango_version_string" pango-version-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @return{A string containing the version of Pango library available at run
+    time. The returned string is owned by Pango and should not be modified or
+    freed.}
+  @begin{short}
+    This is similar to the macro PANGO_VERSION_STRING except that it returns
+    the version of Pango available at run-time, as opposed to the version
+    available at compile-time.
+  @end{short}
+
+  Since 1.16")
 
 (export 'pango-version-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_version_check ()
-;;; 
-;;; const char * pango_version_check (int required_major,
-;;;                                   int required_minor,
-;;;                                   int required_micro);
-;;; 
-;;; Checks that the Pango library in use is compatible with the given version.
-;;; Generally you would pass in the constants PANGO_VERSION_MAJOR,
-;;; PANGO_VERSION_MINOR, PANGO_VERSION_MICRO as the three arguments to this
-;;; function; that produces a check that the library in use at run-time is
-;;; compatible with the version of Pango the application or module was compiled
-;;; against.
-;;; 
-;;; Compatibility is defined by two things: first the version of the running
-;;; library is newer than the version
-;;; required_major.required_minor.required_micro. Second the running library
-;;; must be binary compatible with the version
-;;; required_major.required_minor.required_micro (same major version.)
-;;; 
-;;; For compile-time version checking use PANGO_VERSION_CHECK().
-;;; 
-;;; required_major :
-;;;     the required major version
-;;; 
-;;; required_minor :
-;;;     the required minor version
-;;; 
-;;; required_micro :
-;;;     the required major version
-;;; 
-;;; Returns :
-;;;     NULL if the Pango library is compatible with the given version, or a
-;;;     string describing the version mismatch. The returned string is owned by
-;;;     Pango and should not be modified or freed.
-;;; 
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_version_check" pango-version-check) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[required_major]{the required major version}
+  @argument[required_minor]{the required minor version}
+  @argument[required_micro]{the required major version}
+  @return{NULL if the Pango library is compatible with the given version, or a
+    string describing the version mismatch. The returned string is owned by
+    Pango and should not be modified or freed.}
+  @begin{short}
+    Checks that the Pango library in use is compatible with the given version.
+  @end{short}
+  Generally you would pass in the constants PANGO_VERSION_MAJOR,
+  PANGO_VERSION_MINOR, PANGO_VERSION_MICRO as the three arguments to this
+  function; that produces a check that the library in use at run-time is
+  compatible with the version of Pango the application or module was compiled
+  against.
+
+  Compatibility is defined by two things: first the version of the running
+  library is newer than the version
+  required_major.required_minor.required_micro. Second the running library
+  must be binary compatible with the version
+  required_major.required_minor.required_micro (same major version.)
+
+  For compile-time version checking use PANGO_VERSION_CHECK().
+
+  Since 1.16"
   (required-major :int)
   (required-minor :int)
   (required-micro :int))
