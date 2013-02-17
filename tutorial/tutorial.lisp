@@ -4,7 +4,7 @@
 ;;; Examples from the offical GTK+ 2.0 Tutorial translated to Lisp
 ;;; and updated to GTK+ 3.4
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -24,7 +24,7 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-cffi-gtk)
+(asdf:load-system :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
   (:use :gtk :gdk :gdk-pixbuf :gobject

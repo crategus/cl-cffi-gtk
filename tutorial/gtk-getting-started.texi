@@ -3,9 +3,9 @@
 @c License  : GNU General Public License (GPL)
 @c Author   : Dieter Kaiser
 @c Date     : 26.12.2011
-@c Revision : 01.07.2012
+@c Revision : 16.02.2013
 @c 
-@c Copyright (C) 2011 - 2012 by Dieter Kaiser
+@c Copyright (C) 2011 - 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -25,23 +25,23 @@
 The first thing to do is to download the @code{cl-cffi-gtk} source and to
 install it.  The latest version is available from the repository at
 @url{http://github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library
-can be loaded with the command @code{(asdf:operate 'asdf:load-op :cl-cffi-gtk)}
-from the Lisp prompt.  The library is developed with the Lisp SBCL 1.0.56 on a
-Linux system and GTK+ 3.4.
+is ASDF installable and can be loaded with the command
+@code{(asdf:load-system :cl-cffi-gtk)} from the Lisp prompt.  The library is
+developed with the Lisp SBCL 1.0.57 on a Linux system and GTK+ 3.6.
 
-At this time (April 2012) there is no GTK+ 3 library for Windows available at
+At this time (February 2013) there is no GTK+ 3 library for Windows available at
 @url{http://www.gtk.org}.  The current maintained version is GTK+ 2.24.  The
 repository at @url{http://github.com/crategus/cl-cffi-gtk} has a branch
-@code{gtk-2-24} which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows.
+@code{gtk-2-24} which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows, but
+might be not complet and free of bugs.
 
-With SBCL an alternative command to load the @code{cl-cffi-gtk} library is
-@code{(asdf:load-system 'cl-cffi-gtk)}.  The libraries GLib, GObject, GDK, GIO,
-Pango, and Cairo are part of GTK+ and loaded in addition with the above command.
-These libraries can be loaded individually with the commands:
+GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and
+Cairo. These libraries can be loaded separately with the following commands:
 @verbatim
    (asdf:load-system 'cl-cffi-gtk-glib)
    (asdf:load-system 'cl-cffi-gtk-gobject)
    (asdf:load-system 'cl-cffi-gtk-gdk)
+   (asdf:load-system 'cl-cffi-gtk-gdk-pixbuf)
    (asdf:load-system 'cl-cffi-gtk-gio)
    (asdf:load-system 'cl-cffi-gtk-pango)
    (asdf:load-system 'cl-cffi-gtk-cairo)
@@ -50,36 +50,28 @@ These libraries can be loaded individually with the commands:
 It is assumed, that the corresponding system definition files
 @code{cl-cffi-gtk.asd} for GTK+, @code{cl-cffi-gtk-glib.asd} for GLib,
 @code{cl-cffi-gtk-gobject.asd} for GObject, @code{cl-cffi-gtk-gdk.asd} for GDK,
-@code{cl-cffi-gtk-gio.asd} for GIO, @code{cl-cffi-gtk-pango.asd}, for Pango and
-@code{cl-cffi-gtk-cairo.asd} for Cairo are correctly registered to
-@code{asdf:*central-registry*} or the corresponding symlinks are created.
+@code{cl-cffi-gdk-pixbuf.asd} for GDK-Pixbuf, @code{cl-cffi-gtk-gio.asd} for
+GIO, @code{cl-cffi-gtk-pango.asd}, for Pango and @code{cl-cffi-gtk-cairo.asd}
+for Cairo are correctly registered to @code{asdf:*central-registry*} or the
+corresponding symlinks are created.
 
-For example for SBCL on a Linux system the symlinks are added to the directory
-@code{~/.sbcl/systems} with the commands:
-
-@verbatim
-   cd ~/.sbcl/systems
-   ln -s /path-to-cl-cffi-gtk/gtk/cl-cffi-gtk.asd
-   ln -s /path-to-cl-cffi-gtk/gdk/cl-cffi-gtk-gdk.asd
-   ln -s /path-to-cl-cffi-gtk/gobject/cl-cffi-gtk-gobject.asd
-   ln -s /path-to-cl-cffi-gtk/glib/cl-cffi-gtk-glib.asd
-   ln -s /path-to-cl-cffi-gtk/gio/cl-cffi-gtk-gio.asd
-   ln -s /path-to-cl-cffi-gtk/pango/cl-cffi-gtk-pango.asd
-   ln -s /path-to-cl-cffi-gtk/cairo/cl-cffi-gtk-cairo.asd
-@end verbatim
-
-The @code{cl-cffi-gtk} library depends further on the following libraries,
-which must be installed:
+The @code{cl-cffi-gtk} library depends further on the following libraries:
 @table @emph
 @item CFFI
       the Common Foreign Function Interface, purports to be a portable
       foreign function interface for Common Lisp.
-      See @url{http://common-lisp.net/project/cffi/}.
+      See @url{http://common-lisp.net/project/cffi/} and
+      @url{http://www.crategus.com/books/cffi/}.
+
+      @b{Warning:} Use the version 0.10.1.7 of the CFFI library. The latest
+      version from the repository contains a change which is incompatible with
+      the Lisp implementation of the GBoxed type.
    
 @item Trivial-Garbage
       provides a portable API to finalizers, weak hash-tables
       and weak pointers on all major CL implementations. See
-      @url{http://www.cliki.net/trivial-garbage}.
+      @url{http://www.cliki.net/trivial-garbage} and
+      @url{http://www.crategus.com/books/trivial-garbage/}.
    
 @item Iterate
       is a lispy and extensible replacement for the LOOP macro.
@@ -87,34 +79,37 @@ which must be installed:
    
 @item Bordeaux-Threads
       lets you write multi-threaded applications in a portable way.
-      See @url{http://common-lisp.net/project/bordeaux-threads/}.
+      See @url{http://common-lisp.net/project/bordeaux-threads/} and
+      @url{http://www.crategus.com/books/bordeaux-threads/}.
    
 @item Closer-MOP
       Closer to MOP is a compatibility layer that rectifies many of the absent
       or incorrect MOP features as detected by MOP Feature Tests.
-      See @url{http://common-lisp.net/project/closer/closer-mop.html}.
+      See @url{http://common-lisp.net/project/closer/closer-mop.html} and
+      @url{http://www.crategus.com/books/closer-mop}.
 @end table
 
 @findex cl-cffi-gtk-build-info
+@set CL-CFFI-GTK-BUILD-INFO http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_cl-cffi-gtk-build-info.html
 
 Information about the installation can be obtained with the function
-@code{cl-cffi-gtk-build-info}.  This is an example for the output, when calling
-the function from the Lisp prompt after loading the library:
-
+@url{@value{CL-CFFI-GTK-BUILD-INFO}, @code{cl-cffi-gtk-build-info}}.  This is an
+example for the output, when calling the function from the Lisp prompt after
+loading the library:
 @example
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 1.0.0
-cl-cffi-gtk build date: 21:52 1/19/2013
+cl-cffi-gtk build date: 20:18 2/16/2013
 GTK+ version: 3.6.0
 GLIB version: 2.34.1
 GDK-Pixbuf version: 2.26.4
 Pango version: 1.30.1
 Cairo version: 1.12.2
 Machine type: X86
-Machine version: Intel(R) Core(TM)2 Duo CPU T7250 2.00GHz
+Machine version: Intel(R) Core(TM)2 Duo CPU     T7250  @ 2.00GHz
 Software type: Linux
-Software version: 3.5.0-22-generic
+Software version: 3.5.0-24-generic
 Lisp implementation type: SBCL
 Lisp implementation version: 1.0.57
 @end example
@@ -132,14 +127,13 @@ Lisp implementation version: 1.0.57
 
 The @code{cl-cffi-gtk} source distribution contains the complete source to all
 of the examples used in this tutorial.  To begin the introduction to GTK+, the
-output of the simplest program possible is shown in @ref{figure-simple-window}
-and the Lisp code in @ref{example-simple-window}.
+output of the simplest program possible is shown in @ref{figure-simple-window}.
 
 The program creates a 200 x 200 pixel window.  In this case the window has the
-default title "sbcl".  The window can be sized and moved.  Because no special
-action is implemented to close the window, depending on the operating system
-the program might hang.  First in @ref{example-simple-window-C} the C program
-of the GTK+ 2.0 Tutorial is presented to show the close connection between the
+default title "sbcl".  The window can be sized and moved.  First in
+@ref{example-simple-window-C} the C program of the
+@url{http://developer.gnome.org/gtk3/stable/gtk-getting-started.html, GTK+ 3
+Reference Manual} is presented to show the close connection between the
 C library and the implementation of the Lisp binding.  The code of the Lisp
 program is shown in @ref{example-simple-window}.
 
@@ -149,18 +143,21 @@ program is shown in @ref{example-simple-window}.
 @verbatim
 #include <gtk/gtk.h>
 
-int main( int argc, char *argv[] )
+int main (int argc, char *argv[])
 {
-    GtkWidget *window;
-    
-    gtk_init (&argc, &argv);
-    
-    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_widget_show  (window);
-    
-    gtk_main ();
+  GtkWidget *window;
 
-    return 0;
+  gtk_init (&argc, &argv);
+
+  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+  g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+
+  gtk_widget_show (window);
+
+  gtk_main ();
+
+  return 0;
 }
 @end verbatim
 
@@ -197,7 +194,7 @@ int main( int argc, char *argv[] )
 @caption{A Simple Window in the programing language Lisp}
 @end float
 @verbatim
-(asdf:operate 'asdf:load-op :cl-cffi-gtk)
+(asdf:load-system :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
   (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp))
