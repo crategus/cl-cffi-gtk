@@ -2,8 +2,8 @@
 ;;; gtk.cell-area.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org The API documentation of the
-;;; Lisp Binding is available at http://www.crategus.com/books/cl-cffi-gtk/
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -1185,37 +1185,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_preferred_width ()
-;;;
-;;; void gtk_cell_area_get_preferred_width (GtkCellArea *area,
-;;;                                         GtkCellAreaContext *context,
-;;;                                         GtkWidget *widget,
-;;;                                         gint *minimum_width,
-;;;                                         gint *natural_width);
-;;;
-;;; Retrieves a cell area's initial minimum and natural width.
-;;;
-;;; area will store some geometrical information in context along the way, when
-;;; requesting sizes over an arbitrary number of rows, its not important to
-;;; check the minimum_width and natural_width of this call but rather to consult
-;;; gtk_cell_area_context_get_preferred_width() after a series of requests.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; context :
-;;;     the GtkCellAreaContext to perform this request with
-;;;
-;;; widget :
-;;;     the GtkWidget where area will be rendering
-;;;
-;;; minimum_width :
-;;;     location to store the minimum width, or NULL
-;;;
-;;; natural_width :
-;;;     location to store the natural width, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_area_get_preferred_width"
+          %gtk-cell-area-get-preferred-width) :void
+  (area (g-object gtk-cell-area))
+  (context (g-object gtk-cell-area-context))
+  (widget (g-object gtk-widget))
+  (minium-width (:pointer :int))
+  (natural-width (:pointer :int)))
+
+(defun gtk-cell-area-get-preferred-width (area context widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @argument[context]{the @class{gtk-cell-area-context} to perform this request
+    with}
+  @argument[widget]{the @class{gtk-widget} where area will be rendering}
+  @begin{return}
+    @code{minimum-width} -- the minimum width, or @code{nil}@br{}
+    @code{natural-width} -- the natural width, or @code{nil}
+  @end{return}
+  @begin{short}
+    Retrieves a cell area's initial minimum and natural width.
+  @end{short}
+
+  @arg{area} will store some geometrical information in @arg{context} along the
+  way, when requesting sizes over an arbitrary number of rows, its not important
+  to check the @arg{minimum-width} and @arg{natural-width} of this call but
+  rather to consult @fun{gtk-cell-area-context-get-preferred-width} after a
+  series of requests.
+
+  Since 3.0
+  @see-function{gtk-cell-area-context-get-preferred-width}"
+  (with-foreign-objects ((minimum-width :int) (natural-width :int))
+    (%gtk-cell-area-get-preferred-width area
+                                        context
+                                        widget
+                                        minimum-width
+                                        natural-width)
+    (values (mem-ref minimum-width :int)
+            (mem-ref natural-width :int))))
+
+(export 'gtk-cell-area-get-preferred-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_preferred_height_for_width ()
@@ -1265,38 +1277,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_preferred_height ()
-;;;
-;;; void gtk_cell_area_get_preferred_height (GtkCellArea *area,
-;;;                                          GtkCellAreaContext *context,
-;;;                                          GtkWidget *widget,
-;;;                                          gint *minimum_height,
-;;;                                          gint *natural_height);
-;;;
-;;; Retrieves a cell area's initial minimum and natural height.
-;;;
-;;; area will store some geometrical information in context along the way, when
-;;; requesting sizes over an arbitrary number of rows, its not important to
-;;; check the minimum_height and natural_height of this call but rather to
-;;; consult gtk_cell_area_context_get_preferred_height() after a series of
-;;; requests.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; context :
-;;;     the GtkCellAreaContext to perform this request with
-;;;
-;;; widget :
-;;;     the GtkWidget where area will be rendering
-;;;
-;;; minimum_height :
-;;;     location to store the minimum height, or NULL
-;;;
-;;; natural_height :
-;;;     location to store the natural height, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_area_get_preferred_height"
+          %gtk-cell-area-get-preferred-height) :void
+  (area (g-object gtk-cell-area))
+  (context (g-object gtk-cell-area-context))
+  (widget (g-object gtk-widget))
+  (minium-height (:pointer :int))
+  (natural-height (:pointer :int)))
+
+(defun gtk-cell-area-get-preferred-height (area context widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @argument[context]{the @class{gtk-cell-area-context} to perform this request
+    with}
+  @argument[widget]{the @class{gtk-widget} where area will be rendering}
+  @begin{return}
+    @code{minimum-height} -- the minimum height, or @code{nil}@br{}
+    @code{natural-height} --  the natural height, or @code{nil}
+  @end{return}
+  @begin{short}
+    Retrieves a cell area's initial minimum and natural height.
+  @end{short}
+
+  @arg{area} will store some geometrical information in @arg{context} along the
+  way, when requesting sizes over an arbitrary number of rows, its not important
+  to check the @arg{minimum-height} and @arg{natural-height} of this call but
+  rather to consult @fun{gtk-cell-area-context-get-preferred-height} after a
+  series of requests.
+
+  Since 3.0
+  @see-function{gtk-cell-area-context-get-preferred-height}"
+  (with-foreign-objects ((minimum-height :int) (natural-height :int))
+    (%gtk-cell-area-get-preferred-height area
+                                         context
+                                         widget
+                                         minimum-height
+                                         natural-height)
+    (values (mem-ref minimum-height :int)
+            (mem-ref natural-height :int))))
+
+(export 'gtk-cell-area-get-preferred-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_preferred_width_for_height ()
