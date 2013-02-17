@@ -69,12 +69,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gdk-pixbuf)
-
-(load "../gdk-pixbuf/atdoc/src/atdoc-gdk-pixbuf.package.lisp")
-
-;;; ----------------------------------------------------------------------------
-
 (in-package :gobject)
 
 (load "../gobject/atdoc/src/atdoc-gobject.package.lisp")
@@ -87,7 +81,6 @@
 (in-package :glib)
 
 (load "../glib/atdoc/src/atdoc-glib.package.lisp")
-(load "../glib/atdoc/src/atdoc-glib.version.lisp")
 (load "../glib/atdoc/src/atdoc-glib.misc.lisp")
 (load "../glib/atdoc/src/atdoc-glib.threads.lisp")
 (load "../glib/atdoc/src/atdoc-glib.main-loop.lisp")

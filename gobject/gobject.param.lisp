@@ -6,6 +6,8 @@
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; The API documentation of the Lisp binding is available at
+;;; http://www.crategus.com/books/cl-cffi-gtk/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -505,29 +507,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecChar
-;;;
-;;; struct GParamSpecChar {
-;;;   GParamSpec    parent_instance;
-;;;
-;;;   gint8         minimum;
-;;;   gint8         maximum;
-;;;   gint8         default_value;
-;;; };
-;;;
-;;; A GParamSpec derived structure that contains the meta data for character
-;;; properties.
-;;;
-;;; GParamSpec parent_instance;
-;;;     private GParamSpec portion
-;;;
-;;; gint8 minimum;
-;;;     minimum value for the property specified
-;;;
-;;; gint8 maximum;
-;;;     maximum value for the property specified
-;;;
-;;; gint8 default_value;
-;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-char
@@ -537,44 +516,48 @@
   (:default-value :int8))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-param-spec-char atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-param-spec-char atdoc:*external-symbols*)
+ "@version{2013-2-7}
+  @begin{short}
+    A GParamSpec derived structure that contains the meta data for character
+    properties.
+  @end{short}
+  @begin{pre}
+(defcstruct g-param-spec-char
+  (:parent-instance g-param-spec)
+  (:minimum :int8)
+  (:maximum :int8)
+  (:default-value :int8))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:parent-instance]{private GParamSpec portion}
+    @entry[:minimum]{minimum value for the property specified}
+    @entry[:maximum]{maximum value for the property specified}
+    @entry[:default-value]{default value for the property specified}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_char ()
-;;;
-;;; GParamSpec * g_param_spec_char (const gchar *name,
-;;;                                 const gchar *nick,
-;;;                                 const gchar *blurb,
-;;;                                 gint8 minimum,
-;;;                                 gint8 maximum,
-;;;                                 gint8 default_value,
-;;;                                 GParamFlags flags);
-;;;
-;;; Creates a new GParamSpecChar instance specifying a G_TYPE_CHAR property.
-;;;
-;;; name :
-;;;     canonical name of the property specified
-;;;
-;;; nick :
-;;;     nick name for the property specified
-;;;
-;;; blurb :
-;;;     description of the property specified
-;;;
-;;; minimum :
-;;;     minimum value for the property specified
-;;;
-;;; maximum :
-;;;     maximum value for the property specified
-;;;
-;;; default_value :
-;;;     default value for the property specified
-;;;
-;;; flags :
-;;;     flags for the property specified
-;;;
-;;; Returns :
-;;;     a newly created parameter specification
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_char" g-param-spec-char) (:pointer g-param-spec-char)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[name]{canonical name of the property specified}
+  @argument[nick]{nick name for the property specified}
+  @argument[blurb]{description of the property specified}
+  @argument[minimum]{minimum value for the property specified}
+  @argument[maximum]{maximum value for the property specified}
+  @argument[default-value]{default value for the property specified}
+  @argument[flags]{flags for the property specified}
+  @return{A newly created parameter specification.}
+  @begin{short}
+    Creates a new @symbol{g-param-spec-char} instance specifying a
+    @variable{+g-type-char+} property.
+  @end{short}"
   (name :string)
   (nick :string)
   (blurb :string)
@@ -587,25 +570,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_set_char ()
-;;;
-;;; void g_value_set_char (GValue *value, gchar v_char);
-;;;
-;;; Warning
-;;;
-;;; g_value_set_char has been deprecated since version 2.32 and should not be
-;;; used in newly-written code. This function's input type is broken, see
-;;; g_value_set_schar()
-;;;
-;;; Set the contents of a G_TYPE_CHAR GValue to v_char.
-;;;
-;;; value :
-;;;     a valid GValue of type G_TYPE_CHAR
-;;;
-;;; v_char :
-;;;     character value to be set
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_char" g-value-set-char) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[value]{a valid GValue of type G_TYPE_CHAR}
+  @argument[v-char]{character value to be set}
+  @subheading{Warning}
+    g_value_set_char has been deprecated since version 2.32 and should not be
+    used in newly-written code. This function's input type is broken, see
+    g_value_set_schar()
+
+  @short{Set the contents of a G_TYPE_CHAR GValue to v_char.}"
   (value (:pointer g-value))
   (v-char :char))
 
@@ -613,28 +590,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_value_get_char ()
-;;;
-;;; gchar g_value_get_char (const GValue *value);
-;;;
-;;; Warning
-;;;
-;;; g_value_get_char has been deprecated since version 2.32 and should not be
-;;; used in newly-written code. This function's return type is broken, see
-;;; g_value_get_schar()
-;;;
-;;; Do not use this function; it is broken on platforms where the char type is
-;;; unsigned, such as ARM and PowerPC. See g_value_get_schar().
-;;;
-;;; Get the contents of a G_TYPE_CHAR GValue.
-;;;
-;;; value :
-;;;     a valid GValue of type G_TYPE_CHAR
-;;;
-;;; Returns :
-;;;     character contents of value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_char" g-value-get-char) :char
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[value]{a valid GValue of type G_TYPE_CHAR}
+  @return{character contents of value}
+  @subheading{Warning}
+    g_value_get_char has been deprecated since version 2.32 and should not be
+    used in newly-written code. This function's return type is broken, see
+    g_value_get_schar()
+
+    Do not use this function; it is broken on platforms where the char type is
+    unsigned, such as ARM and PowerPC. See g_value_get_schar().
+
+    @short{Get the contents of a G_TYPE_CHAR GValue.}"
   (value (:pointer g-value)))
 
 (export 'g-value-get-char)

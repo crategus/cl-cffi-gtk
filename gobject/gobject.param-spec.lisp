@@ -6,6 +6,8 @@
 ;;;
 ;;; The documentation of this file has been copied from the
 ;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; The API documentation of the Lisp binding is available at
+;;; http://www.crategus.com/books/cl-cffi-gtk/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -147,7 +149,7 @@
       the parameter. Since 2.8}
     @entry[:deprecated]{the parameter is deprecated and will be removed in a
       future version. A warning will be generated if it is used while running
-      with G_ENABLE_DIAGNOSTIC=1. Since 2.26}
+      with @code{G_ENABLE_DIAGNOSTIC=1}. Since 2.26}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -178,6 +180,14 @@
   characters can be letters, numbers or a '-'. All other characters are
   replaced by a '-' during construction. The result of this replacement is
   called the canonical name of the parameter.
+  @begin{pre}
+(defcstruct g-param-spec
+  (:type-instance g-type-instance)
+  (:name (:string :free-from-foreign nil :free-to-foreign nil))
+  (:flags g-param-flags)
+  (:value-type g-type)
+  (:owner-type g-type))
+  @end{pre}
   @begin[code]{table}
     @entry[:type-instance]{private @symbol{g-type-instance} portion}
     @entry[:name]{name of this parameter: always an interned string}
