@@ -30,7 +30,6 @@
 
 ;; Load the documentation of the package GLib
 (load "src/atdoc-glib.package.lisp")
-(load "src/atdoc-glib.version.lisp")
 (load "src/atdoc-glib.misc.lisp")
 (load "src/atdoc-glib.threads.lisp")
 (load "src/atdoc-glib.main-loop.lisp")

@@ -2,9 +2,11 @@
 ;;; glib.variant.lisp
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
+;;; GLib 2.32.3 Reference Manual. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1102,52 +1104,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_is_signature ()
-;;;
-;;; gboolean g_variant_is_signature (const gchar *string);
-;;;
-;;; Determines if a given string is a valid D-Bus type signature. You should
-;;; ensure that a string is a valid D-Bus type signature before passing it to
-;;; g_variant_new_signature().
-;;;
-;;; D-Bus type signatures consist of zero or more definite GVariantType strings
-;;; in sequence.
-;;;
-;;; string :
-;;;     a normal C nul-terminated string
-;;;
-;;; Returns :
-;;;     TRUE if string is a D-Bus type signature
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_is_signature" g-variant-is-signature) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[string]{a normal C nul-terminated string}
+  @return{TRUE if string is a D-Bus type signature}
+  @begin{short}
+    Determines if a given string is a valid D-Bus type signature.
+  @end{short}
+  You should ensure that a string is a valid D-Bus type signature before passing
+  it to g_variant_new_signature().
+
+  D-Bus type signatures consist of zero or more definite GVariantType strings
+  in sequence.
+
+  Since 2.24"
   (string :string))
 
 (export 'g-variant-is-signature)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_variant ()
-;;;
-;;; GVariant * g_variant_new_variant (GVariant *value);
-;;;
-;;; Boxes value. The result is a GVariant instance representing a variant
-;;; containing the original value.
-;;;
-;;; If child is a floating reference (see g_variant_ref_sink()), the new
-;;; instance takes ownership of child.
-;;;
-;;; value :
-;;;     a GVariant instance
-;;;
-;;; Returns :
-;;;     a floating reference to a new variant GVariant instance
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_variant" g-variant-new-variant)
     (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a GVariant instance}
+  @return{a floating reference to a new variant GVariant instance}
+  @begin{short}
+    Boxes value. The result is a GVariant instance representing a variant
+    containing the original value.
+  @end{short}
+
+  If child is a floating reference (see g_variant_ref_sink()), the new
+  instance takes ownership of child.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-new-variant)
@@ -1243,278 +1239,200 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_boolean ()
-;;;
-;;; gboolean g_variant_get_boolean (GVariant *value);
-;;;
-;;; Returns the boolean value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_BOOLEAN.
-;;;
-;;; value :
-;;;     a boolean GVariant instance
-;;;
-;;; Returns :
-;;;     TRUE or FALSE
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_boolean" g-variant-get-boolean) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a boolean GVariant instance}
+  @return{TRUE or FALSE}
+  @short{Returns the boolean value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_BOOLEAN.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-boolean)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_byte ()
-;;;
-;;; guchar g_variant_get_byte (GVariant *value);
-;;;
-;;; Returns the byte value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_BYTE.
-;;;
-;;; value :
-;;;     a byte GVariant instance
-;;;
-;;; Returns :
-;;;     a guchar
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_byte" g-variant-get-byte) :uchar
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a byte GVariant instance}
+  @return{a guchar}
+  @short{Returns the byte value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_BYTE.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-byte)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_int16 ()
-;;;
-;;; gint16 g_variant_get_int16 (GVariant *value);
-;;;
-;;; Returns the 16-bit signed integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_INT16.
-;;;
-;;; value :
-;;;     a int16 GVariant instance
-;;;
-;;; Returns :
-;;;     a gint16
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_int16" g-variant-get-int16) :int16
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a int16 GVariant instance}
+  @return{a gint16}
+  @short{Returns the 16-bit signed integer value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_INT16.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-int16)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_uint16 ()
-;;;
-;;; guint16 g_variant_get_uint16 (GVariant *value);
-;;;
-;;; Returns the 16-bit unsigned integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_UINT16.
-;;;
-;;; value :
-;;;     a uint16 GVariant instance
-;;;
-;;; Returns :
-;;;     a guint16
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_uint16" g-variant-get-uint16) :uint16
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a uint16 GVariant instance}
+  @return{a guint16}
+  @short{Returns the 16-bit unsigned integer value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_UINT16.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-uint16)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_int32 ()
-;;;
-;;; gint32 g_variant_get_int32 (GVariant *value);
-;;;
-;;; Returns the 32-bit signed integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_INT32.
-;;;
-;;; value :
-;;;     a int32 GVariant instance
-;;;
-;;; Returns :
-;;;     a gint32
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_int32" g-variant-get-int32) :int32
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a int32 GVariant instance}
+  @return{a gint32}
+  @return{Returns the 32-bit signed integer value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_INT32.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-int32)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_uint32 ()
-;;;
-;;; guint32 g_variant_get_uint32 (GVariant *value);
-;;;
-;;; Returns the 32-bit unsigned integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_UINT32.
-;;;
-;;; value :
-;;;     a uint32 GVariant instance
-;;;
-;;; Returns :
-;;;     a guint32
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_uint32" g-variant-get-uint32) :uint32
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @arguemnt[value]{a uint32 GVariant instance}
+  @return{a guint32}
+  @short{Returns the 32-bit unsigned integer value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_UINT32.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-uint32)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_int64 ()
-;;;
-;;; gint64 g_variant_get_int64 (GVariant *value);
-;;;
-;;; Returns the 64-bit signed integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_INT64.
-;;;
-;;; value :
-;;;     a int64 GVariant instance
-;;;
-;;; Returns :
-;;;     a gint64
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_int64" g-variant-get-int64) :int64
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a int64 GVariant instance}
+  @return{a gint64}
+  @short{Returns the 64-bit signed integer value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_INT64.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-int64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_uint64 ()
-;;;
-;;; guint64 g_variant_get_uint64 (GVariant *value);
-;;;
-;;; Returns the 64-bit unsigned integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_UINT64.
-;;;
-;;; value :
-;;;     a uint64 GVariant instance
-;;;
-;;; Returns :
-;;;     a guint64
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_uint64" g-variant-get-uint64) :uint64
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a uint64 GVariant instance}
+  @return{a guint64}
+  @short{Returns the 64-bit unsigned integer value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_UINT64.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-uint64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_handle ()
-;;;
-;;; gint32 g_variant_get_handle (GVariant *value);
-;;;
-;;; Returns the 32-bit signed integer value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_HANDLE.
-;;;
-;;; By convention, handles are indexes into an array of file descriptors that
-;;; are sent alongside a D-Bus message. If you're not interacting with D-Bus,
-;;; you probably don't need them.
-;;;
-;;; value :
-;;;     a handle GVariant instance
-;;;
-;;; Returns :
-;;;     a gint32
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_handle" g-variant-get-handle) :int32
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a handle GVariant instance}
+  @return{a gint32}
+  @short{Returns the 32-bit signed integer value of value.}
+
+ It is an error to call this function with a value of any type other than
+ G_VARIANT_TYPE_HANDLE.
+
+  By convention, handles are indexes into an array of file descriptors that
+  are sent alongside a D-Bus message. If you're not interacting with D-Bus,
+  you probably don't need them.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-int64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_double ()
-;;;
-;;; gdouble g_variant_get_double (GVariant *value);
-;;;
-;;; Returns the double precision floating point value of value.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; G_VARIANT_TYPE_DOUBLE.
-;;;
-;;; value :
-;;;     a double GVariant instance
-;;;
-;;; Returns :
-;;;     a gdouble
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_double" g-variant-get-double) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a double GVariant instance}
+  @return{a gdouble}
+  @short{Returns the double precision floating point value of value.}
+
+  It is an error to call this function with a value of any type other than
+  G_VARIANT_TYPE_DOUBLE.
+
+  Since 2.24"
   (value (:pointer g-variant)))
 
 (export 'g-variant-get-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_string ()
-;;;
-;;; const gchar * g_variant_get_string (GVariant *value, gsize *length);
-;;;
-;;; Returns the string value of a GVariant instance with a string type. This
-;;; includes the types G_VARIANT_TYPE_STRING, G_VARIANT_TYPE_OBJECT_PATH and
-;;; G_VARIANT_TYPE_SIGNATURE.
-;;;
-;;; The string will always be utf8 encoded.
-;;;
-;;; If length is non-NULL then the length of the string (in bytes) is returned
-;;; there. For trusted values, this information is already known. For untrusted
-;;; values, a strlen() will be performed.
-;;;
-;;; It is an error to call this function with a value of any type other than
-;;; those three.
-;;;
-;;; The return value remains valid as long as value exists.
-;;;
-;;; value :
-;;;     a string GVariant instance
-;;;
-;;; length :
-;;;     a pointer to a gsize, to store the length
-;;;
-;;; Returns :
-;;;     the constant string, utf8 encoded
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_string" %g-variant-get-string) :string
@@ -1522,6 +1440,28 @@
   (length :pointer))
 
 (defun g-variant-get-string (value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-17}
+  @argument[value]{a string GVariant instance}
+  @return{the constant string, utf8 encoded}
+  @begin{short}
+    Returns the string value of a GVariant instance with a string type. This
+    includes the types G_VARIANT_TYPE_STRING, G_VARIANT_TYPE_OBJECT_PATH and
+    G_VARIANT_TYPE_SIGNATURE.
+  @end{short}
+
+  The string will always be utf8 encoded.
+
+  If length is non-NULL then the length of the string (in bytes) is returned
+  there. For trusted values, this information is already known. For untrusted
+  values, a strlen() will be performed.
+
+  It is an error to call this function with a value of any type other than
+  those three.
+
+  The return value remains valid as long as value exists.
+
+  Since 2.24"
   (%g-variant-get-string value (null-pointer)))
 
 (export 'g-variant-get-string)

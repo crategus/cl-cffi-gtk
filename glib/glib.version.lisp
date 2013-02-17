@@ -2,13 +2,15 @@
 ;;; glib.version.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
+;;; GLib 2.32.3 Reference Manual. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,8 +77,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; glib_major_version
-;;; 
-;;; extern const guint glib_major_version;
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("glib_major_version" glib-major-version :read-only t) :uint)
@@ -84,9 +84,15 @@
 (export 'glib-major-version)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'glib-major-version atdoc:*symbol-name-alias*) "Variable"
+      (gethash 'glib-major-version atdoc:*external-symbols*)
+ "@version{2013-1-15}
+  @short{The major version number of the GLib library.}")
+
+;;; ----------------------------------------------------------------------------
 ;;; glib_minor_version
-;;; 
-;;; extern const guint glib_minor_version;
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("glib_minor_version" glib-minor-version :read-only t) :uint)
@@ -94,9 +100,15 @@
 (export 'glib-minor-version)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'glib-minor-version atdoc:*symbol-name-alias*) "Variable"
+      (gethash 'glib-minor-version atdoc:*external-symbols*)
+ "@version{2013-1-15}
+  @short{The minor version number of the GLib library.}")
+
+;;; ----------------------------------------------------------------------------
 ;;; glib_micro_version
-;;; 
-;;; extern const guint glib_micro_version;
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("glib_micro_version" glib-micro-version :read-only t) :uint)
@@ -104,9 +116,15 @@
 (export 'glib-micro-version)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'glib-micro-version atdoc:*symbol-name-alias*) "Variable"
+      (gethash 'glib-micro-version atdoc:*external-symbols*)
+ "@version{2013-1-15}
+  @short{The micro version number of the GLib library.}")
+
+;;; ----------------------------------------------------------------------------
 ;;; glib_binary_age
-;;; 
-;;; extern const guint glib_binary_age;
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("glib_binary_age" glib-binary-age :read-only t) :uint)
@@ -114,9 +132,15 @@
 (export 'glib-binary-age)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'glib-binary-age atdoc:*symbol-name-alias*) "Variable"
+      (gethash 'glib-binary-age atdoc:*external-symbols*)
+ "@version{2013-1-15}
+  @short{The binary age of the GLib library.}")
+
+;;; ----------------------------------------------------------------------------
 ;;; glib_interface_age
-;;; 
-;;; extern const guint glib_interface_age;
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("glib_interface_age" glib-interface-age :read-only t) :uint)
@@ -124,42 +148,35 @@
 (export 'glib-interface-age)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'glib-interface-age atdoc:*symbol-name-alias*) "Variable"
+      (gethash 'glib-interface-age atdoc:*external-symbols*)
+ "@version{2013-1-15}
+  @short{The interface age of the GLib library.}")
+
+;;; ----------------------------------------------------------------------------
 ;;; glib_check_version ()
-;;; 
-;;; const gchar * glib_check_version (guint required_major,
-;;;                                   guint required_minor,
-;;;                                   guint required_micro);
-;;; 
-;;; Checks that the GLib library in use is compatible with the given version.
-;;; Generally you would pass in the constants GLIB_MAJOR_VERSION,
-;;; GLIB_MINOR_VERSION, GLIB_MICRO_VERSION as the three arguments to this
-;;; function; that produces a check that the library in use is compatible with
-;;; the version of GLib the application or module was compiled against.
-;;; 
-;;; Compatibility is defined by two things: first the version of the running
-;;; library is newer than the version
-;;; required_major.required_minor.required_micro. Second the running library
-;;; must be binary compatible with the version
-;;; required_major.required_minor.required_micro (same major version.)
-;;; 
-;;; required_major :
-;;;     the required major version.
-;;; 
-;;; required_minor :
-;;;     the required minor version.
-;;; 
-;;; required_micro :
-;;;     the required micro version.
-;;; 
-;;; Returns :
-;;;     NULL if the GLib library is compatible with the given version, or a
-;;;     string describing the version mismatch. The returned string is owned by
-;;;     GLib and must not be modified or freed.
-;;; 
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("glib_check_version" glib-check-version ) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-15}
+  @argument[required-major]{the required major version.}
+  @argument[required-minor]{the required minor version.}
+  @argument[required-micro]{the required micro version.}
+  @return{@code{nil} if the GLib library is compatible with the given version,
+    or a string describing the version mismatch. The returned string is owned by
+    GLib and must not be modified or freed.}
+  @short{Checks that the GLib library in use is compatible with the given
+    version.}
+
+  Since 2.6
+  @see-symbol{glib-major-version}
+  @see-symbol{glib-minor-version}
+  @see-symbol{glib-micro-version}
+  @see-symbol{glib-binary-age}
+  @see-symbol{glib-interface-age}"
   (required-major :uint)
   (required-minor :uint)
   (required-micro :uint))
