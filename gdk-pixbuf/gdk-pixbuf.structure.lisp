@@ -2,10 +2,11 @@
 ;;; gdk-pixbuf.structure.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK-PixBuf Reference Manual
-;;; Version 2.26.1. See http://www.gtk.org.
+;;; Version 2.26.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -109,16 +110,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkColorspace
-;;;
-;;; typedef enum {
-;;;     GDK_COLORSPACE_RGB
-;;; } GdkColorspace;
-;;;
-;;; This enumeration defines the color spaces that are supported by the
-;;; &gdk-pixbuf; library. Currently only RGB is supported.
-;;;
-;;; GDK_COLORSPACE_RGB
-;;;     Indicates a red/green/blue additive color space.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkColorspace" gdk-colorspace
@@ -127,29 +118,28 @@
   :rgb)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-colorspace atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gdk-colorspace atdoc:*external-symbols*)
+ "@version{2013-2-16}
+  @begin{short}
+    This enumeration defines the color spaces that are supported by the
+    GDK-Pixbuf library. Currently only RGB is supported.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GdkColorspace\" gdk-colorspace
+  (:export t
+   :type-initializer \"gdk_colorspace_get_type\")
+  :rgb)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:rgb]{Indicates a red/green/blue additive color space.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GdkPixbufAlphaMode
-;;;
-;;; typedef enum {
-;;;         GDK_PIXBUF_ALPHA_BILEVEL,
-;;;         GDK_PIXBUF_ALPHA_FULL
-;;; } GdkPixbufAlphaMode;
-;;;
-;;; These values can be passed to gdk_pixbuf_render_to_drawable_alpha() to
-;;; control how the alpha channel of an image should be handled. This function
-;;; can create a bilevel clipping mask (black and white) and use it while
-;;; painting the image. In the future, when the X Window System gets an alpha
-;;; channel extension, it will be possible to do full alpha compositing onto
-;;; arbitrary drawables. For now both cases fall back to a bilevel clipping
-;;; mask.
-;;;
-;;; GDK_PIXBUF_ALPHA_BILEVEL
-;;;     A bilevel clipping mask (black and white) will be created and used to
-;;;     draw the image. Pixels below 0.5 opacity will be considered fully
-;;;     transparent, and all others will be considered fully opaque.
-;;;
-;;; GDK_PIXBUF_ALPHA_FULL
-;;;     For now falls back to GDK_PIXBUF_ALPHA_BILEVEL. In the future it will
-;;;     do full alpha compositing.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkPixbufAlphaMode" gdk-pixbuf-alpha-mode
@@ -157,6 +147,36 @@
    :type-initializer "gdk_pixbuf_alpha_mode_get_type")
   (:bilevel 0)
   (:full 1))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-alpha-mode atdoc:*symbol-name-alias*)
+      "Enum"
+      (gethash 'gdk-pixbuf-alpha-mode atdoc:*external-symbols*)
+ "@version{2013-2-16}
+  @begin{short}
+    These values can be passed to @code{gdk_pixbuf_render_to_drawable_alpha()}
+    to control how the alpha channel of an image should be handled.
+  @end{short}
+  This function can create a bilevel clipping mask (black and white) and use it
+  while painting the image. In the future, when the X Window System gets an
+  alpha channel extension, it will be possible to do full alpha compositing onto
+  arbitrary drawables. For now both cases fall back to a bilevel clipping mask.
+  @begin{pre}
+(define-g-enum \"GdkPixbufAlphaMode\" gdk-pixbuf-alpha-mode
+  (:export t
+   :type-initializer \"gdk_pixbuf_alpha_mode_get_type\")
+  (:bilevel 0)
+  (:full 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:bilevel]{A bilevel clipping mask (black and white) will be created
+      and used to draw the image. Pixels below 0.5 opacity will be considered
+      fully transparent, and all others will be considered fully opaque.}
+    @entry[:full]{For now falls back to @code{:bilevel}. In the future it will
+      do full alpha compositing.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkPixbuf
@@ -448,107 +468,82 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_colorspace ()
-;;;
-;;; GdkColorspace gdk_pixbuf_get_colorspace (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries the color space of a pixbuf.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     Color space.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-colorspace))
 
 (defun gdk-pixbuf-get-colorspace (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{Color space.}
+  @short{Queries the color space of a pixbuf.}"
   (gdk-pixbuf-colorspace pixbuf))
 
 (export 'gdk-pixbuf-get-colorspace)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_n_channels ()
-;;;
-;;; int gdk_pixbuf_get_n_channels (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries the number of channels of a pixbuf.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     Number of channels.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-n-channels))
 
 (defun gdk-pixbuf-get-n-channels (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument{pixbuf]{a pixbuf.}
+  @return{Number of channels.}
+  @short{Queries the number of channels of a pixbuf.}"
   (gdk-pixbuf-n-channels pixbuf))
 
 (export 'gdk-pixbuf-get-n-channels)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_has_alpha ()
-;;;
-;;; gboolean gdk_pixbuf_get_has_alpha (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries whether a pixbuf has an alpha channel (opacity information).
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     TRUE if it has an alpha channel, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-has-alpha))
 
 (defun gdk-pixbuf-get-has-alpha (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{@arg{true} if it has an alpha channel, @code{nil} otherwise.}
+  @short{Queries whether a pixbuf has an alpha channel (opacity information).}"
   (gdk-pixbuf-has-alpha pixbuf))
 
 (export 'gdk-pixbuf-get-has-alpha)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_bits_per_sample ()
-;;;
-;;; int gdk_pixbuf_get_bits_per_sample (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries the number of bits per color sample in a pixbuf.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     Number of bits per color sample.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-bits-per-sample))
 
 (defun gdk-pixbuf-get-bits-per-sample (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{Number of bits per color sample.}
+  @short{Queries the number of bits per color sample in a pixbuf.}"
   (gdk-pixbuf-bits-per-sample pixbuf))
 
 (export 'gdk-pixbuf-get-bits-per-sample)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_pixels ()
-;;;
-;;; guchar * gdk_pixbuf_get_pixels (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries a pointer to the pixel data of a pixbuf.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     A pointer to the pixbuf's pixel data. Please see the section called
-;;;     “Image Data” for information about how the pixel data is stored in
-;;;     memory.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-pixels))
 
 (defun gdk-pixbuf-get-pixels (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{A pointer to the pixbuf's pixel data. Please see the section called
+    \"Image Data\" for information about how the pixel data is stored in
+    memory.}
+  @short{Queries a pointer to the pixel data of a pixbuf.}"
   (gdk-pixbuf-pixels pixbuf))
 
 (export 'gdk-pixbuf-get-pixels)
@@ -577,117 +572,93 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_width ()
-;;;
-;;; int gdk_pixbuf_get_width (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries the width of a pixbuf.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     Width in pixels.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-width))
 
 (defun gdk-pixbuf-get-width (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{Width in pixels.}
+  @short{Queries the width of a pixbuf.}"
   (gdk-pixbuf-width pixbuf))
 
 (export 'gdk-pixbuf-get-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_height ()
-;;;
-;;; int gdk_pixbuf_get_height (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries the height of a pixbuf.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     Height in pixels.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-height))
 
 (defun gdk-pixbuf-get-height (pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{Height in pixels.}
+  @short{Queries the height of a pixbuf.}"
   (gdk-pixbuf-height pixbuf))
 
 (export 'gdk-pixbuf-get-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_rowstride ()
-;;;
-;;; int gdk_pixbuf_get_rowstride (const GdkPixbuf *pixbuf);
-;;;
-;;; Queries the rowstride of a pixbuf, which is the number of bytes between
-;;; the start of a row and the start of the next row.
-;;;
-;;; pixbuf :
-;;;     A pixbuf.
-;;;
-;;; Returns :
-;;;     Distance between row starts.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-pixbuf-get-rowstride))
 
 (defun gdk-pixbuf-get-rowstride (pixbuf)
-  (gdk-pixbuf-rowstride pixbuf))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf.}
+  @return{Distance between row starts.}
+  @begin{short}
+    Queries the rowstride of a pixbuf, which is the number of bytes between
+    the start of a row and the start of the next row.
+  @end{short}"
+(gdk-pixbuf-rowstride pixbuf))
 
 (export 'gdk-pixbuf-get-rowstride)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_byte_length ()
-;;;
-;;; gsize gdk_pixbuf_get_byte_length (const GdkPixbuf *pixbuf);
-;;;
-;;; Returns the length of the pixel data, in bytes.
-;;;
-;;; pixbuf :
-;;;     A pixbuf
-;;;
-;;; Returns :
-;;;     The length of the pixel data.
-;;;
-;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_get_byte_length" gdk-pixbuf-get-byte-length) g-size
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a pixbuf}
+  @return{The length of the pixel data.}
+  @short{Returns the length of the pixel data, in bytes.}
+
+  Since 2.26"
   (pixbuf (g-object gdk-pixbuf)))
 
 (export 'gdk-pixbuf-get-byte-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_option ()
-;;;
-;;; const gchar * gdk_pixbuf_get_option (GdkPixbuf *pixbuf, const gchar *key);
-;;;
-;;; Looks up key in the list of options that may have been attached to the
-;;; pixbuf when it was loaded, or that may have been attached by another
-;;; function using gdk_pixbuf_set_option().
-;;;
-;;; For instance, the ANI loader provides "Title" and "Artist" options. The ICO,
-;;; XBM, and XPM loaders provide "x_hot" and "y_hot" hot-spot options for cursor
-;;; definitions. The PNG loader provides the tEXt ancillary chunk key/value
-;;; pairs as options. Since 2.12, the TIFF and JPEG loaders return an
-;;; "orientation" option string that corresponds to the embedded TIFF/Exif
-;;; orientation tag (if present).
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; key :
-;;;     a nul-terminated string.
-;;;
-;;; Returns :
-;;;     the value associated with key. This is a nul-terminated string that
-;;;     should not be freed or NULL if key was not found.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_get_option" gdk-pixbuf-get-option) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[pixbuf]{a @class{gdk-pixbuf object}}
+  @argument[key]{a string.}
+  @return{The value associated with @arg{key}. This is a string or @code{nil} if
+    key was not found.}
+  @begin{short}
+    Looks up key in the list of options that may have been attached to the
+    pixbuf when it was loaded, or that may have been attached by another
+    function using @code{gdk_pixbuf_set_option()}.
+  @end{short}
+  For instance, the ANI loader provides \"Title\" and \"Artist\" options. The
+  ICO, XBM, and XPM loaders provide \"x_hot\" and \"y_hot\" hot-spot options for
+  cursor definitions. The PNG loader provides the tEXt ancillary chunk key/value
+  pairs as options. Since 2.12, the TIFF and JPEG loaders return an
+  \"orientation\" option string that corresponds to the embedded TIFF/Exif
+  orientation tag (if present)."
   (pixbuf (g-object gdk-pixbuf))
   (key :string))
 

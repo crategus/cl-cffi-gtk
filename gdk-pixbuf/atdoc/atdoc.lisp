@@ -4,9 +4,10 @@
 ;;; Functions for generating the documentation for the Library GDK-PixBuf
 ;;;
 ;;; The documentation has been copied from the GDK-PixBuf Reference Manual
-;;; Version 2.26.1. See http://www.gtk.org.
+;;; Version 2.26.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -26,11 +27,11 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+#-cl-cffi-gtk-documentation
+(push :cl-cffi-gtk-documentation *features*)
+
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-gdk-pixbuf)
-
-;; Load the documentation of the Libraray gdk-pixbuf
-(load "atdoc-gdk-pixbuf.lisp")
 
 (defpackage :atdoc-gdk-pixbuf
   (:use :gdk-pixbuf :common-lisp)
@@ -67,7 +68,7 @@
       output-directory
       :author "Crategus"
       :author-url "http://www.crategus.com"
-      :index-title "cl-cffi-gtk-gdk-pixbuf API documentation"
+      :index-title "cl-cffi-gtk-gdk-pixbuf API documentation (single page)"
       :heading "cl-cffi-gtk-gdk-pixbuf"
       :css "crategus.css"
       :logo nil

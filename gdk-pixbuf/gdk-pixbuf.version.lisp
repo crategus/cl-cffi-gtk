@@ -2,9 +2,10 @@
 ;;; gdk-pixbuf.version.lisp
 ;;;
 ;;; The documentation has been copied from the GDK-PixBuf Reference Manual
-;;; Version 2.26.1. See http://www.gtk.org.
+;;; Version 2.26.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,81 +40,113 @@
 ;;;     GDK_PIXBUF_MAJOR
 ;;;     GDK_PIXBUF_MINOR
 ;;;     GDK_PIXBUF_MICRO
-;;;
-;;; Description
-;;;
-;;; These macros and variables let you check the version of gdk-pixbuf you're
-;;; linking against.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_version
-;;;
-;;; extern const char *gdk_pixbuf_version;
-;;;
-;;; Contains the full version of the gdk-pixbuf library as a string. This is
-;;; the version currently in use by a running program.
 ;;; ----------------------------------------------------------------------------
 
-(defcvar ("gdk_pixbuf_version" *gdk-pixbuf-version* :read-only t) :string)
+(defcvar ("gdk_pixbuf_version" +gdk-pixbuf-version+ :read-only t) :string)
 
-(export '*gdk-pixbuf-version*)
+(export '+gdk-pixbuf-version+)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-pixbuf-version+ atdoc:*symbol-name-alias*)
+      "Constant"
+      (gethash '+gdk-pixbuf-version+ atdoc:*external-symbols*)
+ "@version{2013-2-16}
+  @begin{short}
+    Contains the full version of the GDK-Pixbuf library as a string. This is
+    the version currently in use by a running program.
+  @end{short}
+  @see-symbol{+gdk-pixbuf-major-version+}
+  @see-symbol{+gdk-pixbuf-minor-version+}
+  @see-symbol{+gdk-pixbuf-micro-version+}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_major_version
-;;;
-;;; extern const guint gdk_pixbuf_major_version;
-;;;
-;;; The major version number of the gdk-pixbuf library. (e.g. in gdk-pixbuf
-;;; version 1.2.5 this is 1.)
-;;;
-;;; This variable is in the library, so represents the gdk-pixbuf library you
-;;; have linked against. Contrast with the GDK_PIXBUF_MAJOR macro, which
-;;; represents the major version of the gdk-pixbuf headers you have included.
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("gdk_pixbuf_major_version"
-          *gdk-pixbuf-major-version* :read-only t) :uint)
+          +gdk-pixbuf-major-version+ :read-only t) :uint)
 
-(export '*gdk-pixbuf-major-version*)
+(export '+gdk-pixbuf-major-version+)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-pixbuf-major-version+ atdoc:*symbol-name-alias*)
+      "Constant"
+      (gethash '+gdk-pixbuf-major-version+ atdoc:*external-symbols*)
+ "@version{2013-2-16}
+  @begin{short}
+    The major version number of the GDK-Pixbuf library. (e.g. in GDK-Pixbuf
+    version 1.2.5 this is 1.)
+  @end{short}
+
+  This variable is in the library, so represents the GDK-Pixbuf library you
+  have loaded.
+  @see-symbol{+gdk-pixbuf-version+}
+  @see-symbol{+gdk-pixbuf-minor-version+}
+  @see-symbol{+gdk-pixbuf-micro-version+}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_minor_version
-;;;
-;;; extern const guint gdk_pixbuf_minor_version;
-;;;
-;;; The minor version number of the gdk-pixbuf library. (e.g. in gdk-pixbuf
-;;; version 1.2.5 this is 2.)
-;;;
-;;; This variable is in the library, so represents the gdk-pixbuf library you
-;;; have linked against. Contrast with the GDK_PIXBUF_MINOR macro, which
-;;; represents the minor version of the &gdk-pixbuf; headers you have included.
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("gdk_pixbuf_minor_version"
-          *gdk-pixbuf-minor-version* :read-only t) :uint)
+          +gdk-pixbuf-minor-version+ :read-only t) :uint)
 
-(export '*gdk-pixbuf-minor-version*)
+(export '+gdk-pixbuf-minor-version+)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-pixbuf-minor-version+ atdoc:*symbol-name-alias*)
+      "Constant"
+      (gethash '+gdk-pixbuf-minor-version+ atdoc:*external-symbols*)
+ "@version{2013-2-16}
+  @begin{short}
+    The minor version number of the GDK-Pixbuf library. (e.g. in GDK-Pixbuf
+    version 1.2.5 this is 2.)
+  @end{short}
+
+  This variable is in the library, so represents the GDK-Pixbuf library you
+  have loaded.
+  @see-symbol{+gdk-pixbuf-version+}
+  @see-symbol{+gdk-pixbuf-major-version+}
+  @see-symbol{+gdk-pixbuf-micro-version+}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_micro_version
-;;;
-;;; extern const guint gdk_pixbuf_micro_version;
-;;;
-;;; The micro version number of the gdk-pixbuf library. (e.g. in gdk-pixbuf
-;;; version 1.2.5 this is 5.)
-;;;
-;;; This variable is in the library, so represents the gdk-pixbuf library you
-;;; have linked against. Contrast with the GDK_PIXBUF_MICRO macro, which
-;;; represents the micro version of the &gdk-pixbuf; headers you have included.
 ;;; ----------------------------------------------------------------------------
 
 (defcvar ("gdk_pixbuf_micro_version"
-          *gdk-pixbuf-micro-version* :read-only t) :uint)
+          +gdk-pixbuf-micro-version+ :read-only t) :uint)
 
-(export '*gdk-pixbuf-micro-version*)
+(export '+gdk-pixbuf-micro-version+)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-pixbuf-micro-version+ atdoc:*symbol-name-alias*)
+      "Constant"
+      (gethash '+gdk-pixbuf-micro-version+ atdoc:*external-symbols*)
+ "@version{2013-2-16}
+  @begin{short}
+    The micro version number of the GDK-Pixbuf library. (e.g. in GDK-Pixbuf
+    version 1.2.5 this is 5.)
+  @end{short}
+
+  This variable is in the library, so represents the GDK-Pixbuf library you
+  have loaded.
+  @see-symbol{+gdk-pixbuf-version+}
+  @see-symbol{+gdk-pixbuf-major-version+}
+  @see-symbol{+gdk-pixbuf-minor-version+}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_PIXBUF_VERSION

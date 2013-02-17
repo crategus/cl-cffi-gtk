@@ -2,13 +2,14 @@
 ;;; gdk-pixbuf.load.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK-PixBuf Reference Manual
-;;; Version 2.26.1. See http://www.gtk.org.
+;;; Version 2.26.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -58,25 +59,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_file ()
-;;; 
-;;; GdkPixbuf * gdk_pixbuf_new_from_file (const char *filename,
-;;;                                       GError **error);
-;;; 
-;;; Creates a new pixbuf by loading an image from a file. The file format is
-;;; detected automatically. If NULL is returned, then error will be set.
-;;; Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
-;;; 
-;;; filename :
-;;;     Name of file to load, in the GLib file name encoding
-;;; 
-;;; error :
-;;;     Return location for an error
-;;; 
-;;; Returns :
-;;;     A newly-created pixbuf with a reference count of 1, or NULL if any of
-;;;     several error conditions occurred: the file could not be opened, there
-;;;     was no loader for the file's format, there was not enough memory to
-;;;     allocate the image buffer, or the image file contained invalid data.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_new_from_file" %gdk-pixbuf-new-from-file)
@@ -85,6 +67,19 @@
   (error :pointer))
 
 (defun gdk-pixbuf-new-from-file (filename)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-16}
+  @argument[filename]{Name of file to load, in the GLib file name encoding}
+  @return{A newly-created pixbuf with a reference count of 1, or @code{nil} if
+    any of several error conditions occurred: the file could not be opened,
+    there was no loader for the file's format, there was not enough memory to
+    allocate the image buffer, or the image file contained invalid data.}
+  @begin{short}
+    Creates a new pixbuf by loading an image from a file.
+  @end{short}
+  The file format is detected automatically. If @code{nil} is returned, then
+  error will be set. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
+  @code{G_FILE_ERROR} domains."
   (with-g-error (err)
     (%gdk-pixbuf-new-from-file filename err)))
 
