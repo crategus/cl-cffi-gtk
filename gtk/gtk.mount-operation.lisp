@@ -2,7 +2,8 @@
 ;;; gtk.mount-operation.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See http://www.gtk.org.
+;;; Version 3.6.4. See http://www.gtk.org The API documentation of the
+;;; Lisp binding is available at http://www.crategus.com/books/cl-cffi-gtk/
 ;;;
 ;;; Copyright (C) 2013 Dieter Kaiser
 ;;;
@@ -204,7 +205,7 @@
 ;;; gtk_show_uri ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_show-uri" %gtk-show-uri) :boolean
+(defcfun ("gtk_show_uri" %gtk-show-uri) :boolean
   (screen (g-object gdk-screen))
   (uri :string)
   (timestamp :uint32)
