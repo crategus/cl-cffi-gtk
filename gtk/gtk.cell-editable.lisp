@@ -2,13 +2,14 @@
 ;;; gtk.cell-editable.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,111 +41,98 @@
 ;;;     gtk_cell_editable_start_editing
 ;;;     gtk_cell_editable_editing_done
 ;;;     gtk_cell_editable_remove_widget
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GInterface
-;;;    +----GtkCellEditable
-;;;
-;;; Prerequisites
-;;;
-;;; GtkCellEditable requires GtkWidget.
-;;;
-;;; Known Implementations
-;;;
-;;; GtkCellEditable is implemented by GtkAppChooserButton, GtkComboBox,
-;;; GtkComboBoxText, GtkEntry and GtkSpinButton.
-;;;
-;;; Properties
-;;;
-;;;   "editing-canceled"         gboolean              : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "editing-done"                                   : Run Last
-;;;   "remove-widget"                                  : Run Last
-;;;
-;;; Description
-;;;
-;;; The GtkCellEditable interface must be implemented for widgets to be usable
-;;; when editing the contents of a GtkTreeView cell.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editing-canceled" property
-;;;
-;;;   "editing-canceled"         gboolean              : Read / Write
-;;;
-;;; Indicates whether editing on the cell has been canceled.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.20
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editing-done" signal
-;;;
-;;; void user_function (GtkCellEditable *cell_editable,
-;;;                     gpointer         user_data)          : Run Last
-;;;
-;;; This signal is a sign for the cell renderer to update its value from the
-;;; cell_editable.
-;;;
-;;; Implementations of GtkCellEditable are responsible for emitting this signal
-;;; when they are done editing, e.g. GtkEntry is emitting it when the user
-;;; presses Enter.
-;;;
-;;; gtk_cell_editable_editing_done() is a convenience method for emitting
-;;; "editing-done".
-;;;
-;;; cell_editable :
-;;;     the object on which the signal was emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "remove-widget" signal
-;;;
-;;; void user_function (GtkCellEditable *cell_editable,
-;;;                     gpointer         user_data)          : Run Last
-;;;
-;;; This signal is meant to indicate that the cell is finished editing, and the
-;;; widget may now be destroyed.
-;;;
-;;; Implementations of GtkCellEditable are responsible for emitting this signal
-;;; when they are done editing. It must be emitted after the "editing-done"
-;;; signal, to give the cell renderer a chance to update the cell's value before
-;;; the widget is removed.
-;;;
-;;; gtk_cell_editable_remove_widget() is a convenience method for emitting
-;;; "remove-widget".
-;;;
-;;; cell_editable :
-;;;     the object on which the signal was emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCellEditable
-;;;
-;;; typedef struct _GtkCellEditable GtkCellEditable;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GtkCellEditable" gtk-cell-editable
   (:export t
-   :type-initializer "gtk_cell_editable_get_type"))
+   :type-initializer "gtk_cell_editable_get_type")
+  (editing-canceled
+   gtk-cell-editable-editing-canceld
+   "editing-canceled" "gboolean" t t))
+
+;;; ----------------------------------------------------------------------------
+
+(setf (documentation 'gtk-cell-editable 'type)
+ "@version{2013-2-18}
+  @begin{short}
+    The GtkCellEditable interface must be implemented for widgets to be usable
+    when editing the contents of a GtkTreeView cell.
+  @end{short}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"editing-done\" signal}
+      This signal is a sign for the cell renderer to update its value from the
+      cell_editable.
+      Implementations of GtkCellEditable are responsible for emitting this signal
+      when they are done editing, e.g. GtkEntry is emitting it when the user
+      presses Enter.
+      gtk_cell_editable_editing_done() is a convenience method for emitting
+      \"editing-done\".
+      @begin{pre}
+ void user_function (GtkCellEditable *cell_editable,
+                     gpointer         user_data)          : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[cell_editable]{the object on which the signal was emitted}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+
+    @subheading{The \"remove-widget\" signal}
+      @begin{pre}
+ void user_function (GtkCellEditable *cell_editable,
+                     gpointer         user_data)          : Run Last
+      @end{pre}
+      This signal is meant to indicate that the cell is finished editing, and
+      the widget may now be destroyed.
+      Implementations of GtkCellEditable are responsible for emitting this
+      signal when they are done editing. It must be emitted after the
+      \"editing-done\" signal, to give the cell renderer a chance to update the
+      cell's value before the widget is removed.
+      gtk_cell_editable_remove_widget() is a convenience method for emitting
+      \"remove-widget\".
+      @begin[code]{table}
+        @entry[cell_editable]{the object on which the signal was emitted}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-cell-editable-editing-canceled}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "editing-canceled" 'gtk-cell-editable) 't)
+ "The @code{\"editing-canceled\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Indicates whether editing on the cell has been canceled.@br{}
+  Default value: @code{nil}@br{}
+  Since 2.20")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-editable-editing-canceld --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-editable-editing-canceled atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-editable-editing-canceled 'function)
+ "@version{2013-2-15}
+  @begin{short}
+    Accessor of the slot @code{\"editing-canceled\"} of the
+    @class{gtk-cell-editable-editing-canceled} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellEditableIface
@@ -164,23 +152,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_editable_start_editing ()
-;;;
-;;; void gtk_cell_editable_start_editing (GtkCellEditable *cell_editable,
-;;;                                       GdkEvent *event);
-;;;
-;;; Begins editing on a cell_editable. event is the GdkEvent that began the
-;;; editing process. It may be NULL, in the instance that editing was initiated
-;;; through programatic means.
-;;;
-;;; cell_editable :
-;;;     A GtkCellEditable
-;;;
-;;; event :
-;;;     A GdkEvent, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_editable_start_editing" gtk-cell-editable-start-editing)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-19}
+  @argument[cell-editable]{A GtkCellEditable}
+  @argument[event]{A GdkEvent, or NULL.}
+  @begin{short}
+    Begins editing on a cell_editable. event is the GdkEvent that began the
+    editing process. It may be NULL, in the instance that editing was initiated
+    through programatic means.
+  @end{short}"
   (cell-editable (g-object gtk-cell-editable))
     (event (g-boxed-foreign gdk-event)))
 
@@ -188,33 +172,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_editable_editing_done ()
-;;;
-;;; void gtk_cell_editable_editing_done (GtkCellEditable *cell_editable);
-;;;
-;;; Emits the "editing-done" signal.
-;;;
-;;; cell_editable :
-;;;     A GtkTreeEditable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_editable_editing_done" gtk-cell-editable-editing-done) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-19}
+  @argument[cell_editable]{A GtkTreeEditable}
+  @short{Emits the \"editing-done\" signal.}"
   (cell-editable (g-object gtk-cell-editable)))
 
 (export 'gtk-cell-editable-editing-done)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_editable_remove_widget ()
-;;;
-;;; void gtk_cell_editable_remove_widget (GtkCellEditable *cell_editable);
-;;;
-;;; Emits the "remove-widget" signal.
-;;;
-;;; cell_editable :
-;;;     A GtkTreeEditable
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_editable_remove_widget" gtk-cell-editable-remove-widget)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-19}
+  @argument[cell_editable]{A GtkTreeEditable}
+  @short{Emits the \"remove-widget\" signal.}"
   (cell-editable (g-object gtk-cell-editable)))
 
 (export 'gtk-cell-editable-remove-widget)

@@ -2,13 +2,14 @@
 ;;; gtk.cell-renderer.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -64,343 +65,12 @@
 ;;;     gtk_cell_renderer_get_preferred_width
 ;;;     gtk_cell_renderer_get_preferred_width_for_height
 ;;;     gtk_cell_renderer_get_request_mode
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkCellRenderer
-;;;                +----GtkCellRendererText
-;;;                +----GtkCellRendererPixbuf
-;;;                +----GtkCellRendererProgress
-;;;                +----GtkCellRendererSpinner
-;;;                +----GtkCellRendererToggle
-;;;
-;;; Properties
-;;;
-;;;   "cell-background"          gchar*                : Write
-;;;   "cell-background-gdk"      GdkColor*             : Read / Write
-;;;   "cell-background-rgba"     GdkRGBA*              : Read / Write
-;;;   "cell-background-set"      gboolean              : Read / Write
-;;;   "editing"                  gboolean              : Read
-;;;   "height"                   gint                  : Read / Write
-;;;   "is-expanded"              gboolean              : Read / Write
-;;;   "is-expander"              gboolean              : Read / Write
-;;;   "mode"                     GtkCellRendererMode   : Read / Write
-;;;   "sensitive"                gboolean              : Read / Write
-;;;   "visible"                  gboolean              : Read / Write
-;;;   "width"                    gint                  : Read / Write
-;;;   "xalign"                   gfloat                : Read / Write
-;;;   "xpad"                     guint                 : Read / Write
-;;;   "yalign"                   gfloat                : Read / Write
-;;;   "ypad"                     guint                 : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "editing-canceled"                               : Run First
-;;;   "editing-started"                                : Run First
-;;;
-;;; Description
-;;;
-;;; The GtkCellRenderer is a base class of a set of objects used for rendering a
-;;; cell to a cairo_t. These objects are used primarily by the GtkTreeView
-;;; widget, though they aren't tied to them in any specific way. It is worth
-;;; noting that GtkCellRenderer is not a GtkWidget and cannot be treated as
-;;; such.
-;;;
-;;; The primary use of a GtkCellRenderer is for drawing a certain graphical
-;;; elements on a cairo_t. Typically, one cell renderer is used to draw many
-;;; cells on the screen. To this extent, it isn't expected that a CellRenderer
-;;; keep any permanent state around. Instead, any state is set just prior to use
-;;; using GObjects property system. Then, the cell is measured using
-;;; gtk_cell_renderer_get_size(). Finally, the cell is rendered in the correct
-;;; location using gtk_cell_renderer_render().
-;;;
-;;; There are a number of rules that must be followed when writing a new
-;;; GtkCellRenderer. First and formost, its important that a certain set of
-;;; properties will always yield a cell renderer of the same size, barring a
-;;; GtkStyle change. The GtkCellRenderer also has a number of generic properties
-;;; that are expected to be honored by all children.
-;;;
-;;; Beyond merely rendering a cell, cell renderers can optionally provide active
-;;; user interface elements. A cell renderer can be activatable like
-;;; GtkCellRendererToggle, which toggles when it gets activated by a mouse
-;;; click, or it can be editable like GtkCellRendererText, which allows the user
-;;; to edit the text using a GtkEntry. To make a cell renderer activatable or
-;;; editable, you have to implement the GtkCellRendererClass.activate or
-;;; GtkCellRendererClass.start_editing virtual functions, respectively.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cell-background" property
-;;;
-;;;   "cell-background"          gchar*                : Write
-;;;
-;;; Cell background color as a string.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cell-background-gdk" property
-;;;
-;;;   "cell-background-gdk"      GdkColor*             : Read / Write
-;;;
-;;; Warning
-;;;
-;;; GtkCellRenderer:cell-background-gdk has been deprecated since version 3.4
-;;; and should not be used in newly-written code. Use "cell-background-rgba"
-;;; instead.
-;;;
-;;; Cell background as a GdkColor
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cell-background-rgba" property
-;;;
-;;;   "cell-background-rgba"     GdkRGBA*              : Read / Write
-;;;
-;;; Cell background as a GdkRGBA
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cell-background-set" property
-;;;
-;;;   "cell-background-set"      gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the cell background color.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editing" property
-;;;
-;;;   "editing"                  gboolean              : Read
-;;;
-;;; Whether the cell renderer is currently in editing mode.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "height" property
-;;;
-;;;   "height"                   gint                  : Read / Write
-;;;
-;;; The fixed height.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "is-expanded" property
-;;;
-;;;   "is-expanded"              gboolean              : Read / Write
-;;;
-;;; Row is an expander row, and is expanded.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "is-expander" property
-;;;
-;;;   "is-expander"              gboolean              : Read / Write
-;;;
-;;; Row has children.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "mode" property
-;;;
-;;;   "mode"                     GtkCellRendererMode   : Read / Write
-;;;
-;;; Editable mode of the CellRenderer.
-;;;
-;;; Default value: GTK_CELL_RENDERER_MODE_INERT
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "sensitive" property
-;;;
-;;;   "sensitive"                gboolean              : Read / Write
-;;;
-;;; Display the cell sensitive.
-;;;
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "visible" property
-;;;
-;;;   "visible"                  gboolean              : Read / Write
-;;;
-;;; Display the cell.
-;;;
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "width" property
-;;;
-;;;   "width"                    gint                  : Read / Write
-;;;
-;;; The fixed width.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "xalign" property
-;;;
-;;;   "xalign"                   gfloat                : Read / Write
-;;;
-;;; The x-align.
-;;;
-;;; Allowed values: [0,1]
-;;;
-;;; Default value: 0.5
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "xpad" property
-;;;
-;;;   "xpad"                     guint                 : Read / Write
-;;;
-;;; The xpad.
-;;;
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "yalign" property
-;;;
-;;;   "yalign"                   gfloat                : Read / Write
-;;;
-;;; The y-align.
-;;;
-;;; Allowed values: [0,1]
-;;;
-;;; Default value: 0.5
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "ypad" property
-;;;
-;;;   "ypad"                     guint                 : Read / Write
-;;;
-;;; The ypad.
-;;;
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editing-canceled" signal
-;;;
-;;; void user_function (GtkCellRenderer *renderer,
-;;;                     gpointer         user_data)      : Run First
-;;;
-;;; This signal gets emitted when the user cancels the process of editing a
-;;; cell. For example, an editable cell renderer could be written to cancel
-;;; editing when the user presses Escape.
-;;;
-;;; See also: gtk_cell_renderer_stop_editing().
-;;;
-;;; renderer :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editing-started" signal
-;;;
-;;; void user_function (GtkCellRenderer *renderer,
-;;;                     GtkCellEditable *editable,
-;;;                     gchar           *path,
-;;;                     gpointer         user_data)      : Run First
-;;;
-;;; This signal gets emitted when a cell starts to be edited. The intended use
-;;; of this signal is to do special setup on editable, e.g. adding a
-;;; GtkEntryCompletion or setting up additional columns in a GtkComboBox.
-;;;
-;;; Note that GTK+ doesn't guarantee that cell renderers will continue to use
-;;; the same kind of widget for editing in future releases, therefore you should
-;;; check the type of editable before doing any specific setup, as in the
-;;; following example:
-;;;
-;;;   static void
-;;;   text_editing_started (GtkCellRenderer *cell,
-;;;                         GtkCellEditable *editable,
-;;;                         const gchar     *path,
-;;;                         gpointer         data)
-;;;   {
-;;;     if (GTK_IS_ENTRY (editable))
-;;;       {
-;;;         GtkEntry *entry = GTK_ENTRY (editable);
-;;;   
-;;;         /* ... create a GtkEntryCompletion */
-;;;   
-;;;         gtk_entry_set_completion (entry, completion);
-;;;       }
-;;;   }
-;;;
-;;; renderer :
-;;;     the object which received the signal
-;;;
-;;; editable :
-;;;     the GtkCellEditable
-;;;
-;;; path :
-;;;     the path identifying the edited cell
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCellRendererState
-;;;
-;;; typedef enum {
-;;;   GTK_CELL_RENDERER_SELECTED    = 1 << 0,
-;;;   GTK_CELL_RENDERER_PRELIT      = 1 << 1,
-;;;   GTK_CELL_RENDERER_INSENSITIVE = 1 << 2,
-;;;   /* this flag means the cell is in the sort column/row */
-;;;   GTK_CELL_RENDERER_SORTED      = 1 << 3,
-;;;   GTK_CELL_RENDERER_FOCUSED     = 1 << 4,
-;;;   GTK_CELL_RENDERER_EXPANDABLE  = 1 << 5,
-;;;   GTK_CELL_RENDERER_EXPANDED    = 1 << 6
-;;; } GtkCellRendererState;
-;;;
-;;; Tells how a cell is to be rendererd.
-;;;
-;;; GTK_CELL_RENDERER_SELECTED
-;;;     The cell is currently selected, and probably has a selection colored
-;;;     background to render to.
-;;;
-;;; GTK_CELL_RENDERER_PRELIT
-;;;     The mouse is hovering over the cell.
-;;;
-;;; GTK_CELL_RENDERER_INSENSITIVE
-;;;     The cell is drawn in an insensitive manner
-;;;
-;;; GTK_CELL_RENDERER_SORTED
-;;;     The cell is in a sorted row
-;;;
-;;; GTK_CELL_RENDERER_FOCUSED
-;;;     The cell is in the focus row.
-;;;
-;;; GTK_CELL_RENDERER_EXPANDABLE
-;;;     The cell is in a row that can be expanded. Since 3.4
-;;;
-;;; GTK_CELL_RENDERER_EXPANDED
-;;;     The cell is in a row that is expanded. Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkCellRendererState" gtk-cell-renderer-state
@@ -410,29 +80,43 @@
   (:prelit 2)
   (:insensitive 4)
   (:sorted 8)
-  (:focused 16))
+  (:focused 16)
+  (:expandable #.(ash 1 5))
+  (:expanded #.(ash 1 6)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-state atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-cell-renderer-state atdoc:*external-symbols*)
+ "@version{2013-2-19}
+  @short{Tells how a cell is to be rendererd.}
+  @begin{pre}
+(define-g-flags \"GtkCellRendererState\" gtk-cell-renderer-state
+  (:export t
+   :type-initializer \"gtk_cell_renderer_state_get_type\")
+  (:selected 1)
+  (:prelit 2)
+  (:insensitive 4)
+  (:sorted 8)
+  (:focused 16)
+  (:expandable #.(ash 1 5))
+  (:expanded #.(ash 1 6)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:selected]{The cell is currently selected, and probably has a
+      selection colored background to render to.}
+    @entry[:prelit]{The mouse is hovering over the cell.}
+    @entry[:insensitive]{The cell is drawn in an insensitive manner}
+    @entry[:sorted]{The cell is in a sorted row}
+    @entry[:focused]{The cell is in the focus row.}
+    @entry[:expandable]{The cell is in a row that can be expanded. Since 3.4}
+    @entry[:expanded]{The cell is in a row that is expanded. Since 3.4}
+  @end{table}
+")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCellRendererMode
-;;;
-;;; typedef enum {
-;;;   GTK_CELL_RENDERER_MODE_INERT,
-;;;   GTK_CELL_RENDERER_MODE_ACTIVATABLE,
-;;;   GTK_CELL_RENDERER_MODE_EDITABLE
-;;; } GtkCellRendererMode;
-;;;
-;;; Identifies how the user can interact with a particular cell.
-;;;
-;;; GTK_CELL_RENDERER_MODE_INERT
-;;;     The cell is just for display and cannot be interacted with. Note that
-;;;     this doesn't mean that eg. the row being drawn can't be selected -- just
-;;;     that a particular element of it cannot be individually modified.
-;;;
-;;; GTK_CELL_RENDERER_MODE_ACTIVATABLE
-;;;     The cell can be clicked.
-;;;
-;;; GTK_CELL_RENDERER_MODE_EDITABLE
-;;;     The cell can be edited or otherwise modified.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkCellRendererMode" gtk-cell-renderer-mode
@@ -443,9 +127,30 @@
   (:editable 2))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-cell-renderer-mode atdoc:*external-symbols*)
+ "@version{2013-2-19}
+  @short{Identifies how the user can interact with a particular cell.}
+  @begin{pre}
+(define-g-enum \"GtkCellRendererMode\" gtk-cell-renderer-mode
+  (:export t
+   :type-initializer \"gtk_cell_renderer_mode_get_type\")
+  (:inert 0)
+  (:activatable 1)
+  (:editable 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:inert]{The cell is just for display and cannot be interacted with.
+      Note that this doesn't mean that eg. the row being drawn can't be selected
+      -- just that a particular element of it cannot be individually modified.}
+    @entry[:activatable]{The cell can be clicked.}
+    @entry[:editable]{The cell can be edited or otherwise modified.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRenderer
-;;;
-;;; struct GtkCellRenderer;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRenderer" gtk-cell-renderer
@@ -459,6 +164,9 @@
    (cell-background-gdk
     gtk-cell-renderer-cell-background-gdk
     "cell-background-gdk" "GdkColor" t t)
+   (cell-background-rgba
+    gtk-cell-renderer-cell-background-rgba
+    "cell-background-rgba" "GdkRGBA" t t)
    (cell-background-set
     gtk-cell-renderer-cell-background-set
     "cell-background-set" "gboolean" t t)
@@ -498,6 +206,457 @@
    (ypad
     gtk-cell-renderer-ypad
     "ypad" "guint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-renderer 'type)
+ "@version{2013-2-19}
+  @begin{short}
+    The GtkCellRenderer is a base class of a set of objects used for rendering a
+    cell to a cairo_t. These objects are used primarily by the GtkTreeView
+    widget, though they aren't tied to them in any specific way. It is worth
+    noting that GtkCellRenderer is not a GtkWidget and cannot be treated as
+    such.
+  @end{short}
+
+  The primary use of a GtkCellRenderer is for drawing a certain graphical
+  elements on a cairo_t. Typically, one cell renderer is used to draw many
+  cells on the screen. To this extent, it isn't expected that a CellRenderer
+  keep any permanent state around. Instead, any state is set just prior to use
+  using GObjects property system. Then, the cell is measured using
+  gtk_cell_renderer_get_size(). Finally, the cell is rendered in the correct
+  location using gtk_cell_renderer_render().
+
+  There are a number of rules that must be followed when writing a new
+  GtkCellRenderer. First and formost, its important that a certain set of
+  properties will always yield a cell renderer of the same size, barring a
+  GtkStyle change. The GtkCellRenderer also has a number of generic properties
+  that are expected to be honored by all children.
+
+  Beyond merely rendering a cell, cell renderers can optionally provide active
+  user interface elements. A cell renderer can be activatable like
+  GtkCellRendererToggle, which toggles when it gets activated by a mouse
+  click, or it can be editable like GtkCellRendererText, which allows the user
+  to edit the text using a GtkEntry. To make a cell renderer activatable or
+  editable, you have to implement the GtkCellRendererClass.activate or
+  GtkCellRendererClass.start_editing virtual functions, respectively.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"editing-canceled\" signal}
+      This signal gets emitted when the user cancels the process of editing a
+      cell. For example, an editable cell renderer could be written to cancel
+      editing when the user presses Escape.
+
+      See also: gtk_cell_renderer_stop_editing().
+      @begin{pre}
+ void user_function (GtkCellRenderer *renderer,
+                     gpointer         user_data)      : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[renderer]{the object which received the signal}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+      Since 2.4
+
+    @subheading{The \"editing-started\" signal}
+      This signal gets emitted when a cell starts to be edited. The intended use
+      of this signal is to do special setup on editable, e.g. adding a
+      GtkEntryCompletion or setting up additional columns in a GtkComboBox.
+
+      Note that GTK+ doesn't guarantee that cell renderers will continue to use
+      the same kind of widget for editing in future releases, therefore you
+      should check the type of editable before doing any specific setup, as in
+      the following example:
+      @begin{pre}
+ static void
+ text_editing_started (GtkCellRenderer *cell,
+                       GtkCellEditable *editable,
+                       const gchar     *path,
+                       gpointer         data)
+ {
+   if (GTK_IS_ENTRY (editable))
+     {
+       GtkEntry *entry = GTK_ENTRY (editable);
+ 
+       /* ... create a GtkEntryCompletion */
+
+       gtk_entry_set_completion (entry, completion);
+     @}
+ @}
+      @end{pre}
+      @begin{pre}
+ void user_function (GtkCellRenderer *renderer,
+                     GtkCellEditable *editable,
+                     gchar           *path,
+                     gpointer         user_data)      : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[renderer]{the object which received the signal}
+        @entry[editable]{the GtkCellEditable}
+        @entry[path]{the path identifying the edited cell}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+      Since 2.6
+  @end{dictionary}
+  @see-slot{gtk-cell-renderer-cell-background}
+  @see-slot{gtk-cell-renderer-cell-background-gdk}
+  @see-slot{gtk-cell-renderer-cell-background-rgba}
+  @see-slot{gtk-cell-renderer-cell-background-set}
+  @see-slot{gtk-cell-renderer-editing}
+  @see-slot{gtk-cell-renderer-height}
+  @see-slot{gtk-cell-renderer-is-expanded}
+  @see-slot{gtk-cell-renderer-is-expander}
+  @see-slot{gtk-cell-renderer-mode}
+  @see-slot{gtk-cell-renderer-sensitive}
+  @see-slot{gtk-cell-renderer-visible}
+  @see-slot{gtk-cell-renderer-width}
+  @see-slot{gtk-cell-renderer-xalign}
+  @see-slot{gtk-cell-renderer-xpad}
+  @see-slot{gtk-cell-renderer-yalign}
+  @see-slot{gtk-cell-renderer-ypad}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-background" 'gtk-cell-renderer) 't)
+ "The @code{\"cell-background\"} property of type @code{gchar*} (Write)@br{}
+  Cell background color as a string.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-background-gdk" 'gtk-cell-renderer) 't)
+ "The @code{\"cell-background-gdk\"} property of type @class{gdk-color}
+  (Read / Write)@br{}
+  @b{Warning:}
+  GtkCellRenderer:cell-background-gdk has been deprecated since version 3.4
+  and should not be used in newly-written code.
+  Use @code{\"cell-background-rgba\"} instead.@br{}
+  Cell background as a GdkColor")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-background-rgba" 'gtk-cell-renderer) 't)
+ "The @code{\"cell-background-rgba\"} property of type @code{GdkRGBA*}
+  (Read / Write)@br{}
+  Cell background as a GdkRGBA@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-background-set" 'gtk-cell-renderer) 't)
+ "The @code{\"cell-background-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the cell background color.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "editing" 'gtk-cell-renderer) 't)
+ "The @code{\"editing\"} property of type @code{gboolean} (Read)@br{}
+  Whether the cell renderer is currently in editing mode.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "height" 'gtk-cell-renderer) 't)
+ "The @code{\"height\"} property of type @code{gint} (Read / Write)@br{}
+  The fixed height.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "is-expanded" 'gtk-cell-renderer) 't)
+ "The @code{\"is-expanded\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Row is an expander row, and is expanded.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "is-expander" 'gtk-cell-renderer) 't)
+ "The @code{\"is-expander\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Row has children.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-cell-renderer) 't)
+ "The @code{\"mode\"} property of type @code{GtkCellRendererMode}
+  (Read / Write)@br{}
+  Editable mode of the CellRenderer.@br{}
+  Default value: GTK_CELL_RENDERER_MODE_INERT")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-cell-renderer) 't)
+ "The @code{\"sensitive\"} property of type @code{gboolean} (Read / Write)@br{}
+  Display the cell sensitive.@br{}
+  Default value: TRUE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-cell-renderer) 't)
+ "The @code{\"visible\"} property of type @code{gboolean} (Read / Write)@br{}
+  Display the cell.@br{}
+  Default value: TRUE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width" 'gtk-cell-renderer) 't)
+ "The @code{\"width\"} property of type @code{gint} (Read / Write)@br{}
+  The fixed width.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-cell-renderer) 't)
+ "The @code{\"xalign\"} property of type @code{gfloat} (Read / Write)@br{}
+  The x-align.@br{}
+  Allowed values: [0,1]@br{}
+  Default value: 0.5")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "xpad" 'gtk-cell-renderer) 't)
+ "The @code{\"xpad\"} property of type @code{guint} (Read / Write)@br{}
+  The xpad.@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-cell-renderer) 't)
+ "The @code{\"yalign\"} property of type @code{gfloat} (Read / Write)@br{}
+  The y-align.@br{}
+  Allowed values: [0,1]@br{}
+  Default value: 0.5")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "ypad" 'gtk-cell-renderer) 't)
+ "The @code{\"ypad\"} property of tpye @code{guint} (Read / Write)@br{}
+  The ypad.@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-cell-background --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-cell-background atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-cell-background 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"cell-background\"} of the
+    @class{gtk-cell-renderer} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-cell-background-gdk ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-cell-background-gdk atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-cell-background-gdk 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"cell-background-gdk\"} of the
+    @class{gtk-cell-renderer} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-cell-background-rgba ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-cell-background-rgba atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-cell-background-rgba 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"cell-background-rgba\"} of the
+    @class{gtk-cell-renderer} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-cell-background-set ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-cell-background-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-cell-background-set 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"cell-background-set\"} of the
+    @class{gtk-cell-renderer} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-editing ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-editing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-editing 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"editing\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-height -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-height 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"height\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-is-expanded ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-is-expanded atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-is-expanded 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"is-expanded\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-is-expander ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-is-expander atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-is-expander 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"is-expander\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-mode -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-mode 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"mode\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-sensitive --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-sensitive atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-sensitive 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"sensitive\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-visible ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-visible atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-visible 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"visible\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-width -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-width 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"width\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-xalign -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-xalign atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-xalign 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"xalign\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-xpad -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-xpad atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-xpad 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"xpad\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-yalign -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-yalign atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-yalign 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"yalign\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-ypad -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-ypad atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-ypad 'function)
+ "@version{2013-2-19}
+  @begin{short}
+    Accessor of the slot @code{\"ypad\"} of the @class{gtk-cell-renderer}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRendererClass
@@ -800,21 +959,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_get_fixed_size ()
-;;;
-;;; void gtk_cell_renderer_get_fixed_size (GtkCellRenderer *cell,
-;;;                                        gint *width,
-;;;                                        gint *height);
-;;;
-;;; Fills in width and height with the appropriate size of cell.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; width :
-;;;     location to fill in with the fixed width of the cell, or NULL
-;;;
-;;; height :
-;;;     location to fill in with the fixed height of the cell, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_get_fixed_size" %gtk-cell-renderer-get-fixed-size)
@@ -824,6 +968,16 @@
   (height (:pointer :int)))
 
 (defun gtk-cell-renderer-get-fixed-size (cell)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-19}
+  @argument[cell]{A GtkCellRenderer}
+  @argument[width]{location to fill in with the fixed width of the cell,
+    or NULL}
+  @argument[height]{location to fill in with the fixed height of the cell,
+   or NULL}
+  @begin{short}
+    Fills in width and height with the appropriate size of cell.
+  @end{short}"
   (with-foreign-objects ((width :int) (height :int))
     (%gtk-cell-renderer-get-fixed-size cell width height)
     (values (mem-ref width :int)
@@ -833,25 +987,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_set_fixed_size ()
-;;;
-;;; void gtk_cell_renderer_set_fixed_size (GtkCellRenderer *cell,
-;;;                                        gint width,
-;;;                                        gint height);
-;;;
-;;; Sets the renderer size to be explicit, independent of the properties set.
-;;;
-;;; cell :
-;;;     A GtkCellRenderer
-;;;
-;;; width :
-;;;     the width of the cell renderer, or -1
-;;;
-;;; height :
-;;;     the height of the cell renderer, or -1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_set_fixed_size" gtk-cell-renderer-set-fixed-size)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-19}
+  @argument[cell]{A GtkCellRenderer}
+  @argument[width]{the width of the cell renderer, or -1}
+  @argument[height]{the height of the cell renderer, or -1}
+  @begin{short}
+    Sets the renderer size to be explicit, independent of the properties set.
+  @end{short}"
   (cell (g-object gtk-cell-renderer))
   (width :int)
   (height :int))
