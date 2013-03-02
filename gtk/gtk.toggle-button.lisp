@@ -2,10 +2,11 @@
 ;;; gtk.toggle-button.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See http://www.gtk.org.
+;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -56,7 +57,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-button 'type)
- "@version{2013-2-4}
+ "@version{2013-3-2}
   @begin{short}
     A @sym{gtk-toggle-button} is a @class{gtk-button} which will remain
     \"pressed-in\" when clicked. Clicking again will cause the toggle button to
@@ -65,9 +66,9 @@
 
   A toggle button is created by calling either @fun{gtk-toggle-button-new} or
   @fun{gtk-toggle-button-new-with-label}. If using the former, it is advisable
-  to pack a widget, (such as a @class{gtk-label} and/or a @class{gtk-pixmap}),
-  into the toggle button's container. (See @class{gtk-button} for more
-  information).
+  to pack a widget, (such as a @class{gtk-label} or a @class{gtk-image}),
+  into the toggle button's container. See @class{gtk-button} for more
+  information.
 
   The state of a @sym{gtk-toggle-button} can be set specifically using
   @fun{gtk-toggle-button-set-active}, and retrieved using
@@ -118,8 +119,7 @@
   @end{dictionary}
   @see-slot{gtk-toggle-button-active}
   @see-slot{gtk-toggle-button-draw-indicator}
-  @see-slot{gtk-toggle-button-inconsistent}
-")
+  @see-slot{gtk-toggle-button-inconsistent}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;

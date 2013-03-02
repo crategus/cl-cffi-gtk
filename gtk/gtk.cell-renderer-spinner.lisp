@@ -2,9 +2,10 @@
 ;;; gtk.cell-renderer-spinner.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,78 +34,12 @@
 ;;;     GtkCellRendererSpinner
 ;;;
 ;;;     gtk_cell_renderer_spinner_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkCellRenderer
-;;;                +----GtkCellRendererSpinner
-;;; 
-;;; Properties
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;;   "pulse"                    guint                 : Read / Write
-;;;   "size"                     GtkIconSize           : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; GtkCellRendererSpinner renders a spinning animation in a cell, very similar
-;;; to GtkSpinner. It can often be used as an alternative to a
-;;; GtkCellRendererProgress for displaying indefinite activity, instead of
-;;; actual progress.
-;;; 
-;;; To start the animation in a cell, set the "active" property to TRUE and
-;;; increment the "pulse" property at regular intervals. The usual way to set
-;;; the cell renderer properties for each cell is to bind them to columns in
-;;; your tree model using e.g. gtk_tree_view_column_add_attribute().
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;; 
-;;; Whether the spinner is active (ie. shown) in the cell.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pulse" property
-;;; 
-;;;   "pulse"                    guint                 : Read / Write
-;;; 
-;;; Pulse of the spinner. Increment this value to draw the next frame of the
-;;; spinner animation. Usually, you would update this value in a timeout.
-;;; 
-;;; By default, the GtkSpinner widget draws one full cycle of the animation,
-;;; consisting of 12 frames, in 750 milliseconds.
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 2.20
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size" property
-;;; 
-;;;   "size"                     GtkIconSize           : Read / Write
-;;; 
-;;; The GtkIconSize value that specifies the size of the rendered spinner.
-;;; 
-;;; Default value: GTK_ICON_SIZE_MENU
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRendererSpinner
-;;; 
-;;; struct GtkCellRendererSpinner;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRendererSpinner" gtk-cell-renderer-spinner
@@ -123,21 +58,116 @@
     "size" "GtkIconSize" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-renderer-spinner 'type)
+ "@version{2013-2-23}
+  @begin{short}
+    GtkCellRendererSpinner renders a spinning animation in a cell, very similar
+    to GtkSpinner.
+  @end{short}
+  It can often be used as an alternative to a GtkCellRendererProgress for
+  displaying indefinite activity, instead of actual progress.
+
+  To start the animation in a cell, set the @code{\"active\"} property to TRUE
+  and increment the @code{\"pulse\"} property at regular intervals. The usual
+  way to set the cell renderer properties for each cell is to bind them to
+  columns in your tree model using e.g. gtk_tree_view_column_add_attribute().
+  @see-slot{gtk-cell-renderer-spinner-active}
+  @see-slot{gtk-cell-renderer-spinner-pulse}
+  @see-slot{gtk-cell-renderer-spinner-size}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-cell-renderer-spinner) 't)
+ "The @code{\"active\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether the spinner is active (ie. shown) in the cell.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pulse" 'gtk-cell-renderer-spinner) 't)
+ "The @code{\"pulse\"} property of type @code{guint} (Read / Write)@br{}
+  Pulse of the spinner. Increment this value to draw the next frame of the
+  spinner animation. Usually, you would update this value in a timeout.@br{}
+  By default, the GtkSpinner widget draws one full cycle of the animation,
+  consisting of 12 frames, in 750 milliseconds.@br{}
+  Default value: 0@br{}
+  Since 2.20")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-cell-renderer-spinner) 't)
+ "The @code{\"size\"} property of type @code{GtkIconSize} (Read / Write)@br{}
+  The GtkIconSize value that specifies the size of the rendered spinner.@br{}
+  Default value: GTK_ICON_SIZE_MENU@br{}
+  Since 2.20")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-spinner-active ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-spinner-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-spinner-active 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"active\"} of the
+    @class{gtk-cell-renderer-spinner} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-spinner-pulse ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-spinner-pulse atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-spinner-pulse 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"pulse\"} of the
+    @class{gtk-cell-renderer-spinner} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-spinner-size -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-spinner-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-spinner-size 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"size\"} of the
+    @class{gtk-cell-renderer-spinner} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_spinner_new ()
-;;; 
-;;; GtkCellRenderer * gtk_cell_renderer_spinner_new (void);
-;;; 
-;;; Returns a new cell renderer which will show a spinner to indicate activity.
-;;; 
-;;; Returns :
-;;;     a new GtkCellRenderer
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-cell-renderer-spinner-new))
 
 (defun gtk-cell-renderer-spinner-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-23}
+  @return{A new GtkCellRenderer.}
+  @begin{short}
+    Returns a new cell renderer which will show a spinner to indicate activity.
+  @end{short}
+
+  Since 2.20"
   (make-instance 'gtk-cell-renderer-spinner))
 
 (export 'gtk-cell-renderer-spinner-new)

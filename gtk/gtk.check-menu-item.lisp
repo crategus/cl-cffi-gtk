@@ -2,13 +2,14 @@
 ;;; gtk.check-menu-item.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -46,120 +47,12 @@
 ;;;     gtk_check_menu_item_set_inconsistent
 ;;;     gtk_check_menu_item_set_draw_as_radio
 ;;;     gtk_check_menu_item_get_draw_as_radio
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkMenuItem
-;;;                                  +----GtkCheckMenuItem
-;;;                                        +----GtkRadioMenuItem
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkCheckMenuItem implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
-;;;
-;;; Properties
-;;;
-;;;   "active"                   gboolean              : Read / Write
-;;;   "draw-as-radio"            gboolean              : Read / Write
-;;;   "inconsistent"             gboolean              : Read / Write
-;;;
-;;; Style Properties
-;;;
-;;;   "indicator-size"           gint                  : Read
-;;;
-;;; Signals
-;;;
-;;;   "toggled"                                        : Run First
-;;;
-;;; Description
-;;;
-;;; A GtkCheckMenuItem is a menu item that maintains the state of a boolean
-;;; value in addition to a GtkMenuItem usual role in activating application
-;;; code.
-;;;
-;;; A check box indicating the state of the boolean value is displayed at the
-;;; left side of the GtkMenuItem. Activating the GtkMenuItem toggles the value.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;;
-;;;   "active"                   gboolean              : Read / Write
-;;;
-;;; Whether the menu item is checked.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "draw-as-radio" property
-;;;
-;;;   "draw-as-radio"            gboolean              : Read / Write
-;;;
-;;; Whether the menu item looks like a radio menu item.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "inconsistent" property
-;;;
-;;;   "inconsistent"             gboolean              : Read / Write
-;;;
-;;; Whether to display an "inconsistent" state.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "indicator-size" style property
-;;;
-;;;   "indicator-size"           gint                  : Read
-;;;
-;;; Size of check or radio indicator.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 16
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "toggled" signal
-;;;
-;;; void user_function (GtkCheckMenuItem *checkmenuitem,
-;;;                     gpointer          user_data)          : Run First
-;;;
-;;; This signal is emitted when the state of the check box is changed.
-;;;
-;;; A signal handler can use gtk_check_menu_item_get_active() to discover the
-;;; new state.
-;;;
-;;; checkmenuitem :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCheckMenuItem
-;;;
-;;; struct GtkCheckMenuItem;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCheckMenuItem" gtk-check-menu-item
@@ -180,40 +73,144 @@
     "inconsistent" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-check-menu-item 'type)
+ "@version{2013-2-24}
+  @begin{short}
+    A GtkCheckMenuItem is a menu item that maintains the state of a boolean
+    value in addition to a GtkMenuItem usual role in activating application
+    code.
+  @end{short}
+
+  A check box indicating the state of the boolean value is displayed at the
+  left side of the GtkMenuItem. Activating the GtkMenuItem toggles the value.
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"indicator-size\" style property}
+      @code{\"indicator-size\"} of type @code{gint} (Read)@br{}
+      Size of check or radio indicator.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 16
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"toggled\" signal}
+      This signal is emitted when the state of the check box is changed.
+
+      A signal handler can use gtk_check_menu_item_get_active() to discover the
+      new state.
+      @begin{pre}
+ void user_function (GtkCheckMenuItem *checkmenuitem,
+                     gpointer          user_data)          : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[checkmenuitem]{the object which received the signal.}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-check-menu-item-active}
+  @see-slot{gtk-check-menu-item-draw-as-radio}
+  @see-slot{gtk-check-menu-item-inconsistent}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-check-menu-item) 't)
+ "The @code{\"active\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether the menu item is checked.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "draw-as-radio" 'gtk-check-menu-item) 't)
+ "The @code{\"draw-as-radio\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether the menu item looks like a radio menu item.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "inconsistent" 'gtk-check-menu-item) 't)
+ "The @code{\"inconsistent\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether to display an \"inconsistent\" state.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-check-menu-item-active ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-check-menu-item-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-check-menu-item-active 'function)
+ "@version{2013-2-24}
+  @begin{short}
+    Accessor of the slot @code{\"active\"} of the @class{gtk-check-menu-item}
+    class.
+  @end{short}")
+
+;;; --- gtk-check-menu-item-draw-as-radio --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-check-menu-item-draw-as-radio atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-check-menu-item-draw-as-radio 'function)
+ "@version{2013-2-24}
+  @begin{short}
+    Accessor of the slot @code{\"draw-as-radio\"} of the
+    @class{gtk-check-menu-item} class.
+  @end{short}")
+
+;;; --- gtk-check-menu-item-inconsistent ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-check-menu-item-inconsistent atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-check-menu-item-inconsistent 'function)
+ "@version{2013-2-24}
+  @begin{short}
+    Accessor of the slot @code{\"inconsistent\"} of the
+    @class{gtk-check-menu-item} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_new ()
-;;;
-;;; GtkWidget * gtk_check_menu_item_new (void);
-;;;
-;;; Creates a new GtkCheckMenuItem.
-;;;
-;;; Returns :
-;;;     a new GtkCheckMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-new))
 
 (defun gtk-check-menu-item-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @return{a new GtkCheckMenuItem.}
+  @short{Creates a new GtkCheckMenuItem.}"
   (make-instance 'gtk-check-menu-item))
 
 (export 'gtk-check-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_new_with_label ()
-;;;
-;;; GtkWidget * gtk_check_menu_item_new_with_label (const gchar *label);
-;;;
-;;; Creates a new GtkCheckMenuItem with a label.
-;;;
-;;; label :
-;;;     the string to use for the label.
-;;;
-;;; Returns :
-;;;     a new GtkCheckMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-new-with-label))
 
 (defun gtk-check-menu-item-new-with-label (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[label]{the string to use for the label.}
+  @return{a new GtkCheckMenuItem.}
+  @short{Creates a new GtkCheckMenuItem with a label.}"
   (make-instance 'gtk-check-menu-item
                  :label label))
 
@@ -221,23 +218,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_new_with_mnemonic ()
-;;;
-;;; GtkWidget * gtk_check_menu_item_new_with_mnemonic (const gchar *label);
-;;;
-;;; Creates a new GtkCheckMenuItem containing a label. The label will be created
-;;; using gtk_label_new_with_mnemonic(), so underscores in label indicate the
-;;; mnemonic for the menu item.
-;;;
-;;; label :
-;;;     The text of the button, with an underscore in front of the character
-;;;
-;;; Returns :
-;;;     a new GtkCheckMenuItem
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-new-with-mnemonic))
 
 (defun gtk-check-menu-item-new-with-mnemonic (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[label]{The text of the button, with an underscore in front of the
+    character}
+  @return{a new GtkCheckMenuItem}
+  @begin{short}
+    Creates a new GtkCheckMenuItem containing a label.
+  @end{short}
+  The label will be created using gtk_label_new_with_mnemonic(), so underscores
+  in label indicate the mnemonic for the menu item."
   (make-instance 'gtk-check-menu-item
                  :label label
                  :use-underline t))
@@ -246,161 +241,134 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_get_active ()
-;;;
-;;; gboolean gtk_check_menu_item_get_active (GtkCheckMenuItem *check_menu_item);
-;;;
-;;; Returns whether the check menu item is active. See
-;;; gtk_check_menu_item_set_active().
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem
-;;;
-;;; Returns :
-;;;     TRUE if the menu item is checked.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-get-active))
 
 (defun gtk-check-menu-item-get-active (check-menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check_menu_item]{a GtkCheckMenuItem}
+  @return{TRUE if the menu item is checked.}
+  @begin{short}
+    Returns whether the check menu item is active.
+  @end{short}
+  See gtk_check_menu_item_set_active()."
   (gtk-check-menu-item-active check-menu-item))
 
 (export 'gtk-check-menu-item-get-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_set_active ()
-;;;
-;;; void gtk_check_menu_item_set_active (GtkCheckMenuItem *check_menu_item,
-;;;                                      gboolean is_active);
-;;;
-;;; Sets the active state of the menu item's check box.
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem.
-;;;
-;;; is_active :
-;;;     boolean value indicating whether the check box is active.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-set-active))
 
 (defun gtk-check-menu-item-set-active (check-menu-item is-active)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check-menu-item]{a GtkCheckMenuItem.}
+  @argument[is_active]{boolean value indicating whether the check box is
+    active.}
+  @begin{short}
+    Sets the active state of the menu item's check box.
+  @end{short}"
   (setf (gtk-check-menu-item-active check-menu-item) is-active))
 
 (export 'gtk-check-menu-item-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_toggled ()
-;;;
-;;; void gtk_check_menu_item_toggled (GtkCheckMenuItem *check_menu_item);
-;;;
-;;; Emits the "toggled" signal.
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_check_menu_item_toggled" gtk-check-menu-item-toggled) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check_menu_item]{a GtkCheckMenuItem.}
+  @short{Emits the \"toggled\" signal.}"
   (check-menu-item (g-object gtk-check-menu-item)))
 
 (export 'gtk-check-menu-item-toggled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_get_inconsistent ()
-;;;
-;;; gboolean gtk_check_menu_item_get_inconsistent
-;;;                                         (GtkCheckMenuItem *check_menu_item);
-;;;
-;;; Retrieves the value set by gtk_check_menu_item_set_inconsistent().
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem
-;;;
-;;; Returns :
-;;;     TRUE if inconsistent
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-get-inconsistent))
 
 (defun gtk-check-menu-item-get-inconsistent (check-menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check_menu_item]{a GtkCheckMenuItem}
+  @return{TRUE if inconsistent}
+  @begin{short}
+    Retrieves the value set by gtk_check_menu_item_set_inconsistent().
+  @end{short}"
   (gtk-check-menu-item-inconsistent check-menu-item))
 
 (export 'gtk-check-menu-item-get-inconsistent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_set_inconsistent ()
-;;;
-;;; void gtk_check_menu_item_set_inconsistent
-;;;                                          (GtkCheckMenuItem *check_menu_item,
-;;;                                           gboolean setting);
-;;;
-;;; If the user has selected a range of elements (such as some text or
-;;; spreadsheet cells) that are affected by a boolean setting, and the current
-;;; values in that range are inconsistent, you may want to display the check in
-;;; an "in between" state. This function turns on "in between" display. Normally
-;;; you would turn off the inconsistent state again if the user explicitly
-;;; selects a setting. This has to be done manually,
-;;; gtk_check_menu_item_set_inconsistent() only affects visual appearance, it
-;;; doesn't affect the semantics of the widget.
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem
-;;;
-;;; setting :
-;;;     TRUE to display an "inconsistent" third state check
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-set-inconsistent))
 
 (defun gtk-check-menu-item-set-inconsistent (check-menu-item setting)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check_menu_item]{a GtkCheckMenuItem}
+  @argument[setting]{TRUE to display an \"inconsistent\" third state check}
+  @begin{short}
+    If the user has selected a range of elements (such as some text or
+    spreadsheet cells) that are affected by a boolean setting, and the current
+    values in that range are inconsistent, you may want to display the check in
+    an \"in between\" state.
+  @end{short}
+  This function turns on \"in between\" display. Normally you would turn off the
+  inconsistent state again if the user explicitly selects a setting. This has to
+  be done manually, gtk_check_menu_item_set_inconsistent() only affects visual
+  appearance, it doesn't affect the semantics of the widget."
   (setf (gtk-check-menu-item-inconsistent check-menu-item) setting))
 
 (export 'gtk-check-menu-item-set-inconsistent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_set_draw_as_radio ()
-;;;
-;;; void gtk_check_menu_item_set_draw_as_radio
-;;;                                          (GtkCheckMenuItem *check_menu_item,
-;;;                                           gboolean setting);
-;;;
-;;; Sets whether check_menu_item is drawn like a GtkRadioMenuItem
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem
-;;;
-;;; setting :
-;;;     whether check_menu_item is drawn like a GtkRadioMenuItem
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-set-draw-as-radio))
 
 (defun gtk-check-menu-item-set-draw-as-radio (check-menu-item setting)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check_menu_item]{a GtkCheckMenuItem}
+  @argument[setting]{whether check_menu_item is drawn like a GtkRadioMenuItem}
+  @begin{short}
+    Sets whether check_menu_item is drawn like a GtkRadioMenuItem
+  @end{short}
+
+  Since 2.4"
   (setf (gtk-check-menu-item-draw-as-radio check-menu-item) setting))
 
 (export 'gtk-check-menu-item-set-draw-as-radio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_check_menu_item_get_draw_as_radio ()
-;;;
-;;; gboolean gtk_check_menu_item_get_draw_as_radio
-;;;                                         (GtkCheckMenuItem *check_menu_item);
-;;;
-;;; Returns whether check_menu_item looks like a GtkRadioMenuItem
-;;;
-;;; check_menu_item :
-;;;     a GtkCheckMenuItem
-;;;
-;;; Returns :
-;;;     Whether check_menu_item looks like a GtkRadioMenuItem
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-check-menu-item-get-draw-as-radio))
 
 (defun gtk-check-menu-item-get-draw-as-radio (check-menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[check_menu_item]{a GtkCheckMenuItem}
+  @return{Whether check_menu_item looks like a GtkRadioMenuItem}
+  @begin{short}
+    Returns whether check_menu_item looks like a GtkRadioMenuItem
+  @end{short}
+
+  Since 2.4"
   (gtk-check-menu-item-draw-as-radio check-menu-item))
 
 (export 'gtk-check-menu-item-get-draw-as-radio)

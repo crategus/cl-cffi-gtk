@@ -2,12 +2,12 @@
 ;;; gobject.param-spec.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
-;;; http://www.crategus.com/books/cl-cffi-gtk/
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -747,25 +747,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_get_redirect_target ()
-;;;
-;;; GParamSpec * g_param_spec_get_redirect_target (GParamSpec *pspec);
-;;;
-;;; If the paramspec redirects operations to another paramspec, returns that
-;;; paramspec. Redirect is used typically for providing a new implementation of
-;;; a property in a derived type while preserving all the properties from the
-;;; parent type. Redirection is established by creating a property of type
-;;; GParamSpecOverride. See g_object_class_override_property() for an example of
-;;; the use of this capability.
-;;;
-;;; pspec :
-;;;     a GParamSpec
-;;;
-;;; Returns :
-;;;     paramspec to which requests on this paramspec should be redirected, or
-;;;     NULL if none.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_param_spec_get_redirect_target" g-param-spec-get-redirect-target)
+    (:pointer g-param-spec)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-2}
+  @argument[pspec]{a @symbol{g-param-spec} structure}
+  @begin{return}
+    paramspec to which requests on this paramspec should be redirected, or
+    @code{nil} if none.
+  @end{return}
+  @begin{short}
+    If the paramspec redirects operations to another paramspec, returns that
+    paramspec.
+  @end{short}
+  Redirect is used typically for providing a new implementation of a property in
+  a derived type while preserving all the properties from the parent type.
+  Redirection is established by creating a property of type
+  @code{GParamSpecOverride}. See @fun{g-object-class-override-property} for an
+  example of the use of this capability.
+
+  Since 2.4"
+  (pspec (:pointer g-param-spec)))
+
+(export 'g-param-spec-get-redirect-target)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_internal ()

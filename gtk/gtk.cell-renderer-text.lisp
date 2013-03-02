@@ -2,13 +2,14 @@
 ;;; gtk.cell-renderer-text.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,594 +39,12 @@
 ;;;
 ;;;     gtk_cell_renderer_text_new
 ;;;     gtk_cell_renderer_text_set_fixed_height_from_font
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkCellRenderer
-;;;                +----GtkCellRendererText
-;;;                      +----GtkCellRendererAccel
-;;;                      +----GtkCellRendererCombo
-;;;                      +----GtkCellRendererSpin
-;;;
-;;; Properties
-;;;
-;;;   "align-set"                gboolean               : Read / Write
-;;;   "alignment"                PangoAlignment         : Read / Write
-;;;   "attributes"               PangoAttrList*         : Read / Write
-;;;   "background"               gchar*                 : Write
-;;;   "background-gdk"           GdkColor*              : Read / Write
-;;;   "background-rgba"          GdkRGBA*               : Read / Write
-;;;   "background-set"           gboolean               : Read / Write
-;;;   "editable"                 gboolean               : Read / Write
-;;;   "editable-set"             gboolean               : Read / Write
-;;;   "ellipsize"                PangoEllipsizeMode     : Read / Write
-;;;   "ellipsize-set"            gboolean               : Read / Write
-;;;   "family"                   gchar*                 : Read / Write
-;;;   "family-set"               gboolean               : Read / Write
-;;;   "font"                     gchar*                 : Read / Write
-;;;   "font-desc"                PangoFontDescription*  : Read / Write
-;;;   "foreground"               gchar*                 : Write
-;;;   "foreground-gdk"           GdkColor*              : Read / Write
-;;;   "foreground-rgba"          GdkRGBA*               : Read / Write
-;;;   "foreground-set"           gboolean               : Read / Write
-;;;   "language"                 gchar*                 : Read / Write
-;;;   "language-set"             gboolean               : Read / Write
-;;;   "markup"                   gchar*                 : Write
-;;;   "max-width-chars"          gint                   : Read / Write
-;;;   "rise"                     gint                   : Read / Write
-;;;   "rise-set"                 gboolean               : Read / Write
-;;;   "scale"                    gdouble                : Read / Write
-;;;   "scale-set"                gboolean               : Read / Write
-;;;   "single-paragraph-mode"    gboolean               : Read / Write
-;;;   "size"                     gint                   : Read / Write
-;;;   "size-points"              gdouble                : Read / Write
-;;;   "size-set"                 gboolean               : Read / Write
-;;;   "stretch"                  PangoStretch           : Read / Write
-;;;   "stretch-set"              gboolean               : Read / Write
-;;;   "strikethrough"            gboolean               : Read / Write
-;;;   "strikethrough-set"        gboolean               : Read / Write
-;;;   "style"                    PangoStyle             : Read / Write
-;;;   "style-set"                gboolean               : Read / Write
-;;;   "text"                     gchar*                 : Read / Write
-;;;   "underline"                PangoUnderline         : Read / Write
-;;;   "underline-set"            gboolean               : Read / Write
-;;;   "variant"                  PangoVariant           : Read / Write
-;;;   "variant-set"              gboolean               : Read / Write
-;;;   "weight"                   gint                   : Read / Write
-;;;   "weight-set"               gboolean               : Read / Write
-;;;   "width-chars"              gint                   : Read / Write
-;;;   "wrap-mode"                PangoWrapMode          : Read / Write
-;;;   "wrap-width"               gint                   : Read / Write
-;;;                                                     
-;;; Signals                                             
-;;;                                                     
-;;;   "edited"                                          : Run Last
-;;;
-;;; Description
-;;;
-;;; A GtkCellRendererText renders a given text in its cell, using the font,
-;;; color and style information provided by its properties. The text will be
-;;; ellipsized if it is too long and the "ellipsize" property allows it.
-;;;
-;;; If the "mode" is GTK_CELL_RENDERER_MODE_EDITABLE, the GtkCellRendererText
-;;; allows to edit its text using an entry.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "align-set" property
-;;;
-;;;   "align-set"                gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the alignment mode.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "alignment" property
-;;;
-;;;   "alignment"                PangoAlignment        : Read / Write
-;;;
-;;; Specifies how to align the lines of text with respect to each other.
-;;;
-;;; Note that this property describes how to align the lines of text in case
-;;; there are several of them. The "xalign" property of GtkCellRenderer, on the
-;;; other hand, sets the horizontal alignment of the whole text.
-;;;
-;;; Default value: PANGO_ALIGN_LEFT
-;;;
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "attributes" property
-;;;
-;;;   "attributes"               PangoAttrList*        : Read / Write
-;;;
-;;; A list of style attributes to apply to the text of the renderer.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background" property
-;;;
-;;;   "background"               gchar*                : Write
-;;;
-;;; Background color as a string.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-gdk" property
-;;;
-;;;   "background-gdk"           GdkColor*             : Read / Write
-;;;
-;;; Warning
-;;;
-;;; GtkCellRendererText:background-gdk has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. Use "background-rgba" instead.
-;;;
-;;; Background color as a GdkColor
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-rgba" property
-;;;
-;;;   "background-rgba"          GdkRGBA*              : Read / Write
-;;;
-;;; Background color as a GdkRGBA
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-set" property
-;;;
-;;;   "background-set"           gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the background color.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editable" property
-;;;
-;;;   "editable"                 gboolean              : Read / Write
-;;;
-;;; Whether the text can be modified by the user.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editable-set" property
-;;;
-;;;   "editable-set"             gboolean              : Read / Write
-;;;
-;;; Whether this tag affects text editability.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "ellipsize" property
-;;;
-;;;   "ellipsize"                PangoEllipsizeMode    : Read / Write
-;;;
-;;; Specifies the preferred place to ellipsize the string, if the cell renderer
-;;; does not have enough room to display the entire string. Setting it to
-;;; PANGO_ELLIPSIZE_NONE turns off ellipsizing. See the wrap-width property for
-;;; another way of making the text fit into a given width.
-;;;
-;;; Default value: PANGO_ELLIPSIZE_NONE
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "ellipsize-set" property
-;;;
-;;;   "ellipsize-set"            gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the ellipsize mode.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "family" property
-;;;
-;;;   "family"                   gchar*                : Read / Write
-;;;
-;;; Name of the font family, e.g. Sans, Helvetica, Times, Monospace.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "family-set" property
-;;;
-;;;   "family-set"               gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the font family.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font" property
-;;;
-;;;   "font"                     gchar*                : Read / Write
-;;;
-;;; Font description as a string, e.g. "Sans Italic 12".
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font-desc" property
-;;;
-;;;   "font-desc"                PangoFontDescription*  : Read / Write
-;;;
-;;; Font description as a PangoFontDescription struct.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground" property
-;;;
-;;;   "foreground"               gchar*                : Write
-;;;
-;;; Foreground color as a string.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground-gdk" property
-;;;
-;;;   "foreground-gdk"           GdkColor*             : Read / Write
-;;;
-;;; Warning
-;;;
-;;; GtkCellRendererText:foreground-gdk has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. Use "foreground-rgba" instead.
-;;;
-;;; Foreground color as a GdkColor
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground-rgba" property
-;;;
-;;;   "foreground-rgba"          GdkRGBA*              : Read / Write
-;;;
-;;; Foreground color as a GdkRGBA
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground-set" property
-;;;
-;;;   "foreground-set"           gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the foreground color.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "language" property
-;;;
-;;;   "language"                 gchar*                : Read / Write
-;;;
-;;; The language this text is in, as an ISO code. Pango can use this as a hint
-;;; when rendering the text. If you don't understand this parameter, you
-;;; probably don't need it.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "language-set" property
-;;;
-;;;   "language-set"             gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the language the text is rendered as.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "markup" property
-;;;
-;;;   "markup"                   gchar*                : Write
-;;;
-;;; Marked up text to render.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "max-width-chars" property
-;;;
-;;;   "max-width-chars"          gint                  : Read / Write
-;;;
-;;; The desired maximum width of the cell, in characters. If this property is
-;;; set to -1, the width will be calculated automatically.
-;;;
-;;; For cell renderers that ellipsize or wrap text; this property controls the
-;;; maximum reported width of the cell. The cell should not receive any greater
-;;; allocation unless it is set to expand in its GtkCellLayout and all of the
-;;; cell's siblings have received their natural width.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "rise" property
-;;;
-;;;   "rise"                     gint                  : Read / Write
-;;;
-;;; Offset of text above the baseline (below the baseline if rise is negative).
-;;;
-;;; Allowed values: >= -2147483647
-;;;
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "rise-set" property
-;;;
-;;;   "rise-set"                 gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the rise.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scale" property
-;;;
-;;;   "scale"                    gdouble               : Read / Write
-;;;
-;;; Font scaling factor.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scale-set" property
-;;;
-;;;   "scale-set"                gboolean              : Read / Write
-;;;
-;;; Whether this tag scales the font size by a factor.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "single-paragraph-mode" property
-;;;
-;;;   "single-paragraph-mode"    gboolean              : Read / Write
-;;;
-;;; Whether to keep all text in a single paragraph.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size" property
-;;;
-;;;   "size"                     gint                  : Read / Write
-;;;
-;;; Font size.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size-points" property
-;;;
-;;;   "size-points"              gdouble               : Read / Write
-;;;
-;;; Font size in points.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size-set" property
-;;;
-;;;   "size-set"                 gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the font size.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stretch" property
-;;;
-;;;   "stretch"                  PangoStretch          : Read / Write
-;;;
-;;; Font stretch.
-;;;
-;;; Default value: PANGO_STRETCH_NORMAL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stretch-set" property
-;;;
-;;;   "stretch-set"              gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the font stretch.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "strikethrough" property
-;;;
-;;;   "strikethrough"            gboolean              : Read / Write
-;;;
-;;; Whether to strike through the text.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "strikethrough-set" property
-;;;
-;;;   "strikethrough-set"        gboolean              : Read / Write
-;;;
-;;; Whether this tag affects strikethrough.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "style" property
-;;;
-;;;   "style"                    PangoStyle            : Read / Write
-;;;
-;;; Font style.
-;;;
-;;; Default value: PANGO_STYLE_NORMAL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "style-set" property
-;;;
-;;;   "style-set"                gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the font style.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "text" property
-;;;
-;;;   "text"                     gchar*                : Read / Write
-;;;
-;;; Text to render.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "underline" property
-;;;
-;;;   "underline"                PangoUnderline        : Read / Write
-;;;
-;;; Style of underline for this text.
-;;;
-;;; Default value: PANGO_UNDERLINE_NONE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "underline-set" property
-;;;
-;;;   "underline-set"            gboolean              : Read / Write
-;;;
-;;; Whether this tag affects underlining.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "variant" property
-;;;
-;;;   "variant"                  PangoVariant          : Read / Write
-;;;
-;;; Font variant.
-;;;
-;;; Default value: PANGO_VARIANT_NORMAL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "variant-set" property
-;;;
-;;;   "variant-set"              gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the font variant.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "weight" property
-;;;
-;;;   "weight"                   gint                  : Read / Write
-;;;
-;;; Font weight.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 400
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "weight-set" property
-;;;
-;;;   "weight-set"               gboolean              : Read / Write
-;;;
-;;; Whether this tag affects the font weight.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "width-chars" property
-;;;
-;;;   "width-chars"              gint                  : Read / Write
-;;;
-;;; The desired width of the cell, in characters. If this property is set to -1,
-;;; the width will be calculated automatically, otherwise the cell will request
-;;; either 3 characters or the property value, whichever is greater.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wrap-mode" property
-;;;
-;;;   "wrap-mode"                PangoWrapMode         : Read / Write
-;;;
-;;; Specifies how to break the string into multiple lines, if the cell renderer
-;;; does not have enough room to display the entire string. This property has no
-;;; effect unless the wrap-width property is set.
-;;;
-;;; Default value: PANGO_WRAP_CHAR
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wrap-width" property
-;;;
-;;;   "wrap-width"               gint                  : Read / Write
-;;;
-;;; Specifies the minimum width at which the text is wrapped. The wrap-mode
-;;; property can be used to influence at what character positions the line
-;;; breaks can be placed. Setting wrap-width to -1 turns wrapping off.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "edited" signal
-;;;
-;;; void user_function (GtkCellRendererText *renderer,
-;;;                     gchar               *path,
-;;;                     gchar               *new_text,
-;;;                     gpointer             user_data)      : Run Last
-;;;
-;;; This signal is emitted after renderer has been edited.
-;;;
-;;; It is the responsibility of the application to update the model and store
-;;; new_text at the position indicated by path.
-;;;
-;;; renderer :
-;;;     the object which received the signal
-;;;
-;;; path :
-;;;     the path identifying the edited cell
-;;;
-;;; new_text :
-;;;     the new text
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRendererText
-;;;
-;;; struct GtkCellRendererText;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRendererText" gtk-cell-renderer-text
@@ -776,52 +195,1142 @@
     "wrap-width" "gint" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-renderer-text 'type)
+ "@version{2013-2-23}
+  @begin{short}
+    A GtkCellRendererText renders a given text in its cell, using the font,
+    color and style information provided by its properties.
+  @end{short}
+  The text will be ellipsized if it is too long and the @code{\"ellipsize\"}
+  property allows it.
+
+  If the @code{\"mode\"} is @code{GTK_CELL_RENDERER_MODE_EDITABLE}, the
+  GtkCellRendererText allows to edit its text using an entry.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"edited\" signal}
+      @begin{pre}
+ void user_function (GtkCellRendererText *renderer,
+                     gchar               *path,
+                     gchar               *new_text,
+                     gpointer             user_data)      : Run Last
+      @end{pre}
+      This signal is emitted after renderer has been edited.
+      It is the responsibility of the application to update the model and store
+      new_text at the position indicated by path.
+      @begin[code]{table}
+        @entry[renderer]{the object which received the signal}
+        @entry[path]{the path identifying the edited cell}
+        @entry[new-text]{the new text}
+        @entry[user-data]{user data set when the signal handler was connected.}
+      @end{table}
+  @end{dictionary}
+
+  @see-slot{gtk-cell-renderer-text-align-set}
+  @see-slot{gtk-cell-renderer-text-alignment}
+  @see-slot{gtk-cell-renderer-text-attributes}
+  @see-slot{gtk-cell-renderer-text-background}
+  @see-slot{gtk-cell-renderer-text-background-gdk}
+  @see-slot{gtk-cell-renderer-text-background-rgba}
+  @see-slot{gtk-cell-renderer-text-background-set}
+  @see-slot{gtk-cell-renderer-text-editable}
+  @see-slot{gtk-cell-renderer-text-editable-set}
+  @see-slot{gtk-cell-renderer-text-ellipsize}
+  @see-slot{gtk-cell-renderer-text-ellipsize-set}
+  @see-slot{gtk-cell-renderer-text-family}
+  @see-slot{gtk-cell-renderer-text-family-set}
+  @see-slot{gtk-cell-renderer-text-font}
+  @see-slot{gtk-cell-renderer-text-font-desc}
+  @see-slot{gtk-cell-renderer-text-foreground}
+  @see-slot{gtk-cell-renderer-text-foreground-gdk}
+  @see-slot{gtk-cell-renderer-text-foreground-rgba}
+  @see-slot{gtk-cell-renderer-text-foreground-set}
+  @see-slot{gtk-cell-renderer-text-language}
+  @see-slot{gtk-cell-renderer-text-language-set}
+  @see-slot{gtk-cell-renderer-text-markup}
+  @see-slot{gtk-cell-renderer-text-max-width-chars}
+  @see-slot{gtk-cell-renderer-text-rise}
+  @see-slot{gtk-cell-renderer-text-rise-set}
+  @see-slot{gtk-cell-renderer-text-scale}
+  @see-slot{gtk-cell-renderer-text-scale-set}
+  @see-slot{gtk-cell-renderer-text-single-paragraph-mode}
+  @see-slot{gtk-cell-renderer-text-size}
+  @see-slot{gtk-cell-renderer-text-size-points}
+  @see-slot{gtk-cell-renderer-text-size-set}
+  @see-slot{gtk-cell-renderer-text-stretch}
+  @see-slot{gtk-cell-renderer-text-stretch-set}
+  @see-slot{gtk-cell-renderer-text-strikethrough}
+  @see-slot{gtk-cell-renderer-text-strikethrough-set}
+  @see-slot{gtk-cell-renderer-text-style}
+  @see-slot{gtk-cell-renderer-text-style-set}
+  @see-slot{gtk-cell-renderer-text-text}
+  @see-slot{gtk-cell-renderer-text-underline}
+  @see-slot{gtk-cell-renderer-text-underline-set}
+  @see-slot{gtk-cell-renderer-text-variant}
+  @see-slot{gtk-cell-renderer-text-variant-set}
+  @see-slot{gtk-cell-renderer-text-weight}
+  @see-slot{gtk-cell-renderer-text-weight-set}
+  @see-slot{gtk-cell-renderer-text-width-chars}
+  @see-slot{gtk-cell-renderer-text-wrap-mode}
+  @see-slot{gtk-cell-renderer-text-wrap-width}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "align-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"align-set\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether this tag affects the alignment mode.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "alignment" 'gtk-cell-renderer-text) 't)
+ "The @code{\"alignment\"} property of type @code{PangoAlignment}
+  (Read / Write)@br{}
+  Specifies how to align the lines of text with respect to each other.@br{}
+  Note that this property describes how to align the lines of text in case
+  there are several of them. The @code{\"xalign\"} property of GtkCellRenderer,
+  on the other hand, sets the horizontal alignment of the whole text.@br{}
+  Default value: PANGO_ALIGN_LEFT@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-cell-renderer-text) 't)
+ "The @code{\"attributes\"} property of type @code{PangoAttrList*}
+  (Read / Write)@br{}
+  A list of style attributes to apply to the text of the renderer.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background" 'gtk-cell-renderer-text) 't)
+ "The @code{\"background\"} property of type @code{gchar*} (Write)@br{}
+  Background color as a string.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-gdk" 'gtk-cell-renderer-text) 't)
+ "The @code{\"background-gdk\"} property of type @code{GdkColor*}
+  (Read / Write)@br{}
+  @b{Warning:}
+  GtkCellRendererText:background-gdk has been deprecated since version 3.4 and
+  should not be used in newly-written code. Use @code{\"background-rgba\"}
+  instead.@br{}
+  Background color as a GdkColor")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-rgba" 'gtk-cell-renderer-text) 't)
+ "The @code{\"background-rgba\"} property of type @code{GdkRGBA*}
+  (Read / Write)@br{}
+  Background color as a GdkRGBA@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"background-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the background color.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "editable" 'gtk-cell-renderer-text) 't)
+ "The @code{\"editable\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether the text can be modified by the user.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "editable-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"editable-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects text editability.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "ellipsize" 'gtk-cell-renderer-text) 't)
+ "The @code{\"ellipsize\"} property of type @code{PangoEllipsizeMode}
+  (Read / Write)@br{}
+  Specifies the preferred place to ellipsize the string, if the cell renderer
+  does not have enough room to display the entire string. Setting it to
+  PANGO_ELLIPSIZE_NONE turns off ellipsizing. See the wrap-width property for
+  another way of making the text fit into a given width.@br{}
+  Default value: PANGO_ELLIPSIZE_NONE@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "ellipsize-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"ellipsize-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the ellipsize mode.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "family" 'gtk-cell-renderer-text) 't)
+ "The @code{\"family\"} property of type @code{gchar*} (Read / Write)@br{}
+  Name of the font family, e.g. Sans, Helvetica, Times, Monospace.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "family-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"family-set\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether this tag affects the font family.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "font" 'gtk-cell-renderer-text) 't)
+ "The @code{\"font\"} property of type @code{gchar*} (Read / Write)@br{}
+  Font description as a string, e.g. \"Sans Italic 12\".@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "font-desc" 'gtk-cell-renderer-text) 't)
+ "The @code{\"font-desc\"} property of type @code{PangoFontDescription*}
+  (Read / Write)@br{}
+  Font description as a PangoFontDescription struct.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground" 'gtk-cell-renderer-text) 't)
+ "The @code{\"foreground\"} property of type @code{gchar*} (Write)@br{}
+  Foreground color as a string.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground-gdk" 'gtk-cell-renderer-text) 't)
+ "The @code{\"foreground-gdk\"} property of type @code{GdkColor*}
+  (Read / Write)@br{}
+  @b{Warning:}
+  GtkCellRendererText:foreground-gdk has been deprecated since version 3.4 and
+  should not be used in newly-written code. Use @code{\"foreground-rgba\"}
+  instead.@br{}
+  Foreground color as a GdkColor")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground-rgba" 'gtk-cell-renderer-text) 't)
+ "The @code{\"foreground-rgba\"} property of type @code{GdkRGBA*}
+  (Read / Write)@br{}
+  Foreground color as a GdkRGBA@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"foreground-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the foreground color.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "language" 'gtk-cell-renderer-text) 't)
+ "The @code{\"language\"} property of type @code{gchar*} (Read / Write)@br{}
+  The language this text is in, as an ISO code. Pango can use this as a hint
+  when rendering the text. If you don't understand this parameter, you
+  probably don't need it.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "language-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"language-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the language the text is rendered as.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "markup" 'gtk-cell-renderer-text) 't)
+ "The @code{\"markup\"} property of type @code{gchar*} (Write)@br{}
+  Marked up text to render.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "max-width-chars" 'gtk-cell-renderer-text) 't)
+ "The @code{\"max-width-chars\"} property of type @code{gint}
+  (Read / Write)@br{}
+  The desired maximum width of the cell, in characters. If this property is
+  set to -1, the width will be calculated automatically.@br{}
+  For cell renderers that ellipsize or wrap text; this property controls the
+  maximum reported width of the cell. The cell should not receive any greater
+  allocation unless it is set to expand in its GtkCellLayout and all of the
+  cell's siblings have received their natural width.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rise" 'gtk-cell-renderer-text) 't)
+ "The @code{\"rise\"} property of type @code{gint} (Read / Write)@br{}
+  Offset of text above the baseline (below the baseline if rise is
+  negative).@br{}
+  Allowed values: >= -2147483647@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rise-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"rise-set\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether this tag affects the rise.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale" 'gtk-cell-renderer-text) 't)
+ "The @code{\"scale\"} property of type @code{gdouble} (Read / Write)@br{}
+  Font scaling factor.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 1")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"scale-set\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether this tag scales the font size by a factor.@æbr{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "single-paragraph-mode" 'gtk-cell-renderer-text) 't)
+ "The @code{\"single-paragraph-mode\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether to keep all text in a single paragraph.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-cell-renderer-text) 't)
+ "The @code{\"size\"} property of type @code{gint} (Read / Write)@br{}
+  Font size.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size-points" 'gtk-cell-renderer-text) 't)
+ "The @code{\"size-points\"} property of type @code{gdouble} (Read / Write)@br{}
+  Font size in points.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"size-set\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether this tag affects the font size.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stretch" 'gtk-cell-renderer-text) 't)
+ "The @code{\"stretch\"} property of type @code{PangoStretch}
+  (Read / Write)@br{}
+  Font stretch.@br{}
+  Default value: PANGO_STRETCH_NORMAL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stretch-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"stretch-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the font stretch.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "strikethrough" 'gtk-cell-renderer-text) 't)
+ "The @code{\"strikethrough\"} property @code{gboolean} (Read / Write)@br{}
+  Whether to strike through the text.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "strikethrough-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"strikethrough-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects strikethrough.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style" 'gtk-cell-renderer-text) 't)
+ "The @code{\"style\"} property of type @code{PangoStyle} (Read / Write)@br{}
+  Font style.@br{}
+  Default value: PANGO_STYLE_NORMAL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"style-set\"} property of type @code{gboolean} (Read / Write)@br{}
+  Whether this tag affects the font style.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text" 'gtk-cell-renderer-text) 't)
+ "The @code{\"text\"} property of type @code{gchar*} (Read / Write)@br{}
+  Text to render.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "underline" 'gtk-cell-renderer-text) 't)
+ "The @code{\"underline\"} property of type @code{PangoUnderline}
+  (Read / Write)@br{}
+  Style of underline for this text.@br{}
+  Default value: PANGO_UNDERLINE_NONE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "underline-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"underline-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects underlining.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "variant" 'gtk-cell-renderer-text) 't)
+ "The @code{\"variant\"} property of type @code{PangoVariant}
+  (Read / Write)@br{}
+  Font variant.@br{}
+  Default value: PANGO_VARIANT_NORMAL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "variant-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"variant-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the font variant.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "weight" 'gtk-cell-renderer-text) 't)
+ "The @code{\"weight\"} property of type @code{gint} (Read / Write)@br{}
+  Font weight.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 400")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "weight-set" 'gtk-cell-renderer-text) 't)
+ "The @code{\"weight-set\"} property of type @codee{gboolean}
+  (Read / Write)@br{}
+  Whether this tag affects the font weight.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-cell-renderer-text) 't)
+ "The @code{\"width-chars\"} property of type @code{gint} (Read / Write)@br{}
+  The desired width of the cell, in characters. If this property is set to -1,
+  the width will be calculated automatically, otherwise the cell will request
+  either 3 characters or the property value, whichever is greater.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-mode" 'gtk-cell-renderer-text) 't)
+ "The @code{\"wrap-mode\"} property of type @code{PangoWrapMode}
+  (Read / Write)@br{}
+  Specifies how to break the string into multiple lines, if the cell renderer
+  does not have enough room to display the entire string. This property has no
+  effect unless the wrap-width property is set.@br{}
+  Default value: PANGO_WRAP_CHAR@br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-width" 'gtk-cell-renderer-text) 't)
+ "The @code{\"wrap-width\"} property of type @code{gint} (Read / Write)@br{}
+  Specifies the minimum width at which the text is wrapped. The wrap-mode
+  property can be used to influence at what character positions the line
+  breaks can be placed. Setting wrap-width to -1 turns wrapping off.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-text-align-set ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-align-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-align-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"align-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-alignment ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-alignment atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-alignment 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"alignment\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-attributes --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-attributes atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-attributes 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"attributes\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-background --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"background\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-background-gdk ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background-gdk atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background-gdk 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"background-gdk\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-background-rgba ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background-rgba atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background-rgba 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"background-rgba\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-background-set ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-background-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-background-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"background-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-editable ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-editable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-editable 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"editable\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-editable-set ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-editable-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-editable-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"editable-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-ellipsize ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-ellipsize atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-ellipsize 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"ellipsize\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-ellipsize-set -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-ellipsize-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-ellipsize-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"ellipsize-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-family ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-family atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-family 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"family\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-family-set --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-family-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-family-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"family-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-font --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-font atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-font 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"font\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-font-desc ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-font-desc atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-font-desc 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"font-desc\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-foreground --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"foreground\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-foreground-gdk ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground-gdk atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground-gdk 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"foreground-gdk\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-foreground-rgba ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground-rgba atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground-rgba 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"foreground-rgba\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-foreground-set ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-foreground-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-foreground-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"foreground-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-language ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-language atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-language 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"language\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-language-set ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-language-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-language-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"language-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-markup ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-markup atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-markup 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"markup\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-max-width-chars ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-max-width-chars atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-max-width-chars 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"max-width-chars\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-rise --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-rise atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-rise 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"rise\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-rise-set ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-rise-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-rise-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"rise-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-scale -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-scale atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-scale 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"scale\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-scale-set ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-scale-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-scale-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"scale-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-single-paragraph-mode ---------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-single-paragraph-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-single-paragraph-mode 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"single-paragraph-mode\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-size --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-size 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"size\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-size-points -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-size-points atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-size-points 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"size-points\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-size-set ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-size-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-size-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"size-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-stretch -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-stretch atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-stretch 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"stretch\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-stretch-set -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-stretch-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-stretch-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"stretch-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-strikethrough -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-strikethrough atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-strikethrough 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"strikethrough\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-strikethrough-set -------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-strikethrough-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-strikethrough-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"strikethrough-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-style -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-style atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-style 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"style\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-style-set ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-style-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-style-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"style-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-text --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-text atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-text 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"text\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-underline ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-underline atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-underline 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"underline\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-underline-set -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-underline-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-underline-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"underline-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-variant -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-variant atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-variant 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"variant\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-variant-set -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-variant-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-variant-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"variant-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-weight ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-weight atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-weight 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"weight\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-weight-set --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-weight-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-weight-set 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"weight-set\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-width-chars -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-width-chars atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-width-chars 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"width-chars\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-wrap-mode ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-wrap-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-wrap-mode 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"wrap-mode\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-text-wrap-width ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-text-wrap-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-text-wrap-width 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"wrap-width\"} of the
+    @class{gtk-cell-renderer-text} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_text_new ()
-;;;
-;;; GtkCellRenderer * gtk_cell_renderer_text_new (void);
-;;;
-;;; Creates a new GtkCellRendererText. Adjust how text is drawn using object
-;;; properties. Object properties can be set globally (with g_object_set()).
-;;; Also, with GtkTreeViewColumn, you can bind a property to a value in a
-;;; GtkTreeModel. For example, you can bind the "text" property on the cell
-;;; renderer to a string value in the model, thus rendering a different string
-;;; in each row of the GtkTreeView
-;;;
-;;; Returns :
-;;;     the new cell renderer
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-cell-renderer-text-new))
 
 (defun gtk-cell-renderer-text-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-23}
+  @return{The new cell renderer.}
+  @begin{short}
+    Creates a new GtkCellRendererText.
+  @end{short}
+  Adjust how text is drawn using object properties. Object properties can be set
+  globally (with g_object_set()). Also, with GtkTreeViewColumn, you can bind a
+  property to a value in a GtkTreeModel. For example, you can bind the
+  @code{\"text\"} property on the cell renderer to a string value in the model,
+  thus rendering a different string in each row of the GtkTreeView"
   (make-instance 'gtk-cell-renderer-text))
 
 (export 'gtk-cell-renderer-text-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_text_set_fixed_height_from_font ()
-;;;
-;;; void gtk_cell_renderer_text_set_fixed_height_from_font
-;;;                                              (GtkCellRendererText *renderer,
-;;;                                               gint number_of_rows);
-;;;
-;;; Sets the height of a renderer to explicitly be determined by the "font" and
-;;; "y_pad" property set on it. Further changes in these properties do not
-;;; affect the height, so they must be accompanied by a subsequent call to this
-;;; function. Using this function is unflexible, and should really only be used
-;;; if calculating the size of a cell is too slow (ie, a massive number of cells
-;;; displayed). If number_of_rows is -1, then the fixed height is unset, and the
-;;; height is determined by the properties again.
-;;;
-;;; renderer :
-;;;     A GtkCellRendererText
-;;;
-;;; number_of_rows :
-;;;     Number of rows of text each cell renderer is allocated, or -1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_renderer_text_set_fixed_height_from_font"
           gtk-cell-renderer-text-set-fixed-height-from-font) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-23}
+  @argument[renderer]{A GtkCellRendererText}
+  @argument[number-of-rows]{Number of rows of text each cell renderer is
+    allocated, or -1}
+  @begin{short}
+    Sets the height of a renderer to explicitly be determined by the
+    @code{\"font\"} and @code{\"y_pad\"} property set on it.
+  @end{short}
+  Further changes in these properties do not affect the height, so they must be
+  accompanied by a subsequent call to this function. Using this function is
+  unflexible, and should really only be used if calculating the size of a cell
+  is too slow (ie, a massive number of cells displayed). If number_of_rows is
+  -1, then the fixed height is unset, and the height is determined by the
+  properties again."
   (renderer (g-object gtk-cell-renderer-text))
   (number-of-rows :int))
 

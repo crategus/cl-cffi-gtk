@@ -5,10 +5,11 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,84 +38,12 @@
 ;;; GtkCellRendererSpin
 ;;;
 ;;; gtk_cell_renderer_spin_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkCellRenderer
-;;;                +----GtkCellRendererText
-;;;                      +----GtkCellRendererSpin
-;;; 
-;;; Properties
-;;; 
-;;;   "adjustment"               GtkAdjustment*        : Read / Write
-;;;   "climb-rate"               gdouble               : Read / Write
-;;;   "digits"                   guint                 : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; GtkCellRendererSpin renders text in a cell like GtkCellRendererText from
-;;; which it is derived. But while GtkCellRendererText offers a simple entry to
-;;; edit the text, GtkCellRendererSpin offers a GtkSpinButton widget. Of course,
-;;; that means that the text has to be parseable as a floating point number.
-;;; 
-;;; The range of the spinbutton is taken from the adjustment property of the
-;;; cell renderer, which can be set explicitly or mapped to a column in the tree
-;;; model, like all properties of cell renders. GtkCellRendererSpin also has
-;;; properties for the "climb-rate" and the number of "digits" to display. Other
-;;; GtkSpinButton properties can be set in a handler for the "editing-started"
-;;; signal.
-;;; 
-;;; The GtkCellRendererSpin cell renderer was added in GTK+ 2.10.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "adjustment" property
-;;; 
-;;;   "adjustment"               GtkAdjustment*        : Read / Write
-;;; 
-;;; The adjustment that holds the value of the spinbutton. This must be non-NULL
-;;; for the cell renderer to be editable.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "climb-rate" property
-;;; 
-;;;   "climb-rate"               gdouble               : Read / Write
-;;; 
-;;; The acceleration rate when you hold down a button.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "digits" property
-;;; 
-;;;   "digits"                   guint                 : Read / Write
-;;; 
-;;; The number of decimal places to display.
-;;; 
-;;; Allowed values: <= 20
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRendererSpin
-;;; 
-;;; struct GtkCellRendererSpin;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRendererSpin" gtk-cell-renderer-spin
@@ -133,21 +62,121 @@
     "digits" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-renderer-spin 'type)
+ "@version{2013-2-23}
+  @begin{short}
+    GtkCellRendererSpin renders text in a cell like GtkCellRendererText from
+    which it is derived.
+  @end{short}
+  But while GtkCellRendererText offers a simple entry to edit the text,
+  GtkCellRendererSpin offers a GtkSpinButton widget. Of course, that means that
+  the text has to be parseable as a floating point number.
+
+  The range of the spinbutton is taken from the adjustment property of the
+  cell renderer, which can be set explicitly or mapped to a column in the tree
+  model, like all properties of cell renders. GtkCellRendererSpin also has
+  properties for the \"climb-rate\" and the number of \"digits\" to display.
+  Other GtkSpinButton properties can be set in a handler for the
+  \"editing-started\" signal.
+
+  The GtkCellRendererSpin cell renderer was added in GTK+ 2.10.
+  @see-slot{gtk-cell-renderer-spin-adjustment}
+  @see-slot{gtk-cell-renderer-spin-climb-rate}
+  @see-slot{gtk-cell-renderer-spin-digits}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "adjustment" 'gtk-cell-renderer-spin) 't)
+ "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
+  (Read / Write)@br{}
+  The adjustment that holds the value of the spinbutton. This must be non-NULL
+  for the cell renderer to be editable.@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "climb-rate" 'gtk-cell-renderer-spin) 't)
+ "The @code{\"climb-rate\"} property of type @code{gdouble} (Read / Write)@br{}
+  The acceleration rate when you hold down a button.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 0@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-cell-renderer-spin) 't)
+ "The @code{\"digits\"} property of type @code{guint} (Read / Write)@br{}
+  The number of decimal places to display.@br{}
+  Allowed values: <= 20@br{}
+  Default value: 0@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-spin-adjustment --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-spin-adjustment atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-spin-adjustment 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"adjustment\"} of the
+    @class{gtk-cell-renderer-spin} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-spin-climb-rate --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-spin-climb-rate atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-spin-climb-rate 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"climb-rate\"} of the
+    @class{gtk-cell-renderer-spin} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-spin-digits ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-spin-digits atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-spin-digits 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"digits\"} of the
+    @class{gtk-cell-renderer-spin} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_spin_new ()
-;;; 
-;;; GtkCellRenderer * gtk_cell_renderer_spin_new (void);
-;;; 
-;;; Creates a new GtkCellRendererSpin.
-;;; 
-;;; Returns :
-;;;     a new GtkCellRendererSpin
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-cell-renderer-spin-new))
 
 (defun gtk-cell-renderer-spin-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-23}
+  @return{A new GtkCellRendererSpin.}
+
+  @short{Creates a new GtkCellRendererSpin.}
+
+  Since 2.10"
   (make-instance 'gtk-cell-renderer-spin))
 
 (export 'gtk-cell-renderer-spin-new)

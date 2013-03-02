@@ -2,13 +2,14 @@
 ;;; gtk.drag-and-drop.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -91,37 +92,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkDestDefaults
-;;;
-;;; typedef enum {
-;;;   GTK_DEST_DEFAULT_MOTION     = 1 << 0, /* respond to "drag_motion" */
-;;;   GTK_DEST_DEFAULT_HIGHLIGHT  = 1 << 1, /* auto-highlight */
-;;;   GTK_DEST_DEFAULT_DROP       = 1 << 2, /* respond to "drag_drop" */
-;;;   GTK_DEST_DEFAULT_ALL        = 0x07
-;;; } GtkDestDefaults;
-;;;
-;;; The GtkDestDefaults enumeration specifies the various types of action that
-;;; will be taken on behalf of the user for a drag destination site.
-;;;
-;;; GTK_DEST_DEFAULT_MOTION
-;;;     If set for a widget, GTK+, during a drag over this widget will check if
-;;;     the drag matches this widget's list of possible targets and actions.
-;;;     GTK+ will then call gdk_drag_status() as appropriate.
-;;;
-;;; GTK_DEST_DEFAULT_HIGHLIGHT
-;;;     If set for a widget, GTK+ will draw a highlight on this widget as long
-;;;     as a drag is over this widget and the widget drag format and action are
-;;;     acceptable.
-;;;
-;;; GTK_DEST_DEFAULT_DROP
-;;;     If set for a widget, when a drop occurs, GTK+ will will check if the
-;;;     drag matches this widget's list of possible targets and actions. If so,
-;;;     GTK+ will call gtk_drag_get_data() on behalf of the widget. Whether or
-;;;     not the drop is successful, GTK+ will call gtk_drag_finish(). If the
-;;;     action was a move, then if the drag was successful, then TRUE will be
-;;;     passed for the delete parameter to gtk_drag_finish().
-;;;
-;;; GTK_DEST_DEFAULT_ALL
-;;;     If set, specifies that all default actions should be taken.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkDestDefaults" gtk-dest-defaults
@@ -133,33 +103,42 @@
   (:all 7))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-dest-defaults atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-dest-defaults atdoc:*external-symbols*)
+ "@version{2013-2-27}
+  @begin{short}
+    The GtkDestDefaults enumeration specifies the various types of action that
+    will be taken on behalf of the user for a drag destination site.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkDestDefaults\" gtk-dest-defaults
+  (:export t
+   :type-initializer \"gtk_dest_defaults_get_type\")
+  (:motion 1)
+  (:highlight 2)
+  (:drop 4)
+  (:all 7))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:motion]{If set for a widget, GTK+, during a drag over this widget
+      will check if the drag matches this widget's list of possible targets and
+      actions. GTK+ will then call gdk_drag_status() as appropriate.}
+    @entry[:highligth]{If set for a widget, GTK+ will draw a highlight on this
+      widget as long as a drag is over this widget and the widget drag format
+      and action are acceptable.}
+    @entry[:drop]{If set for a widget, when a drop occurs, GTK+ will will check
+      if the drag matches this widget's list of possible targets and actions. If
+      so, GTK+ will call gtk_drag_get_data() on behalf of the widget. Whether or
+      not the drop is successful, GTK+ will call gtk_drag_finish(). If the
+      action was a move, then if the drag was successful, then TRUE will be
+      passed for the delete parameter to gtk_drag_finish().}
+    @entry[:all]{If set, specifies that all default actions should be taken.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkTargetFlags
-;;;
-;;; typedef enum {
-;;;   GTK_TARGET_SAME_APP     = 1 << 0, /*< nick=same-app >*/
-;;;   GTK_TARGET_SAME_WIDGET  = 1 << 1, /*< nick=same-widget >*/
-;;;   GTK_TARGET_OTHER_APP    = 1 << 2, /*< nick=other-app >*/
-;;;   GTK_TARGET_OTHER_WIDGET = 1 << 3  /*< nick=other-widget >*/
-;;; } GtkTargetFlags;
-;;;
-;;; The GtkTargetFlags enumeration is used to specify constraints on an entry in
-;;; a GtkTargetTable.
-;;;
-;;; GTK_TARGET_SAME_APP
-;;;     If this is set, the target will only be selected for drags within a
-;;;     single application.
-;;;
-;;; GTK_TARGET_SAME_WIDGET
-;;;     If this is set, the target will only be selected for drags within a
-;;;     single widget.
-;;;
-;;; GTK_TARGET_OTHER_APP
-;;;     If this is set, the target will not be selected for drags within a
-;;;     single application.
-;;;
-;;; GTK_TARGET_OTHER_WIDGET
-;;;     If this is set, the target will not be selected for drags withing a
-;;;     single widget.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkTargetFlags" gtk-target-flags
@@ -169,6 +148,36 @@
   (:same-widget 2)
   (:other-app 4)
   (:other-widget 8))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-target-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-target-flags atdoc:*external-symbols*)
+ "@version{2013-2-27}
+  @begin{short}
+    The GtkTargetFlags enumeration is used to specify constraints on an entry in
+    a GtkTargetTable.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkTargetFlags\" gtk-target-flags
+  (:export t
+   :type-initializer \"gtk_target_flags_get_type\")
+  (:same-app 1)
+  (:same-widget 2)
+  (:other-app 4)
+  (:other-widget 8))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:same-app]{If this is set, the target will only be selected for drags
+      within a single application.}
+    @entry[:same-widget]{If this is set, the target will only be selected for
+      drags within a single widget.}
+    @entry[:other-app]{If this is set, the target will not be selected for drags
+      within a single application.}
+    @entry[:other-widget]{If this is set, the target will not be selected for
+      drags withing a single widget.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set ()
@@ -419,30 +428,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_finish ()
-;;;
-;;; void gtk_drag_finish (GdkDragContext *context,
-;;;                       gboolean success,
-;;;                       gboolean del,
-;;;                       guint32 time_);
-;;;
-;;; Informs the drag source that the drop is finished, and that the data of the
-;;; drag will no longer be required.
-;;;
-;;; context :
-;;;     the drag context.
-;;;
-;;; success :
-;;;     a flag indicating whether the drop was successful
-;;;
-;;; del :
-;;;     a flag indicating whether the source should delete the original data.
-;;;     (This should be TRUE for a move)
-;;;
-;;; time_ :
-;;;     the timestamp from the "drag-drop" signal.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_drag_finish" gtk-drag-finish) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-27}
+  @argument[context]{the drag context.}
+  @argument[success]{a flag indicating whether the drop was successful}
+  @argument[del]{a flag indicating whether the source should delete the original
+    data. (This should be TRUE for a move)}
+  @argument[time]{the timestamp from the \"drag-drop\" signal.}
+  @begin{short}
+    Informs the drag source that the drop is finished, and that the data of the
+    drag will no longer be required.
+  @end{short}"
   (context (g-object gdk-drag-context))
   (success :boolean)
   (del :boolean)

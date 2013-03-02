@@ -2,13 +2,14 @@
 ;;; gtk.cell-renderer-pixbuf.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,132 +38,12 @@
 ;;;     GtkCellRendererPixbuf
 ;;;
 ;;;     gtk_cell_renderer_pixbuf_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkCellRenderer
-;;;                +----GtkCellRendererPixbuf
-;;;
-;;; Properties
-;;;
-;;;   "follow-state"             gboolean              : Read / Write
-;;;   "gicon"                    GIcon*                : Read / Write
-;;;   "icon-name"                gchar*                : Read / Write
-;;;   "pixbuf"                   GdkPixbuf*            : Read / Write
-;;;   "pixbuf-expander-closed"   GdkPixbuf*            : Read / Write
-;;;   "pixbuf-expander-open"     GdkPixbuf*            : Read / Write
-;;;   "stock-detail"             gchar*                : Read / Write
-;;;   "stock-id"                 gchar*                : Read / Write
-;;;   "stock-size"               guint                 : Read / Write
-;;;
-;;; Description
-;;;
-;;; A GtkCellRendererPixbuf can be used to render an image in a cell. It allows
-;;; to render either a given GdkPixbuf (set via the "pixbuf" property) or a
-;;; stock icon (set via the "stock-id" property).
-;;;
-;;; To support the tree view, GtkCellRendererPixbuf also supports rendering two
-;;; alternative pixbufs, when the "is-expander" property is TRUE. If the
-;;; "is-expanded" property is TRUE and the "pixbuf-expander-open" property is
-;;; set to a pixbuf, it renders that pixbuf, if the "is-expanded" property is
-;;; FALSE and the "pixbuf-expander-closed" property is set to a pixbuf, it
-;;; renders that one.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "follow-state" property
-;;;
-;;;   "follow-state"             gboolean              : Read / Write
-;;;
-;;; Specifies whether the rendered pixbuf should be colorized according to the
-;;; GtkCellRendererState.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "gicon" property
-;;;
-;;;   "gicon"                    GIcon*                : Read / Write
-;;;
-;;; The GIcon representing the icon to display. If the icon theme is changed,
-;;; the image will be updated automatically.
-;;;
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "icon-name" property
-;;;
-;;;   "icon-name"                gchar*                : Read / Write
-;;;
-;;; The name of the themed icon to display. This property only has an effect if
-;;; not overridden by "stock_id" or "pixbuf" properties.
-;;;
-;;; Default value: NULL
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixbuf" property
-;;;
-;;;   "pixbuf"                   GdkPixbuf*            : Read / Write
-;;;
-;;; The pixbuf to render.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixbuf-expander-closed" property
-;;;
-;;;   "pixbuf-expander-closed"   GdkPixbuf*            : Read / Write
-;;;
-;;; Pixbuf for closed expander.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixbuf-expander-open" property
-;;;
-;;;   "pixbuf-expander-open"     GdkPixbuf*            : Read / Write
-;;;
-;;; Pixbuf for open expander.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stock-detail" property
-;;;
-;;;   "stock-detail"             gchar*                : Read / Write
-;;;
-;;; Render detail to pass to the theme engine.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stock-id" property
-;;;
-;;;   "stock-id"                 gchar*                : Read / Write
-;;;
-;;; The stock ID of the stock icon to render.
-;;;
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stock-size" property
-;;;
-;;;   "stock-size"               guint                 : Read / Write
-;;;
-;;; The GtkIconSize value that specifies the size of the rendered icon.
-;;;
-;;; Default value: 1
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellRendererPixbuf
-;;;
-;;; struct GtkCellRendererPixbuf;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCellRendererPixbuf" gtk-cell-renderer-pixbuf
@@ -199,24 +80,250 @@
     "stock-size" "guint" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-cell-renderer-pixbuf 'type)
+ "@version{2013-02-23}
+  @begin{short}
+    A @sym{gtk-cell-renderer-pixbuf} can be used to render an image in a cell.
+    It allows to render either a given @class{gdk-pixbuf} (set via the
+    @code{\"pixbuf\"} property) or a stock icon (set via the @code{\"stock-id\"}
+    property).
+  @end{short}
+
+  To support the tree view, @sym{gtk-cell-renderer-pixbuf} also supports
+  rendering two alternative pixbufs, when the @code{\"is-expander\"} property is
+  @arg{true}. If the @code{\"is-expanded\"} property is @arg{true} and the
+  @code{\"pixbuf-expander-open\"} property is set to a pixbuf, it renders that
+  pixbuf, if the @code{\"is-expanded\"} property is @code{nil} and the
+  @code{\"pixbuf-expander-closed\"} property is set to a pixbuf, it renders that
+  one.
+  @see-slot{gtk-cell-renderer-pixbuf-follow-state}
+  @see-slot{gtk-cell-renderer-pixbuf-gicon}
+  @see-slot{gtk-cell-renderer-pixbuf-icon-name}
+  @see-slot{gtk-cell-renderer-pixbuf-pixbuf}
+  @see-slot{gtk-cell-renderer-pixbuf-pixbuf-expander-closed}
+  @see-slot{gtk-cell-renderer-pixbuf-pixbuf-expander-open}
+  @see-slot{gtk-cell-renderer-pixbuf-stock-detail}
+  @see-slot{gtk-cell-renderer-pixbuf-stock-id}
+  @see-slot{gtk-cell-renderer-pixbuf-stock-size}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "follow-state" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"follow-state\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Specifies whether the rendered pixbuf should be colorized according to the
+  @symbol{gtk-cell-renderer-state}.@br{}
+  Default value: @code{nil}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"gicon\"} property of type @code{GIcon*} (Read / Write)@br{}
+  The GIcon representing the icon to display. If the icon theme is changed,
+  the image will be updated automatically.@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"icon-name\"} property of type @code{gchar*} (Read / Write)@br{}
+  The name of the themed icon to display. This property only has an effect if
+  not overridden by @code{\"stock-id\"} or @code{\"pixbuf\"} properties.@br{}
+  Default value: @code{nil}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixbuf" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"pixbuf\"} property of type  @class{gdk-pixbuf} (Read / Write)@br{}
+  The pixbuf to render.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixbuf-expander-closed" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"pixbuf-expander-closed\"} property of type @class{gdk-pixbuf}
+  (Read / Write)@br{}
+  Pixbuf for closed expander.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixbuf-expander-open" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"pixbuf-expander-open\"} property of type @class{gdk-pixbuf}
+  (Read / Write)@br{}
+  Pixbuf for open expander.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stock-detail" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"stock-detail\"} property of type @code{gchar*} (Read / Write)@br{}
+  Render detail to pass to the theme engine.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stock-id" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"stock-id\"} property of type @code{gchar*} (Read / Write)@br{}
+  The stock ID of the stock icon to render.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stock-size" 'gtk-cell-renderer-pixbuf) 't)
+ "The @code{\"stock-size\"} property of type @code{guint} (Read / Write)@br{}
+  The @symbol{gtk-icon-size} value that specifies the size of the rendered
+  icon.@br{}
+  Default value: @code{1}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-pixbuf-follow-state ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-follow-state atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-follow-state 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"follow-state\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-gicon -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-gicon atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-gicon 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"gicon\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-icon-name -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-icon-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-icon-name 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"icon-name\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-pixbuf ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-pixbuf atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-pixbuf 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"pixbuf\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-pixbuf-expander-closed ------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-pixbuf-expander-closed atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-pixbuf-expander-closed 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"pixbuf-exapnder-closed\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-pixbuf-expander-open --------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-pixbuf-expander-open atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-pixbuf-expander-open 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"pixbuf-expander-open\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-stock-detail ----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-stock-detail atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-stock-detail 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"stock-detail\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-stock-id --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-stock-id atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-stock-id 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"stock-id\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; --- gtk-cell-renderer-pixbuf-stock-size ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-cell-renderer-pixbuf-stock-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-cell-renderer-pixbuf-stock-size 'function)
+ "@version{2013-2-23}
+  @begin{short}
+    Accessor of the slot @code{\"stock-size\"} of the
+    @class{gtk-cell-renderer-pixbuf} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_pixbuf_new ()
-;;;
-;;; GtkCellRenderer * gtk_cell_renderer_pixbuf_new (void);
-;;;
-;;; Creates a new GtkCellRendererPixbuf. Adjust rendering parameters using
-;;; object properties. Object properties can be set globally (with
-;;; g_object_set()). Also, with GtkTreeViewColumn, you can bind a property to a
-;;; value in a GtkTreeModel. For example, you can bind the "pixbuf" property on
-;;; the cell renderer to a pixbuf value in the model, thus rendering a different
-;;; image in each row of the GtkTreeView.
-;;;
-;;; Returns :
-;;;     the new cell renderer
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-cell-renderer-pixbuf-new))
 
 (defun gtk-cell-renderer-pixbuf-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-23}
+  @return{The new cell renderer.}
+  @begin{short}
+    Creates a new GtkCellRendererPixbuf.
+  @end{short}
+  Adjust rendering parameters using object properties. Object properties can be
+  set globally (with ·@fun{g-object-set}). Also, with
+  @class{gtk-tree-view-column}, you can bind a property to a value in a
+  @class{gtk-tree-model}. For example, you can bind the @code{\"pixbuf\"}
+  property on the cell renderer to a pixbuf value in the model, thus rendering a
+  different image in each row of the @class{gtk-tree-view}."
   (make-instance 'gtk-cell-renderer-pixbuf))
 
 (export 'gtk-cell-renderer-pixbuf-new)

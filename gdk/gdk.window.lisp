@@ -2,13 +2,15 @@
 ;;; gdk.window.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
+;;; The API  documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -2533,21 +2535,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_end_paint ()
-;;;
-;;; void gdk_window_end_paint (GdkWindow *window);
-;;;
-;;; Indicates that the backing store created by the most recent call to
-;;; gdk_window_begin_paint_region() should be copied onscreen and deleted,
-;;; leaving the next-most-recent backing store or no backing store at all as the
-;;; active paint region. See gdk_window_begin_paint_region() for full details.
-;;; It is an error to call this function without a matching
-;;; gdk_window_begin_paint_region() first.
-;;;
-;;; window :
-;;;     a GdkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_end_paint" gkd-window-end-paint) :void
+(defcfun ("gdk_window_end_paint" gdk-window-end-paint) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-25}
+  @argument[window]{a @class{gdk-window} object}
+  @begin{short}
+    Indicates that the backing store created by the most recent call to
+    @fun{gdk-window-begin-paint-region} should be copied onscreen and deleted,
+    leaving the next-most-recent backing store or no backing store at all as the
+    active paint region.
+  @end{short}
+  See @fun{gdk-window-begin-paint-region} for full details.
+
+  It is an error to call this function without a matching
+  @fun{gdk-window-begin-paint-region} first.
+  @see-function{gdk-window-begin-paint-region}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-end-paint)

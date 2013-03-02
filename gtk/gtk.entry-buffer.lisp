@@ -2,9 +2,10 @@
 ;;; gtk.entry-buffer.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,141 +44,12 @@
 ;;;     gtk_entry_buffer_delete_text
 ;;;     gtk_entry_buffer_emit_deleted_text
 ;;;     gtk_entry_buffer_emit_inserted_text
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkEntryBuffer
-;;;
-;;; Properties
-;;;
-;;;   "length"                   guint                 : Read
-;;;   "max-length"               gint                  : Read / Write
-;;;   "text"                     gchar*                : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "deleted-text"                                   : Run First
-;;;   "inserted-text"                                  : Run First
-;;;
-;;; Description
-;;;
-;;; The GtkEntryBuffer class contains the actual text displayed in a GtkEntry
-;;; widget.
-;;;
-;;; A single GtkEntryBuffer object can be shared by multiple GtkEntry widgets
-;;; which will then share the same text content, but not the cursor position,
-;;; visibility attributes, icon etc.
-;;;
-;;; GtkEntryBuffer may be derived from. Such a derived class might allow text to
-;;; be stored in an alternate location, such as non-pageable memory, useful in
-;;; the case of important passwords. Or a derived class could integrate with an
-;;; application's concept of undo/redo.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "length" property
-;;;
-;;;   "length"                   guint                 : Read
-;;;
-;;; The length (in characters) of the text in buffer.
-;;;
-;;; Allowed values: <= 65535
-;;;
-;;; Default value: 0
-;;;
-;;; Since 2.18
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "max-length" property
-;;;
-;;;   "max-length"               gint                  : Read / Write
-;;;
-;;; The maximum length (in characters) of the text in the buffer.
-;;;
-;;; Allowed values: [0,65535]
-;;;
-;;; Default value: 0
-;;;
-;;; Since 2.18
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "text" property
-;;;
-;;;   "text"                     gchar*                : Read / Write
-;;;
-;;; The contents of the buffer.
-;;;
-;;; Default value: ""
-;;;
-;;; Since 2.18
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "deleted-text" signal
-;;;
-;;; void user_function (GtkEntryBuffer *buffer,
-;;;                     guint           position,
-;;;                     guint           n_chars,
-;;;                     gpointer        user_data)      : Run First
-;;;
-;;; This signal is emitted after text is deleted from the buffer.
-;;;
-;;; buffer :
-;;;     a GtkEntryBuffer
-;;;
-;;; position :
-;;;     the position the text was deleted at.
-;;;
-;;; n_chars :
-;;;     The number of characters that were deleted.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.18
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "inserted-text" signal
-;;;
-;;; void user_function (GtkEntryBuffer *buffer,
-;;;                     guint           position,
-;;;                     gchar          *chars,
-;;;                     guint           n_chars,
-;;;                     gpointer        user_data)      : Run First
-;;;
-;;; This signal is emitted after text is inserted into the buffer.
-;;;
-;;; buffer :
-;;;     a GtkEntryBuffer
-;;;
-;;; position :
-;;;     the position the text was inserted at.
-;;;
-;;; chars :
-;;;     The text that was inserted.
-;;;
-;;; n_chars :
-;;;     The number of characters that were inserted.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkEntryBuffer
-;;;
-;;; struct GtkEntryBuffer;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkEntryBuffer" gtk-entry-buffer
@@ -194,6 +66,137 @@
    (text
     gtk-entry-buffer-text
     "text" "gchar" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-entry-buffer 'type)
+ "@version{2013-3-1}
+  @begin{short}
+    The GtkEntryBuffer class contains the actual text displayed in a GtkEntry
+    widget.
+  @end{short}
+
+  A single GtkEntryBuffer object can be shared by multiple GtkEntry widgets
+  which will then share the same text content, but not the cursor position,
+  visibility attributes, icon etc.
+
+  GtkEntryBuffer may be derived from. Such a derived class might allow text to
+  be stored in an alternate location, such as non-pageable memory, useful in
+  the case of important passwords. Or a derived class could integrate with an
+  application's concept of undo/redo.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"deleted-text\" signal}
+      This signal is emitted after text is deleted from the buffer.
+      @begin{pre}
+ void user_function (GtkEntryBuffer *buffer,
+                     guint           position,
+                     guint           n_chars,
+                     gpointer        user_data)      : Run First
+      @end{pre}
+
+      @begin[code]{table}
+        @entry[buffer]{a GtkEntryBuffer}
+        @entry[position]{the position the text was deleted at.}
+        @entry[n_chars]{The number of characters that were deleted.}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+      Since 2.18
+
+    @subheading{The \"inserted-text\" signal}
+      This signal is emitted after text is inserted into the buffer.
+      @begin{pre}
+ void user_function (GtkEntryBuffer *buffer,
+                     guint           position,
+                     gchar          *chars,
+                     guint           n_chars,
+                     gpointer        user_data)      : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[buffer]{a GtkEntryBuffer}
+        @entry[position]{the position the text was inserted at.}
+        @entry[chars]{The text that was inserted.}
+        @entry[n_chars]{The number of characters that were inserted.}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+      Since 2.18
+  @end{dictionary}
+  @see-slot{gtk-entry-buffer-length}
+  @see-slot{gtk-entry-buffer-max-length}
+  @see-slot{gtk-entry-buffer-text}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "length" 'gtk-entry-buffer) 't)
+ "The @code{\"length\"} property of type @code{guint} (Read)@br{}
+  The length (in characters) of the text in buffer.@br{}
+  Allowed values: <= 65535@br{}
+  Default value: 0@br{}
+  Since 2.18")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "max-length" 'gtk-entry-buffer) 't)
+ "The @code{\"max-length\"} property of type @code{gint} (Read / Write)@br{}
+  The maximum length (in characters) of the text in the buffer.@br{}
+  Allowed values: [0,65535]@br{}
+  Default value: 0@br{}
+  Since 2.18")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text" 'gtk-entry-buffer) 't)
+ "The @code{\"text\"} property of type @code{gchar*} (Read / Write)@br{}
+  The contents of the buffer.@br{}
+  Default value: \"\"@br{}
+  Since 2.18")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-buffer-length atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-buffer-length 'function)
+ "@version{2013-3-1}
+  @begin{short}
+    Accessor of the slot @code{\"length\"} of the @class{gtk-entry-buffer}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-buffer-max-length atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-buffer-max-length 'function)
+ "@version{2013-3-1}
+  @begin{short}
+    Accessor of the slot @code{\"max-length\"} of the @class{gtk-entry-buffer}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-buffer-text atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-buffer-text 'function)
+ "@version{2013-3-1}
+  @begin{short}
+    Accessor of the slot @code{\"text\"} of the @class{gtk-entry-buffer} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_buffer_new ()

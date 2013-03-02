@@ -195,7 +195,7 @@
   @begin{short}
     The @sym{gtk-label} widget displays a small amount of text. As the name
     implies, most labels are used to label another widget such as a
-    @class{gtk-button}, a @class{gtk-menu-item}, or a @class{gtk-option-menu}.
+    @class{gtk-button}, a @class{gtk-menu-item}, or a @code{GtkOptionMenu}.
   @end{short}
 
   @heading{GtkLabel as GtkBuildable}
@@ -378,7 +378,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (setf (documentation (atdoc:get-slot-from-name "ellipsize" 'gtk-label) 't)
- "The @code{ellipsize} property of type @code{PangoEllipsizeMode} 
+ "The @code{ellipsize} property of type @code{PangoEllipsizeMode}
   (Read / Write)@br{}
   The preferred place to ellipsize the string, if the label does not have
   enough room to display the entire string, specified as a

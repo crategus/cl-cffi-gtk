@@ -2,10 +2,11 @@
 ;;; gtk.widget.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See http://www.gtk.org.
+;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -4531,29 +4532,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_events ()
-;;;
-;;; void gtk_widget_set_events (GtkWidget *widget, gint events);
-;;;
-;;; Sets the event mask (see GdkEventMask) for a widget. The event mask
-;;; determines which events a widget will receive. Keep in mind that different
-;;; widgets have different default event masks, and by changing the event mask
-;;; you may disrupt a widget's functionality, so be careful. This function must
-;;; be called while a widget is unrealized. Consider gtk_widget_add_events() for
-;;; widgets that are already realized, or if you want to preserve the existing
-;;; event mask. This function can't be used with GTK_NO_WINDOW widgets; to get
-;;; events on those widgets, place them inside a GtkEventBox and receive events
-;;; on the event box.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; events :
-;;;     event mask
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-widget-set-events))
 
 (defun gtk-widget-set-events (widget events)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[events]{event mask}
+  @begin{short}
+    Sets the event mask (see @symbol{gdk-event-mask}) for @arg{widget}.
+  @end{short}
+  The event mask determines which events a widget will receive. Keep in mind
+  that different widgets have different default event masks, and by changing the
+  event mask you may disrupt a widget's functionality, so be careful. This
+  function must be called while a widget is unrealized. Consider
+  @code{gtk_widget_add_events()} for widgets that are already realized, or if
+  you want to preserve the existing event mask. This function can not be used
+  with @code{:no-window} widgets; to get events on those widgets, place them
+  inside a @class{gtk-event-box} and receive events on the event box."
   (setf (gtk-widget-events widget) events))
 
 (export 'gtk-widget-set-events)
@@ -8692,25 +8690,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRequestedSize
-;;;
-;;; struct GtkRequestedSize {
-;;;   gpointer data;
-;;;   gint     minimum_size;
-;;;   gint     natural_size;
-;;; };
-;;;
-;;; Represents a request of a screen object in a given orientation. These are
-;;; primarily used in container implementations when allocating a natural size
-;;; for children calling. See gtk_distribute_natural_allocation().
-;;;
-;;; gpointer data;
-;;;     A client pointer
-;;;
-;;; gint minimum_size;
-;;;     The minimum size needed for allocation in a given orientation
-;;;
-;;; gint natural_size;
-;;;     The natural size for allocation in a given orientation
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gtk-requested-size "GtkRequestedSize"
@@ -8719,6 +8698,94 @@
   (natural-size :int))
 
 (export (boxed-related-symbols 'gtk-requested-size))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size atdoc:*class-name-alias*) "Struct"
+      (documentation 'gtk-requested-size 'type)
+ "@version{2013-1-6}
+  @begin{short}
+    Represents a request of a screen object in a given orientation.
+  @end{short}
+  These are primarily used in container implementations when allocating a
+  natural size for children calling. See gtk_distribute_natural_allocation().
+  @begin{pre}
+(define-g-boxed-cstruct gtk-requested-size \"GtkRequestedSize\"
+  (data :pointer)
+  (minimum-size :int)
+  (natural-size :int))
+  @end{pre}
+  @begin[code]{table}
+    @entry[gpointer data]{A client pointer}
+    @entry[gint minimum_size]{The minimum size needed for allocation in a given
+      orientation}
+    @entry[gint natural_size]{The natural size for allocation in a given
+      orientation}
+  @end{table}
+  @see-slot{gtk-requested-size-data}
+  @see-slot{gtk-requested-size-minimum-size}
+  @see-slot{gtk-requested-size-natural-size}
+  @see-constructor{copy-gtk-requested-size}
+  @see-constructor{make-gtk-requested-size}")
+
+;;; --- copy-gtk-requested-size ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gtk-requested-size 'function)
+ "@version{2013-2-25}
+  @argument[instance]{a @class{gtk-requested-size} struct}
+  @begin{short}
+    Copy constructor of a @class{gtk-requested-size} struct
+  @end{short}")
+
+;;; --- make-gtk-requested-size ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gtk-requested-size 'function)
+ "@version{2013-2-25}
+  @argument[data]{a client pointer}
+  @argument[minimum-size]{The minimum size needed for allocation in a given
+    orientation}
+  @argument[natural-size]{The natural size for allocation in a given
+    orientation}
+  @begin{short}
+    Creates a @class{gtk-requested-size} struct
+  @end{short}")
+
+;;; --- gtk-requested-size-data ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size-data atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-requested-size-data 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{data} of the @class{gtk-requested-size} struct.
+  @end{short}")
+
+;;; --- gtk-requested-size-minimum-size ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size-minimum-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-requested-size-minimum-size 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{minimum-size} of the @class{gtk-requested-size}
+    struct.
+  @end{short}")
+
+;;; --- gtk-requested-size-natural-size ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requested-size-natural-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-requested-size-natural-size 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{natural-size} of the @class{gtk-requested-size}
+    struct.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height ()

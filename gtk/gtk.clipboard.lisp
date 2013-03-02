@@ -2,13 +2,14 @@
 ;;; gtk.clipboard.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -74,59 +75,6 @@
 ;;;
 ;;;   "owner-change"                                   : Run First
 ;;;
-;;; Description
-;;;
-;;; The GtkClipboard object represents a clipboard of data shared between
-;;; different processes or between different widgets in the same process. Each
-;;; clipboard is identified by a name encoded as a GdkAtom. (Conversion to and
-;;; from strings can be done with gdk_atom_intern() and gdk_atom_name().) The
-;;; default clipboard corresponds to the "CLIPBOARD" atom; another commonly used
-;;; clipboard is the "PRIMARY" clipboard, which, in X, traditionally contains
-;;; the currently selected text.
-;;;
-;;; To support having a number of different formats on the clipboard at the same
-;;; time, the clipboard mechanism allows providing callbacks instead of the
-;;; actual data. When you set the contents of the clipboard, you can either
-;;; supply the data directly (via functions like gtk_clipboard_set_text()), or
-;;; you can supply a callback to be called at a later time when the data is
-;;; needed (via gtk_clipboard_set_with_data() or
-;;; gtk_clipboard_set_with_owner().) Providing a callback also avoids having to
-;;; make copies of the data when it is not needed.
-;;;
-;;; gtk_clipboard_set_with_data() and gtk_clipboard_set_with_owner() are quite
-;;; similar; the choice between the two depends mostly on which is more
-;;; convenient in a particular situation. The former is most useful when you
-;;; want to have a blob of data with callbacks to convert it into the various
-;;; data types that you advertise. When the clear_func you provided is called,
-;;; you simply free the data blob. The latter is more useful when the contents
-;;; of clipboard reflect the internal state of a GObject (As an example, for the
-;;; PRIMARY clipboard, when an entry widget provides the clipboard's contents
-;;; the contents are simply the text within the selected region.) If the
-;;; contents change, the entry widget can call gtk_clipboard_set_with_owner() to
-;;; update the timestamp for clipboard ownership, without having to worry about
-;;; clear_func being called.
-;;;
-;;; Requesting the data from the clipboard is essentially asynchronous. If the
-;;; contents of the clipboard are provided within the same process, then a
-;;; direct function call will be made to retrieve the data, but if they are
-;;; provided by another process, then the data needs to be retrieved from the
-;;; other process, which may take some time. To avoid blocking the user
-;;; interface, the call to request the selection,
-;;; gtk_clipboard_request_contents() takes a callback that will be called when
-;;; the contents are received (or when the request fails.) If you don't want to
-;;; deal with providing a separate callback, you can also use
-;;; gtk_clipboard_wait_for_contents(). What this does is run the GLib main loop
-;;; recursively waiting for the contents. This can simplify the code flow, but
-;;; you still have to be aware that other callbacks in your program can be
-;;; called while this recursive mainloop is running.
-;;;
-;;; Along with the functions to get the clipboard contents as an arbitrary data
-;;; chunk, there are also functions to retrieve it as text,
-;;; gtk_clipboard_request_text() and gtk_clipboard_wait_for_text(). These
-;;; functions take care of determining which formats are advertised by the
-;;; clipboard provider, asking for the clipboard in the best available format
-;;; and converting the results into the UTF-8 encoding. (The standard form for
-;;; representing strings in GTK+.)
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -159,8 +107,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboard
-;;;
-;;; typedef struct _GtkClipboard GtkClipboard;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkClipboard" gtk-clipboard
@@ -169,6 +115,67 @@
    :interfaces nil
    :type-initializer "gtk_clipboard_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-clipboard 'type)
+ "@version{2013-2-24}
+  @begin{short}
+    The GtkClipboard object represents a clipboard of data shared between
+    different processes or between different widgets in the same process. Each
+    clipboard is identified by a name encoded as a GdkAtom. (Conversion to and
+    from strings can be done with gdk_atom_intern() and gdk_atom_name().) The
+    default clipboard corresponds to the \"CLIPBOARD\" atom; another commonly
+    used clipboard is the \"PRIMARY\" clipboard, which, in X, traditionally
+    contains the currently selected text.
+  @end{short}
+
+  To support having a number of different formats on the clipboard at the same
+  time, the clipboard mechanism allows providing callbacks instead of the
+  actual data. When you set the contents of the clipboard, you can either
+  supply the data directly (via functions like gtk_clipboard_set_text()), or
+  you can supply a callback to be called at a later time when the data is
+  needed (via gtk_clipboard_set_with_data() or
+  gtk_clipboard_set_with_owner().) Providing a callback also avoids having to
+  make copies of the data when it is not needed.
+
+  gtk_clipboard_set_with_data() and gtk_clipboard_set_with_owner() are quite
+  similar; the choice between the two depends mostly on which is more
+  convenient in a particular situation. The former is most useful when you
+  want to have a blob of data with callbacks to convert it into the various
+  data types that you advertise. When the clear_func you provided is called,
+  you simply free the data blob. The latter is more useful when the contents
+  of clipboard reflect the internal state of a GObject (As an example, for the
+  PRIMARY clipboard, when an entry widget provides the clipboard's contents
+  the contents are simply the text within the selected region.) If the
+  contents change, the entry widget can call gtk_clipboard_set_with_owner() to
+  update the timestamp for clipboard ownership, without having to worry about
+  clear_func being called.
+
+  Requesting the data from the clipboard is essentially asynchronous. If the
+  contents of the clipboard are provided within the same process, then a
+  direct function call will be made to retrieve the data, but if they are
+  provided by another process, then the data needs to be retrieved from the
+  other process, which may take some time. To avoid blocking the user
+  interface, the call to request the selection,
+  gtk_clipboard_request_contents() takes a callback that will be called when
+  the contents are received (or when the request fails.) If you don't want to
+  deal with providing a separate callback, you can also use
+  gtk_clipboard_wait_for_contents(). What this does is run the GLib main loop
+  recursively waiting for the contents. This can simplify the code flow, but
+  you still have to be aware that other callbacks in your program can be
+  called while this recursive mainloop is running.
+
+  Along with the functions to get the clipboard contents as an arbitrary data
+  chunk, there are also functions to retrieve it as text,
+  gtk_clipboard_request_text() and gtk_clipboard_wait_for_text(). These
+  functions take care of determining which formats are advertised by the
+  clipboard provider, asking for the clipboard in the best available format
+  and converting the results into the UTF-8 encoding. (The standard form for
+  representing strings in GTK+.)
+")
+
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardReceivedFunc ()
@@ -332,23 +339,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get ()
-;;;
-;;; GtkClipboard * gtk_clipboard_get (GdkAtom selection);
-;;;
-;;; Returns the clipboard object for the given selection. See
-;;; gtk_clipboard_get_for_display() for complete details.
-;;;
-;;; selection :
-;;;     a GdkAtom which identifies the clipboard to use
-;;;
-;;; Returns :
-;;;     the appropriate clipboard object. If no clipboard already exists, a new
-;;;     one will be created. Once a clipboard object has been created, it is
-;;;     persistent and, since it is owned by GTK+, must not be freed or
-;;;     unreffed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_clipboard_get" gtk-clipboard-get) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[selection]{a GdkAtom which identifies the clipboard to use}
+  @begin{return}
+    The appropriate clipboard object. If no clipboard already exists, a new
+    one will be created. Once a clipboard object has been created, it is
+    persistent and, since it is owned by GTK+, must not be freed or unreffed.
+  @end{return}
+  @begin{short}
+    Returns the clipboard object for the given selection.
+  @end{short}
+  See gtk_clipboard_get_for_display() for complete details."
   (selection gdk-atom-as-string))
 
 (export 'gtk-clipboard-get)
@@ -512,43 +517,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_clear ()
-;;;
-;;; void gtk_clipboard_clear (GtkClipboard *clipboard);
-;;;
-;;; Clears the contents of the clipboard. Generally this should only be called
-;;; between the time you call gtk_clipboard_set_with_owner() or
-;;; gtk_clipboard_set_with_data(), and when the clear_func you supplied is
-;;; called. Otherwise, the clipboard may be owned by someone else.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_clipboard_clear" gtk-clipboard-clear) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[clipboard]{a GtkClipboard}
+  @begin{short}
+    Clears the contents of the clipboard.
+  @end{short}
+  Generally this should only be called between the time you call
+  gtk_clipboard_set_with_owner() or gtk_clipboard_set_with_data(), and when the
+  clear_func you supplied is called. Otherwise, the clipboard may be owned by
+  someone else."
   (clipboard (g-object gtk-clipboard)))
 
 (export 'gtk-clipboard-clear)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_set_text ()
-;;;
-;;; void gtk_clipboard_set_text (GtkClipboard *clipboard,
-;;;                              const gchar *text,
-;;;                              gint len);
-;;;
-;;; Sets the contents of the clipboard to the given UTF-8 string. GTK+ will make
-;;; a copy of the text and take responsibility for responding for requests for
-;;; the text, and for converting the text into the requested format.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard object
-;;;
-;;; text :
-;;;     a UTF-8 string.
-;;;
-;;; len :
-;;;     length of text, in bytes, or -1, in which case the length will be
-;;;     determined with strlen().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_clipboard_set_text" %gtk-clipboard-set-text) :void
@@ -557,6 +544,17 @@
   (len :int))
 
 (defun gtk-clipboard-set-text (clipboard text)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[clipboard]{a GtkClipboard object}
+  @argument[text]{a UTF-8 string.}
+  @argument[len]{length of text, in bytes, or -1, in which case the length will
+    be determined with strlen().}
+  @begin{short}
+   Sets the contents of the clipboard to the given UTF-8 string.
+  @end{short}
+  GTK+ will make a copy of the text and take responsibility for responding for
+  requests for the text, and for converting the text into the requested format."
   (%gtk-clipboard-set-text clipboard text -1))
 
 (export 'gtk-clipboard-set-text)

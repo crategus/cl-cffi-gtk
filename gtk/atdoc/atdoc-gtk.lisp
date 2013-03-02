@@ -35,7 +35,6 @@
 ;;; GTK+ Core Reference
 
     (load "src/atdoc-gtk.main-loop.lisp")
-    (load "src/atdoc-gtk.enumerations.lisp")
     (load "src/atdoc-gtk.selections.lisp")
 #|
     
@@ -276,7 +275,6 @@ Theming in GTK+
   Abstract Base Classes
 |#
     (load "src/atdoc-gtk.widget.lisp")
-    (load "src/atdoc-gtk.container.lisp")
 #|
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.4.3
 |#

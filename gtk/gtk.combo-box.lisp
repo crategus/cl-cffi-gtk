@@ -2,13 +2,14 @@
 ;;; gtk.combo-box.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See >http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -94,25 +95,6 @@
 ;;; GtkComboBox implements AtkImplementorIface, GtkBuildable, GtkCellLayout and
 ;;; GtkCellEditable.
 ;;; 
-;;; Properties
-;;; 
-;;;   "active"                   gint                 : Read / Write
-;;;   "active-id"                gchar*               : Read / Write
-;;;   "add-tearoffs"             gboolean             : Read / Write
-;;;   "button-sensitivity"       GtkSensitivityType   : Read / Write
-;;;   "cell-area"                GtkCellArea*         : Read / Write / Construct
-;;;   "column-span-column"       gint                 : Read / Write
-;;;   "entry-text-column"        gint                 : Read / Write
-;;;   "focus-on-click"           gboolean             : Read / Write
-;;;   "has-entry"                gboolean             : Read / Write / Construct
-;;;   "has-frame"                gboolean             : Read / Write
-;;;   "id-column"                gint                 : Read / Write
-;;;   "model"                    GtkTreeModel*        : Read / Write
-;;;   "popup-fixed-width"        gboolean             : Read / Write
-;;;   "popup-shown"              gboolean             : Read
-;;;   "row-span-column"          gint                 : Read / Write
-;;;   "tearoff-title"            gchar*               : Read / Write
-;;;   "wrap-width"               gint                 : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
@@ -129,306 +111,7 @@
 ;;;   "popdown"                                       : Action
 ;;;   "popup"                                         : Action
 ;;; 
-;;; Description
 ;;; 
-;;; A GtkComboBox is a widget that allows the user to choose from a list of
-;;; valid choices. The GtkComboBox displays the selected choice. When activated,
-;;; the GtkComboBox displays a popup which allows the user to make a new choice.
-;;; The style in which the selected value is displayed, and the style of the
-;;; popup is determined by the current theme. It may be similar to a
-;;; Windows-style combo box.
-;;; 
-;;; The GtkComboBox uses the model-view pattern; the list of valid choices is
-;;; specified in the form of a tree model, and the display of the choices can be
-;;; adapted to the data in the model by using cell renderers, as you would in a
-;;; tree view. This is possible since GtkComboBox implements the GtkCellLayout
-;;; interface. The tree model holding the valid choices is not restricted to a
-;;; flat list, it can be a real tree, and the popup will reflect the tree
-;;; structure.
-;;; 
-;;; To allow the user to enter values not in the model, the 'has-entry' property
-;;; allows the GtkComboBox to contain a GtkEntry. This entry can be accessed by
-;;; calling gtk_bin_get_child() on the combo box.
-;;; 
-;;; For a simple list of textual choices, the model-view API of GtkComboBox can
-;;; be a bit overwhelming. In this case, GtkComboBoxText offers a simple
-;;; alternative. Both GtkComboBox and GtkComboBoxText can contain an entry.
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;; 
-;;;   "active"                   gint                  : Read / Write
-;;; 
-;;; The item which is currently active. If the model is a non-flat treemodel,
-;;; and the active item is not an immediate child of the root of the tree, this
-;;; property has the value gtk_tree_path_get_indices (path)[0], where path is
-;;; the GtkTreePath of the active item.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active-id" property
-;;; 
-;;;   "active-id"                gchar*                : Read / Write
-;;; 
-;;; The value of the ID column of the active row.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "add-tearoffs" property
-;;; 
-;;;   "add-tearoffs"             gboolean              : Read / Write
-;;; 
-;;; The add-tearoffs property controls whether generated menus have tearoff menu
-;;; items.
-;;; 
-;;; Note that this only affects menu style combo boxes.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "button-sensitivity" property
-;;; 
-;;;   "button-sensitivity"       GtkSensitivityType    : Read / Write
-;;; 
-;;; Whether the dropdown button is sensitive when the model is empty.
-;;; 
-;;; Default value: GTK_SENSITIVITY_AUTO
-;;; 
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cell-area" property
-;;; 
-;;;   "cell-area"                GtkCellArea*         : Read / Write / Construct
-;;; 
-;;; The GtkCellArea used to layout cell renderers for this combo box.
-;;; 
-;;; If no area is specified when creating the combo box with
-;;; gtk_combo_box_new_with_area() a horizontally oriented GtkCellAreaBox will be
-;;; used.
-;;; 
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "column-span-column" property
-;;; 
-;;;   "column-span-column"       gint                  : Read / Write
-;;; 
-;;; If this is set to a non-negative value, it must be the index of a column of
-;;; type G_TYPE_INT in the model.
-;;; 
-;;; The values of that column are used to determine how many columns a value in
-;;; the list will span.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "entry-text-column" property
-;;; 
-;;;   "entry-text-column"        gint                  : Read / Write
-;;; 
-;;; The column in the combo box's model to associate with strings from the entry
-;;; if the combo was created with "has-entry" = TRUE.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.24
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "focus-on-click" property
-;;; 
-;;;   "focus-on-click"           gboolean              : Read / Write
-;;; 
-;;; Whether the combo box grabs focus when it is clicked with the mouse.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-entry" property
-;;; 
-;;;   "has-entry"                gboolean             : Read / Write / Construct
-;;; 
-;;; Whether the combo box has an entry.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.24
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-frame" property
-;;; 
-;;;   "has-frame"                gboolean              : Read / Write
-;;; 
-;;; The has-frame property controls whether a frame is drawn around the entry.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "id-column" property
-;;; 
-;;;   "id-column"                gint                  : Read / Write
-;;; 
-;;; The column in the combo box's model that provides string IDs for the values
-;;; in the model, if != -1.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "model" property
-;;; 
-;;;   "model"                    GtkTreeModel*         : Read / Write
-;;; 
-;;; The model from which the combo box takes the values shown in the list.
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "popup-fixed-width" property
-;;; 
-;;;   "popup-fixed-width"        gboolean              : Read / Write
-;;; 
-;;; Whether the popup's width should be a fixed width matching the allocated
-;;; width of the combo box.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "popup-shown" property
-;;; 
-;;;   "popup-shown"              gboolean              : Read
-;;; 
-;;; Whether the combo boxes dropdown is popped up. Note that this property is
-;;; mainly useful, because it allows you to connect to notify::popup-shown.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "row-span-column" property
-;;; 
-;;;   "row-span-column"          gint                  : Read / Write
-;;; 
-;;; If this is set to a non-negative value, it must be the index of a column of
-;;; type G_TYPE_INT in the model.
-;;; 
-;;; The values of that column are used to determine how many rows a value in the
-;;; list will span. Therefore, the values in the model column pointed to by this
-;;; property must be greater than zero and not larger than wrap-width.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tearoff-title" property
-;;; 
-;;;   "tearoff-title"            gchar*                : Read / Write
-;;; 
-;;; A title that may be displayed by the window manager when the popup is
-;;; torn-off.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wrap-width" property
-;;; 
-;;;   "wrap-width"               gint                  : Read / Write
-;;; 
-;;; If wrap-width is set to a positive value, the list will be displayed in
-;;; multiple columns, the number of columns is determined by wrap-width.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "appears-as-list" style property
-;;; 
-;;;   "appears-as-list"          gboolean              : Read
-;;; 
-;;; Whether dropdowns should look like lists rather than menus.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-scaling" style property
-;;; 
-;;;   "arrow-scaling"            gfloat                : Read
-;;; 
-;;; Sets the amount of space used up by the combobox arrow, proportional to the
-;;; font size.
-;;; 
-;;; Allowed values: [0,2]
-;;; 
-;;; Default value: 1
-;;; 
-;;; Since 3.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-size" style property
-;;; 
-;;;   "arrow-size"               gint                  : Read
-;;; 
-;;; Sets the minimum size of the arrow in the combo box. Note that the arrow
-;;; size is coupled to the font size, so in case a larger font is used, the
-;;; arrow will be larger than set by arrow size.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 15
-;;; 
-;;; Since 2.12
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "shadow-type" style property
-;;; 
-;;;   "shadow-type"              GtkShadowType         : Read
-;;; 
-;;; Which kind of shadow to draw around the combo box.
-;;; 
-;;; Default value: GTK_SHADOW_NONE
-;;; 
-;;; Since 2.12
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -571,8 +254,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkComboBox
-;;; 
-;;; struct GtkComboBox;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkComboBox" gtk-combo-box
@@ -633,17 +314,461 @@
     "tearoff-title" "gchararray" t t)
    (wrap-width
     gtk-combo-box-wrap-width
-    "wrap-width" "gint" t t)
-   (:cffi active-iter
-          gtk-combo-box-active-iter (g-boxed-foreign gtk-tree-iter)
-          combo-box-get-active-iter "gtk_combo_box_set_active_iter")
-   (:cffi row-separator-func
-          gtk-combo-box-separator-func nil
-          nil combo-box-set-separator-func)
-   (:cffi title
-          gtk-combo-box-title
-          (:string :free-from-foreign nil :free-to-foreign t)
-          "gtk_combo_box_get_title" "gtk_combo_box_set_title")))
+    "wrap-width" "gint" t t)))
+;   (:cffi active-iter
+;          gtk-combo-box-active-iter (g-boxed-foreign gtk-tree-iter)
+;          combo-box-get-active-iter "gtk_combo_box_set_active_iter")
+;   (:cffi row-separator-func
+;          gtk-combo-box-separator-func nil
+;          nil combo-box-set-separator-func)
+;   (:cffi title
+;          gtk-combo-box-title
+;          (:string :free-from-foreign nil :free-to-foreign t)
+;          "gtk_combo_box_get_title" "gtk_combo_box_set_title")))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-combo-box 'type)
+ "@version{2013-2-26}
+  @begin{short}
+    A @sym{gtk-combo-box} is a widget that allows the user to choose from a list
+    of valid choices. The @sym{gtk-combo-box} displays the selected choice. When
+    activated, the @sym{gtk-combo-box} displays a popup which allows the user to
+    make a new choice. The style in which the selected value is displayed, and
+    the style of the popup is determined by the current theme. It may be similar
+    to a Windows-style combo box.
+  @end{short}
+
+  The @sym{gtk-combo-box} uses the model-view pattern; the list of valid choices
+  is specified in the form of a tree model, and the display of the choices can
+  be adapted to the data in the model by using cell renderers, as you would in a
+  tree view. This is possible since @sym{gtk-combo-box} implements the
+  @class{gtk-cell-layout} interface. The tree model holding the valid choices is
+  not restricted to a flat list, it can be a real tree, and the popup will
+  reflect the tree structure.
+
+  To allow the user to enter values not in the model, the 'has-entry' property
+  allows the @sym{gtk-combo-box} to contain a @class{gtk-entry}. This entry can
+  be accessed by calling @fun{gtk-bin-get-child} on the combo box.
+
+  For a simple list of textual choices, the model-view API of
+  @sym{gtk-combo-box} can be a bit overwhelming. In this case,
+  @class{gtk-combo-box-text} offers a simple alternative. Both
+  @sym{gtk-combo-box} and @class{gtk-combo-box-text} can contain an entry.
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"appears-as-list\" style property}
+      @code{\"appears-as-list\"} of type @code{gboolean} (Read)@br{}
+      Whether dropdowns should look like lists rather than menus.@br{}
+      Default value: FALSE
+
+    @subheading{The \"arrow-scaling\" style property}
+      @code{\"arrow-scaling\"} @code{gfloat} (Read)@br{}
+      Sets the amount of space used up by the combobox arrow, proportional to
+      the font size.@br{}
+      Allowed values: [0,2]@br{}
+      Default value: 1@br{}
+      Since 3.2
+
+    @subheading{The \"arrow-size\" style property}
+      @code{\"arrow-size\"} of type @code{gint} (Read)@br{}
+      Sets the minimum size of the arrow in the combo box. Note that the arrow
+      size is coupled to the font size, so in case a larger font is used, the
+      arrow will be larger than set by arrow size.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 15@br{}
+      Since 2.12
+
+    @subheading{The \"shadow-type\" style property}
+      @code{\"shadow-type\"} of type @code{GtkShadowType} (Read)@br{}
+      Which kind of shadow to draw around the combo box.@br{}
+      Default value: GTK_SHADOW_NONE@br{}
+      Since 2.12
+  @end{dictionary}
+  @see-slot{gtk-combo-box-active}
+  @see-slot{gtk-combo-box-active-id}
+  @see-slot{gtk-combo-box-add-tearoffs}
+  @see-slot{gtk-combo-box-button-sensitivity}
+  @see-slot{gtk-combo-box-cell-area}
+  @see-slot{gtk-combo-box-column-span-column}
+  @see-slot{gtk-combo-box-entry-text-column}
+  @see-slot{gtk-combo-box-focus-on-click}
+  @see-slot{gtk-combo-box-has-entry}
+  @see-slot{gtk-combo-box-has-frame}
+  @see-slot{gtk-combo-box-id-column}
+  @see-slot{gtk-combo-box-model}
+  @see-slot{gtk-combo-box-popup-fixed-width}
+  @see-slot{gtk-combo-box-popup-shown}
+  @see-slot{gtk-combo-box-row-span-column}
+  @see-slot{gtk-combo-box-tearoff-title}
+  @see-slot{gtk-combo-box-wrap-width}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-combo-box) 't)
+ "The @code{\"active\"} property of type @code{gint} (Read / Write)@br{}
+  The item which is currently active. If the model is a non-flat treemodel,
+  and the active item is not an immediate child of the root of the tree, this
+  property has the value gtk_tree_path_get_indices (path)[0], where path is
+  the GtkTreePath of the active item.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active-id" 'gtk-combo-box) 't)
+ "The @code{\"active-id\"} property of type @code{gchar*} (Read / Write)@br{}
+  The value of the ID column of the active row.@br{}
+  Default value: NULL@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "add-tearoffs" 'gtk-combo-box) 't)
+ "The @code{\"add-tearoffs\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  The add-tearoffs property controls whether generated menus have tearoff menu
+  items.
+  Note that this only affects menu style combo boxes.@br{}
+  Default value: FALSE@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "button-sensitivity" 'gtk-combo-box) 't)
+ "The @code{\"button-sensitivity\"} property of type @code{GtkSensitivityType}
+  (Read / Write)@br{}
+  Whether the dropdown button is sensitive when the model is empty.@br{}
+  Default value: GTK_SENSITIVITY_AUTO@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-area" 'gtk-combo-box) 't)
+ "The @code{\"cell-area\"} property of type @code{GtkCellArea*}
+  (Read / Write / Construct)@br{}
+  The GtkCellArea used to layout cell renderers for this combo box.
+  If no area is specified when creating the combo box with
+  gtk_combo_box_new_with_area() a horizontally oriented GtkCellAreaBox will be
+  used.@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "column-span-column" 'gtk-combo-box) 't)
+ "The @code{\"column-span-column\"} property of type @code{gint}
+  (Read / Write)@br{}
+  If this is set to a non-negative value, it must be the index of a column of
+  type G_TYPE_INT in the model.
+  The values of that column are used to determine how many columns a value in
+  the list will span.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "entry-text-column" 'gtk-combo-box) 't)
+ "The @code{\"entry-text-column\"} property of type @code{gint}
+  (Read / Write)@br{}
+  The column in the combo box's model to associate with strings from the entry
+  if the combo was created with \"has-entry\" = TRUE.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 2.24")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-combo-box) 't)
+ "The @code{\"focus-on-click\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether the combo box grabs focus when it is clicked with the mouse.@br{}
+  Default value: TRUE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-entry" 'gtk-combo-box) 't)
+ "The @code{\"has-entry\"} property of type @code{gboolean}
+  (Read / Write / Construct)@br{}
+  Whether the combo box has an entry.@br{}
+  Default value: FALSE@br{}
+  Since 2.24")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-frame" 'gtk-combo-box) 't)
+ "The @code{\"has-frame\"} property of type @code{gboolean} (Read / Write)@br{}
+  The has-frame property controls whether a frame is drawn around the
+  entry.@br{}
+  Default value: TRUE@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "id-column" 'gtk-combo-box) 't)
+ "The @code{\"id-column\"} property of type @code{gint} (Read / Write)@br{}
+  The column in the combo box's model that provides string IDs for the values
+  in the model, if != -1.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "model" 'gtk-combo-box) 't)
+ "The @code{\"model\"} property of type @code{GtkTreeModel*} (Read / Write)@br{}
+  The model from which the combo box takes the values shown in the list.@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "popup-fixed-width" 'gtk-combo-box) 't)
+ "The @code{\"popup-fixed-width\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether the popup's width should be a fixed width matching the allocated
+  width of the combo box.@br{}
+  Default value: TRUE@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "popup-shown" 'gtk-combo-box) 't)
+ "The @code{\"popup-shown\"} property of type @code{gboolean} (Read)@br{}
+  Whether the combo boxes dropdown is popped up. Note that this property is
+  mainly useful, because it allows you to connect to notify::popup-shown.@br{}
+  Default value: FALSE@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "row-span-column" 'gtk-combo-box) 't)
+ "The @code{\"row-span-column\"} property of type @code{gint}
+  (Read / Write)@br{}
+  If this is set to a non-negative value, it must be the index of a column of
+  type G_TYPE_INT in the model.
+  The values of that column are used to determine how many rows a value in the
+  list will span. Therefore, the values in the model column pointed to by this
+  property must be greater than zero and not larger than wrap-width.@br{}
+  Allowed values: >= G_MAXULONG@br{}
+  Default value: -1@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tearoff-title" 'gtk-combo-box) 't)
+ "The @code{\"tearoff-title\"} property of type @code{gchar*}
+  (Read / Write)@br{}
+  A title that may be displayed by the window manager when the popup is
+  torn-off.@br{}
+  Default value: NULL@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-width" 'gtk-combo-box) 't)
+ "The @code{\"wrap-width\"} property of type @code{gint} (Read / Write)@br{}
+  If wrap-width is set to a positive value, the list will be displayed in
+  multiple columns, the number of columns is determined by wrap-width.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 0@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-active 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"active\"} of the @class{gtk-combo-box} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-active-id atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-active-id 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"active-id\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-add-tearoffs atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-add-tearoffs 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"add-tearoffs\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-button-sensitivity atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-button-sensitivity 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"button-sensitivity\"} of the
+    @class{gtk-combo-box} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-cell-area atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-cell-area 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"cell-area\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-column-span-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-column-span-column 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"column-span-column\"} of the
+    @class{gtk-combo-box} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-entry-text-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-entry-text-column 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"entry-text-column\"} of the
+    @class{gtk-combo-box} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-focus-on-click atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-focus-on-click 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"focus-on-click\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-has-entry atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-has-entry 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"has-entry\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-has-frame atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-has-frame 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"has-frame\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-id-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-id-column 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"id-column\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-model atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-model 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"model\"} of the @class{gtk-combo-box} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-popup-fixed-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-popup-fixed-width 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"popup-fixed-width\"} of the
+    @class{gtk-combo-box} class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-popup-shown atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-popup-shown 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"popup-shown\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-row-span-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-row-span-column 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"row-span-column\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-tearoff-title atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-tearoff-title 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"tearoff-title\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-combo-box-wrap-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-combo-box-wrap-width 'function)
+ "@version{2013-2-26}
+  @begin{short}
+    Accessor of the slot @code{\"wrap-width\"} of the @class{gtk-combo-box}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new ()
@@ -838,74 +963,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_active ()
-;;; 
-;;; gint gtk_combo_box_get_active (GtkComboBox *combo_box);
-;;; 
-;;; Returns the index of the currently active item, or -1 if there's no active
-;;; item. If the model is a non-flat treemodel, and the active item is not an
-;;; immediate child of the root of the tree, this function returns
-;;; gtk_tree_path_get_indices (path)[0], where path is the GtkTreePath of the
-;;; active item.
-;;; 
-;;; combo_box :
-;;;     A GtkComboBox
-;;; 
-;;; Returns :
-;;;     An integer which is the index of the currently active item, or -1 if
-;;;     there's no active item.
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-combo-box-get-active))
 
 (defun gtk-combo-box-get-active (combo-box)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo_box]{A GtkComboBox}
+  @begin{return}
+    An integer which is the index of the currently active item, or -1 if
+    there's no active item.
+  @end{return}
+
+  Returns the index of the currently active item, or -1 if there's no active
+  item. If the model is a non-flat treemodel, and the active item is not an
+  immediate child of the root of the tree, this function returns
+  @code{gtk_tree_path_get_indices (path)[0]}, where path is the
+  @code{GtkTreePath} of the active item.
+
+  Since 2.4"
   (gtk-combo-box-active combo-box))
 
 (export 'gtk-combo-box-get-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_active ()
-;;; 
-;;; void gtk_combo_box_set_active (GtkComboBox *combo_box, gint index_);
-;;; 
-;;; Sets the active item of combo_box to be the item at index.
-;;; 
-;;; combo_box :
-;;;     A GtkComboBox
-;;; 
-;;; index_ :
-;;;     An index in the model passed during construction, or -1 to have no
-;;;     active item
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-combo-box-set-active))
 
 (defun gtk-combo-box-set-active (combo-box index)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo-box]{A @class{gtk-combo-box} widget.}
+  @argument[index]{An index in the model passed during construction, or -1 to
+    have no active item}
+  @begin{short}
+    Sets the active item of combo_box to be the item at index.
+  @end{short}
+
+  Since 2.4"
   (setf (gtk-combo-box-active combo-box) index))
 
 (export 'gtk-combo-box-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_active_iter ()
-;;; 
-;;; gboolean gtk_combo_box_get_active_iter (GtkComboBox *combo_box,
-;;;                                         GtkTreeIter *iter);
-;;; 
-;;; Sets iter to point to the current active item, if it exists.
-;;; 
-;;; combo_box :
-;;;     A GtkComboBox
-;;; 
-;;; iter :
-;;;     The uninitialized GtkTreeIter
-;;; 
-;;; Returns :
-;;;     TRUE, if iter was set
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_get_active_iter" %gtk-combo-box-get-active-iter)
@@ -914,6 +1018,15 @@
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-combo-box-get-active-iter (combo-box)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo-box]{A GtkComboBox}
+  @return{TRUE, if iter was set}
+  @begin{short}
+    Sets iter to point to the current active item, if it exists.
+  @end{short}
+
+  Since 2.4"
   (let ((i (make-instance 'gtk-tree-iter)))
     (when (%gtk-combo-box-get-active-iter combo-box i)
       i)))
@@ -1082,67 +1195,62 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_popup ()
-;;; 
-;;; void gtk_combo_box_popup (GtkComboBox *combo_box);
-;;; 
-;;; Pops up the menu or dropdown list of combo_box.
-;;; 
-;;; This function is mostly intended for use by accessibility technologies;
-;;; applications should have little use for it.
-;;; 
-;;; combo_box :
-;;;     a GtkComboBox
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_popup" gtk-combo-box-popup) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo-box]{a GtkComboBox}
+  @begin{short}
+    Pops up the menu or dropdown list of combo_box.
+  @end{short}
+
+  This function is mostly intended for use by accessibility technologies;
+  applications should have little use for it.
+
+  Since 2.4"
   (combo-box g-object))
 
 (export 'gtk-combo-box-popup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_popdown ()
-;;; 
-;;; void gtk_combo_box_popdown (GtkComboBox *combo_box);
-;;; 
-;;; Hides the menu or dropdown list of combo_box.
-;;; 
-;;; This function is mostly intended for use by accessibility technologies;
-;;; applications should have little use for it.
-;;; 
-;;; combo_box :
-;;;     a GtkComboBox
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_popdown" gtk-combo-box-popdown) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo-box]{a GtkComboBox}
+  @begin{short}
+    Hides the menu or dropdown list of combo_box.
+  @end{short}
+
+  This function is mostly intended for use by accessibility technologies;
+  applications should have little use for it.
+
+  Since 2.4"
   (combo-box g-object))
 
 (export 'gtk-combo-box-popdown)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_popup_accessible ()
-;;; 
-;;; AtkObject * gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
-;;; 
-;;; Gets the accessible object corresponding to the combo box's popup.
-;;; 
-;;; This function is mostly intended for use by accessibility technologies;
-;;; applications should have little use for it.
-;;; 
-;;; combo_box :
-;;;     a GtkComboBox
-;;; 
-;;; Returns :
-;;;     the accessible object corresponding to the combo box's popup
-;;; 
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_get_popup_accessible"
           gtk-combo-box-get-popup-accessible) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo-box]{a GtkComboBox}
+  @return{the accessible object corresponding to the combo box's popup}
+  @begin{short}
+    Gets the accessible object corresponding to the combo box's popup.
+  @end{short}
+
+  This function is mostly intended for use by accessibility technologies;
+  applications should have little use for it.
+
+  Since 2.6"
   (combo-box g-object))
 
 (export 'gtk-combo-box-get-popup-accessible)
@@ -1166,29 +1274,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_row_separator_func ()
-;;; 
-;;; void gtk_combo_box_set_row_separator_func (GtkComboBox *combo_box,
-;;;                                            GtkTreeViewRowSeparatorFunc func,
-;;;                                            gpointer data,
-;;;                                            GDestroyNotify destroy);
-;;; 
-;;; Sets the row separator function, which is used to determine whether a row
-;;; should be drawn as a separator. If the row separator function is NULL, no
-;;; separators are drawn. This is the default value.
-;;; 
-;;; combo_box :
-;;;     a GtkComboBox
-;;; 
-;;; func :
-;;;     a GtkTreeViewRowSeparatorFunc
-;;; 
-;;; data :
-;;;     user data to pass to func, or NULL
-;;; 
-;;; destroy :
-;;;     destroy notifier for data, or NULL
-;;; 
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_combo_box_set_row_separator_func"
@@ -1199,6 +1284,18 @@
   (destroy-notify :pointer))
 
 (defun gtk-combo-box-set-row-separator-func (combo-box func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-26}
+  @argument[combo-box]{a GtkComboBox}
+  @argument[func]{a GtkTreeViewRowSeparatorFunc}
+  @begin{short}
+    Sets the row separator function, which is used to determine whether a row
+    should be drawn as a separator.
+  @end{short}
+  If the row separator function is NULL, no separators are drawn. This is the
+  default value.
+
+  Since 2.6"
   (%gtk-combo-box-set-row-separator-func
                             combo-box
                             (callback gtk-tree-view-row-separator-func-callback)

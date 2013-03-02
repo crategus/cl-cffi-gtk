@@ -2,10 +2,12 @@
 ;;; gio.action-map.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.1. The latest version of this documentation can be found
-;;; on-line at http://library.gnome.org/devel/gio/unstable/.
+;;; for GIO 2.32.3. The latest version of this documentation can be found
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -140,51 +142,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GActionEntry
-;;;
-;;; struct GActionEntry {
-;;;   const gchar *name;
-;;;
-;;;   void (* activate) (GSimpleAction *action,
-;;;                      GVariant      *parameter,
-;;;                      gpointer       user_data);
-;;;
-;;;   const gchar *parameter_type;
-;;;
-;;;   const gchar *state;
-;;;
-;;;   void (* change_state) (GSimpleAction *action,
-;;;                          GVariant      *value,
-;;;                          gpointer       user_data);
-;;; };
-;;;
-;;; This struct defines a single action. It is for use with
-;;; g_action_map_add_action_entries().
-;;;
-;;; The order of the items in the structure are intended to reflect frequency
-;;; of use. It is permissible to use an incomplete initialiser in order to leave
-;;; some of the later values as NULL. All values after name are optional.
-;;; Additional optional fields may be added in the future.
-;;;
-;;; See g_action_map_add_action_entries() for an example.
-;;;
-;;; const gchar *name;
-;;;     the name of the action
-;;;
-;;; activate ()
-;;;     the callback to connect to the "activate" signal of the action
-;;;
-;;; const gchar *parameter_type;
-;;;     the type of the parameter that must be passed to the activate function
-;;;     for this action, given as a single GVariant type string (or NULL for
-;;;     no parameter)
-;;;
-;;; const gchar *state;
-;;;     the initial state for this action, given in GVariant text format. The
-;;;     state is parsed with no extra type information, so type tags must be
-;;;     added to the string if they are necessary.
-;;;
-;;; change_state ()
-;;;     the callback to connect to the "change-state" signal of the action
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct g-action-entry "GActionEntry"
@@ -195,6 +152,143 @@
   (change-state :pointer))
 
 (export (boxed-related-symbols 'g-action-entry))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-entry atdoc:*class-name-alias*) "Struct"
+      (documentation 'g-action-entry 'type)
+ "@version{2013-2-25}
+  @begin{short}
+    The @sym{g-action-entry} structure defines a single action. It is for use
+    with @fun{g-action-map-add-action-entries}.
+  @end{short}
+
+  The order of the items in the structure are intended to reflect frequency
+  of use. It is permissible to use an incomplete initialiser in order to leave
+  some of the later values as @code{nil}. All values after name are optional.
+  Additional optional fields may be added in the future.
+
+  See @fun{g-action-map-add-action-entries} for an example.
+  @begin{pre}
+(define-g-boxed-cstruct g-action-entry \"GActionEntry\"
+  (name :string)
+  (activate :pointer)
+  (parameter-type :string)
+  (state :string)
+  (change-state :pointer))
+  @end{pre}
+  @begin[code]{table}
+    @entry[name]{the name of the action}
+    @entry[activate]{the callback to connect to the \"activate\" signal of
+      the action}
+    @entry[parameter-type]{the type of the parameter that must be
+      passed to the activate function for this action, given as a single
+      @symbol{g-variant} type string (or @code{nil} for no parameter)}
+    @entry[state]{the initial state for this action, given in
+      @symbol{g-variant} text format. The state is parsed with no extra type
+      information, so type tags must be added to the string if they are
+      necessary.}
+    @entry[change-state]{the callback to connect to the \"change-state\"
+      signal of the action}
+  @end{table}
+  @see-slot{g-action-entry-name}
+  @see-slot{g-action-entry-activate}
+  @see-slot{g-action-entry-parameter-type}
+  @see-slot{g-action-entry-state}
+  @see-slot{g-action-entry-change-state}
+  @see-constructor{copy-g-action-entry}
+  @see-constructor{make-g-action-entry}
+  @see-function{g-action-map-add-action-entries}
+")
+
+;;; --- copy-g-action-entry ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-g-action-entry 'function)
+ "@version{2013-2-25}
+  @argument[instance]{a @class{g-action-entry} struct}
+  @begin{short}
+    Copy constructor of a @class{g-action-entry} struct.
+  @end{short}")
+
+;;; --- make-g-action-entry ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-g-action-entry 'function)
+ "@version{2013-2-25}
+  @argument[name]{the name of the action}
+  @argument[activate]{the callback to connect to the \"activate\" signal of
+    the action}
+  @argument[parameter-type]{the type of the parameter that must be
+      passed to the activate function for this action, given as a single
+      @symbol{g-variant} type string (or @code{nil} for no parameter)}
+  @argument[state]{the initial state for this action, given in
+      @symbol{g-variant} text format. The state is parsed with no extra type
+      information, so type tags must be added to the string if they are
+      necessary.}
+  @argument[change-state]{the callback to connect to the \"change-state\"
+      signal of the action}
+  @begin{short}
+    Creates a @class{g-action-entry} struct.
+  @end{short}")
+
+;;; --- g-action-entry-name ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-entry-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-action-entry-name 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{name} of the @class{g-action-entry} struct.
+  @end{short}")
+
+;;; --- g-action-entry-activate ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-entry-activate atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-action-entry-activate 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{activate} of the @class{g-action-entry} struct.
+  @end{short}")
+
+;;; --- g-action-entry-parameter-type ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-entry-parameter-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-action-entry-parameter-type 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{parameter-type} of the @class{g-action-entry}
+    struct.
+  @end{short}")
+
+;;; --- g-action-entry-state ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-entry-state atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-action-entry-state 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{state} of the @class{g-action-entry} struct.
+  @end{short}")
+
+;;; --- g-action-entry-change-state --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-entry-change-state atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-action-entry-change-state 'function)
+ "@version{2013-2-25}
+  @begin{short}
+    Accessor of the slot @code{change-state} of the @class{g-action-entry}
+    struct.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_map_add_action_entries ()

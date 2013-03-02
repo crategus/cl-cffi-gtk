@@ -2316,26 +2316,6 @@
 
 (export 'gdk-window-begin-paint-region)
 
-;;; ----------------------------------------------------------------------------
-;;; gdk_window_end_paint ()
-;;;
-;;; void gdk_window_end_paint (GdkWindow *window);
-;;;
-;;; Indicates that the backing store created by the most recent call to
-;;; gdk_window_begin_paint_region() should be copied onscreen and deleted,
-;;; leaving the next-most-recent backing store or no backing store at all as the
-;;; active paint region. See gdk_window_begin_paint_region() for full details.
-;;; It is an error to call this function without a matching
-;;; gdk_window_begin_paint_region() first.
-;;;
-;;; window :
-;;;     a GdkWindow
-;;; ----------------------------------------------------------------------------
-
-(defcfun ("gdk_window_end_paint" gkd-window-end-paint) :void
-  (window (g-object gdk-window)))
-
-(export 'gdk-window-end-paint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_visible_region ()

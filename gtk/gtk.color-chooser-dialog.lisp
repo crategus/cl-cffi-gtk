@@ -2,9 +2,10 @@
 ;;; gtk.color-chooser-dialog.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,52 +34,12 @@
 ;;;     GtkColorChooserDialog
 ;;;
 ;;;     gtk_color_chooser_dialog_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkDialog
-;;;                                        +----GtkColorChooserDialog
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkColorChooserDialog implements AtkImplementorIface, GtkBuildable and
-;;; GtkColorChooser.
-;;;
-;;; Properties
-;;; 
-;;;   "show-editor"              gboolean              : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; The GtkColorChooserDialog widget is a dialog for choosing a color. It
-;;; implements the GtkColorChooser interface.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "show-editor" property
-;;; 
-;;;   "show-editor"              gboolean              : Read / Write
-;;; 
-;;; Show editor.
-;;; 
-;;; Default value: FALSE
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkColorChooserDialog
-;;; 
-;;; struct GtkColorChooserDialog;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkColorChooserDialog" gtk-color-chooser-dialog
@@ -93,28 +54,62 @@
     "show-editor" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-color-chooser-dialog 'type)
+ "@version{2013-2-24}
+  @begin{short}
+    The @sym{gtk-color-chooser-dialog} widget is a dialog for choosing a color.
+    It implements the @class{gtk-color-chooser} interface.
+  @end{short}
+  @see-slot{gtk-color-chooser-dialog-show-editor}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-editor"
+                                               'gtk-color-chooser-dialog) 't)
+ "The @code{\"show-editor\"} property of type @code{gboolean} (Read / Write)@br{}
+  Show editor.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-color-chooser-dialog-show-editor -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-color-chooser-dialog-show-editor atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-color-chooser-dialog-show-editor 'function)
+ "@version{2013-2-24}
+  @begin{short}
+    Accessor of the slot @code{\"show-editor\"} of the
+    @class{gtk-color-chooser-dialog} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_color_chooser_dialog_new ()
-;;; 
-;;; GtkWidget * gtk_color_chooser_dialog_new (const gchar *title,
-;;;                                           GtkWindow *parent);
-;;; 
-;;; Creates a new GtkColorChooserDialog.
-;;; 
-;;; title :
-;;;     Title of the dialog, or NULL.
-;;; 
-;;; parent :
-;;;     Transient parent of the dialog, or NULL.
-;;; 
-;;; Returns :
-;;;     a new GtkColorChooserDialog
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-color-chooser-dialog-new))
 
 (defun gtk-color-chooser-dialog-new (title parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-24}
+  @argument[title]{Title of the dialog, or @code{nil}.}
+  @argument[parent]{Transient parent of the dialog, or @code{nil}.}
+  @return{A new @class{gtk-color-chooser-dialog} widget.}
+  @short{Creates a new @class{gtk-color-chooser-dialog}.}
+
+  Since 3.4"
   (make-instance 'gtk-color-chooser-dialog
                  :title title
                  :parent parent))

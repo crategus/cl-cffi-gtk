@@ -34,8 +34,6 @@
 (load "../gtk/atdoc/src/atdoc-gtk.dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.widget.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.window.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.enumerations.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.container.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.misc.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.grid.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
@@ -62,7 +60,6 @@
 (in-package :gdk)
 
 (load "../gdk/atdoc/src/atdoc-gdk.package.lisp")
-(load "../gdk/atdoc/src/atdoc-gdk.event-structures.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.color.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.rectangle.lisp")

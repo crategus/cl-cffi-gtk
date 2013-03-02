@@ -2364,22 +2364,6 @@
   @return{the parent window of @arg{widget}}
   @short{Gets widget's parent window.}")
 
-;;; --- gtk-widget-set-events --------------------------------------------------
-
-(setf (documentation 'gtk-widget-set-events 'function)
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[events]{event mask}
-  @short{Sets the event mask (see @symbol{gdk-event-mask}) for a @arg{widget}.}
-  The event mask determines which events a @arg{widget} will receive. Keep in
-  mind that different widgets have different default event masks, and by
-  changing the event mask you may disrupt a widget's functionality, so be
-  careful. This function must be called while a widget is unrealized. Consider
-  @fun{gtk-widget-add-events} for widgets that are already realized, or if you
-  want to preserve the existing event mask. This function can't be used with
-  @code{:no-window} widgets; to get events on those widgets, place them inside a
-  @class{gtk-event-box} and receive events on the event box.
-  @see-function{gtk-widget-add-events}")
 
 ;;; --- gtk-widget-get-events --------------------------------------------------
 
@@ -5406,27 +5390,6 @@
 
 ;;; --- gtk-requested-size -----------------------------------------------------
 
-(setf (gethash 'gtk-requested-size atdoc:*class-name-alias*) "CStruct")
-(setf (documentation 'gtk-requested-size 'type)
- "@version{2013-1-6}
-  @begin{short}
-    Represents a request of a screen object in a given orientation.
-  @end{short}
-  These are primarily used in container implementations when allocating a
-  natural size for children calling. See gtk_distribute_natural_allocation().
-  @begin{pre}
-(define-g-boxed-cstruct gtk-requested-size \"GtkRequestedSize\"
-  (data :pointer)
-  (minimum-size :int)
-  (natural-size :int))
-  @end{pre}
-  @begin{table}
-    @entry[gpointer data]{A client pointer}
-    @entry[gint minimum_size]{The minimum size needed for allocation in a given
-      orientation}
-    @entry[gint natural_size]{The natural size for allocation in a given
-      orientation}
-  @end{table}")
 
 ;;; --- gtk-widget-get-preferred-height ----------------------------------------
 

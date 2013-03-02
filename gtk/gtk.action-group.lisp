@@ -1,27 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.action-group.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;; 
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
+;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -423,7 +424,7 @@
   Since 2.4"
   (action-group (g-object gtk-action-group)))
 
-(export 'gtk-action-group-lisp-actions)
+(export 'gtk-action-group-list-actions)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_group_add_action ()
@@ -849,7 +850,7 @@
   @begin{short}
     Sets a function to be used for translating the label and tooltip of
     @class{gtk-action-group-entry}'s added by
-    @fun{gtk-action-group-add-actions}.
+    @code{gtk_action_group_add_actions()}.
   @end{short}
 
   If you're using @code{gettext()}, it is enough to set the translation domain
@@ -878,7 +879,7 @@
   @begin{short}
     Sets the translation domain and uses @code{g_dgettext()} for translating the
     label and tooltip of @code{GtkActionEntrys} added by
-    @fun{gtk-action-group-add-actions}.@break{}
+    @code{gtk_action_group_add_actions()}.@break{}
   @end{short}
   If you're not using @code{gettext()} for localization, see
   @fun{gtk-action-group-set-translate-func}.@break{}
