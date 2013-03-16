@@ -86,7 +86,7 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-accel-flags atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gtk-accel-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-accel-flags atdoc:*external-symbols*)
  "@version{2013-1-13}
   @short{}
@@ -101,24 +101,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkArrowPlacement
-;;;
-;;; typedef enum {
-;;;   GTK_ARROWS_BOTH,
-;;;   GTK_ARROWS_START,
-;;;   GTK_ARROWS_END
-;;; } GtkArrowPlacement;
-;;;
-;;; Used to specify the placement of scroll arrows in scrolling menus.
-;;;
-;;; GTK_ARROWS_BOTH
-;;;     Place one arrow on each end of the menu.
-;;;
-;;; GTK_ARROWS_START
-;;;     Place both arrows at the top of the menu.
-;;;
-;;; GTK_ARROWS_END
-;;;     Place both arrows at the bottom of the menu.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkArrowPlacement" gtk-arrow-placement
+  (:export t
+   :type-initializer "gtk_arrow_placement_get_type")
+  (:both 0)
+  (:start 1)
+  (:end 2))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-arrow-placement atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-arrow-placement atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @begin{short}
+    Used to specify the placement of scroll arrows in scrolling menus.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkArrowPlacement\" gtk-arrow-placement
+  (:export t
+   :type-initializer \"gtk_arrow_placement_get_type\")
+  (:both 0)
+  (:start 1)
+  (:end 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:both]{Place one arrow on each end of the menu.}
+    @entry[:start]{Place both arrows at the top of the menu.}
+    @entry[:end]{Place both arrows at the bottom of the menu.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkArrowType
@@ -178,8 +191,8 @@
       (gethash 'gtk-attach-options atdoc:*external-symbols*)
  "@version{2013-1-18}
   @begin{short}
-    Denotes the expansion properties that a widget will have when it (or its
-    parent) is resized.
+    Denotes the expansion properties that a widget will have when it or its
+    parent is resized.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkAttachOptions\" gtk-attach-options
@@ -190,10 +203,10 @@
   (:fill 4))
   @end{pre}
   @begin[code]{table}
-    @entry[:expand]{the widget should expand to take up any extra space in its
+    @entry[:expand]{The widget should expand to take up any extra space in its
       container that has been allocated.}
-    @entry[:shrink]{the widget should shrink as and when possible.}
-    @entry[:fill]{the widget should fill the space allocated to it.}
+    @entry[:shrink]{The widget should shrink as and when possible.}
+    @entry[:fill]{The widget should fill the space allocated to it.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -212,13 +225,13 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-button-box-style atdoc:*external-symbols*)
  "@version{2013-1-18}
   @begin{short}
     Used to dictate the style that a @class{gtk-button-box} uses to layout the
-    buttons it contains. (See also: @class{gtk-vbutton-box} and
-    @class{gtk-hbutton-box}).
+    buttons it contains.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkButtonBoxStyle\" gtk-button-box-style
@@ -234,10 +247,10 @@
   @begin[code]{table}
     @entry[:spread]{Buttons are evenly spread across the box.}
     @entry[:edge]{Buttons are placed at the edges of the box.}
-    @entry[:start]{Buttons are grouped towards the start of the box, (on the
-      left for a HBox, or the top for a VBox).}
-    @entry[:end]{Buttons are grouped towards the end of the box, (on the right
-      for a HBox, or the bottom for a VBox).}
+    @entry[:start]{Buttons are grouped towards the start of the box, on the
+      left for a horizontal box, or the top for a vertical box.}
+    @entry[:end]{Buttons are grouped towards the end of the box, on the right
+      for a horizontal box, or the bottom for a vertical box.}
     @entry[:center]{Buttons are centered in the box. Since 2.12.}
   @end{table}")
 
@@ -337,6 +350,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-direction-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-direction-type atdoc:*external-symbols*)
  "@version{2013-1-18}
@@ -367,6 +381,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-expander-style atdoc:*external-symbols*)
  "@version{2013-1-18}
@@ -402,6 +417,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-preedit-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-im-preedit-style atdoc:*external-symbols*)
  "@version{2013-1-18}
@@ -428,6 +444,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-status-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-im-status-style atdoc:*external-symbols*)
  "@version{2013-1-18}
@@ -455,12 +472,13 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-justification atdoc:*external-symbols*)
  "@version{2013-1-18}
   @begin{short}
-    Used for justifying the text inside a GtkLabel widget. (See also
-    @class{gtk-alignment}).
+    Used for justifying the text inside a @class{gtk-label} widget. See also
+    @class{gtk-alignment}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkJustification\" gtk-justification
@@ -480,49 +498,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkMovementStep
-;;;
-;;; typedef enum {
-;;;   GTK_MOVEMENT_LOGICAL_POSITIONS,
-;;;   GTK_MOVEMENT_VISUAL_POSITIONS,
-;;;   GTK_MOVEMENT_WORDS,
-;;;   GTK_MOVEMENT_DISPLAY_LINES,
-;;;   GTK_MOVEMENT_DISPLAY_LINE_ENDS,
-;;;   GTK_MOVEMENT_PARAGRAPHS,
-;;;   GTK_MOVEMENT_PARAGRAPH_ENDS,
-;;;   GTK_MOVEMENT_PAGES,
-;;;   GTK_MOVEMENT_BUFFER_ENDS,
-;;;   GTK_MOVEMENT_HORIZONTAL_PAGES
-;;; } GtkMovementStep;
-;;;
-;;; GTK_MOVEMENT_LOGICAL_POSITIONS
-;;;     Move forward or back by graphemes
-;;;
-;;; GTK_MOVEMENT_VISUAL_POSITIONS
-;;;     Move left or right by graphemes
-;;;
-;;; GTK_MOVEMENT_WORDS
-;;;     Move forward or back by words
-;;;
-;;; GTK_MOVEMENT_DISPLAY_LINES
-;;;     Move up or down lines (wrapped lines)
-;;;
-;;; GTK_MOVEMENT_DISPLAY_LINE_ENDS
-;;;     Move to either end of a line
-;;;
-;;; GTK_MOVEMENT_PARAGRAPHS
-;;;     Move up or down paragraphs (newline-ended lines)
-;;;
-;;; GTK_MOVEMENT_PARAGRAPH_ENDS
-;;;     Move to either end of a paragraph
-;;;
-;;; GTK_MOVEMENT_PAGES
-;;;     Move by pages
-;;;
-;;; GTK_MOVEMENT_BUFFER_ENDS
-;;;     Move to ends of the buffer
-;;;
-;;; GTK_MOVEMENT_HORIZONTAL_PAGES
-;;;     Move horizontally by pages
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkMovementStep" gtk-movement-step
@@ -540,6 +515,26 @@
   (:horizontal-pages 9))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-movement-step atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-movement-step atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{}
+  @begin[code]{table}
+    @entry[:logical-positions]{Move forward or back by graphemes.}
+    @entry[:visual-positions}{Move left or right by graphemes.}
+    @entry[:words]{Move forward or back by words.}
+    @entry[:display-lines]{Move up or down lines (wrapped lines).}
+    @entry[:display-line-ends]{Move to either end of a line.}
+    @entry[:paragraphs]{Move up or down paragraphs (newline-ended lines).}
+    @entry[:paragraph-ends]{Move to either end of a paragraph.}
+    @entry[:pages]{Move by pages.}
+    @entry[:buffer-ends]{Move to ends of the buffer.}
+    @entry[:horizontal-pages]{Move horizontally by pages.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkOrientation
 ;;; ----------------------------------------------------------------------------
 
@@ -551,6 +546,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientation atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-orientation atdoc:*external-symbols*)
  "@version{2013-1-18}
@@ -582,13 +578,14 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pack-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-pack-type atdoc:*external-symbols*)
  "@version{2013-1-20}
   @begin{short}
     Represents the packing location of a @class{gtk-box} children.
   @end{short}
-  See also @class{gtk-vbox}, @class{gtk-hbox}, and @class{gtk-button-box}.
+  See also @class{gtk-button-box}.
   @begin{pre}
 (define-g-enum \"GtkPackType\" gtk-pack-type
   (:export t
@@ -601,21 +598,10 @@
     @entry[:end]{The child is packed into the end of the box.}
   @end{table}
   @see-class{gtk-box}
-  @see-class{gtk-hbox}
-  @see-class{gtk-vbox}
   @see-class{gtk-button-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPathPriorityType
-;;;
-;;; typedef enum {
-;;;   GTK_PATH_PRIO_LOWEST      = 0,
-;;;   GTK_PATH_PRIO_GTK        = 4,
-;;;   GTK_PATH_PRIO_APPLICATION = 8,
-;;;   GTK_PATH_PRIO_THEME       = 10,
-;;;   GTK_PATH_PRIO_RC          = 12,
-;;;   GTK_PATH_PRIO_HIGHEST     = 15
-;;; } GtkPathPriorityType;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkPathPriorityType" gtk-path-priority-type
@@ -627,6 +613,25 @@
   (:theme 10)
   (:rc 12)
   (:highest 15))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-path-priority-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-path-priority-type atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkPathPriorityType\" gtk-path-priority-type
+  (:export t
+   :type-initializer \"gtk_path_priority_type_get_type\")
+  (:lowest 0)
+  (:gtk 4)
+  (:application 8)
+  (:theme 10)
+  (:rc 12)
+  (:highest 15))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPathType
@@ -646,25 +651,23 @@
   (:class 2))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-path-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-path-type atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkPathType\" gtk-path-type
+  (:export t
+   :type-initializer \"gtk_path_type_get_type\")
+  (:widget 0)
+  (:widget-class 1)
+  (:class 2))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkPolicyType
-;;;
-;;; typedef enum {
-;;;   GTK_POLICY_ALWAYS,
-;;;   GTK_POLICY_AUTOMATIC,
-;;;   GTK_POLICY_NEVER
-;;; } GtkPolicyType;
-;;;
-;;; Determines when a scroll bar will be visible.
-;;;
-;;; GTK_POLICY_ALWAYS
-;;;     The scrollbar is always visible.
-;;;
-;;; GTK_POLICY_AUTOMATIC
-;;;     The scrollbar will appear and disappear as necessary. For example, when
-;;;     all of a GtkCList can not be seen.
-;;;
-;;; GTK_POLICY_NEVER
-;;;     The scrollbar will never appear.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkPolicyType" gtk-policy-type
@@ -673,6 +676,28 @@
   (:always 0)
   (:automatic 1)
   (:never 2))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-policy-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-policy-type atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{Determines when a scroll bar will be visible.}
+  @begin{pre}
+(define-g-enum \"GtkPolicyType\" gtk-policy-type
+  (:export t
+   :type-initializer \"gtk_policy_type_get_type\")
+  (:always 0)
+  (:automatic 1)
+  (:never 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:always]{The scrollbar is always visible.}
+    @entry[:automatic]{The scrollbar will appear and disappear as necessary.
+      For example, when all of a @code{GtkCList} can not be seen.}
+    @entry[:never]{The scrollbar will never appear.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPositionType
@@ -688,6 +713,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-position-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-position-type atdoc:*external-symbols*)
  "@version{2013-1-9}
@@ -725,10 +751,11 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-relief-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-relief-style atdoc:*external-symbols*)
  "@version{2013-1-9}
-  @short{Indicated the relief to be drawn around a GtkButton.}
+  @short{Indicated the relief to be drawn around a @class{gtk-button}.}
   @begin{pre}
 (define-g-enum \"GtkReliefStyle\" gtk-relief-style
   (:export t
@@ -739,8 +766,8 @@
   @end{pre}
   @begin[code]{table}
     @entry[:normal]{Draw a normal relief.}
-    @entry[:half]{A half relief.}
-    @entry[:none]{No relief.}
+    @entry[:half]{Draw a half relief.}
+    @entry[:none]{Draw no relief.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -756,6 +783,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-resize-mode atdoc:*external-symbols*)
  "@version{2013-1-20}
@@ -769,22 +797,13 @@
   (:immediate 2))
   @end{pre}
   @begin[code]{table}
-    @entry[:parent]{Pass resize request to the parent}
-    @entry[:queue]{Queue resizes on this widget}
+    @entry[:parent]{Pass resize request to the parent.}
+    @entry[:queue]{Queue resizes on this widget.}
     @entry[:immediate]{Resize immediately. Deprecated.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkScrollStep
-;;;
-;;; typedef enum {
-;;;   GTK_SCROLL_STEPS,
-;;;   GTK_SCROLL_PAGES,
-;;;   GTK_SCROLL_ENDS,
-;;;   GTK_SCROLL_HORIZONTAL_STEPS,
-;;;   GTK_SCROLL_HORIZONTAL_PAGES,
-;;;   GTK_SCROLL_HORIZONTAL_ENDS
-;;; } GtkScrollStep;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkScrollStep" gtk-scroll-step
@@ -798,26 +817,26 @@
   (:horizontal-ends 5))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scroll-step atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-scroll-step atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkScrollStep\" gtk-scroll-step
+  (:export t
+   :type-initializer \"gtk_scroll_step_get_type\")
+  (:steps 0)
+  (:pages 1)
+  (:ends 2)
+  (:horizontal-steps 3)
+  (:horizontal-pages 4)
+  (:horizontal-ends 5))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkScrollType
-;;;
-;;; typedef enum {
-;;;   GTK_SCROLL_NONE,
-;;;   GTK_SCROLL_JUMP,
-;;;   GTK_SCROLL_STEP_BACKWARD,
-;;;   GTK_SCROLL_STEP_FORWARD,
-;;;   GTK_SCROLL_PAGE_BACKWARD,
-;;;   GTK_SCROLL_PAGE_FORWARD,
-;;;   GTK_SCROLL_STEP_UP,
-;;;   GTK_SCROLL_STEP_DOWN,
-;;;   GTK_SCROLL_PAGE_UP,
-;;;   GTK_SCROLL_PAGE_DOWN,
-;;;   GTK_SCROLL_STEP_LEFT,
-;;;   GTK_SCROLL_STEP_RIGHT,
-;;;   GTK_SCROLL_PAGE_LEFT,
-;;;   GTK_SCROLL_PAGE_RIGHT,
-;;;   GTK_SCROLL_START,
-;;;   GTK_SCROLL_END
-;;; } GtkScrollType;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkScrollType" gtk-scroll-type
@@ -841,35 +860,36 @@
   (:end 15))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scroll-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-scroll-type atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkScrollType\" gtk-scroll-type
+  (:export t
+   :type-initializer \"gtk_scroll_type_get_type\")
+  (:none 0)
+  (:jump 1)
+  (:step-backward 2)
+  (:step-forward 3)
+  (:page-backward 4)
+  (:page-forward 5)
+  (:step-up 6)
+  (:step-down 7)
+  (:page-up 8)
+  (:page-down 9)
+  (:step-left 10)
+  (:step-right 11)
+  (:page-left 12)
+  (:page-right 13)
+  (:start 14)
+  (:end 15))
+  @end{pre}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkSelectionMode
-;;;
-;;; typedef enum {
-;;;   GTK_SELECTION_NONE,
-;;;   GTK_SELECTION_SINGLE,
-;;;   GTK_SELECTION_BROWSE,
-;;;   GTK_SELECTION_MULTIPLE
-;;; } GtkSelectionMode;
-;;;
-;;; Used to control what selections users are allowed to make.
-;;;
-;;; GTK_SELECTION_NONE
-;;;     No selection is possible.
-;;;
-;;; GTK_SELECTION_SINGLE
-;;;     Zero or one element may be selected.
-;;;
-;;; GTK_SELECTION_BROWSE
-;;;     Exactly one element is selected. In some circumstances, such as
-;;;     initially or during a search operation, it's possible for no element to
-;;;     be selected with GTK_SELECTION_BROWSE. What is really enforced is that
-;;;     the user can't deselect a currently selected element except by selecting
-;;;     another element.
-;;;
-;;; GTK_SELECTION_MULTIPLE
-;;;     Any number of elements may be selected. The Ctrl key may be used to
-;;;     enlarge the selection, and Shift key to select between the focus and the
-;;;     child pointed to. Some widgets may also allow Click-drag to select a
-;;;     range of elements.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkSelectionMode" gtk-selection-mode
@@ -878,8 +898,37 @@
   (:none 0)
   (:single 1)
   (:browse 2)
-  (:multiple 3)
-  (:extended 3))
+  (:multiple 3))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-selection-mode atdoc:*external-symbols*)
+ "@version{2013-3-9}
+  @short{Used to control what selections users are allowed to make.}
+  @begin{pre}
+(define-g-enum \"GtkSelectionMode\" gtk-selection-mode
+  (:export t
+   :type-initializer \"gtk_selection_mode_get_type\")
+  (:none 0)
+  (:single 1)
+  (:browse 2)
+  (:multiple 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No selection is possible.}
+    @entry[:single]{Zero or one element may be selected.}
+    @entry[:browse]{Exactly one element is selected. In some circumstances, such
+      as initially or during a search operation, it's possible for no element to
+      be selected with @code{:browse}. What is really enforced is that the user
+      can't deselect a currently selected element except by selecting another
+      element.}
+    @entry[:multiple]{Any number of elements may be selected. The Ctrl key may
+      be used to enlarge the selection, and Shift key to select between the
+      focus and the child pointed to. Some widgets may also allow Click-drag to
+      select a range of elements.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkShadowType
@@ -896,6 +945,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
  "@version{2013-2-3}
@@ -923,45 +973,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkStateType
-;;;
-;;; typedef enum {
-;;;   GTK_STATE_NORMAL,
-;;;   GTK_STATE_ACTIVE,
-;;;   GTK_STATE_PRELIGHT,
-;;;   GTK_STATE_SELECTED,
-;;;   GTK_STATE_INSENSITIVE,
-;;;   GTK_STATE_INCONSISTENT,
-;;;   GTK_STATE_FOCUSED
-;;; } GtkStateType;
-;;;
-;;; This type indicates the current state of a widget; the state determines how
-;;; the widget is drawn. The GtkStateType enumeration is also used to identify
-;;; different colors in a GtkStyle for drawing, so states can be used for
-;;; subparts of a widget as well as entire widgets.
-;;;
-;;; GTK_STATE_NORMAL
-;;;     State during normal operation.
-;;;
-;;; GTK_STATE_ACTIVE
-;;;     State of a currently active widget, such as a depressed button.
-;;;
-;;; GTK_STATE_PRELIGHT
-;;;     State indicating that the mouse pointer is over the widget and the
-;;;     widget will respond to mouse clicks.
-;;;
-;;; GTK_STATE_SELECTED
-;;;     State of a selected item, such the selected row in a list.
-;;;
-;;; GTK_STATE_INSENSITIVE
-;;;     State indicating that the widget is unresponsive to user actions.
-;;;
-;;; GTK_STATE_INCONSISTENT
-;;;     The widget is inconsistent, such as checkbuttons or radiobuttons that
-;;;     aren't either set to TRUE nor FALSE, or buttons requiring the user
-;;;     attention.
-;;;
-;;; GTK_STATE_FOCUSED
-;;;     The widget has the keyboard focus.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkStateType" gtk-state-type
@@ -976,49 +987,21 @@
   (:focused 6))
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkStateFlags
-;;;
-;;; typedef enum {
-;;;   GTK_STATE_FLAG_NORMAL       = 0,
-;;;   GTK_STATE_FLAG_ACTIVE       = 1 << 0,
-;;;   GTK_STATE_FLAG_PRELIGHT     = 1 << 1,
-;;;   GTK_STATE_FLAG_SELECTED     = 1 << 2,
-;;;   GTK_STATE_FLAG_INSENSITIVE  = 1 << 3,
-;;;   GTK_STATE_FLAG_INCONSISTENT = 1 << 4,
-;;;   GTK_STATE_FLAG_FOCUSED      = 1 << 5,
-;;;   GTK_STATE_FLAG_BACKDROP     = 1 << 6
-;;; } GtkStateFlags;
-;;;
-;;; Describes a widget state.
-;;;
-;;; GTK_STATE_FLAG_NORMAL
-;;;     State during normal operation.
-;;;
-;;; GTK_STATE_FLAG_ACTIVE
-;;;     Widget is active.
-;;;
-;;; GTK_STATE_FLAG_PRELIGHT
-;;;     Widget has a mouse pointer over it.
-;;;
-;;; GTK_STATE_FLAG_SELECTED
-;;;     Widget is selected.
-;;;
-;;; GTK_STATE_FLAG_INSENSITIVE
-;;;     Widget is insensitive.
-;;;
-;;; GTK_STATE_FLAG_INCONSISTENT
-;;;     Widget is inconsistent.
-;;;
-;;; GTK_STATE_FLAG_FOCUSED
-;;;     Widget has the keyboard focus.
-;;;
-;;; GTK_STATE_FLAG_BACKDROP
-;;;     Widget is in a background toplevel window.
-;;; ----------------------------------------------------------------------------
 
-(define-g-enum "GtkStateFlags" gtk-state-flags
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-state-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-state-type atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @begin{short}
+    This type indicates the current state of a widget; the state determines how
+    the widget is drawn. The @sym{gtk-state-type} enumeration is also used to
+    identify different colors in a @class{gtk-style} for drawing, so states can
+    be used for subparts of a widget as well as entire widgets.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkStateType\" gtk-state-type
   (:export t
-   :type-initializer "gtk_state_flags_get_type")
+   :type-initializer \"gtk_state_type_get_type\")
   (:normal 0)
   (:active 1)
   (:prelight 2)
@@ -1026,34 +1009,72 @@
   (:insensitive 4)
   (:inconsistent 5)
   (:focused 6))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:normal]{State during normal operation.}
+    @entry[:active]{State of a currently active widget, such as a depressed
+      button.}
+    @entry[:prelight]{State indicating that the mouse pointer is over the widget
+      and the widget will respond to mouse clicks.}
+    @entry[:selected]{State of a selected item, such the selected row in a
+      list.}
+    @entry[:insensitive]{State indicating that the widget is unresponsive to
+      user actions.}
+    @entry[:inconsistent]{The widget is inconsistent, such as checkbuttons or
+      radiobuttons that aren't either set to @em{true} nor @code{nil}, or
+      buttons requiring the user attention.}
+    @entry[:focused]{The widget has the keyboard focus.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkStateFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkStateFlags" gtk-state-flags
+  (:export t
+   :type-initializer "gtk_state_flags_get_type")
+  (:normal 0)
+  (:active #.(ash 1 0))
+  (:prelight #.(ash 1 1))
+  (:selected #.(ash 1 2))
+  (:insensitive #.(ash 1 3))
+  (:inconsistent #.(ash 1 4))
+  (:focused #.(ash 1 5))
+  (:backdrop #.(ash 1 6)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-state-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-state-flags atdoc:*external-symbols*)
+ "@version{2013-3-10}
+  @short{Describes a widget state.}
+  @begin{pre}
+(define-g-flags \"GtkStateFlags\" gtk-state-flags
+  (:export t
+   :type-initializer \"gtk_state_flags_get_type\")
+  (:normal 0)
+  (:active       #.(ash 1 0))
+  (:prelight     #.(ash 1 1))
+  (:selected     #.(ash 1 2))
+  (:insensitive  #.(ash 1 3))
+  (:inconsistent #.(ash 1 4))
+  (:focused      #.(ash 1 5))
+  (:backdrop     #.(ash 1 6)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:normal]{State during normal operation.}
+    @entry[:active]{Widget is active.}
+    @entry[:prelight]{Widget has a mouse pointer over it.}
+    @entry[:selected]{Widget is selected.}
+    @entry[:insensitive]{Widget is insensitive.}
+    @entry[:inconsistent]{Widget is inconsistent.}
+    @entry[:focused]{Widget has the keyboard focus.}
+    @entry[:backdrop]{Widget is in a background toplevel window.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkToolbarStyle
-;;;
-;;; typedef enum {
-;;;   GTK_TOOLBAR_ICONS,
-;;;   GTK_TOOLBAR_TEXT,
-;;;   GTK_TOOLBAR_BOTH,
-;;;   GTK_TOOLBAR_BOTH_HORIZ
-;;; } GtkToolbarStyle;
-;;;
-;;; Used to customize the appearance of a GtkToolbar. Note that setting the
-;;; toolbar style overrides the user's preferences for the default toolbar
-;;; style. Note that if the button has only a label set and GTK_TOOLBAR_ICONS is
-;;; used, the label will be visible, and vice versa.
-;;;
-;;; GTK_TOOLBAR_ICONS
-;;;     Buttons display only icons in the toolbar.
-;;;
-;;; GTK_TOOLBAR_TEXT
-;;;     Buttons display only text labels in the toolbar.
-;;;
-;;; GTK_TOOLBAR_BOTH
-;;;     Buttons display text and icons in the toolbar.
-;;;
-;;; GTK_TOOLBAR_BOTH_HORIZ
-;;;     Buttons display icons and text alongside each other, rather than
-;;;     vertically stacked
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkToolbarStyle" gtk-toolbar-style
@@ -1065,35 +1086,36 @@
   (:both-horiz 3))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-toolbar-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-toolbar-style atdoc:*external-symbols*)
+ "@version{2013-3-10}
+  @begin{short}
+    Used to customize the appearance of a @class{gtk-toolbar}. Note that setting
+    the toolbar style overrides the user's preferences for the default toolbar
+    style. Note that if the button has only a label set and @code{:icons} is
+    used, the label will be visible, and vice versa.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkToolbarStyle\" gtk-toolbar-style
+  (:export t
+   :type-initializer \"gtk_toolbar_style_get_type\")
+  (:icons 0)
+  (:text 1)
+  (:both 2)
+  (:both-horiz 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:icons]{Buttons display only icons in the toolbar.}
+    @entry[:text]{Buttons display only text labels in the toolbar.}
+    @entry[:both]{Buttons display text and icons in the toolbar.}
+    @entry[:both-horiz]{Buttons display icons and text alongside each other,
+      rather than vertically stacked}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkWindowPosition
-;;;
-;;; typedef enum {
-;;;   GTK_WIN_POS_NONE,
-;;;   GTK_WIN_POS_CENTER,
-;;;   GTK_WIN_POS_MOUSE,
-;;;   GTK_WIN_POS_CENTER_ALWAYS,
-;;;   GTK_WIN_POS_CENTER_ON_PARENT
-;;; } GtkWindowPosition;
-;;;
-;;; Window placement can be influenced using this enumeration. Note that using
-;;; GTK_WIN_POS_CENTER_ALWAYS is almost always a bad idea. It won't necessarily
-;;; work well with all window managers or on all windowing systems.
-;;;
-;;; GTK_WIN_POS_NONE
-;;;     No influence is made on placement.
-;;;
-;;; GTK_WIN_POS_CENTER
-;;;     Windows should be placed in the center of the screen.
-;;;
-;;; GTK_WIN_POS_MOUSE
-;;;     Windows should be placed at the current mouse position.
-;;;
-;;; GTK_WIN_POS_CENTER_ALWAYS
-;;;     Keep window centered as it changes size, etc.
-;;;
-;;; GTK_WIN_POS_CENTER_ON_PARENT
-;;;     Center the window on its transient parent (see
-;;;     gtk_window_set_transient_for()).
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkWindowPosition" gtk-window-position
@@ -1104,6 +1126,36 @@
   (:mouse 2)
   (:center-always 3)
   (:center-on-parent 4))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-window-position atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-window-position atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @begin{short}
+    Window placement can be influenced using this enumeration. Note that using
+    @code{:center-always} is almost always a bad idea. It won't necessarily work
+    well with all window managers or on all windowing systems.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkWindowPosition\" gtk-window-position
+  (:export t
+   :type-initializer \"gtk_window_position_get_type\")
+  (:none 0)
+  (:center 1)
+  (:mouse 2)
+  (:center-always 3)
+  (:center-on-parent 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No influence is made on placement.}
+    @entry[:center]{Windows should be placed in the center of the screen.}
+    @entry[:mouse]{Windows should be placed at the current mouse position.}
+    @entry[:center-always]{Keep window centered as it changes size, etc.}
+    @entry[:center-on-parent]{Center the window on its transient parent
+      (see @fun{gtk-window-set-transient-for}).}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWindowType
@@ -1117,54 +1169,41 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-window-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-window-type atdoc:*external-symbols*)
  "@version{2012-12-30}
   @begin{short}
-    An enumeration for the possible types of a @code{GtkWindow}.
+    An enumeration for the possible types of a @class{gtk-window}.
   @end{short}
-  A GtkWindow can be one of the types @code{:toplevel} or @code{:popup}. Most
-  things you'd consider a \"window\" should have type @code{:toplevel}; windows
-  with this type are managed by the window manager and have a frame by default
-  (call @fun{gtk-window-set-decorated} to toggle the frame). Windows with type
-  @code{:popup} are ignored by the window manager; window manager keybindings
-  won't work on them, the window manager won't decorate the window with a frame,
-  many GTK+ features that rely on the window manager will not work (e. g. resize
-  grips and maximization/minimization). @code{:popup} is used to implement
-  widgets such as @code{GtkMenu} or tooltips that you normally don't think of as
-  windows per se. Nearly all windows should be @code{:toplevel}. In particular,
-  do not use @code{:popup} just to turn off the window borders; use
-  @fun{gtk-window-set-decorated} for that.
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  A @class{gtk-window} can be one of the types @code{:toplevel} or
+  @code{:popup}. Most things you'd consider a \"window\" should have type
+  @code{:toplevel}; windows with this type are managed by the window manager and
+  have a frame by default (call @fun{gtk-window-set-decorated} to toggle the
+  frame). Windows with type @code{:popup} are ignored by the window manager;
+  window manager keybindings won't work on them, the window manager won't
+  decorate the window with a frame, many GTK+ features that rely on the window
+  manager will not work (e. g. resize grips and maximization/minimization).
+  @code{:popup} is used to implement widgets such as @class{gtk-menu} or
+  tooltips that you normally don't think of as windows per se. Nearly all
+  windows should be @code{:toplevel}. In particular, do not use @code{:popup}
+  just to turn off the window borders; use @fun{gtk-window-set-decorated} for
+  that.
+  @begin{pre}
 (define-g-enum \"GtkWindowType\" gtk-window-type
   (:export t
    :type-initializer \"gtk_window_type_get_type\")
   (:toplevel 0)
   (:popup 1))
-    @end{pre}
-    @begin{table}
-      @entry[:toplevel]{A regular window, such as a dialog.}
-      @entry[:popup]{A special window such as a tooltip.}
-    @end{table}
-  @end{dictionary}
+  @end{pre}
+  @begin[code]{table}
+    @entry[:toplevel]{A regular window, such as a dialog.}
+    @entry[:popup]{A special window such as a tooltip.}
+  @end{table}
   @see-function{gtk-window-set-decorated}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkSortType
-;;;
-;;; typedef enum {
-;;;   GTK_SORT_ASCENDING,
-;;;   GTK_SORT_DESCENDING
-;;; } GtkSortType;
-;;;
-;;; Determines the direction of a sort.
-;;;
-;;; GTK_SORT_ASCENDING
-;;;     Sorting is in ascending order.
-;;;
-;;; GTK_SORT_DESCENDING
-;;;     Sorting is in descending order.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkSortType" gtk-sort-type
@@ -1172,6 +1211,25 @@
    :type-initializer "gtk_sort_type_get_type")
   (:ascending 0)
   (:descending 1))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-sort-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-sort-type atdoc:*external-symbols*)
+ "@version{2013-3-14}
+  @short{Determines the direction of a sort.}
+  @begin{pre}
+(define-g-enum \"GtkSortType\" gtk-sort-type
+  (:export t
+   :type-initializer \"gtk_sort_type_get_type\")
+  (:ascending 0)
+  (:descending 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:ascending]{Sorting is in ascending order.}
+    @entry[:descending]{Sorting is in descending order.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkDragResult

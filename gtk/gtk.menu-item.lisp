@@ -2,13 +2,14 @@
 ;;; gtk.menu-item.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -56,269 +57,12 @@
 ;;;     gtk_menu_item_toggle_size_allocate
 ;;;     gtk_menu_item_get_reserve_indicator
 ;;;     gtk_menu_item_set_reserve_indicator
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkMenuItem
-;;;                                  +----GtkCheckMenuItem
-;;;                                  +----GtkImageMenuItem
-;;;                                  +----GtkSeparatorMenuItem
-;;;                                  +----GtkTearoffMenuItem
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkMenuItem implements AtkImplementorIface, GtkBuildable and GtkActivatable.
-;;;
-;;; Properties
-;;;
-;;;   "accel-path"               gchar*                : Read / Write
-;;;   "label"                    gchar*                : Read / Write
-;;;   "right-justified"          gboolean              : Read / Write
-;;;   "submenu"                  GtkMenu*              : Read / Write
-;;;   "use-underline"            gboolean              : Read / Write
-;;;
-;;; Style Properties
-;;;
-;;;   "arrow-scaling"            gfloat                : Read
-;;;   "arrow-spacing"            gint                  : Read
-;;;   "horizontal-padding"       gint                  : Read
-;;;   "selected-shadow-type"     GtkShadowType         : Read
-;;;   "toggle-spacing"           gint                  : Read
-;;;   "width-chars"              gint                  : Read
-;;;
-;;; Signals
-;;;
-;;;   "activate"                                       : Action
-;;;   "activate-item"                                  : Run First
-;;;   "deselect"                                       : Run First
-;;;   "select"                                         : Run First
-;;;   "toggle-size-allocate"                           : Run First
-;;;   "toggle-size-request"                            : Run First
-;;;
-;;; Description
-;;;
-;;; The GtkMenuItem widget and the derived widgets are the only valid childs for
-;;; menus. Their function is to correctly handle highlighting, alignment, events
-;;; and submenus.
-;;;
-;;; As it derives from GtkBin it can hold any valid child widget, altough only a
-;;; few are really useful.
-;;;
-;;; GtkMenuItem as GtkBuildable
-;;;
-;;; The GtkMenuItem implementation of the GtkBuildable interface supports adding
-;;; a submenu by specifying "submenu" as the "type" attribute of a <child>
-;;; element.
-;;;
-;;; Example 77. A UI definition fragment with submenus
-;;;
-;;; <object class="GtkMenuItem">
-;;;   <child type="submenu">
-;;;     <object class="GtkMenu"/>
-;;;   </child>
-;;; </object>
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "accel-path" property
-;;;
-;;;   "accel-path"               gchar*                : Read / Write
-;;;
-;;; Sets the accelerator path of the menu item, through which runtime changes of
-;;; the menu item's accelerator caused by the user can be identified and saved
-;;; to persistant storage.
-;;;
-;;; Default value: NULL
-;;;
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "label" property
-;;;
-;;;   "label"                    gchar*                : Read / Write
-;;;
-;;; The text for the child label.
-;;;
-;;; Default value: ""
-;;;
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "right-justified" property
-;;;
-;;;   "right-justified"          gboolean              : Read / Write
-;;;
-;;; Sets whether the menu item appears justified at the right side of a menu
-;;; bar.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "submenu" property
-;;;
-;;;   "submenu"                  GtkMenu*              : Read / Write
-;;;
-;;; The submenu attached to the menu item, or NULL if it has none.
-;;;
-;;; Since 2.12
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "use-underline" property
-;;;
-;;;   "use-underline"            gboolean              : Read / Write
-;;;
-;;; TRUE if underlines in the text indicate mnemonics.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-scaling" style property
-;;;
-;;;   "arrow-scaling"            gfloat                : Read
-;;;
-;;; Amount of space used up by arrow, relative to the menu item's font size.
-;;;
-;;; Allowed values: [0,2]
-;;;
-;;; Default value: 0.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-spacing" style property
-;;;
-;;;   "arrow-spacing"            gint                  : Read
-;;;
-;;; Space between label and arrow.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "horizontal-padding" style property
-;;;
-;;;   "horizontal-padding"       gint                  : Read
-;;;
-;;; Padding to left and right of the menu item.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 3
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "selected-shadow-type" style property
-;;;
-;;;   "selected-shadow-type"     GtkShadowType         : Read
-;;;
-;;; Shadow type when item is selected.
-;;;
-;;; Default value: GTK_SHADOW_NONE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "toggle-spacing" style property
-;;;
-;;;   "toggle-spacing"           gint                  : Read
-;;;
-;;; Space between icon and label.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 5
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "width-chars" style property
-;;;
-;;;   "width-chars"              gint                  : Read
-;;;
-;;; The minimum desired width of the menu item in characters.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 12
-;;;
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "activate" signal
-;;;
-;;; void user_function (GtkMenuItem *menuitem,
-;;;                     gpointer     user_data)      : Action
-;;;
-;;; Emitted when the item is activated.
-;;;
-;;; menuitem :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "activate-item" signal
-;;;
-;;; void user_function (GtkMenuItem *menuitem,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when the item is activated, but also if the menu item has a submenu.
-;;; For normal applications, the relevant signal is "activate".
-;;;
-;;; menuitem :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "deselect" signal
-;;;
-;;; void user_function (GtkMenuItem *menuitem,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "select" signal
-;;;
-;;; void user_function (GtkMenuItem *menuitem,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "toggle-size-allocate" signal
-;;;
-;;; void user_function (GtkMenuItem *menuitem,
-;;;                     gint         arg1,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "toggle-size-request" signal
-;;;
-;;; void user_function (GtkMenuItem *menuitem,
-;;;                     gpointer     arg1,
-;;;                     gpointer     user_data)      : Run First
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkMenuItem
-;;;
-;;; struct GtkMenuItem;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkMenuItem" gtk-menu-item
@@ -344,40 +88,251 @@
     "use-underline" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-menu-item 'type)
+ "@version{2013-3-16}
+  @begin{short}
+    The GtkMenuItem widget and the derived widgets are the only valid childs for
+    menus. Their function is to correctly handle highlighting, alignment, events
+    and submenus.
+  @end{short}
+
+  As it derives from GtkBin it can hold any valid child widget, altough only a
+  few are really useful.
+
+  @subheading{GtkMenuItem as GtkBuildable}
+  The GtkMenuItem implementation of the GtkBuildable interface supports adding
+  a submenu by specifying \"submenu\" as the \"type\" attribute of a <child>
+  element.
+
+  @b{Example.} A UI definition fragment with submenus
+  @begin{pre}
+ <object class=\"GtkMenuItem\">
+   <child type=\"submenu\">
+     <object class=\"GtkMenu\"/>
+   </child>
+ </object>
+  @end{pre}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"arrow-scaling\" style property}
+      @code{\"arrow-scaling\"} of type @code{gfloat} (Read)@br{}
+      Amount of space used up by arrow, relative to the menu item's font
+      size. @br{}
+      Allowed values: @code{[0,2]}@br{}
+      Default value: @code{0.8}
+
+    @subheading{The \"arrow-spacing\" style property}
+      @code{\"arrow-spacing\"} of type @code{:int} (Read)@br{}
+      Space between label and arrow. @br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{10}
+
+    @subheading{The \"horizontal-padding\" style property}
+      @code{\"horizontal-padding\"} of type @code{:int} (Read)@br{}
+      Padding to left and right of the menu item. @br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{3}
+
+    @subheading{The \"selected-shadow-type\" style property}
+      @code{\"selected-shadow-type\"} of type @symbol{gtk-shadow-type}
+      (Read)@br{}
+      Shadow type when item is selected. @br{}
+      Default value: @code{:none}
+
+    @subheading{The \"toggle-spacing\" style property}
+      @code{\"toggle-spacing\"} of type @code{:int} (Read)@br{}
+      Space between icon and label. @br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{5}
+
+    @subheading{The \"width-chars\" style property}
+      @code{\"width-chars\"} of type @code{:int} (Read)@br{}
+      The minimum desired width of the menu item in characters. @br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{12}@br{}
+      Since 2.14
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"activate\" signal}
+      Emitted when the item is activated.
+      @begin{pre}
+ lambda (menuitem)   : Action
+      @end{pre}
+      @begin[code]{table}
+        @entry[menuitem]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"activate-item\" signal}
+      Emitted when the item is activated, but also if the menu item has a
+      submenu. For normal applications, the relevant signal is \"activate\".
+      @begin{pre}
+ lambda (menuitem)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[menuitem]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"deselect\" signal}
+      @begin{pre}
+ lambda (menuitem)   : Run First
+      @end{pre}
+    @subheading{The \"select\" signal}
+      @begin{pre}
+ lambda (menuitem)   : Run First
+      @end{pre}
+    @subheading{The \"toggle-size-allocate\" signal}
+      @begin{pre}
+ lambda (menuitem arg1)   : Run First
+      @end{pre}
+    @subheading{The \"toggle-size-request\" signal}
+      @begin{pre}
+ lambda (menuitem arg1)   : Run First
+      @end{pre}
+  @end{dictionary}
+  @see-slot{gtk-menu-item-accel-path}
+  @see-slot{gtk-menu-item-label}
+  @see-slot{gtk-menu-item-right-justified}
+  @see-slot{gtk-menu-item-submenu}
+  @see-slot{gtk-menu-item-use-underline}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-path" 'gtk-menu-item) 't)
+ "The @code{\"accel-path\"} property of type @code{:string} (Read / Write)@br{}
+  Sets the accelerator path of the menu item, through which runtime changes of
+  the menu item's accelerator caused by the user can be identified and saved
+  to persistant storage. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label" 'gtk-menu-item) 't)
+ "The @code{\"label\"} property of type @code{:string} (Read / Write)@br{}
+  The text for the child label. @br{}
+  Default value: \"\"@br{}
+  Since 2.16")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "right-justified"
+                                               'gtk-menu-item) 't)
+ "The @code{\"right-justified\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Sets whether the menu item appears justified at the right side of a menu
+  bar. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "submenu" 'gtk-menu-item) 't)
+ "The @code{\"submenu\"} property of type @class{gtk-menu}
+  (Read / Write)@br{}
+  The submenu attached to the menu item, or NULL if it has none. @br{}
+  Since 2.12")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-underline"
+                                               'gtk-menu-item) 't)
+ "The @code{\"use-underline\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  @em{true} if underlines in the text indicate mnemonics. @br{}
+  Default value: @code{nil}
+  Since 2.16")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-accel-path atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-accel-path 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"accel-path\"} of the @class{gtk-menu-item}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-label atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-label 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"label\"} of the @class{gtk-menu-item}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-right-justified atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-right-justified 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"right-justified\"} of the @class{gtk-menu-item}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-submenu 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"submenu\"} of the @class{gtk-menu-item}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-use-underline atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-use-underline 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"use-underline\"} of the @class{gtk-menu-item}
+  class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new ()
-;;;
-;;; GtkWidget * gtk_menu_item_new (void);
-;;;
-;;; Creates a new GtkMenuItem.
-;;;
-;;; Returns :
-;;;     the newly created GtkMenuItem
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-new))
 
 (defun gtk-menu-item-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @return{The newly created @class{gtk-menu-item} widget.}
+  @short{Creates a new @class{gtk-menu-item}.}"
   (make-instance 'gtk-menu-item))
 
 (export 'gtk-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new_with_label ()
-;;;
-;;; GtkWidget * gtk_menu_item_new_with_label (const gchar *label);
-;;;
-;;; Creates a new GtkMenuItem whose child is a GtkLabel.
-;;;
-;;; label :
-;;;     the text for the label
-;;;
-;;; Returns :
-;;;     the newly created GtkMenuItem
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-new-with-label))
 
 (defun gtk-menu-item-new-with-label (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[label]{the text for the label}
+  @return{The newly created @class{gtk-menu-item} widget.}
+  @begin{short}
+    Creates a new @class{gtk-menu-item} whose child is a @class{gtk-label}.
+  @end{short}"
   (make-instance 'gtk-menu-item
                  :label label))
 
@@ -520,44 +475,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_submenu ()
-;;;
-;;; void gtk_menu_item_set_submenu (GtkMenuItem *menu_item, GtkWidget *submenu);
-;;;
-;;; Sets or replaces the menu item's submenu, or removes it when a NULL submenu
-;;; is passed.
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; submenu :
-;;;     the submenu, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-set-submenu))
 
 (defun gtk-menu-item-set-submenu (menu-item submenu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu-item]{a @class{gtk-menu-ttem} widget}
+  @argument[submenu]{the submenu, or NULL}
+  Sets or replaces the menu item's submenu, or removes it when a NULL submenu
+  is passed."
   (setf (gtk-menu-item-submenu menu-item) submenu))
 
 (export 'gtk-menu-item-set-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_submenu ()
-;;;
-;;; GtkWidget * gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
-;;;
-;;; Gets the submenu underneath this menu item, if any. See
-;;; gtk_menu_item_set_submenu().
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; Returns :
-;;;     submenu for this menu item, or NULL if none
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-get-submenu))
 
 (defun gtk-menu-item-get-submenu (menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @return{submenu for this menu item, or NULL if none}
+  @begin{short}
+    Gets the submenu underneath this menu item, if any. See
+    gtk_menu_item_set_submenu().
+  @end{short}"
   (gtk-menu-item-submenu menu-item))
 
 (export 'gtk-menu-item-get-submenu)

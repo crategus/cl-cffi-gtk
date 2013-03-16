@@ -2,13 +2,14 @@
 ;;; gtk.expander.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -68,16 +69,6 @@
 ;;; 
 ;;; GtkExpander implements AtkImplementorIface and GtkBuildable.
 ;;; 
-;;; Properties
-;;; 
-;;;   "expanded"                 gboolean             : Read / Write / Construct
-;;;   "label"                    gchar*               : Read / Write / Construct
-;;;   "label-fill"               gboolean             : Read / Write / Construct
-;;;   "label-widget"             GtkWidget*           : Read / Write
-;;;   "resize-toplevel"          gboolean             : Read / Write
-;;;   "spacing"                  gint                 : Read / Write
-;;;   "use-markup"               gboolean             : Read / Write / Construct
-;;;   "use-underline"            gboolean             : Read / Write / Construct
 ;;; 
 ;;; Style Properties
 ;;; 
@@ -88,174 +79,6 @@
 ;;; 
 ;;;   "activate"                                      : Action
 ;;; 
-;;; Description
-;;; 
-;;; A GtkExpander allows the user to hide or show its child by clicking on an
-;;; expander triangle similar to the triangles used in a GtkTreeView.
-;;; 
-;;; Normally you use an expander as you would use any other descendant of
-;;; GtkBin; you create the child widget and use gtk_container_add() to add it to
-;;; the expander. When the expander is toggled, it will take care of showing and
-;;; hiding the child automatically.
-;;; 
-;;; Special Usage
-;;; 
-;;; There are situations in which you may prefer to show and hide the expanded
-;;; widget yourself, such as when you want to actually create the widget at
-;;; expansion time. In this case, create a GtkExpander but do not add a child to
-;;; it. The expander widget has an "expanded" property which can be used to
-;;; monitor its expansion state. You should watch this property with a signal
-;;; connection as follows:
-;;; 
-;;; expander = gtk_expander_new_with_mnemonic ("_More Options");
-;;; g_signal_connect (expander, "notify::expanded",
-;;;                   G_CALLBACK (expander_callback), NULL);
-;;; 
-;;; ...
-;;; 
-;;; static void
-;;; expander_callback (GObject    *object,
-;;;                    GParamSpec *param_spec,
-;;;                    gpointer    user_data)
-;;; {
-;;;   GtkExpander *expander;
-;;; 
-;;;   expander = GTK_EXPANDER (object);
-;;; 
-;;;   if (gtk_expander_get_expanded (expander))
-;;;     {
-;;;       /* Show or create widgets */
-;;;     }
-;;;   else
-;;;     {
-;;;       /* Hide or destroy widgets */
-;;;     }
-;;; }
-;;; 
-;;; GtkExpander as GtkBuildable
-;;; 
-;;; The GtkExpander implementation of the GtkBuildable interface supports
-;;; placing a child in the label position by specifying "label" as the "type"
-;;; attribute of a <child> element. A normal content child can be specified
-;;; without specifying a <child> type attribute.
-;;; 
-;;; Example 93. A UI definition fragment with GtkExpander
-;;; 
-;;; <object class="GtkExpander">
-;;;   <child type="label">
-;;;     <object class="GtkLabel" id="expander-label"/>
-;;;   </child>
-;;;   <child>
-;;;     <object class="GtkEntry" id="expander-content"/>
-;;;   </child>
-;;; </object>
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "expanded" property
-;;; 
-;;;   "expanded"                 gboolean             : Read / Write / Construct
-;;; 
-;;; Whether the expander has been opened to reveal the child widget.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "label" property
-;;; 
-;;;   "label"                    gchar*               : Read / Write / Construct
-;;; 
-;;; Text of the expander's label.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "label-fill" property
-;;; 
-;;;   "label-fill"               gboolean             : Read / Write / Construct
-;;; 
-;;; Whether the label widget should fill all available horizontal space.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "label-widget" property
-;;; 
-;;;   "label-widget"             GtkWidget*            : Read / Write
-;;; 
-;;; A widget to display in place of the usual expander label.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "resize-toplevel" property
-;;; 
-;;;   "resize-toplevel"          gboolean              : Read / Write
-;;; 
-;;; When this property is TRUE, the expander will resize the toplevel widget
-;;; containing the expander upon expanding and collapsing.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 3.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "spacing" property
-;;; 
-;;;   "spacing"                  gint                  : Read / Write
-;;; 
-;;; Space to put between the label and the child.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "use-markup" property
-;;; 
-;;;   "use-markup"               gboolean             : Read / Write / Construct
-;;; 
-;;; The text of the label includes XML markup. See pango_parse_markup().
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "use-underline" property
-;;; 
-;;;   "use-underline"            gboolean             : Read / Write / Construct
-;;; 
-;;; If set, an underline in the text indicates the next character should be used
-;;; for the mnemonic accelerator key.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "expander-size" style property
-;;; 
-;;;   "expander-size"            gint                  : Read
-;;; 
-;;; Size of the expander arrow.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "expander-spacing" style property
-;;; 
-;;;   "expander-spacing"         gint                  : Read
-;;; 
-;;; Spacing around expander arrow.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 2
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -271,8 +94,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkExpander
-;;; 
-;;; struct GtkExpander;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkExpander" gtk-expander
@@ -307,24 +128,284 @@
     "use-underline" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-expander 'type)
+ "@version{2013-3-3}
+  @begin{short}
+    A GtkExpander allows the user to hide or show its child by clicking on an
+    expander triangle similar to the triangles used in a GtkTreeView.
+  @end{short}
+
+  Normally you use an expander as you would use any other descendant of
+  GtkBin; you create the child widget and use gtk_container_add() to add it to
+  the expander. When the expander is toggled, it will take care of showing and
+  hiding the child automatically.
+ 
+  @heading{Special Usage}
+  There are situations in which you may prefer to show and hide the expanded
+  widget yourself, such as when you want to actually create the widget at
+  expansion time. In this case, create a GtkExpander but do not add a child to
+  it. The expander widget has an \"expanded\" property which can be used to
+  monitor its expansion state. You should watch this property with a signal
+  connection as follows:
+  @begin{pre}
+ expander = gtk_expander_new_with_mnemonic (\"_More Options\");
+ g_signal_connect (expander, \"notify::expanded\",
+                   G_CALLBACK (expander_callback), NULL);
+
+ ...
+
+ static void
+ expander_callback (GObject    *object,
+                    GParamSpec *param_spec,
+                    gpointer    user_data)
+ {
+   GtkExpander *expander;
+
+   expander = GTK_EXPANDER (object);
+
+   if (gtk_expander_get_expanded (expander))
+     {
+       /* Show or create widgets */
+     @}
+   else
+     {
+       /* Hide or destroy widgets */
+     @}
+ @}
+  @end{pre}
+  @heading{GtkExpander as GtkBuildable}
+  The GtkExpander implementation of the GtkBuildable interface supports
+  placing a child in the label position by specifying \"label\" as the \"type\"
+  attribute of a <child> element. A normal content child can be specified
+  without specifying a <child> type attribute.
+
+  Example 93. A UI definition fragment with GtkExpander
+  @begin{pre}
+ <object class=\"GtkExpander\">
+   <child type=\"label\">
+     <object class=\"GtkLabel\" id=\"expander-label\"/>
+   </child>
+   <child>
+     <object class=\"GtkEntry\" id=\"expander-content\"/>
+   </child>
+ </object>
+  @end{pre}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"expander-size\" style property}
+      @code{\"expander-size\"} of type @code{gint} (Read)@br{}
+      Size of the expander arrow.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 10
+
+    @subheading{The \"expander-spacing\" style property}
+      @code{\"expander-spacing\"} of type @code{gint} (Read)@br{}
+      Spacing around expander arrow.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 2
+  @end{dictionary}
+  @see-slot{gtk-expander-expanded}
+  @see-slot{gtk-expander-label}
+  @see-slot{gtk-expander-label-fill}
+  @see-slot{gtk-expander-label-widget}
+  @see-slot{gtk-expander-resize-toplevel}
+  @see-slot{gtk-expander-spacing}
+  @see-slot{gtk-expander-use-markup}
+  @see-slot{gtk-expander-use-underline}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "expanded" 'gtk-expander) 't)
+ "The @code{\"expanded\"} property of type @code{gboolean}
+  (Read / Write / Construct)@br{}
+  Whether the expander has been opened to reveal the child widget.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label" 'gtk-expander) 't)
+ "The @code{\"label\"} property of type @code{gchar*}
+  (Read / Write / Construct)@br{}
+  Text of the expander's label.@br{}
+  Default value: NULL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label-fill" 'gtk-expander) 't)
+ "The @code{\"label-fill\"} property of type @code{gboolean}
+  (Read / Write / Construct)@br{}
+  Whether the label widget should fill all available horizontal space.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label-widget" 'gtk-expander) 't)
+ "The @code{\"label-widget\"} property of type @code{GtkWidget*}
+  (Read / Write)@br{}
+  A widget to display in place of the usual expander label.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "resize-toplevel" 'gtk-expander) 't)
+ "The @code{\"resize-toplevel\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  When this property is TRUE, the expander will resize the toplevel widget
+  containing the expander upon expanding and collapsing.@br{}
+  Default value: FALSE@br{}
+  Since 3.2")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-expander) 't)
+ "The @code{\"spacing\"} property of type @code{gint} (Read / Write)@br{}
+  Space to put between the label and the child.@br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-expander) 't)
+ "The @code{\"use-markup\"} property of type @code{gboolean}
+  (Read / Write / Construct)@br{}
+  The text of the label includes XML markup. See pango_parse_markup().@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-underline" 'gtk-expander) 't)
+ "The @code{\"use-underline\"} property of type @code{gboolean}
+  (Read / Write / Construct)@br{}
+  If set, an underline in the text indicates the next character should be used
+  for the mnemonic accelerator key.@br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-expanded atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-expanded 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"expanded\"} of the @class{gtk-expander} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-label atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-label 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"label\"} of the @class{gtk-expander} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-label-fill atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-label-fill 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"label-fill\"} of the @class{gtk-expander}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-label-widget atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-label-widget 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"label-widget\"} of the @class{gtk-expander}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-resize-toplevel atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-resize-toplevel 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"resize-toplevel\"} of the @class{gtk-expander}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-spacing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-spacing 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"spacing\"} of the @class{gtk-expander} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-use-markup atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-use-markup 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"use-markup\"} of the @class{gtk-expander}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-expander-use-underline atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-expander-use-underline 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the slot @code{\"use-underline\"} of the @class{gtk-expander}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_new ()
-;;; 
-;;; GtkWidget * gtk_expander_new (const gchar *label);
-;;; 
-;;; Creates a new expander using label as the text of the label.
-;;; 
-;;; label :
-;;;     the text of the label
-;;; 
-;;; Returns :
-;;;     a new GtkExpander widget.
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-expander-new))
 
 (defun gtk-expander-new (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-3}
+  @argument[label]{the text of the label}
+  @return{a new GtkExpander widget.}
+  @begin{short}
+    Creates a new expander using label as the text of the label.
+  @end{short}
+
+  Since 2.4"
   (make-instance 'gtk-expander
                  :label label))
 

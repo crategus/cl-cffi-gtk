@@ -2,13 +2,14 @@
 ;;; gtk.accel-map.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -83,15 +84,15 @@
     @item{accelerator path}
     @item{accelerator key}
     @item{accelerator modifiers}
-  @end{itemize}
+  @end{itemize}@br{}
   The accelerator path must consist of
   @code{\"<WINDOWTYPE>/Category1/Category2/.../Action\"}, where
-  @code{WINDOWTYPE} should be a unique application-specific identifier that
-  corresponds to the kind of window the accelerator is being used in, e.g.
+  @code{WINDOWTYPE} should be a unique application specific identifier that
+  corresponds to the kind of window the accelerator is being used in, e. g.
   @code{\"Gimp-Image\"}, @code{\"Abiword-Document\"} or
   @code{\"Gnumeric-Settings\"}. The @code{\"Category1/.../Action\"} portion is
-  most appropriately chosen by the action the accelerator triggers, i.e. for
-  accelerators on menu items, choose the item's menu path, e.g.
+  most appropriately chosen by the action the accelerator triggers, i. e. for
+  accelerators on menu items, choose the item's menu path, e. g.
   @code{\"File/Save As\"}, @code{\"Image/View/Zoom\"} or
   @code{\"Edit/Select All\"}. So a full valid accelerator path may look like:
   @code{\"<Gimp-Toolbox>/File/Dialogs/Tool Options...\"}.
@@ -100,50 +101,46 @@
   obtained using @fun{gtk-accel-map-get}. See Monitoring changes for additional
   details.
 
-  @heading{Manipulating accelerators}
-  New accelerators can be added using @fun{gtk-accel-map-add-entry}. To search
-  for specific accelerator, use @fun{gtk-accel-map-lookup-entry}. Modifications
-  of existing accelerators should be done using
-  @fun{gtk-accel-map-change-entry}.
+  @subheading{Manipulating accelerators}
+    New accelerators can be added using @fun{gtk-accel-map-add-entry}. To search
+    for a specific accelerator, use @fun{gtk-accel-map-lookup-entry}.
+    Modifications of existing accelerators should be done using
+    @fun{gtk-accel-map-change-entry}.
 
-  In order to avoid having some accelerators changed, they can be locked using
-  @fun{gtk-accel-map-lock-path}. Unlocking is done using
-  @fun{gtk-accel-map-unlock-path}.
+    In order to avoid having some accelerators changed, they can be locked using
+    @fun{gtk-accel-map-lock-path}. Unlocking is done using
+    @fun{gtk-accel-map-unlock-path}.
 
-  @heading{Saving and loading accelerator maps}
+  @subheading{Saving and loading accelerator maps}
+    Accelerator maps can be saved to and loaded from some external resource. For
+    simple saving and loading from file, @fun{gtk-accel-map-save} and
+    @fun{gtk-accel-map-load} are provided. Saving and loading can also be done
+    by providing a file descriptor to @fun{gtk-accel-map-save-fd} and
+    @fun{gtk-accel-map-load-fd}.
 
-  Accelerator maps can be saved to and loaded from some external resource. For
-  simple saving and loading from file, @fun{gtk-accel-map-save} and
-  @fun{gtk-accel-map-load} are provided. Saving and loading can also be done by
-  providing file descriptor to @fun{gtk-accel-map-save-fd} and
-  @fun{gtk-accel-map-load-fd}.
-
-  @heading{Monitoring changes}
-
-  @sym{gtk-accel-map} object is only useful for monitoring changes of
-  accelerators. By connecting to \"changed\" signal, one can monitor changes of
-  all accelerators. It is also possible to monitor only single accelerator path
-  by using it as a detail of the \"changed\" signal.
+  @subheading{Monitoring changes}
+    A @sym{gtk-accel-map} object is only useful for monitoring changes of
+    accelerators. By connecting to the \"changed\" signal, one can monitor
+    changes of all accelerators. It is also possible to monitor only a single
+    accelerator path by using it as a detail of the \"changed\" signal.
 
   Since 2.4
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
     Notifies of a change in the global accelerator map. The path is also used as
     the detail for the signal, so it is possible to connect to
-    @code{changed::accel_path}.
+    \"changed::accel_path\".
     @begin{pre}
- void user_function (GtkAccelMap    *object,
-                     gchar          *accel_path,
-                     guint           accel_key,
-                     GdkModifierType accel_mods,
-                     gpointer        user_data)       : Has Details
+ lambda (object accel-path accel-key accel-mods)
     @end{pre}
-    @begin[code]{table}
-      @entry[object]{the global accel map object}
-      @entry[accel_path]{the path of the accelerator that changed}
-      @entry[accel_key]{the key value for the new accelerator}
-      @entry[accel_mods]{the modifier mask for the new accelerator}
-      @entry[user_data]{user data set when the signal handler was connected.}
+    @begin[arg]{table}
+      @entry[object]{the global @class{gtk-accel-map} object}
+      @entry[accel-path]{the path of the accelerator that changed of type
+        @code{:string}}
+      @entry[accel-key]{the key value of type @code{guint} for the new
+        accelerator}
+      @entry[accel-mods]{the modifier mask of type @symbol{gdk-modifier-type}
+        for the new accelerator}
     @end{table}
   @end{dictionary}")
 

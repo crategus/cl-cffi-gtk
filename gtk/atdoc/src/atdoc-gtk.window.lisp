@@ -508,7 +508,7 @@
   @argument[accel-group]{a @class{gtk-accel-group} instance}
   @begin{short}
     Associate @arg{accel-group} with @arg{window}, such that calling
-    @fun{gtk-accel-groups-activate} on @arg{window} will activate accelerators
+    @fun{gtk-accel-group-activate} on @arg{window} will activate accelerators
     in @arg{accel-group}.
   @end{short}")
 

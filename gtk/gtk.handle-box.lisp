@@ -2,13 +2,14 @@
 ;;; gtk.handle-box.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,112 +45,8 @@
 ;;;     gtk_handle_box_get_shadow_type
 ;;;     gtk_handle_box_get_snap_edge
 ;;;     gtk_handle_box_get_child_detached
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkHandleBox
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkHandleBox implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Properties
-;;;
-;;;   "child-detached"           gboolean              : Read
-;;;   "handle-position"          GtkPositionType       : Read / Write
-;;;   "shadow-type"              GtkShadowType         : Read / Write
-;;;   "snap-edge"                GtkPositionType       : Read / Write
-;;;   "snap-edge-set"            gboolean              : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "child-attached"                                 : Run First
-;;;   "child-detached"                                 : Run First
-;;;
-;;; Description
-;;;
-;;; The GtkHandleBox widget allows a portion of a window to be "torn off". It is
-;;; a bin widget which displays its child and a handle that the user can drag to
-;;; tear off a separate window (the float window) containing the child widget. A
-;;; thin ghost is drawn in the original location of the handlebox. By dragging
-;;; the separate window back to its original location, it can be reattached.
-;;;
-;;; When reattaching, the ghost and float window, must be aligned along one of
-;;; the edges, the snap edge. This either can be specified by the application
-;;; programmer explicitely, or GTK+ will pick a reasonable default based on the
-;;; handle position.
-;;;
-;;; To make detaching and reattaching the handlebox as minimally confusing as
-;;; possible to the user, it is important to set the snap edge so that the snap
-;;; edge does not move when the handlebox is deattached. For instance, if the
-;;; handlebox is packed at the bottom of a VBox, then when the handlebox is
-;;; detached, the bottom edge of the handlebox's allocation will remain fixed as
-;;; the height of the handlebox shrinks, so the snap edge should be set to
-;;; GTK_POS_BOTTOM.
-;;;
-;;; Note
-;;;
-;;; GtkHandleBox has been deprecated. It is very specialized, lacks features to
-;;; make it useful and most importantly does not fit well into modern
-;;; application design. Do not use it. There is no replacement.
-;;;
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "child-detached" property
-;;;
-;;;   "child-detached"           gboolean              : Read
-;;;
-;;; A boolean value indicating whether the handlebox's child is attached or
-;;; detached.
-;;;
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "handle-position" property
-;;;
-;;;   "handle-position"          GtkPositionType       : Read / Write
-;;;
-;;; Position of the handle relative to the child widget.
-;;;
-;;; Default value: GTK_POS_LEFT
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "shadow-type" property
-;;;
-;;;   "shadow-type"              GtkShadowType         : Read / Write
-;;;
-;;; Appearance of the shadow that surrounds the container.
-;;;
-;;; Default value: GTK_SHADOW_OUT
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "snap-edge" property
-;;;
-;;;   "snap-edge"                GtkPositionType       : Read / Write
-;;;
-;;; Side of the handlebox that's lined up with the docking point to dock the
-;;; handlebox.
-;;;
-;;; Default value: GTK_POS_TOP
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "snap-edge-set" property
-;;;
-;;;   "snap-edge-set"            gboolean              : Read / Write
-;;;
-;;; Whether to use the value from the snap_edge property or a value derived from
-;;; handle_position.
-;;;
-;;; Default value: FALSE
-;;;
+
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -209,8 +106,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHandleBox
-;;;
-;;; struct GtkHandleBox;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkHandleBox" gtk-handle-box
@@ -237,6 +132,161 @@
    (snap-edge-set
     gtk-handle-box-snap-edge-set
     "snap-edge-set" "gboolean" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-handle-box 'type)
+ "@version{2013-3-8}
+  @begin{short}
+    The GtkHandleBox widget allows a portion of a window to be \"torn off\". It
+    is a bin widget which displays its child and a handle that the user can drag
+    to tear off a separate window (the float window) containing the child
+    widget. A thin ghost is drawn in the original location of the handlebox. By
+    dragging the separate window back to its original location, it can be
+    reattached.
+  @end{short}
+
+  When reattaching, the ghost and float window, must be aligned along one of
+  the edges, the snap edge. This either can be specified by the application
+  programmer explicitely, or GTK+ will pick a reasonable default based on the
+  handle position.
+
+  To make detaching and reattaching the handlebox as minimally confusing as
+  possible to the user, it is important to set the snap edge so that the snap
+  edge does not move when the handlebox is deattached. For instance, if the
+  handlebox is packed at the bottom of a VBox, then when the handlebox is
+  detached, the bottom edge of the handlebox's allocation will remain fixed as
+  the height of the handlebox shrinks, so the snap edge should be set to
+  GTK_POS_BOTTOM.
+
+  Note
+
+  GtkHandleBox has been deprecated. It is very specialized, lacks features to
+  make it useful and most importantly does not fit well into modern
+  application design. Do not use it. There is no replacement.
+
+  @see-slot{gtk-handle-box-child-detached}
+  @see-slot{gtk-handle-box-handle-position}
+  @see-slot{gtk-handle-box-shadow-type}
+  @see-slot{gtk-handle-box-snap-edge}
+  @see-slot{gtk-handle-box-snap-edge-set}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "child-detached" 'gtk-handle-box) 't)
+ "The @code{\"child-detached\"} property of type @code{gboolean} (Read)@br{}
+  A boolean value indicating whether the handlebox's child is attached or
+  detached.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "handle-position" 'gtk-handle-box) 't)
+ "The @code{\"handle-position\"} property of type @code{GtkPositionType}
+  (Read / Write)@br{}
+  Position of the handle relative to the child widget.@br{}
+  Default value: GTK_POS_LEFT")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-handle-box) 't)
+ "The @code{\"shadow-type\"} property of type @code{GtkShadowType}
+  (Read / Write)@br{}
+  Appearance of the shadow that surrounds the container.@br{}
+  Default value: GTK_SHADOW_OUT")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "snap-edge" 'gtk-handle-box) 't)
+ "The @code{\"snap-edge\"} property of type @code{GtkPositionType}
+  (Read / Write)@br{}
+  Side of the handlebox that's lined up with the docking point to dock the
+  handlebox.@br{}
+  Default value: GTK_POS_TOP")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "snap-edge-set" 'gtk-handle-box) 't)
+ "The @code{\"snap-edge-set\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Whether to use the value from the snap_edge property or a value derived from
+  handle_position.@br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-handle-box-child-detached 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"child-detached\"} of the @class{gtk-handle-box}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-handle-box-handle-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-handle-box-handle-position 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"handle-position\"} of the
+    @class{gtk-handle-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-handle-box-shadow-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-handle-box-shadow-type 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-handle-box}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-handle-box-snap-edge atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-handle-box-snap-edge 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"snap-edge\"} of the @class{gtk-handle-box}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-handle-box-snap-edge-set 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"snap-edge-set\"} of the @class{gtk-handle-box}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_handle_box_new ()

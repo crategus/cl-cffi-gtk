@@ -28,45 +28,8 @@
 
 (in-package :gtk)
 
-(load "src/atdoc-gtk.package.lisp")
-
-;;; Content from the GTK+ 3.4.3 Reference Manual
-
-;;; GTK+ Core Reference
-
-    (load "src/atdoc-gtk.main-loop.lisp")
-    (load "src/atdoc-gtk.selections.lisp")
-#|
-    
-    not implemented                  - Testing
-    not implemented                  - Filesystem utilities
-    
-Theming in GTK+
-
-    gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.4.3
-
-    not implemented                  - GtkCssProvider
-    not implemented                  - GtkStyleProvider
-    not implemented                  - GtkStyleProperties
-    not implemented                  - GtkThemingEngine
-    not implemented                  - GtkWidgetPath
-    not implemented                  - GtkSymbolicColor
-    not implemented                  - GtkGradient
-
-    gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.4.3
-    gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.4.3
-
-    not implemented                  - GtkNumerableIcon
-
-    gtk.resource-files.lisp          - Resource Files (**)         - GTK+ 3.2.3*
-|#
     (load "src/atdoc-gtk.style.lisp")
 
-;; GTK+ Widgets and Objects
-
-;;  Windows
-
-    (load "src/atdoc-gtk.dialog.lisp")
     (load "src/atdoc-gtk.invisible.lisp")
     (load "src/atdoc-gtk.message-dialog.lisp")
     (load "src/atdoc-gtk.window.lisp")
@@ -76,17 +39,11 @@ Theming in GTK+
 ;;  Display Widgets
 
     (load "src/atdoc-gtk.image.lisp")
-    (load "src/atdoc-gtk.label.lisp")
     (load "src/atdoc-gtk.progress-bar.lisp")
     (load "src/atdoc-gtk.statusbar.lisp")
     (load "src/atdoc-gtk.info-bar.lisp")
     (load "src/atdoc-gtk.status-icon.lisp")
-;;  gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.4.3
 
-
-;;  Buttons and Toggles
-
-    (load "src/atdoc-gtk.button.lisp")
 #|
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.4.1
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.4.1
@@ -209,16 +166,7 @@ Theming in GTK+
     gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.2.3*
     gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.4.3
 |#
-;;  Layout Containers
 
-    (load "src/atdoc-gtk.grid.lisp")
-#|
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.4.3
-    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.4.3
-    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.4.3
-    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.4.3
-    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.4.3
-|#
     (load "src/atdoc-gtk.table.lisp")
 #|
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.4.3

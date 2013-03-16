@@ -2,13 +2,14 @@
 ;;; gtk.layout.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,102 +42,17 @@
 ;;;     gtk_layout_move
 ;;;     gtk_layout_set_size
 ;;;     gtk_layout_get_size
-;;;     gtk_layout_get_hadjustment
-;;;     gtk_layout_get_vadjustment
-;;;     gtk_layout_set_hadjustment
-;;;     gtk_layout_set_vadjustment
+;;;     gtk_layout_get_hadjustment               * deprecated *
+;;;     gtk_layout_get_vadjustment               * deprecated *
+;;;     gtk_layout_set_hadjustment               * deprecated *
+;;;     gtk_layout_set_vadjustment               * deprecated *
 ;;;     gtk_layout_get_bin_window
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkLayout
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkLayout implements AtkImplementorIface, GtkBuildable and GtkScrollable.
-;;; 
-;;; Properties
-;;; 
-;;;   "height"                   guint                 : Read / Write
-;;;   "width"                    guint                 : Read / Write
-;;; 
-;;; Child Properties
-;;; 
-;;;   "x"                        gint                  : Read / Write
-;;;   "y"                        gint                  : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; GtkLayout is similar to GtkDrawingArea in that it's a "blank slate" and
-;;; doesn't do anything but paint a blank background by default. It's different
-;;; in that it supports scrolling natively (you can add it to a
-;;; GtkScrolledWindow), and it can contain child widgets, since it's a
-;;; GtkContainer. However if you're just going to draw, a GtkDrawingArea is a
-;;; better choice since it has lower overhead.
-;;; 
-;;; When handling expose events on a GtkLayout, you must draw to GTK_LAYOUT
-;;; (layout)->bin_window, rather than to GTK_WIDGET (layout)->window, as you
-;;; would for a drawing area.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "height" property
-;;; 
-;;;   "height"                   guint                 : Read / Write
-;;; 
-;;; The height of the layout.
-;;; 
-;;; Allowed values: <= G_MAXINT
-;;; 
-;;; Default value: 100
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "width" property
-;;; 
-;;;   "width"                    guint                 : Read / Write
-;;; 
-;;; The width of the layout.
-;;; 
-;;; Allowed values: <= G_MAXINT
-;;; 
-;;; Default value: 100
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "x" child property
-;;; 
-;;;   "x"                        gint                  : Read / Write
-;;; 
-;;; X position of child widget.
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "y" child property
-;;; 
-;;;   "y"                        gint                  : Read / Write
-;;; 
-;;; Y position of child widget.
-;;; 
-;;; Default value: 0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkLayout
-;;; 
-;;; struct GtkLayout;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -158,6 +74,85 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-layout 'type)
+ "@version{2013-3-10}
+  @begin{short}
+    GtkLayout is similar to GtkDrawingArea in that it's a \"blank slate\" and
+    doesn't do anything but paint a blank background by default. It's different
+    in that it supports scrolling natively (you can add it to a
+    GtkScrolledWindow), and it can contain child widgets, since it's a
+    GtkContainer. However if you're just going to draw, a GtkDrawingArea is a
+    better choice since it has lower overhead.
+  @end{short}
+
+  When handling expose events on a GtkLayout, you must draw to GTK_LAYOUT
+  (layout)->bin_window, rather than to GTK_WIDGET (layout)->window, as you
+  would for a drawing area.
+  @begin[Child Property Details]{dictionary}
+    @subheading{The \"x\" child property}
+      @code{\"x\"} of type @code{gint} (Read / Write)@br{}
+      X position of child widget.@br{}
+      Default value: @code{0}
+
+    @subheading{The \"y\" child property}
+      @code{\"y\"} of type @code{gint} (Read / Write)@br{}
+      Y position of child widget.@br{}
+      Default value: @code{0}
+  @end{dictionary}
+  @see-slot{gtk-layout-height}
+  @see-slot{gtk-layout-width}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "height" 'gtk-layout) 't)
+ "The @code{\"height\"} property of type @code{guint} (Read / Write)@br{}
+  The height of the layout.@br{}
+  Allowed values: @code{<= G_MAXINT}@br{}
+  Default value: @code{100}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width" 'gtk-layout) 't)
+ "The @code{\"width\"} property of type @code{guint} (Read / Write)@br{}
+  The width of the layout.@br{}
+  Allowed values: @code{<= G_MAXINT}@br{}
+  Default value: @code{100}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-layout-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-layout-height 'function)
+ "@version{2013-3-10}
+  @begin{short}
+    Accessor of the slot @code{\"height\"} of the @class{gtk-layout} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-layout-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-layout-width 'function)
+ "@version{2013-3-10}
+  @begin{short}
+    Accessor of the slot @code{\"width\"} of the @class{gtk-layout} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
 (define-child-property "GtkLayout"
                        gtk-layout-child-x
                        "x" "gint" t t t)
@@ -167,27 +162,47 @@
                        "y" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-layout-child-x atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-layout-child-x 'function)
+ "@version{2013-3-10}
+  @begin{short}
+    Accessor of the child property @code{\"x\"} of the @class{gtk-layout} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-layout-child-y atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-layout-child-y 'function)
+ "@version{2013-3-10}
+  @begin{short}
+    Accessor of the child property @code{\"y\"} of the @class{gtk-layout} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_new ()
-;;; 
-;;; GtkWidget * gtk_layout_new (GtkAdjustment *hadjustment,
-;;;                             GtkAdjustment *vadjustment);
-;;; 
-;;; Creates a new GtkLayout. Unless you have a specific adjustment you'd like
-;;; the layout to use for scrolling, pass NULL for hadjustment and vadjustment.
-;;; 
-;;; hadjustment :
-;;;     horizontal scroll adjustment, or NULL
-;;; 
-;;; vadjustment :
-;;;     vertical scroll adjustment, or NULL
-;;; 
-;;; Returns :
-;;;     a new GtkLayout
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-layout-new))
 
 (defun gtk-layout-new (&optional (hadjustment nil) (vadjustment nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[hadjustment]{horizontal scroll adjustment, or NULL}
+  @argument[vadjustment]{vertical scroll adjustment, or NULL}
+  @return{a new GtkLayout}
+  @begin{short}
+    Creates a new GtkLayout. Unless you have a specific adjustment you'd like
+    the layout to use for scrolling, pass NULL for hadjustment and vadjustment.
+  @end{short}"
   (make-instance 'gtk-layout
                  :hadjustment hadjustment
                  :vadjustment vadjustment))
@@ -196,29 +211,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_put ()
-;;; 
-;;; void gtk_layout_put (GtkLayout *layout,
-;;;                      GtkWidget *child_widget,
-;;;                      gint x,
-;;;                      gint y);
-;;; 
-;;; Adds child_widget to layout, at position (x,y). layout becomes the new
-;;; parent container of child_widget.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; child_widget :
-;;;     child widget
-;;; 
-;;; x :
-;;;     X position of child widget
-;;; 
-;;; y :
-;;;     Y position of child widget
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_layout_put" gtk-layout-put) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[layout]{a GtkLayout}
+  @argument[child_widget]{child widget}
+  @argument[x]{X position of child widget}
+  @argument[y]{Y position of child widget}
+  @begin{short}
+    Adds child_widget to layout, at position (x,y). layout becomes the new
+    parent container of child_widget.
+  @end{short}"
   (layout g-object)
   (widget g-object)
   (x :int)
@@ -228,28 +233,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_move ()
-;;; 
-;;; void gtk_layout_move (GtkLayout *layout,
-;;;                       GtkWidget *child_widget,
-;;;                       gint x,
-;;;                       gint y);
-;;; 
-;;; Moves a current child of layout to a new position.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; child_widget :
-;;;     a current child of layout
-;;; 
-;;; x :
-;;;     X position to move to
-;;; 
-;;; y :
-;;;     Y position to move to
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_layout_move" gtk-layout-move) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[layout]{a GtkLayout}
+  @argument[child_widget]{a current child of layout}
+  @argument[x]{X position to move to}
+  @argument[y]{Y position to move to}
+  @short{Moves a current child of layout to a new position.}"
   (layout g-object)
   (widget g-object)
   (x :int)
@@ -259,24 +252,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_set_size ()
-;;; 
-;;; void gtk_layout_set_size (GtkLayout *layout, guint width, guint height);
-;;; 
-;;; Sets the size of the scrollable area of the layout.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; width :
-;;;     width of entire scrollable area
-;;; 
-;;; height :
-;;;     height of entire scrollable area
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-layout-set-size))
 
 (defun gtk-layout-set-size (layout width height)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[layout]{a GtkLayout}
+  @argument[width]{width of entire scrollable area}
+  @argument[height]{height of entire scrollable area}
+  @short{Sets the size of the scrollable area of the layout.}"
   (setf (gtk-layout-width layout) width
         (gtk-layout-height layout) height))
 
@@ -284,25 +270,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_size ()
-;;; 
-;;; void gtk_layout_get_size (GtkLayout *layout, guint *width, guint *height);
-;;; 
-;;; Gets the size that has been set on the layout, and that determines the total
-;;; extents of the layout's scrollbar area. See gtk_layout_set_size().
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; width :
-;;;     location to store the width set on layout, or NULL
-;;; 
-;;; height :
-;;;     location to store the height set on layout, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-layout-get-size))
 
 (defun gtk-layout-get-size (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[layout]{a GtkLayout}
+  @argument[width]{location to store the width set on layout, or NULL}
+  @argument[height]{location to store the height set on layout, or NULL}
+  @begin{short}
+    Gets the size that has been set on the layout, and that determines the total
+    extents of the layout's scrollbar area. See gtk_layout_set_size().
+  @end{short}"
   (values (gtk-layout-width layout)
           (gtk-layout-height layout)))
 
@@ -402,22 +383,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_bin_window ()
-;;; 
-;;; GdkWindow * gtk_layout_get_bin_window (GtkLayout *layout);
-;;; 
-;;; Retrieve the bin window of the layout used for drawing operations.
-;;; 
-;;; layout :
-;;;     a GtkLayout
-;;; 
-;;; Returns :
-;;;     a GdkWindow
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_layout_get_bin_window" gtk-layout-get-bin-window)
     (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[layout]{a GtkLayout}
+  @return{a GdkWindow}
+  @short{Retrieve the bin window of the layout used for drawing operations.}
+
+  Since 2.14"
   (layout (g-object gtk-layout)))
 
 (export 'gtk-layout-get-bin-window)

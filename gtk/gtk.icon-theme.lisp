@@ -2,13 +2,14 @@
 ;;; gtk.icon-theme.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -76,108 +77,12 @@
 ;;;     gtk_icon_info_get_embedded_rect
 ;;;     gtk_icon_info_get_attach_points
 ;;;     gtk_icon_info_get_display_name
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkIconTheme
-;;;
-;;; Signals
-;;;
-;;;   "changed"                                        : Run Last
-;;;
-;;; Description
-;;;
-;;; GtkIconTheme provides a facility for looking up icons by name and size. The
-;;; main reason for using a name rather than simply providing a filename is to
-;;; allow different icons to be used depending on what icon theme is selected by
-;;; the user. The operation of icon themes on Linux and Unix follows the Icon
-;;; Theme Specification. There is a default icon theme, named hicolor where
-;;; applications should install their icons, but more additional application
-;;; themes can be installed as operating system vendors and users choose.
-;;;
-;;; Named icons are similar to the Themeable Stock Images(3) facility, and the
-;;; distinction between the two may be a bit confusing. A few things to keep in
-;;; mind:
-;;;
-;;;     Stock images usually are used in conjunction with Stock Items(3), such
-;;;     as GTK_STOCK_OK or GTK_STOCK_OPEN. Named icons are easier to set up and
-;;;     therefore are more useful for new icons that an application wants to
-;;;     add, such as application icons or window icons.
-;;;
-;;;     Stock images can only be loaded at the symbolic sizes defined by the
-;;;     GtkIconSize enumeration, or by custom sizes defined by
-;;;     gtk_icon_size_register(), while named icons are more flexible and any
-;;;     pixel size can be specified.
-;;;
-;;;     Because stock images are closely tied to stock items, and thus to
-;;;     actions in the user interface, stock images may come in multiple
-;;;     variants for different widget states or writing directions.
-;;;
-;;; A good rule of thumb is that if there is a stock image for what you want to
-;;; use, use it, otherwise use a named icon. It turns out that internally stock
-;;; images are generally defined in terms of one or more named icons. (An
-;;; example of the more than one case is icons that depend on writing direction;
-;;; GTK_STOCK_GO_FORWARD uses the two themed icons "gtk-stock-go-forward-ltr"
-;;; and "gtk-stock-go-forward-rtl".)
-;;;
-;;; In many cases, named themes are used indirectly, via GtkImage or stock
-;;; items, rather than directly, but looking up icons directly is also simple.
-;;; The GtkIconTheme object acts as a database of all the icons in the current
-;;; theme. You can create new GtkIconTheme objects, but its much more efficient
-;;; to use the standard icon theme for the GdkScreen so that the icon
-;;; information is shared with other people looking up icons. In the case where
-;;; the default screen is being used, looking up an icon can be as simple as:
-;;;
-;;;   GError *error = NULL;
-;;;   GtkIconTheme *icon_theme;
-;;;   GdkPixbuf *pixbuf;
-;;;
-;;;   icon_theme = gtk_icon_theme_get_default ();
-;;;   pixbuf = gtk_icon_theme_load_icon (icon_theme,
-;;;                                      "my-icon-name", // icon name
-;;;                                      48, // size
-;;;                                      0,  // flags
-;;;                                      &error);
-;;;   if (!pixbuf)
-;;;     {
-;;;       g_warning ("Couldn't load icon: %s", error->message);
-;;;       g_error_free (error);
-;;;     }
-;;;   else
-;;;     {
-;;;       // Use the pixbuf
-;;;       g_object_unref (pixbuf);
-;;;     }
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "changed" signal
-;;;
-;;; void user_function (GtkIconTheme *icon_theme,
-;;;                     gpointer      user_data)       : Run Last
-;;;
-;;; Emitted when the current icon theme is switched or GTK+ detects that a
-;;; change has occurred in the contents of the current icon theme.
-;;;
-;;; icon_theme :
-;;;     the icon theme
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkIconInfo
-;;;
-;;; typedef struct _GtkIconInfo GtkIconInfo;
-;;;
-;;; Contains information found when looking up an icon in an icon theme.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct gtk-icon-info)
@@ -185,16 +90,15 @@
 (export 'gtk-icon-info)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-info atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-icon-info atdoc:*external-symbols*)
+ "@version{2013-3-15}
+  Contains information found when looking up an icon in an icon theme.")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkIconTheme
-;;;
-;;; struct GtkIconTheme;
-;;;
-;;; Acts as a database of information about an icon theme. Normally, you
-;;; retrieve the icon theme for a particular screen using
-;;; gtk_icon_theme_get_for_screen() and it will contain information about
-;;; current icon theme for that screen, but you can also create a new
-;;; GtkIconTheme object and set the icon theme name explicitely using
-;;; gtk_icon_theme_set_custom_theme().
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkIconTheme" gtk-icon-theme
@@ -205,32 +109,94 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-icon-theme 'type)
+ "@version{2013-3-15}
+  @begin{short}
+    @sym{gtk-icon-theme} provides a facility for looking up icons by name and
+    size. The main reason for using a name rather than simply providing a
+    filename is to allow different icons to be used depending on what icon theme
+    is selected by the user. The operation of icon themes on Linux and Unix
+    follows the Icon Theme Specification. There is a default icon theme, named
+    hicolor where applications should install their icons, but more additional
+    application themes can be installed as operating system vendors and users
+    choose.
+  @end{short}
+
+  Named icons are similar to the Themeable Stock Images(3) facility, and the
+  distinction between the two may be a bit confusing. A few things to keep in
+  mind:
+  @begin{itemize}
+    @begin{item}
+      Stock images usually are used in conjunction with Stock Items(3), such
+      as @code{GTK_STOCK_OK} or @code{GTK_STOCK_OPEN}. Named icons are easier to
+      set up and therefore are more useful for new icons that an application
+      wants to add, such as application icons or window icons.
+    @end{item}
+    @begin{item}
+      Stock images can only be loaded at the symbolic sizes defined by the
+      @symbol{gtk-icon-size} enumeration, or by custom sizes defined by
+      @fun{gtk-icon-size-register}, while named icons are more flexible and any
+      pixel size can be specified.
+    @end{item}
+    @begin{item}
+      Because stock images are closely tied to stock items, and thus to
+      actions in the user interface, stock images may come in multiple
+      variants for different widget states or writing directions.
+    @end{item}
+  @end{itemize}
+  A good rule of thumb is that if there is a stock image for what you want to
+  use, use it, otherwise use a named icon. It turns out that internally stock
+  images are generally defined in terms of one or more named icons. (An
+  example of the more than one case is icons that depend on writing direction;
+  @code{GTK_STOCK_GO_FORWARD} uses the two themed icons
+  @code{\"gtk-stock-go-forward-ltr\"} and @code{\"gtk-stock-go-forward-rtl\"}.)
+
+  In many cases, named themes are used indirectly, via @class{gtk-image} or
+  stock items, rather than directly, but looking up icons directly is also
+  simple. The @sym{gtk-icon-theme} object acts as a database of all the icons in
+  the current theme. You can create new @sym{gtk-icon-theme} objects, but its
+  much more efficient to use the standard icon theme for the @class{gdk-screen}
+  so that the icon information is shared with other people looking up icons. In
+  the case where the default screen is being used, looking up an icon can be as
+  simple as:
+  @begin{pre}
+   GError *error = NULL;
+   GtkIconTheme *icon_theme;
+   GdkPixbuf *pixbuf;
+
+   icon_theme = gtk_icon_theme_get_default ();
+   pixbuf = gtk_icon_theme_load_icon (icon_theme,
+                                      \"my-icon-name\", // icon name
+                                      48, // size
+                                      0,  // flags
+                                      &error);
+   if (!pixbuf)
+     {
+       g_warning (\"Couldn't load icon: %s\", error->message);
+       g_error_free (error);
+     @}
+   else
+     {
+       // Use the pixbuf
+       g_object_unref (pixbuf);
+     @}
+  @end{pre}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"changed\" signal}
+      @begin{pre}
+ lambda (icon-theme) : Run Last
+      @end{pre}
+      Emitted when the current icon theme is switched or GTK+ detects that a
+      change has occurred in the contents of the current icon theme.
+      @begin[code]{table}
+        @entry[icon-theme]{the icon theme}
+      @end{table}
+  @end{dictionary}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconLookupFlags
-;;;
-;;; typedef enum {
-;;;   GTK_ICON_LOOKUP_NO_SVG           = 1 << 0,
-;;;   GTK_ICON_LOOKUP_FORCE_SVG        = 1 << 1,
-;;;   GTK_ICON_LOOKUP_USE_BUILTIN      = 1 << 2,
-;;;   GTK_ICON_LOOKUP_GENERIC_FALLBACK = 1 << 3,
-;;;   GTK_ICON_LOOKUP_FORCE_SIZE       = 1 << 4
-;;; } GtkIconLookupFlags;
-;;;
-;;; GTK_ICON_LOOKUP_NO_SVG
-;;;     Never return SVG icons, even if gdk-pixbuf supports them. Cannot be used
-;;;     together with GTK_ICON_LOOKUP_FORCE_SVG.
-;;;
-;;; GTK_ICON_LOOKUP_FORCE_SVG
-;;;     Return SVG icons, even if gdk-pixbuf doesn't support them. Cannot be
-;;;     used together with GTK_ICON_LOOKUP_NO_SVG.
-;;;
-;;; GTK_ICON_LOOKUP_USE_BUILTIN
-;;;     When passed to gtk_icon_theme_lookup_icon() includes builtin icons as
-;;;     well as files. For a builtin icon, gtk_icon_info_get_filename()
-;;;
-;;; GTK_ICON_LOOKUP_GENERIC_FALLBACK
-;;;
-;;; GTK_ICON_LOOKUP_FORCE_SIZE
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkIconLookupFlags" gtk-icon-lookup-flags
@@ -243,6 +209,35 @@
   (:force-size 16))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-icon-lookup-flags atdoc:*external-symbols*)
+ "@version{2013-3-15}
+  @short{}
+  @begin{pre}
+(define-g-flags \"GtkIconLookupFlags\" gtk-icon-lookup-flags
+  (:export t
+   :type-initializer \"gtk_icon_lookup_flags_get_type\")
+  (:no-svg 1)
+  (:force-svg 2)
+  (:use-builtin 4)
+  (:generic-fallback 8)
+  (:force-size 16))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:no-svg]{Never return SVG icons, even if GDK-Pixbuf supports them.
+      Cannot be used together with @code{:force-svg}.}
+    @entry[:force-svg]{Return SVG icons, even if GDK-Pixbuf doesn't support
+      them. Cannot be used together with @code{:no-svg}.}
+    @entry[:use-builtin]{When passed to @fun{gtk-icon-theme-lookup-icon}
+      includes builtin icons as well as files. For a builtin icon,
+      @fun{gtk-icon-info-get-filename}.}
+    @entry[:generic-fallback]{}
+    @entry[:force-size]{}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; GTK_ICON_THEME_ERROR
 ;;;
 ;;; #define GTK_ICON_THEME_ERROR gtk_icon_theme_error_quark ()
@@ -252,19 +247,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconThemeError
-;;;
-;;; typedef enum {
-;;;   GTK_ICON_THEME_NOT_FOUND,
-;;;   GTK_ICON_THEME_FAILED
-;;; } GtkIconThemeError;
-;;;
-;;; Error codes for GtkIconTheme operations.
-;;;
-;;; GTK_ICON_THEME_NOT_FOUND
-;;;     The icon specified does not exist in the theme
-;;;
-;;; GTK_ICON_THEME_FAILED
-;;;     An unspecified error occurred.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkIconThemeError" gtk-icon-theme-error
@@ -274,74 +256,98 @@
   (:failed 1))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-theme-error atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-icon-theme-error atdoc:*external-symbols*)
+ "@version{2013-3-15}
+  @begin{short}
+    Error codes for @class{gtk-icon-theme} operations.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkIconThemeError\" gtk-icon-theme-error
+  (:export t
+   :type-initializer \"gtk_icon_theme_error_get_type\")
+  (:not-found 0)
+  (:failed 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:not-found]{The icon specified does not exist in the theme.}
+    @entry[:failed]{An unspecified error occurred.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_new ()
-;;;
-;;; GtkIconTheme * gtk_icon_theme_new (void);
-;;;
-;;; Creates a new icon theme object. Icon theme objects are used to lookup up an
-;;; icon by name in a particular icon theme. Usually, you'll want to use
-;;; gtk_icon_theme_get_default() or gtk_icon_theme_get_for_screen() rather than
-;;; creating a new icon theme object for scratch.
-;;;
-;;; Returns :
-;;;     the newly created GtkIconTheme object.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-icon-theme-new))
 
 (defun gtk-icon-theme-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-15}
+  @return{The newly created @class{gtk-icon-theme} object.}
+  @begin{short}
+    Creates a new icon theme object. Icon theme objects are used to lookup up
+    an icon by name in a particular icon theme. Usually, you'll want to use
+    @fun{gtk-icon-theme-get-default} or @fun{gtk-icon-theme-get-for-screen}
+    rather than creating a new icon theme object for scratch.
+  @end{short}
+
+  Since 2.4
+  @see-function{gtk-icon-theme-get-default}
+  @see-function{gtk-icon-theme-get-for-screen}"
   (make-instance 'gtk-icon-theme))
 
 (export 'gtk-icon-theme-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_get_default ()
-;;;
-;;; GtkIconTheme * gtk_icon_theme_get_default (void);
-;;;
-;;; Gets the icon theme for the default screen. See
-;;; gtk_icon_theme_get_for_screen().
-;;;
-;;; Returns :
-;;;     A unique GtkIconTheme associated with the default screen. This icon
-;;;     theme is associated with the screen and can be used as long as the
-;;;     screen is open. Do not ref or unref it.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_get_default" gtk-icon-theme-get-default)
-    (g-object gtk-icon-theme))
+    (g-object gtk-icon-theme)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-15}
+  @begin{return}
+    A unique @class{gtk-icon-theme} associated with the default screen. This
+    icon theme is associated with the screen and can be used as long as the
+    screen is open. Do not ref or unref it.
+  @end{return}
+  @begin{short}
+    Gets the icon theme for the default screen. See
+    @fun{gtk-icon-theme-get-for-screen}.
+  @end{short}
+
+  Since 2.4
+  @see-function{gtk-icon-theme-get-for-screen}")
 
 (export 'gtk-icon-theme-get-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_get_for_screen ()
-;;;
-;;; GtkIconTheme * gtk_icon_theme_get_for_screen (GdkScreen *screen);
-;;;
-;;; Gets the icon theme object associated with screen; if this function has not
-;;; previously been called for the given screen, a new icon theme object will be
-;;; created and associated with the screen. Icon theme objects are fairly
-;;; expensive to create, so using this function is usually a better choice than
-;;; calling than gtk_icon_theme_new() and setting the screen yourself; by using
-;;; this function a single icon theme object will be shared between users.
-;;;
-;;; screen :
-;;;     a GdkScreen
-;;;
-;;; Returns :
-;;;     A unique GtkIconTheme associated with the given screen. This icon theme
-;;;     is associated with the screen and can be used as long as the screen is
-;;;     open. Do not ref or unref it.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_get_for_screen" gtk-icon-theme-get-for-screen)
     (g-object gtk-icon-theme)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-3-15}
+  @argument[screen]{a @class{gdk-screen} object.}
+  @begin{return}
+    A unique @class{gtk-icon-theme} associated with the given screen. This icon
+    theme is associated with the screen and can be used as long as the screen is
+    open. Do not ref or unref it.
+  @end{return}
+  @begin{short}
+    Gets the icon theme object associated with screen; if this function has not
+    previously been called for the given screen, a new icon theme object will be
+    created and associated with the screen. Icon theme objects are fairly
+    expensive to create, so using this function is usually a better choice than
+    calling than @fun{gtk-icon-theme-new} and setting the screen yourself; by
+    using this function a single icon theme object will be shared between users.
+  @end{short}
+
+  Since 2.4
+  @see-function{gtk-icon-theme-new}"
   (screen (g-object gdk-screen)))
 
 (export 'gtk-icon-theme-get-for-screen)
@@ -477,25 +483,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_has_icon ()
-;;;
-;;; gboolean gtk_icon_theme_has_icon (GtkIconTheme *icon_theme,
-;;;                                   const gchar *icon_name);
-;;;
-;;; Checks whether an icon theme includes an icon for a particular name.
-;;;
-;;; icon_theme :
-;;;     a GtkIconTheme
-;;;
-;;; icon_name :
-;;;     the name of an icon
-;;;
-;;; Returns :
-;;;     TRUE if icon_theme includes an icon for icon_name.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_has_icon" gtk-icon-theme-has-icon) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-15}
+  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+  @argument[icon-name]{the name of an icon}
+  @return{@em{true} if @arg{icon-theme} includes an icon for @arg{icon-name}.}
+  @begin{short}
+    Checks whether an icon theme includes an icon for a particular name.
+  @end{short}
+
+  Since 2.4"
   (icon-theme (g-object gtk-icon-theme))
   (icon-name :string))
 
@@ -503,38 +503,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_lookup_icon ()
-;;;
-;;; GtkIconInfo * gtk_icon_theme_lookup_icon (GtkIconTheme *icon_theme,
-;;;                                           const gchar *icon_name,
-;;;                                           gint size,
-;;;                                           GtkIconLookupFlags flags);
-;;;
-;;; Looks up a named icon and returns a structure containing information such as
-;;; the filename of the icon. The icon can then be rendered into a pixbuf using
-;;; gtk_icon_info_load_icon(). (gtk_icon_theme_load_icon() combines these two
-;;; steps if all you need is the pixbuf.)
-;;;
-;;; icon_theme :
-;;;     a GtkIconTheme
-;;;
-;;; icon_name :
-;;;     the name of the icon to lookup
-;;;
-;;; size :
-;;;     desired icon size
-;;;
-;;; flags :
-;;;     flags modifying the behavior of the icon lookup
-;;;
-;;; Returns :
-;;;     a GtkIconInfo structure containing information about the icon, or NULL
-;;;     if the icon wasn't found. Free with gtk_icon_info_free()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_lookup_icon" gtk-icon-theme-lookup-icon)
     (:pointer gtk-icon-info)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-15}
+  @argument[icon-theme]{a @class{gtk-icon-theme} object.}
+  @argument[icon-name]{the name of the icon to lookup}
+  @argument[size]{desired icon size}
+  @argument[flags]{flags modifying the behavior of the icon lookup}
+  @begin{return}
+    A @symbol{gtk-icon-info} structure containing information about the icon,
+    or @code{nil} if the icon wasn't found. Free with @fun{gtk-icon-info-free}.
+  @end{return}
+  @begin{short}
+    Looks up a named icon and returns a structure containing information such as
+    the filename of the icon. The icon can then be rendered into a pixbuf using
+    @fun{gtk-icon-info-load-icon}. (@fun{gtk-icon-theme-load-icon} combines
+    these two steps if all you need is the pixbuf.)
+  @end{short}
+
+  Since 2.4
+  @see-function{gtk-icon-info-load-icon}
+  @see-function{gtk-icon-theme-load-icon}"
   (icon-theme (g-object gtk-icon-theme))
   (icon-name :string)
   (size :int)
@@ -656,57 +648,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_list_contexts ()
-;;;
-;;; GList * gtk_icon_theme_list_contexts (GtkIconTheme *icon_theme);
-;;;
-;;; Gets the list of contexts available within the current hierarchy of icon
-;;; themes
-;;;
-;;; icon_theme :
-;;;     a GtkIconTheme
-;;;
-;;; Returns :
-;;;     a GList list holding the names of all the contexts in the theme. You
-;;;     must first free each element in the list with g_free(), then free the
-;;;     list itself with g_list_free().
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_list_contexts" gtk-icon-theme-list-contexts)
     (g-list :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-3-15}
+  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+  @begin{return}
+    A @type{g-list} list holding the names of all the contexts in the theme.
+  @end{return}
+  @begin{short}
+    Gets the list of contexts available within the current hierarchy of icon
+    themes.
+  @end{short}
+
+  Since 2.12"
   (icon-theme (g-object gtk-icon-theme)))
 
 (export 'gtk-icon-theme-list-contexts)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_list_icons ()
-;;;
-;;; GList * gtk_icon_theme_list_icons (GtkIconTheme *icon_theme,
-;;;                                    const gchar *context);
-;;;
-;;; Lists the icons in the current icon theme. Only a subset of the icons can be
-;;; listed by providing a context string. The set of values for the context
-;;; string is system dependent, but will typically include such values as
-;;; "Applications" and "MimeTypes".
-;;;
-;;; icon_theme :
-;;;     a GtkIconTheme
-;;;
-;;; context :
-;;;     a string identifying a particular type of icon, or NULL to list all
-;;;     icons
-;;;
-;;; Returns :
-;;;     a GList list holding the names of all the icons in the theme. You must
-;;;     first free each element in the list with g_free(), then free the list
-;;;     itself with g_list_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_list_icons" gtk-icon-theme-list-icons)
     (g-list :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-15}
+  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+  @argument[context]{a string identifying a particular type of icon, or
+    @code{nil} to list allicons}
+  @begin{return}
+    A @type{g-list} list holding the names of all the icons in the theme.
+  @end{return}
+  @begin{short}
+    Lists the icons in the current icon theme. Only a subset of the icons can
+    be listed by providing a context string. The set of values for the context
+    string is system dependent, but will typically include such values as
+    \"Applications\" and \"MimeTypes\".
+  @end{short}
+  
+  Since 2.4"
   (icon-theme (g-object gtk-icon-theme))
   (context :string))
 
@@ -738,23 +721,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_get_example_icon_name ()
-;;;
-;;; char * gtk_icon_theme_get_example_icon_name (GtkIconTheme *icon_theme);
-;;;
-;;; Gets the name of an icon that is representative of the current theme (for
-;;; instance, to use when presenting a list of themes to the user.)
-;;;
-;;; icon_theme :
-;;;     a GtkIconTheme
-;;;
-;;; Returns :
-;;;     the name of an example icon or NULL. Free with g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_get_example_icon_name"
            gtk-icon-theme-get-example-icon-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-15}
+  @argument[icon-theme]{a @class{gtk-icon-theme} object}
+  @return{The name of an example icon or @code{nil}.}
+  @begin{short}
+    Gets the name of an icon that is representative of the current theme (for
+    instance, to use when presenting a list of themes to the user.)
+  @end{short}
+
+  Since 2.4"
   (icon-theme (g-object gtk-icon-theme)))
 
 (export 'gtk-icon-theme-get-example-icon-name)

@@ -2,13 +2,14 @@
 ;;; gtk.calendar.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -388,8 +389,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCalendar
-;;;
-;;; struct GtkCalendar;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkCalendar" gtk-calendar
@@ -427,6 +426,123 @@
    (year
     gtk-calendar-year
     "year" "gint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-calendar 'type)
+ "@version{2013-1-28}
+  @begin{short}
+    @sym{gtk-calendar} is a widget that displays a Gregorian calendar, one month
+    at a time.
+  @end{short}
+  It can be created with @fun{gtk-calendar-new}.
+
+  The month and year currently displayed can be altered with
+  @fun{gtk-calendar-select-month}. The exact day can be selected from the
+  displayed month using @fun{gtk-calendar-select-day}.
+
+  To place a visual marker on a particular day, use @fun{gtk-calendar-mark-day}
+  and to remove the marker, @fun{gtk-calendar-unmark-day}. Alternative, all
+  marks can be cleared with @fun{gtk-calendar-clear-marks}.
+
+  The way in which the calendar itself is displayed can be altered using
+  @fun{gtk-calendar-set-display-options}.
+
+  The selected date can be retrieved from a @sym{gtk-calendar} using
+  @fun{gtk-calendar-get-date}.
+
+  Users should be aware that, although the Gregorian calendar is the legal
+  calendar in most countries, it was adopted progressively between 1582 and
+  1929. Display before these dates is likely to be historically incorrect.
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"horizontal-separation\" style property}
+    @code{\"horizontal-separation\"} of type @code{gint} (Read)@br{}
+    Separation between week headers and main area.@br{}
+    Allowed values: @code{>= 0}@br{}
+    Default value: @code{4}
+
+    @subheading{The \"inner-border\" style property}
+    @code{\"inner-border\"} of type @code{gint} (Read)@br{}
+    The spacing around the day/week headers and main area.@br{}
+    Allowed values: @code{>= 0}@br{}
+    Default value: @code{4}
+
+    @subheading{The \"vertical-separation\" style property}
+    @code{\"vertical-separation\"} of type @code{gint} (Read)@br{}
+    Space between day headers and main area.@br{}
+    Allowed values: @code{>= 0}@br{}
+    Default value: @code{4}
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+      Emitted when the user selects a day.
+    @subheading{The \"day-selected\" signal}
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[calendar]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"day-selected-double-click\" signal}
+      Emitted when the user double-clicks a day.
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[calendar]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"month-changed\" signal}
+      Emitted when the user clicks a button to change the selected month on a
+      calendar.
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[calendar]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"next-month\" signal}
+      Emitted when the user switched to the next month.
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @enty[calendar]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"next-year\" signal}
+      Emitted when user switched to the next year.
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[calendar]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"prev-month\" signal}
+      Emitted when the user switched to the previous month.
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[calendar]{the object which received the signal.}
+      @end{table}
+    @subheading{The \"prev-year\" signal}
+      Emitted when user switched to the previous year.
+      @begin{pre}
+ lambda (calendar)   : Run First
+      @end{pre}
+      @begin[code]{table}
+        @entry[calendar]{the object which received the signal.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-calendar-day}
+  @see-slot{gtk-calendar-detail-height-rows}
+  @see-slot{gtk-calendar-detail-width-chars}
+  @see-slot{gtk-calendar-month}
+  @see-slot{gtk-calendar-no-month-change}
+  @see-slot{gtk-calendar-show-day-names}
+  @see-slot{gtk-calendar-show-details}
+  @see-slot{gtk-calendar-show-heading}
+  @see-slot{gtk-calendar-show-week-numbers}
+  @see-slot{gtk-calendar-year}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCalendarDetailFunc ()

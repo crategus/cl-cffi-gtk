@@ -28,20 +28,13 @@
 
 (in-package :gtk)
 
-(load "../gtk/atdoc/src/atdoc-gtk.package.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.main-loop.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.selections.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.widget.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.window.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.misc.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.grid.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.button.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.orientable.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.table.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.label.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.calendar.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.frame.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.separator.lisp")
@@ -59,19 +52,9 @@
 
 (in-package :gdk)
 
-(load "../gdk/atdoc/src/atdoc-gdk.package.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.color.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.rectangle.lisp")
-
-;;; ----------------------------------------------------------------------------
-
-(in-package :gobject)
-
-(load "../gobject/atdoc/src/atdoc-gobject.package.lisp")
-
-(load "../gobject/atdoc/src/atdoc-gobject.base.lisp")
-(load "../gobject/atdoc/src/atdoc-gobject.signals.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -84,24 +67,5 @@
 (load "../glib/atdoc/src/atdoc-glib.utils.lisp")
 (load "../glib/atdoc/src/atdoc-glib.quark.lisp")
 (load "../glib/atdoc/src/atdoc-glib.error.lisp")
-
-;;; ----------------------------------------------------------------------------
-
-(in-package :gio)
-
-(load "../gio/atdoc/src/atdoc-gio.package.lisp")
-
-;;; ----------------------------------------------------------------------------
-
-(in-package :pango)
-
-(load "../pango/atdoc/src/atdoc-pango.package.lisp")
-
-;;; ----------------------------------------------------------------------------
-
-(in-package :cairo)
-
-(load "../cairo/atdoc/src/atdoc-cairo.package.lisp")
-(load "../cairo/atdoc/src/atdoc-cairo.context.lisp")
 
 ;;; --- End of file atdoc-gtk.lisp ---------------------------------------------

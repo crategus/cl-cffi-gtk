@@ -2,10 +2,11 @@
 ;;; gtk.accel-group.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -88,14 +89,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-group 'type)
  "@version{2013-1-12}
-  @short{An object representing and maintaining a group of accelerators.}
-
-  A @sym{gtk-accel-group} represents a group of keyboard accelerators, typically
-  attached to a toplevel @class{gtk-window} (with
-  @fun{gtk-window-add-accel-group}). Usually you won't need to create a
-  @sym{gtk-accel-group} directly; instead, when using @class{gtk-ui-manager},
-  GTK+ automatically sets up the accelerators for your menus in the ui manager's
-  @sym{gtk-accel-group}.
+  @begin{short}
+    A @sym{gtk-accel-group} represents a group of keyboard accelerators,
+    typically attached to a toplevel @class{gtk-window} with
+    @fun{gtk-window-add-accel-group}. Usually you won't need to create a
+    @sym{gtk-accel-group} directly; instead, when using @class{gtk-ui-manager},
+    GTK+ automatically sets up the accelerators for your menus in the UI
+    manager's @sym{gtk-accel-group}.
+  @end{short}
 
   Note that accelerators are different from mnemonics. Accelerators are
   shortcuts for activating a menu item; they appear alongside the menu item
@@ -105,46 +106,37 @@
   @fun{gtk-label-new-with-mnemonic}. Menu items can have both accelerators and
   mnemonics, of course.
   @begin[Signal Details]{dictionary}
-    @subheading{The \"accel-activate\" signal.}
-    The \"accel-activate\" signal is an implementation detail of
-    @sym{gtk-accel-group} and not meant to be used by applications.
-    @begin{pre}
- gboolean user_function (GtkAccelGroup  *accel_group,
-                         GObject        *acceleratable,
-                         guint           keyval,
-                         GdkModifierType modifier,
-                         gpointer        user_data)          : Has Details
-    @end{pre}
-    @begin[code]{table}
-      @entry[accel_group]{the @sym{gtk-accel-group} which received the signal}
-      @entry[acceleratable]{the object on which the accelerator was activated}
-      @entry[keyval]{the accelerator keyval}
-      @entry[modifier]{the modifier combination of the accelerator}
-      @entry[user-data]{user data set when the signal handler was connected.}
-      @entry[Returns]{@arg{true} if the accelerator was activated}
-    @end{table}
-
-    @subheading{The \"accel-changed\" signal.}
-    The \"accel-changed\" signal is emitted when a @class{gtk-accel-group-entry}
-    is added to or removed from the accel group.
-
-    Widgets like @class{gtk-accel-label} which display an associated accelerator
-    should connect to this signal, and rebuild their visual representation if
-    the @code{accel_closure} is theirs.
-    @begin{pre}
- void user_function (GtkAccelGroup  *accel_group,
-                     guint           keyval,
-                     GdkModifierType modifier,
-                     GClosure       *accel_closure,
-                     gpointer        user_data)          : Has Details
-    @end{pre}
-    @begin[code]{table}
-      @entry[accel_group]{the @sym{gtk-accel-group} which received the signal}
-      @entry[keyval]{the accelerator keyval}
-      @entry[modifier]{the modifier combination of the accelerator}
-      @entry[accel_closure]{the @symbol{g-closure} of the accelerator}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
+    @subheading{The \"accel-activate\" signal}
+      The \"accel-activate\" signal is an implementation detail of
+      @sym{gtk-accel-group} and not meant to be used by applications.
+      @begin{pre}
+ lambda (accel-group acceleratable keyval modifier)
+      @end{pre}
+      @begin[arg]{table}
+        @entry[accel-group]{the @sym{gtk-accel-group} which received the signal}
+        @entry[acceleratable]{the @class{g-object} on which the accelerator was
+          activated}
+        @entry[keyval]{the accelerator keyval of type @code{guint}}
+        @entry[modifier]{the modifier combination of type
+          @symbol{gdk-modifier-type} of the accelerator}
+        @entry[Returns]{@arg{true} if the accelerator was activated}
+      @end{table}
+    @subheading{The \"accel-changed\" signal}
+      The \"accel-changed\" signal is emitted when an entry is added to or
+      removed from the accel group.
+      Widgets like @class{gtk-accel-label} which display an associated
+      accelerator should connect to this signal, and rebuild their visual
+      representation if the @arg{accel-closure} is theirs.
+      @begin{pre}
+ lambda (accel-group keyval modifier accel-closure)
+      @end{pre}
+      @begin[arg]{table}
+        @entry[accel-group]{the @sym{gtk-accel-group} which received the signal}
+        @entry[keyval]{the accelerator keyval of type @code{guint}}
+        @entry[modifier]{the modifier combination of type
+          @symbol{gdk-modifier-type} of the accelerator}
+        @entry[accel-closure]{the @symbol{g-closure} of the accelerator}
+      @end{table}
   @end{dictionary}
   @see-slot{gtk-accel-group-is-locked}
   @see-slot{gtk-accel-group-modifier-mask}")
@@ -158,22 +150,24 @@
 ;;; --- gtk-accel-group-is-locked ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "is-locked" 'gtk-accel-group) 't)
- "@version{2013-01-12}
-  The @code{\"is-locked\"} property of type @code{:boolean} (Read).@br{}
+(setf (documentation (atdoc:get-slot-from-name "is-locked"
+                                               'gtk-accel-group) 't)
+ "@version{2013-3-11}
+  The @code{\"is-locked\"} property of type @code{gboolean} (Read)@br{}
   Is the accel group locked.@br{}
   Default value: @code{nil}")
 
 ;;; --- gtk-accel-group-modifier-mask ------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "modifier-mask" 'gtk-accel-group) 't)
- "@version{2013-01-12}
+(setf (documentation (atdoc:get-slot-from-name "modifier-mask"
+                                               'gtk-accel-group) 't)
+ "@version{2013-3-11}
   The @code{\"modifier-mask\"} property of type @symbol{gdk-modifier-type}
-  (Read).@br{}
+  (Read)@br{}
   Modifier Mask.@br{}
-  Default value: '(:shift-mask :control-mask :mod1-mask :super-mask :hyper-mask
-                   :meta-mask)")
+  Default value: @code{'(:shift-mask :control-mask :mod1-mask :super-mask
+                         :hyper-mask :meta-mask)}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -184,24 +178,22 @@
 ;;; --- gtk-accel-group-is-locked ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-accel-group-is-locked atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-accel-group-is-locked atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-accel-group-is-locked 'function)
- "@version{2013-1-13}
-  @begin{short}
-    Accessor of the slot @code{\"is-locked\"} of the @class{gtk-accel-group}
-    class.
-  @end{short}")
+ "@version{2013-3-11}
+  Accessor of the slot @code{\"is-locked\"} of the @class{gtk-accel-group}
+  class.")
 
 ;;; --- gtk-accel-group-modifier-mask ------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-accel-group-modifier-mask 'function)
- "@version{2013-1-13}
-  @begin{short}
-    Accessor of the slot @code{\"modifer-mask\"} of the @class{gtk-accel-group}
-    class.
-  @end{short}")
+ "@version{2013-3-11}
+  Accessor of the slot @code{\"modifer-mask\"} of the @class{gtk-accel-group}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_new ()
@@ -211,9 +203,9 @@
 
 (defun gtk-accel-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
-  @return{a new @class{gtk-accel-group} object}
-  @short{Creates a new @class{gtk-accel-group} object.}"
+ "@version{2013-3-11}
+  @return{A new @class{gtk-accel-group} object.}
+  Creates a new @class{gtk-accel-group} object."
   (make-instance 'gtk-accel-group))
 
 (export 'gtk-accel-group-new)
@@ -778,4 +770,3 @@
 
 
 ;;; --- End of file gtk.accel-group.lisp ---------------------------------------
-

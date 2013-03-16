@@ -2,13 +2,14 @@
 ;;; gtk.hsv.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,28 +46,12 @@
 ;;;     gtk_hsv_to_rgb
 ;;;     gtk_rgb_to_hsv
 ;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkHSV
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkHSV implements AtkImplementorIface and GtkBuildable.
 ;;;
 ;;; Signals
 ;;; 
 ;;;   "changed"                                        : Run First
 ;;;   "move"                                           : Action
 ;;; 
-;;; Description
-;;; 
-;;; GtkHSV is the 'color wheel' part of a complete color selector widget. It
-;;; allows to select a color by determining its HSV components in an intuitive
-;;; way. Moving the selection around the outer ring changes the hue, and moving
-;;; the selection point inside the inner triangle changes value and saturation.
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -90,9 +75,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHSV
-;;; 
-;;; struct GtkHSV;
-;;; 
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkHSV" gtk-hsv
@@ -101,6 +83,19 @@
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_hsv_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-hsv 'type)
+ "@version{2013-3-8}
+  @begin{short}
+    GtkHSV is the 'color wheel' part of a complete color selector widget. It
+    allows to select a color by determining its HSV components in an intuitive
+    way. Moving the selection around the outer ring changes the hue, and moving
+    the selection point inside the inner triangle changes value and saturation.
+  @end{short}
+")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_new ()
@@ -117,28 +112,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_set_color ()
-;;; 
-;;; void gtk_hsv_set_color (GtkHSV *hsv, double h, double s, double v)
-;;; 
-;;; Sets the current color in an HSV color selector. Color component values
-;;; must be in the [0.0, 1.0] range.
-;;; 
-;;; hsv :
-;;;     An HSV color selector
-;;; 
-;;; h :
-;;;     Hue
-;;; 
-;;; s :
-;;;     Saturation
-;;; 
-;;; v :
-;;;     Value
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_hsv_set_color" gtk-hsv-set-color) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[hsv]{An HSV color selector}
+  @argument[h]{Hue}
+  @argument[s]{Saturation}
+  @argument[v]{Value}
+  @begin{short}
+    Sets the current color in an HSV color selector. Color component values
+    must be in the [0.0, 1.0] range.
+  @end{short}
+
+  Since 2.14"
   (hsv (g-object gtk-hsv))
   (h :double)
   (s :double)
@@ -148,25 +136,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_get_color ()
-;;; 
-;;; void gtk_hsv_get_color (GtkHSV *hsv, gdouble *h, gdouble *s, gdouble *v)
-;;; 
-;;; Queries the current color in an HSV color selector. Returned values will be
-;;; in the [0.0, 1.0] range.
-;;; 
-;;; hsv :
-;;;     An HSV color selector
-;;; 
-;;; h :
-;;;     Return value for the hue. [out]
-;;; 
-;;; s :
-;;;     Return value for the saturation. [out]
-;;; 
-;;; v :
-;;;     Return value for the value. [out]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_hsv_get_color" %gtk-hsv-get-color) :void
@@ -176,6 +145,20 @@
   (v (:pointer :double)))
 
 (defun gtk-hsv-get-color (hsv)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[hsv]{An HSV color selector.}
+  @begin{return}
+    @code{h} -- the hue.@br{}
+    @code{s} -- the saturation.@br{}
+    @code{v} -- the value.
+  @end{return}
+  @begin{short}
+    Queries the current color in an HSV color selector. Returned values will be
+    in the [0.0, 1.0] range.
+  @end{short} 
+
+  Since 2.14"
   (with-foreign-objects ((h :double) (s :double) (v :double))
     (%gtk-hsv-get-color hsv h s v)
     (values (mem-ref h :double) (mem-ref s :double) (mem-ref v :double))))
@@ -184,24 +167,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_set_metrics ()
-;;; 
-;;; void gtk_hsv_set_metrics (GtkHSV *hsv, gint size, gint ring_width)
-;;; 
-;;; Sets the size and ring width of an HSV color selector.
-;;; 
-;;; hsv :
-;;;     An HSV color selector
-;;; 
-;;; size :
-;;;     Diameter for the hue ring
-;;; 
-;;; ring_width :
-;;;     Width of the hue ring
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_hsv_set_metrics" gtk-hsv-set-metrics) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[hsv]{An HSV color selector}
+  @argument[size]{Diameter for the hue ring}
+  @argument[ring_width]{Width of the hue ring}
+  @short{Sets the size and ring width of an HSV color selector.}
+
+  Since 2.14"
   (hsv (g-object gtk-hsv))
   (size :int)
   (ring-width :int))
@@ -210,21 +186,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_get_metrics ()
-;;; 
-;;; void gtk_hsv_get_metrics (GtkHSV *hsv, gint *size, gint *ring_width)
-;;; 
-;;; Queries the size and ring width of an HSV color selector.
-;;; 
-;;; hsv :
-;;;     An HSV color selector
-;;; 
-;;; size :
-;;;     Return value for the diameter of the hue ring. [out]
-;;; 
-;;; ring_width :
-;;;     Return value for the width of the hue ring. [out]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_hsv_get_metrics" %gtk-hsv-get-metrics) :void
@@ -233,6 +194,16 @@
   (ring-width (:pointer :int)))
 
 (defun gtk-hsv-get-metrics (hsv)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[hsv]{An HSV color selector}
+  @begin{return}
+    @code{size} -- the diameter of the hue ring.@br{}
+    @code{ring-width} -- the width of the hue ring.
+  @end{return}
+  @short{Queries the size and ring width of an HSV color selector.}
+
+  Since 2.14"
   (with-foreign-objects ((size :int) (ring-width :int))
     (%gtk-hsv-get-metrics hsv size ring-width)
     (values (mem-ref size :int) (mem-ref ring-width :int))))
@@ -241,58 +212,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_is_adjusting ()
-;;; 
-;;; gboolean gtk_hsv_is_adjusting (GtkHSV *hsv)
-;;; 
-;;; An HSV color selector can be said to be adjusting if multiple rapid changes
-;;; are being made to its value, for example, when the user is adjusting the
-;;; value with the mouse. This function queries whether the HSV color selector
-;;; is being adjusted or not.
-;;; 
-;;; hsv :
-;;;     A GtkHSV
-;;; 
-;;; Returns :
-;;;     TRUE if clients can ignore changes to the color value, since they may
-;;;     be transitory, or FALSE if they should consider the color value status
-;;;     to be final.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_hsv_is_adjusting" gtk-hsv-is-adjusting) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[hsv]{A GtkHSV}
+  @begin{return}
+    TRUE if clients can ignore changes to the color value, since they may
+    be transitory, or FALSE if they should consider the color value status
+    to be final.
+  @end{return}
+  @begin{short}
+    An HSV color selector can be said to be adjusting if multiple rapid changes
+    are being made to its value, for example, when the user is adjusting the
+    value with the mouse. This function queries whether the HSV color selector
+    is being adjusted or not.
+  @end{short}
+
+  Since 2.14"
   (hsv (g-object gtk-hsv)))
 
 (export 'gtk-hsv-is-adjusting)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_to_rgb ()
-;;; 
-;;; void gtk_hsv_to_rgb (gdouble h,  gdouble s,  gdouble v,
-;;;                      gdouble *r, gdouble *g, gdouble *b)
-;;; 
-;;; Converts a color from HSV space to RGB. Input values must be in the
-;;; [0.0, 1.0] range; output values will be in the same range.
-;;; 
-;;; h :
-;;;     Hue
-;;; 
-;;; s :
-;;;     Saturation
-;;; 
-;;; v :
-;;;     Value
-;;; 
-;;; r :
-;;;     Return value for the red component. [out]
-;;; 
-;;; g :
-;;;     Return value for the green component. [out]
-;;; 
-;;; b :
-;;;     Return value for the blue component. [out]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_hsv_to_rgb" %gtk-hsv-to-rgb) :void
@@ -304,6 +248,22 @@
   (b (:pointer :double)))
 
 (defun gtk-hsv-to-rgb (h s v)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[h]{Hue}
+  @argument[s]{Saturation}
+  @argument[v]{Value}
+  @begin{return}
+    @code{r} -- the red component.@br{}
+    @code{g} -- the green component.@br{}
+    @code{b} -- the blue component.
+  @end{return}
+  @begin{short}
+    Converts a color from HSV space to RGB. Input values must be in the
+    [0.0, 1.0] range; output values will be in the same range.
+  @end{short}
+
+  Since 2.14"
   (with-foreign-objects ((r :double) (g :double) (b :double))
     (%gtk-hsv-to-rgb h s v r g b)
     (values (mem-ref r :double) (mem-ref g :double) (mem-ref b :double))))
@@ -312,32 +272,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_rgb_to_hsv ()
-;;; 
-;;; void gtk_rgb_to_hsv (gdouble r,  gdouble g,  gdouble b,
-;;;                      gdouble *h, gdouble *s, gdouble *v)
-;;; 
-;;; Converts a color from RGB space to HSV. Input values must be in the
-;;; [0.0, 1.0] range; output values will be in the same range.
-;;; 
-;;; r :
-;;;     Red
-;;; 
-;;; g :
-;;;     Green
-;;; 
-;;; b :
-;;;     Blue
-;;; 
-;;; h :
-;;;     Return value for the hue component.
-;;; 
-;;; s :
-;;;     Return value for the saturation component.
-;;; 
-;;; v :
-;;;     Return value for the value component.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_rgb_to_hsv" %gtk-rgb-to-hsv) :void
@@ -349,6 +283,22 @@
   (v (:pointer :double)))
 
 (defun gtk-rgb-to-hsv (r g b)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[r]{Red}
+  @argument[g]{Green}
+  @argument[b]{Blue}
+  @begin{return}
+    @code{h} -- the hue component.@br{}
+    @code{s} -- the saturation component.@br{}
+    @code{v} -- the value component.
+  @end{return}
+  @begin{short}
+    Converts a color from RGB space to HSV. Input values must be in the
+    [0.0, 1.0] range; output values will be in the same range.
+  @end{short}
+
+  Since 2.14"
   (with-foreign-objects ((h :double) (s :double) (v :double))
     (%gtk-rgb-to-hsv r g b h s v)
     (values (mem-ref h :double) (mem-ref s :double) (mem-ref v :double))))

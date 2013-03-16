@@ -2,13 +2,14 @@
 ;;; gtk.scrollbar.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -193,36 +194,10 @@
 ;;;     GtkHScrollbar
 ;;;     
 ;;;     gtk_hscrollbar_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkRange
-;;;                      +----GtkScrollbar
-;;;                            +----GtkHScrollbar
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkHScrollbar implements AtkImplementorIface, GtkBuildable and
-;;; GtkOrientable.
-;;;
-;;; Description
-;;; 
-;;; The GtkHScrollbar widget is a widget arranged horizontally creating a
-;;; scrollbar. See GtkScrollbar for details on scrollbars. GtkAdjustment
-;;; pointers may be added to handle the adjustment of the scrollbar or it may be
-;;; left NULL in which case one will be created for you. See GtkScrollbar for a
-;;; description of what the fields in an adjustment represent for a scrollbar.
-;;; 
-;;; GtkHScrollbar has been deprecated, use GtkScrollbar instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHScrollbar
-;;; 
-;;; struct GtkHScrollbar;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -238,28 +213,39 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-hscrollbar 'type)
+ "@version{2013-3-8}
+  @begin{short}
+    The @sym{gtk-hscrollbar} widget is a widget arranged horizontally creating
+    a scrollbar. See @class{gtk-scrollbar} for details on scrollbars.
+  @end{short}
+  @class{gtk-adjustment} pointers may be added to handle the adjustment of the
+  scrollbar or it may be left @code{nil} in which case one will be created for
+  you. See @class{gtk-scrollbar} for a description of what the fields in an
+  adjustment represent for a scrollbar.
+
+  @sym{gtk-hscrollbar} has been deprecated, use @class{gtk-scrollbar} instead.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_hscrollbar_new ()
-;;; 
-;;; GtkWidget * gtk_hscrollbar_new (GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_hscrollbar_new has been deprecated since version 3.2 and should not be
-;;; used in newly-written code. Use gtk_scrollbar_new() with
-;;; GTK_ORIENTATION_HORIZONTAL instead
-;;; 
-;;; Creates a new horizontal scrollbar.
-;;; 
-;;; adjustment :
-;;;     the GtkAdjustment to use, or NULL to create a new adjustment
-;;; 
-;;; Returns :
-;;;     the new GtkHScrollbar
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hscrollbar-new))
 
 (defun gtk-hscrollbar-new (adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[adjustment]{The @class{gtk-adjustment} to use, or @code{nil} to
+    create a new adjustment}
+  @return{The new @class{gtk-hscrollbar} widget.}
+  @subheading{Warning}
+  @sym{gtk-hscrollbar-new} has been deprecated since version 3.2 and should not
+  be used in newly-written code. Use @fun{gtk-scrollbar-new} with
+  @code{:horizontal} instead.
+
+  @short{Creates a new horizontal scrollbar.}"
   (make-instance 'gtk-scrollbar
                  :orientation :horizontal
                  :adjustment adjustment))

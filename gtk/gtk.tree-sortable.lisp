@@ -2,13 +2,14 @@
 ;;; gtk.tree-sortable.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,63 +44,43 @@
 ;;;     gtk_tree_sortable_set_sort_func
 ;;;     gtk_tree_sortable_set_default_sort_func
 ;;;     gtk_tree_sortable_has_default_sort_func
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GInterface
-;;;    +----GtkTreeSortable
-;;;
-;;; Prerequisites
-;;;
-;;; GtkTreeSortable requires GtkTreeModel and GObject.
-;;;
-;;; Known Implementations
-;;;
-;;; GtkTreeSortable is implemented by GtkListStore, GtkTreeModelSort and
-;;; GtkTreeStore.
-;;;
-;;; Signals
-;;;
-;;;   "sort-column-changed"                            : Run Last
-;;;
-;;; Description
-;;;
-;;; GtkTreeSortable is an interface to be implemented by tree models which
-;;; support sorting. The GtkTreeView uses the methods provided by this interface
-;;; to sort the model.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "sort-column-changed" signal
-;;;
-;;; void user_function (GtkTreeSortable *sortable,
-;;;                     gpointer         user_data)      : Run Last
-;;;
-;;; The ::sort-column-changed signal is emitted when the sort column or sort
-;;; order of sortable is changed. The signal is emitted before the contents of
-;;; sortable are resorted.
-;;;
-;;; sortable :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeSortable
-;;;
-;;; typedef struct _GtkTreeSortable GtkTreeSortable;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GtkTreeSortable" gtk-tree-sortable
   (:export t
    :type-initializer "gtk_tree_sortable_get_type"))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-sortable atdoc:*class-name-alias*) "Interface"
+      (documentation 'gtk-tree-sortable 'type)
+ "@version{2013-3-10}
+  @begin{short}
+    GtkTreeSortable is an interface to be implemented by tree models which
+    support sorting. The GtkTreeView uses the methods provided by this interface
+    to sort the model.
+  @end{short}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"sort-column-changed\" signal}
+      The ::sort-column-changed signal is emitted when the sort column or sort
+      order of sortable is changed. The signal is emitted before the contents of
+      sortable are resorted.
+      @begin{pre}
+ void user_function (GtkTreeSortable *sortable,
+                     gpointer         user_data)      : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[sortable]{the object on which the signal is emitted}
+        @entry[user_data]{user data set when the signal handler was connected.}
+      @end{table}
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeSortableIface

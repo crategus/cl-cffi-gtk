@@ -226,6 +226,81 @@
 (export 'g-time-val)
 
 ;;; ----------------------------------------------------------------------------
+;;; g_get_current_time ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_get_current_time" %g-get-current-time) :void
+  (result (:pointer g-time-val)))
+
+(defun g-get-current-time ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @return{A @type{g-time-val} structure.}
+  @begin{short}
+    Equivalent to the UNIX @code{gettimeofday()} function, but portable.
+  @end{short}
+
+  You may find @fun{g-get-real-time} to be more convenient.
+  @see-function{g-get-real-time}"
+  (with-foreign-object (result 'g-time-val)
+    (when (%g-get-current-time result)
+      result)))
+
+(export 'g-get-current-time)
+
+;;; ----------------------------------------------------------------------------
+;;; g_get_monotonic_time ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_get_monotonic_time" g-get-monotonic-time) :int64
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @return{The monotonic time, in microseconds.}
+  @short{Queries the system monotonic time, if available.}
+
+  On POSIX systems with @code{clock_gettime()} and @code{CLOCK_MONOTONIC} this
+  call is a very shallow wrapper for that. Otherwise, we make a best effort that
+  probably involves returning the wall clock time (with at least microsecond
+  accuracy, subject to the limitations of the OS kernel).
+
+  It's important to note that @code{POSIX CLOCK_MONOTONIC} does not count time
+  spent while the machine is suspended.
+
+  On Windows, \"limitations of the OS kernel\" is a rather substantial
+  statement. Depending on the configuration of the system, the wall clock time
+  is updated as infrequently as 64 times a second (which is approximately every
+  16 ms). Also, on XP (but not on Vista or later) the monotonic clock is locally
+  monotonic, but may differ in exact value between processes due to timer wrap
+  handling.
+
+  Since 2.28")
+
+(export 'g-get-monotonic-time)
+
+;;; ----------------------------------------------------------------------------
+;;; g_get_real_time ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_get_real_time" g-get-real-time) :int64
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @return{The number of microseconds since January 1, 1970 UTC.}
+  @short{Queries the system wall-clock time.}
+
+  This call is functionally equivalent to @fun{g-get-current-time} except that
+  the return value is often more convenient than dealing with a
+  @type{g-time-val}.
+
+  You should only use this call if you are actually interested in the real
+  wall-clock time. @fun{g-get-monotonic-time} is probably more useful for
+  measuring intervals.
+
+  Since 2.28
+  @see-function{g-get-monotonic-time}")
+
+(export 'g-get-real-time)
+
+;;; ----------------------------------------------------------------------------
 ;;; GString
 ;;; 
 ;;; struct GString {

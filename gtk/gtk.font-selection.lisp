@@ -2,13 +2,14 @@
 ;;; gtk.font-selection.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -49,83 +50,19 @@
 ;;;     gtk_font_selection_get_preview_entry
 ;;;     gtk_font_selection_get_size_entry
 ;;;     gtk_font_selection_get_size_list
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBox
-;;;                            +----GtkFontSelection
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkFontSelection implements AtkImplementorIface, GtkBuildable and
-;;; GtkOrientable.
-;;;
-;;; Properties
-;;; 
-;;;   "font-name"                gchar*                : Read / Write
-;;;   "preview-text"             gchar*                : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; The GtkFontSelection widget lists the available fonts, styles and sizes,
-;;; allowing the user to select a font. It is used in the GtkFontSelectionDialog
-;;; widget to provide a dialog box for selecting fonts.
-;;; 
-;;; To set the font which is initially selected, use
-;;; gtk_font_selection_set_font_name().
-;;; 
-;;; To get the selected font use gtk_font_selection_get_font_name().
-;;; 
-;;; To change the text which is shown in the preview area, use
-;;; gtk_font_selection_set_preview_text().
-;;; 
-;;; In GTK+ 3.2, GtkFontSelection has been deprecated in favor of
-;;; GtkFontChooser.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font-name" property
-;;; 
-;;;   "font-name"                gchar*                : Read / Write
-;;; 
-;;; The string that represents this font.
-;;; 
-;;; Default value: "Sans 10"
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "preview-text" property
-;;; 
-;;;   "preview-text"             gchar*                : Read / Write
-;;; 
-;;; The text to display in order to demonstrate the selected font.
-;;; 
-;;; Default value: "abcdefghijk ABCDEFGHIJK"
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFontSelection
-;;; 
-;;; struct GtkFontSelection;
-;;; 
-;;; Warning
-;;; 
-;;; GtkFontSelection is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (register-object-type "GtkFontSelection" 'gtk-font-selection))
 
 (define-g-object-class "GtkFontSelection" gtk-font-selection
-  (:superclass gtk-vbox
+  (:superclass gtk-box
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
    :type-initializer "gtk_font_selection_get_type")
@@ -141,9 +78,84 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-font-selection 'type)
+ "@version{2013-3-6}
+  @subheading{Warning}
+  GtkFontSelection is deprecated and should not be used in newly-written code.
+
+  @begin{short}
+    The GtkFontSelection widget lists the available fonts, styles and sizes,
+    allowing the user to select a font. It is used in the GtkFontSelectionDialog
+    widget to provide a dialog box for selecting fonts.
+  @end{short}
+
+  To set the font which is initially selected, use
+  gtk_font_selection_set_font_name().
+
+  To get the selected font use gtk_font_selection_get_font_name().
+
+  To change the text which is shown in the preview area, use
+  gtk_font_selection_set_preview_text().
+
+  In GTK+ 3.2, GtkFontSelection has been deprecated in favor of
+  GtkFontChooser.
+  @see-slot{gtk-font-selection-font-name}
+  @see-slot{gtk-font-selection-preview-text}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "font-name" 'gtk-font-selection) 't)
+ "The @code{\"font-name\"} property of type @code{gchar*} (Read / Write)@br{}
+  The string that represents this font.@br{}
+  Default value: \"Sans 10\"")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "preview-text" 'gtk-font-selection) 't)
+ "The @code{\"preview-text\"} property of type @code{gchar*} (Read / Write)@br{}
+  The text to display in order to demonstrate the selected font.@br{}
+  Default value: \"abcdefghijk ABCDEFGHIJK\"")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-font-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-font-name 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the slot @code{\"font-name\"} of the @class{gtk-font-selection}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-preview-text atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-preview-text 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the slot @code{\"preview-text\"} of the
+    @class{gtk-font-selection} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
 (define-child-property "GtkFontSelection"
-  gtk-font-selection-child-expand
-  "expand" "gboolean" t t t)
+                       gtk-font-selection-child-expand
+                       "expand" "gboolean" t t t)
 
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-fill
@@ -160,6 +172,70 @@
 (define-child-property "GtkFontSelection"
                        gtk-font-selection-child-position
                        "position" "gint" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-child-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-child-expand 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the child property @code{\"expand\"} of the
+    @class{gtk-font-selection} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-child-fill atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-child-fill 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the child property @code{\"fill\"} of the
+    @class{gtk-font-selection} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-child-padding atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-child-padding 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the child property @code{\"padding\"} of the
+    @class{gtk-font-selection} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-child-pack-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-child-pack-type 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the child property @code{\"pack-type\"} of the
+    @class{gtk-font-selection} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-selection-child-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-selection-child-position 'function)
+ "@version{2013-3-6}
+  @begin{short}
+    Accessor of the child property @code{\"position\"} of the
+    @class{gtk-font-selection} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_new ()
@@ -276,221 +352,190 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_face ()
-;;; 
-;;; PangoFontFace * gtk_font_selection_get_face (GtkFontSelection *fontsel);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_face has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; Gets the PangoFontFace representing the selected font group details (i.e.
-;;; family, slant, weight, width, etc).
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A PangoFontFace representing the selected font group details. The
-;;;     returned object is owned by fontsel and must not be modified or freed.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_face" gtk-font-selection-face) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @begin{return}
+    A PangoFontFace representing the selected font group details. The
+    returned object is owned by fontsel and must not be modified or freed.
+  @end{return}
+  @subheading{Warning}
+  gtk_font_selection_get_face has been deprecated since version 3.2 and
+  should not be used in newly-written code. Use GtkFontChooser
+  
+  @begin{short}
+    Gets the PangoFontFace representing the selected font group details (i.e.
+    family, slant, weight, width, etc).
+  @end{short}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-face)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_face_list ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_face_list (GtkFontSelection *fontsel);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_face_list has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkTreeView which lists all styles available for the
-;;; selected font. For example, 'Regular', 'Bold', etc.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel. [transfer none]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_face_list" gtk-font-selection-face-list)
     g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @return{A GtkWidget that is part of fontsel.}
+  @subheading{Warning}
+  gtk_font_selection_get_face_list has been deprecated since version 3.2 and
+  should not be used in newly-written code. Use GtkFontChooser
+
+  @begin{short}
+    This returns the GtkTreeView which lists all styles available for the
+    selected font. For example, 'Regular', 'Bold', etc.
+  @end{short}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-face-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_family ()
-;;; 
-;;; PangoFontFamily * gtk_font_selection_get_family (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_family has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; Gets the PangoFontFamily representing the selected font family.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A PangoFontFamily representing the selected font family. Font families
-;;;     are a collection of font faces. The returned object is owned by fontsel
-;;;     and must not be modified or freed.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_family" gtk-font-selection-family) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @begin{return}
+    A PangoFontFamily representing the selected font family. Font families
+    are a collection of font faces. The returned object is owned by fontsel
+    and must not be modified or freed.
+  @end{return}
+  @subheading{Warning}
+  gtk_font_selection_get_family has been deprecated since version 3.2 and
+  should not be used in newly-written code. Use GtkFontChooser
+
+  @begin{short}
+    Gets the PangoFontFamily representing the selected font family.
+  @end{short}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-family)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size ()
-;;; 
-;;; gint gtk_font_selection_get_size (GtkFontSelection *fontsel);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_size has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; The selected font size.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A n integer representing the selected font size, or -1 if no font size
-;;;     is selected.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_size" gtk-font-selection-size) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @begin{return}
+    A n integer representing the selected font size, or -1 if no font size
+    is selected.
+  @end{return}
+  @subheading{Warning}
+  gtk_font_selection_get_size has been deprecated since version 3.2 and
+  should not be used in newly-written code. Use GtkFontChooser
+
+  @short{The selected font size.}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_family_list ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_family_list (GtkFontSelection *fontsel);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_family_list has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkTreeView that lists font families, for example, 'Sans',
-;;; 'Serif', etc.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel. [transfer none]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_family_list" gtk-font-selection-family-list)
     g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @return{A GtkWidget that is part of fontsel.}
+  @subheading{Warning}
+  gtk_font_selection_get_family_list has been deprecated since version 3.2
+  and should not be used in newly-written code. Use GtkFontChooser
+
+  @begin{short}
+    This returns the GtkTreeView that lists font families, for example, 'Sans',
+    'Serif', etc.
+  @end{short}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-family-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_preview_entry ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_preview_entry (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_preview_entry has been deprecated since version 3.2
-;;; and should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkEntry used to display the font as a preview.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel. [transfer none]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_preview_entry"
           gtk-font-selection-preview-entry) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @return{A GtkWidget that is part of fontsel.}
+  @subheading{Warning}
+  gtk_font_selection_get_preview_entry has been deprecated since version 3.2
+  and should not be used in newly-written code. Use GtkFontChooser
+
+  @short{This returns the GtkEntry used to display the font as a preview.}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-preview-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size_entry ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_size_entry (GtkFontSelection *fontsel);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_size_entry has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkEntry used to allow the user to edit the font number
-;;; manually instead of selecting it from the list of font sizes.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel. [transfer none]
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_size_entry" gtk-font-selection-size-entry)
     g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @return{A GtkWidget that is part of fontsel.}
+  @subheading{Warning}
+  gtk_font_selection_get_size_entry has been deprecated since version 3.2 and
+  should not be used in newly-written code. Use GtkFontChooser
+
+  @begin{short}
+    This returns the GtkEntry used to allow the user to edit the font number
+    manually instead of selecting it from the list of font sizes.
+  @end{short}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-size-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_size_list ()
-;;; 
-;;; GtkWidget * gtk_font_selection_get_size_list (GtkFontSelection *fontsel)
-;;; 
-;;; Warning
-;;; 
-;;; gtk_font_selection_get_size_list has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. Use GtkFontChooser
-;;; 
-;;; This returns the GtkTreeeView used to list font sizes.
-;;; 
-;;; fontsel :
-;;;     a GtkFontSelection
-;;; 
-;;; Returns :
-;;;     A GtkWidget that is part of fontsel.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_font_selection_get_size_list" gtk-font-selection-size-list)
     g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[fontsel]{a GtkFontSelection}
+  @return{A GtkWidget that is part of fontsel.}
+  @subheading{Warning}
+  gtk_font_selection_get_size_list has been deprecated since version 3.2 and
+  should not be used in newly-written code. Use GtkFontChooser
+
+
+  @short{This returns the GtkTreeeView used to list font sizes.}
+
+  Since 2.14"
   (fontsel g-object))
 
 (export 'gtk-font-selection-size-list)

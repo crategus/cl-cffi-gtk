@@ -2,13 +2,14 @@
 ;;; gtk.font-selection-dialog.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,52 +45,12 @@
 ;;;     gtk_font_selection_dialog_get_cancel_button
 ;;;     gtk_font_selection_dialog_get_ok_button
 ;;;     gtk_font_selection_dialog_get_font_selection
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkDialog
-;;;                                        +----GtkFontSelectionDialog
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkFontSelectionDialog implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Description
-;;;
-;;; The GtkFontSelectionDialog widget is a dialog box for selecting a font.
-;;;
-;;; To set the font which is initially selected, use
-;;; gtk_font_selection_dialog_set_font_name().
-;;;
-;;; To get the selected font use gtk_font_selection_dialog_get_font_name().
-;;;
-;;; To change the text which is shown in the preview area, use
-;;; gtk_font_selection_dialog_set_preview_text().
-;;;
-;;; In GTK+ 3.2, GtkFontSelectionDialog has been deprecated in favor of
-;;; GtkFontChooserDialog.
-;;;
-;;; GtkFontSelectionDialog as GtkBuildable
-;;;
-;;; The GtkFontSelectionDialog implementation of the GtkBuildable interface
-;;; exposes the embedded GtkFontSelection as internal child with the name
-;;; "font_selection". It also exposes the buttons with the names "ok_button",
-;;; "cancel_button" and "apply_button".
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFontSelectionDialog
-;;;
-;;; struct GtkFontSelectionDialog;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkFontSelectionDialog" gtk-font-selection-dialog
@@ -97,24 +58,51 @@
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable")
    :type-initializer "gtk_font_selection_dialog_get_type")
-  ((:cffi font-name
-          gtk-font-selection-dialog-font-name
-          (g-string :free-from-foreign t :free-to-foreign t)
-          "gtk_font_selection_dialog_get_font_name"
-          "gtk_font_selection_dialog_set_font_name")
-   (:cffi preview-text
-          gtk-font-selection-dialog-preview-text :string
-          "gtk_font_selection_dialog_get_preview_text"
-          "gtk_font_selection_dialog_set_preview_text")
-   (:cffi apply-button
-          gtk-font-selection-dialog-apply-button g-object
-          "gtk_font_selection_dialog_get_apply_button" nil)
-   (:cffi cancel-button
-          gtk-font-selection-dialog-cancel-button g-object
-          "gtk_font_selection_dialog_get_cancel_button" nil)
-   (:cffi ok-button
-          gtk-font-selection-dialog-ok-button g-object
-          "gtk_font_selection_dialog_get_ok_button" nil)))
+  nil)
+;  ((:cffi font-name
+;          gtk-font-selection-dialog-font-name
+;          (g-string :free-from-foreign t :free-to-foreign t)
+;          "gtk_font_selection_dialog_get_font_name"
+;          "gtk_font_selection_dialog_set_font_name")
+;   (:cffi preview-text
+;          gtk-font-selection-dialog-preview-text :string
+;          "gtk_font_selection_dialog_get_preview_text"
+;          "gtk_font_selection_dialog_set_preview_text")
+;   (:cffi apply-button
+;          gtk-font-selection-dialog-apply-button g-object
+;          "gtk_font_selection_dialog_get_apply_button" nil)
+;   (:cffi cancel-button
+;          gtk-font-selection-dialog-cancel-button g-object
+;          "gtk_font_selection_dialog_get_cancel_button" nil)
+;   (:cffi ok-button
+;          gtk-font-selection-dialog-ok-button g-object
+;          "gtk_font_selection_dialog_get_ok_button" nil)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-font-selection-dialog 'type)
+ "@version{2013-3-6}
+  @begin{short}
+    The GtkFontSelectionDialog widget is a dialog box for selecting a font.
+  @end{short}
+
+  To set the font which is initially selected, use
+  gtk_font_selection_dialog_set_font_name().
+
+  To get the selected font use gtk_font_selection_dialog_get_font_name().
+
+  To change the text which is shown in the preview area, use
+  gtk_font_selection_dialog_set_preview_text().
+
+  In GTK+ 3.2, GtkFontSelectionDialog has been deprecated in favor of
+  GtkFontChooserDialog.
+
+  @heading{GtkFontSelectionDialog as GtkBuildable}
+  The GtkFontSelectionDialog implementation of the GtkBuildable interface
+  exposes the embedded GtkFontSelection as internal child with the name
+  \"font_selection\". It also exposes the buttons with the names \"ok_button\",
+  \"cancel_button\" and \"apply_button\".")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_dialog_new ()

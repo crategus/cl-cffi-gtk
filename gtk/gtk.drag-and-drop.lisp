@@ -109,8 +109,8 @@
       (gethash 'gtk-dest-defaults atdoc:*external-symbols*)
  "@version{2013-2-27}
   @begin{short}
-    The GtkDestDefaults enumeration specifies the various types of action that
-    will be taken on behalf of the user for a drag destination site.
+    The @sym{gtk-dest-defaults} enumeration specifies the various types of
+    action that will be taken on behalf of the user for a drag destination site.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkDestDefaults\" gtk-dest-defaults
@@ -124,16 +124,17 @@
   @begin[code]{table}
     @entry[:motion]{If set for a widget, GTK+, during a drag over this widget
       will check if the drag matches this widget's list of possible targets and
-      actions. GTK+ will then call gdk_drag_status() as appropriate.}
-    @entry[:highligth]{If set for a widget, GTK+ will draw a highlight on this
+      actions. GTK+ will then call @fun{gdk-drag-status} as appropriate.}
+    @entry[:highlight]{If set for a widget, GTK+ will draw a highlight on this
       widget as long as a drag is over this widget and the widget drag format
       and action are acceptable.}
     @entry[:drop]{If set for a widget, when a drop occurs, GTK+ will will check
       if the drag matches this widget's list of possible targets and actions. If
-      so, GTK+ will call gtk_drag_get_data() on behalf of the widget. Whether or
-      not the drop is successful, GTK+ will call gtk_drag_finish(). If the
-      action was a move, then if the drag was successful, then TRUE will be
-      passed for the delete parameter to gtk_drag_finish().}
+      so, GTK+ will call @fun{gtk-drag-get-data} on behalf of the widget.
+      Whether or not the drop is successful, GTK+ will call
+      @fun{gtk-drag-finish}. If the action was a move, then if the drag was
+      successful, then @em{true} will be passed for the delete parameter to
+      @fun{gtk-drag-finish}.}
     @entry[:all]{If set, specifies that all default actions should be taken.}
   @end{table}")
 
@@ -156,8 +157,8 @@
       (gethash 'gtk-target-flags atdoc:*external-symbols*)
  "@version{2013-2-27}
   @begin{short}
-    The GtkTargetFlags enumeration is used to specify constraints on an entry in
-    a GtkTargetTable.
+    The @sym{gtk-target-flags} enumeration is used to specify constraints on an
+    entry in a @code{GtkTargetTable}.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkTargetFlags\" gtk-target-flags
@@ -176,7 +177,7 @@
     @entry[:other-app]{If this is set, the target will not be selected for drags
       within a single application.}
     @entry[:other-widget]{If this is set, the target will not be selected for
-      drags withing a single widget.}
+      drags within a single widget.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -432,16 +433,14 @@
 
 (defcfun ("gtk_drag_finish" gtk-drag-finish) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-27}
-  @argument[context]{the drag context.}
+ "@version{2013-3-12}
+  @argument[context]{the drag context}
   @argument[success]{a flag indicating whether the drop was successful}
-  @argument[del]{a flag indicating whether the source should delete the original
-    data. (This should be TRUE for a move)}
-  @argument[time]{the timestamp from the \"drag-drop\" signal.}
-  @begin{short}
-    Informs the drag source that the drop is finished, and that the data of the
-    drag will no longer be required.
-  @end{short}"
+  @argument[del]{A flag indicating whether the source should delete the original
+    data. This should be @arg{true} for a move.}
+  @argument[time]{the timestamp from the \"drag-drop\" signal}
+  Informs the drag source that the drop is finished, and that the data of the
+  drag will no longer be required."
   (context (g-object gdk-drag-context))
   (success :boolean)
   (del :boolean)

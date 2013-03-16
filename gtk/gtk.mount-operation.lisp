@@ -2,8 +2,8 @@
 ;;; gtk.mount-operation.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See http://www.gtk.org The API documentation of the
-;;; Lisp binding is available at http://www.crategus.com/books/cl-cffi-gtk/
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2013 Dieter Kaiser
 ;;;
@@ -231,7 +231,7 @@
 
   Ideally the @arg{timestamp} is taken from the event triggering the
   @sym{gtk-show-uri} call. If @arg{timestamp} is not known you can take
-  @variable{+gdk-current-time+}.
+  @var{+gdk-current-time+}.
 
   This function can be used as a replacement for @code{gnome_vfs_url_show()} and
   @code{gnome_url_show()}.

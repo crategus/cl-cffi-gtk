@@ -2,13 +2,14 @@
 ;;; gtk.menu.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -64,360 +65,12 @@
 ;;;     gtk_menu_detach
 ;;;     gtk_menu_get_attach_widget
 ;;;     gtk_menu_get_for_attach_widget
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkMenuShell
-;;;                            +----GtkMenu
-;;;                                  +----GtkRecentChooserMenu
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkMenu implements AtkImplementorIface and GtkBuildable.
-;;; 
-;;; Properties
-;;; 
-;;;   "accel-group"              GtkAccelGroup*        : Read / Write
-;;;   "accel-path"               gchar*                : Read / Write
-;;;   "active"                   gint                  : Read / Write
-;;;   "attach-widget"            GtkWidget*            : Read / Write
-;;;   "monitor"                  gint                  : Read / Write
-;;;   "reserve-toggle-size"      gboolean              : Read / Write
-;;;   "tearoff-state"            gboolean              : Read / Write
-;;;   "tearoff-title"            gchar*                : Read / Write
-;;; 
-;;; Child Properties
-;;; 
-;;;   "bottom-attach"            gint                  : Read / Write
-;;;   "left-attach"              gint                  : Read / Write
-;;;   "right-attach"             gint                  : Read / Write
-;;;   "top-attach"               gint                  : Read / Write
-;;; 
-;;; Style Properties
-;;; 
-;;;   "arrow-placement"          GtkArrowPlacement     : Read
-;;;   "arrow-scaling"            gfloat                : Read
-;;;   "double-arrows"            gboolean              : Read
-;;;   "horizontal-offset"        gint                  : Read
-;;;   "horizontal-padding"       gint                  : Read
-;;;   "vertical-offset"          gint                  : Read
-;;;   "vertical-padding"         gint                  : Read
-;;; 
-;;; Signals
-;;; 
-;;;   "move-scroll"                                    : Action
-;;; 
-;;; Description
-;;; 
-;;; A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of a
-;;; list of GtkMenuItem objects which can be navigated and activated by the user
-;;; to perform application functions.
-;;; 
-;;; A GtkMenu is most commonly dropped down by activating a GtkMenuItem in a
-;;; GtkMenuBar or popped up by activating a GtkMenuItem in another GtkMenu.
-;;; 
-;;; A GtkMenu can also be popped up by activating a GtkOptionMenu. Other
-;;; composite widgets such as the GtkNotebook can pop up a GtkMenu as well.
-;;; 
-;;; Applications can display a GtkMenu as a popup menu by calling the
-;;; gtk_menu_popup() function. The example below shows how an application can
-;;; pop up a menu when the 3rd mouse button is pressed.
-;;; 
-;;; Example 75. Connecting the popup signal handler.
-;;; 
-;;; /* connect our handler which will popup the menu */
-;;; g_signal_connect_swapped (window, "button_press_event",
-;;; G_CALLBACK (my_popup_handler), menu);
-;;; 
-;;; 
-;;; Example 76. Signal handler which displays a popup menu.
-;;; 
-;;; static gint
-;;; my_popup_handler (GtkWidget *widget, GdkEvent *event)
-;;; {
-;;;   GtkMenu *menu;
-;;;   GdkEventButton *event_button;
-;;; 
-;;;   g_return_val_if_fail (widget != NULL, FALSE);
-;;;   g_return_val_if_fail (GTK_IS_MENU (widget), FALSE);
-;;;   g_return_val_if_fail (event != NULL, FALSE);
-;;; 
-;;;   /* The "widget" is the menu that was supplied when 
-;;;    * g_signal_connect_swapped() was called.
-;;;    */
-;;;   menu = GTK_MENU (widget);
-;;; 
-;;;   if (event->type == GDK_BUTTON_PRESS)
-;;;     {
-;;;       event_button = (GdkEventButton *) event;
-;;;       if (event_button->button == GDK_BUTTON_SECONDARY)
-;;;         {
-;;;           gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 
-;;;                           event_button->button, event_button->time);
-;;;           return TRUE;
-;;;         }
-;;;     }
-;;; 
-;;;   return FALSE;
-;;; }
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "accel-group" property
-;;; 
-;;;   "accel-group"              GtkAccelGroup*        : Read / Write
-;;; 
-;;; The accel group holding accelerators for the menu.
-;;; 
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "accel-path" property
-;;; 
-;;;   "accel-path"               gchar*                : Read / Write
-;;; 
-;;; An accel path used to conveniently construct accel paths of child items.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;; 
-;;;   "active"                   gint                  : Read / Write
-;;; 
-;;; The index of the currently selected menu item, or -1 if no menu item is
-;;; selected.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "attach-widget" property
-;;; 
-;;;   "attach-widget"            GtkWidget*            : Read / Write
-;;; 
-;;; The widget the menu is attached to. Setting this property attaches the menu
-;;; without a GtkMenuDetachFunc. If you need to use a detacher, use
-;;; gtk_menu_attach_to_widget() directly.
-;;; 
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "monitor" property
-;;; 
-;;;   "monitor"                  gint                  : Read / Write
-;;; 
-;;; The monitor the menu will be popped up on.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "reserve-toggle-size" property
-;;; 
-;;;   "reserve-toggle-size"      gboolean              : Read / Write
-;;; 
-;;; A boolean that indicates whether the menu reserves space for toggles and
-;;; icons, regardless of their actual presence.
-;;; 
-;;; This property should only be changed from its default value for
-;;; special-purposes such as tabular menus. Regular menus that are connected to
-;;; a menu bar or context menus should reserve toggle space for consistency.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.18
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tearoff-state" property
-;;; 
-;;;   "tearoff-state"            gboolean              : Read / Write
-;;; 
-;;; A boolean that indicates whether the menu is torn-off.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tearoff-title" property
-;;; 
-;;;   "tearoff-title"            gchar*                : Read / Write
-;;; 
-;;; A title that may be displayed by the window manager when this menu is
-;;; torn-off.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "bottom-attach" child property
-;;; 
-;;;   "bottom-attach"            gint                  : Read / Write
-;;; 
-;;; The row number to attach the bottom of the child to.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "left-attach" child property
-;;; 
-;;;   "left-attach"              gint                  : Read / Write
-;;; 
-;;; The column number to attach the left side of the child to.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "right-attach" child property
-;;; 
-;;;   "right-attach"             gint                  : Read / Write
-;;; 
-;;; The column number to attach the right side of the child to.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "top-attach" child property
-;;; 
-;;;   "top-attach"               gint                  : Read / Write
-;;; 
-;;; The row number to attach the top of the child to.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details#
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-placement" style property
-;;; 
-;;;   "arrow-placement"          GtkArrowPlacement     : Read
-;;; 
-;;; Indicates where scroll arrows should be placed.
-;;; 
-;;; Default value: GTK_ARROWS_BOTH
-;;; 
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-scaling" style property
-;;; 
-;;;   "arrow-scaling"            gfloat                : Read
-;;; 
-;;; Arbitrary constant to scale down the size of the scroll arrow.
-;;; 
-;;; Allowed values: [0,1]
-;;; 
-;;; Default value: 0.7
-;;; 
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "double-arrows" style property
-;;; 
-;;;   "double-arrows"            gboolean              : Read
-;;; 
-;;; When scrolling, always show both arrows.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "horizontal-offset" style property
-;;; 
-;;;   "horizontal-offset"        gint                  : Read
-;;; 
-;;; When the menu is a submenu, position it this number of pixels offset
-;;; horizontally.
-;;; 
-;;; Default value: -2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "horizontal-padding" style property
-;;; 
-;;;   "horizontal-padding"       gint                  : Read
-;;; 
-;;; Extra space at the left and right edges of the menu.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "vertical-offset" style property
-;;; 
-;;;   "vertical-offset"          gint                  : Read
-;;; 
-;;; When the menu is a submenu, position it this number of pixels offset
-;;; vertically.
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "vertical-padding" style property
-;;; 
-;;;   "vertical-padding"         gint                  : Read
-;;; 
-;;; Extra space at the top and bottom of the menu.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "move-scroll" signal
-;;; 
-;;; void user_function (GtkMenu      *menu,
-;;;                     GtkScrollType scroll_type,
-;;;                     gpointer      user_data)        : Action
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; scroll_type :
-;;;     a GtkScrollType
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkMenu
-;;; 
-;;; struct GtkMenu;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -452,13 +105,326 @@
     "tearoff-state" "gboolean" t t)
    (tearoff-title
     gtk-menu-tearoff-title
-    "tearoff-title" "gchararray" t t)
-   (:cffi screen
-          gtk-menu-screen g-object
-          nil "gtk_menu_set_screen")
-   (:cffi title
-          gtk-menu-title (:string :free-from-foreign nil :free-to-foreign t)
-          "gtk_menu_get_title" "gtk_menu_set_title")))
+    "tearoff-title" "gchararray" t t)))
+;   (:cffi screen
+;          gtk-menu-screen g-object
+;          nil "gtk_menu_set_screen")
+;   (:cffi title
+;          gtk-menu-title (:string :free-from-foreign nil :free-to-foreign t)
+;          "gtk_menu_get_title" "gtk_menu_set_title")))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-menu 'type)
+ "@version{2013-3-15}
+  @begin{short}
+    A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of a
+    list of GtkMenuItem objects which can be navigated and activated by the user
+    to perform application functions.
+  @end{short}
+
+  A GtkMenu is most commonly dropped down by activating a GtkMenuItem in a
+  GtkMenuBar or popped up by activating a GtkMenuItem in another GtkMenu.
+
+  A GtkMenu can also be popped up by activating a GtkOptionMenu. Other
+  composite widgets such as the GtkNotebook can pop up a GtkMenu as well.
+
+  Applications can display a GtkMenu as a popup menu by calling the
+  gtk_menu_popup() function. The example below shows how an application can
+  pop up a menu when the 3rd mouse button is pressed.
+
+  @b{Example.} Connecting the popup signal handler.
+  @begin{pre}
+ /* connect our handler which will popup the menu */
+ g_signal_connect_swapped (window, \"button_press_event\",
+ G_CALLBACK (my_popup_handler), menu);
+  @end{pre}
+
+  @b{Example.} Signal handler which displays a popup menu.
+  @begin{pre}
+ static gint
+ my_popup_handler (GtkWidget *widget, GdkEvent *event)
+ {
+   GtkMenu *menu;
+   GdkEventButton *event_button;
+
+   g_return_val_if_fail (widget != NULL, FALSE);
+   g_return_val_if_fail (GTK_IS_MENU (widget), FALSE);
+   g_return_val_if_fail (event != NULL, FALSE);
+
+   /* The \"widget\" is the menu that was supplied when 
+    * g_signal_connect_swapped() was called.
+    */
+   menu = GTK_MENU (widget);
+
+   if (event->type == GDK_BUTTON_PRESS)
+     {
+       event_button = (GdkEventButton *) event;
+       if (event_button->button == GDK_BUTTON_SECONDARY)
+         {
+           gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 
+                           event_button->button, event_button->time);
+           return TRUE;
+         @}
+     @}
+
+   return FALSE;
+ @}
+  @end{pre}
+  @begin[Child Property Details]{dictionary}
+    @subheading{The \"bottom-attach\" child property}
+      @code{\"bottom-attach\"} of type @code{:int} (Read / Write)@br{}
+      The row number to attach the bottom of the child to. @br{}
+      Allowed values: @code{>= G_MAXULONG}@br{}
+      Default value: @code{-1}
+
+    @subheading{The \"left-attach\" child property}
+      @code{\"left-attach\"} of type @code{:int} (Read / Write)@br{}
+      The column number to attach the left side of the child to. @br{}
+      Allowed values: @code{>= G_MAXULONG}@br{}
+      Default value: @code{-1}
+
+    @subheading{The \"right-attach\" child property}
+      @code{\"right-attach\"} of type @code{:int} (Read / Write)@br{}
+      The column number to attach the right side of the child to. @br{}
+      Allowed values: @code{>= G_MAXULONG}@br{}
+      Default value: @code{-1}
+
+    @subheading{The \"top-attach\" child property}
+      @code{\"top-attach\"} of type @code{:int} (Read / Write)@br{}
+      The row number to attach the top of the child to. @br{}
+      Allowed values: @code{>= G_MAXULONG}@br{}
+      Default value: @code{-1}
+  @end{dictionary}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"arrow-placement\" style property}
+      @code{\"arrow-placement\"} of tpye @symbol{gtk-arrow-placement}
+      (Read)@br{}
+      Indicates where scroll arrows should be placed. @br{}
+      Default value: @code{:boths}@br{}
+      Since 2.16
+
+    @subheading{The \"arrow-scaling\" style property}
+      @code{\"arrow-scaling\"} of type @code{gfloat} (Read)@br{}
+      Arbitrary constant to scale down the size of the scroll arrow. @br{}
+      Allowed values: @code{[0,1]}@br{}
+      Default value: @code{0.7}@br{}
+      Since 2.16
+
+    @subheading{The \"double-arrows\" style property}
+      @code{\"double-arrows\"} of type @code{:boolean} (Read)@br{}
+      When scrolling, always show both arrows. @br{}
+      Default value: @em{true}
+
+    @subheading{The \"horizontal-offset\" style property}
+      @code{\"horizontal-offset\"} of type @code{:int} (Read)@br{}
+      When the menu is a submenu, position it this number of pixels offset
+      horizontally. @br{}
+      Default value: @code{-2}
+
+    @subheading{The \"horizontal-padding\" style property}
+      @code{\"horizontal-padding\"} of type @code{:int} (Read)@br{}
+      Extra space at the left and right edges of the menu. @br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{0}
+
+    @subheading{The \"vertical-offset\" style property}
+      @code{\"vertical-offset\"} of type @code{:int} (Read)@br{}
+      When the menu is a submenu, position it this number of pixels offset
+      vertically. @br{}
+      Default value: @code{0}
+
+    @subheading{The \"vertical-padding\" style property}
+      @code{\"vertical-padding\"} of type @code{:int} (Read)@br{}
+      Extra space at the top and bottom of the menu. @br{}
+      Allowed values: @code{>= 0}@br{}
+      Default value: @code{1}
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"move-scroll\" signal}
+      @begin{pre}
+ lambda (menu scroll-type)   : Action
+      @end{pre}
+      @begin[code]{table}
+        @entry[menu]{a @class{gtk-menu} widget}
+        @entry[scroll-type]{a @symbol{gtk-scroll-type}}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-menu-accel-group}
+  @see-slot{gtk-menu-accel-path}
+  @see-slot{gtk-menu-active}
+  @see-slot{gtk-menu-attach-widget}
+  @see-slot{gtk-menu-monitor}
+  @see-slot{gtk-menu-reserve-toggle-size}
+  @see-slot{gtk-menu-tearoff-state}
+  @see-slot{gtk-menu-tearoff-title}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-group" 'gtk-menu) 't)
+ "The @code{\"accel-group\"} property of type @class{gtk-accel-group}
+  (Read / Write)@br{}
+  The accel group holding accelerators for the menu.@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-path" 'gtk-menu) 't)
+ "The @code{\"accel-path\"} property of type @code{:string} (Read / Write)@br{}
+  An accel path used to conveniently construct accel paths of child items.@br{}
+  Default value: @code{nil}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-menu) 't)
+ "The @code{\"active\"} property of type @code{:int} (Read / Write)@br{}
+  The index of the currently selected menu item, or @code{-1} if no menu item is
+  selected.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "attach-widget" 'gtk-menu) 't)
+ "The @code{\"attach-widget\"} property of type @class{gtk-widget}
+  (Read / Write)@br{}
+  The widget the menu is attached to. Setting this property attaches the menu
+  without a @code{GtkMenuDetachFunc}. If you need to use a detacher, use
+  @fun{gtk-menu-attach-to-widget} directly.@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "monitor" 'gtk-menu) 't)
+ "The @code{\"monitor\"} property of type @code{:int} (Read / Write)@br{}
+  The monitor the menu will be popped up on.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "reserve-toggle-size"
+                                               'gtk-menu) 't)
+ "The @code{\"reserve-toggle-size\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  A boolean that indicates whether the menu reserves space for toggles and
+  icons, regardless of their actual presence.
+  This property should only be changed from its default value for
+  special-purposes such as tabular menus. Regular menus that are connected to
+  a menu bar or context menus should reserve toggle space for consistency.@br{}
+  Default value: @em{true}@br{}
+  Since 2.18")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tearoff-state" 'gtk-menu) 't)
+ "The @code{\"tearoff-state\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  A boolean that indicates whether the menu is torn-off. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tearoff-title" 'gtk-menu) 't)
+ "The @code{\"tearoff-title\"} property of type @code{:string}
+  (Read / Write)@br{}
+  A title that may be displayed by the window manager when this menu is
+  torn-off. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-accel-group atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-accel-group 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"accel-group\"} of the @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-accel-path atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-accel-path 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"accel-path\"} of the @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-active 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"active\"} of the @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-attach-widget atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-attach-widget 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"attach-widget\"} of the @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-monitor atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-monitor 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"monitor\"} of the @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-reserve-toggle-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-reserve-toggle-size 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"reserve-toggle-size\"} of the @class{gtk-menu}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-tearoff-state atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-tearoff-state 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"tearoff-state\"} of the @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-tearoff-title atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-tearoff-title 'function)
+ "@version{2013-3-16}
+  Accessor of the slot @code{\"tearoff-title\"} of the @class{gtk-menu} class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -479,19 +445,60 @@
                        "bottom-attach" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-child-left-attach atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-child-left-attach 'function)
+ "@version{2013-3-16}
+  Accessor of the child property @code{\"left-attach\"} of the @class{gtk-menu}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-child-right-attach atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-child-right-attach 'function)
+ "@version{2013-3-16}
+  Accessor of the child property @code{\"right-attach\"} of the @class{gtk-menu}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-child-top-attach atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-child-top-attach 'function)
+ "@version{2013-3-16}
+  Accessor of the child property @code{\"top-attach\"} of the @class{gtk-menu}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-child-bottom-attach atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-child-bottom-attach 'function)
+ "@version{2013-3-16}
+  Accessor of the child property @code{\"bottom-attach\"} of the
+  @class{gtk-menu} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_new ()
-;;; 
-;;; GtkWidget * gtk_menu_new (void);
-;;; 
-;;; Creates a new GtkMenu
-;;; 
-;;; Returns :
-;;;     a new GtkMenu
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-new))
 
 (defun gtk-menu-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @return{A new @class{gtk-menu} widget.}
+  Creates a new @class{gtk-menu} widget."
   (make-instance 'gtk-menu))
 
 (export 'gtk-menu-new)
@@ -520,48 +527,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_screen ()
-;;; 
-;;; void gtk_menu_set_screen (GtkMenu *menu, GdkScreen *screen);
-;;; 
-;;; Sets the GdkScreen on which the menu will be displayed.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; screen :
-;;;     a GdkScreen, or NULL if the screen should be determined by the widget
-;;;     the menu is attached to
-;;; 
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-menu-set-screen))
+(defcfun ("gtk_menu_set_screen" gtk-menu-set-screen) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[screen]{a @class{gdk-screen}, or @code{nil} if the screen should be
+    determined by the widget the menu is attached to}
+  @short{Sets the @class{gdk-screen} on which the menu will be displayed.}
 
-(defun gtk-menu-set-screen (menu screen)
-  (setf (gtk-menu-screen menu) screen))
+  Since 2.2"
+  (menu (g-object gtk-menu))
+  (screen (g-object gdk-screen)))
 
 (export 'gtk-menu-set-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_reorder_child ()
-;;; 
-;;; void gtk_menu_reorder_child (GtkMenu *menu,
-;;;                              GtkWidget *child,
-;;;                              gint position);
-;;; 
-;;; Moves child to a new position in the list of menu children.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; child :
-;;;     the GtkMenuItem to move
-;;; 
-;;; position :
-;;;     the new position to place child. Positions are numbered from 0 to n - 1
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_reorder_child" gtk-menu-reorder-child) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[child]{the @class{gtk-menu-item} to move}
+  @argument[position]{the new position to place child. Positions are numbered
+    from 0 to n - 1}
+  Moves child to a new position in the list of menu children."
   (menu g-object)
   (child g-object)
   (position :int))
@@ -570,44 +563,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_attach ()
-;;; 
-;;; void gtk_menu_attach (GtkMenu *menu,
-;;;                       GtkWidget *child,
-;;;                       guint left_attach,
-;;;                       guint right_attach,
-;;;                       guint top_attach,
-;;;                       guint bottom_attach);
-;;; 
-;;; Adds a new GtkMenuItem to a (table) menu. The number of 'cells' that an item
-;;; will occupy is specified by left_attach, right_attach, top_attach and
-;;; bottom_attach. These each represent the leftmost, rightmost, uppermost and
-;;; lower column and row numbers of the table. (Columns and rows are indexed
-;;; from zero).
-;;; 
-;;; Note that this function is not related to gtk_menu_detach().
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; child :
-;;;     a GtkMenuItem
-;;; 
-;;; left_attach :
-;;;     The column number to attach the left side of the item to
-;;; 
-;;; right_attach :
-;;;     The column number to attach the right side of the item to
-;;; 
-;;; top_attach :
-;;;     The row number to attach the top of the item to
-;;; 
-;;; bottom_attach :
-;;;     The row number to attach the bottom of the item to
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_attach" gtk-menu-attach) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[child]{a @class{gtk-menu-item} widget}
+  @argument[left-attach]{The column number to attach the left side of the item
+    to.}
+  @argument[right-attach]{The column number to attach the right side of the
+    item to}
+  @argument[top-attach]{The row number to attach the top of the item to.}
+  @argument[bottom-attach]{The row number to attach the bottom of the item to.}
+  @begin{short}
+    Adds a new @class{gtk-menu-item} to a (table) menu. The number of cells that
+    an item will occupy is specified by @arg{left-attach}, @arg{right-attach},
+    @arg{top-attach} and @arg{bottom-attach}. These each represent the leftmost,
+    rightmost, uppermost and lower column and row numbers of the table.
+   (Columns and rows are indexed from zero).
+  @end{short}
+
+  Note that this function is not related to @fun{gtk-menu-detach}.
+
+ Since 2.4"
   (menu g-object)
   (child g-object)
   (left-attach :uint)
@@ -681,53 +660,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_popup ()
-;;; 
-;;; void gtk_menu_popup (GtkMenu *menu,
-;;;                      GtkWidget *parent_menu_shell,
-;;;                      GtkWidget *parent_menu_item,
-;;;                      GtkMenuPositionFunc func,
-;;;                      gpointer data,
-;;;                      guint button,
-;;;                      guint32 activate_time);
-;;; 
-;;; Displays a menu and makes it available for selection.
-;;; 
-;;; Applications can use this function to display context-sensitive menus, and
-;;; will typically supply NULL for the parent_menu_shell, parent_menu_item, func
-;;; and data parameters. The default menu positioning function will position the
-;;; menu at the current mouse cursor position.
-;;; 
-;;; The button parameter should be the mouse button pressed to initiate the menu
-;;; popup. If the menu popup was initiated by something other than a mouse
-;;; button press, such as a mouse button release or a keypress, button should be
-;;; 0.
-;;; 
-;;; The activate_time parameter is used to conflict-resolve initiation of
-;;; concurrent requests for mouse/keyboard grab requests. To function properly,
-;;; this needs to be the timestamp of the user event (such as a mouse click or
-;;; key press) that caused the initiation of the popup. Only if no such event is
-;;; available, gtk_get_current_event_time() can be used instead.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; parent_menu_shell :
-;;;     the menu shell containing the triggering menu item, or NULL
-;;; 
-;;; parent_menu_item :
-;;;     the menu item whose activation triggered the popup, or NULL
-;;; 
-;;; func :
-;;;     a user supplied function used to position the menu, or NULL
-;;; 
-;;; data :
-;;;     user supplied data to be passed to func.
-;;; 
-;;; button :
-;;;     the mouse button which was pressed to initiate the event.
-;;; 
-;;; activate_time :
-;;;     the time at which the activation event occurred.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_popup" %gtk-menu-popup) :void
@@ -760,6 +692,36 @@
                              position-func
                              (button 0)
                              (activate-time (gtk-get-current-event-time)))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[parent-menu-shell]{the menu shell containing the triggering menu
+    item, or @code{nil}}
+  @argument[parent-menu-item]{the menu item whose activation triggered the
+    popup, or @code{nil}}
+  @argument[func]{a user supplied function used to position the menu,
+    or @code{nil}}
+  @argument[button]{the mouse button which was pressed to initiate the event.}
+  @argument[activate-time]{the time at which the activation event occurred.}
+  @begin{short}
+    Displays a menu and makes it available for selection.
+  @end{short}
+
+  Applications can use this function to display context-sensitive menus, and
+  will typically supply NULL for the parent_menu_shell, parent_menu_item, func
+  and data parameters. The default menu positioning function will position the
+  menu at the current mouse cursor position.
+
+  The button parameter should be the mouse button pressed to initiate the menu
+  popup. If the menu popup was initiated by something other than a mouse
+  button press, such as a mouse button release or a keypress, button should be
+  0.
+
+  The activate_time parameter is used to conflict-resolve initiation of
+  concurrent requests for mouse/keyboard grab requests. To function properly,
+  this needs to be the timestamp of the user event (such as a mouse click or
+  key press) that caused the initiation of the popup. Only if no such event is
+  available, gtk_get_current_event_time() can be used instead."
   (if position-func
       (with-stable-pointer (ptr position-func)
         (%gtk-menu-popup menu
@@ -781,381 +743,320 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_accel_group ()
-;;; 
-;;; void gtk_menu_set_accel_group (GtkMenu *menu, GtkAccelGroup *accel_group);
-;;; 
-;;; Set the GtkAccelGroup which holds global accelerators for the menu. This
-;;; accelerator group needs to also be added to all windows that this menu is
-;;; being used in with gtk_window_add_accel_group(), in order for those windows
-;;; to support all the accelerators contained in this group.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; accel_group :
-;;;     the GtkAccelGroup to be associated with the menu
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-accel-group))
 
 (defun gtk-menu-set-accel-group (menu accel-group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[accel-group]{the @class{gtk-accel-group} to be associated with the
+    menu}
+  Set the GtkAccelGroup which holds global accelerators for the menu. This
+  accelerator group needs to also be added to all windows that this menu is
+  being used in with gtk_window_add_accel_group(), in order for those windows
+  to support all the accelerators contained in this group."
   (setf (gtk-menu-accel-group menu) accel-group))
 
 (export 'gtk-menu-set-accel-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_accel_group ()
-;;; 
-;;; GtkAccelGroup * gtk_menu_get_accel_group (GtkMenu *menu);
-;;; 
-;;; Gets the GtkAccelGroup which holds global accelerators for the menu. See
-;;; gtk_menu_set_accel_group().
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; Returns :
-;;;     the GtkAccelGroup associated with the menu
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-accel-group))
 
 (defun gtk-menu-get-accel-group (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @return{the GtkAccelGroup associated with the menu}
+  Gets the GtkAccelGroup which holds global accelerators for the menu. See
+  gtk_menu_set_accel_group()."
   (gtk-menu-accel-group menu))
 
 (export 'gtk-menu-get-accel-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_accel_path ()
-;;; 
-;;; void gtk_menu_set_accel_path (GtkMenu *menu, const gchar *accel_path);
-;;; 
-;;; Sets an accelerator path for this menu from which accelerator paths for its
-;;; immediate children, its menu items, can be constructed. The main purpose of
-;;; this function is to spare the programmer the inconvenience of having to call
-;;; gtk_menu_item_set_accel_path() on each menu item that should support runtime
-;;; user changable accelerators. Instead, by just calling
-;;; gtk_menu_set_accel_path() on their parent, each menu item of this menu, that
-;;; contains a label describing its purpose, automatically gets an accel path
-;;; assigned.
-;;; 
-;;; For example, a menu containing menu items "New" and "Exit", will, after
-;;; gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File"); has been called,
-;;; assign its items the accel paths: "<Gnumeric-Sheet>/File/New" and
-;;; "<Gnumeric-Sheet>/File/Exit".
-;;; 
-;;; Assigning accel paths to menu items then enables the user to change their
-;;; accelerators at runtime. More details about accelerator paths and their
-;;; default setups can be found at gtk_accel_map_add_entry().
-;;; 
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
-;;; pass a static string, you can save some memory by interning it first with
-;;; g_intern_static_string().
-;;; 
-;;; menu :
-;;;     a valid GtkMenu
-;;; 
-;;; accel_path :
-;;;     a valid accelerator path
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-accel-path))
 
 (defun gtk-menu-set-accel-path (menu accel-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a valid @class{gtk-menu} widget}
+  @argument[accel_path]{a valid accelerator path}
+  @begin{short}
+    Sets an accelerator path for this menu from which accelerator paths for its
+    immediate children, its menu items, can be constructed. The main purpose of
+    this function is to spare the programmer the inconvenience of having to call
+    gtk_menu_item_set_accel_path() on each menu item that should support runtime
+    user changable accelerators. Instead, by just calling
+    gtk_menu_set_accel_path() on their parent, each menu item of this menu, that
+    contains a label describing its purpose, automatically gets an accel path
+    assigned.
+  @end{short}
+
+  For example, a menu containing menu items \"New\" and \"Exit\", will, after
+  gtk_menu_set_accel_path (menu, \"<Gnumeric-Sheet>/File\"); has been called,
+  assign its items the accel paths: \"<Gnumeric-Sheet>/File/New\" and
+  \"<Gnumeric-Sheet>/File/Exit\".
+
+  Assigning accel paths to menu items then enables the user to change their
+  accelerators at runtime. More details about accelerator paths and their
+  default setups can be found at gtk_accel_map_add_entry().
+
+  Note that accel_path string will be stored in a GQuark. Therefore, if you
+  pass a static string, you can save some memory by interning it first with
+  g_intern_static_string()."
   (setf (gtk-menu-accel-path menu) accel-path))
 
 (export 'gtk-menu-set-accel-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_accel_path ()
-;;; 
-;;; const gchar * gtk_menu_get_accel_path (GtkMenu *menu);
-;;; 
-;;; Retrieves the accelerator path set on the menu.
-;;; 
-;;; menu :
-;;;     a valid GtkMenu
-;;; 
-;;; Returns :
-;;;     the accelerator path set on the menu.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-accel-path))
 
 (defun gtk-menu-get-accel-path (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a valid @class{gtk-menu} widget}
+  @return{The accelerator path set on the menu.}
+  @short{Retrieves the accelerator path set on the menu.}
+
+  Since 2.14"
   (gtk-menu-accel-path menu))
 
 (export 'gtk-menu-get-accel-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_title ()
-;;; 
-;;; void gtk_menu_set_title (GtkMenu *menu, const gchar *title);
-;;; 
-;;; Sets the title string for the menu.
-;;; 
-;;; The title is displayed when the menu is shown as a tearoff menu. If title is
-;;; NULL, the menu will see if it is attached to a parent menu item, and if so
-;;; it will try to use the same text as that menu item's label.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; title :
-;;;     a string containing the title for the menu
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-menu-set-title))
+(defcfun ("gtk_menu_set_title" gtk-menu-set-title) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[title]{a string containing the title for the menu}
+  @short{Sets the title string for the menu.}
 
-(defun gtk-menu-set-title (menu title)
-  (setf (gtk-menu-title menu) title))
+  The title is displayed when the menu is shown as a tearoff menu. If title is
+  NULL, the menu will see if it is attached to a parent menu item, and if so
+  it will try to use the same text as that menu item's label."
+  (menu (g-object gtk-menu))
+  (title :string))
 
 (export 'gtk-menu-set-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_title ()
-;;; 
-;;; const gchar * gtk_menu_get_title (GtkMenu *menu);
-;;; 
-;;; Returns the title of the menu. See gtk_menu_set_title().
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; Returns :
-;;;     the title of the menu, or NULL if the menu has no title set on it. This
-;;;     string is owned by GTK+ and should not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-menu-get-title))
-
-(defun gtk-menu-get-title (menu)
-  (gtk-menu-title menu))
+(defcfun ("gtk_menu_get_title" gtk-menu-get-title) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @begin{return}
+    The title of the menu, or NULL if the menu has no title set on it. This
+    string is owned by GTK+ and should not be modified or freed.
+  @end{return}
+  Returns the title of the menu. See gtk_menu_set_title()."
+  (menu (g-object gtk-menu)))
 
 (export 'gtk-menu-get-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_monitor ()
-;;; 
-;;; void gtk_menu_set_monitor (GtkMenu *menu, gint monitor_num);
-;;; 
-;;; Informs GTK+ on which monitor a menu should be popped up. See
-;;; gdk_screen_get_monitor_geometry().
-;;; 
-;;; This function should be called from a GtkMenuPositionFunc if the menu should
-;;; not appear on the same monitor as the pointer. This information can't be
-;;; reliably inferred from the coordinates returned by a GtkMenuPositionFunc,
-;;; since, for very long menus, these coordinates may extend beyond the monitor
-;;; boundaries or even the screen boundaries.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; monitor_num :
-;;;     the number of the monitor on which the menu should be popped up
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-monitor))
 
 (defun gtk-menu-set-monitor (menu monitor-num)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @code{gtk-menu} widget}
+  @argument[monitor-num]{the number of the monitor on which the menu should be
+    popped up}
+  @begin{short}
+    Informs GTK+ on which monitor a menu should be popped up. See
+    gdk_screen_get_monitor_geometry().
+  @end{short}
+
+  This function should be called from a GtkMenuPositionFunc if the menu should
+  not appear on the same monitor as the pointer. This information can't be
+  reliably inferred from the coordinates returned by a GtkMenuPositionFunc,
+  since, for very long menus, these coordinates may extend beyond the monitor
+  boundaries or even the screen boundaries.
+
+  Since 2.4"
   (setf (gtk-menu-monitor menu) monitor-num))
 
 (export 'gtk-menu-set-monitor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_monitor ()
-;;; 
-;;; gint gtk_menu_get_monitor (GtkMenu *menu);
-;;; 
-;;; Retrieves the number of the monitor on which to show the menu.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; Returns :
-;;;     the number of the monitor on which the menu should be popped up or -1,
-;;;     if no monitor has been set
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-monitor))
 
 (defun gtk-menu-get-monitor (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @begin{return}
+    The number of the monitor on which the menu should be popped up or -1,
+    if no monitor has been set.
+  @end{return}
+  @short{Retrieves the number of the monitor on which to show the menu.}
+
+  Since 2.14"
   (gtk-menu-monitor menu))
 
 (export 'gtk-menu-get-monitor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_tearoff_state ()
-;;; 
-;;; gboolean gtk_menu_get_tearoff_state (GtkMenu *menu);
-;;; 
-;;; Returns whether the menu is torn off. See gtk_menu_set_tearoff_state().
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; Returns :
-;;;     TRUE if the menu is currently torn off.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-tearoff-state))
 
 (defun gtk-menu-get-tearoff-state (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @return{TRUE if the menu is currently torn off.}
+  @begin{return}
+    Returns whether the menu is torn off. See gtk_menu_set_tearoff_state().
+  @end{return}"
   (gtk-menu-tearoff-state menu))
 
 (export 'gtk-menu-get-tearoff-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_reserve_toggle_size ()
-;;; 
-;;; void gtk_menu_set_reserve_toggle_size (GtkMenu *menu,
-;;;                                        gboolean reserve_toggle_size);
-;;; 
-;;; Sets whether the menu should reserve space for drawing toggles or icons,
-;;; regardless of their actual presence.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; reserve_toggle_size :
-;;;     whether to reserve size for toggles
-;;; 
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-reserve-toggle-size))
 
 (defun gtk-menu-set-reserve-toggle-size (menu reserve-toggle-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[reserve-toggle-size]{whether to reserve size for toggles}
+  @begin{short}
+    Sets whether the menu should reserve space for drawing toggles or icons,
+    regardless of their actual presence.
+  @end{short}
+
+  Since 2.18"
   (setf (gtk-menu-reserve-toggle-size menu) reserve-toggle-size))
 
 (export 'gtk-menu-set-reserve-toggle-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_reserve_toggle_size ()
-;;; 
-;;; gboolean gtk_menu_get_reserve_toggle_size (GtkMenu *menu);
-;;; 
-;;; Returns whether the menu reserves space for toggles and icons, regardless of
-;;; their actual presence.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; Returns :
-;;;     Whether the menu reserves toggle space
-;;; 
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-reserve-toggle-size))
 
 (defun gtk-menu-get-reserve-toggle-size (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @return{Whether the menu reserves toggle space.}
+  @begin{short}
+    Returns whether the menu reserves space for toggles and icons, regardless of
+    their actual presence.
+  @end{short}
+
+  Since 2.18"
   (gtk-menu-reserve-toggle-size menu))
 
 (export 'gtk-menu-get-reserve-toggle-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_popdown ()
-;;; 
-;;; void gtk_menu_popdown (GtkMenu *menu);
-;;; 
-;;; Removes the menu from the screen.
-;;; 
-;;; menu :
-;;;     a GtkMenu
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_popdown" gtk-menu-popdown) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  Removes the menu from the screen."
   (menu g-object))
 
 (export 'gtk-menu-popdown)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_reposition ()
-;;; 
-;;; void gtk_menu_reposition (GtkMenu *menu);
-;;; 
-;;; Repositions the menu according to its position function.
-;;; 
-;;; menu :
-;;;     a GtkMenu
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_reposition" gtk-menu-reposition) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  Repositions the menu according to its position function."
   (menu g-object))
 
 (export 'gtk-menu-reposition)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_active ()
-;;; 
-;;; GtkWidget * gtk_menu_get_active (GtkMenu *menu);
-;;; 
-;;; Returns the selected menu item from the menu. This is used by the
-;;; GtkOptionMenu.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; Returns :
-;;;     the GtkMenuItem that was last selected in the menu. If a selection has
-;;;     not yet been made, the first menu item is selected.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-get-active))
 
 (defun gtk-menu-get-active (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @begin{return}
+    The GtkMenuItem that was last selected in the menu. If a selection has
+    not yet been made, the first menu item is selected.
+  @end{return}
+  Returns the selected menu item from the menu. This is used by the
+  GtkOptionMenu."
   (gtk-menu-active menu))
 
 (export 'gtk-menu-get-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_active ()
-;;; 
-;;; void gtk_menu_set_active (GtkMenu *menu, guint index);
-;;; 
-;;; Selects the specified menu item within the menu. This is used by the
-;;; GtkOptionMenu and should not be used by anyone else.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; index :
-;;;     the index of the menu item to select. Iindex values are from 0 to n-1
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-active))
 
 (defun gtk-menu-set-active (menu index)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[index]{the index of the menu item to select. Index values are from
+    0 to n-1}
+  Selects the specified menu item within the menu. This is used by the
+  GtkOptionMenu and should not be used by anyone else."
   (setf (gtk-menu-active menu) index))
 
 (export 'gtk-menu-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_tearoff_state ()
-;;; 
-;;; void gtk_menu_set_tearoff_state (GtkMenu *menu, gboolean torn_off);
-;;; 
-;;; Changes the tearoff state of the menu. A menu is normally displayed as drop
-;;; down menu which persists as long as the menu is active. It can also be
-;;; displayed as a tearoff menu which persists until it is closed or reattached.
-;;; 
-;;; menu :
-;;;     a GtkMenu
-;;; 
-;;; torn_off :
-;;;     If TRUE, menu is displayed as a tearoff menu.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-set-tearoff-state))
 
 (defun gtk-menu-set-tearoff-state (menu torn-off)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[torn_off]{If TRUE, menu is displayed as a tearoff menu.}
+  Changes the tearoff state of the menu. A menu is normally displayed as drop
+  down menu which persists as long as the menu is active. It can also be
+  displayed as a tearoff menu which persists until it is closed or reattached."
   (setf (gtk-menu-tearoff-state menu) torn-off))
 
 (export 'gtk-menu-set-tearoff-state)
@@ -1183,18 +1084,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_detach ()
-;;; 
-;;; void gtk_menu_detach (GtkMenu *menu);
-;;; 
-;;; Detaches the menu from the widget to which it had been attached. This
-;;; function will call the callback function, detacher, provided when the
-;;; gtk_menu_attach_to_widget() function was called.
-;;; 
-;;; menu :
-;;;     a GtkMenu
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_detach" gtk-menu-detach) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[menu]{a @class{gtk-menu} widget}
+  Detaches the menu from the widget to which it had been attached. This
+  function will call the callback function, detacher, provided when the
+  gtk_menu_attach_to_widget() function was called."
   (menu (g-object menu)))
 
 (export 'gtk-menu-detach)
@@ -1215,26 +1113,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_for_attach_widget ()
-;;; 
-;;; GList * gtk_menu_get_for_attach_widget (GtkWidget *widget);
-;;; 
-;;; Returns a list of the menus which are attached to this widget. This list is
-;;; owned by GTK+ and must not be modified.
-;;; 
-;;; widget :
-;;;     a GtkWidget
-;;; 
-;;; Returns :
-;;;     the list of menus attached to his widget
-;;; 
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_menu_get_for_attach_widget" gtk-menu-attached-to-widget)
+(defcfun ("gtk_menu_get_for_attach_widget" gtk-menu-get-for-attach-widget)
     (g-list (g-object gtk-menu) :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-16}
+  @argument[widget]{a @class{gtk-widget} widget}
+  @return{The list of menus attached to his widget.}
+  @begin{short}
+    Returns a list of the menus which are attached to this widget. This list is
+    owned by GTK+ and must not be modified.
+  @end{short}
+
+  Since 2.6"
   (width (g-object gtk-widget)))
 
-(export 'gtk-menu-attached-to-widget)
+(export 'gtk-menu-get-for-attach-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkMenuPositionFunc ()

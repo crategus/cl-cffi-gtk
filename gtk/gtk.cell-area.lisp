@@ -124,8 +124,7 @@
   Usually users dont have to interact with the GtkCellArea directly unless
   they are implementing a cell-layouting widget themselves.
 
-  Requesting area sizes
-
+  @subheading{Requesting area sizes}
   As outlined in GtkWidget's geometry management section, GTK+ uses a
   height-for-width geometry management system to compute the sizes of widgets
   and user interfaces. GtkCellArea uses the same semantics to calculate the

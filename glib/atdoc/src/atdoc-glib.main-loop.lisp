@@ -807,7 +807,7 @@
   function; this function allows for more optimizations and more efficient
   system power usage.
 
-  This internally creates a main loop source using @fun{g-timeout-source_new}
+  This internally creates a main loop source using @fun{g-timeout-source-new}
   and attaches it to the main loop context using @fun{g-source-attach}. You can
   do these steps manually if you need greater control.
 

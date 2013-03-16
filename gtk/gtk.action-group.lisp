@@ -849,8 +849,7 @@
     destroyed and when the translation function is changed again}
   @begin{short}
     Sets a function to be used for translating the label and tooltip of
-    @class{gtk-action-group-entry}'s added by
-    @code{gtk_action_group_add_actions()}.
+    @class{gtk-action-entry}'s added by @code{gtk_action_group_add_actions()}.
   @end{short}
 
   If you're using @code{gettext()}, it is enough to set the translation domain
@@ -858,10 +857,10 @@
 
   Since 2.4"
   (%gtk-action-group-set-translate-func
-                                   action-group
-                                   (callback gtk-translate-func-cb)
-                                   (glib::allocate-stable-pointer func)
-                                   (callback glib::stable-pointer-destroy-notify-cb)))
+                             action-group
+                             (callback gtk-translate-func-cb)
+                             (glib::allocate-stable-pointer func)
+                             (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-action-group-set-translate-func)
 

@@ -37,7 +37,6 @@
 (setf (documentation (find-package :gdk-pixbuf) t)
  "GDK-Pixbuf is a library for image loading and manipulation. The GDK-Pixbuf
   documentation contains both the programmer's guide and the API reference.
-
   This is the API documentation of a Lisp binding to GDK-Pixbuf.
   @begin[Library version numbers]{section}
     These macros and variables let you check the version of GDK-Pixbuf you are

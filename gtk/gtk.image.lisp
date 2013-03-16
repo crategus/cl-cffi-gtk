@@ -898,21 +898,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_clear ()
-;;; 
-;;; void gtk_image_clear (GtkImage *image);
-;;; 
-;;; Resets the image to be empty.
-;;; 
-;;; image :
-;;;     a GtkImage
-;;; 
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_image_clear" gtk-image-clear) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[image]{a @class{gtk-image} object}
+  @short{Resets the image to be empty.}
+
+ Since 2.8"
   (image (g-object gtk-image)))
 
-(export 'gtk-image-new)
+(export 'gtk-image-clear)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new ()

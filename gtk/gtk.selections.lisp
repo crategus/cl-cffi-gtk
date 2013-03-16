@@ -2,13 +2,14 @@
 ;;; gtk.selections.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -115,16 +116,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkSelectionData
-;;;
-;;; typedef struct {
-;;;   GdkAtom       selection;
-;;;   GdkAtom       target;
-;;;   GdkAtom       type;
-;;;   gint          format;
-;;;   guchar       *data;
-;;;   gint          length;
-;;;   GdkDisplay   *display;
-;;; } GtkSelectionData;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gtk-selection-data "GtkSelectionData"
@@ -139,28 +130,123 @@
 (export (boxed-related-symbols 'gtk-selection-data))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-selection-data 'type)
+ "@short{}
+  @begin{pre}
+(define-g-boxed-cstruct gtk-selection-data \"GtkSelectionData\"
+  (selection gdk-atom-as-string :initform nil)
+  (target gdk-atom-as-string :initform nil)
+  (type gdk-atom-as-string :initform nil)
+  (format :int :initform 0)
+  (data :pointer :initform (null-pointer))
+  (length :int :initform 0)
+  (display (g-object gdk-display) :initform nil))
+  @end{pre}
+  @see-slot{gtk-selection-data-selection}
+  @see-slot{gtk-selection-data-target}
+  @see-slot{gtk-selection-data-type}
+  @see-slot{gtk-selection-data-format}
+  @see-slot{gtk-selection-data-data}
+  @see-slot{gtk-selection-data-length}
+  @see-slot{gtk-selection-data-display}
+  @see-constructor{make-gtk-selection-data}
+  @see-constructor{copy-gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-selection atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-selection 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{selection} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-target atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-target 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{target} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-type 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{type} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-format atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-format 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{format} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-data atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-data 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{data} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-length atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-length 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{length} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-selection-data-display atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-selection-data-display 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{display} of the @class{gtk-selection-data}
+  structure.
+  @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gtk-selection-data 'function)
+ "@version{2012-12-23}
+  Returns an object of type @class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gtk-selection-data 'function)
+ "@version{2012-12-23}
+  Copies an object of type @class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkTargetEntry
-;;;
-;;; struct GtkTargetEntry {
-;;;   gchar *target;
-;;;   guint  flags;
-;;;   guint  info;
-;;; };
-;;;
-;;; A GtkTargetEntry structure represents a single type of data than can be
-;;; supplied for by a widget for a selection or for supplied or received during
-;;; drag-and-drop.
-;;;
-;;; gchar *target;
-;;;     a string representation of the target type
-;;;
-;;; guint flags;
-;;;     GtkTargetFlags for DND
-;;;
-;;; guint info;
-;;;     an application-assigned integer ID which will get passed as a parater to
-;;;     e.g the "selection-get" signal. It allows the application to identify
-;;;     the target type without extensive string compares.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gtk-target-entry "GtkTargetEntry"
@@ -169,6 +255,77 @@
   (info :uint :initform 0))
 
 (export (boxed-related-symbols 'gtk-target-entry))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-target-entry 'type)
+ "@version{2012-12-23}
+  @begin{short}
+    A @sym{gtk-target-entry} structure represents a single type of data
+    than can be supplied for by a widget for a selection or for supplied or
+    received during drag-and-drop.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-cstruct gtk-target-entry \"GtkTargetEntry\"
+  (target :string :initform 0)
+  (flags gtk-target-flags :initform 0)
+  (info :uint :initform 0))
+  @end{pre}
+  @begin[code]{table}
+    @entry[target]{a string representation of the target type}
+    @entry[flags]{@symbol{gtk-target-flags} for DND}
+    @entry[info]{an application-assigned integer ID which will get passed
+      as a parameter to e. g the \"selection-get\" signal. It allows the
+      application to identify the target type without extensive string
+      compares.}
+  @end{table}
+  @see-slot{gtk-target-entry-target}
+  @see-slot{gtk-target-entry-flags}
+  @see-slot{gtk-target-entry-info}
+  @see-constructor{make-gtk-target-entry}
+  @see-constructor{copy-gtk-target-entry}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-target-entry-target atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-target-entry-target 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{target} of the @class{gtk-target-entry} structure.
+  @see-class{gtk-target-entry}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-target-entry-flags atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-target-entry-flags 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{flags} of the @class{gtk-target-entry} structure.
+  @see-class{gtk-target-entry}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-target-entry-info atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-target-entry-info 'function)
+ "@version{2012-12-23}
+  Accessor for the slot @code{info} of the @class{gtk-target-entry} structure.
+  @see-class{gtk-target-entry}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gtk-target-entry 'function)
+ "@version{2012-12-23}
+  Returns an object of type @class{gtk-target-entry}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gtk-target-entry 'function)
+ "@version{2012-12-23}
+  Returns an object of type @class{gtk-target-entry}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTargetList

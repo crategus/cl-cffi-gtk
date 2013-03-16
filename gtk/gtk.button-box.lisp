@@ -2,11 +2,11 @@
 ;;; gtk.button-box.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org The API documentation of the
-;;; Lisp Binding is available at http://www.crategus.com/books/cl-cffi-gtk/
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -410,6 +410,82 @@
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-secondary
                        "secondary" "gboolean" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hbutton-box-child-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hbutton-box-child-expand 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"expand\"} of the
+    @class{gtk-hbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hbutton-box-child-fill atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hbutton-box-child-fill 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"fill\"} of the
+    @class{gtk-hbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hbutton-box-child-padding atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hbutton-box-child-padding 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"padding\"} of the
+    @class{gtk-hbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hbutton-box-child-pack-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hbutton-box-child-pack-type 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"pack-type\"} of the
+    @class{gtk-hbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hbutton-box-child-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hbutton-box-child-position 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"position\"} of the
+    @class{gtk-hbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hbutton-box-child-secondary atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hbutton-box-child-secondary 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"secondary\"} of the
+    @class{gtk-hbutton-box} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hbutton_box_new ()

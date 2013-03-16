@@ -2,9 +2,10 @@
 ;;; gtk.font-chooser-dialog.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,40 +34,12 @@
 ;;;     GtkFontChooserDialog
 ;;;
 ;;;     gtk_font_chooser_dialog_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkDialog
-;;;                                        +----GtkFontChooserDialog
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkFontChooserDialog implements AtkImplementorIface, GtkBuildable and
-;;; GtkFontChooser.
-;;;
-;;; Description
-;;;
-;;; The GtkFontChooserDialog widget is a dialog for selecting a font. It
-;;; implements the GtkFontChooser interface.
-;;;
-;;; GtkFontChooserDialog as GtkBuildable
-;;;
-;;; The GtkFontChooserDialog implementation of the GtkBuildable interface
-;;; exposes the buttons with the names "select_button" and "cancel_button.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFontChooserDialog
-;;;
-;;; struct GtkFontChooserDialog;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkFontChooserDialog" gtk-font-chooser-dialog
@@ -79,28 +52,35 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-font-chooser-dialog 'type)
+ "@version{2013-3-6}
+  @begin{short}
+    The @sym{gtk-font-chooser-dialog} widget is a dialog for selecting a font.
+    It implements the @class{gtk-font-chooser} interface.
+  @end{short}
+
+  @heading{GtkFontChooserDialog as GtkBuildable}
+  The @sym{gtk-font-chooser-dialog} implementation of the @class{gtk-buildable}
+  interface exposes the buttons with the names \"select_button\" and
+  \"cancel_button\".")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_dialog_new ()
-;;;
-;;; GtkWidget * gtk_font_chooser_dialog_new (const gchar *title,
-;;;                                          GtkWindow *parent);
-;;;
-;;; Creates a new GtkFontChooserDialog.
-;;;
-;;; title :
-;;;     Title of the dialog, or NULL
-;;;
-;;; parent :
-;;;     Transient parent of the dialog, or NULL
-;;;
-;;; Returns :
-;;;     a new GtkFontChooserDialog
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-font-chooser-dialog-new))
 
 (defun gtk-font-chooser-dialog-new (title parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-6}
+  @argument[title]{Title of the dialog, or @code{nil}.}
+  @argument[parent]{Transient parent of the dialog, or @code{nil}.}
+  @return{A new @class{gtk-font-chooser-dialog} widget.}
+  @short{Creates a new @class{gtk-font-chooser-dialog} widget.}
+
+  Since 3.2"
   (make-instance 'gtk-font-chooser-dialog
                  :title title
                  :parent parent))

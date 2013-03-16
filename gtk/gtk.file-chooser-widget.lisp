@@ -2,13 +2,14 @@
 ;;; gtk.file-chooser-widget.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,38 +38,12 @@
 ;;;     GtkFileChooserWidget
 ;;;
 ;;;     gtk_file_chooser_widget_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBox
-;;;                            +----GtkFileChooserWidget
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkFileChooserWidget implements AtkImplementorIface, GtkBuildable,
-;;; GtkOrientable, GtkFileChooser and GtkFileChooserEmbed.
-;;;
-;;; Description
-;;;
-;;; GtkFileChooserWidget is a widget suitable for selecting files. It is the
-;;; main building block of a GtkFileChooserDialog. Most applications will only
-;;; need to use the latter; you can use GtkFileChooserWidget as part of a larger
-;;; window if you have special needs.
-;;;
-;;; Note that GtkFileChooserWidget does not have any methods of its own.
-;;; Instead, you should use the functions that work on a GtkFileChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFileChooserWidget
-;;;
-;;; struct GtkFileChooserWidget;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -85,6 +60,21 @@
                )
    :type-initializer "gtk_file_chooser_widget_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-file-chooser-widget 'type)
+ "@version{2013-3-3}
+  @begin{short}
+    GtkFileChooserWidget is a widget suitable for selecting files. It is the
+    main building block of a GtkFileChooserDialog. Most applications will only
+    need to use the latter; you can use GtkFileChooserWidget as part of a larger
+    window if you have special needs.
+  @end{short}
+
+  Note that GtkFileChooserWidget does not have any methods of its own.
+  Instead, you should use the functions that work on a GtkFileChooser.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -107,6 +97,70 @@
 (define-child-property "GtkFileChooserWidget"
                        gtk-file-chooser-widget-child-position
                        "position" "gint" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-chooser-widget-child-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-file-chooser-widget-child-expand 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the child property @code{\"expand\"} of the
+    @class{gtk-file-chooser-widget} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-chooser-widget-child-fill atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-file-chooser-widget-child-fill 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the child property @code{\"fill\"} of the
+    @class{gtk-file-chooser-widget} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-chooser-widget-child-padding atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-file-chooser-widget-child-padding 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the child property @code{\"padding\"} of the
+    @class{gtk-file-chooser-widget} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-chooser-widget-child-pack-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-file-chooser-widget-child-pack-type 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the child property @code{\"pack-type\"} of the
+    @class{gtk-file-chooser-widget} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-chooser-widget-child-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-file-chooser-widget-child-position 'function)
+ "@version{2013-3-3}
+  @begin{short}
+    Accessor of the child property @code{\"position\"} of the
+    @class{gtk-file-chooser-widget} class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_widget_new ()

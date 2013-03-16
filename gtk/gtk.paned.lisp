@@ -2,13 +2,14 @@
 ;;; gtk.paned.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See >http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -648,39 +649,16 @@
 ;;;     GtkHPaned
 ;;;
 ;;;     gtk_hpaned_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkPaned
-;;;                            +----GtkHPaned
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkHPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
-;;; Description
-;;;
-;;; The HPaned widget is a container widget with two children arranged
-;;; horizontally. The division between the two panes is adjustable by the user
-;;; by dragging a handle. See GtkPaned for details.
-;;;
-;;; GtkHPaned has been deprecated, use GtkPaned instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHPaned
-;;;
-;;; struct GtkHPaned;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkHPaned" 'gtk-h-paned))
+  (register-object-type "GtkHPaned" 'gtk-hpaned))
 
-(define-g-object-class "GtkHPaned" gtk-h-paned
+(define-g-object-class "GtkHPaned" gtk-hpaned
   (:superclass gtk-paned
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -689,31 +667,70 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(define-child-property "GtkHPaned"
-                       gtk-h-paned-child-resize "resize" "gboolean" t t t)
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-hpaned 'type)
+ "@version{2013-3-7}
+  @begin{short}
+    The @sym{gtk-hpaned} widget is a container widget with two children arranged
+    horizontally. The division between the two panes is adjustable by the user
+    by dragging a handle. See @class{gtk-paned} for details.
+  @end{short}
+
+  @sym{gtk-hpaned} has been deprecated, use @class{gtk-paned} instead.")
+
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHPaned"
-                       gtk-h-paned-child-shrink "shrink" "gboolean" t t t)
+                       gtk-hpaned-child-resize "resize" "gboolean" t t t)
+
+(define-child-property "GtkHPaned"
+                       gtk-hpaned-child-shrink "shrink" "gboolean" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hpaned-child-resize atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hpaned-child-resize 'function)
+ "@version{2013-3-7}
+  @begin{short}
+    Accessor of the child property @code{\"resize\"} of the @class{gtk-hpaned}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-hpaned-child-shrink atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-hpaned-child-shrink 'function)
+ "@version{2013-3-7}
+  @begin{short}
+    Accessor of the child property @code{\"shrink\"} of the @class{gtk-hpaned}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hpaned_new ()
-;;;
-;;; GtkWidget * gtk_hpaned_new (void);
-;;;
-;;; Warning
-;;;
-;;; gtk_hpaned_new has been deprecated since version 3.2 and should not be used
-;;; in newly-written code. Use gtk_paned_new() with GTK_ORIENTATION_HORIZONTAL
-;;; instead
-;;;
-;;; Create a new GtkHPaned
-;;;
-;;; Returns :
-;;;     the new GtkHPaned
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-hpaned-new ()
-  (make-instance 'gtk-h-paned))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-7}
+  @return{The new @class{gtk-hpaned} widget.}
+  @b{Warning}
+
+  @sym{gtk-hpaned-new} has been deprecated since version 3.2 and should not be
+  used in newly-written code. Use @fun{gtk-paned-new} with @code{:horizontal}
+  instead.
+
+  @short{Create a new @class{gtk-hpaned} widget.}"
+  (make-instance 'gtk-paned
+                 :orientation :horizontal))
 
 (export 'gtk-hpaned-new)
 
@@ -727,39 +744,16 @@
 ;;;     GtkVPaned
 ;;;
 ;;;     gtk_vpaned_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkPaned
-;;;                            +----GtkVPaned
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkVPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
-;;; Description
-;;;
-;;; The VPaned widget is a container widget with two children arranged
-;;; vertically. The division between the two panes is adjustable by the user by
-;;; dragging a handle. See GtkPaned for details.
-;;;
-;;; GtkVPaned has been deprecated, use GtkPaned instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkVPaned
-;;;
-;;; struct GtkVPaned;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkVPaned" 'gtk-v-paned))
+  (register-object-type "GtkVPaned" 'gtk-vpaned))
 
-(define-g-object-class "GtkVPaned" gtk-v-paned
+(define-g-object-class "GtkVPaned" gtk-vpaned
   (:superclass gtk-paned
    :export t
    :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
@@ -768,31 +762,70 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(define-child-property "GtkVPaned"
-                       gtk-v-paned-child-resize "resize" "gboolean" t t t)
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-vpaned 'type)
+ "@version{2013-3-7}
+  @begin{short}
+    The @sym{gtk-vpaned} widget is a container widget with two children arranged
+    vertically. The division between the two panes is adjustable by the user by
+    dragging a handle. See @class{gtk-paned} for details.
+  @end{short}
+
+  @sym{gtk-vpaned} has been deprecated, use @class{gtk-paned} instead.")
+
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVPaned"
-                       gtk-v-paned-child-shrink "shrink" "gboolean" t t t)
+                       gtk-vpaned-child-resize "resize" "gboolean" t t t)
+
+(define-child-property "GtkVPaned"
+                       gtk-vpaned-child-shrink "shrink" "gboolean" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vpaned-child-resize atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vpaned-child-resize 'function)
+ "@version{2013-3-7}
+  @begin{short}
+    Accessor of the child property @code{\"resize\"} of the @class{gtk-vpaned}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vpaned-child-shrink atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vpaned-child-shrink 'function)
+ "@version{2013-3-7}
+  @begin{short}
+    Accessor of the child property @code{\"shrink\"} of the @class{gtk-vpaned}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vpaned_new ()
-;;;
-;;; GtkWidget * gtk_vpaned_new (void);
-;;;
-;;; Warning
-;;;
-;;; gtk_vpaned_new has been deprecated since version 3.2 and should not be used
-;;; in newly-written code. Use gtk_paned_new() with GTK_ORIENTATION_VERTICAL
-;;; instead
-;;;
-;;; Create a new GtkVPaned
-;;;
-;;; Returns :
-;;;     the new GtkVPaned
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-vpaned-new ()
-  (make-instance 'gtk-v-paned))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-7}
+  @return{The new @class{gtk-vpaned} widget.}
+  @b{Warning}
+
+  @sym{gtk-vpaned-new} has been deprecated since version 3.2 and should not be
+  used in newly-written code. Use @fun{gtk-paned-new} with @code{:vertival}
+  instead.
+
+  @short{Create a new @class{gtk-vpaned} widget.}"
+  (make-instance 'gtk-paned
+                 :orientation :vertical))
 
 (export 'gtk-vpaned-new)
 

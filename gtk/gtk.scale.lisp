@@ -2,13 +2,14 @@
 ;;; gtk.scale.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -65,12 +66,6 @@
 ;;; 
 ;;; GtkScale implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; 
-;;; Properties
-;;; 
-;;;   "digits"                   gint                  : Read / Write
-;;;   "draw-value"               gboolean              : Read / Write
-;;;   "has-origin"               gboolean              : Read / Write
-;;;   "value-pos"                GtkPositionType       : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
@@ -81,25 +76,6 @@
 ;;; 
 ;;;   "format-value"                                   : Run Last
 ;;; 
-;;; Description
-;;; 
-;;; A GtkScale is a slider control used to select a numeric value. To use it,
-;;; you'll probably want to investigate the methods on its base class, GtkRange,
-;;; in addition to the methods for GtkScale itself. To set the value of a scale,
-;;; you would normally use gtk_range_set_value(). To detect changes to the
-;;; value, you would normally use the "value-changed" signal.
-;;; 
-;;; Note that using the same upper and lower bounds for the GtkScale (through
-;;; the GtkRange methods) will hide the slider itself. This is useful for
-;;; applications that want to show an undeterminate value on the scale, without
-;;; changing the layout of the application (such as movie or music players).
-;;; 
-;;; GtkScale as GtkBuildable
-;;; GtkScale supports a custom <marks> element, which can contain multiple
-;;; <mark> elements. The "value" and "position" attributes have the same meaning
-;;; as gtk_scale_add_mark() parameters of the same name. If the element is not
-;;; empty, its content is taken as the markup to show at the mark. It can be
-;;; translated with the usual "translatable and "context" attributes.
 ;;; 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -212,8 +188,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkScale
-;;; 
-;;; struct GtkScale;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkScale" gtk-scale
@@ -235,6 +209,37 @@
    (value-pos
     gtk-scale-value-pos
     "value-pos" "GtkPositionType" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-scale 'type)
+ "@version{2013-3-8}
+  @begin{short}
+    A GtkScale is a slider control used to select a numeric value. To use it,
+    you'll probably want to investigate the methods on its base class, GtkRange,
+    in addition to the methods for GtkScale itself. To set the value of a scale,
+    you would normally use gtk_range_set_value(). To detect changes to the
+    value, you would normally use the \"value-changed\" signal.
+  @end{short}
+
+  Note that using the same upper and lower bounds for the GtkScale (through
+  the GtkRange methods) will hide the slider itself. This is useful for
+  applications that want to show an undeterminate value on the scale, without
+  changing the layout of the application (such as movie or music players).
+
+  @heading{GtkScale as GtkBuildable}
+  GtkScale supports a custom <marks> element, which can contain multiple
+  <mark> elements. The \"value\" and \"position\" attributes have the same
+  meaning as gtk_scale_add_mark() parameters of the same name. If the element
+  is not empty, its content is taken as the markup to show at the mark. It can
+  be translated with the usual \"translatable\" and \"context\" attributes.
+
+  @see-slot{gtk-scale-digits}
+  @see-slot{gtk-scale-draw-value}
+  @see-slot{gtk-scale-has-origin}
+  @see-slot{gtk-scale-value-pos}
+")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_new ()
@@ -626,35 +631,10 @@
 ;;;     
 ;;;     gtk_hscale_new
 ;;;     gtk_hscale_new_with_range
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkRange
-;;;                      +----GtkScale
-;;;                            +----GtkHScale
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkHScale implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;; 
-;;; Description
-;;; 
-;;; The GtkHScale widget is used to allow the user to select a value using a
-;;; horizontal slider. To create one, use gtk_hscale_new_with_range().
-;;; 
-;;; The position to show the current value, and the number of decimal places
-;;; shown can be set using the parent GtkScale class's functions.
-;;; 
-;;; GtkHScale has been deprecated, use GtkScale instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHScale
-;;; 
-;;; struct GtkHScale;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -672,28 +652,40 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-hscale 'type)
+ "@version{2013-3-8}
+  @begin{short}
+    The @sym{gtk-hscale} widget is used to allow the user to select a value
+    using a horizontal slider. To create one,
+    use @fun{gtk-hscale-new-with-range}.
+  @end{short}
+
+  The position to show the current value, and the number of decimal places
+  shown can be set using the parent @class{gtk-scale} class's functions.
+
+  @sym{gtk-hscale} has been deprecated, use @class{gtk-scale} instead.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_hscale_new ()
-;;; 
-;;; GtkWidget * gtk_hscale_new (GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_hscale_new has been deprecated since version 3.2 and should not be used
-;;; in newly-written code. Use gtk_scale_new() with GTK_ORIENTATION_HORIZONTAL
-;;; instead
-;;; 
-;;; Creates a new GtkHScale.
-;;; 
-;;; adjustment :
-;;;     the GtkAdjustment which sets the range of the scale.
-;;; 
-;;; Returns :
-;;;     a new GtkHScale.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hscale-new))
 
 (defun gtk-hscale-new (adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[adjustment]{The @class{gtk-adjustment} which sets the range of the
+    scale.}
+  @return{A new @class{gtk-hscale} widget.}
+  @subheading{Warning}
+  @sym{gtk-hscale-new} has been deprecated since version 3.2 and should not be
+  used in newly-written code. Use @fun{gtk-scale-new} with @code{:horizontal}
+  instead.
+
+  @short{Creates a new @class{gtk-hscale} widget.}
+  @see-function{gtk-scale-new}"
   (make-instance 'gtk-scale
                  :orientation :horizontal
                  :adjustment adjustment))
@@ -702,42 +694,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hscale_new_with_range ()
-;;; 
-;;; GtkWidget * gtk_hscale_new_with_range (gdouble min,
-;;;                                        gdouble max,
-;;;                                        gdouble step);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_hscale_new_with_range has been deprecated since version 3.2 and should
-;;; not be used in newly-written code. Use gtk_scale_new_with_range() with
-;;; GTK_ORIENTATION_HORIZONTAL instead
-;;; 
-;;; Creates a new horizontal scale widget that lets the user input a number
-;;; between min and max (including min and max) with the increment step. step
-;;; must be nonzero; it's the distance the slider moves when using the arrow
-;;; keys to adjust the scale value.
-;;; 
-;;; Note that the way in which the precision is derived works best if step is a
-;;; power of ten. If the resulting precision is not suitable for your needs, use
-;;; gtk_scale_set_digits() to correct it.
-;;; 
-;;; min :
-;;;     minimum value
-;;; 
-;;; max :
-;;;     maximum value
-;;; 
-;;; step :
-;;;     step increment (tick size) used with keyboard shortcuts
-;;; 
-;;; Returns :
-;;;     a new GtkHScale
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hscale-new-with-range))
 
 (defun gtk-hscale-new-with-range (min max step)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[min]{minimum value}
+  @argument[max]{maximum value}
+  @argument[step]{step increment (tick size) used with keyboard shortcuts}
+  @return{a new GtkHScale}
+  @subheading{Warning}
+  gtk_hscale_new_with_range has been deprecated since version 3.2 and should
+  not be used in newly-written code. Use gtk_scale_new_with_range() with
+  GTK_ORIENTATION_HORIZONTAL instead
+
+  @begin{short}
+    Creates a new horizontal scale widget that lets the user input a number
+    between min and max (including min and max) with the increment step. step
+    must be nonzero; it's the distance the slider moves when using the arrow
+    keys to adjust the scale value.
+  @end{short}
+
+  Note that the way in which the precision is derived works best if step is a
+  power of ten. If the resulting precision is not suitable for your needs, use
+  gtk_scale_set_digits() to correct it."
   (make-instance 'gtk-scale
                  :orientation :horizontal
                  :adjustment (make-instance 'gtk-adjustment
@@ -837,42 +819,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscale_new_with_range ()
-;;; 
-;;; GtkWidget * gtk_vscale_new_with_range (gdouble min,
-;;;                                        gdouble max,
-;;;                                        gdouble step);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_vscale_new_with_range has been deprecated since version 3.2 and should
-;;; not be used in newly-written code. Use gtk_scale_new_with_range() with
-;;; GTK_ORIENTATION_VERTICAL instead
-;;; 
-;;; Creates a new vertical scale widget that lets the user input a number
-;;; between min and max (including min and max) with the increment step. step
-;;; must be nonzero; it's the distance the slider moves when using the arrow
-;;; keys to adjust the scale value.
-;;; 
-;;; Note that the way in which the precision is derived works best if step is a
-;;; power of ten. If the resulting precision is not suitable for your needs, use
-;;; gtk_scale_set_digits() to correct it.
-;;; 
-;;; min :
-;;;     minimum value
-;;; 
-;;; max :
-;;;     maximum value
-;;; 
-;;; step :
-;;;     step increment (tick size) used with keyboard shortcuts
-;;; 
-;;; Returns :
-;;;     a new GtkVScale
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vscale-new-with-range))
 
 (defun gtk-vscale-new-with-range (min max step)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-8}
+  @argument[min]{minimum value}
+  @argument[max]{maximum value}
+  @argument[step]{step increment (tick size) used with keyboard shortcuts}
+  @return{A new GtkVScale.}
+  @subheading{Warning}
+  gtk_vscale_new_with_range has been deprecated since version 3.2 and should
+  not be used in newly-written code. Use gtk_scale_new_with_range() with
+  GTK_ORIENTATION_VERTICAL instead
+
+  @begin{short}
+    Creates a new vertical scale widget that lets the user input a number
+    between min and max (including min and max) with the increment step. step
+    must be nonzero; it's the distance the slider moves when using the arrow
+    keys to adjust the scale value.
+  @end{short}
+
+  Note that the way in which the precision is derived works best if step is a
+  power of ten. If the resulting precision is not suitable for your needs, use
+  gtk_scale_set_digits() to correct it."
   (make-instance 'gtk-scale
                  :orientation :vertical
                  :adjustment (make-instance 'gtk-adjustment

@@ -2,13 +2,14 @@
 ;;; gtk.icon-view.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -114,24 +115,6 @@
 ;;; GtkIconView implements AtkImplementorIface, GtkBuildable, GtkCellLayout and
 ;;; GtkScrollable.
 ;;;
-;;; Properties
-;;;
-;;;   "cell-area"                GtkCellArea*         : Read / Write / Construct
-;;;   "column-spacing"           gint                 : Read / Write
-;;;   "columns"                  gint                 : Read / Write
-;;;   "item-orientation"         GtkOrientation       : Read / Write
-;;;   "item-padding"             gint                 : Read / Write
-;;;   "item-width"               gint                 : Read / Write
-;;;   "margin"                   gint                 : Read / Write
-;;;   "markup-column"            gint                 : Read / Write
-;;;   "model"                    GtkTreeModel*        : Read / Write
-;;;   "pixbuf-column"            gint                 : Read / Write
-;;;   "reorderable"              gboolean             : Read / Write
-;;;   "row-spacing"              gint                 : Read / Write
-;;;   "selection-mode"           GtkSelectionMode     : Read / Write
-;;;   "spacing"                  gint                 : Read / Write
-;;;   "text-column"              gint                 : Read / Write
-;;;   "tooltip-column"           gint                 : Read / Write
 ;;;
 ;;; Style Properties
 ;;;
@@ -148,237 +131,6 @@
 ;;;   "selection-changed"                             : Run First
 ;;;   "toggle-cursor-item"                            : Action
 ;;;   "unselect-all"                                  : Action
-;;;
-;;; Description
-;;;
-;;; GtkIconView provides an alternative view on a GtkTreeModel. It displays the
-;;; model as a grid of icons with labels. Like GtkTreeView, it allows to select
-;;; one or multiple items (depending on the selection mode, see
-;;; gtk_icon_view_set_selection_mode()). In addition to selection with the arrow
-;;; keys, GtkIconView supports rubberband selection, which is controlled by
-;;; dragging the pointer.
-;;;
-;;; Note that if the tree model is backed by an actual tree store (as opposed to
-;;; a flat list where the mapping to icons is obvious), GtkIconView will only
-;;; display the first level of the tree and ignore the tree's branches.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "cell-area" property
-;;;
-;;;   "cell-area"                GtkCellArea*         : Read / Write / Construct
-;;;
-;;; The GtkCellArea used to layout cell renderers for this view.
-;;;
-;;; If no area is specified when creating the icon view with
-;;; gtk_icon_view_new_with_area() a GtkCellAreaBox will be used.
-;;;
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "column-spacing" property
-;;;
-;;;   "column-spacing"           gint                  : Read / Write
-;;;
-;;; The column-spacing property specifies the space which is inserted between
-;;; the columns of the icon view.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 6
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "columns" property
-;;;
-;;;   "columns"                  gint                  : Read / Write
-;;;
-;;; The columns property contains the number of the columns in which the items
-;;; should be displayed. If it is -1, the number of columns will be chosen
-;;; automatically to fill the available area.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "item-orientation" property
-;;;
-;;;   "item-orientation"         GtkOrientation        : Read / Write
-;;;
-;;; The item-orientation property specifies how the cells (i.e. the icon and the
-;;; text) of the item are positioned relative to each other.
-;;;
-;;; Default value: GTK_ORIENTATION_VERTICAL
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "item-padding" property
-;;;
-;;;   "item-padding"             gint                  : Read / Write
-;;;
-;;; The item-padding property specifies the padding around each of the icon
-;;; view's item.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 6
-;;;
-;;; Since 2.18
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "item-width" property
-;;;
-;;;   "item-width"               gint                  : Read / Write
-;;;
-;;; The item-width property specifies the width to use for each item. If it is
-;;; set to -1, the icon view will automatically determine a suitable item size.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "margin" property
-;;;
-;;;   "margin"                   gint                  : Read / Write
-;;;
-;;; The margin property specifies the space which is inserted at the edges of
-;;; the icon view.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 6
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "markup-column" property
-;;;
-;;;   "markup-column"            gint                  : Read / Write
-;;;
-;;; The ::markup-column property contains the number of the model column
-;;; containing markup information to be displayed. The markup column must be of
-;;; type G_TYPE_STRING. If this property and the :text-column property are both
-;;; set to column numbers, it overrides the text column. If both are set to -1,
-;;; no texts are displayed.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "model" property
-;;;
-;;;   "model"                    GtkTreeModel*         : Read / Write
-;;;
-;;; The model for the icon view.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixbuf-column" property
-;;;
-;;;   "pixbuf-column"            gint                  : Read / Write
-;;;
-;;; The ::pixbuf-column property contains the number of the model column
-;;; containing the pixbufs which are displayed. The pixbuf column must be of
-;;; type GDK_TYPE_PIXBUF. Setting this property to -1 turns off the display of
-;;; pixbufs.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "reorderable" property
-;;;
-;;;   "reorderable"              gboolean              : Read / Write
-;;;
-;;; The reorderable property specifies if the items can be reordered by DND.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "row-spacing" property
-;;;
-;;;   "row-spacing"              gint                  : Read / Write
-;;;
-;;; The row-spacing property specifies the space which is inserted between the
-;;; rows of the icon view.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 6
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "selection-mode" property
-;;;
-;;;   "selection-mode"           GtkSelectionMode      : Read / Write
-;;;
-;;; The ::selection-mode property specifies the selection mode of icon view. If
-;;; the mode is GTK_SELECTION_MULTIPLE, rubberband selection is enabled, for the
-;;; other modes, only keyboard selection is possible.
-;;;
-;;; Default value: GTK_SELECTION_SINGLE
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "spacing" property
-;;;
-;;;   "spacing"                  gint                  : Read / Write
-;;;
-;;; The spacing property specifies the space which is inserted between the cells
-;;; (i.e. the icon and the text) of an item.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 0
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "text-column" property
-;;;
-;;;   "text-column"              gint                  : Read / Write
-;;;
-;;; The ::text-column property contains the number of the model column
-;;; containing the texts which are displayed. The text column must be of type
-;;; G_TYPE_STRING. If this property and the :markup-column property are both set
-;;; to -1, no texts are displayed.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
-;;;
-;;; Since 2.6
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tooltip-column" property
-;;;
-;;;   "tooltip-column"           gint                  : Read / Write
-;;;
-;;; The column in the model containing the tooltip texts for the items.
-;;;
-;;; Allowed values: >= G_MAXULONG
-;;;
-;;; Default value: -1
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -579,8 +331,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIconView
-;;;
-;;; struct GtkIconView;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkIconView" gtk-icon-view
@@ -590,12 +340,21 @@
                 "GtkBuildable"
                 "GtkCellLayout")
    :type-initializer "gtk_icon_view_get_type")
-  ((column-spacing
+  ((cell-area
+    gtk-icon-view-cell-area
+    "cell-area" "GtkCellArea" t t)
+   (column-spacing
     gtk-icon-view-column-spacing
     "column-spacing" "gint" t t)
    (columns
     gtk-icon-view-columns
     "columns" "gint" t t)
+   (item-orientation
+    gtk-icon-view-item-orientation
+    "item-orientation" "GtkOrientation" t t)
+   (item-padding
+    gtk-icon-view-item-padding
+    "item-padding" "gint" t t)
    (item-width
     gtk-icon-view-item-width
     "item-width" "gint" t t)
@@ -608,9 +367,6 @@
    (model
     gtk-icon-view-model
     "model" "GtkTreeModel" t t)
-   (orientation
-    gtk-icon-view-orientation
-    "orientation" "GtkOrientation" t t)
    (pixbuf-column
     gtk-icon-view-pixbuf-column
     "pixbuf-column" "gint" t t)
@@ -632,6 +388,422 @@
    (tooltip-column
     gtk-icon-view-tooltip-column
     "tooltip-column" "gint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-icon-view 'type)
+ "@version{2013-3-8}
+  @begin{short}
+    GtkIconView provides an alternative view on a GtkTreeModel. It displays the
+    model as a grid of icons with labels. Like GtkTreeView, it allows to select
+    one or multiple items (depending on the selection mode, see
+    gtk_icon_view_set_selection_mode()). In addition to selection with the arrow
+    keys, GtkIconView supports rubberband selection, which is controlled by
+    dragging the pointer.
+  @end{short}
+
+  Note that if the tree model is backed by an actual tree store (as opposed to
+  a flat list where the mapping to icons is obvious), GtkIconView will only
+  display the first level of the tree and ignore the tree's branches.
+
+  @see-slot{gtk-icon-view-cell-area}
+  @see-slot{gtk-icon-view-column-spacing}
+  @see-slot{gtk-icon-view-columns}
+  @see-slot{gtk-icon-view-item-orientation}
+  @see-slot{gtk-icon-view-item-padding}
+  @see-slot{gtk-icon-view-item-width}
+  @see-slot{gtk-icon-view-margin}
+  @see-slot{gtk-icon-view-markup-column}
+  @see-slot{gtk-icon-view-model}
+  @see-slot{gtk-icon-view-pixbuf-column}
+  @see-slot{gtk-icon-view-reorderable}
+  @see-slot{gtk-icon-view-row-spacing}
+  @see-slot{gtk-icon-view-selection-mode}
+  @see-slot{gtk-icon-view-spacing}
+  @see-slot{gtk-icon-view-text-column}
+  @see-slot{gtk-icon-view-tooltip-column}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-area" 'gtk-icon-view) 't)
+ "The @code{\"cell-area\"} property of type @class{gtk-cell-area}
+  (Read / Write / Construct)@br{}
+  The @class{gtk-cell-area} used to layout cell renderers for this view.
+  If no area is specified when creating the icon view with
+  @fun{gtk-icon-view-new-with-area} a @class{gtk-cell-area-box} will be
+  used.@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "column-spacing" 'gtk-icon-view) 't)
+ "The @code{\"column-spacing\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"column-spacing\"} property specifies the space which is inserted
+  between the columns of the icon view.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: @code{6}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "columns" 'gtk-icon-view) 't)
+ "The @code{\"columns\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"columns\"} property contains the number of the columns in which
+  the items should be displayed. If it is @code{-1}, the number of columns will
+  be chosen automatically to fill the available area.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "item-orientation" 'gtk-icon-view) 't)
+ "The @code{\"item-orientation\"} property of type @symbol{gtk-orientation}
+  (Read / Write)@br{}
+  The @code{\"item-orientation\"} property specifies how the cells (i.e. the
+  icon and the text) of the item are positioned relative to each other.@br{}
+  Default value: @code{:vertical}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "item-padding" 'gtk-icon-view) 't)
+ "The @code{\"item-padding\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"item-padding\"} property specifies the padding around each of the
+  icon view's item.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: @code{6}@br{}
+  Since 2.18")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "item-width" 'gtk-icon-view) 't)
+ "The @code{\"item-width\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"item-width\"} property specifies the width to use for each item.
+  If it is set to @code{-1}, the icon view will automatically determine a
+  suitable item size.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "margin" 'gtk-icon-view) 't)
+ "The @code{\"margin\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"margin\"} property specifies the space which is inserted at the
+  edges of the icon view.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: @code{6}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "markup-column" 'gtk-icon-view) 't)
+ "The @code{\"markup-column\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"markup-column\"} property contains the number of the model column
+  containing markup information to be displayed. The markup column must be of
+  type @var{+g-type-string+}. If this property and the @code{\"text-column\"}
+  property are both set to column numbers, it overrides the text column. If both
+  are set to @code{-1}, no texts are displayed.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "model" 'gtk-icon-view) 't)
+ "The @code{\"model\"} property of type @class{gtk-tree-model}
+  (Read / Write)@br{}
+  The model for the icon view.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixbuf-column" 'gtk-icon-view) 't)
+ "The @code{\"pixbuf-column\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"pixbuf-column\"} property contains the number of the model column
+  containing the pixbufs which are displayed. The pixbuf column must be of
+  type @code{GDK_TYPE_PIXBUF}. Setting this property to @code{-1} turns off the
+  display of pixbufs.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "reorderable" 'gtk-icon-view) 't)
+ "The @code{\"reorderable\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  The reorderable property specifies if the items can be reordered by DND.@br{}
+  Default value: @code{nil}@br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "row-spacing" 'gtk-icon-view) 't)
+ "The @code{\"row-spacing\"} property of type @code{gint} (Read / Write)@br{}
+  The row-spacing property specifies the space which is inserted between the
+  rows of the icon view.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: @code{6}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "selection-mode" 'gtk-icon-view) 't)
+ "The @code{\"selection-mode\"} property of type @symbol{gtk-selection-mode}
+  (Read / Write)@br{}
+  The @code{\"selection-mode\"} property specifies the selection mode of icon
+  view. If the mode is @code{:multiple}, rubberband selection is enabled, for
+  the other modes, only keyboard selection is possible.@br{}
+  Default value: @code{:single}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-icon-view) 't)
+ "The @code{\"spacing\"} property of type @code{gint} (Read / Write)@br{}
+  The spacing property specifies the space which is inserted between the cells
+  (i.e. the icon and the text) of an item.@br{}
+  Allowed values: @code{>= 0}@br{}
+  Default value: 0@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text-column" 'gtk-icon-view) 't)
+ "The @code{\"text-column\"} property of type @code{gint} (Read / Write)@br{}
+  The @code{\"text-column\"} property contains the number of the model column
+  containing the texts which are displayed. The text column must be of type
+  @code{G_TYPE_STRING}. If this property and the @code{\"markup-column\"}
+  property are both set to @code{-1}, no texts are displayed.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}@br{}
+  Since 2.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tooltip-column" 'gtk-icon-view) 't)
+ "The @code{\"tooltip-column\"} property of type @code{gint} (Read / Write)@br{}
+  The column in the model containing the tooltip texts for the items.@br{}
+  Allowed values: @code{>= G_MAXULONG}@br{}
+  Default value: @code{-1}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-cell-area atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-cell-area 'function)
+ "@version{2013-3-9}
+  @begin{short}
+    Accessor of the slot @code{\"cell-area\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-column-spacing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-column-spacing 'function)
+ "@version{2013-3-9}
+  @begin{short}
+    Accessor of the slot @code{\"column-spacing\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-columns atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-columns 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"columns\"} of the @class{gtk-icon-view} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-item-orientation atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-item-orientation 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"item-orientation\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-item-padding atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-item-padding 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"item-padding\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-item-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-item-width 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"item-width\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-margin atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-margin 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"margin\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-markup-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-markup-column 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"markup-column\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-model atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-model 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"model\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-pixbuf-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-pixbuf-column 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"pixbuf-column\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-reorderable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-reorderable 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"reorderable\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-row-spacing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-row-spacing 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"row-spacing\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-selection-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-selection-mode 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"selection-mode\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-spacing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-spacing 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"spacing\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-text-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-text-column 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"text-column\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-tooltip-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-tooltip-column 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the slot @code{\"tooltip-column\"} of the @class{gtk-icon-view}
+    class.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkIconViewForeachFunc ()
@@ -837,35 +1009,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_path_at_pos ()
-;;;
-;;; GtkTreePath * gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,
-;;;                                              gint x,
-;;;                                              gint y);
-;;;
-;;; Finds the path at the point (x, y), relative to bin_window coordinates. See
-;;; gtk_icon_view_get_item_at_pos(), if you are also interested in the cell at
-;;; the specified position. See
-;;; gtk_icon_view_convert_widget_to_bin_window_coords() for converting widget
-;;; coordinates to bin_window coordinates.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; x :
-;;;     The x position to be identified
-;;;
-;;; y :
-;;;     The y position to be identified
-;;;
-;;; Returns :
-;;;     The GtkTreePath corresponding to the icon or NULL if no icon exists at
-;;;     that position.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_get_path_at_pos" gtk-icon-view-get-path-at-pos)
     (g-boxed-foreign gtk-tree-path :return)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon-view]{A GtkIconView.}
+  @argument[x]{The x position to be identified.}
+  @argument[y]{The y position to be identified.}
+  @begin{return}
+    The GtkTreePath corresponding to the icon or NULL if no icon exists at
+    that position.
+  @end{return}
+  @begin{short}
+    Finds the path at the point (x, y), relative to bin_window coordinates.
+  @end{short}
+  See gtk_icon_view_get_item_at_pos(), if you are also interested in the cell at
+  the specified position.
+  See gtk_icon_view_convert_widget_to_bin_window_coords() for converting widget
+  coordinates to bin_window coordinates.
+
+  Since 2.6"
   (icon-view g-object)
   (x :int)
   (y :int))
@@ -874,40 +1039,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_item_at_pos ()
-;;;
-;;; gboolean gtk_icon_view_get_item_at_pos (GtkIconView *icon_view,
-;;;                                         gint x,
-;;;                                         gint y,
-;;;                                         GtkTreePath **path,
-;;;                                         GtkCellRenderer **cell);
-;;;
-;;; Finds the path at the point (x, y), relative to bin_window coordinates. In
-;;; contrast to gtk_icon_view_get_path_at_pos(), this function also obtains the
-;;; cell at the specified position. The returned path should be freed with
-;;; gtk_tree_path_free(). See
-;;; gtk_icon_view_convert_widget_to_bin_window_coords() for converting widget
-;;; coordinates to bin_window coordinates.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; x :
-;;;     The x position to be identified
-;;;
-;;; y :
-;;;     The y position to be identified
-;;;
-;;; path :
-;;;     Return location for the path, or NULL.
-;;;
-;;; cell :
-;;;     Return location for the renderer responsible for the cell at (x, y), or
-;;;     NULL.
-;;;
-;;; Returns :
-;;;     TRUE if an item exists at the specified position
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_get_item_at_pos" %gtk-icon-view-get-item-at-pos)
@@ -919,6 +1050,28 @@
   (cell :pointer))
 
 (defun gtk-icon-view-get-item-at-pos (icon-view x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @argument[x]{The x position to be identified}
+  @argument[y]{The y position to be identified}
+  @begin{return}
+    @code{path} -- the path, or NULL.@br{}
+    @code{cell} -- the renderer responsible for the cell at (x, y),
+                   or NULL.@br{}
+    or@br{}
+    @code{nil} if no item exists at the specified position
+  @end{return}
+  @begin{short}
+    Finds the path at the point (x, y), relative to bin_window coordinates.
+  @end{short}
+  In contrast to gtk_icon_view_get_path_at_pos(), this function also obtains the
+  cell at the specified position. The returned path should be freed with
+  gtk_tree_path_free(). See
+  gtk_icon_view_convert_widget_to_bin_window_coords() for converting widget
+  coordinates to bin_window coordinates.
+
+  Since 2.8"
   (with-foreign-objects ((path :pointer) (cell :pointer))
     (when (%gtk-icon-view-get-item-at-pos icon-view x y path cell)
       (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
@@ -928,33 +1081,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_convert_widget_to_bin_window_coords ()
-;;;
-;;; void gtk_icon_view_convert_widget_to_bin_window_coords
-;;;                                                     (GtkIconView *icon_view,
-;;;                                                      gint wx,
-;;;                                                      gint wy,
-;;;                                                      gint *bx,
-;;;                                                      gint *by);
-;;;
-;;; Converts widget coordinates to coordinates for the bin_window, as expected
-;;; by e.g. gtk_icon_view_get_path_at_pos().
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; wx :
-;;;     X coordinate relative to the widget
-;;;
-;;; wy :
-;;;     Y coordinate relative to the widget
-;;;
-;;; bx :
-;;;     return location for bin_window X coordinate
-;;;
-;;; by :
-;;;     return location for bin_window Y coordinate
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_convert_widget_to_bin_window_coords"
@@ -966,6 +1092,20 @@
   (ry :pointer))
 
 (defun gtk-icon-view-convert-widget-to-bin-window-coords (icon-view x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{a GtkIconView}
+  @argument[wx]{X coordinate relative to the widget}
+  @argument[wy]{Y coordinate relative to the widget}
+  @begin{return}
+    @code{bx} -- bin_window X coordinate@br{}
+    @code{by} -- bin_window Y coordinate
+  @end{return}
+
+  Converts widget coordinates to coordinates for the bin_window, as expected
+  by e.g. gtk_icon_view_get_path_at_pos().
+
+  Since 2.12"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-icon-view-convert-widget-to-bin-window-coords icon-view x y rx ry)
     (values (mem-ref rx :int)
@@ -975,38 +1115,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_cursor ()
-;;;
-;;; void gtk_icon_view_set_cursor (GtkIconView *icon_view,
-;;;                                GtkTreePath *path,
-;;;                                GtkCellRenderer *cell,
-;;;                                gboolean start_editing);
-;;;
-;;; Sets the current keyboard focus to be at path, and selects it. This is
-;;; useful when you want to focus the user's attention on a particular item. If
-;;; cell is not NULL, then focus is given to the cell specified by it.
-;;; Additionally, if start_editing is TRUE, then editing should be started in
-;;; the specified cell.
-;;;
-;;; This function is often followed by gtk_widget_grab_focus (icon_view) in
-;;; order to give keyboard focus to the widget. Please note that editing can
-;;; only happen when the widget is realized.
-;;;
-;;; icon_view :
-;;;     A GtkIconView
-;;;
-;;; path :
-;;;     A GtkTreePath
-;;;
-;;; cell :
-;;;     One of the cell renderers of icon_view, or NULL.
-;;;
-;;; start_editing :
-;;;     TRUE if the specified cell should start being edited.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_set_cursor" gtk-icon-view-set-cursor) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView}
+  @argument[path]{A GtkTreePath}
+  @argument[cell]{One of the cell renderers of icon_view, or NULL.}
+  @argument[start_editing]{TRUE if the specified cell should start being
+    edited.}
+  @begin{short}
+    Sets the current keyboard focus to be at path, and selects it.
+  @end{short}
+  This is useful when you want to focus the user's attention on a particular
+  item. If cell is not NULL, then focus is given to the cell specified by it.
+  Additionally, if start_editing is TRUE, then editing should be started in
+  the specified cell.
+
+  This function is often followed by gtk_widget_grab_focus (icon_view) in
+  order to give keyboard focus to the widget. Please note that editing can
+  only happen when the widget is realized.
+
+  Since 2.8"
   (icon-view g-object)
   (path (g-boxed-foreign gtk-tree-path))
   (cell g-object)
@@ -1016,30 +1147,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_cursor ()
-;;;
-;;; gboolean gtk_icon_view_get_cursor (GtkIconView *icon_view,
-;;;                                    GtkTreePath **path,
-;;;                                    GtkCellRenderer **cell);
-;;;
-;;; Fills in path and cell with the current cursor path and cell. If the cursor
-;;; isn't currently set, then *path will be NULL. If no cell currently has
-;;; focus, then *cell will be NULL.
-;;;
-;;; The returned GtkTreePath must be freed with gtk_tree_path_free().
-;;;
-;;; icon_view :
-;;;     A GtkIconView
-;;;
-;;; path :
-;;;     Return location for the current cursor path, or NULL.
-;;;
-;;; cell :
-;;;     Return location the current focus cell, or NULL.
-;;;
-;;; Returns :
-;;;     TRUE if the cursor is set.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_get_cursor" %gtk-icon-view-get-cursor) :boolean
@@ -1048,6 +1155,24 @@
   (cell :pointer))
 
 (defun gtk-icon-view-get-cursor (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView}
+  @begin{return}
+    @code{path} -- the current cursor path, or NULL.@br{}
+    @code{cell} -- the current focus cell, or NULL.@br{}
+    or@br{}
+    @code{nil} if the cursor is not set.
+  @end{return}
+  @begin{short}
+    Fills in path and cell with the current cursor path and cell.
+  @end{short}
+  If the cursor isn't currently set, then *path will be NULL. If no cell
+  currently has focus, then *cell will be NULL.
+
+  The returned GtkTreePath must be freed with gtk_tree_path_free().
+
+  Since 2.8"
   (with-foreign-objects ((path :pointer) (cell :pointer))
     (when (%gtk-icon-view-get-cursor icon-view path cell)
       (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
@@ -1408,21 +1533,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_select_path ()
-;;;
-;;; void gtk_icon_view_select_path (GtkIconView *icon_view, GtkTreePath *path);
-;;;
-;;; Selects the row at path.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; path :
-;;;     The GtkTreePath to be selected.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_select_path" gtk-icon-view-select-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @argument[path]{The GtkTreePath to be selected.}
+  @short{Selects the row at path.}
+
+  Since 2.6"
   (icon-view g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -1430,21 +1550,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_unselect_path ()
-;;;
-;;; void gtk_icon_view_unselect_path (GtkIconView *icon_view, GtkTreePath *path)
-;;;
-;;; Unselects the row at path.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; path :
-;;;     The GtkTreePath to be unselected.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_unselect_path" gtk-icon-view-unselect-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @argument[path]{The GtkTreePath to be unselected.}
+  @short{Unselects the row at path.}
+
+  Since 2.6"
   (icon-view g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -1452,27 +1567,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_path_is_selected ()
-;;;
-;;; gboolean gtk_icon_view_path_is_selected (GtkIconView *icon_view,
-;;;                                          GtkTreePath *path);
-;;;
-;;; Returns TRUE if the icon pointed to by path is currently selected. If path
-;;; does not point to a valid location, FALSE is returned.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; path :
-;;;     A GtkTreePath to check selection on.
-;;;
-;;; Returns :
-;;;     TRUE if path is selected.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_path_is_selected" gtk-icon-view-path-is-selected)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @argument[path]{A GtkTreePath to check selection on.}
+  @return{TRUE if path is selected.}
+  @begin{short}
+    Returns TRUE if the icon pointed to by path is currently selected.
+  @end{short}
+  If path does not point to a valid location, FALSE is returned.
+
+  Since 2.6"
   (icon-view g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -1480,66 +1589,58 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_selected_items ()
-;;;
-;;; GList * gtk_icon_view_get_selected_items (GtkIconView *icon_view);
-;;;
-;;; Creates a list of paths of all selected items. Additionally, if you are
-;;; planning on modifying the model after calling this function, you may want to
-;;; convert the returned list into a list of GtkTreeRowReferences. To do this,
-;;; you can use gtk_tree_row_reference_new().
-;;;
-;;; To free the return value, use:
-;;;
-;;;   g_list_free_full (list, (GDestroyNotify) gtk_tree_patch_free);
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Returns :
-;;;     A GList containing a GtkTreePath for each selected row.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_get_selected_items" gtk-icon-view-selected-items)
     (g-list (g-boxed-foreign gtk-tree-path) :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @return{A GList containing a GtkTreePath for each selected row.}
+  @begin{short}
+    Creates a list of paths of all selected items.
+  @end{short}
+  Additionally, if you are planning on modifying the model after calling this
+  function, you may want to convert the returned list into a list of
+  GtkTreeRowReferences. To do this, you can use gtk_tree_row_reference_new().
+
+  To free the return value, use:
+  @code{g_list_free_full (list, (GDestroyNotify) gtk_tree_patch_free);}
+
+  Since 2.6"
   (icon-view g-object))
 
 (export 'gtk-icon-view-selected-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_select_all ()
-;;;
-;;; void gtk_icon_view_select_all (GtkIconView *icon_view);
-;;;
-;;; Selects all the icons. icon_view must has its selection mode set to
-;;; GTK_SELECTION_MULTIPLE.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_select_all" gtk-icon-view-select-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @begin{short}
+    Selects all the icons. icon_view must has its selection mode set to
+    GTK_SELECTION_MULTIPLE.
+  @end{short}
+
+  Since 2.6"
   (icon-view g-object))
 
 (export 'gtk-icon-view-select-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_unselect_all ()
-;;;
-;;; void gtk_icon_view_unselect_all (GtkIconView *icon_view);
-;;;
-;;; Unselects all the icons.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_unselect_all" gtk-icon-view-unselect-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @short{Unselects all the icons.}
+
+  Since 2.6"
   (icon-view g-object))
 
 (export 'gtk-icon-view-unselect-all)
@@ -1563,43 +1664,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_scroll_to_path ()
-;;;
-;;; void gtk_icon_view_scroll_to_path (GtkIconView *icon_view,
-;;;                                    GtkTreePath *path,
-;;;                                    gboolean use_align,
-;;;                                    gfloat row_align,
-;;;                                    gfloat col_align);
-;;;
-;;; Moves the alignments of icon_view to the position specified by path.
-;;; row_align determines where the row is placed, and col_align determines where
-;;; column is placed. Both are expected to be between 0.0 and 1.0. 0.0 means
-;;; left/top alignment, 1.0 means right/bottom alignment, 0.5 means center.
-;;;
-;;; If use_align is FALSE, then the alignment arguments are ignored, and the
-;;; tree does the minimum amount of work to scroll the item onto the screen.
-;;; This means that the item will be scrolled to the edge closest to its current
-;;; position. If the item is currently visible on the screen, nothing is done.
-;;;
-;;; This function only works if the model is set, and path is a valid row on the
-;;; model. If the model changes before the icon_view is realized, the centered
-;;; path will be modified to reflect this change.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; path :
-;;;     The path of the item to move to.
-;;;
-;;; use_align :
-;;;     whether to use alignment arguments, or FALSE.
-;;;
-;;; row_align :
-;;;     The vertical alignment of the item specified by path.
-;;;
-;;; col_align :
-;;;     The horizontal alignment of the item specified by path.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_scroll_to_path" %gtk-icon-view-scroll-to-path) :void
@@ -1612,6 +1676,29 @@
 (defun gtk-icon-view-scroll-to-path (icon-view path &key
                                      (row-align 0.5 row-align-supplied-p)
                                      (col-align 0.5 col-align-supplied-p))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView.}
+  @argument[path]{The path of the item to move to.}
+  @argument[row_align]{The vertical alignment of the item specified by path.}
+  @argument[col_align]{The horizontal alignment of the item specified by path.}
+  @begin{short}
+   Moves the alignments of icon_view to the position specified by path.
+  @end{short}
+  row_align determines where the row is placed, and col_align determines where
+  column is placed. Both are expected to be between 0.0 and 1.0. 0.0 means
+  left/top alignment, 1.0 means right/bottom alignment, 0.5 means center.
+
+  If use_align is FALSE, then the alignment arguments are ignored, and the
+  tree does the minimum amount of work to scroll the item onto the screen.
+  This means that the item will be scrolled to the edge closest to its current
+  position. If the item is currently visible on the screen, nothing is done.
+
+  This function only works if the model is set, and path is a valid row on the
+  model. If the model changes before the icon_view is realized, the centered
+  path will be modified to reflect this change.
+
+  Since 2.8"
   (%gtk-icon-view-scroll-to-path icon-view
                                  path
                                  (or row-align-supplied-p col-align-supplied-p)
@@ -1621,29 +1708,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_visible_range ()
-;;;
-;;; gboolean gtk_icon_view_get_visible_range (GtkIconView *icon_view,
-;;;                                           GtkTreePath **start_path,
-;;;                                           GtkTreePath **end_path);
-;;;
-;;; Sets start_path and end_path to be the first and last visible path. Note
-;;; that there may be invisible paths in between.
-;;;
-;;; Both paths should be freed with gtk_tree_path_free() after use.
-;;;
-;;; icon_view :
-;;;     A GtkIconView
-;;;
-;;; start_path :
-;;;     Return location for start of region, or NULL.
-;;;
-;;; end_path :
-;;;     Return location for end of region, or NULL.
-;;;
-;;; Returns :
-;;;     TRUE, if valid paths were placed in start_path and end_path
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_get_visible_range" %gtk-icon-view-get-visible-range)
@@ -1653,6 +1717,23 @@
   (end-path :pointer))
 
 (defun gtk-icon-view-get-visible-range (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{A GtkIconView}
+  @begin{return}
+    @code{start_path} -- start of region, or NULL.@br{}
+    @code{end_path} -- end of region, or NULL.@br{}
+    or @br{}
+    @code{nil}, if valid paths were not placed in start_path and end_path
+  @end{return}
+  @begin{short}
+    Sets start_path and end_path to be the first and last visible path.
+  @end{short}
+  Note that there may be invisible paths in between.
+
+  Both paths should be freed with gtk_tree_path_free() after use.
+
+  Since 2.8"
   (with-foreign-objects ((start-path :pointer) (end-path :pointer))
     (when (%gtk-icon-view-get-visible-range icon-view start-path end-path)
       (values (mem-ref start-path '(g-boxed-foreign gtk-tree-path :return))
@@ -1662,28 +1743,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_tooltip_item ()
-;;;
-;;; void gtk_icon_view_set_tooltip_item (GtkIconView *icon_view,
-;;;                                      GtkTooltip *tooltip,
-;;;                                      GtkTreePath *path);
-;;;
-;;; Sets the tip area of tooltip to be the area covered by the item at path. See
-;;; also gtk_icon_view_set_tooltip_column() for a simpler alternative. See also
-;;; gtk_tooltip_set_tip_area().
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; tooltip :
-;;;     a GtkTooltip
-;;;
-;;; path :
-;;;     a GtkTreePath
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_set_tooltip_item" gtk-icon-view-set-tooltip-item) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{a GtkIconView}
+  @argument[tooltip]{a GtkTooltip}
+  @argument[path]{a GtkTreePath}
+  @begin{short}
+    Sets the tip area of tooltip to be the area covered by the item at path.
+  @end{short}
+  See also gtk_icon_view_set_tooltip_column() for a simpler alternative. See
+  also gtk_tooltip_set_tip_area().
+
+  Since 2.12"
   (icon-view (g-object gtk-icon-view))
   (tooltip (g-object gtk-tooltip))
   (path (g-boxed-foreign gtk-tree-path)))
@@ -1692,33 +1766,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_tooltip_cell ()
-;;;
-;;; void gtk_icon_view_set_tooltip_cell (GtkIconView *icon_view,
-;;;                                      GtkTooltip *tooltip,
-;;;                                      GtkTreePath *path,
-;;;                                      GtkCellRenderer *cell);
-;;;
-;;; Sets the tip area of tooltip to the area which cell occupies in the item
-;;; pointed to by path. See also gtk_tooltip_set_tip_area().
-;;;
-;;; See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; tooltip :
-;;;     a GtkTooltip
-;;;
-;;; path :
-;;;     a GtkTreePath
-;;;
-;;; cell :
-;;;     a GtkCellRenderer or NULL
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_set_tooltip_cell" gtk-icon-view-set-tooltip-cell) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{a GtkIconView}
+  @argument[tooltip]{a GtkTooltip}
+  @argument[path]{a GtkTreePath}
+  @argument[cell]{a GtkCellRenderer or NULL}
+  @begin{short}
+    Sets the tip area of tooltip to the area which cell occupies in the item
+    pointed to by path.
+  @end{short}
+  See also gtk_tooltip_set_tip_area().
+
+  See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
+
+  Since 2.12"
   (icon-view (g-object gtk-icon-view))
   (tooltip (g-object gtk-tooltip))
   (path (g-boxed-foreign gtk-tree-path))
@@ -1728,51 +1793,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_tooltip_context ()
-;;;
-;;; gboolean gtk_icon_view_get_tooltip_context (GtkIconView *icon_view,
-;;;                                             gint *x,
-;;;                                             gint *y,
-;;;                                             gboolean keyboard_tip,
-;;;                                             GtkTreeModel **model,
-;;;                                             GtkTreePath **path,
-;;;                                             GtkTreeIter *iter);
-;;;
-;;; This function is supposed to be used in a "query-tooltip" signal handler for
-;;; GtkIconView. The x, y and keyboard_tip values which are received in the
-;;; signal handler, should be passed to this function without modification.
-;;;
-;;; The return value indicates whether there is an icon view item at the given
-;;; coordinates (TRUE) or not (FALSE) for mouse tooltips. For keyboard tooltips
-;;; the item returned will be the cursor item. When TRUE, then any of model,
-;;; path and iter which have been provided will be set to point to that row and
-;;; the corresponding model. x and y will always be converted to be relative to
-;;; icon_view's bin_window if keyboard_tooltip is FALSE.
-;;;
-;;; icon_view :
-;;;     an GtkIconView
-;;;
-;;; x :
-;;;     the x coordinate (relative to widget coordinates)
-;;;
-;;; y :
-;;;     the y coordinate (relative to widget coordinates)
-;;;
-;;; keyboard_tip :
-;;;     whether this is a keyboard tooltip or not
-;;;
-;;; model :
-;;;     a pointer to receive a GtkTreeModel or NULL
-;;;
-;;; path :
-;;;     a pointer to receive a GtkTreePath or NULL
-;;;
-;;; iter :
-;;;     a pointer to receive a GtkTreeIter or NULL
-;;;
-;;; Returns :
-;;;     whether or not the given tooltip context points to a item
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_get_tooltip_context"
@@ -1786,6 +1806,33 @@
   (iter (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-icon-view-get-tooltip-context (icon-view x y keyboard-tip)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[icon_view]{an GtkIconView}
+  @argument[x]{the x coordinate (relative to widget coordinates)}
+  @argument[y]{the y coordinate (relative to widget coordinates)}
+  @argument[keyboard_tip]{whether this is a keyboard tooltip or not}
+  @begin{return}
+    @code{model} -- a GtkTreeModel or NULL@br{}
+    @code{path} -- a GtkTreePath or NULL@br{}
+    @code{iter} -- a GtkTreeIter or NULL@br{}
+    or@br{}
+    @code{nil} -- if the given tooltip context does not point to a item
+  @end{return}
+  @begin{short}
+    This function is supposed to be used in a \"query-tooltip\" signal handler
+    for GtkIconView. The x, y and keyboard_tip values which are received in the
+    signal handler, should be passed to this function without modification.
+  @end{short}
+
+  The return value indicates whether there is an icon view item at the given
+  coordinates (TRUE) or not (FALSE) for mouse tooltips. For keyboard tooltips
+  the item returned will be the cursor item. When TRUE, then any of model,
+  path and iter which have been provided will be set to point to that row and
+  the corresponding model. x and y will always be converted to be relative to
+  icon_view's bin_window if keyboard_tooltip is FALSE.
+
+  Since 2.12"
   (with-foreign-objects ((xx :int)
                          (yy :int)
                          (model-ptr :pointer)
@@ -1895,35 +1942,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconViewDropPosition
-;;;
-;;; typedef enum {
-;;;   GTK_ICON_VIEW_NO_DROP,
-;;;   GTK_ICON_VIEW_DROP_INTO,
-;;;   GTK_ICON_VIEW_DROP_LEFT,
-;;;   GTK_ICON_VIEW_DROP_RIGHT,
-;;;   GTK_ICON_VIEW_DROP_ABOVE,
-;;;   GTK_ICON_VIEW_DROP_BELOW
-;;; } GtkIconViewDropPosition;
-;;;
-;;; An enum for determining where a dropped item goes.
-;;;
-;;; GTK_ICON_VIEW_NO_DROP
-;;;     no drop possible
-;;;
-;;; GTK_ICON_VIEW_DROP_INTO
-;;;     dropped item replaces the item
-;;;
-;;; GTK_ICON_VIEW_DROP_LEFT
-;;;     droppped item is inserted to the left
-;;;
-;;; GTK_ICON_VIEW_DROP_RIGHT
-;;;     dropped item is inserted to the right
-;;;
-;;; GTK_ICON_VIEW_DROP_ABOVE
-;;;     dropped item is inserted above
-;;;
-;;; GTK_ICON_VIEW_DROP_BELOW
-;;;     dropped item is inserted below
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkIconViewDropPosition" gtk-icon-view-drop-position
@@ -1935,6 +1953,33 @@
   (:drop-right 3)
   (:drop-above 4)
   (:drop-below 5))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-drop-position atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-icon-view-drop-position atdoc:*external-symbols*)
+ "@version{2013-3-9}
+  @short{An enum for determining where a dropped item goes.}
+  @begin{pre}
+(define-g-enum \"GtkIconViewDropPosition\" gtk-icon-view-drop-position
+  (:export t
+   :type-initializer \"gtk_icon_view_drop_position_get_type\")
+  (:no-drop 0)
+  (:drop-into 1)
+  (:drop-left 2)
+  (:drop-right 3)
+  (:drop-above 4)
+  (:drop-below 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:no-drop]{no drop possible}
+    @entry[:drop-into]{dropped item replaces the item}
+    @entry[:drop-left]{droppped item is inserted to the left}
+    @entry[:drop-right]{dropped item is inserted to the right}
+    @entry[:drop-above]{dropped item is inserted above}
+    @entry[:drop-below]{dropped item is inserted below}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_enable_model_drag_source ()
