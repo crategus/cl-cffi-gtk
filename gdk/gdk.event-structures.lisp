@@ -646,8 +646,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*) "Flags")
-(setf (gethash 'gdk-modifier-type atdoc:*external-symbols*)
+(setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gdk-modifier-type atdoc:*external-symbols*)
  "@version{2013-1-21}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
@@ -1501,6 +1501,7 @@
 
 ;;; --- gdk-event-button-y-root ------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-y-root 'function)
  "@version{2013-1-11}
@@ -2930,19 +2931,19 @@
  @};
   @end{pre}
   @begin[code]{table}
-    @entry[GdkEventType type]{the type of the event (GDK_DRAG_ENTER,
-      GDK_DRAG_LEAVE, GDK_DRAG_MOTION, GDK_DRAG_STATUS, GDK_DROP_START or
-      GDK_DROP_FINISHED).}
+    @entry[GdkEventType type]{the type of the event (@code{:drag-enter},
+      @code{:drag-leave}, @code{:drag-motion}, @code{:drag-status},
+      @code{:drop-start} or @code{:drop-finished}.}
     @entry[GdkWindow *window]{the window which received the event.}
-    @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
-      XSendEvent).}
-    @entry[GdkDragContext *context]{the GdkDragContext for the current DND
-      operation.}
+    @entry[gint8 send_event]{@em{true} if the event was sent explicitly (e.g.
+      using @code{XSendEvent}).}
+    @entry[GdkDragContext *context]{the @class{gdk-drag-context} for the current
+      DND operation.}
     @entry[guint32 time]{the time of the event in milliseconds.}
     @entry[gshort x_root]{the x coordinate of the pointer relative to the root
-      of the screen, only set for GDK_DRAG_MOTION and GDK_DROP_START.}
+      of the screen, only set for @code{:drag-motion} and @code{:drop-start}.}
     @entry[gshort y_root]{the y coordinate of the pointer relative to the root
-      of the screen, only set for GDK_DRAG_MOTION and GDK_DROP_START.}
+      of the screen, only set for @code{:drag-motion} and @code{:drop-start}.}
   @end{table}
   @see-slot{gdk-event-dnd-type}
   @see-slot{gdk-event-dnd-window}

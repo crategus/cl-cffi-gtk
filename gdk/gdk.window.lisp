@@ -2415,20 +2415,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_beep ()
-;;;
-;;; void gdk_window_beep (GdkWindow *window);
-;;;
-;;; Emits a short beep associated to window in the appropriate display, if
-;;; supported. Otherwise, emits a short beep on the display just as
-;;; gdk_display_beep().
-;;;
-;;; window :
-;;;     a toplevel GdkWindow
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_beep" gdk-window-beep) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[window]{A toplevel @class{gdk-window} object.}
+  @begin{short}
+    Emits a short beep associated to @arg{window} in the appropriate display, if
+    supported. Otherwise, emits a short beep on the display just as
+    @fun{gdk-display-beep}.
+  @end{short}
+
+  Since 2.12
+  @see-function{gdk-display-beep}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-beep)

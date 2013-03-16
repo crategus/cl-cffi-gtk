@@ -2,13 +2,15 @@
 ;;; gdk.display.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
+;;; The API  documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -407,18 +409,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_beep ()
-;;;
-;;; void gdk_display_beep (GdkDisplay *display);
-;;;
-;;; Emits a short beep on display
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_display_beep" gdk-display-beep) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-10}
+  @argument[display]{A @class{gdk-display} object.}
+  @short{Emits a short beep on @arg{display}.}
+
+  Since 2.2"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-beep)

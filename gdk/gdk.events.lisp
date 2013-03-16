@@ -2,13 +2,15 @@
 ;;; gdk.events.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See yhttp://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
+;;; The API  documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -101,13 +103,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_CURRENT_TIME
-;;;
-;;; #define GDK_CURRENT_TIME 0L
-;;;
-;;; Represents the current time, and can be used anywhere a time is expected.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +gdk-current-time+ 0)
+(defconstant +gdk-current-time+ 0
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-11}
+  Represents the current time, and can be used anywhere a time is expected.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-current-time+ atdoc:*variable-name-alias*) "Constant")
 
 (export '+gdk-current-time+)
 

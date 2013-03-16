@@ -29,7 +29,6 @@
 (in-package :gdk)
 
 ;; Load the documentation of the package GDK
-(load "src/atdoc-gdk.package.lisp")
 (load "src/atdoc-gdk.window.lisp")
 (load "src/atdoc-gdk.color.lisp")
 (load "src/atdoc-gdk.rectangle.lisp")
