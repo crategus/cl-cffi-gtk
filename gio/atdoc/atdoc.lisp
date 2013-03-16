@@ -30,9 +30,6 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-gio)
 
-;; Load the documentation of the Libraray GIO
-(load "atdoc-gio.lisp")
-
 (defpackage :atdoc-gio
   (:use :gio :common-lisp)
   (:export #:generate-html
