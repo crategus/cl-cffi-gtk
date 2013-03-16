@@ -2,12 +2,12 @@
 ;;; gobject.param.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
-;;; http://www.crategus.com/books/cl-cffi-gtk/
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -2407,6 +2407,11 @@
 ;;;     a valid GParamSpec instance
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct g-param-spec-enum
+  (:parent-instance g-param-spec)
+  (:enum-class (:pointer g-enum-class))
+  (:default-value :int))
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_VALUE_HOLDS_FLAGS()
 ;;;
@@ -2433,31 +2438,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecFlags
-;;;
-;;; struct GParamSpecFlags {
-;;;   GParamSpec    parent_instance;
-;;;
-;;;   GFlagsClass  *flags_class;
-;;;   guint         default_value;
-;;; };
-;;;
-;;; A GParamSpec derived structure that contains the meta data for flags
-;;; properties.
-;;;
-;;; GParamSpec parent_instance;
-;;;     private GParamSpec portion
-;;;
-;;; GFlagsClass *flags_class;
-;;;     the GFlagsClass for the flags
-;;;
-;;; guint default_value;
-;;;     default value for the property specified
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-flags
   (:parent-instance g-param-spec)
   (:flags-class (:pointer g-flags-class))
   (:default-value :uint))
+
+(export 'g-param-spec-flags)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-param-spec-flags atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-param-spec-flags atdoc:*external-symbols*)
+ "@version{2013-3-8}
+  @begin{short}
+    A GParamSpec derived structure that contains the meta data for flags
+    properties.
+  @end{short}
+  @begin{pre}
+(defcstruct g-param-spec-flags
+  (:parent-instance g-param-spec)
+  (:flags-class (:pointer g-flags-class))
+  (:default-value :uint))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:parent-instance]{private GParamSpec portion}
+    @entry[:flags-class]{the GFlagsClass for the flags}
+    @entry[:default-value]{default value for the property specified}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_flags ()

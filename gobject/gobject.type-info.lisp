@@ -2,10 +2,12 @@
 ;;; gobject.type-info.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -1778,21 +1780,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_init ()
-;;;
-;;; void g_type_init (void);
-;;;
-;;; Prior to any use of the type system, g_type_init() has to be called to
-;;; initialize the type system and assorted other code portions (such as the
-;;; various fundamental type implementations or the signal system).
-;;;
-;;; This function is idempotent.
-;;;
-;;; Since version 2.24 this also initializes the thread system
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_init" g-type-init) :void)
+(defcfun ("g_type_init" g-type-init) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @begin{short}
+    Prior to any use of the type system, @sym{g-type-init} has to be called to
+    initialize the type system and assorted other code portions such as the
+    various fundamental type implementations or the signal system.
+  @end{short}
+
+  This function is idempotent.
+
+  Since version 2.24 this also initializes the thread system")
 
 (glib::at-init () (g-type-init))
+
+(export 'g-type-init)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeDebugFlags
@@ -2177,10 +2182,10 @@
     (:pointer g-type-interface)
  #+cl-cffi-gtk-documentation
  "@version{2013-2-6}
-  @argument[instance_class]{A GTypeClass structure.}
-  @argument[iface_type]{An interface ID which this class conforms to.}
-  @return{The GTypeInterface structure of iface_type if implemented by
-    instance_class, NULL otherwise.}
+  @argument[instance-class]{A GTypeClass structure.}
+  @argument[iface-type]{An interface ID which this class conforms to.}
+  @return{The GTypeInterface structure of @arg{iface-type} if implemented by
+    @arg{instance-class}, @code{nil} otherwise.}
   @begin{short}
     Returns the GTypeInterface structure of an interface to which the passed in
     class conforms.
@@ -2237,21 +2242,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_default_interface_peek ()
-;;;
-;;; gpointer g_type_default_interface_peek (GType g_type);
-;;;
-;;; If the interface type g_type is currently in use, returns its default
-;;; interface vtable.
-;;;
-;;; g_type :
-;;;     an interface type
-;;;
-;;; Returns :
-;;;     the default vtable for the interface, or NULL if the type is not
-;;;     currently in use
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_default_interface_peek" g-type-default-interface-peek)
+    :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @argument[gtype]{an interface type}
+  @begin{return}
+    The default @code{vtable} for the interface, or @code{nil} if the type is
+    not currently in use.
+  @end{return}
+  @begin{short}
+    If the interface type @arg{gtype} is currently in use, returns its default
+    interface @code{vtable}.
+  @end{short}
+
+  Since 2.4"
+  (gtype g-type))
+
+(export 'g-type-default-interface-peek)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_default_interface_unref ()

@@ -2,13 +2,15 @@
 ;;; gobject.boxed.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -104,89 +106,77 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_copy ()
-;;;
-;;; gpointer g_boxed_copy (GType boxed_type, gconstpointer src_boxed);
-;;;
-;;; Provide a copy of a boxed structure src_boxed which is of type boxed_type.
-;;;
-;;; boxed_type :
-;;;     The type of src_boxed.
-;;;
-;;; src_boxed :
-;;;     The boxed structure to be copied.
-;;;
-;;; Returns :
-;;;     The newly created copy of the boxed structure.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_boxed_copy" g-boxed-copy) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @argument[boxed-type]{The type of src_boxed.}
+  @argument[src-boxed]{The boxed structure to be copied.}
+  @return{The newly created copy of the boxed structure.}
+  @begin{short}
+    Provide a copy of a boxed structure @arg{src-boxed} which is of type
+    @arg{boxed-type}.
+  @end{short}"
   (boxed-type g-type)
   (src-boxed :pointer))
 
+(export 'g-boxed-copy)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_free ()
-;;;
-;;; void g_boxed_free (GType boxed_type, gpointer boxed);
-;;;
-;;; Free the boxed structure boxed which is of type boxed_type.
-;;;
-;;; boxed_type :
-;;;     The type of boxed.
-;;;
-;;; boxed :
-;;;     The boxed structure to be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_boxed_free" g-boxed-free) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @argument[boxed-type]{The type of boxed.}
+  @argument[boxed]{The boxed structure to be freed.}
+  @begin{short}
+    Free the boxed structure @arg{boxed} which is of type @arg{boxed-type}.
+  @end{short}"
   (boxed-type g-type)
   (boxed :pointer))
 
+(export 'g-boxed-free)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_boxed_type_register_static ()
-;;;
-;;; GType g_boxed_type_register_static (const gchar *name,
-;;;                                     GBoxedCopyFunc boxed_copy,
-;;;                                     GBoxedFreeFunc boxed_free);
-;;;
-;;; This function creates a new G_TYPE_BOXED derived type id for a new boxed
-;;; type with name name. Boxed type handling functions have to be provided to
-;;; copy and free opaque boxed structures of this type.
-;;;
-;;; name :
-;;;     Name of the new boxed type.
-;;;
-;;; boxed_copy :
-;;;     Boxed structure copy function.
-;;;
-;;; boxed_free :
-;;;     Boxed structure free function.
-;;;
-;;; Returns :
-;;;     New G_TYPE_BOXED derived type id for name.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_boxed_type_register_static" g-boxed-type-register-static) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @argument[name]{Name of the new boxed type.}
+  @argument[copy-fn]{Boxed structure copy function.}
+  @argument[free-fn]{Boxed structure free function.}
+  @return{New @code{G_TYPE_BOXED} derived type id for @arg{name}.}
+  @begin{short}
+    This function creates a new @code{G_TYPE_BOXED} derived type id for a new
+    boxed type with name @arg{name}.
+  @end{short}
+  Boxed type handling functions have to be provided to copy and free opaque
+  boxed structures of this type."
   (name :string)
   (copy-fn :pointer)
   (free-fn :pointer))
 
+(export 'g-boxed-type-register-static)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_pointer_type_register_static ()
-;;;
-;;; GType g_pointer_type_register_static (const gchar *name);
-;;;
-;;; Creates a new G_TYPE_POINTER derived type id for a new pointer type with
-;;; name name.
-;;;
-;;; name :
-;;;     the name of the new pointer type.
-;;;
-;;; Returns :
-;;;     a new G_TYPE_POINTER derived type id for name.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_pointer_type_register_static" g-pointer-type-register-static)
     g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @argument[name]{the name of the new pointer type.}
+  @return{A new @code{G_TYPE_POINTER} derived type id for @arg{name}.}
+  @begin{short}
+    Creates a new @code{G_TYPE_POINTER} derived type id for a new pointer type
+    with name @arg{name}.
+  @end{short}"
   (name :string))
 
 (export 'g-pointer-type-register-static)
@@ -219,35 +209,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_STRV
-;;;
-;;; #define G_TYPE_STRV (g_strv_get_type ())
-;;;
-;;; The GType for a boxed type holding a NULL-terminated array of strings.
-;;;
-;;; The code fragments in the following example show the use of a property of
-;;; type G_TYPE_STRV with g_object_class_install_property(), g_object_set() and
-;;; g_object_get().
-;;;
-;;;   g_object_class_install_property (object_class,
-;;;                                    PROP_AUTHORS,
-;;;                                    g_param_spec_boxed ("authors",
-;;;                                                        _("Authors"),
-;;;                                                        _("List of authors"),
-;;;                                                        G_TYPE_STRV,
-;;;                                                        G_PARAM_READWRITE));
-;;;
-;;;   gchar *authors[] = { "Owen", "Tim", NULL };
-;;;   g_object_set (obj, "authors", authors, NULL);
-;;;
-;;;   gchar *writers[];
-;;;   g_object_get (obj, "authors", &writers, NULL);
-;;;   /* do something with writers */
-;;;   g_strfreev (writers);
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_strv_get_type" g-type-strv) g-type)
+(defcfun ("g_strv_get_type" g-type-strv) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @begin{short}
+    The GType for a boxed type holding a NULL-terminated array of strings.
+  @end{short}
+
+  The code fragments in the following example show the use of a property of
+  type G_TYPE_STRV with g_object_class_install_property(), g_object_set() and
+  g_object_get().
+  @begin{pre}
+ g_object_class_install_property (object_class,
+                                  PROP_AUTHORS,
+                                  g_param_spec_boxed (\"authors\",
+                                                      _(\"Authors\"),
+                                                      _(\"List of authors\"),
+                                                      G_TYPE_STRV,
+                                                      G_PARAM_READWRITE));
+
+ gchar *authors[] = { \"Owen\", \"Tim\", NULL @};
+ g_object_set (obj, \"authors\", authors, NULL);
+
+ gchar *writers[];
+ g_object_get (obj, \"authors\", &writers, NULL);
+ /* do something with writers */
+ g_strfreev (writers);
+  @end{pre}
+  Since 2.4")
 
 (export 'g-type-strv)
 

@@ -2,12 +2,12 @@
 ;;; gobject.base.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
-;;; http://www.crategus.com/books/cl-cffi-gtk/
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -113,102 +113,6 @@
 ;;;    g_weak_ref_clear
 ;;;    g_weak_ref_get
 ;;;    g_weak_ref_set
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GBinding
-;;;    +----GTypeModule
-;;;
-;;; Signals
-;;;
-;;;   "notify"                                         : No Hooks
-;;;
-;;; Description
-;;;
-;;; GObject is the fundamental type providing the common attributes and methods
-;;; for all object types in GTK+, Pango and other libraries based on GObject.
-;;; The GObject class provides methods for object construction and destruction,
-;;; property access methods, and signal support. Signals are described in detail
-;;; in Signals(3).
-;;;
-;;; GInitiallyUnowned is derived from GObject. The only difference between the
-;;; two is that the initial reference of a GInitiallyUnowned is flagged as a
-;;; floating reference. This means that it is not specifically claimed to be
-;;; "owned" by any code portion. The main motivation for providing floating
-;;; references is C convenience. In particular, it allows code to be written as:
-;;;
-;;;   container = create_container ();
-;;;   container_add_child (container, create_child());
-;;;
-;;; If container_add_child() will g_object_ref_sink() the passed in child, no
-;;; reference of the newly created child is leaked. Without floating references,
-;;; container_add_child() can only g_object_ref() the new child, so to implement
-;;; this code without reference leaks, it would have to be written as:
-;;;
-;;;   Child *child;
-;;;   container = create_container ();
-;;;   child = create_child ();
-;;;   container_add_child (container, child);
-;;;   g_object_unref (child);
-;;;
-;;; The floating reference can be converted into an ordinary reference by
-;;; calling g_object_ref_sink(). For already sunken objects (objects that don't
-;;; have a floating reference anymore), g_object_ref_sink() is equivalent to
-;;; g_object_ref() and returns a new reference. Since floating references are
-;;; useful almost exclusively for C convenience, language bindings that provide
-;;; automated reference and memory ownership maintenance (such as smart pointers
-;;; or garbage collection) should not expose floating references in their API.
-;;;
-;;; Some object implementations may need to save an objects floating state
-;;; across certain code portions (an example is GtkMenu), to achieve this, the
-;;; following sequence can be used:
-;;;
-;;;   /* save floating state */
-;;;   gboolean was_floating = g_object_is_floating (object);
-;;;   g_object_ref_sink (object);
-;;;   /* protected code portion */
-;;;   ...;
-;;;   /* restore floating state */
-;;;   if (was_floating)
-;;;     g_object_force_floating (object);
-;;;   g_object_unref (object); /* release previously acquired reference */
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "notify" signal
-;;;
-;;; void user_function (GObject    *gobject,
-;;;                     GParamSpec *pspec,
-;;;                     gpointer    user_data)      : No Hooks
-;;;
-;;; The notify signal is emitted on an object when one of its properties has
-;;; been changed. Note that getting this signal doesn't guarantee that the value
-;;; of the property has actually changed, it may also be emitted when the setter
-;;; for the property is called to reinstate the previous value.
-;;;
-;;; This signal is typically used to obtain change notification for a single
-;;; property, by specifying the property name as a detail in the
-;;; g_signal_connect() call, like this:
-;;;
-;;;   g_signal_connect (text_view->buffer, "notify::paste-target-list",
-;;;                     G_CALLBACK (gtk_text_view_target_list_notify),
-;;;                     text_view)
-;;;
-;;; It is important to note that you must use canonical parameter names as
-;;; detail strings for the notify signal.
-;;;
-;;; gobject :
-;;;     the object which received the signal.
-;;;
-;;; pspec :
-;;;     the GParamSpec of the property which changed.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -271,8 +175,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObject
 ;;;
-;;; struct GObject;
-;;;
 ;;; All the fields in the GObject structure are private to the GObject
 ;;; implementation and should never be accessed directly.
 ;;; ----------------------------------------------------------------------------
@@ -327,7 +229,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-object 'type)
- "@version{2013-2-16}
+ "@version{2013-3-3}
   @begin{short}
     @sym{g-object} is the fundamental type providing the common attributes and
     methods for all object types in GTK+, Pango and other libraries based on
@@ -357,21 +259,21 @@
     property, by specifying the property name as a detail in the
     @fun{g-signal-connect} call, like this:
     @begin{pre}
- g_signal_connect (text_view->buffer, \"notify::paste-target-list\",
-                   G_CALLBACK (gtk_text_view_target_list_notify),
-                   text_view)
+ (g-signal-connect switch \"notify::active\"
+    (lambda (widget param)
+      (declare (ignore param))
+      (if (gtk-switch-get-active widget)
+          (gtk-label-set-label label \"The Switch is ON\")
+          (gtk-label-set-label label \"The Switch is OFF\"))))
     @end{pre}
     It is important to note that you must use canonical parameter names as
     detail strings for the notify signal.
     @begin{pre}
- void user_function (GObject    *gobject,
-                     GParamSpec *pspec,
-                     gpointer    user_data)      : No Hooks
+ lambda (gobject pspec)
     @end{pre}
     @begin[code]{table}
-      @entry[gobject]{the object which received the signal.}
+      @entry[gobject]{the @sym{g-object} which received the signal.}
       @entry[pspec]{the @symbol{g-param-spec} of the property which changed.}
-      @entry[user_data]{user data set when the signal handler was connected.}
     @end{table}
   @end{dictionary}
   @see-slot{pointer}
@@ -390,7 +292,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-reference" 'g-object) 't)
- "Holds the value @code{t} when the instance is successfully registered.")
+ "Holds the value @em{true} when the instance is successfully registered.")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "signal-handlers" 'g-object) 't)
@@ -430,7 +332,7 @@
     Accessor of the slot @code{has-reference} of the @class{g-object} class.
   @end{short}
   
-  Note: The slot is set to @code{t} when registering an object during creation.
+  Note: The slot is set to @em{true} when registering an object during creation.
   The slot is not in use at any place in the code.
   @see-class{g-object}")
 
@@ -1057,20 +959,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObjectConstructParam
-;;;
-;;; struct GObjectConstructParam {
-;;;   GParamSpec *pspec;
-;;;   GValue     *value;
-;;; };
-;;;
-;;; The GObjectConstructParam struct is an auxiliary structure used to hand
-;;; GParamSpec/GValue pairs to the constructor of a GObjectClass.
-;;;
-;;; GParamSpec *pspec;
-;;;     the GParamSpec of the construct parameter
-;;;
-;;; GValue *value;
-;;;     the value to set the parameter to
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-object-construct-param
@@ -1166,19 +1054,21 @@
 
 (defun g-type-is-object (type)
  #+cl-cffi-gtk-documentation
- "@version{2012-2-16}
+ "@version{2013-3-3}
   @argument[type]{Type id to check}
-  @return{@code{nil} or @arg{true}, indicating whether type is a
+  @return{@code{nil} or @em{true}, indicating whether @arg{type} is a
     @var{+g-type-object+}.}
   @begin{short}
-    Check if the passed in type id is a @var{+g-type-object+} or derived from it.
+    Check if the passed in @arg{type} id is a @var{+g-type-object+} or derived
+    from it.
   @end{short}
   @begin[Examples]{dictionary}
     @begin{pre}
  (g-type-is-object (gtype \"GtkLabel\")) => T
  (g-type-is-object (gtype \"gboolean\")) => NIL
     @end{pre}
-  @end{dictionary}"
+  @end{dictionary}
+  @see-variable{+g-type-object+}"
   (eql (gtype-id (g-type-fundamental (gtype type))) +g-type-object+))
 
 (export 'g-type-is-object)
@@ -1251,19 +1141,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_TYPE()
-;;;
-;;; #define G_OBJECT_TYPE(object) (G_TYPE_FROM_INSTANCE (object))
-;;;
-;;; Get the type id of an object.
-;;;
-;;; object :
-;;;     Object to return the type id for.
-;;;
-;;; Returns :
-;;;     Type id of object.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-type (object)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-29}
+  @argument[object]{Object to return the type id for.}
+  @return{Type id of object.}
+  @short{Get the type id of an object.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-object-type (make-instance 'gtk-label))
+=> #S(GTYPE :NAME \"GtkLabel\" :%ID 134905144)
+    @end{pre}
+  @end{dictionary}"
   (g-type-from-instance object))
 
 (export 'g-object-type)
@@ -1284,75 +1175,81 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-type-name (object)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-29}
+  @argument[object]{Object to return the type name for.}
+  @return{Type name of object. The string is owned by the type system and should
+    not be freed.}
+  @short{Get the name of an object's type.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-object-type-name (make-instance 'gtk-label))
+=> \"GtkLabel\"
+    @end{pre}
+  @end{dictionary}"
   (g-type-name (g-object-type object)))
 
 (export 'g-object-type-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_CLASS_TYPE()
-;;;
-;;; #define G_OBJECT_CLASS_TYPE(class) (G_TYPE_FROM_CLASS (class))
-;;;
-;;; Get the type id of a class structure.
-;;;
-;;; class :
-;;;     a valid GObjectClass
-;;;
-;;; Returns :
-;;;     Type id of class.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-class-type (class)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-29}
+  @argument[class]{a valid GObjectClass}
+  @return{Type id of class.}
+  @short{Get the type id of a class structure.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-object-class-type (g-type-class-ref (gtype \"GtkLabel\")))
+=> #S(GTYPE :NAME \"GtkLabel\" :%ID 134905144)
+    @end{pre}
+  @end{dictionary}"
   (g-type-from-class class))
 
 (export 'g-object-class-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_CLASS_NAME()
-;;;
-;;; #define G_OBJECT_CLASS_NAME(class)
-;;;         (g_type_name (G_OBJECT_CLASS_TYPE (class)))
-;;;
-;;; Return the name of a class structure's type.
-;;;
-;;; class :
-;;;     a valid GObjectClass
-;;;
-;;; Returns :
-;;;     Type name of class. The string is owned by the type system and should
-;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-class-name (class)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-29}
+  @argument[class]{a valid GObjectClass}
+  @return{Type name of class. The string is owned by the type system and should
+    not be freed.}
+  @short{Return the name of a class structure's type.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-object-class-name (g-type-class-ref (gtype \"GtkLabel\")))
+=> \"GtkLabel\"
+    @end{pre}
+  @end{dictionary}"
   (g-type-name (g-type-from-class class)))
 
 (export 'g-object-class-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_class_install_property ()
-;;;
-;;; void g_object_class_install_property (GObjectClass *oclass,
-;;;                                       guint property_id,
-;;;                                       GParamSpec *pspec);
-;;;
-;;; Installs a new property. This is usually done in the class initializer.
-;;;
-;;; Note that it is possible to redefine a property in a derived class, by
-;;; installing a property with the same name. This can be useful at times, e.g.
-;;; to change the range of allowed values or the default value.
-;;;
-;;; oclass :
-;;;     a GObjectClass
-;;;
-;;; property_id :
-;;;     the id for the new property
-;;;
-;;; pspec :
-;;;     the GParamSpec for the new property
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_install_property" g-object-class-install-property)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-01-01}
+  @argument[oclass]{a GObjectClass}
+  @argument[property-id]{the id for the new property}
+  @argument[pspec]{the GParamSpec for the new property}
+  @begin{short}
+    Installs a new property. This is usually done in the class initializer.
+  @end{short}
+
+  Note that it is possible to redefine a property in a derived class, by
+  installing a property with the same name. This can be useful at times, e.g.
+  to change the range of allowed values or the default value."
   (class (:pointer g-object-class))
   (property-id :uint)
   (pspec (:pointer g-param-spec)))
@@ -1435,25 +1332,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_class_find_property ()
-;;;
-;;; GParamSpec * g_object_class_find_property (GObjectClass *oclass,
-;;;                                            const gchar *property_name);
-;;;
-;;; Looks up the GParamSpec for a property of a class.
-;;;
-;;; oclass :
-;;;     a GObjectClass
-;;;
-;;; property_name :
-;;;     the name of the property to look up
-;;;
-;;; Returns :
-;;;     the GParamSpec for the property, or NULL if the class doesn't have a
-;;;     property of that name
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_find_property" g-object-class-find-property)
     (:pointer g-param-spec)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-01-01}
+  @argument[oclass]{a GObjectClass}
+  @argument[property-name]{the name of the property to look up}
+  @return{the GParamSpec for the property, or @code{nil} if the class doesn't
+    have a property of that name}
+  @short{Looks up the @symbol{g-param-spec} for a property of a class.}
+  @begin[Example]{dictionary}
+    The @sym{g-param-spec} structure for the property \"label\" of the
+    @class{gtk-button} is looked up.
+    @begin{pre}
+ (setq param
+       (g-object-class-find-property (g-type-class-ref (gtype \"GtkButton\"))
+                                     \"label\"))
+=> #.(SB-SYS:INT-SAP #X08188AE0)
+ (foreign-slot-value param '(:struct g-param-spec) :type-instance)
+=> #.(SB-SYS:INT-SAP #X08188AE0)
+ (foreign-slot-value param '(:struct g-param-spec) :name)
+=> \"label\"
+ (foreign-slot-value param '(:struct g-param-spec) :flags)
+=> (:READABLE :WRITABLE :CONSTRUCT :STATIC-NAME :STATIC-NICK :STATIC-BLURB)
+ (foreign-slot-value param '(:struct g-param-spec) :value-type)
+=> #S(GTYPE :NAME \"gchararray\" :%ID 64)
+ (foreign-slot-value param '(:struct g-param-spec) :owner-type)
+=> #S(GTYPE :NAME \"GtkButton\" :%ID 134906760)
+    @end{pre}
+  @end{dictionary}"
   (class (:pointer g-object-class))
   (property-name :string))
 
@@ -1461,20 +1370,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_class_list_properties ()
-;;;
-;;; GParamSpec ** g_object_class_list_properties (GObjectClass *oclass,
-;;;                                               guint *n_properties);
-;;;
-;;; Get an array of GParamSpec* for all properties of a class.
-;;;
-;;; oclass :
-;;;     a GObjectClass
-;;;
-;;; n_properties :
-;;;     return location for the length of the returned array
-;;;
-;;; Returns :
-;;;     an array of GParamSpec* which should be freed after use
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_list_properties" %g-object-class-list-properties)
@@ -1483,6 +1378,20 @@
   (n-properties (:pointer :uint)))
 
 (defun g-object-class-list-properties (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[type]{a type id of a class}
+  @return{A list of @symbol{g-param-spec} CStruct for all properties of a
+    class.}
+  @begin{short}
+    Get a list of @symbol{g-param-spec} CStruct for all properties of a
+    class.
+  @end{short}
+  @begin[Note]{dictionary}
+    The C implementation of the corresponding function does not take a
+    type id, but a GObjectClass as the first argument. The Lisp function gets
+    the GObjectClass with @code{(g-type-class-ref @arg{type})}.
+  @end{dictionary}"
   (assert (g-type-is-a type +g-type-object+))
   (with-unwind (class (g-type-class-ref type) g-type-class-unref)
     (with-foreign-object (n-properties :uint)
@@ -1497,43 +1406,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_class_override_property ()
-;;;
-;;; void g_object_class_override_property (GObjectClass *oclass,
-;;;                                        guint property_id,
-;;;                                        const gchar *name);
-;;;
-;;; Registers property_id as referring to a property with the name name in a
-;;; parent class or in an interface implemented by oclass. This allows this
-;;; class to override a property implementation in a parent class or to provide
-;;; the implementation of a property from an interface.
-;;;
-;;; Note
-;;;
-;;; Internally, overriding is implemented by creating a property of type
-;;; GParamSpecOverride; generally operations that query the properties of the
-;;; object class, such as g_object_class_find_property() or
-;;; g_object_class_list_properties() will return the overridden property.
-;;; However, in one case, the construct_properties argument of the constructor
-;;; virtual function, the GParamSpecOverride is passed instead, so that the
-;;; param_id field of the GParamSpec will be correct. For virtually all uses,
-;;; this makes no difference. If you need to get the overridden property, you
-;;; can call g_param_spec_get_redirect_target().
-;;;
-;;; oclass :
-;;;     a GObjectClass
-;;;
-;;; property_id :
-;;;     the new property ID
-;;;
-;;; name :
-;;;     the name of a property registered in a parent class or in an interface
-;;;     of this class.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_override_property"
            g-object-class-override-property) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[oclass]{a @symbol{g-object-class} CStruct}
+  @argument[property-id]{the new property ID}
+  @argument[name]{the name of a property registered in a parent class or in an
+    interface of this class.}
+  @begin{short}
+    Registers @arg{property-id} as referring to a property with the name
+    @arg{name} in a parent class or in an interface implemented by @arg{oclass}.
+  @end{short}
+  This allows this class to override a property implementation in a parent class
+  or to provide the implementation of a property from an interface.
+  @begin[Note]{dictionary}
+    Internally, overriding is implemented by creating a property of type
+    @code{GParamSpecOverride}; generally operations that query the properties of
+    the object class, such as @fun{g-object-class-find-property} or
+    @fun{g-object-class-list-properties} will return the overridden property.
+    However, in one case, the @code{construct_properties} argument of the
+    constructor virtual function, the @code{GParamSpecOverride} is passed
+    instead, so that the @code{param_id} field of the @symbol{g-param-spec}
+    CStruct will be correct. For virtually all uses, this makes no difference.
+    If you need to get the overridden property, you can call
+    @fun{g-param-spec-get-redirect-target}.
+  @end{dictionary}
+  Since 2.4"
   (class (:pointer g-object-class))
   (property-id :uint)
   (name :string))
@@ -1542,36 +1443,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_interface_install_property ()
-;;;
-;;; void g_object_interface_install_property (gpointer g_iface,
-;;;                                           GParamSpec *pspec);
-;;;
-;;; Add a property to an interface; this is only useful for interfaces that are
-;;; added to GObject-derived types. Adding a property to an interface forces all
-;;; objects classes with that interface to have a compatible property. The
-;;; compatible property could be a newly created GParamSpec, but normally
-;;; g_object_class_override_property() will be used so that the object class
-;;; only needs to provide an implementation and inherits the property
-;;; description, default value, bounds, and so forth from the interface
-;;; property.
-;;;
-;;; This function is meant to be called from the interface's default vtable
-;;; initialization function (the class_init member of GTypeInfo.) It must not be
-;;; called after after class_init has been called for any object types
-;;; implementing this interface.
-;;;
-;;; g_iface :
-;;;     any interface vtable for the interface, or the default vtable for the
-;;;     interface.
-;;;
-;;; pspec :
-;;;     the GParamSpec for the new property
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_install_property"
            g-object-interface-install-property) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[g-iface]{any interface vtable for the interface, or the default
+    vtable for theinterface.}
+  @argument[pspec]{the @symbol{g-param-spec} CStruct for the new property}
+  @begin{short}
+    Add a property to an interface; this is only useful for interfaces that are
+    added to GObject-derived types.
+  @end{short}
+  Adding a property to an interface forces all objects classes with that
+  interface to have a compatible property. The compatible property could be a
+  newly created @symbol{g-param-spec} CStruct, but normally
+  @fun{g-object-class-override-property} will be used so that the object class
+  only needs to provide an implementation and inherits the property
+  description, default value, bounds, and so forth from the interface
+  property.
+
+  This function is meant to be called from the interface's default vtable
+  initialization function (the class_init member of GTypeInfo.) It must not be
+  called after after class_init has been called for any object types
+  implementing this interface.
+
+  Since 2.4"
   (g-iface :pointer)
   (pspec (:pointer g-param-spec)))
 
@@ -1579,31 +1477,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_interface_find_property ()
-;;;
-;;; GParamSpec * g_object_interface_find_property (gpointer g_iface,
-;;;                                                const gchar *property_name);
-;;;
-;;; Find the GParamSpec with the given name for an interface. Generally, the
-;;; interface vtable passed in as g_iface will be the default vtable from
-;;; g_type_default_interface_ref(), or, if you know the interface has already
-;;; been loaded, g_type_default_interface_peek().
-;;;
-;;; g_iface :
-;;;     any interface vtable for the interface, or the default vtable for the
-;;;     interface
-;;;
-;;; property_name :
-;;;     name of a property to lookup.
-;;;
-;;; Returns :
-;;;     the GParamSpec for the property of the interface with the name
-;;;     property_name, or NULL if no such property exists
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_find_property" g-object-interface-find-property)
     (:pointer g-param-spec)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[g-iface]{any interface vtable for the interface, or the default
+    vtable for the interface}
+  @argument[property-name]{name of a property to lookup.}
+  @return{The @symbol{g-param-spec} CStruct for the property of the interface
+    with the name @arg{property-name}, or @code{nil} if no such property
+    exists.}
+  @begin{short}
+    Find the @symbol{g-param-spec} CStruct with the given name for an interface.
+  @end{short}
+  Generally, the interface vtable passed in as @arg{g-iface} will be the default
+  vtable from @fun{g-type-default-interface-ref}, or, if you know the interface
+  has already been loaded, @fun{g-type-default-interface-peek}.
+
+  Since 2.4"
   (interface :pointer)
   (property-name :string))
 
@@ -1611,28 +1504,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_interface_list_properties ()
-;;;
-;;; GParamSpec ** g_object_interface_list_properties (gpointer g_iface,
-;;;                                                   guint *n_properties_p);
-;;;
-;;; Lists the properties of an interface.Generally, the interface vtable passed
-;;; in as g_iface will be the default vtable from
-;;; g_type_default_interface_ref(), or, if you know the interface has already
-;;; been loaded, g_type_default_interface_peek().
-;;;
-;;; g_iface :
-;;;     any interface vtable for the interface, or the default vtable for the
-;;;     interface
-;;;
-;;; n_properties_p :
-;;;     location to store number of properties returned
-;;;
-;;; Returns :
-;;;     a pointer to an array of pointers to GParamSpec structures. The
-;;;     paramspecs are owned by GLib, but the array should be freed with
-;;;     g_free() when you are done with it.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_list_properties"
@@ -1641,6 +1512,24 @@
   (n-properties (:pointer :uint)))
 
 (defun g-object-interface-list-properties (type)
+
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[type]{a type id of an interface}
+  @return{A list of @symbol{g-param-spec} CStruct for all properties of an
+    interface.}
+  @begin{short}
+    Lists the properties of an interface.
+  @end{short}
+  Generally, the interface vtable passed in as @arg{g-iface} will be the default
+  vtable from @fun{g-type-default-interface-ref}, or, if you know the interface
+  has already been loaded, @fun{g-type-default-interface-peek}.
+  @begin[Note]{dictionary}
+    The C implementation of the corresponding function does not take a
+    type id, but a vtable as the first argument. The Lisp function gets
+    the vtable with @code{(g-type-default-interface-ref type)}.
+  @end{dictionary}
+  Since 2.4"
   (assert (g-type-is-a type +g-type-interface+))
   (with-unwind (g-iface (g-type-default-interface-ref type)
                         g-type-default-interface-unref)
@@ -1731,64 +1620,55 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_ref ()
-;;;
-;;; gpointer g_object_ref (gpointer object);
-;;;
-;;; Increases the reference count of object.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; Returns :
-;;;     the same object
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_ref" g-object-ref) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[object]{a @class{g-object} instance}
+  @return{the same object}
+  @short{Increases the reference count of object.}"
   (object :pointer))
 
 (export 'g-object-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_unref ()
-;;;
-;;; void g_object_unref (gpointer object);
-;;;
-;;; Decreases the reference count of object. When its reference count drops to
-;;; 0, the object is finalized (i.e. its memory is freed).
-;;;
-;;; object :
-;;;     a GObject
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_unref" g-object-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[object]{a @class{g-object} instance}
+  @begin{short}
+    Decreases the reference count of object.
+  @end{short}
+  When its reference count drops to 0, the object is finalized (i.e. its memory
+  is freed)."
   (object :pointer))
 
 (export 'g-object-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_ref_sink ()
-;;;
-;;; gpointer g_object_ref_sink (gpointer object);
-;;;
-;;; Increase the reference count of object, and possibly remove the floating
-;;; reference, if object has a floating reference.
-;;;
-;;; In other words, if the object is floating, then this call "assumes
-;;; ownership" of the floating reference, converting it to a normal reference by
-;;; clearing the floating flag while leaving the reference count unchanged. If
-;;; the object is not floating, then this call adds a new normal reference
-;;; increasing the reference count by one.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; Returns :
-;;;     object
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_ref_sink" g-object-ref-sink) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-10}
+  @argument[object]{a @class{g-object} instance}
+  @return{@arg{object}}
+  @begin{short}
+    Increase the reference count of @arg{object}, and possibly remove the
+    floating reference, if object has a floating reference.
+  @end{short}
+  In other words, if the object is floating, then this call \"assumes
+  ownership\" of the floating reference, converting it to a normal reference by
+  clearing the floating flag while leaving the reference count unchanged. If
+  the object is not floating, then this call adds a new normal reference
+  increasing the reference count by one.
+
+  Since 2.10"
   (object :pointer))
 
 (export 'g-object-ref-sink)

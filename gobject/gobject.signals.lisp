@@ -2,13 +2,15 @@
 ;;; gobject.signals.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1144,30 +1146,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_connect()
-;;;
-;;; #define g_signal_connect(instance, detailed_signal, c_handler, data)
-;;;
-;;; Connects a GCallback function to a signal for a particular object.
-;;;
-;;; The handler will be called before the default handler of the signal.
-;;;
-;;; instance :
-;;;     the instance to connect to.
-;;;
-;;; detailed_signal :
-;;;     a string of the form "signal-name::detail".
-;;;
-;;; c_handler :
-;;;     the GCallback to connect.
-;;;
-;;; data :
-;;;     data to pass to c_handler calls.
-;;;
-;;; Returns :
-;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 (defun g-signal-connect (instance detailed-signal handler &key after)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-19}
+  @argument[instance]{the instance to connect to.}
+  @argument[detailed-signal]{a string of the form \"signal-name::detail\".}
+  @argument[handler]{the GCallback to connect.}
+  @return{the handler id}
+  @short{Connects a GCallback function to a signal for a particular object.}
+
+  The handler will be called before the default handler of the signal."
   (g-signal-connect-closure (pointer instance)
                             detailed-signal
                             (create-closure instance handler)
