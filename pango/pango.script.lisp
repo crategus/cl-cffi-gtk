@@ -2,9 +2,10 @@
 ;;; pango.script.lisp
 ;;;
 ;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.29.5. See http://www.gtk.org.
+;;; for Pango 1.29.5. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -571,13 +572,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoLanguage
-;;;
-;;; typedef struct _PangoLanguage PangoLanguage;
-;;;
-;;; The PangoLanguage structure is used to represent a language.
-;;;
-;;; PangoLanguage pointers can be efficiently copied and compared with each
-;;; other.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque pango-language "PangoLanguage"
@@ -586,14 +580,26 @@
 (export (boxed-related-symbols 'pango-language))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-language atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-language 'type)
+ "@version{2013-3-9}
+  @begin{short}
+    The @sym{pango-language} structure is used to represent a language.
+  @end{short}
+
+  @sym{pango-language} pointers can be efficiently copied and compared with each
+  other.")
+
+;;; ----------------------------------------------------------------------------
 ;;; PANGO_TYPE_LANGUAGE
-;;;
-;;; #define PANGO_TYPE_LANGUAGE (pango_language_get_type ())
-;;;
-;;; The GObject type for PangoLanguage.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_language_get_type" pango-language-get-type) g-type)
+(defcfun ("pango_language_get_type" pango-language-get-type) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @short{The GObject type for @class{pango-language}.}")
 
 (export 'pango-language-get-type)
 
@@ -748,41 +754,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_language_get_default ()
-;;;
-;;; PangoLanguage * pango_language_get_default (void);
-;;;
-;;; Returns the PangoLanguage for the current locale of the process. Note that
-;;; this can change over the life of an application.
-;;;
-;;; On Unix systems, this is the return value is derived from
-;;; setlocale(LC_CTYPE, NULL), and the user can affect this through the
-;;; environment variables LC_ALL, LC_CTYPE or LANG (checked in that order).
-;;; The locale string typically is in the form lang_COUNTRY, where lang is
-;;; an ISO-639 language code, and COUNTRY is an ISO-3166 country code. For
-;;; instance, sv_FI for Swedish as written in Finland or pt_BR for Portuguese
-;;; as written in Brazil.
-;;;
-;;; On Windows, the C library does not use any such environment variables, and
-;;; setting them won't affect the behavior of functions like ctime(). The user
-;;; sets the locale through the Regional Options in the Control Panel. The
-;;; C library (in the setlocale() function) does not use country and language
-;;; codes, but country and language names spelled out in English. However, this
-;;; function does check the above environment variables, and does return a
-;;; Unix-style locale string based on either said environment variables or the
-;;; thread's current locale.
-;;;
-;;; Your application should call setlocale(LC_ALL, ""); for the user settings
-;;; to take effect. Gtk+ does this in its initialization functions automatically
-;;; (by calling gtk_set_locale()). See man setlocale for more details.
-;;;
-;;; Returns :
-;;;     the default language as a PangoLanguage, must not be freed
-;;;
-;;; Since 1.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_language_get_default" pango-language-get-default)
-    (g-boxed-foreign pango-language))
+    (g-boxed-foreign pango-language)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-9}
+  @return{The default language as a @class{pango-language} object.}
+  @begin{short}
+    Returns the @class{pango-language} for the current locale of the process.
+    Note that this can change over the life of an application.
+  @end{short}
+
+  On Unix systems, this is the return value derived from
+  @code{setlocale(LC_CTYPE, NULL)}, and the user can affect this through the
+  environment variables @code{LC_ALL}, @code{LC_CTYPE} or @code{LANG} (checked
+  in that order). The locale string typically is in the form
+  @code{lang_COUNTRY}, where @code{lang} is an ISO-639 language code, and
+  @code{COUNTRY} is an ISO-3166 country code. For instance, @code{sv_FI} for
+  Swedish as written in Finland or @code{pt_BR} for Portuguese as written in
+  Brazil.
+
+  On Windows, the C library does not use any such environment variables, and
+  setting them won't affect the behavior of functions like @code{ctime()}. The
+  user sets the locale through the Regional Options in the Control Panel. The
+  C library (in the @code{setlocale()} function) does not use country and
+  language codes, but country and language names spelled out in English.
+  However, this function does check the above environment variables, and does
+  return a Unix-style locale string based on either said environment variables 
+  or the thread's current locale.
+
+  Your application should call @code{setlocale(LC_ALL, \"\");} for the user
+  settings to take effect. Gtk+ does this in its initialization functions
+  automatically (by calling @code{gtk_set_locale()}). See @code{man setlocale}
+  for more details.
+
+  Since 1.16")
 
 (export 'pango-language-get-default)
 

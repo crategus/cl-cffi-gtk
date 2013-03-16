@@ -2,13 +2,14 @@
 ;;; pango.layout.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.30.0. See http://www.gtk.org.
+;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -167,27 +168,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoLayout
-;;; 
-;;; typedef struct _PangoLayout PangoLayout;
-;;; 
-;;; The PangoLayout structure represents an entire paragraph of text. It is
-;;; initialized with a PangoContext, UTF-8 string and set of attributes for that
-;;; string. Once that is done, the set of formatted lines can be extracted from
-;;; the object, the layout can be rendered, and conversion between logical
-;;; character positions within the layout's text, and the physical position of
-;;; the resulting glyphs can be made.
-;;; 
-;;; There are also a number of parameters to adjust the formatting of a
-;;; PangoLayout, which are illustrated in Figure 1, “Adjustable parameters for
-;;; a PangoLayout”. It is possible, as well, to ignore the 2-D setup, and simply
-;;; treat the results of a PangoLayout as a list of lines.
-;;; 
-;;; The PangoLayout structure is opaque, and has no user-visible fields.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "PangoLayout" pango-layout
   (:type-initializer "pango_layout_get_type")
   ())
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'pango-layout 'type)
+ "@version{2013-3-4}
+  @begin{short}
+    The PangoLayout structure represents an entire paragraph of text. It is
+    initialized with a PangoContext, UTF-8 string and set of attributes for that
+    string. Once that is done, the set of formatted lines can be extracted from
+    the object, the layout can be rendered, and conversion between logical
+    character positions within the layout's text, and the physical position of
+    the resulting glyphs can be made.
+  @end{short}
+
+  There are also a number of parameters to adjust the formatting of a
+  PangoLayout, which are illustrated in Figure 1, “Adjustable parameters for
+  a PangoLayout”. It is possible, as well, to ignore the 2-D setup, and simply
+  treat the results of a PangoLayout as a list of lines.
+
+  The PangoLayout structure is opaque, and has no user-visible fields.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoLayoutIter
@@ -250,16 +256,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_context_changed ()
-;;; 
-;;; void pango_layout_context_changed (PangoLayout *layout);
-;;; 
-;;; Forces recomputation of any state in the PangoLayout that might depend on
-;;; the layout's context. This function should be called if you make changes to
-;;; the context subsequent to creating the layout.
-;;; 
-;;; layout :
-;;;     a PangoLayout
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_context_changed" pango-layout-context-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-4}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{short}
+    Forces recomputation of any state in the PangoLayout that might depend on
+    the layout's context. This function should be called if you make changes to
+    the context subsequent to creating the layout.
+  @end{short}"
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-context-changed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_text ()
