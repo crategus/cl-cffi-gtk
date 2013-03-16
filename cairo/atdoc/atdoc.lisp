@@ -4,9 +4,9 @@
 ;;; Functions for generating the documentation for the Library Cairo
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See http://cairographics.org
+;;; for Cairo 1.12.2. See <http://cairographics.org>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,9 +28,6 @@
 
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-cairo)
-
-;; Load the documentation of the Libraray Cairo
-(load "atdoc-cairo.lisp")
 
 (defpackage :atdoc-cairo
   (:use :cairo :common-lisp)

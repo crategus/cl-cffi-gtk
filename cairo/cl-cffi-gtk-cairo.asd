@@ -35,9 +35,8 @@
                (:file "cairo.context")
                (:file "cairo.paths")
               )
-  :depends-on (:cl-cffi-gtk-glib
-               :cl-cffi-gtk-gobject
-               :cffi
+  :depends-on (:cffi
+               :cl-cffi-gtk-glib
                :iterate))
 
 ;;; --- End of file cl-cffi-gtk-cairo.asd --------------------------------------

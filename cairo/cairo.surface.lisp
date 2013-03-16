@@ -2,9 +2,11 @@
 ;;; cairo.surface.lisp
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See http://cairographics.org
+;;; for Cairo 1.12.2. See <http://cairographics.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -176,64 +178,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_t
-;;; 
-;;; typedef struct _cairo_surface cairo_surface_t;
-;;; 
-;;; A cairo_surface_t represents an image, either as the destination of a
-;;; drawing operation or as source when drawing onto another surface. To draw to
-;;; a cairo_surface_t, create a cairo context with the surface as the target,
-;;; using cairo_create().
-;;; 
-;;; There are different subtypes of cairo_surface_t for different drawing
-;;; backends; for example, cairo_image_surface_create() creates a bitmap image
-;;; in memory. The type of a surface can be queried with
-;;; cairo_surface_get_type().
-;;; 
-;;; The initial contents of a surface after creation depend upon the manner of
-;;; its creation. If cairo creates the surface and backing storage for the user,
-;;; it will be initially cleared; for example, cairo_image_surface_create() and
-;;; cairo_surface_create_similar(). Alternatively, if the user passes in a
-;;; reference to some backing storage and asks cairo to wrap that in a
-;;; cairo_surface_t, then the contents are not modified; for example,
-;;; cairo_image_surface_create_for_data() and cairo_xlib_surface_create().
-;;; 
-;;; Memory management of cairo_surface_t is done with cairo_surface_reference()
-;;; and cairo_surface_destroy().
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
-(defctype cairo-surface-t :pointer)
+(defcstruct cairo-surface-t)
 
 (export 'cairo-surface-t)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-surface-t atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'cairo-surface-t atdoc:*external-symbols*)
+ "@version{2013-3-3}
+  @begin{short}
+    A cairo_surface_t represents an image, either as the destination of a
+    drawing operation or as source when drawing onto another surface. To draw to
+    a cairo_surface_t, create a cairo context with the surface as the target,
+    using cairo_create().
+  @end{short}
+
+  There are different subtypes of cairo_surface_t for different drawing
+  backends; for example, cairo_image_surface_create() creates a bitmap image
+  in memory. The type of a surface can be queried with
+  cairo_surface_get_type().
+
+  The initial contents of a surface after creation depend upon the manner of
+  its creation. If cairo creates the surface and backing storage for the user,
+  it will be initially cleared; for example, cairo_image_surface_create() and
+  cairo_surface_create_similar(). Alternatively, if the user passes in a
+  reference to some backing storage and asks cairo to wrap that in a
+  cairo_surface_t, then the contents are not modified; for example,
+  cairo_image_surface_create_for_data() and cairo_xlib_surface_create().
+
+  Memory management of cairo_surface_t is done with cairo_surface_reference()
+  and cairo_surface_destroy().
+
+  Since 1.0")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum cairo_content_t
-;;; 
-;;; typedef enum {
-;;;     CAIRO_CONTENT_COLOR       = 0x1000,
-;;;     CAIRO_CONTENT_ALPHA       = 0x2000,
-;;;     CAIRO_CONTENT_COLOR_ALPHA = 0x3000
-;;; } cairo_content_t;
-;;; 
-;;; cairo_content_t is used to describe the content that a surface will contain,
-;;; whether color information, alpha information (translucence vs. opacity), or
-;;; both.
-;;; 
-;;; Note: The large values here are designed to keep cairo_content_t values
-;;; distinct from cairo_format_t values so that the implementation can detect
-;;; the error if users confuse the two types.
-;;; 
-;;; CAIRO_CONTENT_COLOR
-;;;     The surface will hold color content only. (Since 1.0)
-;;; 
-;;; CAIRO_CONTENT_ALPHA
-;;;     The surface will hold alpha content only. (Since 1.0)
-;;; 
-;;; CAIRO_CONTENT_COLOR_ALPHA
-;;;     The surface will hold color and alpha content. (Since 1.0)
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcenum cairo-content-t
@@ -242,6 +225,35 @@
   (:color-alpha #x3000))
 
 (export 'cairo-content-t)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-content-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-content-t atdoc:*external-symbols*)
+ "@version{2013-3-3}
+  @begin{short}
+    cairo_content_t is used to describe the content that a surface will contain,
+    whether color information, alpha information (translucence vs. opacity), or
+    both.
+  @end{short}
+
+  Note: The large values here are designed to keep cairo_content_t values
+  distinct from cairo_format_t values so that the implementation can detect
+  the error if users confuse the two types.
+  @begin{pre}
+(defcenum cairo-content-t
+  (:color #x1000)
+  (:alpha #x2000)
+  (:color-alpha #x3000))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:color]{The surface will hold color content only. (Since 1.0)}
+    @entry[:alpha]{The surface will hold alpha content only. (Since 1.0)}
+    @entry[:color-alpha]{The surface will hold color and alpha content.
+      (Since 1.0)}
+  @end{table}
+  Since 1.0")
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_create_similar ()
@@ -397,20 +409,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_destroy ()
-;;; 
-;;; void cairo_surface_destroy (cairo_surface_t *surface);
-;;; 
-;;; Decreases the reference count on surface by one. If the result is zero, then
-;;; surface and all associated resources are freed. See
-;;; cairo_surface_reference().
-;;; 
-;;; surface :
-;;;     a cairo_surface_t
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_surface_destroy" cairo-surface-destroy) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-3}
+  @argument[surface]{a cairo_surface_t}
+  @begin{short}
+    Decreases the reference count on surface by one. If the result is zero, then
+    surface and all associated resources are freed.
+  @end{short}
+  See cairo_surface_reference().
+
+  Since 1.0"
   (surface cairo-surface-t))
 
 (export 'cairo-surface-destroy)

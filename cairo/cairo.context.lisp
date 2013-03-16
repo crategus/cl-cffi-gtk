@@ -2,9 +2,11 @@
 ;;; cairo.context.lisp
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See http://cairographics.org
+;;; for Cairo 1.12.2. See <http://cairographics.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -128,103 +130,105 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_t
-;;; 
-;;; typedef struct _cairo cairo_t;
-;;; 
-;;; A cairo_t contains the current state of the rendering device, including
-;;; coordinates of yet to be drawn shapes.
-;;; 
-;;; Cairo contexts, as cairo_t objects are named, are central to cairo and all
-;;; drawing with cairo is always done to a cairo_t object.
-;;; 
-;;; Memory management of cairo_t is done with cairo_reference() and
-;;; cairo_destroy().
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
-(defctype cairo-t :pointer)
+(defcstruct cairo-t)
 
 (export 'cairo-t)
 
-(defctype cairo-context :pointer)
+;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-opaque cairo-context "CairoContext"
-  :alloc (error "CairoContext can not be created from Lisp side"))
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-t atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'cairo-t atdoc:*external-symbols*)
+ "@version{2013-3-2}
+  @begin{short}
+    A @sym{cairo-t} contains the current state of the rendering device,
+    including coordinates of yet to be drawn shapes.
+  @end{short}
 
-(export (boxed-related-symbols 'cairo-context))
+  Cairo contexts, as @sym{cairo-t} objects are named, are central to Cairo and
+  all drawing with Cairo is always done to a @sym{cairo-t} object.
+
+  Memory management of @sym{cairo-t} is done with @code{cairo_reference()} and
+  @fun{cairo-destroy}.
+
+  Since 1.0
+  @see-function{cairo-destroy}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_create ()
-;;; 
-;;; cairo_t * cairo_create (cairo_surface_t *target);
-;;; 
-;;; Creates a new cairo_t with all graphics state parameters set to default
-;;; values and with target as a target surface. The target surface should be
-;;; constructed with a backend-specific function such as
-;;; cairo_image_surface_create() (or any other cairo_backend_surface_create()
-;;; variant).
-;;; 
-;;; This function references target, so you can immediately call
-;;; cairo_surface_destroy() on it if you don't need to maintain a separate
-;;; reference to it.
-;;; 
-;;; target :
-;;;     target surface for the context
-;;; 
-;;; Returns :
-;;;     a newly allocated cairo_t with a reference count of 1. The initial
-;;;     reference count should be released with cairo_destroy() when you are
-;;;     done using the cairo_t. This function never returns NULL. If memory
-;;;     cannot be allocated, a special cairo_t object will be returned on which
-;;;     cairo_status() returns CAIRO_STATUS_NO_MEMORY. If you attempt to target
-;;;     a surface which does not support writing (such as cairo_mime_surface_t)
-;;;     then a CAIRO_STATUS_WRITE_ERROR will be raised. You can use this object
-;;;     normally, but no drawing will be done.
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_create" cairo-create) cairo-t
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[target]{target surface for the context}
+  @begin{return}
+    a newly allocated cairo_t with a reference count of 1. The initial 
+    reference count should be released with cairo_destroy() when you are
+    done using the cairo_t. This function never returns NULL. If memory
+    cannot be allocated, a special cairo_t object will be returned on which
+    cairo_status() returns CAIRO_STATUS_NO_MEMORY. If you attempt to target
+    a surface which does not support writing (such as cairo_mime_surface_t)
+    then a CAIRO_STATUS_WRITE_ERROR will be raised. You can use this object
+    normally, but no drawing will be done.
+  @end{return}
+  @begin{short}
+    Creates a new cairo_t with all graphics state parameters set to default
+    values and with target as a target surface.
+  @end{short}
+  The target surface should be
+  constructed with a backend-specific function such as
+  cairo_image_surface_create() (or any other cairo_backend_surface_create()
+  variant).
+
+  This function references target, so you can immediately call
+  cairo_surface_destroy() on it if you don't need to maintain a separate
+  reference to it.
+
+  Since 1.0"
   (target cairo-surface-t))
 
 (export 'cairo-create)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_reference ()
-;;; 
-;;; cairo_t * cairo_reference (cairo_t *cr);
-;;; 
-;;; Increases the reference count on cr by one. This prevents cr from being
-;;; destroyed until a matching call to cairo_destroy() is made.
-;;; 
-;;; The number of references to a cairo_t can be get using
-;;; cairo_get_reference_count().
-;;; 
-;;; cr :
-;;;     a cairo_t
-;;; 
-;;; Returns :
-;;;     the referenced cairo_t.
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_reference" cairo-reference) cairo-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-2}
+  @argument[cr]{a cairo_t}
+  @return{the referenced cairo_t.}
+  @begin{short}
+    Increases the reference count on cr by one. This prevents cr from being
+    destroyed until a matching call to cairo_destroy() is made.
+  @end{short}
+
+  The number of references to a cairo_t can be get using
+  cairo_get_reference_count().
+
+  Since 1.0"
+  (cr cairo-t))
+
+(export 'cairo-reference)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_destroy ()
-;;; 
-;;; void cairo_destroy (cairo_t *cr);
-;;; 
-;;; Decreases the reference count on cr by one. If the result is zero, then cr
-;;; and all associated resources are freed. See cairo_reference().
-;;; 
-;;; cr :
-;;;     a cairo_t
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_destroy" cairo-destroy) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[cr]{a @symbol{cairo-t}}
+  @begin{short}
+    Decreases the reference count on @arg{cr} by one. If the result is zero,
+    then @arg{cr} and all associated resources are freed. See
+    @code{cairo_reference()}.
+  @end{short}
+
+  Since 1.0"
   (cr cairo-t))
 
 (export 'cairo-destroy)
@@ -452,38 +456,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_source_rgb ()
-;;; 
-;;; void cairo_set_source_rgb (cairo_t *cr,
-;;;                            double red,
-;;;                            double green,
-;;;                            double blue);
-;;; 
-;;; Sets the source pattern within cr to an opaque color. This opaque color will
-;;; then be used for any subsequent drawing operation until a new source pattern
-;;; is set.
-;;; 
-;;; The color components are floating point numbers in the range 0 to 1. If the
-;;; values passed in are outside that range, they will be clamped.
-;;; 
-;;; The default source pattern is opaque black, (that is, it is equivalent to
-;;; cairo_set_source_rgb(cr, 0.0, 0.0, 0.0)).
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; red :
-;;;     red component of color
-;;; 
-;;; green :
-;;;     green component of color
-;;; 
-;;; blue :
-;;;     blue component of color
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_set_source_rgb" cairo-set-source-rgb) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[cr]{a cairo context}
+  @argument[red]{red component of color}
+  @argument[green]{green component of color}
+  @argument[blue]{blue component of color}
+  @begin{short}
+    Sets the source pattern within @arg{cr} to an opaque color. This opaque
+    color will then be used for any subsequent drawing operation until a new
+    source pattern is set.
+  @end{short}
+
+  The color components are floating point numbers in the range @code{0.0} to
+  @code{1.0}. If the values passed in are outside that range, they will be
+  clamped.
+
+  The default source pattern is opaque black, (that is, it is equivalent to
+  @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}).
+
+ Since 1.0"
   (cr cairo-t)
   (red :double)
   (green :double)
@@ -556,43 +551,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_source_surface ()
-;;; 
-;;; void cairo_set_source_surface (cairo_t *cr,
-;;;                                cairo_surface_t *surface,
-;;;                                double x,
-;;;                                double y);
-;;; 
-;;; This is a convenience function for creating a pattern from surface and
-;;; setting it as the source in cr with cairo_set_source().
-;;; 
-;;; The x and y parameters give the user-space coordinate at which the surface
-;;; origin should appear. (The surface origin is its upper-left corner before
-;;; any transformation has been applied.) The x and y parameters are negated and
-;;; then set as translation values in the pattern matrix.
-;;; 
-;;; Other than the initial translation pattern matrix, as described above, all
-;;; other pattern attributes, (such as its extend mode), are set to the default
-;;; values as in cairo_pattern_create_for_surface(). The resulting pattern can
-;;; be queried with cairo_get_source() so that these attributes can be modified
-;;; if desired, (eg. to create a repeating pattern with
-;;; cairo_pattern_set_extend()).
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; surface :
-;;;     a surface to be used to set the source pattern
-;;; 
-;;; x :
-;;;     User-space X coordinate for surface origin
-;;; 
-;;; y :
-;;;     User-space Y coordinate for surface origin
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_set_source_surface" cairo-set-source-surface) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[cr]{a cairo context}
+  @argument[surface]{a surface to be used to set the source pattern}
+  @argument[x]{User-space X coordinate for surface origin}
+  @argument[y]{User-space Y coordinate for surface origin}
+  @begin{short}
+    This is a convenience function for creating a pattern from surface and
+    setting it as the source in @arg{cr} with @code{cairo_set_source()}.
+  @end{short}
+
+  The @arg{x} and @arg{y} parameters give the user-space coordinate at which the
+  surface origin should appear. (The surface origin is its upper-left corner
+  before any transformation has been applied.) The @arg{x} and @arg{y}
+  parameters are negated and then set as translation values in the pattern
+  matrix.
+
+  Other than the initial translation pattern matrix, as described above, all
+  other pattern attributes, (such as its extend mode), are set to the default
+  values as in @code{cairo_pattern_create_for_surface()}. The resulting pattern
+  can be queried with @code{cairo_get_source()} so that these attributes can be
+  modified if desired, (eg. to create a repeating pattern with
+  @code{cairo_pattern_set_extend()}).
+
+  Since 1.0"
   (cr cairo-t)
   (surface cairo-surface-t)
   (x :double)
@@ -1014,36 +1000,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_line_width ()
-;;; 
-;;; void cairo_set_line_width (cairo_t *cr, double width);
-;;; 
-;;; Sets the current line width within the cairo context. The line width value
-;;; specifies the diameter of a pen that is circular in user space, (though
-;;; device-space pen may be an ellipse in general due to scaling/shear/rotation
-;;; of the CTM).
-;;; 
-;;; Note: When the description above refers to user space and CTM it refers to
-;;; the user space and CTM in effect at the time of the stroking operation, not
-;;; the user space and CTM in effect at the time of the call to
-;;; cairo_set_line_width(). The simplest usage makes both of these spaces
-;;; identical. That is, if there is no change to the CTM between a call to
-;;; cairo_set_line_width() and the stroking operation, then one can just pass
-;;; user-space values to cairo_set_line_width() and ignore this note.
-;;; 
-;;; As with the other stroke parameters, the current line width is examined by
-;;; cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but does
-;;; not have any effect during path construction.
-;;; 
-;;; The default line width value is 2.0.
-;;; 
-;;; cr :
-;;;     a cairo_t
-;;; 
-;;; width :
-;;;     a line width
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_line_width" %cairo-set-line-width) :void
+  (cr cairo-t)
+  (width :double))
+
+(defun cairo-set-line-width (cr width)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-2}
+  @argument[cr]{a cairo_t}
+  @argument[width]{a line width}
+  @begin{short}
+    Sets the current line width within the cairo context. The line width value
+    specifies the diameter of a pen that is circular in user space, (though
+    device-space pen may be an ellipse in general due to scaling/shear/rotation
+    of the CTM).
+  @end{short}
+
+  Note: When the description above refers to user space and CTM it refers to
+  the user space and CTM in effect at the time of the stroking operation, not
+  the user space and CTM in effect at the time of the call to
+  cairo_set_line_width(). The simplest usage makes both of these spaces
+  identical. That is, if there is no change to the CTM between a call to
+  cairo_set_line_width() and the stroking operation, then one can just pass
+  user-space values to cairo_set_line_width() and ignore this note.
+
+  As with the other stroke parameters, the current line width is examined by
+  cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but does
+  not have any effect during path construction.
+
+  The default line width value is 2.0.
+
+  Since 1.0"
+  (%cairo-set-line-width cr (coerce width 'double-float)))
+
+(export 'cairo-set-line-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_line_width ()
@@ -1572,21 +1564,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_fill ()
-;;; 
-;;; void cairo_fill (cairo_t *cr);
-;;; 
-;;; A drawing operator that fills the current path according to the current fill
-;;; rule, (each sub-path is implicitly closed before being filled). After
-;;; cairo_fill(), the current path will be cleared from the cairo context. See
-;;; cairo_set_fill_rule() and cairo_fill_preserve().
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_fill" cairo-fill) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    A drawing operator that fills the current path according to the current fill
+    rule, (each sub-path is implicitly closed before being filled). After
+    @sym{cairo-fill}, the current path will be cleared from the cairo context.
+    See @code{cairo_set_fill_rule()} and @code{cairo_fill_preserve()}.
+  @end{short}
+
+  Since 1.0"
   (cr cairo-t))
 
 (export 'cairo-fill)
@@ -1725,19 +1716,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_paint ()
-;;; 
-;;; void cairo_paint (cairo_t *cr);
-;;; 
-;;; A drawing operator that paints the current source everywhere within the
-;;; current clip region.
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_paint" cairo-paint) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-21}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    A drawing operator that paints the current source everywhere within the
+    current clip region.
+  @end{short}
+
+  Since 1.0"
   (cr cairo-t))
 
 (export 'cairo-paint)
@@ -1763,39 +1753,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_stroke ()
-;;; 
-;;; void cairo_stroke (cairo_t *cr);
-;;; 
-;;; A drawing operator that strokes the current path according to the current
-;;; line width, line join, line cap, and dash settings. After cairo_stroke(),
-;;; the current path will be cleared from the cairo context. See
-;;; cairo_set_line_width(), cairo_set_line_join(), cairo_set_line_cap(),
-;;; cairo_set_dash(), and cairo_stroke_preserve().
-;;; 
-;;; Note: Degenerate segments and sub-paths are treated specially and provide a
-;;; useful result. These can result in two different situations:
-;;; 
-;;; 1. Zero-length "on" segments set in cairo_set_dash(). If the cap style is
-;;;    CAIRO_LINE_CAP_ROUND or CAIRO_LINE_CAP_SQUARE then these segments will be
-;;;    drawn as circular dots or squares respectively. In the case of
-;;;    CAIRO_LINE_CAP_SQUARE, the orientation of the squares is determined by
-;;;    the direction of the underlying path.
-;;; 
-;;; 2. A sub-path created by cairo_move_to() followed by either a
-;;;    cairo_close_path() or one or more calls to cairo_line_to() to the same
-;;;    coordinate as the cairo_move_to(). If the cap style is
-;;;    CAIRO_LINE_CAP_ROUND then these sub-paths will be drawn as circular dots.
-;;;    Note that in the case of CAIRO_LINE_CAP_SQUARE a degenerate sub-path will
-;;;    not be drawn at all, (since the correct orientation is indeterminate).
-;;; 
-;;; In no case will a cap style of CAIRO_LINE_CAP_BUTT cause anything to be
-;;; drawn in the case of either degenerate segments or sub-paths.
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_stroke" cairo-stroke) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-2}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    A drawing operator that strokes the current path according to the current
+    line width, line join, line cap, and dash settings. After cairo_stroke(),
+    the current path will be cleared from the cairo context.
+  @end{short}
+  See cairo_set_line_width(), cairo_set_line_join(), cairo_set_line_cap(),
+  cairo_set_dash(), and cairo_stroke_preserve().
+
+  Note: Degenerate segments and sub-paths are treated specially and provide a
+  useful result. These can result in two different situations:
+  @begin{enumerate}
+    @begin{item}
+      Zero-length \"on\" segments set in cairo_set_dash(). If the cap style is
+      CAIRO_LINE_CAP_ROUND or CAIRO_LINE_CAP_SQUARE then these segments will be
+      drawn as circular dots or squares respectively. In the case of
+      CAIRO_LINE_CAP_SQUARE, the orientation of the squares is determined by
+      the direction of the underlying path.
+    @end{item}
+    @begin{item}
+      A sub-path created by cairo_move_to() followed by either a
+      cairo_close_path() or one or more calls to cairo_line_to() to the same
+      coordinate as the cairo_move_to(). If the cap style is
+      CAIRO_LINE_CAP_ROUND then these sub-paths will be drawn as circular dots.
+      Note that in the case of CAIRO_LINE_CAP_SQUARE a degenerate sub-path will
+      not be drawn at all, (since the correct orientation is indeterminate).
+    @end{item}
+  @end{enumerate}
+  In no case will a cap style of CAIRO_LINE_CAP_BUTT cause anything to be
+  drawn in the case of either degenerate segments or sub-paths.
+
+  Since 1.0"
+  (cr cairo-t))
+
+(export 'cairo-stroke)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_stroke_preserve ()

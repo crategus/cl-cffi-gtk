@@ -2,9 +2,11 @@
 ;;; cairo.regions.lisp
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See http://cairographics.org
+;;; for Cairo 1.12.2. See <http://cairographics.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -70,42 +72,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_t
-;;; 
-;;; typedef struct _cairo_region cairo_region_t;
-;;; 
-;;; A cairo_region_t represents a set of integer-aligned rectangles.
-;;; 
-;;; It allows set-theoretical operations like cairo_region_union() and
-;;; cairo_region_intersect() to be performed on them.
-;;; 
-;;; Memory management of cairo_region_t is done with cairo_region_reference()
-;;; and cairo_region_destroy().
-;;; 
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
 
-(defctype cairo-region-t :pointer)
+(defcstruct cairo-region-t)
 
 (export 'cairo-region-t)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-region-t atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'cairo-region-t atdoc:*external-symbols*)
+ "@version{2013-3-3}
+  @begin{short}
+    A cairo_region_t represents a set of integer-aligned rectangles.
+  @end{short}
+
+  It allows set-theoretical operations like cairo_region_union() and
+  cairo_region_intersect() to be performed on them.
+
+  Memory management of cairo_region_t is done with cairo_region_reference()
+  and cairo_region_destroy().
+
+  Since 1.10")
+
+;;; ----------------------------------------------------------------------------
 ;;; cairo_region_create ()
-;;; 
-;;; cairo_region_t * cairo_region_create (void);
-;;; 
-;;; Allocates a new empty region object.
-;;; 
-;;; Returns :
-;;;     A newly allocated cairo_region_t. Free with cairo_region_destroy().
-;;;     This function always returns a valid pointer; if memory cannot be
-;;;     allocated, then a special error object is returned where all operations
-;;;     on the object do nothing. You can check for this with
-;;;     cairo_region_status().
-;;; 
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_region_create" cairo-region-create) cairo-region-t)
+(defcfun ("cairo_region_create" cairo-region-create) cairo-region-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-3}
+  @begin{return}
+    A newly allocated cairo_region_t. Free with cairo_region_destroy(). This
+    function always returns a valid pointer; if memory cannot be allocated, then
+    a special error object is returned where all operations on the object do
+    nothing. You can check for this with cairo_region_status().
+  @end{return}
+  @short{Allocates a new empty region object.}
+
+  Since 1.10")
 
 (export 'cairo-region-create)
 

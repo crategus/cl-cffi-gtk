@@ -2,9 +2,11 @@
 ;;; cairo.paths.lisp
 ;;;
 ;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See http://cairographics.org
+;;; for Cairo 1.12.2. See <http://cairographics.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -572,85 +574,76 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_line_to ()
-;;; 
-;;; void cairo_line_to (cairo_t *cr, double x, double y);
-;;; 
-;;; Adds a line to the path from the current point to position (x, y) in
-;;; user-space coordinates. After this call the current point will be (x, y).
-;;; 
-;;; If there is no current point before the call to cairo_line_to() this
-;;; function will behave as cairo_move_to(cr, x, y).
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; x :
-;;;     the X coordinate of the end of the new line
-;;; 
-;;; y :
-;;;     the Y coordinate of the end of the new line
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_line_to" cairo-line-to) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-3}
+  @argument[cr]{a cairo context}
+  @argument[x]{the X coordinate of the end of the new line}
+  @argument[y]{the Y coordinate of the end of the new line}
+  @begin{short}
+    Adds a line to the path from the current point to position (x, y) in
+    user-space coordinates. After this call the current point will be (x, y).
+  @end{short}
+
+  If there is no current point before the call to cairo_line_to() this
+  function will behave as cairo_move_to(cr, x, y).
+
+  Since 1.0"
+  (cr cairo-t)
+  (x :double)
+  (y :double))
+
+(export 'cairo-line-to)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_move_to ()
-;;; 
-;;; void cairo_move_to (cairo_t *cr, double x, double y);
-;;; 
-;;; Begin a new sub-path. After this call the current point will be (x, y).
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; x :
-;;;     the X coordinate of the new position
-;;; 
-;;; y :
-;;;     the Y coordinate of the new position
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_move_to" cairo-move-to) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-3}
+  @argument[cr]{a cairo context}
+  @argument[x]{the X coordinate of the new position}
+  @argument[y]{the Y coordinate of the new position}
+  @begin{short}
+    Begin a new sub-path. After this call the current point will be (x, y).
+  @end{short}
+
+  Since 1.0"
+  (cr cairo-t)
+  (x :double)
+  (y :double))
+
+(export 'cairo-move-to)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rectangle ()
-;;; 
-;;; void cairo_rectangle (cairo_t *cr,
-;;;                       double x,
-;;;                       double y,
-;;;                       double width,
-;;;                       double height);
-;;; 
-;;; Adds a closed sub-path rectangle of the given size to the current path at
-;;; position (x, y) in user-space coordinates.
-;;; 
-;;; This function is logically equivalent to:
-;;; 
-;;; cairo_move_to (cr, x, y);
-;;; cairo_rel_line_to (cr, width, 0);
-;;; cairo_rel_line_to (cr, 0, height);
-;;; cairo_rel_line_to (cr, -width, 0);
-;;; cairo_close_path (cr);
-;;; 
-;;; cr :
-;;;     a cairo context
-;;; 
-;;; x :
-;;;     the X coordinate of the top left corner of the rectangle
-;;; 
-;;; y :
-;;;     the Y coordinate to the top left corner of the rectangle
-;;; 
-;;; width :
-;;;     the width of the rectangle
-;;; 
-;;; height :
-;;;     the height of the rectangle
-;;; 
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_rectangle" cairo-rectangle) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-3}
+  @argument[cr]{a cairo context}
+  @argument[x]{the X coordinate of the top left corner of the rectangle}
+  @argument[y]{the Y coordinate to the top left corner of the rectangle}
+  @argument[width]{the width of the rectangle}
+  @argument[height]{the height of the rectangle}
+  @begin{short}
+    Adds a closed sub-path rectangle of the given size to the current path at
+    position (x, y) in user-space coordinates.
+  @end{short}
+
+  This function is logically equivalent to:
+  @begin{pre}
+    cairo_move_to (cr, x, y);
+    cairo_rel_line_to (cr, width, 0);
+    cairo_rel_line_to (cr, 0, height);
+    cairo_rel_line_to (cr, -width, 0);
+    cairo_close_path (cr);
+  @end{pre}
+  Since 1.0"
   (cr cairo-t)
   (x :double)
   (y :double)
