@@ -2,13 +2,14 @@
 ;;; gtk.style.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.2.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -103,92 +104,6 @@
 ;;; void                gtk_draw_insertion_cursor
 ;;;
 ;;;                     GtkRcProperty
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkStyle
-;;;
-;;; Properties
-;;;
-;;;   "context"   GtkStyleContext*      : Read / Write / Construct Only
-;;;
-;;; Signals
-;;;
-;;;  "realize"                                        : Run First
-;;;  "unrealize"                                      : Run First
-;;;
-;;; Description
-;;;
-;;; A GtkStyle object encapsulates the information that provides the look and
-;;; feel for a widget.
-;;;
-;;; Warning
-;;;
-;;; In GTK+ 3.0, GtkStyle has been deprecated and replaced by GtkStyleContext.
-;;;
-;;; Each GtkWidget has an associated GtkStyle object that is used when rendering
-;;; that widget. Also, a GtkStyle holds information for the five possible widget
-;;; states though not every widget supports all five states; see GtkStateType.
-;;;
-;;; Usually the GtkStyle for a widget is the same as the default style that is
-;;; set by GTK+ and modified the theme engine.
-;;;
-;;; Usually applications should not need to use or modify the GtkStyle of their
-;;; widgets.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "context" property
-;;;
-;;;  "context"             GtkStyleContext*      : Read / Write / Construct Only
-;;;
-;;; GtkStyleContext to get style from.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "realize" signal
-;;;
-;;; void user_function (GtkStyle *style,
-;;;                     gpointer  user_data)      : Run First
-;;;
-;;; Emitted when the style has been initialized for a particular colormap and
-;;; depth. Connecting to this signal is probably seldom useful since most of
-;;; the time applications and widgets only deal with styles that have been
-;;; already realized.
-;;;
-;;; style :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "unrealize" signal
-;;;
-;;; void user_function (GtkStyle *style,
-;;;                     gpointer  user_data)      : Run First
-;;;
-;;; Emitted when the aspects of the style specific to a particular colormap and
-;;; depth are being cleaned up. A connection to this signal can be useful if a
-;;; widget wants to cache objects like a GdkGC as object data on GtkStyle. This
-;;; signal provides a convenient place to free such cached objects.
-;;;
-;;; style :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -247,6 +162,89 @@
   ((context
     gtk-style-context
     "context" "GtkStyleContext" t t)))
+
+;;; --- gtk-style --------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-style 'type)
+ "@version{2013-1-13}
+  @begin{short}
+    A @sym{gtk-style} object encapsulates the information that provides the look
+    and feel for a widget.
+  @end{short}
+
+  Each @class{gtk-widget} has an associated @sym{gtk-style} object that is used
+  when rendering that widget. Also, a @sym{gtk-style} holds information for the
+  five possible widget states though not every widget supports all five states;
+  see @symbol{gtk-state-type}.
+
+  Usually the @sym{gtk-style} for a widget is the same as the default style that
+  is set by GTK+ and modified the theme engine.
+
+  Usually applications should not need to use or modify the @sym{gtk-style} of
+  their widgets.
+  @begin[Warning]{dictionary}
+    In GTK+ 3.0, @sym{gtk-style} has been deprecated and replaced by
+    @class{gtk-style-context}.
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @b{The \"realize\" signal}
+    @begin{pre}
+ void user_function (GtkStyle *style,
+                     gpointer  user_data)   : Run First
+    @end{pre}
+    Emitted when the @arg{style} has been initialized for a particular colormap
+    and depth. Connecting to this signal is probably seldom useful since most of
+    the time applications and widgets only deal with styles that have been
+    already realized.
+    @begin[code]{table}
+      @entry[style]{the object which received the signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    Since 2.4
+
+    @b{The \"unrealize\" signal}
+    @begin{pre}
+ void user_function (GtkStyle *style,
+                     gpointer  user_data)   : Run First
+    @end{pre}
+    Emitted when the aspects of the @arg{style} specific to a particular
+    colormap and depth are being cleaned up. A connection to this signal can be
+    useful if a widget wants to cache objects like a GdkGC as object data on
+    @sym{gtk-style}. This signal provides a convenient place to free such cached
+    objects.
+    @begin[code]{table}
+      @entry[style]{the object which received the signal}
+      @entry[user_data]{user data set when the signal handler was connected.}
+    @end{table}
+    Since 2.4
+  @end{dictionary}
+  @see-slot{gtk-style-context}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "context" 'gtk-style) 't)
+ "The @arg{\"context\"} property of type @class{gtk-style-context}
+  (Read / Write / Construct Only).@br{}
+  @class{gtk-style-context} class to get style from.")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-style-context atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-style-context 'function)
+ "@version{2013-3-18}
+  Accessor of the slot \"context\" of the @class{gtk-style} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_new ()
@@ -1718,6 +1716,5 @@
 ;;;                                  const GString *rc_string,
 ;;;                                  GValue *property_value);
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.style.lisp ---------------------------------------------

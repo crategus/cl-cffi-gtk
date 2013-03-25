@@ -157,6 +157,7 @@
 
 ;;; --- gtk-label --------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-label 'type)
  "@version{2013-1-23}
   @begin{short}
@@ -445,6 +446,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "angle" 'gtk-label) 't)
  "The @code{angle} property of type @code{gdouble} (Read / Write)@br{}
   The angle that the baseline of the label makes with the horizontal, in
@@ -457,6 +459,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-label) 't)
  "The @code{attributes} property of type @code{PangoAttrList*}
   (Read / Write)@br{}
@@ -464,6 +467,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-position" 'gtk-label) 't)
  "The @code{cursor-position} property of type @code{gint} (Read)@br{}
   The current position of the insertion cursor in chars.@br{}
@@ -472,6 +476,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize" 'gtk-label) 't)
  "The @code{ellipsize} property of type @code{PangoEllipsizeMode}
   (Read / Write)@br{}
@@ -490,6 +495,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justify" 'gtk-label) 't)
  "The @code{justify} property of type @symbol{gtk-justification}
   (Read / Write)@br{}
@@ -500,6 +506,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-label) 't)
  "The @code{label} property of type @code{gchar*} (Read / Write)@br{}
   The text of the label.@br{}
@@ -507,6 +514,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-width-chars" 'gtk-label) 't)
  "The @code{max-width-chars} property of type @code{gint} (Read / Write)@br{}
   The desired maximum width of the label, in characters. If this property is
@@ -519,6 +527,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mnemonic-keyval" 'gtk-label) 't)
  "The @code{mnemonic-keyval} property of @code{guint} (Read)@br{}
   The mnemonic accelerator key for this label.@br{}
@@ -526,6 +535,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mnemonic-widget" 'gtk-label) 't)
  "The @code{mnemonic-widget} property of type @code{gtk-widget}
   (Read / Write)@br{}
@@ -533,6 +543,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pattern" 'gtk-label) 't)
  "The @code{pattern} property of type @code{gchar*} (Write)@br{}
   A string with _ characters in positions correspond to characters in the text
@@ -541,6 +552,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selectable" 'gtk-label) 't)
  "The @code{selectable} property of type @code{gboolean} (Read / Write)@br{}
   Whether the label text can be selected with the mouse.@br{}
@@ -548,6 +560,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selection-bound" 'gtk-label) 't)
  "The @code{selection-bound} property of type @code{gint} (Read)@br{}
   The position of the opposite end of the selection from the cursor in
@@ -557,6 +570,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "single-line-mode" 'gtk-label) 't)
  "The @code{single-line-mode} property of type  @code{gboolean}
   (Read / Write)@br{}
@@ -570,6 +584,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "track-visited-links" 'gtk-label) 't)
  "The @code{track-visited-links} property of type @code{gboolean}
   (Read / Write)@br{}
@@ -581,6 +596,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-label) 't)
  "The @code{use-markup} property of type @code{gboolean} (Read / Write)@br{}
   The text of the label includes XML markup. See
@@ -589,6 +605,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline" 'gtk-label) 't)
  "The @code{use-underline} property of type @code{gboolean} (Read / Write)@br{}
   If set, an underline in the text indicates the next character should be used
@@ -597,6 +614,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-label) 't)
  "The @code{width-chars} property of @code{gint} (Read / Write)@br{}
   The desired width of the label, in characters. If this property is set to
@@ -609,6 +627,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap" 'gtk-label) 't)
  "The @code{wrap} property of type @code{gboolean} (Read / Write)@br{}
   If set, wrap lines if the text becomes too wide.@br{}
@@ -616,6 +635,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap-mode" 'gtk-label) 't)
  "The @code{wrap-mode} property of type @code{PangoWrapMode} (Read / Write)@br{}
   If line wrapping is on (see the \"wrap\" property) this controls how the line

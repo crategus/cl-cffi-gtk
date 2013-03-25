@@ -30,30 +30,19 @@
 
 (load "../gtk/atdoc/src/atdoc-gtk.widget.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.window.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.misc.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.style.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.orientable.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.table.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.calendar.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.frame.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.separator.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.invisible.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.message-dialog.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.window-group.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.offscreen-window.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.image.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.progress-bar.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.statusbar.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.info-bar.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.status-icon.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
 (load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
-(load "../gdk/atdoc/src/atdoc-gdk.color.lisp")
 (load "../gdk/atdoc/src/atdoc-gdk.rectangle.lisp")
 
 ;;; ----------------------------------------------------------------------------

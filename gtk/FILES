@@ -1,4 +1,4 @@
-Content from the GTK+ 3.4.3 Reference Manual
+Content from the GTK+ 3.6.4 Reference Manual
 
     *   - needs update
    (**) - deprecated
@@ -210,7 +210,7 @@ GTK+ Widgets and Objects
   
   Ornaments
   
-    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.4.3
+    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.6.4
     gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.4.3
   
   Scrolling

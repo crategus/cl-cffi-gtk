@@ -2,9 +2,10 @@
 ;;; gtk.switch.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.2. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -48,9 +49,6 @@
 ;;; GtkSwitch implements AtkImplementorIface, GtkBuildable, GtkActionable and
 ;;; GtkActivatable.
 ;;; 
-;;; Properties
-;;; 
-;;;   "active"                   gboolean              : Read / Write
 ;;; 
 ;;; Style Properties
 ;;; 
@@ -60,24 +58,6 @@
 ;;; 
 ;;;   "activate"                                       : Action
 ;;; 
-;;; Description
-;;; 
-;;; GtkSwitch is a widget that has two states: on or off. The user can control
-;;; which state should be active by clicking the empty area, or by dragging the
-;;; handle.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;; 
-;;; Whether the GtkSwitch widget is in its on or off state.
-;;; 
-;;; Default value: FALSE
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -119,11 +99,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkSwitch
-;;; 
-;;; struct GtkSwitch;
-;;;
-;;; The GtkSwitch structure contains private data and it should only be accessed
-;;; using the provided API.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkSwitch" gtk-switch
@@ -139,67 +114,94 @@
     "active" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-switch 'type)
+ "@version{2013-3-23}
+  @begin{short}
+    GtkSwitch is a widget that has two states: on or off. The user can control
+    which state should be active by clicking the empty area, or by dragging the
+    handle.
+  @end{short}
+  @see-slot{gtk-switch-active}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-switch) 't)
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether the GtkSwitch widget is in its on or off state. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-switch-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-switch-active 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"active\"} of the @class{gtk-switch} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_switch_new ()
-;;; 
-;;; GtkWidget * gtk_switch_new (void);
-;;; 
-;;; Creates a new GtkSwitch widget.
-;;; 
-;;; Returns :
-;;;     the newly created GtkSwitch instance
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-switch-new))
 
 (defun gtk-switch-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @return{the newly created GtkSwitch instance}
+  @short{Creates a new GtkSwitch widget.}
+
+  Since 3.0"
   (make-instance 'gtk-switch))
 
 (export 'gtk-switch-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_switch_set_active ()
-;;; 
-;;; void gtk_switch_set_active (GtkSwitch *sw, gboolean is_active);
-;;; 
-;;; Changes the state of sw to the desired one.
-;;; 
-;;; sw :
-;;;     a GtkSwitch
-;;; 
-;;; is_active :
-;;;     TRUE if sw should be active, and FALSE otherwise
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-switch-set-active))
 
-(defun gtk-switch-set-active (sw is-active)
-  (setf (gtk-switch-active sw) is-active))
+(defun gtk-switch-set-active (switch is-active)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[switch]{a GtkSwitch}
+  @argument[is-active]{TRUE if sw should be active, and FALSE otherwise}
+  @begin{short}
+    Changes the state of sw to the desired one.
+  @end{short}
+
+  Since 3.0"
+  (setf (gtk-switch-active switch) is-active))
 
 (export 'gtk-switch-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_switch_get_active ()
-;;; 
-;;; gboolean gtk_switch_get_active (GtkSwitch *sw);
-;;; 
-;;; Gets whether the GtkSwitch is in its "on" or "off" state.
-;;; 
-;;; sw :
-;;;     a GtkSwitch
-;;; 
-;;; Returns :
-;;;     TRUE if the GtkSwitch is active, and FALSE otherwise
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-switch-get-active))
 
-(defun gtk-switch-get-active (sw)
+(defun gtk-switch-get-active (switch)
+ "@version{2013-3-23}
+  @argument[switch]{a GtkSwitch}
+  @return{TRUE if the GtkSwitch is active, and FALSE otherwise}
+  @begin{short}
+    Gets whether the GtkSwitch is in its \"on\" or \"off\" state.
+  @end{short}
+
+  Since 3.0"
   (gtk-switch-active sw))
 
 (export 'gtk-switch-get-active)

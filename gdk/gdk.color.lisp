@@ -90,24 +90,94 @@
 (export (boxed-related-symbols 'gdk-color))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-color 'type)
+ "@version{2013-1-17}
+  @short{A @sym{gdk-color} represents a color.}
+
+  The @sym{gdk-color} structure is used to describe a color, similar to the
+  XColor struct used in the X11 drawing API.
+  When working with cairo, it is often more convenient to use a @class{gdk-rgba}
+  instead.
+  @begin{pre}
+(define-g-boxed-cstruct gdk-color \"GdkColor\"
+  (pixel :uint32 :initform 0)
+  (red :uint16 :initform 0)
+  (green :uint16 :initform 0)
+  (blue :uint16 :initform 0))
+  @end{pre}
+  @begin[code]{table}
+    @entry[pixel]{For allocated colors, the pixel value used to draw this
+      color on the screen. Not used anymore.}
+    @entry[red]{The red component of the color. This is a value between
+      @code{0} and @code{65535}, with @code{65535} indicating full intensity.}
+    @entry[green]{The green component of the color.}
+    @entry[blue]{The blue component of the color.}
+  @end{table}
+  @see-slot{gdk-color-pixel}
+  @see-slot{gdk-color-red}
+  @see-slot{gdk-color-green}
+  @see-slot{gdk-color-blue}")
+
+;;; --- gdk-color-pixel --------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-color-pixel atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-color-pixel 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"pixel\" of the @class{gdk-color} struct.
+  @end{short}")
+
+;;; --- gdk-color-red --------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-color-red atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-color-red 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"redl\" of the @class{gdk-color} struct.
+  @end{short}")
+
+;;; --- gdk-color-green --------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-color-green atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-color-green 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"green\" of the @class{gdk-color} struct.
+  @end{short}")
+
+;;; --- gdk-color-pixel --------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-color-blue atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-color-blue 'function)
+ "@version{2013-2-2}
+  @begin{short}
+    Accessor of the slot \"blue\" of the @class{gdk-color} struct.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_color_copy ()
-;;;
-;;; GdkColor * gdk_color_copy (const GdkColor *color);
-;;;
-;;; Makes a copy of a color structure.
-;;;
-;;; The result must be freed using gdk_color_free().
-;;;
-;;; color :
-;;;     a GdkColor
-;;;
-;;; Returns :
-;;;     a copy of color
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-color-copy))
 
 (defun gdk-color-copy (color)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-2}
+  @argument[color]{a @class{gdk-color} struct}
+  @return{a copy of @arg{color}}
+  @begin{short}
+    Makes a copy of a color structure.
+  @end{short}"
   (copy-gdk-color color))
 
 (export 'gdk-color-copy)
@@ -125,26 +195,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_color_parse ()
-;;;
-;;; gboolean gdk_color_parse (const gchar *spec, GdkColor *color);
-;;;
-;;; Parses a textual specification of a color and fill in the red, green, and
-;;; blue fields of a GdkColor structure.
-;;;
-;;; The string can either one of a large set of standard names (taken from the
-;;; X11 rgb.txt file), or it can be a hex value in the form '#rgb' '#rrggbb'
-;;; '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex digits of the
-;;; red, green, and blue components of the color, respectively. (White in the
-;;; four forms is '#fff', '#ffffff', '#fffffffff' and '#ffffffffffff').
-;;;
-;;; spec :
-;;;     the string specifying the color
-;;;
-;;; color :
-;;;     the GdkColor to fill in
-;;;
-;;; Returns :
-;;;     TRUE if the parsing succeeded
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_color_parse" %gdk-color-parse) :boolean
@@ -152,6 +202,21 @@
   (color (g-boxed-foreign gdk-color)))
 
 (defun gdk-color-parse (color-spec)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-2}
+  @argument[spec]{the string specifying the color}
+  @return{The @class{gdk-color} color or @code{nil} if the parsing did not
+    succeed.}
+  @begin{short}
+    Parses a textual specification of a color and fill in the red, green, and
+   blue fields of a @class{gdk-color} structure.
+  @end{short}
+
+  The string can either one of a large set of standard names (taken from the
+  X11 rgb.txt file), or it can be a hex value in the form '#rgb' '#rrggbb'
+  '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex digits of the
+  red, green, and blue components of the color, respectively. (White in the
+  four forms is '#fff', '#ffffff', '#fffffffff' and '#ffffffffffff')."
   (let ((color (make-gdk-color)))
     (when (%gdk-color-parse color-spec color)
       color)))
@@ -160,22 +225,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_color_equal ()
-;;;
-;;; gboolean gdk_color_equal (const GdkColor *colora, const GdkColor *colorb);
-;;;
-;;; Compares two colors.
-;;;
-;;; color1 :
-;;;     a GdkColor
-;;;
-;;; color2 :
-;;;     another GdkColor
-;;;
-;;; Returns :
-;;;     TRUE if the two colors compare equal
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_color_equal" gdk-color-equal) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-2}
+  @argument[color1]{a @class{gdk-color}}
+  @argument[color2]{another @class{gdk-color}}
+  @return{@arg{true} if the two colors compare equal}
+  @begin{short}
+    Compares two colors.
+  @end{short}"
   (color1 (g-boxed-foreign gdk-color))
   (color2 (g-boxed-foreign gdk-color)))
 
@@ -183,45 +243,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_color_hash ()
-;;;
-;;; guint gdk_color_hash (const GdkColor *color);
-;;;
-;;; A hash function suitable for using for a hash table that stores GdkColors.
-;;;
-;;; color :
-;;;     a GdkColor
-;;;
-;;; Returns :
-;;;     The hash function applied to color
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_color_hash" gdk-color-hash) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-2}
+  @argument[color]{a @class{gdk-color}}
+  @return{The hash function applied to color.}
+  @begin{short}
+    A hash function suitable for using for a hash table that stores
+    @class{gdk-color}'s.
+  @end{short}"
   (color (g-boxed-foreign gdk-color)))
 
 (export 'gdk-color-hash)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_color_to_string ()
-;;;
-;;; gchar * gdk_color_to_string (const GdkColor *color);
-;;;
-;;; Returns a textual specification of color in the hexadecimal form
-;;; #rrrrggggbbbb, where r, g and b are hex digits representing the red, green
-;;; and blue components respectively.
-;;;
-;;; The returned string can be parsed by gdk_color_parse().
-;;;
-;;; color :
-;;;     a GdkColor
-;;;
-;;; Returns :
-;;;     a newly-allocated text string
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_color_to_string" gdk-color-to-string)
     (g-string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-2-2}
+  @argument[color]{a @class{gdk-color}}
+  @return{A newly-allocated text string.}
+  @begin{short}
+    Returns a textual specification of color in the hexadecimal form
+    #rrrrggggbbbb, where r, g and b are hex digits representing the red, green
+    and blue components respectively.
+  @end{short}
+
+  The returned string can be parsed by @fun{gdk-color-parse}.
+
+  Since 2.12"
   (color (g-boxed-foreign gdk-color)))
 
 (export 'gdk-color-to-string)

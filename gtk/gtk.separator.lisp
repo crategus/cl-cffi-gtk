@@ -2,13 +2,14 @@
 ;;; gtk.separator.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,34 +38,12 @@
 ;;;     GtkSeparator
 ;;;     
 ;;;     gtk_separator_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkSeparator
-;;;                      +----GtkHSeparator
-;;;                      +----GtkVSeparator
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkSeparator implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;; 
-;;; Description
-;;; 
-;;; GtkSeparator is a horizontal or vertical separator widget, depending on the
-;;; value of the "orientation" property, used to group the widgets within a
-;;; window. It displays a line with a shadow to make it appear sunken into the
-;;; interface.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkSeparator
-;;; 
-;;; struct GtkSeparator;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -80,24 +59,38 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-separator 'type)
+ "@version{2013-1-29}
+  @begin{short}
+    @sym{gtk-separator} is a horizontal or vertical separator widget, depending
+    on the value of the @code{\"orientation\"} property of the interface
+    @class{gtk-orientable}, used to group the widgets within a window.
+  @end{short}
+  It displays a line with a shadow to make it appear sunken into the interface.
+")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_new ()
-;;; 
-;;; GtkWidget * gtk_separator_new (GtkOrientation orientation);
-;;; 
-;;; Creates a new GtkSeparator with the given orientation.
-;;; 
-;;; orientation :
-;;;     the separator's orientation.
-;;; 
-;;; Returns :
-;;;     a new GtkSeparator.
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-separator-new))
 
 (defun gtk-separator-new (orientation)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-29}
+  @argument[orientation]{the separator's orientation}
+  @return{A new @class{gtk-separator} widget.}
+  @begin{short}
+    Creates a new @class{gtk-separator} with the given @arg{orientation}
+    @code{:horizontal} or @code{:vertical} of type @symbol{gtk-orientation}.
+  @end{short}
+  See also the interface @class{gtk-orientable}.
+
+  Since 3.0
+  @see-class{gtk-orientable}
+  @see-symbol{gtk-orientation}"
   (make-instance 'gtk-separator
                  :orientation orientation))
 
@@ -113,40 +106,10 @@
 ;;;     GtkHSeparator
 ;;;     
 ;;;     gtk_hseparator_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkSeparator
-;;;                      +----GtkHSeparator
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkHSeparator implements AtkImplementorIface, GtkBuildable and
-;;; GtkOrientable.
-;;; 
-;;; Description
-;;; 
-;;; The GtkHSeparator widget is a horizontal separator, used to group the
-;;; widgets within a window. It displays a horizontal line with a shadow to make
-;;; it appear sunken into the interface.
-;;; 
-;;; Note
-;;; 
-;;; The GtkHSeparator widget is not used as a separator within menus. To create
-;;; a separator in a menu create an empty GtkSeparatorMenuItem widget using
-;;; gtk_separator_menu_item_new() and add it to the menu with
-;;; gtk_menu_shell_append().
-;;; 
-;;; GtkHSeparator has been deprecated, use GtkSeparator instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkHSeparator
-;;; 
-;;; struct GtkHSeparator;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -164,25 +127,44 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+(setf (documentation 'gtk-hseparator 'type)
+ "@version{2013-1-29}
+  @begin{short}
+    The @sym{gtk-hseparator} widget is a horizontal separator, used to group
+    the widgets within a window. It displays a horizontal line with a shadow to
+    make it appear sunken into the interface.
+  @end{short}
+
+  @subheading{Note}
+  The @sym{gtk-hseparator} widget is not used as a separator within menus. To
+  create a separator in a menu create an empty @class{gtk-separator-menu-item}
+  widget using @fun{gtk-separator-menu-item-new} and add it to the menu with
+  @fun{gtk-menu-shell-append}.
+
+  @subheading{Warning}
+  @sym{gtk-hseparator} has been deprecated, use @class{gtk-separator}
+  with an orientation @code{:horizontal} instead.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_hseparator_new ()
-;;; 
-;;; GtkWidget * gtk_hseparator_new (void);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_hseparator_new has been deprecated since version 3.2 and should not be
-;;; used in newly-written code. Use gtk_separator_new() with
-;;; GTK_ORIENTATION_HORIZONTAL instead.
-;;; 
-;;; Creates a new GtkHSeparator.
-;;; 
-;;; Returns :
-;;;     a new GtkHSeparator.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-hseparator-new))
 
 (defun gtk-hseparator-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-29}
+  @return{A new @class{gtk-hseparator} widget.}
+  @begin{short}
+    Creates a new @class{gtk-hseparator} widget.
+  @end{short}
+
+  @subheading{Warning}
+  @sym{gtk-hseparator-new} has been deprecated since version 3.2 and should not
+  be used in newly-written code. Use @fun{gtk-separator-new} with an orientation
+  @code{:horizontal} instead.
+  @see-function{gtk-separator-new}"
   (make-instance 'gtk-hseparator))
 
 (export 'gtk-hseparator-new)
@@ -197,36 +179,10 @@
 ;;;     GtkVSeparator
 ;;;     
 ;;;     gtk_vseparator_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkSeparator
-;;;                      +----GtkVSeparator
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkVSeparator implements AtkImplementorIface, GtkBuildable and
-;;; GtkOrientable.
-;;; 
-;;; Description
-;;; 
-;;; The GtkVSeparator widget is a vertical separator, used to group the widgets
-;;; within a window. It displays a vertical line with a shadow to make it appear
-;;; sunken into the interface.
-;;; 
-;;; GtkVSeparator has been deprecated, use GtkSeparator instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkVSeparator
-;;; 
-;;; struct GtkVSeparator;
-;;;
-;;; The GtkVSeparator struct contains private data only, and should be accessed
-;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -244,25 +200,40 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-vseparator 'type)
+ "@version{2013-1-29}
+  @begin{short}
+    The @sym{gtk-vseparator} widget is a vertical separator, used to group the
+    widgets within a window. It displays a vertical line with a shadow to make
+    it appear sunken into the interface.
+  @end{short}
+
+  @subheading{Warning}
+  @sym{gtk-vseparator} has been deprecated, use @class{gtk-separator} with
+  orientation @code{:vertical} instead.
+  @see-class{gtk-separator}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_vseparator_new ()
-;;; 
-;;; GtkWidget * gtk_vseparator_new (void);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_vseparator_new has been deprecated since version 3.2 and should not be
-;;; used in newly-written code. Use gtk_separator_new() with
-;;; GTK_ORIENTATION_VERTICAL instead.
-;;; 
-;;; Creates a new GtkVSeparator.
-;;; 
-;;; Returns :
-;;;     a new GtkVSeparator.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vseparator-new))
 
 (defun gtk-vseparator-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-29}
+  @return{A new @class{gtk-vseparator} widget.}
+  @begin{short}
+    Creates a new @class{gtk-vseparator} widget.
+  @end{short}
+
+  @subheading{Warning}
+  @sym{gtk-vseparator-new} has been deprecated since version 3.2 and should not
+  be used in newly-written code. Use @fun{gtk-separator-new} with the
+  orientation @code{:vertical} instead.
+  @see-function{gtk-separator-new}"
   (make-instance 'gtk-vseparator))
 
 (export 'gtk-vseparator-new)

@@ -51,137 +51,6 @@
 ;;;     gtk_scale_get_layout_offsets
 ;;;     gtk_scale_add_mark
 ;;;     gtk_scale_clear_marks
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkRange
-;;;                      +----GtkScale
-;;;                            +----GtkHScale
-;;;                            +----GtkVScale
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkScale implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;; 
-;;; 
-;;; Style Properties
-;;; 
-;;;   "slider-length"            gint                  : Read
-;;;   "value-spacing"            gint                  : Read
-;;; 
-;;; Signals
-;;; 
-;;;   "format-value"                                   : Run Last
-;;; 
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "digits" property
-;;; 
-;;;   "digits"                   gint                  : Read / Write
-;;; 
-;;; The number of decimal places that are displayed in the value.
-;;; 
-;;; Allowed values: [G_MAXULONG,64]
-;;; 
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "draw-value" property
-;;; 
-;;;   "draw-value"               gboolean              : Read / Write
-;;; 
-;;; Whether the current value is displayed as a string next to the slider.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-origin" property
-;;; 
-;;;   "has-origin"               gboolean              : Read / Write
-;;; 
-;;; Whether the scale has an origin.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "value-pos" property
-;;; 
-;;;   "value-pos"                GtkPositionType       : Read / Write
-;;; 
-;;; The position in which the current value is displayed.
-;;; 
-;;; Default value: GTK_POS_TOP
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "slider-length" style property
-;;; 
-;;;   "slider-length"            gint                  : Read
-;;; 
-;;; Length of scale's slider.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 31
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "value-spacing" style property
-;;; 
-;;;   "value-spacing"            gint                  : Read
-;;; 
-;;; Space between value text and the slider/trough area.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 2
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "format-value" signal
-;;; 
-;;; gchar* user_function (GtkScale *scale,
-;;;                       gdouble   value,
-;;;                       gpointer  user_data)      : Run Last
-;;; 
-;;; Signal which allows you to change how the scale value is displayed. Connect
-;;; a signal handler which returns an allocated string representing value. That
-;;; string will then be used to display the scale's value.
-;;; 
-;;; Here's an example signal handler which displays a value 1.0 as with
-;;; "-->1.0<--".
-;;; 
-;;; static gchar*
-;;; format_value_callback (GtkScale *scale,
-;;;                        gdouble   value)
-;;; {
-;;;   return g_strdup_printf ("-->%0.*g<--",
-;;;                           gtk_scale_get_digits (scale), value);
-;;;  }
-;;; 
-;;; scale :
-;;;     the object which received the signal
-;;; 
-;;; value :
-;;;     the value to format
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Returns :
-;;;     allocated string representing value
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -216,55 +85,164 @@
 (setf (documentation 'gtk-scale 'type)
  "@version{2013-3-8}
   @begin{short}
-    A GtkScale is a slider control used to select a numeric value. To use it,
-    you'll probably want to investigate the methods on its base class, GtkRange,
-    in addition to the methods for GtkScale itself. To set the value of a scale,
-    you would normally use gtk_range_set_value(). To detect changes to the
-    value, you would normally use the \"value-changed\" signal.
+    A @sym{gtk-scale} is a slider control used to select a numeric value. To use
+    it, you'll probably want to investigate the methods on its base class,
+    @class{gtk-range}, in addition to the methods for @sym{gtk-scale} itself. To
+    set the value of a scale, you would normally use @fun{gtk-range-set-value}.
+    To detect changes to the value, you would normally use the
+    \"value-changed\" signal.
   @end{short}
 
-  Note that using the same upper and lower bounds for the GtkScale (through
-  the GtkRange methods) will hide the slider itself. This is useful for
-  applications that want to show an undeterminate value on the scale, without
-  changing the layout of the application (such as movie or music players).
+  Note that using the same upper and lower bounds for the @sym{gtk-scale}
+  (through the @class{gtk-range} methods) will hide the slider itself. This is
+  useful for applications that want to show an undeterminate value on the scale,
+  without changing the layout of the application (such as movie or music
+  players).
 
-  @heading{GtkScale as GtkBuildable}
-  GtkScale supports a custom <marks> element, which can contain multiple
-  <mark> elements. The \"value\" and \"position\" attributes have the same
-  meaning as gtk_scale_add_mark() parameters of the same name. If the element
-  is not empty, its content is taken as the markup to show at the mark. It can
-  be translated with the usual \"translatable\" and \"context\" attributes.
+  @subheading{GtkScale as GtkBuildable}
+  @sym{gtk-scale} supports a custom @code{<marks>} element, which can contain
+  multiple @code{<mark>} elements. The \"value\" and \"position\" attributes
+  have the same meaning as @fun{gtk-scale-add-mark} parameters of the same name.
+  If the element is not empty, its content is taken as the markup to show at the
+  mark. It can be translated with the usual \"translatable\" and \"context\"
+  attributes.
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"slider-length\" style property}
+      @code{\"slider-length\"} of type @code{:int} (Read)@br{}
+      Length of scale's slider. @br{}
+      Allowed values: >= 0@br{}
+      Default value: 31
 
+    @subheading{The \"value-spacing\" style property}
+      @code{\"value-spacing\"} of type @code{:int} (Read)@br{}
+      Space between value text and the slider/trough area. @br{}
+      Allowed values: >= 0@br{}
+      Default value: 2
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"format-value\" signal}
+      Signal which allows you to change how the scale value is displayed.
+      Connect a signal handler which returns an allocated string representing
+      value. That string will then be used to display the scale's value. @br{}
+      Here's an example signal handler which displays a value 1.0 as with
+      \"-->1.0<--\".
+      @begin{pre}
+ static gchar*
+ format_value_callback (GtkScale *scale,
+                        gdouble   value)
+ {
+   return g_strdup_printf (\"-->%0.*g<--\",
+                           gtk_scale_get_digits (scale), value);
+ @}
+      @end{pre}
+      @begin{pre}
+ lambda (scale value)   : Run Last
+      @end{pre}
+      @begin[code]{table}
+        @entry[scale]{the object which received the signal}
+        @entry[value]{the value to format}
+        @entry[Returns]{allocated string representing value}
+      @end{table}
+  @end{dictionary}
   @see-slot{gtk-scale-digits}
   @see-slot{gtk-scale-draw-value}
   @see-slot{gtk-scale-has-origin}
-  @see-slot{gtk-scale-value-pos}
-")
+  @see-slot{gtk-scale-value-pos}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-scale) 't)
+ "The @code{\"digits\"} property of type @code{:int} (Read / Write)@br{}
+  The number of decimal places that are displayed in the value. @br{}
+  Allowed values: [@code{G_MAXULONG}, 64]@br{}
+  Default value: 1")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "draw-value" 'gtk-scale) 't)
+ "The @code{\"draw-value\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether the current value is displayed as a string next to the slider. @br{}
+  Default value: @em{true}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-origin" 'gtk-scale) 't)
+ "The @code{\"has-origin\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether the scale has an origin. @br{}
+  Default value: @em{true}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value-pos" 'gtk-scale) 't)
+ "The @code{\"value-pos\"} property of type @symbol{gtk-position-type}
+  (Read / Write)@br{}
+  The position in which the current value is displayed. @br{}
+  Default value: @code{:top}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scale-digits atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scale-digits 'function)
+ "@version{2013-3-21}
+  Accessor of the slot @code{\"digits\"} of the @class{gtk-scale} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scale-draw-value atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scale-draw-value 'function)
+ "@version{2013-3-21}
+  Accessor of the slot @code{\"draw-value\"} of the @class{gtk-scale} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scale-has-origin atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scale-has-origin 'function)
+ "@version{2013-3-21}
+  Accessor of the slot @code{\"has-origin\"} of the @class{gtk-scale} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scale-value-pos atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scale-value-pos 'function)
+ "@version{2013-3-21}
+  Accessor of the slot @code{\"value-pos\"} of the @class{gtk-scale} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_new ()
-;;; 
-;;; GtkWidget * gtk_scale_new (GtkOrientation orientation,
-;;;                            GtkAdjustment *adjustment);
-;;; 
-;;; Creates a new GtkScale.
-;;; 
-;;; orientation :
-;;;     the scale's orientation.
-;;; 
-;;; adjustment :
-;;;     the GtkAdjustment which sets the range of the scale, or NULL to create a
-;;;     new adjustment
-;;; 
-;;; Returns :
-;;;     a new GtkScale
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-new))
 
 (defun gtk-scale-new (orientation adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-21}
+  @argument[orientation]{the scale's orientation.}
+  @argument[adjustment]{the @class{gtk-adjustment} which sets the range of the
+    scale, or @code{nil} to create a new adjustment}
+  @return{a new @class{gtk-scale}}
+  @short{Creates a new @class{gtk-scale}.}
+
+  Since 3.0"
   (make-instance 'gtk-scale
                  :orientation orientation
                  :adjustment adjustment))
@@ -273,42 +251,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_new_with_range ()
-;;; 
-;;; GtkWidget * gtk_scale_new_with_range (GtkOrientation orientation,
-;;;                                       gdouble min,
-;;;                                       gdouble max,
-;;;                                       gdouble step);
-;;; 
-;;; Creates a new scale widget with the given orientation that lets the user
-;;; input a number between min and max (including min and max) with the
-;;; increment step. step must be nonzero; it's the distance the slider moves
-;;; when using the arrow keys to adjust the scale value.
-;;; 
-;;; Note that the way in which the precision is derived works best if step is a
-;;; power of ten. If the resulting precision is not suitable for your needs, use
-;;; gtk_scale_set_digits() to correct it.
-;;; 
-;;; orientation :
-;;;     the scale's orientation.
-;;; 
-;;; min :
-;;;     minimum value
-;;; 
-;;; max :
-;;;     maximum value
-;;; 
-;;; step :
-;;;     step increment (tick size) used with keyboard shortcuts
-;;; 
-;;; Returns :
-;;;     a new GtkScale
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-new-with-range))
 
 (defun gtk-scale-new-with-range (orientation min max step)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-21}
+  @argument[orientation]{the scale's orientation.}
+  @argument[min]{minimum value}
+  @argument[max]{maximum value}
+  @argument[step]{step increment (tick size) used with keyboard shortcuts}
+  @return{a new GtkScale}
+  @begin{short}
+    Creates a new scale widget with the given orientation that lets the user
+    input a number between min and max (including min and max) with the
+    increment step. step must be nonzero; it's the distance the slider moves
+    when using the arrow keys to adjust the scale value.
+  @end{short}
+
+  Note that the way in which the precision is derived works best if step is a
+  power of ten. If the resulting precision is not suitable for your needs, use
+  gtk_scale_set_digits() to correct it.
+
+  Since 3.0"
   (make-instance 'gtk-scale
                  :orientation orientation
                  :adjustment (make-instance 'gtk-adjustment
@@ -320,228 +286,173 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_set_digits ()
-;;; 
-;;; void gtk_scale_set_digits (GtkScale *scale, gint digits);
-;;; 
-;;; Sets the number of decimal places that are displayed in the value. Also
-;;; causes the value of the adjustment to be rounded off to this number of
-;;; digits, so the retrieved value matches the value the user saw.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; digits :
-;;;     the number of decimal places to display, e.g. use 1 to display 1.0, 2 to
-;;;     display 1.00, etc
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-set-digits))
 
 (defun gtk-scale-set-digits (scale digits)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-21}
+  @argument[scale]{a GtkScale}
+  @argument[digits]{the number of decimal places to display, e.g. use 1 to 
+    display 1.0, 2 to display 1.00, etc}
+  @begin{short}
+    Sets the number of decimal places that are displayed in the value. Also
+    causes the value of the adjustment to be rounded off to this number of
+    digits, so the retrieved value matches the value the user saw.
+  @end{short}"
   (setf (gtk-scale-digits scale) digits))
 
 (export 'gtk-scale-set-digits)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_set_draw_value ()
-;;; 
-;;; void gtk_scale_set_draw_value (GtkScale *scale, gboolean draw_value);
-;;; 
-;;; Specifies whether the current value is displayed as a string next to the
-;;; slider.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; draw_value :
-;;;     TRUE to draw the value
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-set-draw-value))
 
 (defun gtk-scale-set-draw-value (scale draw-value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-21}
+  @argument[scale]{a GtkScale}
+  @argument[draw_value]{TRUE to draw the value}
+  @begin{short}
+    Specifies whether the current value is displayed as a string next to the
+    slider.
+  @end{short}"
   (setf (gtk-scale-draw-value scale) draw-value))
 
 (export 'gtk-scale-set-draw-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_set_has_origin ()
-;;; 
-;;; void gtk_scale_set_has_origin (GtkScale *scale, gboolean has_origin);
-;;; 
-;;; If has_origin is set to TRUE (the default), the scale will highlight the
-;;; part of the scale between the origin (bottom or left side) of the scale and
-;;; the current value.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; has_origin :
-;;;     TRUE if the scale has an origin
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-set-has-origin))
 
 (defun gtk-scale-set-has-origin (scale has-origin)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @argument[has_origin]{TRUE if the scale has an origin}
+  @begin{short}
+    If has_origin is set to TRUE (the default), the scale will highlight the
+    part of the scale between the origin (bottom or left side) of the scale and
+    the current value.
+  @end{short}
+
+  Since 3.4"
   (setf (gtk-scale-has-origin scale) has-origin))
 
 (export 'gtk-scale-set-has-origin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_set_value_pos ()
-;;; 
-;;; void gtk_scale_set_value_pos (GtkScale *scale, GtkPositionType pos);
-;;; 
-;;; Sets the position in which the current value is displayed.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; pos :
-;;;     the position in which the current value is displayed
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-set-value-pos))
 
 (defun gtk-scale-set-value-pos (scale pos)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @argument[pos]{the position in which the current value is displayed}
+  Sets the position in which the current value is displayed."
   (setf (gtk-scale-value-pos scale) pos))
 
 (export 'gtk-scale-set-value-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_digits ()
-;;; 
-;;; gint gtk_scale_get_digits (GtkScale *scale);
-;;; 
-;;; Gets the number of decimal places that are displayed in the value.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; Returns :
-;;;     the number of decimal places that are displayed
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-get-digits))
 
 (defun gtk-scale-get-digits (scale)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @return{The number of decimal places that are displayed.}
+  Gets the number of decimal places that are displayed in the value."
   (gtk-scale-digits scale))
   
 (export 'gtk-scale-get-digits)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_draw_value ()
-;;; 
-;;; gboolean gtk_scale_get_draw_value (GtkScale *scale);
-;;; 
-;;; Returns whether the current value is displayed as a string next to the
-;;; slider.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; Returns :
-;;;     whether the current value is displayed as a string
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gkt-scale-get-draw-value))
 
 (defun gtk-scale-get-draw-value (scale)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @return{Whether the current value is displayed as a string.}
+  Returns whether the current value is displayed as a string next to the
+  slider."
   (gtk-scale-draw-value scale))
 
 (export 'gtk-scale-get-draw-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_has_origin ()
-;;; 
-;;; gboolean gtk_scale_get_has_origin (GtkScale *scale);
-;;; 
-;;; Returns whether the scale has an origin.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; Returns :
-;;;     TRUE if the scale has an origin.
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-get-has-origin))
 
 (defun gtk-scale-get-has-origin (scale)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @return{TRUE if the scale has an origin.}
+  @short{Returns whether the scale has an origin.}
+
+  Since 3.4"
   (gtk-scale-has-origin scale))
 
 (export 'gtk-scale-get-has-origin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_value_pos ()
-;;; 
-;;; GtkPositionType gtk_scale_get_value_pos (GtkScale *scale);
-;;; 
-;;; Gets the position in which the current value is displayed.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; Returns :
-;;;     the position in which the current value is displayed
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scale-get-value-pos))
 
 (defun gtk-scale-get-value-pos (scale)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @return{the position in which the current value is displayed}
+  Gets the position in which the current value is displayed."
   (gtk-scale-value-pos scale))
 
 (export 'gtk-scale-get-value-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_layout ()
-;;; 
-;;; PangoLayout * gtk_scale_get_layout (GtkScale *scale);
-;;; 
-;;; Gets the PangoLayout used to display the scale. The returned object is owned
-;;; by the scale so does not need to be freed by the caller.
-;;; 
-;;; scale :
-;;;     A GtkScale
-;;; 
-;;; Returns :
-;;;     the PangoLayout for this scale, or NULL if the "draw-value" property is
-;;;     FALSE
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scale_get_layout" gtk-scale-get-layout) (g-object pango-layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a @class{gtk-scale} widget}
+  @begin{return}
+    The @class{pango-layout} for this scale, or @code{nil} if the
+    @code{\"draw-value\"} property is @code{nil}.
+  @end{return}
+  @begin{short}
+    Gets the @class{pango-layout} used to display the scale. The returned object
+    is owned by the scale so does not need to be freed by the caller.
+  @end{short}
+
+  Since 2.4"
   (scale (g-object gtk-scale)))
 
 (export 'gtk-scale-get-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_layout_offsets ()
-;;; 
-;;; void gtk_scale_get_layout_offsets (GtkScale *scale, gint *x, gint *y);
-;;; 
-;;; Obtains the coordinates where the scale will draw the PangoLayout
-;;; representing the text in the scale. Remember when using the PangoLayout
-;;; function you need to convert to and from pixels using PANGO_PIXELS() or
-;;; PANGO_SCALE.
-;;; 
-;;; If the "draw-value" property is FALSE, the return values are undefined.
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; x :
-;;;     location to store X offset of layout, or NULL
-;;; 
-;;; y :
-;;;     location to store Y offset of layout, or NULL
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scale_get_layout_offsets" %gtk-scale-get-layout-offsets) :void
@@ -550,6 +461,23 @@
   (y (:pointer :int)))
 
 (defun gtk-scale-get-layout-offsets (scale)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[scale]{a GtkScale}
+  @begin{return}
+    @code{x} -- X offset of layout, or NULL @br{}
+    @code{y} -- Y offset of layout, or NULL
+  @end{return}
+  @begin{pre}
+    Obtains the coordinates where the scale will draw the PangoLayout
+    representing the text in the scale. Remember when using the PangoLayout
+    function you need to convert to and from pixels using PANGO_PIXELS() or
+    PANGO_SCALE.
+  @end{pre}
+
+  If the \"draw-value\" property is FALSE, the return values are undefined.
+
+  Since 2.4"
   (with-foreign-objects ((x :int) (y :int))
     (%gtk-scale-get-layout-offsets scale x y)
     (values (mem-ref x :int)
@@ -559,42 +487,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_add_mark ()
-;;; 
-;;; void gtk_scale_add_mark (GtkScale *scale,
-;;;                          gdouble value,
-;;;                          GtkPositionType position,
-;;;                          const gchar *markup);
-;;; 
-;;; Adds a mark at value.
-;;; 
-;;; A mark is indicated visually by drawing a tick mark next to the scale, and
-;;; GTK+ makes it easy for the user to position the scale exactly at the marks
-;;; value.
-;;; 
-;;; If markup is not NULL, text is shown next to the tick mark.
-;;; 
-;;; To remove marks from a scale, use gtk_scale_clear_marks().
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; value :
-;;;     the value at which the mark is placed, must be between the lower and
-;;;     upper limits of the scales' adjustment
-;;; 
-;;; position :
-;;;     where to draw the mark. For a horizontal scale, GTK_POS_TOP and
-;;;     GTK_POS_LEFT are drawn above the scale, anything else below. For a
-;;;     vertical scale, GTK_POS_LEFT and GTK_POS_TOP are drawn to the left of
-;;;     the scale, anything else to the right.
-;;; 
-;;; markup :
-;;;     Text to be shown at the mark, using Pango markup, or NULL
-;;; 
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scale_add_mark" gtk-scale-add-mark) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-21}
+  @argument[scale]{a GtkScale}
+  @argument[value]{the value at which the mark is placed, must be between the
+    lower and upper limits of the scales' adjustment}
+  @argument[position]{where to draw the mark. For a horizontal scale,
+    GTK_POS_TOP and GTK_POS_LEFT are drawn above the scale, anything else below.
+    For a vertical scale, GTK_POS_LEFT and GTK_POS_TOP are drawn to the left of
+    the scale, anything else to the right.}
+  @argument[markup]{Text to be shown at the mark, using Pango markup, or NULL}
+  @short{Adds a mark at value.}
+
+  A mark is indicated visually by drawing a tick mark next to the scale, and
+  GTK+ makes it easy for the user to position the scale exactly at the marks
+  value.
+
+  If markup is not NULL, text is shown next to the tick mark.
+ 
+  To remove marks from a scale, use @fun{gtk-scale-clear-marks}.
+
+  Since 2.16"
   (scale (g-object gtk-scale))
   (value :double)
   (pos gtk-position-type)
@@ -604,18 +520,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_clear_marks ()
-;;; 
-;;; void gtk_scale_clear_marks (GtkScale *scale);
-;;; 
-;;; Removes any marks that have been added with gtk_scale_add_mark().
-;;; 
-;;; scale :
-;;;     a GtkScale
-;;; 
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scale_clear_marks" gtk-scale-clear-marks) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-21}
+  @argument[scale]{a GtkScale}
+  @begin{short}
+    Removes any marks that have been added with gtk_scale_add_mark().
+  @end{short}
+
+  Since 2.16"
   (scale (g-object gtk-scale)))
 
 (export 'gtk-scale-clear-marks)
@@ -740,38 +655,10 @@
 ;;;     
 ;;;     gtk_vscale_new
 ;;;     gtk_vscale_new_with_range
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkRange
-;;;                      +----GtkScale
-;;;                            +----GtkVScale
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkVScale implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
-;;; Description
-;;; 
-;;; The GtkVScale widget is used to allow the user to select a value using a
-;;; vertical slider. To create one, use gtk_hscale_new_with_range().
-;;; 
-;;; The position to show the current value, and the number of decimal places
-;;; shown can be set using the parent GtkScale class's functions.
-;;; 
-;;; GtkVScale has been deprecated, use GtkScale instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkVScale
-;;; 
-;;; struct GtkVScale;
-;;;
-;;; The GtkVScale struct contains private data only, and should be accessed
-;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -789,28 +676,38 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-vscale 'type)
+ "@version{2013-3-22}
+  @begin{short}
+    The GtkVScale widget is used to allow the user to select a value using a
+    vertical slider. To create one, use gtk_hscale_new_with_range().
+  @end{short}
+
+  The position to show the current value, and the number of decimal places
+  shown can be set using the parent GtkScale class's functions.
+
+  GtkVScale has been deprecated, use GtkScale instead.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_vscale_new ()
-;;; 
-;;; GtkWidget * gtk_vscale_new (GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_vscale_new has been deprecated since version 3.2 and should not be used
-;;; in newly-written code. Use gtk_scale_new() with GTK_ORIENTATION_VERTICAL
-;;; instead
-;;; 
-;;; Creates a new GtkVScale.
-;;; 
-;;; adjustment :
-;;;     the GtkAdjustment which sets the range of the scale.
-;;; 
-;;; Returns :
-;;;     a new GtkVScale.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vscale-new))
 
 (defun gtk-vscale-new (adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-22}
+  @argument[adjustment]{the GtkAdjustment which sets the range of the scale.}
+  @return{A new GtkVScale widget.}
+  Warning
+
+  gtk_vscale_new has been deprecated since version 3.2 and should not be used
+  in newly-written code. Use gtk_scale_new() with GTK_ORIENTATION_VERTICAL
+  instead
+
+  Creates a new GtkVScale."
   (make-instance 'gtk-scale
                  :orientation :vertical
                  :adjustment adjustment))

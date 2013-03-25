@@ -2,13 +2,14 @@
 ;;; gtk.scrolled-window.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; <See http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -73,196 +74,12 @@
 ;;; 
 ;;; GtkScrolledWindow implements AtkImplementorIface and GtkBuildable.
 ;;; 
-;;; Properties
-;;; 
-;;;   "hadjustment"              GtkAdjustment*       : Read / Write / Construct
-;;;   "hscrollbar-policy"        GtkPolicyType        : Read / Write
-;;;   "kinetic-scrolling"        gboolean             : Read / Write
-;;;   "min-content-height"       gint                 : Read / Write
-;;;   "min-content-width"        gint                 : Read / Write
-;;;   "shadow-type"              GtkShadowType        : Read / Write
-;;;   "vadjustment"              GtkAdjustment*       : Read / Write / Construct
-;;;   "vscrollbar-policy"        GtkPolicyType        : Read / Write
-;;;   "window-placement"         GtkCornerType        : Read / Write
-;;;   "window-placement-set"     gboolean             : Read / Write
-;;; 
-;;; Style Properties
-;;; 
-;;;   "scrollbar-spacing"        gint                 : Read
-;;;   "scrollbars-within-bevel"  gboolean             : Read
 ;;; 
 ;;; Signals
 ;;; 
 ;;;   "move-focus-out"                                : Action
 ;;;   "scroll-child"                                  : Action
 ;;; 
-;;; Description
-;;; 
-;;; GtkScrolledWindow is a GtkBin subclass: it's a container the accepts a
-;;; single child widget. GtkScrolledWindow adds scrollbars to the child widget
-;;; and optionally draws a beveled frame around the child widget.
-;;; 
-;;; The scrolled window can work in two ways. Some widgets have native scrolling
-;;; support; these widgets implement the GtkScrollable interface. Widgets with
-;;; native scroll support include GtkTreeView, GtkTextView, and GtkLayout.
-;;; 
-;;; For widgets that lack native scrolling support, the GtkViewport widget acts
-;;; as an adaptor class, implementing scrollability for child widgets that lack
-;;; their own scrolling capabilities. Use GtkViewport to scroll child widgets
-;;; such as GtkGrid, GtkBox, and so on.
-;;; 
-;;; If a widget has native scrolling abilities, it can be added to the
-;;; GtkScrolledWindow with gtk_container_add(). If a widget does not, you must
-;;; first add the widget to a GtkViewport, then add the GtkViewport to the
-;;; scrolled window. The convenience function
-;;; gtk_scrolled_window_add_with_viewport() does exactly this, so you can ignore
-;;; the presence of the viewport.
-;;; 
-;;; The position of the scrollbars is controlled by the scroll adjustments. See
-;;; GtkAdjustment for the fields in an adjustment - for GtkScrollbar, used by
-;;; GtkScrolledWindow, the "value" field represents the position of the
-;;; scrollbar, which must be between the "lower" field and "upper - page_size."
-;;; The "page_size" field represents the size of the visible scrollable area.
-;;; The "step_increment" and "page_increment" fields are used when the user asks
-;;; to step down (using the small stepper arrows) or page down (using for
-;;; example the PageDown key).
-;;; 
-;;; If a GtkScrolledWindow doesn't behave quite as you would like, or doesn't
-;;; have exactly the right layout, it's very possible to set up your own
-;;; scrolling with GtkScrollbar and for example a GtkGrid.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "hadjustment" property
-;;; 
-;;;   "hadjustment"              GtkAdjustment*       : Read / Write / Construct
-;;; 
-;;; The GtkAdjustment for the horizontal position.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "hscrollbar-policy" property
-;;; 
-;;;   "hscrollbar-policy"        GtkPolicyType         : Read / Write
-;;; 
-;;; When the horizontal scrollbar is displayed.
-;;; 
-;;; Default value: GTK_POLICY_AUTOMATIC
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "kinetic-scrolling" property
-;;; 
-;;;   "kinetic-scrolling"        gboolean              : Read / Write
-;;; 
-;;; The kinetic scrolling behavior flags. Kinetic scrolling only applies to
-;;; devices with source GDK_SOURCE_TOUCHSCREEN
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 3.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "min-content-height" property
-;;; 
-;;;   "min-content-height"       gint                  : Read / Write
-;;; 
-;;; The minimum content height of scrolled_window, or -1 if not set.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "min-content-width" property
-;;; 
-;;;   "min-content-width"        gint                  : Read / Write
-;;; 
-;;; The minimum content width of scrolled_window, or -1 if not set.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;; 
-;;; Since 3.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "shadow-type" property
-;;; 
-;;;   "shadow-type"              GtkShadowType         : Read / Write
-;;; 
-;;; Style of bevel around the contents.
-;;; 
-;;; Default value: GTK_SHADOW_NONE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "vadjustment" property
-;;; 
-;;;   "vadjustment"              GtkAdjustment*        : Read / Write / Construct
-;;; 
-;;; The GtkAdjustment for the vertical position.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "vscrollbar-policy" property
-;;; 
-;;;   "vscrollbar-policy"        GtkPolicyType         : Read / Write
-;;; 
-;;; When the vertical scrollbar is displayed.
-;;; 
-;;; Default value: GTK_POLICY_AUTOMATIC
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "window-placement" property
-;;; 
-;;;   "window-placement"         GtkCornerType         : Read / Write
-;;; 
-;;; Where the contents are located with respect to the scrollbars. This property
-;;; only takes effect if "window-placement-set" is TRUE.
-;;; 
-;;; Default value: GTK_CORNER_TOP_LEFT
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "window-placement-set" property
-;;; 
-;;;   "window-placement-set"     gboolean              : Read / Write
-;;; 
-;;; Whether "window-placement" should be used to determine the location of the
-;;; contents with respect to the scrollbars. Otherwise, the
-;;; "gtk-scrolled-window-placement" setting is used.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scrollbar-spacing" style property
-;;; 
-;;;   "scrollbar-spacing"        gint                  : Read
-;;; 
-;;; Number of pixels between the scrollbars and the scrolled window.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 3
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scrollbars-within-bevel" style property
-;;; 
-;;;   "scrollbars-within-bevel"  gboolean              : Read
-;;; 
-;;; Whether to place scrollbars within the scrolled window's bevel.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.12
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
@@ -319,8 +136,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkScrolledWindow
-;;; 
-;;; struct GtkScrolledWindow;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkScrolledWindow" gtk-scrolled-window
@@ -361,31 +176,301 @@
     "window-placement-set" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-scrolled-window 'type)
+ "@version{2013-3-23}
+  @begin{short}
+    GtkScrolledWindow is a GtkBin subclass: it's a container the accepts a
+    single child widget. GtkScrolledWindow adds scrollbars to the child widget
+    and optionally draws a beveled frame around the child widget.
+  @end{short}
+
+  The scrolled window can work in two ways. Some widgets have native scrolling
+  support; these widgets implement the GtkScrollable interface. Widgets with
+  native scroll support include GtkTreeView, GtkTextView, and GtkLayout.
+
+  For widgets that lack native scrolling support, the GtkViewport widget acts
+  as an adaptor class, implementing scrollability for child widgets that lack
+  their own scrolling capabilities. Use GtkViewport to scroll child widgets
+  such as GtkGrid, GtkBox, and so on.
+
+  If a widget has native scrolling abilities, it can be added to the
+  GtkScrolledWindow with gtk_container_add(). If a widget does not, you must
+  first add the widget to a GtkViewport, then add the GtkViewport to the
+  scrolled window. The convenience function
+  gtk_scrolled_window_add_with_viewport() does exactly this, so you can ignore
+  the presence of the viewport.
+
+  The position of the scrollbars is controlled by the scroll adjustments. See
+  GtkAdjustment for the fields in an adjustment - for GtkScrollbar, used by
+  GtkScrolledWindow, the \"value\" field represents the position of the
+  scrollbar, which must be between the \"lower\" field and
+  \"upper - page_size\". The \"page_size\" field represents the size of the
+  visible scrollable area. The \"step_increment\" and \"page_increment\" fields
+  are used when the user asks to step down (using the small stepper arrows) or
+  page down (using for example the PageDown key).
+
+  If a GtkScrolledWindow doesn't behave quite as you would like, or doesn't
+  have exactly the right layout, it's very possible to set up your own
+  scrolling with GtkScrollbar and for example a GtkGrid.
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"scrollbar-spacing\" style property}
+      @code{\"scrollbar-spacing\"} of type @code{:int} (Read)@br{}
+      Number of pixels between the scrollbars and the scrolled window. @br{}
+      Allowed values: >= 0@br{}
+      Default value: 3
+
+    @subheading{The \"scrollbars-within-bevel\" style property}
+      @code{\"scrollbars-within-bevel\"} of type @code{:boolean} (Read)@br{}
+      Whether to place scrollbars within the scrolled window's bevel. @br{}
+      Default value: FALSE @br{}
+      Since 2.12
+  @end{dictionary}
+  @see-slot{gtk-scrolled-window-hadjustment}
+  @see-slot{gtk-scrolled-window-hscrollbar-policy}
+  @see-slot{gtk-scrolled-window-kinetic-scrolling}
+  @see-slot{gtk-scrolled-window-min-content-height}
+  @see-slot{gtk-scrolled-window-min-content-width}
+  @see-slot{gtk-scrolled-window-shadow-type}
+  @see-slot{gtk-scrolled-window-vadjustment}
+  @see-slot{gtk-scrolled-window-vscrollbar-policy}
+  @see-slot{gtk-scrolled-window-window-placement}
+  @see-slot{gtk-scrolled-window-window-placement-set}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "hadjustment"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"hadjustment\"} property of type @class{gtk-adjustment}
+  (Read / Write / Construct)@br{}
+  The GtkAdjustment for the horizontal position.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "hscrollbar-policy"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"hscrollbar-policy\"} property of type @symbol{gtk-policy-type}
+  (Read / Write)@br{}
+  When the horizontal scrollbar is displayed. @br{}
+  Default value: GTK_POLICY_AUTOMATIC")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "kinetic-scrolling"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"kinetic-scrolling\"} property of type @code{:boolean}
+  (Read / Write]@br{}
+  The kinetic scrolling behavior flags. Kinetic scrolling only applies to
+  devices with source GDK_SOURCE_TOUCHSCREEN @br{}
+  Default value: TRUE @br{}
+  Since 3.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "min-content-height"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"min-content-height\"} property of type @code{:int}
+  (Read / Write)@br{}
+  The minimum content height of scrolled_window, or -1 if not set. @br{}
+  Allowed values: >= G_MAXULONG @br{}
+  Default value: -1@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "min-content-width"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"min-content-width\"} property of type @code{:int}
+  (Read / Write)@br{}
+  The minimum content width of scrolled_window, or -1 if not set. @br{}
+  Allowed values: >= G_MAXULONG @br{}
+  Default value: -1@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "shadow-type"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
+  (Read / Write)@br{}
+  Style of bevel around the contents. @br{}
+  Default value: GTK_SHADOW_NONE")
+
+;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "vadjustment"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"vadjustment\"} property of type @class{gtk-adjustment}
+  (Read / Write / Construct)@br{}
+  The GtkAdjustment for the vertical position.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "vscrollbar-policy"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"vscrollbar-policy\"} property of type @symbol{gtk-policy-type}
+  (Read / Write)@br{}
+  When the vertical scrollbar is displayed. @br{}
+  Default value: GTK_POLICY_AUTOMATIC")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "window-placement"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"window-placement\"} property of type @symbol{gtk-corner-type}
+  (Read / Write)@br{}
+  Where the contents are located with respect to the scrollbars. This property
+  only takes effect if \"window-placement-set\" is TRUE. @br{}
+  Default value: GTK_CORNER_TOP_LEFT")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "window-placement-set"
+                                               'gtk-scrolled-window) 't)
+ "The @code{\"window-placement-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether \"window-placement\" should be used to determine the location of the
+  contents with respect to the scrollbars. Otherwise, the
+  \"gtk-scrolled-window-placement\" setting is used. @br{}
+  Default value: FALSE @br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-hadjustment atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-hadjustment 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"hadjustment\"} of the @class{gtk-scrolled-window}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-hscrollbar-policy atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-hscrollbar-policy 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"hscrollbar-policy\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-kinetic-scrolling atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-kinetic-scrolling 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"kinetic-scrolling\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-min-content-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-min-content-height 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"min-content-height\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-min-content-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-min-content-width 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"min-content-width\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-shadow-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-shadow-type 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-scrolled-window}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-vadjustment atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-vadjustment 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"vadjustment\"} of the @class{gtk-scrolled-window}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-vscrollbar-policy atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-vscrollbar-policy 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"vscrollbar-policy\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-window-placement atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-window-placement 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"window-placement\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scrolled-window-window-placement-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scrolled-window-window-placement-set 'function)
+ "@version{2013-3-23}
+  Accessor of the slot @code{\"window-placement-set\"} of the
+  @class{gtk-scrolled-window} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_new ()
-;;; 
-;;; GtkWidget * gtk_scrolled_window_new (GtkAdjustment *hadjustment,
-;;;                                      GtkAdjustment *vadjustment);
-;;; 
-;;; Creates a new scrolled window.
-;;; 
-;;; The two arguments are the scrolled window's adjustments; these will be
-;;; shared with the scrollbars and the child widget to keep the bars in sync
-;;; with the child. Usually you want to pass NULL for the adjustments, which
-;;; will cause the scrolled window to create them for you.
-;;; 
-;;; hadjustment :
-;;;     horizontal adjustment
-;;; 
-;;; vadjustment :
-;;;     vertical adjustment
-;;; 
-;;; Returns :
-;;;     a new scrolled window
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-new))
 
 (defun gtk-scrolled-window-new (&optional (hadjustment nil) (vadjustment nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[hadjustment]{horizontal adjustment}
+  @argument[vadjustment]{vertical adjustment}
+  @return{a new scrolled window}
+  @short{Creates a new scrolled window.}
+
+  The two arguments are the scrolled window's adjustments; these will be
+  shared with the scrollbars and the child widget to keep the bars in sync
+  with the child. Usually you want to pass NULL for the adjustments, which
+  will cause the scrolled window to create them for you."
   (make-instance 'gtk-scrolled-window
                  :hadjustment hadjustment
                  :vadjustment vadjustment))
@@ -394,130 +479,103 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_hadjustment ()
-;;; 
-;;; GtkAdjustment * gtk_scrolled_window_get_hadjustment
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Returns the horizontal scrollbar's adjustment, used to connect the
-;;; horizontal scrollbar to the child widget's horizontal scroll functionality.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the horizontal GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-hadjustment))
 
 (defun gtk-scrolled-window-get-hadjustment (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @return{the horizontal GtkAdjustment}
+  Returns the horizontal scrollbar's adjustment, used to connect the
+  horizontal scrollbar to the child widget's horizontal scroll functionality."
   (gtk-scrolled-window-hadjustment scrolled-window))
 
 (export 'gtk-scrolled-window-get-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_vadjustment ()
-;;; 
-;;; GtkAdjustment * gtk_scrolled_window_get_vadjustment
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Returns the vertical scrollbar's adjustment, used to connect the vertical
-;;; scrollbar to the child widget's vertical scroll functionality.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the vertical GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-vadjustment))
 
 (defun gtk-scrolled-window-get-vadjustment (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @reurn{the vertical GtkAdjustment}
+  Returns the vertical scrollbar's adjustment, used to connect the vertical
+  scrollbar to the child widget's vertical scroll functionality."
   (gtk-scrolled-window-vadjustment scrolled-window))
 
 (export 'gtk-scrolled-window-get-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_hscrollbar ()
-;;; 
-;;; GtkWidget * gtk_scrolled_window_get_hscrollbar
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Returns the horizontal scrollbar of scrolled_window.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the horizontal scrollbar of the scrolled window, or NULL if it does not
-;;;     have one
-;;; 
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scrolled_window_get_hscrollbar"
            gtk-scrolled-window-get-hscrollbar)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @begin{return}
+    The horizontal scrollbar of the scrolled window, or NULL if it does not
+    have one.
+  @end{return}
+  @short{Returns the horizontal scrollbar of scrolled_window.}
+
+  Since 2.8"
   (scrolled-window (g-object gtk-scrolled-window)))
 
 (export 'gtk-scrolled-window-get-hscrollbar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_vscrollbar ()
-;;; 
-;;; GtkWidget * gtk_scrolled_window_get_vscrollbar
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Returns the vertical scrollbar of scrolled_window.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the vertical scrollbar of the scrolled window, or NULL if it does not
-;;;     have one
-;;; 
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scrolled_window_get_vscrollbar"
            gtk-scrolled-window-get-vscrollbar)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @begin{return}
+    The vertical scrollbar of the scrolled window, or NULL if it does not
+    have one.
+  @end{return}
+  @short{Returns the vertical scrollbar of scrolled_window.}
+
+  Since 2.8"
   (scrolled-window (g-object gtk-scrolled-window)))
 
 (export 'gtk-scrolled-window-get-vscrollbar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_policy ()
-;;; 
-;;; void gtk_scrolled_window_set_policy (GtkScrolledWindow *scrolled_window,
-;;;                                      GtkPolicyType hscrollbar_policy,
-;;;                                      GtkPolicyType vscrollbar_policy);
-;;; 
-;;; Sets the scrollbar policy for the horizontal and vertical scrollbars.
-;;; 
-;;; The policy determines when the scrollbar should appear; it is a value from
-;;; the GtkPolicyType enumeration. If GTK_POLICY_ALWAYS, the scrollbar is always
-;;; present; if GTK_POLICY_NEVER, the scrollbar is never present; if
-;;; GTK_POLICY_AUTOMATIC, the scrollbar is present only if needed (that is, if
-;;; the slider part of the bar would be smaller than the trough - the display is
-;;; larger than the page size).
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; hscrollbar_policy :
-;;;     policy for horizontal bar
-;;; 
-;;; vscrollbar_policy :
-;;;     policy for vertical bar
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-policy))
 
 (defun gtk-scrolled-window-set-policy (scrolled-window hscrollbar-policy
                                                        vscrollbar-policy)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[hscrollbar_policy]{policy for horizontal bar}
+  @argument[vscrollbar_policy]{policy for vertical bar}
+  @begin{short}
+    Sets the scrollbar policy for the horizontal and vertical scrollbars.
+  @end{short}
+
+  The policy determines when the scrollbar should appear; it is a value from
+  the GtkPolicyType enumeration. If GTK_POLICY_ALWAYS, the scrollbar is always
+  present; if GTK_POLICY_NEVER, the scrollbar is never present; if
+  GTK_POLICY_AUTOMATIC, the scrollbar is present only if needed (that is, if
+  the slider part of the bar would be smaller than the trough - the display is
+  larger than the page size)."
   (setf (gtk-scrolled-window-hscrollbar-policy scrolled-window)
         hscrollbar-policy
         (gtk-scrolled-window-vscrollbar-policy scrolled-window)
@@ -527,35 +585,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_add_with_viewport ()
-;;; 
-;;; void gtk_scrolled_window_add_with_viewport
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          GtkWidget *child);
-;;; 
-;;; Used to add children without native scrolling capabilities. This is simply a
-;;; convenience function; it is equivalent to adding the unscrollable child to a
-;;; viewport, then adding the viewport to the scrolled window. If a child has
-;;; native scrolling, use gtk_container_add() instead of this function.
-;;; 
-;;; The viewport scrolls the child by moving its GdkWindow, and takes the size
-;;; of the child to be the size of its toplevel GdkWindow. This will be very
-;;; wrong for most widgets that support native scrolling; for example, if you
-;;; add a widget such as GtkTreeView with a viewport, the whole widget will
-;;; scroll, including the column headings. Thus, widgets with native scrolling
-;;; support should not be used with the GtkViewport proxy.
-;;; 
-;;; A widget supports scrolling natively if it implements the GtkScrollable
-;;; interface.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; child :
-;;;     the widget you want to scroll
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scrolled_window_add_with_viewport"
           gtk-scrolled-window-add-with-viewport) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[child]{the widget you want to scroll}
+  @begin{short}
+    Used to add children without native scrolling capabilities. This is simply a
+    convenience function; it is equivalent to adding the unscrollable child to a
+    viewport, then adding the viewport to the scrolled window. If a child has
+    native scrolling, use gtk_container_add() instead of this function.
+  @end{short}
+
+  The viewport scrolls the child by moving its GdkWindow, and takes the size
+  of the child to be the size of its toplevel GdkWindow. This will be very
+  wrong for most widgets that support native scrolling; for example, if you
+  add a widget such as GtkTreeView with a viewport, the whole widget will
+  scroll, including the column headings. Thus, widgets with native scrolling
+  support should not be used with the GtkViewport proxy.
+
+  A widget supports scrolling natively if it implements the GtkScrollable
+  interface."
   (scrolled-window (g-object gtk-scrolled-window))
   (child (g-object gtk-widget)))
 
@@ -563,31 +616,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_placement ()
-;;; 
-;;; void gtk_scrolled_window_set_placement (GtkScrolledWindow *scrolled_window,
-;;;                                         GtkCornerType window_placement);
-;;; 
-;;; Sets the placement of the contents with respect to the scrollbars for the
-;;; scrolled window.
-;;; 
-;;; The default is GTK_CORNER_TOP_LEFT, meaning the child is in the top left,
-;;; with the scrollbars underneath and to the right. Other values in
-;;; GtkCornerType are GTK_CORNER_TOP_RIGHT, GTK_CORNER_BOTTOM_LEFT, and
-;;; GTK_CORNER_BOTTOM_RIGHT.
-;;; 
-;;; See also gtk_scrolled_window_get_placement() and
-;;; gtk_scrolled_window_unset_placement().
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; window_placement :
-;;;     position of the child window
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-placement))
 
 (defun gtk-scrolled-window-set-placement (scrolled-window window-placement)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[window_placement]{position of the child window}
+  @begin{short}
+    Sets the placement of the contents with respect to the scrollbars for the
+    scrolled window.
+  @end{short}
+
+  The default is GTK_CORNER_TOP_LEFT, meaning the child is in the top left,
+  with the scrollbars underneath and to the right. Other values in
+  GtkCornerType are GTK_CORNER_TOP_RIGHT, GTK_CORNER_BOTTOM_LEFT, and
+  GTK_CORNER_BOTTOM_RIGHT.
+
+  See also gtk_scrolled_window_get_placement() and
+  gtk_scrolled_window_unset_placement()."
   (setf (gtk-scrolled-window-window-placement-set scrolled-window)
         t
         (gtk-scrolled-window-window-placement scrolled-window)
@@ -597,147 +646,113 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_unset_placement ()
-;;; 
-;;; void gtk_scrolled_window_unset_placement
-;;                                         (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Unsets the placement of the contents with respect to the scrollbars for the
-;;; scrolled window. If no window placement is set for a scrolled window, it
-;;; obeys the "gtk-scrolled-window-placement" XSETTING.
-;;; 
-;;; See also gtk_scrolled_window_set_placement() and
-;;; gtk_scrolled_window_get_placement().
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-unset-placement))
 
 (defun gtk-scrolled-window-unset-placement (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @begin{short}
+    Unsets the placement of the contents with respect to the scrollbars for the
+    scrolled window. If no window placement is set for a scrolled window, it
+    obeys the \"gtk-scrolled-window-placement\" XSETTING.
+  @end{short}
+
+  See also gtk_scrolled_window_set_placement() and
+  gtk_scrolled_window_get_placement().
+
+  Since 2.10"
   (setf (gtk-scrolled-window-window-placement-set scrolled-window) nil))
 
 (export 'gtk-scrolled-window-unset-placement)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_shadow_type ()
-;;; 
-;;; void gtk_scrolled_window_set_shadow_type
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          GtkShadowType shadow_type);
-;;; 
-;;; Changes the type of shadow drawn around the contents of scrolled_window.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; shadow_type :
-;;;     kind of shadow to draw around scrolled window contents
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-shadow-type))
 
 (defun gtk-scrolled-window-set-shadow-type (scrolled-window shadow-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[shadow_type]{kind of shadow to draw around scrolled window contents}
+  Changes the type of shadow drawn around the contents of scrolled_window."
   (setf (gtk-scrolled-window-shadow-type scrolled-window) shadow-type))
 
 (export 'gtk-scrolled-window-set-shadow-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_hadjustment ()
-;;; 
-;;; void gtk_scrolled_window_set_hadjustment
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          GtkAdjustment *hadjustment);
-;;; 
-;;; Sets the GtkAdjustment for the horizontal scrollbar.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; hadjustment :
-;;;     horizontal scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-hadjustment))
 
 (defun gtk-scrolled-window-set-hadjustment (scrolled-window hadjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[hadjustment]{horizontal scroll adjustment}
+  Sets the GtkAdjustment for the horizontal scrollbar."
   (setf (gtk-scrolled-window-hadjustment scrolled-window) hadjustment))
 
 (export 'gtk-scrolled-window-set-hadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_vadjustment ()
-;;; 
-;;; void gtk_scrolled_window_set_vadjustment
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          GtkAdjustment *vadjustment);
-;;; 
-;;; Sets the GtkAdjustment for the vertical scrollbar.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; vadjustment :
-;;;     vertical scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-vadjustment))
 
 (defun gtk-scrolled-window-set-vadjustment (scrolled-window vadjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[vadjustment]{vertical scroll adjustment}
+  Sets the GtkAdjustment for the vertical scrollbar."
   (setf (gtk-scrolled-window-vadjustment scrolled-window) vadjustment))
 
 (export 'gtk-scrolled-window-set-vadjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_placement ()
-;;; 
-;;; GtkCornerType gtk_scrolled_window_get_placement
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Gets the placement of the contents with respect to the scrollbars for the
-;;; scrolled window. See gtk_scrolled_window_set_placement().
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the current placement value. See also
-;;;     gtk_scrolled_window_set_placement() and
-;;;     gtk_scrolled_window_unset_placement().
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-placement))
 
 (defun gtk-scrolled-window-get-placement (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @begin{return}
+    The current placement value. See also gtk_scrolled_window_set_placement()
+    and gtk_scrolled_window_unset_placement().
+  @end{return}
+  Gets the placement of the contents with respect to the scrollbars for the
+  scrolled window. See gtk_scrolled_window_set_placement()."
   (gtk-scrolled-window-window-placement scrolled-window))
 
 (export 'gtk-scrolled-window-get-placement)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_policy ()
-;;; 
-;;; void gtk_scrolled_window_get_policy (GtkScrolledWindow *scrolled_window,
-;;;                                      GtkPolicyType *hscrollbar_policy,
-;;;                                      GtkPolicyType *vscrollbar_policy);
-;;; 
-;;; Retrieves the current policy values for the horizontal and vertical
-;;; scrollbars. See gtk_scrolled_window_set_policy().
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; hscrollbar_policy :
-;;;     location to store the policy for the horizontal scrollbar, or NULL
-;;; 
-;;; vscrollbar_policy :
-;;;     location to store the policy for the vertical scrollbar, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-policy))
 
 (defun gtk-scrolled-window-get-policy (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @begin{return}
+    @code{hscrollbar_policy} -- the policy for the horizontal scrollbar,
+                                or NULL @br{}
+    @code{vscrollbar_policy} -- the policy for the vertical scrollbar, or NULL
+  @end{return}
+  Retrieves the current policy values for the horizontal and vertical
+  scrollbars. See gtk_scrolled_window_set_policy()."
   (values (gtk-scrolled-window-hscrollbar-policy scrolled-window)
           (gtk-scrolled-window-vscrollbar-policy scrolled-window)))
 
@@ -745,150 +760,121 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_shadow_type ()
-;;; 
-;;; GtkShadowType gtk_scrolled_window_get_shadow_type
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Gets the shadow type of the scrolled window. See
-;;; gtk_scrolled_window_set_shadow_type().
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the current shadow type
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-shadow-type))
 
 (defun gtk-scrolled-window-get-shadow-type (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @return{The current shadow type.}
+  Gets the shadow type of the scrolled window. See
+  gtk_scrolled_window_set_shadow_type()."
   (gtk-scrolled-window-shadow-type scrolled-window))
 
 (export 'gtk-scrolled-window-get-shadow-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_min_content_width ()
-;;; 
-;;; gint gtk_scrolled_window_get_min_content_width
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Gets the minimum content width of scrolled_window, or -1 if not set.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the minimum content width
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-min-content-width))
 
 (defun gtk-scrolled-window-get-min-content-width (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @return{The minimum content width.}
+  @begin{short}
+    Gets the minimum content width of scrolled_window, or -1 if not set.
+  @end{short}
+
+  Since 3.0"
   (gtk-scrolled-window-min-content-width scrolled-window))
 
 (export 'gtk-scrolled-window-get-min-content-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_min_content_width ()
-;;; 
-;;; void gtk_scrolled_window_set_min_content_width
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          gint width);
-;;; 
-;;; Sets the minimum width that scrolled_window should keep visible. Note that
-;;; this can and (usually will) be smaller than the minimum size of the content.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; width :
-;;;     the minimal content width
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-min-content-width))
 
 (defun gtk-scrolled-window-set-min-content-width (scrolled-window width)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[width]{the minimal content width}
+  @begin{short}
+    Sets the minimum width that scrolled_window should keep visible. Note that
+    this can and (usually will) be smaller than the minimum size of the content.
+  @end{short}
+
+  Since 3.0"
   (setf (gtk-scrolled-window-min-content-width scrolled-window) width))
 
 (export 'gtk-scrolled-window-set-min-content-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_min_content_height ()
-;;; 
-;;; gint gtk_scrolled_window_get_min_content_height
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Gets the minimal content height of scrolled_window, or -1 if not set.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the minimal content height
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-min-content-height))
 
 (defun gtk-scrolled-window-get-min-content-height (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @return{The minimal content height.}
+  @begin{short}
+    Gets the minimal content height of scrolled_window, or -1 if not set.
+  @end{short}
+
+  Since 3.0"
   (gtk-scrolled-window-min-content-height scrolled-window))
 
 (export 'gtk-scrolled-window-get-min-content-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_min_content_height ()
-;;; 
-;;; void gtk_scrolled_window_set_min_content_height
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          gint height);
-;;; 
-;;; Sets the minimum height that scrolled_window should keep visible. Note that
-;;; this can and (usually will) be smaller than the minimum size of the content.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; height :
-;;;     the minimal content height
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-min-content-height))
 
 (defun gtk-scrolled-window-set-min-content-height (scrolled-window height)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[height]{the minimal content height}
+  @begin{short}
+    Sets the minimum height that scrolled_window should keep visible. Note that
+    this can and (usually will) be smaller than the minimum size of the content.
+  @end{short}
+
+  Since 3.0"
   (setf (gtk-scrolled-window-min-content-height scrolled-window) height))
 
 (export 'gtk-scrolled-window-set-min-content-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_kinetic_scrolling ()
-;;; 
-;;; void gtk_scrolled_window_set_kinetic_scrolling
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          gboolean kinetic_scrolling);
-;;; 
-;;; Turns kinetic scrolling on or off. Kinetic scrolling only applies to devices
-;;; with source GDK_SOURCE_TOUCHSCREEN.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; kinetic_scrolling :
-;;;     TRUE to enable kinetic scrolling
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-set-kinetic-scrolling))
 
 (defun gtk-scrolled-window-set-kinetic-scrolling (scrolled-window
                                                   kinetic-scrolling)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[kinetic_scrolling]{TRUE to enable kinetic scrolling}
+  @begin{short}
+    Turns kinetic scrolling on or off. Kinetic scrolling only applies to devices
+    with source GDK_SOURCE_TOUCHSCREEN.
+  @end{short}
+
+  Since 3.4"
   (setf (gtk-scrolled-window-kinetic-scrolling scrolled-window)
         kinetic-scrolling))
 
@@ -896,58 +882,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_kinetic_scrolling ()
-;;; 
-;;; gboolean gtk_scrolled_window_get_kinetic_scrolling
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Returns the specified kinetic scrolling behavior.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     the scrolling behavior flags.
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrolled-window-get-kinetic-scrolling))
 
 (defun gtk-scrolled-window-get-kinetic-scrolling (scrolled-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @return{The scrolling behavior flags.}
+  @short{Returns the specified kinetic scrolling behavior.}
+
+  Since 3.4"
   (gtk-scrolled-window-kinetic-scrolling scrolled-window))
 
 (export 'gtk-scrolled-window-get-kinetic-scrolling)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_set_capture_button_press ()
-;;; 
-;;; void gtk_scrolled_window_set_capture_button_press
-;;;                                         (GtkScrolledWindow *scrolled_window,
-;;;                                          gboolean capture_button_press);
-;;; 
-;;; Changes the behaviour of scrolled_window wrt. to the initial event that
-;;; possibly starts kinetic scrolling. When capture_button_press is set to TRUE,
-;;; the event is captured by the scrolled window, and then later replayed if it
-;;; is meant to go to the child widget.
-;;; 
-;;; This should be enabled if any child widgets perform non-reversible actions
-;;; on "button-press-event". If they don't, and handle additionally handle
-;;; "grab-broken-event", it might be better to set capture_button_press to
-;;; FALSE.
-;;; 
-;;; This setting only has an effect if kinetic scrolling is enabled.
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; capture_button_press :
-;;;     TRUE to capture button presses
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scrolled_window_set_capture_button_press"
            gtk-scrolled-window-set-capture-button-press) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @argument[capture_button_press]{TRUE to capture button presses}
+  @begin{short}
+    Changes the behaviour of scrolled_window wrt. to the initial event that
+    possibly starts kinetic scrolling. When capture_button_press is set to TRUE,
+    the event is captured by the scrolled window, and then later replayed if it
+    is meant to go to the child widget.
+  @end{short}
+
+  This should be enabled if any child widgets perform non-reversible actions
+  on \"button-press-event\". If they don't, and handle additionally handle
+  \"grab-broken-event\", it might be better to set capture_button_press to
+  FALSE.
+
+  This setting only has an effect if kinetic scrolling is enabled.
+
+  Since 3.4"
   (scrolled-window (g-object gtk-scrolled-window)
   (capture-button-press :boolean)))
 
@@ -955,24 +930,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrolled_window_get_capture_button_press ()
-;;; 
-;;; gboolean gtk_scrolled_window_get_capture_button_press
-;;;                                        (GtkScrolledWindow *scrolled_window);
-;;; 
-;;; Return whether button presses are captured during kinetic scrolling. See
-;;; gtk_scrolled_window_set_capture_button_press().
-;;; 
-;;; scrolled_window :
-;;;     a GtkScrolledWindow
-;;; 
-;;; Returns :
-;;;     TRUE if button presses are captured during kinetic scrolling
-;;; 
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_scrolled_window_get_capture_button_press"
            gtk-scrolled-window-get-capture-button-press) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[scrolled_window]{a GtkScrolledWindow}
+  @return{TRUE if button presses are captured during kinetic scrolling}
+  @begin{short}
+    Return whether button presses are captured during kinetic scrolling. See
+    gtk_scrolled_window_set_capture_button_press().
+  @end{short}
+
+  Since 3.4"
   (scrolled-window (g-object gtk-scrolled-window)))
 
 (export 'gtk-scrolled-window-get-capture-button-press)

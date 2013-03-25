@@ -2,13 +2,14 @@
 ;;; gtk.radio-menu.item.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; <See http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,86 +45,12 @@
 ;;;     gtk_radio_menu_item_new_with_mnemonic_from_widget
 ;;;     gtk_radio_menu_item_set_group
 ;;;     gtk_radio_menu_item_get_group
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkMenuItem
-;;;                                  +----GtkCheckMenuItem
-;;;                                        +----GtkRadioMenuItem
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkRadioMenuItem implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
-;;;
-;;; Properties
-;;;
-;;;   "group"                    GtkRadioMenuItem*     : Write
-;;;
-;;; Signals
-;;;
-;;;   "group-changed"                                  : Run First
-;;;
-;;; Description
-;;;
-;;; A radio menu item is a check menu item that belongs to a group. At each
-;;; instant exactly one of the radio menu items from a group is selected.
-;;;
-;;; The group list does not need to be freed, as each GtkRadioMenuItem will
-;;; remove itself and its list item when it is destroyed.
-;;;
-;;; The correct way to create a group of radio menu items is approximatively
-;;; this:
-;;;
-;;; Example 78. How to create a group of radio menu items.
-;;;
-;;; GSList *group = NULL;
-;;; GtkWidget *item;
-;;; gint i;
-;;;
-;;; for (i = 0; i < 5; i++)
-;;; {
-;;;   item = gtk_radio_menu_item_new_with_label (group, "This is an example");
-;;;   group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-;;;   if (i == 1)
-;;;     gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
-;;; }
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "group" property
-;;;
-;;;   "group"                    GtkRadioMenuItem*     : Write
-;;;
-;;; The radio menu item whose group this widget belongs to.
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "group-changed" signal
-;;;
-;;; void user_function (GtkRadioMenuItem *radiomenuitem,
-;;;                     gpointer          user_data)          : Run First
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRadioMenuItem
-;;;
-;;; struct GtkRadioMenuItem;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRadioMenuItem" gtk-radio-menu-item
@@ -136,6 +63,71 @@
   ((group
     gtk-radio-menu-item-group
     "group" "GtkRadioMenuItem" nil t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-radio-menu-item 'type)
+ "@version{2013-3-18}
+  @begin{short}
+    A radio menu item is a check menu item that belongs to a group. At each
+    instant exactly one of the radio menu items from a group is selected.
+  @end{short}
+
+  The group list does not need to be freed, as each @sym{gtk-radio-menu-item}
+  will remove itself and its list item when it is destroyed.
+
+  The correct way to create a group of radio menu items is approximatively
+  this:
+
+  @b{Example:} How to create a group of radio menu items.
+  @begin{pre}
+ GSList *group = NULL;
+ GtkWidget *item;
+ gint i;
+
+ for (i = 0; i < 5; i++)
+ {
+   item = gtk_radio_menu_item_new_with_label (group, \"This is an example\");
+   group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
+   if (i == 1)
+     gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+ @}
+  @end{pre}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"group-changed\" signal}
+      @begin{pre}
+ lambda (radiomenuitem)   : Run First
+      @end{pre}
+  @end{dictionary}
+  @see-slot{gtk-radio-menu-item-group}
+")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-menu-item) 't)
+ "The @code{\"group\"} property of type @class{gtk-radio-menu-item} (Write)@br{}
+  The radio menu item whose group this widget belongs to. @br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-radio-menu-item-group atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-radio-menu-item-group 'function)
+ "@version{2013-3-18}
+  Accessor of the slot @code{\"group\"} of the @class{gtk-radio-menu-item}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new ()

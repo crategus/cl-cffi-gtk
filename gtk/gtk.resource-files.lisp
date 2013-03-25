@@ -569,58 +569,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkRcTokenType
-;;; 
-;;; typedef enum {
-;;;   GTK_RC_TOKEN_INVALID = G_TOKEN_LAST,
-;;;   GTK_RC_TOKEN_INCLUDE,
-;;;   GTK_RC_TOKEN_NORMAL,
-;;;   GTK_RC_TOKEN_ACTIVE,
-;;;   GTK_RC_TOKEN_PRELIGHT,
-;;;   GTK_RC_TOKEN_SELECTED,
-;;;   GTK_RC_TOKEN_INSENSITIVE,
-;;;   GTK_RC_TOKEN_FG,
-;;;   GTK_RC_TOKEN_BG,
-;;;   GTK_RC_TOKEN_TEXT,
-;;;   GTK_RC_TOKEN_BASE,
-;;;   GTK_RC_TOKEN_XTHICKNESS,
-;;;   GTK_RC_TOKEN_YTHICKNESS,
-;;;   GTK_RC_TOKEN_FONT,
-;;;   GTK_RC_TOKEN_FONTSET,
-;;;   GTK_RC_TOKEN_FONT_NAME,
-;;;   GTK_RC_TOKEN_BG_PIXMAP,
-;;;   GTK_RC_TOKEN_PIXMAP_PATH,
-;;;   GTK_RC_TOKEN_STYLE,
-;;;   GTK_RC_TOKEN_BINDING,
-;;;   GTK_RC_TOKEN_BIND,
-;;;   GTK_RC_TOKEN_WIDGET,
-;;;   GTK_RC_TOKEN_WIDGET_CLASS,
-;;;   GTK_RC_TOKEN_CLASS,
-;;;   GTK_RC_TOKEN_LOWEST,
-;;;   GTK_RC_TOKEN_GTK,
-;;;   GTK_RC_TOKEN_APPLICATION,
-;;;   GTK_RC_TOKEN_THEME,
-;;;   GTK_RC_TOKEN_RC,
-;;;   GTK_RC_TOKEN_HIGHEST,
-;;;   GTK_RC_TOKEN_ENGINE,
-;;;   GTK_RC_TOKEN_MODULE_PATH,
-;;;   GTK_RC_TOKEN_IM_MODULE_PATH,
-;;;   GTK_RC_TOKEN_IM_MODULE_FILE,
-;;;   GTK_RC_TOKEN_STOCK,
-;;;   GTK_RC_TOKEN_LTR,
-;;;   GTK_RC_TOKEN_RTL,
-;;;   GTK_RC_TOKEN_COLOR,
-;;;   GTK_RC_TOKEN_UNBIND,
-;;;   GTK_RC_TOKEN_LAST
-;;; } GtkRcTokenType;
-;;; 
-;;; Warning
-;;; 
-;;;    GtkRcTokenType has been deprecated since version 3.0 and should not be
-;;;    used in newly-written code. Use GtkCssProvider instead.
-;;; 
-;;;    The GtkRcTokenType enumeration represents the tokens in the RC
-;;;    file. It is exposed so that theme engines can reuse these tokens when
-;;;    parsing the theme-engine specific portions of a RC file.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkRcTokenType" gtk-rc-token-type
@@ -666,6 +614,67 @@
   (:color 307)
   (:unbind 308)
   (:last 309))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-rc-token-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-rc-token-type atdoc:*external-symbols*)
+ "@version{2013-3-18}
+  @subheading{Warning}
+    @sym{gtk-rc-token-type} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use @class{gtk-css-provider} instead.
+
+  @begin{short}
+    The @sym{gtk-rc-token-type} enumeration represents the tokens in the RC
+    file. It is exposed so that theme engines can reuse these tokens when
+    parsing the theme-engine specific portions of a RC file.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkRcTokenType\" gtk-rc-token-type
+  (:export t
+   :type-initializer \"gtk_rc_token_type_get_type\")
+  (:invalid 270)
+  (:include 271)
+  (:normal 272)
+  (:active 273)
+  (:prelight 274)
+  (:selected 275)
+  (:insensitive 276)
+  (:fg 277)
+  (:bg 278)
+  (:text 279)
+  (:base 280)
+  (:xthickness 281)
+  (:ythickness 282)
+  (:font 283)
+  (:fontset 284)
+  (:font-name 285)
+  (:bg-pixmap 286)
+  (:pixmap-path 287)
+  (:style 288)
+  (:binding 289)
+  (:bind 290)
+  (:widget 291)
+  (:widget-class 292)
+  (:class 293)
+  (:lowest 294)
+  (:gtk 295)
+  (:application 296)
+  (:theme 297)
+  (:rc 298)
+  (:highest 299)
+  (:engine 300)
+  (:module-path 301)
+  (:im-module-path 302)
+  (:im-module-file 303)
+  (:stock 304)
+  (:ltr 305)
+  (:rtl 306)
+  (:color 307)
+  (:unbind 308)
+  (:last 309))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_rc_scanner_new ()
@@ -1188,4 +1197,3 @@
 
 
 ;;; --- End of file gtk.resource-files.lisp ------------------------------------
-

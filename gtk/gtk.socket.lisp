@@ -2,13 +2,14 @@
 ;;; gtk.socket.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,122 +41,12 @@
 ;;;     gtk_socket_add_id
 ;;;     gtk_socket_get_id
 ;;;     gtk_socket_get_plug_window
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkSocket
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkSocket implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Signals
-;;;
-;;;   "plug-added"                                     : Run Last
-;;;   "plug-removed"                                   : Run Last
-;;;
-;;; Description
-;;;
-;;; Together with GtkPlug, GtkSocket provides the ability to embed widgets from
-;;; one process into another process in a fashion that is transparent to the
-;;; user. One process creates a GtkSocket widget and passes that widget's window
-;;; ID to the other process, which then creates a GtkPlug with that window ID.
-;;; Any widgets contained in the GtkPlug then will appear inside the first
-;;; application's window.
-;;;
-;;; The socket's window ID is obtained by using gtk_socket_get_id(). Before
-;;; using this function, the socket must have been realized, and for hence, have
-;;; been added to its parent.
-;;;
-;;; Example 106. Obtaining the window ID of a socket.
-;;;
-;;;   GtkWidget *socket = gtk_socket_new ();
-;;;   gtk_widget_show (socket);
-;;;   gtk_container_add (GTK_CONTAINER (parent), socket);
-;;;   
-;;;   /* The following call is only necessary if one of
-;;;    * the ancestors of the socket is not yet visible.
-;;;    */
-;;;   gtk_widget_realize (socket);
-;;;   g_print ("The ID of the sockets window is
-;;;             %<GTKDOCLINK HREF="x">x</GTKDOCLINK>\n",
-;;;            gtk_socket_get_id (socket));
-;;;   
-;;;
-;;; Note that if you pass the window ID of the socket to another process that
-;;; will create a plug in the socket, you must make sure that the socket widget
-;;; is not destroyed until that plug is created. Violating this rule will cause
-;;; unpredictable consequences, the most likely consequence being that the plug
-;;; will appear as a separate toplevel window. You can check if the plug has
-;;; been created by using gtk_socket_get_plug_window(). If it returns a non-NULL
-;;; value, then the plug has been successfully created inside of the socket.
-;;;
-;;; When GTK+ is notified that the embedded window has been destroyed, then it
-;;; will destroy the socket as well. You should always, therefore, be prepared
-;;; for your sockets to be destroyed at any time when the main event loop is
-;;; running. To prevent this from happening, you can connect to the
-;;; "plug-removed" signal.
-;;;
-;;; The communication between a GtkSocket and a GtkPlug follows the XEmbed
-;;; protocol. This protocol has also been implemented in other toolkits, e.g.
-;;; Qt, allowing the same level of integration when embedding a Qt widget in GTK
-;;; or vice versa.
-;;;
-;;; Note
-;;;
-;;; The GtkPlug and GtkSocket widgets are only available when GTK+ is compiled
-;;; for the X11 platform and GDK_WINDOWING_X11 is defined. They can only be used
-;;; on a GdkX11Display. To use GtkPlug and GtkSocket, you need to include the
-;;; gtk/gtkx.h header.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "plug-added" signal
-;;;
-;;; void user_function (GtkSocket *socket_,
-;;;                     gpointer   user_data)      : Run Last
-;;;
-;;; This signal is emitted when a client is successfully added to the socket.
-;;;
-;;; socket_ :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "plug-removed" signal
-;;;
-;;; gboolean user_function (GtkSocket *socket_,
-;;;                         gpointer   user_data)      : Run Last
-;;;
-;;; This signal is emitted when a client is removed from the socket. The default
-;;; action is to destroy the GtkSocket widget, so if you want to reuse it you
-;;; must add a signal handler that returns TRUE.
-;;;
-;;; socket_ :
-;;;     the object which received the signal
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkSocket
-;;;
-;;; struct GtkSocket;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkSocket" gtk-socket
@@ -165,6 +56,84 @@
                 "GtkBuildable")
    :type-initializer "gtk_socket_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-socket 'type)
+ "@version{2013-3-23}
+  @begin{short}
+    Together with GtkPlug, GtkSocket provides the ability to embed widgets from
+    one process into another process in a fashion that is transparent to the
+    user. One process creates a GtkSocket widget and passes that widget's window
+    ID to the other process, which then creates a GtkPlug with that window ID.
+    Any widgets contained in the GtkPlug then will appear inside the first
+   application's window.
+  @end{short}
+
+  The socket's window ID is obtained by using gtk_socket_get_id(). Before
+  using this function, the socket must have been realized, and for hence, have
+  been added to its parent.
+
+  Example 106. Obtaining the window ID of a socket.
+  @begin{pre}
+   GtkWidget *socket = gtk_socket_new ();
+   gtk_widget_show (socket);
+   gtk_container_add (GTK_CONTAINER (parent), socket);
+
+   /* The following call is only necessary if one of
+    * the ancestors of the socket is not yet visible.
+    */ 
+   gtk_widget_realize (socket);
+   g_print (\"The ID of the sockets window is
+             %<GTKDOCLINK HREF=\"x\">x</GTKDOCLINK>\n\",
+            gtk_socket_get_id (socket));
+  @end{pre}
+  Note that if you pass the window ID of the socket to another process that
+  will create a plug in the socket, you must make sure that the socket widget
+  is not destroyed until that plug is created. Violating this rule will cause
+  unpredictable consequences, the most likely consequence being that the plug
+  will appear as a separate toplevel window. You can check if the plug has
+  been created by using gtk_socket_get_plug_window(). If it returns a non-NULL
+  value, then the plug has been successfully created inside of the socket.
+
+  When GTK+ is notified that the embedded window has been destroyed, then it
+  will destroy the socket as well. You should always, therefore, be prepared
+  for your sockets to be destroyed at any time when the main event loop is
+  running. To prevent this from happening, you can connect to the
+  \"plug-removed\" signal.
+
+  The communication between a GtkSocket and a GtkPlug follows the XEmbed
+  protocol. This protocol has also been implemented in other toolkits, e.g.
+  Qt, allowing the same level of integration when embedding a Qt widget in GTK
+  or vice versa.
+
+  @subheading{Note}
+    The GtkPlug and GtkSocket widgets are only available when GTK+ is compiled
+    for the X11 platform and GDK_WINDOWING_X11 is defined. They can only be used
+    on a GdkX11Display. To use GtkPlug and GtkSocket, you need to include the
+    gtk/gtkx.h header.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"plug-added\" signal}
+      @begin{pre}
+ lambda (socket)   : Run Last
+      @end{pre}
+      This signal is emitted when a client is successfully added to the socket.
+      @begin[code]{table}
+        @entry[socket]{the object which received the signal}
+      @end{table}
+    @subheading{The \"plug-removed\" signal}
+      @begin{pre}
+ lambda (socket)   : Run Last
+      @end{pre}
+      This signal is emitted when a client is removed from the socket. The
+      default action is to destroy the GtkSocket widget, so if you want to reuse
+      it you must add a signal handler that returns TRUE.
+      @begin[code]{table}
+        @entry[:socket]{the object which received the signal}
+        @entry[Returns]{TRUE to stop other handlers from being invoked.}
+      @end{table}
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_new ()
@@ -235,6 +204,5 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.socket.lisp --------------------------------------------

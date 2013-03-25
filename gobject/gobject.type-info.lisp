@@ -275,10 +275,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_UCHAR
-;;;
-;;; #define G_TYPE_UCHAR G_TYPE_MAKE_FUNDAMENTAL (4)
-;;;
-;;; The fundamental type corresponding to guchar.
 ;;; ----------------------------------------------------------------------------
 
 (defconstant +g-type-uchar+ #.(ash 4 +g-type-fundamental-shift+)
@@ -621,9 +617,14 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-type-flags atdoc:*external-symbols*)
- "@version{2012-12-16}
+ "@version{2013-3-24}
   @short{Bit masks used to check or determine characteristics of a type.}
-  @begin{table}
+  @begin{pre}
+(defbitfield g-type-flags
+  (:abstract       #.(ash 1 4))
+  (:value-abstract #.(ash 1 5)))
+  @end{pre}
+  @begin[code]{table}
     @begin[:abstract]{entry}
       Indicates an abstract type. No instances can be created for an abstract
       type.
@@ -651,11 +652,18 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-fundamental-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-type-fundamental-flags atdoc:*external-symbols*)
- "@version{2012-12-16}
+ "@version{2013-3-24}
   @begin{short}
     Bit masks used to check or determine specific characteristics of a
    fundamental type.
   @end{short}
+  @begin{pre}
+(defbitfield g-type-fundamental-flags
+  :classed
+  :instantiatable
+  :derivable
+  :deep-derivable)
+  @end{pre}
   @begin{table}
     @entry[:classed]{Indicates a classed type.}
     @entry[:instantiatable]{Indicates an instantiable type (implies classed).}
@@ -726,7 +734,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; Make a Lisp representation gtype form a name or an id
+;; Make a Lisp representation gtype from a name or an id
 
 (defun gtype-from-name (name)
   (when name
@@ -959,13 +967,13 @@
 ;;; G_TYPE_HAS_VALUE_TABLE()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-has-value-table (type)
+(defun g-type-has-value-table (gtype)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-16}
-  @argument[type]{A GType value.}
-  @return{TRUE on success.}
-  Checks if type has a @code{GTypeValueTable}."
-  (not (null-pointer-p (g-type-value-table-peek type))))
+ "@version{2013-3-24}
+  @argument[gtype]{a @class{g-type} value}
+  @return{@em{True} on success.}
+  Checks if @arg{gtype} has a @symbol{g-type-value-table}."
+  (not (null-pointer-p (g-type-value-table-peek gtype))))
 
 (export 'g-type-has-value-table)
 
@@ -1071,7 +1079,6 @@
       (gethash 'g-type-interface atdoc:*external-symbols*)
  "@version{2012-12-16}
   @short{An opaque structure used as the base of all interface types.}
-
   @begin{pre}
 (defcstruct g-type-interface
   (:type g-type)
@@ -1303,8 +1310,9 @@
       (gethash 'g-type-value-table atdoc:*external-symbols*)
  "@version{2012-12-21}
   @begin{short}
-    The GTypeValueTable provides the functions required by the GValue
-    implementation, to serve as a container for values of a type.
+    The @sym{g-type-value-table} provides the functions required by the
+    @symbol{g-value} implementation, to serve as a container for values of a
+    type.
   @end{short}
   @begin{pre}
 (defcstruct g-type-value-table
@@ -1317,8 +1325,8 @@
   (:lcopy-format (:string :free-from-foreign nil :free-to-foreign nil))
   (:lcopy-value :pointer))
   @end{pre}
-  @begin{table}
-    @begin[value_init ()]{entry}
+  @begin[code]{table}
+    @begin[:value-init]{entry}
       Default initialize values contents by poking values directly into the
       value->data array. The data array of the GValue passed into this
       function was zero-filled with memset(), so no care has to be taken to
@@ -1328,7 +1336,7 @@
  value->data[0].v_pointer = g_strdup (\"\");
       @end{pre}
     @end{entry}
-    @begin[value_free ()]{entry}
+    @begin[:value-free]{entry}
       Free any old contents that might be left in the data array of the passed
       in value. No resources may remain allocated through the GValue contents
       after this function returns. E.g. for our above string type:
@@ -1338,7 +1346,7 @@
  g_free (value->data[0].v_pointer);
       @end{pre}
     @end{entry}
-    @begin[value_copy ()]{entry}
+    @begin[:value-copy]{entry}
       dest_value is a GValue with zero-filled data section and src_value is a
       properly setup GValue of same or derived type. The purpose of this
       function is to copy the contents of src_value into dest_value in a way,
@@ -1348,7 +1356,7 @@
  dest_value->data[0].v_pointer = g_strdup (src_value->data[0].v_pointer);
       @end{pre}
     @end{entry}
-    @begin[value_peek_pointer ()]{entry}
+    @begin[:value-peek-pointer]{entry}
       If the value contents fit into a pointer, such as objects or strings,
       return this pointer, so the caller can peek at the current contents. To
       extend on our above string example:
@@ -1356,7 +1364,7 @@
  return value->data[0].v_pointer;
       @end{pre}
     @end{entry}
-    @begin[const gchar *collect_format]{entry}
+    @begin[:collect-format]{entry}
       A string format describing how to collect the contents of this value
       bit-by-bit. Each character in the format represents an argument to be
       collected, and the characters themselves indicate the type of the
@@ -1372,7 +1380,7 @@
       doubles. So for collection of short int or char, 'i' needs to be used,
       and for collection of floats 'd'.
     @end{entry}
-    @begin[collect_value ()]{entry}
+    @begin[:collect-value]{entry}
       The collect_value() function is responsible for converting the values
       collected from a variable argument list into contents suitable for
       storage in a GValue. This function should setup value similar to
@@ -1437,12 +1445,12 @@
       non-NULL return is considered a fatal condition so further program
       behaviour is undefined.
     @end{entry}
-    @begin[const gchar *lcopy_format]{entry}
+    @begin[:lcopy-format]{entry}
       Format description of the arguments to collect for lcopy_value,
       analogous to collect_format. Usually, lcopy_format string consists only
       of 'p's to provide lcopy_value() with pointers to storage locations.
     @end{entry}
-    @begin[lcopy_value ()]{entry}
+    @begin[:lcopy-value]{entry}
       This function is responsible for storing the value contents into
       arguments passed through a variable argument list which got collected
       into collect_values according to lcopy_format. n_collect_values equals
@@ -3123,16 +3131,18 @@
 (defcfun ("g_type_value_table_peek" g-type-value-table-peek)
     (:pointer g-type-value-table)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{A GType value.}
-  @return{Location of the GTypeValueTable associated with type or NULL if there
-    is no GTypeValueTable associated with type.}
+ "@version{2013-3-24}
+  @argument[gtype]{A @class{g-type} value.}
+  @return{Location of the @symbol{g-type-value-table} associated with
+    @arg{gtype} or @code{nil} if there is no @symbol{g-type-value-table}
+    associated with @arg{gtype}.}
   @begin{short}
-    Returns the location of the GTypeValueTable associated with type.
+    Returns the location of the @symbol{g-type-value-table} associated with
+    @arg{gtype}.
   @end{short}
   Note that this function should only be used from source code that implements
-  or has internal knowledge of the implementation of type."
-  (type g-type))
+  or has internal knowledge of the implementation of @arg{gtype}."
+  (gtype g-type))
 
 (export 'g-type-value-table-peek)
 
@@ -3489,6 +3499,5 @@
 ;;;
 ;;; Since 2.26
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gobject.type-info.lisp -------------------------------------

@@ -2,13 +2,14 @@
 ;;; gtk.text-tag.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -50,275 +51,506 @@
 ;;;     gtk_text_attributes_copy_values
 ;;;     gtk_text_attributes_unref
 ;;;     gtk_text_attributes_ref
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GtkTextTag
-;;; 
-;;; Properties
-;;; 
-;;;   "accumulative-margin"        gboolean              : Read / Write
-;;;   "background"                 gchar*                : Write
-;;;   "background-full-height"     gboolean              : Read / Write
-;;;   "background-full-height-set" gboolean              : Read / Write
-;;;   "background-gdk"             GdkColor*             : Read / Write
-;;;   "background-rgba"            GdkRGBA*              : Read / Write
-;;;   "background-set"             gboolean              : Read / Write
-;;;   "direction"                  GtkTextDirection      : Read / Write
-;;;   "editable"                   gboolean              : Read / Write
-;;;   "editable-set"               gboolean              : Read / Write
-;;;   "family"                     gchar*                : Read / Write
-;;;   "family-set"                 gboolean              : Read / Write
-;;;   "font"                       gchar*                : Read / Write
-;;;   "font-desc"                  PangoFontDescription* : Read / Write
-;;;   "foreground"                 gchar*                : Write
-;;;   "foreground-gdk"             GdkColor*             : Read / Write
-;;;   "foreground-rgba"            GdkRGBA*              : Read / Write
-;;;   "foreground-set"             gboolean              : Read / Write
-;;;   "indent"                     gint                  : Read / Write
-;;;   "indent-set"                 gboolean              : Read / Write
-;;;   "invisible"                  gboolean              : Read / Write
-;;;   "invisible-set"              gboolean              : Read / Write
-;;;   "justification"              GtkJustification      : Read / Write
-;;;   "justification-set"          gboolean              : Read / Write
-;;;   "language"                   gchar*                : Read / Write
-;;;   "language-set"               gboolean              : Read / Write
-;;;   "left-margin"                gint                  : Read / Write
-;;;   "left-margin-set"            gboolean              : Read / Write
-;;;   "name"                       gchar*                : Read / Write / Constr
-;;;   "paragraph-background"       gchar*                : Write
-;;;   "paragraph-background-gdk"   GdkColor*             : Read / Write
-;;;   "paragraph-background-rgba"  GdkRGBA*              : Read / Write
-;;;   "paragraph-background-set"   gboolean              : Read / Write
-;;;   "pixels-above-lines"         gint                  : Read / Write
-;;;   "pixels-above-lines-set"     gboolean              : Read / Write
-;;;   "pixels-below-lines"         gint                  : Read / Write
-;;;   "pixels-below-lines-set"     gboolean              : Read / Write
-;;;   "pixels-inside-wrap"         gint                  : Read / Write
-;;;   "pixels-inside-wrap-set"     gboolean              : Read / Write
-;;;   "right-margin"               gint                  : Read / Write
-;;;   "right-margin-set"           gboolean              : Read / Write
-;;;   "rise"                       gint                  : Read / Write
-;;;   "rise-set"                   gboolean              : Read / Write
-;;;   "scale"                      gdouble               : Read / Write
-;;;   "scale-set"                  gboolean              : Read / Write
-;;;   "size"                       gint                  : Read / Write
-;;;   "size-points"                gdouble               : Read / Write
-;;;   "size-set"                   gboolean              : Read / Write
-;;;   "stretch"                    PangoStretch          : Read / Write
-;;;   "stretch-set"                gboolean              : Read / Write
-;;;   "strikethrough"              gboolean              : Read / Write
-;;;   "strikethrough-set"          gboolean              : Read / Write
-;;;   "style"                      PangoStyle            : Read / Write
-;;;   "style-set"                  gboolean              : Read / Write
-;;;   "tabs"                       PangoTabArray*        : Read / Write
-;;;   "tabs-set"                   gboolean              : Read / Write
-;;;   "underline"                  PangoUnderline        : Read / Write
-;;;   "underline-set"              gboolean              : Read / Write
-;;;   "variant"                    PangoVariant          : Read / Write
-;;;   "variant-set"                gboolean              : Read / Write
-;;;   "weight"                     gint                  : Read / Write
-;;;   "weight-set"                 gboolean              : Read / Write
-;;;   "wrap-mode"                  GtkWrapMode           : Read / Write
-;;;   "wrap-mode-set"              gboolean              : Read / Write
-;;; 
-;;; Signals
-;;; 
-;;;   "event"                                            : Run Last
-;;; 
-;;; Description
-;;; 
-;;; You may wish to begin by reading the text widget conceptual overview which
-;;; gives an overview of all the objects and data types related to the text
-;;; widget and how they work together.
-;;; 
-;;; Tags should be in the GtkTextTagTable for a given GtkTextBuffer before using
-;;; them with that buffer.
-;;; 
-;;; gtk_text_buffer_create_tag() is the best way to create tags. See gtk3-demo
-;;; for numerous examples.
-;;;
+;;; ----------------------------------------------------------------------------
+
+(in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkTextTag
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkTextTag" gtk-text-tag
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_text_tag_get_type")
+  ((accumulative-margin
+    gtk-text-tag-accumulative-margin
+    "accumulative-margin" "gboolean" t t)
+   (background
+    gtk-text-tag-background
+    "background" "gchararray" nil t)
+   (background-full-height
+    gtk-text-tag-background-full-height
+    "background-full-height" "gboolean" t t)
+   (background-full-height-set
+    gtk-text-tag-background-full-height-set
+    "background-full-height-set" "gboolean" t t)
+   (background-gdk
+    gtk-text-tag-background-gdk
+    "background-gdk" "GdkColor" t t)
+   (background-rgba
+    gtk-text-tag-background-rgba
+    "background-rgba" "GdkRGBA" t t)
+   (background-set
+    gtk-text-tag-background-set
+    "background-set" "gboolean" t t)
+;   (background-stipple
+;    gtk-text-tag-background-stipple
+;    "background-stipple" "GdkPixmap" t t)
+;   (background-stipple-set
+;    gtk-text-tag-background-stipple-set
+;    "background-stipple-set" "gboolean" t t)
+   (direction
+    gtk-text-tag-direction
+    "direction" "GtkTextDirection" t t)
+   (editable
+    gtk-text-tag-editable
+    "editable" "gboolean" t t)
+   (editable-set
+    gtk-text-tag-editable-set
+    "editable-set" "gboolean" t t)
+   (family
+    gtk-text-tag-family
+    "family" "gchararray" t t)
+   (family-set
+    gtk-text-tag-family-set
+    "family-set" "gboolean" t t)
+   (font
+    gtk-text-tag-font
+    "font" "gchararray" t t)
+   (font-desc
+    gtk-text-tag-font-desc
+    "font-desc" "PangoFontDescription" t t)
+   (foreground
+    gtk-text-tag-foreground
+    "foreground" "gchararray" nil t)
+   (foreground-gdk
+    gtk-text-tag-foreground-gdk
+    "foreground-gdk" "GdkColor" t t)
+   (foreground-rgba
+    gtk-text-tag-foreground-rgba
+    "foreground-rgba" "GdkRGBA" t t)
+   (foreground-set
+    gtk-text-tag-foreground-set
+    "foreground-set" "gboolean" t t)
+;   (foreground-stipple
+;    gtk-text-tag-foreground-stipple
+;    "foreground-stipple" "GdkPixmap" t t)
+;   (foreground-stipple-set
+;    gtk-text-tag-foreground-stipple-set
+;    "foreground-stipple-set" "gboolean" t t)
+   (indent
+    gtk-text-tag-indent
+    "indent" "gint" t t)
+   (indent-set
+    gtk-text-tag-indent-set
+    "indent-set" "gboolean" t t)
+   (invisible
+    gtk-text-tag-invisible
+    "invisible" "gboolean" t t)
+   (invisible-set
+    gtk-text-tag-invisible-set
+    "invisible-set" "gboolean" t t)
+   (justification
+    gtk-text-tag-justification
+    "justification" "GtkJustification" t t)
+   (justification-set
+    gtk-text-tag-justification-set
+    "justification-set" "gboolean" t t)
+   (language
+    gtk-text-tag-language
+    "language" "gchararray" t t)
+   (language-set
+    gtk-text-tag-language-set
+    "language-set" "gboolean" t t)
+   (left-margin
+    gtk-text-tag-left-margin
+    "left-margin" "gint" t t)
+   (left-margin-set
+    gtk-text-tag-left-margin-set
+    "left-margin-set" "gboolean" t t)
+   (name
+    gtk-text-tag-name
+    "name" "gchararray" t nil)
+   (paragraph-background
+    gtk-text-tag-paragraph-background
+    "paragraph-background" "gchararray" nil t)
+   (paragraph-background-gdk
+    gtk-text-tag-paragraph-background-gdk
+    "paragraph-background-gdk" "GdkColor" t t)
+   (paragraph-background-rgba
+    gtk-text-tag-paragraph-background-rgba
+    "paragraph-background-rgba" "GdkRGBA" t t)
+   (paragraph-background-set
+    gtk-text-tag-paragraph-background-set
+    "paragraph-background-set" "gboolean" t t)
+   (pixels-above-lines
+    gtk-text-tag-pixels-above-lines
+    "pixels-above-lines" "gint" t t)
+   (pixels-above-lines-set
+    gtk-text-tag-pixels-above-lines-set
+    "pixels-above-lines-set" "gboolean" t t)
+   (pixels-below-lines
+    gtk-text-tag-pixels-below-lines
+    "pixels-below-lines" "gint" t t)
+   (pixels-below-lines-set
+    gtk-text-tag-pixels-below-lines-set
+    "pixels-below-lines-set" "gboolean" t t)
+   (pixels-inside-wrap
+    gtk-text-tag-pixels-inside-wrap
+    "pixels-inside-wrap" "gint" t t)
+   (pixels-inside-wrap-set
+    gtk-text-tag-pixels-inside-wrap-set
+    "pixels-inside-wrap-set" "gboolean" t t)
+   (right-margin
+    gtk-text-tag-right-margin
+    "right-margin" "gint" t t)
+   (right-margin-set
+    gtk-text-tag-right-margin-set
+    "right-margin-set" "gboolean" t t)
+   (rise
+    gtk-text-tag-rise
+    "rise" "gint" t t)
+   (rise-set
+    gtk-text-tag-rise-set
+    "rise-set" "gboolean" t t)
+   (scale
+    gtk-text-tag-scale
+    "scale" "gdouble" t t)
+   (scale-set
+    gtk-text-tag-scale-set
+    "scale-set" "gboolean" t t)
+   (size
+    gtk-text-tag-size
+    "size" "gint" t t)
+   (size-points
+    gtk-text-tag-size-points
+    "size-points" "gdouble" t t)
+   (size-set
+    gtk-text-tag-size-set
+    "size-set" "gboolean" t t)
+   (stretch
+    gtk-text-tag-stretch
+    "stretch" "PangoStretch" t t)
+   (stretch-set
+    gtk-text-tag-stretch-set
+    "stretch-set" "gboolean" t t)
+   (strikethrough
+    gtk-text-tag-strikethrough
+    "strikethrough" "gboolean" t t)
+   (strikethrough-set
+    gtk-text-tag-strikethrough-set
+    "strikethrough-set" "gboolean" t t)
+   (style
+    gtk-text-tag-style
+    "style" "PangoStyle" t t)
+   (style-set
+    gtk-text-tag-style-set
+    "style-set" "gboolean" t t)
+   (tabs
+    gtk-text-tag-tabs
+    "tabs" "PangoTabArray" t t)
+   (tabs-set
+    gtk-text-tag-tabs-set
+    "tabs-set" "gboolean" t t)
+   (underline
+    gtk-text-tag-underline
+    "underline" "PangoUnderline" t t)
+   (underline-set
+    gtk-text-tag-underline-set
+    "underline-set" "gboolean" t t)
+   (variant
+    gtk-text-tag-variant
+    "variant" "PangoVariant" t t)
+   (variant-set
+    gtk-text-tag-variant-set
+    "variant-set" "gboolean" t t)
+   (weight
+    gtk-text-tag-weight
+    "weight" "gint" t t)
+   (weight-set
+    gtk-text-tag-weight-set
+    "weight-set" "gboolean" t t)
+   (wrap-mode
+    gtk-text-tag-wrap-mode
+    "wrap-mode" "GtkWrapMode" t t)
+   (wrap-mode-set
+    gtk-text-tag-wrap-mode-set
+    "wrap-mode-set" "gboolean" t t)))
+;   (:cffi priority
+;          gtk-text-tag-priority :int
+;          "gtk_text_tag_get_priority" "gtk_text_tag_set_priority")))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-text-tag 'type)
+ "@version{2013-3-24}
+  @begin{short}
+    You may wish to begin by reading the text widget conceptual overview which
+    gives an overview of all the objects and data types related to the text
+    widget and how they work together.
+  @end{short}
+
+  Tags should be in the GtkTextTagTable for a given GtkTextBuffer before using
+  them with that buffer.
+
+  gtk_text_buffer_create_tag() is the best way to create tags. See gtk3-demo
+  for numerous examples.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"event\" signal}
+      @begin{pre}
+ lambda (tag object event iter)   : Run Last
+      @end{pre}
+      The \"event\" signal is emitted when an event occurs on a region of the
+      buffer marked with this tag.
+      @begin[code]{table}
+        @entry[tag]{the GtkTextTag on which the signal is emitted}
+        @entry[object]{the object the event was fired from (typically a
+          GtkTextView)}
+        @entry[event]{the event which triggered the signal}
+        @entry[iter]{a GtkTextIter pointing at the location the event occured}
+        @entry[Returns]{TRUE to stop other handlers from being invoked for the
+          event. FALSE to propagate the event further.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-text-tag-accumulative-margin}
+  @see-slot{gtk-text-tag-background}
+  @see-slot{gtk-text-tag-background-full-height}
+  @see-slot{gtk-text-tag-background-full-height-set}
+  @see-slot{gtk-text-tag-background-gdk}
+  @see-slot{gtk-text-tag-background-rgba}
+  @see-slot{gtk-text-tag-background-set}
+  @see-slot{gtk-text-tag-direction}
+  @see-slot{gtk-text-tag-editable}
+  @see-slot{gtk-text-tag-editable-set}
+  @see-slot{gtk-text-tag-family}
+  @see-slot{gtk-text-tag-family-set}
+  @see-slot{gtk-text-tag-font}
+  @see-slot{gtk-text-tag-font-desc}
+  @see-slot{gtk-text-tag-foreground}
+  @see-slot{gtk-text-tag-foreground-gdk}
+  @see-slot{gtk-text-tag-foreground-rgba}
+  @see-slot{gtk-text-tag-foreground-set}
+  @see-slot{gtk-text-tag-indent}
+  @see-slot{gtk-text-tag-indent-set}
+  @see-slot{gtk-text-tag-invisible}
+  @see-slot{gtk-text-tag-invisible-set}
+  @see-slot{gtk-text-tag-justification}
+  @see-slot{gtk-text-tag-justification-set}
+  @see-slot{gtk-text-tag-language}
+  @see-slot{gtk-text-tag-language-set}
+  @see-slot{gtk-text-tag-left-margin}
+  @see-slot{gtk-text-tag-left-margin-set}
+  @see-slot{gtk-text-tag-name}
+  @see-slot{gtk-text-tag-paragraph-background}
+  @see-slot{gtk-text-tag-paragraph-background-gdk}
+  @see-slot{gtk-text-tag-paragraph-background-rgba}
+  @see-slot{gtk-text-tag-paragraph-background-set}
+  @see-slot{gtk-text-tag-pixels-above-lines}
+  @see-slot{gtk-text-tag-pixels-above-lines-set}
+  @see-slot{gtk-text-tag-pixels-below-lines}
+  @see-slot{gtk-text-tag-pixels-below-lines-set}
+  @see-slot{gtk-text-tag-pixels-inside-wrap}
+  @see-slot{gtk-text-tag-pixels-inside-wrap-set}
+  @see-slot{gtk-text-tag-right-margin}
+  @see-slot{gtk-text-tag-right-margin-set}
+  @see-slot{gtk-text-tag-rise}
+  @see-slot{gtk-text-tag-rise-set}
+  @see-slot{gtk-text-tag-scale}
+  @see-slot{gtk-text-tag-scale-set}
+  @see-slot{gtk-text-tag-size}
+  @see-slot{gtk-text-tag-size-points}
+  @see-slot{gtk-text-tag-size-set}
+  @see-slot{gtk-text-tag-stretch}
+  @see-slot{gtk-text-tag-stretch-set}
+  @see-slot{gtk-text-tag-strikethrough}
+  @see-slot{gtk-text-tag-strikethrough-set}
+  @see-slot{gtk-text-tag-style}
+  @see-slot{gtk-text-tag-style-set}
+  @see-slot{gtk-text-tag-tabs}
+  @see-slot{gtk-text-tag-tabs-set}
+  @see-slot{gtk-text-tag-underline}
+  @see-slot{gtk-text-tag-underline-set}
+  @see-slot{gtk-text-tag-variant}
+  @see-slot{gtk-text-tag-variant-set}
+  @see-slot{gtk-text-tag-weight}
+  @see-slot{gtk-text-tag-weight-set}
+  @see-slot{gtk-text-tag-wrap-mode}
+  @see-slot{gtk-text-tag-wrap-mode-set}
+")
+
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property Details
 ;;;
 ;;; ----------------------------------------------------------------------------
-;;; The "accumulative-margin" property
-;;; 
-;;;   "accumulative-margin"      gboolean              : Read / Write
-;;; 
-;;; Whether the margins accumulate or override each other.
-;;; 
-;;; When set to TRUE the margins of this tag are added to the margins of any
-;;; other non-accumulative margins present. When set to FALSE the margins
-;;; override one another (the default).
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.12
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accumulative-margin"
+                                               'gtk-text-tag) 't)
+ "The @code{\"accumulative-margin\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether the margins accumulate or override each other.
+  When set to TRUE the margins of this tag are added to the margins of any
+  other non-accumulative margins present. When set to FALSE the margins
+  override one another (the default). @br{}
+  Default value: @code{nil}@br{}
+  Since 2.12")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background" 'gtk-text-tag) 't)
+ "The @code{\"background\"} property of type @code{:string} (Write)@br{}
+  Background color as a string. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-full-height"
+                                               'gtk-text-tag) 't)
+ "The @code{\"background-full-height\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the background color fills the entire line height or only the height
+  of the tagged characters. @br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-full-height-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"background-full-height-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects background height. @br{}
+  Default value: FALSE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-gdk"
+                                               'gtk-text-tag) 't)
+ "The @code{\"background-gdk\"} property of type @class{gdk-color}
+  (Read / Write)@br{}
+  @b{Warning:}
+  @code{\"background-gdk\"} has been deprecated since version 3.4 and should
+  not be used in newly-written code. Use @code{\"background-rgba\"}
+  instead. @br{}
+  Background color as a @class{gdk-color}.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-rgba"
+                                               'gtk-text-tag) 't)
+ "The @code{\"background-rgba\"} property of type @class{gdk-rgba}
+  (Read / Write)@br{}
+  Background color as a @class{gdk-rgba}. @br{}
+  Since 3.2")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "background-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"background-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the background color. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "direction" 'gtk-text-tag) 't)
+ "The @code{\"direction\"} property of type @symbol{gtk-text-direction}
+  (Read / Write)@br{}
+  Text direction, e.g. right-to-left or left-to-right. @br{}
+  Default value: @code{:none}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "editable" 'gtk-text-tag) 't)
+ "The @code{\"editable\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether the text can be modified by the user. @br{}
+  Default value: @em{true}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "editable-set" 'gtk-text-tag) 't)
+ "The @code{\"editable-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects text editability. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "family" 'gtk-text-tag) 't)
+ "The @code{\"family\"} property of type @code{:string} (Read / Write)@br{}
+  Name of the font family, e.g. Sans, Helvetica, Times, Monospace. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "family-set" 'gtk-text-tag) 't)
+ "The @code{\"family-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag affects the font family. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "font" 'gtk-text-tag) 't)
+ "The @code{\"font\"} property of type @code{:string} (Read / Write)@br{}
+  Font description as string, e. g. \"Sans Italic 12\".
+  Note that the initial value of this property depends on the internals of
+  PangoFontDescription. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "font-desc" 'gtk-text-tag) 't)
+ "The @code{\"font-desc\"} property of type @class{pango-font-description}
+  (Read / Write)@br{}
+  Font description as a PangoFontDescription struct.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground" 'gtk-text-tag) 't)
+ "The @code{\"foreground\"} property of type @code{:string} (Write)@br{}
+  Foreground color as a string. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground-gdk"
+                                               'gtk-text-tag) 't)
+ "The @code{\"foreground-gdk\"} property of type @class{gdk-color}
+  (Read / Write)@br{}
+  @b{Warning:} @code{\"foreground-gdk\"} has been deprecated since version 3.4
+  and should not be used in newly-written code. Use @code{\"foreground-rgba\"}
+  instead. @br{}
+  Foreground color as a @class{gdk-color}.")
 ;;;
 ;;; ----------------------------------------------------------------------------
-;;; The "background" property
-;;; 
-;;;   "background"               gchar*                : Write
-;;; 
-;;; Background color as a string.
-;;; 
-;;; Default value: NULL
-;;;
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground-rgba"
+                                               'gtk-text-tag) 't)
+ "The @code{\"foreground-rgba\"} property of type @class{gdk-rgba}
+  (Read / Write)@br{}
+  Foreground color as a @class{gdk-rgba}. @br{}
+  Since 3.2")
+
 ;;; ----------------------------------------------------------------------------
-;;; The "background-full-height" property
-;;; 
-;;;   "background-full-height"   gboolean              : Read / Write
-;;; 
-;;; Whether the background color fills the entire line height or only the height
-;;; of the tagged characters.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-full-height-set" property
-;;; 
-;;;   "background-full-height-set" gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects background height.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-gdk" property
-;;; 
-;;;   "background-gdk"           GdkColor*             : Read / Write
-;;; 
-;;; Warning
-;;; 
-;;; GtkTextTag:background-gdk has been deprecated since version 3.4 and should
-;;; not be used in newly-written code. Use "background-rgba" instead.
-;;; 
-;;; Background color as a GdkColor.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-rgba" property
-;;; 
-;;;   "background-rgba"          GdkRGBA*              : Read / Write
-;;; 
-;;; Background color as a GdkRGBA.
-;;; 
-;;; Since 3.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "background-set" property
-;;; 
-;;;   "background-set"           gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the background color.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "direction" property
-;;; 
-;;;   "direction"                GtkTextDirection      : Read / Write
-;;; 
-;;; Text direction, e.g. right-to-left or left-to-right.
-;;; 
-;;; Default value: GTK_TEXT_DIR_NONE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editable" property
-;;; 
-;;;   "editable"                 gboolean              : Read / Write
-;;; 
-;;; Whether the text can be modified by the user.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "editable-set" property
-;;; 
-;;;   "editable-set"             gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects text editability.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "family" property
-;;; 
-;;;   "family"                   gchar*                : Read / Write
-;;; 
-;;; Name of the font family, e.g. Sans, Helvetica, Times, Monospace.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "family-set" property
-;;; 
-;;;   "family-set"               gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the font family.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font" property
-;;; 
-;;;   "font"                     gchar*                : Read / Write
-;;; 
-;;; Font description as string, e.g. \"Sans Italic 12\".
-;;; 
-;;; Note that the initial value of this property depends on the internals of
-;;; PangoFontDescription.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "font-desc" property
-;;; 
-;;;   "font-desc"                PangoFontDescription*  : Read / Write
-;;; 
-;;; Font description as a PangoFontDescription struct.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground" property
-;;; 
-;;;   "foreground"               gchar*                : Write
-;;; 
-;;; Foreground color as a string.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground-gdk" property
-;;; 
-;;;   "foreground-gdk"           GdkColor*             : Read / Write
-;;; 
-;;; Warning
-;;; 
-;;; GtkTextTag:foreground-gdk has been deprecated since version 3.4 and should
-;;; not be used in newly-written code. Use "foreground-rgba" instead.
-;;; 
-;;; Foreground color as a GdkColor.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground-rgba" property
-;;; 
-;;;   "foreground-rgba"          GdkRGBA*              : Read / Write
-;;; 
-;;; Foreground color as a GdkRGBA.
-;;; 
-;;; Since 3.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "foreground-set" property
-;;; 
-;;;   "foreground-set"           gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the foreground color.
-;;; 
-;;; Default value: FALSE
-;;;
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "foreground-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"foreground-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the foreground color. @br{}
+  Default value: @code{nil}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; The "indent" property
 ;;; 
@@ -770,254 +1002,8 @@
 ;;; Whether this tag affects line wrap mode.
 ;;; 
 ;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "event" signal
-;;; 
-;;; gboolean user_function (GtkTextTag  *tag,
-;;;                         GObject     *object,
-;;;                         GdkEvent    *event,
-;;;                         GtkTextIter *iter,
-;;;                         gpointer     user_data)      : Run Last
-;;; 
-;;; The ::event signal is emitted when an event occurs on a region of the buffer
-;;; marked with this tag.
-;;; 
-;;; tag :
-;;;     the GtkTextTag on which the signal is emitted
-;;; 
-;;; object :
-;;;     the object the event was fired from (typically a GtkTextView)
-;;; 
-;;; event :
-;;;     the event which triggered the signal
-;;; 
-;;; iter :
-;;;     a GtkTextIter pointing at the location the event occured
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Returns :
-;;;     TRUE to stop other handlers from being invoked for the event. FALSE to
-;;;     propagate the event further.
-;;; ----------------------------------------------------------------------------
 
-(in-package :gtk)
 
-;;; ----------------------------------------------------------------------------
-;;; struct GtkTextTag
-;;; 
-;;; struct GtkTextTag;
-;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkTextTag" gtk-text-tag
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "gtk_text_tag_get_type")
-  ((accumulative-margin
-    gtk-text-tag-accumulative-margin
-    "accumulative-margin" "gboolean" t t)
-   (background
-    gtk-text-tag-background
-    "background" "gchararray" nil t)
-   (background-full-height
-    gtk-text-tag-background-full-height
-    "background-full-height" "gboolean" t t)
-   (background-full-height-set
-    gtk-text-tag-background-full-height-set
-    "background-full-height-set" "gboolean" t t)
-   (background-gdk
-    gtk-text-tag-background-gdk
-    "background-gdk" "GdkColor" t t)
-   (background-set
-    gtk-text-tag-background-set
-    "background-set" "gboolean" t t)
-   (background-stipple
-    gtk-text-tag-background-stipple
-    "background-stipple" "GdkPixmap" t t)
-   (background-stipple-set
-    gtk-text-tag-background-stipple-set
-    "background-stipple-set" "gboolean" t t)
-   (direction
-    gtk-text-tag-direction
-    "direction" "GtkTextDirection" t t)
-   (editable
-    gtk-text-tag-editable
-    "editable" "gboolean" t t)
-   (editable-set
-    gtk-text-tag-editable-set
-    "editable-set" "gboolean" t t)
-   (family
-    gtk-text-tag-family
-    "family" "gchararray" t t)
-   (family-set
-    gtk-text-tag-family-set
-    "family-set" "gboolean" t t)
-   (font
-    gtk-text-tag-font
-    "font" "gchararray" t t)
-   (font-desc
-    gtk-text-tag-font-desc
-    "font-desc" "PangoFontDescription" t t)
-   (foreground
-    gtk-text-tag-foreground
-    "foreground" "gchararray" nil t)
-   (foreground-gdk
-    gtk-text-tag-foreground-gdk
-    "foreground-gdk" "GdkColor" t t)
-   (foreground-set
-    gtk-text-tag-foreground-set
-    "foreground-set" "gboolean" t t)
-   (foreground-stipple
-    gtk-text-tag-foreground-stipple
-    "foreground-stipple" "GdkPixmap" t t)
-   (foreground-stipple-set
-    gtk-text-tag-foreground-stipple-set
-    "foreground-stipple-set" "gboolean" t t)
-   (indent
-    gtk-text-tag-indent
-    "indent" "gint" t t)
-   (indent-set
-    gtk-text-tag-indent-set
-    "indent-set" "gboolean" t t)
-   (invisible
-    gtk-text-tag-invisible
-    "invisible" "gboolean" t t)
-   (invisible-set
-    gtk-text-tag-invisible-set
-    "invisible-set" "gboolean" t t)
-   (justification
-    gtk-text-tag-justification
-    "justification" "GtkJustification" t t)
-   (justification-set
-    gtk-text-tag-justification-set
-    "justification-set" "gboolean" t t)
-   (language
-    gtk-text-tag-language
-    "language" "gchararray" t t)
-   (language-set
-    gtk-text-tag-language-set
-    "language-set" "gboolean" t t)
-   (left-margin
-    gtk-text-tag-left-margin
-    "left-margin" "gint" t t)
-   (left-margin-set
-    gtk-text-tag-left-margin-set
-    "left-margin-set" "gboolean" t t)
-   (name
-    gtk-text-tag-name
-    "name" "gchararray" t nil)
-   (paragraph-background
-    gtk-text-tag-paragraph-background
-    "paragraph-background" "gchararray" nil t)
-   (paragraph-background-gdk
-    gtk-text-tag-paragraph-background-gdk
-    "paragraph-background-gdk" "GdkColor" t t)
-   (paragraph-background-set
-    gtk-text-tag-paragraph-background-set
-    "paragraph-background-set" "gboolean" t t)
-   (pixels-above-lines
-    gtk-text-tag-pixels-above-lines
-    "pixels-above-lines" "gint" t t)
-   (pixels-above-lines-set
-    gtk-text-tag-pixels-above-lines-set
-    "pixels-above-lines-set" "gboolean" t t)
-   (pixels-below-lines
-    gtk-text-tag-pixels-below-lines
-    "pixels-below-lines" "gint" t t)
-   (pixels-below-lines-set
-    gtk-text-tag-pixels-below-lines-set
-    "pixels-below-lines-set" "gboolean" t t)
-   (pixels-inside-wrap
-    gtk-text-tag-pixels-inside-wrap
-    "pixels-inside-wrap" "gint" t t)
-   (pixels-inside-wrap-set
-    gtk-text-tag-pixels-inside-wrap-set
-    "pixels-inside-wrap-set" "gboolean" t t)
-   (right-margin
-    gtk-text-tag-right-margin
-    "right-margin" "gint" t t)
-   (right-margin-set
-    gtk-text-tag-right-margin-set
-    "right-margin-set" "gboolean" t t)
-   (rise
-    gtk-text-tag-rise
-    "rise" "gint" t t)
-   (rise-set
-    gtk-text-tag-rise-set
-    "rise-set" "gboolean" t t)
-   (scale
-    gtk-text-tag-scale
-    "scale" "gdouble" t t)
-   (scale-set
-    gtk-text-tag-scale-set
-    "scale-set" "gboolean" t t)
-   (size
-    gtk-text-tag-size
-    "size" "gint" t t)
-   (size-points
-    gtk-text-tag-size-points
-    "size-points" "gdouble" t t)
-   (size-set
-    gtk-text-tag-size-set
-    "size-set" "gboolean" t t)
-   (stretch
-    gtk-text-tag-stretch
-    "stretch" "PangoStretch" t t)
-   (stretch-set
-    gtk-text-tag-stretch-set
-    "stretch-set" "gboolean" t t)
-   (strikethrough
-    gtk-text-tag-strikethrough
-    "strikethrough" "gboolean" t t)
-   (strikethrough-set
-    gtk-text-tag-strikethrough-set
-    "strikethrough-set" "gboolean" t t)
-   (style
-    gtk-text-tag-style
-    "style" "PangoStyle" t t)
-   (style-set
-    gtk-text-tag-style-set
-    "style-set" "gboolean" t t)
-   (tabs
-    gtk-text-tag-tabs
-    "tabs" "PangoTabArray" t t)
-   (tabs-set
-    gtk-text-tag-tabs-set
-    "tabs-set" "gboolean" t t)
-   (underline
-    gtk-text-tag-underline
-    "underline" "PangoUnderline" t t)
-   (underline-set
-    gtk-text-tag-underline-set
-    "underline-set" "gboolean" t t)
-   (variant
-    gtk-text-tag-variant
-    "variant" "PangoVariant" t t)
-   (variant-set
-    gtk-text-tag-variant-set
-    "variant-set" "gboolean" t t)
-   (weight
-    gtk-text-tag-weight
-    "weight" "gint" t t)
-   (weight-set
-    gtk-text-tag-weight-set
-    "weight-set" "gboolean" t t)
-   (wrap-mode
-    gtk-text-tag-wrap-mode
-    "wrap-mode" "GtkWrapMode" t t)
-   (wrap-mode-set
-    gtk-text-tag-wrap-mode-set
-    "wrap-mode-set" "gboolean" t t)
-   (:cffi priority
-          gtk-text-tag-priority :int
-          "gtk_text_tag_get_priority" "gtk_text_tag_set_priority")))
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWrapMode

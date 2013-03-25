@@ -245,145 +245,6 @@
 ;;; Default value: 0
 ;;;
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "horizontal-separation" style property
-;;;
-;;;   "horizontal-separation"    gint                  : Read
-;;;
-;;; Separation between week headers and main area.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "inner-border" style property
-;;;
-;;;   "inner-border"             gint                  : Read
-;;;
-;;; The spacing around the day/week headers and main area.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "vertical-separation" style property
-;;;
-;;;   "vertical-separation"      gint                  : Read
-;;;
-;;; Space between day headers and main area.
-;;;
-;;; Allowed values: >= 0
-;;;
-;;; Default value: 4
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "day-selected" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when the user selects a day.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "day-selected-double-click" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when the user double-clicks a day.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "month-changed" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when the user clicks a button to change the selected month on a
-;;; calendar.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "next-month" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when the user switched to the next month.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "next-year" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when user switched to the next year.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "prev-month" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when the user switched to the previous month.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "prev-year" signal
-;;;
-;;; void user_function (GtkCalendar *calendar,
-;;;                     gpointer     user_data)      : Run First
-;;;
-;;; Emitted when user switched to the previous year.
-;;;
-;;; calendar :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
@@ -545,6 +406,246 @@
   @see-slot{gtk-calendar-year}")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "day" 'gtk-calendar) 't)
+ "The @code{\"day\"} property of type @code{gint} (Read / Write)@br{}
+  The selected day (as a number between 1 and 31, or 0 to unselect the
+  currently selected day). This property gets initially set to the current
+  day.@br{}
+  Allowed values: @code{[0,31]}@br{}
+  Default value: @code{0}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "detail-height-rows"
+                                               'gtk-calendar) 't)
+ "The @code{\"detail-height-rows\"} property of type @code{gint}
+  (Read / Write)@br{}
+  Height of a detail cell, in rows. A value of 0 allows any width. See
+  @fun{gtk-calendar-set-detail-func}.@br{}
+  Allowed values: @code{[0,127]}@br{}
+  Default value: @code{0}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "detail-width-chars"
+                                               'gtk-calendar) 't)
+ "The @code{\"detail-width-chars\"} property of type @code{gint}
+  (Read / Write)@br{}
+  Width of a detail cell, in characters. A value of 0 allows any width. See
+  @fun{gtk-calendar-set-detail-func}.@br{}
+  Allowed values: @code{0,127]}@br{}
+  Default value: @code{0}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "month" 'gtk-calendar) 't)
+ "The @code{\"month\"} property of type @code{gint} (Read / Write)@br{}
+  The selected month (as a number between 0 and 11). This property gets
+  initially set to the current month.@br{}
+  Allowed values: @code{[0,11]}@br{}
+  Default value: @code{0}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "no-month-change"
+                                               'gtk-calendar) 't)
+ "The @code{\"no-month-change\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Determines whether the selected month can be changed.@br{}
+  Default value: @code{nil}@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-day-names"
+                                               'gtk-calendar) 't)
+ "The @code{\"show-day-names\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Determines whether day names are displayed.@br{}
+  Default value: @arg{true}@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-details"
+                                               'gtk-calendar) 't)
+ "The @code{\"show-details\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Determines whether details are shown directly in the widget, or if they are
+  available only as tooltip. When this property is set days with details are
+  marked.@br{}
+  Default value: @arg{true}@br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-heading"
+                                               'gtk-calendar) 't)
+ "The @code{\"show-heading\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Determines whether a heading is displayed.@br{}
+  Default value: @arg{true}@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-week-numbers"
+                                               'gtk-calendar) 't)
+ "The @code{\"show-week-numbers\"} property of type @code{gboolean}
+  (Read / Write)@br{}
+  Determines whether week numbers are displayed.@br{}
+  Default value: @code{nil}@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "year" 'gtk-calendar) 't)
+ "The @code{\"year\"} property of type @code{gint} (Read / Write)@br{}
+  The selected year. This property gets initially set to the current year.@br{}
+  Allowed values: @code{[0,4194303]}@br{}
+  Default value: @code{0}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-calendar-day -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-day atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-day 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"day\"} of the @class{gtk-calendar} class.
+  @end{short}")
+
+;;; --- gtk-calendar-detail-height-rows ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-detail-height-rows atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-detail-height-rows 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"detail-height-rows\"} of the
+    @class{gtk-calendar} class.
+  @end{short}")
+
+;;; --- gtk-calendar-detail-width-chars ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-detail-width-chars atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-detail-width-chars 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"detail-width-chars\"} of the
+    @class{gtk-calendar} class.
+  @end{short}")
+
+;;; --- gtk-calendar-month -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-month atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-month 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"month\"} of the @class{gtk-calendar} class.
+  @end{short}")
+
+;;; --- gtk-calendar-no-month-chage --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-no-month-change atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-no-month-change 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"no-month-change\"} of the @class{gtk-calendar}
+    class.
+  @end{short}")
+
+;;; --- gtk-calendar-show-day-names --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-show-day-names atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-show-day-names 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"show-day-names\"} of the @class{gtk-calendar}
+    class.
+  @end{short}")
+
+;;; --- gtk-calendar-show-details ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-show-details atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-show-details 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"show-details\"} of the @class{gtk-calendar}
+    class.
+  @end{short}")
+
+;;; --- gtk-calendar-show-heading ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-show-heading atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-show-heading 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"show-heading\"} of the @class{gtk-calendar}
+    class.
+  @end{short}")
+
+;;; --- gtk-calendar-show-week-numbers -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-show-week-numbers atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-show-week-numbers 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"show-week-numbers\"} of the
+    @class{gtk-calendar} class.
+  @end{short}")
+
+;;; --- gtk-calendar-year ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-year atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-year 'function)
+ "@version{2013-1-28}
+  @begin{short}
+    Accessor of the slot @code{\"year\"} of the @class{gtk-calendar} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkCalendarDetailFunc ()
 ;;;
 ;;; gchar * (*GtkCalendarDetailFunc) (GtkCalendar *calendar,
@@ -593,34 +694,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCalendarDisplayOptions
-;;;
-;;; typedef enum {
-;;;   GTK_CALENDAR_SHOW_HEADING      = 1 << 0,
-;;;   GTK_CALENDAR_SHOW_DAY_NAMES    = 1 << 1,
-;;;   GTK_CALENDAR_NO_MONTH_CHANGE   = 1 << 2,
-;;;   GTK_CALENDAR_SHOW_WEEK_NUMBERS = 1 << 3,
-;;;   GTK_CALENDAR_SHOW_DETAILS      = 1 << 5
-;;; } GtkCalendarDisplayOptions;
-;;;
-;;; These options can be used to influence the display and behaviour of a
-;;; GtkCalendar.
-;;;
-;;; GTK_CALENDAR_SHOW_HEADING
-;;;     Specifies that the month and year should be displayed.
-;;;
-;;; GTK_CALENDAR_SHOW_DAY_NAMES
-;;;     Specifies that three letter day descriptions should be present.
-;;;
-;;; GTK_CALENDAR_NO_MONTH_CHANGE
-;;;     Prevents the user from switching months with the calendar.
-;;;
-;;; GTK_CALENDAR_SHOW_WEEK_NUMBERS
-;;;     Displays each week numbers of the current year, down the left side of
-;;;     the calendar.
-;;;
-;;; GTK_CALENDAR_SHOW_DETAILS
-;;;     Just show an indicator, not the full details text when details are
-;;;     provided. See gtk_calendar_set_detail_func().
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkCalendarDisplayOptions" gtk-calendar-display-options
@@ -633,45 +706,71 @@
   (:show-details 32))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-display-options atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-calendar-display-options atdoc:*external-symbols*)
+ "@version{2013-1-28}
+  @begin{short}
+    These options can be used to influence the display and behaviour of a
+    @class{gtk-calendar}.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkCalendarDisplayOptions\" gtk-calendar-display-options
+  (:export t
+   :type-initializer \"gtk_calendar_display_options_get_type\")
+  (:show-heading 1)
+  (:show-day-names 2)
+  (:no-month-change 4)
+  (:show-week-numbers 8)
+  (:show-details 32))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:show-heading]{Specifies that the month and year should be
+      displayed.}
+    @entry[:show-day-name]{Specifies that three letter day descriptions should
+      be present.}
+    @entry[:no-month-chage]{Prevents the user from switching months with the
+      calendar.}
+    @entry[:show-week-numbers]{Displays each week numbers of the current year,
+      down the left side of the calendar.}
+    @entry[:show-details]{Just show an indicator, not the full details text when
+      details are provided. See @fun{gtk-calendar-set-detail-func}.}
+  @end{table}
+  @see-function{gtk-calendar-set-detail-func}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_new ()
-;;;
-;;; GtkWidget * gtk_calendar_new (void);
-;;;
-;;; Creates a new calendar, with the current date being selected.
-;;;
-;;; Returns :
-;;;     a newly GtkCalendar widget
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-new))
 
 (defun gtk-calendar-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @return{A newly @class{gtk-calendar} widget.}
+  @begin{short}
+    Creates a new calendar, with the current date being selected.
+  @end{short}"
   (make-instance 'gtk-calendar))
 
 (export 'gtk-calendar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_select_month ()
-;;;
-;;; void gtk_calendar_select_month (GtkCalendar *calendar,
-;;;                                 guint month,
-;;;                                 guint year);
-;;;
-;;; Shifts the calendar to a different month.
-;;;
-;;; calendar :
-;;;     a GtkCalendar
-;;;
-;;; month :
-;;;     a month number between 0 and 11.
-;;;
-;;; year :
-;;;     the year the month is in.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-select-month))
 
 (defun gtk-calendar-select-month (calendar month year)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @argument[month]{a month number between 0 and 11.}
+  @argument[year]{the year the @arg{month} is in.}
+  @begin{short}
+    Shifts the calendar to a different month.
+  @end{short}"
   (setf (gtk-calendar-month calendar) month
         (gtk-calendar-year calendar) year))
 
@@ -679,41 +778,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_select_day ()
-;;;
-;;; void gtk_calendar_select_day (GtkCalendar *calendar, guint day);
-;;;
-;;; Selects a day from the current month.
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; day :
-;;;     the day number between 1 and 31, or 0 to unselect the currently selected
-;;;     day.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-select-day))
 
 (defun gtk-calendar-select-day (calendar day)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @argument[day]{the day number between 1 and 31, or 0 to unselect the currently
+    selected day.}
+  @begin{short}
+    Selects a day from the current month.
+  @end{short}"
   (setf (gtk-calendar-day calendar) day))
 
 (export 'gtk-calendar-select-day)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_mark_day ()
-;;;
-;;; void gtk_calendar_mark_day (GtkCalendar *calendar, guint day);
-;;;
-;;; Places a visual marker on a particular day.
-;;;
-;;; calendar :
-;;;     a GtkCalendar
-;;;
-;;; day :
-;;;     the day number to mark between 1 and 31.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_mark_day" gtk-calendar-mark-day) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @argument[day]{the day number to mark between 1 and 31.}
+  @begin{short}
+    Places a visual marker on a particular day.
+  @end{short}"
   (calendar (g-object gtk-calendar))
   (day :uint))
 
@@ -721,19 +814,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_unmark_day ()
-;;;
-;;; void gtk_calendar_unmark_day (GtkCalendar *calendar, guint day);
-;;;
-;;; Removes the visual marker from a particular day.
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; day :
-;;;     the day number to unmark between 1 and 31.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_unmark_day" gtk-calendar-unmark-day) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget.}
+  @argument[day]{the day number to unmark between 1 and 31.}
+  @begin{short}
+    Removes the visual marker from a particular day.
+  @end{short}"
   (calendar (g-object gtk-calendar))
   (day :uint))
 
@@ -741,25 +831,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_day_is_marked ()
-;;;
-;;; gboolean gtk_calendar_get_day_is_marked (GtkCalendar *calendar, guint day);
-;;;
-;;; Returns if the day of the calendar is already marked.
-;;;
-;;; calendar :
-;;;     a GtkCalendar
-;;;
-;;; day :
-;;;     the day number between 1 and 31.
-;;;
-;;; Returns :
-;;;     whether the day is marked.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_get_day_is_marked" gtk-calendar-get-day-is-marked)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @argument[day]{the day number between 1 and 31.}
+  @return{whether the day is marked.}
+  @begin{short}
+    Returns if the day of the calendar is already marked.
+  @end{short}
+
+  Since 3.0"
   (calendar (g-object gtk-calendar))
   (day :int))
 
@@ -767,63 +852,54 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_clear_marks ()
-;;;
-;;; void gtk_calendar_clear_marks (GtkCalendar *calendar);
-;;;
-;;; Remove all visual markers.
-;;;
-;;; calendar :
-;;;     a GtkCalendar
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_clear_marks" gtk-calendar-clear-marks) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @begin{short}
+    Remove all visual markers.
+  @end{short}"
   (calendar (g-object gtk-calendar)))
 
 (export 'gtk-calendar-clear-marks)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_display_options ()
-;;;
-;;; GtkCalendarDisplayOptions gtk_calendar_get_display_options
-;;;                                                     (GtkCalendar *calendar);
-;;;
-;;; Returns the current display options of calendar.
-;;;
-;;; calendar :
-;;;     a GtkCalendar
-;;;
-;;; Returns :
-;;;     the display options.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_get_display_options" gtk-calendar-get-display-options)
     gtk-calendar-display-options
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @return{the display options.}
+  @begin{short}
+    Returns the current display options of calendar.
+  @end{short}
+
+  Since 2.4"
   (calendar (g-object gtk-calendar)))
 
 (export 'gtk-calendar-get-display-options)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_display_options ()
-;;;
-;;; void gtk_calendar_set_display_options (GtkCalendar *calendar,
-;;;                                        GtkCalendarDisplayOptions flags);
-;;;
-;;; Sets display options (whether to display the heading and the month
-;;; headings).
-;;;
-;;; calendar :
-;;;     a GtkCalendar
-;;;
-;;; flags :
-;;;     the display options to set
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_set_display_options" gtk-calendar-set-display-options)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @argument[flags]{the display options to set}
+  @begin{short}
+    Sets display options (whether to display the heading and the month
+    headings).
+  @end{short}
+
+  Since 2.4"
   (calendar (g-object gtk-calendar))
   (flags gtk-calendar-display-options))
 
@@ -831,30 +907,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_date ()
-;;;
-;;; void gtk_calendar_get_date (GtkCalendar *calendar,
-;;;                             guint *year,
-;;;                             guint *month,
-;;;                             guint *day);
-;;;
-;;; Obtains the selected date from a GtkCalendar.
-;;;
-;;; calendar :
-;;;     a GtkCalendar
-;;;
-;;; year :
-;;;     location to store the year as a decimal number (e.g. 2011), or NULL
-;;;
-;;; month :
-;;;     location to store the month number (between 0 and 11), or NULL
-;;;
-;;; day :
-;;;     location to store the day number (between 1 and 31), or NULL
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-get-date))
 
 (defun gtk-calendar-get-date (calendar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget}
+  @argument[year]{location to store the year as a decimal number (e.g. 2011),
+    or @code{nil}}
+  @argument[month]{location to store the month number (between 0 and 11),
+    or @code{nil}}
+  @argument[day]{location to store the day number (between 1 and 31), or
+    @code{nil}}
+  @begin{short}
+    Obtains the selected date from a @class{gtk-calendar}.
+  @end{short}"
   (values (gtk-calendar-year calendar)
           (gtk-calendar-month calendar)
           (gtk-calendar-day calendar)))
@@ -863,34 +932,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_detail_func ()
-;;;
-;;; void gtk_calendar_set_detail_func (GtkCalendar *calendar,
-;;;                                    GtkCalendarDetailFunc func,
-;;;                                    gpointer data,
-;;;                                    GDestroyNotify destroy);
-;;;
-;;; Installs a function which provides Pango markup with detail information for
-;;; each day. Examples for such details are holidays or appointments. That
-;;; information is shown below each day when "show-details" is set. A tooltip
-;;; containing with full detail information is provided, if the entire text
-;;; should not fit into the details area, or if "show-details" is not set.
-;;;
-;;; The size of the details area can be restricted by setting the
-;;; "detail-width-chars" and "detail-height-rows" properties.
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; func :
-;;;     a function providing details for each day.
-;;;
-;;; data :
-;;;     data to pass to func invokations.
-;;;
-;;; destroy :
-;;;     a function for releasing data.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_calendar_set_detail_func" %gtk-calendar-set-detail-func) :void
@@ -900,6 +941,26 @@
   (destroy :pointer))
 
 (defun gtk-calendar-set-detail-func (calendar func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget.}
+  @argument[func]{a function providing details for each day.}
+  @argument[data]{data to pass to func invokations.}
+  @argument[destroy]{a function for releasing data.}
+  @begin{short}
+    Installs a function which provides Pango markup with detail information for
+    each day.
+  @end{short}
+  Examples for such details are holidays or appointments. That information is
+  shown below each day when @code{\"show-details\"} is set. A tooltip
+  containing with full detail information is provided, if the entire text
+  should not fit into the details area, or if @code{\"show-details\"} is not
+  set.
+
+  The size of the details area can be restricted by setting the
+  @code{\"detail-width-chars\"} and @code{\"detail-height-rows\"} properties.
+
+  Since 2.14"
   (%gtk-calendar-set-detail-func calendar
                                  (callback gtk-calendar-detail-func-cb)
                                  (glib::allocate-stable-pointer func)
@@ -909,92 +970,84 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_detail_width_chars ()
-;;;
-;;; gint gtk_calendar_get_detail_width_chars (GtkCalendar *calendar);
-;;;
-;;; Queries the width of detail cells, in characters. See "detail-width-chars".
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; Returns :
-;;;     The width of detail cells, in characters.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-get-detail-width-chars))
 
 (defun gtk-calendar-get-detail-width-chars (calendar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget.}
+  @return{The width of detail cells, in characters.}
+  @begin{short}
+    Queries the width of detail cells, in characters.
+  @end{short}
+  See the property @code{\"detail-width-chars\"}.
+
+  Since 2.14"
   (gtk-calendar-detail-width-chars calendar))
 
 (export 'gtk-calendar-get-detail-width-chars)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_detail_width_chars ()
-;;;
-;;; void gtk_calendar_set_detail_width_chars (GtkCalendar *calendar, gint chars)
-;;;
-;;; Updates the width of detail cells. See "detail-width-chars".
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; chars :
-;;;     detail width in characters.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-set-detail-width-chars))
 
 (defun gtk-calendar-set-detail-width-chars (calendar chars)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget.}
+  @argument[chars]{detail width in characters.}
+  @begin{short}
+    Updates the width of detail cells.
+  @end{short}
+  See @code{\"detail-width-chars\"}.
+
+  Since 2.14"
   (setf (gtk-calendar-detail-width-chars calendar) chars))
 
 (export 'gtk-calendar-set-detail-width-chars)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_get_detail_height_rows ()
-;;;
-;;; gint gtk_calendar_get_detail_height_rows (GtkCalendar *calendar);
-;;;
-;;; Queries the height of detail cells, in rows. See "detail-width-chars".
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; Returns :
-;;;     The height of detail cells, in rows.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-get-detail-height-rows))
 
 (defun gtk-calendar-get-detail-height-rows (calendar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget.}
+  @return{The height of detail cells, in rows.}
+  @begin{short}
+    Queries the height of detail cells, in rows.
+  @end{short}
+  See @code{\"detail-width-chars\"}.
+
+  Since 2.14"
   (gtk-calendar-detail-height-rows calendar))
 
 (export 'gtk-calendar-get-detail-height-rows)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_calendar_set_detail_height_rows ()
-;;;
-;;; void gtk_calendar_set_detail_height_rows (GtkCalendar *calendar, gint rows);
-;;;
-;;; Updates the height of detail cells. See "detail-height-rows".
-;;;
-;;; calendar :
-;;;     a GtkCalendar.
-;;;
-;;; rows :
-;;;     detail height in rows.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-calendar-set-detail-height-rows))
 
 (defun gtk-calendar-set-detail-height-rows (calendar rows)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-28}
+  @argument[calendar]{a @class{gtk-calendar} widget.}
+  @argument[rows]{detail height in rows.}
+  @begin{short}
+    Updates the height of detail cells.
+  @end{short}
+  See @code{\"detail-height-rows\".}
+
+  Since 2.14"
   (setf (gtk-calendar-detail-height-rows calendar) rows))
 
 (export 'gtk-calendar-set-detail-height-rows)

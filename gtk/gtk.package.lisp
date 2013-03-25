@@ -715,8 +715,101 @@
       not implemented
     @end{subsection}
     @begin[Resource Files]{subsection}
+      Deprecated routines for handling resource files
+
+      @about-class{gtk-rc-style}
+      @about-symbol{gtk-rc-flags}
+      @about-symbol{gtk-rc-token-type}
+      @about-function{gtk-rc-scanner-new}
+      @about-function{gtk-rc-get-style}
+      @about-function{gtk-rc-get-style-by-paths}
+      @about-function{gtk-rc-parse}
+      @about-function{gtk-rc-parse-string}
+      @about-function{gtk-rc-reparse-all}
+      @about-function{gtk-rc-reparse-all-for-settings}
+      @about-function{gtk-rc-reset-styles}
+      @about-function{gtk-rc-add-default-file}
+      @about-function{gtk-rc-get-default-files}
+      @about-function{gtk-rc-set-default-files}
+      @about-function{gtk-rc-parse-color}
+      @about-function{gtk-rc-parse-color-full}
+      @about-function{gtk-rc-parse-state}
+      @about-function{gtk-rc-parse-priority}
+      @about-function{gtk-rc-find-module-in-path}
+      @about-function{gtk-rc-find-pixmap-in-path}
+      @about-function{gtk-rc-get-module-dir}
+      @about-function{gtk-rc-get-im-module-path}
+      @about-function{gtk-rc-get-im-module-file}
+      @about-function{gtk-rc-get-theme-dir}
+      @about-function{gtk-rc-style-new}
+      @about-function{gtk-rc-style-copy}
     @end{subsection}
     @begin[GtkStyle]{subsection}
+      Functions for drawing widget parts
+
+      @about-class{gtk-style}
+      @about-function{gtk-style-new}
+      @about-function{gtk-style-copy}
+      @about-function{gtk-style-attach}
+      @about-function{gtk-style-detach}
+      @about-function{gtk-style-ref}
+      @about-function{gtk-style-unref}
+      @about-function{gtk-style-set-background}
+      @about-function{gtk-style-apply-default-background}
+      @about-function{gtk-style-apply-default-pixmap}
+      @about-function{gtk-style-lookup-color}
+      @about-function{gtk-style-lookup-icon-set}
+      @about-function{gtk-style-render-icon}
+      @about-function{gtk-style-get-font}
+      @about-function{gtk-style-set-font}
+      @about-function{gtk-style-get-style-property}
+      @about-function{gtk-style-get-valist}
+      @about-function{gtk-style-get}
+      @about-function{gtk-draw-hline}
+      @about-function{gtk-draw-vline}
+      @about-function{gtk-draw-shadow}
+      @about-function{gtk-draw-polygon}
+      @about-function{gtk-draw-arrow}
+      @about-function{gtk-draw-diamond}
+      @about-function{gtk-draw-string}
+      @about-function{gtk-draw-box}
+      @about-function{gtk-draw-box-gap}
+      @about-function{gtk-draw-check}
+      @about-function{gtk-draw-extension}
+      @about-function{gtk-draw-flat-box}
+      @about-function{gtk-draw-focus}
+      @about-function{gtk-draw-handle}
+      @about-function{gtk-draw-option}
+      @about-function{gtk-draw-shadow-gap}
+      @about-function{gtk-draw-slider}
+      @about-function{gtk-draw-tab}
+      @about-function{gtk-draw-expander}
+      @about-function{gtk-draw-layout}
+      @about-function{gtk-draw-resize-grip}
+      @about-function{gtk-paint-arrow}
+      @about-function{gtk-paint-box}
+      @about-function{gtk-paint-box-gap}
+      @about-function{gtk-paint-check}
+      @about-function{gtk-paint-diamond}
+      @about-function{gtk-paint-extension}
+      @about-function{gtk-paint-flat-box}
+      @about-function{gtk-paint-focus}
+      @about-function{gtk-paint-handle}
+      @about-function{gtk-paint-hline}
+      @about-function{gtk-paint-option}
+      @about-function{gtk-paint-polygon}
+      @about-function{gtk-paint-shadow}
+      @about-function{gtk-paint-shadow-gap}
+      @about-function{gtk-paint-slider}
+      @about-function{gtk-paint-spinner}
+      @about-function{gtk-paint-string}
+      @about-function{gtk-paint-tab}
+      @about-function{gtk-paint-vline}
+      @about-function{gtk-paint-expander}
+      @about-function{gtk-paint-layout}
+      @about-function{gtk-paint-resize-grip}
+      @about-function{gtk-draw-insertion-cursor}
+      @about-symbol{gtk-rc-property}
     @end{subsection}
   @end{section}
   @begin[Windows]{section}
@@ -1207,6 +1300,17 @@
     @begin[GtkImageMenuItem]{subsection}
     @end{subsection}
     @begin[GtkRadioMenuItem]{subsection}
+      A choice from multiple check menu items
+
+      @about-class{gtk-radio-menu-item}
+      @about-function{gtk-radio-menu-item-new}
+      @about-function{gtk-radio-menu-item-new-with-label}
+      @about-function{gtk-radio-menu-item-new-with-mnemonic}
+      @about-function{gtk-radio-menu-item-new-from-widget}
+      @about-function{gtk-radio-menu-item-new-with-label-from-widget}
+      @about-function{gtk-radio-menu-item-new-with-mnemonic-from-widget}
+      @about-function{gtk-radio-menu-item-set-group}
+      @about-function{gtk-radio-menu-item-get-group}
     @end{subsection}
     @begin[GtkCheckMenuItem]{subsection}
     @end{subsection}
@@ -1448,8 +1552,14 @@
 
       @about-class{gtk-frame}
       @about-function{gtk-frame-new}
-      @about-function{gtk-frame-set-label-align}
-      @about-function{gtk-frame-get-label-align}
+     @about-function{gtk-frame-set-label}
+     @about-function{gtk-frame-set-label-widget}
+     @about-function{gtk-frame-set-label-align}
+     @about-function{gtk-frame-set-shadow-type}
+     @about-function{gtk-frame-get-label}
+     @about-function{gtk-frame-get-label-align}
+     @about-function{gtk-frame-get-label-widget}
+     @about-function{gtk-frame-get-shadow-type}
     @end{subsection}
     @begin[GtkSeparator]{subsection}
       A separator widget.
@@ -1793,6 +1903,38 @@
       @about-class{gtk-misc}
     @end{subsection}
     @begin[GtkRange]{subsection}
+      Base class for widgets which visualize an adjustment
+
+      @about-class{gtk-range}
+      @about-function{gtk-range-get-fill-level}
+      @about-function{gtk-range-get-restrict-to-fill-level}
+      @about-function{gtk-range-get-show-fill-level}
+      @about-function{gtk-range-set-fill-level}
+      @about-function{gtk-range-set-restrict-to-fill-level}
+      @about-function{gtk-range-set-show-fill-level}
+      @about-function{gtk-range-get-adjustment}
+      @about-function{gtk-range-set-adjustment}
+      @about-function{gtk-range-get-inverted}
+      @about-function{gtk-range-set-inverted}
+      @about-function{gtk-range-get-value}
+      @about-function{gtk-range-set-value}
+      @about-function{gtk-range-set-increments}
+      @about-function{gtk-range-set-range}
+      @about-function{gtk-range-get-round-digits}
+      @about-function{gtk-range-set-round-digits}
+      @about-symbol{gtk-sensitivity-type}
+      @about-function{gtk-range-set-lower-stepper-sensitivity}
+      @about-function{gtk-range-get-lower-stepper-sensitivity}
+      @about-function{gtk-range-set-upper-stepper-sensitivity}
+      @about-function{gtk-range-get-upper-stepper-sensitivity}
+      @about-function{gtk-range-get-flippable}
+      @about-function{gtk-range-set-flippable}
+      @about-function{gtk-range-get-min-slider-size}
+      @about-function{gtk-range-get-range-rect}
+      @about-function{gtk-range-get-slider-range}
+      @about-function{gtk-range-get-slider-size-fixed}
+      @about-function{gtk-range-set-min-slider-size}
+      @about-function{gtk-range-set-slider-size-fixed}
     @end{subsection}
     @begin[GtkIMContext]{subsection}
     @end{subsection}

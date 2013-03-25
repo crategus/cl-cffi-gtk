@@ -2,13 +2,14 @@
 ;;; gtk.notebook.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -81,27 +82,7 @@
 ;;;     gtk_notebook_set_action_widget
 ;;;     gtk_notebook_get_action_widget
 ;;; 
-;;; Object Hierarchy
 ;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkNotebook
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkNotebook implements AtkImplementorIface and GtkBuildable.
-;;; 
-;;; Properties
-;;; 
-;;;   "enable-popup"             gboolean              : Read / Write
-;;;   "group-name"               gchar*                : Read / Write
-;;;   "page"                     gint                  : Read / Write
-;;;   "scrollable"               gboolean              : Read / Write
-;;;   "show-border"              gboolean              : Read / Write
-;;;   "show-tabs"                gboolean              : Read / Write
-;;;   "tab-pos"                  GtkPositionType       : Read / Write
 ;;; 
 ;;; Child Properties
 ;;; 
@@ -137,117 +118,6 @@
 ;;;   "select-page"                                    : Action
 ;;;   "switch-page"                                    : Run Last
 ;;; 
-;;; Description
-;;; 
-;;; The GtkNotebook widget is a GtkContainer whose children are pages that can
-;;; be switched between using tab labels along one edge.
-;;; 
-;;; There are many configuration options for GtkNotebook. Among other things,
-;;; you can choose on which edge the tabs appear (see
-;;; gtk_notebook_set_tab_pos()), whether, if there are too many tabs to fit the
-;;; notebook should be made bigger or scrolling arrows added (see
-;;; gtk_notebook_set_scrollable()), and whether there will be a popup menu
-;;; allowing the users to switch pages. (see gtk_notebook_popup_enable(),
-;;; gtk_notebook_popup_disable())
-;;; 
-;;; GtkNotebook as GtkBuildable
-;;; 
-;;; The GtkNotebook implementation of the GtkBuildable interface supports
-;;; placing children into tabs by specifying "tab" as the "type" attribute of a
-;;; <child> element. Note that the content of the tab must be created before the
-;;; tab can be filled. A tab child can be specified without specifying a <child>
-;;; type attribute.
-;;; 
-;;; To add a child widget in the notebooks action area, specify "action-start"
-;;; or "action-end" as the "type" attribute of the <child> element.
-;;; 
-;;; Example 92. A UI definition fragment with GtkNotebook
-;;; 
-;;; <object class="GtkNotebook">
-;;;   <child>
-;;;     <object class="GtkLabel" id="notebook-content">
-;;;       <property name="label">Content</property>
-;;;     </object>
-;;;   </child>
-;;;   <child type="tab">
-;;;     <object class="GtkLabel" id="notebook-tab">
-;;;       <property name="label">Tab</property>
-;;;     </object>
-;;;   </child>
-;;; </object>
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "enable-popup" property
-;;; 
-;;;   "enable-popup"             gboolean              : Read / Write
-;;; 
-;;; If TRUE, pressing the right mouse button on the notebook pops up a menu that
-;;; you can use to go to a page.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "group-name" property
-;;; 
-;;;   "group-name"               gchar*                : Read / Write
-;;; 
-;;; Group name for tab drag and drop.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.24
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "page" property
-;;; 
-;;;   "page"                     gint                  : Read / Write
-;;; 
-;;; The index of the current page.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: -1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scrollable" property
-;;; 
-;;;   "scrollable"               gboolean              : Read / Write
-;;; 
-;;; If TRUE, scroll arrows are added if there are too many tabs to fit.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "show-border" property
-;;; 
-;;;   "show-border"              gboolean              : Read / Write
-;;; 
-;;; Whether the border should be shown.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "show-tabs" property
-;;; 
-;;;   "show-tabs"                gboolean              : Read / Write
-;;; 
-;;; Whether tabs should be shown.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tab-pos" property
-;;; 
-;;;   "tab-pos"                  GtkPositionType       : Read / Write
-;;; 
-;;; Which side of the notebook holds the tabs.
-;;; 
-;;; Default value: GTK_POS_TOP
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Child Property Details
@@ -638,8 +508,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkNotebook
-;;; 
-;;; struct GtkNotebook;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -675,6 +543,199 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-notebook 'type)
+ "@version{2013-3-17}
+  @begin{short}
+    The GtkNotebook widget is a GtkContainer whose children are pages that can
+    be switched between using tab labels along one edge.
+  @end{short}
+
+  There are many configuration options for GtkNotebook. Among other things,
+  you can choose on which edge the tabs appear (see
+  gtk_notebook_set_tab_pos()), whether, if there are too many tabs to fit the
+  notebook should be made bigger or scrolling arrows added (see
+  gtk_notebook_set_scrollable()), and whether there will be a popup menu
+  allowing the users to switch pages. (see gtk_notebook_popup_enable(),
+  gtk_notebook_popup_disable())
+
+  @subheading{GtkNotebook as GtkBuildable}
+  The GtkNotebook implementation of the GtkBuildable interface supports
+  placing children into tabs by specifying \"tab\" as the \"type\" attribute of
+  a <child> element. Note that the content of the tab must be created before the
+  tab can be filled. A tab child can be specified without specifying a <child>
+  type attribute.
+
+  To add a child widget in the notebooks action area, specify \"action-start\"
+  or \"action-end\" as the \"type\" attribute of the <child> element.
+
+  @b{Example.} A UI definition fragment with GtkNotebook
+  @begin{pre}
+ <object class=\"GtkNotebook\">
+   <child>
+     <object class=\"GtkLabel\" id=\"notebook-content\">
+       <property name=\"label\">Content</property>
+     </object>
+   </child>
+   <child type=\"tab\">
+     <object class=\"GtkLabel\" id=\"notebook-tab\">
+       <property name=\"label\">Tab</property>
+     </object>
+   </child>
+ </object>
+  @end{pre}
+
+  @see-slot{gtk-notebook-enable-popup}
+  @see-slot{gtk-notebook-group-name}
+  @see-slot{gtk-notebook-page}
+  @see-slot{gtk-notebook-scrollable}
+  @see-slot{gtk-notebook-show-border}
+  @see-slot{gtk-notebook-show-tabs}
+  @see-slot{gtk-notebook-tab-pos}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "enable-popup" 'gtk-notebook) 't)
+ "The @code{\"enable-popup\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  If @em{true}, pressing the right mouse button on the notebook pops up a menu
+  that you can use to go to a page. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "group-name" 'gtk-notebook) 't)
+ "The @code{\"group-name\"} property of type @code{:string}
+  (Read / Write)@br{}
+  Group name for tab drag and drop. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.24")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "page" 'gtk-notebook) 't)
+ "The @code{\"page\"} property of type @code{:int} (Read / Write)@br{}
+  The index of the current page. @br{}
+  Allowed values: >= @code{G_MAXULONG}@br{}
+  Default value: -1")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scrollable" 'gtk-notebook) 't)
+ "The @code{\"scrollable\"} property of type @code{:boolean} (Read / Write)@br{}
+  If @em{true}, scroll arrows are added if there are too many tabs to fit. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-border" 'gtk-notebook) 't)
+ "The @code{\"show-border\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether the border should be shown. @br{}
+  Default value: @em{true}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-tabs" 'gtk-notebook) 't)
+ "The @code{\"show-tabs\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether tabs should be shown. @br{}
+  Default value: @em{true}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tab-pos" 'gtk-notebook) 't)
+ "The @code{\"tab-pos\"} property of type @symbol{gtk-position-type}
+  (Read / Write)@br{}
+  Which side of the notebook holds the tabs. @br{}
+  Default value: @code{:top}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-enable-popup atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-enable-popup 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"enable-popup\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-group-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-group-name 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"group-name\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-page atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-page 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"page\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-scrollable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-scrollable 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"scrollable\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-show-border atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-show-border 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"show-border\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-show-tabs atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-show-tabs 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"show-tabs\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-tab-pos atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-tab-pos 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"tab-pos\"} of the @class{gtk-notebook}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-detachable
                        "detachable" "gboolean" t t t)
@@ -704,48 +765,110 @@
                        "tab-label" "gchararray" t t t)
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-detachable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-detachable 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"detachable\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-menu-label atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-menu-label 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"menu-label\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-position 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"position\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-reorderable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-reorderable 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"reorderable\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-tab-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-tab-expand 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"tab-expand\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-tab-fill atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-tab-fill 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"tab-fill\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-notebook-child-tab-label atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-notebook-child-tab-label 'function)
+ "@version{2013-3-17}
+  Accessor of the child property @code{\"tab-label\"} of the
+  @class{gtk-notebook} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_new ()
-;;; 
-;;; GtkWidget * gtk_notebook_new (void);
-;;; 
-;;; Creates a new GtkNotebook widget with no pages.
-;;; 
-;;; Returns :
-;;;     the newly created GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-new))
 
 (defun gtk-notebook-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @return{The newly created @class{gtk-notebook} widget}
+  Creates a new @class{gtk-notebook} widget with no pages."
   (make-instance 'gtk-notebook))
 
 (export 'gtk-notebook-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_append_page ()
-;;; 
-;;; gint gtk_notebook_append_page (GtkNotebook *notebook,
-;;;                                GtkWidget *child,
-;;;                                GtkWidget *tab_label);
-;;; 
-;;; Appends a page to notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the GtkWidget to use as the contents of the page
-;;; 
-;;; tab_label :
-;;;     the GtkWidget to be used as the label for the page, or NULL to use the
-;;;     default label, 'page N'
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the appended page in the notebook, or -1
-;;;     if function fails
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_append_page" gtk-notebook-append-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a @class{gtk-notebook} widget}
+  @argument[child]{the @class{gtk-widget} to use as the contents of the page}
+  @argument[tab-label]{the @class{gtk-widget} to be used as the label for the
+    page, or @code{nil} to use the default label, \"page N\"}
+  @begin{return}
+    The index (starting from 0) of the appended page in the notebook, or -1
+    if function fails.
+  @end{return}
+  Appends a page to notebook."
   (notebook g-object)
   (child g-object)
   (tab-label g-object))
@@ -754,70 +877,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_append_page_menu ()
-;;; 
-;;; gint gtk_notebook_append_page_menu (GtkNotebook *notebook,
-;;;                                     GtkWidget *child,
-;;;                                     GtkWidget *tab_label,
-;;;                                     GtkWidget *menu_label);
-;;; 
-;;; Appends a page to notebook, specifying the widget to use as the label in the
-;;; popup menu.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the GtkWidget to use as the contents of the page
-;;; 
-;;; tab_label :
-;;;     the GtkWidget to be used as the label for the page, or NULL to use the
-;;;     default label, 'page N'
-;;; 
-;;; menu_label :
-;;;     the widget to use as a label for the page-switch menu, if that is
-;;;     enabled. If NULL, and tab_label is a GtkLabel or NULL, then the menu
-;;;     label will be a newly created label with the same text as tab_label; if
-;;;     tab_label is not a GtkLabel, menu_label must be specified if the
-;;;     page-switch menu is to be used
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the appended page in the notebook, or -1
-;;;     if function fails
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_append_page_menu" gtk-notebook-append-page-menu) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the GtkWidget to use as the contents of the page}
+  @argument[tab-label]{the GtkWidget to be used as the label for the page, or
+    NULL to use the default label, \"page N\"}
+  @argument[menu-label]{the widget to use as a label for the page-switch menu,
+    if that is enabled. If NULL, and tab_label is a GtkLabel or NULL, then the
+    menu label will be a newly created label with the same text as tab_label;
+    if tab_label is not a GtkLabel, menu_label must be specified if the
+    page-switch menu is to be used}
+  @begin{return}
+    The index (starting from 0) of the appended page in the notebook, or -1
+    if function fails.
+  @end{return}
+  Appends a page to notebook, specifying the widget to use as the label in the
+  popup menu."
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
-  (menu g-object))
+  (menu-label g-object))
 
 (export 'gtk-notebook-append-page-menu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_prepend_page ()
-;;; 
-;;; gint gtk_notebook_prepend_page (GtkNotebook *notebook,
-;;;                                 GtkWidget *child,
-;;;                                 GtkWidget *tab_label);
-;;; 
-;;; Prepends a page to notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the GtkWidget to use as the contents of the page
-;;; 
-;;; tab_label :
-;;;     the GtkWidget to be used as the label for the page, or NULL to use the
-;;;     default label, 'page N'
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the prepended page in the notebook, or -1
-;;;     if function fails
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_prepend_page" gtk-notebook-prepend-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the GtkWidget to use as the contents of the page}
+  @argument[tab_label]{the GtkWidget to be used as the label for the page, or
+    NULL to use the default label, 'page N'}
+  @begin{return}
+    The index (starting from 0) of the prepended page in the notebook, or -1
+    if function fails.
+  @end{return}
+  Prepends a page to notebook."
   (notebook g-object)
   (child g-object)
   (tab-label g-object))
@@ -826,75 +928,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_prepend_page_menu ()
-;;; 
-;;; gint gtk_notebook_prepend_page_menu (GtkNotebook *notebook,
-;;;                                      GtkWidget *child,
-;;;                                      GtkWidget *tab_label,
-;;;                                      GtkWidget *menu_label);
-;;; 
-;;; Prepends a page to notebook, specifying the widget to use as the label in
-;;; the popup menu.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the GtkWidget to use as the contents of the page
-;;; 
-;;; tab_label :
-;;;     the GtkWidget to be used as the label for the page, or NULL to use the
-;;;     default label, 'page N'
-;;; 
-;;; menu_label :
-;;;     the widget to use as a label for the page-switch menu, if that is
-;;;     enabled. If NULL, and tab_label is a GtkLabel or NULL, then the menu
-;;;     label will be a newly created label with the same text as tab_label; if
-;;;     tab_label is not a GtkLabel, menu_label must be specified if the
-;;;     page-switch menu is to be used
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the prepended page in the notebook, or -1
-;;;     if function fails
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_prepend_page_menu" gtk-notebook-prepend-page-menu) :int
-  (notebook g-object)
-  (child g-object)
-  (tab-label g-object)
-  (menu g-object))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the GtkWidget to use as the contents of the page}
+  @argument[tab_label]{the GtkWidget to be used as the label for the page,
+    or NULL to use the default label, 'page N'}
+  @argument[menu_label]{the widget to use as a label for the page-switch menu,
+    if that is enabled. If NULL, and tab_label is a GtkLabel or NULL, then the
+    menu label will be a newly created label with the same text as tab_label; if
+    tab_label is not a GtkLabel, menu_label must be specified if the
+    page-switch menu is to be used}
+  @begin{return}
+    The index (starting from 0) of the prepended page in the notebook, or -1
+    if function fails.
+  @end{return}
+  Prepends a page to notebook, specifying the widget to use as the label in
+  the popup menu."
+  (notebook (g-object gtk-notebook))
+  (child (g-object gtk-widget))
+  (tab-label (g-object gtk-widget))
+  (menu-label (g-object gtk-widget)))
 
 (export 'gtk-notebook-prepend-page-menu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_insert_page ()
-;;; 
-;;; gint gtk_notebook_insert_page (GtkNotebook *notebook,
-;;;                                GtkWidget *child,
-;;;                                GtkWidget *tab_label,
-;;;                                gint position);
-;;; 
-;;; Insert a page into notebook at the given position.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the GtkWidget to use as the contents of the page
-;;; 
-;;; tab_label :
-;;;     the GtkWidget to be used as the label for the page, or NULL to use the
-;;;     default label, 'page N'
-;;; 
-;;; position :
-;;;     the index (starting at 0) at which to insert the page, or -1 to append
-;;;     the page after all other pages
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the inserted page in the notebook, or -1
-;;;     if function fails
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_insert_page" gtk-notebook-insert-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the GtkWidget to use as the contents of the page}
+  @argument[tab_label]{the GtkWidget to be used as the label for the page, or
+    NULL to use the default label, 'page N'}
+  @argument[position]{the index (starting at 0) at which to insert the page,
+    or -1 to append the page after all other pages}
+  @begin{return}
+    The index (starting from 0) of the inserted page in the notebook, or -1
+    if function fails.
+  @end{return}
+  Insert a page into notebook at the given position."
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
@@ -904,42 +982,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_insert_page_menu ()
-;;; 
-;;; gint gtk_notebook_insert_page_menu (GtkNotebook *notebook,
-;;;                                     GtkWidget *child,
-;;;                                     GtkWidget *tab_label,
-;;;                                     GtkWidget *menu_label,
-;;;                                     gint position);
-;;; 
-;;; Insert a page into notebook at the given position, specifying the widget to
-;;; use as the label in the popup menu.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the GtkWidget to use as the contents of the page
-;;; 
-;;; tab_label :
-;;;     the GtkWidget to be used as the label for the page, or NULL to use the
-;;;     default label, 'page N'
-;;; 
-;;; menu_label :
-;;;     the widget to use as a label for the page-switch menu, if that is
-;;;     enabled. If NULL, and tab_label is a GtkLabel or NULL, then the menu
-;;;     label will be a newly created label with the same text as tab_label; if
-;;;     tab_label is not a GtkLabel, menu_label must be specified if the
-;;;     page-switch menu is to be used
-;;; 
-;;; position :
-;;;     the index (starting at 0) at which to insert the page, or -1 to append
-;;;     the page after all other pages.
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the inserted page in the notebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_insert_page_menu" gtk-notebook-insert-page-menu) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the GtkWidget to use as the contents of the page}
+  @argument[tab_label]{the GtkWidget to be used as the label for the page,
+    or NULL to use the default label, 'page N'}
+  @argument[menu_label]{the widget to use as a label for the page-switch menu,
+    if that is enabled. If NULL, and tab_label is a GtkLabel or NULL, then the
+    menu label will be a newly created label with the same text as tab_label; if
+    tab_label is not a GtkLabel, menu_label must be specified if the
+    page-switch menu is to be used}
+  @argument[position]{the index (starting at 0) at which to insert the page,
+    or -1 to append the page after all other pages.}
+  @return{the index (starting from 0) of the inserted page in the notebook}
+  Insert a page into notebook at the given position, specifying the widget to
+  use as the label in the popup menu."
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
@@ -950,17 +1011,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_remove_page ()
-;;; 
-;;; void gtk_notebook_remove_page (GtkNotebook *notebook, gint page_num);
-;;; 
-;;; Removes a page from the notebook given its index in the notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; page_num :
-;;;     the index of a notebook page, starting from 0. If -1, the last page will
-;;;     be removed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_remove_page" %gtk-notebook-remove-page) :void
@@ -968,6 +1018,12 @@
   (page-num :int))
 
 (defun gtk-notebook-remove-page (notebook page-or-number)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[page_num]{the index of a notebook page, starting from 0. If -1, the
+    last page will be removed.}
+  Removes a page from the notebook given its index in the notebook."
   (%gtk-notebook-remove-page notebook
                   (etypecase page-or-number
                     (integer page-or-number)
@@ -978,23 +1034,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_page_num ()
-;;; 
-;;; gint gtk_notebook_page_num (GtkNotebook *notebook, GtkWidget *child);
-;;; 
-;;; Finds the index of the page which contains the given child widget.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a GtkWidget
-;;; 
-;;; Returns :
-;;;     the index of the page containing child, or -1 if child is not in the
-;;;     notebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_page_num" gtk-notebook-page-num) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a GtkWidget}
+  @begin{return}
+    The index of the page containing child, or -1 if child is not in the
+    notebook.
+  @end{return}
+  Finds the index of the page which contains the given child widget."
   (notebook g-object)
   (child g-object))
 
@@ -1002,60 +1053,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_next_page ()
-;;; 
-;;; void gtk_notebook_next_page (GtkNotebook *notebook);
-;;; 
-;;; Switches to the next page. Nothing happens if the current page is the last
-;;; page.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_next_page" gtk-notebook-next-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  Switches to the next page. Nothing happens if the current page is the last
+  page."
   (notebook g-object))
 
 (export 'gtk-notebook-next-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_prev_page ()
-;;; 
-;;; void gtk_notebook_prev_page (GtkNotebook *notebook);
-;;; 
-;;; Switches to the previous page. Nothing happens if the current page is the
-;;; first page.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_prev_page" gtk-notebook-prev-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  Switches to the previous page. Nothing happens if the current page is the
+  first page."
   (notebook g-object))
 
 (export 'gtk-notebook-prev-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_reorder_child ()
-;;; 
-;;; void gtk_notebook_reorder_child (GtkNotebook *notebook,
-;;;                                  GtkWidget *child,
-;;;                                  gint position);
-;;; 
-;;; Reorders the page containing child, so that it appears in position position.
-;;; If position is greater than or equal to the number of children in the list
-;;; or negative, child will be moved to the end of the list.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the child to move
-;;; 
-;;; position :
-;;;     the new position, or -1 to move to the end
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_reorder_child" gtk-notebook-reorder-child) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the child to move}
+  @argument[position]{the new position, or -1 to move to the end}
+  Reorders the page containing child, so that it appears in position position.
+  If position is greater than or equal to the number of children in the list
+  or negative, child will be moved to the end of the list."
   (notebook g-object)
   (child g-object)
   (position :int))
@@ -1064,196 +1100,152 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_tab_pos ()
-;;; 
-;;; void gtk_notebook_set_tab_pos (GtkNotebook *notebook, GtkPositionType pos);
-;;; 
-;;; Sets the edge at which the tabs for switching pages in the notebook are
-;;; drawn.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook.
-;;; 
-;;; pos :
-;;;     the edge to draw the tabs at
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-tab-pos))
 
 (defun gtk-notebook-set-tab-pos (notebook pos)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook.}
+  @argument[pos]{the edge to draw the tabs at}
+  Sets the edge at which the tabs for switching pages in the notebook are
+  drawn."
   (setf (gtk-notebook-tab-pos notebook) pos))
 
 (export 'gtk-notebook-set-tab-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_show_tabs ()
-;;; 
-;;; void gtk_notebook_set_show_tabs (GtkNotebook *notebook, gboolean show_tabs);
-;;; 
-;;; Sets whether to show the tabs for the notebook or not.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; show_tabs :
-;;;     TRUE if the tabs should be shown
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-show-tabs))
 
 (defun gtk-notebook-set-show-tabs (notebook show-tabs)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[show_tabs]{TRUE if the tabs should be shown}
+  Sets whether to show the tabs for the notebook or not."
   (setf (gtk-notebook-show-tabs notebook) show-tabs))
 
 (export 'gtk-notebook-set-show-tabs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_show_border ()
-;;; 
-;;; void gtk_notebook_set_show_border (GtkNotebook *notebook,
-;;;                                    gboolean show_border);
-;;; 
-;;; Sets whether a bevel will be drawn around the notebook pages. This only has
-;;; a visual effect when the tabs are not shown. See
-;;; gtk_notebook_set_show_tabs().
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; show_border :
-;;;     TRUE if a bevel should be drawn around the notebook
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-show-border))
 
 (defun gtk-notebook-set-show-border (notebook show-border)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[show_border]{TRUE if a bevel should be drawn around the notebook}
+  Sets whether a bevel will be drawn around the notebook pages. This only has
+  a visual effect when the tabs are not shown. See
+  gtk_notebook_set_show_tabs()."
   (setf (gtk-notebook-show-border notebook) show-border))
 
 (export 'gtk-notebook-set-show-border)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_scrollable ()
-;;; 
-;;; void gtk_notebook_set_scrollable (GtkNotebook *notebook,
-;;;                                   gboolean scrollable);
-;;; 
-;;; Sets whether the tab label area will have arrows for scrolling if there are
-;;; too many tabs to fit in the area.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; scrollable :
-;;;     TRUE if scroll arrows should be added
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-scrollable))
 
 (defun gtk-notebook-set-scrollable (notebook scrollable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[scrollable]{TRUE if scroll arrows should be added}
+ Sets whether the tab label area will have arrows for scrolling if there are
+ too many tabs to fit in the area."
   (setf (gtk-notebook-scrollable notebook) scrollable))
 
 (export 'gtk-notebook-set-scrollable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_popup_enable ()
-;;; 
-;;; void gtk_notebook_popup_enable (GtkNotebook *notebook);
-;;; 
-;;; Enables the popup menu: if the user clicks with the right mouse button on
-;;; the tab labels, a menu with all the pages will be popped up.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-popup-enable))
 
 (defun gtk-notebook-popup-enable (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  Enables the popup menu: if the user clicks with the right mouse button on
+  the tab labels, a menu with all the pages will be popped up."
   (setf (gtk-notebook-enable-popup notebook) t))
 
 (export 'gtk-notebook-popup-enable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_popup_disable ()
-;;; 
-;;; void gtk_notebook_popup_disable (GtkNotebook *notebook);
-;;; 
-;;; Disables the popup menu.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-popup-disable))
 
 (defun gtk-notebook-popup-disable (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  Disables the popup menu."
   (setf (gtk-notebook-enable-popup notebook) nil))
 
 (export 'gtk-notebook-popup-disable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_current_page ()
-;;; 
-;;; gint gtk_notebook_get_current_page (GtkNotebook *notebook);
-;;; 
-;;; Returns the page number of the current page.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     the index (starting from 0) of the current page in the notebook. If the
-;;;     notebook has no pages, then -1 will be returned.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_current_page" gtk-notebook-get-current-page) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @begin{return}
+    The index (starting from 0) of the current page in the notebook. If the
+    notebook has no pages, then -1 will be returned.
+  @end{return}
+  Returns the page number of the current page."
   (notebook (g-object gtk-notebook)))
 
 (export 'gtk-notebook-get-current-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_menu_label ()
-;;; 
-;;; GtkWidget * gtk_notebook_get_menu_label (GtkNotebook *notebook,
-;;;                                          GtkWidget *child);
-;;; 
-;;; Retrieves the menu label widget of the page containing child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a widget contained in a page of notebook
-;;; 
-;;; Returns :
-;;;     the menu label, or NULL if the notebook page does not have a menu label
-;;;     other than the default (the tab label)
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-menu-label))
 
 (defun gtk-notebook-get-menu-label (notebook child)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a widget contained in a page of notebook}
+  @begin{return}
+    The menu label, or NULL if the notebook page does not have a menu label
+    other than the default (the tab label).
+  @end{return}
+  Retrieves the menu label widget of the page containing child."
   (gtk-notebook-child-menu-label notebook child))
 
 (export 'gtk-notebook-get-menu-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_nth_page ()
-;;; 
-;;; GtkWidget * gtk_notebook_get_nth_page (GtkNotebook *notebook,
-;;;                                        gint page_num);
-;;; 
-;;; Returns the child widget contained in page number page_num.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; page_num :
-;;;     the index of a page in the notebook, or -1 to get the last page
-;;; 
-;;; Returns :
-;;;     the child widget, or NULL if page_num is out of bounds
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_nth_page" gtk-notebook-nth-page) g-object
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[page_num]{the index of a page in the notebook, or -1 to get the
+    last page}
+  @return{The child widget, or NULL if page_num is out of bounds.}
+  Returns the child widget contained in page number page_num."
   (notebook g-object)
   (page-num :int))
 
@@ -1261,98 +1253,67 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_n_pages ()
-;;; 
-;;; gint gtk_notebook_get_n_pages (GtkNotebook *notebook);
-;;; 
-;;; Gets the number of pages in a notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     the number of pages in the notebook
-;;; 
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_n_pages" gtk-notebook-n-pages) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @return{The number of pages in the notebook.}
+  @short{Gets the number of pages in a notebook.}
+
+  Since 2.2"
   (notebook g-object))
 
 (export 'gtk-notebook-n-pages)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_label ()
-;;; 
-;;; GtkWidget * gtk_notebook_get_tab_label (GtkNotebook *notebook,
-;;;                                         GtkWidget *child);
-;;; 
-;;; Returns the tab label widget for the page child. NULL is returned if child
-;;; is not in notebook or if no tab label has specifically been set for child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the page
-;;; 
-;;; Returns :
-;;;     the tab label
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-tab-label))
 
 (defun gtk-notebook-get-tab-label (notebook child)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the page}
+  @return{the tab label}
+  Returns the tab label widget for the page child. NULL is returned if child
+  is not in notebook or if no tab label has specifically been set for child."
   (gtk-notebook-child-tab-label notebook child))
 
 (export 'gtk-notebook-tab-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_menu_label ()
-;;; 
-;;; void gtk_notebook_set_menu_label (GtkNotebook *notebook,
-;;;                                   GtkWidget *child,
-;;;                                   GtkWidget *menu_label);
-;;; 
-;;; Changes the menu label for the page containing child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the child widget
-;;; 
-;;; menu_label :
-;;;     the menu label, or NULL for default
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-menu-label))
 
 (defun gtk-notebook-set-menu-label (notebook child menu-label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the child widget}
+  @argument[menu_label]{the menu label, or NULL for default}
+  Changes the menu label for the page containing child."
   (setf (gtk-notebook-child-menu-label notebook child) menu-label))
 
 (export 'gtk-notebook-set-menu-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_menu_label_text ()
-;;; 
-;;; void gtk_notebook_set_menu_label_text (GtkNotebook *notebook,
-;;;                                        GtkWidget *child,
-;;;                                        const gchar *menu_text);
-;;; 
-;;; Creates a new label and sets it as the menu label of child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the child widget
-;;; 
-;;; menu_text :
-;;;     the label text
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_set_menu_label_text" gtk-notebook-set-menu-label-text)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the child widget}
+  @argument[menu_text]{the label text}
+  Creates a new label and sets it as the menu label of child."
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget))
   (menu-text :string))
@@ -1361,53 +1322,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_tab_label ()
-;;; 
-;;; void gtk_notebook_set_tab_label (GtkNotebook *notebook,
-;;;                                  GtkWidget *child,
-;;;                                  GtkWidget *tab_label);
-;;; 
-;;; Changes the tab label for child. If NULL is specified for tab_label, then
-;;; the page will have the label 'page N'.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the page
-;;; 
-;;; tab_label :
-;;;     the tab label widget to use, or NULL for default tab label
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-tab-label))
 
 (defun gtk-notebook-set-tab-label (notebook child tab-label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the page}
+  @argument[tab_label]{the tab label widget to use, or NULL for default tab
+    label}
+  Changes the tab label for child. If NULL is specified for tab_label, then
+  the page will have the label 'page N'."
   (setf (gtk-notebook-child-tab-label notebook child) tab-label))
 
 (export 'gtk-notebook-set-tab-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_tab_label_text ()
-;;; 
-;;; void gtk_notebook_set_tab_label_text (GtkNotebook *notebook,
-;;;                                       GtkWidget *child,
-;;;                                       const gchar *tab_text);
-;;; 
-;;; Creates a new label and sets it as the tab label for the page containing
-;;; child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the page
-;;; 
-;;; tab_text :
-;;;     the label text
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_set_tab_label_text" gtk-notebook-set-tab-label-text)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the page}
+  @argument[tab_text]{the label text}
+  Creates a new label and sets it as the tab label for the page containing
+  child."
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget))
   (tab-text :string))
@@ -1416,116 +1360,96 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_tab_reorderable ()
-;;; 
-;;; void gtk_notebook_set_tab_reorderable (GtkNotebook *notebook,
-;;;                                        GtkWidget *child,
-;;;                                        gboolean reorderable);
-;;; 
-;;; Sets whether the notebook tab can be reordered via drag and drop or not.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a child GtkWidget
-;;; 
-;;; reorderable :
-;;;     whether the tab is reorderable or not
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-tab-reorderable))
 
 (defun gtk-notebook-set-tab-reorderable (notebook child reorderable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a child GtkWidget}
+  @argument[reorderable]{whether the tab is reorderable or not}
+  @begin{short}
+    Sets whether the notebook tab can be reordered via drag and drop or not.
+  @end{short}
+
+  Since 2.10"
   (setf (gtk-notebook-child-reorderable notebook child) reorderable))
 
 (export 'gtk-notebook-set-tab-reorderable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_tab_detachable ()
-;;; 
-;;; void gtk_notebook_set_tab_detachable (GtkNotebook *notebook,
-;;;                                       GtkWidget *child,
-;;;                                       gboolean detachable);
-;;; 
-;;; Sets whether the tab can be detached from notebook to another notebook or
-;;; widget.
-;;; 
-;;; Note that 2 notebooks must share a common group identificator (see
-;;; gtk_notebook_set_group_name()) to allow automatic tabs interchange between
-;;; them.
-;;; 
-;;; If you want a widget to interact with a notebook through DnD (i.e.: accept
-;;; dragged tabs from it) it must be set as a drop destination and accept the
-;;; target "GTK_NOTEBOOK_TAB". The notebook will fill the selection with a
-;;; GtkWidget** pointing to the child widget that corresponds to the dropped
-;;; tab.
-;;; 
-;;; static void
-;;; on_drop_zone_drag_data_received (GtkWidget        *widget,
-;;;                                  GdkDragContext   *context,
-;;;                                  gint              x,
-;;;                                  gint              y,
-;;;                                  GtkSelectionData *selection_data,
-;;;                                  guint             info,
-;;;                                  guint             time,
-;;;                                  gpointer          user_data)
-;;; {
-;;;   GtkWidget *notebook;
-;;;   GtkWidget **child;
-;;; 
-;;;   notebook = gtk_drag_get_source_widget (context);
-;;;   child = (void*) gtk_selection_data_get_data (selection_data);
-;;; 
-;;;   process_widget (*child);
-;;;   gtk_container_remove (GTK_CONTAINER (notebook), *child);
-;;; }
-;;; 
-;;; If you want a notebook to accept drags from other widgets, you will have to
-;;; set your own DnD code to do it.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a child GtkWidget
-;;; 
-;;; detachable :
-;;;     whether the tab is detachable or not
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-tab-detachable))
 
 (defun gtk-notebook-set-tab-detachable (notebook child detachable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a child GtkWidget}
+  @argument[detachable]{whether the tab is detachable or not}
+  @begin{short}
+    Sets whether the tab can be detached from notebook to another notebook or
+    widget.
+  @end{short}
+
+  Note that 2 notebooks must share a common group identificator (see
+  gtk_notebook_set_group_name()) to allow automatic tabs interchange between
+  them.
+
+  If you want a widget to interact with a notebook through DnD (i.e.: accept
+  dragged tabs from it) it must be set as a drop destination and accept the
+  target \"GTK_NOTEBOOK_TAB\". The notebook will fill the selection with a
+  GtkWidget** pointing to the child widget that corresponds to the dropped
+  tab.
+  @begin{pre}
+ static void
+ on_drop_zone_drag_data_received (GtkWidget        *widget,
+                                  GdkDragContext   *context,
+                                  gint              x,
+                                  gint              y,
+                                  GtkSelectionData *selection_data,
+                                  guint             info,
+                                  guint             time,
+                                  gpointer          user_data)
+ {
+   GtkWidget *notebook;
+   GtkWidget **child;
+
+   notebook = gtk_drag_get_source_widget (context);
+   child = (void*) gtk_selection_data_get_data (selection_data);
+
+   process_widget (*child);
+   gtk_container_remove (GTK_CONTAINER (notebook), *child);
+ @}
+  @end{pre}
+  If you want a notebook to accept drags from other widgets, you will have to
+  set your own DnD code to do it.
+
+  Since 2.10"
   (setf (gtk-notebook-child-detachable notebook child) detachable))
 
 (export 'gtk-notebook-set-tab-detachable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_menu_label_text ()
-;;; 
-;;; const gchar * gtk_notebook_get_menu_label_text (GtkNotebook *notebook,
-;;;                                                 GtkWidget *child);
-;;; 
-;;; Retrieves the text of the menu label for the page containing child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     the child widget of a page of the notebook.
-;;; 
-;;; Returns :
-;;;     the text of the tab label, or NULL if the widget does not have a menu
-;;;     label other than the default menu label, or the menu label widget is not
-;;;     a GtkLabel. The string is owned by the widget and must not be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_menu_label_text" gtk-notebook-get-menu-label-text)
     :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{the child widget of a page of the notebook.}
+  @begin{return}
+    The text of the tab label, or NULL if the widget does not have a menu
+    label other than the default menu label, or the menu label widget is not
+    a GtkLabel. The string is owned by the widget and must not be freed.
+  @end{return}
+  Retrieves the text of the menu label for the page containing child."
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget)))
 
@@ -1533,91 +1457,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_scrollable ()
-;;; 
-;;; gboolean gtk_notebook_get_scrollable (GtkNotebook *notebook);
-;;; 
-;;; Returns whether the tab label area has arrows for scrolling. See
-;;; gtk_notebook_set_scrollable().
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     TRUE if arrows for scrolling are present
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-scrollable))
 
 (defun gtk-notebook-get-scrollable (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @return{TRUE if arrows for scrolling are present}
+  Returns whether the tab label area has arrows for scrolling. See
+  gtk_notebook_set_scrollable()."
   (gtk-notebook-scrollable notebook))
 
 (export 'gtk-notebook-get-scrollable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_show_border ()
-;;; 
-;;; gboolean gtk_notebook_get_show_border (GtkNotebook *notebook);
-;;; 
-;;; Returns whether a bevel will be drawn around the notebook pages. See
-;;; gtk_notebook_set_show_border().
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     TRUE if the bevel is drawn
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-show-border))
 
 (defun gtk-notebook-get-show-border (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @return{TRUE if the bevel is drawn}
+  Returns whether a bevel will be drawn around the notebook pages. See
+  gtk_notebook_set_show_border()."
   (gtk-notebook-show-border notebook))
 
 (export 'gtk-notebook-get-show-border)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_show_tabs ()
-;;; 
-;;; gboolean gtk_notebook_get_show_tabs (GtkNotebook *notebook);
-;;; 
-;;; Returns whether the tabs of the notebook are shown. See
-;;; gtk_notebook_set_show_tabs().
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     TRUE if the tabs are shown
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-show-tabs))
 
 (defun gtk-notebook-get-show-tabs (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @return{TRUE if the tabs are shown}
+  Returns whether the tabs of the notebook are shown. See
+  gtk_notebook_set_show_tabs()."
   (gtk-notebook-show-tabs notebook))
 
 (export 'gtk-notebook-get-show-tabs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_label_text ()
-;;; 
-;;; const gchar * gtk_notebook_get_tab_label_text (GtkNotebook *notebook,
-;;;                                                GtkWidget *child);
-;;; 
-;;; Retrieves the text of the tab label for the page containing child.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a widget contained in a page of notebook
-;;; 
-;;; Returns :
-;;;     the text of the tab label, or NULL if the tab label widget is not a
-;;;     GtkLabel. The string is owned by the widget and must not be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_tab_label_text" gtk-notebook-get-tab-label-text)
     :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a widget contained in a page of notebook}
+  @begin{return}
+    The text of the tab label, or NULL if the tab label widget is not a
+    GtkLabel. The string is owned by the widget and must not be freed.
+  @end{return}
+  Retrieves the text of the tab label for the page containing child."
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget)))
 
@@ -1625,76 +1528,55 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_pos ()
-;;; 
-;;; GtkPositionType gtk_notebook_get_tab_pos (GtkNotebook *notebook);
-;;; 
-;;; Gets the edge at which the tabs for switching pages in the notebook are
-;;; drawn.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     the edge at which the tabs are drawn
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-tab-pos))
 
 (defun gtk-notebook-get-tab-pos (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @return{the edge at which the tabs are drawn}
+  Gets the edge at which the tabs for switching pages in the notebook are
+  drawn."
   (gtk-notebook-tab-pos notebook))
 
 (export 'gtk-notebook-get-tab-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_reorderable ()
-;;; 
-;;; gboolean gtk_notebook_get_tab_reorderable (GtkNotebook *notebook,
-;;;                                            GtkWidget *child);
-;;; 
-;;; Gets whether the tab can be reordered via drag and drop or not.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a child GtkWidget
-;;; 
-;;; Returns :
-;;;     TRUE if the tab is reorderable.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-tab-reorderable))
 
 (defun gtk-notebook-get-tab-reorderable (notebook child)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a child GtkWidget}
+  @return{TRUE if the tab is reorderable.}
+  @short{Gets whether the tab can be reordered via drag and drop or not.}
+
+  Since 2.10"
   (gtk-notebook-child-reorderable notebook child))
 
 (export 'gtk-notebook-get-tab-reorderable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_detachable ()
-;;; 
-;;; gboolean gtk_notebook_get_tab_detachable (GtkNotebook *notebook,
-;;;                                           GtkWidget *child);
-;;; 
-;;; Returns whether the tab contents can be detached from notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; child :
-;;;     a child GtkWidget
-;;; 
-;;; Returns :
-;;;     TRUE if the tab is detachable.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-tab-detachable))
 
 (defun gtk-notebook-get-tab-detachable (notebook child)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[child]{a child GtkWidget}
+  @return{TRUE if the tab is detachable.}
+  @short{Returns whether the tab contents can be detached from notebook.}
+
+  Since 2.10"
   (gtk-notebook-child-detachable notebook child))
 
 (export 'gtk-notebook-get-tab-detachable)
@@ -1743,25 +1625,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_current_page ()
-;;; 
-;;; void gtk_notebook_set_current_page (GtkNotebook *notebook, gint page_num);
-;;; 
-;;; Switches to the page number page_num.
-;;; 
-;;; Note that due to historical reasons, GtkNotebook refuses to switch to a page
-;;; unless the child widget is visible. Therefore, it is recommended to show
-;;; child widgets before adding them to a notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; page_num :
-;;;     index of the page to switch to, starting from 0. If negative, the last
-;;;     page will be used. If greater than the number of pages in the notebook,
-;;;     nothing will be done.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_set_current_page" gtk-notebook-set-current-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[page_num]{index of the page to switch to, starting from 0. If
+    negative, the last page will be used. If greater than the number of pages
+    in the notebook, nothing will be done.}
+  @short{Switches to the page number page_num.}
+
+  Note that due to historical reasons, GtkNotebook refuses to switch to a page
+  unless the child widget is visible. Therefore, it is recommended to show
+  child widgets before adding them to a notebook."
   (notebook (g-object gtk-notebook))
   (page-num :int))
 
@@ -1769,82 +1646,64 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_group_name ()
-;;; 
-;;; void gtk_notebook_set_group_name (GtkNotebook *notebook,
-;;;                                   const gchar *group_name);
-;;; 
-;;; Sets a group name for notebook.
-;;; 
-;;; Notebooks with the same name will be able to exchange tabs via drag and
-;;; drop. A notebook with a NULL group name will not be able to exchange tabs
-;;; with any other notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; group_name :
-;;;     the name of the notebook group, or NULL to unset it
-;;; 
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-set-group-name))
 
 (defun gtk-notebook-set-group-name (notebook group-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[group_name]{the name of the notebook group, or NULL to unset it}
+  @short{Sets a group name for notebook.}
+
+  Notebooks with the same name will be able to exchange tabs via drag and
+  drop. A notebook with a NULL group name will not be able to exchange tabs
+  with any other notebook.
+
+  Since 2.24"
   (setf (gtk-notebook-group-name notebook) group-name))
 
 (export 'gtk-notebook-set-group-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_group_name ()
-;;; 
-;;; const gchar * gtk_notebook_get_group_name (GtkNotebook *notebook);
-;;; 
-;;; Gets the current group name for notebook.
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; Returns :
-;;;     the group name, or NULL if none is set
-;;; 
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-notebook-get-group-name))
 
 (defun gtk-notebook-get-group-name (notebook)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @return{The group name, or NULL if none is set.}
+  @short{Gets the current group name for notebook.}
+
+  Since 2.24"
   (gtk-notebook-group-name notebook))
 
 (export 'gtk-notebook-get-group-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_action_widget ()
-;;; 
-;;; void gtk_notebook_set_action_widget (GtkNotebook *notebook,
-;;;                                      GtkWidget *widget,
-;;;                                      GtkPackType pack_type);
-;;; 
-;;; Sets widget as one of the action widgets. Depending on the pack type the
-;;; widget will be placed before or after the tabs. You can use a GtkBox if you
-;;; need to pack more than one widget on the same side.
-;;; 
-;;; Note that action widgets are "internal" children of the notebook and thus
-;;; not included in the list returned from gtk_container_foreach().
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; widget :
-;;;     a GtkWidget
-;;; 
-;;; pack_type :
-;;;     pack type of the action widget
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_set_action_widget" gtk-notebook-set-action-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[widget]{a GtkWidget}
+  @argument[pack_type]{pack type of the action widget}
+  @begin{short}
+    Sets widget as one of the action widgets. Depending on the pack type the
+    widget will be placed before or after the tabs. You can use a GtkBox if you
+    need to pack more than one widget on the same side.
+  @end{short}
+
+  Note that action widgets are \"internal\" children of the notebook and thus
+  not included in the list returned from gtk_container_foreach().
+
+  Since 2.20"
   (notebook (g-object gtk-notebook))
   (widget (g-object gtk-widget))
   (pack-type gtk-pack-type))
@@ -1853,27 +1712,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_action_widget ()
-;;; 
-;;; GtkWidget * gtk_notebook_get_action_widget (GtkNotebook *notebook,
-;;;                                             GtkPackType pack_type);
-;;; 
-;;; Gets one of the action widgets. See gtk_notebook_set_action_widget().
-;;; 
-;;; notebook :
-;;;     a GtkNotebook
-;;; 
-;;; pack_type :
-;;;     pack type of the action widget to receive
-;;; 
-;;; Returns :
-;;;     The action widget with the given pack_type or NULL when this action
-;;;     widget has not been set.
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_notebook_get_action_widget" gtk-notebook-get-action-widget)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[notebook]{a GtkNotebook}
+  @argument[pack_type]{pack type of the action widget to receive}
+  @begin{return}
+    The action widget with the given pack_type or NULL when this action
+    widget has not been set.
+  @end{return}
+  @begin{short}
+    Gets one of the action widgets. See gtk_notebook_set_action_widget().
+  @end{short}
+
+  Since 2.20"
   (notebook (g-object gtk-notebook))
   (pack-type gtk-pack-type))
 

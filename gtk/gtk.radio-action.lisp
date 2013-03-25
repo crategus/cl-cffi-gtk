@@ -2,13 +2,14 @@
 ;;; gtk.radio-action.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,105 +43,12 @@
 ;;;     gtk_radio_action_join_group
 ;;;     gtk_radio_action_get_current_value
 ;;;     gtk_radio_action_set_current_value
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkAction
-;;;          +----GtkToggleAction
-;;;                +----GtkRadioAction
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkRadioAction implements GtkBuildable.
-;;;
-;;; Properties
-;;;
-;;;   "current-value"            gint                  : Read / Write
-;;;   "group"                    GtkRadioAction*       : Write
-;;;   "value"                    gint                  : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "changed"                                        : No Recursion
-;;;
-;;; Description
-;;;
-;;; A GtkRadioAction is similar to GtkRadioMenuItem. A number of radio actions
-;;; can be linked together so that only one may be active at any one time.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "current-value" property
-;;;
-;;;   "current-value"            gint                  : Read / Write
-;;;
-;;; The value property of the currently active member of the group to which this
-;;; action belongs.
-;;;
-;;; Default value: 0
-;;;
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "group" property
-;;;
-;;;   "group"                    GtkRadioAction*       : Write
-;;;
-;;; Sets a new group for a radio action.
-;;;
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "value" property
-;;;
-;;;   "value"                    gint                  : Read / Write
-;;;
-;;; The value is an arbitrary integer which can be used as a convenient way to
-;;; determine which action in the group is currently active in an ::activate or
-;;; ::changed signal handler. See gtk_radio_action_get_current_value() and
-;;; GtkRadioActionEntry for convenient ways to get and set this property.
-;;;
-;;; Default value: 0
-;;;
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "changed" signal
-;;;
-;;; void user_function (GtkRadioAction *action,
-;;;                     GtkRadioAction *current,
-;;;                     gpointer        user_data)      : No Recursion
-;;;
-;;; The ::changed signal is emitted on every member of a radio group when the
-;;; active member is changed. The signal gets emitted after the ::activate
-;;; signals for the previous and current active members.
-;;;
-;;; action :
-;;;     the action on which the signal is emitted
-;;;
-;;; current :
-;;;     the member of actions group which has just been activated
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRadioAction
-;;;
-;;; struct GtkRadioAction;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRadioAction" gtk-radio-action
@@ -157,6 +65,103 @@
    (value
     gtk-radio-action-value
     "value" "gint" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-radio-action 'type)
+ "@version{2013-3-17}
+  @begin{short}
+    A GtkRadioAction is similar to GtkRadioMenuItem. A number of radio actions
+    can be linked together so that only one may be active at any one time.
+  @end{short}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"changed\" signal}
+      The ::changed signal is emitted on every member of a radio group when the
+      active member is changed. The signal gets emitted after the ::activate
+      signals for the previous and current active members.
+      @begin{pre}
+ lambda (action current)   : No Recursion
+      @end{pre}
+      @begin[code]{table}
+        @entry[action]{the action on which the signal is emitted}
+        @entry[current]{the member of actions group which has just been
+          activated}
+      @end{table}
+      Since 2.4
+  @end{dictionary}
+  @see-slot{gtk-radio-action-current-value}
+  @see-slot{gtk-radio-action-group}
+  @see-slot{gtk-radio-action-value}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "current-value"
+                                               'gtk-radio-action) 't)
+ "The @code{\"current-value\"} property of type @code{:int} (Read / Write)@br{}
+  The value property of the currently active member of the group to which this
+  action belongs. @br{}
+  Default value: 0@br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-action) 't)
+ "The @code{\"group\"} property of type @class{gtk-radio-action} (Write)@br{}
+  Sets a new group for a radio action. @br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-radio-action) 't)
+ "The @code{\"value\"} property of type @code{:int} (Read / Write)@br{}
+  The value is an arbitrary integer which can be used as a convenient way to
+  determine which action in the group is currently active in an ::activate or
+  ::changed signal handler. See gtk_radio_action_get_current_value() and
+  GtkRadioActionEntry for convenient ways to get and set this property. @br{}
+  Default value: 0@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-radio-action-current-value atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-radio-action-current-value 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"current-value\"} of the @class{gtk-radio-action}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-radio-action-group atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-radio-action-group 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"group\"} of the @class{gtk-radio-action}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-radio-action-value atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-radio-action-value 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"value\"} of the @class{gtk-radio-action}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_new ()
@@ -195,36 +200,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_get_group ()
-;;;
-;;; GSList * gtk_radio_action_get_group (GtkRadioAction *action);
-;;;
-;;; Returns the list representing the radio group for this object. Note that the
-;;; returned list is only valid until the next change to the group.
-;;;
-;;; A common way to set up a group of radio group is the following:
-;;;
-;;;   GSList *group = NULL;
-;;;   GtkRadioAction *action;
-;;;
-;;;   while (/* more actions to add */)
-;;;     {
-;;;        action = gtk_radio_action_new (...);
-;;;
-;;;        gtk_radio_action_set_group (action, group);
-;;;        group = gtk_radio_action_get_group (action);
-;;;     }
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Returns :
-;;;     the list representing the radio group for this object
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_action_get_group" gtk-radio-action-get-group)
     (g-slist (g-object gtk-radio-action) :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[action]{the action object}
+  @return{The list representing the radio group for this object.}
+  @begin{short}
+    Returns the list representing the radio group for this object. Note that the
+    returned list is only valid until the next change to the group.
+  @end{short}
+
+  A common way to set up a group of radio group is the following:
+  @begin{pre}
+   GSList *group = NULL;
+   GtkRadioAction *action;
+
+   while (/* more actions to add */)
+     {
+        action = gtk_radio_action_new (...);
+
+        gtk_radio_action_set_group (action, group);
+        group = gtk_radio_action_get_group (action);
+     @}
+  @end{pre}
+  Since 2.4"
   (action (g-object gtk-radio-action)))
 
 (export 'gtk-radio-action-get-group)

@@ -192,8 +192,6 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-box-homogeneous ----------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-homogeneous atdoc:*function-name-alias*)
       "Accessor"
@@ -205,7 +203,7 @@
   @see-function{gtk-box-get-homogeneous}
   @see-function{gtk-box-set-homogeneous}")
 
-;;; --- gtk-box-spacing --------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-spacing atdoc:*function-name-alias*)

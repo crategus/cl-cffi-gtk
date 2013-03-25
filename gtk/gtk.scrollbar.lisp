@@ -38,112 +38,12 @@
 ;;;     GtkScrollbar
 ;;;     
 ;;;     gtk_scrollbar_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkRange
-;;;                      +----GtkScrollbar
-;;;                            +----GtkHScrollbar
-;;;                            +----GtkVScrollbar
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkScrollbar implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;; 
-;;; Style Properties
-;;; 
-;;;   "fixed-slider-length"            gboolean              : Read
-;;;   "has-backward-stepper"           gboolean              : Read
-;;;   "has-forward-stepper"            gboolean              : Read
-;;;   "has-secondary-backward-stepper" gboolean              : Read
-;;;   "has-secondary-forward-stepper"  gboolean              : Read
-;;;   "min-slider-length"              gint                  : Read
-;;; 
-;;; Description
-;;; 
-;;; The GtkScrollbar widget is a horizontal or vertical scrollbar, depending on
-;;; the value of the "orientation" property.
-;;; 
-;;; The position of the thumb in a scrollbar is controlled by the scroll
-;;; adjustments. See GtkAdjustment for the fields in an adjustment - for
-;;; GtkScrollbar, the GtkAdjustment.value field represents the position of the
-;;; scrollbar, which must be between the GtkAdjustment.lower field and
-;;; GtkAdjustment.upper - GtkAdjustment.page_size. The GtkAdjustment.page_size
-;;; field represents the size of the visible scrollable area. The
-;;; GtkAdjustment.step_increment and GtkAdjustment.page_increment fields are
-;;; used when the user asks to step down (using the small stepper arrows) or
-;;; page down (using for example the PageDown key).
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "fixed-slider-length" style property
-;;; 
-;;;   "fixed-slider-length"      gboolean              : Read
-;;; 
-;;; Don't change slider size, just lock it to the minimum length.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-backward-stepper" style property
-;;; 
-;;;   "has-backward-stepper"     gboolean              : Read
-;;; 
-;;; Display the standard backward arrow button.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-forward-stepper" style property
-;;; 
-;;;   "has-forward-stepper"      gboolean              : Read
-;;; 
-;;; Display the standard forward arrow button.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-secondary-backward-stepper" style property
-;;; 
-;;;   "has-secondary-backward-stepper" gboolean              : Read
-;;; 
-;;; Display a second backward arrow button on the opposite end of the scrollbar.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-secondary-forward-stepper" style property
-;;; 
-;;;   "has-secondary-forward-stepper" gboolean              : Read
-;;; 
-;;; Display a second forward arrow button on the opposite end of the scrollbar.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "min-slider-length" style property
-;;; 
-;;;   "min-slider-length"        gint                  : Read
-;;; 
-;;; Minimum length of scrollbar slider.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 21
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkScrollbar
-;;; 
-;;; struct GtkScrollbar;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkScrollbar" gtk-scrollbar
@@ -156,28 +56,77 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-scrollbar 'type)
+ "@version{2013-3-22}
+  @begin{short}
+    The GtkScrollbar widget is a horizontal or vertical scrollbar, depending on
+    the value of the \"orientation\" property.
+  @end{short}
+
+  The position of the thumb in a scrollbar is controlled by the scroll
+  adjustments. See GtkAdjustment for the fields in an adjustment - for
+  GtkScrollbar, the GtkAdjustment.value field represents the position of the
+  scrollbar, which must be between the GtkAdjustment.lower field and
+  GtkAdjustment.upper - GtkAdjustment.page_size. The GtkAdjustment.page_size
+  field represents the size of the visible scrollable area. The
+  GtkAdjustment.step_increment and GtkAdjustment.page_increment fields are
+  used when the user asks to step down (using the small stepper arrows) or
+  page down (using for example the PageDown key).
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"fixed-slider-length\" style property}
+      @code{\"fixed-slider-length\"} of type @code{:boolean} (Read)@br{}
+      Don't change slider size, just lock it to the minimum length. @br{}
+      Default value: @code{nil}
+
+    @subheading{The \"has-backward-stepper\" style property}
+      @code{\"has-backward-stepper\"} of type @code{:boolean} (Read)@br{}
+      Display the standard backward arrow button. @br{}
+      Default value: @em{true}
+
+    @subheading{The \"has-forward-stepper\" style property}
+      @code{\"has-forward-stepper\"} of type @code{:boolean} (Read)@br{}
+      Display the standard forward arrow button. @br{}
+      Default value: @em{true}
+
+    @subheading{The \"has-secondary-backward-stepper\" style property}
+      @code{\"has-secondary-backward-stepper\"} of type @code{:boolean}
+      (Read)@br{}
+      Display a second backward arrow button on the opposite end of the
+      scrollbar. @br{}
+      Default value: @code{nil}
+
+    @subheading{The \"has-secondary-forward-stepper\" style property}
+      @code{\"has-secondary-forward-stepper\"} of type @code{:boolean}
+      (Read)@br{}
+      Display a second forward arrow button on the opposite end of the
+      scrollbar. @br{}
+      Default value: @code{nil}
+
+    @subheading{The \"min-slider-length\" style property}
+      @code{\"min-slider-length\"} of type @code{:int} (Read)@br{}
+      Minimum length of scrollbar slider. @br{}
+      Allowed values: >= 0@br{}
+      Default value: 21
+  @end{dictionary}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_scrollbar_new ()
-;;; 
-;;; GtkWidget * gtk_scrollbar_new (GtkOrientation orientation,
-;;;                                GtkAdjustment *adjustment);
-;;; 
-;;; Creates a new scrollbar with the given orientation.
-;;; 
-;;; orientation :
-;;;     the scrollbar's orientation.
-;;; 
-;;; adjustment :
-;;;     the GtkAdjustment to use, or NULL to create a new adjustment
-;;; 
-;;; Returns :
-;;;     the new GtkScrollbar
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-scrollbar-new))
 
 (defun gtk-scrollbar-new (orientation adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[orientation]{the scrollbar's orientation.}
+  @argument[adjustment]{the GtkAdjustment to use, or NULL to create a new
+    adjustment}
+  @return{the new GtkScrollbar}
+  @short{Creates a new scrollbar with the given orientation.}
+
+  Since 3.0"
   (make-instance 'gtk-scrollbar
                  :orientation orientation
                  :adjustment adjustment))
@@ -262,39 +211,10 @@
 ;;;     GtkVScrollbar
 ;;;     
 ;;;     gtk_vscrollbar_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkRange
-;;;                      +----GtkScrollbar
-;;;                            +----GtkVScrollbar
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkVScrollbar implements AtkImplementorIface, GtkBuildable and
-;;; GtkOrientable.
-;;; 
-;;; Description
-;;; 
-;;; The GtkVScrollbar widget is a widget arranged vertically creating a
-;;; scrollbar. See GtkScrollbar for details on scrollbars. GtkAdjustment
-;;; pointers may be added to handle the adjustment of the scrollbar or it may be
-;;; left NULL in which case one will be created for you. See GtkScrollbar for a
-;;; description of what the fields in an adjustment represent for a scrollbar.
-;;; 
-;;; GtkVScrollbar has been deprecated, use GtkScrollbar instead.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkVScrollbar
-;;; 
-;;; struct GtkVScrollbar;
-;;;
-;;; The GtkVScrollbar struct contains private data and should be accessed using
-;;; the functions below.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -310,28 +230,39 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-vscrollbar 'type)
+ "@version{2013-3-23}
+  @begin{short}
+    The GtkVScrollbar widget is a widget arranged vertically creating a
+    scrollbar. See GtkScrollbar for details on scrollbars. GtkAdjustment
+    pointers may be added to handle the adjustment of the scrollbar or it may be
+    left NULL in which case one will be created for you. See GtkScrollbar for a
+    description of what the fields in an adjustment represent for a scrollbar.
+  @end{short}
+
+  GtkVScrollbar has been deprecated, use GtkScrollbar instead.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_vscrollbar_new ()
-;;; 
-;;; GtkWidget * gtk_vscrollbar_new (GtkAdjustment *adjustment);
-;;; 
-;;; Warning
-;;; 
-;;; gtk_vscrollbar_new has been deprecated since version 3.2 and should not be
-;;; used in newly-written code. Use gtk_scrollbar_new() with
-;;; GTK_ORIENTATION_VERTICAL instead
-;;; 
-;;; Creates a new vertical scrollbar.
-;;; 
-;;; adjustment :
-;;;     the GtkAdjustment to use, or NULL to create a new adjustment
-;;; 
-;;; Returns :
-;;;     the new GtkVScrollbar
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vscrollbar-new))
 
 (defun gtk-vscrollbar-new (adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @argument[adjustment]{the GtkAdjustment to use, or NULL to create a new
+    adjustment}
+  @return{the new GtkVScrollbar}
+  Warning
+
+  gtk_vscrollbar_new has been deprecated since version 3.2 and should not be
+  used in newly-written code. Use gtk_scrollbar_new() with
+  GTK_ORIENTATION_VERTICAL instead
+
+  Creates a new vertical scrollbar."
   (make-instance 'gtk-scrollbar
                  :orientation :vertical
                  :adjustment adjustment))

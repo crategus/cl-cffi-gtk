@@ -148,10 +148,10 @@
   @end{itemize}
   A good rule of thumb is that if there is a stock image for what you want to
   use, use it, otherwise use a named icon. It turns out that internally stock
-  images are generally defined in terms of one or more named icons. (An
+  images are generally defined in terms of one or more named icons. An
   example of the more than one case is icons that depend on writing direction;
   @code{GTK_STOCK_GO_FORWARD} uses the two themed icons
-  @code{\"gtk-stock-go-forward-ltr\"} and @code{\"gtk-stock-go-forward-rtl\"}.)
+  @code{\"gtk-stock-go-forward-ltr\"} and @code{\"gtk-stock-go-forward-rtl\"}.
 
   In many cases, named themes are used indirectly, via @class{gtk-image} or
   stock items, rather than directly, but looking up icons directly is also
@@ -186,12 +186,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (icon-theme) : Run Last
+ lambda (icon-theme)   : Run Last
       @end{pre}
       Emitted when the current icon theme is switched or GTK+ detects that a
       change has occurred in the contents of the current icon theme.
       @begin[code]{table}
-        @entry[icon-theme]{the icon theme}
+        @entry[icon-theme]{The icon theme of @sym{gtk-icon-theme}.}
       @end{table}
   @end{dictionary}")
 
@@ -331,19 +331,20 @@
     (g-object gtk-icon-theme)
  #+cl-cffi-gtk-documentation
  "@version{2014-3-15}
-  @argument[screen]{a @class{gdk-screen} object.}
+  @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
-    A unique @class{gtk-icon-theme} associated with the given screen. This icon
-    theme is associated with the screen and can be used as long as the screen is
-    open. Do not ref or unref it.
+    A unique @class{gtk-icon-theme} associated with the given @arg{screen}. This
+    icon theme is associated with the @arg{screen} and can be used as long as
+    the @arg{screen} is open. Do not ref or unref it.
   @end{return}
   @begin{short}
-    Gets the icon theme object associated with screen; if this function has not
-    previously been called for the given screen, a new icon theme object will be
-    created and associated with the screen. Icon theme objects are fairly
-    expensive to create, so using this function is usually a better choice than
-    calling than @fun{gtk-icon-theme-new} and setting the screen yourself; by
-    using this function a single icon theme object will be shared between users.
+    Gets the icon theme object associated with @arg{screen}; if this function
+    has not previously been called for the given @arg{screen}, a new icon theme
+    object will be created and associated with the @arg{screen}. Icon theme
+    objects are fairly expensive to create, so using this function is usually a
+    better choice than calling than @fun{gtk-icon-theme-new} and setting the
+    screen yourself; by using this function a single icon theme object will be
+    shared between users.
   @end{short}
 
   Since 2.4
@@ -490,7 +491,7 @@
  "@version{2013-3-15}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
   @argument[icon-name]{the name of an icon}
-  @return{@em{true} if @arg{icon-theme} includes an icon for @arg{icon-name}.}
+  @return{@em{True} if @arg{icon-theme} includes an icon for @arg{icon-name}.}
   @begin{short}
     Checks whether an icon theme includes an icon for a particular name.
   @end{short}
@@ -662,7 +663,14 @@
     Gets the list of contexts available within the current hierarchy of icon
     themes.
   @end{short}
-
+  @begin[example]{dictionary}
+    @begin{pre}
+ (gtk-icon-theme-list-contexts (gtk-icon-theme-get-default))
+=>(\"International\" \"Emotes\" \"Places\" \"stock\" \"FileSystems\"
+   \"Devices\" \"Applications\" \"Actions\" \"Categories\" \"Animations\"
+   \"MimeTypes\" \"Stock\" \"Status\" \"Emblems\")
+    @end{pre}
+  @end{dictionary}
   Since 2.12"
   (icon-theme (g-object gtk-icon-theme)))
 
@@ -672,15 +680,20 @@
 ;;; gtk_icon_theme_list_icons ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_icon_theme_list_icons" gtk-icon-theme-list-icons)
+(defcfun ("gtk_icon_theme_list_icons" %gtk-icon-theme-list-icons)
     (g-list :string)
+  (icon-theme (g-object gtk-icon-theme))
+  (context :string))
+
+(defun gtk-icon-theme-list-icons (icon-theme context)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-15}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
   @argument[context]{a string identifying a particular type of icon, or
-    @code{nil} to list allicons}
+    @code{nil} to list all icons}
   @begin{return}
-    A @type{g-list} list holding the names of all the icons in the theme.
+    A list of type @type{g-list} holding the names of all the icons in the
+    theme.
   @end{return}
   @begin{short}
     Lists the icons in the current icon theme. Only a subset of the icons can
@@ -690,8 +703,8 @@
   @end{short}
   
   Since 2.4"
-  (icon-theme (g-object gtk-icon-theme))
-  (context :string))
+  (let ((context (if context context (null-pointer))))
+    (%gtk-icon-theme-list-icons icon-theme context)))
 
 (export 'gtk-icon-theme-list-icons)
 

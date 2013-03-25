@@ -521,6 +521,21 @@
       (gethash 'gtk-movement-step atdoc:*external-symbols*)
  "@version{2013-3-14}
   @short{}
+  @begin{pre}
+(define-g-enum \"GtkMovementStep\" gtk-movement-step
+  (:export t
+   :type-initializer \"gtk_movement_step_get_type\")
+  (:logical-positions 0)
+  (:visual-positions 1)
+  (:words 2)
+  (:display-lines 3)
+  (:display-line-ends 4)
+  (:paragraphs 5)
+  (:paragraph-ends 6)
+  (:pages 7)
+  (:buffer-ends 8)
+  (:horizontal-pages 9))
+  @end{pre}
   @begin[code]{table}
     @entry[:logical-positions]{Move forward or back by graphemes.}
     @entry[:visual-positions}{Move left or right by graphemes.}

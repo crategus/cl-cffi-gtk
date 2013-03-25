@@ -2,13 +2,14 @@
 ;;; gtk.separator-menu-item.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,35 +38,12 @@
 ;;;     GtkSeparatorMenuItem
 ;;;
 ;;;     gtk_separator_menu_item_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkMenuItem
-;;;                                  +----GtkSeparatorMenuItem
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkSeparatorMenuItem implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
-;;;
-;;; Description
-;;;
-;;; The GtkSeparatorMenuItem is a separator used to group items within a menu.
-;;; It displays a horizontal line with a shadow to make it appear sunken into
-;;; the interface.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkSeparatorMenuItem
-;;;
-;;; struct GtkSeparatorMenuItem;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkSeparatorMenuItem" gtk-separator-menu-item
@@ -78,19 +56,27 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-separator-menu-item 'type)
+ "@version{2013-3-23}
+  @begin{short}
+    The GtkSeparatorMenuItem is a separator used to group items within a menu.
+    It displays a horizontal line with a shadow to make it appear sunken into
+    the interface.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_menu_item_new ()
-;;;
-;;; GtkWidget * gtk_separator_menu_item_new (void);
-;;;
-;;; Creates a new GtkSeparatorMenuItem.
-;;;
-;;; Returns :
-;;;     a new GtkSeparatorMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-separator-menu-item-new))
 
 (defun gtk-separator-menu-item-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-23}
+  @return{A new GtkSeparatorMenuItem.}
+  Creates a new GtkSeparatorMenuItem."
   (make-instance 'gtk-separator-menu-item))
 
 (export 'gtk-separator-menu-item-new)

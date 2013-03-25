@@ -384,19 +384,13 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-about-dialog-artists -----------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-artists atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-artists 'function)
  "@version{2013-1-12}
-  @begin{short}
-    Accessor of the slot @code{\"artists\"} of the @class{gtk-about-dialog}
-    class.
-  @end{short}
-  @see-function{gtk-about-dialog-get-artists}
-  @see-function{gtk-about-dialog-set-artists}")
+  Accessor of the slot @code{\"artists\"} of the @class{gtk-about-dialog}
+  class.")
 
 ;;; --- gtk-about-dialog-authors -----------------------------------------------
 

@@ -1294,41 +1294,6 @@
 
 ;;; --- gtk-align --------------------------------------------------------------
 
-(setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum")
-(setf (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2012-12-29}
-  @begin{short}
-    Controls how a widget deals with extra space in a single (x or y) dimension.
-  @end{short}
-
-  Alignment only matters if the widget receives a \"too large\" allocation, for
-  example if you packed the widget with the \"expand\" flag inside a
-  @class{gtk-box}, then the widget might get extra space. If you have for
-  example a 16x16 icon inside a 32x32 space, the icon could be scaled and
-  stretched, it could be centered, or it could be positioned to one side of the
-  space.
-
-  Note that in horizontal context @code{:start} and @code{:align} are
-  interpreted relative to text direction.
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
-(define-g-enum \"GtkAlign\" gtk-align
-  (:export t
-   :type-initializer \"gtk_align_get_type\")
-  (:fill 0)
-  (:start 1)
-  (:end 2)
-  (:center 3))
-    @end{pre}
-  @end{dictionary}
-  @begin{table}
-    @entry[:fill]{stretch to fill all space if possible, center if no meaningful
-      way to stretch}
-    @entry[:start]{snap to left or top side, leaving space on right or bottom}
-    @entry[:end]{snap to right or bottom side, leaving space on left or top}
-    @entry[:center]{center natural width of widget inside the allocation}
-  @end{table}")
-
 ;;; --- gtk-widget-get-halign --------------------------------------------------
 
 (setf (documentation 'gtk-widget-get-halign 'function)

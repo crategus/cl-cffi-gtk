@@ -2,13 +2,14 @@
 ;;; gtk.radio-tool-button.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,53 +43,6 @@
 ;;;     gtk_radio_tool_button_new_with_stock_from_widget
 ;;;     gtk_radio_tool_button_get_group
 ;;;     gtk_radio_tool_button_set_group
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkToolItem
-;;;                                  +----GtkToolButton
-;;;                                        +----GtkToggleToolButton
-;;;                                              +----GtkRadioToolButton
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkRadioToolButton implements AtkImplementorIface, GtkBuildable,
-;;; GtkActivatable and GtkActionable.
-;;;
-;;; Properties
-;;; 
-;;;   "group"                    GtkRadioToolButton*   : Write
-;;; 
-;;; Description
-;;; 
-;;; A GtkRadioToolButton is a GtkToolItem that contains a radio button, that is,
-;;; a button that is part of a group of toggle buttons where only one button can
-;;; be active at a time.
-;;; 
-;;; Use gtk_radio_tool_button_new() to create a new GtkRadioToolButton. Use
-;;; gtk_radio_tool_button_new_from_widget() to create a new GtkRadioToolButton
-;;; that is part of the same group as an existing GtkRadioToolButton. Use
-;;; gtk_radio_tool_button_new_from_stock() or
-;;; gtk_radio_tool_button_new_with_stock_from_widget() create a new
-;;; GtkRadioToolButton containing a stock item.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "group" property
-;;; 
-;;;   "group"                    GtkRadioToolButton*   : Write
-;;; 
-;;; Sets a new group for a radio tool button.
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -110,6 +64,54 @@
   ((group
     gtk-radio-tool-button-group
     "group" "GtkRadioToolButton" nil t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-radio-tool-button 'type)
+ "@version{2013-3-18}
+  @begin{short}
+    A @class{gtk-radio-tool-button} is a @class{gtk-tool-item} that contains a
+    radio button, that is, a button that is part of a group of toggle buttons
+    where only one button can be active at a time.
+  @end{short}
+
+  Use @fun{gtk-radio-tool-button-new} to create a new
+  @sym{gtk-radio-tool-button}. Use @fun{gtk-radio-tool-button-new-from-widget}
+  to create a new @sym{gtk-radio-tool-button} that is part of the same group as
+  an existing @sym{gtk-radio-tool-button}. Use
+  @fun{gtk-radio-tool-button-new-from-stock} or
+  @fun{gtk-radio-tool-button-new-with-stock-from-widget} create a new
+  @sym{gtk-radio-tool-button} containing a stock item.
+  @see-slot{gtk-radio-tool-button-group}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "group"
+                                               'gtk-radio-tool-button) 't)
+ "The @code{\"group\"} property of type @code{gtk-radio-tool-button}
+  (Write)@br{}
+  Sets a new group for a radio tool button.@br{}
+  Since 2.4")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-radio-tool-button-group atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-radio-tool-button-group 'function)
+ "@version{2013-3-18}
+  Accessor of the slot @code{\"group\"} of the @class{gtk-radio-tool-button}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_tool_button_new ()
@@ -191,22 +193,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_tool_button_get_group ()
-;;; 
-;;; GSList * gtk_radio_tool_button_get_group (GtkRadioToolButton *button);
-;;; 
-;;; Returns the radio button group button belongs to.
-;;; 
-;;; button :
-;;;     a GtkRadioToolButton
-;;; 
-;;; Returns :
-;;;     The group button belongs to
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_tool_button_get_group" gtk-radio-tool-button-get-group)
     (g-slist (g-object gtk-radio-tool-button) :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-18}
+  @argument[button]{a @class{gtk-radio-tool-button} widget}
+  @return{The group button belongs to.}
+  @short{Returns the radio button group button belongs to.}
+
+  Since 2.4"
   (button (g-object gtk-radio-tool-button)))
 
 (export 'gtk-radio-tool-button-get-group)

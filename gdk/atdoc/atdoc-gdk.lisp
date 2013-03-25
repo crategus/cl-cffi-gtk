@@ -30,7 +30,6 @@
 
 ;; Load the documentation of the package GDK
 (load "src/atdoc-gdk.window.lisp")
-(load "src/atdoc-gdk.color.lisp")
 (load "src/atdoc-gdk.rectangle.lisp")
 
 ;;; --- End of file atdoc-gdk.lisp ---------------------------------------------

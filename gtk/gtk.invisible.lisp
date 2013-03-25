@@ -2,13 +2,14 @@
 ;;; gtk.invisible.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,48 +41,12 @@
 ;;;     gtk_invisible_new_for_screen
 ;;;     gtk_invisible_set_screen
 ;;;     gtk_invisible_get_screen
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkInvisible
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkInvisible implements AtkImplementorIface and GtkBuildable.
-;;; 
-;;; Properties
-;;; 
-;;;   "screen"                   GdkScreen*            : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; The GtkInvisible widget is used internally in GTK+, and is probably not very
-;;; useful for application developers.
-;;; 
-;;; It is used for reliable pointer grabs and selection handling in the code for
-;;; drag-and-drop.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "screen" property
-;;; 
-;;;   "screen"                   GdkScreen*            : Read / Write
-;;; 
-;;; The screen where this window will be displayed.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkInvisible
-;;; 
-;;; struct GtkInvisible;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkInvisible" gtk-invisible
@@ -95,43 +60,74 @@
     "screen" "GdkScreen" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-invisible 'type)
+ "@version{2013-3-17}
+  @begin{short}
+    The @sym{gtk-invisible} widget is used internally in GTK+, and is probably
+    not very useful for application developers.
+  @end{short}
+
+  It is used for reliable pointer grabs and selection handling in the code for
+  drag-and-drop.
+  @see-slot{gtk-invisible-screen}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-invisible) 't)
+ "The @code{\"screen\"} property of type @class{gdk-screen} (Read / Write)@br{}
+  The screen where this window will be displayed.")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-invisible-screen atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-invisible-screen 'function)
+ "@version{2013-3-17}
+  Accessor of the slot @code{\"screen\"} of the @class{gtk-invisible} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_new ()
-;;; 
-;;; GtkWidget * gtk_invisible_new (void);
-;;; 
-;;; Creates a new GtkInvisible.
-;;; 
-;;; Returns :
-;;;     a new GtkInvisible.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-invisible-new))
 
 (defun gtk-invisible-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @return{A new @class{gtk-invisible} widget.}
+  Creates a new @class{gtk-invisible} widget."
   (make-instance 'gtk-invisible))
 
 (export 'gtk-invisible-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_new_for_screen ()
-;;; 
-;;; GtkWidget * gtk_invisible_new_for_screen (GdkScreen *screen);
-;;; 
-;;; Creates a new GtkInvisible object for a specified screen
-;;; 
-;;; screen :
-;;;     a GdkScreen which identifies on which the new GtkInvisible will be
-;;;     created.
-;;; 
-;;; Returns :
-;;;     a newly created GtkInvisible object
-;;; 
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-invisible-new-for-screen))
 
 (defun gtk-invisible-new-for-screen (screen)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[screen]{a @class{gdk-screen} object which identifies on which the
+    new @class{gtk-invisible} widget will be created}
+  @return{A newly created @class{gtk-invisible} widget.}
+  @begin{short}
+    Creates a new @class{gtk-invisible} widget for a specified @arg{screen}.
+  @end{short}
+
+  Since 2.2"
   (make-instance 'gtk-invisible
                  :screen screen))
 
@@ -139,46 +135,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_set_screen ()
-;;; 
-;;; void gtk_invisible_set_screen (GtkInvisible *invisible, GdkScreen *screen);
-;;; 
-;;; Sets the GdkScreen where the GtkInvisible object will be displayed.
-;;; 
-;;; invisible :
-;;;     a GtkInvisible.
-;;; 
-;;; screen :
-;;;     a GdkScreen.
-;;; 
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-invisible-set-screen))
 
 (defun gtk-invisible-set-screen (invisible screen)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[invisible]{a @class{gtk-invisible} widget}
+  @argument[screen]{a @class{gdk-screen} object}
+  @begin{short}
+    Sets the @class{gdk-screen} object where the @class{gtk-invisible} widget
+    will be displayed.
+  @end{short}
+
+  Since 2.2"
   (setf (gtk-invisible-screen invisible) screen))
 
 (export 'gtk-invisible-set-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_get_screen ()
-;;; 
-;;; GdkScreen * gtk_invisible_get_screen (GtkInvisible *invisible);
-;;; 
-;;; Returns the GdkScreen object associated with invisible
-;;; 
-;;; invisible :
-;;;     a GtkInvisible.
-;;; 
-;;; Returns :
-;;;     the associated GdkScreen. [transfer none]
-;;; 
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-invisible-get-screen))
 
 (defun gtk-invisible-get-screen (invisible)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-17}
+  @argument[invisible]{a @class{gtk-invisible} widget}
+  @return{The associated @class{gdk-screen} object.}
+  @begin{short}
+    Returns the @class{gdk-screen} object associated with invisible.
+  @end{short}
+
+  Since 2.2"
   (gtk-invisible-screen invisible))
 
 (export 'gtk-invisible-get-screen)

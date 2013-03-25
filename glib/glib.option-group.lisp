@@ -803,7 +803,7 @@
 (defun g-option-context-add-main-entries (context entries translation-domain)
   (let ((count (length entries))
         (i -1))
-    (with-foreign-object (array :pointer (+ 1 (length entries)))
+    (with-foreign-object (array :pointer (+ 1 count))
       (dolist (entry entries)
         (setf i (+ i 1))
         (with-foreign-object (ptr 'g-option-entry)

@@ -97,10 +97,10 @@
 ;;; CAIRO_VERSION_STRING
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +cairo-version-string+
-             #.(format nil "~D.~D.~D" +cairo-version-major+
-                                      +cairo-version-minor+
-                                      +cairo-version-micro+)
+(defvar +cairo-version-string+
+        #.(format nil "~D.~D.~D" +cairo-version-major+
+                                 +cairo-version-minor+
+                                 +cairo-version-micro+)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-2}
   @begin{short}

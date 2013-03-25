@@ -2278,6 +2278,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "app-paintable" 'gtk-widget) 't)
  "The @arg{\"app-paintable\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2286,6 +2287,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-default" 'gtk-widget) 't)
  "The @arg{\"can-default\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2294,6 +2296,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-focus" 'gtk-widget) 't)
  "The @arg{\"can-focus\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2302,6 +2305,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "composite-child" 'gtk-widget) 't)
  "The @arg{\"composite-child\"} property of type @code{gboolean} (Read).@br{}
   Whether the widget is part of a composite widget.@br{}
@@ -2309,6 +2313,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "double-buffered" 'gtk-widget) 't)
  "The @arg{\"double-buffered\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2318,6 +2323,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "events" 'gtk-widget) 't)
  "The @arg{\"events\"} property of type @symbol{gdk-event-mask}
   (Read / Write).@br{}
@@ -2327,6 +2333,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expand" 'gtk-widget) 't)
  "The @arg{\"expand\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether to expand in both directions. Setting this sets both properties
@@ -2336,6 +2343,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "halign" 'gtk-widget) 't)
  "The @arg{\"halign\"} property of type @symbol{gtk-align} (Read / Write).@br{}
   How to distribute horizontal space if widget gets extra space.@br{}
@@ -2344,6 +2352,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-default" 'gtk-widget) 't)
  "The @arg{\"has-default\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2352,6 +2361,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-focus" 'gtk-widget) 't)
  "The @arg{\"has-focus\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether the widget has the input focus.@br{}
@@ -2359,6 +2369,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip" 'gtk-widget) 't)
  "The @arg{\"has-tooltip\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2375,6 +2386,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
  "The @arg{\"height-request\"} property of type @code{gint} (Read / Write).@br{}
   Override for height request of the widget, or @code{-1} if natural request
@@ -2384,6 +2396,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand" 'gtk-widget) 't)
  "The @arg{\"hexpand\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether to expand horizontally. See @fun{gtk-widget-set-hexpand}.@br{}
@@ -2392,6 +2405,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
  "The @arg{\"hexpand-set\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2402,6 +2416,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-focus" 'gtk-widget) 't)
  "The @arg{\"is-focus\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether the widget is the focus widget within the toplevel.@br{}
@@ -2409,6 +2424,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin" 'gtk-widget) 't)
  "The @arg{\"margin\"} property of type @code{gint} (Read / Write).@br{}
   Sets all four sides' margin at once. If read, returns max margin on any
@@ -2419,6 +2435,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-bottom" 'gtk-widget) 't)
  "The @arg{\"margin-bottom\"} property of type @code{gint} (Read / Write).@br{}
   Margin on bottom side of widget.@br{}
@@ -2431,6 +2448,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-left" 'gtk-widget) 't)
  "The @arg{\"margin-left\"} property of type @code{gint} (Read / Write).@br{}
   Margin on left side of widget.@br{}
@@ -2443,6 +2461,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-right" 'gtk-widget) 't)
  "The @arg{\"margin-right\"} property of type @code{gint} (Read / Write).@br{}
   Margin on right side of widget.@br{}
@@ -2455,6 +2474,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-top" 'gtk-widget) 't)
  "The @arg{\"margin-top\"} property of type @code{gint} (Read / Write).@br{}
   Margin on top side of widget.@br{}
@@ -2467,6 +2487,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-widget) 't)
  "The @arg{\"name\"} property of type @code{gchar*} (Read / Write).@br{}
   The name of the widget.@br{}
@@ -2474,6 +2495,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "no-show-all" 'gtk-widget) 't)
  "The @arg{\"no-show-all\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2482,6 +2504,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-widget) 't)
  "The @arg{\"parent\"} property of type @class{gtk-container}
   (Read / Write).@br{}
@@ -2489,6 +2512,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "receives-default" 'gtk-widget) 't)
  "The @arg{\"receives-default\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2498,6 +2522,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-widget) 't)
  "The @arg{\"sensitive\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether the widget responds to input.@br{}
@@ -2505,6 +2530,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-widget) 't)
  "The @arg{\"style\"} property of type @class{gtk-style} (Read / Write).@br{}
   The style of the widget, which contains information about how it will look
@@ -2512,6 +2538,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup" 'gtk-widget) 't)
  "The @arg{\"tooltip-markup\"} property of type @code{gchar*}
   (Read / Write)@br{}
@@ -2526,6 +2553,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text" 'gtk-widget) 't)
  "The @arg{\"tooltip-text\"} property of type @code{gchar*} (Read / Write).@br{}
   Sets the text of tooltip to be the given string.
@@ -2539,6 +2567,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "valign" 'gtk-widget) 't)
  "The @arg{\"valign\"} property of type @symbol{gtk-align} (Read / Write).@br{}
   How to distribute vertical space if widget gets extra space.@br{}
@@ -2547,6 +2576,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand" 'gtk-widget) 't)
  "The @arg{\"vexpand\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether to expand vertically. See @fun{gtk-widget-set-vexpand}.@br{}
@@ -2555,6 +2585,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand-set" 'gtk-widget) 't)
  "The @arg{\"vexpand-set\"} property of type @code{gboolean}
   (Read / Write).@br{}
@@ -2565,6 +2596,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-widget) 't)
  "The @arg{\"visible\"} property of type @code{gboolean} (Read / Write).@br{}
   Whether the widget is visible.@br{}
@@ -2572,6 +2604,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-request" 'gtk-widget) 't)
  "The @arg{\"width-request\"} property of type @code{gint} (Read / Write).@br{}
   Override for width request of the widget, or @code{-1} if natural request
@@ -2581,6 +2614,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gtk-widget) 't)
  "The @arg{\"window\"} property of type @class{gdk-window} (Read).@br{}
   The widget's window if it is realized, @code{nil} otherwise.@br{}
@@ -4534,6 +4568,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-direction atdoc:*external-symbols*)
  "@version{2012-12-23}
@@ -8431,37 +8466,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkAlign
-;;;
-;;; typedef enum {
-;;;   GTK_ALIGN_FILL,
-;;;   GTK_ALIGN_START,
-;;;   GTK_ALIGN_END,
-;;;   GTK_ALIGN_CENTER
-;;; } GtkAlign;
-;;;
-;;; Controls how a widget deals with extra space in a single (x or y) dimension.
-;;;
-;;; Alignment only matters if the widget receives a "too large" allocation, for
-;;; example if you packed the widget with the "expand" flag inside a GtkBox,
-;;; then the widget might get extra space. If you have for example a 16x16 icon
-;;; inside a 32x32 space, the icon could be scaled and stretched, it could be
-;;; centered, or it could be positioned to one side of the space.
-;;;
-;;; Note that in horizontal context GTK_ALIGN_START and GTK_ALIGN_END are
-;;; interpreted relative to text direction.
-;;;
-;;; GTK_ALIGN_FILL
-;;;     stretch to fill all space if possible, center if no meaningful way to
-;;;     stretch
-;;;
-;;; GTK_ALIGN_START
-;;;     snap to left or top side, leaving space on right or bottom
-;;;
-;;; GTK_ALIGN_END
-;;;     snap to right or bottom side, leaving space on left or top
-;;;
-;;; GTK_ALIGN_CENTER
-;;;     center natural width of widget inside the allocation
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkAlign" gtk-align
@@ -8471,6 +8475,42 @@
   (:start 1)
   (:end 2)
   (:center 3))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-align atdoc:*external-symbols*)
+ "@version{2013-3-17}
+  @begin{short}
+    Controls how a widget deals with extra space in a single (x or y) dimension.
+  @end{short}
+
+  Alignment only matters if the widget receives a \"too large\" allocation, for
+  example if you packed the widget with the \"expand\" flag inside a
+  @class{gtk-box}, then the widget might get extra space. If you have for
+  example a 16 x 16 icon inside a 32 x 32 space, the icon could be scaled and
+  stretched, it could be centered, or it could be positioned to one side of the
+  space.
+
+  Note that in horizontal context @code{:start} and @code{:end} are
+  interpreted relative to text direction.
+  @begin{pre}
+(define-g-enum \"GtkAlign\" gtk-align
+  (:export t
+   :type-initializer \"gtk_align_get_type\")
+  (:fill 0)
+  (:start 1)
+  (:end 2)
+  (:center 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:fill]{Stretch to fill all space if possible, center if no meaningful
+      way to stretch.}
+    @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
+    @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
+    @entry[:center]{Center natural width of widget inside the allocation.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_halign ()

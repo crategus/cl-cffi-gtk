@@ -863,8 +863,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkStyleContext
-;;;
-;;; typedef struct _GtkStyleContext GtkStyleContext;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkStyleContext" gtk-style-context
@@ -893,17 +891,17 @@
   @end{short}
 
   In order to construct the final style information, @sym{gtk-style-context}
-  queries information from all attached @class{gtk-style-provider}s. Style
-  providers can be either attached explicitly to the context through
-  @fun{gtk-style-context-add-provider}, or to the screen through
-  @fun{gtk-style-context-add-provider-for-screen}. The resulting style is a
-  combination of all providers' information in priority order.
+  queries information from all attached style providers of type
+  @class{gtk-style-provider}. Style providers can be either attached explicitly
+  to the context through @fun{gtk-style-context-add-provider}, or to the screen
+  through @fun{gtk-style-context-add-provider-for-screen}. The resulting style
+  is a combination of all providers' information in priority order.
 
-  For GTK+ widgets, any @class{gtk-style-context} returned by
+  For GTK+ widgets, any @sym{gtk-style-context} returned by
   @fun{gtk-widget-get-style-context} will already have a
-  @class{gtk-widget-path}, a @class{gdk-screen} and @code{RTL/LTR} information
-  set. The style context will be also updated automatically if any of these
-  settings change on the widget.
+  @class{gtk-widget-path}, a @class{gdk-screen} and a text direction
+  @code{RTL/LTR} information set. The style context will be also updated
+  automatically if any of these settings change on the widget.
 
   If you are using the theming layer standalone, you will need to set a widget
   path and a screen yourself to the created style context through
@@ -931,9 +929,9 @@
   @fun{gtk-style-context-pop-animatable-region}. These functions take an
   identifier for the region which must be unique within the style context. For
   simple widgets with a fixed set of animatable regions, using an enumeration
-  works well:
+  works well.
 
-  @b{Example}. Using an enumeration to identify animatable regions
+  @b{Example:} Using an enumeration to identify animatable regions
   @begin{pre}
    enum {
      REGION_ENTRY,
@@ -968,7 +966,7 @@
   animatable region. Using pointers to internal structs is one way to achieve
   this:
 
-  @b{Example.} Using struct pointers to identify animatable regions
+  @b{Example:} Using struct pointers to identify animatable regions
   @begin{pre}
    void
    notebook_draw_tab (GtkWidget    *widget,
@@ -983,7 +981,7 @@
   The widget also needs to notify the style context about a state change for a
   given animatable region so the animation is triggered.
 
-  @b{Example.} Triggering a state change animation on a region
+  @b{Example:} Triggering a state change animation on a region
   @begin{pre}
    gboolean
    notebook_motion_notify (GtkWidget      *widget,
@@ -1115,7 +1113,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "direction"
                                                'gtk-style-context) 't)
- "The @code{\"direction\"} property @symbol{gtk-text-direction}
+ "The @code{\"direction\"} property of type @symbol{gtk-text-direction}
   (Read / Write)@br{}
   Text direction.@br{}
   Default value: @code{:ltr}")
@@ -1136,7 +1134,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 (setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-style-context) 't)
  "The @code{\"screen\"} property of type @class{gdk-screen}
   (Read / Write)@br{}
-  The associated @class{gdk-screen}.")
+  The associated @class{gdk-screen} object.")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
