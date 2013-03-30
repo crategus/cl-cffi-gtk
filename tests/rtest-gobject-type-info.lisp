@@ -58,7 +58,7 @@
   (assert-eql (ash 256 2) (g-type-make-fundamental 256))
   
   (assert-equal "GType" (gtype-name (gtype (g-type-gtype))))
-  (assert-eql 134819824 (gtype-id (gtype (g-type-gtype))))
+  (assert-eql 134837944 (gtype-id (gtype (g-type-gtype))))
   
   (assert-false (g-type-is-abstract (gtype "gboolean")))
   (assert-false (g-type-is-abstract (gtype "GObject")))
@@ -365,7 +365,7 @@
         (name "GtkLabel")
         (gtype (gtype "GtkLabel")))
     ;; gtype-id
-    (assert-eql 134905144 (gtype-id gtype))
+    (assert-eql 134918464 (gtype-id gtype))
     ;; gtype-name
     (assert-equal name (gtype-name gtype))
     ;; gtype-from-id
