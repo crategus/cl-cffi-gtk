@@ -77,28 +77,54 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-test glib-misc
+  ;; Check the types g-size, g-ssize, and g-offset
   (assert-eq :unsigned-long (cffi::canonicalize-foreign-type 'g-size))
   (assert-eq :long (cffi::canonicalize-foreign-type 'g-ssize))
   (assert-eq :unsigned-long-long (cffi::canonicalize-foreign-type 'g-offset))
 
+  ;; g-malloc and g-free
   (let ((mem nil))
     (assert-true (pointerp (setq mem (g-malloc 10))))
     (g-free mem)
     (assert-true (null-pointer-p (g-malloc 0))))
 
+  ;; g-time-val CStruct
+  (assert-eq :pointer (cffi::canonicalize-foreign-type 'g-time-val))
   (with-foreign-object (ptr 'g-time-val)
-    ;; Initialize the slots.
+    ;; Write values into the slots.
     ;; The CStruct is exported, but not the slots.
     (setf (foreign-slot-value ptr 'g-time-val 'glib::tv-sec) 412776
           (foreign-slot-value ptr 'g-time-val 'glib::tv-usec) 132423)
-    ;; Return a list with the values
+    ;; Read the slots.
     (assert-equal
       (list 412776 132423)
       (with-foreign-slots ((glib::tv-sec glib::tv-usec) ptr g-time-val)
         (list glib::tv-sec glib::tv-usec))))
 
+  ;; g-get-current-time returns a g-time-val CStruct
+  (with-foreign-object (result 'g-time-val)
+    (setf result (g-get-current-time))
+    (with-foreign-slots ((glib::tv-sec glib::tv-usec) result g-time-val)
+      (assert-true (integerp glib::tv-sec))
+      (assert-true (integerp glib::tv-usec))))
 
-)
+  ;; g-get-monotonic-time
+  (assert-true (integerp (g-get-monotonic-time)))
+
+  ;; g-get-real-time
+  (assert-true (integerp (g-get-real-time)))
+
+  ;; g-string
+  (assert-eq :pointer (cffi::canonicalize-foreign-type 'g-string))
+  (let ((ptr (convert-to-foreign "Hello" 'g-string)))
+    (assert-true (pointerp ptr))
+    (assert-equal "Hello" (convert-from-foreign ptr 'g-string)))
+
+  ;; g-strv
+  (assert-eq :pointer (cffi::canonicalize-foreign-type 'g-strv))
+  (let ((ptr (convert-to-foreign (list "Hello" "World") 'g-strv)))
+    (assert-true (pointerp ptr))
+    (assert-equal '("Hello" "World") (convert-from-foreign ptr 'g-strv))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -142,10 +168,7 @@
     (assert-false (bt:thread-alive-p *main-thread*))
     (assert-eql 0 *main-thread-level*)
     (assert-true (pointerp *main-loop*))
-    (assert-false (g-main-loop-is-running *main-loop*))
-
-
-)
+    (assert-false (g-main-loop-is-running *main-loop*)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -171,26 +194,6 @@
     (g-set-prgname "GTK Program"))
   (assert-equal "GTK Application" (g-get-application-name))
   (assert-equal "GTK Program" (g-get-prgname)))
-
-;;; ----------------------------------------------------------------------------
-
-#+nil
-(define-test glib-main-loop
-  (let* ((loop (g-main-loop-new (null-pointer) nil))
-         (func (lambda () (g-main-loop-run loop)))
-         (context (g-main-context-default)))
-    (g-thread-new "GTK+ thread" func)
-    (sleep 1)
-    (assert-true (g-main-loop-is-running loop))
-    (assert-true (pointer-eq context (g-main-loop-get-context loop)))
-    (assert-false (g-main-context-pending context))
-    (assert-true (null-pointer-p (g-main-current-source)))
-;    (let* ((source (g-timeout-source-new 1000)))
-;      (g-source-attach source context)
-;      (assert-true (pointer-eq context (g-source-get-context source))))
-    (g-main-loop-quit loop)
-    (sleep 1)
-    (assert-false (g-main-loop-is-running loop))))
 
 ;;; ----------------------------------------------------------------------------
 
