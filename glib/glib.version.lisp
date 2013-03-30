@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GLib 2.32.3 Reference Manual. See <http://www.gtk.org>.
+;;; GLib 2.34.3 Reference Manual. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -31,41 +31,41 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Version Information
-;;; 
+;;;
 ;;; Variables and functions to check the GLib version
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     glib_major_version
 ;;;     glib_minor_version
 ;;;     glib_micro_version
 ;;;     glib_binary_age
 ;;;     glib_interface_age
 ;;;     glib_check_version
-;;;     
+;;;
 ;;;     GLIB_MAJOR_VERSION
 ;;;     GLIB_MINOR_VERSION
 ;;;     GLIB_MICRO_VERSION
 ;;;     GLIB_CHECK_VERSION
-;;;     
+;;;
 ;;;     GLIB_VERSION_2_26
 ;;;     GLIB_VERSION_2_28
 ;;;     GLIB_VERSION_2_30
 ;;;     GLIB_VERSION_2_32
 ;;;     GLIB_VERSION_MIN_REQUIRED
 ;;;     GLIB_VERSION_MAX_ALLOWED
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; GLib provides version information, primarily useful in configure checks for
 ;;; builds that have a configure script. Applications will not typically use the
 ;;; features described here.
-;;; 
+;;;
 ;;; The GLib headers annotate deprecated APIs in a way that produces compiler
 ;;; warnings if these deprecated APIs are used. The warnings can be turned off
 ;;; by defining the macro GLIB_DISABLE_DEPRECATION_WARNINGS before including the
 ;;; glib.h header.
-;;; 
+;;;
 ;;; GLib also provides support for building applications against defined subsets
 ;;; of deprecated or new GLib APIs. Define the macro GLIB_VERSION_MIN_REQUIRED
 ;;; to specify up to what version of GLib you want to receive warnings about
@@ -185,60 +185,60 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_MAJOR_VERSION
-;;; 
+;;;
 ;;; #define GLIB_MAJOR_VERSION 2
-;;; 
+;;;
 ;;; The major version number of the GLib library.
-;;; 
+;;;
 ;;; Like glib_major_version, but from the headers used at application compile
 ;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_MINOR_VERSION
-;;; 
-;;; #define GLIB_MINOR_VERSION 32
-;;; 
+;;;
+;;; #define GLIB_MINOR_VERSION 34
+;;;
 ;;; The minor version number of the GLib library.
-;;; 
+;;;
 ;;; Like gtk_minor_version, but from the headers used at application compile
 ;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_MICRO_VERSION
-;;; 
+;;;
 ;;; #define GLIB_MICRO_VERSION 3
-;;; 
+;;;
 ;;; The micro version number of the GLib library.
-;;; 
+;;;
 ;;; Like gtk_micro_version, but from the headers used at application compile
 ;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_CHECK_VERSION()
-;;; 
+;;;
 ;;; #define GLIB_CHECK_VERSION(major,minor,micro)
-;;; 
+;;;
 ;;; Checks the version of the GLib library that is being compiled against.
-;;; 
+;;;
 ;;; Example 1. Checking the version of the GLib library
-;;; 
+;;;
 ;;; if (!GLIB_CHECK_VERSION (1, 2, 0))
 ;;;   g_error ("GLib version 1.2.0 or above is needed");
-;;; 
+;;;
 ;;; See glib_check_version() for a runtime check.
-;;; 
+;;;
 ;;; major :
 ;;;     the major version to check for
-;;; 
+;;;
 ;;; minor :
 ;;;     the minor version to check for
-;;; 
+;;;
 ;;; micro :
 ;;;     the micro version to check for
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the version of the GLib header files is the same as or newer
 ;;;     than the passed-in version.
@@ -246,81 +246,81 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_VERSION_2_26
-;;; 
+;;;
 ;;; #define GLIB_VERSION_2_26 (G_ENCODE_VERSION (2, 26))
-;;; 
+;;;
 ;;; A macro that evaluates to the 2.26 version of GLib, in a format that can be
 ;;; used by the C pre-processor.
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_VERSION_2_28
-;;; 
+;;;
 ;;; #define GLIB_VERSION_2_28 (G_ENCODE_VERSION (2, 28))
-;;; 
+;;;
 ;;; A macro that evaluates to the 2.28 version of GLib, in a format that can be
 ;;; used by the C pre-processor.
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_VERSION_2_30
-;;; 
+;;;
 ;;; #define GLIB_VERSION_2_30 (G_ENCODE_VERSION (2, 30))
-;;; 
+;;;
 ;;; A macro that evaluates to the 2.30 version of GLib, in a format that can be
 ;;; used by the C pre-processor.
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_VERSION_2_32
-;;; 
+;;;
 ;;; #define GLIB_VERSION_2_32 (G_ENCODE_VERSION (2, 32))
-;;; 
+;;;
 ;;; A macro that evaluates to the 2.32 version of GLib, in a format that can be
 ;;; used by the C pre-processor.
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_VERSION_MIN_REQUIRED
-;;; 
+;;;
 ;;; #define GLIB_VERSION_MIN_REQUIRED (GLIB_VERSION_PREV_STABLE)
-;;; 
+;;;
 ;;; A macro that should be defined by the user prior to including the glib.h
 ;;; header. The definition should be one of the predefined GLib version macros:
 ;;; GLIB_VERSION_2_26, GLIB_VERSION_2_28,...
-;;; 
+;;;
 ;;; This macro defines the lower bound for the GLib API to use.
-;;; 
+;;;
 ;;; If a function has been deprecated in a newer version of GLib, it is possible
 ;;; to use this symbol to avoid the compiler warnings without disabling warning
 ;;; for every deprecated function.
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_VERSION_MAX_ALLOWED
-;;; 
+;;;
 ;;; #define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_MIN_REQUIRED
-;;; 
+;;;
 ;;; A macro that should be defined by the user prior to including the
 ;;; glib.h header. The definition should be one of the predefined GLib version
 ;;; macros: GLIB_VERSION_2_26, GLIB_VERSION_2_28,...
-;;; 
+;;;
 ;;; This macro defines the upper bound for the GLib API to use.
-;;; 
+;;;
 ;;; If a function has been introduced in a newer version of GLib, it is possible
 ;;; to use this symbol to get compiler warnings when trying to use that
 ;;; function.
-;;; 
+;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
@@ -357,7 +357,7 @@
 
 (defun require-library-version (library min-major-version
                                         min-minor-version
-                                        major-version 
+                                        major-version
                                         minor-version)
   (unless (or (> major-version min-major-version)
               (and (= major-version min-major-version)

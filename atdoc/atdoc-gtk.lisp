@@ -46,7 +46,6 @@
 (in-package :glib)
 
 (load "../glib/atdoc/src/atdoc-glib.package.lisp")
-(load "../glib/atdoc/src/atdoc-glib.misc.lisp")
 (load "../glib/atdoc/src/atdoc-glib.threads.lisp")
 (load "../glib/atdoc/src/atdoc-glib.main-loop.lisp")
 (load "../glib/atdoc/src/atdoc-glib.utils.lisp")

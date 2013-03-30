@@ -30,61 +30,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(setf (gethash 'g-main-loop atdoc:*type-name-alias*) "CStruct")
-(setf (documentation 'g-main-loop 'type)
- "@version{2012-12-25}
-  @begin{short}
-    The @sym{g-main-loop} struct is an opaque data type representing the main
-    event loop of a GLib or GTK+ application.
-  @end{short}")
-
-
-
 ;;; ----------------------------------------------------------------------------
-
-
-;;; ----------------------------------------------------------------------------
-
-
-;;; ----------------------------------------------------------------------------
-
-
-
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation 'g-main-loop-quit 'function)
- "@version{2012-12-25}
-  @argument[loop]{a @type{g-main-loop}}
-  @short{Stops a @type{g-main-loop} from running.}
-  Any calls to @fun{g-main-loop-run} for the @arg{loop} will return.
-
-  Note that sources that have already been dispatched when
-  @sym{g-main-loop-quit} is called will still be executed.
-  @see-type{g-main-loop}
-  @see-function{g-main-loop-run}")
-
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation 'g-main-loop-is-running 'function)
- "@version{2012-12-25}
-  @argument[loop]{a @type{g-main-loop}}
-  @return{@code{t} if the main @arg{loop} is currently being run.}
-  @begin{short}
-    Checks to see if the main @arg{loop} is currently being run via
-    @fun{g-main-loop-run}.
-  @end{short}
-  @see-type{g-main-loop}
-  @see-function{g-main-loop-run}")
-
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation 'g-main-loop-get-context 'function)
- "@version{2012-12-25}
-  @argument[loop]{a @type{g-main-loop}}
-  @return{The @type{g-main-context} of @arg{loop}.}
-  @short{Returns the @type{g-main-context} of @arg{loop}.}
-  @see-type{g-main-loop}
-  @see-type{g-main-context}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1227,77 +1173,7 @@
 
 ;;; --- g-source ---------------------------------------------------------------
 
-(setf (gethash 'g-source atdoc:*type-name-alias*) "CStruct")
-(setf (documentation 'g-source 'type)
- "@begin{short}
-    The @sym{g-source} struct is an opaque data type representing an event
-    source.
-  @end{short}")
-
 ;;; --- g-source-funcs ---------------------------------------------------------
-
-(setf (documentation 'g-source-funcs 'type)
- "@version{2013-01-01}
-  @begin{short}
-    The @sym{g-source-funcs} struct contains a table of functions used to handle
-    event sources in a generic manner.
-  @end{short}
-
-  For idle sources, the prepare and check functions always return TRUE to
-  indicate that the source is always ready to be processed. The prepare
-  function also returns a timeout value of 0 to ensure that the poll() call
-  doesn't block (since that would be time wasted which could have been spent
-  running the idle function).
-
-  For timeout sources, the prepare and check functions both return TRUE if the
-  timeout interval has expired. The prepare function also returns a timeout
-  value to ensure that the @code{poll()} call doesn't block too long and miss
-  the next timeout.
-
-  For file descriptor sources, the prepare function typically returns FALSE,
-  since it must wait until @code{poll()} has been called before it knows whether
-  any events need to be processed. It sets the returned timeout to -1 to
-  indicate that it doesn't mind how long the @code{poll()} call blocks. In the
-  check function, it tests the results of the @code{poll()} call to see if the
-  required condition has been met, and returns TRUE if so.
-  @begin{pre}
-(defcstruct g-source-funcs
-  (prepare :pointer)
-  (check :pointer)
-  (dispatch :pointer)
-  (finalize :pointer)
-  (closure-callback :pointer)
-  (closure-marshal :pointer))
-  @end{pre}
-  @begin{table}
-    @begin[prepare ()]{entry}
-      Called before all the file descriptors are polled. If the source can
-      determine that it is ready here (without waiting for the results of the
-      poll() call) it should return TRUE. It can also return a timeout_ value
-      which should be the maximum timeout (in milliseconds) which should be
-      passed to the poll() call. The actual timeout used will be -1 if all
-      sources returned -1, or it will be the minimum of all the timeout_
-      values returned which were >= 0.
-    @end{entry}
-    @begin[check ()]{entry}
-      Called after all the file descriptors are polled. The source should
-      return TRUE if it is ready to be dispatched. Note that some time may
-      have passed since the previous prepare function was called, so the
-      source should be checked again here.
-    @end{entry}
-    @begin[dispatch ()]{entry}
-      Called to dispatch the event source, after it has returned TRUE in
-      either its prepare or its check function. The dispatch function is
-      passed in a callback function and data. The callback function may be
-      NULL if the source was never connected to a callback using
-      g_source_set_callback(). The dispatch function should call the callback
-      function with user_data and whatever additional parameters are needed
-      for this type of event source.
-    @end{entry}
-    @begin[finalize ()]{entry}
-      Called when the source is finalized.
-    @end{entry}
-  @end{table}")
 
 ;;; --- g-source-callback-funcs ------------------------------------------------
 
@@ -1323,21 +1199,6 @@
   @end{dictionary}")
 
 ;;; --- g-source-new -----------------------------------------------------------
-
-(setf (documentation 'g-source-new 'function)
- "@version{2013-01-01}
-  @argument[source-funcs]{structure containing functions that implement the
-    sources behavior.}
-  @argument[struct-size]{size of the GSource structure to create.}
-  @return{the newly-created GSource.}
-  @begin{short}
-    Creates a new GSource structure. The size is specified to allow creating
-    structures derived from GSource that contain additional data.
-  @end{short}
-  The size passed in must be at least sizeof (GSource).
-
-  The source will not initially be associated with any GMainContext and must
-  be added to one with g_source_attach() before it will be executed.")
 
 ;;; --- g-source-ref -----------------------------------------------------------
 

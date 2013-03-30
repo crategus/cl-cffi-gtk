@@ -2,13 +2,15 @@
 ;;; glib.misc.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
+;;; GLib 2.34.3 Reference Manual. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -35,7 +37,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Basic Types
-;;; 
+;;;
 ;;; Standard GLib types, defined for ease-of-use and portability
 ;;;
 ;;; Only the following types are implemented:
@@ -46,7 +48,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Memory Allocation
-;;; 
+;;;
 ;;; The following functions for the general memory-handling are implemented:
 ;;;
 ;;;     g_malloc
@@ -54,24 +56,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Date and Time Functions
-;;; 
+;;;
 ;;; Calendrical calculations and miscellaneous time stuff
 ;;;
-;;; Only the following struct is implemented:
+;;; Only the following struct and functions are implemented:
 ;;;
 ;;;     GTimeVal
+;;;
+;;;     g_get_current_time
+;;;     g_get_monotonic_time
+;;;     g_get_real_time
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; String Utility Functions - Various string-related functions
 ;;;
 ;;; Implemented is:
-;;; 
+;;;
 ;;;     GString
 ;;;     GStrv
 ;;;
 ;;;     g_strdup        *not exported*
 ;;; ----------------------------------------------------------------------------
-;;; 
+;;;
 ;;; Doubly-Linked Lists
 ;;;
 ;;; Linked lists containing integer values or pointers to data, with the ability
@@ -86,7 +92,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Singly-Linked Lists
-;;; 
+;;;
 ;;; Linked lists containing integer values or pointers to data, limited to
 ;;; iterating over the list in one direction
 ;;;
@@ -103,17 +109,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gsize
-;;; 
-;;; typedef unsigned long gsize;
-;;; 
-;;; An unsigned integer type of the result of the sizeof operator,
-;;; corresponding to the size_t type defined in C99. This type is wide enough
-;;; to hold the numeric value of a pointer, so it is usually 32bit wide on a
-;;; 32bit platform and 64bit wide on a 64bit platform. Values of this type can
-;;; range from 0 to G_MAXSIZE.
-;;; 
-;;; To print or scan values of this type, use G_GSIZE_MODIFIER and/or
-;;; G_GSIZE_FORMAT.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -127,96 +122,89 @@
 
 (export 'g-size)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-size 'type)
+ "@version{2013-3-30}
+  @begin{short}
+    An unsigned integer type of the result of the sizeof operator,
+    corresponding to the @code{size_t} type defined in C99.
+  @end{short}
+  This type is wide enough to hold the numeric value of a pointer, so it is
+  usually 32bit wide on a 32bit platform and 64bit wide on a 64bit platform.
+  Values of this type can range from 0 to @code{G_MAXSIZE}.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; gssize
-;;; 
-;;; typedef signed long gssize;
-;;; 
-;;; A signed variant of gsize, corresponding to the ssize_t defined on most
-;;; platforms. Values of this type can range from G_MINSSIZE to G_MAXSSIZE.
-;;; 
-;;; To print or scan values of this type, use G_GSIZE_MODIFIER and/or
-;;; G_GSSIZE_FORMAT.
 ;;; ----------------------------------------------------------------------------
 
 (defctype g-ssize :long)
 
 (export 'g-ssize)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-ssize 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    A signed variant of @type{g-size}, corresponding to the @code{ssize_t}
+    defined on most platforms.
+  @end{short}
+  Values of this type can range from @code{G_MINSSIZE} to @code{G_MAXSSIZE}.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; goffset
-;;; 
-;;; typedef gint64 goffset;
-;;; 
-;;; A signed integer type that is used for file offsets, corresponding to the
-;;; C99 type off64_t. Values of this type can range from G_MINOFFSET to
-;;; G_MAXOFFSET.
-;;; 
-;;; To print or scan values of this type, use G_GOFFSET_MODIFIER and/or
-;;; G_GOFFSET_FORMAT.
-;;;
-;;; Since: 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defctype g-offset :uint64)
 
 (export 'g-offset)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-offset 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    A signed integer type that is used for file offsets, corresponding to the
+    C99 type @code{off64_t}.
+  @end{short}
+  Values of this type can range from @code{G_MINOFFSET} to @code{G_MAXOFFSET}.
+
+  Since: 2.14")
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_malloc ()
-;;; 
-;;; gpointer g_malloc (gsize n_bytes)
-;;; 
-;;; Allocates n_bytes bytes of memory. If n_bytes is 0 it returns NULL.
-;;; 
-;;; n-bytes :
-;;;     the number of bytes to allocate
-;;; 
-;;; Returns :
-;;;     a pointer to the allocated memory
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_malloc" g-malloc) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-30}
+  @argument[n-bytes]{the number of bytes to allocate}
+  @return{A foreign pointer to the allocated memory.}
+  @begin{short}
+    Allocates @arg{n-bytes} bytes of memory. If @arg{n-bytes} is 0
+    @sym{g-malloc} returns a foreign @code{null}-pointer.
+  @end{short}
+  @see{g-free}"
   (n-bytes g-size))
 
 (export 'g-malloc)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_free ()
-;;; 
-;;; void g_free (gpointer mem)
-;;; 
-;;; Frees the memory pointed to by mem. If mem is NULL it simply returns.
-;;; 
-;;; mem :
-;;;     the memory to free
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_free" g-free) :void
+ "@version{2013-1-15}
+  @argument[mem]{a foreign pointer to the memory to free}
+  @begin{short}
+    Frees the memory pointed to by the foreign pointer @arg{mem}. If @arg{mem}
+    is a @code{null}-pointer @sym{g-free} simply returns.
+  @end{short}
+  @see{g-malloc}"
   (mem :pointer))
 
 (export 'g-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTimeVal
-;;; 
-;;; struct GTimeVal {
-;;;   glong tv_sec;
-;;;   glong tv_usec;
-;;; };
-;;; 
-;;; Represents a precise time, with seconds and microseconds. Similar to the
-;;; struct timeval returned by the gettimeofday() UNIX call.
-;;; 
-;;; GLib is attempting to unify around the use of 64bit integers to represent
-;;; microsecond-precision time. As such, this type will be removed from a
-;;; future version of GLib.
-;;; 
-;;; glong tv_sec;
-;;;     seconds
-;;; 
-;;; glong tv_usec;
-;;;     microseconds
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-time-val
@@ -224,6 +212,31 @@
   (tv-usec :long))
 
 (export 'g-time-val)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-time-val atdoc:*type-name-alias*) "CStruct"
+      (documentation 'g-time-val 'type)
+ "@version{2013-3-30}
+  @begin{short}
+    Represents a precise time, with seconds and microseconds.
+  @end{short}
+  Similar to the struct @code{timeval} returned by the @code{gettimeofday()}
+  UNIX call.
+
+  GLib is attempting to unify around the use of 64bit integers to represent
+  microsecond-precision time. As such, this type will be removed from a
+  future version of GLib.
+  @begin{pre}
+(defcstruct g-time-val
+  (tv-sec :long)
+  (tv-usec :long))
+  @end{pre}
+  @begin[code]{table}
+    @entry[tv-sec]{seconds}
+    @entry[tv-usec]{microseconds}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_current_time ()
@@ -243,8 +256,8 @@
   You may find @fun{g-get-real-time} to be more convenient.
   @see-function{g-get-real-time}"
   (with-foreign-object (result 'g-time-val)
-    (when (%g-get-current-time result)
-      result)))
+    (%g-get-current-time result)
+    result))
 
 (export 'g-get-current-time)
 
@@ -302,26 +315,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GString
-;;; 
-;;; struct GString {
-;;;   gchar  *str;
-;;;   gsize   len;    
-;;;   gsize   allocated_len;
-;;; };
-;;; 
-;;; The GString struct contains the public fields of a GString.
-;;; 
-;;; gchar *str;
-;;;     points to the character data. It may move as text is added. The str
-;;;     field is null-terminated and so can be used as an ordinary C string.
-;;; 
-;;; gsize len;
-;;;     contains the length of the string, not including the terminating nul
-;;;     byte.
-;;; 
-;;; gsize allocated_len;
-;;;     the number of bytes that can be stored in the string before it needs to
-;;;     be reallocated. May be larger than len.
 ;;; ----------------------------------------------------------------------------
 
 ;; A type that it almost like :string but uses g_malloc and g_free
@@ -351,12 +344,29 @@
 
 (export 'g-string)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-string 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    A type that is almost like the foreign CFFI type @code{:string} but uses the
+    GLib functions @fun{g-malloc} and @fun{g-free} to allocate and free memory.
+  @end{short}
+
+  The @sym{g-string} type performs automatic conversion between Lisp and C
+  strings. Note that, in the case of functions the converted C string will
+  have dynamic extent (i.e. it will be automatically freed after the foreign
+  function returns).
+
+  In addition to Lisp strings, this type will accept foreign pointers and pass
+  them unmodified.
+
+  A method for free-translated-object is specialized for this type. So, for
+  example, foreign strings allocated by this type and passed to a foreign
+  function will be freed after the function returns.
+  @see-type{g-strv}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; GStrv
-;;; 
-;;; typedef gchar** GStrv;
-;;; 
-;;; A C representable type name for G_TYPE_STRV.
 ;;; ----------------------------------------------------------------------------
 
 ;;; Another string type g-strv
@@ -399,44 +409,39 @@
 
 (export 'g-strv)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-strv 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    This type represents and performs automatic conversion between a list of
+    Lisp strings and an array of C strings of type @type{g-string}.
+  @end{short}
+
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq str (convert-to-foreign (list \"Hello\" \"World\") 'g-strv))
+=> #.(SB-SYS:INT-SAP #X01541998)
+ (convert-from-foreign str 'g-strv)
+=> (\"Hello\" \"World\")
+    @end{pre}
+  @end{dictionary}
+  @see-type{g-string}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_strdup ()
-;;; 
-;;; gchar * g_strdup (const gchar *str)
-;;; 
-;;; Duplicates a string. If str is NULL it returns NULL. The returned string
-;;; should be freed with g_free() when no longer needed.
-;;; 
-;;; str :
-;;;     the string to duplicate
-;;; 
-;;; Returns :
-;;;     a newly-allocated copy of str
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_strdup" g-strdup) :pointer
+ #+cl-cffi-gtk-documentation
+ "@argument[str]{the string to duplicate}
+  @return{a newly-allocated copy of @arg{str}}
+  @short{Duplicates a string.}
+  If @arg{str} is @code{NULL} it returns @code{NULL}. The returned string should
+  be freed with @fun{g-free} when no longer needed."
   (str (:string :free-to-foreign t)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GList
-;;; 
-;;; struct GList {
-;;;   gpointer data;
-;;;   GList   *next;
-;;;   GList   *prev;
-;;; };
-;;; 
-;;; The GList struct is used for each element in a doubly-linked list.
-;;; 
-;;; gpointer data;
-;;;     holds the element's data, which can be a pointer to any kind of data,
-;;;     or any integer value using the Type Conversion Macros.
-;;; 
-;;; GList *next;
-;;;     contains the link to the next element in the list.
-;;; 
-;;; GList *prev;
-;;;     contains the link to the previous element in the list.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %g-list
@@ -474,61 +479,51 @@
 
 (export 'g-list)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-list 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    The @sym{g-list} type represents a C doubly-linked list with elements of
+    type @code{GList} struct.
+  @end{short}
+  The type @sym{g-list} performs automatic conversion from a C list to a Lisp
+  list. The conversion from a Lisp list to a C reprensentation is not
+  implemented.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_free ()
-;;; 
-;;; void g_list_free (GList *list)
-;;; 
-;;; Frees all of the memory used by a GList. The freed elements are returned to
-;;; the slice allocator.
-;;; 
-;;; Note
-;;; 
-;;; If list elements contain dynamically-allocated memory, you should either
-;;; use g_list_free_full() or free them manually first.
-;;; 
-;;; lst :
-;;;     a GList
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_list_free" g-list-free) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-24}
+  @argument[lst]{a @code{GList}}
+  @begin{short}
+    Frees all of the memory used by a GList. The freed elements are returned to
+    the slice allocator.
+  @end{short}
+  @begin[Note]{dictionary}
+    If list elements contain dynamically-allocated memory, you should either
+    use @code{g_list_free_full()} or free them manually first.
+  @end{dictionary}"
   (lst (:pointer %g-list)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_next ()
-;;; 
-;;; #define g_list_next(list)
-;;; 
-;;; A convenience macro to get the next element in a GList.
-;;; 
-;;; list :
-;;;     an element in a GList.
-;;; 
-;;; Returns :
-;;;     the next element, or NULL if there are no more elements.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-list-next (lst)
+ #+cl-cffi-gtk-documentation
+ "@version{2012-12-24}
+  @argument[list]{an element in a GList.}
+  @return{the next element, or NULL if there are no more elements.}
+  @short{A convenience macro to get the next element in a GList.}"
   (if (null-pointer-p lst)
       (null-pointer)
       (foreign-slot-value lst '%g-list 'next)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSList
-;;; 
-;;; struct GSList {
-;;;   gpointer data;
-;;;   GSList  *next;
-;;; };
-;;; 
-;;; The GSList struct is used for each element in the singly-linked list.
-;;; 
-;;; gpointer data;
-;;;     holds the element's data, which can be a pointer to any kind of data,
-;;;     or any integer value using the Type Conversion Macros.
-;;; 
-;;; GSList *next;
-;;;     contains the link to the next element in the list.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct %g-slist
@@ -578,57 +573,53 @@
 
 (export 'g-slist)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-slist 'type)
+ "@version{2013-1-15}
+  @begin{short}
+    The @sym{g-slist} type represents a C singly-linked list with elements of
+    type @code{GSList} struct.
+  @end{short}
+  The type @sym{g-slist} performs automatic conversion from a C list to a Lisp
+  list. The conversion from a Lisp list to a C reprensentation is not
+  implemented.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_slist_alloc ()
-;;; 
-;;; GSList * g_slist_alloc (void)
-;;; 
-;;; Allocates space for one GSList element. It is called by the
-;;; g_slist_append(), g_slist_prepend(), g_slist_insert() and
-;;; g_slist_insert_sorted() functions and so is rarely used on its own.
-;;; 
-;;; Returns :
-;;;     a pointer to the newly-allocated GSList element.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_slist_alloc" g-slist-alloc)
+ #+cl-cffi-gtk-documentation
+ "@return{a pointer to the newly-allocated GSList element.}
+  @short{Allocates space for one GSList element.}
+  It is called by the g_slist_append(), g_slist_prepend(), g_slist_insert() and
+  g_slist_insert_sorted() functions and so is rarely used on its own."
   (:pointer %g-slist))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_slist_free ()
-;;; 
-;;; void g_slist_free (GSList *list)
-;;; 
-;;; Frees all of the memory used by a GSList. The freed elements are returned
-;;; to the slice allocator.
-;;; 
-;;; Note
-;;; 
-;;; If list elements contain dynamically-allocated memory, you should either
-;;; use g_slist_free_full() or free them manually first.
-;;; 
-;;; lst :
-;;;     a GSList
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_slist_free" g-slist-free) :void
+ #+cl-cffi-gtk-documentation
+ "@argument[lst]{a GSList}
+  @short{Frees all of the memory used by a GSList.}
+  The freed elements are returned to the slice allocator.
+  @begin[Note]{dictionary}
+    If list elements contain dynamically-allocated memory, you should either
+    use g_slist_free_full() or free them manually first.
+  @end{dictionary}"
   (lst (:pointer %g-slist)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_slist_next ()
-;;; 
-;;; #define g_slist_next(slist)
-;;; 
-;;; A convenience macro to get the next element in a GSList.
-;;; 
-;;; slist :
-;;;     an element in a GSList.
-;;; 
-;;; Returns :
-;;;     the next element, or NULL if there are no more elements.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-slist-next (lst)
+ #+cl-cffi-gtk-documentation
+ "@argument[slist]{an element in a GSList.}
+  @return{the next element, or NULL if there are no more elements.}
+  @short{A convenience macro to get the next element in a GSList.}"
   (if (null-pointer-p lst)
       (null-pointer)
       (foreign-slot-value lst '%g-slist 'next)))
