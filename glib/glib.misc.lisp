@@ -588,13 +588,12 @@
 ;;; g_slist_alloc ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_slist_alloc" g-slist-alloc)
+(defcfun ("g_slist_alloc" g-slist-alloc) (:pointer %g-slist)
  #+cl-cffi-gtk-documentation
  "@return{a pointer to the newly-allocated GSList element.}
   @short{Allocates space for one GSList element.}
   It is called by the g_slist_append(), g_slist_prepend(), g_slist_insert() and
-  g_slist_insert_sorted() functions and so is rarely used on its own."
-  (:pointer %g-slist))
+  g_slist_insert_sorted() functions and so is rarely used on its own.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_slist_free ()
