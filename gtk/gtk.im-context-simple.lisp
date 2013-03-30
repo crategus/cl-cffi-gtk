@@ -2,9 +2,10 @@
 ;;; gtk.im-context-simple.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,21 +37,12 @@
 ;;;     gtk_im_context_simple_add_table
 ;;;
 ;;;     GTK_MAX_COMPOSE_LEN
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkIMContext
-;;;          +----GtkIMContextSimple
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIMContextSimple
-;;;
-;;; struct GtkIMContextSimple;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkIMContextSimple" gtk-im-context-simple
@@ -59,6 +51,13 @@
    :interfaces nil
    :type-initializer "gtk_im_context_simple_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-im-context-simple 'type)
+ "@version{2013-3-28}
+  An input method context supporting table-based input methods")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_im_context_simple_new ()

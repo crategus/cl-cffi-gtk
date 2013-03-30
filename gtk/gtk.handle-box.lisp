@@ -47,61 +47,6 @@
 ;;;     gtk_handle_box_get_child_detached
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "child-attached" signal
-;;;
-;;; void user_function (GtkHandleBox *handlebox,
-;;;                     GtkWidget    *widget,
-;;;                     gpointer      user_data)      : Run First
-;;;
-;;; Warning
-;;;
-;;; GtkHandleBox::child-attached has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; This signal is emitted when the contents of the handlebox are reattached to
-;;; the main window.
-;;;
-;;; handlebox :
-;;;     the object which received the signal.
-;;;
-;;; widget :
-;;;     the child widget of the handlebox. (this argument provides no extra
-;;;     information and is here only for backwards-compatibility)
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "child-detached" signal
-;;;
-;;; void user_function (GtkHandleBox *handlebox,
-;;;                     GtkWidget    *widget,
-;;;                     gpointer      user_data)      : Run First
-;;;
-;;; Warning
-;;;
-;;; GtkHandleBox::child-detached has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. GtkHandleBox has been deprecated.
-;;;
-;;; This signal is emitted when the contents of the handlebox are detached from
-;;; the main window.
-;;;
-;;; handlebox :
-;;;     the object which received the signal.
-;;;
-;;; widget :
-;;;     the child widget of the handlebox. (this argument provides no extra
-;;;     information and is here only for backwards-compatibility)
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
-
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
@@ -120,9 +65,6 @@
    (handle-position
     gtk-handle-box-handle-position
     "handle-position" "GtkPositionType" t t)
-   (shadow
-    gtk-handle-box-shadow
-    "shadow" "GtkShadowType" t t)
    (shadow-type
     gtk-handle-box-shadow-type
     "shadow-type" "GtkShadowType" t t)
@@ -137,17 +79,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-handle-box 'type)
- "@version{2013-3-8}
+ "@version{2013-3-26}
   @begin{short}
-    The GtkHandleBox widget allows a portion of a window to be \"torn off\". It
-    is a bin widget which displays its child and a handle that the user can drag
-    to tear off a separate window (the float window) containing the child
-    widget. A thin ghost is drawn in the original location of the handlebox. By
-    dragging the separate window back to its original location, it can be
-    reattached.
+    The @sym{gtk-handle-box} widget allows a portion of a window to be
+    \"torn off\". It is a bin widget which displays its child and a handle that
+    the user can drag to tear off a separate window (the float window)
+    containing the child widget. A thin ghost is drawn in the original location
+    of the handlebox. By dragging the separate window back to its original
+    location, it can be reattached.
   @end{short}
 
-  When reattaching, the ghost and float window, must be aligned along one of
+  When reattaching, the ghost and float window must be aligned along one of
   the edges, the snap edge. This either can be specified by the application
   programmer explicitely, or GTK+ will pick a reasonable default based on the
   handle position.
@@ -155,23 +97,53 @@
   To make detaching and reattaching the handlebox as minimally confusing as
   possible to the user, it is important to set the snap edge so that the snap
   edge does not move when the handlebox is deattached. For instance, if the
-  handlebox is packed at the bottom of a VBox, then when the handlebox is
-  detached, the bottom edge of the handlebox's allocation will remain fixed as
-  the height of the handlebox shrinks, so the snap edge should be set to
-  GTK_POS_BOTTOM.
+  handlebox is packed at the bottom of a @class{gtk-vbox}, then when the
+  handlebox is detached, the bottom edge of the handlebox's allocation will
+  remain fixed as the height of the handlebox shrinks, so the snap edge should
+  be set to @code{:bottom}.
 
-  Note
+  @subheading{Note}
+    @sym{gtk-handle-box} has been deprecated. It is very specialized, lacks
+    features to make it useful and most importantly does not fit well into
+    modern application design. Do not use it. There is no replacement.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"child-attached\" signal}
+      @begin{pre}
+ lambda (handlebox widget)   : Run First
+      @end{pre}
+      @b{Warning}@br{}
+      \"child-attached\" has been deprecated since version 3.4 and
+      should not be used in newly-written code. @sym{gtk-handle-box} has been
+      deprecated.
 
-  GtkHandleBox has been deprecated. It is very specialized, lacks features to
-  make it useful and most importantly does not fit well into modern
-  application design. Do not use it. There is no replacement.
+      This signal is emitted when the contents of the handlebox are reattached
+      to the main window.
+      @begin[code]{table}
+        @entry[handlebox]{The object which received the signal.}
+        @entry[widget]{The child widget of the handlebox. This argument provides
+          no extra information and is here only for backwards-compatibility.}
+      @end{table}
+    @subheading{The \"child-detached\" signal}
+      @begin{pre}
+ lambda (handlebox widget)   : Run First
+      @end{pre}
+      @b{Warning}@br{}
+      \"child-detached\" has been deprecated since version 3.4 and should not be
+      used in newly-written code. @sym{gtk-handle-box} has been deprecated.
 
+      This signal is emitted when the contents of the handlebox are detached
+      from the main window.
+      @begin[code]{table}
+        @entry[handlebox]{The object which received the signal.}
+        @entry[widget]{The child widget of the handlebox. This argument provides
+          no extra information and is here only for backwards-compatibility.}
+      @end{table}
+  @end{dictionary}
   @see-slot{gtk-handle-box-child-detached}
   @see-slot{gtk-handle-box-handle-position}
   @see-slot{gtk-handle-box-shadow-type}
   @see-slot{gtk-handle-box-snap-edge}
-  @see-slot{gtk-handle-box-snap-edge-set}
-")
+  @see-slot{gtk-handle-box-snap-edge-set}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -180,8 +152,9 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "child-detached" 'gtk-handle-box) 't)
- "The @code{\"child-detached\"} property of type @code{gboolean} (Read)@br{}
+(setf (documentation (atdoc:get-slot-from-name "child-detached"
+                                               'gtk-handle-box) 't)
+ "The @code{\"child-detached\"} property of type @code{:boolean} (Read)@br{}
   A boolean value indicating whether the handlebox's child is attached or
   detached.@br{}
   Default value: @code{nil}")
@@ -189,39 +162,42 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "handle-position" 'gtk-handle-box) 't)
- "The @code{\"handle-position\"} property of type @code{GtkPositionType}
+(setf (documentation (atdoc:get-slot-from-name "handle-position"
+                                               'gtk-handle-box) 't)
+ "The @code{\"handle-position\"} property of type @symbol{gtk-position-type}
   (Read / Write)@br{}
   Position of the handle relative to the child widget.@br{}
-  Default value: GTK_POS_LEFT")
+  Default value: @code{:left}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-handle-box) 't)
- "The @code{\"shadow-type\"} property of type @code{GtkShadowType}
+(setf (documentation (atdoc:get-slot-from-name "shadow-type"
+                                               'gtk-handle-box) 't)
+ "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
   (Read / Write)@br{}
   Appearance of the shadow that surrounds the container.@br{}
-  Default value: GTK_SHADOW_OUT")
+  Default value: @code{:out}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "snap-edge" 'gtk-handle-box) 't)
- "The @code{\"snap-edge\"} property of type @code{GtkPositionType}
+ "The @code{\"snap-edge\"} property of type @symbol{gtk-position-type}
   (Read / Write)@br{}
   Side of the handlebox that's lined up with the docking point to dock the
   handlebox.@br{}
-  Default value: GTK_POS_TOP")
+  Default value: @code{:top}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "snap-edge-set" 'gtk-handle-box) 't)
- "The @code{\"snap-edge-set\"} property of type @code{gboolean}
+(setf (documentation (atdoc:get-slot-from-name "snap-edge-set"
+                                               'gtk-handle-box) 't)
+ "The @code{\"snap-edge-set\"} property of type @code{:boolean}
   (Read / Write)@br{}
-  Whether to use the value from the snap_edge property or a value derived from
-  handle_position.@br{}
+  Whether to use the value from the @code{\"snap-edge\"} property or a value
+  derived from @code{\"handle-position\"}.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -234,11 +210,9 @@
 (setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-child-detached 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the slot @code{\"child-detached\"} of the @class{gtk-handle-box}
-    class.
-  @end{short}")
+ "@version{2013-3-26}
+  Accessor of the slot @code{\"child-detached\"} of the @class{gtk-handle-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -246,11 +220,9 @@
 (setf (gethash 'gtk-handle-box-handle-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-handle-position 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the slot @code{\"handle-position\"} of the
-    @class{gtk-handle-box} class.
-  @end{short}")
+ "@version{2013-3-26}
+  Accessor of the slot @code{\"handle-position\"} of the @class{gtk-handle-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -258,11 +230,9 @@
 (setf (gethash 'gtk-handle-box-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-shadow-type 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-handle-box}
-    class.
-  @end{short}")
+ "@version{2013-3-26}
+  Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-handle-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -270,11 +240,9 @@
 (setf (gethash 'gtk-handle-box-snap-edge atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the slot @code{\"snap-edge\"} of the @class{gtk-handle-box}
-    class.
-  @end{short}")
+ "@version{2013-3-26}
+  Accessor of the slot @code{\"snap-edge\"} of the @class{gtk-handle-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -282,11 +250,9 @@
 (setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge-set 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the slot @code{\"snap-edge-set\"} of the @class{gtk-handle-box}
-    class.
-  @end{short}")
+ "@version{2013-3-26}
+  Accessor of the slot @code{\"snap-edge-set\"} of the @class{gtk-handle-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_handle_box_new ()
@@ -456,6 +422,5 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- gtk.handle-box.lisp ----------------------------------------------------

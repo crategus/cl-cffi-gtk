@@ -136,7 +136,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-indicator" 'gtk-toggle-button) 't)
+(setf (documentation (atdoc:get-slot-from-name "draw-indicator"
+                                               'gtk-toggle-button) 't)
  "The @code{\"draw-indicator\"} property of type @code{gboolean}
   (Read / Write)@br{}
   If the toggle part of the button is displayed.@br{}
@@ -145,7 +146,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inconsistent" 'gtk-toggle-button) 't)
+(setf (documentation (atdoc:get-slot-from-name "inconsistent"
+                                               'gtk-toggle-button) 't)
  "The ´@code{\"inconsistent\"} property of type @code{gboolean}
   (Read / Write)@br{}
   If the toggle button is in an \"in between\" state.@br{}
@@ -158,7 +160,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-toggle-button-active atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-toggle-button-active atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-toggle-button-active 'function)
  "@version{2013-2-4}
   @begin{short}
@@ -166,7 +169,8 @@
   @end{short}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-toggle-button-draw-indicator atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-toggle-button-draw-indicator atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-toggle-button-draw-indicator 'function)
  "@version{2013-2-4}
   @begin{short}
@@ -175,7 +179,8 @@
   @end{short}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-toggle-button-inconsistent atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-toggle-button-inconsistent atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-toggle-button-inconsistent 'function)
  "@version{2013-2-4}
   @begin{short}
@@ -269,135 +274,105 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_get_mode ()
-;;;
-;;; gboolean gtk_toggle_button_get_mode (GtkToggleButton *toggle_button);
-;;;
-;;; Retrieves whether the button is displayed as a separate indicator and label.
-;;; See gtk_toggle_button_set_mode().
-;;;
-;;; toggle_button :
-;;;     a GtkToggleButton
-;;;
-;;; Returns :
-;;;     TRUE if the togglebutton is drawn as a separate indicator and label
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-toggle-button-get-mode))
 
 (defun gtk-toggle-button-get-mode (toggle-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-25}
+  @argument[toggle_button]{a GtkToggleButton}
+  @return{TRUE if the togglebutton is drawn as a separate indicator and label}
+  Retrieves whether the button is displayed as a separate indicator and label.
+  See gtk_toggle_button_set_mode()."
   (gtk-toggle-button-draw-indicator toggle-button))
 
 (export 'gtk-toggle-button-get-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_toggled ()
-;;;
-;;; void gtk_toggle_button_toggled (GtkToggleButton *toggle_button);
-;;;
-;;; Emits the "toggled" signal on the GtkToggleButton. There is no good reason
-;;; for an application ever to call this function.
-;;;
-;;; toggle_button :
-;;;     a GtkToggleButton
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_toggle_button_toggled" gtk-toggle-button-toggled) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-25}
+  @argument[toggle_button]{a GtkToggleButton}
+  Emits the \"toggled\" signal on the GtkToggleButton. There is no good reason
+  for an application ever to call this function."
   (toggle-button (g-object gtk-toggle-button)))
 
 (export 'gtk-toggle-button-toggled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_get_active ()
-;;;
-;;; gboolean gtk_toggle_button_get_active (GtkToggleButton *toggle_button);
-;;;
-;;; Queries a GtkToggleButton and returns its current state. Returns TRUE if the
-;;; toggle button is pressed in and FALSE if it is raised.
-;;;
-;;; toggle_button :
-;;;     a GtkToggleButton
-;;;
-;;; Returns :
-;;;     a gboolean value
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-toggle-button-get-active))
 
 (defun gtk-toggle-button-get-active (toggle-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-25}
+  @argument[toggle_button]{a GtkToggleButton}
+  @return{a gboolean value}
+  Queries a GtkToggleButton and returns its current state. Returns TRUE if the
+  toggle button is pressed in and FALSE if it is raised."
   (gtk-toggle-button-active toggle-button))
 
 (export 'gtk-toggle-button-get-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_set_active ()
-;;;
-;;; void gtk_toggle_button_set_active (GtkToggleButton *toggle_button,
-;;;                                    gboolean is_active);
-;;;
-;;; Sets the status of the toggle button. Set to TRUE if you want the
-;;; GtkToggleButton to be 'pressed in', and FALSE to raise it. This action
-;;; causes the toggled signal to be emitted.
-;;;
-;;; toggle_button :
-;;;     a GtkToggleButton
-;;;
-;;; is_active :
-;;;     TRUE or FALSE
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-toggle-button-set-active))
 
 (defun gtk-toggle-button-set-active (toggle-button is-active)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-25}
+  @argument[toggle_button]{a GtkToggleButton}
+  @argument[is_active]{TRUE or FALSE}
+  Sets the status of the toggle button. Set to TRUE if you want the
+  GtkToggleButton to be 'pressed in', and FALSE to raise it. This action
+  causes the toggled signal to be emitted."
   (setf (gtk-toggle-button-active toggle-button) is-active))
 
 (export 'gtk-toggle-button-set-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_get_inconsistent ()
-;;;
-;;; gboolean gtk_toggle_button_get_inconsistent (GtkToggleButton *toggle_button)
-;;;
-;;; Gets the value set by gtk_toggle_button_set_inconsistent().
-;;;
-;;; toggle_button :
-;;;     a GtkToggleButton
-;;;
-;;; Returns :
-;;;     TRUE if the button is displayed as inconsistent, FALSE otherwise
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-toggle-button-get-inconsistent))
 
 (defun gtk-toggle-button-get-inconsistent (toggle-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-25}
+  @argument[toggle_button]{a GtkToggleButton}
+  @return{TRUE if the button is displayed as inconsistent, FALSE otherwise}
+  Gets the value set by gtk_toggle_button_set_inconsistent()."
   (gtk-toggle-button-inconsistent toggle-button))
 
 (export 'gtk-toggle-button-get-inconsistent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_button_set_inconsistent ()
-;;;
-;;; void gtk_toggle_button_set_inconsistent (GtkToggleButton *toggle_button,
-;;;                                          gboolean setting);
-;;;
-;;; If the user has selected a range of elements (such as some text or
-;;; spreadsheet cells) that are affected by a toggle button, and the current
-;;; values in that range are inconsistent, you may want to display the toggle in
-;;; an "in between" state. This function turns on "in between" display. Normally
-;;; you would turn off the inconsistent state again if the user toggles the
-;;; toggle button. This has to be done manually,
-;;; gtk_toggle_button_set_inconsistent() only affects visual appearance, it
-;;; doesn't affect the semantics of the button.
-;;;
-;;; toggle_button :
-;;;     a GtkToggleButton
-;;;
-;;; setting :
-;;;     TRUE if state is inconsistent
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-toggle-button-set-inconsistent))
 
 (defun gtk-toggle-button-set-inconsistent (toggle-button setting)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-25}
+  @argument[toggle_button]{a GtkToggleButton}
+  @argument[setting]{TRUE if state is inconsistent}
+  If the user has selected a range of elements (such as some text or
+  spreadsheet cells) that are affected by a toggle button, and the current
+  values in that range are inconsistent, you may want to display the toggle in
+  an \"in between\" state. This function turns on \"in between\" display.
+  Normally you would turn off the inconsistent state again if the user toggles
+  the toggle button. This has to be done manually,
+  gtk_toggle_button_set_inconsistent() only affects visual appearance, it
+  doesn't affect the semantics of the button."
   (setf (gtk-toggle-button-inconsistent toggle-button) setting))
 
 (export 'gtk-toggle-button-set-inconsistent)

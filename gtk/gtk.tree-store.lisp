@@ -2,13 +2,14 @@
 ;;; gtk.tree-store.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,58 +60,54 @@
 ;;;     gtk_tree_store_swap
 ;;;     gtk_tree_store_move_before
 ;;;     gtk_tree_store_move_after
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkTreeStore
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkTreeStore implements GtkTreeModel, GtkTreeDragSource, GtkTreeDragDest,
-;;; GtkTreeSortable and GtkBuildable.
-;;;
-;;; Description
-;;;
-;;; The GtkTreeStore object is a list model for use with a GtkTreeView widget.
-;;; It implements the GtkTreeModel interface, and consequentialy, can use all of
-;;; the methods available there. It also implements the GtkTreeSortable
-;;; interface so it can be sorted by the view. Finally, it also implements the
-;;; tree drag and drop interfaces.
-;;;
-;;; GtkTreeStore as GtkBuildable
-;;; The GtkTreeStore implementation of the GtkBuildable interface allows to
-;;; specify the model columns with a <columns> element that may contain multiple
-;;; <column> elements, each specifying one model column. The "type" attribute
-;;; specifies the data type for the column.
-;;;
-;;; Example 73. A UI Definition fragment for a tree store
-;;;
-;;;   <object class="GtkTreeStore">
-;;;     <columns>
-;;;       <column type="gchararray"/>
-;;;       <column type="gchararray"/>
-;;;       <column type="gint"/>
-;;;     </columns>
-;;;   </object>
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeStore
-;;;
-;;; struct GtkTreeStore;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkTreeStore" gtk-tree-store
   (:superclass g-object
    :export t
-   :interfaces ("GtkBuildable" "GtkTreeDragDest" "GtkTreeDragSource"
-                "GtkTreeModel" "GtkTreeSortable")
+   :interfaces ("GtkBuildable"
+                "GtkTreeDragDest"
+                "GtkTreeDragSource"
+                "GtkTreeModel"
+                "GtkTreeSortable")
    :type-initializer "gtk_tree_store_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-tree-store 'type)
+ "@version{2013-3-27}
+  @begin{short}
+    The GtkTreeStore object is a list model for use with a GtkTreeView widget.
+    It implements the GtkTreeModel interface, and consequentialy, can use all of
+    the methods available there. It also implements the GtkTreeSortable
+    interface so it can be sorted by the view. Finally, it also implements the
+    tree drag and drop interfaces.
+  @end{short}
+
+  GtkTreeStore as GtkBuildable
+  The GtkTreeStore implementation of the GtkBuildable interface allows to
+  specify the model columns with a <columns> element that may contain multiple
+  <column> elements, each specifying one model column. The \"type\" attribute
+  specifies the data type for the column.
+
+  Example 73. A UI Definition fragment for a tree store
+  @begin{pre}
+    <object class=\"GtkTreeStore\">
+     <columns>
+       <column type=\"gchararray\"/>
+       <column type=\"gchararray\"/>
+       <column type=\"gint\"/>
+     </columns>
+   </object>
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -165,24 +162,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set_column_types ()
-;;;
-;;; void gtk_tree_store_set_column_types (GtkTreeStore *tree_store,
-;;;                                       gint n_columns,
-;;;                                       GType *types);
-;;;
-;;; This function is meant primarily for GObjects that inherit from
-;;; GtkTreeStore, and should only be used when constructing a new GtkTreeStore.
-;;; It will not function after a row has been added, or a method on the
-;;; GtkTreeModel interface is called.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; n_columns :
-;;;     Number of columns for the tree store
-;;;
-;;; types :
-;;;     An array of GType types, one for each column.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_set_column_types"
@@ -192,6 +171,14 @@
   (types :pointer))
 
 (defun gtk-tree-store-set-column-types (tree-store column-types)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[types]{An array of GType types, one for each column.}
+  This function is meant primarily for GObjects that inherit from
+  GtkTreeStore, and should only be used when constructing a new GtkTreeStore.
+  It will not function after a row has been added, or a method on the
+  GtkTreeModel interface is called."
   (let ((n (length column-types)))
     (with-foreign-object (types-ar 'g-type n)
       (iter (for i from 0 below n)
@@ -203,26 +190,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set_value ()
-;;;
-;;; void gtk_tree_store_set_value (GtkTreeStore *tree_store,
-;;;                                GtkTreeIter *iter,
-;;;                                gint column,
-;;;                                GValue *value);
-;;;
-;;; Sets the data in the cell specified by iter and column. The type of value
-;;; must be convertible to the type of the column.
-;;;
-;;; tree_store :
-;;;     a GtkTreeStore
-;;;
-;;; iter :
-;;;     A valid GtkTreeIter for the row being modified
-;;;
-;;; column :
-;;;     column number to modify
-;;;
-;;; value :
-;;;     new value for the cell
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_set_value" %gtk-tree-store-set-value) :void
@@ -232,6 +199,14 @@
   (value :pointer))
 
 (defun gtk-tree-store-set-value (tree-store iter column value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{a GtkTreeStore}
+  @argument[iter]{A valid GtkTreeIter for the row being modified}
+  @argument[column]{column number to modify}
+  @argument[value]{new value for the cell}
+  Sets the data in the cell specified by iter and column. The type of value
+  must be convertible to the type of the column."
   (with-foreign-object (v 'g-value)
     (set-g-value v
                  value
@@ -321,24 +296,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_remove ()
-;;;
-;;; gboolean gtk_tree_store_remove (GtkTreeStore *tree_store, GtkTreeIter *iter)
-;;;
-;;; Removes iter from tree_store. After being removed, iter is set to the next
-;;; valid row at that level, or invalidated if it previously pointed to the last
-;;; one.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     A valid GtkTreeIter
-;;;
-;;; Returns :
-;;;     TRUE if iter is still valid, FALSE if not.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_remove" gtk-tree-store-remove) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[iter]{A valid GtkTreeIter}
+  @return{TRUE if iter is still valid, FALSE if not.}
+  Removes iter from tree_store. After being removed, iter is set to the next
+  valid row at that level, or invalidated if it previously pointed to the last
+  one."
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -346,31 +314,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_insert ()
-;;;
-;;; void gtk_tree_store_insert (GtkTreeStore *tree_store,
-;;;                             GtkTreeIter *iter,
-;;;                             GtkTreeIter *parent,
-;;;                             gint position);
-;;;
-;;; Creates a new row at position. If parent is non-NULL, then the row will be
-;;; made a child of parent. Otherwise, the row will be created at the toplevel.
-;;; If position is larger than the number of rows at that level, then the new
-;;; row will be inserted to the end of the list. iter will be changed to point
-;;; to this new row. The row will be empty after this function is called. To
-;;; fill in values, you need to call gtk_tree_store_set() or
-;;; gtk_tree_store_set_value().
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set to the new row.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
-;;;
-;;; position :
-;;;     position to insert the new row
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_insert" %gtk-tree-store-insert) :void
@@ -380,6 +323,18 @@
   (position :int))
 
 (defun gtk-tree-store-insert (tree-store parent position)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[parent]{a valid @class{gtk-tree-iter}, or @code{nil}.}
+  @argument[position]{position to insert the new row}
+  Creates a new row at position. If parent is non-@code{nil}, then the row will
+  be made a child of parent. Otherwise, the row will be created at the toplevel.
+  If position is larger than the number of rows at that level, then the new
+  row will be inserted to the end of the list. iter will be changed to point
+  to this new row. The row will be empty after this function is called. To
+  fill in values, you need to call @fun{gtk-tree-store-set} or
+  @fun{gtk-tree-store-set-value}."
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-insert tree-store iter parent position)
     iter))
@@ -388,33 +343,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_insert_before ()
-;;;
-;;; void gtk_tree_store_insert_before (GtkTreeStore *tree_store,
-;;;                                    GtkTreeIter *iter,
-;;;                                    GtkTreeIter *parent,
-;;;                                    GtkTreeIter *sibling);
-;;;
-;;; Inserts a new row before sibling. If sibling is NULL, then the row will be
-;;; appended to parent 's children. If parent and sibling are NULL, then the row
-;;; will be appended to the toplevel. If both sibling and parent are set, then
-;;; parent must be the parent of sibling. When sibling is set, parent is
-;;; optional.
-;;;
-;;; iter will be changed to point to this new row. The row will be empty after
-;;; this function is called. To fill in values, you need to call
-;;; gtk_tree_store_set() or gtk_tree_store_set_value().
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set to the new row.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
-;;;
-;;; sibling :
-;;;     A valid GtkTreeIter, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_insert_before" %gtk-tree-store-insert-before) :void
@@ -424,6 +352,22 @@
   (sibling (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-store-insert-before (tree-store parent sibling)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[parent]{A valid GtkTreeIter, or NULL.}
+  @argument[sibling]{A valid GtkTreeIter, or NULL.}
+  @begin{short}
+    Inserts a new row before sibling. If sibling is NULL, then the row will be
+    appended to parent 's children. If parent and sibling are NULL, then the row
+    will be appended to the toplevel. If both sibling and parent are set, then
+    parent must be the parent of sibling. When sibling is set, parent is
+    optional.
+  @end{short}
+
+  iter will be changed to point to this new row. The row will be empty after
+  this function is called. To fill in values, you need to call
+  gtk_tree_store_set() or gtk_tree_store_set_value()."
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-insert-before tree-store iter parent sibling)
     iter))
@@ -432,33 +376,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_insert_after ()
-;;;
-;;; void gtk_tree_store_insert_after (GtkTreeStore *tree_store,
-;;;                                   GtkTreeIter *iter,
-;;;                                   GtkTreeIter *parent,
-;;;                                   GtkTreeIter *sibling);
-;;;
-;;; Inserts a new row after sibling. If sibling is NULL, then the row will be
-;;; prepended to parent 's children. If parent and sibling are NULL, then the
-;;; row will be prepended to the toplevel. If both sibling and parent are set,
-;;; then parent must be the parent of sibling. When sibling is set, parent is
-;;; optional.
-;;;
-;;; iter will be changed to point to this new row. The row will be empty after
-;;; this function is called. To fill in values, you need to call
-;;; gtk_tree_store_set() or gtk_tree_store_set_value().
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set to the new row.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
-;;;
-;;; sibling :
-;;;     A valid GtkTreeIter, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_insert_after" %gtk-tree-store-insert-after) :void
@@ -468,6 +385,22 @@
   (sibling (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-store-insert-after (tree-store parent sibling)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[parent]{A valid GtkTreeIter, or NULL.}
+  @argument[sibling]{A valid GtkTreeIter, or NULL.}
+  @begin{short}
+    Inserts a new row after sibling. If sibling is NULL, then the row will be
+    prepended to parent 's children. If parent and sibling are NULL, then the
+    row will be prepended to the toplevel. If both sibling and parent are set,
+    then parent must be the parent of sibling. When sibling is set, parent is
+    optional.
+  @end{short}
+
+  iter will be changed to point to this new row. The row will be empty after
+  this function is called. To fill in values, you need to call
+  gtk_tree_store_set() or gtk_tree_store_set_value()."
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-insert-after tree-store iter parent sibling)
     iter))
@@ -476,51 +409,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_insert_with_values ()
-;;;
-;;; void gtk_tree_store_insert_with_values (GtkTreeStore *tree_store,
-;;;                                         GtkTreeIter *iter,
-;;;                                         GtkTreeIter *parent,
-;;;                                         gint position,
-;;;                                         ...);
-;;;
-;;; Creates a new row at position. iter will be changed to point to this new
-;;; row. If position is -1, or larger than the number of rows on the list, then
-;;; the new row will be appended to the list. The row will be filled with the
-;;; values given to this function.
-;;;
-;;; Calling gtk_tree_store_insert_with_values (tree_store, iter, position, ...)
-;;; has the same effect as calling
-;;;
-;;;   gtk_tree_store_insert (tree_store, iter, position);
-;;;   gtk_tree_store_set (tree_store, iter, ...);
-;;;
-;;; with the different that the former will only emit a row_inserted signal,
-;;; while the latter will emit row_inserted, row_changed and if the tree store
-;;; is sorted, rows_reordered. Since emitting the rows_reordered signal
-;;; repeatedly can affect the performance of the program,
-;;; gtk_tree_store_insert_with_values() should generally be preferred when
-;;; inserting rows in a sorted tree store.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set the new row, or NULL.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
-;;;
-;;; position :
-;;;     position to insert the new row, or -1 to append after existing rows
-;;;
-;;; ... :
-;;;     pairs of column number and value, terminated with -1
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-tree-store-insert-with-values (tree-store parent position
                                                      &rest values)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[parent]{a valid @class{gtk-tree-iter}, or @code{nil}.}
+  @argument[position]{position to insert the new row, or -1 to append after
+    existing rows}
+  @argument[values]{pairs of column number and value, terminated with -1}
+  @begin{short}
+    Creates a new row at position. iter will be changed to point to this new
+    row. If position is -1, or larger than the number of rows on the list, then
+    the new row will be appended to the list. The row will be filled with the
+    values given to this function.
+  @end{short}
+
+  Calling @code{(gtk-tree-store-insert-with-values tree_store position ...)}
+  has the same effect as calling
+  @begin{pre}
+ gtk_tree_store_insert (tree_store, iter, position);
+ gtk_tree_store_set (tree_store, iter, ...);
+  @end{pre}
+  with the different that the former will only emit a row_inserted signal,
+  while the latter will emit row_inserted, row_changed and if the tree store
+  is sorted, rows_reordered. Since emitting the rows_reordered signal
+  repeatedly can affect the performance of the program,
+  gtk_tree_store_insert_with_values() should generally be preferred when
+  inserting rows in a sorted tree store.
+
+  Since 2.10"
   (let ((n (length values))
         (iter (make-gtk-tree-iter)))
     (with-foreign-objects ((v-ar 'g-value n)
@@ -545,45 +465,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_insert_with_valuesv ()
-;;;
-;;; void gtk_tree_store_insert_with_valuesv (GtkTreeStore *tree_store,
-;;;                                          GtkTreeIter *iter,
-;;;                                          GtkTreeIter *parent,
-;;;                                          gint position,
-;;;                                          gint *columns,
-;;;                                          GValue *values,
-;;;                                          gint n_values);
-;;;
-;;; A variant of gtk_tree_store_insert_with_values() which takes the columns and
-;;; values as two arrays, instead of varargs. This function is mainly intended
-;;; for language bindings.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set the new row, or NULL.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
-;;;
-;;; position :
-;;;     position to insert the new row
-;;;
-;;; columns :
-;;;     an array of column numbers
-;;;
-;;; values :
-;;;     an array of GValues
-;;;
-;;; n_values :
-;;;     the length of the columns and values arrays
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_insert_with_valuesv"
           %gtk-tree-store-insert-with-valuesv) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[iter]{An unset GtkTreeIter to set the new row, or NULL.}
+  @argument[parent]{A valid GtkTreeIter, or NULL.}
+  @argument[position]{position to insert the new row}
+  @argument[columns]{an array of column numbers}
+  @argument[values]{an array of GValues}
+  @argument[n_values]{the length of the columns and values arrays}
+  @begin{short}
+    A variant of gtk_tree_store_insert_with_values() which takes the columns and
+    values as two arrays, instead of varargs. This function is mainly intended
+    for language bindings.
+  @end{short}
+
+  Since 2.10"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter))
@@ -594,25 +495,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_prepend ()
-;;;
-;;; void gtk_tree_store_prepend (GtkTreeStore *tree_store,
-;;;                              GtkTreeIter *iter,
-;;;                              GtkTreeIter *parent);
-;;;
-;;; Prepends a new row to tree_store. If parent is non-NULL, then it will
-;;; prepend the new row before the first child of parent, otherwise it will
-;;; prepend a row to the top level. iter will be changed to point to this new
-;;; row. The row will be empty after this function is called. To fill in values,
-;;; you need to call gtk_tree_store_set() or gtk_tree_store_set_value().
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set to the prepended row.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_prepend" %gtk-tree-store-prepend) :void
@@ -621,6 +503,15 @@
   (parent (g-boxed-foreign gtk-tree-iter)))
 
 (defun tree-store-prepend (tree-store parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[parent]{A valid GtkTreeIter, or NULL.}
+  Prepends a new row to tree_store. If parent is non-NULL, then it will
+  prepend the new row before the first child of parent, otherwise it will
+  prepend a row to the top level. iter will be changed to point to this new
+  row. The row will be empty after this function is called. To fill in values,
+  you need to call gtk_tree_store_set() or gtk_tree_store_set_value()."
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-prepend tree-store iter parent)
     iter))
@@ -629,25 +520,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_append ()
-;;;
-;;; void gtk_tree_store_append (GtkTreeStore *tree_store,
-;;;                             GtkTreeIter *iter,
-;;;                             GtkTreeIter *parent);
-;;;
-;;; Appends a new row to tree_store. If parent is non-NULL, then it will append
-;;; the new row after the last child of parent, otherwise it will append a row
-;;; to the top level. iter will be changed to point to this new row. The row
-;;; will be empty after this function is called. To fill in values, you need to
-;;; call gtk_tree_store_set() or gtk_tree_store_set_value().
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     An unset GtkTreeIter to set to the appended row.
-;;;
-;;; parent :
-;;;     A valid GtkTreeIter, or NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_append" %gtk-tree-store-append) :void
@@ -656,6 +528,15 @@
   (parent (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-store-append (tree-store parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[parent]{A valid GtkTreeIter, or NULL.}
+  Appends a new row to tree_store. If parent is non-NULL, then it will append
+  the new row after the last child of parent, otherwise it will append a row
+  to the top level. iter will be changed to point to this new row. The row
+  will be empty after this function is called. To fill in values, you need to
+  call gtk_tree_store_set() or gtk_tree_store_set_value()."
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-append tree-store iter parent)
     iter))
@@ -664,28 +545,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_is_ancestor ()
-;;;
-;;; gboolean gtk_tree_store_is_ancestor (GtkTreeStore *tree_store,
-;;;                                      GtkTreeIter *iter,
-;;;                                      GtkTreeIter *descendant);
-;;;
-;;; Returns TRUE if iter is an ancestor of descendant. That is, iter is the
-;;; parent (or grandparent or great-grandparent) of descendant.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     A valid GtkTreeIter
-;;;
-;;; descendant :
-;;;     A valid GtkTreeIter
-;;;
-;;; Returns :
-;;;     TRUE, if iter is an ancestor of descendant
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_is_ancestor" gtk-tree-store-is-ancestor) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[iter]{A valid GtkTreeIter}
+  @argument[descendant]{A valid GtkTreeIter}
+  @return{TRUE, if iter is an ancestor of descendant}
+  Returns TRUE if iter is an ancestor of descendant. That is, iter is the
+  parent (or grandparent or great-grandparent) of descendant."
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (descendant (g-boxed-foreign gtk-tree-iter)))
@@ -694,23 +564,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_iter_depth ()
-;;;
-;;; gint gtk_tree_store_iter_depth (GtkTreeStore *tree_store, GtkTreeIter *iter)
-;;;
-;;; Returns the depth of iter. This will be 0 for anything on the root level, 1
-;;; for anything down a level, etc.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     A valid GtkTreeIter
-;;;
-;;; Returns :
-;;;     The depth of iter
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_iter_depth" gtk-tree-store-iter-depth) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore}
+  @argument[iter]{A valid GtkTreeIter}
+  @return{The depth of iter}
+  Returns the depth of iter. This will be 0 for anything on the root level, 1
+  for anything down a level, etc."
   (tree-store (g-object gtk-tree-store))
   (tree-iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -718,45 +581,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_clear ()
-;;;
-;;; void gtk_tree_store_clear (GtkTreeStore *tree_store);
-;;;
-;;; Removes all rows from tree_store
-;;;
-;;; tree_store :
-;;;     a GtkTreeStore
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_clear" gtk-tree-store-clear) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{a GtkTreeStore}
+  Removes all rows from tree_store"
   (tree-store (g-object gtk-tree-store)))
 
 (export 'gtk-tree-store-clear)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_iter_is_valid ()
-;;;
-;;; gboolean gtk_tree_store_iter_is_valid (GtkTreeStore *tree_store,
-;;;                                        GtkTreeIter *iter);
-;;;
-;;; WARNING
-;;;
-;;; This function is slow. Only use it for debugging and/or testing purposes.
-;;;
-;;; Checks if the given iter is a valid iter for this GtkTreeStore.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore.
-;;;
-;;; iter :
-;;;     A GtkTreeIter.
-;;;
-;;; Returns :
-;;;     TRUE if the iter is valid, FALSE if the iter is invalid.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_iter_is_valid" gtk-tree-store-iter-is-valid) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore.}
+  @arguemnt[iter]{A GtkTreeIter.}
+  @return{TRUE if the iter is valid, FALSE if the iter is invalid.}
+  @subheading{WARNING}
+    This function is slow. Only use it for debugging and/or testing purposes.
+
+  @short{Checks if the given iter is a valid iter for this GtkTreeStore.}
+
+  Since 2.2"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -787,27 +638,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_swap ()
-;;;
-;;; void gtk_tree_store_swap (GtkTreeStore *tree_store,
-;;;                           GtkTreeIter *a,
-;;;                           GtkTreeIter *b);
-;;;
-;;; Swaps a and b in the same level of tree_store. Note that this function only
-;;; works with unsorted stores.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore.
-;;;
-;;; a :
-;;;     A GtkTreeIter.
-;;;
-;;; b :
-;;;     Another GtkTreeIter.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_swap" gtk-tree-store-swap) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore.}
+  @argument[a]{A GtkTreeIter.}
+  @argument[b]{Another GtkTreeIter.}
+  @begin{short}
+    Swaps a and b in the same level of tree_store. Note that this function only
+    works with unsorted stores.
+  @end{short}
+
+  Since 2.2"
   (tree-store (g-object gtk-tree-store))
   (a (g-boxed-foreign gtk-tree-iter))
   (b (g-boxed-foreign gtk-tree-iter)))
@@ -816,29 +660,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_move_before ()
-;;;
-;;; void gtk_tree_store_move_before (GtkTreeStore *tree_store,
-;;;                                  GtkTreeIter *iter,
-;;;                                  GtkTreeIter *position);
-;;;
-;;; Moves iter in tree_store to the position before position. iter and position
-;;; should be in the same level. Note that this function only works with
-;;; unsorted stores. If position is NULL, iter will be moved to the end of the
-;;; level.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore.
-;;;
-;;; iter :
-;;;     A GtkTreeIter.
-;;;
-;;; position :
-;;;     A GtkTreeIter or NULL.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_move_before" gtk-tree-store-move-before) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore.}
+  @argument[iter]{A GtkTreeIter.}
+  @argument[position]{A GtkTreeIter or NULL.}
+  @begin{short}
+    Moves iter in tree_store to the position before position. iter and position
+    should be in the same level. Note that this function only works with
+    unsorted stores. If position is NULL, iter will be moved to the end of the
+    level.
+  @end{short}
+
+  Since 2.2"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (position (g-boxed-foreign gtk-tree-iter)))
@@ -847,29 +684,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_move_after ()
-;;;
-;;; void gtk_tree_store_move_after (GtkTreeStore *tree_store,
-;;;                                 GtkTreeIter *iter,
-;;;                                 GtkTreeIter *position);
-;;;
-;;; Moves iter in tree_store to the position after position. iter and position
-;;; should be in the same level. Note that this function only works with
-;;; unsorted stores. If position is NULL, iter will be moved to the start of the
-;;; level.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore.
-;;;
-;;; iter :
-;;;     A GtkTreeIter.
-;;;
-;;; position :
-;;;     A GtkTreeIter.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_store_move_after" gtk-tree-store-move-after) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[tree_store]{A GtkTreeStore.}
+  @argument[iter]{A GtkTreeIter.}
+  @argument[position]{A GtkTreeIter.}
+  @begin{short}
+    Moves iter in tree_store to the position after position. iter and position
+    should be in the same level. Note that this function only works with
+    unsorted stores. If position is NULL, iter will be moved to the start of the
+    level.
+  @end{short}
+
+  Since 2.2"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (position (g-boxed-foreign gtk-tree-iter)))

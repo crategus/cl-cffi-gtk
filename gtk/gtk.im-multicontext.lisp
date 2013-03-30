@@ -2,9 +2,10 @@
 ;;; gtk.im-multicontext.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,21 +37,12 @@
 ;;;     gtk_im_multicontext_append_menuitems
 ;;;     gtk_im_multicontext_get_context_id
 ;;;     gtk_im_multicontext_set_context_id
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkIMContext
-;;;          +----GtkIMMulticontext
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIMMulticontext
-;;;
-;;; struct GtkIMMulticontext;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkIMMulticontext" gtk-im-multicontext
@@ -59,6 +51,13 @@
    :interfaces nil
    :type-initializer "gtk_im_multicontext_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-im-multicontext 'type)
+ "@version{2013-3-28}
+ An input method context supporting multiple, loadable input methods.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_im_multicontext_new ()

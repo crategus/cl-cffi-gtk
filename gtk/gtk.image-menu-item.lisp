@@ -2,13 +2,14 @@
 ;;; gtk.image-menu-item.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,90 +48,12 @@
 ;;;     gtk_image_menu_item_get_always_show_image
 ;;;     gtk_image_menu_item_set_always_show_image
 ;;;     gtk_image_menu_item_set_accel_group
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkMenuItem
-;;;                                  +----GtkImageMenuItem
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkImageMenuItem implements AtkImplementorIface, GtkBuildable and
-;;; GtkActivatable.
-;:;
-;;; Properties
-;;;
-;;;   "accel-group"              GtkAccelGroup*       : Write
-;;;   "always-show-image"        gboolean             : Read / Write / Construct
-;;;   "image"                    GtkWidget*           : Read / Write
-;;;   "use-stock"                gboolean             : Read / Write / Construct
-;;;
-;;; Description
-;;;
-;;; A GtkImageMenuItem is a menu item which has an icon next to the text label.
-;;;
-;;; Note that the user can disable display of menu icons, so make sure to still
-;;; fill in the text label.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "accel-group" property
-;;;
-;;;   "accel-group"              GtkAccelGroup*        : Write
-;;;
-;;; The Accel Group to use for stock accelerator keys
-;;;
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "always-show-image" property
-;;;
-;;;   "always-show-image"        gboolean             : Read / Write / Construct
-;;;
-;;; If TRUE, the menu item will ignore the "gtk-menu-images" setting and always
-;;; show the image, if available.
-;;;
-;;; Use this property if the menuitem would be useless or hard to use without
-;;; the image.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.16
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "image" property
-;;;
-;;;   "image"                    GtkWidget*            : Read / Write
-;;;
-;;; Child widget to appear next to the menu text.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "use-stock" property
-;;;
-;;;   "use-stock"                gboolean             : Read / Write / Construct
-;;;
-;;; If TRUE, the label set in the menuitem is used as a stock id to select the
-;;; stock item for the item.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkImageMenuItem
-;;;
-;;; struct GtkImageMenuItem;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkImageMenuItem" gtk-image-menu-item
@@ -152,6 +75,114 @@
    (use-stock
     gtk-image-menu-item-use-stock
     "use-stock" "gboolean" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-image-menu-item 'type)
+ "@version{2013-3-27}
+  @begin{short}
+    A GtkImageMenuItem is a menu item which has an icon next to the text label.
+  @end{short}
+
+  Note that the user can disable display of menu icons, so make sure to still
+  fill in the text label.
+  @see-slot{gtk-image-menu-item-accel-group}
+  @see-slot{gtk-image-menu-item-always-show-image}
+  @see-slot{gtk-image-menu-item-image}
+  @see-slot{gtk-image-menu-item-use-stock}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-group"
+                                               'gtk-image-menu-item) 't)
+ "The @code{\"accel-group\"} property of type @class{gtk-accel-group}
+  (Write)@br{}
+  The Accel Group to use for stock accelerator keys @br{}
+  Since 2.16")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "always-show-image"
+                                               'gtk-image-menu-item) 't)
+ "The @code{\"always-show-image\"} property of type @code{:boolean}
+  (Read / Write / Construct)@br{}
+  If TRUE, the menu item will ignore the @code{\"gtk-menu-images\"} setting and
+  always show the image, if available.
+  Use this property if the menuitem would be useless or hard to use without
+  the image. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.16")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "image"
+                                               'gtk-image-menu-item) 't)
+ "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write)@br{}
+  Child widget to appear next to the menu text.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-stock"
+                                               'gtk-image-menu-item) 't)
+ "The @code{\"use-stock\"} property of type @code{:boolean}
+  (Read / Write / Construct)@br{}
+  If TRUE, the label set in the menuitem is used as a stock id to select the
+  stock item for the item. @br{}
+  Default value: @code{nilö}@br{}
+  Since 2.16")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-image-menu-item-accel-group atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-image-menu-item-accel-group 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"accel-group\"} of the
+  @class{gtk-image-menu-item-accel-group} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-image-menu-item-always-show-image atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-image-menu-item-always-show-image 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"always-show-image\"} of the
+  @class{gtk-image-menu-item-accel-group} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-image-menu-item-image atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-image-menu-item-image 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"image\"} of the
+  @class{gtk-image-menu-item-accel-group} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-image-menu-item-use-stock atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-image-menu-item-use-stock 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"use-stock\"} of the
+  @class{gtk-image-menu-item-accel-group} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_set_image ()

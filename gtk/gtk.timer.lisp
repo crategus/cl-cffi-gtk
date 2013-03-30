@@ -27,6 +27,13 @@
 
 (in-package :gtk)
 
+(defun gtk-main-add-timeout (millisec func &key (priority g-priority-default))
+  (g-timeout-add-full priority
+                      millisec
+                      (callback call-timeout-from-main-loop-callback)
+                      (glib::allocate-stable-pointer func)
+                      (callback glib::stable-pointer-destroy-notify-cb)))
+
 (defclass timer ()
   ((fn :initform nil :initarg :fn :accessor timer-fn)
    (interval-msec :initform 100 :initarg :interval-msec :accessor timer-interval-msec)

@@ -2,13 +2,14 @@
 ;;; gtk.page-setup.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -62,62 +63,12 @@
 ;;;     gtk_page_setup_load_key_file
 ;;;     gtk_page_setup_to_file
 ;;;     gtk_page_setup_to_key_file
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkPageSetup
-;;;
-;;; Description
-;;;
-;;; A GtkPageSetup object stores the page size, orientation and margins. The
-;;; idea is that you can get one of these from the page setup dialog and then
-;;; pass it to the GtkPrintOperation when printing. The benefit of splitting
-;;; this out of the GtkPrintSettings is that these affect the actual layout of
-;;; the page, and thus need to be set long before user prints.
-;;;
-;;; The margins specified in this object are the "print margins", i.e. the parts
-;;; of the page that the printer cannot print on. These are different from the
-;;; layout margins that a word processor uses; they are typically used to
-;;; determine the minimal size for the layout margins.
-;;;
-;;; To obtain a GtkPageSetup use gtk_page_setup_new() to get the defaults, or
-;;; use gtk_print_run_page_setup_dialog() to show the page setup dialog and
-;;; receive the resulting page setup.
-;;;
-;;; Example 97. A page setup dialog
-;;;
-;;;   static GtkPrintSettings *settings = NULL;
-;;;   static GtkPageSetup *page_setup = NULL;
-;;;
-;;;   static void
-;;;   do_page_setup (void)
-;;;   {
-;;;     GtkPageSetup *new_page_setup;
-;;;
-;;;     if (settings == NULL)
-;;;       settings = gtk_print_settings_new ();
-;;;
-;;;     new_page_setup = gtk_print_run_page_setup_dialog
-;;;                                                   (GTK_WINDOW (main_window),
-;;;                                                    page_setup, settings);
-;;;
-;;;     if (page_setup)
-;;;       g_object_unref (page_setup);
-;;;
-;;;     page_setup = new_page_setup;
-;;;   }
-;;;
-;;;
-;;; Printing support was added in GTK+ 2.10.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPageSetup
-;;;
-;;; typedef struct _GtkPageSetup GtkPageSetup;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkPageSetup" gtk-page-setup
@@ -126,6 +77,53 @@
    :interfaces nil
    :type-initializer "gtk_page_setup_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-page-setup 'type)
+ "@version{2013-3-28}
+  @begin{short}
+    A GtkPageSetup object stores the page size, orientation and margins. The
+    idea is that you can get one of these from the page setup dialog and then
+    pass it to the GtkPrintOperation when printing. The benefit of splitting
+    this out of the GtkPrintSettings is that these affect the actual layout of
+    the page, and thus need to be set long before user prints.
+  @end{short}
+
+  The margins specified in this object are the \"print margins\", i. e. the
+  parts of the page that the printer cannot print on. These are different from
+  the layout margins that a word processor uses; they are typically used to
+  determine the minimal size for the layout margins.
+
+  To obtain a GtkPageSetup use gtk_page_setup_new() to get the defaults, or
+  use gtk_print_run_page_setup_dialog() to show the page setup dialog and
+  receive the resulting page setup.
+
+  @b{Example:} A page setup dialog
+  @begin{pre}
+   static GtkPrintSettings *settings = NULL;
+   static GtkPageSetup *page_setup = NULL;
+
+   static void
+   do_page_setup (void)
+   {
+     GtkPageSetup *new_page_setup;
+
+     if (settings == NULL)
+       settings = gtk_print_settings_new ();
+
+     new_page_setup = gtk_print_run_page_setup_dialog
+                                                   (GTK_WINDOW (main_window),
+                                                    page_setup, settings);
+
+     if (page_setup)
+       g_object_unref (page_setup);
+
+     page_setup = new_page_setup;
+   @}
+  @end{pre}
+  Printing support was added in GTK+ 2.10.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_new ()
@@ -636,6 +634,5 @@
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; ---- End of file gtk.page-setup.lisp ---------------------------------------

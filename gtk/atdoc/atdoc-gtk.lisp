@@ -28,11 +28,7 @@
 
 (in-package :gtk)
 
-    (load "src/atdoc-gtk.window.lisp")
-    (load "src/atdoc-gtk.window-group.lisp")
     (load "src/atdoc-gtk.offscreen-window.lisp")
-    
-    (load "src/atdoc-gtk.image.lisp")
     (load "src/atdoc-gtk.info-bar.lisp")
 
     (load "src/atdoc-gtk.table.lisp")
@@ -40,7 +36,6 @@
     (load "src/atdoc-gtk.orientable.lisp")
 
     (load "src/atdoc-gtk.tooltip.lisp")
-    (load "src/atdoc-gtk.widget.lisp")
 
 
 

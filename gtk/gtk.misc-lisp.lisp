@@ -49,15 +49,6 @@
       (progn (funcall (glib::get-stable-pointer-value data)))
     (return-from-callback () nil)))
 
-(defun gtk-main-add-timeout (millisec func &key (priority g-priority-default))
-  (g-timeout-add-full priority
-                      millisec
-                      (callback call-timeout-from-main-loop-callback)
-                      (glib::allocate-stable-pointer func)
-                      (callback glib::stable-pointer-destroy-notify-cb)))
-
-(export 'gtk-main-add-timeout)
-
 (defmacro within-main-loop (&body body)
   `(call-from-gtk-main-loop (lambda () ,@body)))
 

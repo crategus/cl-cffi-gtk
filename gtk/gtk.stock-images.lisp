@@ -112,19 +112,14 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-icon-source gtk-icon-source-filename
-  :reader "gtk_icon_source_get_filename"
-  :writer "gtk_icon_source_set_filename"
-  :type (:string :free-from-foreign nil))
-
-(export 'gtk-icon-source-filename)
-
-(define-boxed-opaque-accessor gtk-icon-source gtk-icon-source-icon-name
-  :reader "gtk_icon_source_get_icon_name"
-  :writer "gtk_icon_source_set_icon_name"
-  :type (:string :free-from-foreign nil))
-
-(export 'gtk-icon-source-icon-name)
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-icon-source 'type)
+ "@version{2013-3-28}
+  @short{}
+  @begin{pre}
+(define-g-boxed-opaque gtk-icon-source \"GtkIconSource\"
+  :alloc (gtk-icon-source-new))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIconFactory
@@ -151,9 +146,9 @@
   @class{gtk-icon-set} contains variants for different sizes and widget states.
   Icons in an icon factory are named by a stock ID, which is a simple string
   identifying the icon. Each @class{gtk-style} has a list of
-  @class{gtk-icon-factory} derived from the current theme; those icon
+  @sym{gtk-icon-factory} derived from the current theme; those icon
   factories are consulted first when searching for an icon. If the theme
-  doesn't set a particular icon, GTK+ looks for the icon in a list of default
+  does not set a particular icon, GTK+ looks for the icon in a list of default
   icon factories, maintained by @fun{gtk-icon-factory-add-default} and
   @fun{gtk-icon-factory-remove-default}. Applications with icons should add a
   default icon factory with their icons, which will allow themes to override
@@ -201,8 +196,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkIconSet
-;;;
-;;; typedef struct _GtkIconSet GtkIconSet;
 ;;; ----------------------------------------------------------------------------
 
 (glib::at-init () (foreign-funcall "gtk_icon_set_get_type" :int))
@@ -213,6 +206,14 @@
   :alloc (gtk-icon-set-new))
 
 (export 'gtk-icon-set)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-icon-set 'type)
+ "@version{2013-3-28}
+  A @sym{gtk-icon-set} manages a set of variants of a particular icon, i. e. a
+  @sym{gtk-icon-set} contains variants for different sizes and widget states.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconSize
@@ -786,19 +787,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_get_filename ()
-;;;
-;;; const gchar * gtk_icon_source_get_filename (const GtkIconSource *source);
-;;;
-;;; Retrieves the source filename, or NULL if none is set. The filename is not a
-;;; copy, and should not be modified or expected to persist beyond the lifetime
-;;; of the icon source.
-;;;
-;;; source :
-;;;     a GtkIconSource
-;;;
-;;; Returns :
-;;;     image filename. This string must not be modified or freed
 ;;; ----------------------------------------------------------------------------
+
+(define-boxed-opaque-accessor gtk-icon-source gtk-icon-source-filename
+  :reader "gtk_icon_source_get_filename"
+  :writer "gtk_icon_source_set_filename"
+  :type (:string :free-from-foreign nil))
+
+(defun gtk-icon-source-get-filename (source)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-28}
+  @argument[source]{a GtkIconSource}
+  @begin{return}
+    Image filename. This string must not be modified or freed.
+  @end{return}
+  Retrieves the source filename, or NULL if none is set. The filename is not a
+  copy, and should not be modified or expected to persist beyond the lifetime
+  of the icon source."
+  (gtk-icon-source-filename source))
+
+(export 'gtk-icon-source-get-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_get_pixbuf ()
@@ -820,19 +828,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_get_icon_name ()
-;;;
-;;; const gchar * gtk_icon_source_get_icon_name (const GtkIconSource *source);
-;;;
-;;; Retrieves the source icon name, or NULL if none is set. The icon_name is not
-;;; a copy, and should not be modified or expected to persist beyond the
-;;; lifetime of the icon source.
-;;;
-;;; source :
-;;;     a GtkIconSource
-;;;
-;;; Returns :
-;;;     icon name. This string must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
+
+(define-boxed-opaque-accessor gtk-icon-source gtk-icon-source-icon-name
+  :reader "gtk_icon_source_get_icon_name"
+  :writer "gtk_icon_source_set_icon_name"
+  :type (:string :free-from-foreign nil))
+
+(declaim (inline gtk-icon-source-get-icon-name))
+
+(defun gtk-icon-source-get-icon-name (source)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-28}
+  @argument[source]{a GtkIconSource}
+  @begin{return}
+    icon name. This string must not be modified or freed.
+  @end{return}
+  Retrieves the source icon name, or NULL if none is set. The icon_name is not
+  a copy, and should not be modified or expected to persist beyond the
+  lifetime of the icon source."
+  (gtk-icon-source-icon-name source))
+
+(export 'gtk-icon-source-get-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_get_size ()
@@ -975,19 +992,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_set_filename ()
-;;;
-;;; void gtk_icon_source_set_filename (GtkIconSource *source,
-;;;                                    const gchar *filename);
-;;;
-;;; Sets the name of an image file to use as a base image when creating icon
-;;; variants for GtkIconSet. The filename must be absolute.
-;;;
-;;; source :
-;;;     a GtkIconSource
-;;;
-;;; filename :
-;;;     image file to use
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-source-set-filename))
+
+(defun gtk-icon-source-set-filename (source filename)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-28}
+  @argument[source]{a GtkIconSource}
+  @argument[filename]{image file to use}
+  Sets the name of an image file to use as a base image when creating icon
+  variants for GtkIconSet. The filename must be absolute."
+  (setf (gtk-icon-source-filename source) filename))
+
+(export 'gtk-icon-source-set-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_set_pixbuf ()
@@ -1006,19 +1024,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_set_icon_name ()
-;;;
-;;; void gtk_icon_source_set_icon_name (GtkIconSource *source,
-;;;                                     const gchar *icon_name);
-;;;
-;;; Sets the name of an icon to look up in the current icon theme to use as a
-;;; base image when creating icon variants for GtkIconSet.
-;;;
-;;; source :
-;;;     a GtkIconSource
-;;;
-;;; icon_name :
-;;;     name of icon to use
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-source-set-icon-name))
+
+(defun gtk-icon-source-set-icon-name (source icon-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-28}
+  @argument[source]{a GtkIconSource}
+  @argument[icon-name]{name of icon to use}
+  Sets the name of an icon to look up in the current icon theme to use as a
+  base image when creating icon variants for GtkIconSet."
+  (setf (gtk-icon-source-icon-name source) icon-name))
+
+(export 'gtk-icon-source-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_source_set_size ()

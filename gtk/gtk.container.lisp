@@ -254,7 +254,7 @@
   Use @code{gtk_container_class_install_child_property()} to install child
   properties for a container class and
   @fun{gtk-container-class-find-child-property} or
-  @code{gtk_container_class_list_child_properties()} to get information about
+  @fun{gtk-container-class-list-child-properties} to get information about
   existing child properties.
 
   To set the value of a child property, use
@@ -832,49 +832,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_child_get_property ()
-;;;
-;;; void gtk_container_child_get_property (GtkContainer *container,
-;;;                                        GtkWidget *child,
-;;;                                        const gchar *property_name,
-;;;                                        GValue *value);
-;;;
-;;; Gets the value of a child property for child and container.
-;;;
-;;; container :
-;;;     a GtkContainer
-;;;
-;;; child :
-;;;     a widget which is a child of container
-;;;
-;;; property_name :
-;;;     the name of the property to get
-;;;
-;;; value :
-;;;     a location to return the value
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Consider to return the value in the Lisp implementation
+
+(defcfun ("gtk_container_child_get_property" gtk-container-child-get-property)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-26}
+  @argument[container]{a @class{gtk-container} widget}
+  @argument[child]{a widget which is a child of @arg{container}}
+  @argument[property-name]{the name of the property to get}
+  @argument[value]{a location to return the value}
+  Gets the value of a child property for @arg{child} and @arg{container}."
+  (container g-object)
+  (child g-object)
+  (property-name :string)
+  (value (:pointer g-value)))
+
+(export 'gtk-container-child-get-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_child_set_property ()
-;;;
-;;; void gtk_container_child_set_property (GtkContainer *container,
-;;;                                        GtkWidget *child,
-;;;                                        const gchar *property_name,
-;;;                                        const GValue *value);
-;;;
-;;; Sets a child property for child and container.
-;;;
-;;; container :
-;;;     a GtkContainer
-;;;
-;;; child :
-;;;     a widget which is a child of container
-;;;
-;;; property_name :
-;;;     the name of the property to set
-;;;
-;;; value :
-;;;     the value to set the property to
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_container_child_set_property" gtk-container-child-set-property)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-26}
+  @argument[container]{a @class{gtk-container} widget}
+  @argument[child]{a widget which is a child of @arg{container}}
+  @argument[property-name]{the name of the property to set}
+  @argument[value]{the value to set the property to}
+  Sets a child property for child and container."
+  (container g-object)
+  (child g-object)
+  (property-name :string)
+  (value (:pointer g-value)))
+
+(export 'gtk-container-child-set-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_child_get_valist ()
@@ -1123,23 +1119,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_class_find_child_property ()
-;;;
-;;; GParamSpec * gtk_container_class_find_child_property
-;;;                                                 (GObjectClass *cclass,
-;;;                                                  const gchar *property_name)
-;;;
-;;; Finds a child property of a container class by name.
-;;;
-;;; cclass :
-;;;     a GtkContainerClass
-;;;
-;;; property_name :
-;;;     the name of the child property to find
-;;;
-;;; Returns :
-;;;     the GParamSpec of the child property or NULL if class has no child
-;;;     property with that name
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_container_class_find_child_property"
+           gtk-container-class-find-child-property) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-26}
+  @argument[class]{a @class{gtk-container-class}}
+  @argument[property-name]{the name of the child property to find}
+  @begin{return}
+    The @symbol{g-param-spec} of the child property or @code{nil} if @arg{class}
+    has no child property with that name.
+  @end{return}
+  Finds a child property of a container class by name."
+  (class :pointer)
+  (property-name :string))
+
+(export 'gtk-container-class-find-child-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_class_install_child_property ()
@@ -1162,23 +1158,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_class_list_child_properties ()
-;;;
-;;; GParamSpec ** gtk_container_class_list_child_properties
-;;;                                                       (GObjectClass *cclass,
-;;;                                                        guint *n_properties);
-;;;
-;;; Returns all child properties of a container class.
-;;;
-;;; cclass :
-;;;     a GtkContainerClass
-;;;
-;;; n_properties :
-;;;     location to return the number of child properties found
-;;;
-;;; Returns :
-;;;     a newly allocated NULL-terminated array of GParamSpec*. The array must
-;;;     be freed with g_free()
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_container_class_list_child_properties"
+           gtk-container-class-list-child-properties)
+    (:pointer (:pointer g-param-spec))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-26}
+  @argument[class]{a @class{gtk-container-class} object}
+  @argument[n-properties]{location to return the number of child properties
+    found}
+  @return{A newly allocated list of @symbol{g-param-spec}.}
+  Returns all child properties of a container class."
+  (class (:pointer g-object-class))
+  (n-properties (:pointer :int)))
+
+(export 'gtk-container-class-list-child-properties)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_class_handle_border_width ()

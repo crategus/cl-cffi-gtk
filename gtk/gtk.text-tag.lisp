@@ -30,22 +30,22 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTextTag
-;;; 
+;;;
 ;;; A tag that can be applied to text in a GtkTextBuffer
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTextTag
 ;;;     GtkWrapMode
 ;;;     GtkTextAttributes
-;;;     
+;;;
 ;;;     gtk_text_tag_new
 ;;;     gtk_text_tag_get_priority
 ;;;     gtk_text_tag_set_priority
 ;;;     gtk_text_tag_event
-;;;     
+;;;
 ;;;     GtkTextAppearance
-;;;     
+;;;
 ;;;     gtk_text_attributes_new
 ;;;     gtk_text_attributes_copy
 ;;;     gtk_text_attributes_copy_values
@@ -368,8 +368,7 @@
   @see-slot{gtk-text-tag-weight}
   @see-slot{gtk-text-tag-weight-set}
   @see-slot{gtk-text-tag-wrap-mode}
-  @see-slot{gtk-text-tag-wrap-mode-set}
-")
+  @see-slot{gtk-text-tag-wrap-mode-set}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -552,485 +551,1079 @@
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
-;;; The "indent" property
-;;; 
-;;;   "indent"                   gint                  : Read / Write
-;;; 
-;;; Amount to indent the paragraph, in pixels.
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "indent-set" property
-;;; 
-;;;   "indent-set"               gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects indentation.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "invisible" property
-;;; 
-;;;   "invisible"                gboolean              : Read / Write
-;;; 
-;;; Whether this text is hidden.
-;;; 
-;;; Note that there may still be problems with the support for invisible text,
-;;; in particular when navigating programmatically inside a buffer containing
-;;; invisible segments.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "invisible-set" property
-;;; 
-;;;   "invisible-set"            gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects text visibility.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "justification" property
-;;; 
-;;;   "justification"            GtkJustification      : Read / Write
-;;; 
-;;; Left, right, or center justification.
-;;; 
-;;; Default value: GTK_JUSTIFY_LEFT
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "justification-set" property
-;;; 
-;;;   "justification-set"        gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects paragraph justification.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "language" property
-;;; 
-;;;   "language"                 gchar*                : Read / Write
-;;; 
-;;; The language this text is in, as an ISO code. Pango can use this as a hint
-;;; when rendering the text. If not set, an appropriate default will be used.
-;;; 
-;;; Note that the initial value of this property depends on the current locale,
-;;; see also gtk_get_default_language().
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "language-set" property
-;;; 
-;;;   "language-set"             gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the language the text is rendered as.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "left-margin" property
-;;; 
-;;;   "left-margin"              gint                  : Read / Write
-;;; 
-;;; Width of the left margin in pixels.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "left-margin-set" property
-;;; 
-;;;   "left-margin-set"          gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the left margin.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "name" property
-;;; 
-;;;   "name"                     gchar*               : Read / Write / Construct
-;;; 
-;;; Name used to refer to the text tag. NULL for anonymous tags.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "paragraph-background" property
-;;; 
-;;;   "paragraph-background"     gchar*                : Write
-;;; 
-;;; The paragraph background color as a string.
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "paragraph-background-gdk" property
-;;; 
-;;;   "paragraph-background-gdk" GdkColor*             : Read / Write
-;;; 
-;;; Warning
-;;; 
-;;; GtkTextTag:paragraph-background-gdk has been deprecated since version 3.4
-;;; and should not be used in newly-written code. Use
-;;; "paragraph-background-rgba" instead.
-;;; 
-;;; The paragraph background color as a as a GdkColor.
-;;; 
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "paragraph-background-rgba" property
-;;; 
-;;;   "paragraph-background-rgba" GdkRGBA*              : Read / Write
-;;; 
-;;; The paragraph background color as a as a GdkRGBA.
-;;; 
-;;; Since 3.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "paragraph-background-set" property
-;;; 
-;;;   "paragraph-background-set" gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the paragraph background color.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels-above-lines" property
-;;; 
-;;;   "pixels-above-lines"       gint                  : Read / Write
-;;; 
-;;; Pixels of blank space above paragraphs.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels-above-lines-set" property
-;;; 
-;;;   "pixels-above-lines-set"   gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the number of pixels above lines.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels-below-lines" property
-;;; 
-;;;   "pixels-below-lines"       gint                  : Read / Write
-;;; 
-;;; Pixels of blank space below paragraphs.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels-below-lines-set" property
-;;; 
-;;;   "pixels-below-lines-set"   gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the number of pixels above lines.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels-inside-wrap" property
-;;; 
-;;;   "pixels-inside-wrap"       gint                  : Read / Write
-;;; 
-;;; Pixels of blank space between wrapped lines in a paragraph.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "pixels-inside-wrap-set" property
-;;; 
-;;;   "pixels-inside-wrap-set"   gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the number of pixels between wrapped lines.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "right-margin" property
-;;; 
-;;;   "right-margin"             gint                  : Read / Write
-;;; 
-;;; Width of the right margin in pixels.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "right-margin-set" property
-;;; 
-;;;   "right-margin-set"         gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the right margin.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "rise" property
-;;; 
-;;;   "rise"                     gint                  : Read / Write
-;;; 
-;;; Offset of text above the baseline (below the baseline if rise is negative)
-;;; in Pango units.
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "rise-set" property
-;;; 
-;;;   "rise-set"                 gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the rise.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scale" property
-;;; 
-;;;   "scale"                    gdouble               : Read / Write
-;;; 
-;;; Font size as a scale factor relative to the default font size. This properly
-;;; adapts to theme changes etc. so is recommended. Pango predefines some scales
-;;; such as PANGO_SCALE_X_LARGE.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 1
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "scale-set" property
-;;; 
-;;;   "scale-set"                gboolean              : Read / Write
-;;; 
-;;; Whether this tag scales the font size by a factor.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size" property
-;;; 
-;;;   "size"                     gint                  : Read / Write
-;;; 
-;;; Font size in Pango units.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size-points" property
-;;; 
-;;;   "size-points"              gdouble               : Read / Write
-;;; 
-;;; Font size in points.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size-set" property
-;;; 
-;;;   "size-set"                 gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the font size.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stretch" property
-;;; 
-;;;   "stretch"                  PangoStretch          : Read / Write
-;;; 
-;;; Font stretch as a PangoStretch, e.g. PANGO_STRETCH_CONDENSED.
-;;; 
-;;; Default value: PANGO_STRETCH_NORMAL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "stretch-set" property
-;;; 
-;;;   "stretch-set"              gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the font stretch.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "strikethrough" property
-;;; 
-;;;   "strikethrough"            gboolean              : Read / Write
-;;; 
-;;; Whether to strike through the text.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "strikethrough-set" property
-;;; 
-;;;   "strikethrough-set"        gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects strikethrough.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "style" property
-;;; 
-;;;   "style"                    PangoStyle            : Read / Write
-;;; 
-;;; Font style as a PangoStyle, e.g. PANGO_STYLE_ITALIC.
-;;; 
-;;; Default value: PANGO_STYLE_NORMAL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "style-set" property
-;;; 
-;;;   "style-set"                gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the font style.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tabs" property
-;;; 
-;;;   "tabs"                     PangoTabArray*        : Read / Write
-;;; 
-;;; Custom tabs for this text.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tabs-set" property
-;;; 
-;;;   "tabs-set"                 gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects tabs.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "underline" property
-;;; 
-;;;   "underline"                PangoUnderline        : Read / Write
-;;; 
-;;; Style of underline for this text.
-;;; 
-;;; Default value: PANGO_UNDERLINE_NONE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "underline-set" property
-;;; 
-;;;   "underline-set"            gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects underlining.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "variant" property
-;;; 
-;;;   "variant"                  PangoVariant          : Read / Write
-;;; 
-;;; Font variant as a PangoVariant, e.g. PANGO_VARIANT_SMALL_CAPS.
-;;; 
-;;; Default value: PANGO_VARIANT_NORMAL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "variant-set" property
-;;; 
-;;;   "variant-set"              gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the font variant.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "weight" property
-;;; 
-;;;   "weight"                   gint                  : Read / Write
-;;; 
-;;; Font weight as an integer, see predefined values in PangoWeight; for
-;;; example, PANGO_WEIGHT_BOLD.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 400
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "weight-set" property
-;;; 
-;;;   "weight-set"               gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects the font weight.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wrap-mode" property
-;;; 
-;;;   "wrap-mode"                GtkWrapMode           : Read / Write
-;;; 
-;;; Whether to wrap lines never, at word boundaries, or at character boundaries.
-;;; 
-;;; Default value: GTK_WRAP_NONE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wrap-mode-set" property
-;;; 
-;;;   "wrap-mode-set"            gboolean              : Read / Write
-;;; 
-;;; Whether this tag affects line wrap mode.
-;;; 
-;;; Default value: FALSE
 
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "indent" 'gtk-text-tag) 't)
+ "The @code{\"indent\"} property of type @code{:int} (Read / Write)@br{}
+  Amount to indent the paragraph, in pixels. @br{}
+  Default value: 0")
 
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "indent-set" 'gtk-text-tag) 't)
+ "The @code{\"indent-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag affects indentation. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "invisible" 'gtk-text-tag) 't)
+ "The @code{\"invisible\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this text is hidden.
+  Note that there may still be problems with the support for invisible text,
+  in particular when navigating programmatically inside a buffer containing
+  invisible segments. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "invisible-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"invisible-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects text visibility. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "justification"
+                                               'gtk-text-tag) 't)
+ "The @code{\"justification\"} property of type @symbol{gtk-justification}
+  (Read / Write)@br{}
+  Left, right, or center justification. @br{}
+  Default value: @code{:left}")
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "justification-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"justification-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects paragraph justification. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "language" 'gtk-text-tag) 't)
+ "The @code{\"language\"} property of type @code{:string} (Read / Write)@br{}
+  The language this text is in, as an ISO code. Pango can use this as a hint
+  when rendering the text. If not set, an appropriate default will be used.
+  Note that the initial value of this property depends on the current locale,
+  see also gtk_get_default_language(). @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "language-set" 'gtk-text-tag) 't)
+ "The @code{\"language-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the language the text is rendered as. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "left-margin" 'gtk-text-tag) 't)
+ "The @code{\"left-margin\"} property of type @code{:int} (Read / Write)@br{}
+  Width of the left margin in pixels. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "left-margin-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"left-margin-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the left margin. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-text-tag) 't)
+ "The @code{\"name\"} property of type @code{:string}
+  (Read / Write / Construct)@br{}
+  Name used to refer to the text tag. @code{nil} for anonymous tags. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "paragraph-background"
+                                               'gtk-text-tag) 't)
+ "The @code{\"paragraph-background\"} property of type @code{:string}
+  (Write)@br{}
+  The paragraph background color as a string. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "paragraph-background-gdk"
+                                               'gtk-text-tag) 't)
+ "The @code{\"paragraph-background-gdk\"} property of type @class{gdk-color}
+  (Read / Write)@br{}
+  @b{Warning:}
+  @code{\"paragraph-background-gdk\"} has been deprecated since version 3.4
+  and should not be used in newly-written code. Use
+  @code{\"paragraph-background-rgba\"} instead. @br{}
+  The paragraph background color as a as a @class{gdk-color}. @br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "paragraph-background-rgba"
+                                               'gtk-text-tag) 't)
+ "The @code{\"paragraph-background-rgba\"} property of type @class{gdk-rgba}
+  (Read / Write)@br{}
+  The paragraph background color as a as a @class{gdk-rgba}. @br{}
+  Since 3.2")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "paragraph-background-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"paragraph-background-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the paragraph background color. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels-above-lines"
+                                               'gtk-text-tag) 't)
+ "The @code{\"pixels-above-lines\"} property of type @code{:int}
+  (Read / Write)@br{}
+  Pixels of blank space above paragraphs. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels-above-lines-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"pixels-above-lines-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the number of pixels above lines. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels-below-lines"
+                                               'gtk-text-tag) 't)
+ "The @code{\"pixels-below-lines\"} property of type @code{:int}
+  (Read / Write)@br{}
+  Pixels of blank space below paragraphs. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels-below-lines-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"pixels-below-lines-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the number of pixels above lines. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels-inside-wrap"
+                                               'gtk-text-tag) 't)
+ "The @code{\"pixels-inside-wrap\"} property of type @code{:int}
+  (Read / Write)@br{}
+  Pixels of blank space between wrapped lines in a paragraph. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pixels-inside-wrap-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"pixels-inside-wrap-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the number of pixels between wrapped lines. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "right-margin" 'gtk-text-tag) 't)
+ "The @code{\"right-margin\"} property of type @code{:int} (Read / Write)@br{}
+  Width of the right margin in pixels. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "right-margin-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"right-margin-set\"} property of type @code{:boolean}
+  Read / Write)@br{}
+  Whether this tag affects the right margin. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rise" 'gtk-text-tag) 't)
+ "The @code{\"rise\"} property of type @code{:int} (Read / Write)@br{}
+  Offset of text above the baseline (below the baseline if rise is negative)
+  in Pango units. @br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rise-set" 'gtk-text-tag) 't)
+ "The @code{\"rise-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag affects the rise. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale" 'gtk-text-tag) 't)
+ "The @code{\"scale\"} property of type @code{gdouble} (Read / Write)@br{}
+  Font size as a scale factor relative to the default font size. This properly
+  adapts to theme changes etc. so is recommended. Pango predefines some scales
+  such as PANGO_SCALE_X_LARGE. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 1")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale-set" 'gtk-text-tag) 't)
+ "The @code{\"scale-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag scales the font size by a factor. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-text-tag) 't)
+ "The @code{\"size\"} property of type @code{:int} (Read / Write)@br{}
+  Font size in Pango units. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size-points" 'gtk-text-tag) 't)
+ "The @code{\"size-points\"} property of type @code{gdouble} (Read / Write)@br{}
+  Font size in points. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 0")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size-set" 'gtk-text-tag) 't)
+ "The @code{\"size-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag affects the font size. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stretch" 'gtk-text-tag) 't)
+ "The @code{\"stretch\"} property of type @code{PangoStretch}
+  (Read / Write)@br{}
+  Font stretch as a PangoStretch, e.g. PANGO_STRETCH_CONDENSED. @br{}
+  Default value: PANGO_STRETCH_NORMAL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "stretch-set" 'gtk-text-tag) 't)
+ "The @code{\"stretch-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the font stretch. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "strikethrough"
+                                               'gtk-text-tag) 't)
+ "The @code{\"strikethrough\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether to strike through the text. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "strikethrough-set"
+                                       'gtk-text-tag) 't)
+ "The @code{\"strikethrough-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects strikethrough. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style" 'gtk-text-tag) 't)
+ "The @code{\"style\"} property of type @code{PangoStyle} (Read / Write)@br{}
+  Font style as a PangoStyle, e.g. PANGO_STYLE_ITALIC. @br{}
+  Default value: PANGO_STYLE_NORMAL @br{}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "style-set" 'gtk-text-tag) 't)
+ "The @code{\"style-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag affects the font style. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tabs" 'gtk-text-tag) 't)
+ "The @code{\"tabs\"} property of type @code{PangoTabArray*} (Read / Write)@br{}
+  Custom tabs for this text.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tabs-set" 'gtk-text-tag) 't)
+ "The @code{\"tabs-set\"} property of type @code{:boolean} Read / Write)@br{}
+  Whether this tag affects tabs. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "underline" 'gtk-text-tag) 't)
+ "The @code{\"underline\"} property of type @code{PangoUnderline}
+  (Read / Write)@br{}
+  Style of underline for this text. @br{}
+  Default value: PANGO_UNDERLINE_NONE")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "underline-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"underline-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects underlining. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "variant" 'gtk-text-tag) 't)
+ "The @code{\"variant\"} property of type @code{PangoVariant}
+  (Read / Write)@br{}
+  Font variant as a PangoVariant, e.g. PANGO_VARIANT_SMALL_CAPS. @br{}
+  Default value: PANGO_VARIANT_NORMAL")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "variant-set" 'gtk-text-tag) 't)
+ "The @code{\"variant-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects the font variant. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "weight" 'gtk-text-tag) 't)
+ "The @code{\"weight\"} property of type @code{:int} (Read / Write)@br{}
+  Font weight as an integer, see predefined values in PangoWeight; for
+  example, PANGO_WEIGHT_BOLD. @br{}
+  Allowed values: >= 0@br{}
+  Default value: 400")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "weight-set" 'gtk-text-tag) 't)
+ "The @code{\"weight-set\"} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this tag affects the font weight. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-mode" 'gtk-text-tag) 't)
+ "The @code{\"wrap-mode\"} property of type @symbol{gtk-wrap-mode}
+  (Read / Write)@br{}
+  Whether to wrap lines never, at word boundaries, or at character
+  boundaries. @br{}
+  Default value: @code{:none}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-mode-set"
+                                               'gtk-text-tag) 't)
+ "The @code{\"wrap-mode-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether this tag affects line wrap mode. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-accumulative-margin atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-accumulative-margin 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"accumulative-margin\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-background atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-background 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"background\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-background-full-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-background-full-height 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"background-full-height\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-background-full-height-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-background-full-height-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"background-full-height-set\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-background-gdk atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-background-gdk 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"background-gdk\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-background-rgba atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-background-rgba 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"background-rgba\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-background-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-background-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"background-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-direction atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-direction 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"direction\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-editable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-editable 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"editable\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-editable-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-editable-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"editable-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-family atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-family 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"family\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-family-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-family-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"family-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-font atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-font 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"font\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-font-desc atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-font-desc 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"font-desc\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-foreground atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-foreground 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"foreground\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-foreground-gdk atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-foreground-gdk 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"foreground-gdk\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-foreground-rgba atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-foreground-rgba 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"foreground-rgba\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-foreground-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-foreground-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"foreground-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-indent atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-indent 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"indent\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-indent-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-indent-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"indent-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-invisible atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-invisible 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"invisible\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-invisible-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-invisible-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"invisible-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-justification atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-justification 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"justification\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-justification-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-justification-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"justification-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-language atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-language 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"language\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-language-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-language-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"language-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-left-margin atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-left-margin 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"left-margin\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-left-margin-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-left-margin-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"left-margin-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-name 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"name\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-paragraph-background atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-paragraph-background 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"paragraph-background\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-paragraph-background-gdk atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-paragraph-background-gdk 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"paragraph-background-gdk\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-paragraph-background-rgba atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-paragraph-background-rgba 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"paragraph-background-rgba\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-paragraph-background-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-paragraph-background-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"paragraph-background-set\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-pixels-above-lines atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-pixels-above-lines 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"pixels-above-lines\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-pixels-above-lines-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-pixels-above-lines-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"pixels-above-lines-set\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-pixels-below-lines atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-pixels-below-lines 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"pixels-below-lines\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-pixels-below-lines-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-pixels-below-lines-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"pixels-below-lines-set\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-pixels-inside-wrap atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-pixels-inside-wrap 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"pixels-inside-wrap\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-pixels-inside-wrap-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-pixels-inside-wrap-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"pixels-inside-wrap-set\"} of the
+  @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-right-margin atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-right-margin 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"right-margin\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-right-margin-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-right-margin-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"right-margin-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-rise atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-rise 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"rise\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-rise-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-rise-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"rise-set\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-scale atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-scale 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"scale\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-scale-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-scale-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"scale-set\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-size 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"size\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-size-points atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-size-points 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"size-points\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-size-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-size-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"size-set\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-stretch atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-stretch 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"stretch\"} of the @class{gtk-text-tag} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-stretch-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-stretch-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"stretch-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-strikethrough atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-strikethrough 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"strikethrough\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-strikethrough-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-strikethrough-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"strikethrough-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-style atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-style 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"style\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-style-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-style-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"style-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-tabs atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-tabs 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"tabs\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-tabs-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-tabs-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"tabs-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-underline atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-underline 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"underline\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-underline-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-underline-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"underline-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-variant atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-variant 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"variant\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-variant-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-variant-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"variant-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-weight atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-weight 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"weight\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-weight-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-weight-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"weight-set\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-wrap-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-wrap-mode 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"wrap-mode\"} of the @class{gtk-text-tag}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-tag-wrap-mode-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-tag-wrap-mode-set 'function)
+ "@version{2013-3-25}
+  Accessor of the slot @code{\"wrap-mode-set\"} of the @class{gtk-text-tag}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWrapMode
-;;; 
-;;; typedef enum {
-;;;   GTK_WRAP_NONE,
-;;;   GTK_WRAP_CHAR,
-;;;   GTK_WRAP_WORD,
-;;;   GTK_WRAP_WORD_CHAR
-;;; } GtkWrapMode;
-;;; 
-;;; Describes a type of line wrapping.
-;;; 
-;;; GTK_WRAP_NONE
-;;;     do not wrap lines; just make the text area wider
-;;; 
-;;; GTK_WRAP_CHAR
-;;;     wrap text, breaking lines anywhere the cursor can appear (between
-;;;     characters, usually - if you want to be technical, between graphemes,
-;;;     see pango_get_log_attrs())
-;;; 
-;;; GTK_WRAP_WORD
-;;;     wrap text, breaking lines in between words
-;;; 
-;;; GTK_WRAP_WORD_CHAR
-;;;     wrap text, breaking lines in between words, or if that is not enough,
-;;;     also between graphemes
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkWrapMode" gtk-wrap-mode
@@ -1042,48 +1635,74 @@
   (:word-char 3))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-wrap-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-wrap-mode atdoc:*external-symbols*)
+ "@version{2013-3-25}
+  @short{Describes a type of line wrapping.}
+  @begin{pre}
+(define-g-enum \"GtkWrapMode\" gtk-wrap-mode
+  (:export t
+   :type-initializer \"gtk_wrap_mode_get_type\")
+  (:none 0)
+  (:char 1)
+  (:word 2)
+  (:word-char 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{do not wrap lines; just make the text area wider}
+    @entry[:char]{wrap text, breaking lines anywhere the cursor can appear
+      (between characters, usually - if you want to be technical, between
+      graphemes, see pango_get_log_attrs())}
+    @entry[:word]{wrap text, breaking lines in between words}
+    @entry[:word-char]{wrap text, breaking lines in between words, or if that is
+      not enough, also between graphemes}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkTextAttributes
-;;; 
+;;;
 ;;; struct GtkTextAttributes {
 ;;;   GtkTextAppearance appearance;
-;;; 
+;;;
 ;;;   GtkJustification justification;
 ;;;   GtkTextDirection direction;
-;;; 
+;;;
 ;;;   /* Individual chunks of this can be set/unset as a group */
 ;;;   PangoFontDescription *font;
-;;; 
+;;;
 ;;;   gdouble font_scale;
-;;; 
+;;;
 ;;;   gint left_margin;
 ;;;   gint right_margin;
 ;;;   gint indent;
-;;; 
+;;;
 ;;;   gint pixels_above_lines;
 ;;;   gint pixels_below_lines;
 ;;;   gint pixels_inside_wrap;
-;;; 
+;;;
 ;;;   PangoTabArray *tabs;
-;;; 
+;;;
 ;;;   GtkWrapMode wrap_mode;        /* How to handle wrap-around for this tag.
 ;;;                                  * Must be GTK_WRAPMODE_CHAR,
 ;;;                                  * GTK_WRAPMODE_NONE, GTK_WRAPMODE_WORD
 ;;;                                  */
-;;; 
+;;;
 ;;;   PangoLanguage *language;
-;;; 
+;;;
 ;;;   /* hide the text  */
 ;;;   guint invisible : 1;
-;;; 
+;;;
 ;;;   /* Background is fit to full line height rather than
 ;;;    * baseline +/- ascent/descent (font height)
 ;;;    */
 ;;;   guint bg_full_height : 1;
-;;; 
+;;;
 ;;;   /* can edit this text */
 ;;;   guint editable : 1;
 ;;; };
-;;; 
+;;;
 ;;; Using GtkTextAttributes directly should rarely be necessary. It's primarily
 ;;; useful with gtk_text_iter_get_attributes(). As with most GTK+ structs, the
 ;;; fields in this struct should only be read, never modified directly.
@@ -1091,38 +1710,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_new ()
-;;; 
+;;;
 ;;; GtkTextTag * gtk_text_tag_new (const gchar *name);
-;;; 
+;;;
 ;;; Creates a GtkTextTag. Configure the tag using object arguments, i.e. using
 ;;; g_object_set().
-;;; 
+;;;
 ;;; name :
 ;;;     tag name, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkTextTag
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_get_priority ()
-;;; 
+;;;
 ;;; gint gtk_text_tag_get_priority (GtkTextTag *tag);
-;;; 
+;;;
 ;;; Get the tag priority.
-;;; 
+;;;
 ;;; tag :
 ;;;     a GtkTextTag
-;;; 
+;;;
 ;;; Returns :
 ;;;     The tag's priority.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_set_priority ()
-;;; 
+;;;
 ;;; void gtk_text_tag_set_priority (GtkTextTag *tag, gint priority);
-;;; 
+;;;
 ;;; Sets the priority of a GtkTextTag. Valid priorities are start at 0 and go to
 ;;; one less than gtk_text_tag_table_get_size(). Each tag in a table has a
 ;;; unique priority; setting the priority of one tag shifts the priorities of
@@ -1133,69 +1752,69 @@
 ;;; order in which they were added to the table, or created with
 ;;; gtk_text_buffer_create_tag(), which adds the tag to the buffer's table
 ;;; automatically.
-;;; 
+;;;
 ;;; tag :
 ;;;     a GtkTextTag
-;;; 
+;;;
 ;;; priority :
 ;;;     the new priority
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_tag_event ()
-;;; 
+;;;
 ;;; gboolean gtk_text_tag_event (GtkTextTag *tag,
 ;;;                              GObject *event_object,
 ;;;                              GdkEvent *event,
 ;;;                              const GtkTextIter *iter);
-;;; 
+;;;
 ;;; Emits the "event" signal on the GtkTextTag.
-;;; 
+;;;
 ;;; tag :
 ;;;     a GtkTextTag
-;;; 
+;;;
 ;;; event_object :
 ;;;     object that received the event, such as a widget
-;;; 
+;;;
 ;;; event :
 ;;;     the event
-;;; 
+;;;
 ;;; iter :
 ;;;     location where the event was received
-;;; 
+;;;
 ;;; Returns :
 ;;;     result of signal emission (whether the event was handled)
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTextAppearance
-;;; 
+;;;
 ;;; struct GtkTextAppearance {
 ;;;   GdkColor bg_color;
 ;;;   GdkColor fg_color;
-;;; 
+;;;
 ;;;   /* super/subscript rise, can be negative */
 ;;;   gint rise;
-;;; 
+;;;
 ;;;   guint underline : 4;          /* PangoUnderline */
 ;;;   guint strikethrough : 1;
-;;; 
+;;;
 ;;;   /* Whether to use background-related values; this is irrelevant for
 ;;;    * the values struct when in a tag, but is used for the composite
 ;;;    * values struct; it's true if any of the tags being composited
 ;;;    * had background stuff set.
 ;;;    */
 ;;;   guint draw_bg : 1;
-;;; 
+;;;
 ;;;   /* These are only used when we are actually laying out and rendering
 ;;;    * a paragraph; not when a GtkTextAppearance is part of a
 ;;;    * GtkTextAttributes.
 ;;;    */
 ;;;   guint inside_selection : 1;
 ;;;   guint is_text : 1;
-;;; 
+;;;
 ;;;   GdkRGBA *rgba[2];
-;;; 
+;;;
 ;;; #if (defined(__SIZEOF_INT__) && defined(__SIZEOF_POINTER__))
 ;;;                              && (__SIZEOF_INT__ == __SIZEOF_POINTER__)
 ;;;   /* unusable, just for ABI compat */
@@ -1206,71 +1825,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_new ()
-;;; 
+;;;
 ;;; GtkTextAttributes * gtk_text_attributes_new (void);
-;;; 
+;;;
 ;;; Creates a GtkTextAttributes, which describes a set of properties on some
 ;;; text.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkTextAttributes, free with gtk_text_attributes_unref().
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy ()
-;;; 
+;;;
 ;;; GtkTextAttributes * gtk_text_attributes_copy (GtkTextAttributes *src);
-;;; 
+;;;
 ;;; Copies src and returns a new GtkTextAttributes.
-;;; 
+;;;
 ;;; src :
 ;;;     a GtkTextAttributes to be copied
-;;; 
+;;;
 ;;; Returns :
 ;;;     a copy of src, free with gtk_text_attributes_unref()
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_copy_values ()
-;;; 
+;;;
 ;;; void gtk_text_attributes_copy_values (GtkTextAttributes *src,
 ;;;                                       GtkTextAttributes *dest);
-;;; 
+;;;
 ;;; Copies the values from src to dest so that dest has the same values as src.
 ;;; Frees existing values in dest.
-;;; 
+;;;
 ;;; src :
 ;;;     a GtkTextAttributes
-;;; 
+;;;
 ;;; dest :
 ;;;     another GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_unref ()
-;;; 
+;;;
 ;;; void gtk_text_attributes_unref (GtkTextAttributes *values);
-;;; 
+;;;
 ;;; Decrements the reference count on values, freeing the structure if the
 ;;; reference count reaches 0.
-;;; 
+;;;
 ;;; values :
 ;;;     a GtkTextAttributes
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_attributes_ref ()
-;;; 
+;;;
 ;;; GtkTextAttributes * gtk_text_attributes_ref (GtkTextAttributes *values);
-;;; 
+;;;
 ;;; Increments the reference count on values.
-;;; 
+;;;
 ;;; values :
 ;;;     a GtkTextAttributes
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkTextAttributes that were passed in
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.text-tag.lisp ------------------------------------------

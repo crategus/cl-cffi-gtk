@@ -2,13 +2,14 @@
 ;;; gtk.im-context.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -49,218 +50,12 @@
 ;;;     gtk_im_context_set_surrounding
 ;;;     gtk_im_context_get_surrounding
 ;;;     gtk_im_context_delete_surrounding
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkIMContext
-;;;          +----GtkIMContextSimple
-;;;          +----GtkIMMulticontext
-;;;
-;;; Signals
-;;;
-;;;   "commit"                                         : Run Last
-;;;   "delete-surrounding"                             : Run Last
-;;;   "preedit-changed"                                : Run Last
-;;;   "preedit-end"                                    : Run Last
-;;;   "preedit-start"                                  : Run Last
-;;;   "retrieve-surrounding"                           : Run Last
-;;;
-;;; Description
-;;;
-;;; GtkIMContext defines the interface for GTK+ input methods. An input method
-;;; is used by GTK+ text input widgets like GtkEntry to map from key events to
-;;; Unicode character strings.
-;;;
-;;; The user may change the current input method via a context menu, unless the
-;;; "gtk-show-input-method-menu" GtkSettings property is set to FALSE. The
-;;; default input method can be set programmatically via the "gtk-im-module"
-;;; GtkSettings property. Alternatively, you may set the GTK_IM_MODULE
-;;; environment variable as documented in gtk-running.
-;;;
-;;; The GtkEntry "im-module" and GtkTextView "im-module" properties may also be
-;;; used to set input methods for specific widget instances. For instance, a
-;;; certain entry widget might be expected to contain certain characters which
-;;; would be easier to input with a certain input method.
-;;;
-;;; An input method may consume multiple key events in sequence and finally
-;;; output the composed result. This is called preediting, and an input method
-;;; may provide feedback about this process by displaying the intermediate
-;;; composition states as preedit text. For instance, the default GTK+ input
-;;; method implements the input of arbitrary Unicode code points by holding down
-;;; the Control and Shift keys and then typing "U" followed by the hexadecimal
-;;; digits of the code point. When releasing the Control and Shift keys,
-;;; preediting ends and the character is inserted as text. Ctrl+Shift+u20AC for
-;;; example results in the Euro sign.
-;;;
-;;; Additional input methods can be made available for use by GTK+ widgets as
-;;; loadable modules. An input method module is a small shared library which
-;;; implements a subclass of GtkIMContext or GtkIMContextSimple and exports
-;;; these four functions:
-;;;
-;;;   void im_module_init(<GTKDOCLINK HREF="GTypeModule">
-;;;                         GTypeModule</GTKDOCLINK> *module);
-;;;
-;;; This function should register the GType of the GtkIMContext subclass which
-;;; implements the input method by means of g_type_module_register_type(). Note
-;;; that g_type_register_static() cannot be used as the type needs to be
-;;; registered dynamically.
-;;;
-;;;   void im_module_exit(void);
-;;;
-;;; Here goes any cleanup code your input method might require on module unload.
-;;;
-;;;   void im_module_list(const <a class="link"
-;;;                         href="GtkIMContext.html#GtkIMContextInfo"
-;;;                         title="struct GtkIMContextInfo">GtkIMContextInfo</a>
-;;;                         ***contexts, int *n_contexts)
-;;;   {
-;;;     *contexts = info_list;
-;;;     *n_contexts = G_N_ELEMENTS (info_list);
-;;;   }
-;;;
-;;; This function returns the list of input methods provided by the module. The
-;;; example implementation above shows a common solution and simply returns a
-;;; pointer to statically defined array of GtkIMContextInfo items for each
-;;; provided input method.
-;;;
-;;;   <a class="link" href="GtkIMContext.html"
-;;;                   title="GtkIMContext">GtkIMContext</a> *
-;;;                   im_module_create(const <GTKDOCLINK HREF="gchar">
-;;;                                       gchar</GTKDOCLINK> *context_id);
-;;;
-;;; This function should return a pointer to a newly created instance of the
-;;; GtkIMContext subclass identified by context_id. The context ID is the same
-;;; as specified in the GtkIMContextInfo array returned by im_module_list().
-;;;
-;;; After a new loadable input method module has been installed on the system,
-;;; the configuration file gtk.immodules needs to be regenerated by
-;;; gtk-query-immodules-3.0, in order for the new input method to become
-;;; available to GTK+ applications.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "commit" signal
-;;;
-;;; void user_function (GtkIMContext *context,
-;;;                     gchar        *str,
-;;;                     gpointer      user_data)      : Run Last
-;;;
-;;; The ::commit signal is emitted when a complete input sequence has been
-;;; entered by the user. This can be a single character immediately after a key
-;;; press or the final result of preediting.
-;;;
-;;; context :
-;;;     the object on which the signal is emitted
-;;;
-;;; str :
-;;;     the completed character(s) entered by the user
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "delete-surrounding" signal
-;;;
-;;; gboolean user_function (GtkIMContext *context,
-;;;                         gint          offset,
-;;;                         gint          n_chars,
-;;;                         gpointer      user_data)      : Run Last
-;;;
-;;; The ::delete-surrounding signal is emitted when the input method needs to
-;;; delete all or part of the context surrounding the cursor.
-;;;
-;;; context :
-;;;     the object on which the signal is emitted
-;;;
-;;; offset :
-;;;     the character offset from the cursor position of the text to be deleted.
-;;;     A negative value indicates a position before the cursor.
-;;;
-;;; n_chars :
-;;;     the number of characters to be deleted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE if the signal was handled.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "preedit-changed" signal
-;;;
-;;; void user_function (GtkIMContext *context,
-;;;                     gpointer      user_data)      : Run Last
-;;;
-;;; The ::preedit-changed signal is emitted whenever the preedit sequence
-;;; currently being entered has changed. It is also emitted at the end of a
-;;; preedit sequence, in which case gtk_im_context_get_preedit_string() returns
-;;; the empty string.
-;;;
-;;; context :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "preedit-end" signal
-;;;
-;;; void user_function (GtkIMContext *context,
-;;;                     gpointer      user_data)      : Run Last
-;;;
-;;; The ::preedit-end signal is emitted when a preediting sequence has been
-;;; completed or canceled.
-;;;
-;;; context :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "preedit-start" signal
-;;;
-;;; void user_function (GtkIMContext *context,
-;;;                     gpointer      user_data)      : Run Last
-;;;
-;;; The ::preedit-start signal is emitted when a new preediting sequence starts.
-;;;
-;;; context :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "retrieve-surrounding" signal
-;;;
-;;; gboolean user_function (GtkIMContext *context,
-;;;                         gpointer      user_data)      : Run Last
-;;;
-;;; The ::retrieve-surrounding signal is emitted when the input method requires
-;;; the context surrounding the cursor. The callback should set the input method
-;;; surrounding context by calling the gtk_im_context_set_surrounding() method.
-;;;
-;;; context :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     TRUE if the signal was handled.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIMContext
-;;;
-;;; struct GtkIMContext;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkIMContext" gtk-im-context
@@ -269,6 +64,151 @@
    :interfaces nil
    :type-initializer "gtk_im_context_get_type")
   nil)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-im-context 'type)
+ "@version{2013-3-28}
+  @begin{short}
+    GtkIMContext defines the interface for GTK+ input methods. An input method
+    is used by GTK+ text input widgets like GtkEntry to map from key events to
+    Unicode character strings.
+  @end{short}
+
+  The user may change the current input method via a context menu, unless the
+  \"gtk-show-input-method-menu\" GtkSettings property is set to FALSE. The
+  default input method can be set programmatically via the \"gtk-im-module\"
+  GtkSettings property. Alternatively, you may set the GTK_IM_MODULE
+  environment variable as documented in gtk-running.
+
+  The GtkEntry \"im-module\" and GtkTextView \"im-module\" properties may also
+  be used to set input methods for specific widget instances. For instance, a
+  certain entry widget might be expected to contain certain characters which
+  would be easier to input with a certain input method.
+
+  An input method may consume multiple key events in sequence and finally
+  output the composed result. This is called preediting, and an input method
+  may provide feedback about this process by displaying the intermediate
+  composition states as preedit text. For instance, the default GTK+ input
+  method implements the input of arbitrary Unicode code points by holding down
+  the Control and Shift keys and then typing \"U\" followed by the hexadecimal
+  digits of the code point. When releasing the Control and Shift keys,
+  preediting ends and the character is inserted as text. Ctrl+Shift+u20AC for
+  example results in the Euro sign.
+
+  Additional input methods can be made available for use by GTK+ widgets as
+  loadable modules. An input method module is a small shared library which
+  implements a subclass of GtkIMContext or GtkIMContextSimple and exports
+  these four functions:
+  @begin{pre}
+   void im_module_init(<GTKDOCLINK HREF=\"GTypeModule\">
+                         GTypeModule</GTKDOCLINK> *module);
+  @end{pre}
+  This function should register the GType of the GtkIMContext subclass which
+  implements the input method by means of g_type_module_register_type(). Note
+  that g_type_register_static() cannot be used as the type needs to be
+  registered dynamically.
+  @begin{pre}
+   void im_module_exit(void);
+  @end{pre}
+  Here goes any cleanup code your input method might require on module unload.
+  @begin{pre}
+   void im_module_list(const <a class=\"link\"
+                         href=\"GtkIMContext.html#GtkIMContextInfo\"
+                         title=\"struct GtkIMContextInfo\">GtkIMContextInfo</a>
+                         ***contexts, int *n_contexts)
+   {
+     *contexts = info_list;
+     *n_contexts = G_N_ELEMENTS (info_list);
+   @}
+  @end{pre}
+  This function returns the list of input methods provided by the module. The
+  example implementation above shows a common solution and simply returns a
+  pointer to statically defined array of GtkIMContextInfo items for each
+  provided input method.
+  @begin{pre}
+   <a class=\"link\" href=\"GtkIMContext.html\"
+                   title=\"GtkIMContext\">GtkIMContext</a> *
+                   im_module_create(const <GTKDOCLINK HREF=\"gchar\">
+                                       gchar</GTKDOCLINK> *context_id);
+  @end{pre}
+  This function should return a pointer to a newly created instance of the
+  GtkIMContext subclass identified by context_id. The context ID is the same
+  as specified in the GtkIMContextInfo array returned by im_module_list().
+
+  After a new loadable input method module has been installed on the system,
+  the configuration file gtk.immodules needs to be regenerated by
+  gtk-query-immodules-3.0, in order for the new input method to become
+  available to GTK+ applications.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"commit\" signal}
+      @begin{pre}
+ lambda (context str)   : Run Last
+      @end{pre}
+      The ::commit signal is emitted when a complete input sequence has been
+      entered by the user. This can be a single character immediately after a
+      key press or the final result of preediting.
+      @begin[code]{table}
+        @entry[context]{the object on which the signal is emitted}
+        @entry[str]{the completed character(s) entered by the user}
+      @end{table}
+    @subheading{The \"delete-surrounding\" signal}
+      @begin{pre}
+ lambda (context offset n-chars)   : Run Last
+      @end{pre}
+      The ::delete-surrounding signal is emitted when the input method needs to
+      delete all or part of the context surrounding the cursor.
+      @begin[code]{table}
+        @entry[context]{the object on which the signal is emitted}
+        @entry[offset]{the character offset from the cursor position of the text
+          to be deleted. A negative value indicates a position before the
+          cursor.}
+        @entry[n-chars]{the number of characters to be deleted}
+        @entry[Returns]{TRUE if the signal was handled.}
+      @end{table}
+    @subheading{The \"preedit-changed\" signal}
+      @begin{pre}
+ lambda (context)   : Run Last
+      @end{pre}
+      The ::preedit-changed signal is emitted whenever the preedit sequence
+      currently being entered has changed. It is also emitted at the end of a
+      preedit sequence, in which case gtk_im_context_get_preedit_string()
+      returns the empty string.
+      @begin[code]{table}
+        @entry[context]{the object on which the signal is emitted}
+      @end{table}
+    @subheading{The \"preedit-end\" signal}
+      @begin{pre}
+ lambda (context)   : Run Last
+      @end{pre}
+      The ::preedit-end signal is emitted when a preediting sequence has been
+      completed or canceled.
+      @begin[code]{table}
+        @entry[context]{the object on which the signal is emitted}
+      @end{table}
+    @subheading{The \"preedit-start\" signal}
+      @begin{pre}
+ lambda (context)   : Run Last
+      @end{pre}
+      The ::preedit-start signal is emitted when a new preediting sequence
+      starts.
+      @begin[code]{table}
+        @entry[context]{the object on which the signal is emitted}
+      @end{table}
+    @subheading{The \"retrieve-surrounding\" signal}
+      @begin{pre}
+ lambda (context)   : Run Last
+      @end{pre}
+      The ::retrieve-surrounding signal is emitted when the input method
+      requires the context surrounding the cursor. The callback should set the
+      input method surrounding context by calling the
+      gtk_im_context_set_surrounding() method.
+      @begin[code]{table}
+        @entry[context]{the object on which the signal is emitted}
+        @entry[Returns]{TRUE if the signal was handled.}
+      @end{table}
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIMContextClass
@@ -621,7 +561,7 @@
 ;;;
 ;;; Returns :
 ;;;     TRUE if surrounding text was provided; in this case you must free the
-;;;     result stored in *text.#
+;;;     result stored in *text.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -661,5 +601,4 @@
 ;;;     TRUE if the signal was handled.
 ;;; ----------------------------------------------------------------------------
 
-
-;;; --- gtk.im-ontext.lisp -----------------------------------------------------
+;;; --- gtk.im-context.lisp ----------------------------------------------------

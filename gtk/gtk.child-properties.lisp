@@ -27,28 +27,6 @@
 
 (in-package :gtk)
 
-(defcfun gtk-container-child-get-property :void
-  (container g-object)
-  (child g-object)
-  (property-name :string)
-  (value (:pointer g-value)))
-
-(export 'gtk-container-child-get-property)
-
-(defcfun gtk-container-child-set-property :void
-  (container g-object)
-  (child g-object)
-  (property-name :string)
-  (value (:pointer g-value)))
-
-(export 'gtk-container-child-set-property)
-
-(defcfun gtk-container-class-find-child-property :pointer
-  (class :pointer)
-  (property-name :string))
-
-(export 'gtk-container-class-find-child-property)
-
 (defun container-child-property-info (type property-name)
   (let ((class (g-type-class-ref type)))
     (unwind-protect
@@ -98,10 +76,6 @@
                                                    ,property-type))))
      ,@(when export
              (list `(export ',property-name)))))
-
-(defcfun gtk-container-class-list-child-properties (:pointer (:pointer g-param-spec))
-  (class (:pointer g-object-class))
-  (n-properties (:pointer :int)))
 
 (defun container-class-child-properties (type)
   (setf type (gtype type))

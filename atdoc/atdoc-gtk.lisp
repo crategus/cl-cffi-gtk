@@ -28,14 +28,10 @@
 
 (in-package :gtk)
 
-(load "../gtk/atdoc/src/atdoc-gtk.widget.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.window.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.tooltip.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.orientable.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.table.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.window-group.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.offscreen-window.lisp")
-(load "../gtk/atdoc/src/atdoc-gtk.image.lisp")
 (load "../gtk/atdoc/src/atdoc-gtk.info-bar.lisp")
 
 ;;; ----------------------------------------------------------------------------

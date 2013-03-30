@@ -2,13 +2,14 @@
 ;;; gtk.tool-shell.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -46,51 +47,40 @@
 ;;;     gtk_tool_shell_get_text_orientation
 ;;;     gtk_tool_shell_rebuild_menu
 ;;;     gtk_tool_shell_get_text_size_group
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GInterface
-;;;    +----GtkToolShell
-;;; 
-;;; Prerequisites
-;;; 
-;;; GtkToolShell requires GtkWidget.
-;;;
-;;; Known Implementations
-;;; 
-;;; GtkToolShell is implemented by GtkToolItemGroup and GtkToolbar.
-;;;
-;;; Description
-;;; 
-;;; The GtkToolShell interface allows container widgets to provide additional
-;;; information when embedding GtkToolItem widgets.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkToolShell
-;;; 
-;;; typedef struct _GtkToolShell GtkToolShell;
-;;; 
-;;; Dummy structure for accessing instances of GtkToolShellIface.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GtkToolShell" gtk-tool-shell
   (:export t
-   :type-initializer "gtk_tool_shell_get_type")
-  (:cffi icon-size
-         gtk-tool-shell-icon-size gtk-icon-size
-         "gtk_tool_shell_get_icon_size" nil)
-  (:cffi orientation
-         gtk-tool-shell-orientation gtk-orientation
-         "gtk_tool_shell_get_orientation" nil)
-  (:cffi relief-style
-         gtk-tool-shell-relief-style gtk-relief-style
-         "gtk_tool_shell_get_relief_style" nil)
-  (:cffi style
-         gtk-tool-shell-style gtk-toolbar-style
-         "gtk_tool_shell_get_style" nil))
+   :type-initializer "gtk_tool_shell_get_type"))
+;  (:cffi icon-size
+;         gtk-tool-shell-icon-size gtk-icon-size
+;         "gtk_tool_shell_get_icon_size" nil)
+;  (:cffi orientation
+;         gtk-tool-shell-orientation gtk-orientation
+;         "gtk_tool_shell_get_orientation" nil)
+;  (:cffi relief-style
+;         gtk-tool-shell-relief-style gtk-relief-style
+;         "gtk_tool_shell_get_relief_style" nil)
+;  (:cffi style
+;         gtk-tool-shell-style gtk-toolbar-style
+;         "gtk_tool_shell_get_style" nil))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-shell atdoc:*class-name-alias*) "Interface"
+      (documentation 'gtk-tool-shell 'type)
+ "@version{2013-3-27}
+  @begin{short}
+    The GtkToolShell interface allows container widgets to provide additional
+    information when embedding GtkToolItem widgets.
+  @end{short}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkToolShellIface
@@ -263,23 +253,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_rebuild_menu ()
-;;; 
-;;; void gtk_tool_shell_rebuild_menu (GtkToolShell *shell);
-;;; 
-;;; Calling this function signals the tool shell that the overflow menu item for
-;;; tool items have changed. If there is an overflow menu and if it is visible
-;;; when this function it called, the menu will be rebuilt.
-;;; 
-;;; Tool items must not call this function directly, but rely on
-;;; gtk_tool_item_rebuild_menu() instead.
-;;; 
-;;; shell :
-;;;     a GtkToolShell
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_shell_rebuild_menu" gtk-tool-shell-rebuild-menu) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-27}
+  @argument[shell]{a GtkToolShell}
+  @begin{short}
+    Calling this function signals the tool shell that the overflow menu item for
+    tool items have changed. If there is an overflow menu and if it is visible
+    when this function it called, the menu will be rebuilt.
+  @end{short}
+
+  Tool items must not call this function directly, but rely on
+  gtk_tool_item_rebuild_menu() instead.
+
+  Since 2.14"
   (shell (g-object gtk-tool-shell)))
 
 (export 'gtk-tool-shell-rebuild-menu)

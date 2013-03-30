@@ -188,7 +188,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -249,50 +249,40 @@
       "Accessor"
       (documentation 'gtk-box-child-expand 'function)
  "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"expand\"} of the @class{gtk-box}
-    class.
-  @end{short}")
+  Accessor of the child property @code{\"expand\"} of the @class{gtk-box}
+  class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-fill 'function)
  "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"fill\"} of the @class{gtk-box}
-    class.
-  @end{short}")
+  Accessor of the child property @code{\"fill\"} of the @class{gtk-box}
+  class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-padding 'function)
  "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"padding\"} of the @class{gtk-box}
-    class.
-  @end{short}")
+  Accessor of the child property @code{\"padding\"} of the @class{gtk-box}
+  class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-pack-type 'function)
  "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"pack-type\"} of the @class{gtk-box}
-    class.
-  @end{short}")
+  Accessor of the child property @code{\"pack-type\"} of the @class{gtk-box}
+  class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-position 'function)
  "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"position\"} of the @class{gtk-box}
-    class.
-  @end{short}")
+  Accessor of the child property @code{\"position\"} of the @class{gtk-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_new ()

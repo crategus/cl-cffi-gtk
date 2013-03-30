@@ -2,9 +2,10 @@
 ;;; gtk.tool-palette.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -57,173 +58,12 @@
 ;;;     gtk_tool_palette_set_drag_source
 ;;;     gtk_tool_palette_get_hadjustment
 ;;;     gtk_tool_palette_get_vadjustment
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkToolPalette
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkToolPalette implements AtkImplementorIface, GtkBuildable, GtkOrientable
-;;; and GtkScrollable.
-;;;
-;;; Properties
-;;; 
-;;;   "icon-size"                GtkIconSize           : Read / Write
-;;;   "icon-size-set"            gboolean              : Read / Write
-;;;   "toolbar-style"            GtkToolbarStyle       : Read / Write
-;;; 
-;;; Child Properties
-;;; 
-;;;   "exclusive"                gboolean              : Read / Write
-;;;   "expand"                   gboolean              : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; A GtkToolPalette allows you to add GtkToolItems to a palette-like container
-;;; with different categories and drag and drop support.
-;;; 
-;;; A GtkToolPalette is created with a call to gtk_tool_palette_new().
-;;; 
-;;; GtkToolItems cannot be added directly to a GtkToolPalette - instead they are
-;;; added to a GtkToolItemGroup which can than be added to a GtkToolPalette. To
-;;; add a GtkToolItemGroup to a GtkToolPalette, use gtk_container_add().
-;;; 
-;;; GtkWidget *palette, *group;
-;;; GtkToolItem *item;
-;;; 
-;;; palette = gtk_tool_palette_new ();
-;;; group = gtk_tool_item_group_new (_("Test Category"));
-;;; gtk_container_add (GTK_CONTAINER (palette), group);
-;;; 
-;;; item = gtk_tool_button_new_from_stock (GTK_STOCK_OK);
-;;; gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
-;;; 
-;;; The easiest way to use drag and drop with GtkToolPalette is to call
-;;; gtk_tool_palette_add_drag_dest() with the desired drag source palette and
-;;; the desired drag target widget. Then gtk_tool_palette_get_drag_item() can be
-;;; used to get the dragged item in the "drag-data-received" signal handler of
-;;; the drag target.
-;;; 
-;;; static void
-;;; passive_canvas_drag_data_received (GtkWidget        *widget,
-;;;                                    GdkDragContext   *context,
-;;;                                    gint              x,
-;;;                                    gint              y,
-;;;                                    GtkSelectionData *selection,
-;;;                                    guint             info,
-;;;                                    guint             time,
-;;;                                    gpointer          data)
-;;; {
-;;;   GtkWidget *palette;
-;;;   GtkWidget *item;
-;;; 
-;;;   /* Get the dragged item */
-;;;   palette = gtk_widget_get_ancestor (gtk_drag_get_source_widget (context),
-;;;                                      GTK_TYPE_TOOL_PALETTE);
-;;;   if (palette != NULL)
-;;;     item = gtk_tool_palette_get_drag_item (GTK_TOOL_PALETTE (palette),
-;;;                                            selection);
-;;; 
-;;;   /* Do something with item */
-;;; }
-;;; 
-;;; GtkWidget *target, palette;
-;;; 
-;;; palette = gtk_tool_palette_new ();
-;;; target = gtk_drawing_area_new ();
-;;; 
-;;; g_signal_connect (G_OBJECT (target), "drag-data-received",
-;;;                   G_CALLBACK (passive_canvas_drag_data_received), NULL);
-;;; gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
-;;;                                 GTK_DEST_DEFAULT_ALL,
-;;;                                 GTK_TOOL_PALETTE_DRAG_ITEMS,
-;;;                                 GDK_ACTION_COPY);
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "icon-size" property
-;;; 
-;;;   "icon-size"                GtkIconSize           : Read / Write
-;;; 
-;;; The size of the icons in a tool palette is normally determined by the
-;;; "toolbar-icon-size" setting. When this property is set, it overrides the
-;;; setting.
-;;; 
-;;; This should only be used for special-purpose tool palettes, normal
-;;; application tool palettes should respect the user preferences for the size
-;;; of icons.
-;;; 
-;;; Default value: GTK_ICON_SIZE_SMALL_TOOLBAR
-;;; 
-;;; Since 2.20
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "icon-size-set" property
-;;; 
-;;;   "icon-size-set"            gboolean              : Read / Write
-;;; 
-;;; Is TRUE if the "icon-size" property has been set.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.20
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "toolbar-style" property
-;;; 
-;;;   "toolbar-style"            GtkToolbarStyle       : Read / Write
-;;; 
-;;; The style of items in the tool palette.
-;;; 
-;;; Default value: GTK_TOOLBAR_ICONS
-;;; 
-;;; Since 2.20
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "exclusive" child property
-;;; 
-;;;   "exclusive"                gboolean              : Read / Write
-;;; 
-;;; Whether the item group should be the only one that is expanded at a given
-;;; time.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.20
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "expand" child property
-;;; 
-;;;   "expand"                   gboolean              : Read / Write
-;;; 
-;;; Whether the item group should receive extra space when the palette grows. at
-;;; a given time.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkToolPalette
-;;; 
-;;; struct GtkToolPalette;
-;;;
-;;; This should not be accessed directly. Use the accessor functions below.
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -249,6 +89,168 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-tool-palette 'type)
+ "@version{2013-3-27}
+  @begin{short}
+    A GtkToolPalette allows you to add GtkToolItems to a palette-like container
+    with different categories and drag and drop support.
+  @end{short}
+
+  A GtkToolPalette is created with a call to gtk_tool_palette_new().
+
+  GtkToolItems cannot be added directly to a GtkToolPalette - instead they are
+  added to a GtkToolItemGroup which can than be added to a GtkToolPalette. To
+  add a GtkToolItemGroup to a GtkToolPalette, use gtk_container_add().
+  @begin{pre}
+ GtkWidget *palette, *group;
+ GtkToolItem *item;
+
+ palette = gtk_tool_palette_new ();
+ group = gtk_tool_item_group_new (_(\"Test Category\"));
+ gtk_container_add (GTK_CONTAINER (palette), group);
+
+ item = gtk_tool_button_new_from_stock (GTK_STOCK_OK);
+ gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
+  @end{pre}
+  The easiest way to use drag and drop with GtkToolPalette is to call
+  gtk_tool_palette_add_drag_dest() with the desired drag source palette and
+  the desired drag target widget. Then gtk_tool_palette_get_drag_item() can be
+  used to get the dragged item in the \"drag-data-received\" signal handler of
+  the drag target.
+  @begin{pre}
+ static void
+ passive_canvas_drag_data_received (GtkWidget        *widget,
+                                    GdkDragContext   *context,
+                                    gint              x,
+                                    gint              y,
+                                    GtkSelectionData *selection,
+                                    guint             info,
+                                    guint             time,
+                                    gpointer          data)
+ {
+   GtkWidget *palette;
+   GtkWidget *item;
+ 
+   /* Get the dragged item */
+   palette = gtk_widget_get_ancestor (gtk_drag_get_source_widget (context),
+                                      GTK_TYPE_TOOL_PALETTE);
+   if (palette != NULL)
+     item = gtk_tool_palette_get_drag_item (GTK_TOOL_PALETTE (palette),
+                                            selection);
+ 
+   /* Do something with item */
+ @}
+
+ GtkWidget *target, palette;
+
+ palette = gtk_tool_palette_new ();
+ target = gtk_drawing_area_new ();
+
+ g_signal_connect (G_OBJECT (target), \"drag-data-received\",
+                   G_CALLBACK (passive_canvas_drag_data_received), NULL);
+ gtk_tool_palette_add_drag_dest (GTK_TOOL_PALETTE (palette), target,
+                                 GTK_DEST_DEFAULT_ALL,
+                                 GTK_TOOL_PALETTE_DRAG_ITEMS,
+                                 GDK_ACTION_COPY);
+  @end{pre}
+  @begin[Child Property Details]{dictionary}
+    @subheading{The \"exclusive\" child property}
+      @code{\"exclusive\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether the item group should be the only one that is expanded at a given
+      time. @br{}
+      Default value: @code{nil}@br{}
+      Since 2.20
+
+    @subheading{The \"expand\" child property}
+      @code{\"expand\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether the item group should receive extra space when the palette grows
+      at a given time. @br{}
+      Default value: @code{nil}@br{}
+      Since 2.20
+  @end{dictionary}
+  @see-slot{gtk-tool-palette-icon-size}
+  @see-slot{gtk-tool-palette-icon-size-set}
+  @see-slot{gtk-tool-palette-toolbar-style}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "icon-size"
+                                               'gtk-tool-palette) 't)
+ "The @code{\"icon-size\"} property of type @symbol{gtk-icon-size}
+  (Read / Write)@br{}
+  The size of the icons in a tool palette is normally determined by the
+  @code{\"toolbar-icon-size\"} setting. When this property is set, it overrides
+  the setting.
+  This should only be used for special-purpose tool palettes, normal
+  application tool palettes should respect the user preferences for the size
+  of icons. @br{}
+  Default value: @code{:small-toolbar}@br{}
+  Since 2.20")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "icon-size-set"
+                                               'gtk-tool-palette) 't)
+ "The @code{\"icon-size-set\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Is @em{true} if the @code{\"icon-size\"} property has been set. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.20")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "toolbar-style"
+                                               'gtk-tool-palette) 't)
+ "The @code{\"toolbar-style\"} property of type @symbol{gtk-toolbar-style}
+  (Read / Write)@br{}
+  The style of items in the tool palette. @br{}
+  Default value: @code{:icons}@br{}
+  Since 2.20")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-icon-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tool-palette-icon-size 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"icon-size\"} of the @class{gtk-tool-palette}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-icon-size-set atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tool-palette-icon-size-set 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"icon-size-set\"} of the @class{gtk-tool-palette}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-toolbar-style atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tool-palette-toolbar-style 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @code{\"toolbar-style\"} of the @class{gtk-tool-palette}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
 (define-child-property "GtkToolPalette"
                        gtk-tool-palette-child-exclusive
                        "exclusive" "gboolean" t t t)
@@ -256,6 +258,30 @@
 (define-child-property "GtkToolPalette"
                        gtk-tool-palette-child-expand
                        "expand" "gboolean" t t t)
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-child-exclusive atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tool-palette-child-exclusive 'function)
+ "@version{2013-3-27}
+  Accessor of the child property @code{\"exclusive\"} of the
+  @class{gtk-tool-palette} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-child-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tool-palette-child-expand 'function)
+ "@version{2013-3-27}
+  Accessor of the child property @code{\"expand\"} of the
+  @class{gtk-tool-palette} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_new ()
@@ -701,6 +727,5 @@
 ;;; 
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.tool-palette.lisp --------------------------------------

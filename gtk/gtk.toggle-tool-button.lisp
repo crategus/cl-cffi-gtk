@@ -2,13 +2,14 @@
 ;;; gtk.toggle-tool-button.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,80 +41,12 @@
 ;;;     gtk_toggle_tool_button_new_from_stock
 ;;;     gtk_toggle_tool_button_set_active
 ;;;     gtk_toggle_tool_button_get_active
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkToolItem
-;;;                                  +----GtkToolButton
-;;;                                        +----GtkToggleToolButton
-;;;                                              +----GtkRadioToolButton
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkToggleToolButton implements AtkImplementorIface, GtkBuildable,
-;;; GtkActivatable and GtkActionable.
-;;;
-;;; Properties
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;; 
-;;; Signals
-;;; 
-;;;   "toggled"                                        : Run First
-;;; 
-;;; Description
-;;; 
-;;; A GtkToggleToolButton is a GtkToolItem that contains a toggle button.
-;;; 
-;;; Use gtk_toggle_tool_button_new() to create a new GtkToggleToolButton. Use
-;;; gtk_toggle_tool_button_new_from_stock() to create a new GtkToggleToolButton
-;;; containing a stock item.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "active" property
-;;; 
-;;;   "active"                   gboolean              : Read / Write
-;;; 
-;;; If the toggle tool button should be pressed in.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "toggled" signal
-;;; 
-;;; void user_function (GtkToggleToolButton *toggle_tool_button,
-;;;                     gpointer             user_data)              : Run First
-;;; 
-;;; Emitted whenever the toggle tool button changes state.
-;;; 
-;;; toggle_tool_button :
-;;;     the object that emitted the signal
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkToggleToolButton
-;;; 
-;;; struct GtkToggleToolButton;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkToggleToolButton" gtk-toggle-tool-button
@@ -127,6 +60,57 @@
   ((active
     gtk-toggle-tool-button-active
     "active" "gboolean" t t)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-toggle-tool-button 'type)
+ "@version{2013-3-25}
+  @begin{short}
+    A GtkToggleToolButton is a GtkToolItem that contains a toggle button.
+  @end{short}
+
+  Use gtk_toggle_tool_button_new() to create a new GtkToggleToolButton. Use
+  gtk_toggle_tool_button_new_from_stock() to create a new GtkToggleToolButton
+  containing a stock item.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"toggled\" signal}
+      @begin{pre}
+ lambda (toggle-tool-button)   : Run First
+      @end{pre}
+      Emitted whenever the toggle tool button changes state.
+      @begin[code]{table}
+        @entry[toggle-tool-button]{the object that emitted the signal}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-toggle-tool-button-active}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "active"
+                                               'gtk-toggle-tool-button) 't)
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
+  If the toggle tool button should be pressed in. @br{}
+  Default value: @code{nil}@br{}
+  Since 2.8")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-toggle-tool-button-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-toggle-tool-button-active 'function)
+ "@version{2013-3-25}
+  Accessor of the slot \"active\" of the @class{gtk-toggle-tool-button} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_tool_button_new ()
@@ -196,6 +180,5 @@
 ;;; 
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.toggle-tool-button.lisp --------------------------------

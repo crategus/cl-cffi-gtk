@@ -2,10 +2,11 @@
 ;;; gtk.window-group.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -42,28 +43,12 @@
 ;;;     gtk_window_group_list_windows
 ;;;     gtk_window_group_get_current_grab
 ;;;     gtk_window_group_get_current_device_grab
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GtkWindowGroup
-;;; 
-;;; Description
-;;; 
-;;; GtkWindowGroup objects are referenced by each window in the group, so once
-;;; you have added all windows to a GtkWindowGroup, you can drop the initial
-;;; reference to the window group with g_object_unref(). If the windows in the
-;;; window group are subsequently destroyed, then they will be removed from the
-;;; window group and drop their references on the window group; when all window
-;;; have been removed, the window group will be freed.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkWindowGroup
-;;; 
-;;; struct GtkWindowGroup;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkWindowGroup" gtk-window-group
@@ -72,45 +57,50 @@
     :interfaces nil
     :type-initializer "gtk_window_group_get_type")
   nil)
-;  ((:cffi windows
-;          gtk-window-group-windows (g-list (g-object gtk-window))
-;          "gtk_window_group_list_windows" nil)))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-window-group 'type)
+ "@version{2013-3-28}
+  @begin{short}
+    @sym{gtk-window-group} objects are referenced by each window in the group,
+    so once you have added all windows to a @sym{gtk-window-group}, you can drop
+    the initial reference to the window group with @fun{g-object-unref}.
+  @end{short}
+  If the windows in the window group are subsequently destroyed, then they will
+  be removed from the window group and drop their references on the window
+  group; when all window have been removed, the window group will be freed.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_new ()
-;;; 
-;;; GtkWindowGroup * gtk_window_group_new (void);
-;;; 
-;;; Creates a new GtkWindowGroup object. Grabs added with gtk_grab_add() only
-;;; affect windows within the same GtkWindowGroup.
-;;; 
-;;; Returns :
-;;;     a new GtkWindowGroup.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-window-group-new))
 
 (defun gtk-window-group-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @return{A new @class{gtk-window-group} object.}
+  Creates a new @class{gtk-window-group} object. Grabs added with
+  @fun{gtk-grab-add} only affect windows within the same
+  @class{gtk-window-group}."
   (make-instance 'gtk-window-group))
 
 (export 'gtk-window-group-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_add_window ()
-;;; 
-;;; void gtk_window_group_add_window (GtkWindowGroup *window_group,
-;;;                                   GtkWindow *window);
-;;; 
-;;; Adds a window to a GtkWindowGroup.
-;;; 
-;;; window_group :
-;;;     a GtkWindowGroup
-;;; 
-;;; window :
-;;;     the GtkWindow to add
 ;;; ----------------------------------------------------------------------------
 
 (defcfun (gtk-window-group-add-window "gtk_window_group_add_window") :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window-group]{a @class{gtk-window-group} object}
+  @argument[window]{the @class{gtk-window} to add}
+  @begin{short}
+    Adds a window to a @class{gtk-window-group} object.
+  @end{short}"
   (window-group (g-object gtk-window-group))
   (window (g-object gtk-window)))
 
@@ -118,20 +108,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_remove_window ()
-;;; 
-;;; void gtk_window_group_remove_window (GtkWindowGroup *window_group,
-;;;                                      GtkWindow *window);
-;;; 
-;;; Removes a window from a GtkWindowGroup.
-;;; 
-;;; window_group :
-;;;     a GtkWindowGroup
-;;; 
-;;; window :
-;;;     the GtkWindow to remove
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_group_remove_window" gtk-window-group-remove-window) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window-group]{a @class{gtk-window-group} object}
+  @argument[window]{the @class{gtk-window} to remove}
+  Removes a window from a @class{gtk-window-group} object."
   (window-group (g-object gtk-window-group))
   (window (g-object gtk-window)))
 
@@ -139,72 +123,60 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_list_windows ()
-;;; 
-;;; GList * gtk_window_group_list_windows (GtkWindowGroup *window_group);
-;;; 
-;;; Returns a list of the GtkWindows that belong to window_group.
-;;; 
-;;; window_group :
-;;;     a GtkWindowGroup
-;;; 
-;;; Returns :
-;;;     A newly-allocated list of windows inside the group.
-;;; 
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_group_list_windows" gtk-window-group-list-windows)
     (g-list gtk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window-group]{a @class{gtk-window-group} object}
+  @return{A newly allocated list of windows inside the group.}
+  @begin{short}
+    Returns a list of the @class{gtk-window} windows that belong to
+    @arg{window-group}.
+  @end{short}
+
+  Since 2.14"
   (window-group (g-object gtk-window-group)))
 
 (export 'gtk-window-group-list-windows)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_get_current_grab ()
-;;; 
-;;; GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group)
-;;; 
-;;; Gets the current grab widget of the given group, see gtk_grab_add().
-;;; 
-;;; window_group :
-;;;     a GtkWindowGroup
-;;; 
-;;; Returns :
-;;;     the current grab widget of the group
-;;; 
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_group_get_current_grab" gtk-window-group-get-current-grab)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window-group]{a @class{gtk-window-group} object}
+  @return{The current grab widget of the group.}
+  @begin{short}
+    Gets the current grab widget of the given group, see @fun{gtk-grab-add}.
+  @end{short}
+
+  Since 2.22"
   (window-group (g-object gtk-window-group)))
 
 (export 'gtk-window-group-get-current-grab)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_group_get_current_device_grab ()
-;;; 
-;;; GtkWidget * gtk_window_group_get_current_device_grab
-;;;                                               (GtkWindowGroup *window_group,
-;;;                                                GdkDevice *device);
-;;; 
-;;; Returns the current grab widget for device, or NULL if none.
-;;; 
-;;; window_group :
-;;;     a GtkWindowGroup
-;;; 
-;;; device :
-;;;     a GdkDevice
-;;; 
-;;; Returns :
-;;;     The grab widget, or NULL.
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_group_get_current_device_grab"
            gtk-window-group-get-current-device-grab)
     (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window-group]{a @class{gtk-window-group} object}
+  @argument[device]{a @class{gdk-device} object}
+  @return{The grab widget, or @code{nil}.}
+  @begin{short}
+    Returns the current grab widget for @arg{device}, or @code{nil} if none.
+  @end{short}
+
+  Since 3.0"
   (window-group (g-object gtk-window-group))
   (device (g-object gdk-device)))
 

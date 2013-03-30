@@ -64,12 +64,11 @@
 (define-g-object-class "GtkFontSelection" gtk-font-selection
   (:superclass gtk-box
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_font_selection_get_type")
-  ((font
-    gtk-font-selection-font
-    "font" "GdkFont" t nil)
-   (font-name
+  ((font-name
     gtk-font-selection-font-name
     "font-name" "gchararray" t t)
    (preview-text
@@ -80,27 +79,29 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-font-selection 'type)
- "@version{2013-3-6}
+ "@version{2013-3-26}
   @subheading{Warning}
-  GtkFontSelection is deprecated and should not be used in newly-written code.
+  @sym{gtk-font-selection} is deprecated and should not be used in newly-written
+  code.
 
   @begin{short}
-    The GtkFontSelection widget lists the available fonts, styles and sizes,
-    allowing the user to select a font. It is used in the GtkFontSelectionDialog
-    widget to provide a dialog box for selecting fonts.
+    The @sym{gtk-font-selection} widget lists the available fonts, styles and
+    sizes, allowing the user to select a font. It is used in the
+    @class{gtk-font-selection-dialog} widget to provide a dialog box for
+    selecting fonts.
   @end{short}
 
   To set the font which is initially selected, use
-  gtk_font_selection_set_font_name().
+  @fun{gtk-font-selection-set-font-name}.
 
-  To get the selected font use gtk_font_selection_get_font_name().
+  To get the selected font use @fun{gtk-font-selection-get-font-name}.
 
   To change the text which is shown in the preview area, use
-  gtk_font_selection_set_preview_text().
+  @fun{gtk-font-selection-set-preview-text}.
 
-  In GTK+ 3.2, GtkFontSelection has been deprecated in favor of
-  GtkFontChooser.
-  @see-slot{gtk-font-selection-font-name}
+  In GTK+ 3.2, @sym{gtk-font-selection} has been deprecated in favor of
+  @class{GTK-Font-Chooser}.
+  @see-slot{gtk-font-selection-get-font-name}
   @see-slot{gtk-font-selection-preview-text}")
 
 ;;; ----------------------------------------------------------------------------
@@ -110,16 +111,19 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "font-name" 'gtk-font-selection) 't)
- "The @code{\"font-name\"} property of type @code{gchar*} (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "font-name"
+                                               'gtk-font-selection) 't)
+ "The @code{\"font-name\"} property of type @code{:string} (Read / Write)@br{}
   The string that represents this font.@br{}
   Default value: \"Sans 10\"")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "preview-text" 'gtk-font-selection) 't)
- "The @code{\"preview-text\"} property of type @code{gchar*} (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "preview-text"
+                                               'gtk-font-selection) 't)
+ "The @code{\"preview-text\"} property of type @code{:string}
+  (Read / Write)@br{}
   The text to display in order to demonstrate the selected font.@br{}
   Default value: \"abcdefghijk ABCDEFGHIJK\"")
 

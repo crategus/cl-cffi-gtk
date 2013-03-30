@@ -519,54 +519,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowHints
-;;;
-;;; typedef enum {
-;;;   GDK_HINT_POS         = 1 << 0,
-;;;   GDK_HINT_MIN_SIZE    = 1 << 1,
-;;;   GDK_HINT_MAX_SIZE    = 1 << 2,
-;;;   GDK_HINT_BASE_SIZE   = 1 << 3,
-;;;   GDK_HINT_ASPECT      = 1 << 4,
-;;;   GDK_HINT_RESIZE_INC  = 1 << 5,
-;;;   GDK_HINT_WIN_GRAVITY = 1 << 6,
-;;;   GDK_HINT_USER_POS    = 1 << 7,
-;;;   GDK_HINT_USER_SIZE   = 1 << 8
-;;; } GdkWindowHints;
-;;;
-;;; Used to indicate which fields of a GdkGeometry struct should be paid
-;;; attention to. Also, the presence/absence of GDK_HINT_POS, GDK_HINT_USER_POS,
-;;; and GDK_HINT_USER_SIZE is significant, though they don't directly refer to
-;;; GdkGeometry fields. GDK_HINT_USER_POS will be set automatically by GtkWindow
-;;; if you call gtk_window_move(). GDK_HINT_USER_POS and GDK_HINT_USER_SIZE
-;;; should be set if the user specified a size/position using a --geometry
-;;; command-line argument; gtk_window_parse_geometry() automatically sets these
-;;; flags.
-;;;
-;;; GDK_HINT_POS
-;;;     indicates that the program has positioned the window
-;;;
-;;; GDK_HINT_MIN_SIZE
-;;;     min size fields are set
-;;;
-;;; GDK_HINT_MAX_SIZE
-;;;     max size fields are set
-;;;
-;;; GDK_HINT_BASE_SIZE
-;;;     base size fields are set
-;;;
-;;; GDK_HINT_ASPECT
-;;;     aspect ratio fields are set
-;;;
-;;; GDK_HINT_RESIZE_INC
-;;;     resize increment fields are set
-;;;
-;;; GDK_HINT_WIN_GRAVITY
-;;;     window gravity field is set
-;;;
-;;; GDK_HINT_USER_POS
-;;;     indicates that the window's position was explicitly set by the user
-;;;
-;;; GDK_HINT_USER_SIZE
-;;;     indicates that the window's size was explicitly set by the user
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GdkWindowHints" gdk-window-hints
@@ -581,6 +533,50 @@
   (:win-gravity 64)
   (:user-pos 128)
   (:user-size 256))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-window-hints atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gdk-window-hints atdoc:*external-symbols*)
+ "@version{2013-3-29}
+  @begin{short}
+    Used to indicate which fields of a @class{gdk-geometry} struct should be
+    paid attention to. Also, the presence/absence of @code{:pos},
+    @code{:user-pos}, and @code{:user-size} is significant, though they do not
+    directly refer to @class{gdk-geometry} fields. @code{:user-pos} will be set
+    automatically by @class{gtk-window} if you call @fun{gtk-window-move}.
+    @code{:user-pos} and @code{:user-size} should be set if the user specified
+    a size/position using a --geometry command-line argument;
+    @fun{gtk-window-parse-geometry} automatically sets these flags.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GdkWindowHints\" gdk-window-hints
+  (:export t
+   :type-initializer \"gdk_window_hints_get_type\")
+  (:pos 1)
+  (:min-size 2)
+  (:max-size 4)
+  (:base-size 8)
+  (:aspect 16)
+  (:resize-inc 32)
+  (:win-gravity 64)
+  (:user-pos 128)
+  (:user-size 256))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:pos]{indicates that the program has positioned the window}
+    @entry[:min-size]{min size fields are set}
+    @entry[:max-size]{max size fields are set}
+    @entry[:base-size]{base size fields are set}
+    @entry[:aspect]{aspect ratio fields are set}
+    @entry[:resize-inc]{resize increment fields are set}
+    @entry[:win-gravity]{window gravity field is set}
+    @entry[:user-pos]{indicates that the window's position was explicitly set
+      by the user}
+    @entry[:user-size]{indicates that the window's size was explicitly set by
+      the user}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkGravity

@@ -332,7 +332,7 @@ NIL
   @see-function{glib-major-version}
   @see-function{glib-minor-version}
   @see-function{glib-micro-version}
-  @see-symbol{*gdk-pixbuf-version*}
+  @see-symbol{+gdk-pixbuf-version+}
   @see-function{pango-version-string}
   @see-function{cairo-version-string}"
   (format t "~%cl-cffi-gtk version: ~a~%" *cl-cffi-gtk-version*)

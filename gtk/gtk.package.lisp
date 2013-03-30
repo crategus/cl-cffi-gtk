@@ -35,7 +35,7 @@
   (:use :cl :cl-user :cffi
    :gobject :gdk :gdk-pixbuf :glib :gio :iter :pango :cairo)
   (:export #:cl-cffi-gtk-build-info
-           
+
            #:define-child-property
            #:container-class-child-properties
            #:generate-child-properties
@@ -52,9 +52,9 @@
            #:tree-node-remove-at
            #:tree-node-child-at
            #:tree-lisp-store-add-column
-           
-           #:gtk-call-aborted
-           #:gtk-call-aborted-condition
+
+;           #:gtk-call-aborted
+;           #:gtk-call-aborted-condition
            #:let-ui))
 
 (defpackage :gtk-examples
@@ -860,18 +860,32 @@
     @end{subsection}
     @begin[GtkWindow]{subsection}
       Toplevel which can contain other widgets.
-  
+
       @about-class{gtk-window}
       @about-function{gtk-window-new}
+      @about-function{gtk-window-set-title}
       @about-function{gtk-window-set-wmclass}
+      @about-function{gtk-window-set-resizable}
+      @about-function{gtk-window-get-resizable}
       @about-function{gtk-window-add-accel-group}
       @about-function{gtk-window-remove-accel-group}
       @about-function{gtk-window-activate-focus}
       @about-function{gtk-window-activate-default}
+      @about-function{gtk-window-set-modal}
       @about-function{gtk-window-set-default-size}
       @about-function{gtk-window-set-default-geometry}
       @about-function{gtk-window-set-geometry-hints}
+      @about-function{gtk-window-set-gravity}
+      @about-function{gtk-window-get-gravity}
       @about-function{gtk-window-set-position}
+      @about-function{gtk-window-set-transient-for}
+      @about-function{gtk-window-set-attached-to}
+      @about-function{gtk-window-set-destroy-with-parent}
+      @about-function{gtk-window-set-hide-titlebar-when-maximized}
+      @about-function{gtk-window-set-screen}
+      @about-function{gtk-window-get-screen}
+      @about-function{gtk-window-is-active}
+      @about-function{gtk-window-has-toplevel-focus}
       @about-function{gtk-window-list-toplevels}
       @about-function{gtk-window-add-mnemonic}
       @about-function{gtk-window-remove-mnemonic}
@@ -896,13 +910,41 @@
       @about-function{gtk-window-set-keep-below}
       @about-function{gtk-window-begin-resize-drag}
       @about-function{gtk-window-begin-move-drag}
+      @about-function{gtk-window-set-decorated}
+      @about-function{gtk-window-set-deletable}
       @about-function{gtk-window-set-mnemonic-modifier}
+      @about-function{gtk-window-set-type-hint}
+      @about-function{gtk-window-set-skip-taskbar-hint}
+      @about-function{gtk-window-set-skip-pager-hint}
+      @about-function{gtk-window-set-urgency-hint}
+      @about-function{gtk-window-set-accept-focus}
+      @about-function{gtk-window-set-focus-on-map}
+      @about-function{gtk-window-set-startup-id}
+      @about-function{gtk-window-set-role}
+      @about-function{gtk-window-get-decorated}
+      @about-function{gtk-window-get-deletable}
       @about-function{gtk-window-get-default-icon-list}
       @about-function{gtk-window-get-default-icon-name}
       @about-function{gtk-window-get-default-size}
+      @about-function{gtk-window-get-destroy-with-parent}
+      @about-function{gtk-window-get-hide-titlebar-when-maximized}
+      @about-function{gtk-window-get-icon}
       @about-function{gtk-window-get-icon-list}
+      @about-function{gtk-window-get-icon-name}
       @about-function{gtk-window-get-mnemonic-modifier}
+      @about-function{gtk-window-get-modal}
+      @about-function{gtk-window-get-position}
+      @about-function{gtk-window-get-role}
       @about-function{gtk-window-get-size}
+      @about-function{gtk-window-get-title}
+      @about-function{gtk-window-get-transient-for}
+      @about-function{gtk-window-get-attached-to}
+      @about-function{gtk-window-get-type-hint}
+      @about-function{gtk-window-get-skip-taskbar-hint}
+      @about-function{gtk-window-get-skip-pager-hint}
+      @about-function{gtk-window-get-urgency-hint}
+      @about-function{gtk-window-get-accept-focus}
+      @about-function{gtk-window-get-focus-on-map}
       @about-function{gtk-window-get-group}
       @about-function{gtk-window-has-group}
       @about-function{gtk-window-get-window-type}
@@ -915,11 +957,23 @@
       @about-function{gtk-window-set-default-icon}
       @about-function{gtk-window-set-default-icon-from-file}
       @about-function{gtk-window-set-default-icon-name}
+      @about-function{gtk-window-set-icon}
       @about-function{gtk-window-set-icon-list}
       @about-function{gtk-window-set-icon-from-file}
+      @about-function{gtk-window-set-icon-name}
       @about-function{gtk-window-set-auto-startup-notification}
+      @about-function{gtk-window-get-opacity}
+      @about-function{gtk-window-set-opacity}
+      @about-function{gtk-window-get-mnemonics-visible}
+      @about-function{gtk-window-set-mnemonics-visible}
+      @about-function{gtk-window-get-focus-visible}
+      @about-function{gtk-window-set-focus-visible}
+      @about-function{gtk-window-set-has-resize-grip}
+      @about-function{gtk-window-get-has-resize-grip}
       @about-function{gtk-window-resize-grip-is-visible}
       @about-function{gtk-window-get-resize-grip-area}
+      @about-function{gtk-window-get-application}
+      @about-function{gtk-window-set-application}
       @about-function{gtk-window-set-has-user-ref-count}
     @end{subsection}
     @begin[GtkWindowGroup]{subsection}
@@ -986,7 +1040,7 @@
   @begin[Display Widgets]{section}
     @begin[GtkAccelLabel]{subsection}
       A label which displays an accelerator key on the right of the text.
-  
+
       @about-class{gtk-accel-label}
       @about-function{gtk-accel-label-new}
       @about-function{gtk-accel-label-refetch}
@@ -1021,7 +1075,7 @@
       @about-function{gtk-label-new}
       @about-function{gtk-label-text}
       @about-function{gtk-label-set-markup}
-      @about-function{gtk-label-set-markup-with_mnemonic}
+      @about-function{gtk-label-set-markup-with-mnemonic}
       @about-function{gtk-label-set-line-wrap}
       @about-function{gtk-label-set-line-wrap-mode}
       @about-function{gtk-label-get-layout-offsets}
@@ -1044,7 +1098,7 @@
     @end{subsection}
     @begin[GtkStatusbar]{subsection}
       Report messages of minor importance to the user.
- 
+
       @about-class{gtk-statusbar}
       @about-function{gtk-statusbar-new}
       @about-function{gtk-statusbar-get-context-id}
@@ -1227,7 +1281,7 @@
     @begin[GtkCellRendererAccel]{subsection}
     @end{subsection}
     @begin[GtkCellRendererComo]{subsection}
-    @end{subsection}    
+    @end{subsection}
     @begin[GtkCellRendererPixbuf]{subsection}
     @end{subsection}
     @begin[GtkCellRendererProgress]{subsection}
@@ -1352,7 +1406,7 @@
       @about-function{gtk-action-group-add-action}
       @about-function{gtk-action-group-add-action-with-accel}
       @about-function{gtk-action-group-remove-action}
-      @about-class{gtk-action-entry}
+      @about-symbol{gtk-action-entry}
       @about-function{gtk-action-group-add-actions}
       @about-function{gtk-action-group-add-actions-full}
       @about-class{gtk-toggle-action-entry}
@@ -1394,6 +1448,16 @@
     @begin[GtkRecentAction]{subsection}
     @end{subsection}
     @begin[GtkActivatable]{subsection}
+      An interface for activatable widgets.
+
+      @about-class{gtk-activatable}
+      @about-class{gtk-activatable-iface}
+      @about-function{gtk-activatable-do-set-related-action}
+      @about-function{gtk-activatable-get-related-action}
+      @about-function{gtk-activatable-get-use-action-appearance}
+      @about-function{gtk-activatable-sync-action-properties}
+      @about-function{gtk-activatable-set-related-action}
+      @about-function{gtk-activatable-set-use-action-appearance}
     @end{subsection}
   @end{section}
   @begin[Selectors (Color, File and Font)]{section}
@@ -1515,6 +1579,53 @@
     @begin[GtkLayout]{subsection}
     @end{subsection}
     @begin[GtkNotebook]{subsection}
+      A tabbed notebook container.
+
+      @about-class{gtk-notebook}
+      @about-function{gtk-notebook-new}
+      @about-function{gtk-notebook-append-page}
+      @about-function{gtk-notebook-append-page-menu}
+      @about-function{gtk-notebook-prepend-page}
+      @about-function{gtk-notebook-prepend-page-menu}
+      @about-function{gtk-notebook-insert-page}
+      @about-function{gtk-notebook-insert-page-menu}
+      @about-function{gtk-notebook-remove-page}
+      @about-function{gtk-notebook-page-num}
+      @about-function{gtk-notebook-next-page}
+      @about-function{gtk-notebook-prev-page}
+      @about-function{gtk-notebook-reorder-child}
+      @about-function{gtk-notebook-set-tab-pos}
+      @about-function{gtk-notebook-set-show-tabs}
+      @about-function{gtk-notebook-set-show-border}
+      @about-function{gtk-notebook-set-scrollable}
+      @about-function{gtk-notebook-popup-enable}
+      @about-function{gtk-notebook-popup-disable}
+      @about-function{gtk-notebook-get-current-page}
+      @about-function{gtk-notebook-get-menu-label}
+      @about-function{gtk-notebook-get-nth-page}
+      @about-function{gtk-notebook-get-n-pages}
+      @about-function{gtk-notebook-get-tab-label}
+      @about-function{gtk-notebook-set-menu-label}
+      @about-function{gtk-notebook-set-menu-label-text}
+      @about-function{gtk-notebook-set-tab-label}
+      @about-function{gtk-notebook-set-tab-label-text}
+      @about-function{gtk-notebook-set-tab-reorderable}
+      @about-function{gtk-notebook-set-tab-detachable}
+      @about-function{gtk-notebook-get-menu-label-text}
+      @about-function{gtk-notebook-get-scrollable}
+      @about-function{gtk-notebook-get-show-border}
+      @about-function{gtk-notebook-get-show-tabs}
+      @about-function{gtk-notebook-get-tab-label-text}
+      @about-function{gtk-notebook-get-tab-pos}
+      @about-function{gtk-notebook-get-tab-reorderable}
+      @about-function{gtk-notebook-get-tab-detachable}
+      @about-function{gtk-notebook-get-tab-hborder}
+      @about-function{gtk-notebook-get-tab-vborder}
+      @about-function{gtk-notebook-set-current-page}
+      @about-function{gtk-notebook-set-group-name}
+      @about-function{gtk-notebook-get-group-name}
+      @about-function{gtk-notebook-set-action-widget}
+      @about-function{gtk-notebook-get-action-widget}
     @end{subsection}
     @begin[GtkTable]{subsection}
       Pack widgets in regular patterns
@@ -1530,7 +1641,7 @@
       @about-function{gtk-table-set-row-spacings}
       @about-function{gtk-table-set-col-spacings}
       @about-function{gtk-table-set-homogeneous}
-      @about-function{gtk-table-get_default-row-spacing}
+      @about-function{gtk-table-get-default-row-spacing}
       @about-function{gtk-table-get-homogeneous}
       @about-function{gtk-table-get-row-spacing}
       @about-function{gtk-table-get-col-spacing}
@@ -1574,9 +1685,9 @@
   @end{section}
   @begin[Scrolling]{section}
     @begin[GtkScrollbar]{subsection}
-    @end{subsection} 
+    @end{subsection}
     @begin[GtkScrolledWindow]{subsection}
-    @end{subsection} 
+    @end{subsection}
     @begin[GtkScrollable]{subsection}
     @end{subsection}
   @end{section}
@@ -1858,11 +1969,11 @@
       @about-function{GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID}
       @about-function{gtk-container-add}
       @about-function{gtk-container-remove}
-      @about-function{gtk_container_add_with_properties}
+      @about-function{gtk-container-add-with-properties}
       @about-function{gtk-container-check-resize}
       @about-function{gtk-container-foreach}
       @about-function{gtk-container-get-children}
-      @about-function{gtk_container_get_path_for_child}
+      @about-function{gtk-container-get-path-for-child}
       @about-function{gtk-container-set-reallocate-redraws}
       @about-function{gtk-container-get-focus-child}
       @about-function{gtk-container-set-focus-child}
@@ -1872,22 +1983,22 @@
       @about-function{gtk-container-set-focus-hadjustment}
       @about-function{gtk-container-resize-children}
       @about-function{gtk-container-child-type}
-      @about-function{gtk_container_child_get}
-      @about-function{gtk_container_child_set}
-      @about-function{gtk_container_child_get_property}
-      @about-function{gtk_container_child_set_property}
-      @about-function{gtk_container_child_get_valist}
-      @about-function{gtk_container_child_set_valist}
-      @about-function{gtk_container_child_notify}
+      @about-function{gtk-container-child-get}
+      @about-function{gtk-container-child-set}
+      @about-function{gtk-container-child-get-property}
+      @about-function{gtk-container-child-set-property}
+      @about-function{gtk-container-child-get-valist}
+      @about-function{gtk-container-child-set-valist}
+      @about-function{gtk-container-child-notify}
       @about-function{gtk-container-forall}
-      @about-function{gtk_container_propagate_draw}
-      @about-function{gtk_container_get_focus_chain}
-      @about-function{gtk_container_set_focus_chain}
-      @about-function{gtk_container_unset_focus_chain}
-      @about-function{gtk_container_class_find_child_property}
-      @about-function{gtk_container_class_install_child_property}
-      @about-function{gtk_container_class_list_child_properties}
-      @about-function{gtk_container_class_handle_border_width}
+      @about-function{gtk-container-propagate-draw}
+      @about-function{gtk-container-get-focus-chain}
+      @about-function{gtk-container-set-focus-chain}
+      @about-function{gtk-container-unset-focus-chain}
+      @about-function{gtk-container-class-find-child-property}
+      @about-function{gtk-container-class-install-child-property}
+      @about-function{gtk-container-class-list-child-properties}
+      @about-function{gtk-container-class-handle-border-width}
     @end{subsection}
     @begin[GtkBin]{subsection}
       A container with just one child.
@@ -1944,7 +2055,7 @@
     @end{subsection}
     @begin[GtkSocket]{subsection}
     @end{subsection}
-  @end{section} 
+  @end{section}
   @begin[Recently Used Documents]{section}
     @begin[GtkRecentManager]{subsection}
     @end{subsection}
@@ -1991,9 +2102,9 @@
       @about-function{gtk-application-get-windows}
       @about-function{gtk-application-inhibit}
       @about-function{gtk-application-uninhibit}
-      @about-function{gtk-application-is_inhibited}
+      @about-function{gtk-application-is-inhibited}
       @about-function{gtk-application-get-app-menu}
-      @about-function{gtk-application-set-app_menu}
+      @about-function{gtk-application-set-app-menu}
       @about-function{gtk-application-get-menubar}
       @about-function{gtk-application-set-menubar}
     @end{subsection}

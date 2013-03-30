@@ -245,7 +245,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-action-group) 't)
+(setf (documentation (atdoc:get-slot-from-name "sensitive"
+                                               'gtk-action-group) 't)
  "The @code{\"sensitive\"} property of type @code{gboolean} (Read / Write)@br{}
   Whether the action group is enabled.@br{}
   Default value: @arg{true}")
@@ -265,7 +266,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-action-group-name atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-action-group-name atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-action-group-name 'function)
  "@version{2013-2-5}
   @begin{short}
@@ -273,7 +275,8 @@
   @end{short}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-action-group-sensitive atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-action-group-sensitive atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-action-group-sensitive 'function)
  "@version{2013-2-5}
   @begin{short}
@@ -282,7 +285,8 @@
   @end{short}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-action-group-visible atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-action-group-visible atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-action-group-visible 'function)
  "@version{2013-2-5}
   @begin{short}
@@ -500,41 +504,52 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkActionEntry
-;;;
-;;; struct GtkActionEntry {
-;;;   const gchar     *name;
-;;;   const gchar     *stock_id;
-;;;   const gchar     *label;
-;;;   const gchar     *accelerator;
-;;;   const gchar     *tooltip;
-;;;   GCallback  callback;
-;;; };
-;;;
-;;; GtkActionEntry structs are used with gtk_action_group_add_actions() to
-;;; construct actions.
-;;;
-;;; const gchar *name;
-;;;     The name of the action.
-;;;
-;;; const gchar *stock_id;
-;;;     The stock id for the action, or the name of an icon from the icon theme.
-;;;
-;;; const gchar *label;
-;;;     The label for the action. This field should typically be marked for
-;;;     translation, see gtk_action_group_set_translation_domain(). If label is
-;;;     NULL, the label of the stock item with id stock_id is used.
-;;;
-;;; const gchar *accelerator;
-;;;     The accelerator for the action, in the format understood by
-;;;     gtk_accelerator_parse().
-;;;
-;;; const gchar *tooltip;
-;;;     The tooltip for the action. This field should typically be marked for
-;;;     translation, see gtk_action_group_set_translation_domain().
-;;;
-;;; GCallback callback;
-;;;     The function to call when the action is activated.
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct gtk-action-entry
+  (name :string)
+  (stock-id :string)
+  (label :string)
+  (accelerator :string)
+  (tooltip :string)
+  (callback :pointer))
+
+(export 'gtk-action-entry)
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-action-entry atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-action-entry atdoc:*external-symbols*)
+ "@version{2013-3-29}
+  @begin{short}
+    @sym{gtk-action-entry} structs are used with
+    @fun{gtk-action-group-add-actions} to construct actions.
+  @end{short}
+  @begin{pre}
+(defcstruct gtk-action-entry
+  (name :string)
+  (stock-id :string)
+  (label :string)
+  (accelerator :string)
+  (tooltip :string)
+  (callback :pointer))
+  @end{pre}
+  @begin[code]{table}
+    @entry[name]{The name of the action.}
+    @entry[stock-id]{The stock id for the action, or the name of an icon from
+      the icon theme.}
+    @entry[label]{The label for the action. This field should typically be
+      marked for translation, see @fun{gtk-action-group-set-translation-domain}.
+      If label is @code{nil}, the label of the stock item with id
+      @code{stock-id} is used.}
+    @entry[accelerator]{The accelerator for the action, in the format
+      understood by @fun{gtk-accelerator-parse}.}
+    @entry[tooltip]{The tooltip for the action. This field should typically be
+      marked for translation, see
+      @fun{gtk-action-group-set-translation-domain}.}
+    @entry[callback]{The function to call when the action is activated.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_group_add_actions ()
@@ -841,21 +856,20 @@
 
 (defun gtk-action-group-set-translate-func (action-group func)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-3-29}
   @argument[action-group]{a @class{gtk-action-group} object}
-  @argument[func]{a GtkTranslateFunc}
-  @argument[data]{data to be passed to func and notify}
-  @argument[notify]{a GDestroyNotify function to be called when action_group is
-    destroyed and when the translation function is changed again}
+  @argument[func]{a @code{GtkTranslateFunc}}
   @begin{short}
     Sets a function to be used for translating the label and tooltip of
-    @class{gtk-action-entry}'s added by @code{gtk_action_group_add_actions()}.
+    @symbol{gtk-action-entry}'s added by @fun{gtk-action-group-add-actions}.
   @end{short}
 
   If you're using @code{gettext()}, it is enough to set the translation domain
   with @fun{gtk-action-group-set-translation-domain}.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-action-group-add-actions}
+  @see-function{gtk-action-group-set-translation-domain}"
   (%gtk-action-group-set-translate-func
                              action-group
                              (callback gtk-translate-func-cb)

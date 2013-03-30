@@ -134,21 +134,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-button-box-layout-style --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-layout-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-layout-style 'function)
- "@version{2013-2-15}
-  @begin{short}
-    Accessor of the slot @code{\"layout-style\"} of the @class{gtk-button-box}
-    class.
-  @end{short}")
+ "@version{2013-3-28}
+  Accessor of the slot @code{\"layout-style\"} of the @class{gtk-button-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -160,7 +156,11 @@
                        gtk-button-box-child-secondary
                        "secondary" "gboolean" t t t)
 
-;;; --- Accessors of the Child Properties --------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-child-non-homogeneous atdoc:*function-name-alias*)
@@ -589,25 +589,94 @@
                        "secondary" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vbutton-box-child-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vbutton-box-child-expand 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"expand\"} of the
+    @class{gtk-vbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vbutton-box-child-fill atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vbutton-box-child-fill 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"fill\"} of the
+    @class{gtk-vbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vbutton-box-child-padding atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vbutton-box-child-padding 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"padding\"} of the
+    @class{gtk-vbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vbutton-box-child-pack-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vbutton-box-child-pack-type 'function)
+ "@version{2013-3-8}
+  @begin{short}
+    Accessor of the child property @code{\"pack-type\"} of the
+    @class{gtk-vbutton-box} class.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vbutton-box-child-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vbutton-box-child-position 'function)
+ "@version{2013-3-8}
+  Accessor of the child property @code{\"position\"} of the
+  @class{gtk-vbutton-box} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-vbutton-box-child-secondary atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-vbutton-box-child-secondary 'function)
+ "@version{2013-3-8}
+  Accessor of the child property @code{\"secondary\"} of the
+  @class{gtk-vbutton-box} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_vbutton_box_new ()
-;;;
-;;; GtkWidget * gtk_vbutton_box_new (void);
-;;;
-;;; Warning
-;;;
-;;; gtk_vbutton_box_new has been deprecated since version 3.2 and should not be
-;;; used in newly-written code. Use gtk_button_box_new() with
-;;; GTK_ORIENTATION_VERTICAL instead
-;;;
-;;; Creates a new vertical button box.
-;;;
-;;; Returns :
-;;;     a new button box GtkWidget.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-vbutton-box-new))
 
 (defun gtk-vbutton-box-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-28}
+  @return{A new button box widget.}
+  @subeading{Warning}
+    @sym{gtk-vbutton-box-new} has been deprecated since version 3.2 and should
+    not be used in newly-written code. Use @fun{gtk-button-box-new} with
+    @code{:vertical} instead.
+
+  @short{Creates a new vertical button box.}
+  @see-function{gtk-button-box-new}"
   (make-instance 'gtk-button-box
                  :orientation :vertical))
 

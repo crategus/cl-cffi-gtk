@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkNotebook
-;;; 
+;;;
 ;;; A tabbed notebook container
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkNotebook
-;;;     
+;;;
 ;;;     gtk_notebook_new
 ;;;     gtk_notebook_append_page
 ;;;     gtk_notebook_append_page_menu
@@ -81,389 +81,6 @@
 ;;;     gtk_notebook_get_group_name
 ;;;     gtk_notebook_set_action_widget
 ;;;     gtk_notebook_get_action_widget
-;;; 
-;;; 
-;;; 
-;;; Child Properties
-;;; 
-;;;   "detachable"               gboolean              : Read / Write
-;;;   "menu-label"               gchar*                : Read / Write
-;;;   "position"                 gint                  : Read / Write
-;;;   "reorderable"              gboolean              : Read / Write
-;;;   "tab-expand"               gboolean              : Read / Write
-;;;   "tab-fill"                 gboolean              : Read / Write
-;;;   "tab-label"                gchar*                : Read / Write
-;;; 
-;;; Style Properties
-;;; 
-;;;   "arrow-spacing"                  gint                  : Read
-;;;   "has-backward-stepper"           gboolean              : Read
-;;;   "has-forward-stepper"            gboolean              : Read
-;;;   "has-secondary-backward-stepper" gboolean              : Read
-;;;   "has-secondary-forward-stepper"  gboolean              : Read
-;;;   "initial-gap"                    gint                  : Read
-;;;   "tab-curvature"                  gint                  : Read
-;;;   "tab-overlap"                    gint                  : Read
-;;; 
-;;; Signals
-;;; 
-;;;   "change-current-page"                            : Action
-;;;   "create-window"                                  : Run Last
-;;;   "focus-tab"                                      : Action
-;;;   "move-focus-out"                                 : Action
-;;;   "page-added"                                     : Run Last
-;;;   "page-removed"                                   : Run Last
-;;;   "page-reordered"                                 : Run Last
-;;;   "reorder-tab"                                    : Action
-;;;   "select-page"                                    : Action
-;;;   "switch-page"                                    : Run Last
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Child Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "detachable" child property
-;;; 
-;;;   "detachable"               gboolean              : Read / Write
-;;; 
-;;; Whether the tab is detachable.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "menu-label" child property
-;;; 
-;;;   "menu-label"               gchar*                : Read / Write
-;;; 
-;;; The string displayed in the child's menu entry.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "position" child property
-;;; 
-;;;   "position"                 gint                  : Read / Write
-;;; 
-;;; The index of the child in the parent.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: 0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "reorderable" child property
-;;; 
-;;;   "reorderable"              gboolean              : Read / Write
-;;; 
-;;; Whether the tab is reorderable by user action.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tab-expand" child property
-;;; 
-;;;   "tab-expand"               gboolean              : Read / Write
-;;; 
-;;; Whether to expand the child's tab.
-;;; 
-;;; Default value: FALSE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tab-fill" child property
-;;; 
-;;;   "tab-fill"                 gboolean              : Read / Write
-;;; 
-;;; Whether the child's tab should fill the allocated area.
-;;; 
-;;; Default value: TRUE
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tab-label" child property
-;;; 
-;;;   "tab-label"                gchar*                : Read / Write
-;;; 
-;;; The string displayed on the child's tab label.
-;;; 
-;;; Default value: NULL
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "arrow-spacing" style property
-;;; 
-;;;   "arrow-spacing"            gint                  : Read
-;;; 
-;;; The "arrow-spacing" property defines the spacing between the scroll arrows
-;;; and the tabs.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-backward-stepper" style property
-;;; 
-;;;   "has-backward-stepper"     gboolean              : Read
-;;; 
-;;; The "has-backward-stepper" property determines whether the standard backward
-;;; arrow button is displayed.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-forward-stepper" style property
-;;; 
-;;;   "has-forward-stepper"      gboolean              : Read
-;;; 
-;;; The "has-forward-stepper" property determines whether the standard forward
-;;; arrow button is displayed.
-;;; 
-;;; Default value: TRUE
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-secondary-backward-stepper" style property
-;;; 
-;;;   "has-secondary-backward-stepper" gboolean              : Read
-;;; 
-;;; The "has-secondary-backward-stepper" property determines whether a second
-;;; backward arrow button is displayed on the opposite end of the tab area.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "has-secondary-forward-stepper" style property
-;;; 
-;;;   "has-secondary-forward-stepper" gboolean              : Read
-;;; 
-;;; The "has-secondary-forward-stepper" property determines whether a second
-;;; forward arrow button is displayed on the opposite end of the tab area.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.4
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "initial-gap" style property
-;;; 
-;;;   "initial-gap"              gint                  : Read
-;;; 
-;;; The "initial-gap" property defines the minimum size for the initial gap
-;;; between the first tab.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 3.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tab-curvature" style property
-;;; 
-;;;   "tab-curvature"            gint                  : Read
-;;; 
-;;; The "tab-curvature" property defines size of tab curvature.
-;;; 
-;;; Allowed values: >= 0
-;;; 
-;;; Default value: 1
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "tab-overlap" style property
-;;; 
-;;;   "tab-overlap"              gint                  : Read
-;;; 
-;;; The "tab-overlap" property defines size of tab overlap area.
-;;; 
-;;; Default value: 2
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "change-current-page" signal
-;;; 
-;;; gboolean user_function (GtkNotebook *notebook,
-;;;                         gint         arg1,
-;;;                         gpointer     user_data)      : Action
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "create-window" signal
-;;; 
-;;; GtkNotebook* user_function (GtkNotebook *notebook,
-;;;                             GtkWidget   *page,
-;;;                             gint         x,
-;;;                             gint         y,
-;;;                             gpointer     user_data)      : Run Last
-;;; 
-;;; The ::create-window signal is emitted when a detachable tab is dropped on
-;;; the root window.
-;;; 
-;;; A handler for this signal can create a window containing a notebook where
-;;; the tab will be attached. It is also responsible for moving/resizing the
-;;; window and adding the necessary properties to the notebook
-;;; (e.g. the "group").
-;;; 
-;;; notebook :
-;;;     the GtkNotebook emitting the signal
-;;; 
-;;; page :
-;;;     the tab of notebook that is being detached
-;;; 
-;;; x :
-;;;     the X coordinate where the drop happens
-;;; 
-;;; y :
-;;;     the Y coordinate where the drop happens
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Returns :
-;;;     a GtkNotebook that page should be added to, or NULL
-;;; 
-;;; Since 2.12
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "focus-tab" signal
-;;; 
-;;; gboolean user_function (GtkNotebook   *notebook,
-;;;                         GtkNotebookTab arg1,
-;;;                         gpointer       user_data)      : Action
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "move-focus-out" signal
-;;; 
-;;; void user_function (GtkNotebook     *notebook,
-;;;                     GtkDirectionType arg1,
-;;;                     gpointer         user_data)      : Action
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "page-added" signal
-;;; 
-;;; void user_function (GtkNotebook *notebook,
-;;;                     GtkWidget   *child,
-;;;                     guint        page_num,
-;;;                     gpointer     user_data)      : Run Last
-;;; 
-;;; the ::page-added signal is emitted in the notebook right after a page is
-;;; added to the notebook.
-;;; 
-;;; notebook :
-;;;     the GtkNotebook
-;;; 
-;;; child :
-;;;     the child GtkWidget affected
-;;; 
-;;; page_num :
-;;;     the new page number for child
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "page-removed" signal
-;;; 
-;;; void user_function (GtkNotebook *notebook,
-;;;                     GtkWidget   *child,
-;;;                     guint        page_num,
-;;;                     gpointer     user_data)      : Run Last
-;;; 
-;;; the ::page-removed signal is emitted in the notebook right after a page is
-;;; removed from the notebook.
-;;; 
-;;; notebook :
-;;;     the GtkNotebook
-;;; 
-;;; child :
-;;;     the child GtkWidget affected
-;;; 
-;;; page_num :
-;;;     the child page number
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "page-reordered" signal
-;;; 
-;;; void user_function (GtkNotebook *notebook,
-;;;                     GtkWidget   *child,
-;;;                     guint        page_num,
-;;;                     gpointer     user_data)      : Run Last
-;;; 
-;;; the ::page-reordered signal is emitted in the notebook right after a page
-;;; has been reordered.
-;;; 
-;;; notebook :
-;;;     the GtkNotebook
-;;; 
-;;; child :
-;;;     the child GtkWidget affected
-;;; 
-;;; page_num :
-;;;     the new page number for child
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "reorder-tab" signal
-;;; 
-;;; gboolean user_function (GtkNotebook     *notebook,
-;;;                         GtkDirectionType arg1,
-;;;                         gboolean         arg2,
-;;;                         gpointer         user_data)      : Action
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "select-page" signal
-;;; 
-;;; gboolean user_function (GtkNotebook *notebook,
-;;;                         gboolean     arg1,
-;;;                         gpointer     user_data)      : Action
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "switch-page" signal
-;;; 
-;;; void user_function (GtkNotebook *notebook,
-;;;                     GtkWidget   *page,
-;;;                     guint        page_num,
-;;;                     gpointer     user_data)      : Run Last
-;;; 
-;;; Emitted when the user or a function changes the current page.
-;;; 
-;;; notebook :
-;;;     the object which received the signal.
-;;; 
-;;; page :
-;;;     the new current page
-;;; 
-;;; page_num :
-;;;     the index of the page
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -503,8 +120,6 @@
                                              child
                                              tab-label
                                              position)))))
-
-(export 'gtk-notebook-add-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkNotebook
@@ -584,7 +199,195 @@
    </child>
  </object>
   @end{pre}
+  @begin[Child Property Details]{dictionary}
+    @subheading{The \"detachable\" child property}
+      @code{\"detachable\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether the tab is detachable. @br{}
+      Default value: @code{nil}
 
+    @subheading{The \"menu-label\" child property}
+      @code{\"menu-label\"} of type @code{:string} (Read / Write)@br{}
+      The string displayed in the child's menu entry. @br{}
+      Default value: @code{nil}
+
+    @subheading{The \"position\" child property}
+      @code{\"position\"} of type @code{:int} (Read / Write)@br{}
+      The index of the child in the parent. @br{}
+      Allowed values: >= @code{G_MAXULONG}@br{}
+      Default value: 0
+
+    @subheading{The \"reorderable\" child property}
+      @code{\"reorderable\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether the tab is reorderable by user action. @br{}
+      Default value: @code{nil}
+
+    @subheading{The \"tab-expand\" child property}
+      @code{\"tab-expand\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether to expand the child's tab. @br{}
+      Default value: @code{nil}
+
+    @subheading{The \"tab-fill\" child property}
+      @code{\"tab-fill\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether the child's tab should fill the allocated area. @br{}
+      Default value: @em{true}
+
+    @subheading{The \"tab-label\" child property}
+      @code{\"tab-label\"} of type @code{:string} (Read / Write)@br{}
+      The string displayed on the child's tab label. @br{}
+      Default value: @code{nil}
+  @end{dictionary}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"arrow-spacing\" style property}
+      @code{\"arrow-spacing\"} of type @code{:int} (Read)@br{}
+      The @code{\"arrow-spacing\"} property defines the spacing between the
+      scroll arrows and the tabs. @br{}
+      Allowed values: >= 0 @br{}
+      Default value: 0@br{}
+      Since 2.10
+
+    @subheading{The \"has-backward-stepper\" style property}
+      @code{\"has-backward-stepper\"} of type @code{:boolean} (Read)@br{}
+      The @code{\"has-backward-stepper\"} property determines whether the
+      standard backward arrow button is displayed. @br{}
+      Default value: @em{true}@br{}
+      Since 2.4
+
+    @subheading{The \"has-forward-stepper\" style property}
+      @code{\"has-forward-stepper\"} of type @code{:boolean} (Read)@br{}
+      The @code{\"has-forward-stepper\"} property determines whether the
+      standard forward arrow button is displayed. @br{}
+      Default value: @em{true}@br{}
+      Since 2.4
+
+    @subheading{The \"has-secondary-backward-stepper\" style property}
+      @code{\"has-secondary-backward-stepper\"} of type @code{:boolean}
+      (Read)@br{}
+      The @code{\"has-secondary-backward-stepper\"} property determines whether
+      a second backward arrow button is displayed on the opposite end of the tab
+      area. @br{}
+      Default value: @code{nil}@br{}
+      Since 2.4
+
+    @subheading{The \"has-secondary-forward-stepper\" style property}
+      @code{\"has-secondary-forward-stepper\"} of type @code{:boolean}
+      (Read)@br{}
+      The @code{\"has-secondary-forward-stepper\"} property determines whether a
+      second forward arrow button is displayed on the opposite end of the tab
+      area. @br{}
+      Default value: @code{nil}@br{}
+      Since 2.4
+
+    @subheading{The \"initial-gap\" style property}
+      @code{\"initial-gap\"} of type @code{:int} (Read)@br{}
+      The @code{\"initial-gap\"} property defines the minimum size for the
+      initial gap between the first tab. @br{}
+      Allowed values: >= 0@br{}
+      Default value: 0@br{}
+      Since 3.2
+
+    @subheading{The \"tab-curvature\" style property}
+      @code{\"tab-curvature\"} of type @code{:int} (Read)@br{}
+      The @code{\"tab-curvature\"} property defines size of tab curvature. @br{}
+      Allowed values: >= 0@br{}
+      Default value: 1@br{}
+      Since 2.10
+
+    @subheading{The \"tab-overlap\" style property}
+      @code{\"tab-overlap\"} of type @code{:int} (Read)@br{}
+      The @code{\"tab-overlap\"} property defines size of tab overlap area.@br{}
+      Default value: 2@br{}
+      Since 2.10
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"change-current-page\" signal}
+      @begin{pre}
+ lambda (notebook arg1)   : Action
+      @end{pre}
+    @subheading{The \"create-window\" signal}
+      @begin{pre}
+ lambda (notebook page x y)   : Run Last
+      @end{pre}
+      The ::create-window signal is emitted when a detachable tab is dropped on
+      the root window.
+      A handler for this signal can create a window containing a notebook where
+      the tab will be attached. It is also responsible for moving/resizing the
+      window and adding the necessary properties to the notebook
+      (e. g. the \"group\").
+      @begin[code]{table}
+        @entry[notebook]{the GtkNotebook emitting the signal}
+        @entry[page]{the tab of notebook that is being detached}
+        @entry[x]{the X coordinate where the drop happens}
+        @entry[y]{the Y coordinate where the drop happens}
+        @entry[Returns]{a GtkNotebook that page should be added to, or NULL}
+      @end{table}
+      Since 2.12
+
+    @subheading{The \"focus-tab\" signal}
+      @begin{pre}
+ lambda (notebook arg1)   : Action
+      @end{pre}
+    @subheading{The \"move-focus-out\" signal}
+      @begin{pre}
+ lambda (notebook arg1)   : Action
+      @end{pre}
+    @subheading{The \"page-added\" signal}
+      @begin{pre}
+ lambda (notebook child page-num)   : Run Last
+      @end{pre}
+      The \"page-added\" signal is emitted in the notebook right after a page is
+      added to the notebook.
+      @begin[code]{table}
+        @entry[notebook]{the GtkNotebook}
+        @entry[child]{the child GtkWidget affected}
+        @entry[page-num]{the new page number for child}
+      @end{table}
+      Since 2.10
+
+    @subheading{The \"page-removed\" signal}
+      @begin{pre}
+ lambda (notebook child page-num)   : Run Last
+      @end{pre}
+      The \"page-removed\" signal is emitted in the notebook right after a page
+      is removed from the notebook.
+      @begin[code]{table}
+        @entry[notebook]{the GtkNotebook}
+        @entry[child]{the child GtkWidget affected}
+        @entry[page-num]{the child page number}
+      @end{table}
+      Since 2.10
+
+    @subheading{The \"page-reordered\" signal}
+      @begin{pre}
+ lambda (notebook child page-num)   : Run Last
+      @end{pre}
+      The \"page-reordered\" signal is emitted in the notebook right after a
+      page has been reordered.
+      @begin[code]{table}
+        @entry[notebook]{the GtkNotebook}
+        @entry[child]{the child GtkWidget affected}
+        @entry[page-num]{the new page number for child}
+      @end{table}
+      Since 2.10
+
+    @subheading{The \"reorder-tab\" signal}
+      @begin{pre}
+ lambda (notebook arg1 arg2)   : Action
+      @end{pre}
+    @subheading{The \"select-page\" signal}
+      @begin{pre}
+ lambda (notebook arg1)   : Action
+      @end{pre}
+    @subheading{The \"switch-page\" signal}
+      @begin{pre}
+ lambda (notebook page page-num)   : Run Last
+      @end{pre}
+      Emitted when the user or a function changes the current page.
+      @begin[code]{table}
+        @entry[notebook]{the object which received the signal.}
+        @entry[page]{the new current page}
+        @entry[page-num]{the index of the page}
+      @end{table}
+  @end{dictionary}
   @see-slot{gtk-notebook-enable-popup}
   @see-slot{gtk-notebook-group-name}
   @see-slot{gtk-notebook-page}
@@ -662,7 +465,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -1583,43 +1386,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_hborder ()
-;;; 
+;;;
 ;;; guint16 gtk_notebook_get_tab_hborder (GtkNotebook *notebook);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_notebook_get_tab_hborder has been deprecated since version 3.4 and
 ;;; should not be used in newly-written code. this function returns zero
-;;; 
+;;;
 ;;; Returns the horizontal width of a tab border.
-;;; 
+;;;
 ;;; notebook :
 ;;;     a GtkNotebook
-;;; 
+;;;
 ;;; Returns :
 ;;;     horizontal width of a tab border
-;;; 
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_vborder ()
-;;; 
+;;;
 ;;; guint16 gtk_notebook_get_tab_vborder (GtkNotebook *notebook);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_notebook_get_tab_vborder has been deprecated since version 3.4 and
 ;;; should not be used in newly-written code. this function returns zero
-;;; 
+;;;
 ;;; Returns the vertical width of a tab border.
-;;; 
+;;;
 ;;; notebook :
 ;;;     a GtkNotebook
-;;; 
+;;;
 ;;; Returns :
 ;;;     vertical width of a tab border
-;;; 
+;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 

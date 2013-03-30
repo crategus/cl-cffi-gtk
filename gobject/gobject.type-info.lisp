@@ -505,7 +505,13 @@
 (defun g-type-gtype ()
  #+cl-cffi-gtk-documentation
  "@version{2013-2-6}
-  The type for @code{GType}."
+  The type for @code{GType}.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-gtype)
+=> #S(GTYPE :NAME \"GType\" :%ID 134819824)
+    @end{pre}
+  @end{dictionary}"
   (gtype (%g-type-gtype)))
 
 (export 'g-type-gtype)
@@ -625,14 +631,10 @@
   (:value-abstract #.(ash 1 5)))
   @end{pre}
   @begin[code]{table}
-    @begin[:abstract]{entry}
-      Indicates an abstract type. No instances can be created for an abstract
-      type.
-    @end{entry}
-    @begin[:value-abstract]{entry}
-      Indicates an abstract value type, i.e. a type that introduces a value
-      table, but can't be used for @fun{g-value-init}.
-    @end{entry}
+    @entry[:abstract]{Indicates an abstract type. No instances can be created
+      for an abstract type.}
+    @entry[:value-abstract]{Indicates an abstract value type, i. e. a type that
+      introduces a value table, but can not be used for @fun{g-value-init}.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -664,7 +666,7 @@
   :derivable
   :deep-derivable)
   @end{pre}
-  @begin{table}
+  @begin[code]{table}
     @entry[:classed]{Indicates a classed type.}
     @entry[:instantiatable]{Indicates an instantiable type (implies classed).}
     @entry[:derivable]{Indicates a flat derivable type.}
@@ -826,15 +828,15 @@
               :initform nil
               :documentation
               "Whether the type designator is mangled with
-               the G_SIGNAL_TYPE_STATIC_SCOPE flag"))
+               the @code{G_SIGNAL_TYPE_STATIC_SCOPE} flag"))
   (:documentation
-    "Values of this CFFI foreign type identify the GType. GType is designated by
-     a its name (a string) or a numeric identifier. Functions accept GType
-     designators as a string or integer and return them as a string. Functions
-     g-type-name and g-type-from-name are used to convert between
-     name and numeric identifier.
-     Numeric identifier of GType may be different between different program
-     runs. But string identifier of GType does not change.")
+    "Values of this CFFI foreign type @sym{g-type} identify the C GType. GType
+     is designated by its name (a string) or a numeric identifier. Functions
+     accept GType designators as a string or integer and return them as a
+     string. The functions @fun{g-type-name} and @fun{g-type-from-name} are used
+     to convert between the name and the numeric identifier. Numeric identifier
+     of GType may be different between different program runs. But string
+     identifier of GType does not change.")
   (:actual-type %g-type)
   (:simple-parser g-type))
 
@@ -885,11 +887,19 @@
 (defun g-type-make-fundamental (x)
  #+cl-cffi-gtk-documentation
  "@version{2012-12-12}
-  @argument[x]{the fundamental type number.}
-  @return{the GType}
+  @argument[x]{a fundamental type number}
+  @return{The type ID of the GType.}
   Get the type ID for the fundamental type number @arg{x}. Use
-  @code{g_type_fundamental_next()} instead of this macro to create new
-  fundamental types."
+  @fun{g-type-fundamental-next} instead of this function to create new
+  fundamental types.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (g-type-make-fundamental 5)
+=> 20
+ (gtype (g-type-make-fundamental 5))
+=> #S(GTYPE :NAME \"gboolean\" :%ID 20)
+    @end{pre}
+  @end{dictionary}"
   (ash x +g-type-fundamental-shift+))
 
 (export 'g-type-make-fundamental)
@@ -905,8 +915,8 @@
 (defun g-type-is-abstract (gtype)
  #+cl-cffi-gtk-documentation
  "@version{2012-12-12}
-  @argument[gtype]{A @class{g-type} value.}
-  @return{@arg{true} on success.}
+  @argument[gtype]{a @class{g-type} value}
+  @return{@em{True} on success.}
   Checks if @arg{gtype} is an abstract type. An abstract type cannot be
   instantiated and is normally used as an abstract base class for derived
   classes."
@@ -2958,6 +2968,10 @@
 ;;;     The nextmost fundamental type ID to be registered, or 0 if the type
 ;;;     system ran out of fundamental type IDs.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_fundamental_next" g-type-fundamental-next) g-type)
+
+(export 'g-type-fundamental-next)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_fundamental ()

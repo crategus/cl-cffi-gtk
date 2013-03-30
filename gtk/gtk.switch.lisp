@@ -175,11 +175,12 @@
 
 (defun gtk-switch-set-active (switch is-active)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[switch]{a GtkSwitch}
-  @argument[is-active]{TRUE if sw should be active, and FALSE otherwise}
+ "@version{2013-3-25}
+  @argument[switch]{a @class{gtk-switch} widget}
+  @argument[is-active]{@em{true} if @arg{switch} should be active,
+    and @code{nil} otherwise}
   @begin{short}
-    Changes the state of sw to the desired one.
+    Changes the state of @arg{switch} to the desired one.
   @end{short}
 
   Since 3.0"
@@ -194,15 +195,17 @@
 (declaim (inline gtk-switch-get-active))
 
 (defun gtk-switch-get-active (switch)
- "@version{2013-3-23}
-  @argument[switch]{a GtkSwitch}
-  @return{TRUE if the GtkSwitch is active, and FALSE otherwise}
+ "@version{2013-3-25}
+  @argument[switch]{a @class{gtk-switch} widget}
+  @begin{return}
+    @em{True} if the @class{gtk-switch} is active, and @code{nil} otherwise.
+  @end{return}
   @begin{short}
-    Gets whether the GtkSwitch is in its \"on\" or \"off\" state.
+    Gets whether the @class{gtk-switch} is in its \"on\" or \"off\" state.
   @end{short}
 
   Since 3.0"
-  (gtk-switch-active sw))
+  (gtk-switch-active switch))
 
 (export 'gtk-switch-get-active)
 

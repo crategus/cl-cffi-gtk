@@ -83,13 +83,15 @@
 (setf (documentation 'gtk-file-chooser-button 'type)
  "@version{2013-3-3}
   @begin{short}
-    The GtkFileChooserButton is a widget that lets the user select a file. It
-    implements the GtkFileChooser interface. Visually, it is a file name with a
-    button to bring up a GtkFileChooserDialog. The user can then use that dialog
-    to change the file associated with that button. This widget does not support
-    setting the \"select-multiple\" property to TRUE.
+    The @sym{gtk-file-chooser-button} is a widget that lets the user select a
+    file. It implements the @class{gtk-file-chooser} interface. Visually, it is
+    a file name with a button to bring up a @class{gtk-file-chooser-dialog}. The
+    user can then use that dialog to change the file associated with that
+    button. This widget does not support setting the @code{\"select-multiple\"}
+    property to @em{true}.
   @end{short}
-  Example 88. Create a button to let the user select a file in /etc
+
+  @b{Example:} Create a button to let the user select a file in /etc
   @begin{pre}
    {
      GtkWidget *button;
@@ -111,23 +113,20 @@
   that other interface elements give space to the widget.
   @begin[Signal Details]{dictionary}
     @subheading{The \"file-set\" signal}
-      The @code{\"file-set\"} signal is emitted when the user selects a file.
-      Note that this signal is only emitted when the user changes the file.
       @begin{pre}
- void user_function (GtkFileChooserButton *widget,
-                     gpointer              user_data)      : Run First
+ lambda (widget)   : Run First
       @end{pre}
+      The \"file-set\" signal is emitted when the user selects a file.
+      Note that this signal is only emitted when the user changes the file.
       @begin[code]{table}
         @entry[widget]{the object which received the signal.}
-        @entry[user_data]{user data set when the signal handler was connected.}
       @end{table}
       Since 2.12
   @end{dictionary}
-  @see-slot{gtk-file-chooser-dialog}
-  @see-slot{gtk-file-chooser-focus-on-click}
-  @see-slot{gtk-file-chooser-title}
-  @see-slot{gtk-file-chooser-width-chars}
-")
+  @see-slot{gtk-file-chooser-button-dialog}
+  @see-slot{gtk-file-chooser-button-focus-on-click}
+  @see-slot{gtk-file-chooser-button-title}
+  @see-slot{gtk-file-chooser-button-width-chars}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -136,7 +135,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "dialog" 'gtk-file-chooser-button) 't)
+(setf (documentation (atdoc:get-slot-from-name "dialog"
+                                               'gtk-file-chooser-button) 't)
  "The @code{\"dialog\"} property of type @code{GtkFileChooser*}
   (Write / Construct Only)@br{}
   Instance of the GtkFileChooserDialog associated with the button.@br{}
@@ -145,7 +145,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-file-chooser-button) 't)
+(setf (documentation (atdoc:get-slot-from-name "focus-on-click"
+                                               'gtk-file-chooser-button) 't)
  "The @code{\"focus-on-click\"} property of type @code{gboolean}
   (Read / Write)@br{}
   Whether the GtkFileChooserButton button grabs focus when it is clicked with
@@ -156,7 +157,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-file-chooser-button) 't)
+(setf (documentation (atdoc:get-slot-from-name "title"
+                                               'gtk-file-chooser-button) 't)
  "The @code{\"title\"} property of type @code{gchar*} (Read / Write)@br{}
   Title to put on the GtkFileChooserDialog associated with the button.@br{}
   Default value: \"Select a File\"@br{}
@@ -165,7 +167,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-file-chooser-button) 't)
+(setf (documentation (atdoc:get-slot-from-name "width-chars"
+                                               'gtk-file-chooser-button) 't)
  "The @code{\"width-chars\"} property of type @code{gint} (Read / Write)@br{}
   The width of the entry and label inside the button, in characters.@br{}
   Allowed values: >= G_MAXULONG@br{}

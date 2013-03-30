@@ -2,13 +2,14 @@
 ;;; gtk.volume-button.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.2. See http://www.gtk.org.
+;;; Version 3.4.2. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,57 +38,12 @@
 ;;;     GtkVolumeButton
 ;;;     
 ;;;     gtk_volume_button_new
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkButton
-;;;                                  +----GtkScaleButton
-;;;                                        +----GtkVolumeButton
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkVolumeButton implements AtkImplementorIface, GtkBuildable, GtkActionable,
-;;; GtkActivatable and GtkOrientable.
-;;;
-;;; Properties
-;;; 
-;;;   "use-symbolic"             gboolean              : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; GtkVolumeButton is a subclass of GtkScaleButton that has been tailored for
-;;; use as a volume control widget with suitable icons, tooltips and accessible
-;;; labels.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "use-symbolic" property
-;;; 
-;;;   "use-symbolic"             gboolean              : Read / Write
-;;; 
-;;; Whether to use symbolic icons as the icons. Note that if the symbolic icons
-;;; are not available in your installed theme, then the normal (potentially
-;;; colorful) icons will be used.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkVolumeButton
-;;; 
-;;; struct GtkVolumeButton;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkVolumeButton" gtk-volume-button
@@ -104,23 +60,65 @@
     "use-symbolic" "gboolean" t t)))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-volume-button 'type)
+ "@version{2013-3-28}
+  @begin{short}
+    GtkVolumeButton is a subclass of GtkScaleButton that has been tailored for
+    use as a volume control widget with suitable icons, tooltips and accessible
+    labels.
+  @end{short}
+  @see-slot{gtk-volume-button-use-symbolic}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-symbolic"
+                                               'gtk-volume-button) 't)
+ "The @code{\"use-symbolic\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether to use symbolic icons as the icons. Note that if the symbolic icons
+  are not available in your installed theme, then the normal (potentially
+  colorful) icons will be used. @br{}
+  Default value: @code{nil}@br{}
+  Since 3.0")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-volume-button-use-symbolic atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-volume-button-use-symbolic 'function)
+ "@version{2013-3-28}
+  Accessor of the slot @code{\"use-symbolic\"} of the @class{gtk-volume-button}
+  class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_volume_button_new ()
-;;; 
-;;; GtkWidget * gtk_volume_button_new (void);
-;;; 
-;;; Creates a GtkVolumeButton, with a range between 0.0 and 1.0, with a stepping
-;;; of 0.02. Volume values can be obtained and modified using the functions from
-;;; GtkScaleButton.
-;;; 
-;;; Returns :
-;;;     a new GtkVolumeButton
-;;; 
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-volume-button-new))
 
 (defun gtk-volume-button-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-28}
+  @return{a new GtkVolumeButton}
+  @begin{short}
+    Creates a GtkVolumeButton, with a range between 0.0 and 1.0, with a stepping
+    of 0.02. Volume values can be obtained and modified using the functions from
+    GtkScaleButton.
+  @end{short}
+
+  Since 2.12"
   (make-instance 'gtk-volume-button))
 
 (export 'gtk-volume-button-new)

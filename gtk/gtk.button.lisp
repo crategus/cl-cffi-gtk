@@ -495,14 +495,12 @@
 (declaim (inline gtk-button-new-with-label))
 
 (defun gtk-button-new-with-label (label)
- #+cl-cffi-gtk-button
+ #+cl-cffi-gtk-documentation
  "@version{2013-1-18}
-  @argument[label]{The text you want the @class{gtk-label} to hold.}
+  @argument[label]{the text you want the @class{gtk-label} to hold}
   @return{The newly created @class{gtk-button} widget.}
-  @begin{short}
-    Creates a @class{gtk-button} widget with a @class{gtk-label} child
-    containing the given text.
-  @end{short}"
+  Creates a @class{gtk-button} widget with a @class{gtk-label} child
+  containing the given text in @arg{label}."
   (make-instance 'gtk-button :label label))
 
 (export 'gtk-button-new-with-label)
