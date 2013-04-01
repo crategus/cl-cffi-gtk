@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -89,14 +89,18 @@
 ;;;    g_object_notify_by_pspec
 ;;;    g_object_freeze_notify
 ;;;    g_object_thaw_notify
+
 ;;;    g_object_get_data
 ;;;    g_object_set_data
 ;;;    g_object_set_data_full
 ;;;    g_object_steal_data
+
 ;;;    g_object_get_qdata
 ;;;    g_object_set_qdata
 ;;;    g_object_set_qdata_full
 ;;;    g_object_steal_qdata
+;;;    g_object_dup_qdata
+;;;    g_object_replace-qdata
 ;;;    g_object_set_property
 ;;;    g_object_get_property
 ;;;    g_object_new_valist
@@ -1123,6 +1127,11 @@
 ;;; class :
 ;;;     a GObjectClass
 ;;; ----------------------------------------------------------------------------
+
+(defun g-is-object-class (class)
+  (g-type-check-class-type class +g-type-object+))
+
+(export 'g-is-object-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_GET_CLASS()
@@ -2476,6 +2485,92 @@
 
 (export 'g-object-steal-data)
 
+;;;-----------------------------------------------------------------------------
+;;; g_object_dup_data ()
+;;;
+;;; gpointer g_object_dup_data (GObject *object,
+;;;                             const gchar *key,
+;;;                             GDuplicateFunc dup_func,
+;;;                             gpointer user_data);
+;;;
+;;; This is a variant of g_object_get_data() which returns a 'duplicate' of the
+;;; value. dup_func defines the meaning of 'duplicate' in this context, it could
+;;; e.g. take a reference on a ref-counted object.
+;;;
+;;; If the key is not set on the object then dup_func will be called with a NULL
+;;; argument.
+;;;
+;;; Note that dup_func is called while user data of object is locked.
+;;;
+;;; This function can be useful to avoid races when multiple threads are using
+;;; object data on the same key on the same object.
+;;;
+;;; object :
+;;;     the GObject to store user data on
+;;;
+;;; key :
+;;;     a string, naming the user data pointer
+;;;
+;;; dup_func :
+;;;     function to dup the value. [allow-none]
+;;;
+;;; user_data :
+;;;     passed as user_data to dup_func. [allow-none]
+;;;
+;;; Returns :
+;;;     the result of calling dup_func on the value associated with key on
+;;;     object, or NULL if not set. If dup_func is NULL, the value is returned
+;;;     unmodified.
+;;;
+;;; Since 2.34
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_object_replace_data ()
+;;;
+;;; gboolean g_object_replace_data (GObject *object,
+;;;                                 const gchar *key,
+;;;                                 gpointer oldval,
+;;;                                 gpointer newval,
+;;;                                 GDestroyNotify destroy,
+;;;                                 GDestroyNotify *old_destroy);
+;;;
+;;; Compares the user data for the key key on object with oldval, and if they
+;;; are the same, replaces oldval with newval.
+;;;
+;;; This is like a typical atomic compare-and-exchange operation, for user data
+;;; on an object.
+;;;
+;;; If the previous value was replaced then ownership of the old value (oldval)
+;;; is passed to the caller, including the registred destroy notify for it
+;;; (passed out in old_destroy). Its up to the caller to free this as he wishes,
+;;; which may or may not include using old_destroy as sometimes replacement
+;;; should not destroy the object in the normal way.
+;;;
+;;; Return: TRUE if the existing value for key was replaced by newval, FALSE
+;;; otherwise.
+;;;
+;;; object :
+;;;     the GObject to store user data on
+;;;
+;;; key :
+;;;     a string, naming the user data pointer
+;;;
+;;; oldval :
+;;;     the old value to compare against. [allow-none]
+;;;
+;;; newval :
+;;;     the new value. [allow-none]
+;;;
+;;; destroy :
+;;;     a destroy notify for the new value. [allow-none]
+;;;
+;;; old_destroy :
+;;;     destroy notify for the existing value. [allow-none]
+;;;
+;;; Since 2.34
+;;; ----------------------------------------------------------------------------
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_get_qdata ()
 ;;;
@@ -2589,6 +2684,92 @@
 ;;;
 ;;; Returns :
 ;;;     The user data pointer set, or NULL.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_object_dup_qdata ()
+;;;
+;;; gpointer g_object_dup_qdata (GObject *object,
+;;;                              GQuark quark,
+;;;                              GDuplicateFunc dup_func,
+;;;                              gpointer user_data);
+;;;
+;;; This is a variant of g_object_get_qdata() which returns a 'duplicate' of the
+;;; value. dup_func defines the meaning of 'duplicate' in this context, it could
+;;; e.g. take a reference on a ref-counted object.
+;;;
+;;; If the quark is not set on the object then dup_func will be called with a
+;;; NULL argument.
+;;;
+;;; Note that dup_func is called while user data of object is locked.
+;;;
+;;; This function can be useful to avoid races when multiple threads are using
+;;; object data on the same key on the same object.
+;;;
+;;; object :
+;;;     the GObject to store user data on
+;;;
+;;; quark :
+;;;     a GQuark, naming the user data pointer
+;;;
+;;; dup_func :
+;;;     function to dup the value. [allow-none]
+;;;
+;;; user_data :
+;;;     passed as user_data to dup_func. [allow-none]
+;;;
+;;; Returns :
+;;;     the result of calling dup_func on the value associated with quark on
+;;;     object, or NULL if not set. If dup_func is NULL, the value is returned
+;;;     unmodified.
+;;;
+;;; Since 2.34
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_object_replace_qdata ()
+;;;
+;;; gboolean g_object_replace_qdata (GObject *object,
+;;;                                  GQuark quark,
+;;;                                  gpointer oldval,
+;;;                                  gpointer newval,
+;;;                                  GDestroyNotify destroy,
+;;;                                  GDestroyNotify *old_destroy);
+;;;
+;;; Compares the user data for the key quark on object with oldval, and if they
+;;; are the same, replaces oldval with newval.
+;;;
+;;; This is like a typical atomic compare-and-exchange operation, for user data
+;;; on an object.
+;;;
+;;; If the previous value was replaced then ownership of the old value (oldval)
+;;; is passed to the caller, including the registred destroy notify for it
+;;; (passed out in old_destroy). Its up to the caller to free this as he wishes,
+;;; which may or may not include using old_destroy as sometimes replacement
+;;; should not destroy the object in the normal way.
+;;;
+;;; Return: TRUE if the existing value for quark was replaced by newval, FALSE
+;;; otherwise.
+;;;
+;;; object :
+;;;     the GObject to store user data on
+;;;
+;;; quark :
+;;;     a GQuark, naming the user data pointer
+;;;
+;;; oldval :
+;;;     the old value to compare against. [allow-none]
+;;;
+;;; newval :
+;;;     the new value. [allow-none]
+;;;
+;;; destroy :
+;;;     a destroy notify for the new value. [allow-none]
+;;;
+;;; old_destroy :
+;;;     destroy notify for the existing value. [allow-none]
+;;;
+;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

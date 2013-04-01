@@ -2,13 +2,15 @@
 ;;; gobject.g-value.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -480,7 +482,7 @@
 
 ;; Initializes the GValue in 'unset' state.
 ;; This function is called from g-value-init to initialize the GValue
-;; structure with zeros. value is a C pointer to the GValue structure.
+;; structure with zeros. VALUE is a C pointer to the GValue structure.
 
 (defun g-value-zero (value)
   (loop
@@ -491,13 +493,11 @@
 
 (defun g-value-init (value &optional (type nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{A zero-filled (uninitialized) GValue structure.}
-  @argument[g_type]{Type the GValue should hold values of.}
-  @return{the GValue structure that has been passed in}
-  @begin{short}
-    Initializes value with the default value of type.
-  @end{short}"
+ "@version{2013-3-31}
+  @argument[value]{a zero-filled (uninitialized) @symbol{g-value} structure}
+  @argument[type]{the type the @symbol{g-value} should hold values of}
+  @return{The @symbol{g-value} structure that has been passed in.}
+  Initializes @arg{value} with the default value of @arg{type}."
   (cond ((null type)
          (g-value-zero value))
         (t
