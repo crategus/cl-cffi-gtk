@@ -372,34 +372,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_activate ()
-;;;
-;;; gboolean gtk_accel_group_activate (GtkAccelGroup *accel_group,
-;;;                                    GQuark accel_quark,
-;;;                                    GObject *acceleratable,
-;;;                                    guint accel_key,
-;;;                                    GdkModifierType accel_mods);
-;;;
-;;; Finds the first accelerator in accel_group that matches accel_key and
-;;; accel_mods, and activates it.
-;;;
-;;; accel_group :
-;;;     a GtkAccelGroup
-;;;
-;;; accel_quark :
-;;;     the quark for the accelerator name
-;;;
-;;; acceleratable :
-;;;     the GObject, usually a GtkWindow, on which to activate the accelerator
-;;;
-;;; accel_key :
-;;;     accelerator keyval from a key event
-;;;
-;;; accel_mods :
-;;;     keyboard state mask from a key event
-;;;
-;;; Returns :
-;;;     TRUE if an accelerator was activated and handled this keypress
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_group_activate" gtk-accel-group-activate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-31}
+  @argument[accel-group]{a @class{gtk-accel-group} object}
+  @argument[accel-quark]{the quark for the accelerator name}
+  @argument[acceleratable]{the @class{g-object}, usually a @class{gkt-window},
+    on which to activate the accelerator}
+  @argument[accel-key]{accelerator keyval from a key event}
+  @argument[accel-mods]{keyboard state mask from a key event}
+  @return{@em{True} if an accelerator was activated and handled this keypress.}
+  Finds the first accelerator in @arg{accel-group} that matches @arg{accel-key}
+  and @arg{accel-mods}, and activates it."
+  (accel-group (g-object gtk-accel-group))
+  (accel-quark g-quark)
+  (acceleratable g-object)
+  (accel-key :uint)
+  (accel-mods gdk-modifier-type))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_lock ()
@@ -767,6 +758,5 @@
 ;;; Returns :
 ;;;     the default accelerator modifier mask
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.accel-group.lisp ---------------------------------------
