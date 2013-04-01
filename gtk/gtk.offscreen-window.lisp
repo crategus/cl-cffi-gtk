@@ -2,9 +2,10 @@
 ;;; gtk.offscreen-window.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -35,47 +36,12 @@
 ;;;     gtk_offscreen_window_new
 ;;;     gtk_offscreen_window_get_surface
 ;;;     gtk_offscreen_window_get_pixbuf
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkOffscreenWindow
-;;; 
-;;; Implemented Interfaces
-;;; 
-;;; GtkOffscreenWindow implements AtkImplementorIface and GtkBuildable.
-;;; 
-;;; Description
-;;; 
-;;; GtkOffscreenWindow is strictly intended to be used for obtaining snapshots
-;;; of widgets that are not part of a normal widget hierarchy. Since
-;;; GtkOffscreenWindow is a toplevel widget you cannot obtain snapshots of a
-;;; full window with it since you cannot pack a toplevel widget in another
-;;; toplevel.
-;;; 
-;;; The idea is to take a widget and manually set the state of it, add it to a
-;;; GtkOffscreenWindow and then retrieve the snapshot as a cairo_surface_t or
-;;; GdkPixbuf.
-;;; 
-;;; GtkOffscreenWindow derives from GtkWindow only as an implementation detail.
-;;; Applications should not use any API specific to GtkWindow to operate on this
-;;; object. It should be treated as a GtkBin that has no parent widget.
-;;; 
-;;; When contained offscreen widgets are redrawn, GtkOffscreenWindow will emit a
-;;; "damage-event" signal.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkOffscreenWindow
-;;; 
-;;; struct GtkOffscreenWindow;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkOffscreenWindow" gtk-offscreen-window
@@ -87,22 +53,46 @@
   nil)
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-offscreen-window 'type)
+ "@version{2013-3-30}
+  @begin{short}
+    @sym{gtk-offscreen-window} is strictly intended to be used for obtaining
+    snapshots of widgets that are not part of a normal widget hierarchy.
+  @end{short}
+  Since @sym{gtk-offscreen-window} is a toplevel widget you cannot obtain
+  snapshots of a full window with it since you cannot pack a toplevel widget in
+  another toplevel.
+
+  The idea is to take a widget and manually set the state of it, add it to a
+  @sym{gtk-offscreen-window} and then retrieve the snapshot as a
+  @symbol{cairo-surface-t} or @class{gdk-pixbuf}.
+
+  @sym{gtk-offscreen-window} derives from @class{gtk-window} only as an
+  implementation detail. Applications should not use any API specific to
+  @class{gtk-window} to operate on this object. It should be treated as a
+  @class{gtk-bin} that has no parent widget.
+
+  When contained offscreen widgets are redrawn, @sym{gtk-offscreen-window} will
+  emit a \"damage-event\" signal.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_offscreen_window_new ()
-;;; 
-;;; GtkWidget * gtk_offscreen_window_new (void);
-;;; 
-;;; Creates a toplevel container widget that is used to retrieve snapshots of
-;;; widgets without showing them on the screen.
-;;; 
-;;; Returns :
-;;;     A pointer to a GtkWidget
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-offscreen-window-new))
 
 (defun gtk-offscreen-window-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-30}
+  @return{a @class{gtk-widget} widget}
+  @begin{short}
+    Creates a toplevel container widget that is used to retrieve snapshots of
+    widgets without showing them on the screen.
+  @end{short}
+
+  Since 2.20"
   (make-instance 'gtk-offscreen-window))
 
 (export 'gtk-offscreen-window-new)

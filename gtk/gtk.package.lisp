@@ -191,8 +191,8 @@
       @about-function{gtk-accel-group-get-is-locked}
       @about-function{gtk-accel-group-from-accel-closure}
       @about-function{gtk-accel-group-get-modifier-mask}
-      @about-function{gtk-accel-group-activate}
-      @about-function{gtk-accel-group-from-object}
+      @about-function{gtk-accel-groups-activate}
+      @about-function{gtk-accel-groups-from-object}
       @about-function{gtk-accel-group-find}
       @about-symbol{gtk-accel-key}
       @about-function{gtk-accelerator-valid}

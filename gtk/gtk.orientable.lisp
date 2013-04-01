@@ -2,13 +2,14 @@
 ;;; gtk.orientable.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,65 +39,12 @@
 ;;;     
 ;;;     gtk_orientable_get_orientation
 ;;;     gtk_orientable_set_orientation
-;;; 
-;;; Object Hierarchy
-;;; 
-;;;   GInterface
-;;;    +----GtkOrientable
-;;; 
-;;; Prerequisites
-;;; 
-;;; GtkOrientable requires GObject.
-;;; 
-;;; Known Implementations
-;;; 
-;;; GtkOrientable is implemented by GtkAppChooserWidget, GtkBox, GtkButtonBox,
-;;; GtkCellAreaBox, GtkCellRendererProgress, GtkCellView, GtkColorChooserWidget,
-;;; GtkColorSelection, GtkFileChooserButton, GtkFileChooserWidget,
-;;; GtkFontChooserWidget, GtkFontSelection, GtkGrid, GtkHBox, GtkHButtonBox,
-;;; GtkHPaned, GtkHScale, GtkHScrollbar, GtkHSeparator, GtkInfoBar, GtkPaned,
-;;; GtkProgressBar, GtkRange, GtkRecentChooserWidget, GtkScale, GtkScaleButton,
-;;; GtkScrollbar, GtkSeparator, GtkStatusbar, GtkToolPalette, GtkToolbar,
-;;; GtkVBox, GtkVButtonBox, GtkVPaned, GtkVScale, GtkVScrollbar, GtkVSeparator
-;;; and GtkVolumeButton.
-;;; 
-;;; Properties
-;;; 
-;;;   "orientation"              GtkOrientation        : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; The GtkOrientable interface is implemented by all widgets that can be
-;;; oriented horizontally or vertically. Historically, such widgets have been
-;;; realized as subclasses of a common base class (e.g GtkBox/GtkHBox/GtkVBox or
-;;; GtkScale/GtkHScale/GtkVScale). GtkOrientable is more flexible in that it
-;;; allows the orientation to be changed at runtime, allowing the widgets to
-;;; 'flip'.
-;;; 
-;;; GtkOrientable was introduced in GTK+ 2.16.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "orientation" property
-;;; 
-;;;   "orientation"              GtkOrientation        : Read / Write
-;;; 
-;;; The orientation of the orientable.
-;;; 
-;;; Default value: GTK_ORIENTATION_HORIZONTAL
-;;; 
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkOrientable
-;;; 
-;;; typedef struct _GtkOrientable GtkOrientable;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GtkOrientable" gtk-orientable
@@ -107,48 +55,85 @@
    "orientation" "GtkOrientation" t t))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-orientable atdoc:*class-name-alias*) "Interface"
+      (documentation 'gtk-orientable 'type)
+ "@version{2013-3-30}
+  @short{An interface for flippable widgets.}
+
+  The @sym{gtk-orientable} interface is implemented by all widgets that can be
+  oriented horizontally or vertically. Historically, such widgets have been
+  realized as subclasses of a common base class (e. g. @class{gtk-box},
+  @class{gtk-hbox}, @class{gtk-vbox} and @class{gtk-scale}, @class{gtk-hscale},
+  or @class{gtk-vscale}). @sym{gtk-orientable} is more flexible in that it
+  allows the orientation to be changed at runtime, allowing the widgets to
+  \"flip\".
+ 
+  @sym{gtk-orientable} was introduced in GTK+ 2.16.
+  @see-slot{gtk-orientable-orientation}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "orientation"
+                                               'gtk-orientable) 't)
+ "The @code{\"orientation\"} property of type @symbol{gtk-orientation}
+  (Read / Write)@br{}
+  The orientation of the orientable.@br{}
+  Default value: @code{:horizontal}
+  Since 2.16")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-orientable-orientation 'function)
+ "@version{2013-3-30}
+  Accessor of the slot @arg{\"orientation\"} of the @class{gtk-orientable}
+  interface.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_orientable_get_orientation ()
-;;; 
-;;; GtkOrientation gtk_orientable_get_orientation (GtkOrientable *orientable);
-;;; 
-;;; Retrieves the orientation of the orientable.
-;;; 
-;;; orientable :
-;;;     a GtkOrientable
-;;; 
-;;; Returns :
-;;;     the orientation of the orientable.
-;;; 
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-orientable-get-orientation))
 
 (defun gtk-orientable-get-orientation (orientable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-30}
+  @argument[orientable]{a @class{gtk-orientable} instance}
+  @return{The orientation of the @arg{orientable}.}
+  @short{Retrieves the orientation of the @arg{orientable}.}
+
+  Since 2.16"
   (gtk-orientable-orientation orientable))
 
 (export 'gtk-orientable-get-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_orientable_set_orientation ()
-;;; 
-;;; void gtk_orientable_set_orientation (GtkOrientable *orientable,
-;;;                                      GtkOrientation orientation);
-;;; 
-;;; Sets the orientation of the orientable.
-;;; 
-;;; orientable :
-;;;     a GtkOrientable
-;;; 
-;;; orientation :
-;;;     the orientable's new orientation.
-;;; 
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-orientable-set-orientation))
 
 (defun gtk-orientable-set-orientation (orientable orientation)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-30}
+  @argument[orientable]{a @class{gtk-orientable} instance}
+  @argument[orientation]{the @arg{orientable}'s new @arg{orientation}}
+  @short{Sets the @arg{orientation} of the @arg{orientable}.}
+
+  Since 2.16"
   (setf (gtk-orientable-orientation orientable) orientation))
 
 (export 'gtk-orientable-set-orientation)
