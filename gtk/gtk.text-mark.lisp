@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTextMark
-;;; 
+;;;
 ;;; A position in the buffer preserved across buffer modifications
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTextMark
-;;;     
+;;;
 ;;;     gtk_text_mark_new
 ;;;     gtk_text_mark_set_visible
 ;;;     gtk_text_mark_get_visible
@@ -206,12 +206,13 @@
 ;;; gtk_text_mark_get_visible ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_mark_get-visible" gtk-text-mark-get-visible) :boolean
+(defcfun ("gtk_text_mark_get_visible" gtk-text-mark-get-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[mark]{a GtkTextMark}
-  @return{TRUE if visible}
-  Returns TRUE if the mark is visible (i.e. a cursor is displayed for it)."
+ "@version{2013-3-31}
+  @argument[mark]{a @class{gtk-text-mark} object}
+  @return{@em{True} if visible.}
+  Returns @em{true} if the @arg{mark} is visible (i. e. a cursor is displayed
+  for it)."
   (mark (g-object gtk-text-mark)))
 
 (export 'gtk-text-mark-get-visible)
