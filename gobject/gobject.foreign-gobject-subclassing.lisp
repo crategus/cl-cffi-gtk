@@ -122,7 +122,7 @@
         ((gtype +g-type-invalid+)
          (error "GValue is of invalid type ~A (~A)"
                 property-g-type (gtype-name property-g-type)))
-        ((gtype +g-type-void+) nil)
+        ((gtype +g-type-none+) nil)
         ((gtype +g-type-char+)
          (g-param-spec-char property-name
                             property-name

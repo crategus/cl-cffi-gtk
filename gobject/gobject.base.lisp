@@ -2262,23 +2262,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_notify ()
-;;;
-;;; void g_object_notify (GObject *object, const gchar *property_name);
-;;;
-;;; Emits a "notify" signal for the property property_name on object.
-;;;
-;;; When possible, eg. when signaling a property change from within the class
-;;; that registered the property, you should use g_object_notify_by_pspec()
-;;; instead.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; property_name :
-;;;     the name of a property installed on the class of object.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_notify" g-object-notify) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-3}
+  @argument[object]{a @class{g-object}}
+  @argument[property-name]{the name of a property installed on the class of
+    @arg{object}}
+  @begin{short}
+    Emits a \"notify\" signal for the property @arg{property-name} on
+    @arg{object}.
+  @end{short}
+
+  When possible, e. g. when signaling a property change from within the class
+  that registered the property, you should use @fun{g-object-notify-by-pspec}
+  instead.
+  @see-function{g-object-notify-by-pspec}"
   (object :pointer)
   (property-name :string))
 

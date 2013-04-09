@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -28,6 +28,37 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Generic values
+;;;
+;;; A polymorphic type that can hold values of any other type
+;;;
+;;; Synopsis
+;;;
+;;;     GValue
+;;;
+;;;     G_VALUE_INIT                             * not implemented *
+;;;     G_VALUE_HOLDS
+;;;     G_VALUE_TYPE
+;;;     G_VALUE_TYPE_NAME
+;;;     G_TYPE_IS_VALUE
+;;;     G_TYPE_IS_VALUE_ABSTRACT
+;;;     G_IS_VALUE                               * not implemented *
+;;;     G_TYPE_VALUE
+;;;     G_TYPE_VALUE_ARRAY                       * not implemented *
+;;;     g_value_init
+;;;     g_value_copy
+;;;     g_value_reset
+;;;     g_value_unset
+;;;     g_value_set_instance
+;;;     g_value_fits_pointer                     * not implemented *
+;;;     g_value_peek_pointer                     * not implemented *
+;;;     g_value_type_compatible
+;;;     g_value_type_transformable
+;;;     g_value_transform
+;;;     g_value_register_transform_func
+;;;     g_strdup_value_contents
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -98,7 +129,7 @@
     (ev-case fundamental-type
       ((gtype +g-type-invalid+)
        (error "GValue is of invalid type (~A)" (gtype-name gtype)))
-      ((gtype +g-type-void+) nil)
+      ((gtype +g-type-none+) nil)
       ((gtype +g-type-char+) (g-value-get-char gvalue))
       ((gtype +g-type-uchar+) (g-value-get-uchar gvalue))
       ((gtype +g-type-boolean+) (g-value-get-boolean gvalue))
@@ -195,7 +226,7 @@
   (let ((fundamental-type (g-type-fundamental type)))
     (ev-case fundamental-type
       ((gtype +g-type-invalid+) (error "Invalid type (~A)" type))
-      ((gtype +g-type-void+) nil)
+      ((gtype +g-type-none+) nil)
       ((gtype +g-type-char+) (g-value-set-char gvalue value))
       ((gtype +g-type-uchar+) (g-value-set-uchar gvalue value))
       ((gtype +g-type-boolean+) (g-value-set-boolean gvalue value))
@@ -245,7 +276,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-value atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-value atdoc:*external-symbols*)
- "@version{2013-2-6}
+ "@version{2013-4-2}
   @begin{short}
     The @sym{g-value} structure is basically a variable container that consists
     of a type identifier and a specific value of that type. The type identifier
@@ -272,20 +303,20 @@
 (defun example-g-value ()
   ;; Declare two variables of type g-value.
   (with-foreign-objects ((value1 'g-value) (value2 'g-value))
-    
+
     ;; Initialization, setting and reading a value of type g-value
     (g-value-init value1 +g-type-string+)
     (g-value-set-string value1 \"string\")
     (format t \"value1 = ~A~%\" (g-value-get-string value1))
     (format t \"type   = ~A~%\" (g-value-type value1))
     (format t \"name   = ~A~%~%\" (g-value-type-name value1))
-    
+
     ;; The same in one step with the Lisp extension set-g-value
     (set-g-value value2 \"a second string\" +g-type-string+ :zero-g-value t)
     (format t \"value2 = ~A~%\" (parse-g-value value2))
     (format t \"type   = ~A~%\" (g-value-type value2))
     (format t \"name   = ~A~%~%\" (g-value-type-name value2))
-    
+
     ;; Reuse value1 for an integer value.
     (g-value-unset value1)
     (g-value-init value1 +g-type-int+)
@@ -293,26 +324,26 @@
     (format t \"value1 = ~A~%\" (parse-g-value value1))
     (format t \"type   = ~A~%\" (g-value-type value1))
     (format t \"name   = ~A~%~%\" (g-value-type-name value1))
-    
+
     ;; The types integer and string are transformable.
     (assert (g-value-type-transformable +g-type-int+ +g-type-string+))
-    
+
     ;; Transform value1 of type integer into value2 which is a string
     (g-value-transform value1 value2)
     (format t \"value1 = ~A~%\" (parse-g-value value1))
     (format t \"value2 = ~A~%~%\" (parse-g-value value2))
-    
+
     ;; Some test functions.
     (assert (g-value-holds value1 +g-type-int+))
     (format t \"value-holds is ~A~%\" (g-value-holds value1 +g-type-int+))
     (format t \"is-value is ~A~%~%\" (g-type-is-value +g-type-int+))
-                             
+
     ;; Reuse value2 again for a string.
     (g-value-unset value2)
     (g-value-init value2 +g-type-string+)
     (g-value-set-string value2 \"string\")
     (format t \"value2 = ~A~%\" (parse-g-value value2))
-    
+
     ;; Register the transformation int2string
     (g-value-register-transform-func +g-type-int+
                                      +g-type-string+
@@ -347,18 +378,30 @@
 ;;; G_VALUE_HOLDS()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-value-holds (value gtype)
+(defun g-value-holds (value type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{A @symbol{g-value} structure.}
-  @argument[type]{A @class{g-type} value.}
-  @return{@arg{true} if @arg{value} holds the @arg{type}.}
+ "@version{2013-4-2}
+  @argument[value]{a @symbol{g-value} structure}
+  @argument[type]{a @class{g-type} value}
+  @return{@arg{True} if @arg{value} holds the @arg{type}.}
   @begin{short}
-    Checks if @arg{value} holds (or contains) a value of @arg{type}. This
-    function will also check for a value @code{nil} and issue a warning if the
-    check fails.
-  @end{short}"
-  (g-type= gtype (g-value-type value)))
+    Checks if @arg{value} holds or contains a value of @arg{type}. This
+    function will also check for a value not @code{NULL} and issue a warning if
+    the check fails.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq value 
+       (with-foreign-object (value 'g-value)
+         (g-value-init value \"gint\")))
+=> #.(SB-SYS:INT-SAP #XB7910FE8)
+ (g-value-holds value \"gint\")
+=> T
+ (g-value-holds value \"gboolean\")
+=> NIL
+    @end{pre}
+  @end{dictionary}"
+  (g-type= type (g-value-type value)))
 
 (export 'g-value-holds)
 
@@ -368,12 +411,22 @@
 
 (defun g-value-type (value)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{A @symbol{g-value} structure.}
-  @return{the @class{g-type}.}
+ "@version{2013-4-2}
+  @argument[value]{a @symbol{g-value} structure}
+  @return{The @class{g-type} of @arg{value}.}
   @begin{short}
-    Get the type identifier of value.
-  @end{short}"
+    Get the type identifier of @arg{value}.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq value 
+       (with-foreign-object (value 'g-value)
+         (g-value-init value \"gint\")))
+=> #.(SB-SYS:INT-SAP #XB7910FE8)
+ (g-value-type value)
+=> #S(GTYPE :NAME \"gint\" :%ID 24)
+    @end{pre}
+  @end{dictionary}"
   (foreign-slot-value value 'g-value :type))
 
 (export 'g-value-type)
@@ -384,13 +437,23 @@
 
 (defun g-value-type-name (value)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{A @smybol{g-value} structure.}
+ "@version{2013-4-2}
+  @argument[value]{a @symbol{g-value} structure}
   @return{The type name of @arg{value}.}
   @begin{short}
     Gets the the type name of @arg{value}.
-  @end{short}"
-  (gtype-name (g-value-type value)))
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (setq value 
+       (with-foreign-object (value 'g-value)
+         (g-value-init value \"gint\")))
+=> #.(SB-SYS:INT-SAP #XB7910FE8)
+ (g-value-type-name value)
+=> \"gint\"
+    @end{pre}
+  @end{dictionary}"
+  (g-type-name (g-value-type value)))
 
 (export 'g-value-type-name)
 
@@ -398,40 +461,42 @@
 ;;; G_TYPE_IS_VALUE()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-is-value (gtype)
+(defun g-type-is-value (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{A @class{g-type} value.}
+ "@version{2013-4-2}
+  @argument[type]{a @class{g-type}}
   @return{Whether @arg{type} is suitable as a @symbol{g-value} type.}
   @begin{short}
-    Checks whether the passed in type ID can be used for @fun{g-value-init}.
+    Checks whether the passed in @arg{type} ID can be used for
+    @fun{g-value-init}.
   @end{short}
   That is, this function checks whether this @arg{type} provides an
   implementation of the @symbol{g-type-value-table} functions required for a
-  type to create a @symbol{g-value} of."
-  (g-type-check-is-value-type gtype))
+  type to create a @symbol{g-value} of.
+
+  This function is equivalent to @fun{g-type-is-value-type}.
+  @see-function{g-value-init}
+  @see-function{g-type-is-value-type}"
+  (%g-type-check-is-value-type type))
 
 (export 'g-type-is-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_VALUE_ABSTRACT()
-;;;
-;;; #define G_TYPE_IS_VALUE_ABSTRACT(type)
-;;;         (g_type_test_flags ((type), G_TYPE_FLAG_VALUE_ABSTRACT))
-;;;
-;;; Checks if type is an abstract value type. An abstract value type introduces
-;;; a value table, but can't be used for g_value_init() and is normally used as
-;;; an abstract base type for derived value types.
-;;;
-;;; type :
-;;;     A GType value.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-is-value-abstract (gtype)
-  (g-type-test-flags gtype :value-abstract))
+(defun g-type-is-value-abstract (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-2}
+  @argument[type]{a @class{g-type}}
+  @return{@em{True} if @arg{type} is an abstract value type.}
+  @begin{short}
+    Checks if @arg{type} is an abstract value type. An abstract value type
+    introduces a value table, but can not be used for @fun{g-value-init} and is
+    normally used as an abstract base type for derived value types.
+  @end{short}
+  @see-function{g-value-init}"
+  (%g-type-test-flags type :value-abstract))
 
 (export 'g-type-is-value-abstract)
 
@@ -451,12 +516,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VALUE
-;;;
-;;; #define G_TYPE_VALUE (g_value_get_type ())
-;;;
-;;; The type ID of the "GValue" type which is a boxed type, used to pass around
-;;; pointers to GValues.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-type-value ()
+ "@version{2013-4-2}
+  @return{The type ID of @symbol{g-value}.}
+  The type ID of the @symbol{g-value} type which is a boxed type, used to pass
+  around pointers to GValues."
+  (cffi:foreign-funcall "g_value_get_type" g-type))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VALUE_ARRAY
@@ -513,13 +580,11 @@
 
 (defcfun ("g_value_copy" g-value-copy) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[src_value]{An initialized GValue structure.}
-  @argument[dest_value]{An initialized GValue structure of the same type as
-    src_value.}
-  @begin{short}
-    Copies the value of src_value into dest_value.
-  @end{short}"
+ "@version{2013-4-2}
+  @argument[src-value]{an initialized @symbol{g-value} structure}
+  @argument[dest-value]{an initialized @symbol{g-value} structure of the same
+    type as @arg{src-value}}
+  Copies the value of @arg{src-value} into @arg{dest-value}."
   (src-value (:pointer g-value))
   (dst-value (:pointer g-value)))
 
@@ -531,13 +596,11 @@
 
 (defcfun ("g_value_reset" g-value-reset) (:pointer g-value)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{An initialized GValue structure.}
-  @return{the GValue structure that has been passed in}
-  @begin{short}
-    Clears the current value in value and resets it to the default value (as if
-    the value had just been initialized).
-  @end{short}"
+ "@version{2013-4-2}
+  @argument[value]{an initialized @symbol{g-value} structure}
+  @return{The @symbol{g-value} structure that has been passed in.}
+  Clears the current value in @arg{value} and resets it to the default value
+  as if the value had just been initialized."
   (value (:pointer g-value)))
 
 (export 'g-value-reset)
@@ -548,13 +611,13 @@
 
 (defcfun ("g_value_unset" g-value-unset) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{An initialized GValue structure.}
+ "@version{2013-4-2}
+  @argument[value]{an initialized @symbol{g-value} structure}
   @begin{short}
-    Clears the current value in value and \"unsets\" the type, this releases all
-    resources associated with this GValue.
+    Clears the current value in @arg{value} and \"unsets\" the type, this
+    releases all resources associated with this @symbol{g-value}.
   @end{short}
-  An unset value is the same as an uninitialized (zero-filled) GValue
+  An unset value is the same as an uninitialized (zero-filled) @symbol{g-value}
   structure."
   (value (:pointer g-value)))
 
@@ -566,13 +629,11 @@
 
 (defcfun ("g_value_set_instance" g-value-set-instance) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{An initialized GValue structure.}
+ "@version{2013-4-2}
+  @argument[value]{an initialized @symbol{g-value} structure}
   @argument[instance]{the instance}
-  @begin{short}
-    Sets value from an instantiatable type via the value_table's collect_value()
-    function.
-  @end{short}"
+  Sets @arg{value} from an instantiatable type via the @arg{value_table}'s
+  @arg{collect_value()} function."
   (value (:pointer g-value))
   (instance :pointer))
 
@@ -613,14 +674,14 @@
 
 (defcfun ("g_value_type_compatible" g-value-type-compatible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[src_type]{source type to be copied.}
-  @argument[dest_type]{destination type for copying.}
-  @return{@arg{true} if g_value_copy() is possible with src_type and dest_type.}
-  @begin{short}
-    Returns whether a GValue of type src_type can be copied into a GValue of
-    type dest_type.
-  @end{short}"
+ "@version{2013-4-2}
+  @argument[src-type]{source type to be copied}
+  @argument[dest-type]{destination type for copying}
+  @return{@em{True} if @fun{g-value-copy} is possible with @arg{src-type} and
+  @arg{dest-type}.}
+  Returns whether a @symbol{g-value} of type @arg{src-type} can be copied into
+  a @symbol{g-value} of type @arg{dest-type}.
+  @see-function{g-value-copy}"
   (src-type g-type)
   (dest-type g-type))
 
@@ -632,14 +693,13 @@
 
 (defcfun ("g_value_type_transformable" g-value-type-transformable) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[src_type]{Source type.}
-  @argument[dest_type]{Target type.}
-  @return{@code{nil} if the transformation is possible, @code{nil} otherwise.}
-  @begin{short}
-    Check whether g_value_transform() is able to transform values of type
-    src_type into values of type dest_type.
-  @end{short}"
+ "@version{2013-4-2}
+  @argument[src-type]{source type}
+  @argument[dest-type]{target type}
+  @return{@code{True} if the transformation is possible, @code{nil} otherwise.}
+  Check whether @fun{g-value-transform} is able to transform values of type
+  @arg{src-type} into values of type @arg{dest-type}.
+  @see-function{g-value-transform}"
   (src-type g-type)
   (dest-type g-type))
 
@@ -651,18 +711,19 @@
 
 (defcfun ("g_value_transform" g-value-transform) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[src_value]{Source value.}
-  @argument[dest_value]{Target value.}
+ "@version{2013-4-2}
+  @argument[src-value]{source value}
+  @argument[dest-value]{target value}
   @return{Whether a transformation rule was found and could be applied. Upon
-    failing transformations, dest_value is left untouched.}
+    failing transformations, @arg{dest-value} is left untouched.}
   @begin{short}
-    Tries to cast the contents of src_value into a type appropriate to store in
-    dest_value, e.g. to transform a G_TYPE_INT value into a G_TYPE_FLOAT value.
+    Tries to cast the contents of @arg{src-value} into a type appropriate to
+    store in @arg{dest-value}, e. g. to transform a @var{+g-type-int+} value
+    into a @var{+g-type-float+} value.
   @end{short}
   Performing transformations between value types might incur precision
   lossage. Especially transformations into strings might reveal seemingly
-  arbitrary results and shouldn't be relied upon for production code (such as
+  arbitrary results and should not be relied upon for production code (such as
   rcfile value or object property serialization)."
   (src-value (:pointer g-value))
   (dest-value (:pointer g-value)))
@@ -691,16 +752,18 @@
 (defcfun ("g_value_register_transform_func" g-value-register-transform-func)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[src_type]{Source type.}
-  @argument[dest_type]{Target type.}
-  @argument[transform_func]{a function which transforms values of type src_type
-    into value of type dest_type}
+ "@version{2013-4-2}
+  @argument[src-type]{source type}
+  @argument[dest-type]{target type}
+  @argument[transform-func]{a function which transforms values of type
+    @arg{src-type} into value of type @arg{dest-type}}
   @begin{short}
-    Registers a value transformation function for use in g_value_transform().
+    Registers a value transformation function for use in
+    @fun{g-value-transform}.
   @end{short}
-  A previously registered transformation function for src_type and dest_type
-  will be replaced."
+  A previously registered transformation function for @arg{src-type} and
+  @arg{dest-type} will be replaced.
+  @see-function{g-value-transform}"
   (src-type g-type)
   (dest-type g-type)
   (transform-func :pointer))
@@ -713,13 +776,14 @@
 
 (defcfun ("g_strdup_value_contents" g-strdup-value-contents) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[value]{GValue which contents are to be described.}
+ "@version{2013-4-2}
+  @argument[value]{@symbol{g-value} which contents are to be described}
   @return{Newly allocated string.}
   @begin{short}
-    Return a newly allocated string, which describes the contents of a GValue.
+    Return a newly allocated string, which describes the contents of a
+    @symbol{g-value}.
   @end{short}
-  The main purpose of this function is to describe GValue contents for
+  The main purpose of this function is to describe @symbol{g-value} contents for
   debugging output, the way in which the contents are described may change
   between different GLib versions."
   (value (:pointer g-value)))

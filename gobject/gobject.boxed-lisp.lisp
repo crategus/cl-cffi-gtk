@@ -36,7 +36,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;; Get the structure info for a name from the property list
-;; e.g. (get-g-boxed-foreign-info 'gdk-cursor)
 
 (defun get-g-boxed-foreign-info (name)
   (get name 'g-boxed-foreign-info))

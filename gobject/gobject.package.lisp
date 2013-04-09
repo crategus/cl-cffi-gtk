@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -166,7 +166,7 @@
     @about-function{g-type-check-value-type}
     @about-function{g-type-flag-reserved-id-bit}
     @about-function{g-type-init}
-    @about-symbol{GTypeDebugFlags}
+    @about-symbol{g-type-debug-flags}
     @about-function{g-type-init-with-debug-flags}
     @about-function{g-type-name}
     @about-function{g-type-qname}
@@ -213,6 +213,7 @@
     @about-function{g-type-add-interface-check}
     @about-function{g-type-remove-interface-check}
     @about-function{g-type-value-table-peek}
+    @about-function{g-type-ensure}
     @about-function{G-DEFINE-TYPE}
     @about-function{G-DEFINE-TYPE-WITH-CODE}
     @about-function{G-DEFINE-ABSTRACT-TYPE}
@@ -382,7 +383,7 @@
     @about-symbol{GStrv}
   @end{section}
   @begin[Generic Values]{section}
-    A polymorphic type that can hold values of any other type
+    A polymorphic type that can hold values of any other type.
 
     @about-symbol{g-value}
     @about-function{g-value-holds}
@@ -407,6 +408,212 @@
     @about-function{g-strdup-value-contents}
   @end{section}
   @begin[Parameters and Values]{section}
+    Standard Parameter and Value Types
+
+    GValue provides an abstract container structure which can be copied,
+    transformed and compared while holding a value of any (derived) type, which
+    is registered as a GType with a GTypeValueTable in its GTypeInfo structure.
+    Parameter specifications for most value types can be created as GParamSpec
+    derived instances, to implement e.g. GObject properties which operate on
+    GValue containers.
+
+    Parameter names need to start with a letter (a-z or A-Z). Subsequent
+    characters can be letters, numbers or a '-'. All other characters are
+    replaced by a '-' during construction.
+
+    @about-function{G_IS_PARAM_SPEC_BOOLEAN}
+    @about-function{G_PARAM_SPEC_BOOLEAN}
+    @about-function{G_VALUE_HOLDS_BOOLEAN}
+    @about-function{G_TYPE_PARAM_BOOLEAN}
+    @about-symbol{g-param-spec-boolean}
+    @about-function{g-param-spec-boolean}
+    @about-function{g-value-set-boolean}
+    @about-function{g-value-get-boolean}
+    @about-function{G_IS_PARAM_SPEC_CHAR}
+    @about-function{G_PARAM_SPEC_CHAR}
+    @about-function{G_VALUE_HOLDS_CHAR}
+    @about-function{G_TYPE_PARAM_CHAR}
+    @about-symbol{g-param-spec-char}
+    @about-function{g-param-spec-char}
+    @about-function{g-value-set-char}
+    @about-function{g-value-get-char}
+    @about-function{g-value-get-schar}
+    @about-function{g-value-set-schar}
+    @about-function{G_IS_PARAM_SPEC_UCHAR}
+    @about-function{G_PARAM_SPEC_UCHAR}
+    @about-function{G_VALUE_HOLDS_UCHAR}
+    @about-function{G_TYPE_PARAM_UCHAR}
+    @about-symbol{g-param-spec-uchar}
+    @about-function{g-param-spec-uchar}
+    @about-function{g-value-set-uchar}
+    @about-function{g-value-get-uchar}
+    @about-function{G_IS_PARAM_SPEC_INT}
+    @about-function{G_PARAM_SPEC_INT}
+    @about-function{G_VALUE_HOLDS_INT}
+    @about-function{G_TYPE_PARAM_INT}
+    @about-symbol{g-param-spec-int}
+    @about-function{g-param-spec-int}
+    @about-function{g-value-set-int}
+    @about-function{g-value-get-int}
+    @about-function{G_IS_PARAM_SPEC_UINT}
+    @about-function{G_PARAM_SPEC_UINT}
+    @about-function{G_VALUE_HOLDS_UINT}
+    @about-function{G_TYPE_PARAM_UINT}
+    @about-symbol{g-param-spec-uint}
+    @about-function{g-param-spec-uint}
+    @about-function{g-value-set-uint}
+    @about-function{g-value-get-uint}
+    @about-function{G_IS_PARAM_SPEC_LONG}
+    @about-function{G_PARAM_SPEC_LONG}
+    @about-function{G_VALUE_HOLDS_LONG}
+    @about-function{G_TYPE_PARAM_LONG}
+    @about-symbol{g-param-spec-long}
+    @about-function{g-param-spec-long}
+    @about-function{g-value-set-long}
+    @about-function{g-value-get-long}
+    @about-function{G_IS_PARAM_SPEC_ULONG}
+    @about-function{G_PARAM_SPEC_ULONG}
+    @about-function{G_VALUE_HOLDS_ULONG}
+    @about-function{G_TYPE_PARAM_ULONG}
+    @about-symbol{g-param-spec-ulong}
+    @about-function{g-param-spec-ulong}
+    @about-function{g-value-set-ulong}
+    @about-function{g-value-get-ulong}
+    @about-function{G_IS_PARAM_SPEC_INT64}
+    @about-function{G_PARAM_SPEC_INT64}
+    @about-function{G_VALUE_HOLDS_INT64}
+    @about-function{G_TYPE_PARAM_INT64}
+    @about-symbol{g-param-spec-int64}
+    @about-function{g-param-spec-int64}
+    @about-function{g-value-set-int64}
+    @about-function{g-value-get-int64}
+    @about-function{G_IS_PARAM_SPEC_UINT64}
+    @about-function{G_PARAM_SPEC_UINT64}
+    @about-function{G_VALUE_HOLDS_UINT64}
+    @about-function{G_TYPE_PARAM_UINT64}
+    @about-symbol{g-param-spec-uint64}
+    @about-function{g-param-spec-uint64}
+    @about-function{g-value-set-uint64}
+    @about-function{g-value-get-uint64}
+    @about-function{G_IS_PARAM_SPEC_FLOAT}
+    @about-function{G_PARAM_SPEC_FLOAT}
+    @about-function{G_VALUE_HOLDS_FLOAT}
+    @about-function{G_TYPE_PARAM_FLOAT}
+    @about-symbol{g-param-spec-float}
+    @about-function{g-param-spec-float}
+    @about-function{g-value-set-float}
+    @about-function{g-value-get-float}
+    @about-function{G_IS_PARAM_SPEC_DOUBLE}
+    @about-function{G_PARAM_SPEC_DOUBLE}
+    @about-function{G_VALUE_HOLDS_DOUBLE}
+    @about-function{G_TYPE_PARAM_DOUBLE}
+    @about-symbol{g-param-spec-double}
+    @about-function{g-param-spec-double}
+    @about-function{g-value-set-double}
+    @about-function{g-value-get-double}
+    @about-function{G_IS_PARAM_SPEC_ENUM}
+    @about-function{G_PARAM_SPEC_ENUM}
+    @about-function{G_VALUE_HOLDS_ENUM}
+    @about-function{G_TYPE_PARAM_ENUM}
+    @about-symbol{g-param-spec-enum}
+    @about-function{g-param-spec-enum}
+    @about-function{g-value-set-enum}
+    @about-function{g-value-get-enum}
+    @about-function{G_IS_PARAM_SPEC_FLAGS}
+    @about-function{G_PARAM_SPEC_FLAGS}
+    @about-function{G_VALUE_HOLDS_FLAGS}
+    @about-function{G_TYPE_PARAM_FLAGS}
+    @about-symbol{g-param-spec-flags}
+    @about-function{g-param-spec-flags}
+    @about-function{g-value-set-flags}
+    @about-function{g-value-get-flags}
+    @about-function{G_IS_PARAM_SPEC_STRING}
+    @about-function{G_PARAM_SPEC_STRING}
+    @about-function{G_VALUE_HOLDS_STRING}
+    @about-function{G_TYPE_PARAM_STRING}
+    @about-symbol{g-param-spec-string}
+    @about-function{g-param-spec-string}
+    @about-function{g-value-set-string}
+    @about-function{g-value-set-static-string}
+    @about-function{g-value-take-string}
+    @about-function{g-value-set-string-take-ownership}
+    @about-function{g-value-get-string}
+    @about-function{g-value-dup-string}
+    @about-function{G_IS_PARAM_SPEC_PARAM}
+    @about-function{G_PARAM_SPEC_PARAM}
+    @about-function{G_VALUE_HOLDS_PARAM}
+    @about-function{G_TYPE_PARAM_PARAM}
+    @about-symbol{g-param-spec-param}
+    @about-function{g-param-spec-param}
+    @about-function{g-value-set-param}
+    @about-function{g-value-take-param}
+    @about-function{g-value-set-param-take-ownership}
+    @about-function{g-value-get-param}
+    @about-function{g-value-dup-param}
+    @about-function{G_IS_PARAM_SPEC_BOXED}
+    @about-function{G_PARAM_SPEC_BOXED}
+    @about-function{G_VALUE_HOLDS_BOXED}
+    @about-function{G_TYPE_PARAM_BOXED}
+    @about-symbol{g-param-spec-boxed}
+    @about-function{g-param-spec-boxed}
+    @about-function{g-value-set-boxed}
+    @about-function{g-value-set-static-boxed}
+    @about-function{g-value-take-boxed}
+    @about-function{g-value-set-boxed-take-ownership}
+    @about-function{g-value-get-boxed}
+    @about-function{g-value-dup-boxed}
+    @about-function{G_IS_PARAM_SPEC_POINTER}
+    @about-function{G_PARAM_SPEC_POINTER}
+    @about-function{G_VALUE_HOLDS_POINTER}
+    @about-function{G_TYPE_PARAM_POINTER}
+    @about-symbol{g-param-spec-pointer}
+    @about-function{g-param-spec-pointer}
+    @about-function{g-value-set-pointer}
+    @about-function{g-value-get-pointer}
+    @about-function{G_IS_PARAM_SPEC_OBJECT}
+    @about-function{G_PARAM_SPEC_OBJECT}
+    @about-function{G_VALUE_HOLDS_OBJECT}
+    @about-function{G_TYPE_PARAM_OBJECT}
+    @about-symbol{g-param-spec-object}
+    @about-function{g-param-spec-object}
+    @about-function{g-value-set-object}
+    @about-function{g-value-take-object}
+    @about-function{g-value-set-object-take-ownership}
+    @about-function{g-value-get-object}
+    @about-function{g-value-dup-object}
+    @about-function{G_IS_PARAM_SPEC_UNICHAR}
+    @about-function{G_PARAM_SPEC_UNICHAR}
+    @about-function{G_TYPE_PARAM_UNICHAR}
+    @about-symbol{g-param-spec-unichar}
+    @about-function{g-param-spec-unichar}
+    @about-function{G_IS_PARAM_SPEC_VALUE_ARRAY}
+    @about-function{G_PARAM_SPEC_VALUE_ARRAY}
+    @about-function{G_TYPE_PARAM_VALUE_ARRAY}
+    @about-symbol{g-param-spec-value-array}
+    @about-function{g-param-spec-value-array}
+    @about-function{G_IS_PARAM_SPEC_OVERRIDE}
+    @about-function{G_PARAM_SPEC_OVERRIDE}
+    @about-function{G_TYPE_PARAM_OVERRIDE}
+    @about-symbol{g-param-spec-override}
+    @about-function{g-param-spec-override}
+    @about-function{G_IS_PARAM_SPEC_GTYPE}
+    @about-function{G_PARAM_SPEC_GTYPE}
+    @about-function{G_VALUE_HOLDS_GTYPE}
+    @about-function{G_TYPE_PARAM_GTYPE}
+    @about-symbol{g-param-spec-g-type}
+    @about-function{g-param-spec-g-type}
+    @about-function{g-value-get-g-type}
+    @about-function{g-value-set-g-type}
+    @about-function{G_IS_PARAM_SPEC_VARIANT}
+    @about-function{G_PARAM_SPEC_VARIANT}
+    @about-function{G_VALUE_HOLDS_VARIANT}
+    @about-function{G_TYPE_PARAM_VARIANT}
+    @about-symbol{g-param-spec-variant}
+    @about-function{g-param-spec-variant}
+    @about-function{g-value-get-variant}
+    @about-function{g-value-dup-variant}
+    @about-function{g-value-set-variant}
+    @about-function{g-value-take-variant}
   @end{section}
   @begin[GParamSpec]{section}
     Metadata for parameter specifications.

@@ -134,7 +134,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-enum-value atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-enum-value atdoc:*external-symbols*)
- "@version{2013-2-6}
+ "@version{2013-4-2}
   @begin{short}
     A structure which contains a single enum value, its name, and its nickname.
   @end{short}
@@ -147,7 +147,7 @@
   @begin[code]{table}
     @entry[:value]{the enum value}
     @entry[:name]{the name of the value}
-    @entry{:nick]{the nickname of the value}
+    @entry[:nick]{the nickname of the value}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------

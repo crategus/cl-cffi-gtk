@@ -1035,7 +1035,7 @@
                            :zero-g-value t))
         (prog1
           (if (eq (signal-info-return-type signal-info)
-                  (gtype +g-type-void+))
+                  (gtype +g-type-none+))
               (g-signal-emitv params
                               (signal-info-id signal-info)
                               signal-name

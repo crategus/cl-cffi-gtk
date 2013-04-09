@@ -95,24 +95,24 @@
 ;;;     G_TYPE_FROM_INSTANCE
 ;;;     G_TYPE_FROM_CLASS
 ;;;     G_TYPE_FROM_INTERFACE
-;;;     G_TYPE_INSTANCE_GET_CLASS
-;;;     G_TYPE_INSTANCE_GET_INTERFACE
-;;;     G_TYPE_INSTANCE_GET_PRIVATE
-;;;     G_TYPE_CLASS_GET_PRIVATE
-;;;     G_TYPE_CHECK_INSTANCE
-;;;     G_TYPE_CHECK_INSTANCE_CAST
+;;;     G_TYPE_INSTANCE_GET_CLASS                * not implemented *
+;;;     G_TYPE_INSTANCE_GET_INTERFACE            * not implemented *
+;;;     G_TYPE_INSTANCE_GET_PRIVATE              * not implemented *
+;;;     G_TYPE_CLASS_GET_PRIVATE                 * not implemented *
+;;;     G_TYPE_CHECK_INSTANCE                    * not implemented *
+;;;     G_TYPE_CHECK_INSTANCE_CAST               * not implemented *
 ;;;     G_TYPE_CHECK_INSTANCE_TYPE
-;;;     G_TYPE_CHECK_CLASS_CAST
+;;;     G_TYPE_CHECK_CLASS_CAST                  * not implemented *
 ;;;     G_TYPE_CHECK_CLASS_TYPE
-;;;     G_TYPE_CHECK_VALUE
-;;;     G_TYPE_CHECK_VALUE_TYPE
-;;;     G_TYPE_FLAG_RESERVED_ID_BIT
+;;;     G_TYPE_CHECK_VALUE                       * not implemented *
+;;;     G_TYPE_CHECK_VALUE_TYPE                  * not implemented *
+;;;     G_TYPE_FLAG_RESERVED_ID_BIT              * not implemented *
 ;;;
 ;;;     g_type_init
 ;;;
-;;;     GTypeDebugFlags
+;;;     GTypeDebugFlags                          * not implemented *
 ;;;
-;;;     g_type_init_with_debug_flags
+;;;     g_type_init_with_debug_flags             * not implemented *
 ;;;     g_type_name
 ;;;     g_type_qname
 ;;;     g_type_from_name
@@ -126,9 +126,9 @@
 ;;;     g_type_class_unref
 ;;;     g_type_class_peek_parent
 ;;;     g_type_class_add_private
-;;;     g_type_add_class_private
+;;;     g_type_add_class_private                 * not implemented *
 ;;;     g_type_interface_peek
-;;;     g_type_interface_peek_parent
+;;;     g_type_interface_peek_parent             * not implemented *
 ;;;     g_type_default_interface_ref
 ;;;     g_type_default_interface_peek
 ;;;     g_type_default_interface_unref
@@ -141,40 +141,39 @@
 ;;;     GTypeQuery
 ;;;
 ;;;     g_type_query
-;;;
 ;;;     g_type_register_static
 ;;;     g_type_register_static_simple
-;;;     g_type_register_dynamic
-;;;     g_type_register_fundamental
+;;;     g_type_register_dynamic                  * not implemented *
+;;;     g_type_register_fundamental              * not implemented *
 ;;;     g_type_add_interface_static
-;;;     g_type_add_interface_dynamic
+;;;     g_type_add_interface_dynamic             * not implemented *
 ;;;     g_type_interface_add_prerequisite
-;;;     g_type_get_plugin
-;;;     g_type_interface_get_plugin
+;;;     g_type_get_plugin                        * not implemented *
+;;;     g_type_interface_get_plugin              * not implemented *
 ;;;     g_type_fundamental_next
 ;;;     g_type_fundamental
-;;;     g_type_create_instance
-;;;     g_type_free_instance
-;;;     g_type_add_class_cache_func
-;;;     g_type_remove_class_cache_func
-;;;     g_type_class_unref_uncached
-;;;     g_type_add_interface_check
-;;;     g_type_remove_interface_check
+;;;     g_type_create_instance                   * not implemented *
+;;;     g_type_free_instance                     * not implemented *
+;;;     g_type_add_class_cache_func              * not implemented *
+;;;     g_type_remove_class_cache_func           * not implemented *
+;;;     g_type_class_unref_uncached              * not implemented *
+;;;     g_type_add_interface_check               * not implemented *
+;;;     g_type_remove_interface_check            * not implemented *
 ;;;     g_type_value_table_peek
 ;;;     g_type_ensure
 ;;;
-;;;     G_DEFINE_TYPE
-;;;     G_DEFINE_TYPE_WITH_CODE
-;;;     G_DEFINE_ABSTRACT_TYPE
-;;;     G_DEFINE_ABSTRACT_TYPE_WITH_CODE
-;;;     G_DEFINE_INTERFACE
-;;;     G_DEFINE_INTERFACE_WITH_CODE
-;;;     G_IMPLEMENT_INTERFACE
-;;;     G_DEFINE_TYPE_EXTENDED
-;;;     G_DEFINE_BOXED_TYPE
-;;;     G_DEFINE_BOXED_TYPE_WITH_CODE
-;;;     G_DEFINE_POINTER_TYPE
-;;;     G_DEFINE_POINTER_TYPE_WITH_CODE
+;;;     G_DEFINE_TYPE                            * not implemented *
+;;;     G_DEFINE_TYPE_WITH_CODE                  * not implemented *
+;;;     G_DEFINE_ABSTRACT_TYPE                   * not implemented *
+;;;     G_DEFINE_ABSTRACT_TYPE_WITH_CODE         * not implemented *
+;;;     G_DEFINE_INTERFACE                       * not implemented *
+;;;     G_DEFINE_INTERFACE_WITH_CODE             * not implemented *
+;;;     G_IMPLEMENT_INTERFACE                    * not implemented *
+;;;     G_DEFINE_TYPE_EXTENDED                   * not implemented *
+;;;     G_DEFINE_BOXED_TYPE                      * not implemented *
+;;;     G_DEFINE_BOXED_TYPE_WITH_CODE            * not implemented *
+;;;     G_DEFINE_POINTER_TYPE                    * not implemented *
+;;;     G_DEFINE_POINTER_TYPE_WITH_CODE          * not implemented *
 ;;;
 ;;;
 ;;; Description
@@ -237,14 +236,14 @@
 ;;; G_TYPE_NONE
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +g-type-void+ #.(ash 1 +g-type-fundamental-shift+)
+(defconstant +g-type-none+ #.(ash 1 +g-type-fundamental-shift+)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
+ "@version{2013-4-2}
   @variable-value{@code{(g-type-make-fundamental 1)}}
   A fundamental type which is used as a replacement for the C void return type.
   @see-function{g-type-make-fundamental}")
 
-(export '+g-type-void+)
+(export '+g-type-none+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INTERFACE
@@ -506,7 +505,7 @@
 (defun g-type-gtype ()
  #+cl-cffi-gtk-documentation
  "@version{2013-2-6}
-  The type for @code{GType}.
+  @short{The type for @code{GType}.}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-type-gtype)
@@ -610,7 +609,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield g-type-flags
-  (:abstract       #.(ash 1 4))
+  (:abstract #.(ash 1 4))
   (:value-abstract #.(ash 1 5)))
 
 (export 'g-type-flags)
@@ -620,11 +619,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-type-flags atdoc:*external-symbols*)
- "@version{2013-3-24}
+ "@version{2013-4-2}
   @short{Bit masks used to check or determine characteristics of a type.}
   @begin{pre}
 (defbitfield g-type-flags
-  (:abstract       #.(ash 1 4))
+  (:abstract #.(ash 1 4))
   (:value-abstract #.(ash 1 5)))
   @end{pre}
   @begin[code]{table}
@@ -651,7 +650,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-fundamental-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-type-fundamental-flags atdoc:*external-symbols*)
- "@version{2013-3-24}
+ "@version{2013-4-2}
   @begin{short}
     Bit masks used to check or determine specific characteristics of a
    fundamental type.
@@ -888,10 +887,11 @@
  "@version{2013-3-31}
   @argument[x]{a fundamental type number}
   @return{The type ID of the @class{g-type}.}
-  Get the type ID for the fundamental type number @arg{x}. Use
-  @fun{g-type-fundamental-next} instead of this function to create new
-  fundamental types.
-
+  @begin{short}
+    Get the type ID for the fundamental type number @arg{x}. Use
+    @fun{g-type-fundamental-next} instead of this function to create new
+    fundamental types.
+  @end{short}
   @subheading{Note}
     @sym{g-type-make-fundamental} does not return a Lisp @code{gtype} value,
     but the ID number of the @class{g-type}.
@@ -1292,7 +1292,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-fundamental-info atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-type-fundamental-info atdoc:*external-symbols*)
- "@version{2012-12-21}
+ "@version{2013-4-1}
   @begin{short}
     A structure that provides information to the type system which is used
     specifically for managing fundamental types.
@@ -1301,9 +1301,9 @@
 (defcstruct g-type-fundamental-info
   (:type-flags g-type-fundamental-flags))
   @end{pre}
-  @begin{table}
-    @entry[GTypeFundamentalFlags type_flags]{GTypeFundamentalFlags describing
-      the characteristics of the fundamental type}
+  @begin[code]{table}
+    @entry[type-flags]{@symbol{g-type-fundamental-flags} describing
+      the characteristics of the fundamental type.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1322,7 +1322,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-interface-info atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-interface-info atdoc:*external-symbols*)
- "@version{2012-12-21}
+ "@version{2013-4-1}
   @begin{short}
     A structure that provides information to the type system which is used
     specifically for managing interface types.
@@ -1333,13 +1333,12 @@
   (:interface-finalize :pointer)
   (:interface-data :pointer))
   @end{pre}
-  @begin{table}
-    @entry[GInterfaceInitFunc interface_init]{location of the interface
-      initialization function}
-    @entry[GInterfaceFinalizeFunc interface_finalize]{location of the interface
-      finalization function}
-    @entry[gpointer interface_data]{user-supplied data passed to the interface
-      init/finalize functions}
+  @begin[@code]{table}
+    @entry[:interface-init]{Location of the interface initialization function.}
+    @entry[:interface-finalize]{Location of the interface finalization
+      function.}
+    @entry[:interface-data]{User supplied data passed to the interface
+      init/finalize functions.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1363,7 +1362,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-value-table atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-type-value-table atdoc:*external-symbols*)
- "@version{2012-12-21}
+ "@version{2013-4-1}
   @begin{short}
     The @sym{g-type-value-table} provides the functions required by the
     @symbol{g-value} implementation, to serve as a container for values of a
@@ -1383,18 +1382,19 @@
   @begin[code]{table}
     @begin[:value-init]{entry}
       Default initialize values contents by poking values directly into the
-      value->data array. The data array of the GValue passed into this
-      function was zero-filled with memset(), so no care has to be taken to
-      free any old contents. E.g. for the implementation of a string value
-      that may never be NULL, the implementation might look like:
+      @code{value->data array}. The data array of the @symbol{g-value} passed
+      into this function was zero-filled with @code{memset()}, so no care has to
+      be taken to free any old contents. E. g. for the implementation of a
+      string value that may never be @code{NULL}, the implementation might look
+      like:
       @begin{pre}
  value->data[0].v_pointer = g_strdup (\"\");
       @end{pre}
     @end{entry}
     @begin[:value-free]{entry}
       Free any old contents that might be left in the data array of the passed
-      in value. No resources may remain allocated through the GValue contents
-      after this function returns. E.g. for our above string type:
+      in value. No resources may remain allocated through the @symbol{g-value}
+      contents after this function returns. E. g. for our above string type:
       @begin{pre}
  // only free strings without a specific flag for static storage
  if (!(value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS))
@@ -1402,11 +1402,12 @@
       @end{pre}
     @end{entry}
     @begin[:value-copy]{entry}
-      dest_value is a GValue with zero-filled data section and src_value is a
-      properly setup GValue of same or derived type. The purpose of this
-      function is to copy the contents of src_value into dest_value in a way,
-      that even after src_value has been freed, the contents of dest_value
-      remain valid. String type example:
+      @arg{dest-value} is a @symbol{g-value} with zero-filled data section and
+      @arg{src-value} is a properly setup @symbol{g-value} of same or derived
+      type. The purpose of this function is to copy the contents of
+      @arg{src-value} into @arg{dest-value} in a way, that even after
+      @arg{src-value} has been freed, the contents of @arg{dest-value} remain
+      valid. String type example:
       @begin{pre}
  dest_value->data[0].v_pointer = g_strdup (src_value->data[0].v_pointer);
       @end{pre}
@@ -1425,10 +1426,10 @@
       collected, and the characters themselves indicate the type of the
       argument. Currently supported arguments are:
       @begin{table}
-        @entry['i']{Integers. passed as collect_values[].v_int.}
-        @entry['l']{Longs. passed as collect_values[].v_long.}
-        @entry['d']{Doubles. passed as collect_values[].v_double.}
-        @entry['p']{Pointers. passed as collect_values[].v_pointer.}
+        @entry['i']{Integers, passed as @code{collect_values[].v_int}.}
+        @entry['l']{Longs, passed as @code{collect_values[].v_long}.}
+        @entry['d']{Doubles, passed as @code{collect_values[].v_double}.}
+        @entry['p']{Pointers, passed as @code{collect_values[].v_pointer}.}
       @end{table}
       It should be noted that for variable argument list construction, ANSI C
       promotes every type smaller than an integer to an int, and floats to
@@ -1436,23 +1437,24 @@
       and for collection of floats 'd'.
     @end{entry}
     @begin[:collect-value]{entry}
-      The collect_value() function is responsible for converting the values
-      collected from a variable argument list into contents suitable for
-      storage in a GValue. This function should setup value similar to
-      value_init(); e.g. for a string value that does not allow NULL pointers,
-      it needs to either spew an error, or do an implicit conversion by
-      storing an empty string. The value passed in to this function has a
-      zero-filled data array, so just like for value_init() it is guaranteed
-      to not contain any old contents that might need freeing.
-      n_collect_values is exactly the string length of collect_format, and
-      collect_values is an array of unions GTypeCValue with length
-      n_collect_values, containing the collected values according to
-      collect_format. collect_flags is an argument provided as a hint by the
-      caller. It may contain the flag G_VALUE_NOCOPY_CONTENTS indicating, that
-      the collected value contents may be considered \"static\" for the duration
-      of the value lifetime. Thus an extra copy of the contents stored in
-      collect_values is not required for assignment to value. For our above
-      string example, we continue with:
+      The @code{collect_value()} function is responsible for converting the
+      values collected from a variable argument list into contents suitable for
+      storage in a @symbol{g-value}. This function should setup value similar to
+      @code{value_init()}; e. g. for a string value that does not allow
+      @code{NULL} pointers, it needs to either spew an error, or do an implicit
+      conversion by storing an empty string. The value passed in to this
+      function has a zero-filled data array, so just like for
+      @code{value_init()} it is guaranteed to not contain any old contents that
+      might need freeing. @code{n_collect_values} is exactly the string length
+      of collect_format, and @code{collect_values} is an array of unions
+      @code{GTypeCValue} with length @code{n_collect_values}, containing the
+      collected values according to  @code{collect_format}. @code{collect_flags}
+      is an argument provided as a hint by the caller. It may contain the flag
+      @code{G_VALUE_NOCOPY_CONTENTS} indicating, that the collected value
+      contents may be considered \"static\" for the duration of the value
+      lifetime. Thus an extra copy of the contents stored in
+      @code{collect_values} is not required for assignment to value. For our
+      above string example, we continue with:
       @begin{pre}
  if (!collect_values[0].v_pointer)
      value->data[0].v_pointer = g_strdup (\"\");
@@ -1468,12 +1470,12 @@
    return NULL;
       @end{pre}
       It should be noted, that it is generally a bad idea to follow the
-      G_VALUE_NOCOPY_CONTENTS hint for reference counted types. Due to
+      @code{G_VALUE_NOCOPY_CONTENTS} hint for reference counted types. Due to
       reentrancy requirements and reference count assertions performed by the
       signal emission code, reference counts should always be incremented for
-      reference counted contents stored in the value->data array. To deviate
-      from our string example for a moment, and taking a look at an exemplary
-      implementation for collect_value() of GObject:
+      reference counted contents stored in the @code{value->data} array. To
+      deviate from our string example for a moment, and taking a look at an
+      exemplary implementation for @code{collect_value()} of GObject:
       @begin{pre}
  if (collect_values[0].v_pointer)
  {
@@ -1487,32 +1489,34 @@
  @}
       @end{pre}
       The reference count for valid objects is always incremented, regardless
-      of collect_flags. For invalid objects, the example returns a newly
-      allocated string without altering value. Upon success, collect_value()
-      needs to return NULL. If, however, an error condition occurred,
-      collect_value() may spew an error by returning a newly allocated
-      non-NULL string, giving a suitable description of the error condition.
-      The calling code makes no assumptions about the value contents being
-      valid upon error returns, value is simply thrown away without further
-      freeing. As such, it is a good idea to not allocate GValue contents,
-      prior to returning an error, however, collect_values() is not obliged to
-      return a correctly setup value for error returns, simply because any
-      non-NULL return is considered a fatal condition so further program
-      behaviour is undefined.
+      of @code{collect_flags}. For invalid objects, the example returns a newly
+      allocated string without altering value. Upon success,
+      @code{collect_value()} needs to return @code{NULL}. If, however, an error
+      condition occurred, @code{collect_value()} may spew an error by returning
+      a newly allocated non-@code{NULL} string, giving a suitable description of
+      the error condition. The calling code makes no assumptions about the value
+      contents being valid upon error returns, value is simply thrown away
+      without further freeing. As such, it is a good idea to not allocate
+      @symbol{g-value} contents, prior to returning an error, however,
+      @code{collect_values()} is not obliged to return a correctly setup value
+      for error returns, simply because any non-@code{NULL} return is considered
+      a fatal condition so further program behaviour is undefined.
     @end{entry}
     @begin[:lcopy-format]{entry}
-      Format description of the arguments to collect for lcopy_value,
-      analogous to collect_format. Usually, lcopy_format string consists only
-      of 'p's to provide lcopy_value() with pointers to storage locations.
+      Format description of the arguments to collect for @code{lcopy_value},
+      analogous to @code{collect_format}. Usually, @code{lcopy_format} string
+      consists only of 'p's to provide @code{lcopy_value()} with pointers to
+      storage locations.
     @end{entry}
     @begin[:lcopy-value]{entry}
       This function is responsible for storing the value contents into
       arguments passed through a variable argument list which got collected
-      into collect_values according to lcopy_format. n_collect_values equals
-      the string length of lcopy_format, and collect_flags may contain
-      G_VALUE_NOCOPY_CONTENTS. In contrast to collect_value(), lcopy_value()
-      is obliged to always properly support G_VALUE_NOCOPY_CONTENTS. Similar
-      to collect_value() the function may prematurely abort by returning a
+      into @code{collect_values} according to @code{lcopy_format}.
+      @code{n_collect_values} equals the string length of @code{lcopy_format},
+      and collect_flags may contain @code{G_VALUE_NOCOPY_CONTENTS}. In contrast
+      to @code{collect_value()}, @code{lcopy_value()} is obliged to always
+      properly support @code{G_VALUE_NOCOPY_CONTENTS}. Similar to
+      @code{collect_value()} the function may prematurely abort by returning a
       newly allocated string describing an error condition. To complete the
       string example:
       @begin{pre}
@@ -1524,7 +1528,7 @@
  else
    *string_p = g_strdup (value->data[0].v_pointer);
       @end{pre}
-      And an illustrative version of lcopy_value() for reference-counted
+      And an illustrative version of @code{lcopy_value()} for reference-counted
       types:
       @begin{pre}
  GObject **object_p = collect_values[0].v_pointer;
@@ -1547,12 +1551,18 @@
 
 (defun g-type-from-instance (instance)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
-  @argument[instance]{Location of a valid GTypeInstance structure.}
-  @return{the GType}
-  @short{Get the type identifier from a given instance structure.}
+ "@version{2013-4-1}
+  @argument[instance]{location of a valid @symbol{g-type-instance} structure}
+  @return{The @class{g-type} of @arg{instance}.}
+  @short{Get the type identifier from a given @arg{instance} structure.}
 
-  This macro should only be used in type implementations."
+  This function should only be used in type implementations.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-from-instance (make-instance 'gtk-button))
+=> #S(GTYPE :NAME \"GtkButton\" :%ID 134920032)
+    @end{pre}
+  @end{dictionary}"
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
     (g-type-from-class (foreign-slot-value ptr
                                            'g-type-instance :class))))
@@ -1565,12 +1575,18 @@
 
 (defun g-type-from-class (class)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
-  @argument[g_class]{Location of a valid GTypeClass structure.}
-  @return{the GType}
-  @short{Get the type identifier from a given class structure.}
+ "@version{2013-4-1}
+  @argument[class]{location of a valid @symbol{g-type-class} structure}
+  @return{The @class{g-type} of @arg{class}.}
+  @short{Get the type identifier from a given @arg{class} structure.}
 
-  This macro should only be used in type implementations."
+  This macro should only be used in type implementations.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-from-class (g-type-class-ref \"GtkWidget\"))
+=> #S(GTYPE :NAME \"GtkWidget\" :%ID 134888256)
+    @end{pre}
+  @end{dictionary}"
   (foreign-slot-value class 'g-type-class :type))
 
 (export 'g-type-from-class)
@@ -1581,12 +1597,18 @@
 
 (defun g-type-from-interface (interface)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
-  @argument[g_iface]{Location of a valid GTypeInterface structure.}
-  @return{the GType}
-  @short{Get the type identifier from a given interface structure.}
+ "@version{2013-4-1}
+  @argument[interface]{location of a valid @symbol{g-type-interface} structure}
+  @return{The @class{g-type} of @arg{interface}.}
+  @short{Get the type identifier from a given @arg{interface} structure.}
 
-  This macro should only be used in type implementations."
+  This macro should only be used in type implementations.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-from-interface (g-type-default-interface-ref \"GtkOrientable\"))
+=> #S(GTYPE :NAME \"GtkOrientable\" :%ID 134887472)
+    @end{pre}
+  @end{dictionary}"
   (foreign-slot-value interface 'g-type-interface :type))
 
 (export 'g-type-from-interface)
@@ -1740,19 +1762,19 @@
 ;;; G_TYPE_CHECK_INSTANCE_TYPE()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-type-check-instance-type (instance gtype)
+(defun g-type-check-instance-type (instance type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-4-1}
   @argument[instance]{location of a @symbol{g-type-instance} structure}
-  @argument[gtype]{the type to be checked}
+  @argument[type]{the type to be checked}
   @return{@em{True} on success.}
   @begin{short}
     Checks if @arg{instance} is an instance of the type identified by
-    @arg{gtype}.
+    @arg{type} or derived.
   @end{short}
 
   This function should only be used in type implementations."
-  (eql (gtype-id (g-type-from-instance instance)) (gtype-id gtype)))
+  (g-type-is-a (g-type-from-instance instance) type))
 
 (export 'g-type-check-instance-type)
 
@@ -1780,26 +1802,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CHECK_CLASS_TYPE()
-;;;
-;;; #define G_TYPE_CHECK_CLASS_TYPE(g_class, g_type)
-;;;         (_G_TYPE_CCT ((g_class), (g_type)))
-;;;
-;;; Checks if g_class is a class structure of the type identified by g_type
-;;; or derived.
-;;;
-;;; This macro should only be used in type implementations.
-;;;
-;;; g_class :
-;;;     Location of a GTypeClass structure.
-;;;
-;;; g_type :
-;;;     The type to be checked.
-;;;
-;;; Returns :
-;;;     TRUE on success.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-check-class-type (class type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-1}
+  @argument[class]{location of a @symbol{g-type-class} structure}
+  @argument[type]{the type to be checked}
+  @return{@em{True} on success.}
+  @begin{short}
+    Checks if @arg{class} is a class structure of the type identified by
+    @arg{type} or derived.
+  @end{short}
+
+  This function should only be used in type implementations."
   (g-type-is-a (g-type-from-class class) type))
 
 (export 'g-type-check-class-type)
@@ -1854,16 +1870,22 @@
 
 (defcfun ("g_type_init" g-type-init) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-4}
+ "@version{2013-4-1}
   @begin{short}
     Prior to any use of the type system, @sym{g-type-init} has to be called to
     initialize the type system and assorted other code portions such as the
     various fundamental type implementations or the signal system.
   @end{short}
 
-  This function is idempotent.
+  This function is idempotent. If you call it multiple times, all but the first
+  calls will be silently ignored. There is no way to undo the effect of
+  @sym{g-type-init}.
 
-  Since version 2.24 this also initializes the thread system")
+  Since version 2.24 this also initializes the thread system.
+
+  @subheading{Note}
+    In the Lisp binding to GTK+ @sym{g-type-init} is called, when loading the
+    library.")
 
 (glib::at-init () (g-type-init))
 
@@ -1919,19 +1941,19 @@
 
 (declaim (inline g-type-name))
 
-(defun g-type-name (gtype)
+(defun g-type-name (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[gtype]{Type to return name for.}
-  @return{Static type name or NULL.}
+ "@version{2013-4-1}
+  @argument[type]{type to return name for}
+  @return{Static type name or @code{nil}.}
   @begin{short}
     Get the unique name that is assigned to a type ID.
   @end{short}
   Note that this function (like all other GType API) cannot cope with invalid
-  type IDs. G_TYPE_INVALID may be passed to this function, as may be any other
-  validly registered type ID, but randomized type IDs should not be passed in
-  and will most likely lead to a crash."
-  (gtype-name (gtype gtype)))
+  type IDs. @var{+g-type-invalid+} may be passed to this function, as may
+  be any other validly registered type ID, but randomized type IDs should not be
+  passed in and will most likely lead to a crash."
+  (gtype-name (gtype type)))
 
 (export 'g-type-name)
 
@@ -1941,13 +1963,11 @@
 
 (defcfun ("g_type_qname" g-type-qname) g-quark
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{Type to return quark of type name for.}
-  @return{The type names quark or 0.}
-  @begin{short}
-    Get the corresponding quark of the type IDs name.
-  @end{short}"
-  (gtype g-type))
+ "@version{2013-4-1}
+  @argument[type]{type to return quark of @arg{type} name for}
+  @return{The @arg{type} names quark or 0.}
+  Get the corresponding quark of the @arg{type} IDs name."
+  (type g-type))
 
 (export 'g-type-qname)
 
@@ -1960,14 +1980,12 @@
 
 (defun g-type-from-name (name)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[name]{Type name to lookup.}
-  @return{Corresponding type ID or 0.}
-  @begin{short}
-    Lookup the type ID from a given type name, returning 0 if no type has been
-    registered under this name (this is the preferred method to find out by name
-    whether a specific type has been registered yet).
-  @end{short}"
+ "@version{2013-4-1}
+  @argument[name]{type name to lookup}
+  @return{Corresponding type ID for @arg{name} or 0.}
+  Lookup the type ID from a given type @arg{name}, returning 0 if no type has
+  been registered under this @arg{name}. This is the preferred method to find
+  out by name whether a specific type has been registered yet."
   (gtype name))
 
 (export 'g-type-from-name)
@@ -1978,13 +1996,12 @@
 
 (defcfun ("g_type_parent" g-type-parent) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{The derived type.}
-  @return{The parent type.}
-  @begin{short}
-    Return the direct parent type of the passed in type. If the passed in type
-    has no parent, i.e. is a fundamental type, 0 is returned.
-  @end{short}"
+ "@version{2013-4-1}
+  @argument[type]{the derived type}
+  @return{The parent type of @arg{type}.}
+  Return the direct parent type of the passed in @arg{type}. If the passed in
+  @arg{type} has no parent, i. e. is a fundamental type, @code{nil} is
+  returned."
   (type g-type))
 
 (export 'g-type-parent)
@@ -1995,13 +2012,11 @@
 
 (defcfun ("g_type_depth" g-type-depth) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{A GType value.}
-  @return{The depth of type.}
-  @begin{short}
-    Returns the length of the ancestry of the passed in type. This includes the
-    type itself, so that e.g. a fundamental type has depth 1.
-  @end{short}"
+ "@version{2013-4-1}
+  @argument[type]{a @class{g-type}}
+  @return{The depth of @arg{type}.}
+  Returns the length of the ancestry of the passed in @arg{type}. This includes
+  the @arg{type} itself, so that e. g. a fundamental type has depth 1."
   (type g-type))
 
 (export 'g-type-depth)
@@ -2012,18 +2027,19 @@
 
 (defcfun ("g_type_next_base" g-type-next-base) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[leaf_type]{Descendant of root_type and the type to be returned.}
-  @argument[root_type]{Immediate parent of the returned type.}
-  @return{Immediate child of root_type and anchestor of leaf_type.}
+ "@version{2013-4-1}
+  @argument[leaf-type]{descendant of @arg{root-type} and the type to be
+    returned}
+  @argument[root-type]{immediate parent of the returned type}
+  @return{Immediate child of @arg{root-type} and anchestor of @arg{leaf-type}.}
   @begin{short}
-    Given a leaf_type and a root_type which is contained in its anchestry,
-    return the type that root_type is the immediate parent of.
+    Given a @arg{leaf-type} and a @arg{root-type} which is contained in its
+    anchestry, return the type that @arg{root-type} is the immediate parent of.
   @end{short}
   In other words, this function determines the type that is derived directly
-  from root_type which is also a base class of leaf_type. Given a root type and
-  a leaf type, this function can be used to determine the types and order in
-  which the leaf type is descended from the root type."
+  from @arg{root-type} which is also a base class of @arg{leaf-type}. Given a
+  root type and a leaf type, this function can be used to determine the types
+  and order in which the leaf type is descended from the root type."
   (leaf-type g-type)
   (root-type g-type))
 
@@ -2035,16 +2051,15 @@
 
 (defcfun ("g_type_is_a" g-type-is-a) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{Type to check anchestry for.}
-  @argument[is_a_type]{Possible anchestor of type or interface type could
-    conform to.}
-  @return{TRUE if type is_a is_a_type holds true.}
-  @begin{short}
-    If is_a_type is a derivable type, check whether type is a descendant of
-    is_a_type. If is_a_type is an interface, check whether type conforms to it.
-  @end{short}"
-  (gtype g-type)
+ "@version{2013-4-1}
+  @argument[type]{type to check anchestry for}
+  @argument[is-a-type]{possible anchestor of @arg{type} or interface
+    @arg{type} could conform to}
+  @return{@em{True} if @arg{type} is a @arg{is-a-type} holds true.}
+  If @arg{is-a-type} is a derivable type, check whether @arg{type} is a
+  descendant of @arg{is-a-type}. If @arg{is-a-type} is an interface, check
+  whether type conforms to it."
+  (type g-type)
   (is-a-type g-type))
 
 (export 'g-type-is-a)
@@ -2055,14 +2070,12 @@
 
 (defcfun ("g_type_class_ref" g-type-class-ref) (:pointer g-type-class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{Type ID of a classed type.}
-  @return{The GTypeClass structure for the given type ID.}
-  @begin{short}
-    Increments the reference count of the class structure belonging to type.
-    This function will demand-create the class if it doesn't exist already.
-  @end{short}"
-  (gtype g-type))
+ "@version{2013-4-1}
+  @argument[type]{type ID of a classed type}
+  @return{The @symbol{g-type-class} structure for the given @arg{type}.}
+  Increments the reference count of the class structure belonging to @arg{type}.
+  This function will create the class if it does not exist already."
+  (type g-type))
 
 (export 'g-type-class-ref)
 
@@ -2072,16 +2085,27 @@
 
 (defcfun ("g_type_class_peek" g-type-class-peek) (:pointer g-type-class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{Type ID of a classed type.}
-  @return{The GTypeClass structure for the given type ID or NULL if the class
-    does not currently exist.}
+ "@version{2013-4-1}
+  @argument[type]{type ID of a classed type}
+  @return{The @symbol{g-type-class} structure for the given @arg{type} ID or
+    @code{NULL} if the class does not currently exist.}
   @begin{short}
-    This function is essentially the same as g_type_class_ref(), except that the
-    classes reference count isn't incremented. As a consequence, this function
-    may return NULL if the class of the type passed in does not currently exist
-    (hasn't been referenced before).
-  @end{short}"
+    This function is essentially the same as @fun{g-type-class-ref}, except that
+    the classes reference count is not incremented. As a consequence, this
+    function may return @code{NULL} if the class of the type passed in does not
+    currently exist (hasn't been referenced before).
+  @end{short}
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (g-type-class-peek \"GtkLabel\")
+=> #.(SB-SYS:INT-SAP #X00000000)
+ (g-type-class-ref \"GtkLabel\")
+=> #.(SB-SYS:INT-SAP #X081B9760)
+ (g-type-class-peek \"GtkLabel\")
+=> #.(SB-SYS:INT-SAP #X081B9760)
+    @end{pre}
+  @end{dictionary}
+  @see-function{g-type-class-ref}"
   (type g-type))
 
 (export 'g-type-class-peek)
@@ -2093,16 +2117,18 @@
 (defcfun ("g_type_class_peek_static" g-type-class-peek-static)
     (:pointer g-type-class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{Type ID of a classed type.}
-  @return{The GTypeClass structure for the given type ID or NULL if the class
-    does not currently exist or is dynamically loaded.}
+ "@version{2013-4-1}
+  @argument[type]{type ID of a classed type}
+  @return{The @symbol{g-type-class} structure for the given @arg{type} ID or
+    @code{NULL} if the class does not currently exist or is dynamically loaded.}
   @begin{short}
-    A more efficient version of g_type_class_peek() which works only for static
-    types.
-  @end{short}@break{}
-  Since 2.4"
-  (gtype g-type))
+    A more efficient version of @fun{g-type-class-peek} which works only for
+    static types.
+  @end{short}
+
+  Since 2.4
+  @see-function{g-type-class-peek}"
+  (type g-type))
 
 (export 'g-type-class-peek-static)
 
@@ -2112,15 +2138,15 @@
 
 (defcfun ("g_type_class_unref" g-type-class-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[g_class]{The GTypeClass structure to unreference.}
+ "@version{2013-4-1}
+  @argument[class]{the @symbol{g-type-class} structure to unreference}
   @begin{short}
-    Decrements the reference count of the class structure being passed in.
+    Decrements the reference count of the @arg{class} structure being passed in.
   @end{short}
   Once the last reference count of a class has been released, classes may be
   finalized by the type system, so further dereferencing of a class pointer
-  after g_type_class_unref() are invalid."
-  (g-class (:pointer g-type-class)))
+  after @sym{g-type-class-unref} are invalid."
+  (class (:pointer g-type-class)))
 
 (export 'g-type-class-unref)
 
@@ -2131,19 +2157,20 @@
 (defcfun ("g_type_class_peek_parent" g-type-class-peek-parent)
     (:pointer g-type-class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[g_class]{The GTypeClass structure to retrieve the parent class for.}
-  @return{The parent class of g_class.}
+ "@version{2013-4-1}
+  @argument[class]{the @symbol{g-type-class} structure to retrieve the parent
+    class for}
+  @return{The parent class of @arg{class}.}
   @begin{short}
     This is a convenience function often needed in class initializers. It
-    returns the class structure of the immediate parent type of the class passed
-    in.
+    returns the class structure of the immediate parent type of the @arg{class}
+    passed in.
   @end{short}
   Since derived classes hold a reference count on their parent classes as long
   as they are instantiated, the returned class will always exist. This function
   is essentially equivalent to:
   @begin{pre}
- g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)));
+ (g-type-class-peek (g-type-parent class))
   @end{pre}"
   (g-class (:pointer g-type-class)))
 
@@ -2155,9 +2182,9 @@
 
 (defcfun ("g_type_class_add_private" g-type-class-add-private) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
-  @argument[g-class]{Class structure for an instantiatable type.}
-  @argument[private-size]{Size of private structure.}
+ "@version{2014-4-1}
+  @argument[class]{class structure for an instantiatable type}
+  @argument[private-size]{size of private structure}
   @begin{short}
     Registers a private structure for an instantiatable type.
   @end{short}
@@ -2169,14 +2196,15 @@
   Note that the accumulated size of the private structures of a type and all
   its parent types cannot excced 64 KiB.
 
-  This function should be called in the type's class_init() function. The
-  private structure can be retrieved using the G_TYPE_INSTANCE_GET_PRIVATE()
-  macro.
+  This function should be called in the type's @code{class_init()} function.
+  The private structure can be retrieved using the
+  @code{G_TYPE_INSTANCE_GET_PRIVATE()} macro.
 
-  The following example shows attaching a private structure MyObjectPrivate to
-  an object MyObject defined in the standard GObject fashion. type's
-  class_init() function. Note the use of a structure member \"priv\" to avoid
-  the overhead of repeatedly calling MY_OBJECT_GET_PRIVATE().
+  The following example shows attaching a private structure
+  @code{MyObjectPrivate} to an object @code{MyObject} defined in the standard
+  @code{GObject} fashion of type's @code{class_init()} function. Note the use of
+  a structure member \"priv\" to avoid the overhead of repeatedly calling
+  @code{MY_OBJECT_GET_PRIVATE()}.
   @begin{pre}
  typedef struct _MyObject        MyObject;
  typedef struct _MyObjectPrivate MyObjectPrivate;
@@ -2251,15 +2279,24 @@
 (defcfun ("g_type_interface_peek" g-type-interface-peek)
     (:pointer g-type-interface)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[instance-class]{A GTypeClass structure.}
-  @argument[iface-type]{An interface ID which this class conforms to.}
-  @return{The GTypeInterface structure of @arg{iface-type} if implemented by
-    @arg{instance-class}, @code{nil} otherwise.}
+ "@version{2013-4-1}
+  @argument[instance-class]{a @symbol{g-type-class} structure}
+  @argument[iface-type]{an interface ID which this @arg{instance-class} conforms
+    to}
+  @return{The @symbol{g-type-interface} structure of @arg{iface-type} if
+    implemented by @arg{instance-class}, @code{NULL} otherwise.}
   @begin{short}
-    Returns the GTypeInterface structure of an interface to which the passed in
-    class conforms.
-  @end{short}"
+    Returns the @symbol{g-type-interface} structure of an interface to which the
+    passed in @arg{class} conforms.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-interface-peek (g-type-class-ref \"GtkBox\") \"GtkOrientable\")
+=> #.(SB-SYS:INT-SAP #X080C6858)
+ (g-type-from-interface *)
+=> #S(GTYPE :NAME \"GtkOrientable\" :%ID 134887472)
+    @end{pre}
+  @end{dictionary}"
   (instance-class (:pointer g-type-class))
   (iface-type g-type))
 
@@ -2290,23 +2327,25 @@
 
 (defcfun ("g_type_default_interface_ref" g-type-default-interface-ref) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[g_type]{an interface type}
-  @return{the default vtable for the interface; call
-    g_type_default_interface_unref() when you are done using the interface.}
+ "@version{2013-4-1}
+  @argument[type]{an interface type}
+  @return{The default vtable for the interface of type @arg{type}.}
   @begin{short}
-    Increments the reference count for the interface type g_type, and returns
-    the default interface vtable for the type.
+    Increments the reference count for the interface type @arg{type}, and
+    returns the default interface vtable for the type. Call
+    @fun{g-type-default-interface-unref} when you are done using the interface.
   @end{short}
 
-  If the type is not currently in use, then the default vtable for the type
-  will be created and initalized by calling the base interface init and
+  If the type is not currently in use, then the default vtable for the type will
+  be created and initalized by calling the base interface init and
   default vtable init functions for the type (the @code{base_init} and
-  @code{class_init} members of GTypeInfo). Calling
-  g_type_default_interface_ref() is useful when you want to make sure that
-  signals and properties for an interface have been installed.@break{}
-  Since 2.4"
-  (gtype g-type))
+  @code{class_init} members of @symbol{g-type-info}). Calling
+  @sym{g-type-default-interface-ref} is useful when you want to make sure that
+  signals and properties for an interface have been installed.
+
+  Since 2.4
+  @see-function{g-type-default-interface-unref}"
+  (type g-type))
 
 (export 'g-type-default-interface-ref)
 
@@ -2317,19 +2356,19 @@
 (defcfun ("g_type_default_interface_peek" g-type-default-interface-peek)
     :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[gtype]{an interface type}
+ "@version{2013-4-1}
+  @argument[type]{an interface type}
   @begin{return}
-    The default @code{vtable} for the interface, or @code{nil} if the type is
-    not currently in use.
+    The default vtable for the interface of type @arg{type}, or @code{NULL} if
+    the type is not currently in use.
   @end{return}
   @begin{short}
-    If the interface type @arg{gtype} is currently in use, returns its default
-    interface @code{vtable}.
+    If the interface type @arg{type} is currently in use, returns its default
+    interface vtable.
   @end{short}
 
   Since 2.4"
-  (gtype g-type))
+  (type g-type))
 
 (export 'g-type-default-interface-peek)
 
@@ -2339,17 +2378,18 @@
 
 (defcfun ("g_type_default_interface_unref" g-type-default-interface-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[g_iface]{the default vtable structure for a interface, as returned
-    by}
-  @begin{pre}
+ "@version{2013-4-1}
+  @argument[interface]{the default vtable structure for a interface, as returned
+    by @fun{g-type-default-interface-ref}}
+  @begin{short}
     Decrements the reference count for the type corresponding to the interface
-    default vtable g_iface.
-  @end{pre}
+    default vtable of @arg{interface}.
+  @end{short}
   If the type is dynamic, then when no one is using the interface and all
   references have been released, the finalize function for the interface's
-  default vtable (the class_finalize member of GTypeInfo) will be
-  called.@break{}
+  default vtable (the @code{class_finalize} member of @symbol{g-type-info}) will
+  be called.
+
   Since 2.4"
   (interface :pointer))
 
@@ -2360,20 +2400,25 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_children" %g-type-children) (:pointer %g-type)
-  (gtype g-type)
+  (type g-type)
   (n-children (:pointer :uint)))
 
 (defun g-type-children (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{The parent type.}
-  @argument[n_children]{Optional guint pointer to contain the number of child
-    types.}
-  @return{Newly allocated and 0-terminated array of child types.}
-  @begin{short}
-    Return a newly allocated and 0-terminated array of type IDs, listing the
-   child types of type. The return value has to be g_free()ed after use.
-  @end{short}"
+ "@version{2013-4-1}
+  @argument[type]{the parent type}
+  @return{A list of child types.}
+  @short{Return a list of type IDs, listing the child types of @arg{type}.}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-children \"GtkButton\")
+=> (#S(GTYPE :NAME \"GtkToggleButton\" :%ID 134878968)
+    #S(GTYPE :NAME \"GtkLinkButton\" :%ID 134879568)
+    #S(GTYPE :NAME \"GtkScaleButton\" :%ID 134844456)
+    #S(GTYPE :NAME \"GtkColorButton\" :%ID 134947120)
+    #S(GTYPE :NAME \"GtkFontButton\" :%ID 134953216))
+    @end{pre}
+  @end{dictionary}"
   (with-foreign-object (n-children :uint)
     (let ((g-types-ptr (%g-type-children type n-children)))
       (prog1
@@ -2393,17 +2438,23 @@
   (n-interfaces (:pointer :uint)))
 
 (defun g-type-interfaces (type)
- #+cl-cffi-gtk-documetation
- "@version{2013-2-6}
-  @argument[type]{The type to list interface types for.}
-  @argument[n_interfaces]{Optional guint pointer to contain the number of
-    interface types.}
-  @return{Newly allocated and 0-terminated array of interface types.}
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-1}
+  @argument[type]{the type to list interface types for}
+  @return{A list of interface types.}
   @begin{short}
-    Return a newly allocated and 0-terminated array of type IDs, listing the
-    interface types that type conforms to. The return value has to be g_free()ed
-    after use.
-  @end{pre}"
+    Return a list of type IDs, listing the interface types that @arg{type}
+    conforms to.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-interfaces \"GtkButton\")
+=> (#S(GTYPE :NAME \"AtkImplementorIface\" :%ID 134892472)
+    #S(GTYPE :NAME \"GtkBuildable\" :%ID 134887048)
+    #S(GTYPE :NAME \"GtkActionable\" :%ID 134885776)
+    #S(GTYPE :NAME \"GtkActivatable\" :%ID 134887624))
+    @end{pre}
+  @end{dictionary}"
   (with-foreign-object (n-interfaces :uint)
     (let ((g-types-ptr (%g-type-interfaces type n-interfaces)))
       (prog1
@@ -2425,15 +2476,19 @@
 
 (defun g-type-interface-prerequisites (interface-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[interface_type]{an interface type}
-  @argument[n_prerequisites]{location to return the number of prerequisites,
-    or @code{nil}}
-  @return{a newly-allocated zero-terminated array of GType containing the
-    prerequisites of interface_type}
+ "@version{2013-4-1}
+  @argument[interface-type]{an interface type}
+  @return{A list of @class{g-type} containing the prerequisites of
+    @arg{interface-type}}
   @begin{short}
     Returns the prerequisites of an interfaces type.
-  @end{short}@break{}
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-interface-prerequisites \"GtkOrientable\")
+=> (#S(GTYPE :NAME \"GObject\" :%ID 80))
+    @end{pre}
+  @end{dictionary}
   Since 2.2"
   (with-foreign-object (n-prerequisites :uint)
     (let ((g-types-ptr (%g-type-interface-prerequisites interface-type
@@ -2450,16 +2505,46 @@
 ;;; g_type_set_qdata ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_set_qdata" g-type-set-qdata) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{a GType}
-  @argument[quark]{a GQuark id to identify the data}
-  @argument[data]{the data}
-  @short{Attaches arbitrary data to a type.}"
-  (gtype g-type)
+(defcfun ("g_type_set_qdata" %g-type-set-qdata) :void
+  (type g-type)
   (quark g-quark)
   (data :pointer))
+
+(defun g-type-set-qdata (type quark data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-1}
+  @argument[type]{a @class{g-type}}
+  @argument[quark]{a @type{g-quark} id to identify the data}
+  @argument[data]{the data}
+  @short{Attaches arbitrary data to a @arg{type}.}
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (g-type-set-qdata \"gboolean\" \"mydata\" \"a string\")
+=>
+ (g-type-get-qdata \"gboolean\" \"mydata\")
+=> \"a string\"
+ (g-type-set-qdata \"gboolean\" \"mydata\" '(a b c))
+=>
+ (g-type-get-qdata \"gboolean\" \"mydata\")
+=> (A B C)
+ (g-type-set-qdata \"gboolean\" \"mydata\" nil)
+=> NIL
+ (g-type-get-qdata \"gboolean\" \"mydata\")
+=> NIL
+    @end{pre}
+  @end{dictionary}
+  @see-function{g-type-get-qdata}"
+  (let ((ptr (%g-type-get-qdata type quark)))
+    (cond ((null data)
+           (when (not (null-pointer-p ptr))
+             (%g-type-set-qdata type quark (null-pointer))
+             (glib::free-stable-pointer ptr)))           
+          ((null-pointer-p ptr)
+           (setq ptr (glib::allocate-stable-pointer data))
+           (%g-type-set-qdata type quark ptr))
+          (t
+           (glib::set-stable-pointer-value ptr data)
+           (%g-type-set-qdata type quark ptr)))))
 
 (export 'g-type-set-qdata)
 
@@ -2467,22 +2552,30 @@
 ;;; g_type_get_qdata ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_get_qdata" g-type-get-qdata) :pointer
+(defcfun ("g_type_get_qdata" %g-type-get-qdata) :pointer
+  (type g-type)
+  (quark g-quark))
+
+(defun g-type-get-qdata (type quark)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{a GType}
-  @argument[quark]{a GQuark id to identify the data}
-  @return{the data, or NULL if no data was found}
+ "@version{2013-4-1}
+  @argument[type]{a @class{g-type}}
+  @argument[quark]{a @type{g-quark} id to identify the data}
+  @return{The data, or @code{NULL} if no data was found.}
   @begin{short}
-    Obtains data which has previously been attached to type with
-    g_type_set_qdata().
+    Obtains data which has previously been attached to @arg{type} with
+    @fun{g-type-set-qdata}.
   @end{short}
+  See @fun{g-type-set-qdata} for an example.
 
   Note that this does not take subtyping into account; data attached to one
-  type with g_type_set_qdata() cannot be retrieved from a subtype using
-  g_type_get_qdata()."
-  (gtype g-type)
-  (quark g-quark))
+  type with @fun{g-type-set-qdata} cannot be retrieved from a subtype using
+  @sym{g-type-get-qdata}.
+  @see-function{g-type-set-qdata}"
+  (let ((ptr (%g-type-get-qdata type quark)))
+    (if (null-pointer-p ptr)
+        nil
+        (glib::get-stable-pointer-value ptr))))
 
 (export 'g-type-get-qdata)
 
@@ -2503,7 +2596,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-query atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-type-query atdoc:*external-symbols*)
- "@version{2012-12-21}
+ "@version{2013-4-2}
   @begin{short}
     A structure holding information for a specific type.
   @end{short}
@@ -2515,11 +2608,11 @@
   (:class-size :uint)
   (:instance-size :uint))
   @end{pre}
-  @begin{table}
-    @entry[type]{the @class{g-type} value of the type.}
-    @entry[type-name]{the name of the type.}
-    @entry[class-size]{the size of the class structure.}
-    @entry[instance-size]{the size of the instance structure.}
+  @begin[code]{table}
+    @entry[type]{The @class{g-type} value of the type.}
+    @entry[type-name]{The name of the type.}
+    @entry[class-size]{The size of the class structure.}
+    @entry[instance-size]{The size of the instance structure.}
   @end{table}
   @see-function{g-type-query}")
 
@@ -2529,19 +2622,19 @@
 
 (defcfun ("g_type_query" g-type-query) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
-  @argument[type]{the @class{g-type} value of a static, classed type.}
-  @argument[query]{A user provided structure that is filled in with constant
-    values upon success.}
+ "@version{2013-4-2}
+  @argument[type]{the @class{g-type} value of a static, classed type}
+  @argument[query]{a user provided structure that is filled in with constant
+    values upon success}
   @begin{short}
     Queries the type system for information about a specific type.
   @end{short}
-  This function will fill in a user-provided structure to hold type-specific
+  This function will fill in a user provided structure to hold type specific
   information. If an invalid @class{g-type} is passed in, the type member of the
   @symbol{g-type-query} is 0. All members filled into the @symbol{g-type-query}
   structure should be considered constant and have to be left untouched.
   @see-class{g-type-query}"
-  (gtype g-type)
+  (type g-type)
   (query (:pointer g-type-query)))
 
 (export 'g-type-query)
@@ -2780,12 +2873,12 @@
 
 (defcfun ("g_type_register_static" g-type-register-static) g-type
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
-  @argument[parent-type]{Type from which this type will be derived.}
-  @argument[type-name]{String used as the name of the new type.}
-  @argument[info]{The @symbol{g-type-info} structure for this type.}
-  @argument[flags]{Bitwise combination of @symbol{g-type-flags} values.}
-  @return{The new type identifier.}
+ "@version{2013-4-2}
+  @argument[parent-type]{type from which this type will be derived}
+  @argument[type-name]{string used as the name of the new type}
+  @argument[info]{the @symbol{g-type-info} structure for this type}
+  @argument[flags]{bitwise combination of @symbol{g-type-flags} values}
+  @return{the new type identifier}
   @begin{short}
     Registers @arg{type-name} as the name of a new static type derived from
     @arg{parent-type}.
@@ -2810,24 +2903,27 @@
 (defcfun ("g_type_register_static_simple"
           g-type-register-static-simple) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[parent_type]{Type from which this type will be derived.}
-  @argument[type_name]{0-terminated string used as the name of the new type.}
-  @argument[class_size]{Size of the class structure (see GTypeInfo)}
-  @argument[class_init]{Location of the class initialization function (see
-    GTypeInfo)}
-  @argument[instance_size]{Size of the instance structure (see GTypeInfo)}
-  @argument[instance_init]{Location of the instance initialization function
-    (see GTypeInfo)}
-  @argument[flags]{Bitwise combination of GTypeFlags values.}
+ "@version{2013-4-2}
+  @argument[parent-type]{type from which this type will be derived}
+  @argument[type-name]{string used as the name of the new type}
+  @argument[class-size]{size of the class structure, see @symbol{g-type-info}}
+  @argument[class-init]{location of the class initialization function, see
+    @symbol{g-type-info}}
+  @argument[instance-size]{size of the instance structure,
+    see @symbol{g-type-info}}
+  @argument[instance-init]{location of the instance initialization function,
+    see @symbol{g-type-info}}
+  @argument[flags]{bitwise combination of @symbol{g-type-flags} values}
   @return{The new type identifier.}
   @begin{short}
-    Registers type_name as the name of a new static type derived from
-    parent_type. The value of flags determines the nature (e.g. abstract or not)
-    of the type. It works by filling a GTypeInfo struct and calling
-    g_type_register_static().
-  @end{short}@break{}
-  Since 2.12"
+    Registers @arg{type-name} as the name of a new static type derived from
+    @arg{parent-type}. The value of flags determines the nature (e. g. abstract
+    or not) of the type. It works by filling a @symbol{g-type-info} struct and
+    calling @fun{g-type-register-static}.
+  @end{short}
+
+  Since 2.12
+  @see-function{g-type-register-static}"
   (parent-type g-type)
   (type-name :string)
   (class-size :uint)
@@ -2910,15 +3006,15 @@
 
 (defcfun ("g_type_add_interface_static" g-type-add-interface-static) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[instance_type]{GType value of an instantiable type.}
-  @argument[interface_type]{GType value of an interface type.}
-  @argument[info]{The GInterfaceInfo structure for this (instance_type,
-    interface_type) combination.}
+ "@version{2013-4-2}
+  @argument[instance-type]{@class{g-type} value of an instantiable type}
+  @argument[interface-type]{@class{g-type} value of an interface type}
+  @argument[info]{the @symbol{g-interface-info} structure for this
+    (@arg{instance-type}, @arg{interface-type}) combination}
   @begin{short}
-    Adds the static interface_type to instantiable_type. The information
-    contained in the GInterfaceInfo structure pointed to by info is used to
-    manage the relationship.
+    Adds the static @arg{interface-type} to @arg{instantiable-type}. The
+    information contained in the @symbol{g-interface-info} structure pointed to
+    by info is used to manage the relationship.
   @end{short}"
   (instance-type g-type)
   (interface-type g-type)
@@ -2954,7 +3050,7 @@
 (defcfun ("g_type_interface_add_prerequisite" g-type-interface-add-prerequisite)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-4-2}
   @argument[interface-type]{a @class{g-type} of an interface type}
   @argument[prerequisite-type]{a @class{g-type} of an interface or
     instantiatable type}
@@ -3010,19 +3106,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_fundamental_next ()
-;;;
-;;; GType g_type_fundamental_next (void);
-;;;
-;;; Returns the next free fundamental type id which can be used to register a
-;;; new fundamental type with g_type_register_fundamental(). The returned type
-;;; ID represents the highest currently registered fundamental type identifier.
-;;;
-;;; Returns :
-;;;     The nextmost fundamental type ID to be registered, or 0 if the type
-;;;     system ran out of fundamental type IDs.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_fundamental_next" g-type-fundamental-next) g-type)
+(defcfun ("g_type_fundamental_next" g-type-fundamental-next) %g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-2}
+  @begin{return}
+    The nextmost fundamental type ID to be registered, or 0 if the type
+    system ran out of fundamental type IDs.
+  @end{return}
+  Returns the next free fundamental type id which can be used to register a
+  new fundamental type with @fun{g-type-register-fundamental}. The returned type
+  ID represents the highest currently registered fundamental type identifier.")
 
 (export 'g-type-fundamental-next)
 
@@ -3032,7 +3127,7 @@
 
 (defcfun ("g_type_fundamental" g-type-fundamental) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-4-2}
   @argument[type]{a valid @class{g-type}}
   @return{The fundamental type of the argument @arg{type}.}
   @begin{short}
@@ -3206,43 +3301,48 @@
 (defcfun ("g_type_value_table_peek" g-type-value-table-peek)
     (:pointer g-type-value-table)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[gtype]{A @class{g-type} value.}
+ "@version{2013-4-2}
+  @argument[type]{A @class{g-type} value}
   @return{Location of the @symbol{g-type-value-table} associated with
-    @arg{gtype} or @code{nil} if there is no @symbol{g-type-value-table}
-    associated with @arg{gtype}.}
+    @arg{type} or @code{NULL} if there is no @symbol{g-type-value-table}
+    associated with @arg{type}.}
   @begin{short}
     Returns the location of the @symbol{g-type-value-table} associated with
-    @arg{gtype}.
+    @arg{type}.
   @end{short}
   Note that this function should only be used from source code that implements
-  or has internal knowledge of the implementation of @arg{gtype}."
-  (gtype g-type))
+  or has internal knowledge of the implementation of @arg{type}."
+  (type g-type))
 
 (export 'g-type-value-table-peek)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_ensure ()
-;;;
-;;; void g_type_ensure (GType type);
-;;;
-;;; Ensures that the indicated type has been registered with the type system,
-;;; and its _class_init() method has been run.
-;;;
-;;; In theory, simply calling the type's _get_type() method (or using the
-;;; corresponding macro) is supposed take care of this. However, _get_type()
-;;; methods are often marked G_GNUC_CONST for performance reasons, even though
-;;; this is technically incorrect (since G_GNUC_CONST requires that the function
-;;; not have side effects, which _get_type() methods do on the first call). As
-;;; a result, if you write a bare call to a _get_type() macro, it may get
-;;; optimized out by the compiler. Using g_type_ensure() guarantees that the
-;;; type's _get_type() method is called.
-;;;
-;;; type :
-;;;     a GType.
-;;;
-;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_type_ensure" g-type-ensure) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-2}
+  @argument[type]{a @class{g-type}}
+  @begin{short}
+    Ensures that the indicated @arg{type} has been registered with the type
+    system, and its @code{_class_init()} method has been run.
+  @end{short}
+
+  In theory, simply calling the type's @code{_get_type()} method (or using the
+  corresponding macro) is supposed take care of this. However,
+  @code{_get_type()} methods are often marked @code{G_GNUC_CONST} for
+  performance reasons, even though this is technically incorrect (since
+  @code{G_GNUC_CONST} requires that the function not have side effects, which
+  @code{_get_type()} methods do on the first call). As a result, if you write a
+  bare call to a @code{_get_type()} macro, it may get optimized out by the
+  compiler. Using @sym{g-type-ensure} guarantees that the type's
+  @code{_get_type()} method is called.
+
+  Since 2.34"
+  (type g-type))
+
+(export 'g-type-ensure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_DEFINE_TYPE()
