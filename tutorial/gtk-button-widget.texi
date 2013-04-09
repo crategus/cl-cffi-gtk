@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 03.02.2012
 @c Revision : 01.02.2013
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -228,7 +228,7 @@ additionally parses the label for '_'-prefixed mnemonic characters.
 To retrieve the state of the toggle widget, including radio and check buttons,
 a construct as shown in the example below is used.  This tests the state of the
 toggle button, by accessing the active field of the toggle widget's structure.
-The signal of interest to us emitted by toggle buttons (the toggle button 
+The signal of interest to us emitted by toggle buttons (the toggle button
 check button, and radio button widgets) is the "toggled" signal.  To check the
 state of these buttons, set up a signal handler to catch the toggled signal, and
 access the property @code{active} to determine the state of the button.  A
@@ -395,7 +395,7 @@ becoming active).
                         (lambda (widget)
                           (declare (ignore widget))
                           (gtk-main-quit)))
-      ;; Create three radio buttons and put the buttons in a vbox      
+      ;; Create three radio buttons and put the buttons in a vbox
       (let ((vbox (make-instance 'gtk-box
                                  :orientation :vertical
                                  :spacing 12
@@ -418,7 +418,7 @@ becoming active).
       ;; Create three check buttons and put the buttons in a vbox
       (let ((vbox (make-instance 'gtk-box
                                  :orientation :vertical
-                                 :homogenous nil
+                                 :homogeneous nil
                                  :spacing 12
                                  :border-width 12)))
         (gtk-box-pack-start
