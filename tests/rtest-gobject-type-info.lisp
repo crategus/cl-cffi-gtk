@@ -25,9 +25,9 @@
 
 (define-test g-type-info
   (assert-eql 2 gobject::+g-type-fundamental-shift+)
-  
+
   (assert-eql (ash  0 2) +g-type-invalid+)
-  (assert-eql (ash  1 2) +g-type-void+)
+  (assert-eql (ash  1 2) +g-type-none+)
   (assert-eql (ash  2 2) +g-type-interface+)
   (assert-eql (ash  3 2) +g-type-char+)
   (assert-eql (ash  4 2) +g-type-uchar+)
@@ -53,24 +53,24 @@
   (assert-eql 32 +g-type-reserved-bse-first+)
   (assert-eql 48 +g-type-reserved-bse-last+)
   (assert-eql 49 +g-type-reserved-user-first+)
-    
+
   (assert-eql (ash 255 2) +g-type-fundamental-max+)
   (assert-eql (ash 256 2) (g-type-make-fundamental 256))
-  
+
   (assert-equal "GType" (gtype-name (gtype (g-type-gtype))))
   (assert-eql 134837944 (gtype-id (gtype (g-type-gtype))))
-  
+
   (assert-false (g-type-is-abstract (gtype "gboolean")))
   (assert-false (g-type-is-abstract (gtype "GObject")))
   (assert-true  (g-type-is-abstract (gtype "GtkWidget")))
   (assert-true  (g-type-is-abstract (gtype "GtkContainer")))
   (assert-false (g-type-is-abstract (gtype "GtkWindow")))
-  
+
   (assert-false (g-type-is-derived (gtype "gboolean")))
   (assert-false (g-type-is-derived (gtype "GObject")))
   (assert-true  (g-type-is-derived (gtype "GtkWidget")))
   (assert-true  (g-type-is-derived (gtype "GtkWindow")))
-  
+
   (assert-true  (g-type-is-fundamental (gtype "gboolean")))
   (assert-true  (g-type-is-fundamental (gtype "GObject")))
   (assert-false (g-type-is-fundamental (gtype "GtkWidget")))
@@ -124,7 +124,7 @@
 
 (define-test g-type-info-gtype-from-id
   (assert-eql (ash  0 2) (gtype-id (gtype-from-id +g-type-invalid+)))
-  (assert-eql (ash  1 2) (gtype-id (gtype-from-id +g-type-void+)))
+  (assert-eql (ash  1 2) (gtype-id (gtype-from-id +g-type-none+)))
   (assert-eql (ash  2 2) (gtype-id (gtype-from-id +g-type-interface+)))
   (assert-eql (ash  3 2) (gtype-id (gtype-from-id +g-type-char+)))
   (assert-eql (ash  4 2) (gtype-id (gtype-from-id +g-type-uchar+)))
@@ -193,7 +193,7 @@
   (assert-eql (ash 21 2) (gtype-id (gtype "GVariant"))))
 
 (define-test g-type-info-gtype-id
-  (assert-eql (ash  1 2) (gtype-id (gtype +g-type-void+)))
+  (assert-eql (ash  1 2) (gtype-id (gtype +g-type-none+)))
   (assert-eql (ash  2 2) (gtype-id (gtype +g-type-interface+)))
   (assert-eql (ash  3 2) (gtype-id (gtype +g-type-char+)))
   (assert-eql (ash  4 2) (gtype-id (gtype +g-type-uchar+)))
@@ -216,7 +216,7 @@
   (assert-eql (ash 21 2) (gtype-id (gtype +g-type-variant+))))
 
 (define-test g-type-info-gtype-name
-  (assert-equal "void"       (gtype-name (gtype +g-type-void+)))
+  (assert-equal "void"       (gtype-name (gtype +g-type-none+)))
   (assert-equal "GInterface" (gtype-name (gtype +g-type-interface+)))
   (assert-equal "gchar"      (gtype-name (gtype +g-type-char+)))
   (assert-equal "guchar"     (gtype-name (gtype +g-type-uchar+)))
@@ -301,7 +301,7 @@
   ;; g-type-qname
   (assert-equal name (g-type-qname gtype))
   (assert-equal name (g-type-qname id))
-  (assert-equal name (g-type-qname name))  
+  (assert-equal name (g-type-qname name))
   ;; g-type-from-name
   (assert-eql gtype (g-type-from-name name))
   ;; g-type-parent
@@ -433,7 +433,7 @@
     ;; g-type-qname
     (assert-equal name (g-type-qname gtype))
     (assert-equal name (g-type-qname id))
-    (assert-equal name (g-type-qname name))  
+    (assert-equal name (g-type-qname name))
     ;; g-type-from-name
     (assert-eql gtype (g-type-from-name name))
     ;; g-type-parent
