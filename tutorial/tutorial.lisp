@@ -206,7 +206,7 @@
 
 (defun example-upgraded-hello-world-2 ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window 
+    (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Hello Buttons"
                                  :default-width 250
@@ -779,7 +779,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      ;; Create three radio buttons and put the buttons in a vbox      
+      ;; Create three radio buttons and put the buttons in a vbox
       (let ((vbox (make-instance 'gtk-box
                                  :orientation :vertical
                                  :spacing 12
@@ -802,7 +802,7 @@
       ;; Create three check buttons and put the buttons in a vbox
       (let ((vbox (make-instance 'gtk-box
                                  :orientation :vertical
-                                 :homogenous nil
+                                 :homogeneous nil
                                  :spacing 12
                                  :border-width 12)))
         (gtk-box-pack-start vbox
@@ -907,7 +907,7 @@
       (gtk-container-add grid label)
       (gtk-container-add window grid)
       (gtk-widget-show-all window))))
-      
+
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Chapter 5. Display Widgets
@@ -1325,16 +1325,16 @@
 
 ;;; GtkWidget *save_item;
 ;;; GtkAccelGroup *accel_group;
-;;; 
+;;;
 ;;; /* Create a GtkAccelGroup and add it to the window. */
 ;;; accel_group = gtk_accel_group_new ();
 ;;; gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
-;;; 
+;;;
 ;;; /* Create the menu item using the convenience function. */
 ;;; save_item = gtk_menu_item_new_with_label ("Save");
 ;;; gtk_widget_show (save_item);
 ;;; gtk_container_add (GTK_CONTAINER (menu), save_item);
-;;; 
+;;;
 ;;; /* Now add the accelerator to the GtkMenuItem. Note that since we called
 ;;;    gtk_menu_item_new_with_label() to create the GtkMenuItem the
 ;;;    GtkAccelLabel is automatically set up to display the GtkMenuItem
@@ -1504,7 +1504,7 @@
                    (gtk-adjustment-page-increment adjustment))))
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
-                                           :label "Scrollbar Page Size:") 
+                                           :label "Scrollbar Page Size:")
                             :expand nil :fill nil)
         (gtk-box-pack-start box scale)
         (gtk-box-pack-start box1 box))
@@ -1535,7 +1535,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; Alignment widget
-      
+
 (defun example-alignment ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
@@ -1972,7 +1972,7 @@
                                          :icon-widget
                                          (gtk-image-new-from-file "gtk-logo.png"))
                           0)
-      
+
       (gtk-widget-show-all dialog))))
 
 ;;; ----------------------------------------------------------------------------
@@ -2268,7 +2268,7 @@
                             (drawing-area-event widget event area)))
         (gtk-container-add window area)
         (gtk-widget-show-all window)))))
-      
+
 ;;; ----------------------------------------------------------------------------
 
 ;;; File Chooser Dialog
@@ -2535,7 +2535,7 @@
       ;; Add the label to the event box and the event box to the window
       (gtk-container-add eventbox label)
       (gtk-container-add window eventbox)
-      ;; Realize the event box 
+      ;; Realize the event box
       (gtk-widget-realize eventbox)
       ;; Set a new cursor for the event box
       (gdk-window-set-cursor (gtk-widget-window eventbox)
@@ -2565,7 +2565,7 @@
           Lesser General Public License.  If not, see ~
           <http://www.gnu.org/licenses/> and ~
           <http://opensource.franz.com/preamble.html>."))
-          
+
 (defun create-dialog ()
   (let ((dialog (make-instance 'gtk-dialog
                                :title "Dialog Window"
@@ -2610,7 +2610,7 @@
                                (format nil
                                        "This is a message dialog of type ~
                                         :info with a secondary text."))))
-    ;; Run the message dialog    
+    ;; Run the message dialog
     (gtk-dialog-run dialog)
     ;; Destroy the message dialog
     (gtk-widget-destroy dialog)))
@@ -2648,7 +2648,7 @@
                                :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
-                          (declare (ignore widget)) 
+                          (declare (ignore widget))
                           (leave-gtk-main)))
       (gtk-container-add window vbox)
       (let ((button (make-instance 'gtk-button
@@ -3210,7 +3210,7 @@
   (multiple-value-bind (start end)
       (gtk-text-buffer-get-selection-bounds buffer)
     (gtk-text-buffer-apply-tag-by-name buffer tag start end)))
-    
+
 (defun example-2 ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
@@ -3263,7 +3263,7 @@
              (declare (ignore widget))
              (on-button-clicked buffer "font")))
         (gtk-container-add bbox button))
-      ;; Create the close button.   
+      ;; Create the close button.
       (let ((button (make-instance 'gtk-button :label "Close")))
         (g-signal-connect button "clicked"
                           (lambda (widget)
@@ -3308,7 +3308,7 @@
       (gtk-box-pack-start vbox scrolled)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-      
+
 ;;; ----------------------------------------------------------------------------
 
 (defun find-text (text-view text iter)
@@ -3356,8 +3356,8 @@
                           text
                           (gtk-text-buffer-get-iter-at-mark buffer
                                                             last-pos))))))
-               
-      
+
+
       (gtk-container-add scrolled text-view)
       (gtk-box-pack-start hbox entry)
       (gtk-box-pack-start hbox button-search)
@@ -3366,7 +3366,7 @@
       (gtk-box-pack-start vbox scrolled)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-      
+
 ;;; ----------------------------------------------------------------------------
 
 (defun example-5 ()
@@ -3395,10 +3395,10 @@
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
            (gtk-text-buffer-insert buffer "</li>" :position iter))))
-           
+
    (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
                              (format nil "Item 1~%Item 2~%Item 3~%"))
-   
+
    (gtk-box-pack-start vbox text-view)
    (gtk-box-pack-start vbox button)
    (gtk-container-add window vbox)
@@ -3441,7 +3441,7 @@
            (let* ((buffer (gtk-text-view-get-buffer text-view))
                   (cursor (gtk-text-buffer-get-mark buffer "insert"))
                   (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
-             
+
              (do ((stack '()))
                  ((not (gtk-text-iter-find-char iter
                                                (lambda (ch) (eq ch #\<))
@@ -3497,7 +3497,7 @@
     (gtk-box-pack-start vbox text-view)
     (gtk-container-add window vbox)
     (gtk-widget-show-all window))))
-    
+
 ;;; ----------------------------------------------------------------------------
 
 (defun example-8 ()
@@ -3586,7 +3586,7 @@
       ;; Connect signal "destroy" to the application window
       (g-signal-connect window "destroy"
                         (lambda (widget)
-                          (declare (ignore widget))                          
+                          (declare (ignore widget))
                           (leave-gtk-main)
                           (if (zerop gtk::*main-thread-level*)
                               (g-application-quit application))))
@@ -3601,7 +3601,7 @@
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-get-buffer view)
-                                  (gtk-widget-get-clipboard view 
+                                  (gtk-widget-get-clipboard view
                                                             "CLIPBOARD"))))))
 
       ;; Add action "paste" to the application window
@@ -3640,7 +3640,7 @@
 
       ;; Add action "justify" to the application window
       (let ((action (g-simple-action-new-stateful
-                                             "justify" 
+                                             "justify"
                                              (g-variant-type-new "s")
                                              (g-variant-new-string "left"))))
         (g-action-map-add-action window action)
