@@ -2506,18 +2506,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_icon ()
-;;; 
-;;; GdkPixbuf * gtk_window_get_icon (GtkWindow *window);
-;;; 
-;;; Gets the value set by gtk_window_set_icon() (or if you've called
-;;; gtk_window_set_icon_list(), gets the first icon in the icon list).
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     icon for window
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-get-icon))
+
+(defun gtk-window-get-icon (window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-4}
+  @argument[window]{a @class{gtk-window} widget}
+  @return{Icon for @arg{window}.}
+  Gets the value set by the function @fun{gtk-window-set-icon} or if you have
+  called the function @fun{gtk-window-set-icon-list}, gets the first icon in
+  the icon list.
+  @see-function{gtk-window-set-icon}
+  @see-function{gtk-window-set-icon-list}"
+  (gtk-window-icon window))
+
+(export 'gtk-window-get-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_icon_list ()
@@ -3215,34 +3220,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_icon ()
-;;; 
-;;; void gtk_window_set_icon (GtkWindow *window, GdkPixbuf *icon);
-;;; 
-;;; Sets up the icon representing a GtkWindow. This icon is used when the window
-;;; is minimized (also known as iconified). Some window managers or desktop
-;;; environments may also place it in the window frame, or display it in other
-;;; contexts.
-;;; 
-;;; The icon should be provided in whatever size it was naturally drawn; that
-;;; is, don't scale the image before passing it to GTK+. Scaling is postponed
-;;; until the last minute, when the desired final size is known, to allow best
-;;; quality.
-;;; 
-;;; If you have your icon hand-drawn in multiple sizes, use
-;;; gtk_window_set_icon_list(). Then the best size will be used.
-;;; 
-;;; This function is equivalent to calling gtk_window_set_icon_list() with a
-;;; 1-element list.
-;;; 
-;;; See also gtk_window_set_default_icon_list() to set the icon for all windows
-;;; in your application in one go.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; icon :
-;;;     icon image, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-set-icon))
+
+(defun gtk-window-set-icon (window icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-4}
+  @argument[window]{a @class{gtk-window} widget}
+  @argument[icon]{a @class{gdk-pixbuf} icon image, or @code{nil}}
+  @begin{short}
+    Sets up the icon representing a @class{gtk-window} widget. This icon is used
+    when the window is minimized (also known as iconified). Some window managers
+    or desktop environments may also place it in the window frame, or display it
+    in other contexts.
+  @end{short}
+
+  The icon should be provided in whatever size it was naturally drawn; that
+  is, do not scale the image before passing it to GTK+. Scaling is postponed
+  until the last minute, when the desired final size is known, to allow best
+  quality.
+
+  If you have your icon hand drawn in multiple sizes, use the function
+  @fun{gtk-window-set-icon-list}. Then the best size will be used.
+
+  This function is equivalent to calling the function
+  @fun{gtk-window-set-icon-list} with a 1-element list.
+
+  See also the function @fun{gtk-window-set-default-icon-list} to set the icon
+  for all windows in your application in one go.
+  @see-function{gtk-window-set-icon-list}
+  @see-function{gtk-window-set-default-icon-list}"
+  (setf (gtk-window-icon window) icon))
+
+(export 'gtk-window-set-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_icon_list ()

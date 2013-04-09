@@ -157,7 +157,7 @@ GTK+ Widgets and Objects
     gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.4.3
     gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.4.3
     gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.4.3
-    gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.4.3
+    gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.6.4
     
   Action-based menus and toolbars
     

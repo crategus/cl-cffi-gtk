@@ -922,29 +922,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_child_notify ()
-;;;
-;;; void gtk_container_child_notify (GtkContainer *container,
-;;;                                  GtkWidget *child,
-;;;                                  const gchar *child_property);
-;;;
-;;; Emits a "child-notify" signal for the child property child_property on
-;;; widget.
-;;;
-;;; This is an analogue of g_object_notify() for child properties.
-;;;
-;;; Also see gtk_widget_child_notify().
-;;;
-;;; container :
-;;;     the GtkContainer
-;;;
-;;; child :
-;;;     the child widget
-;;;
-;;; child_property :
-;;;     the name of a child property installed on the class of container
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_container_child_notify" gtk-container-child-notify) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-3}
+  @argument[container]{the @class{gtk-container}}
+  @argument[child]{the child widget}
+  @argument[child-property]{the name of a child property installed on the class
+    of @arg{container}}
+  @begin{short}
+    Emits a \"child-notify\" signal for the child property @arg{child-property}
+    on @arg{widget}.
+  @end{short}
+
+  This is an analogue of @fun{g-object-notify} for child properties.
+  Also see @fun{gtk-widget-child-notify}.
+
+  Since 3.2
+  @see-function{g-object-notify}
+  @see-function{gtk-widget-child-notify}"
+  (container (g-object gtk-container))
+  (child (g-object gtk-widget))
+  (child-property :string))
+
+(export 'gtk-container-child-notify)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_forall ()
@@ -1125,7 +1127,7 @@
            gtk-container-class-find-child-property) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-3-26}
-  @argument[class]{a @class{gtk-container-class}}
+  @argument[class]{a @class{gtk-container} class}
   @argument[property-name]{the name of the child property to find}
   @begin{return}
     The @symbol{g-param-spec} of the child property or @code{nil} if @arg{class}
@@ -1165,7 +1167,7 @@
     (:pointer (:pointer g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-26}
-  @argument[class]{a @class{gtk-container-class} object}
+  @argument[class]{a @class{gtk-container} class}
   @argument[n-properties]{location to return the number of child properties
     found}
   @return{A newly allocated list of @symbol{g-param-spec}.}

@@ -422,26 +422,27 @@ use-action-appearance property ...
 (defcfun ("gtk_activatable_do_set_related_action"
            gtk-activatable-do-set-related-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2013-4-7}
   @argument[activatable]{a @class{gtk-activatable} object}
-  @argument[action]{the @class{gtk-action} to set}
+  @argument[action]{the @class{gtk-action} object to set}
   @begin{short}
-    This is a utility function for @class{gtk-activatable} implementors.
+    This is a utility function for @class{gtk-activatable} interface
+    implementors.
   @end{short}
 
-  When implementing @class{gtk-activatable} you must call this when handling
-  changes of the @code{\"related-action\"} property, and you must also use this
-  to break references in @code{GObject->dispose()}.
+  When implementing @class{gtk-activatable} interface you must call this when
+  handling changes of the @code{\"related-action\"} property, and you must also
+  use this to break references in @code{GObject->dispose()}.
 
   This function adds a reference to the currently set related action for you,
   it also makes sure the @code{GtkActivatable->update()} method is called when
-  the related @class{gtk-action} properties change and registers to the action's
-  proxy list.
+  the related @class{gtk-action} object properties change and registers to the
+  action's proxy list.
 
   @subheading{Note}
     Be careful to call this before setting the local copy of the
-    @class{gtk-action} property, since this function uses
-    @fun{gtk-activatable-get-action} to retrieve the previous action.
+    @class{gtk-action} object property, since this function uses
+    @fun{gtk-activatable-get-related-action} to retrieve the previous action.
 
   Since 2.16"
   (activatable (g-object gtk-activatable))
@@ -451,19 +452,21 @@ use-action-appearance property ...
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_get_related_action ()
-;;;
-;;; GtkAction * gtk_activatable_get_related_action (GtkActivatable *activatable)
-;;;
-;;; Gets the related GtkAction for activatable.
-;;;
-;;; activatable :
-;;;     a GtkActivatable
-;;;
-;;; Returns :
-;;;     the related GtkAction if one is set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-activable-get-related-action))
+
+(defun gtk-activatable-get-related-action (activatable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[activatable]{a @class{gtk-activatable} object}
+  @return{The related @class{gtk-action} object if one is set.}
+  @short{Gets the related @class{gtk-action} object for @arg{activatable}.}
+
+  Since 2.16"
+  (gtk-activatable-related-action activatable))
+
+(export 'gtk-activatable-get-related-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_get_use_action_appearance ()
@@ -494,7 +497,7 @@ use-action-appearance property ...
   @argument[activatable]{a @class{gtk-activatable} object}
   @argument[action]{the related @class{gtk-action} or @code{nil}}
   @begin{short}
-    This is called to update the activatable completely, this is called
+    This is called to update the @arg{activatable} completely, this is called
     internally when the @code{\"related-action\"} property is set or unset and
     by the implementing class when @code{\"use-action-appearance\"} changes.
   @end{short}

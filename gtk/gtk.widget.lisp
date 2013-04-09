@@ -462,13 +462,10 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-allocation-heigth atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-allocation-heigth 'function)
- "@version{2012-12-23}
-  @begin{short}
-    Accessor of the slot @code{heigth} of the @class{gtk-allocation}
-    structure.
-  @end{short}
+(setf (gethash 'gtk-allocation-height atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-allocation-height 'function)
+ "@version{2013-4-4}
+  Accessor of the slot @code{height} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -491,7 +488,8 @@
 (define-g-object-class "GtkWidget" gtk-widget
   (:superclass g-initially-unowned
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_widget_get_type")
   ((app-paintable
     gtk-widget-app-paintable
@@ -6459,13 +6457,13 @@
 
 (defcfun ("gtk_widget_child_notify" gtk-widget-child-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
+ "@version{2013-4-3}
   @argument[widget]{a @class{gtk-widget} instance}
   @argument[child-property]{the name of a child property installed on the class
-    of widget's parent}
+    of @arg{widget}'s parent}
   @begin{short}
-    Emits a \"child-notify\" signal for the child property child_property on
-    widget.
+    Emits a \"child-notify\" signal for the child property @arg{child-property}
+    on @arg{widget}.
   @end{short}
 
   This is the analogue of @fun{g-object-notify} for child properties.
@@ -6473,7 +6471,7 @@
   @see-function{g-object-notify}
   @see-function{gtk-container-child-notify}"
   (widget (g-object gtk-widget))
-  (property-name :string))
+  (child-property :string))
 
 (export 'gtk-widget-child-notify)
 
@@ -8330,7 +8328,7 @@
 
 (define-g-enum "GtkSizeRequestMode" gtk-size-request-mode
   (:export t
-   :type-initializer "gtk_size_request_mode_type_get_type")
+   :type-initializer "gtk_size_request_mode_get_type")
   (:height-for-width 0)
   (:width-for-height 1)
   (:constant-size 2))
@@ -8348,7 +8346,7 @@
   @begin{pre}
 (define-g-enum \"GtkSizeRequestMode\" gtk-size-request-mode
   (:export t
-   :type-initializer \"gtk_size_request_mode_type_get_type\")
+   :type-initializer \"gtk_size_request_mode_get_type\")
   (:height-for-width 0)
   (:width-for-height 1)
   (:constant-size 2))
@@ -8656,37 +8654,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_size ()
-;;;
-;;; void gtk_widget_get_preferred_size (GtkWidget *widget,
-;;;                                     GtkRequisition *minimum_size,
-;;;                                     GtkRequisition *natural_size);
-;;;
-;;; Retrieves the minimum and natural size of a widget, taking into account the
-;;; widget's preference for height-for-width management.
-;;;
-;;; This is used to retrieve a suitable size by container widgets which do not
-;;; impose any restrictions on the child placement. It can be used to deduce
-;;; toplevel window and menu sizes as well as child widgets in free-form
-;;; containers such as GtkLayout.
-;;;
-;;; Note
-;;;
-;;; Handle with care. Note that the natural height of a height-for-width widget
-;;; will generally be a smaller size than the minimum height, since the required
-;;; height for the natural width is generally smaller than the required height
-;;; for the minimum width.
-;;;
-;;; widget :
-;;;     a GtkWidget instance
-;;;
-;;; minimum_size :
-;;;     location for storing the minimum size, or NULL
-;;;
-;;; natural_size :
-;;;     location for storing the natural size, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_preferred_size" %gtk-widget-get-preferred-size)
+    :void
+  (widget (g-object gtk-widget))
+  (minium-size (g-boxed-foreign gtk-requisition))
+  (natural-size (g-boxed-foreign gtk-requisition)))
+
+(defun gtk-widget-get-preferred-size (widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-1}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @begin{return}
+    @code{minimum-size} -- the minimum size, or @code{nil}@br{}
+    @code{natural-size} -- the natural size, or @code{nil}
+  @end{return}
+  @begin{short}
+    Retrieves the minimum and natural size of a @arg{widget}, taking into
+    account the @arg{widget}'s preference for height-for-width management.
+  @end{short}
+
+  This is used to retrieve a suitable size by container widgets which do not
+  impose any restrictions on the child placement. It can be used to deduce
+  toplevel window and menu sizes as well as child widgets in free-form
+  containers such as @class{gtk-layout}.
+
+  @subheading{Note}
+    Handle with care. Note that the natural height of a height-for-width widget
+    will generally be a smaller size than the minimum height, since the required
+    height for the natural width is generally smaller than the required height
+    for the minimum width.
+
+  Since 3.0"
+ (let ((minimum-size (make-gtk-requisition))
+       (natural-size (make-gtk-requisition)))
+    (%gtk-widget-get-preferred-size widget minimum-size natural-size)
+    (values minimum-size
+            natural-size)))
+
+(export 'gtk-widget-get-preferred-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_distribute_natural_allocation ()

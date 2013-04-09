@@ -1078,15 +1078,16 @@
 
 (defun gtk-notebook-get-tab-label (notebook child)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[notebook]{a GtkNotebook}
+ "@version{2013-4-4}
+  @argument[notebook]{a @class{gtk-notebook} object}
   @argument[child]{the page}
-  @return{the tab label}
-  Returns the tab label widget for the page child. NULL is returned if child
-  is not in notebook or if no tab label has specifically been set for child."
+  @return{The tab label.}
+  Returns the tab label widget for the page @arg{child}. @code{nil} is returned
+  if @arg{child} is not in @arg{notebook} or if no tab label has specifically
+  been set for @arg{child}."
   (gtk-notebook-child-tab-label notebook child))
 
-(export 'gtk-notebook-tab-label-widget)
+(export 'gtk-notebook-get-tab-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_menu_label ()

@@ -1391,6 +1391,15 @@
     @begin[GtkToogleToolButton]{subsection}
     @end{subsection}
     @begin[GtkRadioToolButton]{subsection}
+      A toolbar item that contains a radio button.
+
+      @about-class{gtk-radio-tool-button}
+      @about-function{gtk-radio-tool-button-new}
+      @about-function{gtk-radio-tool-button-new-from-stock}
+      @about-function{gtk-radio-tool-button-new-from-widget}
+      @about-function{gtk-radio-tool-button-new-with-stock-from-widget}
+      @about-function{gtk-radio-tool-button-get-group}
+      @about-function{gtk-radio-tool-button-set-group}
     @end{subsection}
   @end{section}
   @begin[Action-based menus and toolbars]{section}
@@ -1478,6 +1487,17 @@
     @begin[GtkFileChooser]{subsection}
     @end{subsection}
     @begin[GtkFileChooserButton]{subsection}
+      A button to launch a file selection dialog.
+
+      @about-class{gtk-file-chooser-button}
+      @about-function{gtk-file-chooser-button-new}
+      @about-function{gtk-file-chooser-button-new-with-dialog}
+      @about-function{gtk-file-chooser-button-get-title}
+      @about-function{gtk-file-chooser-button-set-title}
+      @about-function{gtk-file-chooser-button-get-width-chars}
+      @about-function{gtk-file-chooser-button-set-width-chars}
+      @about-function{gtk-file-chooser-button-get-focus-on-click}
+      @about-function{gtk-file-chooser-button-set-focus-on-click}
     @end{subsection}
     @begin[GtkFileChooserDialog]{subsection}
     @end{subsection}

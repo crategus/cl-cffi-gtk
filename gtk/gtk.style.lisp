@@ -49,7 +49,7 @@
 ;;; #define             gtk_style_apply_default_pixmap
 ;;;
 ;;; gboolean            gtk_style_lookup_color
-;;; GtkIconSet *        gtk_style_lookup_icon_set
+;;; GtkIconSet *        gtk_style_lookup_icon_set          * deprecated *
 ;;; GdkPixbuf *         gtk_style_render_icon
 ;;; GdkFont *           gtk_style_get_font
 ;;; void                gtk_style_set_font
@@ -416,29 +416,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_lookup_icon_set ()
-;;;
-;;; GtkIconSet * gtk_style_lookup_icon_set (GtkStyle *style,
-;;;                                         const gchar *stock_id);
-;;;
-;;; Warning
-;;;
-;;;    gtk_style_lookup_icon_set has been deprecated since version 3.0 and
-;;;    should not be used in newly-written code. Use
-;;;    gtk_style_context_lookup_icon_set() instead
-;;;
-;;;    Looks up stock_id in the icon factories associated with style and the
-;;;    default icon factory, returning an icon set if found, otherwise
-;;;    NULL.
-;;;
-;;;    style :
-;;;              a GtkStyle
-;;;
-;;;    stock_id :
-;;;              an icon name
-;;;
-;;;    Returns :
-;;;              icon set of stock_id
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_lookup_icon_set" gtk-style-lookup-icon-set)
+    (g-boxed-foreign gtk-icon-set)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[style]{a @class{gtk-style} object}
+  @argument[stock-id]{an icon name}
+  @return{A icon set of @arg{stock-id}.}
+  @subheading{Warning}
+    @sym{gtk-style-lookup-icon-set} has been deprecated since version 3.0 and
+    should not be used in newly-written code.
+    Use @fun{gtk-style-context-lookup-icon-set} instead.
+
+  @begin{short}
+    Looks up @arg{stock-id} in the icon factories associated with style and the
+    default icon factory, returning an icon set if found, otherwise @code{nil}.
+  @end{short}"
+  (style (g-object gtk-style))
+  (stock-id :string))
+
+(export 'gtk-style-lookup-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_render_icon ()

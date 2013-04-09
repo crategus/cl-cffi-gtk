@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTable
-;;; 
+;;;
 ;;; Pack widgets in regular patterns
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTable
-;;;     
+;;;
 ;;;     gtk_table_new
 ;;;     gtk_table_resize
 ;;;     gtk_table_get_size
@@ -98,7 +98,7 @@
 
   Tables are created with a call to @fun{gtk-table-new}, the size of which can
   later be changed with @fun{gtk-table-resize}.
- 
+
   Widgets can be added to a table using @fun{gtk-table-attach} or the more
   convenient (but slightly less flexible) @fun{gtk-table-attach-defaults}.
 
@@ -536,7 +536,7 @@
   from zero).
 
   To make a button occupy the lower right cell of a 2 x 2 table, use
-  @begin{pre} 
+  @begin{pre}
  gtk_table_attach (table, button,
                    1, 2, // left, right attach
                    1, 2, // top, bottom attach
@@ -706,7 +706,7 @@
   @argument[homogeneous]{set to @em{true} to ensure all table cells are the same
     size, set to @code{nil} if this is not your desired behaviour}
   @begin{short}
-    Changes the homogenous property of table cells, i. e. whether all cells are
+    Changes the homogeneous property of table cells, i. e. whether all cells are
     an equal size or not.
   @end{short}
 
@@ -756,7 +756,7 @@
   @return{@em{True} if the cells are all constrained to the same size}
   @begin{short}
     Returns whether the table cells are all constrained to the same width and
-    height. See @fun{gtk-table-set-homogenous}.
+    height. See @fun{gtk-table-set-homogeneous}.
   @end{short}
 
   @subheading{Warning}

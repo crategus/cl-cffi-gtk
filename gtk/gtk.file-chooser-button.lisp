@@ -81,7 +81,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-button 'type)
- "@version{2013-3-3}
+ "@version{2013-4-1}
   @begin{short}
     The @sym{gtk-file-chooser-button} is a widget that lets the user select a
     file. It implements the @class{gtk-file-chooser} interface. Visually, it is
@@ -102,15 +102,15 @@
                                           \"/etc\");
    @}
   @end{pre}
-  The GtkFileChooserButton supports the GtkFileChooserActions
-  GTK_FILE_CHOOSER_ACTION_OPEN and GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
+  The @sym{gtk-file-chooser-button} supports the
+  @symbol{gtk-file-chooser-action}'s @code{:open} and @code{:select-folder}.
 
   @subheading{Important}
-  The GtkFileChooserButton will ellipsize the label, and thus will request
-  little horizontal space. To give the button more space, you should
-  call gtk_widget_get_preferred_size(),
-  gtk_file_chooser_button_set_width_chars(), or pack the button in such a way
-  that other interface elements give space to the widget.
+    The @sym{gtk-file-chooser-button} will ellipsize the label, and thus will
+    request little horizontal space. To give the button more space, you should
+    call @fun{gtk-widget-get-preferred-size},
+    @fun{gtk-file-chooser-button-set-width-chars}, or pack the button in such a
+    way that other interface elements give space to the widget.
   @begin[Signal Details]{dictionary}
     @subheading{The \"file-set\" signal}
       @begin{pre}
@@ -119,7 +119,7 @@
       The \"file-set\" signal is emitted when the user selects a file.
       Note that this signal is only emitted when the user changes the file.
       @begin[code]{table}
-        @entry[widget]{the object which received the signal.}
+        @entry[widget]{The object which received the signal.}
       @end{table}
       Since 2.12
   @end{dictionary}
@@ -137,9 +137,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "dialog"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"dialog\"} property of type @code{GtkFileChooser*}
+ "The @code{\"dialog\"} property of type @class{gtk-file-chooser}
   (Write / Construct Only)@br{}
-  Instance of the GtkFileChooserDialog associated with the button.@br{}
+  Instance of the @class{gtk-file-chooser-dialog} associated with the
+  button.@br{}
   Since 2.6")
 
 ;;; ----------------------------------------------------------------------------
@@ -147,11 +148,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "focus-on-click"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"focus-on-click\"} property of type @code{gboolean}
+ "The @code{\"focus-on-click\"} property of type @code{:boolean}
   (Read / Write)@br{}
-  Whether the GtkFileChooserButton button grabs focus when it is clicked with
-  the mouse.@br{}
-  Default value: TRUE@br{}
+  Whether the @sym{gtk-file-chooser-button} button grabs focus when it is
+  clicked with the mouse.@br{}
+  Default value: @em{true}@br{}
   Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
@@ -159,8 +160,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"title\"} property of type @code{gchar*} (Read / Write)@br{}
-  Title to put on the GtkFileChooserDialog associated with the button.@br{}
+ "The @code{\"title\"} property of type @code{:string} (Read / Write)@br{}
+  Title to put on the @class{gtk-file-chooser-dialog} associated with the
+  button.@br{}
   Default value: \"Select a File\"@br{}
   Since 2.6")
 
@@ -169,9 +171,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-chars"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"width-chars\"} property of type @code{gint} (Read / Write)@br{}
+ "The @code{\"width-chars\"} property of type @code{:int} (Read / Write)@br{}
   The width of the entry and label inside the button, in characters.@br{}
-  Allowed values: >= G_MAXULONG@br{}
+  Allowed values: >= @code{G_MAXULONG}@br{}
   Default value: -1@br{}
   Since 2.6")
 

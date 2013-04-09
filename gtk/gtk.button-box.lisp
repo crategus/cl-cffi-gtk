@@ -253,9 +253,9 @@
  "@version{2013-2-15}
   @argument[widget]{a GtkButtonBox}
   @argument[child]{a child of widget}
-  @return{TRUE if the child is not subject to homogenous sizing}
+  @return{TRUE if the child is not subject to homogeneous sizing}
   @begin{short}
-    Returns whether the child is exempted from homogenous sizing.
+    Returns whether the child is exempted from homogeneous sizing.
   @end{short}
 
   Since 3.2"

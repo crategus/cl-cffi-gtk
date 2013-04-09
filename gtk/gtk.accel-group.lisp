@@ -564,32 +564,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_parse ()
-;;;
-;;; void gtk_accelerator_parse (const gchar *accelerator,
-;;;                             guint *accelerator_key,
-;;;                             GdkModifierType *accelerator_mods);
-;;;
-;;; Parses a string representing an accelerator. The format looks like
-;;; "<Control>a" or "<Shift><Alt>F1" or "<Release>z" (the last one is for key
-;;; release).
-;;;
-;;; The parser is fairly liberal and allows lower or upper case, and also
-;;; abbreviations such as "<Ctl>" and "<Ctrl>". Key names are parsed using
-;;; gdk_keyval_from_name(). For character keys the name is not the symbol, but
-;;; the lowercase name, e.g. one would use "<Ctrl>minus" instead of "<Ctrl>-".
-;;;
-;;; If the parse fails, accelerator_key and accelerator_mods will be set to 0
-;;; (zero).
-;;;
-;;; accelerator :
-;;;     string representing an accelerator
-;;;
-;;; accelerator_key :
-;;;     return location for accelerator keyval, or NULL
-;;;
-;;; accelerator_mods :
-;;;     return location for accelerator modifier mask, NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accelerator_parse" %gtk-accelerator-parse) :void
+  (accelerator :string)
+  (accelerator-key :int)
+  (accelerator-mods gdk-modifier-type))
+
+(defun gtk-accelerator-parse (accelerator)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[accelerator]{string representing an accelerator}
+  @begin{return}
+    @code{accelerator-key} -- accelerator keyval, or @code{nil} @br{}
+    @code{accelerator-mods} --accelerator modifier mask, @code{nil}
+  @end{return}
+  @begin{short}
+    Parses a string representing an accelerator. The format looks like
+    \"<Control>a\" or \"<Shift><Alt>F1\" or \"<Release>z\" (the last one is for
+    key release).
+  @end{short}
+
+  The parser is fairly liberal and allows lower or upper case, and also
+  abbreviations such as \"<Ctl>\" and \"<Ctrl>\". Key names are parsed using
+  @fun{gdk-keyval-from-name}. For character keys the name is not the symbol, but
+  the lowercase name, e. g. one would use \"<Ctrl>minus\" instead of
+  \"<Ctrl>-\".
+
+  If the parse fails, @arg{accelerator-key} and @arg{accelerator-mods} will be
+  set to 0 (zero).
+  @see-function{gdk-keyval-from-name}"
+  (with-foreign-objects ((accelerator-key :int)
+                         (accelerator-mods 'gdk-modifier-type))
+    (%gtk-accelerator-parse accelerator accelerator-key accelerator-mods)
+    (values (mem-ref accelerator-key :int)
+            (mem-ref accelerator-mods 'gdk-modifier-type))))
+
+(export 'gtk-accelerator-parse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_name ()

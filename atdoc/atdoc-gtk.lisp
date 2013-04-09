@@ -30,18 +30,9 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gdk)
-
-(load "../gdk/atdoc/src/atdoc-gdk.window.lisp")
-(load "../gdk/atdoc/src/atdoc-gdk.rectangle.lisp")
-
-;;; ----------------------------------------------------------------------------
-
 (in-package :glib)
 
-(load "../glib/atdoc/src/atdoc-glib.package.lisp")
 (load "../glib/atdoc/src/atdoc-glib.threads.lisp")
-(load "../glib/atdoc/src/atdoc-glib.main-loop.lisp")
 (load "../glib/atdoc/src/atdoc-glib.utils.lisp")
 (load "../glib/atdoc/src/atdoc-glib.quark.lisp")
 (load "../glib/atdoc/src/atdoc-glib.error.lisp")

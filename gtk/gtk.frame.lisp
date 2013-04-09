@@ -365,13 +365,14 @@
 
 (defun gtk-frame-get-shadow-type (frame)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-4}
   @argument[frame]{a @class{gtk-frame} widget}
   @return{The current shadow type of the @arg{frame}.}
   Retrieves the shadow type of the @arg{frame}.
-  See @fun{gtk-frame-set-shadow-type}."
+  See function @fun{gtk-frame-set-shadow-type}.
+  @see-function{gtk-frame-set-shadow-type}"
   (gtk-frame-get-shadow-type frame))
 
-(export 'gtk-framge-get-shadow-type)
+(export 'gtk-frame-get-shadow-type)
 
 ;;; --- End of file gtk.frame.lisp ---------------------------------------------

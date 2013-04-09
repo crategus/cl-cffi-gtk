@@ -71,19 +71,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-bar 'type)
- "@version{2013-3-16}
+ "@version{2013-4-3}
   @begin{short}
     The @class{gtk-menu-bar} is a subclass of @class{gtk-menu-shell} which
-    contains one or more @class{gtk-menu-items}. The result is a standard menu
-    bar which can hold many menu items.
+    contains one or more items of type @class{gtk-menu-item}. The result is a
+    standard menu bar which can hold many menu items.
   @end{short}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"internal-padding\" style property}
       @code{\"internal-padding\"} of type @code{:int} (Read)@br{}
       Amount of border space between the menubar shadow and the menu items.
       @br{}
-      Allowed values: @code{>= 0}@br{}
-      Default value: @code{1}
+      Allowed values: >= 0@br{}
+      Default value: 1
 
     @subheading{The \"shadow-type\" style property}
       @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read)@br{}

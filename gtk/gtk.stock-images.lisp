@@ -200,10 +200,10 @@
 
 (glib::at-init () (foreign-funcall "gtk_icon_set_get_type" :int))
 
-(defcfun gtk-icon-set-new :pointer)
+(defcfun ("gtk_icon_set_new" %gtk-icon-set-new) :pointer)
 
 (define-g-boxed-opaque gtk-icon-set "GtkIconSet"
-  :alloc (gtk-icon-set-new))
+  :alloc (%gtk-icon-set-new))
 
 (export 'gtk-icon-set)
 
@@ -464,21 +464,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_new ()
-;;;
-;;; GtkIconSet * gtk_icon_set_new (void);
-;;;
-;;; Creates a new GtkIconSet. A GtkIconSet represents a single icon in various
-;;; sizes and widget states. It can provide a GdkPixbuf for a given size and
-;;; state on request, and automatically caches some of the rendered GdkPixbuf
-;;; objects.
-;;;
-;;; Normally you would use gtk_widget_render_icon_pixbuf() instead of using
-;;; GtkIconSet directly. The one case where you'd use GtkIconSet is to create
-;;; application-specific icon sets to place in a GtkIconFactory.
-;;;
-;;; Returns :
-;;;     a new GtkIconSet
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_set_new" gtk-icon-set-new) (g-boxed-foreign gtk-icon-set)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-3}
+  @return{A new @class{gtk-icon-set} object.}
+  @begin{short}
+    Creates a new @class{gtk-icon-set}. A @class{gtk-icon-set} represents a
+    single icon in various sizes and widget states. It can provide a
+    @class{gdk-pixbuf} for a given size and state on request, and automatically
+    caches some of the rendered @class{gdk-pixbuf} objects.
+  @end{short}
+
+  Normally you would use @fun{gtk-widget-render-icon-pixbuf} instead of using
+  @class{gtk-icon-set} directly. The one case where you'd use
+  @class{gtk-icon-set} is to create application specific icon sets to place in
+  a @class{gtk-icon-factory}.
+  @see-function{gtk-widget-render-icon-pixbuf}")
+
+(export 'gtk-icon-set-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_new_from_pixbuf ()
@@ -514,83 +519,78 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_render_icon ()
-;;;
-;;; GdkPixbuf * gtk_icon_set_render_icon (GtkIconSet *icon_set,
-;;;                                       GtkStyle *style,
-;;;                                       GtkTextDirection direction,
-;;;                                       GtkStateType state,
-;;;                                       GtkIconSize size,
-;;;                                       GtkWidget *widget,
-;;;                                       const gchar *detail);
-;;;
-;;; Warning
-;;;
-;;; gtk_icon_set_render_icon has been deprecated since version 3.0 and should
-;;; not be used in newly-written code. Use gtk_icon_set_render_icon_pixbuf()
-;;; instead
-;;;
-;;; Renders an icon using gtk_style_render_icon(). In most cases,
-;;; gtk_widget_render_icon() is better, since it automatically provides most of
-;;; the arguments from the current widget settings. This function never returns
-;;; NULL; if the icon can't be rendered (perhaps because an image file fails to
-;;; load), a default "missing image" icon will be returned instead.
-;;;
-;;; icon_set :
-;;;     a GtkIconSet
-;;;
-;;; style :
-;;;     a GtkStyle associated with widget, or NULL
-;;;
-;;; direction :
-;;;     text direction
-;;;
-;;; state :
-;;;     widget state
-;;;
-;;; size :
-;;;     icon size. A size of (GtkIconSize)-1 means render at the size of the
-;;;     source and don't scale
-;;;
-;;; widget :
-;;;     widget that will display the icon, or NULL. The only use that is
-;;;     typically made of this is to determine the appropriate GdkScreen.
-;;;
-;;; detail :
-;;;     detail to pass to the theme engine, or NULL. Note that passing a detail
-;;;     of anything but NULL will disable caching.
-;;;
-;;; Returns :
-;;;     a GdkPixbuf to be displayed
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_set_render_icon" gtk-icon-set-render-icon)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[icon-set]{a @class{gtk-icon-set} object}
+  @argument[style]{a @class{gtk-style} object associated with @arg{widget},
+    or @code{nil}}
+  @argument[direction]{text direction}
+  @argument[state]{widget state}
+  @argument[size]{icon size. A size of @code{(GtkIconSize)-1} means render at
+    the size of the source and don't scale.}
+  @argument[widget]{widget that will display the icon, or @code{nil}. The only
+    use that is typically made of this is to determine the appropriate
+    @class{gdk-screen} object.}
+  @argument[detail]{detail to pass to the theme engine, or @code{nil}. Note that
+    passing a detail of anything but @code{nil} will disable caching.}
+  @return{A @class{gdk-pixbuf} to be displayed.}
+  @subheading{Warning}
+    @sym{gtk-icon-set-render-icon} has been deprecated since version 3.0 and
+    should not be used in newly-written code.
+    Use @fun{gtk-icon-set-render-icon-pixbuf} instead.
+
+  @begin{short}
+    Renders an icon using @fun{gtk-style-render-icon}. In most cases,
+    @fun{gtk-widget-render-icon} is better, since it automatically provides most
+    of the arguments from the current widget settings. This function never
+    returns @code{nil}; if the icon can't be rendered (perhaps because an image
+    file fails to load), a default \"missing image\" icon will be returned
+    instead.
+  @end{short}"
+  (icon-set (g-boxed-foreign gtk-icon-set))
+  (style (g-object gtk-style))
+  (direction :pointer) ; type gtk-text-direction is not defined at this point
+  (state gtk-state-type)
+  (size gtk-icon-size)
+  (widget (g-object gtk-widget))
+  (detail :string))
+
+(export 'gtk-icon-set-render-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_render_icon_pixbuf ()
-;;;
-;;; GdkPixbuf * gtk_icon_set_render_icon_pixbuf (GtkIconSet *icon_set,
-;;;                                              GtkStyleContext *context,
-;;;                                              GtkIconSize size);
-;;;
-;;; Renders an icon using gtk_render_icon_pixbuf(). In most cases,
-;;; gtk_widget_render_icon_pixbuf() is better, since it automatically provides
-;;; most of the arguments from the current widget settings. This function never
-;;; returns NULL; if the icon can't be rendered (perhaps because an image file
-;;; fails to load), a default "missing image" icon will be returned instead.
-;;;
-;;; icon_set :
-;;;     a GtkIconSet
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; size :
-;;;     icon size. A size of (GtkIconSize)-1 means render at the size of the
-;;;     source and don't scale
-;;;
-;;; Returns :
-;;;     a GdkPixbuf to be displayed
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_set_render_icon_pixbuf" gtk-icon-set-render-icon-pixbuf)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[icon-set]{a @class{gtk-icon-set} object}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[size]{icon size. A size of @code{(GtkIconSize)-1} means render at
+    the size of the source and don't scale.}
+  @return{A @class{gdk-pixbuf} object to be displayed.}
+  @begin{short}
+    Renders an icon using @fun{gtk-render-icon-pixbuf}. In most cases,
+    @fun{gtk-widget-render-icon-pixbuf} is better, since it automatically
+    provides most of the arguments from the current widget settings. This
+    function never returns @code{nil}; if the icon can't be rendered (perhaps
+    because an image file fails to load), a default \"missing image\" icon will
+    be returned instead.
+  @end{short}
+
+  Since 3.0
+  @see-function{gtk-render-icon-pixbuf}
+  @see-function{gtk-widget-render-icon-pixbuf}"
+  (icon-set (g-boxed-foreign gtk-icon-set))
+  (context (g-object gtk-style-context))
+  (size gtk-icon-size))
+
+(export 'gtk-icon-set-render-icon-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_unref ()
