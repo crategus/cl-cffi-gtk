@@ -29,9 +29,7 @@
 (in-package :glib)
 
 ;; Load the documentation of the package GLib
-(load "src/atdoc-glib.package.lisp")
 (load "src/atdoc-glib.threads.lisp")
-(load "src/atdoc-glib.main-loop.lisp")
 (load "src/atdoc-glib.utils.lisp")
 (load "src/atdoc-glib.quark.lisp")
 (load "src/atdoc-glib.error.lisp")

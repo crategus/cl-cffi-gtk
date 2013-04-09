@@ -81,15 +81,13 @@
 
 (defcvar ("glib_major_version" glib-major-version :read-only t) :uint)
 
-(export 'glib-major-version)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'glib-major-version atdoc:*symbol-name-alias*) "Variable"
+(setf (gethash 'glib-major-version atdoc:*symbol-name-alias*) "Constant"
       (gethash 'glib-major-version atdoc:*external-symbols*)
- "@version{2013-1-15}
-  @short{The major version number of the GLib library.}")
+ "@version{2013-4-8}
+  @short{The major version number of the GLib C library.}")
+
+(export 'glib-major-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; glib_minor_version
@@ -97,15 +95,13 @@
 
 (defcvar ("glib_minor_version" glib-minor-version :read-only t) :uint)
 
-(export 'glib-minor-version)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'glib-minor-version atdoc:*symbol-name-alias*) "Variable"
+(setf (gethash 'glib-minor-version atdoc:*symbol-name-alias*) "Constant"
       (gethash 'glib-minor-version atdoc:*external-symbols*)
- "@version{2013-1-15}
-  @short{The minor version number of the GLib library.}")
+ "@version{2013-4-8}
+  @short{The minor version number of the GLib C library.}")
+
+(export 'glib-minor-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; glib_micro_version
@@ -113,15 +109,13 @@
 
 (defcvar ("glib_micro_version" glib-micro-version :read-only t) :uint)
 
-(export 'glib-micro-version)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'glib-micro-version atdoc:*symbol-name-alias*) "Variable"
+(setf (gethash 'glib-micro-version atdoc:*symbol-name-alias*) "Constant"
       (gethash 'glib-micro-version atdoc:*external-symbols*)
- "@version{2013-1-15}
-  @short{The micro version number of the GLib library.}")
+ "@version{2013-4-8}
+  @short{The micro version number of the GLib C library.}")
+
+(export 'glib-micro-version)
 
 ;;; ----------------------------------------------------------------------------
 ;;; glib_binary_age
@@ -129,15 +123,13 @@
 
 (defcvar ("glib_binary_age" glib-binary-age :read-only t) :uint)
 
-(export 'glib-binary-age)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'glib-binary-age atdoc:*symbol-name-alias*) "Variable"
+(setf (gethash 'glib-binary-age atdoc:*symbol-name-alias*) "Constant"
       (gethash 'glib-binary-age atdoc:*external-symbols*)
- "@version{2013-1-15}
-  @short{The binary age of the GLib library.}")
+ "@version{2013-4-8}
+  @short{The binary age of the GLib C library.}")
+
+(export 'glib-binary-age)
 
 ;;; ----------------------------------------------------------------------------
 ;;; glib_interface_age
@@ -145,33 +137,42 @@
 
 (defcvar ("glib_interface_age" glib-interface-age :read-only t) :uint)
 
-(export 'glib-interface-age)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'glib-interface-age atdoc:*symbol-name-alias*) "Variable"
+(setf (gethash 'glib-interface-age atdoc:*symbol-name-alias*) "Constant"
       (gethash 'glib-interface-age atdoc:*external-symbols*)
- "@version{2013-1-15}
-  @short{The interface age of the GLib library.}")
+ "@version{2013-4-8}
+  @short{The interface age of the GLib C library.}")
+
+(export 'glib-interface-age)
 
 ;;; ----------------------------------------------------------------------------
 ;;; glib_check_version ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("glib_check_version" glib-check-version ) :string
+(defcfun ("glib_check_version" glib-check-version )
+   (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-15}
-  @argument[required-major]{the required major version.}
-  @argument[required-minor]{the required minor version.}
-  @argument[required-micro]{the required micro version.}
-  @return{@code{nil} if the GLib library is compatible with the given version,
-    or a string describing the version mismatch. The returned string is owned by
-    GLib and must not be modified or freed.}
-  @short{Checks that the GLib library in use is compatible with the given
-    version.}
+ "@version{2013-4-8}
+  @argument[required-major]{the required major version}
+  @argument[required-minor]{the required minor version}
+  @argument[required-micro]{the required micro version}
+  @begin{return}
+    @code{nil} if the GLib C library is compatible with the given version,
+    or a string describing the version mismatch.
+  @end{return}
+  @begin{short}
+    Checks that the GLib C library in use is compatible with the given version.
+  @end{short}
 
   Since 2.6
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (glib-check-version 2 34 0)
+=> NIL
+ (glib-check-version 2 36 0)
+=> \"GLib version too old (micro mismatch)\"
+    @end{pre}
+  @end{dictionary}
   @see-symbol{glib-major-version}
   @see-symbol{glib-minor-version}
   @see-symbol{glib-micro-version}
@@ -185,36 +186,65 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_MAJOR_VERSION
-;;;
-;;; #define GLIB_MAJOR_VERSION 2
-;;;
-;;; The major version number of the GLib library.
-;;;
-;;; Like glib_major_version, but from the headers used at application compile
-;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+glib-major-version+ atdoc:*variable-name-alias*) "Constant")
+
+#+cl-cffi-gtk-documentation
+(defconstant +glib-major-version+ 2
+ "@version{2013-4-8}
+  @variable-value{2}
+  @short{The major version number of the GLib Lisp library.}
+
+  Like @symbol{glib-major-version}, but from the Lisp library used at
+  application compile time, rather than from the C library loaded at
+  application run time.")
+
+(export '+glib-major-version+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_MINOR_VERSION
-;;;
-;;; #define GLIB_MINOR_VERSION 34
-;;;
-;;; The minor version number of the GLib library.
-;;;
-;;; Like gtk_minor_version, but from the headers used at application compile
-;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+glib-minor-version+ atdoc:*variable-name-alias*) "Constant")
+
+#+cl-cffi-gtk-documentation
+(defconstant +glib-minor-version+ 34
+ "@version{2013-4-8}
+  @variable-value{34}
+  @short{The minor version number of the GLib library.}
+
+  Like @symbol{glib-minor-version}, but from the Lisp library used at
+  application compile time, rather than from the C library loaded at
+  application run time.")
+
+(export '+glib-minor-version+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_MICRO_VERSION
-;;;
-;;; #define GLIB_MICRO_VERSION 3
-;;;
-;;; The micro version number of the GLib library.
-;;;
-;;; Like gtk_micro_version, but from the headers used at application compile
-;;; time, rather than from the library linked against at application run time.
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+glib-micro-version+ atdoc:*variable-name-alias*) "Constant")
+
+
+;; The documentation is taken from the GDK Reference manual for version 2.34.3,
+;; but we implement the micro version number to 0. This way we match all
+;; versions with a minor version number of 34.
+
+#+cl-cffi-gtk-documentation
+(defconstant +glib-micro-version+ 0
+ "@version{2013-4-8}
+  @variable-value{0}
+  @short{The micro version number of the GLib library.}
+
+  Like @symbol{glib-micro-version}, but from the Lisp library used at
+  application compile time, rather than from the C library loaded at
+  application run time.")
+
+(export '+glib-micro-version+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GLIB_CHECK_VERSION()
