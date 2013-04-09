@@ -51,6 +51,7 @@
 (load "rtest-gtk-label.lisp")
 (load "rtest-gtk-progress-bar.lisp")
 (load "rtest-gtk-radio-button.lisp")
+(load "rtest-gtk-radio-tool-button.lisp")
 (load "rtest-gtk-range.lisp")
 (load "rtest-gtk-settings.lisp")
 (load "rtest-gtk-scale.lisp")
