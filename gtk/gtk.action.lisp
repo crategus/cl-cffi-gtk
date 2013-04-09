@@ -857,7 +857,7 @@
  "@version{2013-2-9}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
-    Undoes the effect of one call to @fun{gtk-action-connect-ccelerator}.
+    Undoes the effect of one call to @fun{gtk-action-connect-accelerator}.
   @end{short}
   Since 2.4"
   (action g-object))
