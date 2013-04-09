@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkWindow
-;;; 
+;;;
 ;;; Toplevel which can contain other widgets
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkWindow
-;;;     
+;;;
 ;;;     gtk_window_new
 ;;;     gtk_window_set_title
 ;;;     gtk_window_set_wmclass
@@ -1024,19 +1024,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_title ()
-;;; 
+;;;
 ;;; void gtk_window_set_title (GtkWindow *window, const gchar *title);
-;;; 
+;;;
 ;;; Sets the title of the GtkWindow. The title of a window will be displayed in
 ;;; its title bar; on the X Window System, the title bar is rendered by the
 ;;; window manager, so exactly how the title appears to users may vary according
 ;;; to a user's exact configuration. The title should help a user distinguish
 ;;; this window from other windows they may have open. A good title might
 ;;; include the application name and current document filename, for example.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; title :
 ;;;     title of the window
 ;;; ----------------------------------------------------------------------------
@@ -1064,11 +1064,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_wmclass ()
-;;; 
+;;;
 ;;; void gtk_window_set_wmclass (GtkWindow *window,
 ;;;                              const gchar *wmclass_name,
 ;;;                              const gchar *wmclass_class);
-;;; 
+;;;
 ;;; Don't use this function. It sets the X Window System "class" and "name"
 ;;; hints for a window. According to the ICCCM, you should always set these to
 ;;; the same value for all windows in an application, and GTK+ sets them to that
@@ -1076,13 +1076,13 @@
 ;;; you may want to call gtk_window_set_role() on each window in your
 ;;; application, for the benefit of the session manager. Setting the role allows
 ;;; the window manager to restore window positions when loading a saved session.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; wmclass_name :
 ;;;     window name hint
-;;; 
+;;;
 ;;; wmclass_class :
 ;;;     window class hint
 ;;; ----------------------------------------------------------------------------
@@ -1201,7 +1201,7 @@
   Sets a @arg{window} modal or non-modal. Modal windows prevent interaction with
   other windows in the same application. To keep modal dialogs on top of main
   application windows, use @fun{gtk-window-set-transient-for} to make the dialog
-  transient for the parent; most window managers will then disallow lowering 
+  transient for the parent; most window managers will then disallow lowering
   the dialog below the parent.
   @see-function{gtk-window-set-transient-for}"
   (setf (gtk-window-modal window) modal))
@@ -1529,22 +1529,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_is_active ()
-;;; 
+;;;
 ;;; gboolean gtk_window_is_active (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns whether the window is part of the current active toplevel. (That is,
 ;;; the toplevel window receiving keystrokes.) The return value is TRUE if the
 ;;; window is active toplevel itself, but also if it is, say, a GtkPlug embedded
 ;;; in the active toplevel. You might use this function if you wanted to draw a
 ;;; widget differently in an active window from a widget in an inactive window.
 ;;; See gtk_window_has_toplevel_focus()
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the window part of the current active window
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1552,19 +1552,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_has_toplevel_focus ()
-;;; 
+;;;
 ;;; gboolean gtk_window_has_toplevel_focus (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns whether the input focus is within this GtkWindow. For real toplevel
 ;;; windows, this is identical to gtk_window_is_active(), but for embedded
 ;;; windows, like GtkPlug, the results will differ.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the input focus is within this GtkWindow
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1774,7 +1774,7 @@
     The default widget is the widget that is activated when the user presses
     Enter in a dialog for example. This function sets or unsets the default
     widget for a @class{gtk-window} about.
-  @end{short}  
+  @end{short}
   When setting (rather than unsetting) the default widget it is generally easier
   to call @fun{gtk-widget-grab-focus} on the widget. Before making a widget the
   default widget, you must call @fun{gtk-widget-set-can-default} on the widget
@@ -2181,25 +2181,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_deletable ()
-;;; 
+;;;
 ;;; void gtk_window_set_deletable (GtkWindow *window, gboolean setting);
-;;; 
+;;;
 ;;; By default, windows have a close button in the window frame. Some window
 ;;; managers allow GTK+ to disable this button. If you set the deletable
 ;;; property to FALSE using this function, GTK+ will do its best to convince the
 ;;; window manager not to show a close button. Depending on the system, this
 ;;; function may not have any effect when called on a window that is already
 ;;; visible, so you should call it before calling gtk_window_show().
-;;; 
+;;;
 ;;; On Windows, this function always works, since there's no window manager
 ;;; policy involved.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     TRUE to decorate the window as deletable
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
@@ -2222,109 +2222,109 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_type_hint ()
-;;; 
+;;;
 ;;; void gtk_window_set_type_hint (GtkWindow *window, GdkWindowTypeHint hint);
-;;; 
+;;;
 ;;; By setting the type hint for the window, you allow the window manager to
 ;;; decorate and handle the window in a way which is suitable to the function of
 ;;; the window in your application.
-;;; 
+;;;
 ;;; This function should be called before the window becomes visible.
-;;; 
+;;;
 ;;; gtk_dialog_new_with_buttons() and other convenience functions in GTK+ will
 ;;; sometimes call gtk_window_set_type_hint() on your behalf.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; hint :
 ;;;     the window type
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_skip_taskbar_hint ()
-;;; 
+;;;
 ;;; void gtk_window_set_skip_taskbar_hint (GtkWindow *window, gboolean setting)
-;;; 
+;;;
 ;;; Windows may set a hint asking the desktop environment not to display the
 ;;; window in the task bar. This function sets this hint.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     TRUE to keep this window from appearing in the task bar
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_skip_pager_hint ()
-;;; 
+;;;
 ;;; void gtk_window_set_skip_pager_hint (GtkWindow *window, gboolean setting);
-;;; 
+;;;
 ;;; Windows may set a hint asking the desktop environment not to display the
 ;;; window in the pager. This function sets this hint. (A "pager" is any desktop
 ;;; navigation tool such as a workspace switcher that displays a thumbnail
 ;;; representation of the windows on the screen.)
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     TRUE to keep this window from appearing in the pager
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_urgency_hint ()
-;;; 
+;;;
 ;;; void gtk_window_set_urgency_hint (GtkWindow *window, gboolean setting);
-;;; 
+;;;
 ;;; Windows may set a hint asking the desktop environment to draw the users
 ;;; attention to the window. This function sets this hint.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     TRUE to mark this window as urgent
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_accept_focus ()
-;;; 
+;;;
 ;;; void gtk_window_set_accept_focus (GtkWindow *window, gboolean setting);
-;;; 
+;;;
 ;;; Windows may set a hint asking the desktop environment not to receive the
 ;;; input focus. This function sets this hint.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     TRUE to let this window receive input focus
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_focus_on_map ()
-;;; 
+;;;
 ;;; void gtk_window_set_focus_on_map (GtkWindow *window, gboolean setting);
-;;; 
+;;;
 ;;; Windows may set a hint asking the desktop environment not to receive the
 ;;; input focus when the window is mapped. This function sets this hint.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     TRUE to let this window receive input focus on map
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -2359,24 +2359,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_role ()
-;;; 
+;;;
 ;;; void gtk_window_set_role (GtkWindow *window, const gchar *role);
-;;; 
+;;;
 ;;; This function is only useful on X11, not with other GTK+ targets.
-;;; 
+;;;
 ;;; In combination with the window title, the window role allows a window
 ;;; manager to identify "the same" window when an application is restarted. So
 ;;; for example you might set the "toolbox" role on your app's toolbox window,
 ;;; so that when the user restarts their session, the window manager can put the
 ;;; toolbox back in the same place.
-;;; 
+;;;
 ;;; If a window already has a unique title, you don't need to set the role,
 ;;; since the WM can use the title to identify the window when restoring the
 ;;; session.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; role :
 ;;;     unique identifier for the window to be used when restoring a session
 ;;; ----------------------------------------------------------------------------
@@ -2401,18 +2401,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_deletable ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_deletable (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns whether the window has been set to have a close button via
 ;;; gtk_window_set_deletable().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the window has been set to have a close button
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
@@ -2473,34 +2473,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_destroy_with_parent ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_destroy_with_parent (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns whether the window will be destroyed with its transient parent.
 ;;; See gtk_window_set_destroy_with_parent().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the window will be destroyed with its transient parent.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_hide_titlebar_when_maximized ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_hide_titlebar_when_maximized (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns whether the window has requested to have its titlebar hidden when
 ;;; maximized. See gtk_window_set_hide_titlebar_when_maximized().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the window has requested to have its titlebar hidden when
 ;;;     maximized
-;;; 
+;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
@@ -2546,20 +2546,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_icon_name ()
-;;; 
-;;; const gchar * gtk_window_get_icon_name (GtkWindow *window);
-;;; 
-;;; Returns the name of the themed icon for the window, see
-;;; gtk_window_set_icon_name().
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; Returns :
-;;;     the icon name or NULL if the window has no themed icon
-;;; 
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-get-icon-name))
+
+(defun gtk-window-get-icon-name (window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-9}
+  @argument[window]{a @class{gtk-window} widget}
+  @return{The icon name or @code{nil} if the window has no themed icon.}
+  @begin{short}
+    Returns the name of the themed icon for the @arg{window}, see
+    @fun{gtk-window-set-icon-name}.
+  @end{short}
+
+  Since 2.6
+  @see-function{gtk-window-set-icon-name}"
+  (gtk-window-icon-name window))
+
+(export 'gtk-window-get-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_mnemonic_modifier ()
@@ -2582,14 +2587,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_modal ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_modal (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns whether the window is modal. See gtk_window_set_modal().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the window is set to be modal and establishes a grab when shown
 ;;; ----------------------------------------------------------------------------
@@ -2659,15 +2664,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_role ()
-;;; 
+;;;
 ;;; const gchar * gtk_window_get_role (GtkWindow *window);
-;;; 
+;;;
 ;;; Returns the role of the window. See gtk_window_set_role() for further
 ;;; explanation.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     the role of the window if set, or NULL. The returned is owned by the
 ;;;     widget and must not be modified or freed.
@@ -2780,112 +2785,112 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_attached_to ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_window_get_attached_to (GtkWindow *window);
-;;; 
+;;;
 ;;; Fetches the attach widget for this window. See gtk_window_set_attached_to().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     the widget where the window is attached, or NULL if the window is not
 ;;;     attached to any widget
-;;; 
+;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_type_hint ()
-;;; 
+;;;
 ;;; GdkWindowTypeHint gtk_window_get_type_hint (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the type hint for this window. See gtk_window_set_type_hint().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     the type hint for window
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_skip_taskbar_hint ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_skip_taskbar_hint (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value set by gtk_window_set_skip_taskbar_hint()
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if window shouldn't be in taskbar
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_skip_pager_hint ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_skip_pager_hint (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value set by gtk_window_set_skip_pager_hint().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if window shouldn't be in pager
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_urgency_hint ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_urgency_hint (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value set by gtk_window_set_urgency_hint()
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if window is urgent
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_accept_focus ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_accept_focus (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value set by gtk_window_set_accept_focus().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if window should receive the input focus
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_focus_on_map ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_focus_on_map (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value set by gtk_window_set_focus_on_map().
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if window should receive the input focus when mapped
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -3035,7 +3040,7 @@
  {
    GtkWidget *window, *vbox;
    GdkGeometry size_hints = {
-     100, 50, 0, 0, 100, 50, 10, 10, 0.0, 0.0, GDK_GRAVITY_NORTH_WEST  
+     100, 50, 0, 0, 100, 50, 10, 10, 0.0, 0.0, GDK_GRAVITY_NORTH_WEST
    @};
 
    gtk_init (&argc, &argv);
@@ -3050,8 +3055,8 @@
    gtk_window_set_geometry_hints (GTK_WINDOW (window),
                      window,
                      &size_hints,
-                     GDK_HINT_MIN_SIZE | 
-                     GDK_HINT_BASE_SIZE | 
+                     GDK_HINT_MIN_SIZE |
+                     GDK_HINT_BASE_SIZE |
                      GDK_HINT_RESIZE_INC);
 
    if (argc > 1)
@@ -3117,23 +3122,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_resize_to_geometry ()
-;;; 
+;;;
 ;;; void gtk_window_resize_to_geometry (GtkWindow *window,
 ;;;                                     gint width,
 ;;;                                     gint height);
-;;; 
+;;;
 ;;; Like gtk_window_resize(), but width and height are interpreted in terms of
 ;;; the base size and increment set with gtk_window_set_geometry_hints.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; width :
 ;;;     width in resize increments to resize the window to
-;;; 
+;;;
 ;;; height :
 ;;;     height in resize increments to resize the window to
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -3178,23 +3183,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_default_icon_from_file ()
-;;; 
+;;;
 ;;; gboolean gtk_window_set_default_icon_from_file (const gchar *filename,
 ;;;                                                 GError **err);
-;;; 
+;;;
 ;;; Sets an icon to be used as fallback for windows that haven't had
 ;;; gtk_window_set_icon_list() called on them from a file on disk. Warns on
 ;;; failure if err is NULL.
-;;; 
+;;;
 ;;; filename :
 ;;;     location of icon file
-;;; 
+;;;
 ;;; err :
 ;;;     location to store error, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if setting the icon succeeded.
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
@@ -3299,50 +3304,54 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_icon_from_file ()
-;;; 
+;;;
 ;;; gboolean gtk_window_set_icon_from_file (GtkWindow *window,
 ;;;                                         const gchar *filename,
 ;;;                                         GError **err);
-;;; 
+;;;
 ;;; Sets the icon for window. Warns on failure if err is NULL.
-;;; 
+;;;
 ;;; This function is equivalent to calling gtk_window_set_icon() with a pixbuf
 ;;; created by loading the image from filename.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; filename :
 ;;;     location of icon file
-;;; 
+;;;
 ;;; err :
 ;;;     location to store error, or NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if setting the icon succeeded
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_icon_name ()
-;;; 
-;;; void gtk_window_set_icon_name (GtkWindow *window, const gchar *name);
-;;; 
-;;; Sets the icon for the window from a named themed icon. See the docs for
-;;; GtkIconTheme for more details.
-;;; 
-;;; Note that this has nothing to do with the WM_ICON_NAME property which is
-;;; mentioned in the ICCCM.
-;;; 
-;;; window :
-;;;     a GtkWindow
-;;; 
-;;; name :
-;;;     the name of the themed icon
-;;; 
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-window-set-icon-name))
+
+(defun gtk-window-set-icon-name (window name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-9}
+  @argument[window]{a @class{gtk-window} widget}
+  @argument[name]{the name of the themed icon}
+  @begin{short}
+    Sets the icon for the @arg{window} from a named themed icon. See the docs
+    for @class{gtk-icon-theme} for more details.
+  @end{short}
+
+  Note that this has nothing to do with the @code{WM_ICON_NAME} property which
+  is mentioned in the ICCCM.
+
+  Since 2.6"
+  (setf (gtk-window-icon-name window) name))
+
+(export 'gtk-window-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_auto_startup_notification ()
@@ -3420,66 +3429,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_mnemonics_visible ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_mnemonics_visible (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value of the "mnemonics-visible" property.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if mnemonics are supposed to be visible in this window
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_mnemonics_visible ()
-;;; 
+;;;
 ;;; void gtk_window_set_mnemonics_visible (GtkWindow *window,
 ;;;                                        gboolean setting);
-;;; 
+;;;
 ;;; Sets the "mnemonics-visible" property.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     the new value
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_focus_visible ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_focus_visible (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the value of the "focus-visible" property.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if 'focus rectangles' are supposed to be visible in this window.
-;;; 
+;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_focus_visible ()
-;;; 
+;;;
 ;;; void gtk_window_set_focus_visible (GtkWindow *window, gboolean setting);
-;;; 
+;;;
 ;;; Sets the "focus-visible" property.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     the new value
-;;; 
+;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
@@ -3547,80 +3556,80 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_resize_grip_area ()
-;;; 
+;;;
 ;;; gboolean gtk_window_get_resize_grip_area (GtkWindow *window,
 ;;;                                           GdkRectangle *rect);
-;;; 
+;;;
 ;;; If a window has a resize grip, this will retrieve the grip position, width
 ;;; and height into the specified GdkRectangle.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; rect :
 ;;;     a pointer to a GdkRectangle which we should store the resize grip area.
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the resize grip's area was retrieved
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_application ()
-;;; 
+;;;
 ;;; GtkApplication * gtk_window_get_application (GtkWindow *window);
-;;; 
+;;;
 ;;; Gets the GtkApplication associated with the window (if any).
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     a GtkApplication, or NULL
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_application ()
-;;; 
+;;;
 ;;; void gtk_window_set_application (GtkWindow *window,
 ;;;                                  GtkApplication *application);
-;;; 
+;;;
 ;;; Sets or unsets the GtkApplication associated with the window.
-;;; 
+;;;
 ;;; The application will be kept alive for at least as long as the window is
 ;;; open.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; application :
 ;;;     a GtkApplication, or NULL
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_has_user_ref_count ()
-;;; 
+;;;
 ;;; void gtk_window_set_has_user_ref_count (GtkWindow *window, gboolean setting)
-;;; 
+;;;
 ;;; Tells GTK+ whether to drop its extra reference to the window when
 ;;; gtk_window_destroy() is called.
-;;; 
+;;;
 ;;; This function is only exported for the benefit of language bindings which
 ;;; may need to keep the window alive until their wrapper object is garbage
 ;;; collected. There is no justification for ever calling this function in an
 ;;; application.
-;;; 
+;;;
 ;;; window :
 ;;;     a GtkWindow
-;;; 
+;;;
 ;;; setting :
 ;;;     the new value
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
