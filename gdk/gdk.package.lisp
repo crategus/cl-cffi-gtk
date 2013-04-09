@@ -2,7 +2,7 @@
 ;;; gdk.package.lisp
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -39,19 +39,147 @@
   windowing system.
   This is the API documentation of a Lisp binding to GDK.
   @begin[General]{section}
-    Library initialization and miscellaneous functions
+    This section describes the GDK initialization functions and miscellaneous
+    utility functions, as well as deprecation facilities.
+
+    GDK and GTK+ provide support for building applications against defined
+    subsets of deprecated or new APIs. Define the macro
+    @code{GDK_VERSION_MIN_REQUIRED} to specify up to what version you want to
+    receive warnings about deprecated APIs. Define the macro
+    @code{GDK_VERSION_MAX_ALLOWED} to specify the newest version whose API you
+    want to use.
+
+    @about-function{gdk-init}
+    @about-function{gdk-init-check}
+    @about-function{gdk-parse-args}
+    @about-function{gdk-get-display-arg-name}
+    @about-function{gdk-notify-startup-complete}
+    @about-function{gdk-notify-startup-complete-with-id}
+    @about-function{gdk-get-program-class}
+    @about-function{gdk-set-program-class}
+    @about-function{gdk-get-display}
+    @about-function{gdk-flush}
+    @about-function{gdk-screen-width}
+    @about-function{gdk-screen-height}
+    @about-function{gdk-screen-width-mm}
+    @about-function{gdk-screen-height-mm}
+    @about-function{gdk-pointer-grab}
+    @about-symbol{gdk-grab-status}
+    @about-function{gdk-pointer-ungrab}
+    @about-function{gdk-pointer-is-grabbed}
+    @about-function{gdk-set-double-click-time}
+    @about-function{gdk-keyboard-grab}
+    @about-function{gdk-keyboard-ungrab}
+    @about-function{gdk-beep}
+    @about-function{gdk-error-trap-push}
+    @about-function{gdk-error-trap-pop}
+    @about-function{gdk-error-trap-pop-ignored}
+    @about-symbol{GDK_WINDOWING_X11}
+    @about-symbol{GDK_WINDOWING_WIN32}
+    @about-symbol{GDK_VERSION_3_0}
+    @about-symbol{GDK_VERSION_3_2}
+    @about-symbol{GDK_VERSION_3_4}
+    @about-symbol{GDK_VERSION_MIN_REQUIRED}
+    @about-symbol{GDK_VERSION_MAX_ALLOWED}
   @end{section}
   @begin[GdkDisplayManager]{section}
-    Maintains a list of all open GdkDisplays
+    Maintains a list of all open GdkDisplays.
+
+    @about-class{gdk-display-manager}
+    @about-function{gdk-display-manager-get}
+    @about-function{gdk-display-manager-get-default-display}
+    @about-function{gdk-display-manager-set-default-display}
+    @about-function{gdk-display-manager-list-displays}
+    @about-function{gdk-display-manager-open-display}
   @end{section}
   @begin[GdkDisplay]{section}
-    Controls a set of GdkScreens and their associated input devices
+    Controls a set of GdkScreens and their associated input devices.
+
+    @about-class{gdk-display}
+    @about-function{gdk-display-open}
+    @about-function{gdk-display-get-default}
+    @about-function{gdk-display-get-name}
+    @about-function{gdk-display-get-n-screens}
+    @about-function{gdk-display-get-screen}
+    @about-function{gdk-display-get-default-screen}
+    @about-function{gdk-display-get-device-manager}
+    @about-function{gdk-display-pointer-ungrab}
+    @about-function{gdk-display-keyboard-ungrab}
+    @about-function{gdk-display-pointer-is-grabbed}
+    @about-function{gdk-display-device-is-grabbed}
+    @about-function{gdk-display-beep}
+    @about-function{gdk-display-sync}
+    @about-function{gdk-display-flush}
+    @about-function{gdk-display-close}
+    @about-function{gdk-display-is-closed}
+    @about-function{gdk-display-get-event}
+    @about-function{gdk-display-peek-event}
+    @about-function{gdk-display-put-event}
+    @about-function{gdk-display-has-pending}
+    @about-function{gdk-display-set-double-click-time}
+    @about-function{gdk-display-set-double-click-distance}
+    @about-function{gdk-display-get-pointer}
+    @about-function{gdk-display-list-devices}
+    @about-function{gdk-display-get-window-at-pointer}
+    @about-function{gdk-display-warp-pointer}
+    @about-function{gdk-display-supports-cursor-color}
+    @about-function{gdk-display-supports-cursor-alpha}
+    @about-function{gdk-display-get-default-cursor-size}
+    @about-function{gdk-display-get-maximal-cursor-size}
+    @about-function{gdk-display-get-default-group}
+    @about-function{gdk-display-supports-selection-notification}
+    @about-function{gdk-display-request-selection-notification}
+    @about-function{gdk-display-supports-clipboard-persistence}
+    @about-function{gdk-display-store-clipboard}
+    @about-function{gdk-display-supports-shapes}
+    @about-function{gdk-display-supports-input-shapes}
+    @about-function{gdk-display-supports-composite}
+    @about-function{gdk-display-get-app-launch-context}
+    @about-function{gdk-display-notify-startup-complete}
   @end{section}
   @begin[GdkScreen]{section}
-    Object representing a physical screen
+    Object representing a physical screen.
+
+    @about-class{gdk-screen}
+    @about-function{gdk-screen-get-default}
+    @about-function{gdk-screen-get-system-visual}
+    @about-function{gdk-screen-get-rgba-visual}
+    @about-function{gdk-screen-is-composited}
+    @about-function{gdk-screen-get-root-window}
+    @about-function{gdk-screen-get-display}
+    @about-function{gdk-screen-get-number}
+    @about-function{gdk-screen-get-width}
+    @about-function{gdk-screen-get-height}
+    @about-function{gdk-screen-get-width-mm}
+    @about-function{gdk-screen-get-height-mm}
+    @about-function{gdk-screen-list-visuals}
+    @about-function{gdk-screen-get-toplevel-windows}
+    @about-function{gdk-screen-make-display-name}
+    @about-function{gdk-screen-get-n-monitors}
+    @about-function{gdk-screen-get-primary-monitor}
+    @about-function{gdk-screen-get-monitor-geometry}
+    @about-function{gdk-screen-get-monitor-workarea}
+    @about-function{gdk-screen-get-monitor-at-point}
+    @about-function{gdk-screen-get-monitor-at-window}
+    @about-function{gdk-screen-get-monitor-height-mm}
+    @about-function{gdk-screen-get-monitor-width-mm}
+    @about-function{gdk-screen-get-monitor-plug-name}
+    @about-function{gdk-screen-get-setting}
+    @about-function{gdk-screen-get-font-options}
+    @about-function{gdk-screen-set-font-options}
+    @about-function{gdk-screen-get-resolution}
+    @about-function{gdk-screen-set-resolution}
+    @about-function{gdk-screen-get-active-window}
+    @about-function{gdk-screen-get-window-stack}
   @end{section}
   @begin[GdkDeviceManager]{section}
-    Functions for handling input devices
+    Functions for handling input devices.
+
+    @about-class{gdk-device-manager}
+    @about-function{gdk-disable-multidevice}
+    @about-function{gdk-device-manager-get-display}
+    @about-function{gdk-device-manager-list-devices}
+    @about-function{gdk-device-manager-get-client-pointer}
   @end{section}
   @begin[GdkDevice]{section}
     Object representing an input device
@@ -90,7 +218,19 @@
     Low-level display hardware information
   @end{section}
   @begin[Cursors]{section}
-    Standard and pixmap cursors
+    Standard and pixmap cursors.
+
+    @about-class{gdk-cursor}
+    @about-symbol{gdk-cursor-type}
+    @about-function{gdk-cursor-new}
+    @about-function{gdk-cursor-new-from-pixbuf}
+    @about-function{gdk-cursor-new-from-name}
+    @about-function{gdk-cursor-new-for-display}
+    @about-function{gdk-cursor-get-display}
+    @about-function{gdk-cursor-get-image}
+    @about-function{gdk-cursor-get-cursor-type}
+    @about-function{gdk-cursor-ref}
+    @about-function{gdk-cursor-unref}
   @end{section}
   @begin[Windows]{section}
     Onscreen display areas in the target window system.
@@ -107,20 +247,20 @@
     @about-symbol{gdk-window-attributes-type}
     @about-function{gdk-window-new}
     @about-function{gdk-window-destroy}
-    @about-function{gdk-window-get_window_type}
-    @about-function{gdk-window-get_display}
-    @about-function{gdk-window-get_screen}
-    @about-function{gdk-window-get_visual}
-    @about-function{gdk-window-at_pointer}
+    @about-function{gdk-window-get-window-type}
+    @about-function{gdk-window-get-display}
+    @about-function{gdk-window-get-screen}
+    @about-function{gdk-window-get-visual}
+    @about-function{gdk-window-at-pointer}
     @about-function{gdk-window-show}
-    @about-function{gdk-window-show_unraised}
+    @about-function{gdk-window-show-unraised}
     @about-function{gdk-window-hide}
-    @about-function{gdk-window-is_destroyed}
-    @about-function{gdk-window-is_visible}
-    @about-function{gdk-window-is_viewable}
-    @about-function{gdk-window-is_input_only}
-    @about-function{gdk-window-is_shaped}
-    @about-function{gdk-window-get_state}
+    @about-function{gdk-window-is-destroyed}
+    @about-function{gdk-window-is-visible}
+    @about-function{gdk-window-is-viewable}
+    @about-function{gdk-window-is-input-only}
+    @about-function{gdk-window-is-shaped}
+    @about-function{gdk-window-get-state}
     @about-function{gdk-window-withdraw}
     @about-function{gdk-window-iconify}
     @about-function{gdk-window-deiconify}
@@ -130,125 +270,125 @@
     @about-function{gdk-window-unmaximize}
     @about-function{gdk-window-fullscreen}
     @about-function{gdk-window-unfullscreen}
-    @about-function{gdk-window-set_keep_above}
-    @about-function{gdk-window-set_keep_below}
-    @about-function{gdk-window-set_opacity}
-    @about-function{gdk-window-set_composited}
-    @about-function{gdk-window-get_composited}
+    @about-function{gdk-window-set-keep-above}
+    @about-function{gdk-window-set-keep-below}
+    @about-function{gdk-window-set-opacity}
+    @about-function{gdk-window-set-composited}
+    @about-function{gdk-window-get-composited}
     @about-function{gdk-window-move}
     @about-function{gdk-window-resize}
-    @about-function{gdk-window-move_resize}
+    @about-function{gdk-window-move-resize}
     @about-function{gdk-window-scroll}
-    @about-function{gdk-window-move_region}
+    @about-function{gdk-window-move-region}
     @about-function{gdk-window-flush}
-    @about-function{gdk-window-has_native}
-    @about-function{gdk-window-ensure_native}
+    @about-function{gdk-window-has-native}
+    @about-function{gdk-window-ensure-native}
     @about-function{gdk-window-reparent}
     @about-function{gdk-window-raise}
     @about-function{gdk-window-lower}
     @about-function{gdk-window-restack}
     @about-function{gdk-window-focus}
-    @about-function{gdk-window-register_dnd}
-    @about-function{gdk-window-begin_resize_drag}
-    @about-function{gdk-window-begin_resize_drag_for_device}
-    @about-function{gdk-window-begin_move_drag}
-    @about-function{gdk-window-begin_move_drag_for_device}
-    @about-function{gdk-window-constrain_size}
+    @about-function{gdk-window-register-dnd}
+    @about-function{gdk-window-begin-resize-drag}
+    @about-function{gdk-window-begin-resize-drag-for-device}
+    @about-function{gdk-window-begin-move-drag}
+    @about-function{gdk-window-begin-move-drag-for-device}
+    @about-function{gdk-window-constrain-size}
     @about-function{gdk-window-beep}
-    @about-function{gdk-window-get_clip_region}
-    @about-function{gdk-window-begin_paint_rect}
-    @about-function{gdk-window-begin_paint_region}
-    @about-function{gdk-window-end_paint}
-    @about-function{gdk-window-get_visible_region}
-    @about-function{gdk-window-invalidate_rect}
-    @about-function{gdk-window-invalidate_region}
-    @about-function{gdk-window-invalidate_maybe_recurse}
-    @about-function{gdk-window-get_update_area}
-    @about-function{gdk-window-freeze_updates}
-    @about-function{gdk-window-thaw_updates}
-    @about-function{gdk-window-process_all_updates}
-    @about-function{gdk-window-process_updates}
-    @about-function{gdk-window-set_debug_updates}
-    @about-function{gdk-window-enable_synchronized_configure}
-    @about-function{gdk-window-configure_finished}
-    @about-function{gdk-window-set_user_data}
-    @about-function{gdk-window-set_override_redirect}
-    @about-function{gdk-window-set_accept_focus}
-    @about-function{gdk-window-get_accept_focus}
-    @about-function{gdk-window-set_focus_on_map}
-    @about-function{gdk-window-get_focus_on_map}
-    @about-function{gdk-window-add_filter}
-    @about-function{gdk-window-remove_filter}
+    @about-function{gdk-window-get-clip-region}
+    @about-function{gdk-window-begin-paint-rect}
+    @about-function{gdk-window-begin-paint-region}
+    @about-function{gdk-window-end-paint}
+    @about-function{gdk-window-get-visible-region}
+    @about-function{gdk-window-invalidate-rect}
+    @about-function{gdk-window-invalidate-region}
+    @about-function{gdk-window-invalidate-maybe-recurse}
+    @about-function{gdk-window-get-update-area}
+    @about-function{gdk-window-freeze-updates}
+    @about-function{gdk-window-thaw-updates}
+    @about-function{gdk-window-process-all-updates}
+    @about-function{gdk-window-process-updates}
+    @about-function{gdk-window-set-debug-updates}
+    @about-function{gdk-window-enable-synchronized-configure}
+    @about-function{gdk-window-configure-finished}
+    @about-function{gdk-window-set-user-data}
+    @about-function{gdk-window-set-override-redirect}
+    @about-function{gdk-window-set-accept-focus}
+    @about-function{gdk-window-get-accept-focus}
+    @about-function{gdk-window-set-focus-on-map}
+    @about-function{gdk-window-get-focus-on-map}
+    @about-function{gdk-window-add-filter}
+    @about-function{gdk-window-remove-filter}
     @about-symbol{gdk-filter-return}
     @about-symbol{gdk-x-event}
-    @about-function{gdk-window-shape_combine_region}
-    @about-function{gdk-window-set_child_shapes}
-    @about-function{gdk-window-merge_child_shapes}
-    @about-function{gdk-window-input_shape_combine_region}
-    @about-function{gdk-window-set_child_input_shapes}
-    @about-function{gdk-window-merge_child_input_shapes}
-    @about-function{gdk-window-set_static_gravities}
-    @about-function{gdk-window-set_title}
-    @about-function{gdk-window-set_background}
-    @about-function{gdk-window-set_background_rgba}
-    @about-function{gdk-window-set_background_pattern}
-    @about-function{gdk-window-get_background_patter}
-    @about-symbol{GDK_PARENT_RELATIVE}
-    @about-function{gdk-window-get_user_data}
-    @about-function{gdk-window-get_geometry}
-    @about-function{gdk-window-set_geometry_hints}
-    @about-function{gdk-window-get_width}
-    @about-function{gdk-window-get_height}
-    @about-function{gdk-window-set_icon_list}
-    @about-function{gdk-window-set_modal_hint}
-    @about-function{gdk-window-get_modal_hint}
-    @about-function{gdk-window-set_type_hint}
-    @about-function{gdk-window-get_type_hint}
-    @about-function{gdk-window-set_skip_taskbar_hint}
-    @about-function{gdk-window-set_skip_pager_hint}
-    @about-function{gdk-window-set_urgency_hint}
-    @about-function{gdk-window-get_position}
-    @about-function{gdk-window-get_root_origin}
-    @about-function{gdk-window-get_frame_extents}
-    @about-function{gdk-window-get_origin}
-    @about-function{gdk-window-get_root_coords}
-    @about-function{gdk-window-get_pointer}
-    @about-function{gdk-window-get_device_position}
+    @about-function{gdk-window-shape-combine-region}
+    @about-function{gdk-window-set-child-shapes}
+    @about-function{gdk-window-merge-child-shapes}
+    @about-function{gdk-window-input-shape-combine-region}
+    @about-function{gdk-window-set-child-input-shapes}
+    @about-function{gdk-window-merge-child-input-shapes}
+    @about-function{gdk-window-set-static-gravities}
+    @about-function{gdk-window-set-title}
+    @about-function{gdk-window-set-background}
+    @about-function{gdk-window-set-background-rgba}
+    @about-function{gdk-window-set-background-pattern}
+    @about-function{gdk-window-get-background-patter}
+    @about-symbol{GDK-PARENT-RELATIVE}
+    @about-function{gdk-window-get-user-data}
+    @about-function{gdk-window-get-geometry}
+    @about-function{gdk-window-set-geometry-hints}
+    @about-function{gdk-window-get-width}
+    @about-function{gdk-window-get-height}
+    @about-function{gdk-window-set-icon-list}
+    @about-function{gdk-window-set-modal-hint}
+    @about-function{gdk-window-get-modal-hint}
+    @about-function{gdk-window-set-type-hint}
+    @about-function{gdk-window-get-type-hint}
+    @about-function{gdk-window-set-skip-taskbar-hint}
+    @about-function{gdk-window-set-skip-pager-hint}
+    @about-function{gdk-window-set-urgency-hint}
+    @about-function{gdk-window-get-position}
+    @about-function{gdk-window-get-root-origin}
+    @about-function{gdk-window-get-frame-extents}
+    @about-function{gdk-window-get-origin}
+    @about-function{gdk-window-get-root-coords}
+    @about-function{gdk-window-get-pointer}
+    @about-function{gdk-window-get-device-position}
     @about-symbol{GdkModifierType}
-    @about-function{gdk-window-get_parent}
-    @about-function{gdk-window-get_toplevel}
-    @about-function{gdk-window-get_children}
-    @about-function{gdk-window-peek_children}
-    @about-function{gdk-window-get_events}
-    @about-function{gdk-window-set_events}
-    @about-function{gdk-window-set_icon_name}
-    @about-function{gdk-window-set_transient_for}
-    @about-function{gdk-window-set_role}
-    @about-function{gdk-window-set_startup_id}
-    @about-function{gdk-window-set_group}
-    @about-function{gdk-window-get_group}
-    @about-function{gdk-window-set_decorations}
-    @about-function{gdk-window-get_decorations}
+    @about-function{gdk-window-get-parent}
+    @about-function{gdk-window-get-toplevel}
+    @about-function{gdk-window-get-children}
+    @about-function{gdk-window-peek-children}
+    @about-function{gdk-window-get-events}
+    @about-function{gdk-window-set-events}
+    @about-function{gdk-window-set-icon-name}
+    @about-function{gdk-window-set-transient-for}
+    @about-function{gdk-window-set-role}
+    @about-function{gdk-window-set-startup-id}
+    @about-function{gdk-window-set-group}
+    @about-function{gdk-window-get-group}
+    @about-function{gdk-window-set-decorations}
+    @about-function{gdk-window-get-decorations}
     @about-symbol{GdkWMDecoration}
-    @about-function{gdk-window-set_functions}
+    @about-function{gdk-window-set-functions}
     @about-symbol{GdkWMFunction}
-    @about-function{gdk_get_default_root_window}
-    @about-function{gdk-window-get_support_multidevice}
-    @about-function{gdk-window-set_support_multidevice}
-    @about-function{gdk-window-get_device_cursor}
-    @about-function{gdk-window-set_device_cursor}
-    @about-function{gdk-window-get_device_events}
-    @about-function{gdk-window-set_device_events}
-    @about-function{gdk-window-get_source_events}
-    @about-function{gdk-window-set_source_events}
-    @about-function{gdk_offscreen_window_get_surface}
-    @about-function{gdk_offscreen_window_set_embedder}
-    @about-function{gdk_offscreen_window_get_embedder}
-    @about-function{gdk-window-geometry_changed}
-    @about-function{gdk-window-coords_from_parent}
-    @about-function{gdk-window-coords_to_parent}
-    @about-function{gdk-window-get_effective_parent}
-    @about-function{gdk-window-get_effective_toplevel}
+    @about-function{gdk-get-default-root-window}
+    @about-function{gdk-window-get-support-multidevice}
+    @about-function{gdk-window-set-support-multidevice}
+    @about-function{gdk-window-get-device-cursor}
+    @about-function{gdk-window-set-device-cursor}
+    @about-function{gdk-window-get-device-events}
+    @about-function{gdk-window-set-device-events}
+    @about-function{gdk-window-get-source-events}
+    @about-function{gdk-window-set-source-events}
+    @about-function{gdk-offscreen-window-get-surface}
+    @about-function{gdk-offscreen-window-set-embedder}
+    @about-function{gdk-offscreen-window-get-embedder}
+    @about-function{gdk-window-geometry-changed}
+    @about-function{gdk-window-coords-from-parent}
+    @about-function{gdk-window-coords-to-parent}
+    @about-function{gdk-window-get-effective-parent}
+    @about-function{gdk-window-get-effective-toplevel}
   @end{section}
   @begin[Events]{section}
     Functions for handling events from the window system
@@ -256,10 +396,9 @@
   @begin[Event Structures]{section}
     The event structs contain data specific to each type of event in GDK.
 
-    @b{Note}
-
-    A common mistake is to forget to set the event mask of a widget so that the
-    required events are received. See @fun{gtk-widget-set-events}.
+    @subheading{Note}
+      A common mistake is to forget to set the event mask of a widget so that
+      the required events are received. See @fun{gtk-widget-set-events}.
 
     @about-symbol{gdk-scroll-direction}
     @about-symbol{gdk-visibility-state}
@@ -330,7 +469,32 @@
     @about-function{gdk-selection-send-notify-for-display}
   @end{section}
   @begin[Drag And Drop]{section}
-    Functions for controlling drag and drop handling
+    Functions for controlling drag and drop handling.
+
+    @about-symbol{gdk-drag-protocol}
+    @about-symbol{gdk-drag-action}
+    @about-class{gdk-drag-context}
+    @about-function{gdk-drag-get-selection}
+    @about-function{gdk-drag-abort}
+    @about-function{gdk-drop-reply}
+    @about-function{gdk-drag-drop}
+    @about-function{gdk-drag-find-window-for-screen}
+    @about-function{gdk-drag-begin}
+    @about-function{gdk-drag-begin-for-device}
+    @about-function{gdk-drag-motion}
+    @about-function{gdk-drop-finish}
+    @about-function{gdk-drag-status}
+    @about-function{gdk-drag-drop-succeeded}
+    @about-function{gdk-window-get-drag-protocol}
+    @about-function{gdk-drag-context-get-actions}
+    @about-function{gdk-drag-context-get-suggested-action}
+    @about-function{gdk-drag-context-get-selected-action}
+    @about-function{gdk-drag-context-list-targets}
+    @about-function{gdk-drag-context-get-device}
+    @about-function{gdk-drag-context-set-device}
+    @about-function{gdk-drag-context-get-source-window}
+    @about-function{gdk-drag-context-get-dest-window}
+    @about-function{gdk-drag-context-get-protocol}
   @end{section}
   @begin[Properties and Atoms]{section}
     Functions to manipulate properties on windows
@@ -348,7 +512,16 @@
     X backend-specific functions
   @end{section}
   @begin[Application launching]{section}
-    Startup notification for applications
+    Startup notification for applications.
+
+    @about-class{gdk-app-launch-context}
+    @about-function{gdk-app-launch-context-new}
+    @about-function{gdk-app-launch-context-set-display}
+    @about-function{gdk-app-launch-context-set-screen}
+    @about-function{gdk-app-launch-context-set-desktop}
+    @about-function{gdk-app-launch-context-set-timestamp}
+    @about-function{gdk-app-launch-context-set-icon}
+    @about-function{gdk-app-launch-context-set-icon-name}
   @end{section}
  ")
 

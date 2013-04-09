@@ -2,9 +2,11 @@
 ;;; gdk.rgba.lisp
 ;;; 
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
+;;; The API  documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -52,29 +54,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkRGBA
-;;; 
-;;; typedef struct {
-;;;   gdouble red;
-;;;   gdouble green;
-;;;   gdouble blue;
-;;;   gdouble alpha;
-;;; } GdkRGBA;
-;;; 
-;;; The GdkRGBA structure is used to represent a (possibly translucent) color,
-;;; in a way that is compatible with cairos notion of color.
-;;; 
-;;; gdouble red;
-;;;     The intensity of the red channel from 0.0 to 1.0 inclusive
-;;; 
-;;; gdouble green;
-;;;     The intensity of the green channel from 0.0 to 1.0 inclusive
-;;; 
-;;; gdouble blue;
-;;;     The intensity of the blue channel from 0.0 to 1.0 inclusive
-;;; 
-;;; gdouble alpha;
-;;;     The opacity of the color from 0.0 for completely translucent to 1.0 for
-;;;     opaque
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-rgba "GdkRGBA"
@@ -84,6 +63,96 @@
   (alpha :double :initform 0.0d0))
 
 (export (boxed-related-symbols 'gdk-rgba))
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-rgba atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gdk-rgba 'type)
+ "@version{2013-4-5}
+  @begin{short}
+    The GdkRGBA structure is used to represent a (possibly translucent) color,
+    in a way that is compatible with cairos notion of color.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-cstruct gdk-rgba \"GdkRGBA\"
+  (red :double :initform 0.0d0)
+  (green :double :initform 0.0d0)
+  (blue :double :initform 0.0d0)
+  (alpha :double :initform 0.0d0))
+  @end{pre}
+  @begin[code]{table}
+    @entry[red]{The intensity of the red channel from 0.0 to 1.0 inclusive.}
+    @entry[green]{The intensity of the green channel from 0.0 to 1.0 inclusive.}
+    @entry[blue]{The intensity of the blue channel from 0.0 to 1.0 inclusive.}
+    @entry[alpha]{The opacity of the color from 0.0 for completely translucent
+      to 1.0 for opaque.}
+  @end{table}
+  @see-constructor{make-gdk-rgba}
+  @see-constructor{copy-gdk-rgba}
+  @see-slot{red}
+  @see-slot{green}
+  @see-slot{blue}
+  @see-slot{alpha}")
+
+;;; --- copy-gdk-rgba ----------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-rgba 'function)
+ "@version{2013-4-5}
+  @argument[instance]{a @class{gdk-rgba} struct}
+  Copy constructor of a @class{gdk-rgba} struct.")
+
+;;; --- make-gdk-rgba ----------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-rgba 'function)
+ "@version{2013-4-5}
+  @argument[red]{The intensity of the red channel from 0.0 to 1.0 inclusive.}
+  @argument[green]{The intensity of the green channel from 0.0 to 1.0
+    inclusive.}
+  @argument[blue]{The intensity of the blue channel from 0.0 to 1.0 inclusive.}
+  @argument[alpha]{The opacity of the color from 0.0 for completely translucent
+    to 1.0 for opaque.}
+  @begin{short}
+    Creates a @class{gdk-rgba} struct.
+  @end{short}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-rgba-red atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-rgba-red 'function)
+ "@version{2013-4-5}
+  Accessor of the slot @code{red} of the @class{gdk-rgba} struct.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-rgba-green atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-rgba-green 'function)
+ "@version{2013-4-5}
+  Accessor of the slot @code{green} of the @class{gdk-rgba} struct.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-rgba-blue atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-rgba-blue 'function)
+ "@version{2013-4-5}
+  Accessor of the slot @code{blue} of the @class{gdk-rgba} struct.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-rgba-alpha atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-rgba-alpha 'function)
+ "@version{2013-4-5}
+  Accessor of the slot @code{alpha} of the @class{gdk-rgba} struct.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_copy ()

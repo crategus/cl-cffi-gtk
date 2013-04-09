@@ -1,28 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.device.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
 ;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -249,7 +249,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -906,10 +906,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-grab-status atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-grab-status atdoc:*external-symbols*)
- "@version{2013-3-22}
+ "@version{2013-4-3}
   @begin{short}
-    Returned by gdk_pointer_grab() and gdk_keyboard_grab() to indicate success
-    or the reason for the failure of the grab attempt.
+    Returned by @fun{gdk-pointer-grab} and @fun{gdk-keyboard-grab} to indicate
+    success or the reason for the failure of the grab attempt.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkGrabStatus\" gdk-grab-status
@@ -927,7 +927,7 @@
       client.}
     @entry[:invalid-time]{The resource was grabbed more recently than the
       specified time.}
-    @entry[:not-viewable]{The grab window or the confine_to window are not
+    @entry[:not-viewable]{The grab window or the @arg{confine-to} window are not
       viewable.}
     @entry[:frozen]{The resource is frozen by an active grab of another client.}
   @end{table}")
@@ -989,7 +989,7 @@
   (grab-ownership gdk-grab-ownership)
   (owner-events :boolean)
   (event-mask gdk-event-mask)
-  (cursor (g-boxed-foreign gdk-cursor))
+  (cursor (g-object gdk-cursor))
   (time :uint32))
 
 (export 'gdk-device-grab)
@@ -1145,7 +1145,48 @@
   @begin[code]{table}
     @entry[time]{The timestamp for this event.}
     @entry[axes]{the values of the device's axes.}
-  @end{table}")
+  @end{table}
+  @see-constructor{make-gdk-time-coord}
+  @see-constructor{copy-gdk-time-coord}
+  @see-slot{gdk-time-coord-time}
+  @see-slot{gdk-time-coord-axes}")
+
+;;; --- copy-gdk-time-coord ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-rgba 'function)
+ "@version{2013-4-5}
+  @argument[instance]{a @class{gdk-time-coord} struct}
+  Copy constructor of a @class{gdk-time-coord} struct.")
+
+;;; --- make-gdk-time-coord ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-time-coord 'function)
+ "@version{2013-4-5}
+  @argument[time]{The timestamp for this event.}
+  @argument[axes]{the values of the device's axes.}
+  @begin{short}
+    Creates a @class{gdk-time-coord} struct.
+  @end{short}")
+
+;;; --- gdk-time-coord-time ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-time-coord-time atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-time-coord-time 'function)
+ "@version{2013-4-5}
+  Accessor of the slot @code{time} of the @class{gdk-time-coord} struct.")
+
+;;; --- gdk-time-coord-axes ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-time-coord-axes atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-time-coord-axes 'function)
+ "@version{2013-4-5}
+  Accessor of the slot @code{axes} of the @class{gdk-time-coord} struct.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_history ()
@@ -1161,18 +1202,15 @@
 
 (defun gdk-device-get-history (device window start stop)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-4-5}
   @argument[device]{a @class{gdk-device} object}
   @argument[window]{the window with respect to which which the event coordinates
     will be reported}
   @argument[start]{starting timestamp for range of events to return}
   @argument[stop]{ending timestamp for the range of events to return}
-  @argument[events]{location to store a newly-allocated array of GdkTimeCoord,
-    or NULL}
-  @argument[n_events]{location to store the length of events, or NULL}
   @begin{return}
-    TRUE if the windowing system supports motion history and at least one
-    event was found.
+    A list of GdkTimeCoord if the windowing system supports motion history and
+    at least one event was found, or @code{nil}.
   @end{return}
   Obtains the motion history for a pointer device; given a starting and ending
   timestamp, return all events in the motion history for the device in the

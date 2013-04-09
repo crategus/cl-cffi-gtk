@@ -1,10 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.cairo.lisp
 ;;;
-;;; The documentation has been copied from the GDK 2 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; The documentation has been copied from the GDK 3 Reference Manual
+;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
+;;; The API  documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -57,45 +59,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_create_similar_surface ()
-;;; 
-;;; cairo_surface_t * gdk_window_create_similar_surface
-;;;                                                    (GdkWindow *window,
-;;;                                                     cairo_content_t content,
-;;;                                                     int width,
-;;;                                                     int height);
-;;; 
-;;; Create a new surface that is as compatible as possible with the given
-;;; window. For example the new surface will have the same fallback resolution
-;;; and font options as window. Generally, the new surface will also use the
-;;; same backend as window, unless that is not possible for some reason. The
-;;; type of the returned surface may be examined with cairo_surface_get_type().
-;;; 
-;;; Initially the surface contents are all 0 (transparent if contents have
-;;; transparency, black otherwise.)
-;;; 
-;;; window :
-;;;     window to make new surface similar to
-;;; 
-;;; content :
-;;;     the content for the new surface
-;;; 
-;;; width :
-;;;     width of the new surface
-;;; 
-;;; height :
-;;;     height of the new surface
-;;; 
-;;; Returns :
-;;;     a pointer to the newly allocated surface. The caller owns the surface
-;;;     and should call cairo_surface_destroy() when done with it. This function
-;;;     always returns a valid pointer, but it will return a pointer to a "nil"
-;;;     surface if other is already in an error state or any other error occurs.
-;;; 
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_create_similar_surface"
            gdk-window-create-similar-surface) cairo-surface-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-5}
+  @argument[window]{window to make new surface similar to}
+  @argument[content]{the content for the new surface}
+  @argument[width]{width of the new surface}
+  @argument[height]{height of the new surface}
+  @begin{return}
+    A pointer to the newly allocated surface. The caller owns the surface
+    and should call @fun{cairo-surface-destroy} when done with it. This function
+    always returns a valid pointer, but it will return a pointer to a \"nil\"
+    surface if other is already in an error state or any other error occurs.
+  @end{return}
+  @begin{short}
+    Create a new surface that is as compatible as possible with the given
+    window. For example the new surface will have the same fallback resolution
+    and font options as window. Generally, the new surface will also use the
+    same backend as window, unless that is not possible for some reason. The
+    type of the returned surface may be examined with cairo_surface_get_type().
+  @end{short}
+
+  Initially the surface contents are all 0 (transparent if contents have
+  transparency, black otherwise.)
+
+  Since 2.22"
   (window (g-object gdk-window))
   (content cairo-content-t)
   (width :int)

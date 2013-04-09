@@ -1267,15 +1267,14 @@
     Accessor of the slot \"string\" of the @class{gdk-event-key} struct.
   @end{short}")
 
-;;; --- gdk-event-key-keycode --------------------------------------------------
+;;; --- gdk-event-key-hardware-keycode -----------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-keycode atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gdk-event-key-keycode 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot \"keycode\" of the @class{gdk-event-key} struct.
-  @end{short}")
+(setf (gethash 'gdk-event-key-hardware-keycode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-event-key-hardware-keycode 'function)
+ "@version{2013-4-4}
+  Accessor of the slot \"keycode\" of the @class{gdk-event-key} struct.")
 
 ;;; --- gdk-event-key-group ----------------------------------------------------
 
@@ -2621,13 +2620,12 @@
 ;;; --- gdk-event-configure-send-event -----------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-configure-send-event atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gdk-event-configure-event-type 'function)
- "@version{2013-1-21}
-  @begin{short}
-    Accessor of the slot @code{send-event} of the @class{gdk-event-configure}
-    struct.
-  @end{short}")
+(setf (gethash 'gdk-event-configure-send-event atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-event-configure-send-event 'function)
+ "@version{2013-4-4}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-configure}
+  struct.")
 
 ;;; --- gdk-event-configure-x --------------------------------------------------
 

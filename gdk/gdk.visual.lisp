@@ -2,13 +2,14 @@
 ;;; gdk.visual.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -62,38 +63,12 @@
 ;;;
 ;;;   GObject
 ;;;    +----GdkVisual
-;;;
-;;; Description
-;;;
-;;; A GdkVisual describes a particular video hardware display format. It
-;;; includes information about the number of bits used for each color, the way
-;;; the bits are translated into an RGB value for display, and the way the bits
-;;; are stored in memory. For example, a piece of display hardware might support
-;;; 24-bit color, 16-bit color, or 8-bit color; meaning 24/16/8-bit pixel sizes.
-;;; For a given pixel size, pixels can be in different formats; for example the
-;;; "red" element of an RGB pixel may be in the top 8 bits of the pixel, or may
-;;; be in the lower 4 bits.
-;;;
-;;; There are several standard visuals. The visual returned by
-;;; gdk_screen_get_system_visual() is the system's default visual.
-;;;
-;;; A number of functions are provided for determining the "best" available
-;;; visual. For the purposes of making this determination, higher bit depths are
-;;; considered better, and for visuals of the same bit depth,
-;;; GDK_VISUAL_PSEUDO_COLOR is preferred at 8bpp, otherwise, the visual types
-;;; are ranked in the order of(highest to lowest) GDK_VISUAL_DIRECT_COLOR,
-;;; GDK_VISUAL_TRUE_COLOR, GDK_VISUAL_PSEUDO_COLOR, GDK_VISUAL_STATIC_COLOR,
-;;; GDK_VISUAL_GRAYSCALE, then GDK_VISUAL_STATIC_GRAY.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkVisual
-;;;
-;;; typedef struct _GdkVisual GdkVisual;
-;;;
-;;; The GdkVisual structure contains information about a particular visual.
 ;;; ----------------------------------------------------------------------------
 
 
@@ -106,6 +81,32 @@
 
 ;;; ----------------------------------------------------------------------------
 
+(setf (documentation 'gdk-visual 'type)
+ "@version{2013-4-7}
+  @begin{short}
+    A @sym{gdk-visual} describes a particular video hardware display format. It
+    includes information about the number of bits used for each color, the way
+    the bits are translated into an RGB value for display, and the way the bits
+    are stored in memory. For example, a piece of display hardware might support
+    24-bit color, 16-bit color, or 8-bit color; meaning 24/16/8-bit pixel sizes.
+    For a given pixel size, pixels can be in different formats; for example the
+    \"red\" element of an RGB pixel may be in the top 8 bits of the pixel, or
+    may be in the lower 4 bits.
+  @end{short}
+
+  There are several standard visuals. The visual returned by
+  @fun{gdk-screen-get-system-visual} is the system's default visual.
+
+  A number of functions are provided for determining the \"best\" available
+  visual. For the purposes of making this determination, higher bit depths are
+  considered better, and for visuals of the same bit depth,
+  @code{:pseudo-color} is preferred at 8bpp, otherwise, the visual types
+  are ranked in the order of(highest to lowest) @code{:direct-color},
+  @code{:true-color}, @code{:pseudo-color}, @code{:static-color},
+  @code{:grayscale}, then @code{:static-gray}.")
+
+;;; ----------------------------------------------------------------------------
+
 (defmethod print-object ((visual gdk-visual) stream)
   (print-unreadable-object (visual stream :type t :identity t)
     (format stream "~S at ~S bpp"
@@ -114,43 +115,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkVisualType
-;;;
-;;; typedef enum {
-;;;   GDK_VISUAL_STATIC_GRAY,
-;;;   GDK_VISUAL_GRAYSCALE,
-;;;   GDK_VISUAL_STATIC_COLOR,
-;;;   GDK_VISUAL_PSEUDO_COLOR,
-;;;   GDK_VISUAL_TRUE_COLOR,
-;;;   GDK_VISUAL_DIRECT_COLOR
-;;; } GdkVisualType;
-;;;
-;;; A set of values that describe the manner in which the pixel values for a
-;;; visual are converted into RGB values for display.
-;;;
-;;; GDK_VISUAL_STATIC_GRAY
-;;;     Each pixel value indexes a grayscale value directly.
-;;;
-;;; GDK_VISUAL_GRAYSCALE
-;;;     Each pixel is an index into a color map that maps pixel values into
-;;;     grayscale values. The color map can be changed by an application.
-;;;
-;;; GDK_VISUAL_STATIC_COLOR
-;;;     Each pixel value is an index into a predefined, unmodifiable color map
-;;;     that maps pixel values into RGB values.
-;;;
-;;; GDK_VISUAL_PSEUDO_COLOR
-;;;     Each pixel is an index into a color map that maps pixel values into rgb
-;;;     values. The color map can be changed by an application.
-;;;
-;;; GDK_VISUAL_TRUE_COLOR
-;;;     Each pixel value directly contains red, green, and blue components. Use
-;;;     gdk_visual_get_red_pixel_details(), etc, to obtain information about how
-;;;     the components are assembled into a pixel value.
-;;;
-;;; GDK_VISUAL_DIRECT_COLOR
-;;;     Each pixel value contains red, green, and blue components as for
-;;;     GDK_VISUAL_TRUE_COLOR, but the components are mapped via a color table
-;;;     into the final output table instead of being converted directly.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkVisualType" gdk-visual-type
@@ -164,25 +128,48 @@
   (:direct-color 5))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-visual-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gdk-visual-type atdoc:*external-symbols*)
+ "@version{2013-4-7}
+  @begin{short}
+    A set of values that describe the manner in which the pixel values for a
+    visual are converted into RGB values for display.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GdkVisualType\" gdk-visual-type
+  (:export t
+   :type-initializer \"gdk_visual_type_get_type\")
+  (:static-gray 0)
+  (:grayscale 1)
+  (:static-color 2)
+  (:pseudo-color 3)
+  (:true-color 4)
+  (:direct-color 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:static-gray]{Each pixel value indexes a grayscale value directly.}
+    @entry[:grayscale]{Each pixel is an index into a color map that maps pixel
+      values into grayscale values. The color map can be changed by an
+      application.}
+    @entry[:static-color]{Each pixel value is an index into a predefined,
+      unmodifiable color map that maps pixel values into RGB values.}
+    @entry[:pseudo-color]{Each pixel is an index into a color map that maps
+      pixel values into RGB values. The color map can be changed by an
+      application.}
+    @entry[:true-color]{Each pixel value directly contains red, green, and blue
+      components. Use @fun{gdk-visual-get-red-pixel-details}, etc, to obtain
+      information about how the components are assembled into a pixel value.}
+    @entry[:direct-color]{Each pixel value contains red, green, and blue
+      components as for @code{:true-color}, but the components are mapped via a
+      color table into the final output table instead of being converted
+      directly.}
+  @end{table}
+  @see-function{gdk-visual-get-red-pixel-details}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GdkByteOrder
-;;;
-;;; typedef enum {
-;;;   GDK_LSB_FIRST,
-;;;   GDK_MSB_FIRST
-;;; } GdkByteOrder;
-;;;
-;;; A set of values describing the possible byte-orders for storing pixel values
-;;; in memory.
-;;;
-;;; GDK_LSB_FIRST
-;;;     The values are stored with the least-significant byte first. For
-;;;     instance, the 32-bit value 0xffeecc would be stored in memory as 0xcc,
-;;;     0xee, 0xff, 0x00.
-;;;
-;;; GDK_MSB_FIRST
-;;;     The values are stored with the most-significant byte first. For
-;;;     instance, the 32-bit value 0xffeecc would be stored in memory as 0x00,
-;;;     0xcc, 0xee, 0xff.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkByteOrder" gdk-byte-order
@@ -192,21 +179,33 @@
   (:msb-first 1))
 
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-byte-order atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gdk-byte-order atdoc:*external-symbols*)
+ "@version{2013-4-7}
+  @begin{short}
+    A set of values describing the possible byte-orders for storing pixel values
+    in memory.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GdkByteOrder\" gdk-byte-order
+  (:export t
+   :type-initializer \"gdk_byte_order_get_type\")
+  (:lsb-first 0)
+  (:msb-first 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:lsb-first]{The values are stored with the least-significant byte
+      first. For instance, the 32-bit value 0xffeecc would be stored in memory
+      as 0xcc, 0xee, 0xff, 0x00.}
+    @entry[:msb-first]{The values are stored with the most-significant byte
+      first. For instance, the 32-bit value 0xffeecc would be stored in memory
+      as 0x00, 0xcc, 0xee, 0xff.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_query_depths ()
-;;;
-;;; void gdk_query_depths (gint **depths, gint *count);
-;;;
-;;; This function returns the available bit depths for the default screen. It's
-;;; equivalent to listing the visuals (gdk_list_visuals()) and then looking at
-;;; the depth field in each visual, removing duplicates.
-;;;
-;;; The array returned by this function should not be freed.
-;;;
-;;; depths :
-;;;     return location for available depths
-;;;
-;;; count :
-;;;     return location for number of available depths
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_query_depths" %gdk-query-depths) :void
@@ -214,6 +213,13 @@
   (count (:pointer :int)))
 
 (defun gdk-query-depths ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{A list of the available depths.}
+  This function returns the available bit depths for the default screen. It's
+  equivalent to listing the visuals with the function @fun{gdk-list-visuals}
+  and then looking at the depth field in each visual, removing duplicates.
+  @see-function{gdk-list-visuals}"
   (with-foreign-objects ((count-r :int) (depths-r :pointer))
     (%gdk-query-depths depths-r count-r)
     (iter (with count = (mem-ref count-r :int))
@@ -225,20 +231,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_query_visual_types ()
-;;;
-;;; void gdk_query_visual_types (GdkVisualType **visual_types, gint *count);
-;;;
-;;; This function returns the available visual types for the default screen.
-;;; It's equivalent to listing the visuals (gdk_list_visuals()) and then looking
-;;; at the type field in each visual, removing duplicates.
-;;;
-;;; The array returned by this function should not be freed.
-;;;
-;;; visual_types :
-;;;     return location for the available visual types
-;;;
-;;; count :
-;;;     return location for the number of available visual types
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_query_visual_types" %gdk-query-visual-types) :void
@@ -246,6 +238,14 @@
   (count (:pointer :int)))
 
 (defun gdk-query-visual-types ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{A list of the available visual types.}
+  This function returns the available visual types for the default screen.
+  It's equivalent to listing the visuals with the function
+  @fun{gdk-list-visuals} and then looking at the type field in each visual,
+  removing duplicates.
+  @see-function{gdk-list-visuals}"
   (with-foreign-objects ((count-r :int) (types-r 'gdk-visual-type))
     (%gdk-query-visual-types types-r count-r)
     (iter (with count = (mem-ref count-r :int))
@@ -257,73 +257,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_list_visuals ()
-;;;
-;;; GList * gdk_list_visuals (void);
-;;;
-;;; Lists the available visuals for the default screen. (See
-;;; gdk_screen_list_visuals()) A visual describes a hardware image data format.
-;;; For example, a visual might support 24-bit color, or 8-bit color, and might
-;;; expect pixels to be in a certain format.
-;;;
-;;; Call g_list_free() on the return value when you're finished with it.
-;;;
-;;; Returns :
-;;;     a list of visuals; the list must be freed, but not its contents
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_list_visuals" gdk-list-visuals)
-    (g-list (g-object gdk-visual) :free-from-foreign t))
+    (g-list (g-object gdk-visual) :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{A list of visuals.}
+  Lists the available visuals for the default screen. See
+  @fun{gdk-screen-list-visuals}. A visual describes a hardware image data
+  format. For example, a visual might support 24-bit color, or 8-bit color, and
+  might expect pixels to be in a certain format.
+  @see-function{gdk-screen-list-visuals}")
 
 (export 'gdk-list-visuals)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_bits_per_rgb ()
-;;;
-;;; gint gdk_visual_get_bits_per_rgb (GdkVisual *visual);
-;;;
-;;; Returns the number of significant bits per red, green and blue value.
-;;;
-;;; visual :
-;;;     a GdkVisual
-;;;
-;;; Returns :
-;;;     The number of significant bits per color value for visual.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_bits_per_rgb" gdk-visual-get-bits-per-rgb) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @return{The number of significant bits per color value for visual.}
+  @begin{short}
+    Returns the number of significant bits per red, green and blue value.
+  @end{short}
+
+  Since 2.22"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-get-bits-per-rgb)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_blue_pixel_details ()
-;;;
-;;; void gdk_visual_get_blue_pixel_details (GdkVisual *visual,
-;;;                                         guint32 *mask,
-;;;                                         gint *shift,
-;;;                                         gint *precision);
-;;;
-;;; Obtains values that are needed to calculate blue pixel values in TrueColor
-;;; and DirectColor. The "mask" is the significant bits within the pixel. The
-;;; "shift" is the number of bits left we must shift a primary for it to be in
-;;; position (according to the "mask"). Finally, "precision" refers to how much
-;;; precision the pixel value contains for a particular primary.
-;;;
-;;; visual :
-;;;     a GdkVisual
-;;;
-;;; mask :
-;;;     A pointer to a guint32 to be filled in, or NULL.
-;;;
-;;; shift :
-;;;     A pointer to a gint to be filled in, or NULL.
-;;;
-;;; precision :
-;;;     A pointer to a gint to be filled in, or NULL.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_blue_pixel_details"
@@ -334,6 +302,23 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-get-blue-pixel-details (visual)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @begin{return}
+    @code{mask} -- a @code{guint32}, or @code{nil}@br{}
+    @code{shift} -- a @code{gint}, or @code{nil}@br{}
+    @code{precision} -- a @code{gint}, or @code{nil}
+  @end{return}
+  @begin{short}
+    Obtains values that are needed to calculate blue pixel values in TrueColor
+    and DirectColor. The \"mask\" is the significant bits within the pixel. The
+    \"shift\" is the number of bits left we must shift a primary for it to be in
+    position (according to the \"mask\"). Finally, \"precision\" refers to how
+    much precision the pixel value contains for a particular primary.
+  @end{short}
+
+  Since 2.22"
   (with-foreign-objects ((mask :uint32) (shift :int) (precision :int))
     (%gdk-visual-get-blue-pixel-details visual mask shift precision)
     (values (mem-ref mask :uint32)
@@ -344,94 +329,60 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_byte_order ()
-;;;
-;;; GdkByteOrder gdk_visual_get_byte_order (GdkVisual *visual);
-;;;
-;;; Returns the byte order of this visual.
-;;;
-;;; visual :
-;;;     A GdkVisual.
-;;;
-;;; Returns :
-;;;     A GdkByteOrder stating the byte order of visual.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_byte_order" gdk-visual-get-byte-order) gdk-byte-order
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @return{A @symbol{gdk-byte-order} stating the byte order of visual.}
+  @begin{return}
+    Returns the byte order of this visual.
+  @end{return}
+
+  Since 2.22"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-get-byte-order)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_colormap_size ()
-;;;
-;;; gint gdk_visual_get_colormap_size (GdkVisual *visual);
-;;;
-;;; Returns the size of a colormap for this visual.
-;;;
-;;; visual :
-;;;     A GdkVisual.
-;;;
-;;; Returns :
-;;;     The size of a colormap that is suitable for visual.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_colormap_size" gdk-visual-get-colormap-size) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @return{The size of a colormap that is suitable for visual.}
+  @begin{short}
+    Returns the size of a colormap for this visual.
+  @end{short}
+
+  Since 2.22"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-get-colormap-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_depth ()
-;;;
-;;; gint gdk_visual_get_depth (GdkVisual *visual);
-;;;
-;;; Returns the bit depth of this visual.
-;;;
-;;; visual :
-;;;     A GdkVisual.
-;;;
-;;; Returns :
-;;;     The bit depth of this visual.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_depth" gdk-visual-get-depth) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @return{The bit depth of this visual.}
+  @begin{short}
+    Returns the bit depth of this visual.
+  @end{short}
+
+  Since 2.22"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-get-depth)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_green_pixel_details ()
-;;;
-;;; void gdk_visual_get_green_pixel_details (GdkVisual *visual,
-;;;                                          guint32 *mask,
-;;;                                          gint *shift,
-;;;                                          gint *precision);
-;;;
-;;; Obtains values that are needed to calculate green pixel values in TrueColor
-;;; and DirectColor. The "mask" is the significant bits within the pixel. The
-;;; "shift" is the number of bits left we must shift a primary for it to be in
-;;; position (according to the "mask"). Finally, "precision" refers to how much
-;;; precision the pixel value contains for a particular primary.
-;;;
-;;; visual :
-;;;     a GdkVisual
-;;;
-;;; mask :
-;;;     A pointer to a guint32 to be filled in, or NULL.
-;;;
-;;; shift :
-;;;     A pointer to a gint to be filled in, or NULL.
-;;;
-;;; precision :
-;;;     A pointer to a gint to be filled in, or NULL.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_green_pixel_details"
@@ -442,6 +393,22 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-get-green-pixel-details (visual)
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @begin{return}
+    @code{mask} -- a @code{guint32}, or @code{nil}@br{}
+    @code{shift} -- a @code{gint}, or @code{nil}@br{}
+    @code{precision} -- a @code{gint}, or @code{nil}
+  @end{return}
+  @begin{short}
+    Obtains values that are needed to calculate green pixel values in TrueColor
+    and DirectColor. The \"mask\" is the significant bits within the pixel. The
+    \"shift\" is the number of bits left we must shift a primary for it to be in
+    position (according to the \"mask\"). Finally, \"precision\" refers to how
+    much precision the pixel value contains for a particular primary.
+  @end{short}
+
+  Since 2.22"
   (with-foreign-objects ((mask :uint32) (shift :int) (precision :int))
     (%gdk-visual-get-green-pixel-details visual mask shift precision)
     (values (mem-ref mask :uint32)
@@ -452,31 +419,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_red_pixel_details ()
-;;;
-;;; void gdk_visual_get_red_pixel_details (GdkVisual *visual,
-;;;                                        guint32 *mask,
-;;;                                        gint *shift,
-;;;                                        gint *precision);
-;;;
-;;; Obtains values that are needed to calculate red pixel values in TrueColor
-;;; and DirectColor. The "mask" is the significant bits within the pixel. The
-;;; "shift" is the number of bits left we must shift a primary for it to be in
-;;; position (according to the "mask"). Finally, "precision" refers to how much
-;;; precision the pixel value contains for a particular primary.
-;;;
-;;; visual :
-;;;     A GdkVisual
-;;;
-;;; mask :
-;;;     A pointer to a guint32 to be filled in, or NULL.
-;;;
-;;; shift :
-;;;     A pointer to a gint to be filled in, or NULL.
-;;;
-;;; precision :
-;;;     A pointer to a gint to be filled in, or NULL.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_red_pixel_details"
@@ -487,6 +429,22 @@
   (precision (:pointer :int)))
 
 (defun gdk-visual-get-red-pixel-details (visual)
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @begin{return}
+    @code{mask} -- a @code{guint32}, or @code{nil}@br{}
+    @code{shift} -- a @code{gint}, or @code{nil}@br{}
+    @code{precision} -- a @code{gint}, or @code{nil}
+  @end{return}
+  @begin{short}
+    Obtains values that are needed to calculate red pixel values in TrueColor
+    and DirectColor. The \"mask\" is the significant bits within the pixel. The
+    \"shift\" is the number of bits left we must shift a primary for it to be in
+    position (according to the \"mask\"). Finally, \"precision\" refers to how
+    much precision the pixel value contains for a particular primary.
+  @end{short}
+
+  Since 2.22"
   (with-foreign-objects ((mask :uint32) (shift :int) (precision :int))
     (%gdk-visual-get-red-pixel-details visual mask shift precision)
     (values (mem-ref mask :uint32)
@@ -497,156 +455,125 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_visual_type ()
-;;;
-;;; GdkVisualType gdk_visual_get_visual_type (GdkVisual *visual);
-;;;
-;;; Returns the type of visual this is (PseudoColor, TrueColor, etc).
-;;;
-;;; visual :
-;;;     A GdkVisual.
-;;;
-;;; Returns :
-;;;     A GdkVisualType stating the type of visual.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_visual_type" gdk-visual-get-visual-type)
     gdk-visual-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @return{A @symbol{gdk-visual-type} stating the type of visual.}
+  @begin{return}
+    Returns the type of visual this is (PseudoColor, TrueColor, etc).
+  @end{return}
+
+  Since 2.22"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-get-visual-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_best_depth ()
-;;;
-;;; gint gdk_visual_get_best_depth (void);
-;;;
-;;; Get the best available depth for the default GDK screen. "Best" means
-;;; "largest," i.e. 32 preferred over 24 preferred over 8 bits per pixel.
-;;;
-;;; Returns :
-;;;     best available depth
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_visual_get_best_depth" gdk-visual-get-best-depth) :int)
+(defcfun ("gdk_visual_get_best_depth" gdk-visual-get-best-depth) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{Best available depth.}
+  Get the best available depth for the default GDK screen. \"Best\" means
+  \"largest\", i. e. 32 preferred over 24 preferred over 8 bits per pixel.")
 
 (export 'gdk-visual-get-best-depth)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_best_type ()
-;;;
-;;; GdkVisualType gdk_visual_get_best_type (void);
-;;;
-;;; Return the best available visual type for the default GDK screen.
-;;;
-;;; Returns :
-;;;     best visual type
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_visual_get_best_type" gdk-visual-get-best-type) gdk-visual-type)
+(defcfun ("gdk_visual_get_best_type" gdk-visual-get-best-type) gdk-visual-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{Best visual type.}
+  Return the best available visual type for the default GDK screen.")
 
 (export 'gdk-visual-get-best-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_system ()
-;;;
-;;; GdkVisual * gdk_visual_get_system (void);
-;;;
-;;; Get the system's default visual for the default GDK screen. This is the
-;;; visual for the root window of the display. The return value should not be
-;;; freed.
-;;;
-;;; Returns :
-;;;     system visual
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_visual_get_system" gdk-visual-get-system) (g-object gdk-visual))
+(defcfun ("gdk_visual_get_system" gdk-visual-get-system) (g-object gdk-visual)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{The system visual.}
+  Get the system's default visual for the default GDK screen. This is the
+  visual for the root window of the display. The return value should not be
+  freed.")
 
 (export 'gdk-visual-get-system)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_best ()
-;;;
-;;; GdkVisual * gdk_visual_get_best (void);
-;;;
-;;; Get the visual with the most available colors for the default GDK screen.
-;;; The return value should not be freed.
-;;;
-;;; Returns :
-;;;     best visual
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_visual_get_best" gdk-visual-get-best) (g-object gdk-visual))
+(defcfun ("gdk_visual_get_best" gdk-visual-get-best) (g-object gdk-visual)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @return{The best visual.}
+  Get the visual with the most available colors for the default GDK screen.
+  The return value should not be freed.")
 
 (export 'gdk-visual-get-best)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_best_with_depth ()
-;;;
-;;; GdkVisual * gdk_visual_get_best_with_depth (gint depth);
-;;;
-;;; Get the best visual with depth depth for the default GDK screen. Color
-;;; visuals and visuals with mutable colormaps are preferred over grayscale or
-;;; fixed-colormap visuals. The return value should not be freed. NULL may be
-;;; returned if no visual supports depth.
-;;;
-;;; depth :
-;;;     a bit depth
-;;;
-;;; Returns :
-;;;     best visual for the given depth
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_with_depth" gdk-visual-get-best-with-depth)
     (g-object gdk-visual)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[depth]{a bit depth}
+  @return{The best visual for the given depth.}
+  Get the best visual with depth depth for the default GDK screen. Color
+  visuals and visuals with mutable colormaps are preferred over grayscale or
+  fixed-colormap visuals. The return value should not be freed. NULL may be
+  returned if no visual supports depth."
   (depth :int))
 
 (export 'gdk-visual-get-best-with-depth)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_best_with_type ()
-;;;
-;;; GdkVisual * gdk_visual_get_best_with_type (GdkVisualType visual_type);
-;;;
-;;; Get the best visual of the given visual_type for the default GDK screen.
-;;; Visuals with higher color depths are considered better. The return value
-;;; should not be freed. NULL may be returned if no visual has type visual_type.
-;;;
-;;; visual_type :
-;;;     a visual type
-;;;
-;;; Returns :
-;;;     best visual of the given type
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_with_type" gdk-visual-get-best-with-type)
     (g-object gdk-visual)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual-type]{a visual type}
+  @return{The best visual of the given type.}
+  Get the best visual of the given visual_type for the default GDK screen.
+  Visuals with higher color depths are considered better. The return value
+  should not be freed. NULL may be returned if no visual has type visual_type."
   (visual-type gdk-visual-type))
 
 (export 'gdk-visual-get-best-with-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_best_with_both ()
-;;;
-;;; GdkVisual * gdk_visual_get_best_with_both (gint depth,
-;;;                                            GdkVisualType visual_type);
-;;;
-;;; Combines gdk_visual_get_best_with_depth() and
-;;; gdk_visual_get_best_with_type().
-;;;
-;;; depth :
-;;;     a bit depth
-;;;
-;;; visual_type :
-;;;     a visual type
-;;;
-;;; Returns :
-;;;     best visual with both depth and visual_type, or NULL if none
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_best_with_both" gdk-visual-get-best-with-both)
     (g-object gdk-visual)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[depth]{a bit depth}
+  @argument[visual-type]{a visual type}
+  @return{The best visual with both depth and visual_type, or NULL if none.}
+  Combines @fun{gdk-visual-get-best-with-depth} and
+  @fun{gdk-visual-get-best-with-type}.
+  @see-function{gdk-visual-get-best-with-depth}
+  @see-function{gdk-visual-get-best-with-type}"
   (depth :int)
   (visual-type gdk-visual-type))
 
@@ -654,21 +581,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_visual_get_screen ()
-;;;
-;;; GdkScreen * gdk_visual_get_screen (GdkVisual *visual);
-;;;
-;;; Gets the screen to which this visual belongs
-;;;
-;;; visual :
-;;;     a GdkVisual
-;;;
-;;; Returns :
-;;;     the screen to which this visual belongs
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_visual_get_screen" gdk-visual-get-screen) (g-object gdk-screen)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-7}
+  @argument[visual]{a @class{gdk-visual} object}
+  @return{The screen to which this visual belongs.}
+  @begin{short}
+    Gets the screen to which this visual belongs.
+  @end{short}
+
+  Since 2.2"
   (visual (g-object gdk-visual)))
 
 (export 'gdk-visual-get-screen)

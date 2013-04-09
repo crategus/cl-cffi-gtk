@@ -1,7 +1,7 @@
-Content from the GDK 3.4.3 Reference Manual
+Content from the GDK 3.6.4 Reference Manual
 
-  gdk.general.lisp          - Library initialization - GDK 3.4.3
-  gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.4.3
+  gdk.general.lisp          - Library initialization - GDK 3.6.4
+  gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.6.4
   gdk.display.lisp          - GdkDisplay             - GDK 3.4.3
   gdk.screen.lisp           - GdkScreen              - GDK 3.4.3
   gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.4.3
@@ -25,5 +25,5 @@ Content from the GDK 3.4.3 Reference Manual
 
   not implemented           - X Window System Interaction
 
-  gdk.app.lisp              - Application launching  - GDK 3.4.3
+  gdk.app.lisp              - Application launching  - GDK 3.6.4
 
