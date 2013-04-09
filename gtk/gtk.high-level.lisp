@@ -58,6 +58,7 @@
 
 (export 'within-main-loop-and-wait)
 
+#|
 (defstruct progress-display
   parent
   name
@@ -207,4 +208,5 @@
                  repeat 10
                  do (with-progress-bar-action (sleep 1))))))))
 
+|#
 ;;; --- End of file gtk.high-level.lisp ----------------------------------------
