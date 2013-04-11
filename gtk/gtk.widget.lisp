@@ -297,13 +297,9 @@
   (width :int :initform 0)
   (height :int :initform 0))
 
-(export (boxed-related-symbols 'gtk-requisition))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-requisition 'type)
- "@version{2012-12-22}
+ "@version{2013-4-11}
   @begin{short}
     A @sym{gtk-requisition} represents the desired size of a widget.
   @end{short}
@@ -315,23 +311,23 @@
   (height :int :initform 0))
   @end{pre}
   @begin[code]{table}
-    @entry[width]{the widget's desired width}
-    @entry[height]{the widget's desired height}
+    @entry[width]{The widget's desired width.}
+    @entry[height]{The widget's desired height.}
   @end{table}
   @see-slot{gtk-requisition-width}
   @see-slot{gtk-requisition-height}
   @see-constructor{make-gtk-requisition}
   @see-constructor{copy-gtk-requisition}")
 
+(export (boxed-related-symbols 'gtk-requisition))
+
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-width 'function)
- "@version{2012-12-23}
-  @begin{short}
-    Accessor of the slot @arg{width} of the @class{gtk-requisition} structure.
-  @end{short}
+ "@version{2013-4-11}
+  Accessor of the slot @arg{width} of the @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
@@ -339,31 +335,24 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-height 'function)
- "@version{2012-12-23}
-  @begin{short}
-    Accessor of the slot @arg{height} of the @class{gtk-requisition}
-    structure.
-  @end{short}
+ "@version{2013-4-11}
+  Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-requisition 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Creates a @class{gtk-requisition} structure.
-  @end{short}
+ "@version{2013-4-11}
+  Creates a @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-requisition 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Copy constructor of a @class{gtk-requisition} structure.
-  @end{short}
+ "@version{2013-4-11}
+  Copy constructor of a @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
@@ -376,13 +365,9 @@
   (width :int :initform 0)
   (height :int :initform 0))
 
-(export (boxed-related-symbols 'gtk-allocation))
-
-;;; --- gtk-allocation ---------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-allocation 'type)
- "@version{2012-12-22}
+ "@version{2013-4-11}
   @begin{short}
     A @sym{gtk-allocation} of a widget represents a region which has been
     allocated to the widget by its parent.
@@ -403,24 +388,22 @@
   @see-constructor{make-gtk-allocation}
   @see-constructor{copy-gtk-allociation}")
 
+(export (boxed-related-symbols 'gtk-allocation))
+
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-allocation 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Creates a @class{gtk-allocation} structure.
-  @end{short}
+ "@version{2013-4-11}
+  Creates a @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-allocation 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Copy constructor of a @class{gtk-allocation} structure.
-  @end{short}
+ "@version{2013-4-11}
+  Copy constructor of a @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -428,11 +411,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-x atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-x 'function)
- "@version{2012-12-23}
-  @begin{short}
-    Accessor of the slot @code{x} of the @class{gtk-allocation}
-    structure.
-  @end{short}
+ "@version{2013-4-11}
+  Accessor of the slot @code{x} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -440,11 +420,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-y atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-y 'function)
- "@version{2012-12-23}
-  @begin{short}
-    Accessor of the slot @code{y} of the @class{gtk-allocation}
-    structure.
-  @end{short}
+ "@version{2013-4-11}
+  Accessor of the slot @code{y} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -452,11 +429,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-width atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-width 'function)
- "@version{2012-12-23}
-  @begin{short}
-    Accessor of the slot @code{width} of the @class{gtk-allocation}
-    structure.
-  @end{short}
+ "@version{2013-4-11}
+  Accessor of the slot @code{width} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -464,7 +438,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-height atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-height 'function)
- "@version{2013-4-4}
+ "@version{2013-4-11}
   Accessor of the slot @code{height} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
@@ -598,13 +572,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-widget 'type)
- "@version{2012-12-29}
-  @short{Base class for all widgets.}
+ "@version{2013-4-11}
+  @begin{short}
+    Base class for all widgets.
 
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
+  @end{short}
 
-    @heading{Height-for-width Geometry Management}
+  @subheading{Height-for-width Geometry Management}
     GTK+ uses a height-for-width (and width-for-height) geometry management
     system. Height-for-width means that a widget can change how much vertical
     space it needs, depending on the amount of horizontal space that it is given
@@ -730,7 +706,7 @@
     know its natural size. In these cases, the widget should be careful to call
     its virtual methods directly, like this:
 
-    Example 101. Widget calling its own size request method.
+    @b{Example:} Widget calling its own size request method.
     @begin{pre}
  GTK_WIDGET_GET_CLASS(widget)->get_preferred_width (widget),
                                &min, &natural);
@@ -747,27 +723,27 @@
     child of a container, you must use the wrapper APIs. Otherwise, you would
     not properly consider widget margins, @class{gtk-size-group}, and so forth.
 
-   @heading{Style Properties}
-   @sym{gtk-widget} introduces style properties - these are basically object
-   properties that are stored not on the object, but in the style object
-   associated to the widget. Style properties are set in resource files. This
-   mechanism is used for configuring such things as the location of the
-   scrollbar arrows through the theme, giving theme authors more control over
-   the look of applications without the need to write a theme engine in C.
+  @subheading{Style Properties}
+    @sym{gtk-widget} introduces style properties - these are basically object
+    properties that are stored not on the object, but in the style object
+    associated to the widget. Style properties are set in resource files. This
+    mechanism is used for configuring such things as the location of the
+    scrollbar arrows through the theme, giving theme authors more control over
+    the look of applications without the need to write a theme engine in C.
 
-   Use @code{gtk_widget_class_install_style_property()} to install style
-   properties for a widget class, @fun{gtk-widget-class-find-style-property} or
-   @fun{gtk-widget-class-list-style-properties} to get information about
-   existing style properties and @fun{gtk-widget-style-get-property},
-   @code{gtk_widget_style_get()} or @code{gtk_widget_style_get_valist()} to
-   obtain the value of a style property.
+    Use @fun{gtk-widget-class-install-style-property} to install style
+    properties for a widget class, @fun{gtk-widget-class-find-style-property} or
+    @fun{gtk-widget-class-list-style-properties} to get information about
+    existing style properties and @fun{gtk-widget-style-get-property},
+    @fun{gtk-widget-style-get} or @fun{gtk-widget-style-get-valist} to
+    obtain the value of a style property.
 
-    @heading{gtk-widget as gtk-buildable}
+  @subheading{gtk-widget as gtk-buildable}
     The @sym{gtk-widget} implementation of the @class{gtk-buildable} interface
     supports a custom @code{<accelerator>} element, which has attributes named
     key, modifiers and signal and allows to specify accelerators.
 
-    Example 102. A UI definition fragment specifying an accelerator
+    @b{Example:} A UI definition fragment specifying an accelerator
     @begin{pre}
  <object class=\"GtkButton\">
    <accelerator key=\"q\" modifiers=\"GDK_CONTROL_MASK\" signal=\"clicked\"/>
@@ -778,7 +754,7 @@
     Properties on the accessible implementation of an object can be set by
     accessing the internal child @arg{\"accessible\"} of a @sym{gtk-widget}.
 
-    Example 103. A UI definition fragment specifying an accessible
+    @b{Example:} A UI definition fragment specifying an accessible
     @begin{pre}
  <object class=\"GtkButton\" id=\"label1\"/>
    <property name=\"label\">I am a Label for a Button</property>
@@ -799,7 +775,7 @@
     Finally, @sym{gtk-widget} allows style information such as style classes to
     be associated with widgets, using the custom @code{<style>} element:
 
-    Example 104. A UI definition fragment specifying an style class
+    @b{Example:} A UI definition fragment specifying an style class
     @begin{pre}
  <object class=\"GtkButton\" id=\"button1\">
    <style>
@@ -810,100 +786,100 @@
     @end{pre}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"cursor-aspect-ratio\" style property}
-    @code{\"cursor-aspect-ratio\"} @code{gfloat} (Read)@br{}
-    Aspect ratio with which to draw insertion cursor.@br{}
-    Allowed values: @code{[0,1]}@br{}
-    Default value: @code{0.04}
+      @code{\"cursor-aspect-ratio\"} of type @code{:float} (Read)@br{}
+      Aspect ratio with which to draw insertion cursor.@br{}
+      Allowed values: [0,1]@br{}
+      Default value: 0.04
 
     @subheading{The \"cursor-color\" style property}
-    @code{\"cursor-color\"} @class{gdk-color} (Read).@br{}
-    Color with which to draw insertion cursor.
+      @code{\"cursor-color\"} of type @class{gdk-color} (Read)@br{}
+      Color with which to draw insertion cursor.
 
     @subheading{The \"focus-line-pattern\" style property}
-    @code{\"focus-line-pattern\"} @code{gchar*} (Read)@br{}
-    Dash pattern used to draw the focus indicator.@br{}
-    Default value: @code{\"\001\001\"}
+      @code{\"focus-line-pattern\"} of type @code{:string} (Read)@br{}
+      Dash pattern used to draw the focus indicator.@br{}
+      Default value: \"\001\001\"
 
     @subheading{The \"focus-line-width\" style property}
-    @code{\"focus-line-width\"} @code{gint} (Read)@br{}
-    Width, in pixels, of the focus indicator line.@br{}
-    Allowed values: @code{>= 0}@br{}
-    Default value: @code{1}
+      @code{\"focus-line-width\"} of type @code{:int} (Read)@br{}
+      Width, in pixels, of the focus indicator line.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 1
 
     @subheading{The \"focus-padding\" style property}
-    @code{\"focus-padding\"} @code{gint} (Read)@br{}
-    Width, in pixels, between focus indicator and the widget 'box'.@br{}
-    Allowed values: @code{>= 0}@br{}
-    Default value: @code{1}
+      @code{\"focus-padding\"} of type @code{:int} (Read)@br{}
+      Width, in pixels, between focus indicator and the widget 'box'.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 1
 
     @subheading{The \"interior-focus\" style property}
-    @code{\"interior-focus\"} @code{gboolean} (Read)@br{}
-    Whether to draw the focus indicator inside widgets.@br{}
-    Default value: @arg{true}
+      @code{\"interior-focus\"} of type @code{:boolean} (Read)@br{}
+      Whether to draw the focus indicator inside widgets.@br{}
+      Default value: @em{true}
 
     @subheading{The \"link-color\" style property}
-    @code{\"link-color\"} @class{gdk-color} (Read)@br{}
-    The @code{\"link-color\"} style property defines the color of unvisited
-    links.@br{}
-    Since 2.10
+      @code{\"link-color\"} of type @class{gdk-color} (Read)@br{}
+      The @code{\"link-color\"} style property defines the color of unvisited
+      links.@br{}
+      Since 2.10
 
     @subheading{The \"scroll-arrow-hlength\" style property}
-    @code{\"scroll-arrow-hlength\"} @code{gint} (Read)@br{}
-    The @code{\"scroll-arrow-hlength\"} style property defines the length of
-    horizontal scroll arrows.@br{}
-    Allowed values: @code{>= 1}
-    Default value: @code{16}@br{}
-    Since 2.10
+      @code{\"scroll-arrow-hlength\"} of type @code{:int} (Read)@br{}
+      The @code{\"scroll-arrow-hlength\"} style property defines the length of
+      horizontal scroll arrows.@br{}
+      Allowed values: >= 1@br{}
+      Default value: 16@br{}
+      Since 2.10
 
     @subheading{The \"scroll-arrow-vlength\" style property}
-    @code{\"scroll-arrow-vlength\"} @code{gint} (Read)@br{}
-    The @code{\"scroll-arrow-vlength\"} style property defines the length of
-    vertical scroll arrows.@br{}
-    Allowed values: @code{>= 1}
-    Default value: @code{16}
-    Since 2.10
+      @code{\"scroll-arrow-vlength\"} of type @code{:int} (Read)@br{}
+      The @code{\"scroll-arrow-vlength\"} style property defines the length of
+      vertical scroll arrows.@br{}
+      Allowed values: >= 1@br{}
+      Default value: 16@br{}
+      Since 2.10
 
     @subheading{The \"secondary-cursor-color\" style property}
-    @code{\"secondary-cursor-color\"} @class{gdk-color} (Read)@br{}
-    Color with which to draw the secondary insertion cursor when editing mixed
-    right-to-left and left-to-right text.
+      @code{\"secondary-cursor-color\"} of type @class{gdk-color} (Read)@br{}
+      Color with which to draw the secondary insertion cursor when editing
+      mixed right-to-left and left-to-right text.
 
     @subheading{The \"separator-height\" style property}
-    @code{\"separator-height\"} @code{gint} (Read)@br{}
-    The @code{\"separator-height\"} style property defines the height of
-    separators. This property only takes effect if @code{\"wide-separators\"} is
-    @arg{true}.@br{}
-    Allowed values: @code{>= 0}@br{}
-    Default value: @code{0}@br{}
-    Since 2.10
+      @code{\"separator-height\"} of type @code{:int} (Read)@br{}
+      The @code{\"separator-height\"} style property defines the height of
+      separators. This property only takes effect if @code{\"wide-separators\"}
+      is @em{true}.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 0@br{}
+      Since 2.10
 
     @subheading{The \"separator-width\" style property}
-    @code{\"separator-width\"} @code{gint} (Read)@br{}
-    The @code{\"separator-width\"} style property defines the width of
-    separators. This property only takes effect if @code{\"wide-separators\"} is
-    @arg{true}.@br{}
-    Allowed values: @code{>= 0}@br{}
-    Default value: @code{0}@br{}
-    Since 2.10
+      @code{\"separator-width\"} of type @code{:int} (Read)@br{}
+      The @code{\"separator-width\"} style property defines the width of
+      separators. This property only takes effect if @code{\"wide-separators\"}
+      is @em{true}.@br{}
+      Allowed values: >= 0@br{}
+      Default value: 0@br{}
+      Since 2.10
 
     @subheading{The \"visited-link-color\" style property}
-    @code{\"visited-link-color\"} @class{gdk-color} (Read)@br{}
-    The @code{\"visited-link-color\"} style property defines the color of
-    visited links.@br{}
-    Since 2.10
+      @code{\"visited-link-color\"} of type @class{gdk-color} (Read)@br{}
+      The @code{\"visited-link-color\"} style property defines the color of
+      visited links.@br{}
+      Since 2.10
 
     @subheading{The \"wide-separators\" style property}
-    @code{\"wide-separators\"} @code{gboolean} (Read)@br{}
-    The @code{\"wide-separators\"} style property defines whether separators
-    have configurable width and should be drawn using a box instead of a
-    line.@br{}
-    Default value: @code{nil}@br{}
-    Since 2.10
+      @code{\"wide-separators\"} of type @code{:boolean} (Read)@br{}
+      The @code{\"wide-separators\"} style property defines whether separators
+      have configurable width and should be drawn using a box instead of a
+      line.@br{}
+      Default value: @code{nil}@br{}
+      Since 2.10
 
     @subheading{The \"window-dragging\" style property}
-    @code{\"window-dragging\"} @code{gboolean} (Read)@br{}
-    Whether windows can be dragged by clicking on empty areas.@br{}
-    Default value: @code{nil}
+      @code{\"window-dragging\"} of type @code{:boolean} (Read)@br{}
+      Whether windows can be dragged by clicking on empty areas.@br{}
+      Default value: @code{nil}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"accel-closures-changed\" signal}
@@ -920,14 +896,14 @@
       The \"button-press-event\" signal will be emitted when a button
       (typically from a mouse) is pressed.
       To receive this signal, the @class{gdk-window} associated to the widget
-      needs to enable the @code{GDK_BUTTON_PRESS_MASK} mask.
+      needs to enable the @code{:button-press-mask} mask.
       This signal will be sent to the grab widget if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @code{GdkEventButton} of type @class{gdk-event} which
-          triggered this signal.}
-        @entry[Returns]{@em{true} to stop other handlers from being invoked for
-          the event. @code{nil} to propagate the event further.}
+        @entry[event]{The @class{gdk-event-button} of type @class{gdk-event}
+          which triggered this signal.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event, @code{nil} to propagate the event further.}
       @end{table}
     @subheading{The \"button-release-event\" signal}
       @begin{pre}
@@ -936,14 +912,14 @@
       The \"button-release-event\" signal will be emitted when a button
       (typically from a mouse) is released.
       To receive this signal, the @class{gdk-window} associated to the widget
-      needs to enable the @code{GDK_BUTTON_RELEASE_MASK} mask.
+      needs to enable the @code{:button-realease-mask} mask.
       This signal will be sent to the grab widget if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @code{GdkEventButton} of type @class{gdk-event} which
-          triggered this signal.}
-        @entry[Returns]{@em{true} to stop other handlers from being invoked for
-          the event. @code{nil} to propagate the event further.}
+        @entry[event]{The @class{gdk-event-button} of type @class{gdk-event}
+          which triggered this signal.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event, @code{nil} to propagate the event further.}
       @end{table}
     @subheading{The \"can-activate-accel\" signal}
       @begin{pre}
@@ -957,7 +933,7 @@
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
         @entry[signal-id]{The ID of a signal installed on @arg{widget}.}
-        @entry[Returns]{@em{true} if the signal can be activated.}
+        @entry[Returns]{@em{True} if the signal can be activated.}
       @end{table}
     @subheading{The \"child-notify\" signal}
       @begin{pre}
