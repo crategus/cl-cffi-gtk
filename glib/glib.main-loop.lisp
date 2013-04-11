@@ -607,11 +607,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (defconstant g-priority-high -100
+ #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @variable-value{-100}
   @short{Use this for high priority event sources.}
   It is not used within GLib or GTK+.")
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'g-priority-high atdoc:*variable-name-alias*) "Constant")
 
 (export 'g-priority-high)
