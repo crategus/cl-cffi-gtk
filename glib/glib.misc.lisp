@@ -124,13 +124,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-size 'type)
- "@version{2013-3-30}
+ "@version{2013-4-11}
   @begin{short}
     An unsigned integer type of the result of the sizeof operator,
     corresponding to the @code{size_t} type defined in C99.
   @end{short}
   This type is wide enough to hold the numeric value of a pointer, so it is
-  usually 32bit wide on a 32bit platform and 64bit wide on a 64bit platform.
+  usually 32 bit wide on a 32 bit platform and 64 bit wide on a 64 bit platform.
   Values of this type can range from 0 to @code{G_MAXSIZE}.")
 
 ;;; ----------------------------------------------------------------------------
