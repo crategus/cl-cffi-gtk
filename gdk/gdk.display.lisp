@@ -949,16 +949,16 @@
 
 (defcfun ("gdk_display_supports_shapes" gdk-display-supports-shapes) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2013-4-12}
   @argument[display]{a @class{gdk-display} object}
-  @return{@em{True} if shaped windows are supported}
+  @return{@em{True} if shaped windows are supported.}
   @begin{short}
-    Returns @em{true} if the function @fun{gdk-window-shape-combine-mask} can be
-    used to create shaped windows on @arg{display}.
+    Returns @em{true} if the function @fun{gdk-window-shape-combine-region} can
+    be used to create shaped windows on @arg{display}.
   @end{short}
 
   Since 2.10
-  @see-function{gdk-window-shape-combine-mask}"
+  @see-function{gdk-window-shape-combine-region}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-shapes)
@@ -970,16 +970,17 @@
 (defcfun ("gdk_display_supports_input_shapes" gdk-display-supports-input-shapes)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2013-4-12}
   @argument[display]{a @class{gdk-display} object}
-  @return{@em{True} if windows with modified input shape are supported}
+  @return{@em{True} if windows with modified input shape are supported.}
   @begin{short}
-    Returns @em{true} if the function @fun{gdk-window-input-shape-combine-mask}
-    can be used to modify the input shape of windows on @arg{display}.
+    Returns @em{true} if the function
+    @fun{gdk-window-input-shape-combine-region} can be used to modify the input
+    shape of windows on @arg{display}.
   @end{short}
 
   Since 2.10
-  @see-function{gdk-window-input-shape-combine-mask}"
+  @see-function{gdk-window-input-shape-combine-region}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-input-shapes)
