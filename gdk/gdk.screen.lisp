@@ -402,7 +402,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-4}
   @argument[screen]{a @class{gdk-screen} object}
-  @return{The heigth of @arg{screen} in millimeters.}
+  @return{The height of @arg{screen} in millimeters.}
   @begin{short}
     Returns the height of @arg{screen} in millimeters. Note that on some X
     servers this value will not be correct.
@@ -889,7 +889,7 @@
     @code{nil}.
   @end{return}
   @begin{short}
-    Returns a list of @class{gdk-windows} windows representing the current
+    Returns a list of @class{gdk-window} windows representing the current
     window stack.
   @end{short}
 
