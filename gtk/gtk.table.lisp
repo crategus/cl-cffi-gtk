@@ -700,8 +700,8 @@
 
 (defun gtk-table-set-homogeneous (table homogeneous)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
-  @argument[table]{the @class{gtk-table} you wish to set the homogeneous
+ "@version{2013-4-12}
+  @argument[table]{the @class{gtk-table} widget you wish to set the homogeneous
     properties of}
   @argument[homogeneous]{set to @em{true} to ensure all table cells are the same
     size, set to @code{nil} if this is not your desired behaviour}
@@ -713,8 +713,10 @@
   @subheading{Warning}
     @sym{gtk-table-set-homogeneous} has been deprecated since version 3.4 and
     should not be used in newly-written code. Use
-    @class{gtk-grid-set-row-homogeneous} and
-    @fun{gtk-grid-set-column-homogeneous} with @class{gtk-grid}."
+    @fun{gtk-grid-set-row-homogeneous} and
+    @fun{gtk-grid-set-column-homogeneous} with @class{gtk-grid}.
+  @see-function{gtk-grid-set-row-homogeneous}
+  @see-function{gtk-grid-set-column-homogeneous}"
   (setf (gtk-table-homogeneous table) homogeneous))
 
 (export 'gtk-table-set-homogeneous)
@@ -824,18 +826,21 @@
 
 (defun gtk-table-get-default-col-spacing (table)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2013-4-12}
   @argument[table]{a @class{gtk-table} widget}
   @return{The default column spacing.}
   @begin{short}
-    Gets the default column spacing for the table. This is the spacing that will
-    be used for newly added columns. See @fun{gtk-table-set-col-spacings}.
+    Gets the default column spacing for the @arg{table}. This is the spacing
+    that will be used for newly added columns.
+    See @fun{gtk-table-set-col-spacings}.
   @end{short}
 
   @subheading{Warning}
     @sym{gtk-table-get-default-col-spacing} has been deprecated since version
     3.4 and should not be used in newly-written code. Use
-    @class{gtk-grid-get-column-spacing} with @class{gtk-grid}."
+    @fun{gtk-grid-get-column-spacing} with @class{gtk-grid}.
+  @see-function{gtk-table-set-col-spacings}
+  @see-function{gtk-grid-get-column-spacing}"
   (gtk-table-column-spacing table))
 
 (export 'gtk-table-get-default-col-spacing)
