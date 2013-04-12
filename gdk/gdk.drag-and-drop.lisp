@@ -393,7 +393,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-7}
   @argument[window]{the source window for this drag}
-  @argument[targets]{the offered targets, as list of GdkAtoms}
+  @argument[targets]{the offered targets, as list of @symbol{gdk-atom}'s}
   @return{A newly created @class{gdk-drag-context} object.}
   @begin{short}
     Starts a drag and creates a new drag context for it. This function assumes
@@ -401,7 +401,8 @@
     @fun{gdk-drag-begin-for-device} to begin a drag with a different device.
   @end{short}
 
-  This function is called by the drag source."
+  This function is called by the drag source.
+  @see-function{gdk-drag-begin-for-device}"
   (window (g-object gdk-window))
   (targets (g-list gdk-atom-as-string)))
 
@@ -409,27 +410,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_begin_for_device ()
-;;;
-;;; GdkDragContext * gdk_drag_begin_for_device (GdkWindow *window,
-;;;                                             GdkDevice *device,
-;;;                                             GList *targets);
-;;;
-;;; Starts a drag and creates a new drag context for it.
-;;;
-;;; This function is called by the drag source.
-;;;
-;;; window :
-;;;     the source window for this drag
-;;;
-;;; device :
-;;;     the device that controls this drag
-;;;
-;;; targets :
-;;;     the offered targets, as list of GdkAtoms
-;;;
-;;; Returns :
-;;;     a newly created GdkDragContext
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_begin_for_device" gdk-drag-begin-for-device)
+    (g-object gdk-drag-context :already-referenced)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-12}
+  @argument[window]{the source window for this drag}
+  @argument[device]{the device that controls this drag}
+  @argument[targets]{the offered targets, as list of @symbol{gdk-atom}'s}
+  @return{A newly created @class{gdk-drag-context} object.}
+  @short{Starts a drag and creates a new drag context for it.}
+
+  This function is called by the drag source."
+  (window (g-object gdk-window))
+  (device (g-object gdk-device))
+  (targets (g-list gdk-atom-as-string)))
+
+(export 'gdk-drag-begin-for-device)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_motion ()
