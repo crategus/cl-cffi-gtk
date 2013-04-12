@@ -1208,6 +1208,18 @@
       @about-function{gtk-link-button-new-with-label}
     @end{subsection}
     @begin[GtkScaleButton]{subsection}
+      A button which pops up a scale.
+
+      @about-class{gtk-scale-button}
+      @about-function{gtk-scale-button-new}
+      @about-function{gtk-scale-button-set-adjustment}
+      @about-function{gtk-scale-button-set-icons}
+      @about-function{gtk-scale-button-set-value}
+      @about-function{gtk-scale-button-get-adjustment}
+      @about-function{gtk-scale-button-get-value}
+      @about-function{gtk-scale-button-get-popup}
+      @about-function{gtk-scale-button-get-plus-button}
+      @about-function{gtk-scale-button-get-minus-button}
     @end{subsection}
     @begin[GtkVolumeButton]{subsection}
     @end{subsection}
