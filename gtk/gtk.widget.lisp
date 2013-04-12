@@ -8594,7 +8594,7 @@
 
   Since 3.0"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
-    (%gtk-widget-get-preferred-width-for-heigth widget
+    (%gtk-widget-get-preferred-width-for-height widget
                                                 height
                                                 minimum-width
                                                 natural-width)
