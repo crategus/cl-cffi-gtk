@@ -346,7 +346,7 @@
   Returns the height of the default screen in millimeters. Note that on many X
   servers this value will not be correct.")
 
-(export 'gdk-screen-heigth-mm)
+(export 'gdk-screen-height-mm)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pointer_grab ()
