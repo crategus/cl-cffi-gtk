@@ -3375,7 +3375,7 @@
                                  :title "Multiline Text Editing"
                                  :type :toplevel
                                  :default-width 200
-                                 :default-heigth 200))
+                                 :default-height 200))
           (text-view (make-instance 'gtk-text-view))
           (button (make-instance 'gtk-button
                                  :label "Make List Item"))
@@ -3426,7 +3426,7 @@
                                  :title "Multiline Editing Text"
                                  :type :toplevel
                                  :default-width 200
-                                 :defalut-heigth 200))
+                                 :defalut-height 200))
           (text-view (make-instance 'gtk-text-view))
           (button (make-instance 'gtk-button
                                  :label "Insert Close Tag"))
@@ -3506,7 +3506,7 @@
                                  :title "Example TreeView"
                                  :type :toplevel
                                  :default-width 200
-                                 :default-heigth 200))
+                                 :default-height 200))
                                  )
       (g-signal-connect window "destroy"
                         (lambda (widget)

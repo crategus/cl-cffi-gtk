@@ -31,6 +31,8 @@ END-INFO-DIR-ENTRY
 
 @c @include category-macros.texi
 
+@include gtk-links.texi
+
 @titlepage
 @sp 10
 @comment The title is printed in a large font.

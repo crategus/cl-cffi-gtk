@@ -36,12 +36,6 @@
 @findex button-new-with-mnemonic, gtk-button-new-with-mnemonic
 @findex button-new-from-stock, gtk-button-new-from-stock
 
-@set GTK-BUTTON http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-button.html
-@set GTK-BUTTON-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new.html
-@set GTK-BUTTON-NEW-WITH-LABEL http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-with-label.html
-@set GTK-BUTTON-NEW-WITH-MNEMONIC http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-with-mnemonic.html
-@set GTK-BUTTON-NEW-FROM-STOCK http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-from-stock.html
-
 We have almost seen all there is to see of the button widget, which is
 represented by the @url{@value{GTK-BUTTON}, @code{gtk-button}} class.  The
 button widget is pretty simple.  There is however more than one way to create a

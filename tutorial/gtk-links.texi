@@ -1,0 +1,61 @@
+
+@c GtkBuildable
+
+@set GTK-BUILDABLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-buildable.html
+
+@c GtkButton
+
+@set GTK-BUTTON http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-button.html
+@set GTK-BUTTON-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new.html
+@set GTK-BUTTON-NEW-WITH-LABEL http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-with-label.html
+@set GTK-BUTTON-NEW-WITH-MNEMONIC http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-with-mnemonic.html
+@set GTK-BUTTON-NEW-FROM-STOCK http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-new-from-stock.html
+
+@c GtkEntry
+
+@set GTK-ENTRY http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-entry.html
+
+@c GtkEventBox
+
+@set GTK-EVENT-BOX http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-event-box.html
+
+@c GtkJustification
+
+@set GTK-JUSTIFICATION http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-justification.html
+
+@c GtkLabel
+
+@set GTK-LABEL http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-label.html
+@set GTK-LABEL-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-new.html
+@set GTK-LABEL-NEW-WITH-MNEMONIC http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-new-with-mnemonic.html
+@set GTK-LABEL-SET-TEXT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-text.html
+@set GTK-LABEL-GET-TEXT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-get-text.html
+@set GTK-LABEL-SET-MNEMONIC-WIDGET http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-mnemonic-widget.html
+@set GTK-LABEL-SET-TEXT-WITH-MNEMONIC http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-text-with-mnemonic.html
+@set GTK-LABEL-SET-MARKUP http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-markup.html
+
+@set GTK-LABEL-SET-ATTRIBUTES http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-attributes.html
+@set GTK-LABEL-SET-SELECTABLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-selectable.html
+@set GTK-LABEL-SET-LINE-WRAP http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-line-wrap.html
+@set GTK-LABEL-SET-JUSTIFY http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-justify.html
+@set GTK-LABEL-SET-PATTERN http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-pattern.html
+@set GTK-LABEL-GET-CURRENT-URI http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-get-current-uri.html
+
+@c GtkMenuItem
+
+@set GTK-MENU-ITEM http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-item.html
+
+@c GtkMisc
+
+@set GTK-MISC-SET-ALIGNMENT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-misc-set-alignment.html
+
+@c GtkOptionMenu
+
+@set GTK-OPTION-MENU http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-option-menu.html
+
+
+@c PangoAttrList
+
+@set PANGO-ATTR-LIST http://www.crategus.com/books/cl-cffi-gtk/pages/pango_class_pango-attr-list.html
+
+
