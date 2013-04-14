@@ -1280,24 +1280,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoAttrList
-;;;
-;;; typedef struct _PangoAttrList PangoAttrList;
-;;;
-;;; The PangoAttrList structure represents a list of attributes that apply to a
-;;; section of text. The attributes are, in general, allowed to overlap in an
-;;; arbitrary fashion, however, if the attributes are manipulated only through
-;;; pango_attr_list_change(), the overlap between properties will meet stricter
-;;; criteria.
-;;;
-;;; Since the PangoAttrList structure is stored as a linear list, it is not
-;;; suitable for storing attributes for large amounts of text. In general, you
-;;; should not use a single PangoAttrList for more than one paragraph of text.
 ;;; ----------------------------------------------------------------------------
 
 (glib::at-init () (foreign-funcall "pango_attr_list_get_type" :int))
 
 (define-g-boxed-opaque pango-attr-list "PangoAttrList"
-  :alloc (pango-attr-list-new))
+  :alloc (%pango-attr-list-new))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-attr-list atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-attr-list 'type)
+ "@version{2013-4-12}
+  @begin{short}
+    The @sym{pango-attr-list} structure represents a list of attributes that
+    apply to a section of text. The attributes are, in general, allowed to
+    overlap in an arbitrary fashion, however, if the attributes are manipulated
+    only through @fun{pango-attr-list-change}, the overlap between properties
+    will meet stricter criteria.
+  @end{short}
+
+  Since the @sym{pango-attr-list} structure is stored as a linear list, it is
+  not suitable for storing attributes for large amounts of text. In general, you
+  should not use a single @sym{pango-attr-list} for more than one paragraph of
+  text.")
 
 (export (boxed-related-symbols 'pango-attr-list))
 
@@ -1313,9 +1318,7 @@
 ;;;     pango_attr_list_unref()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_attr_list_new" pango-attr-list-new) :pointer)
-
-(export 'pango-attr-list-new)
+(defcfun ("pango_attr_list_new" %pango-attr-list-new) :pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_attr_list_ref ()
