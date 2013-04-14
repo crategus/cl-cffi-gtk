@@ -477,6 +477,15 @@
     (when (g-list-type-free-from-foreign type)
       (g-list-free pointer))))
 
+;; TODO: This implemention only allows pointers as list elements, but not
+;;       Lisp objects.
+
+(defmethod translate-to-foreign (lst (type g-list-type))
+  (let ((nlst (null-pointer)))
+    (iter (for data in lst)
+          (setq nlst (%g-list-append nlst data)))
+    nlst))
+
 (export 'g-list)
 
 #+cl-cffi-gtk-documentation
@@ -521,6 +530,52 @@
   (if (null-pointer-p lst)
       (null-pointer)
       (foreign-slot-value lst '%g-list 'next)))
+
+;;; ----------------------------------------------------------------------------
+;;; g_list_append ()
+;;;
+;;; GList * g_list_append (GList *list, gpointer data);
+;;;
+;;; Adds a new element on to the end of the list.
+;;;
+;;; Note
+;;;
+;;; The return value is the new start of the list, which may have changed, so
+;;; make sure you store the new value.
+;;;
+;;; Note
+;;;
+;;; Note that g_list_append() has to traverse the entire list to find the end,
+;;; which is inefficient when adding multiple elements. A common idiom to avoid
+;;; the inefficiency is to prepend the elements and reverse the list when all
+;;; elements have been added.
+;;;
+;;; /* Notice that these are initialized to the empty list. */
+;;; GList *list = NULL, *number_list = NULL;
+;;;
+;;; /* This is a list of strings. */
+;;; list = g_list_append (list, "first");
+;;; list = g_list_append (list, "second");
+;;;
+;;; /* This is a list of integers. */
+;;; number_list = g_list_append (number_list, GINT_TO_POINTER (27));
+;;; number_list = g_list_append (number_list, GINT_TO_POINTER (14));
+;;;
+;;; list :
+;;;     a pointer to a GList
+;;;
+;;; data :
+;;;     the data for the new element
+;;;
+;;; Returns :
+;;;     the new start of the GList
+;;; ----------------------------------------------------------------------------
+
+;;; GList * g_list_append (GList *list, gpointer data);
+
+(defcfun ("g_list_append" %g-list-append) %g-list
+  (list %g-list)
+  (data :pointer))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSList
