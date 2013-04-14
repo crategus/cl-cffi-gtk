@@ -3146,20 +3146,25 @@
 ;;; gtk_window_set_default_icon_list ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_window_set_default_icon_list" gtk-window-set-default-icon-list)
+(defcfun ("gtk_window_set_default_icon_list" %gtk-window-set-default-icon-list)
     :void
+  (icon-list (g-list (g-object gdk-pixbuf))))
+
+(defun gtk-window-set-default-icon-list (icon-list)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2013-4-13}
   @argument[list]{a list of @class{gdk-pixbuf} objects}
   @begin{short}
-    Sets an icon list to be used as fallback for windows that haven't had
-    @fun{gtk-window-set-icon-list} called on them to set up a window specific
-    icon list. This function allows you to set up the icon for all windows in
-    your app at once.
+    Sets an icon list to be used as fallback for windows that have not had the
+    function @fun{gtk-window-set-icon-list} called on them to set up a window
+    specific icon list. This function allows you to set up the icon for all
+    windows in your app at once.
   @end{short}
 
-  See @fun{gtk-window-set-icon-list} for more details."
-  (icon-list (g-list (g-object gdk-pixbuf))))
+  See @fun{gtk-window-set-icon-list} for more details.
+  @see-function{gtk-window-set-icon-list}"
+  ;; We have to pass a list of pointers.
+  (%gtk-window-set-default-icon-list (mapcar #'pointer icon-list)))
 
 (export 'gtk-window-set-default-icon-list)
 
@@ -3172,7 +3177,7 @@
  "@version{2013-3-29}
   @argument[icon]{the icon}
   @begin{short}
-    Sets an icon to be used as fallback for windows that haven't had
+    Sets an icon to be used as fallback for windows that have not had
     @fun{gtk-window-set-icon} called on them from a pixbuf.
   @end{short}
 
