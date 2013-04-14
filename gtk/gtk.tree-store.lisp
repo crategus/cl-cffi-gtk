@@ -83,22 +83,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-store 'type)
- "@version{2013-3-27}
+ "@version{2013-4-14}
   @begin{short}
-    The GtkTreeStore object is a list model for use with a GtkTreeView widget.
-    It implements the GtkTreeModel interface, and consequentialy, can use all of
-    the methods available there. It also implements the GtkTreeSortable
-    interface so it can be sorted by the view. Finally, it also implements the
-    tree drag and drop interfaces.
+    The @sym{gtk-tree-store} object is a list model for use with a
+    @class{gtk-tree-view} widget. It implements the @class{gtk-tree-model}
+    interface, and consequentialy, can use all of the methods available there.
+    It also implements the @class{gtk-tree-sortable} interface so it can be
+    sorted by the view. Finally, it also implements the tree drag and drop
+    interfaces.
   @end{short}
 
-  GtkTreeStore as GtkBuildable
-  The GtkTreeStore implementation of the GtkBuildable interface allows to
-  specify the model columns with a <columns> element that may contain multiple
-  <column> elements, each specifying one model column. The \"type\" attribute
-  specifies the data type for the column.
+  @subheading{GtkTreeStore as GtkBuildable}
+    The @sym{gtk-tree-store} implementation of the @class{gtk-buildable}
+    interface allows to specify the model columns with a @code{<columns>}
+    element that may contain multiple @code{<column>} elements, each specifying
+    one model column. The @code{\"type\"} attribute specifies the data type for
+    the column.
 
-  Example 73. A UI Definition fragment for a tree store
+  @b{Example:} A UI Definition fragment for a tree store
   @begin{pre}
     <object class=\"GtkTreeStore\">
      <columns>
@@ -220,27 +222,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set ()
-;;;
-;;; void gtk_tree_store_set (GtkTreeStore *tree_store, GtkTreeIter *iter, ...);
-;;;
-;;; Sets the value of one or more cells in the row referenced by iter. The
-;;; variable argument list should contain integer column numbers, each column
-;;; number followed by the value to be set. The list is terminated by a -1. For
-;;; example, to set column 0 with type G_TYPE_STRING to "Foo", you would write
-;;; gtk_tree_store_set (store, iter, 0, "Foo", -1).
-;;;
-;;; The value will be referenced by the store if it is a G_TYPE_OBJECT, and it
-;;; will be copied if it is a G_TYPE_STRING or G_TYPE_BOXED.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     A valid GtkTreeIter for the row being modified
-;;;
-;;; ... :
-;;;     pairs of column number and value, terminated with -1
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-tree-store-set (tree-store iter &rest values)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-14}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter} for the row being modified}
+  @argument[values]{pairs of column number and value}
+  @return{The @class{gtk-tree-iter} for the row being modified.}
+  @begin{short}
+    Sets the value of one or more cells in the row referenced by @arg{iter}. The
+    variable argument list should contain integer column numbers, each column
+    number followed by the value to be set. For example, to set column 0 with
+    type @var{+g-type-string+} to \"Foo\", you would write
+    @code{(gtk-tree-store-set store iter 0 \"Foo\")}.
+  @end{short}
+
+  The value will be referenced by the store if it is a @var{+g-type-object+},
+  and it will be copied if it is a @var{+g-type-string+} or
+  @var{+g-type-boxed+}."
+  (let ((n (length values)))
+    (with-foreign-objects ((value-ar 'g-value n)
+                           (columns-ar :int n))
+      (iter (for i from 0 below n)
+            (for value in values)
+            (for type = (gtk-tree-model-get-column-type tree-store i))
+            (setf (mem-aref columns-ar :int i) i)
+            (set-g-value (mem-aref value-ar 'g-value i)
+                         value
+                         type
+                         :zero-g-value t))
+      (gtk-tree-store-set-valuesv tree-store iter columns-ar value-ar n)
+      (iter (for i from 0 below n)
+            (g-value-unset (mem-aref value-ar 'g-value i)))
+      iter)))
+
+(export 'gtk-tree-store-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set_valist ()
@@ -264,35 +282,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_set_valuesv ()
-;;;
-;;; void gtk_tree_store_set_valuesv (GtkTreeStore *tree_store,
-;;;                                  GtkTreeIter *iter,
-;;;                                  gint *columns,
-;;;                                  GValue *values,
-;;;                                  gint n_values);
-;;;
-;;; A variant of gtk_tree_store_set_valist() which takes the columns and values
-;;; as two arrays, instead of varargs. This function is mainly intended for
-;;; language bindings or in case the number of columns to change is not known
-;;; until run-time.
-;;;
-;;; tree_store :
-;;;     A GtkTreeStore
-;;;
-;;; iter :
-;;;     A valid GtkTreeIter for the row being modified
-;;;
-;;; columns :
-;;;     an array of column numbers
-;;;
-;;; values :
-;;;     an array of GValues
-;;;
-;;; n_values :
-;;;     the length of the columns and values arrays
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_store_set_valuesv"
+           gtk-tree-store-set-valuesv) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-14}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter} for the row being modified}
+  @argument[columns]{an array of column numbers}
+  @argument[values]{an array of @symbol{g-value}'s}
+  @argument[n-values]{the length of the columns and values arrays}
+  @begin{short}
+    A variant of @fun{gtk-tree-store-set-valist} which takes the columns and
+    values as two arrays, instead of varargs. This function is mainly intended
+    for language bindings or in case the number of columns to change is not
+    known until run-time.
+  @end{short}
+  Since 2.12"
+  (tree-store (g-object gtk-tree-store))
+  (iter (g-boxed-foreign gtk-tree-iter))
+  (columns :pointer)
+  (values :pointer)
+  (n-values :int))
+
+(export 'gtk-tree-store-set-valuesv)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_remove ()
@@ -529,14 +543,15 @@
 
 (defun gtk-tree-store-append (tree-store parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore}
-  @argument[parent]{A valid GtkTreeIter, or NULL.}
-  Appends a new row to tree_store. If parent is non-NULL, then it will append
-  the new row after the last child of parent, otherwise it will append a row
-  to the top level. iter will be changed to point to this new row. The row
-  will be empty after this function is called. To fill in values, you need to
-  call gtk_tree_store_set() or gtk_tree_store_set_value()."
+ "@version{2013-4-14}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[parent]{a valid @class{gtk-tree-iter} structure, or @code{nil}}
+  @return{The @class{gtk-tree-iter} of the appended row.}
+  Appends a new row to @arg{tree-store}. If @arg{parent} is non-@code{nil}, then
+  it will append the new row after the last child of @arg{parent}, otherwise it
+  will append a row to the top level. The row will be empty after this function
+  is called. To fill in values, you need to call @fun{gtk-tree-store-set} or
+  @fun{gtk-tree-store-set-value}."
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-append tree-store iter parent)
     iter))
