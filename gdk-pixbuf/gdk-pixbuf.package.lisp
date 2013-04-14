@@ -90,10 +90,11 @@
   @begin[File Saving]{section}
     Saving a pixbuf to a file.
 
-    These functions allow to save a @class{gdk-pixbuf} in a number of file
-    formats. The formatted data can be written to a file or to a memory buffer.
-    @class{gdk-pixbuf} can also call a user-defined callback on the data, which
-    allows to e.g. write the image to a socket or store it in a database.
+    These functions allow to save a @class{gdk-pixbuf} object in a number of
+    file formats. The formatted data can be written to a file or to a memory
+    buffer. @class{gdk-pixbuf} can also call a user-defined callback on the
+    data, which allows to e. g. write the image to a socket or store it in a
+    database.
 
     @about-function{gdk-pixbuf-savev}
     @about-function{gdk-pixbuf-save}
@@ -103,6 +104,19 @@
     @about-function{gdk-pixbuf-save-to-bufferv}
     @about-function{gdk-pixbuf-save-to-stream}
   @end{section}
- ")
+  @begin[Utilities]{section}
+    Utility and miscellaneous convenience functions.
+
+    These functions provide miscellaneous utilities for manipulating pixbufs.
+    The pixel data in pixbufs may of course be manipulated directly by
+    applications, but several common operations can be performed by these
+    functions instead.
+
+    @about-function{gdk-pixbuf-add-alpha}
+    @about-function{gdk-pixbuf-copy-area}
+    @about-function{gdk-pixbuf-saturate-and-pixelate}
+    @about-function{gdk-pixbuf-apply-embedded-orientation}
+    @about-function{gdk-pixbuf-fill}
+  @end{section}")
 
 ;;; --- End of file gdk.pixbuf-package.lisp ------------------------------------
