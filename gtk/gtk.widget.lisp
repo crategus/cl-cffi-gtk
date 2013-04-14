@@ -966,10 +966,10 @@
       mask automatically for all new windows.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @code{GdkEventConfigure} of type @class{gdk-event}
+        @entry[event]{The @class{gdk-event-configure} of type @class{gdk-event}
           which triggered this signal.}
-        @entry[Returns]{@em{true} to stop other handlers from being invoked for
-          the event. @code{nil} to propagate the event further.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @code{Nil} to propagate the event further.}
       @end{table}
     @subheading{The \"damage-event\" signal}
       @begin{pre}
@@ -979,163 +979,126 @@
       region/area members of the event shows what area of the redirected
       drawable was drawn into.
       @begin[code]{table}
-        @entry[widget]{the object which received the signal}
-        @entry[event]{the @class{gdk-event-expose} event}
+        @entry[widget]{The object which received the signal.}
+        @entry[event]{The @class{gdk-event-expose} event.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
-          the event. @code{nil} to propagate the event further.}
+          the event. @code{Nil} to propagate the event further.}
       @end{table}
       Since 2.14
 
-    @b{The \"delete-event\" signal}
-    @begin{pre}
- gboolean user_function (GtkWidget *widget,
-                         GdkEvent  *event,
-                         gpointer   user_data)      : Run Last
-    @end{pre}
-    The @code{::delete-event} signal is emitted if a user requests that a
-    toplevel window is closed. The default handler for this signal destroys the
-    window. Connecting gtk_widget_hide_on_delete() to this signal will cause the
-    window to be hidden instead, so that it can later be shown again without
-    reconstructing it.
+    @subheading{The \"delete-event\" signal}
+      @begin{pre}
+ lambda (widget event)   : Run Last
+      @end{pre}
+      The \"delete-event\" signal is emitted if a user requests that a
+      toplevel window is closed. The default handler for this signal destroys
+      the window. Connecting @fun{gtk-widget-hide-on-delete} to this signal will
+      cause the window to be hidden instead, so that it can later be shown again
+      without reconstructing it.
     @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[event]{the event which triggered this signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-      @entry[Returns]{TRUE to stop other handlers from being invoked for the
-        event. FALSE to propagate the event further.}
+      @entry[widget]{The object which received the signal.}
+      @entry[event]{The event which triggered this signal.}
+      @entry[Returns]{@em{True} to stop other handlers from being invoked for
+        the event. @code{Nil} to propagate the event further.}
     @end{table}
-
-    @b{The \"destroy\" signal}
-    @begin{pre}
- void user_function (GtkWidget *object,
-                     gpointer   user_data)      : No Hooks
-    @end{pre}
-    Signals that all holders of a reference to the widget should release the
-    reference that they hold. May result in finalization of the widget if all
-    references are released.
-    @begin[code]{table}
-      @entry[object]{the object which received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
+    @subheading{The \"destroy\" signal}
+      @begin{pre}
+ lambda (object)   :No Hooks
+      @end{pre}
+      Signals that all holders of a reference to the widget should release the
+      reference that they hold. May result in finalization of the widget if all
+      references are released.
+      @begin[code]{table}
+        @entry[object]{The object which received the signal.}
     @end{table}
-
-    @b{The \"destroy-event\" signal}
-    @begin{pre}
- gboolean user_function (GtkWidget *widget,
-                         GdkEvent  *event,
-                         gpointer   user_data)      : Run Last
-    @end{pre}
-    The ::destroy-event signal is emitted when a GdkWindow is destroyed. You
-    rarely get this signal, because most widgets disconnect themselves from
-    their window before they destroy it, so no widget owns the window at destroy
-    time.
-
-    To receive this signal, the GdkWindow associated to the widget needs to
-    enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask automatically
-    for all new windows.
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal.}
-      @entry[event]{the event which triggered this signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-      @entry[Returns]{TRUE to stop other handlers from being invoked for the
-        event. FALSE to propagate the event further.}
+    @subheading{The \"destroy-event\" signal}
+      @begin{pre}
+ lambda (widget event)   : Run Last
+      @end{pre}
+      The \"destroy-event\" signal is emitted when a @class{gdk-window} window
+      is destroyed. You rarely get this signal, because most widgets disconnect
+      themselves from their window before they destroy it, so no widget owns the
+      window at destroy time.
+      To receive this signal, the @class{gdk-window} window associated to the
+      widget needs to enable the @code{GDK_STRUCTURE_MASK} mask. GDK will enable
+      this mask automatically for all new windows.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[event]{The event which triggered this signal.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @code{Nil} to propagate the event further.}
+      @end{table}
+    @subheading{The \"direction-changed\" signal}
+      @begin{pre}
+ lambda (widget previous-direction)   : Run First
+      @end{pre}
+      The \"direction-changed\" signal is emitted when the text direction of a
+      widget changes.
+      @begin[code]{table}
+        @entry[widget]{The object on which the signal is emitted.}
+        @entry[previous-direction]{The previous text direction of widget.}
+      @end{table}
+    @subheading{The \"drag-begin\" signal}
+      @begin{pre}
+ lambda (widget drag-context)   : Run Last
+      @end{pre}
+      The \"drag-begin\" signal is emitted on the drag source when a drag is
+      started. A typical reason to connect to this signal is to set up a custom
+      drag icon with @fun{gtk-drag-source-set-icon}.
+      Note that some widgets set up a drag icon in the default handler of this
+      signal, so you may have to use @fun{g-signal-connect-after} to override
+      what the default handler did.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+      @end{table}
+    @subheading{The \"drag-data-delete\" signal}
+      @begin{pre}
+ lambda (widget drag-context)   : Run Last
+      @end{pre}
+      The \"drag-data-delete\" signal is emitted on the drag source when a drag
+      with the action @code{:move} of type @symbol{gdk-drag-action} is
+      successfully completed. The signal handler is responsible for deleting the
+      data that has been dropped. What \"delete\" means depends on the context
+      of the drag operation.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+      @end{table}
+    @subheading{The \"drag-data-get\" signal}
+      @begin{pre}
+ lambda (widget drag-context data info time)   : Run Last
+      @end{pre}
+      The \"drag-data-get\" signal is emitted on the drag source when the drop
+      site requests the data which is dragged. It is the responsibility of the
+      signal handler to fill data with the data in the format which is
+      indicated by info. See @fun{gtk-selection-data-set} and
+      @fun{gtk-selection-data-set-text}.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+        @entry[data]{The @class{gtk-selection-data} to be filled with the
+          dragged data}
+        @entry[info]{The info that has been registered with the target in the
+          @class{gtk-target-list}.}
+      @entry[time]{The timestamp at which the data was requested.}
     @end{table}
-
-    @b{The \"direction-changed\" signal}
-    @begin{pre}
- void user_function (GtkWidget       *widget,
-                     GtkTextDirection previous_direction,
-                     gpointer         user_data)               : Run First
-    @end{pre}
-    The ::direction-changed signal is emitted when the text direction of a
-    widget changes.
-    @begin[code]{table}
-      @entry[widget]{the object on which the signal is emitted}
-      @entry[previous_direction]{the previous text direction of widget}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-
-    @b{The \"drag-begin\" signal}
-    @begin{pre}
- void user_function (GtkWidget      *widget,
-                     GdkDragContext *drag_context,
-                     gpointer        user_data)         : Run Last
-    @end{pre}
-    The ::drag-begin signal is emitted on the drag source when a drag is
-    started. A typical reason to connect to this signal is to set up a custom
-    drag icon with gtk_drag_source_set_icon().
-
-    Note that some widgets set up a drag icon in the default handler of this
-    signal, so you may have to use g_signal_connect_after() to override what the
-    default handler did.
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-
-    @b{The \"drag-data-delete\" signal}
-    @begin{pre}
- void user_function (GtkWidget      *widget,
-                     GdkDragContext *drag_context,
-                     gpointer        user_data)         : Run Last
-    @end{pre}
-    The ::drag-data-delete signal is emitted on the drag source when a drag with
-    the action GDK_ACTION_MOVE is successfully completed. The signal handler is
-    responsible for deleting the data that has been dropped. What \"delete\"
-    means depends on the context of the drag operation.
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-
-    @b{The \"drag-data-get\" signal}
-    @begin{pre}
- void user_function (GtkWidget        *widget,
-                     GdkDragContext   *drag_context,
-                     GtkSelectionData *data,
-                     guint             info,
-                     guint             time,
-                     gpointer          user_data)         : Run Last
-    @end{pre}
-    The ::drag-data-get signal is emitted on the drag source when the drop site
-    requests the data which is dragged. It is the responsibility of the signal
-    handler to fill data with the data in the format which is indicated by info.
-    See gtk_selection_data_set() and gtk_selection_data_set_text().
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[data]{the GtkSelectionData to be filled with the dragged data}
-      @entry[info]{the info that has been registered with the target in the
-        GtkTargetList}
-      @entry[time]{the timestamp at which the data was requested}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-
-    @b{The \"drag-data-received\" signal}
-    @begin{pre}
- void user_function (GtkWidget        *widget,
-                     GdkDragContext   *drag_context,
-                     gint              x,
-                     gint              y,
-                     GtkSelectionData *data,
-                     guint             info,
-                     guint             time,
-                     gpointer          user_data)         : Run Last
-    @end{pre}
-    The ::drag-data-received signal is emitted on the drop site when the dragged
-    data has been received. If the data was received in order to determine
-    whether the drop will be accepted, the handler is expected to call
-    gdk_drag_status() and not finish the drag. If the data was received in
-    response to a \"drag-drop\" signal (and this is the last target to be
-    received), the handler for this signal is expected to process the received
-    data and then call gtk_drag_finish(), setting the success parameter
-    depending on whether the data was processed successfully.
-
-    The handler may inspect and modify drag_context->action before calling
-    gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
-    following example:
-    @begin{pre}
+    @subheading{The \"drag-data-received\" signal}
+      @begin{pre}
+ lambda (widget drag-context x y data info time)   : Run Last
+      @end{pre}
+      The \"drag-data-received\" signal is emitted on the drop site when the
+      dragged data has been received. If the data was received in order to
+      determine whether the drop will be accepted, the handler is expected to
+      call @fun{gdk-drag-status} and not finish the drag. If the data was
+      received in response to a \"drag-drop\" signal (and this is the last
+      target to be received), the handler for this signal is expected to process
+      the received data and then call @fun{gtk-drag-finish}, setting the success
+      parameter depending on whether the data was processed successfully.
+      The handler may inspect and modify @code{drag_context->action} before
+      calling @fun{gtk-drag-finish}, e. g. to implement @code{:ask} of type
+      @symbol{gdk-drag-action} as shown in the following example:
+      @begin{pre}
  void
  drag_data_received (GtkWidget          *widget,
                      GdkDragContext     *drag_context,
@@ -1172,83 +1135,72 @@
 
     gtk_drag_finish (drag_context, FALSE, FALSE, time);
   @}
-    @end{pre}
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[x]{where the drop happened}
-      @entry[y]{where the drop happened}
-      @entry[data]{the received data}
-      @entry[info]{the info that has been registered with the target in the
-        GtkTargetList}
-      @entry[time]{the timestamp at which the data was received}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
+      @end{pre}
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+        @entry[x]{Where the drop happened.}
+        @entry[y]{Where the drop happened.}
+        @entry[data]{The received data.}
+        @entry[info]{The info that has been registered with the target in the
+          @class{gtk-target-list}.}
+        @entry[time]{the timestamp at which the data was received.}
+      @end{table}
+    @subheading{The \"drag-drop\" signal}
+      @begin{pre}
+ lambda (widget drag-context x y time)   : Run Last
+      @end{pre}
+      The \"drag-drop\" signal is emitted on the drop site when the user drops
+      the data onto the widget. The signal handler must determine whether the
+      cursor position is in a drop zone or not. If it is not in a drop zone, it
+      returns @code{nil} and no further processing is necessary. Otherwise, the
+      handler returns @em{true}. In this case, the handler must ensure that
+      @fun{gtk-drag-finish} is called to let the source know that the drop is
+      done. The call to @fun{gtk-drag-finish} can be done either directly or in
+      a \"drag-data-received\" signal handler which gets triggered by calling
+      @fun{gtk-drag-get-data} to receive the data for one or more of the
+      supported targets.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+        @entry[x]{The x coordinate of the current cursor position.}
+        @entry[y]{The y coordinate of the current cursor position.}
+        @entry[time]{The timestamp of the motion event.}
+        @entry[Returns]{Whether the cursor position is in a drop zone.}
+      @end{table}
+    @subheading{The \"drag-end\" signal}
+      @begin{pre}
+ lambda (widget drag-context)   : Run Last
+      @end{pre}
+      The \"drag-end\" signal is emitted on the drag source when a drag is
+      finished. A typical reason to connect to this signal is to undo things
+      done in \"drag-begin\".
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+      @end{table}
+    @subheading{The \"drag-failed\" signal}
+      @begin{pre}
+ lambda (widget drag-context result)   : Run Last
+      @end{pre}
+      The \"drag-failed\" signal is emitted on the drag source when a drag has
+      failed. The signal handler may hook custom code to handle a failed DND
+      operation based on the type of error, it returns TRUE is the failure has
+      been already handled (not showing the default \"drag operation failed\"
+      animation), otherwise it returns @code{nil}.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+        @entry[drag-context]{The drag context.}
+        @entry[result]{The result of the drag operation.}
+        @entry[Returns]{@em{True} if the failed drag operation has been already
+          handled.}
+      @end{table}
+      Since 2.12
 
-    @b{The \"drag-drop\" signal}
-    @begin{pre}
- gboolean user_function (GtkWidget      *widget,
-                         GdkDragContext *drag_context,
-                         gint            x,
-                         gint            y,
-                         guint           time,
-                         gpointer        user_data)         : Run Last
-    @end{pre}
-    The ::drag-drop signal is emitted on the drop site when the user drops the
-    data onto the widget. The signal handler must determine whether the cursor
-    position is in a drop zone or not. If it is not in a drop zone, it returns
-    FALSE and no further processing is necessary. Otherwise, the handler returns
-    TRUE. In this case, the handler must ensure that gtk_drag_finish() is called
-    to let the source know that the drop is done. The call to gtk_drag_finish()
-    can be done either directly or in a \"drag-data-received\" handler which
-    gets triggered by calling gtk_drag_get_data() to receive the data for one or
-    more of the supported targets.
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[x]{the x coordinate of the current cursor position}
-      @entry[y]{the y coordinate of the current cursor position}
-      @entry[time]{the timestamp of the motion event}
-      @entry[user_data]{user data set when the signal handler was connected.}
-      @entry[Returns]{whether the cursor position is in a drop zone}
-    @end{table}
 
-    @b{The \"drag-end\" signal}
-    @begin{pre}
- void user_function (GtkWidget      *widget,
-                     GdkDragContext *drag_context,
-                     gpointer        user_data)         : Run Last
-    @end{pre}
-    The ::drag-end signal is emitted on the drag source when a drag is finished.
-    A typical reason to connect to this signal is to undo things done in
-    \"drag-begin\".
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
 
-    @b{The \"drag-failed\" signal}
-    @begin{pre}
- gboolean user_function (GtkWidget      *widget,
-                         GdkDragContext *drag_context,
-                         GtkDragResult   result,
-                         gpointer        user_data)         : Run Last
-    @end{pre}
-    The ::drag-failed signal is emitted on the drag source when a drag has
-    failed. The signal handler may hook custom code to handle a failed DND
-    operation based on the type of error, it returns TRUE is the failure has
-    been already handled (not showing the default \"drag operation failed\"
-    animation), otherwise it returns FALSE.
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal}
-      @entry[drag_context]{the drag context}
-      @entry[result]{the result of the drag operation}
-      @entry[user_data]{user data set when the signal handler was connected.}
-      @entry[Returns]{TRUE if the failed drag operation has been already
-        handled.}
-    @end{table}
-    Since 2.12
+
+
 
     @b{The \"drag-leave\" signal}
     @begin{pre}

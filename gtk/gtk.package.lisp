@@ -1073,21 +1073,49 @@
 
       @about-class{gtk-label}
       @about-function{gtk-label-new}
-      @about-function{gtk-label-text}
+      @about-function{gtk-label-set-text}
+      @about-function{gtk-label-set-attributes}
       @about-function{gtk-label-set-markup}
       @about-function{gtk-label-set-markup-with-mnemonic}
+      @about-function{gtk-label-set-pattern}
+      @about-function{gtk-label-set-justify}
+      @about-function{gtk-label-set-ellipsize}
+      @about-function{gtk-label-set-width-chars}
+      @about-function{gtk-label-set-max-width-chars}
       @about-function{gtk-label-set-line-wrap}
       @about-function{gtk-label-set-line-wrap-mode}
       @about-function{gtk-label-get-layout-offsets}
+      @about-function{gtk-label-get-mnemonic-keyval}
+      @about-function{gtk-label-get-selectable}
       @about-function{gtk-label-get-text}
       @about-function{gtk-label-new-with-mnemonic}
       @about-function{gtk-label-select-region}
+      @about-function{gtk-label-set-mnemonic-widget}
+      @about-function{gtk-label-set-selectable}
       @about-function{gtk-label-set-text-with-mnemonic}
+      @about-function{gtk-label-get-attributes}
+      @about-function{gtk-label-get-justify}
+      @about-function{gtk-label-get-ellipsize}
+      @about-function{gtk-label-get-width-chars}
+      @about-function{gtk-label-get-max-width-chars}
+      @about-function{gtk-label-get-label}
       @about-function{gtk-label-get-layout}
       @about-function{gtk-label-get-line-wrap}
       @about-function{gtk-label-get-line-wrap-mode}
+      @about-function{gtk-label-get-mnemonic-widget}
       @about-function{gtk-label-get-selection-bounds}
+      @about-function{gtk-label-get-use-markup}
+      @about-function{gtk-label-get-use-underline}
+      @about-function{gtk-label-get-single-line-mode}
+      @about-function{gtk-label-get-angle}
+      @about-function{gtk-label-set-label}
+      @about-function{gtk-label-set-use-markup}
+      @about-function{gtk-label-set-use-underline}
+      @about-function{gtk-label-set-single-line-mode}
+      @about-function{gtk-label-set-angle}
       @about-function{gtk-label-get-current-uri}
+      @about-function{gtk-label-set-track-visited-links}
+      @about-function{gtk-label-get-track-visited-links}
     @end{subsection}
     @begin[GtkProgressBar]{subsection}
       A widget which indicates progress visually.
@@ -1309,6 +1337,33 @@
     @begin[GtkListStore]{subsection}
     @end{subsection}
     @begin[GtkTreeStore]{subsection}
+      A tree-like data structure that can be used with the
+      @class{gtk-tree-view}.
+
+      @about-class{gtk-tree-store}
+      @about-function{gtk-tree-store-new}
+      @about-function{gtk-tree-store-newv}
+      @about-function{gtk-tree-store-set-column-types}
+      @about-function{gtk-tree-store-set-value}
+      @about-function{gtk-tree-store-set}
+      @about-function{gtk-tree-store-set-valist}
+      @about-function{gtk-tree-store-set-valuesv}
+      @about-function{gtk-tree-store-remove}
+      @about-function{gtk-tree-store-insert}
+      @about-function{gtk-tree-store-insert-before}
+      @about-function{gtk-tree-store-insert-after}
+      @about-function{gtk-tree-store-insert-with-values}
+      @about-function{gtk-tree-store-insert-with-valuesv}
+      @about-function{gtk-tree-store-prepend}
+      @about-function{gtk-tree-store-append}
+      @about-function{gtk-tree-store-is-ancestor}
+      @about-function{gtk-tree-store-iter-depth}
+      @about-function{gtk-tree-store-clear}
+      @about-function{gtk-tree-store-iter-is-valid}
+      @about-function{gtk-tree-store-reorder}
+      @about-function{gtk-tree-store-swap}
+      @about-function{gtk-tree-store-move-before}
+      @about-function{gtk-tree-store-move-after}
     @end{subsection}
   @end{section}
   @begin[Menus, Combo Box, Toolbar]{section}
