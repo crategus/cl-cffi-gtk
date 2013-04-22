@@ -1,27 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.properties.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;; 
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
+;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
-;;; 
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
-;;; 
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -80,14 +81,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkAtom
-;;;
-;;; typedef struct _GdkAtom GdkAtom;
-;;;
-;;; An opaque type representing a string as an index into a table of strings on
-;;; the X server.
 ;;; ----------------------------------------------------------------------------
 
 (defctype gdk-atom :pointer)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-atom atdoc:*symbol-name-alias*) "Type"
+      (gethash 'gdk-atom atdoc:*external-symbols*)
+ "@version{2013-4-17}
+  An opaque type representing a string as an index into a table of strings on
+  the X server.
+
+  An atom is a numeric index into a string table on the X server. They are used
+  to transfer strings efficiently between clients without having to transfer the
+  entire string.")
 
 (export 'gdk-atom)
 
@@ -197,26 +204,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_atom_intern ()
-;;;
-;;; GdkAtom gdk_atom_intern (const gchar *atom_name, gboolean only_if_exists);
-;;;
-;;; Finds or creates an atom corresponding to a given string.
-;;;
-;;; atom_name :
-;;;     a string.
-;;;
-;;; only_if_exists :
-;;;     if TRUE, GDK is allowed to not create a new atom, but just return
-;;;     GDK_NONE if the requested atom doesn't already exists. Currently, the
-;;;     flag is ignored, since checking the existance of an atom is as expensive
-;;;     as creating it.
-;;;
-;;; Returns :
-;;;     the atom corresponding to atom_name
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_atom_intern" gdk-atom-intern) gdk-atom
-  (name :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-17}
+  @argument[atom-name]{a string}
+  @argument[only-if-exists]{if @em{true}, GDK is allowed to not create a new
+    atom, but just return @code{GDK_NONE} if the requested atom does not already
+    exists. Currently, the flag is ignored, since checking the existance of an
+    atom is as expensive as creating it.}
+  @return{The atom corresponding to @arg{atom-name}.}
+  Finds or creates an atom corresponding to a given string."
+  (atom-name :string)
   (only-if-exists :boolean))
 
 (export 'gdk-atom-intern)
@@ -247,21 +247,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_atom_name ()
-;;;
-;;; gchar * gdk_atom_name (GdkAtom atom);
-;;;
-;;; Determines the string corresponding to an atom.
-;;;
-;;; atom :
-;;;     a GdkAtom.
-;;;
-;;; Returns :
-;;;     a newly-allocated string containing the string corresponding to atom.
-;;;     When you are done with the return value, you should free it using
-;;;     g_free().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_atom_name" gdk-atom-name) (g-string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-17}
+  @argument[atom]{a @symbol{gdk-atom}}
+  @begin{return}
+    A newly allocated string containing the string corresponding to @arg{atom}.
+  @end{return}
+  Determines the string corresponding to an atom."
   (atom gdk-atom))
 
 (export 'gdk-atom-name)
@@ -418,6 +413,5 @@
 ;;; property :
 ;;;     the property to delete
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gdk.properties.lisp ----------------------------------------

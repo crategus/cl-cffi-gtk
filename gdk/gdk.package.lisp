@@ -497,7 +497,21 @@
     @about-function{gdk-drag-context-get-protocol}
   @end{section}
   @begin[Properties and Atoms]{section}
-    Functions to manipulate properties on windows
+    Functions to manipulate properties on windows.
+
+    @about-symbol{gdk-atom}
+    @about-symbol{GDK_ATOM_TO_POINTER}
+    @about-symbol{GDK_POINTER_TO_ATOM}
+    @about-symbol{GDK_NONE}
+    @about-function{gdk-text-property-to-utf8-list-for-display}
+    @about-function{gdk-utf8-to-string-target}
+    @about-function{gdk-atom-intern}
+    @about-function{gdk-atom-intern-static-string}
+    @about-function{gdk-atom-name}
+    @about-function{gdk-property-get}
+    @about-function{gdk-property-change}
+    @about-symbol{GdkPropMode}
+    @about-function{gdk-property-delete}
   @end{section}
   @begin[Threads]{section}
     Functions for using GDK in multi-threaded programs
