@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -71,27 +71,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gtk) t)
- "GTK+ is a library for creating graphical user interfaces. It works on many
+ "This is the API documentation of a Lisp binding to GTK+.
+  GTK+ is a library for creating graphical user interfaces. It works on many
   UNIX-like platforms, Windows, and OS X. GTK+ is released under the GNU Library
   General Public License (GNU LGPL), which allows for flexible licensing of
   client applications. GTK+ has a C-based object-oriented architecture that
   allows for maximum flexibility. Bindings for many other languages have been
   written, including C++, Objective-C, Guile/Scheme, Perl, Python, TOM, Ada95,
   Free Pascal, and Eiffel.
-  This is the API documentation of a Lisp binding to GTK+.
   @begin[GTK+ Core Reference]{section}
-    @begin[Version Information]{subsection}
-      GTK+ provides version information, primarily useful in configure checks
-      for builds that have a configure script. Applications will not typically
-      use the features described here.
-
-      @about-function{gtk-get-major-version}
-      @about-function{gtk-get-minor-version}
-      @about-function{gtk-get-micro-version}
-      @about-function{gtk-get-binary-age}
-      @about-function{gtk-get-interface-age}
-      @about-function{gtk-check-version}
-    @end{subsection}
     @begin[Main loop and Events]{subsection}
       Library initialization, main event loop, and events.
 
@@ -117,20 +105,16 @@
 
       When widgets receive an event, they frequently emit one or more signals.
       Signals notify your program that \"something interesting happened\" by
-      invoking functions you've connected to the signal with
+      invoking functions you have connected to the signal with the function
       @fun{g-signal-connect}. Functions connected to a signal are often termed
       callbacks.
 
       When your callbacks are invoked, you would typically take some action -
       for example, when an Open button is clicked you might display a
-      @class{gtk-file-chooser-dialog}. After a callback finishes, GTK+ will
-      return to the main loop and await more user input.
+      @class{gtk-file-chooser-dialog} window. After a callback finishes, GTK+
+      will return to the main loop and await more user input.
 
-      It is OK to use the GLib main loop directly instead of @sym{gtk-main},
-      though it involves slightly more typing. See @type{g-main-loop} in the
-      GLib documentation.
-
-      @b{Example.} Typical main function in Lisp for a GTK+ application.
+      @b{Example:} Typical main function in Lisp for a GTK+ application.
       @begin{pre}
 (defun main ()
   (within-main-loop
@@ -175,8 +159,26 @@
       @about-function{gtk-get-event-widget}
       @about-function{gtk-propagate-event}
     @end{subsection}
+    @begin[Version Information]{subsection}
+      GTK+ provides version information, primarily useful in configure checks
+      for builds that have a configure script. Applications will not typically
+      use the features described here.
+
+      @about-function{gtk-get-major-version}
+      @about-function{gtk-get-minor-version}
+      @about-function{gtk-get-micro-version}
+      @about-function{gtk-get-binary-age}
+      @about-function{gtk-get-interface-age}
+      @about-function{gtk-check-version}
+      @about-variable{+gtk-major-version+}
+      @about-variable{+gtk-minor-version+}
+      @about-variable{+gtk-micro-version+}
+      @about-variable{+gtk-binary-age+}
+      @about-variable{+gtk-interface-age+}
+    @end{subsection}
     @begin[Accelerator Groups]{subsection}
-      Groups of global keyboard accelerators for an entire @class{gtk-window}.
+      Groups of global keyboard accelerators for an entire @class{gtk-window}
+      widget.
 
       @about-class{gtk-accel-group}
       @about-function{gtk-accel-group-new}
@@ -184,7 +186,6 @@
       @about-function{gtk-accel-group-connect-by-path}
       @about-function{gtk-accel-group-disconnect}
       @about-function{gtk-accel-group-disconnect-key}
-      @about-function{gtk-accel-group-query}
       @about-function{gtk-accel-group-activate}
       @about-function{gtk-accel-group-lock}
       @about-function{gtk-accel-group-unlock}
@@ -225,7 +226,7 @@
       @about-function{gtk-accel-map-unlock-path}
     @end{subsection}
     @begin[GtkClipboard]{subsection}
-      Storing data on clipboards
+      Storing data on clipboards.
 
       @about-class{gtk-clipboard}
       @about-function{gtk-clipboard-get}
@@ -310,7 +311,7 @@
       not implemented
     @end{subsection}
     @begin[GtkSettings]{subsection}
-      Sharing settings between applications
+      Sharing settings between applications.
 
       @about-class{gtk-settings}
       @about-symbol{GtkSettingsValue}
@@ -385,9 +386,9 @@
       receiving data. The @class{gtk-selection-data} object is used to store a
       chunk of data along with the data type and other associated information.
 
-      @about-class{gtk-selection-data}
-      @about-class{gtk-target-entry}
-      @about-class{gtk-target-list}
+      @about-struct{gtk-selection-data}
+      @about-struct{gtk-target-entry}
+      @about-struct{gtk-target-list}
       @about-function{gtk-target-entry-new}
       @about-function{gtk-target-entry-copy}
       @about-function{gtk-target-entry-free}
@@ -519,6 +520,9 @@
       @about-symbol{GTK_STYLE_CLASS_RIGHT}
       @about-symbol{GTK_STYLE_CLASS_LINKED}
       @about-symbol{GTK_STYLE_CLASS_ARROW}
+      @about-symbol{GTK_STYLE_CLASS_OSD}
+      @about-symbol{GTK_STYLE_CLASS_LEVEL_BAR}
+      @about-symbol{GTK_STYLE_CLASS_CURSOR_HANDLE}
       @about-symbol{GTK_STYLE_REGION_COLUMN}
       @about-symbol{GTK_STYLE_REGION_COLUMN_HEADER}
       @about-symbol{GTK_STYLE_REGION_ROW}
@@ -530,7 +534,7 @@
       @about-function{gtk-style-context-get}
       @about-function{gtk-style-context-get-direction}
       @about-function{gtk-style-context-get-junction-sides}
-      @about-function{gtk-style-context-set-parent}
+      @about-function{gtk-style-context-get-parent}
       @about-function{gtk-style-context-get-path}
       @about-function{gtk-style-context-get-property}
       @about-function{gtk-style-context-get-screen}
@@ -564,6 +568,7 @@
       @about-function{gtk-style-context-save}
       @about-function{gtk-style-context-set-direction}
       @about-function{gtk-style-context-set-junction-sides}
+      @about-function{gtk-style-context-set-parent}
       @about-function{gtk-style-context-set-path}
       @about-function{gtk-style-context-add-class}
       @about-function{gtk-style-context-remove-class}
@@ -575,7 +580,7 @@
       @about-function{gtk-style-context-list-regions}
       @about-function{gtk-style-context-set-screen}
       @about-function{gtk-style-context-set-state}
-      @about-class{gtk-border}
+      @about-struct{gtk-border}
       @about-function{gtk-border-new}
       @about-function{gtk-border-copy}
       @about-function{gtk-border-free}
@@ -715,7 +720,7 @@
       not implemented
     @end{subsection}
     @begin[Resource Files]{subsection}
-      Deprecated routines for handling resource files
+      Deprecated routines for handling resource files.
 
       @about-class{gtk-rc-style}
       @about-symbol{gtk-rc-flags}
@@ -752,40 +757,15 @@
       @about-function{gtk-style-copy}
       @about-function{gtk-style-attach}
       @about-function{gtk-style-detach}
-      @about-function{gtk-style-ref}
-      @about-function{gtk-style-unref}
       @about-function{gtk-style-set-background}
       @about-function{gtk-style-apply-default-background}
       @about-function{gtk-style-apply-default-pixmap}
       @about-function{gtk-style-lookup-color}
       @about-function{gtk-style-lookup-icon-set}
       @about-function{gtk-style-render-icon}
-      @about-function{gtk-style-get-font}
-      @about-function{gtk-style-set-font}
       @about-function{gtk-style-get-style-property}
       @about-function{gtk-style-get-valist}
       @about-function{gtk-style-get}
-      @about-function{gtk-draw-hline}
-      @about-function{gtk-draw-vline}
-      @about-function{gtk-draw-shadow}
-      @about-function{gtk-draw-polygon}
-      @about-function{gtk-draw-arrow}
-      @about-function{gtk-draw-diamond}
-      @about-function{gtk-draw-string}
-      @about-function{gtk-draw-box}
-      @about-function{gtk-draw-box-gap}
-      @about-function{gtk-draw-check}
-      @about-function{gtk-draw-extension}
-      @about-function{gtk-draw-flat-box}
-      @about-function{gtk-draw-focus}
-      @about-function{gtk-draw-handle}
-      @about-function{gtk-draw-option}
-      @about-function{gtk-draw-shadow-gap}
-      @about-function{gtk-draw-slider}
-      @about-function{gtk-draw-tab}
-      @about-function{gtk-draw-expander}
-      @about-function{gtk-draw-layout}
-      @about-function{gtk-draw-resize-grip}
       @about-function{gtk-paint-arrow}
       @about-function{gtk-paint-box}
       @about-function{gtk-paint-box-gap}
@@ -842,6 +822,8 @@
       @about-class{gtk-invisible}
       @about-function{gtk-invisible-new}
       @about-function{gtk-invisible-new-for-screen}
+      @about-function{gtk-invisible-set-screen}
+      @about-function{gtk-invisible-get-screen}
     @end{subsection}
     @begin[GtkMessageDialog]{subsection}
       A convenient message window.
@@ -993,6 +975,36 @@
       @about-class{gtk-about-dialog}
       @about-symbol{gtk-license}
       @about-function{gtk-about-dialog-new}
+      @about-function{gtk-about-dialog-get-program-name}
+      @about-function{gtk-about-dialog-set-program-name}
+      @about-function{gtk-about-dialog-get-version}
+      @about-function{gtk-about-dialog-set-version}
+      @about-function{gtk-about-dialog-get-copyright}
+      @about-function{gtk-about-dialog-set-copyright}
+      @about-function{gtk-about-dialog-get-comments}
+      @about-function{gtk-about-dialog-set-comments}
+      @about-function{gtk-about-dialog-get-license}
+      @about-function{gtk-about-dialog-set-license}
+      @about-function{gtk-about-dialog-get-wrap-license}
+      @about-function{gtk-about-dialog-set-wrap-license}
+      @about-function{gtk-about-dialog-get-license-type}
+      @about-function{gtk-about-dialog-set-license-type}
+      @about-function{gtk-about-dialog-get-website}
+      @about-function{gtk-about-dialog-set-website}
+      @about-function{gtk-about-dialog-get-website-label}
+      @about-function{gtk-about-dialog-set-website-label}
+      @about-function{gtk-about-dialog-get-authors}
+      @about-function{gtk-about-dialog-set-authors}
+      @about-function{gtk-about-dialog-get-artists}
+      @about-function{gtk-about-dialog-set-artists}
+      @about-function{gtk-about-dialog-get-documenters}
+      @about-function{gtk-about-dialog-set-documenters}
+      @about-function{gtk-about-dialog-get-translator-credits}
+      @about-function{gtk-about-dialog-set-translator-credits}
+      @about-function{gtk-about-dialog-get-logo}
+      @about-function{gtk-about-dialog-set-logo}
+      @about-function{gtk-about-dialog-get-logo-icon-name}
+      @about-function{gtk-about-dialog-set-logo-icon-name}
       @about-function{gtk-about-dialog-add-credit-section}
       @about-function{gtk-show-about-dialog}
     @end{subsection}
@@ -1000,7 +1012,6 @@
       A widget used to guide users through multi-step operations.
 
       @about-class{gtk-assistant}
-      @about-symbol{gtk-assistant-page-type}
       @about-function{gtk-assistant-new}
       @about-function{gtk-assistant-get-current-page}
       @about-function{gtk-assistant-set-current-page}
@@ -1011,6 +1022,7 @@
       @about-function{gtk-assistant-insert-page}
       @about-function{gtk-assistant-remove-page}
       @about-function{gtk-assistant-set-forward-page-func}
+      @about-symbol{gtk-assistant-page-type}
       @about-function{gtk-assistant-set-page-type}
       @about-function{gtk-assistant-get-page-type}
       @about-function{gtk-assistant-set-page-title}
@@ -1044,13 +1056,23 @@
       @about-class{gtk-accel-label}
       @about-function{gtk-accel-label-new}
       @about-function{gtk-accel-label-refetch}
+      @about-function{gtk-accel-label-set-accel-closure}
+      @about-function{gtk-accel-label-get-accel-widget}
+      @about-function{gtk-accel-label-set-accel-widget}
+      @about-function{gtk-accel-label-get-accel-width}
     @end{subsection}
     @begin[GtkImage]{subsection}
       A widget displaying an image.
 
       @about-class{gtk-image}
       @about-symbol{gtk-image-type}
+      @about-function{gtk-image-get-icon-set}
+      @about-function{gtk-image-get-pixbuf}
+      @about-function{gtk-image-get-stock}
       @about-function{gtk-image-get-animation}
+      @about-function{gtk-image-get-icon-name}
+      @about-function{gtk-image-get-gicon}
+      @about-function{gtk-image-get-storage-type}
       @about-function{gtk-image-new-from-file}
       @about-function{gtk-image-new-from-icon-set}
       @about-function{gtk-image-new-from-pixbuf}
@@ -1067,6 +1089,8 @@
       @about-function{gtk-image-set-from-gicon}
       @about-function{gtk-image-clear}
       @about-function{gtk-image-new}
+      @about-function{gtk-image-set-pixel-size}
+      @about-function{gtk-image-get-pixel-size}
     @end{subsection}
     @begin[GtkLabel]{subsection}
       A widget that displays a small to medium amount of text.
@@ -1123,6 +1147,18 @@
       @about-class{gtk-progress-bar}
       @about-function{gtk-progress-bar-new}
       @about-function{gtk-progress-bar-pulse}
+      @about-function{gtk-progress-bar-set-fraction}
+      @about-function{gtk-progress-bar-get-fraction}
+      @about-function{gtk-progress-bar-set-inverted}
+      @about-function{gtk-progress-bar-get-inverted}
+      @about-function{gtk-progress-bar-set-show-text}
+      @about-function{gtk-progress-bar-get-show-text}
+      @about-function{gtk-progress-bar-set-text}
+      @about-function{gtk-progress-bar-get-text}
+      @about-function{gtk-progress-bar-set-ellipsize}
+      @about-function{gtk-progress-bar-get-ellipsize}
+      @about-function{gtk-progress-bar-set-pulse-step}
+      @about-function{gtk-progress-bar-get-pulse-step}
     @end{subsection}
     @begin[GtkStatusbar]{subsection}
       Report messages of minor importance to the user.
@@ -1148,6 +1184,8 @@
       @about-function{gtk-info-bar-set-response-sensitive}
       @about-function{gtk-info-bar-set-default-response}
       @about-function{gtk-info-bar-response}
+      @about-function{gtk-info-bar-set-message-type}
+      @about-function{gtk-info-bar-get-message-type}
       @about-function{gtk-info-bar-get-action-area}
       @about-function{gtk-info-bar-get-content-area}
     @end{subsection}
@@ -1156,20 +1194,39 @@
 
       @about-class{gtk-status-icon}
       @about-function{gtk-status-icon-new}
-      @about-function{gtk-status-new-from-pixbuf}
-      @about-function{gtk-status-new-from-file}
-      @about-function{gtk-status-new-from-stock}
-      @about-function{gtk-status-new-from-icon-name}
-      @about-function{gtk-status-new-from-gicon}
-      @about-function{gtk-status-set-from-pixbuf}
-      @about-function{gtk-status-set-from-file}
-      @about-function{gtk-status-set-from-stock}
-      @about-function{gtk-status-set-from-icon-name}
-      @about-function{gtk-status-set-from-gicon}
-      @about-function{gtk-status-is-embedded}
-      @about-function{gtk-status-position-menu}
-      @about-function{gtk-status-get-geometry}
-      @about-function{gtk-status-get-x11-window-id}
+      @about-function{gtk-status-icon-new-from-pixbuf}
+      @about-function{gtk-status-icon-new-from-file}
+      @about-function{gtk-status-icon-new-from-stock}
+      @about-function{gtk-status-icon-new-from-icon-name}
+      @about-function{gtk-status-icon-new-from-gicon}
+      @about-function{gtk-status-icon-set-from-pixbuf}
+      @about-function{gtk-status-icon-set-from-file}
+      @about-function{gtk-status-icon-set-from-stock}
+      @about-function{gtk-status-icon-set-from-icon-name}
+      @about-function{gtk-status-icon-set-from-gicon}
+      @about-function{gtk-status-icon-get-storage-type}
+      @about-function{gtk-status-icon-get-pixbuf}
+      @about-function{gtk-status-icon-get-stock}
+      @about-function{gtk-status-icon-get-icon-name}
+      @about-function{gtk-status-icon-get-gicon}
+      @about-function{gtk-status-icon-get-size}
+      @about-function{gtk-status-icon-set-screen}
+      @about-function{gtk-status-icon-get-screen}
+      @about-function{gtk-status-icon-set-tooltip-text}
+      @about-function{gtk-status-icon-get-tooltip-text}
+      @about-function{gtk-status-icon-set-tooltip-markup}
+      @about-function{gtk-status-icon-get-tooltip-markup}
+      @about-function{gtk-status-icon-set-has-tooltip}
+      @about-function{gtk-status-icon-get-has-tooltip}
+      @about-function{gtk-status-icon-set-title}
+      @about-function{gtk-status-icon-get-title}
+      @about-function{gtk-status-icon-set-name}
+      @about-function{gtk-status-icon-set-visible}
+      @about-function{gtk-status-icon-get-visible}
+      @about-function{gtk-status-icon-is-embedded}
+      @about-function{gtk-status-icon-position-menu}
+      @about-function{gtk-status-icon-get-geometry}
+      @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
     @begin[GtkSpinner]{subsection}
       Show a spinner animation.
@@ -1272,6 +1329,145 @@
     @end{subsection}
   @end{section}
   @begin[Multiline Text Editor]{section}
+    Overview of @class{gtk-text-buffer}, @class{gtk-text-view}, and friends.
+
+    @subheading{Conceptual Overview}
+      GTK+ has an extremely powerful framework for multiline text editing. The
+      primary objects involved in the process are @class{gtk-text-buffer}, which
+      represents the text being edited, and @class{gtk-text-view}, a widget
+      which can display a @class{gtk-text-buffer}. Each buffer can be displayed
+      by any number of views.
+
+      One of the important things to remember about text in GTK+ is that it is
+      in the UTF-8 encoding. This means that one character can be encoded as
+      multiple bytes. Character counts are usually referred to as offsets, while
+      byte counts are called indexes. If you confuse these two, things will work
+      fine with ASCII, but as soon as your buffer contains multibyte characters,
+      bad things will happen.
+
+      Text in a buffer can be marked with tags. A tag is an attribute that can
+      be applied to some range of text. For example, a tag might be called
+      \"bold\" and make the text inside the tag bold. However, the tag concept
+      is more general than that; tags do not have to affect appearance. They can
+      instead affect the behavior of mouse and key presses, \"lock\" a range of
+      text so the user cannot edit it, or countless other things. A tag is
+      represented by a @class{gtk-text-tag} object. One @class{gtk-text-tag} can
+      be applied to any number of text ranges in any number of buffers.
+
+      Each tag is stored in a @class{gtk-text-tag-table}. A tag table defines a
+      set of tags that can be used together. Each buffer has one tag table
+      associated with it; only tags from that tag table can be used with the
+      buffer. A single tag table can be shared between multiple buffers,
+      however.
+
+      Tags can have names, which is convenient sometimes (for example, you can
+      name your tag that makes things bold \"bold\"), but they can also be
+      anonymous (which is convenient if you are creating tags on-the-fly).
+
+      Most text manipulation is accomplished with iterators, represented by a
+      @class{gtk-text-iter}. An iterator represents a position between two
+      characters in the text buffer. @class{gtk-text-iter} is a structure
+      designed to be allocated on the stack; it is guaranteed to be copiable
+      by value and never contain any heap-allocated data. Iterators are not
+      valid indefinitely; whenever the buffer is modified in a way that affects
+      the number of characters in the buffer, all outstanding iterators become
+      invalid. (Note that deleting 5 characters and then reinserting 5 still
+      invalidates iterators, though you end up with the same number of
+      characters you pass through a state with a different number).
+
+      Because of this, iterators cannot be used to preserve positions across
+      buffer modifications. To preserve a position, the @class{gtk-text-mark}
+      object is ideal. You can think of a mark as an invisible cursor or
+      insertion point; it floats in the buffer, saving a position. If the text
+      surrounding the mark is deleted, the mark remains in the position the text
+      once occupied; if text is inserted at the mark, the mark ends up either to
+      the left or to the right of the new text, depending on its gravity. The
+      standard text cursor in left-to-right languages is a mark with right
+      gravity, because it stays to the right of inserted text.
+
+      Like tags, marks can be either named or anonymous. There are two marks
+      built-in to @class{gtk-text-buffer}; these are named \"insert\" and
+      \"selection_bound\" and refer to the insertion point and the boundary of
+      the selection which is not the insertion point, respectively. If no text
+      is selected, these two marks will be in the same position. You can
+      manipulate what is selected and where the cursor appears by moving these
+      marks around. [2]
+
+      Text buffers always contain at least one line, but may be empty (that is,
+      buffers can contain zero characters). The last line in the text buffer
+      never ends in a line separator (such as newline); the other lines in the
+      buffer always end in a line separator. Line separators count as characters
+      when computing character counts and character offsets. Note that some
+      Unicode line separators are represented with multiple bytes in UTF-8, and
+      the two-character sequence \"\r\n\" is also considered a line separator.
+
+    @subheading{Simple Example}
+      The simplest usage of @class{gtk-text-view} might look like this:
+      @begin{pre}
+GtkWidget *view;
+GtkTextBuffer *buffer;
+
+view = gtk_text_view_new ();
+
+buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+
+gtk_text_buffer_set_text (buffer, \"Hello, this is some text\", -1);
+
+/* Now you might put the view in a container and display it on the
+ * screen; when the user edits the text, signals on the buffer
+ * will be emitted, such as \"changed\", \"insert_text\", and so on.
+ */
+      @end{pre}
+      In many cases it is also convenient to first create the buffer with
+      @fun{gtk-text-buffer-new}, then create a widget for that buffer with
+      @fun{gtk-text-view-new-with-buffer}. Or you can change the buffer the
+      widget displays after the widget is created with
+      @fun{gtk-text-view-set-buffer}.
+
+    @subheading{Example of Changing Text Attributes}
+      There are two ways to affect text attributes in @class{gtk-text-view}. You
+      can change the default attributes for a given @class{gtk-text-view}, and
+      you can apply tags that change the attributes for a region of text. For
+      text features that come from the theme - such as font and foreground color
+      - use standard @class{gtk-widget} functions such as
+      @fun{gtk-widget-modify-font} or @fun{gtk-widget-override-text}. For other
+      attributes there are dedicated methods on @class{gtk-text-view} such as
+      @fun{gtk-text-view-set-tabs}.
+      @begin{pre}
+GtkWidget *view;
+GtkTextBuffer *buffer;
+GtkTextIter start, end;
+PangoFontDescription *font_desc;
+GdkRGBA rgba;
+GtkTextTag *tag;
+
+view = gtk_text_view_new ();
+
+buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+
+gtk_text_buffer_set_text (buffer, \"Hello, this is some text\", -1);
+
+/* Change default font throughout the widget */
+font_desc = pango_font_description_from_string (\"Serif 15\");
+gtk_widget_modify_font (view, font_desc);
+pango_font_description_free (font_desc);
+
+/* Change default color throughout the widget */
+gdk_rgba_parse (\"green\", &rgba);
+gtk_widget_override_color (view, GTK_STATE_FLAG_NORMAL, &rgba);
+
+/* Change left margin throughout the widget */
+gtk_text_view_set_left_margin (GTK_TEXT_VIEW (view), 30);
+
+/* Use a tag to change the color for just one part of the widget */
+tag = gtk_text_buffer_create_tag (buffer, \"blue_foreground\",
+                        \"foreground\", \"blue\", NULL);
+gtk_text_buffer_get_iter_at_offset (buffer, &start, 7);
+gtk_text_buffer_get_iter_at_offset (buffer, &end, 12);
+gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
+      @end{pre}
+      The gtk-demo application that comes with GTK+ contains more example code
+      for @class{gtk-text-view}.
     @begin[GtkTextIter]{subsection}
     @end{subsection}
     @begin[GtkTextMark]{subsection}
@@ -1286,6 +1482,272 @@
     @end{subsection}
   @end{section}
   @begin[Tree, List and Icon Grid Widgets]{section}
+    Overview of @class{gtk-tree-model}, @class{gtk-tree-view}, and friends.
+
+    @subheading{Overview}
+      To create a tree or list in GTK+, use the @class{gtk-tree-model} interface
+      in conjunction with the @class{gtk-tree-view} widget. This widget is
+      designed around a Model/View/Controller design and consists of four major
+      parts:
+      @begin{itemize}
+        @item{The tree view widget (@class{gtk-tree-view}).}
+        @item{The view column (@class{gtk-tree-view-column}).}
+        @item{The cell renderers (@class{gtk-cell-renderer} etc.).}
+        @item{The model interface (@class{gtk-tree-model}).}
+      @end{itemize}
+      The View is composed of the first three objects, while the last is the
+      Model. One of the prime benefits of the MVC design is that multiple views
+      can be created of a single model. For example, a model mapping the file
+      system could be created for a file manager. Many views could be created to
+      display various parts of the file system, but only one copy need be kept
+      in memory.
+
+      The purpose of the cell renderers is to provide extensibility to the
+      widget and to allow multiple ways of rendering the same type of data. For
+      example, consider how to render a boolean variable. Should it render it
+      as a string of \"True\" or \"False\", \"On\" or \"Off\", or should it be
+      rendered as a checkbox?
+
+    @subheading{Creating a model}
+      GTK+ provides two simple models that can be used: the
+      @class{gtk-list-store} and the @class{gtk-tree-store}.
+      @class{gtk-list-store} is used to model list widgets, while the
+      @class{gtk-tree-store} models trees. It is possible to develop a new type
+      of model, but the existing models should be satisfactory for all but the
+      most specialized of situations. Creating the model is quite simple:
+      @begin{pre}
+GtkListStore *store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_BOOLEAN);
+      @end{pre}
+      This creates a list store with two columns: a string column and a boolean
+      column. Typically the 2 is never passed directly like that; usually an
+      enum is created wherein the different columns are enumerated, followed by
+      a token that represents the total number of columns. The next example will
+      illustrate this, only using a tree store instead of a list store. Creating
+      a tree store operates almost exactly the same.
+      @begin{pre}
+enum
+{
+   TITLE_COLUMN,
+   AUTHOR_COLUMN,
+   CHECKED_COLUMN,
+   N_COLUMNS
+@};
+
+GtkTreeStore *store = gtk_tree_store_new (N_COLUMNS,       /* Total number of columns */
+                                          G_TYPE_STRING,   /* Book title              */
+                                          G_TYPE_STRING,   /* Author                  */
+                                          G_TYPE_BOOLEAN); /* Is checked out?         */
+      @end{pre}
+      Adding data to the model is done using @fun{gtk-tree-store-set} or
+      @fun{gtk-list-store-set}, depending upon which sort of model was created.
+      To do this, a @class{gtk-tree-iter} must be acquired. The iterator points
+      to the location where data will be added.
+
+      Once an iterator has been acquired, @fun{gtk-tree-store-set} is used to
+      apply data to the part of the model that the iterator points to. Consider
+      the following example:
+      @begin{pre}
+GtkTreeIter   iter;
+
+gtk_tree_store_append (store, &iter, NULL);  /* Acquire an iterator */
+
+gtk_tree_store_set (store, &iter,
+                    TITLE_COLUMN, \"The Principle of Reason\",
+                    AUTHOR_COLUMN, \"Martin Heidegger\",
+                    CHECKED_COLUMN, FALSE,
+                    -1);
+      @end{pre}
+      Notice that the last argument is -1. This is always done because this is
+      a variable-argument function and it needs to know when to stop processing
+      arguments. It can be used to set the data in any or all columns in a given
+      row.
+
+      The third argument to @fun{gtk-tree-store-append} is the parent iterator.
+      It is used to add a row to a @class{gtk-tree-store} as a child of an
+      existing row. This means that the new row will only be visible when its
+      parent is visible and in its expanded state. Consider the following
+      example:
+      @begin{pre}
+GtkTreeIter iter1;  /* Parent iter */
+GtkTreeIter iter2;  /* Child iter  */
+
+gtk_tree_store_append (store, &iter1, NULL);  /* Acquire a top-level iterator */
+gtk_tree_store_set (store, &iter1,
+                    TITLE_COLUMN, \"The Art of Computer Programming\",
+                    AUTHOR_COLUMN, \"Donald E. Knuth\",
+                    CHECKED_COLUMN, FALSE,
+                    -1);
+
+gtk_tree_store_append (store, &iter2, &iter1);  /* Acquire a child iterator */
+gtk_tree_store_set (store, &iter2,
+                    TITLE_COLUMN, \"Volume 1: Fundamental Algorithms\",
+                    -1);
+
+gtk_tree_store_append (store, &iter2, &iter1);
+gtk_tree_store_set (store, &iter2,
+                    TITLE_COLUMN, \"Volume 2: Seminumerical Algorithms\",
+                    -1);
+
+gtk_tree_store_append (store, &iter2, &iter1);
+gtk_tree_store_set (store, &iter2,
+                    TITLE_COLUMN, \"Volume 3: Sorting and Searching\",
+                    -1);
+      @end{pre}
+
+    @subheading{Creating the view component}
+      While there are several different models to choose from, there is only one
+      view widget to deal with. It works with either the list or the tree store.
+      Setting up a @class{gtk-tree-view} is not a difficult matter. It needs a
+      @class{gtk-tree-model} to know where to retrieve its data from.
+      @begin{pre}
+GtkWidget *tree;
+
+tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+
+Columns and cell renderers
+      @end{pre}
+      Once the @class{gtk-tree-view} widget has a model, it will need to know
+      how to display the model. It does this with columns and cell renderers.
+
+      Cell renderers are used to draw the data in the tree model in a way. There
+      are a number of cell renderers that come with GTK+ 2.x, including the
+      @class{gtk-cell-renderer-text}, @class{gtk-cell-renderer-pixbuf} and the
+      @class{gtk-cell-renderer-toggle}. It is relatively easy to write a custom
+      renderer.
+
+      A @class{gtk-tree-view-column} is the object that @class{gtk-tree-view}
+      uses to organize the vertical columns in the tree view. It needs to know
+      the name of the column to label for the user, what type of cell renderer
+      to use, and which piece of data to retrieve from the model for a given
+      row.
+      @begin{pre}
+GtkCellRenderer *renderer;
+GtkTreeViewColumn *column;
+
+renderer = gtk_cell_renderer_text_new ();
+column = gtk_tree_view_column_new_with_attributes (\"Author\",
+                                                   renderer,
+                                                   \"text\", AUTHOR_COLUMN,
+                                                   NULL);
+gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+      @end{pre}
+      At this point, all the steps in creating a displayable tree have been
+      covered. The model is created, data is stored in it, a tree view is
+      created and columns are added to it.
+
+    @subheading{Selection handling}
+      Most applications will need to not only deal with displaying data, but
+      also receiving input events from users. To do this, simply get a reference
+      to a selection object and connect to the \"changed\" signal.
+      @begin{pre}
+/* Prototype for selection handler callback */
+static void tree_selection_changed_cb (GtkTreeSelection *selection, gpointer data);
+
+/* Setup the selection handler */
+GtkTreeSelection *select;
+
+select = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
+gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);
+g_signal_connect (G_OBJECT (select), \"changed\",
+                  G_CALLBACK (tree_selection_changed_cb),
+                  NULL);
+      @end{pre}
+      Then to retrieve data for the row selected:
+      @begin{pre}
+static void
+tree_selection_changed_cb (GtkTreeSelection *selection, gpointer data)
+{
+        GtkTreeIter iter;
+        GtkTreeModel *model;
+        gchar *author;
+
+        if (gtk_tree_selection_get_selected (selection, &model, &iter))
+        {
+                gtk_tree_model_get (model, &iter, AUTHOR_COLUMN, &author, -1);
+
+                g_print (\"You selected a book by %s\n\", author);
+
+                g_free (author);
+        @}
+@}
+      @end{pre}
+
+    @subheading{Simple Example}
+      Here is a simple example of using a @class{gtk-tree-view} widget in
+      context of the other widgets. It simply creates a simple model and view,
+      and puts them together. Note that the model is never populated with data
+      - that is left as an exercise for the reader. More information can be
+      found on this in the GtkTreeModel section.
+      @begin{pre}
+enum
+{
+   TITLE_COLUMN,
+   AUTHOR_COLUMN,
+   CHECKED_COLUMN,
+   N_COLUMNS
+@};
+
+void
+setup_tree (void)
+{
+   GtkTreeStore *store;
+   GtkWidget *tree;
+   GtkTreeViewColumn *column;
+   GtkCellRenderer *renderer;
+
+   /* Create a model.  We are using the store model for now, though we
+    * could use any other GtkTreeModel */
+   store = gtk_tree_store_new (N_COLUMNS,
+                               G_TYPE_STRING,
+                               G_TYPE_STRING,
+                               G_TYPE_BOOLEAN);
+
+   /* custom function to fill the model with data */
+   populate_tree_model (store);
+
+   /* Create a view */
+   tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+
+   /* The view now holds a reference.  We can get rid of our own
+    * reference */
+   g_object_unref (G_OBJECT (store));
+
+   /* Create a cell render and arbitrarily make it red for demonstration
+    * purposes */
+   renderer = gtk_cell_renderer_text_new ();
+   g_object_set (G_OBJECT (renderer),
+                 \"foreground\", \"red\",
+                 NULL);
+
+   /* Create a column, associating the \"text\" attribute of the
+    * cell_renderer to the first column of the model */
+   column = gtk_tree_view_column_new_with_attributes (\"Author\", renderer,
+                                                      \"text\", AUTHOR_COLUMN,
+                                                      NULL);
+
+   /* Add the column to the view. */
+   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+
+   /* Second column.. title of the book. */
+   renderer = gtk_cell_renderer_text_new ();
+   column = gtk_tree_view_column_new_with_attributes (\"Title\",
+                                                      renderer,
+                                                      \"text\", TITLE_COLUMN,
+                                                      NULL);
+   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+
+   /* Last column.. whether a book is checked out. */
+   renderer = gtk_cell_renderer_toggle_new ();
+   column = gtk_tree_view_column_new_with_attributes (\"Checked out\",
+                                                      renderer,
+                                                      \"active\", CHECKED_COLUMN,
+                                                      NULL);
+   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+
+   /* Now we can manipulate the view just like any other GTK widget */
+   ...
+@}
+      @end{pre}
     @begin[GtkTreeModel]{subsection}
     @end{subsection}
     @begin[GtkTreeSelection]{subsection}
@@ -1910,11 +2372,18 @@
       @about-function{gtk-widget-activate}
       @about-function{gtk-widget-reparent}
       @about-function{gtk-widget-intersect}
+      @about-function{gtk-widget-is-focus}
       @about-function{gtk-widget-grab-focus}
       @about-function{gtk-widget-grab-default}
+      @about-function{gtk-widget-set-name}
+      @about-function{gtk-widget-get-name}
       @about-function{gtk-widget-set-state}
-      @about-function{gtk-widget-get-parent-window}
+      @about-function{gtk-widget-set-sensitive}
+      @about-function{gtk-widget-set-parent}
       @about-function{gtk-widget-set-parent-window}
+      @about-function{gtk-widget-get-parent-window}
+      @about-function{gtk-widget-set-events}
+      @about-function{gtk-widget-get-events}
       @about-function{gtk-widget-add-events}
       @about-function{gtk-widget-set-device-events}
       @about-function{gtk-widget-get-device-events}
@@ -1929,19 +2398,20 @@
       @about-function{gtk-widget-is-ancestor}
       @about-function{gtk-widget-translate-coordinates}
       @about-function{gtk-widget-hide-on-delete}
+      @about-function{gtk-widget-set-style}
       @about-function{gtk-widget-ensure-style}
+      @about-function{gtk-widget-get-style}
       @about-function{gtk-widget-reset-rc-styles}
       @about-function{gtk-widget-get-default-style}
-      @about-function{gtk-widget-get-direction}
       @about-function{gtk-widget-set-direction}
-      @about-function{gtk-widget-get-default-direction}
+      @about-function{gtk-widget-get-direction}
       @about-function{gtk-widget-set-default-direction}
+      @about-function{gtk-widget-get-default-direction}
       @about-function{gtk-widget-shape-combine-region}
       @about-function{gtk-widget-input-shape-combine-region}
       @about-function{gtk-widget-path}
       @about-function{gtk-widget-class-path}
       @about-function{gtk-widget-get-composite-name}
-      @about-function{gtk-widget-set-composite-name}
       @about-function{gtk-widget-override-background-color}
       @about-function{gtk-widget-override-color}
       @about-function{gtk-widget-override-font}
@@ -1964,7 +2434,10 @@
       @about-function{gtk-widget-push-composite-child}
       @about-function{gtk-widget-queue-draw-area}
       @about-function{gtk-widget-queue-draw-region}
+      @about-function{gtk-widget-set-app-paintable}
+      @about-function{gtk-widget-set-double-buffered}
       @about-function{gtk-widget-set-redraw-on-allocate}
+      @about-function{gtk-widget-set-composite-name}
       @about-function{gtk-widget-mnemonic-activate}
       @about-function{gtk-widget-class-install-style-property}
       @about-function{gtk-widget-class-install-style-property-parser}
@@ -1984,7 +2457,7 @@
       @about-function{gtk-widget-child-notify}
       @about-function{gtk-widget-freeze-child-notify}
       @about-function{gtk-widget-get-child-visible}
-      @about-function{gtk-widget-set-child-visible}
+      @about-function{gtk-widget-get-parent}
       @about-function{gtk-widget-get-settings}
       @about-function{gtk-widget-get-clipboard}
       @about-function{gtk-widget-get-display}
@@ -1992,35 +2465,59 @@
       @about-function{gtk-widget-get-screen}
       @about-function{gtk-widget-has-screen}
       @about-function{gtk-widget-get-size-request}
+      @about-function{gtk-widget-set-child-visible}
       @about-function{gtk-widget-set-size-request}
       @about-function{gtk-widget-thaw-child-notify}
+      @about-function{gtk-widget-set-no-show-all}
+      @about-function{gtk-widget-get-no-show-all}
       @about-function{gtk-widget-list-mnemonic-labels}
       @about-function{gtk-widget-add-mnemonic-label}
       @about-function{gtk-widget-remove-mnemonic-label}
       @about-function{gtk-widget-is-composited}
       @about-function{gtk-widget-error-bell}
       @about-function{gtk-widget-keynav-failed}
+      @about-function{gtk-widget-get-tooltip-markup}
+      @about-function{gtk-widget-set-tooltip-markup}
+      @about-function{gtk-widget-get-tooltip-text}
+      @about-function{gtk-widget-set-tooltip-text}
       @about-function{gtk-widget-get-tooltip-window}
       @about-function{gtk-widget-set-tooltip-window}
+      @about-function{gtk-widget-get-has-tooltip}
+      @about-function{gtk-widget-set-has-tooltip}
       @about-function{gtk-widget-trigger-tooltip-query}
+      @about-function{gtk-widget-get-window}
       @about-function{gtk-cairo-should-draw-window}
       @about-function{gtk-cairo-transform-to-window}
       @about-function{gtk-widget-get-allocated-width}
       @about-function{gtk-widget-get-allocated-height}
       @about-function{gtk-widget-get-allocation}
       @about-function{gtk-widget-set-allocation}
+      @about-function{gtk-widget-get-app-paintable}
+      @about-function{gtk-widget-get-can-default}
+      @about-function{gtk-widget-set-can-default}
+      @about-function{gtk-widget-get-can-focus}
+      @about-function{gtk-widget-set-can-focus}
+      @about-function{gtk-widget-get-double-buffered}
       @about-function{gtk-widget-get-has-window}
       @about-function{gtk-widget-set-has-window}
+      @about-function{gtk-widget-get-sensitive}
       @about-function{gtk-widget-is-sensitive}
       @about-function{gtk-widget-get-state}
+      @about-function{gtk-widget-get-visible}
+      @about-function{gtk-widget-set-visible}
       @about-function{gtk-widget-set-state-flags}
       @about-function{gtk-widget-unset-state-flags}
       @about-function{gtk-widget-get-state-flags}
+      @about-function{gtk-widget-has-default}
+      @about-function{gtk-widget-has-focus}
       @about-function{gtk-widget-has-visible-focus}
       @about-function{gtk-widget-has-grab}
       @about-function{gtk-widget-has-rc-style}
       @about-function{gtk-widget-is-drawable}
       @about-function{gtk-widget-is-toplevel}
+      @about-function{gtk-widget-set-window}
+      @about-function{gtk-widget-set-receives-default}
+      @about-function{gtk-widget-get-receives-default}
       @about-function{gtk-widget-set-support-multidevice}
       @about-function{gtk-widget-get-support-multidevice}
       @about-function{gtk-widget-set-realized}
@@ -2045,6 +2542,26 @@
       @about-function{gtk-widget-get-request-mode}
       @about-function{gtk-widget-get-preferred-size}
       @about-function{gtk-distribute-natural-allocation}
+      @about-function{gtk-widget-get-halign}
+      @about-function{gtk-widget-set-halign}
+      @about-function{gtk-widget-get-valign}
+      @about-function{gtk-widget-set-valign}
+      @about-function{gtk-widget-get-margin-left}
+      @about-function{gtk-widget-set-margin-left}
+      @about-function{gtk-widget-get-margin-right}
+      @about-function{gtk-widget-set-margin-right}
+      @about-function{gtk-widget-get-margin-top}
+      @about-function{gtk-widget-set-margin-top}
+      @about-function{gtk-widget-get-margin-bottom}
+      @about-function{gtk-widget-set-margin-bottom}
+      @about-function{gtk-widget-get-hexpand}
+      @about-function{gtk-widget-set-hexpand}
+      @about-function{gtk-widget-get-hexpand-set}
+      @about-function{gtk-widget-set-hexpand-set}
+      @about-function{gtk-widget-get-vexpand}
+      @about-function{gtk-widget-set-vexpand}
+      @about-function{gtk-widget-get-vexpand-set}
+      @about-function{gtk-widget-set-vexpand-set}
       @about-function{gtk-widget-queue-compute-expand}
       @about-function{gtk-widget-compute-expand}
     @end{subsection}

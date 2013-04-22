@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -130,6 +130,9 @@
    (gtk-enable-mnemonics
     gtk-settings-gtk-enable-mnemonics
     "gtk-enable-mnemonics" "gboolean" t t)
+   (gtk-enable-primary-paste
+    gtk-settings-gtk-enable-primary-paste
+    "gtk-enable-primary-paste" "gboolean" t t)
    (gtk-enable-tooltips
     gtk-settings-gtk-enable-tooltips
     "gtk-enable-tooltips" "gboolean" t t)
@@ -199,6 +202,9 @@
    (gtk-modules
     gtk-settings-gtk-modules
     "gtk-modules" "gchararray" t t)
+   (gtk-primary-button-warps-slider
+    gtk-settings-gtk-primary-button-warps-slider
+    "gtk-primary-button-warps-slider" "gboolean" t t)
    (gtk-print-backends
     gtk-settings-gtk-print-backends
     "gtk-print-backends" "gchararray" t t)
@@ -316,10 +322,10 @@
   g_object_set (gtk_settings_get_default (), \"gtk-menu-images\", FALSE, NULL);
   @end{pre}
   There is one @sym{gtk-settings} instance per screen. It can be obtained with
-  @fun{gtk-settings-get-for-screen}, but in many cases, it is more convenient to
-  use @fun{gtk-widget-get-settings}. @fun{gtk-settings-get-default} returns the
-  @sym{gtk-settings} instance for the default screen.
-
+  the function @fun{gtk-settings-get-for-screen}, but in many cases, it is more
+  convenient to use the function @fun{gtk-widget-get-settings}. The function
+  @fun{gtk-settings-get-default} returns the @sym{gtk-settings} instance for the
+  default screen.
   @see-slot{gtk-settings-color-hash}
   @see-slot{gtk-settings-gtk-alternative-button-order}
   @see-slot{gtk-settings-gtk-alternative-sort-arrows}
@@ -342,6 +348,7 @@
   @see-slot{gtk-settings-gtk-enable-event-sounds}
   @see-slot{gtk-settings-gtk-enable-input-feedback-sounds}
   @see-slot{gtk-settings-gtk-enable-mnemonics}
+  @see-slot{gtk-settings-gtk-enable-primary-paste}
   @see-slot{gtk-settings-gtk-enable-tooltips}
   @see-slot{gtk-settings-gtk-entry-password-hint-timeout}
   @see-slot{gtk-settings-gtk-entry-select-on-focus}
@@ -365,6 +372,7 @@
   @see-slot{gtk-settings-gtk-menu-popdown-delay}
   @see-slot{gtk-settings-gtk-menu-popup-delay}
   @see-slot{gtk-settings-gtk-modules}
+  @see-slot{gtk-settings-gtk-primary-button-warps-slider}
   @see-slot{gtk-settings-gtk-print-backends}
   @see-slot{gtk-settings-gtk-print-preview-command}
   @see-slot{gtk-settings-gtk-recent-files-limit}
@@ -401,9 +409,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "color-hash" 'gtk-settings) 't)
- "The @code{\"color-hash\"} property of type @code{GHashTable*} (Read)@br{}
-  Holds a hash table representation of the \"gtk-color-scheme\" setting, mapping
-  color names to @class{gdk-colors}.@br{}
+ "The @code{\"color-hash\"} property of type @code{GHashTable} (Read)@br{}
+  Holds a hash table representation of the @code{\"gtk-color-scheme\"} setting,
+  mapping color names to @class{gdk-color}'s.@br{}
   Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
@@ -411,7 +419,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-alternative-button-order"
                                                'gtk-settings) 't)
- "The @code{\"gtk-alternative-button-order\"} property of type @code{gboolean}
+ "The @code{\"gtk-alternative-button-order\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether buttons in dialogs should use the alternative button order.@br{}
   Default value: @code{nil}")
@@ -421,7 +429,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-alternative-sort-arrows"
                                                'gtk-settings) 't)
- "The @code{\"gtk-alternative-sort-arrows\"} property of type @code{gboolean}
+ "The @code{\"gtk-alternative-sort-arrows\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Controls the direction of the sort indicators in sorted list and tree views.
   By default an arrow pointing down means the column is sorted in ascending
@@ -435,7 +443,7 @@
 (setf (documentation (atdoc:get-slot-from-name "gtk-application-prefer-dark-theme"
                                                'gtk-settings) 't)
  "The @code{\"gtk-application-prefer-dark-theme\"} property of type
-  @code{gboolean} (Read / Write)@br{}
+  @code{:boolean} (Read / Write)@br{}
   Whether the application prefers to use a dark theme. If a GTK+ theme
   includes a dark variant, it will be used instead of the configured theme.
   Some applications benefit from minimizing the amount of light pollution that
@@ -453,7 +461,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-auto-mnemonics"
                                                'gtk-settings) 't)
- "The @code{\"gtk-auto-mnemonics\"} property of type @code{gboolean}
+ "The @code{\"gtk-auto-mnemonics\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether mnemonics should be automatically shown and hidden when the user
   presses the mnemonic activator.@br{}
@@ -465,7 +473,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-button-images"
                                                'gtk-settings) 't)
- "The @code{\"gtk-button-images\"} property of type @code{gboolean}
+ "The @code{\"gtk-button-images\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether images should be shown on buttons.@br{}
   Default value: @em{true}")
@@ -475,7 +483,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-can-change-accels"
                                                'gtk-settings) 't)
- "The @code{\"gtk-can-change-accels\"} property of type @code{gboolean}
+ "The @code{\"gtk-can-change-accels\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether menu accelerators can be changed by pressing a key over the menu
   item.@br{}
@@ -486,20 +494,37 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-color-palette"
                                                'gtk-settings) 't)
- "The @code{\"gtk-color-palette\"} property of type @code{gchar*}
+ "The @code{\"gtk-color-palette\"} property of type @code{:string}
   (Read / Write)@br{}
   Palette to use in the color selector.@br{}
-  Default value: @code{\"black:white:gray50:red:purple:blue:light
-                         blue:green:yellow:orange:lavender:brown:goldenrod4:dodger
-                         blue:pink:light
-                         green:gray10:gray30:gray75:gray90\"}")
+  Default value: @br{}
+    @code{\"black:
+            white:
+            gray50:
+            red:
+            purple:
+            blue:
+            light blue:
+            green:
+            yellow:
+            orange:
+            lavender:
+            brown:
+            goldenrod4:
+            dodger blue:
+            pink:
+            light green:
+            gray10:
+            gray30:
+            gray75:
+            gray90\"}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-color-scheme"
                                                'gtk-settings) 't)
- "The @code{\"gtk-color-scheme\"} property of type @code{gchar*}
+ "The @code{\"gtk-color-scheme\"} property of type @code{:string}
   (Read / Write)@br{}
   A palette of named colors for use in themes. The format of the string is
   @begin{pre}
@@ -508,10 +533,10 @@
  ...
   @end{pre}
   Color names must be acceptable as identifiers in the gtkrc syntax, and color
-  specifications must be in the format accepted by @fun{gdk-color-parse}.
-  Note that due to the way the color tables from different sources are merged,
-  color specifications will be converted to hexadecimal form when getting this
-  property.
+  specifications must be in the format accepted by the function
+  @fun{gdk-color-parse}. Note that due to the way the color tables from
+  different sources are merged, color specifications will be converted to
+  hexadecimal form when getting this property.
   Starting with GTK+ 2.12, the entries can alternatively be separated by ';'
   instead of newlines:
   @begin{pre}
@@ -537,25 +562,25 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-cursor-blink-time"
                                                'gtk-settings) 't)
- "The @code{\"gtk-cursor-blink-time\"} property of type @code{gint}
+ "The @code{\"gtk-cursor-blink-time\"} property of type @code{:int}
   (Read / Write)@br{}
   Length of the cursor blink cycle, in milliseconds.@br{}
-  Allowed values: @code{>= 100}@br{}
-  Default value: @code{1200}")
+  Allowed values: >= 100@br{}
+  Default value: 1200")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-cursor-blink-timeout"
                                                'gtk-settings) 't)
- "The @code{\"gtk-cursor-blink-timeout\"} property of type @code{gint}
+ "The @code{\"gtk-cursor-blink-timeout\"} property of type @code{:int}
   (Read / Write)@br{}
   Time after which the cursor stops blinking, in seconds. The timer is reset
   after each user interaction.
   Setting this to zero has the same effect as setting
   @code{\"gtk-cursor-blink\"} to @code{nil}.@br{}
-  Allowed values: @code{>= 1}@br{}
-  Default value: @code{2147483647}@br{}
+  Allowed values: >= 1@br{}
+  Default value: 2147483647@br{}
   Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
@@ -563,7 +588,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-cursor-theme-name"
                                                'gtk-settings) 't)
- "The @code{\"gtk-cursor-theme-name\"} property of type @code{gchar*}
+ "The @code{\"gtk-cursor-theme-name\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of the cursor theme to use, or @code{nil} to use the default theme.@br{}
   Default value: @code{nil}")
@@ -573,53 +598,53 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-cursor-theme-size"
                                                'gtk-settings) 't)
- "The @code{\"gtk-cursor-theme-size\"} property of type @code{gint}
+ "The @code{\"gtk-cursor-theme-size\"} property of type @code{:int}
   (Read / Write)@br{}
-  Size to use for cursors, or @code{0} to use the default size.@br{}
-  Allowed values: @code{[0,128]}@br{}
-  Default value: @code{0}")
+  Size to use for cursors, or 0 to use the default size.@br{}
+  Allowed values: [0,128]@br{}
+  Default value: 0")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-dnd-drag-threshold"
                                                'gtk-settings) 't)
- "The @code{\"gtk-dnd-drag-threshold\"} property of type @code{gint}
+ "The @code{\"gtk-dnd-drag-threshold\"} property of type @code{:int}
   (Read / Write)@br{}
   Number of pixels the cursor can move before dragging.@br{}
-  Allowed values: @code{>= 1}@br{}
-  Default value: @code{8}")
+  Allowed values: >= 1@br{}
+  Default value: 8")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-double-click-distance"
                                                'gtk-settings) 't)
- "The @code{\"gtk-double-click-distance\"} property of type @code{gint}
+ "The @code{\"gtk-double-click-distance\"} property of type @code{:int}
   (Read / Write)@br{}
   Maximum distance in pixels allowed between two clicks for them to be
   considered a double click.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{5}")
+  Allowed values: >= 0@br{}
+  Default value: 5")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-double-click-time"
                                                'gtk-settings) 't)
- "The @code{\"gtk-double-click-time\"} property of type @code{gint}
+ "The @code{\"gtk-double-click-time\"} property of type @code{:int}
   (Read / Write)@br{}
   Maximum time allowed between two clicks for them to be considered a double
   click (in milliseconds).@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{250}")
+  Allowed values: >= 0@br{}
+  Default value: 250")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-enable-accels"
                                                'gtk-settings) 't)
- "The @code{\"gtk-enable-accels\"} property of type @code{gboolean}
+ "The @code{\"gtk-enable-accels\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether menu items should have visible accelerators which can be
   activated.@br{}
@@ -631,7 +656,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-enable-animations"
                                                'gtk-settings) 't)
- "The @code{\"gtk-enable-animations\"} property of type @code{gboolean}
+ "The @code{\"gtk-enable-animations\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether to enable toolkit-wide animations.@br{}
   Default value: @em{true}")
@@ -641,7 +666,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-enable-event-sounds"
                                                'gtk-settings) 't)
- "The @code{\"gtk-enable-event-sounds\"} property of type @code{gboolean}
+ "The @code{\"gtk-enable-event-sounds\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether to play any event sounds at all.
   See the Sound Theme spec for more information on event sounds and sound
@@ -657,7 +682,7 @@
 (setf (documentation (atdoc:get-slot-from-name "gtk-enable-input-feedback-sounds"
                                                'gtk-settings) 't)
  "The @code{\"gtk-enable-input-feedback-sounds\"} property of type
-  @code{gboolean} (Read / Write)@br{}
+  @code{:boolean} (Read / Write)@br{}
   Whether to play event sounds as feedback to user input.
   See the Sound Theme spec for more information on event sounds and sound
   themes.
@@ -671,7 +696,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-enable-mnemonics"
                                                'gtk-settings) 't)
- "The @code{\"gtk-enable-mnemonics\"} property of type @code{gboolean}
+ "The @code{\"gtk-enable-mnemonics\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether labels and menu items should have visible mnemonics which can be
   activated.@br{}
@@ -681,9 +706,21 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "gtk-enable-primary-paste"
+                                               'gtk-settings) t)
+ "The @code{\"gtk-enable-primary-paste\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether a middle click on a mouse should paste the @code{PRIMARY} clipboard
+  content at the cursor location. @br{}
+  Default value: @em{true}@br{}
+  Since 3.4")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-enable-tooltips"
                                                'gtk-settings) 't)
- "The @code{\"gtk-enable-tooltips\"} property of type @code{gboolean}
+ "The @code{\"gtk-enable-tooltips\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether tooltips should be shown on widgets.@br{}
   Default value: @em{true}@br{}
@@ -694,12 +731,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-entry-password-hint-timeout"
                                                'gtk-settings) 't)
- "The @code{\"gtk-entry-password-hint-timeout\"} property of type @code{guint}
+ "The @code{\"gtk-entry-password-hint-timeout\"} property of type @code{:uint}
   (Read / Write)@br{}
   How long to show the last input character in hidden entries. This value is
-  in milliseconds. @code{0} disables showing the last char. @code{600} is a
-  good value for enabling it.@br{}
-  Default value: @code{0}@br{}
+  in milliseconds. The value 0 disables showing the last char. The value 600 is
+  a good value for enabling it.@br{}
+  Default value: 0@br{}
   Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
@@ -707,7 +744,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-entry-select-on-focus"
                                                'gtk-settings) 't)
- "The @code{\"gtk-entry-select-on-focus\"} property of type @code{gboolean}
+ "The @code{\"gtk-entry-select-on-focus\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether to select the contents of an entry when it is focused.@br{}
   Default value: @code{true}")
@@ -717,12 +754,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-error-bell"
                                                'gtk-settings) 't)
- "The @code{\"gtk-error-bell\"} property of type @code{gboolean}
+ "The @code{\"gtk-error-bell\"} property of type @code{:boolean}
   (Read / Write)@br{}
   When @em{true}, keyboard navigation and other input-related errors will cause
-  a beep. Since the error bell is implemented using @fun{gdk-window-beep}, the
-  windowing system may offer ways to configure the error bell in many ways,
-  such as flashing the window or similar visual effects.@br{}
+  a beep. Since the error bell is implemented using the function
+  @fun{gdk-window-beep}, the windowing system may offer ways to configure the
+  error bell in many ways, such as flashing the window or similar visual
+  effects.@br{}
   Default value: @em{true}
   Since 2.12")
 
@@ -731,7 +769,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-fallback-icon-theme"
                                                'gtk-settings) 't)
- "The @code{\"gtk-fallback-icon-theme\"} property of type @code{gchar*}
+ "The @code{\"gtk-fallback-icon-theme\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of a icon theme to fall back to.@br{}
   Default value: @code{nil}")
@@ -741,7 +779,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-file-chooser-backend"
                                                'gtk-settings) 't)
- "The @code{\"gtk-file-chooser-backend\"} property of type @code{gchar*}
+ "The @code{\"gtk-file-chooser-backend\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of the @class{gtk-file-chooser} backend to use by default.@br{}
   Default value: @code{nil}")
@@ -751,27 +789,27 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-font-name"
                                                'gtk-settings) 't)
- "The @code{\"gtk-font-name\"} property of type @code{gchar*}
+ "The @code{\"gtk-font-name\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of default font to use.@br{}
-  Default value: @code{\"Sans 10\"}")
+  Default value: \"Sans 10\"")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-fontconfig-timestamp"
                                                'gtk-settings) 't)
- "The @code{\"gtk-fontconfig-timestamp\"} property of type @code{guint}
+ "The @code{\"gtk-fontconfig-timestamp\"} property of type @code{:uint}
   (Read / Write)@br{}
   Timestamp of current fontconfig configuration.@br{}
-  Default value: @code{0}")
+  Default value: 0")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-icon-sizes"
                                                'gtk-settings) 't)
- "The @code{\"gtk-icon-sizes\"} property of type @code{gchar*}
+ "The @code{\"gtk-icon-sizes\"} property of type @code{:string}
   (Read / Write)@br{}
   A list of icon sizes. The list is separated by colons, and item has the
   form:
@@ -790,17 +828,17 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-icon-theme-name"
                                                'gtk-settings) 't)
- "The @code{\"gtk-icon-theme-name\"} property of type @code{gchar*}
+ "The @code{\"gtk-icon-theme-name\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of icon theme to use.@br{}
-  Default value: @code{\"hicolor\"}")
+  Default value: \"hicolor\"")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-im-module"
                                                'gtk-settings) 't)
- "The @code{\"gtk-im-module\"} property of type @code{gchar*}
+ "The @code{\"gtk-im-module\"} property of type @code{:string}
   (Read / Write)@br{}
   Which IM (input method) module should be used by default. This is the input
   method that will be used if the user has not explicitly chosen another input
@@ -836,7 +874,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-key-theme-name"
                                                'gtk-settings) 't)
- "The @code{\"gtk-key-theme-name\"} property of type @code{gchar*}
+ "The @code{\"gtk-key-theme-name\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of key theme to load.@br{}
   Default value: @code{nil}")
@@ -846,10 +884,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-keynav-cursor-only"
                                                'gtk-settings) 't)
- "The @code{\"gtk-keynav-cursor-only\"} property of type @code{gboolean}
+ "The @code{\"gtk-keynav-cursor-only\"} property of type @code{:boolean}
   (Read / Write)@br{}
   When @code{true}, keyboard navigation should be able to reach all widgets by
-  using the cursor keys only. Tab, Shift etc. keys can't be expected to be
+  using the cursor keys only. Tab, Shift etc. keys cannot be expected to be
   present on the used input device.@br{}
   Default value: @code{nil}@br{}
   Since 2.12")
@@ -859,7 +897,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-keynav-wrap-around"
                                                'gtk-settings) 't)
- "The @code{\"gtk-keynav-wrap-around\"} property of type @code{gboolean}
+ "The @code{\"gtk-keynav-wrap-around\"} property of type @code{:boolean}
   (Read / Write)@br{}
   When @code{true}, some widgets will wrap around when doing keyboard
   navigation, such as menus, menubars and notebooks.@br{}
@@ -871,7 +909,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-label-select-on-focus"
                                                'gtk-settings) 't)
- "The @code{\"gtk-label-select-on-focus\"} property of type @code{gboolean}
+ "The @code{\"gtk-label-select-on-focus\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether to select the contents of a selectable label when it is focused.@br{}
   Default value: @em{true}")
@@ -881,28 +919,28 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-menu-bar-accel"
                                                'gtk-settings) 't)
- "The @code{\"gtk-menu-bar-accel\"} property of type @code{gchar*}
+ "The @code{\"gtk-menu-bar-accel\"} property of type @code{:string}
   (Read / Write)@br{}
   Keybinding to activate the menu bar.@br{}
-  Default value: @code{\"F10\"}")
+  Default value: \"F10\"")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-menu-bar-popup-delay"
                                                'gtk-settings) 't)
- "The @code{\"gtk-menu-bar-popup-delay\"} property of type @code{gint}
+ "The @code{\"gtk-menu-bar-popup-delay\"} property of type @code{:int}
   (Read / Write)@br{}
   Delay before the submenus of a menu bar appear.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{0}")
+  Allowed values: >= 0@br{}
+  Default value: 0")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-menu-images"
                                                'gtk-settings) 't)
- "The @code{\"gtk-menu-images\"} property of type @code{gboolean}
+ "The @code{\"gtk-menu-images\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether images should be shown in menus.@br{}
   Default value: @em{true}")
@@ -912,40 +950,52 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-menu-popdown-delay"
                                                'gtk-settings) 't)
- "The @code{\"gtk-menu-popdown-delay\"} property of type @code{gint}
+ "The @code{\"gtk-menu-popdown-delay\"} property of type @code{:int}
   (Read / Write)@br{}
   The time before hiding a submenu when the pointer is moving towards the
   submenu.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{1000}")
+  Allowed values: >= 0@br{}
+  Default value: 1000")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-menu-popup-delay"
                                                'gtk-settings) 't)
- "The @code{\"gtk-menu-popup-delay\"} property of type @code{gint}
+ "The @code{\"gtk-menu-popup-delay\"} property of type @code{:int}
   (Read / Write)@br{}
   Minimum time the pointer must stay over a menu item before the submenu
   appear.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{225}")
+  Allowed values: >= 0@br{}
+  Default value: 225")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-modules"
                                                'gtk-settings) 't)
- "The @code{\"gtk-modules\"} property of type @code{gchar*} (Read / Write)@br{}
+ "The @code{\"gtk-modules\"} property of type @code{:string} (Read / Write)@br{}
   List of currently active GTK modules.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "gtk-primary-button-warps-slider"
+                                               'gtk-settings) t)
+ "The @code{\"gtk-primary-button-warps-slider\"} property of type
+  @code{:boolean} (Read / Write) @br{}
+  Whether a click in a @class{gtk-range} widget trough should scroll to the
+  click position or scroll by a single page in the respective direction. @br{}
+  Default value: @em{true}@br{}
+  Since 3.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-print-backends"
                                                'gtk-settings) 't)
- "The @code{\"gtk-print-backends\"} property of type @code{gchar*}
+ "The @code{\"gtk-print-backends\"} property of type @code{:string}
   (Read / Write)@br{}
   A comma-separated list of print backends to use in the print dialog.
   Available print backends depend on the GTK+ installation, and may include
@@ -958,13 +1008,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-print-preview-command"
                                                'gtk-settings) 't)
- "The @code{\"gtk-print-preview-command\"} property of type @code{gchar*}
+ "The @code{\"gtk-print-preview-command\"} property of type @code{:string}
   (Read / Write)@br{}
   A command to run for displaying the print preview. The command should
   contain a @code{f} placeholder, which will get replaced by the path to the
   pdf file. The command may also contain a @code{s} placeholder, which will get
   replaced by the path to a file containing the print settings in the format
-  produced by @fun{gtk-print-settings-to-file}.
+  produced by the function @fun{gtk-print-settings-to-file}.
   The preview application is responsible for removing the pdf file and the
   print settings file when it is done.@br{}
   Default value:
@@ -976,14 +1026,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-recent-files-limit"
                                                'gtk-settings) 't)
- "The @code{\"gtk-recent-files-limit\"} property of type @code{gint}
+ "The @code{\"gtk-recent-files-limit\"} property of type @code{:int}
   (Read / Write)@br{}
   The number of recently used files that should be displayed by default by
   @class{gtk-recent-chooser} implementations and by the
-  @class{gtk-file-chooser}. A value of @code{-1} means every recently used file
+  @class{gtk-file-chooser}. A value of -1 means every recently used file
   stored.@br{}
-  Allowed values: @code{>= G_MAXULONG}@br{}
-  Default value: @code{50}@br{}
+  Allowed values: >= @code{G_MAXULONG}@br{}
+  Default value: 50@br{}
   Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
@@ -991,13 +1041,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-recent-files-max-age"
                                                'gtk-settings) 't)
- "The @code{\"gtk-recent-files-max-age\"} property of type @code{gint}
+ "The @code{\"gtk-recent-files-max-age\"} property of type @code{:int}
   (Read / Write)@br{}
   The maximum age, in days, of the items inside the recently used resources
   list. Items older than this setting will be excised from the list. If set to
-  @code{0}, the list will always be empty; if set to @code{-1}, no item will be
+  0, the list will always be empty; if set to -1, no item will be
   removed.@br{}
-  Allowed values: @code{>= G_MAXULONG}@br{}
+  Allowed values: >= @code{G_MAXULONG}@br{}
   Default value: 30@br{}
   Since 2.14")
 
@@ -1018,7 +1068,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-shell-shows-app-menu"
                                                'gtk-settings) 't)
- "The @code{\"gtk-shell-shows-app-menu\"} property of type @code{gboolean}
+ "The @code{\"gtk-shell-shows-app-menu\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Set to @em{true} if the desktop environment is displaying the app menu,
   @code{nil} if the app should display it itself.@br{}
@@ -1029,7 +1079,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-shell-shows-menubar"
                                                'gtk-settings) 't)
- "The @code{\"gtk-shell-shows-menubar\"} property of type @code{gboolean} 
+ "The @code{\"gtk-shell-shows-menubar\"} property of type @code{:boolean} 
   (Read / Write)@br{}
   Set to @em{true} if the desktop environment is displaying the menubar,
   @code{false} if the app should display it itself.@br{}
@@ -1040,7 +1090,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-show-input-method-menu"
                                                'gtk-settings) 't)
- "The @code{\"gtk-show-input-method-menu\"} property of type @code{gboolean} 
+ "The @code{\"gtk-show-input-method-menu\"} property of type @code{:boolean} 
   (Read / Write)@br{}
   Whether the context menus of entries and text views should offer to change
   the input method.@br{}
@@ -1051,7 +1101,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-show-unicode-menu"
                                                'gtk-settings) 't)
- "The @code{\"gtk-show-unicode-menu\"} property of type @code{gboolean}
+ "The @code{\"gtk-show-unicode-menu\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether the context menus of entries and text views should offer to insert
   control characters.@br{}
@@ -1062,7 +1112,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-sound-theme-name"
                                                'gtk-settings) 't)
- "The @code{\"gtk-sound-theme-name\"} property of type @code{gchar*}
+ "The @code{\"gtk-sound-theme-name\"} property of type @code{:string}
   (Read / Write)@br{}
   The XDG sound theme to use for event sounds.
   See the Sound Theme spec for more information on event sounds and sound
@@ -1077,7 +1127,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-split-cursor"
                                                'gtk-settings) 't)
- "The @code{\"gtk-split-cursor\"} property of type @code{gboolean}
+ "The @code{\"gtk-split-cursor\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether two cursors should be displayed for mixed left-to-right and
   right-to-left text.@br{}
@@ -1088,7 +1138,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-theme-name"
                                                'gtk-settings) 't)
- "The @code{\"gtk-theme-name\"} property of type @code{gchar*}
+ "The @code{\"gtk-theme-name\"} property of type @code{:string}
   (Read / Write)@br{}
   Name of theme to load.@br{}
   Default value: @code{\"Raleigh\"}")
@@ -1098,33 +1148,33 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-timeout-expand"
                                                'gtk-settings) 't)
- "The @code{\"gtk-timeout-expand\"} property of type @code{gint}
+ "The @code{\"gtk-timeout-expand\"} property of type @code{:int}
   (Read / Write)@br{}
   Expand value for timeouts, when a widget is expanding a new region.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{500}")
+  Allowed values: >= 0@br{}
+  Default value: 500")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-timeout-initial"
                                                'gtk-settings) 't)
- "The @code{\"gtk-timeout-initial\"} property of type @code{gint}
+ "The @code{\"gtk-timeout-initial\"} property of type @code{:int}
   (Read / Write)@br{}
   Starting value for timeouts, when button is pressed.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{200}")
+  Allowed values: >= 0@br{}
+  Default value: 200")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-timeout-repeat"
                                                'gtk-settings) 't)
- "The @code{\"gtk-timeout-repeat\"} property of type @code{gint}
+ "The @code{\"gtk-timeout-repeat\"} property of type @code{:int}
   (Read / Write)@br{}
   Repeat value for timeouts, when button is pressed.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{20}")
+  Allowed values: >= 0@br{}
+  Default value: 20")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1151,14 +1201,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-tooltip-browse-mode-timeout"
                                                'gtk-settings) 't)
- "The @code{\"gtk-tooltip-browse-mode-timeout\"} property of type @code{gint}
+ "The @code{\"gtk-tooltip-browse-mode-timeout\"} property of type @code{:int}
   (Read / Write)@br{}
   Amount of time, in milliseconds, after which the browse mode will be
   disabled.
   See @code{\"gtk-tooltip-browse-timeout\"} for more information about browse
   mode.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{500}@br{}
+  Allowed values: >= 0@br{}
+  Default value: 500@br{}
   Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
@@ -1166,7 +1216,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-tooltip-browse-timeout"
                                                'gtk-settings) 't)
- "The @code{\"gtk-tooltip-browse-timeout\"} property of type @code{gint}
+ "The @code{\"gtk-tooltip-browse-timeout\"} property of type @code{:int}
   (Read / Write)@br{}
   Controls the time after which tooltips will appear when browse mode is
   enabled, in milliseconds.
@@ -1176,8 +1226,8 @@
   @code{\"gtk-tooltip-browse-mode-timeout\"}), it will take the amount of
   milliseconds specified by this setting to popup the tooltip for the new
   object.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{60}@br{}
+  Allowed values: >= 0@br{}
+  Default value: 60@br{}
   Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
@@ -1185,12 +1235,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-tooltip-timeout"
                                                'gtk-settings) 't)
- "The @code{\"gtk-tooltip-timeout\"} property of type @code{gint}
+ "The @code{\"gtk-tooltip-timeout\"} property of type @code{:int}
   (Read / Write)@br{}
   Time, in milliseconds, after which a tooltip could appear if the cursor is
   hovering on top of a widget.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{500}@br{}
+  Allowed values: >= 0@br{}
+  Default value: 500@br{}
   Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
@@ -1198,11 +1248,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-touchscreen-mode"
                                                'gtk-settings) 't)
- "The @code{\"gtk-touchscreen-mode\"} property of type @code{gboolean}
+ "The @code{\"gtk-touchscreen-mode\"} property of type @code{:boolean}
   (Read / Write)@br{}
   @b{Warning:} @code{\"gtk-touchscreen-mode\"} is deprecated since GTk+ 3.4 and
   should not be used in newly-written code. Generally the behavior touchscreen
-  input should be performed dynamically based on
+  input should be performed dynamically based on the function
   @fun{gdk-event-get-source-device}. When @em{true}, there are no motion notify
   events delivered on this screen, and widgets can't use the pointer hovering
   them for any essential functionality.@br{}
@@ -1226,22 +1276,22 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-antialias"
                                                'gtk-settings) 't)
- "The @code{\"gtk-xft-antialias\"} property of type @code{gint}
+ "The @code{\"gtk-xft-antialias\"} property of type @code{:int}
   (Read / Write)@br{}
   Whether to antialias Xft fonts:
   @code{0=no}, @code{1=yes}, @code{-1=default}.@br{}
-  Allowed values: @code{[G_MAXULONG,1]}@br{}
-  Default value: @code{-1}")
+  Allowed values: [@code{G_MAXULONG},1]@br{}
+  Default value: -1")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-dpi" 'gtk-settings) 't)
  "The @code{\"gtk-xft-dpi\"} property of type @code{gint} (Read / Write)@br{}
-  Resolution for Xft, in @code{1024 * dots/inch}. @code{-1} to use default
+  Resolution for Xft, in @code{1024 * dots/inch}. -1 to use default
   value.@br{}
-  Allowed values: @code{[G_MAXULONG,1048576]}@br{}
-  Default value: @code{-1}")
+  Allowed values: [@code{G_MAXULONG},1048576]@br{}
+  Default value: -1")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1251,15 +1301,15 @@
  "The @code{\"gtk-xft-hinting\"} property of type @code{gint}
   (Read / Write)@br{}
   Whether to hint Xft fonts: @code{0=no}, @code{1=yes}, @code{-1=default}.@br{}
-  Allowed values: @code{[G_MAXULONG,1]}@br{}
-  Default value: @code{-1}")
+  Allowed values: [@code{G_MAXULONG},1]@br{}
+  Default value: -1")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-hintstyle"
                                                'gtk-settings) 't)
- "The @code{\"gtk-xft-hintstyle\"} property of type @code{gchar*}
+ "The @code{\"gtk-xft-hintstyle\"} property of type @code{:string}
   (Read / Write)@br{}
   What degree of hinting to use: @code{hintnone}, @code{hintslight},
   @code{hintmedium}, or @code{hintfull}.@br{}
@@ -1269,14 +1319,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-rgba" 'gtk-settings) 't)
- "The @code{\"gtk-xft-rgba\"} property of type @code{gchar*} (Read / Write)@br{}
+ "The @code{\"gtk-xft-rgba\"} property of type @code{:string} (Read / Write)@br{}
   Type of subpixel antialiasing:
   @code{none}, @code{rgb}, @code{bgr}, @code{vrgb}, @code{vbgr}.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -1503,6 +1553,16 @@
       (documentation 'gtk-settings-gtk-enable-mnemonics 'function)
  "@version{2013-3-13}
   Accessor of the slot @code{\"gtk-enable-mnemonics\"} of the
+  @class{gtk-settings} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-settings-gtk-enable-primary-paste atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-settings-gtk-enable-primary-paste 'function)
+ "@version{2013-4-17}
+  Accessor of the slot @code{\"gtk-enable-primary-paste\"} of the
   @class{gtk-settings} class.")
 
 ;;; ----------------------------------------------------------------------------
@@ -1741,6 +1801,17 @@
  "@version{2013-3-13}
   Accessor of the slot @code{\"gtk-modules\"} of the @class{gtk-settings}
   class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-settings-gtk-primary-button-warps-slider
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-settings-gtk-primary-button-warps-slider 'function)
+ "@version{2013-4-17}
+  Accessor of the slot @code{\"gtk-primary-buton-warps-slider\"} of the
+  @class{gtk-settings} class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2257,6 +2328,5 @@
 ;;;                                        gdouble v_double,
 ;;;                                        const gchar *origin);
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.settings.lisp ------------------------------------------

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -83,12 +83,10 @@
   (:locked 2)
   (:mask 7))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-accel-flags atdoc:*external-symbols*)
- "@version{2013-1-13}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-flags \"GtkAccelFlags\" gtk-accel-flags
@@ -110,12 +108,10 @@
   (:start 1)
   (:end 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-arrow-placement atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-arrow-placement atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @begin{short}
     Used to specify the placement of scroll arrows in scrolling menus.
   @end{short}
@@ -146,14 +142,13 @@
   (:right 3)
   (:none 4))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-arrow-type atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
-    Used to indicate the direction in which a @class{gtk-arrow} should point.
+    Used to indicate the direction in which a @class{gtk-arrow} widget should
+    point.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkArrowType\" gtk-arrow-type
@@ -171,7 +166,8 @@
     @entry[:left]{Represents a left pointing arrow.}
     @entry[:right]{Represents a right pointing arrow.}
     @entry[:none]{No arrow. Since 2.10.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-arrow}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkAttachOptions
@@ -184,12 +180,10 @@
   (:shrink 2)
   (:fill 4))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-attach-options atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-attach-options atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
     Denotes the expansion properties that a widget will have when it or its
     parent is resized.
@@ -223,15 +217,13 @@
   (:end 4)
   (:center 5))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-button-box-style atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
-    Used to dictate the style that a @class{gtk-button-box} uses to layout the
-    buttons it contains.
+    Used to dictate the style that a @class{gtk-button-box} widget uses to
+    layout the buttons it contains.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkButtonBoxStyle\" gtk-button-box-style
@@ -252,7 +244,8 @@
     @entry[:end]{Buttons are grouped towards the end of the box, on the right
       for a horizontal box, or the bottom for a vertical box.}
     @entry[:center]{Buttons are centered in the box. Since 2.12.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-button-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCornerType
@@ -266,16 +259,14 @@
   (:top-right 2)
   (:bottom-right 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-corner-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-corner-type atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
     Specifies which corner a child widget should be placed in when packed into a
-    @class{gtk-scrolled-window}. This is effectively the opposite of where the
-    scroll bars are placed.
+    @class{gtk-scrolled-window} widget. This is effectively the opposite of
+    where the scroll bars are placed.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkCornerType\" gtk-corner-type
@@ -295,7 +286,8 @@
       widget.}
     @entry[:bottom-right]{Place the scrollbars on the top and left of the
       widget.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkDeleteType
@@ -313,12 +305,10 @@
   (:paragraphs 6)
   (:whitespace 7))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-delete-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-delete-type atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkDeleteType\" gtk-delete-type
@@ -348,12 +338,10 @@
   (:left 4)
   (:right 5))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-direction-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-direction-type atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkDirectionType\" gtk-direction-type
@@ -379,14 +367,13 @@
   (:semi-expanded 2)
   (:expanded 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-expander-style atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
-    Used to specify the style of the expanders drawn by a @class{gtk-tree-view}.
+    Used to specify the style of the expanders drawn by a @class{gtk-tree-view}
+    widget.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkExpanderStyle\" gtk-expander-style
@@ -402,7 +389,8 @@
     @entry[:semi-collapsed]{Intermediate style used during animation.}
     @entry[:semi-expanded]{Intermediate style used during animation.}
     @entry[:expanded]{The style used for an expanded subtree.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-tree-view}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIMPreeditStyle
@@ -415,12 +403,10 @@
   (:callback 1)
   (:none 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-preedit-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-im-preedit-style atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkIMPreeditStyle\" gtk-im-preedit-style
@@ -442,12 +428,10 @@
   (:callback 1)
   (:none 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-status-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-im-status-style atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkIMStatusStyle\" gtk-im-status-style
@@ -470,15 +454,13 @@
   (:center 2)
   (:fill 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-justification atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-justification atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
-    Used for justifying the text inside a @class{gtk-label} widget. See also
-    @class{gtk-alignment}.
+    Used for justifying the text inside a @class{gtk-label} widget. See also the
+    @class{gtk-alignment} widget.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkJustification\" gtk-justification
@@ -494,7 +476,9 @@
     @entry[:right]{The text is placed at the right edge of the label.}
     @entry[:center]{The text is placed in the center of the label.}
     @entry[:fill]{The text is placed is distributed across the label.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-alignment}
+  @see-class{gtk-label}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkMovementStep
@@ -514,12 +498,10 @@
   (:buffer-ends 8)
   (:horizontal-pages 9))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-movement-step atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-movement-step atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkMovementStep\" gtk-movement-step
@@ -538,7 +520,7 @@
   @end{pre}
   @begin[code]{table}
     @entry[:logical-positions]{Move forward or back by graphemes.}
-    @entry[:visual-positions}{Move left or right by graphemes.}
+    @entry[:visual-positions]{Move left or right by graphemes.}
     @entry[:words]{Move forward or back by words.}
     @entry[:display-lines]{Move up or down lines (wrapped lines).}
     @entry[:display-line-ends]{Move to either end of a line.}
@@ -559,12 +541,10 @@
   (:horizontal 0)
   (:vertical 1))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientation atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-orientation atdoc:*external-symbols*)
- "@version{2013-1-18}
+ "@version{2013-4-18}
   @begin{short}
     Represents the orientation of widgets which can be switched between
     horizontal and vertical orientation on the fly, like @class{gtk-toolbar}.
@@ -579,7 +559,9 @@
   @begin[code]{table}
     @entry[:horizontal]{The widget is in horizontal orientation.}
     @entry[:vertical]{The widget is in vertical orientation.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-orientable}
+  @see-class{gtk-toolbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPackType
@@ -591,12 +573,10 @@
   (:start 0)
   (:end 1))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pack-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-pack-type atdoc:*external-symbols*)
- "@version{2013-1-20}
+ "@version{2013-4-18}
   @begin{short}
     Represents the packing location of a @class{gtk-box} children.
   @end{short}
@@ -629,12 +609,10 @@
   (:rc 12)
   (:highest 15))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-path-priority-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-path-priority-type atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkPathPriorityType\" gtk-path-priority-type
@@ -650,12 +628,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPathType
-;;;
-;;; typedef enum {
-;;;   GTK_PATH_WIDGET,
-;;;   GTK_PATH_WIDGET_CLASS,
-;;;   GTK_PATH_CLASS
-;;; } GtkPathType;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkPathType" gtk-path-type
@@ -665,12 +637,10 @@
   (:widget-class 1)
   (:class 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-path-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-path-type atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkPathType\" gtk-path-type
@@ -692,12 +662,10 @@
   (:automatic 1)
   (:never 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-policy-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-policy-type atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @short{Determines when a scroll bar will be visible.}
   @begin{pre}
 (define-g-enum \"GtkPolicyType\" gtk-policy-type
@@ -709,8 +677,7 @@
   @end{pre}
   @begin[code]{table}
     @entry[:always]{The scrollbar is always visible.}
-    @entry[:automatic]{The scrollbar will appear and disappear as necessary.
-      For example, when all of a @code{GtkCList} can not be seen.}
+    @entry[:automatic]{The scrollbar will appear and disappear as necessary.}
     @entry[:never]{The scrollbar will never appear.}
   @end{table}")
 
@@ -726,16 +693,13 @@
   (:top 2)
   (:bottom 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-position-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-position-type atdoc:*external-symbols*)
- "@version{2013-1-9}
+ "@version{2013-4-18}
   @begin{short}
     Describes which edge of a widget a certain feature is positioned at, e. g.
-    the tabs of a @class{gtk-notebook}, the handle of a @class{gtk-handle-box}
-    or the label of a @class{gtk-scale}.
+    the tabs of a @class{gtk-notebook} or the label of a @class{gtk-scale}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkPositionType\" gtk-position-type
@@ -751,7 +715,9 @@
     @entry[:right]{The feature is at the right edge.}
     @entry[:top]{The feature is at the top edge.}
     @entry[:bottom]{The feature is at the bottom edge.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-notebook}
+  @see-class{gtk-scale}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkReliefStyle
@@ -764,13 +730,11 @@
   (:half 1)
   (:none 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-relief-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-relief-style atdoc:*external-symbols*)
- "@version{2013-1-9}
-  @short{Indicated the relief to be drawn around a @class{gtk-button}.}
+ "@version{2013-4-18}
+  @short{Indicated the relief to be drawn around a @class{gtk-button} button.}
   @begin{pre}
 (define-g-enum \"GtkReliefStyle\" gtk-relief-style
   (:export t
@@ -783,7 +747,8 @@
     @entry[:normal]{Draw a normal relief.}
     @entry[:half]{Draw a half relief.}
     @entry[:none]{Draw no relief.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkResizeMode
@@ -796,12 +761,10 @@
   (:queue 1)
   (:immediate 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-resize-mode atdoc:*external-symbols*)
- "@version{2013-1-20}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkResizeMode\" gtk-resize-mode
@@ -831,12 +794,10 @@
   (:horizontal-pages 4)
   (:horizontal-ends 5))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scroll-step atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-scroll-step atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-3-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkScrollStep\" gtk-scroll-step
@@ -874,12 +835,10 @@
   (:start 14)
   (:end 15))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scroll-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-scroll-type atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkScrollType\" gtk-scroll-type
@@ -915,12 +874,10 @@
   (:browse 2)
   (:multiple 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-selection-mode atdoc:*external-symbols*)
- "@version{2013-3-9}
+ "@version{2013-4-18}
   @short{Used to control what selections users are allowed to make.}
   @begin{pre}
 (define-g-enum \"GtkSelectionMode\" gtk-selection-mode
@@ -935,10 +892,10 @@
     @entry[:none]{No selection is possible.}
     @entry[:single]{Zero or one element may be selected.}
     @entry[:browse]{Exactly one element is selected. In some circumstances, such
-      as initially or during a search operation, it's possible for no element to
-      be selected with @code{:browse}. What is really enforced is that the user
-      can't deselect a currently selected element except by selecting another
-      element.}
+      as initially or during a search operation, it is possible for no element
+      to be selected with @code{:browse}. What is really enforced is that the
+      user  cannot deselect a currently selected element except by selecting
+      another element.}
     @entry[:multiple]{Any number of elements may be selected. The Ctrl key may
       be used to enlarge the selection, and Shift key to select between the
       focus and the child pointed to. Some widgets may also allow Click-drag to
@@ -958,12 +915,10 @@
   (:etched-in 3)
   (:etched-out 4))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-shadow-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-shadow-type atdoc:*external-symbols*)
- "@version{2013-2-3}
+ "@version{2013-4-18}
   @begin{short}
     Used to change the appearance of an outline typically provided by a
     @class{gtk-frame} widget.
@@ -984,7 +939,8 @@
     @entry[:out]{The outline is bevelled outwards like a button.}
     @entry[:etched-in]{The outline has a sunken 3d appearance.}
     @entry[:etched-out]{The outline has a raised 3d appearance.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-frame}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkStateType
@@ -1001,17 +957,15 @@
   (:inconsistent 5)
   (:focused 6))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-state-type atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @begin{short}
     This type indicates the current state of a widget; the state determines how
     the widget is drawn. The @sym{gtk-state-type} enumeration is also used to
-    identify different colors in a @class{gtk-style} for drawing, so states can
-    be used for subparts of a widget as well as entire widgets.
+    identify different colors in a @class{gtk-style} object for drawing, so
+    states can be used for subparts of a widget as well as entire widgets.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkStateType\" gtk-state-type
@@ -1039,7 +993,8 @@
       radiobuttons that aren't either set to @em{true} nor @code{nil}, or
       buttons requiring the user attention.}
     @entry[:focused]{The widget has the keyboard focus.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkStateFlags
@@ -1057,12 +1012,10 @@
   (:focused #.(ash 1 5))
   (:backdrop #.(ash 1 6)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-state-flags atdoc:*external-symbols*)
- "@version{2013-3-10}
+ "@version{2013-4-18}
   @short{Describes a widget state.}
   @begin{pre}
 (define-g-flags \"GtkStateFlags\" gtk-state-flags
@@ -1100,12 +1053,10 @@
   (:both 2)
   (:both-horiz 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-toolbar-style atdoc:*external-symbols*)
- "@version{2013-3-10}
+ "@version{2013-4-18}
   @begin{short}
     Used to customize the appearance of a @class{gtk-toolbar}. Note that setting
     the toolbar style overrides the user's preferences for the default toolbar
@@ -1127,7 +1078,8 @@
     @entry[:both]{Buttons display text and icons in the toolbar.}
     @entry[:both-horiz]{Buttons display icons and text alongside each other,
       rather than vertically stacked}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-toolbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWindowPosition
@@ -1142,16 +1094,14 @@
   (:center-always 3)
   (:center-on-parent 4))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-window-position atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-window-position atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @begin{short}
     Window placement can be influenced using this enumeration. Note that using
-    @code{:center-always} is almost always a bad idea. It won't necessarily work
-    well with all window managers or on all windowing systems.
+    @code{:center-always} is almost always a bad idea. It will not necessarily
+    work well with all window managers or on all windowing systems.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkWindowPosition\" gtk-window-position
@@ -1170,7 +1120,8 @@
     @entry[:center-always]{Keep window centered as it changes size, etc.}
     @entry[:center-on-parent]{Center the window on its transient parent
       (see @fun{gtk-window-set-transient-for}).}
-  @end{table}")
+  @end{table}
+  @see-function{gtk-window-set-transient-for}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWindowType
@@ -1182,25 +1133,23 @@
   (:toplevel 0)
   (:popup 1))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-window-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-window-type atdoc:*external-symbols*)
- "@version{2012-12-30}
+ "@version{2012-4-18}
   @begin{short}
-    An enumeration for the possible types of a @class{gtk-window}.
+    An enumeration for the possible types of a @class{gtk-window} widget.
   @end{short}
-  A @class{gtk-window} can be one of the types @code{:toplevel} or
-  @code{:popup}. Most things you'd consider a \"window\" should have type
+  A @class{gtk-window} widget can be one of the types @code{:toplevel} or
+  @code{:popup}. Most things you would consider a \"window\" should have type
   @code{:toplevel}; windows with this type are managed by the window manager and
   have a frame by default (call @fun{gtk-window-set-decorated} to toggle the
   frame). Windows with type @code{:popup} are ignored by the window manager;
-  window manager keybindings won't work on them, the window manager won't
+  window manager keybindings will not work on them, the window manager will not
   decorate the window with a frame, many GTK+ features that rely on the window
   manager will not work (e. g. resize grips and maximization/minimization).
   @code{:popup} is used to implement widgets such as @class{gtk-menu} or
-  tooltips that you normally don't think of as windows per se. Nearly all
+  tooltips that you normally do not think of as windows per se. Nearly all
   windows should be @code{:toplevel}. In particular, do not use @code{:popup}
   just to turn off the window borders; use @fun{gtk-window-set-decorated} for
   that.
@@ -1215,6 +1164,8 @@
     @entry[:toplevel]{A regular window, such as a dialog.}
     @entry[:popup]{A special window such as a tooltip.}
   @end{table}
+  @see-class{gtk-window}
+  @see-class{gtk-menu}
   @see-function{gtk-window-set-decorated}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1227,12 +1178,10 @@
   (:ascending 0)
   (:descending 1))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-sort-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-sort-type atdoc:*external-symbols*)
- "@version{2013-3-14}
+ "@version{2013-4-18}
   @short{Determines the direction of a sort.}
   @begin{pre}
 (define-g-enum \"GtkSortType\" gtk-sort-type
@@ -1260,12 +1209,10 @@
   (:grab-broken 4)
   (:error 5))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-drag-result atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-drag-result atdoc:*external-symbols*)
- "@version{2013-2-27}
+ "@version{2013-4-18}
   @begin{short}
     Gives an indication why a drag operation failed. The value can by obtained
     by connecting to the \"drag-failed\" signal.
@@ -1293,134 +1240,146 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkJunctionSides
-;;;
-;;; typedef enum {
-;;;   GTK_JUNCTION_NONE   = 0,
-;;;   GTK_JUNCTION_CORNER_TOPLEFT = 1 << 0,
-;;;   GTK_JUNCTION_CORNER_TOPRIGHT = 1 << 1,
-;;;   GTK_JUNCTION_CORNER_BOTTOMLEFT = 1 << 2,
-;;;   GTK_JUNCTION_CORNER_BOTTOMRIGHT = 1 << 3,
-;;;   GTK_JUNCTION_TOP    = (GTK_JUNCTION_CORNER_TOPLEFT |
-;;;                          GTK_JUNCTION_CORNER_TOPRIGHT),
-;;;   GTK_JUNCTION_BOTTOM = (GTK_JUNCTION_CORNER_BOTTOMLEFT |
-;;;                          GTK_JUNCTION_CORNER_BOTTOMRIGHT),
-;;;   GTK_JUNCTION_LEFT   = (GTK_JUNCTION_CORNER_TOPLEFT |
-;;;                          GTK_JUNCTION_CORNER_BOTTOMLEFT),
-;;;   GTK_JUNCTION_RIGHT  = (GTK_JUNCTION_CORNER_TOPRIGHT |
-;;;                          GTK_JUNCTION_CORNER_BOTTOMRIGHT)
-;;; } GtkJunctionSides;
-;;;
-;;; Describes how a rendered element connects to adjacent elements.
-;;;
-;;; GTK_JUNCTION_NONE
-;;;     No junctions.
-;;;
-;;; GTK_JUNCTION_CORNER_TOPLEFT
-;;;     Element connects on the top-left corner.
-;;;
-;;; GTK_JUNCTION_CORNER_TOPRIGHT
-;;;     Element connects on the top-right corner.
-;;;
-;;; GTK_JUNCTION_CORNER_BOTTOMLEFT
-;;;     Element connects on the bottom-left corner.
-;;;
-;;; GTK_JUNCTION_CORNER_BOTTOMRIGHT
-;;;     Element connects on the bottom-right corner.
-;;;
-;;; GTK_JUNCTION_TOP
-;;;     Element connects on the top side.
-;;;
-;;; GTK_JUNCTION_BOTTOM
-;;;     Element connects on the bottom side.
-;;;
-;;; GTK_JUNCTION_LEFT
-;;;     Element connects on the left side.
-;;;
-;;; GTK_JUNCTION_RIGHT
-;;;     Element connects on the right side.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkJunctionSides" gtk-junction-sides
+  (:export t
+   :type-initializer "gtk_junction_sides_get_type")
+  (:none 0)
+  (:corner-topleft #.(ash 1 0))
+  (:corner-topright #.(ash 1 1))
+  (:corner-bottomleft #.(ash 1 2))
+  (:corner-bottomright #.(ash 1 3))
+  (:top 3)
+  (:left 5)
+  (:bottom 6)
+  (:right 10))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-junction-sides atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-junction-sides atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @begin{short}
+    Describes how a rendered element connects to adjacent elements.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkJunctionSides\" gtk-junction-sides
+  (:export t
+   :type-initializer \"gtk_junction_sides_get_type\")
+  (:none 0)
+  (:corner-topleft #.(ash 1 0))
+  (:corner-topright #.(ash 1 1))
+  (:corner-bottomleft #.(ash 1 2))
+  (:corner-bottomright #.(ash 1 3))
+  (:top 3)
+  (:left 5)
+  (:bottom 6)
+  (:right 10))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No junctions.}
+    @entry[:corner-topleft]{Element connects on the top-left corner.}
+    @entry[:corner-topright]{Element connects on the top-right corner.}
+    @entry[:corner-bottomleft]{Element connects on the bottom-left corner.}
+    @entry[:corner-bottomright]{Element connects on the bottom-right corner.}
+    @entry[:top]{Element connects on the top side.}
+    @entry[:bottom]{Element connects on the bottom side.}
+    @entry[:left]{Element connects on the left side.}
+    @entry[:right]{Element connects on the right side.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkBorderStyle
-;;;
-;;; typedef enum {
-;;;   GTK_BORDER_STYLE_NONE,
-;;;   GTK_BORDER_STYLE_SOLID,
-;;;   GTK_BORDER_STYLE_INSET,
-;;;   GTK_BORDER_STYLE_OUTSET,
-;;;   GTK_BORDER_STYLE_HIDDEN,
-;;;   GTK_BORDER_STYLE_DOTTED,
-;;;   GTK_BORDER_STYLE_DASHED,
-;;;   GTK_BORDER_STYLE_DOUBLE,
-;;;   GTK_BORDER_STYLE_GROOVE,
-;;;   GTK_BORDER_STYLE_RIDGE
-;;; } GtkBorderStyle;
-;;;
-;;; Describes how the border of a UI element should be rendered.
-;;;
-;;; GTK_BORDER_STYLE_NONE
-;;;     No visible border
-;;;
-;;; GTK_BORDER_STYLE_SOLID
-;;;     A single line segment
-;;;
-;;; GTK_BORDER_STYLE_INSET
-;;;     Looks as if the content is sunken into the canvas
-;;;
-;;; GTK_BORDER_STYLE_OUTSET
-;;;     Looks as if the content is coming out of the canvas
-;;;
-;;; GTK_BORDER_STYLE_HIDDEN
-;;;     Same as GTK_BORDER_STYLE_NONE
-;;;
-;;; GTK_BORDER_STYLE_DOTTED
-;;;     A series of round dots
-;;;
-;;; GTK_BORDER_STYLE_DASHED
-;;;     A series of square-ended dashes
-;;;
-;;; GTK_BORDER_STYLE_DOUBLE
-;;;     Two parrallel lines with some space between them
-;;;
-;;; GTK_BORDER_STYLE_GROOVE
-;;;     Looks as if it were carved in the canvas
-;;;
-;;; GTK_BORDER_STYLE_RIDGE
-;;;     Looks as if it were coming out of the canvas
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkBorderStyle" gtk-border-style
+  (:export t
+   :type-initializer "gtk_border_style_get_type")
+  :none
+  :solid
+  :inset
+  :outset
+  :hidden
+  :dotted
+  :dashed
+  :double
+  :groove
+  :ridge)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-border-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-border-style atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @begin{short}
+    Describes how the border of a UI element should be rendered.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkBorderStyle\" gtk-border-style
+  (:export t
+   :type-initializer \"gtk_border_style_get_type\")
+  :none
+  :solid
+  :inset
+  :outset
+  :hidden
+  :dotted
+  :dashed
+  :double
+  :groove
+  :ridge)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No visible border.}
+    @entry[:solid]{A single line segment.}
+    @entry[:inset]{Looks as if the content is sunken into the canvas.}
+    @entry[:outset]{Looks as if the content is coming out of the canvas.}
+    @entry[:hidden]{Same as @code{:none}.}
+    @entry[:dotted]{A series of round dots.}
+    @entry[:dashed]{A series of square-ended dashes.}
+    @entry[:double]{Two parrallel lines with some space between them.}
+    @entry[:groove]{Looks as if it were carved in the canvas.}
+    @entry[:ridge]{Looks as if it were coming out of the canvas.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkRegionFlags
-;;;
-;;; typedef enum {
-;;;   GTK_REGION_EVEN    = 1 << 0,
-;;;   GTK_REGION_ODD     = 1 << 1,
-;;;   GTK_REGION_FIRST   = 1 << 2,
-;;;   GTK_REGION_LAST    = 1 << 3,
-;;;   GTK_REGION_ONLY    = 1 << 4,
-;;;   GTK_REGION_SORTED  = 1 << 5
-;;; } GtkRegionFlags;
-;;;
-;;; Describes a region within a widget.
-;;;
-;;; GTK_REGION_EVEN
-;;;     Region has an even number within a set.
-;;;
-;;; GTK_REGION_ODD
-;;;     Region has an odd number within a set.
-;;;
-;;; GTK_REGION_FIRST
-;;;     Region is the first one within a set.
-;;;
-;;; GTK_REGION_LAST
-;;;     Region is the last one within a set.
-;;;
-;;; GTK_REGION_ONLY
-;;;     Region is the only one within a set.
-;;;
-;;; GTK_REGION_SORTED
-;;;     Region is part of a sorted area.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "GtkRegionFlags" gtk-region-flags
+  (:export t
+   :type-initializer "gtk_region_flags_get_type")
+  (:even #.(ash 1 0))
+  (:odd #.(ash 1 1))
+  (:first #.(ash 1 2))
+  (:last #.(ash 1 3))
+  (:only #.(ash 1 4))
+  (:sorted #.(ash 1 5)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-region-flags atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-region-flags atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @begin{short}
+    Describes a region within a widget.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkRegionFlags\" gtk-region-flags
+  (:export t
+   :type-initializer \"gtk_region_flags_get_type\")
+  (:even #.(ash 1 0))
+  (:odd #.(ash 1 1))
+  (:first #.(ash 1 2))
+  (:last #.(ash 1 3))
+  (:only #.(ash 1 4))
+  (:sorted #.(ash 1 5)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:even]{Region has an even number within a set.}
+    @entry[:odd]{Region has an odd number within a set.}
+    @entry[:first]{Region is the first one within a set.}
+    @entry[:last]{Region is the last one within a set.}
+    @entry[:only]{Region is the only one within a set.}
+    @entry[:sorted]{Region is part of a sorted area.}
+  @end{table}")
 
 ;;; --- End of file gtk.enumerations.lisp --------------------------------------

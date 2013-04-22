@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -135,15 +135,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-about-dialog 'type)
- "@version{2012-12-30}
+ "@version{2013-4-21}
   @begin{short}
     The @sym{gtk-about-dialog} offers a simple way to display information about
     a program like its logo, name, copyright, website and license.
+    It is also possible to give credits to the authors, documenters, translators
+    and artists who have worked on the program. An about dialog is typically
+    opened when the user selects the About option from the Help menu. All parts
+    of the dialog are optional.
   @end{short}
-  It is also possible to give credits to the authors, documenters, translators
-  and artists who have worked on the program. An about dialog is typically
-  opened when the user selects the About option from the Help menu. All parts of
-  the dialog are optional.
 
   About dialog often contain links and email addresses. @sym{gtk-about-dialog}
   displays these as clickable links. By default, it calls @fun{gtk-show-uri}
@@ -151,14 +151,14 @@
   \"activate-link\" signal.
 
   To make constructing a @sym{gtk-about-dialog} as convenient as possible, you
-  can use the function @code{gtk_show_about_dialog()} which constructs and shows
+  can use the function @fun{gtk-show-about-dialog} which constructs and shows
   a dialog and keeps it around so that it can be shown again.
 
   Note that GTK+ sets a default title of @code{_(\"About %s\")} on the dialog
-  window where %s is replaced by the name of the application, but in order to
-  ensure proper translation of the title, applications should set the title
-  property explicitly when constructing a @sym{gtk-about-dialog}, as shown in
-  the following example:
+  window where @code{%s} is replaced by the name of the application, but in
+  order to ensure proper translation of the title, applications should set the
+  title property explicitly when constructing a @sym{gtk-about-dialog}, as shown
+  in the following example:
   @begin{pre}
  gtk_show_about_dialog (NULL,
                         \"program-name\", \"ExampleCode\",
@@ -167,28 +167,23 @@
                         NULL);
   @end{pre}
   It is also possible to show a @sym{gtk-about-dialog} like any other
-  @class{gtk-dialog}, e. g. using @fun{gtk-dialog-run}. In this case, you might
-  need to know that the \"Close\" button returns the @code{:cancel} response id.
-
-  The @sym{gtk-about-dialog} struct contains only private fields and should not
-  be directly accessed.
+  @class{gtk-dialog}, e. g. using the function @fun{gtk-dialog-run}. In this
+  case, you might need to know that the \"Close\" button returns the
+  @code{:cancel} response ID.
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-link\" signal}
-      The signal which gets emitted to activate a URI. Applications may connect
-      to it to override the default behaviour, which is to call
-      @fun{gtk-show-uri}.
-      Since 2.24.
       @begin{pre}
- gboolean user_function (GtkAboutDialog *label,
-                         gchar          *uri,
-                         gpointer        user_data)      : Run Last
+ lambda (label uri)   : Run Last
       @end{pre}
+      The signal which gets emitted to activate a URI. Applications may connect
+      to it to override the default behaviour, which is to call the function
+      @fun{gtk-show-uri}.
       @begin[code]{table}
-        @entry[label]{the object on which the signal was emitted}
-        @entry[uri]{the URI that is activated}
-        @entry[user_data]{user data set when the signal handler was connected.}
-        @entry[Returns]{@arg{true} if the link has been activated}
+        @entry[label]{The object on which the signal was emitted.}
+        @entry[uri]{The URI that is activated.}
+        @entry[Returns]{@em{True} if the link has been activated.}
       @end{table}
+      Since 2.24.
   @end{dictionary}
   @see-slot{gtk-about-dialog-artists}
   @see-slot{gtk-about-dialog-authors}
@@ -244,7 +239,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "copyright" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "copyright"
+                                               'gtk-about-dialog) 't)
  "The @code{\"copyright\"} property of type @code{:string} (Read / Write).@br{}
   Copyright information for the program.@br{}
   Default value: @code{nil}@br{}
@@ -253,7 +249,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "documenters" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "documenters"
+                                               'gtk-about-dialog) 't)
  "The @code{\"documenters\"} property of type @class{g-strv}
   (Read / Write).@br{}
   The people documenting the program, as a list of strings. Each string may
@@ -269,7 +266,7 @@
   The license of the program. This string is displayed in a text view in a
   secondary dialog, therefore it is fine to use a long multi-paragraph text.
   Note that the text is only wrapped in the text view if the
-  @code{\"wrap-license\"} property is set to @arg{true}; otherwise the text
+  @code{\"wrap-license\"} property is set to @em{true}; otherwise the text
   itself must contain the intended linebreaks. When setting this property to a
   non-@code{nil} value, the @code{\"license-type\"} property is set to
   @code{:custom} of the @symbol{gtk-license} enumeration as a side effect.@br{}
@@ -279,8 +276,10 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "license-type" 'gtk-about-dialog) 't)
- "The @code{\"license-type\"} property of type GtkLicense (Read / Write).@br{}
+(setf (documentation (atdoc:get-slot-from-name "license-type"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"license-type\"} property of type @symbol{gtk-license}
+  (Read / Write).@br{}
   The license of the program, as a value of the @symbol{gtk-license}
   enumeration.
   The @sym{gtk-about-dialog} will automatically fill out a standard disclaimer
@@ -308,7 +307,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "logo-icon-name" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "logo-icon-name"
+                                               'gtk-about-dialog) 't)
  "The @code{\"logo-icon-name\"} property of type @code{:string}
   (Read / Write).@br{}
   A named icon to use as the logo for the about box. This property overrides
@@ -319,10 +319,11 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "program-name" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "program-name"
+                                               'gtk-about-dialog) 't)
  "The @code{\"program-name\"} property of type @code{:string}
   (Read / Write).@br{}
-  The name of the program. If this is not set, it defaults to
+  The name of the program. If this is not set, it defaults to the function
   @fun{g-get-application-name}.@br{}
   Default value: @code{nil}@br{}
   Since 2.12")
@@ -330,7 +331,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "translator-credits" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "translator-credits"
+                                               'gtk-about-dialog) 't)
  "The @code{\"translator-credits\"} property of type @code{:string}
   (Read / Write).@br{}
   Credits to the translators. This string should be marked as translatable.
@@ -361,7 +363,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "website-label" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "website-label"
+                                               'gtk-about-dialog) 't)
  "The @code{\"website-label\"} property of type @code{:string}
   (Read / Write).@br{}
   The label for the link to the website of the program.@br{}
@@ -371,7 +374,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "wrap-license" 'gtk-about-dialog) 't)
+(setf (documentation (atdoc:get-slot-from-name "wrap-license"
+                                               'gtk-about-dialog) 't)
  "The @code{\"wrap-license\"} property of type @code{:boolean}
   (Read / Write).@br{}
   Whether to wrap the text in the license dialog.@br{}
@@ -609,13 +613,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-license atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-license atdoc:*external-symbols*)
- "@version{2013-1-4}
+ "@version{2013-4-21}
   @short{The type of license for an application.}
   This enumeration can be expanded at later date.
 
   Since 3.0
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (define-g-enum \"GtkLicense\" gtk-license
   (:export t
    :type-initializer \"gtk_license_get_type\")
@@ -628,19 +631,18 @@
   (:bsd 6)
   (:mit-x11 7)
   (:artistic 8))
-    @end{pre}
-    @begin[code]{table}
-      @entry[:unknown]{No license specified}
-      @entry[:custom]{A license text is going to be specified by the developer}
-      @entry[:gpl-2-0]{The GNU General Public License, version 2.0}
-      @entry[:gpl-3-0]{The GNU General Public License, version 3.0}
-      @entry[:lgpl-2-1]{The GNU Lesser General Public License, version 2.1}
-      @entry[:lgpl-3-0]{The GNU Lesser General Public License, version 3.0}
-      @entry[:bsd]{The BSD standard license}
-      @entry[MIT_X11]{The MIT/X11 standard license}
-      @entry[:artistic]{The Artistic License, version 2.0}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:unknown]{No license specified.}
+    @entry[:custom]{A license text is going to be specified by the developer.}
+    @entry[:gpl-2-0]{The GNU General Public License, version 2.0.}
+    @entry[:gpl-3-0]{The GNU General Public License, version 3.0.}
+    @entry[:lgpl-2-1]{The GNU Lesser General Public License, version 2.1.}
+    @entry[:lgpl-3-0]{The GNU Lesser General Public License, version 3.0.}
+    @entry[:bsd]{The BSD standard license.}
+    @entry[MIT_X11]{The MIT/X11 standard license.}
+    @entry[:artistic]{The Artistic License, version 2.0.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_new ()
@@ -653,6 +655,7 @@
  "@version{2012-12-22}
   @return{A newly created @class{gtk-about-dialog} widget.}
   @short{Creates a new @class{gtk-about-dialog} widget.}
+
   Since 2.6."
   (make-instance 'gtk-about-dialog))
 
@@ -666,11 +669,12 @@
 
 (defun gtk-about-dialog-get-program-name (about)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The program name. The string is owned by the about dialog and must not
     be modified.}
-  @short{Returns the program name displayed in the about dialog.}
+  @short{Returns the program name displayed in the @arg{about} dialog.}
+
   Since 2.12."
   (gtk-about-dialog-program-name about))
 
@@ -684,13 +688,14 @@
 
 (defun gtk-about-dialog-set-program-name (about name)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[name]{the program name}
   @begin{short}
-    Sets the name to display in the about dialog. If this is not set, it
-    defaults to @fun{g-get-application-name}.
+    Sets the @arg{name} to display in the @arg{about} dialog. If this is not
+    set, it defaults to @fun{g-get-application-name}.
   @end{short}
+
   Since 2.12."
   (setf (gtk-about-dialog-program-name about) name))
 
@@ -704,11 +709,12 @@
 
 (defun gtk-about-dialog-get-version (about)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The version string. The string is owned by the about dialog and must
     not be modified.}
   @short{Returns the version string.}
+
   Since 2.6"
   (gtk-about-dialog-version about))
 
@@ -722,10 +728,11 @@
 
 (defun gtk-about-dialog-set-version (about version)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[version]{the version string}
-  @short{Sets the version string to display in the about dialog.}
+  @short{Sets the @arg{version} string to display in the @arg{about} dialog.}
+
   Since 2.6."
   (setf (gtk-about-dialog-version about) version))
 
@@ -739,7 +746,7 @@
 
 (defun gtk-about-dialog-get-copyright (about)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The copyright string. The string is owned by the about dialog and must
     not be modified.}
@@ -757,13 +764,14 @@
 
 (defun gtk-about-dialog-set-copyright (about copyright)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
-  @argument[copyright]{(allow-none) the copyright string}
+  @argument[copyright]{the copyright string}
   @begin{short}
-    Sets the copyright string to display in the about dialog.
+    Sets the @arg{copyright} string to display in the @arg{about} dialog.
   @end{short}
   This should be a short string of one or two lines.
+
   Since 2.6."
   (setf (gtk-about-dialog-copyright about) copyright))
 
@@ -777,11 +785,12 @@
 
 (defun gtk-about-dialog-get-comments (about)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The comments. The string is owned by the about dialog and must not be
     modified.}
   @short{Returns the comments string.}
+
   Since 2.6."
   (gtk-about-dialog-comments about))
 
@@ -795,13 +804,14 @@
 
 (defun gtk-about-dialog-set-comments (about comments)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[comments]{a comments string}
   @begin{short}
-    Sets the comments string to display in the about dialog.
+    Sets the @arg{comments} string to display in the @arg{about} dialog.
   @end{short}
   This should be a short string of one or two lines.
+
   Since 2.6."
   (setf (gtk-about-dialog-comments about) comments))
 
@@ -815,11 +825,12 @@
 
 (defun gtk-about-dialog-get-license (about)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The license information. The string is owned by the about dialog and
     must not be modified.}
   @short{Returns the license information.}
+
   Since 2.6."
   (gtk-about-dialog-license about))
 
@@ -833,13 +844,14 @@
 
 (defun gtk-about-dialog-set-license (about license)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-22}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[license]{the license information or @code{nil}}
   @begin{short}
     Sets the license information to be displayed in the secondary license
    dialog. If license is @code{nil}, the license button is hidden.
   @end{short}
+
   Since 2.6."
   (setf (gtk-about-dialog-license about) license))
 
@@ -853,12 +865,13 @@
 
 (defun gtk-about-dialog-get-wrap-license (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
-  @return{@arg{true} if the license text is wrapped.}
+  @return{@em{True} if the license text is wrapped.}
   @begin{short}
     Returns whether the license text in @arg{about} is automatically wrapped.
   @end{short}
+
   Since 2.8."
   (gtk-about-dialog-wrap-license about))
 
@@ -872,12 +885,13 @@
 
 (defun gtk-about-dialog-set-wrap-license (about wrap-license)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[wrap-license]{whether to wrap the license}
   @begin{short}
-    Sets whether the license text in about is automatically wrapped.
+    Sets whether the license text in @arg{about} is automatically wrapped.
   @end{short}
+
   Since 2.8."
   (setf (gtk-about-dialog-wrap-license about) wrap-license))
 
@@ -891,12 +905,14 @@
 
 (defun gtk-about-dialog-get-license-type (about-dialog)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{A @symbol{gtk-license} value.}
   @begin{short}
-    Retrieves the license set using @fun{gtk-about-dialog-set-license-type}.
+    Retrieves the license set using the function
+    @fun{gtk-about-dialog-set-license-type}.
   @end{short}
+
   Since 3.0.
   @see-function{gtk-about-dialog-set-license-type}"
   (gtk-about-dialog-license-type about-dialog))
@@ -911,15 +927,16 @@
 
 (defun gtk-about-dialog-set-license-type (about-dialog license-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[license-type]{the type of license}
   @begin{short}
-    Sets the license of the application showing the about dialog from a list of
-    known licenses.
+    Sets the license of the application showing the @arg{about} dialog from a
+    list of known licenses.
   @end{short}
-  This function overrides the license set using
+  This function overrides the license set using the function
   @fun{gtk-about-dialog-set-license}.
+
   Since 3.0.
   @see-function{gtk-about-dialog-set-license}"
   (setf (gtk-about-dialog-license-type about-dialog) license-type))
@@ -934,11 +951,12 @@
 
 (defun gtk-about-dialog-get-website (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The website URL. The string is owned by the about dialog and must not
     be modified.}
   @short{Returns the website URL.}
+
   Since 2.6."
   (gtk-about-dialog-website about))
 
@@ -952,10 +970,11 @@
 
 (defun gtk-about-dialog-set-website (about website)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[website]{a URL string starting with \"http://\"}
   @short{Sets the URL to use for the website link.}
+
   Since 2.6."
   (setf (gtk-about-dialog-website about) website))
 
@@ -969,11 +988,12 @@
 
 (defun gtk-about-dialog-get-website-label (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The label used for the website link. The string is owned by the about
     dialog and must not be modified.}
   @short{Returns the label used for the website link.}
+
   Since 2.6"
   (gtk-about-dialog-website-label about))
 
@@ -987,10 +1007,11 @@
 
 (defun gtk-about-dialog-set-website-label (about website-label)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-03}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[website-label]{the label used for the website link}
   @short{Sets the label to be used for the website link.}
+
   Since 2.6"
   (setf (gtk-about-dialog-website-label about) website-label))
 
@@ -1004,13 +1025,14 @@
 
 (defun gtk-about-dialog-get-authors (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
-  @argument[about]{a @class{gtk-about-dialog} instance}
+ "@version{2013-4-21}
+  @argument[about]{a @class{gtk-about-dialog} widget}
   @return{A list of strings containing the authors.}
   @begin{short}
     Returns the strings which are displayed in the authors tab of the secondary
     credits dialog.
   @end{short}
+
   Since 2.6"
   (gtk-about-dialog-authors about))
 
@@ -1024,7 +1046,7 @@
 
 (defun gtk-about-dialog-set-authors (about authors)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[authors]{a list of strings}
   @begin{short}
@@ -1054,13 +1076,14 @@
 
 (defun gtk-about-dialog-get-artists (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{A list of strings containing the artists.}
   @begin{short}
     Returns the strings which are displayed in the artists tab of the secondary
     credits dialog.
   @end{short}
+
   Since 2.6"
   (gtk-about-dialog-artists about))
 
@@ -1074,13 +1097,14 @@
 
 (defun gtk-about-dialog-set-artists (about artists)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[artists]{a list of of strings}
   @begin{short}
     Sets the strings which are displayed in the artists tab of the secondary
     credits dialog.
   @end{short}
+
   Since 2.6"
   (setf (gtk-about-dialog-artists about) artists))
 
@@ -1094,13 +1118,14 @@
 
 (defun gtk-about-dialog-get-documenters (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{A list of strings containing the documenters.}
   @begin{short}
     Returns the strings which are displayed in the documenters tab of the
     secondary credits dialog.
   @end{short}
+
   Since 2.6"
   (gtk-about-dialog-documenters about))
 
@@ -1114,13 +1139,14 @@
 
 (defun gtk-about-dialog-set-documenters (about documenters)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[documenters]{a list of strings}
   @begin{short}
     Sets the strings which are displayed in the documenters tab of the secondary
     credits dialog.
   @end{short}
+
   Since 2.6"
   (setf (gtk-about-dialog-documenters about) documenters))
 
@@ -1134,7 +1160,7 @@
 
 (defun gtk-about-dialog-get-translator-credits (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The translator credits string. The string is owned by the about dialog
     and must not be modified.}
@@ -1142,6 +1168,7 @@
     Returns the translator credits string which is displayed in the translators
     tab of the secondary credits dialog.
   @end{short}
+
   Since 2.6"
   (gtk-about-dialog-translator-credits about))
 
@@ -1155,7 +1182,7 @@
 
 (defun gtk-about-dialog-set-translator-credits (about translator-credits)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[translator-credits]{the translator credits}
   @begin{short}
@@ -1188,12 +1215,13 @@
 
 (defun gtk-about-dialog-get-logo (about)
   #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The pixbuf displayed as logo. The pixbuf is owned by the about dialog.
-    If you want to keep a reference to it, you have to call @fun{g-object-ref}
-    on it.}
+    If you want to keep a reference to it, you have to call the function
+    @fun{g-object-ref} on it.}
   @short{Returns the pixbuf displayed as logo in the about dialog.}
+
   Since 2.6"
   (gtk-about-dialog-logo about))
 
@@ -1207,12 +1235,12 @@
 
 (defun gtk-about-dialog-set-logo (about logo)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
-  @argument[logo]{a @class{gdk-pixbuf}, or @code{nil}}
+  @argument[logo]{a @class{gdk-pixbuf} object, or @code{nil}}
   @begin{short}
     Sets the pixbuf to be displayed as logo in the about dialog. If it is
-    @code{nil}, the default window icon set with
+    @code{nil}, the default window icon set with the function
     @fun{gtk-window-set-default-icon} will be used.
   @end{short}
 
@@ -1229,10 +1257,11 @@
 
 (defun gtk-about-dialog-get-logo-icon-name (about)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @return{The icon name displayed as logo. The string is owned by the dialog. If
-    you want to keep a reference to it, you have to call @fun{g-strdup} on it.}
+    you want to keep a reference to it, you have to call the function
+    @fun{g-strdup} on it.}
   @short{Returns the icon name displayed as logo in the about dialog.}
 
   Since 2.6"
@@ -1248,12 +1277,12 @@
 
 (defun gtk-about-dialog-set-logo-icon-name (about icon-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-12}
+ "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[icon-name]{an icon name, or @code{nil}}
   @begin{short}
     Sets the pixbuf to be displayed as logo in the about dialog. If it is
-    @code{nil}, the default window icon set with
+    @code{nil}, the default window icon set with the function
     @fun{gtk-window-set-default-icon} will be used.
   @end{short}
 
@@ -1305,6 +1334,5 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.about-dialog.lisp --------------------------------------

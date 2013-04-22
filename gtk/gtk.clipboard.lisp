@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -84,16 +84,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-clipboard 'type)
- "@version{2013-3-11}
+ "@version{2013-4-17}
   @begin{short}
     The @sym{gtk-clipboard} object represents a clipboard of data shared between
     different processes or between different widgets in the same process. Each
     clipboard is identified by a name encoded as a @symbol{gdk-atom}.
-    (Conversion to and from strings can be done with @fun{gdk-atom-intern} and
-    @fun{gdk-atom-name}.) The default clipboard corresponds to the
-    @code{\"CLIPBOARD\"} atom; another commonly used clipboard is the
-    @code{\"PRIMARY\"} clipboard, which, in X, traditionally contains the
-    currently selected text.
+    Conversion to and from strings can be done with the functions
+    @fun{gdk-atom-intern} and @fun{gdk-atom-name}. The default clipboard
+    corresponds to the @code{\"CLIPBOARD\"} atom; another commonly used
+    clipboard is the @code{\"PRIMARY\"} clipboard, which, in X, traditionally
+    contains the currently selected text.
   @end{short}
 
   To support having a number of different formats on the clipboard at the same
@@ -101,22 +101,23 @@
   actual data. When you set the contents of the clipboard, you can either
   supply the data directly via functions like @fun{gtk-clipboard-set-text},
   or you can supply a callback to be called at a later time when the data is
-  needed via @fun{gtk-clipboard-set-with-data} or
+  needed via the functions @fun{gtk-clipboard-set-with-data} or
   @fun{gtk-clipboard-set-with-owner}. Providing a callback also avoids having
   to make copies of the data when it is not needed.
 
-  @fun{gtk-clipboard-set-with-data} and @fun{gtk-clipboard-set-with-owner} are
-  quite similar; the choice between the two depends mostly on which is more
-  convenient in a particular situation. The former is most useful when you
-  want to have a blob of data with callbacks to convert it into the various
-  data types that you advertise. When the @code{clear_func} you provided is
-  called, you simply free the data blob. The latter is more useful when the
-  contents of clipboard reflect the internal state of a @class{g-object}. As an
-  example, for the @code{PRIMARY} clipboard, when an entry widget provides the
-  clipboard's contents the contents are simply the text within the selected
-  region. If the contents change, the entry widget can call
-  @fun{gtk-clipboard-set-with-owner} to update the timestamp for clipboard
-  ownership, without having to worry about @code{clear_func} being called.
+  The functions @fun{gtk-clipboard-set-with-data} and
+  @fun{gtk-clipboard-set-with-owner} are quite similar; the choice between the
+  two depends mostly on which is more convenient in a particular situation. The
+  former is most useful when you want to have a blob of data with callbacks to
+  convert it into the various data types that you advertise. When the
+  @code{clear_func} you provided is called, you simply free the data blob. The
+  latter is more useful when the contents of clipboard reflect the internal
+  state of a @class{g-object}. As an example, for the @code{PRIMARY} clipboard,
+  when an entry widget provides the clipboard's contents the contents are simply
+  the text within the selected region. If the contents change, the entry widget
+  can call the function @fun{gtk-clipboard-set-with-owner} to update the
+  timestamp for clipboard ownership, without having to worry about
+  @code{clear_func} being called.
 
   Requesting the data from the clipboard is essentially asynchronous. If the
   contents of the clipboard are provided within the same process, then a
@@ -125,8 +126,8 @@
   other process, which may take some time. To avoid blocking the user
   interface, the call to request the selection,
   @fun{gtk-clipboard-request-contents} takes a callback that will be called when
-  the contents are received (or when the request fails.) If you don't want to
-  deal with providing a separate callback, you can also use
+  the contents are received or when the request fails. If you do not want to
+  deal with providing a separate callback, you can also use the function
   @fun{gtk-clipboard-wait-for-contents}. What this does is run the GLib main
   loop recursively waiting for the contents. This can simplify the code flow,
   but you still have to be aware that other callbacks in your program can be
@@ -137,20 +138,20 @@
   @fun{gtk-clipboard-request-text} and @fun{gtk-clipboard-wait-for-text}. These
   functions take care of determining which formats are advertised by the
   clipboard provider, asking for the clipboard in the best available format
-  and converting the results into the UTF-8 encoding. (The standard form for
-  representing strings in GTK+.)
+  and converting the results into the UTF-8 encoding, which is the standard form
+  for representing strings in GTK+.
   @begin[Signal Details]{dictionary}
     @subheading{The \"owner-change\" signal}
       @begin{pre}
- lambda (clipboard event)
+ lambda (clipboard event)   : Run First
       @end{pre}
       The \"owner-change\" signal is emitted when GTK+ receives an event that
       indicates that the ownership of the selection associated with clipboard
       has changed.
       @begin[arg]{table}
-        @entry[clipboard]{the @sym{gtk-clipboard} on which the signal is
-          emitted}
-        @entry[event]{the @class{gdk-event-owner-change} event}
+        @entry[clipboard]{The @sym{gtk-clipboard} object on which the signal is
+          emitted.}
+        @entry[event]{The @class{gdk-event-owner-change} event.}
       @end{table}
       Since 2.6
   @end{dictionary}")
@@ -319,18 +320,18 @@
 ;;; gtk_clipboard_get ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_clipboard_get" gtk-clipboard-get) g-object
+(defcfun ("gtk_clipboard_get" gtk-clipboard-get) (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-4-17}
   @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
     use}
   @begin{return}
     The appropriate clipboard object. If no clipboard already exists, a new
     one will be created. Once a clipboard object has been created, it is
-    persistent and, since it is owned by GTK+, must not be freed or unreffed.
+    persistent and, since it is owned by GTK+, must not be freed or unrefed.
   @end{return}
   @short{Returns the clipboard object for the given selection.}
-  See @fun{gtk-clipboard-get-for-display} for complete details.
+  See the function @fun{gtk-clipboard-get-for-display} for complete details.
   @see-function{gtk-clipboard-get-for-display}"
   (selection gdk-atom-as-string))
 
@@ -499,15 +500,17 @@
 
 (defcfun ("gtk_clipboard_clear" gtk-clipboard-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
-  @argument[clipboard]{a @class{gtk-clipboard}}
+ "@version{2013-4-17}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
   @begin{short}
-    Clears the contents of the clipboard.
+    Clears the contents of the @arg{clipboard}.
   @end{short}
-  Generally this should only be called between the time you call
+  Generally this should only be called between the time you call the functions
   @fun{gtk-clipboard-set-with-owner} or @fun{gtk-clipboard-set-with-data}, and
   when the @code{clear_func} you supplied is called. Otherwise, the clipboard
-  may be owned by someone else."
+  may be owned by someone else.
+  @see-function{gtk-clipboard-set-with-owner}
+  @see-function{gtk-clipboard-set-with-data}"
   (clipboard (g-object gtk-clipboard)))
 
 (export 'gtk-clipboard-clear)
@@ -523,14 +526,16 @@
 
 (defun gtk-clipboard-set-text (clipboard text)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-4-17}
   @argument[clipboard]{a @class{gtk-clipboard} object}
   @argument[text]{a UTF-8 string}
   @begin{short}
-   Sets the contents of the clipboard to the given UTF-8 string.
+   Sets the contents of the @arg{clipboard} to the given UTF-8 string
+   @arg{text}.
   @end{short}
-  GTK+ will make a copy of the text and take responsibility for responding for
-  requests for the text, and for converting the text into the requested format."
+  GTK+ will make a copy of the @arg{text} and take responsibility for responding
+  for requests for the @arg{text}, and for converting the @arg{text} into the
+  requested format."
   (%gtk-clipboard-set-text clipboard text -1))
 
 (export 'gtk-clipboard-set-text)
@@ -1027,6 +1032,5 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.clipboard.lisp -----------------------------------------

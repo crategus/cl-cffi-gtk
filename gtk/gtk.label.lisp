@@ -361,7 +361,6 @@
         @entry[extend-selection]{@em{True} if the move should extend the
           selection.}
       @end{table}
-
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
  lambda (label menu)   : Run Last
@@ -559,7 +558,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-label) 't)
  "The @code{\"use-markup\"} property of type @code{:boolean} (Read / Write)@br{}
-  The text of the label includes XML markup. See
+  The text of the label includes XML markup. See the function
   @fun{pango-parse-markup}.@br{}
   Default value: @code{nil}")
 
@@ -867,8 +866,8 @@
   @argument[label]{a @class{gtk-label} widget}
   @argument[str]{the text you want to set}
   @begin{short}
-    Sets the text within the @class{gtk-label} widget. It overwrites any text
-    that was there before.
+    Sets the text within the @arg{label}. It overwrites any text that was there
+    before.
   @end{short}
   This will also clear any previously set mnemonic accelerators."
   (label (g-object gtk-label))
@@ -889,7 +888,7 @@
   @argument[attrs]{a @class{pango-attr-list} structure}
   @begin{short}
     Sets a @class{pango-attr-list}; the attributes in the list are applied to
-    the label text.
+    the @arg{label} text.
   @end{short}
 
   @subheading{Note}
@@ -897,7 +896,8 @@
     other attributes previously effected by way of the @code{\"use-underline\"}
     or @code{\"use-markup\"} properties. While it is not recommended to mix
     markup strings with manually set attributes, if you must; know that the
-    attributes will be applied to the label after the markup string is parsed."
+    attributes will be applied to the @arg{label} after the markup string is
+    parsed."
   (setf (gtk-label-attributes label) attrs))
 
 (export 'gtk-label-set-attributes)
@@ -967,12 +967,10 @@
  "@version{2013-4-12}
   @argument[label]{the @class{gtk-label} you want to set the pattern to}
   @argument[pattern]{the pattern as described below}
-  @begin{short}
-    The pattern of underlines you want under the existing text within the
-    @class{gtk-label} widget. For example if the current text of the label says
-    \"FooBarBaz\" passing a pattern of \"___ ___\" will underline \"Foo\" and
-    \"Baz\" but not \"Bar\".
-  @end{short}"
+  The pattern of underlines you want under the existing text within the
+  @arg{label}. For example if the current text of the label says \"FooBarBaz\"
+  passing a pattern of \"___ ___\" will underline \"Foo\" and \"Baz\" but not
+  \"Bar\"."
   (setf (gtk-label-pattern label) pattern))
 
 (export 'gtk-label-set-pattern)
@@ -989,13 +987,14 @@
   @argument[label]{a @class{gtk-label} widget}
   @argument[jtype]{a @symbol{gtk-justification}}
   @begin{short}
-    Sets the alignment of the lines in the text of the label relative to each
-    other.
+    Sets the alignment of the lines in the text of the @arg{label} relative to
+    each other.
   @end{short}
   @code{:left} is the default value when the widget is first created with
-  @fun{gtk-label-new}. If you instead want to set the alignment of the label as
-  a whole, use @fun{gtk-misc-set-alignment} instead. @sym{gtk-label-set-justify}
-  has no effect on labels containing only a single line.
+  @fun{gtk-label-new}. If you instead want to set the alignment of the
+  @arg{label} as a whole, use @fun{gtk-misc-set-alignment} instead.
+  @sym{gtk-label-set-justify} has no effect on labels containing only a single
+  line.
   @see-function{gtk-label-new}
   @see-function{gtk-misc-set-alignment}"
   (setf (gtk-label-justify label) jtype))
@@ -1100,9 +1099,9 @@
   @argument[label]{a @class{gtk-label} widget}
   @argument[wrap-mode]{the line wrapping mode}
   @begin{short}
-    If line wrapping is on (see @fun{gtk-label-set-line-wrap}) this controls how
-    the line wrapping is done. The default is @code{:word} which means wrap on
-    word boundaries.
+    If line wrapping is on (see the function @fun{gtk-label-set-line-wrap}) this
+    controls how the line wrapping is done. The default is @code{:word} which
+    means wrap on word boundaries.
   @end{short}
 
   Since 2.10
@@ -1187,17 +1186,18 @@
 
 (defcfun ("gtk_label_get_text" gtk-label-get-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
   @begin{return}
-    The text in the label widget. This is the internal string used by the
-    label, and must not be modified
+    The text in the @arg{label} widget. This is the internal string used by the
+    label, and must not be modified.
   @end{return}
   @begin{short}
-    Fetches the text from a label widget, as displayed on the screen.
+    Fetches the text from a @arg{label} widget, as displayed on the screen.
   @end{short}
   This does not include any embedded underlines indicating mnemonics or Pango
-  markup. See gtk_label_get_label()."
+  markup. See the function @fun{gtk-label-get-label}.
+  @see-function{gtk-label-get-label}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-get-text)
@@ -1211,26 +1211,27 @@
 (defcfun ("gtk_label_new_with_mnemonic" gtk-label-new-with-mnemonic)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
+ "@version{2013-4-14}
   @argument[str]{the text of the label, with an underscore in front of
     the mnemonic character}
-  @return{the new GtkLabel}
+  @return{The new @class{gtk-label} widget.}
   @begin{short}
-    Creates a new GtkLabel, containing the text in str.
+    Creates a new @class{gtk-label} widget, containing the text in @arg{str}.
   @end{short}
 
-  If characters in str are preceded by an underscore, they are underlined.
+  If characters in @arg{str} are preceded by an underscore, they are underlined.
   If you need a literal underscore character in a label, use '__'
   (two underscores). The first underlined character represents a keyboard
   accelerator called a mnemonic. The mnemonic key can be used to activate
   another widget, chosen automatically, or explicitly using
-  gtk_label_set_mnemonic_widget().
+  @fun{gtk-label-set-mnemonic-widget}.
 
-  If gtk_label_set_mnemonic_widget() is not called, then the first activatable
-  ancestor of the GtkLabel will be chosen as the mnemonic widget. For
-  instance, if the label is inside a button or menu item, the button or menu
-  item will automatically become the mnemonic widget and be activated by the
-  mnemonic."
+  If @fun{gtk-label-set-mnemonic-widget} is not called, then the first
+  activatable ancestor of the @class{gtk-label} will be chosen as the mnemonic
+  widget. For instance, if the label is inside a button or menu item, the button
+  or menu item will automatically become the mnemonic widget and be activated by
+  the mnemonic.
+  @see-function{gtk-label-set-mnemonic-widget}"
   (str :string))
 
 (export 'gtk-label-new-with-mnemonic)
@@ -1241,16 +1242,18 @@
 
 (defcfun ("gtk_label_select_region" gtk-label-select-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[start_offset]{start offset (in characters not bytes)}
-  @argument[end_offset]{end offset (in characters not bytes)}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[start-offset]{start offset (in characters not bytes)}
+  @argument[end-offset]{end offset (in characters not bytes)}
   @begin{short}
-    Selects a range of characters in the label, if the label is selectable.
+    Selects a range of characters in the @arg{label}, if the @arg{label} is
+    selectable.
   @end{short}
-  See gtk_label_set_selectable(). If the label is not selectable, this function
-  has no effect. If start_offset or end_offset are -1, then the end of the
-  label will be substituted."
+  See the function @fun{gtk-label-set-selectable}. If the @arg{label} is not
+  selectable, this function has no effect. If @arg{start-offset} or
+  @arg{end-offset} are -1, then the end of the @arg{label} will be substituted.
+  @see-function{gtk-label-set-selectable}"
   (label (g-object gtk-label))
   (start-offset :int)
   (end-offset :int))
@@ -1263,24 +1266,29 @@
 
 (defcfun ("gtk_label_set_mnemonic_widget" gtk-label-set-mnemonic-widget) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[widget]{the target GtkWidget}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[widget]{the target @class{gtk-widget}}
   @begin{short}
-    If the label has been set so that it has an mnemonic key (using i.e.
-    gtk_label_set_markup_with_mnemonic(), gtk_label_set_text_with_mnemonic(),
-    gtk_label_new_with_mnemonic() or the \"use_underline\" property) the label
-    can be associated with a widget that is the target of the mnemonic.
+    If the @arg{label} has been set so that it has an mnemonic key (using i. e.
+    @fun{gtk-label-set-markup-with-mnemonic},
+    @fun{gtk-label-set-text-with_mnemonic},
+    @fun{gtk-label-new-with-mnemonic} or the @code{\"use_underline\"} property)
+    the @arg{label} can be associated with a widget that is the target of the
+    mnemonic.
   @end{short}
-  When the label is inside a widget (like a GtkButton or a GtkNotebook tab) it
-  is automatically associated with the correct widget, but sometimes (i.e. when
-  the target is a GtkEntry next to the label) you need to set it explicitly
-  using this function.
+  When the @arg{label} is inside a widget (like a @class{gtk-button} or a
+  @class{gtk-notebook} tab) it is automatically associated with the correct
+  widget, but sometimes (i. e. when the target is a @class{gtk-entry} next to
+  the label) you need to set it explicitly using this function.
 
-  The target widget will be accelerated by emitting the
-  GtkWidget::mnemonic-activate signal on it. The default handler for this
-  signal will activate the widget if there are no mnemonic collisions and
-  toggle focus between the colliding widgets otherwise."
+  The target widget will be accelerated by emitting the \"mnemonic-activate\"
+  signal on it. The default handler for this signal will activate the widget if
+  there are no mnemonic collisions and toggle focus between the colliding
+  widgets otherwise.
+  @see-function{gtk-label-set-markup-with-mnemonic}
+  @see-function{gtk-label-set-text-with_mnemonic}
+  @see-function{gtk-label-new-with-mnemonic}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-set-mnemonic-widget)
@@ -1293,13 +1301,11 @@
 
 (defun gtk-label-set-selectable (label setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[setting]{TRUE to allow selecting text in the label}
-  @begin{short}
-    Selectable labels allow the user to select text from the label, for
-    copy-and-paste.
-  @end{short}"
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[setting]{@em{true} to allow selecting text in the label}
+  Selectable labels allow the user to select text from the label, for
+  copy-and-paste."
   (setf (gtk-label-selectable label) setting))
 
 (export 'gtk-label-set-selectable)
@@ -1311,16 +1317,15 @@
 (defcfun ("gtk_label_set_text_with_mnemonic" gtk-label-set-text-with-mnemonic)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
   @argument[str]{a string}
-  @begin{short}
-    Sets the label's text from the string str. If characters in str are preceded
-    by an underscore, they are underlined indicating that they represent a
-    keyboard accelerator called a mnemonic. The mnemonic key can be used to
-    activate another widget, chosen automatically, or explicitly using
-    gtk_label_set_mnemonic_widget().
-  @end{short}"
+  Sets the @arg{label}'s text from the string @arg{str}. If characters in
+  @arg{str} are preceded by an underscore, they are underlined indicating that
+  they represent a keyboard accelerator called a mnemonic. The mnemonic key can
+  be used to activate another widget, chosen automatically, or explicitly using
+  @fun{gtk-label-set-mnemonic-widget}.
+  @see-function{gtk-label-set-mnemonic-widget}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-set-text-with-mnemonic)
@@ -1333,16 +1338,19 @@
 
 (defun gtk-label-get-attributes (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{the attribute list, or NULL if none was set}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The attribute list, or @code{nil} if none was set.}
   @begin{short}
     Gets the attribute list that was set on the label using
-    gtk_label_set_attributes(), if any.
+    @fun{gtk-label-set-attributes}, if any.
   @end{short}
   This function does not reflect attributes that come from the labels markup
-  (see gtk_label_set_markup()). If you want to get the effective attributes for
-  the label, use pango_layout_get_attribute (gtk_label_get_layout (label))."
+  (see the function @fun{gtk-label-set-markup}). If you want to get the
+  effective attributes for the @arg{label}, use
+  @code{(pango-layout-get-attribute (gtk-label-get-layout label))}.
+  @see-function{gtk-label-set-attributes}
+  @see-function{gtk-label-set-markup}"
   (gtk-label-attributes label))
 
 (export 'gtk-label-get-attributes)
@@ -1355,12 +1363,12 @@
 
 (defun gtk-label-get-justify (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{GtkJustification}
-  @begin{short}
-    Returns the justification of the label. See gtk_label_set_justify().
-  @end{short}"
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The @symbol{gtk-justification}.}
+  Returns the justification of the @arg{label}.
+  See the function @fun{gtk-label-set-justify}.
+  @see-function{gtk-label-set-justify}"
   (gtk-label-justify label))
 
 (export 'gtk-label-get-justify)
@@ -1373,15 +1381,16 @@
 
 (defun gtk-label-get-ellipsize (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9} 
-  @argument[label]{a GtkLabel}
-  @return{PangoEllipsizeMode}
+ "@version{2013-4-14} 
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The @symbol{pango-ellipsize-mode}.}
   @begin{short}
-    Returns the ellipsizing position of the label.
+    Returns the ellipsizing position of the @arg{label}.
   @end{short}
-  See gtk_label_set_ellipsize().
+  See the function @fun{gtk-label-set-ellipsize}.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-label-set-ellipsize}"
   (gtk-label-ellipsize label))
 
 (export 'gtk-label-get-ellipsize)
@@ -1394,15 +1403,16 @@
 
 (defun gtk-label-get-width-chars (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{the width of the label in characters}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The width of the @arg{label} in characters.}
   @begin{short}
-    Retrieves the desired width of label, in characters.
+    Retrieves the desired width of @arg{label}, in characters.
   @end{short}
-  See gtk_label_set_width_chars().
+  See the function @fun{gtk-label-set-width-chars}.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-label-set-width-chars}"
   (gtk-label-get-width-chars label))
 
 (export 'gtk-label-get-width-chars)
@@ -1415,15 +1425,16 @@
 
 (defun gtk-label-get-max-width-chars (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{the maximum width of the label in characters}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The maximum width of the @arg{label} in characters.}
   @begin{short}
-    Retrieves the desired maximum width of label, in characters.
+    Retrieves the desired maximum width of @arg{label}, in characters.
   @end{short}
-  See gtk_label_set_width_chars().
+  See the function @fun{gtk-label-set-width-chars}.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-label-set-width-chars}"
   (gtk-label-get-max-width-chars label))
 
 (export 'gtk-label-get-max-width-chars)
@@ -1436,16 +1447,16 @@
 
 (defun gtk-label-get-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
   @begin{return}
-    the text of the label widget. This string is owned by the widget and
+    The text of the @arg{label} widget. This string is owned by the widget and
     must not be modified or freed.
   @end{return}
-  @begin{short}
-    Fetches the text from a label widget including any embedded underlines
-    indicating mnemonics and Pango markup. (See gtk_label_get_text()).
-  @end{short}"
+  Fetches the text from a @arg{label} widget including any embedded underlines
+  indicating mnemonics and Pango markup. See the function
+  @fun{gtk-label-get-text}.
+  @see-function{gtk-label-get-text}"
   (gtk-label-label label))
 
 (export 'gtk-label-get-label)
@@ -1456,16 +1467,18 @@
 
 (defcfun ("gtk_label_get_layout" gtk-label-get-layout) (g-object pango-layout)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{The @class{pango-layout} for this label.}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The @class{pango-layout} for this @arg{label}.}
   @begin{short}
-    Gets the @class{pango-layout} used to display the label.
+    Gets the @class{pango-layout} used to display the @arg{label}.
   @end{short}
   The layout is useful to e. g. convert text positions to pixel positions, in
-  combination with gtk_label_get_layout_offsets(). The returned layout is owned
-  by the label so need not be freed by the caller. The label is free to recreate
-  its layout at any time, so it should be considered read-only."
+  combination with @fun{gtk-label-get-layout-offsets}. The returned layout is
+  owned by the @arg{label} so need not be freed by the caller. The @arg{label}
+  is free to recreate its layout at any time, so it should be considered
+  read-only.
+  @see-function{gtk-label-get-layout-offsets}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-get-layout)
@@ -1476,13 +1489,14 @@
 
 (defcfun ("gtk_label_get_line_wrap" gtk-label-get-line-wrap) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument{label]{a GtkLabel}
-  @return{TRUE if the lines of the label are automatically wrapped}
+ "@version{2013-4-14}
+  @argument{label]{a @class{gtk-label} widget}
+  @return{@em{True} if the lines of the @arg{label} are automatically wrapped.}
   @begin{short}
-    Returns whether lines in the label are automatically wrapped.
+    Returns whether lines in the @arg{label} are automatically wrapped.
   @end{short}
-  See gtk_label_set_line_wrap()."
+  See the function @fun{gtk-label-set-line-wrap}.
+  @see-function{gtk-label-set-line-wrap}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-get-line-wrap)
@@ -1494,13 +1508,14 @@
 (defcfun ("gtk_label_get_line_wrap_mode" gtk-label-get-line-wrap-mode)
     pango-wrap-mode
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{TRUE if the lines of the label are automatically wrapped}
-  @short{Returns line wrap mode used by the label.}
-  See gtk_label_set_line_wrap_mode().
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{@em{True} if the lines of the @arg{label} are automatically wrapped.}
+  @short{Returns line wrap mode used by the @arg{label}.}
+  See the function @fun{gtk-label-set-line-wrap-mode}.
 
-  Since 2.10"
+  Since 2.10
+  @see-function{gtk-label-set-line-wrap-mode}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-get-line-wrap-mode)
@@ -1512,16 +1527,18 @@
 (defcfun ("gtk_label_get_mnemonic_widget" gtk-label-get-mnemonic-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
   @begin{return}
-    the target of the label's mnemonic, or NULL if none has been set and the
-    default algorithm will be used
+    The target of the @arg{label}'s mnemonic, or @code{nil} if none has been set
+    and the default algorithm will be used.
   @end{return}
   @begin{short}
-    Retrieves the target of the mnemonic (keyboard shortcut) of this label.
+    Retrieves the target of the mnemonic (keyboard shortcut) of this
+    @arg{label}.
   @end{short}
-  See gtk_label_set_mnemonic_widget()."
+  See the function @fun{gtk-label-set-mnemonic-widget}.
+  @see-function{gtk-label-set-mnemonic-widget}"
   (label (g-object gtk-label)))
 
 (export 'gtk-label-get-mnemonic-widget)
@@ -1538,18 +1555,15 @@
 
 (defun gtk-label-get-selection-bounds (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
   @begin{return}
     @code{start} -- start of selection, as a character offset@br{}
-    @code{end} -- end of selection, as a character offset@br{}
-    or@br{}
-    @code{nil} if selection is empty
+    @code{end} -- end of selection, as a character offset,@br{}
+    or @code{nil} if selection is empty
   @end{return}
-  @begin{short}
-    Gets the selected range of characters in the label, returning TRUE if
-    there's a selection.
-  @end{short}"
+  Gets the selected range of characters in the @arg{label}, returning @em{true}
+  if there is a selection."
   (with-foreign-objects ((start :int) (end :int))
     (when (%gtk-label-get-selection-bounds label start end)
       (values (mem-ref start :int)
@@ -1565,14 +1579,15 @@
 
 (defun gtk-label-get-use-markup (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{TRUE if the label's text will be parsed for markup}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{@em{True} if the @arg{label}'s text will be parsed for markup.}
   @begin{short}
-    Returns whether the label's text is interpreted as marked up with the Pango
-    text markup language.
+    Returns whether the @arg{label}'s text is interpreted as marked up with the
+    Pango text markup language.
   @end{short}
-  See gtk_label_set_use_markup()."
+  See the function @fun{gtk-label-set-use-markup}.
+  @see-function{gtk-label-set-use-markup}"
   (gtk-label-use-markup label))
 
 (export 'gtk-label-get-use-markup)
@@ -1585,16 +1600,18 @@
 
 (defun gtk-label-get-use-underline (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gt-label} widget}
   @begin{return}
-    TRUE whether an embedded underline in the label indicates the mnemonic
-    accelerator keys
+    @em{True} whether an embedded underline in the @arg{label} indicates the
+    mnemonic accelerator keys.
   @end{return}
   @begin{short}
-    Returns whether an embedded underline in the label indicates a mnemonic.
+    Returns whether an embedded underline in the @arg{label} indicates a
+    mnemonic.
   @end{short}
-  See gtk_label_set_use_underline()."
+  See the function @fun{gtk-label-set-use-underline}.
+  @see-function{gtk-label-set-use-underline}"
   (gtk-label-use-underline label))
 
 (export 'gtk-label-get-user-underline)
@@ -1607,10 +1624,10 @@
 
 (defun gtk-label-get-single-line-mode (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{TRUE when the label is in single line mode}
-  @short{Returns whether the label is in single line mode.}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{@em{True} when the @arg{label} is in single line mode.}
+  @short{Returns whether the @arg{label} is in single line mode.}
 
   Since 2.6"
   (gtk-label-single-line-mode label))
@@ -1625,13 +1642,14 @@
 
 (defun gtk-label-get-angle (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{the angle of rotation for the label}
-  @short{Gets the angle of rotation for the label.}
-  See gtk_label_set_angle().
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{The angle of rotation for the @arg{label}.}
+  @short{Gets the angle of rotation for the @arg{label}.}
+  See the function @fun{gtk-label-set-angle}.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-label-set-angle}"
   (gtk-label-angle label))
 
 (export 'gtk-label-get-angle)
@@ -1644,15 +1662,15 @@
 
 (defun gtk-label-set-label (label str)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[str]{the new text to set for the label}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[str]{the new text to set for the @arg{label}}
   @begin{short}
-    Sets the text of the label.
+    Sets the text of the @arg{label}.
   @end{short}
   The label is interpreted as including embedded underlines and/or Pango markup
-  depending on the values of the \"use-underline\" and \"use-markup\"
-  properties."
+  depending on the values of the @code{\"use-underline\"} and
+  @code{\"use-markup\"}properties."
   (setf (gtk-label-label label) str))
 
 (export 'gtk-label-set-label)
@@ -1665,14 +1683,16 @@
 
 (defun gtk-label-set-use-markup (label setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[setting]{TRUE if the label's text should be parsed for markup}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[setting]{@em{True} if the @arg{label}'s text should be parsed for
+    markup}
   @begin{short}
-    Sets whether the text of the label contains markup in Pango's text markup
-    language.
+    Sets whether the text of the @arg{label} contains markup in Pango's text
+    markup language.
   @end{short}
-  See gtk_label_set_markup()."
+  See the function @fun{gtk-label-set-markup}.
+  @see-function{gtk-label-set-markup}"
   (setf (gtk-label-use-markup label) setting))
 
 (export 'gtk-label-set-use-markup)
@@ -1685,13 +1705,11 @@
 
 (defun gtk-label-set-use-underline (label setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[setting]{TRUE if underlines in the text indicate mnemonics}
-  @begin{short}
-    If true, an underline in the text indicates the next character should be
-    used for the mnemonic accelerator key.
-  @end{short}"
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[setting]{@em{True} if underlines in the text indicate mnemonics}
+  If @em{true}, an underline in the text indicates the next character should
+  be used for the mnemonic accelerator key."
   (setf (gtk-label-use-underline label) setting))
 
 (export 'gtk-label-set-use-underline)
@@ -1704,11 +1722,12 @@
 
 (defun gtk-label-set-single-line-mode (label single-line-mode)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[single_line_mode]{TRUE if the label should be in single line mode}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[single-line-mode]{@em{True} if the @arg{label} should be in single
+    line mode}
   @begin{short}
-    Sets whether the label is in single line mode.
+    Sets whether the @arg{label} is in single line mode.
   @end{short}
 
   Since 2.6"
@@ -1724,12 +1743,12 @@
 
 (defun gtk-label-set-angle (label angle)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[angle]{the angle that the baseline of the label makes with the
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[angle]{the angle that the baseline of the @arg{label} makes with the
     horizontal, in degrees, measured counterclockwise}
   @begin{short}
-    Sets the angle of rotation for the label.
+    Sets the angle of rotation for the @arg{label}.
   @end{short}
   An angle of 90 reads from from bottom to top, an angle of 270, from top to
   bottom. The angle setting for the label is ignored if the label is selectable,
@@ -1746,20 +1765,20 @@
 
 (defcfun ("gtk_label_get_current_uri" gtk-label-get-current-uri) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
+ "@version{2013-4-12}
+  @argument[label]{a @class{gtk-label} widget}
   @begin{return}
     The currently active URI. The string is owned by GTK+ and must not be
-    freed or modified
+    freed or modified.
   @end{return}
   @begin{short}
-    Returns the URI for the currently active link in the label. The active link
-    is the one under the mouse pointer or, in a selectable label, the link in
-    which the text cursor is currently positioned.
+    Returns the URI for the currently active link in the @arg{label}. The active
+    link is the one under the mouse pointer or, in a selectable @arg{label}, the
+    link in which the text cursor is currently positioned.
   @end{short}
 
-  This function is intended for use in a \"activate-link\" handler or for use
-  in a \"query-tooltip\" handler.
+  This function is intended for use in a \"activate-link\" signal handler or for
+  use in a \"query-tooltip\" signal handler.
 
   Since 2.18"
   (label (g-object gtk-label)))
@@ -1774,11 +1793,11 @@
 
 (defun gtk-label-set-track-visited-links (label track-links)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @argument[track_links]{TRUE to track visited links}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @argument[track-links]{@em{True} to track visited links.}
   @begin{short}
-    Sets whether the label should keep track of clicked links (and use a
+    Sets whether the @arg{label} should keep track of clicked links (and use a
     different color for them).
   @end{short}
 
@@ -1795,11 +1814,12 @@
 
 (defun gtk-label-get-track-visited-links (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
-  @argument[label]{a GtkLabel}
-  @return{TRUE if clicked links are remembered}
+ "@version{2013-4-14}
+  @argument[label]{a @class{gtk-label} widget}
+  @return{@em{True} if clicked links are remembered.}
   @begin{short}
-    Returns whether the label is currently keeping track of clicked links.
+    Returns whether the @arg{label} is currently keeping track of clicked
+    links.
   @end{short}
 
   Since 2.18"

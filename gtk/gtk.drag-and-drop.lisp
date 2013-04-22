@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -54,7 +54,6 @@
 ;;;     gtk_drag_get_source_widget
 ;;;     gtk_drag_highlight
 ;;;     gtk_drag_unhighlight
-;;;
 ;;;     gtk_drag_begin
 ;;;     gtk_drag_set_icon_widget
 ;;;     gtk_drag_set_icon_pixbuf
@@ -102,12 +101,10 @@
   (:drop 4)
   (:all 7))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dest-defaults atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-dest-defaults atdoc:*external-symbols*)
- "@version{2013-2-27}
+ "@version{2013-4-17}
   @begin{short}
     The @sym{gtk-dest-defaults} enumeration specifies the various types of
     action that will be taken on behalf of the user for a drag destination site.
@@ -124,19 +121,23 @@
   @begin[code]{table}
     @entry[:motion]{If set for a widget, GTK+, during a drag over this widget
       will check if the drag matches this widget's list of possible targets and
-      actions. GTK+ will then call @fun{gdk-drag-status} as appropriate.}
+      actions. GTK+ will then call the function @fun{gdk-drag-status} as
+      appropriate.}
     @entry[:highlight]{If set for a widget, GTK+ will draw a highlight on this
       widget as long as a drag is over this widget and the widget drag format
       and action are acceptable.}
     @entry[:drop]{If set for a widget, when a drop occurs, GTK+ will will check
       if the drag matches this widget's list of possible targets and actions. If
-      so, GTK+ will call @fun{gtk-drag-get-data} on behalf of the widget.
-      Whether or not the drop is successful, GTK+ will call
+      so, GTK+ will call the function @fun{gtk-drag-get-data} on behalf of the
+      widget. Whether or not the drop is successful, GTK+ will call the function
       @fun{gtk-drag-finish}. If the action was a move, then if the drag was
       successful, then @em{true} will be passed for the delete parameter to
-      @fun{gtk-drag-finish}.}
+      the function @fun{gtk-drag-finish}.}
     @entry[:all]{If set, specifies that all default actions should be taken.}
-  @end{table}")
+  @end{table}
+  @see-function{gdk-drag-status}
+  @see-function{gtk-drag-get-data}
+  @see-function{gtk-drag-finish}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTargetFlags
@@ -150,12 +151,10 @@
   (:other-app 4)
   (:other-widget 8))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-target-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-target-flags atdoc:*external-symbols*)
- "@version{2013-2-27}
+ "@version{2013-4-17}
   @begin{short}
     The @sym{gtk-target-flags} enumeration is used to specify constraints on an
     entry in a @code{GtkTargetTable}.
@@ -433,10 +432,10 @@
 
 (defcfun ("gtk_drag_finish" gtk-drag-finish) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-12}
+ "@version{2013-4-17}
   @argument[context]{the drag context}
   @argument[success]{a flag indicating whether the drop was successful}
-  @argument[del]{A flag indicating whether the source should delete the original
+  @argument[del]{a flag indicating whether the source should delete the original
     data. This should be @arg{true} for a move.}
   @argument[time]{the timestamp from the \"drag-drop\" signal}
   Informs the drag source that the drop is finished, and that the data of the

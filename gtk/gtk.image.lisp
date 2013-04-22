@@ -115,23 +115,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-image 'type)
- "@version{2013-2-1}
+ "@version{2013-4-21}
   @begin{short}
     The @sym{gtk-image} widget displays an image. Various kinds of object can be
     displayed as an image; most typically, you would load a @class{gdk-pixbuf}
-    (\"pixel buffer\") from a file, and then display that.
+    object (\"pixel buffer\") from a file, and then display that.
   @end{short}
-  There's a convenience function to do this, @fun{gtk-image-new-from-file}, used
-  as follows:
+  There is a convenience function to do this, @fun{gtk-image-new-from-file},
+  used as follows:
   @begin{pre}
  GtkWidget *image;
  image = gtk_image_new_from_file (\"myfile.png\");
   @end{pre}
-  If the file isn't loaded successfully, the image will contain a
+  If the file is not loaded successfully, the image will contain a
   \"broken image\" icon similar to that used in many web browsers. If you want
   to handle errors in loading the file yourself, for example by displaying an
-  error message, then load the image with @fun{gdk-pixbuf-new-from-file}, then
-  create the @sym{gtk-image} with @fun{gtk-image-new-from-pixbuf}.
+  error message, then load the image with the function
+  @fun{gdk-pixbuf-new-from-file}, then create the @sym{gtk-image} with
+  the function @fun{gtk-image-new-from-pixbuf}.
 
   The image file may contain an animation, if so the @sym{gtk-image} will
   display an animation of type @class{gdk-pixbuf-animation} instead of a static
@@ -195,7 +196,7 @@
   files, such as image files. GTK+ comes with a program to avoid this, called
   @code{gdk-pixbuf-csource}. This library allows you to convert an image into a
   C variable declaration, which can then be loaded into a @class{gdk-pixbuf}
-  using @fun{gdk-pixbuf-new-from-inline}.
+  using the function @fun{gdk-pixbuf-new-from-inline}.
   @see-slot{gtk-image-file}
   @see-slot{gtk-image-gicon}
   @see-slot{gtk-image-icon-name}
@@ -315,7 +316,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -437,15 +438,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-image-type atdoc:*external-symbols*)
- "@version{2013-2-1}
+ "@version{2013-4-21}
   @begin{short}
-    Describes the image data representation used by a GtkImage.
+    Describes the image data representation used by a @class{gtk-image}.
   @end{short}
   If you want to get the image from the widget, you can only get the
-  currently-stored representation. e.g. if the gtk_image_get_storage_type()
-  returns GTK_IMAGE_PIXBUF, then you can call gtk_image_get_pixbuf() but not
-  gtk_image_get_stock(). For empty images, you can request any storage type
-  (call any of the \"get\" functions), but they will all return NULL values.
+  currently stored representation. e. g. if the @fun{gtk-image-get-storage-type}
+  returns @code{:pixbuf}, then you can call the function
+  @fun{gtk-image-get-pixbuf} but not @fun{gtk-image-get-stock}. For empty
+  images, you can request any storage type (call any of the \"get\" functions),
+  but they will all return @code{nil} values.
   @begin{pre}
 (define-g-enum \"GtkImageType\" gtk-image-type
   (:export t
@@ -459,15 +461,16 @@
   (:gicon 6))
   @end{pre}
   @begin[code]{table}
-    @entry[:empty]{there is no image displayed by the widget}
-    @entry[:pixbuf]{the widget contains a GdkPixbuf}
-    @entry[:stock]{the widget contains a stock icon name (see Stock Items(3))}
-    @entry[:icon-set]{the widget contains a GtkIconSet}
-    @entry[:animation]{the widget contains a GdkPixbufAnimation}
-    @entry[:icon-name]{the widget contains a named icon. This image type was
-      added in GTK+ 2.6}
-    @entry[:gicon]{the widget contains a GIcon. This image type was added in
-      GTK+ 2.14}
+    @entry[:empty]{There is no image displayed by the widget.}
+    @entry[:pixbuf]{The widget contains a @class{gdk-pixbuf} object.}
+    @entry[:stock]{The widget contains a stock icon name (see Stock Items(3)).}
+    @entry[:icon-set]{The widget contains a @class{gtk-icon-set} object.}
+    @entry[:animation]{The widget contains a @class{gdk-pixbuf-animation}
+      object.}
+    @entry[:icon-name]{The widget contains a named icon. This image type was
+      added in GTK+ 2.6.}
+    @entry[:gicon]{The widget contains a @class{g-icon}. This image type was
+      added in GTK+ 2.14.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -478,15 +481,15 @@
 
 (defun gtk-image-get-icon-set (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
+ "@version{2013-4-21}
   @argument[image]{a @class{gtk-image} widget}
   @begin{return}
-    @code{icon-set} -- a @class{gtk-icon-set}, or @code{nil}@br{}
+    @code{icon-set} -- a @class{gtk-icon-set} object, or @code{nil}@br{}
     @code{size} -- a stock icon size, or @code{nil}
   @end{return}
   Gets the icon set and size being displayed by the @class{gtk-image}. The
   storage type of the image must be @code{:empty} or @code{:icon-set} (see
-  @fun{gtk-image-get-storage-type}).
+  the function @fun{gtk-image-get-storage-type}).
   @see-function{gtk-image-get-storage-type}"
   (values (gtk-image-icon-set image)
           (gtk-image-icon-size image)))
@@ -501,13 +504,13 @@
 
 (defun gtk-image-get-pixbuf (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
+ "@version{2013-4-21}
   @argument[image]{a @class{gtk-image} widget}
   @return{The displayed pixbuf, or @code{nil} if the image is empty.}
-  Gets the @class{gdk-pixbuf} being displayed by the @class{gtk-image}. The
-  storage type of the image must be @code{:empty} or @code{:pixbuf} (see
-  @fun{gtk-image-get-storage-type}). The caller of this function does not own a
-  reference to the returned pixbuf.
+  Gets the @class{gdk-pixbuf} object being displayed by the @class{gtk-image}.
+  The storage type of the image must be @code{:empty} or @code{:pixbuf} (see
+  the function @fun{gtk-image-get-storage-type}). The caller of this function
+  does not own a reference to the returned pixbuf.
   @fun{gtk-image-get-storage-type}"
   (gtk-image-pixbuf image))
 
@@ -521,16 +524,16 @@
 
 (defun gtk-image-get-stock (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
+ "@version{2013-4-21}
   @argument[image]{a @class{gtk-image} object}
   @begin{return}
     @code{stock-id} -- a stock icon name, or @code{nil}@br{}
     @code{size} -- a stock icon size, or @code{nil}
   @end{return}
-  Gets the stock icon name and size being displayed by the GtkImage. The
-  storage type of the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_STOCK (see
-  gtk_image_get_storage_type()). The returned string is owned by the GtkImage
-  and should not be freed."
+  Gets the stock icon name and size being displayed by the @class{gtk-image}
+  object. The storage type of the image must be @code{:empty} or @code{:stock}
+  (see the @fun{gtk-image-get-storage-type}). The returned string is owned by
+  the @class{gtk-image} object and should not be freed."
   (values (gtk-image-stock image)
           (gtk-image-icon-size image)))
 
@@ -543,13 +546,13 @@
 (defcfun ("gtk_image_get_animation" gtk-image-get-animation)
     (g-object gdk-pixbuf-animation)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
-  @return{The displayed animation, or NULL if the image is empty.}
-  Gets the GdkPixbufAnimation being displayed by the GtkImage. The storage
-  type of the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_ANIMATION (see
-  gtk_image_get_storage_type()). The caller of this function does not own a
-  reference to the returned animation."
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
+  @return{The displayed animation, or @code{nil} if the image is empty.}
+  Gets the @class{gdk-pixbuf-animation} object being displayed by the
+  @class{gtk-image} object. The storage type of the image must be @code{:empty}
+  or @code{:animation} (see the function @fun{gtk-image-get-storage-type}). The
+  caller of this function does not own a reference to the returned animation."
   (image (g-object gtk-image)))
 
 (export 'gtk-image-get-animation)
@@ -562,17 +565,17 @@
 
 (defun gtk-image-get-icon-name (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
   @begin{return}
     @code{icon-name} -- an icon name, or NULL @br{}
     @code{size} -- an icon size, or NULL
   @end{return}
   @begin{short}
-    Gets the icon name and size being displayed by the GtkImage. The storage
-    type of the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_ICON_NAME (see
-    gtk_image_get_storage_type()). The returned string is owned by the GtkImage
-    and should not be freed.
+    Gets the icon name and size being displayed by the @class{gtk-image} object.
+    The storage type of the image must be @code{:empty} or @code{:icon-name}
+    (see the function @fun{gtk-image-get-storage-type}). The returned string is
+    owned by the @class{gtk-image} object and should not be freed.
   @end{short}
 
   Since 2.6"
@@ -589,17 +592,17 @@
 
 (defun gtk-image-get-gicon (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
   @begin{return}
-    @code{gicon} -- a GIcon, or NULL @br{}
-    @code{size} -- an icon size, or NULL
+    @code{gicon} -- a @class{g-icon}, or @code{nil} @br{}
+    @code{size} -- an icon size, or @code{nil}
   @end{return}
   @begin{short}
-    Gets the GIcon and size being displayed by the GtkImage. The storage type of
-    the image must be GTK_IMAGE_EMPTY or GTK_IMAGE_GICON (see
-    gtk_image_get_storage_type()). The caller of this function does not own a
-    reference to the returned GIcon.
+    Gets the @class{g-icon} and size being displayed by the @class{gtk-image}
+    object. The storage type of the image must be @code{:empty} or @code{:gicon}
+    (see the function @fun{gtk-image-get-storage-type}). The caller of this
+    function does not own a reference to the returned @class{g-icon}.
   @end{short}
 
   Since 2.14"
@@ -616,12 +619,12 @@
 
 (defun gtk-image-get-storage-type (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
-  @return{image representation being used}
-  Gets the type of representation being used by the GtkImage to store image
-  data. If the GtkImage has no image data, the return value will be
-  GTK_IMAGE_EMPTY."
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
+  @return{Image representation being used.}
+  Gets the type of representation being used by the @class{gtk-image} object to
+  store image data. If the @class{gtk-image} object has no image data, the
+  return value will be @code{:empty}."
   (gtk-image-storage-type image))
 
 (export 'gtk-image-get-storage-type)
@@ -633,25 +636,26 @@
 (defcfun ("gtk_image_new_from_file" gtk-image-new-from-file)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
+ "@version{2013-4-21}
   @argument[filename]{a filename}
-  @return{a new GtkImage}
+  @return{A new @class{gtk-image} object.}
   @begin{short}
-    Creates a new GtkImage displaying the file filename. If the file isn't found
-    or can't be loaded, the resulting GtkImage will display a \"broken image\"
-    icon. This function never returns NULL, it always returns a valid GtkImage
-    widget.
+    Creates a new @class{gtk-image} displaying the file filename. If the file
+    is not found or cannot be loaded, the resulting @class{gtk-image} object
+    will display a \"broken image\" icon. This function never returns
+    @code{nil}, it always returns a valid @class{gtk-image} widget.
   @end{short}
 
   If the file contains an animation, the image will contain an animation.
 
-  If you need to detect failures to load the file, use
-  gdk_pixbuf_new_from_file() to load the file yourself, then create the
-  GtkImage from the pixbuf. (Or for animations, use
-  gdk_pixbuf_animation_new_from_file()).
+  If you need to detect failures to load the file, use the function
+  @fun{gdk-pixbuf-new-from-file} to load the file yourself, then create the
+  @class{gtk-image} object from the pixbuf. (Or for animations, use the function
+  @fun{gdk-pixbuf-animation-new-from-file}).
 
-  The storage type (gtk_image_get_storage_type()) of the returned image is not
-  defined, it will be whatever is appropriate for displaying the file."
+  The storage type (see the function @fun{gtk-image-get-storage-type}) of the
+  returned image is not defined, it will be whatever is appropriate for
+  displaying the file."
   (filename :string))
 
 (export 'gtk-image-new-from-file)
@@ -664,23 +668,23 @@
 
 (defun gtk-image-new-from-icon-set (icon-set size)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[icon_set]{a GtkIconSet}
+ "@version{2013-4-21}
+  @argument[icon-set]{a @class{gtk-icon-set} object}
   @argument[size]{a stock icon size}
-  @return{a new GtkImage}
+  @return{A new @class{gtk-image} object.}
   @begin{short}
-    Creates a GtkImage displaying an icon set. Sample stock sizes are
-    GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_SMALL_TOOLBAR. Instead of using this
-    function, usually it's better to create a GtkIconFactory, put your icon sets
-    in the icon factory, add the icon factory to the list of default factories
-    with gtk_icon_factory_add_default(), and then use
-    gtk_image_new_from_stock(). This will allow themes to override the icon you
-    ship with your application.
+    Creates a @class{gtk-image} object displaying an icon set. Sample stock
+    sizes are @code{:menu}, @code{:small-toolbar}. Instead of using this
+    function, usually it is better to create a @class{gtk-icon-factory}, put
+    your icon sets in the icon factory, add the icon factory to the list of
+    default factories with the function @fun{gtk-icon-factory-add-default}, and
+    then use the function @fun{gtk-image-new-from-stock}. This will allow themes
+    to override the icon you ship with your application.
   @end{short}
 
-  The GtkImage does not assume a reference to the icon set; you still need to
-  unref it if you own references. GtkImage will add its own reference rather
-  than adopting yours."
+  The @class{gtk-image} object does not assume a reference to the icon set; you
+  still need to unref it if you own references. @class{gtk-image} object will
+  add its own reference rather than adopting yours."
   (make-instance 'gtk-image
                  :icon-set icon-set
                  :icon-size size
@@ -696,18 +700,20 @@
 
 (defun gtk-image-new-from-pixbuf (pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[pixbuf]{a GdkPixbuf, or NULL}
-  @return{a new GtkImage}
+ "@version{2013-4-21}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object, or @code{nil}}
+  @return{A new @class{gtk-image} object.}
   @begin{short}
-    Creates a new GtkImage displaying pixbuf. The GtkImage does not assume a
-    reference to the pixbuf; you still need to unref it if you own references.
-    GtkImage will add its own reference rather than adopting yours.
+    Creates a new @class{gtk-image} object displaying pixbuf. The
+    @class{gtk-image} does not assume a reference to the pixbuf; you still need
+    to unref it if you own references. @class{gtk-image} object will add its own
+    reference rather than adopting yours.
   @end{short}
 
-  Note that this function just creates an GtkImage from the pixbuf. The
-  GtkImage created will not react to state changes. Should you want that, you
-  should use gtk_image_new_from_icon_set()."
+  Note that this function just creates an @class{gtk-image} object from the
+  pixbuf. The @class{gtk-image} object created will not react to state changes.
+  Should you want that, you should use the function
+  @fun{gtk-image-new-from-icon-set}."
   (make-instance 'gtk-image
                  :pixbuf pixbuf
                  :storage-type :pixbuf))
@@ -721,15 +727,15 @@
 (defcfun ("gtk_image_new_from_stock" gtk-image-new-from-stock)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[stock_id]{a stock icon name}
+ "@version{2013-4-21}
+  @argument[stock-id]{a stock icon name}
   @argument[size]{a stock icon size}
-  @return{a new GtkImage displaying the stock icon}
-  Creates a GtkImage displaying a stock icon. Sample stock icon names are
-  GTK_STOCK_OPEN, GTK_STOCK_QUIT. Sample stock sizes are GTK_ICON_SIZE_MENU,
-  GTK_ICON_SIZE_SMALL_TOOLBAR. If the stock icon name isn't known, the image
-  will be empty. You can register your own stock icon names, see
-  gtk_icon_factory_add_default() and gtk_icon_factory_add()."
+  @return{A new @class{gtk-image} object displaying the stock icon.}
+  Creates a @class{gtk-image} object displaying a stock icon. Sample stock icon
+  names are @code{\"gtk-open\"}, @code{\"gtk-quit\"}. Sample stock sizes are
+  @code{:menu}, @code{:small-toolbar}. If the stock icon name is not known, the
+  image will be empty. You can register your own stock icon names, see the
+  functions @fun{gtk-icon-factory-add-default} and @fun{gtk-icon-factory-add}."
   (stock-id :string)
   (size gtk-icon-size))
 
@@ -871,11 +877,11 @@
 
 (defcfun ("gtk_image_set_from_animation" gtk-image-set-from-animation) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
-  @argument[animation]{the GdkPixbufAnimation}
-  Causes the GtkImage to display the given animation (or display nothing, if
-  you set the animation to NULL)."
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
+  @argument[animation]{the @class{gdk-pixbuf-animation} object}
+  Causes the @class{gtk-image} object to display the given animation (or display
+  nothing, if you set the animation to @code{nil})."
   (image (g-object gtk-image))
   (animation (g-object gdk-pixbuf-animation)))
 
@@ -929,7 +935,7 @@
 
 (defcfun ("gtk_image_clear" gtk-image-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-8}
+ "@version{2013-4-21}
   @argument[image]{a @class{gtk-image} object}
   @short{Resets the image to be empty.}
 
@@ -946,9 +952,9 @@
 
 (defun gtk-image-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @return{a newly created GtkImage widget}
-  Creates a new empty GtkImage widget."
+ "@version{2013-4-21}
+  @return{A newly created @class{gtk-image} object.}
+  Creates a new empty @class{gtk-image} widget."
   (make-instance 'gtk-image))
 
 (export 'gtk-image-new)
@@ -961,13 +967,13 @@
 
 (defun gtk-image-set-pixel-size (image pixel-size)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
-  @argument[pixel_size]{the new pixel size}
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
+  @argument[pixel-size]{the new pixel size}
   @begin{short}
     Sets the pixel size to use for named icons. If the pixel size is set to a
-    value != -1, it is used instead of the icon size set by
-    gtk_image_set_from_icon_name().
+    value != -1, it is used instead of the icon size set by the function
+    @fun{gtk-image-set-from-icon-name}.
   @end{short}
 
   Since 2.6"
@@ -983,9 +989,9 @@
 
 (defun gtk-image-get-pixel-size (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[image]{a GtkImage}
-  @return{the pixel size used for named icons}
+ "@version{2013-4-21}
+  @argument[image]{a @class{gtk-image} object}
+  @return{The pixel size used for named icons.}
   @short{Gets the pixel size used for named icons.}
 
   Since 2.6"

@@ -42,7 +42,6 @@
 ;;;     gtk_accel_group_connect_by_path
 ;;;     gtk_accel_group_disconnect
 ;;;     gtk_accel_group_disconnect_key
-;;;     gtk_accel_group_query
 ;;;     gtk_accel_group_activate
 ;;;     gtk_accel_group_lock
 ;;;     gtk_accel_group_unlock
@@ -88,54 +87,56 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-group 'type)
- "@version{2013-1-12}
+ "@version{2013-4-17}
   @begin{short}
-    A @sym{gtk-accel-group} represents a group of keyboard accelerators,
-    typically attached to a toplevel @class{gtk-window} with
-    @fun{gtk-window-add-accel-group}. Usually you won't need to create a
-    @sym{gtk-accel-group} directly; instead, when using @class{gtk-ui-manager},
-    GTK+ automatically sets up the accelerators for your menus in the UI
-    manager's @sym{gtk-accel-group}.
+    A @sym{gtk-accel-group} object represents a group of keyboard accelerators,
+    typically attached to a toplevel @class{gtk-window} widget with the function
+    @fun{gtk-window-add-accel-group}. Usually you will not need to create a
+    @sym{gtk-accel-group} object directly; instead, when using
+    @class{gtk-ui-manager}, GTK+ automatically sets up the accelerators for your
+    menus in the UI manager's @sym{gtk-accel-group} object.
   @end{short}
 
   Note that accelerators are different from mnemonics. Accelerators are
   shortcuts for activating a menu item; they appear alongside the menu item
-  they're a shortcut for. For example \"Ctrl+Q\" might appear alongside the
+  they are a shortcut for. For example \"Ctrl+Q\" might appear alongside the
   \"Quit\" menu item. Mnemonics are shortcuts for GUI elements such as text
-  entries or buttons; they appear as underlined characters. See
+  entries or buttons; they appear as underlined characters. See the function
   @fun{gtk-label-new-with-mnemonic}. Menu items can have both accelerators and
   mnemonics, of course.
   @begin[Signal Details]{dictionary}
     @subheading{The \"accel-activate\" signal}
+      @begin{pre}
+ lambda (accel-group acceleratable keyval modifier)   : Has Details
+      @end{pre}
       The \"accel-activate\" signal is an implementation detail of
       @sym{gtk-accel-group} and not meant to be used by applications.
-      @begin{pre}
- lambda (accel-group acceleratable keyval modifier)
-      @end{pre}
       @begin[arg]{table}
-        @entry[accel-group]{the @sym{gtk-accel-group} which received the signal}
-        @entry[acceleratable]{the @class{g-object} on which the accelerator was
-          activated}
-        @entry[keyval]{the accelerator keyval of type @code{guint}}
-        @entry[modifier]{the modifier combination of type
-          @symbol{gdk-modifier-type} of the accelerator}
-        @entry[Returns]{@arg{true} if the accelerator was activated}
+        @entry[accel-group]{The @sym{gtk-accel-group} which received the
+          signal.}
+        @entry[acceleratable]{The @class{g-object} on which the accelerator was
+          activated.}
+        @entry[keyval]{The accelerator keyval of type @code{:uint}.}
+        @entry[modifier]{The modifier combination of type
+          @symbol{gdk-modifier-type} of the accelerator.}
+        @entry[Returns]{@arg{True} if the accelerator was activated.}
       @end{table}
     @subheading{The \"accel-changed\" signal}
+      @begin{pre}
+ lambda (accel-group keyval modifier accel-closure)   : Has Details
+      @end{pre}
       The \"accel-changed\" signal is emitted when an entry is added to or
       removed from the accel group.
       Widgets like @class{gtk-accel-label} which display an associated
       accelerator should connect to this signal, and rebuild their visual
       representation if the @arg{accel-closure} is theirs.
-      @begin{pre}
- lambda (accel-group keyval modifier accel-closure)
-      @end{pre}
       @begin[arg]{table}
-        @entry[accel-group]{the @sym{gtk-accel-group} which received the signal}
-        @entry[keyval]{the accelerator keyval of type @code{guint}}
-        @entry[modifier]{the modifier combination of type
-          @symbol{gdk-modifier-type} of the accelerator}
-        @entry[accel-closure]{the @symbol{g-closure} of the accelerator}
+        @entry[accel-group]{The @sym{gtk-accel-group} which received the
+          signal.}
+        @entry[keyval]{The accelerator keyval of type @code{:uint}.}
+        @entry[modifier]{The modifier combination of type
+          @symbol{gdk-modifier-type} of the accelerator.}
+        @entry[accel-closure]{The @symbol{g-closure} of the accelerator.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-accel-group-is-locked}
@@ -152,8 +153,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-locked"
                                                'gtk-accel-group) 't)
- "@version{2013-3-11}
-  The @code{\"is-locked\"} property of type @code{gboolean} (Read)@br{}
+ "@version{2013-4-17}
+  The @code{\"is-locked\"} property of type @code{:boolean} (Read)@br{}
   Is the accel group locked.@br{}
   Default value: @code{nil}")
 
@@ -162,16 +163,16 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "modifier-mask"
                                                'gtk-accel-group) 't)
- "@version{2013-3-11}
+ "@version{2013-4-17}
   The @code{\"modifier-mask\"} property of type @symbol{gdk-modifier-type}
   (Read)@br{}
-  Modifier Mask.@br{}
+  The modifier mask.@br{}
   Default value: @code{'(:shift-mask :control-mask :mod1-mask :super-mask
                          :hyper-mask :meta-mask)}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -181,7 +182,7 @@
 (setf (gethash 'gtk-accel-group-is-locked atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-is-locked 'function)
- "@version{2013-3-11}
+ "@version{2013-4-17}
   Accessor of the slot @code{\"is-locked\"} of the @class{gtk-accel-group}
   class.")
 
@@ -191,7 +192,7 @@
 (setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-modifier-mask 'function)
- "@version{2013-3-11}
+ "@version{2013-4-17}
   Accessor of the slot @code{\"modifer-mask\"} of the @class{gtk-accel-group}
   class.")
 
@@ -203,7 +204,7 @@
 
 (defun gtk-accel-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2014-4-17}
   @return{A new @class{gtk-accel-group} object.}
   Creates a new @class{gtk-accel-group} object."
   (make-instance 'gtk-accel-group))
@@ -340,34 +341,6 @@
 ;;;
 ;;; Returns :
 ;;;     TRUE if there was an accelerator which could be removed, FALSE otherwise
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_group_query ()
-;;;
-;;; GtkAccelGroupEntry * gtk_accel_group_query (GtkAccelGroup *accel_group,
-;;;                                             guint accel_key,
-;;;                                             GdkModifierType accel_mods,
-;;;                                             guint *n_entries);
-;;;
-;;; Queries an accelerator group for all entries matching accel_key and
-;;; accel_mods.
-;;;
-;;; accel_group :
-;;;     the accelerator group to query
-;;;
-;;; accel_key :
-;;;     key value of the accelerator
-;;;
-;;; accel_mods :
-;;;     modifier combination of the accelerator
-;;;
-;;; n_entries :
-;;;     location to return the number of entries found, or NULL
-;;;
-;;; Returns :
-;;;     an array of n_entries GtkAccelGroupEntry elements, or NULL. The array is
-;;;     owned by GTK+ and must not be freed
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -568,16 +541,16 @@
 
 (defcfun ("gtk_accelerator_parse" %gtk-accelerator-parse) :void
   (accelerator :string)
-  (accelerator-key :int)
-  (accelerator-mods gdk-modifier-type))
+  (accelerator-key (:pointer :uint))
+  (accelerator-mods (:pointer gdk-modifier-type)))
 
 (defun gtk-accelerator-parse (accelerator)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
-  @argument[accelerator]{string representing an accelerator}
+ "@version{2013-4-17}
+  @argument[accelerator]{a string representing an accelerator}
   @begin{return}
-    @code{accelerator-key} -- accelerator keyval, or @code{nil} @br{}
-    @code{accelerator-mods} --accelerator modifier mask, @code{nil}
+    @code{accelerator-key} -- an accelerator keyval, or @code{nil} @br{}
+    @code{accelerator-mods} --an accelerator modifier mask, or @code{nil}
   @end{return}
   @begin{short}
     Parses a string representing an accelerator. The format looks like
@@ -587,17 +560,28 @@
 
   The parser is fairly liberal and allows lower or upper case, and also
   abbreviations such as \"<Ctl>\" and \"<Ctrl>\". Key names are parsed using
-  @fun{gdk-keyval-from-name}. For character keys the name is not the symbol, but
-  the lowercase name, e. g. one would use \"<Ctrl>minus\" instead of
-  \"<Ctrl>-\".
+  the function @fun{gdk-keyval-from-name}. For character keys the name is not
+  the symbol, but the lowercase name, e. g. one would use \"<Ctrl>minus\"
+  instead of \"<Ctrl>-\".
 
   If the parse fails, @arg{accelerator-key} and @arg{accelerator-mods} will be
   set to 0 (zero).
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (gtk-accelerator-parse \"<Control>a\")
+=> 97
+=> (:CONTROL-MASK)
+
+ (gtk-accelerator-parse \"<Shift><Alt>F1\")
+=> 65470
+=> (:SHIFT-MASK :MOD1-MASK)
+    @end{pre}
+  @end{dictionary}
   @see-function{gdk-keyval-from-name}"
-  (with-foreign-objects ((accelerator-key :int)
+  (with-foreign-objects ((accelerator-key :uint)
                          (accelerator-mods 'gdk-modifier-type))
     (%gtk-accelerator-parse accelerator accelerator-key accelerator-mods)
-    (values (mem-ref accelerator-key :int)
+    (values (mem-ref accelerator-key :uint)
             (mem-ref accelerator-mods 'gdk-modifier-type))))
 
 (export 'gtk-accelerator-parse)

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -63,7 +63,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-invisible 'type)
- "@version{2013-3-17}
+ "@version{2013-4-16}
   @begin{short}
     The @sym{gtk-invisible} widget is used internally in GTK+, and is probably
     not very useful for application developers.
@@ -86,14 +86,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-invisible-screen atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-invisible-screen 'function)
- "@version{2013-3-17}
+ "@version{2013-4-16}
   Accessor of the slot @code{\"screen\"} of the @class{gtk-invisible} class.")
 
 ;;; ----------------------------------------------------------------------------
@@ -104,7 +104,7 @@
 
 (defun gtk-invisible-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
+ "@version{2013-4-16}
   @return{A new @class{gtk-invisible} widget.}
   Creates a new @class{gtk-invisible} widget."
   (make-instance 'gtk-invisible))
@@ -119,7 +119,7 @@
 
 (defun gtk-invisible-new-for-screen (screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
+ "@version{2013-4-16}
   @argument[screen]{a @class{gdk-screen} object which identifies on which the
     new @class{gtk-invisible} widget will be created}
   @return{A newly created @class{gtk-invisible} widget.}
@@ -141,7 +141,7 @@
 
 (defun gtk-invisible-set-screen (invisible screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
+ "@version{2013-4-16}
   @argument[invisible]{a @class{gtk-invisible} widget}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
@@ -162,7 +162,7 @@
 
 (defun gtk-invisible-get-screen (invisible)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
+ "@version{2013-4-16}
   @argument[invisible]{a @class{gtk-invisible} widget}
   @return{The associated @class{gdk-screen} object.}
   @begin{short}

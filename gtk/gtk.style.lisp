@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -41,43 +41,21 @@
 ;;; GtkStyle *          gtk_style_copy
 ;;; GtkStyle *          gtk_style_attach
 ;;; void                gtk_style_detach
-;;; GtkStyle *          gtk_style_ref
-;;; void                gtk_style_unref
+
+;;;     gtk_style_has_context
+
 ;;; void                gtk_style_set_background
 ;;; void                gtk_style_apply_default_background
 ;;;
-;;; #define             gtk_style_apply_default_pixmap
 ;;;
 ;;; gboolean            gtk_style_lookup_color
 ;;; GtkIconSet *        gtk_style_lookup_icon_set          * deprecated *
 ;;; GdkPixbuf *         gtk_style_render_icon
-;;; GdkFont *           gtk_style_get_font
-;;; void                gtk_style_set_font
+
+
 ;;; void                gtk_style_get_style_property
 ;;; void                gtk_style_get_valist
 ;;; void                gtk_style_get
-;;;
-;;; void                gtk_draw_hline
-;;; void                gtk_draw_vline
-;;; void                gtk_draw_shadow
-;;; void                gtk_draw_polygon
-;;; void                gtk_draw_arrow
-;;; void                gtk_draw_diamond
-;;; void                gtk_draw_string
-;;; void                gtk_draw_box
-;;; void                gtk_draw_box_gap
-;;; void                gtk_draw_check
-;;; void                gtk_draw_extension
-;;; void                gtk_draw_flat_box
-;;; void                gtk_draw_focus
-;;; void                gtk_draw_handle
-;;; void                gtk_draw_option
-;;; void                gtk_draw_shadow_gap
-;;; void                gtk_draw_slider
-;;; void                gtk_draw_tab
-;;; void                gtk_draw_expander
-;;; void                gtk_draw_layout
-;;; void                gtk_draw_resize_grip
 ;;;
 ;;; void                gtk_paint_arrow
 ;;; void                gtk_paint_box
@@ -235,7 +213,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 

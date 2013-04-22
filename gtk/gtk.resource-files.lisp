@@ -2,13 +2,14 @@
 ;;; gtk.resource-files.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.2.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -67,453 +68,6 @@
 ;;;   GObject
 ;;;    +----GtkRcStyle
 ;;; 
-;;; Description
-;;; 
-;;;    GTK+ provides resource file mechanism for configuring various aspects
-;;;    of the operation of a GTK+ program at runtime.
-;;; 
-;;; Warning
-;;; 
-;;;    In GTK+ 3.0, resource files have been deprecated and replaced by
-;;;    CSS-like style sheets, which are understood by GtkCssProvider.
-;;; 
-;;; Default files
-;;; 
-;;;    An application can cause GTK+ to parse a specific RC file by calling
-;;;    gtk_rc_parse(). In addition to this, certain files will be read at
-;;;    the end of gtk_init(). Unless modified, the files looked for will
-;;;    be <SYSCONFDIR>/gtk-2.0/gtkrc and .gtkrc-3.0 in the users home
-;;;    directory. (<SYSCONFDIR> defaults to /usr/local/etc. It can be changed
-;;;    with the --prefix or --sysconfdir options when configuring GTK+.)
-;;; 
-;;;    The set of these default files can be retrieved with
-;;;    gtk_rc_get_default_files() and modified with
-;;;    gtk_rc_add_default_file() and gtk_rc_set_default_files().
-;;;    Additionally, the GTK2_RC_FILES environment variable can be set to a
-;;;    G_SEARCHPATH_SEPARATOR_S-separated list of files in order to overwrite
-;;;    the set of default files at runtime.
-;;; 
-;;;    For each RC file, in addition to the file itself, GTK+ will look for a
-;;;    locale-specific file that will be parsed after the main file. For
-;;;    instance, if LANG is set to ja_JP.ujis, when loading the default file
-;;;    ~/.gtkrc then GTK+ looks for ~/.gtkrc.ja_JP and ~/.gtkrc.ja, and parses
-;;;    the first of those that exists.
-;;; 
-;;; Pathnames and patterns
-;;; 
-;;;    A resource file defines a number of styles and key bindings and
-;;;    attaches them to particular widgets. The attachment is done by the
-;;;    widget, widget_class, and class declarations. As an example of such a
-;;;    statement:
-;;; 
-;;;    widget "mywindow.*.GtkEntry" style "my-entry-class"
-;;; 
-;;;    attaches the style "my-entry-class" to all widgets whose widget path
-;;;    matches the pattern "mywindow.*.GtkEntry". That is, all GtkEntry
-;;;    widgets which are part of a GtkWindow named "mywindow".
-;;; 
-;;;    The patterns here are given in the standard shell glob syntax. The "?"
-;;;    wildcard matches any character, while "*" matches zero or more of any
-;;;    character. The three types of matching are against the widget path, the
-;;;    class path and the class hierarchy. Both the widget path and the class
-;;;    path consist of a "." separated list of all the parents of the widget
-;;;    and the widget itself from outermost to innermost. The difference is
-;;;    that in the widget path, the name assigned by gtk_widget_set_name()
-;;;    is used if present, otherwise the class name of the widget, while for
-;;;    the class path, the class name is always used.
-;;; 
-;;;    Since GTK+ 2.10, widget_class paths can also contain <classname>
-;;;    substrings, which are matching the class with the given name and any
-;;;    derived classes. For instance,
-;;; 
-;;;    widget_class "*<GtkMenuItem>.GtkLabel" style "my-style"
-;;; 
-;;;    will match GtkLabel widgets which are contained in any kind of
-;;;    menu item.
-;;; 
-;;;    So, if you have a GtkEntry named "myentry", inside of a horizontal
-;;;    box in a window named "mywindow", then the widget path is:
-;;;    "mywindow.GtkHBox.myentry" while the class path is:
-;;;    "GtkWindow.GtkHBox.GtkEntry".
-;;; 
-;;;    Matching against class is a little different. The pattern match is done
-;;;    against all class names in the widgets class hierarchy (not the layout
-;;;    hierarchy) in sequence, so the pattern:
-;;;    
-;;;    class "GtkButton" style "my-style"
-;;; 
-;;;    will match not just GtkButton widgets, but also GtkToggleButton and
-;;;    GtkCheckButton widgets, since those classes derive from GtkButton.
-;;; 
-;;;    Additionally, a priority can be specified for each pattern, and styles
-;;;    override other styles first by priority, then by pattern type and then
-;;;    by order of specification (later overrides earlier). The priorities
-;;;    that can be specified are (highest to lowest):
-;;;    highest
-;;;    rc
-;;;    theme
-;;;    application
-;;;    gtk
-;;;    lowest
-;;; 
-;;;    rc is the default for styles read from an RC file, theme is the default
-;;;    for styles read from theme RC files, application should be used for
-;;;    styles an application sets up, and gtk is used for styles that GTK+
-;;;    creates internally.
-;;; 
-;;; Theme gtkrc files
-;;; 
-;;;    Theme RC files are loaded first from under the ~/.themes/, then from
-;;;    the directory from gtk_rc_get_theme_dir(). The files looked at
-;;;    will be gtk-3.0/gtkrc.
-;;; 
-;;;    When the application prefers dark themes (see the
-;;;    "gtk-application-prefer-dark-theme" property for details),
-;;;    gtk-3.0/gtkrc-dark will be loaded first, and if not present
-;;;    gtk-3.0/gtkrc will be loaded.
-;;; 
-;;; Optimizing RC Style Matches
-;;; 
-;;;    Everytime a widget is created and added to the layout hierarchy of a
-;;;    GtkWindow ("anchored" to be exact), a list of matching RC styles
-;;;    out of all RC styles read in so far is composed. For this, every RC
-;;;    style is matched against the widgets class path, the widgets name path
-;;;    and widgets inheritance hierarchy. As a consequence, significant
-;;;    slowdown can be caused by utilization of many RC styles and by using RC
-;;;    style patterns that are slow or complicated to match against a given
-;;;    widget. The following ordered list provides a number of advices
-;;;    (prioritized by effectiveness) to reduce the performance overhead
-;;;    associated with RC style matches:
-;;; 
-;;;     1. Move RC styles for specific applications into RC files dedicated to
-;;;        those applications and parse application specific RC files only
-;;;        from applications that are affected by them. This reduces the
-;;;        overall amount of RC styles that have to be considered for a match
-;;;        across a group of applications.
-;;;     2. Merge multiple styles which use the same matching rule, for
-;;;        instance:
-;;; 
-;;;         style "Foo" { foo_content }
-;;;         class "X" style "Foo"
-;;;         style "Bar" { bar_content }
-;;;         class "X" style "Bar"
-;;; 
-;;;        is faster to match as:
-;;; 
-;;;         style "FooBar" { foo_content bar_content }
-;;;         class "X" style "FooBar"
-;;; 
-;;;     3. Use of wildcards should be avoided, this can reduce the individual
-;;;        RC style match to a single integer comparison in most cases.
-;;;     4. To avoid complex recursive matching, specification of full class
-;;;        names (for class matches) or full path names (for widget and
-;;;        widget_class matches) is to be preferred over shortened names
-;;;        containing "*" or "?".
-;;;     5. If at all necessary, wildcards should only be used at the tail or
-;;;        head of a pattern. This reduces the match complexity to a string
-;;;        comparison per RC style.
-;;;     6. When using wildcards, use of "?" should be preferred over "*". This
-;;;        can reduce the matching complexity from O(n^2) to O(n). For example
-;;;        "Gtk*Box" can be turned into "Gtk?Box" and will still match
-;;;        GtkHBox and GtkVBox.
-;;;     7. The use of "*" wildcards should be restricted as much as possible,
-;;;        because matching "A*B*C*RestString" can result in matching
-;;;        complexities of O(n^2) worst case.
-;;; 
-;;; Toplevel declarations
-;;; 
-;;;    An RC file is a text file which is composed of a sequence of
-;;;    declarations. '#' characters delimit comments and the portion of a line
-;;;    after a '#' is ignored when parsing an RC file.
-;;; 
-;;;    The possible toplevel declarations are:
-;;; 
-;;;    binding name { ... }
-;;; 
-;;;    Declares a binding set.
-;;; 
-;;;    class pattern [ style | binding ][ : priority ] name
-;;; 
-;;;    Specifies a style or binding set for a particular branch of the
-;;;    inheritance hierarchy.
-;;; 
-;;;    include filename
-;;; 
-;;;    Parses another file at this point. If filename is not an absolute
-;;;    filename, it is searched in the directories of the currently open RC
-;;;    files.
-;;; 
-;;;    GTK+ also tries to load a locale-specific variant of the included
-;;;    file.
-;;; 
-;;;    module_path path
-;;; 
-;;;    Sets a path (a list of directories separated by colons) that will be
-;;;    searched for theme engines referenced in RC files.
-;;; 
-;;;    pixmap_path path
-;;; 
-;;;    Sets a path (a list of directories separated by colons) that will be
-;;;    searched for pixmaps referenced in RC files.
-;;; 
-;;;    im_module_file pathname
-;;; 
-;;;    Sets the pathname for the IM modules file. Setting this from RC files
-;;;    is deprecated; you should use the environment variable
-;;;    GTK_IM_MODULE_FILE instead.
-;;; 
-;;;    style name [ = parent ] { ... }
-;;; 
-;;;    Declares a style.
-;;; 
-;;;    widget pattern [ style | binding ][ : priority ] name
-;;; 
-;;;    Specifies a style or binding set for a particular group of widgets by
-;;;    matching on the widget pathname.
-;;; 
-;;;    widget_class pattern [ style | binding ][ : priority ] name
-;;; 
-;;;    Specifies a style or binding set for a particular group of widgets by
-;;;    matching on the class pathname.
-;;; 
-;;;    setting = value
-;;; 
-;;;    Specifies a value for a setting. Note that settings in RC files
-;;;    are overwritten by system-wide settings (which are managed by an
-;;;    XSettings manager on X11).
-;;; 
-;;; Styles
-;;; 
-;;;    A RC style is specified by a style declaration in a RC file, and then
-;;;    bound to widgets with a widget, widget_class, or class declaration. All
-;;;    styles applying to a particular widget are composited together with
-;;;    widget declarations overriding widget_class declarations which, in
-;;;    turn, override class declarations. Within each type of declaration,
-;;;    later declarations override earlier ones.
-;;; 
-;;;    Within a style declaration, the possible elements are:
-;;; 
-;;;    bg[state] = color
-;;;    Sets the color used for the background of most widgets.
-;;; 
-;;;    fg[state] = color
-;;;    Sets the color used for the foreground of most widgets.
-;;; 
-;;;    base[state] = color
-;;;    Sets the color used for the background of widgets displaying editable
-;;;    text. This color is used for the background of, among others,
-;;;    GtkText, GtkEntry, GtkList, and GtkCList.
-;;; 
-;;;    text[state] = color
-;;;    Sets the color used for foreground of widgets using base for the
-;;;    background color.
-;;; 
-;;;    xthickness = number
-;;;    Sets the xthickness, which is used for various horizontal padding
-;;;    values in GTK+.
-;;; 
-;;;    ythickness = number
-;;;    Sets the ythickness, which is used for various vertical padding values
-;;;    in GTK+.
-;;; 
-;;;    bg_pixmap[state] = pixmap
-;;;    Sets a background pixmap to be used in place of the bg color (or for
-;;;    GtkText, in place of the base color. The special value "<parent>"
-;;;    may be used to indicate that the widget should use the same background
-;;;    pixmap as its parent. The special value "<none>" may be used to
-;;;    indicate no background pixmap.
-;;; 
-;;;    font = font
-;;;    Starting with GTK+ 2.0, the "font" and "fontset" declarations are
-;;;    ignored; use "font_name" declarations instead.
-;;; 
-;;;    fontset = font
-;;;    Starting with GTK+ 2.0, the "font" and "fontset" declarations are
-;;;    ignored; use "font_name" declarations instead.
-;;; 
-;;;    font_name = font
-;;;    Sets the font for a widget. font must be a Pango font name, e.g. "Sans
-;;;    Italic 10". For details about Pango font names, see
-;;;    pango_font_description_from_string().
-;;; 
-;;;    stock["stock-id"] = { icon source specifications }
-;;;    Defines the icon for a stock item.
-;;; 
-;;;    color["color-name"] = color specification
-;;;    Since 2.10, this element can be used to defines symbolic colors. See
-;;;    below for the syntax of color specifications.
-;;; 
-;;;    engine "engine" { engine-specific settings }
-;;;    Defines the engine to be used when drawing with this style.
-;;; 
-;;;    class::property = value
-;;;    Sets a style property for a widget class.
-;;; 
-;;;    The colors and background pixmaps are specified as a function of the
-;;;    state of the widget. The states are:
-;;; 
-;;;    NORMAL
-;;;    A color used for a widget in its normal state.
-;;; 
-;;;    ACTIVE
-;;;    A variant of the NORMAL color used when the widget is in the
-;;;    GTK_STATE_ACTIVE state, and also for the trough of a ScrollBar,
-;;;    tabs of a NoteBook other than the current tab and similar areas.
-;;;    Frequently, this should be a darker variant of the NORMAL color.
-;;; 
-;;;    PRELIGHT
-;;;    A color used for widgets in the GTK_STATE_PRELIGHT state. This
-;;;    state is the used for Buttons and MenuItems that have the mouse cursor
-;;;    over them, and for their children.
-;;; 
-;;;    SELECTED
-;;;    A color used to highlight data selected by the user. for instance, the
-;;;    selected items in a list widget, and the selection in an editable
-;;;    widget.
-;;; 
-;;;    INSENSITIVE
-;;;    A color used for the background of widgets that have been set
-;;;    insensitive with gtk_widget_set_sensitive().
-;;; 
-;;;    Colors can be specified as a string containing a color name (GTK+ knows
-;;;    all names from the X color database /usr/lib/X11/rgb.txt), in one of
-;;;    the hexadecimal forms rrrrggggbbbb, rrrgggbbb, rrggbb, or rgb, where r,
-;;;    g and b are hex digits, or they can be specified as a triplet { r, g,
-;;;    b}, where r, g and b are either integers in the range 0-65535 or floats
-;;;    in the range 0.0-1.0.
-;;; 
-;;;    Since 2.10, colors can also be specified by refering to a symbolic
-;;;    color, as follows: @color-name, or by using expressions to combine
-;;;    colors. The following expressions are currently supported:
-;;; 
-;;;    mix (factor, color1, color2)
-;;; 
-;;;    Computes a new color by mixing color1 and color2. The factor determines
-;;;    how close the new color is to color1. A factor of 1.0 gives pure
-;;;    color1, a factor of 0.0 gives pure color2.
-;;; 
-;;;    shade (factor, color)
-;;; 
-;;;    Computes a lighter or darker variant of color. A factor of 1.0 leaves
-;;;    the color unchanged, smaller factors yield darker colors, larger
-;;;    factors yield lighter colors.
-;;; 
-;;;    lighter (color)
-;;; 
-;;;    This is an abbreviation for shade (1.3, color).
-;;; 
-;;;    darker (color)
-;;; 
-;;;    This is an abbreviation for shade (0.7, color).
-;;; 
-;;;    Here are some examples of color expressions:
-;;; 
-;;; mix (0.5, "red", "blue")
-;;; shade (1.5, mix (0.3,
-;;;                  "<GTKDOCLINK HREF="0abbc0">0abbc0</GTKDOCLINK>",
-;;;                  { 0.3, 0.5, 0.9 }))
-;;; lighter (@foreground)
-;;; 
-;;;    In a stock definition, icon sources are specified as a 4-tuple of image
-;;;    filename or icon name, text direction, widget state, and size, in that
-;;;    order. Each icon source specifies an image filename or icon name to use
-;;;    with a given direction, state, and size. Filenames are specified as a
-;;;    string such as "itemltr.png", while icon names (looked up in the
-;;;    current icon theme), are specified with a leading @, such as
-;;;    @"item-ltr". The * character can be used as a wildcard, and if
-;;;    direction/state/size are omitted they default to *. So for example, the
-;;;    following specifies different icons to use for left-to-right and
-;;;    right-to-left languages:
-;;; 
-;;;    stock["my-stock-item"] =
-;;;    {
-;;;      { "itemltr.png", LTR, *, * },
-;;;      { "itemrtl.png", RTL, *, * }
-;;;    }
-;;; 
-;;;    This could be abbreviated as follows:
-;;; 
-;;;    stock["my-stock-item"] =
-;;;    {
-;;;      { "itemltr.png", LTR },
-;;;      { "itemrtl.png", RTL }
-;;;    }
-;;; 
-;;;    You can specify custom icons for specific sizes, as follows:
-;;; 
-;;;    stock["my-stock-item"] =
-;;;    {
-;;;      { "itemmenusize.png", *, *, "gtk-menu" },
-;;;      { "itemtoolbarsize.png", *, *, "gtk-large-toolbar" }
-;;;      { "itemgeneric.png" } // implicit *, *, * as a fallback
-;;;    }
-;;; 
-;;;    The sizes that come with GTK+ itself are "gtk-menu",
-;;;    "gtk-small-toolbar", "gtk-large-toolbar", "gtk-button", "gtk-dialog".
-;;;    Applications can define other sizes.
-;;; 
-;;;    It's also possible to use custom icons for a given state, for example:
-;;; 
-;;;    stock["my-stock-item"] =
-;;;    {
-;;;      { "itemprelight.png", *, PRELIGHT },
-;;;      { "iteminsensitive.png", *, INSENSITIVE },
-;;;      { "itemgeneric.png" } // implicit *, *, * as a fallback
-;;;    }
-;;; 
-;;;    When selecting an icon source to use, GTK+ will consider text direction
-;;;    most important, state second, and size third. It will select the best
-;;;    match based on those criteria. If an attribute matches exactly (e.g.
-;;;    you specified PRELIGHT or specified the size), GTK+ won't modify the
-;;;    image; if the attribute matches with a wildcard, GTK+ will scale or
-;;;    modify the image to match the state and size the user requested.
-;;; 
-;;; Key bindings
-;;; 
-;;;    Key bindings allow the user to specify actions to be taken on
-;;;    particular key presses. The form of a binding set declaration is:
-;;; 
-;;; binding <em class="replaceable"><code>name</code></em> {
-;;;   bind <em class="replaceable"><code>key</code></em> {
-;;;     <em class="replaceable"><code>signalname</code></em>
-;;;    (<em class="replaceable"><code>param</code></em>, ...)
-;;;     ...
-;;;   }
-;;;   ...
-;;; }
-;;; 
-;;;    key is a string consisting of a series of modifiers followed by the
-;;;    name of a key. The modifiers can be:
-;;;    <alt>
-;;;    <ctl>
-;;;    <control>
-;;;    <meta>
-;;;    <hyper>
-;;;    <super>
-;;;    <mod1>
-;;;    <mod2>
-;;;    <mod3>
-;;;    <mod4>
-;;;    <mod5>
-;;;    <release>
-;;;    <shft>
-;;;    <shift>
-;;; 
-;;;    <shft> is an alias for <shift>, <ctl> is an alias for <control>, and
-;;;    <alt> is an alias for <mod1>.
-;;; 
-;;;    The action that is bound to the key is a sequence of signal names
-;;;    (strings) followed by parameters for each signal. The signals must be
-;;;    action signals. (See g_signal_new()). Each parameter can be a
-;;;    float, integer, string, or unquoted string representing an enumeration
-;;;    value. The types of the parameters specified must match the types of
-;;;    the parameters of the signal.
-;;; 
-;;;    Binding sets are connected to widgets in the same manner as styles,
-;;;    with one difference: Binding sets override other binding sets first by
-;;;    pattern type, then by priority and then by order of specification. The
-;;;    priorities that can be specified and their default values are the same
-;;;    as for styles.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -535,10 +89,6 @@
 ;;;   gint xthickness;
 ;;;   gint ythickness;
 ;;; } GtkRcStyle;
-;;; 
-;;;    The GtkRcStyle structure is used to represent a set of information
-;;;    about the appearance of a widget. This can later be composited together
-;;;    with other GtkRcStyle structures to form a GtkStyle.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRcStyle" gtk-rc-style
@@ -548,15 +98,408 @@
    :type-initializer "gtk_rc_style_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-rc-style 'type)
+ "@version{2013-4-21}
+  @begin{short}
+    GTK+ provides resource file mechanism for configuring various aspects
+    of the operation of a GTK+ program at runtime.
+    The @sym{gtk-rc-style} structure is used to represent a set of information
+    about the appearance of a widget. This can later be composited together
+    with other @sym{gtk-rc-style} structures to form a @class{gtk-style}.
+  @end{short}
+
+  @subheading{Warning}
+    In GTK+ 3.0, resource files have been deprecated and replaced by
+    CSS-like style sheets, which are understood by @class{gtk-css-provider}.
+
+  @subheading{Default files}
+    An application can cause GTK+ to parse a specific RC file by calling the
+    function @fun{gtk-rc-parse}. In addition to this, certain files will be
+    read at the end of @fun{gtk-init}. Unless modified, the files looked for
+    will be @code{<SYSCONFDIR>/gtk-2.0/gtkrc} and @code{.gtkrc-3.0} in the users
+    home directory. @code{(<SYSCONFDIR>} defaults to @code{/usr/local/etc}. It
+    can be changed with the @code{--prefix} or @code{--sysconfdir} options when#
+    configuring GTK+.)
+
+    The set of these default files can be retrieved with the function
+    @fun{gtk-rc-get-default-files} and modified with the functions
+    @fun{gtk-rc-add-default-file} and @fun{gtk-rc-set-default-files}.
+    Additionally, the @code{GTK2_RC_FILES} environment variable can be set to a
+    @code{G_SEARCHPATH_SEPARATOR_S-separated} list of files in order to
+    overwrite the set of default files at runtime.
+
+    For each RC file, in addition to the file itself, GTK+ will look for a
+    locale-specific file that will be parsed after the main file. For
+    instance, if @code{LANG} is set to @code{ja_JP.ujis}, when loading the
+    default file @code{~/.gtkrc} then GTK+ looks for @code{~/.gtkrc.ja_JP} and
+    @code{~/.gtkrc.ja}, and parses the first of those that exists.
+
+  @subheading{Pathnames and patterns}
+    A resource file defines a number of styles and key bindings and
+    attaches them to particular widgets. The attachment is done by the
+    widget, @code{widget_class}, and class declarations. As an example of such
+    a statement:
+    @begin{pre}
+ widget \"mywindow.*.GtkEntry\" style \"my-entry-class\"
+    @end{pre}
+    attaches the style @code{\"my-entry-class\"} to all widgets whose widget
+    path matches the pattern @code{\"mywindow.*.GtkEntry\"}. That is, all
+    @class{gtk-entry} widgets which are part of a @class{gtk-window} named
+    @code{\"mywindow\"}.
+
+    The patterns here are given in the standard shell glob syntax. The \"?\"
+    wildcard matches any character, while \"*\" matches zero or more of any
+    character. The three types of matching are against the widget path, the
+    class path and the class hierarchy. Both the widget path and the class
+    path consist of a \".\" separated list of all the parents of the widget
+    and the widget itself from outermost to innermost. The difference is
+    that in the widget path, the name assigned by the function
+    @fun{gtk-widget-set-name} is used if present, otherwise the class name of
+    the widget, while for the class path, the class name is always used.
+
+    Since GTK+ 2.10, widget_class paths can also contain @code{<classname>}
+    substrings, which are matching the class with the given name and any
+    derived classes. For instance,
+    @begin{pre}
+ widget_class \"*<GtkMenuItem>.GtkLabel\" style \"my-style\"
+    @end{pre}
+    will match @class{gtk-label} widgets which are contained in any kind of
+    menu item.
+
+    So, if you have a @class{gtk-entry} named @code{\"myentry\"}, inside of a
+    horizontal box in a window named @code{\"mywindow\"}, then the widget path
+    is: @code{\"mywindow.GtkHBox.myentry\"} while the class path is:
+    @code{\"GtkWindow.GtkHBox.GtkEntry\"}.
+
+    Matching against class is a little different. The pattern match is done
+    against all class names in the widgets class hierarchy (not the layout
+    hierarchy) in sequence, so the pattern:
+    @begin{pre}
+ class \"GtkButton\" style \"my-style\"
+    @end{pre}
+    will match not just @class{gtk-button} widgets, but also
+    @class{gtk-toggle-button} and @class{gtk-check-button} widgets, since those
+    classes derive from @class{gtk-button}.
+
+    Additionally, a priority can be specified for each pattern, and styles
+    override other styles first by priority, then by pattern type and then
+    by order of specification (later overrides earlier). The priorities
+    that can be specified are (highest to lowest):
+    @begin{pre}
+ highest
+ rc
+ theme
+ application
+ gtk
+ lowest
+    @end{pre}
+    @code{rc} is the default for styles read from an RC file, @code{theme} is
+    the default for styles read from theme RC files, @code{application} should
+    be used for styles an application sets up, and @code{gtk} is used for styles
+    that GTK+ creates internally.
+
+  @subheading{Theme gtkrc files}
+    Theme RC files are loaded first from under the @code{~/.themes/}, then from
+    the directory from the function @fun{gtk-rc-get-theme-dir}. The files looked
+    at will be @code{gtk-3.0/gtkrc}.
+
+    When the application prefers dark themes (see the
+    @code{\"gtk-application-prefer-dark-theme\"} property for details),
+    @code{gtk-3.0/gtkrc-dark} will be loaded first, and if not present
+    @code{gtk-3.0/gtkrc} will be loaded.
+
+  @subheading{Optimizing RC Style Matches}
+    Everytime a widget is created and added to the layout hierarchy of a
+    @class{gtk-window} (\"anchored\" to be exact), a list of matching RC styles
+    out of all RC styles read in so far is composed. For this, every RC
+    style is matched against the widgets class path, the widgets name path
+    and widgets inheritance hierarchy. As a consequence, significant
+    slowdown can be caused by utilization of many RC styles and by using RC
+    style patterns that are slow or complicated to match against a given
+    widget. The following ordered list provides a number of advices
+    (prioritized by effectiveness) to reduce the performance overhead
+    associated with RC style matches:
+    @begin{enumerate}
+      @begin{item}
+        Move RC styles for specific applications into RC files dedicated to
+        those applications and parse application specific RC files only
+        from applications that are affected by them. This reduces the
+        overall amount of RC styles that have to be considered for a match
+        across a group of applications.
+      @end{item}
+      @begin{item}
+        Merge multiple styles which use the same matching rule, for instance:
+        @begin{pre}
+ style \"Foo\" { foo_content @}
+ class \"X\" style \"Foo\"
+ style \"Bar\" { bar_content @}
+ class \"X\" style \"Bar\"
+        @end{pre}
+        is faster to match as:
+        @begin{pre}
+ style \"FooBar\" { foo_content bar_content @}
+ class \"X\" style \"FooBar\"
+        @end{pre}
+      @end{item}
+      @begin{item}
+        Use of wildcards should be avoided, this can reduce the individual
+        RC style match to a single integer comparison in most cases.
+      @end{item}
+      @begin{item}
+        To avoid complex recursive matching, specification of full class
+        names (for class matches) or full path names (for widget and
+        widget_class matches) is to be preferred over shortened names
+        containing \"*\" or \"?\".
+      @end{item}
+      @begin{item}
+        If at all necessary, wildcards should only be used at the tail or
+        head of a pattern. This reduces the match complexity to a string
+        comparison per RC style.
+      @end{item}
+      @begin{item}
+        When using wildcards, use of \"?\" should be preferred over \"*\". This
+        can reduce the matching complexity from O(n^2) to O(n). For example
+        @code{\"Gtk*Box\"} can be turned into @code{\"Gtk?Box\"} and will still
+        match @class{gtk-hbox} and @class{gtk-vbox}.
+      @end{item}
+      @begin{item}
+        The use of \"*\" wildcards should be restricted as much as possible,
+        because matching @code{\"A*B*C*RestString\"} can result in matching
+        complexities of O(n^2) worst case.
+      @end{item}
+    @end{enumerate}
+  @subheading{Toplevel declarations}
+    An RC file is a text file which is composed of a sequence of
+    declarations. '#' characters delimit comments and the portion of a line
+    after a '#' is ignored when parsing an RC file.
+
+    The possible toplevel declarations are:
+    @begin[code]{table}
+      @entry[binding name { ... }]{Declares a binding set.}
+      @entry[class pattern [ style | binding @][ : priority @] name]{Specifies a
+        style or binding set for a particular branch of the inheritance
+        hierarchy.}
+      @entry[include filename]{Parses another file at this point. If filename is
+        not an absolute filename, it is searched in the directories of the
+        currently open RC files.
+        GTK+ also tries to load a locale-specific variant of the included file.}
+      @entry[module_path path]{Sets a path (a list of directories separated by
+        colons) that will be searched for theme engines referenced in RC files.}
+      @entry[pixmap_path path]{Sets a path (a list of directories separated by
+        colons) that will be searched for pixmaps referenced in RC files.}
+      @entry[im_module_file pathname]{Sets the pathname for the IM modules file.
+        Setting this from RC files is deprecated; you should use the environment
+        variable @code{GTK_IM_MODULE_FILE} instead.}
+      @entry[style name [ = parent @] { ... }]{Declares a style.}
+      @entry[widget pattern [ style | binding @][ : priority @] name]{Specifies
+        a style or binding set for a particular group of widgets by matching on
+        the widget pathname.}
+      @entry[widget_class pattern [ style | binding @][ : priority @]
+        name]{Specifies a style or binding set for a particular group of widgets
+        by matching on the class pathname.}
+      @entry[setting = value]{Specifies a value for a setting. Note that
+        settings in RC files are overwritten by system-wide settings (which are
+        managed by an XSettings manager on X11).}
+    @end{table}
+  @subheading{Styles}
+    A RC style is specified by a style declaration in a RC file, and then
+    bound to widgets with a widget, @code{widget_class}, or class declaration.
+    All styles applying to a particular widget are composited together with
+    widget declarations overriding @code{widget_class} declarations which, in
+    turn, override class declarations. Within each type of declaration,
+    later declarations override earlier ones.
+
+    Within a style declaration, the possible elements are:
+    @begin[code]{table}
+      @entry[bg[state@] = color]{Sets the color used for the background of most
+        widgets.}
+      @entry[fg[state@] = color]{Sets the color used for the foreground of most
+        widgets.}
+      @entry[base[state@] = color]{Sets the color used for the background of
+        widgets displaying editable text. This color is used for the background
+        of, among others, @class{gtk-text}, @class{gtk-entry}, @code{GtkList},
+        and @code{GtkCList}.}
+      @entry[text[state@] = color]{Sets the color used for foreground of widgets
+        using base for the background color.}
+      @entry[xthickness = number]{Sets the @code{xthickness}, which is used for
+        various horizontal padding values in GTK+.}
+      @entry[ythickness = number]{Sets the @code{ythickness}, which is used for
+        various vertical padding values in GTK+.}
+      @entry[bg_pixmap[state@] = pixmap]{Sets a background pixmap to be used in
+        place of the bg color (or for @class{gtk-text}, in place of the base
+        color. The special value @code{\"<parent>\"} may be used to indicate
+        that the widget should use the same background pixmap as its parent.
+        The special value  @code{\"<none>\"} may be used to indicate no
+        background pixmap.}
+      @entry[font = font]{Starting with GTK+ 2.0, the @code{\"font\"} and
+        @code{\"fontset\"} declarations are ignored; use @code{\"font_name\"}
+        declarations instead.}
+      @entry[fontset = font]{Starting with GTK+ 2.0, the @code{\"font\"} and
+        @code{\"fontset\"} declarations are ignored; use @code{\"font_name\"}
+        declarations instead.}
+      @entry[font_name = font]{Sets the font for a widget. font must be a Pango
+        font name, e. g. \"Sans Italic 10\". For details about Pango font names,
+        see the function @fun{pango-font-description-from-string}.}
+      @entry[stock[\"stock-id\"@] = { icon source specifications }]{Defines the
+        icon for a stock item.}
+      @entry[color[\"color-name\"@] = color specification]{Since 2.10, this
+        element can be used to defines symbolic colors. See below for the syntax
+        of color specifications.}
+      @entry[engine \"engine\" { engine-specific settings }]{Defines the engine
+        to be used when drawing with this style.}
+      @entry[class::property = value]{Sets a style property for a widget class.}
+    @end{table}
+    The colors and background pixmaps are specified as a function of the
+    state of the widget. The states are:
+    @begin[code]{table}
+      @entry[NORMAL]{A color used for a widget in its normal state.}
+      @entry[ACTIVE]{A variant of the @code{NORMAL} color used when the widget
+        is in the @code{GTK_STATE_ACTIVE} state, and also for the trough of a
+        @class{gtk-scrollbar}, tabs of a @class{gtk-notebook} other than the
+        current tab and similar areas. Frequently, this should be a darker
+        variant of the @code{NORMAL} color.}
+      @entry[PRELIGHT]{A color used for widgets in the @code{GTK_STATE_PRELIGHT}
+        state. This state is the used for Buttons and MenuItems that have the
+        mouse cursor over them, and for their children.}
+      @entry[SELECTED]{A color used to highlight data selected by the user. For
+        instance, the selected items in a list widget, and the selection in an
+        editable widget.}
+      @entry[INSENSITIVE]{A color used for the background of widgets that have
+        been set insensitive with the function @fun{gtk-widget-set-sensitive}.}
+    @end{table}
+    Colors can be specified as a string containing a color name (GTK+ knows
+    all names from the X color database @code{/usr/lib/X11/rgb.txt}), in one of
+    the hexadecimal forms @code{rrrrggggbbbb}, @code{rrrgggbbb}, @code{rrggbb},
+    or @code{rgb}, where @code{r}, @code{g} and @code{b} are hex digits, or they
+    can be specified as a triplet @code{{ r, g, b@}}, where @code{r}, @code{g}
+    and @code{b} are either integers in the range 0 - 65535 or floats
+    in the range 0.0 - 1.0.
+
+    Since 2.10, colors can also be specified by refering to a symbolic
+    color, as follows: @@color-name, or by using expressions to combine
+    colors. The following expressions are currently supported:
+    @begin[code]{table}
+      @entry[mix (factor, color1, color2)]{Computes a new color by mixing color1
+        and color2. The factor determines how close the new color is to color1.
+        A factor of 1.0 gives pure color1, a factor of 0.0 gives pure color2.}
+      @entry[shade (factor, color)]{Computes a lighter or darker variant of
+        color. A factor of 1.0 leaves the color unchanged, smaller factors yield
+        darker colors, larger factors yield lighter colors.}
+      @entry[lighter (color)]{This is an abbreviation for shade (1.3, color).}
+      @entry[darker (color)]{This is an abbreviation for shade (0.7, color).}
+    @end{table}
+    Here are some examples of color expressions:
+    @begin{pre}
+ mix (0.5, \"red\", \"blue\")
+ shade (1.5, mix (0.3,
+                  \"<GTKDOCLINK HREF=\"0abbc0\">0abbc0</GTKDOCLINK>\",
+                  { 0.3, 0.5, 0.9 @}))
+ lighter (@@foreground)
+    @end{pre}
+    In a stock definition, icon sources are specified as a 4-tuple of image
+    filename or icon name, text direction, widget state, and size, in that
+    order. Each icon source specifies an image filename or icon name to use
+    with a given direction, state, and size. Filenames are specified as a
+    string such as @code{\"itemltr.png\"}, while icon names (looked up in the
+    current icon theme), are specified with a leading @@, such as
+    @@\"item-ltr\". The * character can be used as a wildcard, and if
+    @code{direction/state/size} are omitted they default to *. So for example,
+    the following specifies different icons to use for left-to-right and
+    right-to-left languages:
+    @begin{pre}
+    stock[\"my-stock-item\"] =
+    {
+      { \"itemltr.png\", LTR, *, * @},
+      { \"itemrtl.png\", RTL, *, * @}
+    @}
+    @end{pre}
+    This could be abbreviated as follows:
+    @begin{pre}
+    stock[\"my-stock-item\"] =
+    {
+      { \"itemltr.png\", LTR @},
+      { \"itemrtl.png\", RTL @}
+    @}
+    @end{pre}
+    You can specify custom icons for specific sizes, as follows:
+    @begin{pre}
+    stock[\"my-stock-item\"] =
+    {
+      { \"itemmenusize.png\", *, *, \"gtk-menu\" @},
+      { \"itemtoolbarsize.png\", *, *, \"gtk-large-toolbar\" @}
+      { \"itemgeneric.png\" @} // implicit *, *, * as a fallback
+    @}
+    @end{pre}
+    The sizes that come with GTK+ itself are \"gtk-menu\",
+    \"gtk-small-toolbar\", \"gtk-large-toolbar\", \"gtk-button\", \"gtk-dialog\".
+    Applications can define other sizes.
+
+    It's also possible to use custom icons for a given state, for example:
+    @begin{pre}
+    stock[\"my-stock-item\"] =
+    {
+      { \"itemprelight.png\", *, PRELIGHT @},
+      { \"iteminsensitive.png\", *, INSENSITIVE @},
+      { \"itemgeneric.png\" @} // implicit *, *, * as a fallback
+    @}
+    @end{pre}
+    When selecting an icon source to use, GTK+ will consider text direction
+    most important, state second, and size third. It will select the best
+    match based on those criteria. If an attribute matches exactly (e.g.
+    you specified @code{PRELIGHT} or specified the size), GTK+ won't modify the
+    image; if the attribute matches with a wildcard, GTK+ will scale or
+    modify the image to match the state and size the user requested.
+
+  @subheading{Key bindings}
+    Key bindings allow the user to specify actions to be taken on
+    particular key presses. The form of a binding set declaration is:
+    @begin{pre}
+ binding <em class=\"replaceable\"><code>name</code></em> {
+   bind <em class=\"replaceable\"><code>key</code></em> {
+     <em class=\"replaceable\"><code>signalname</code></em>
+    (<em class=\"replaceable\"><code>param</code></em>, ...)
+     ...
+   @}
+   ...
+ @}
+    @end{pre}
+    key is a string consisting of a series of modifiers followed by the
+    name of a key. The modifiers can be:
+    @begin{pre}
+    <alt>
+    <ctl>
+    <control>
+    <meta>
+    <hyper>
+    <super>
+    <mod1>
+    <mod2>
+    <mod3>
+    <mod4>
+    <mod5>
+    <release>
+    <shft>
+    <shift>
+    @end{pre}
+    @code{<shft>} is an alias for @code{<shift>}, @code{<ctl>} is an alias for
+    @code{<control>}, and @code{<alt>} is an alias for @code{<mod1>}.
+
+    The action that is bound to the key is a sequence of signal names
+    (strings) followed by parameters for each signal. The signals must be
+    action signals. (See the function @fun{g-signal-new}). Each parameter can
+    be a float, integer, string, or unquoted string representing an enumeration
+    value. The types of the parameters specified must match the types of
+    the parameters of the signal.
+
+    Binding sets are connected to widgets in the same manner as styles,
+    with one difference: Binding sets override other binding sets first by
+    pattern type, then by priority and then by order of specification. The
+    priorities that can be specified and their default values are the same
+    as for styles.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkRcFlags
-;;; 
-;;; typedef enum {
-;;;   GTK_RC_FG             = 1 << 0,
-;;;   GTK_RC_BG             = 1 << 1,
-;;;   GTK_RC_TEXT           = 1 << 2,
-;;;   GTK_RC_BASE           = 1 << 3
-;;; } GtkRcFlags;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkRcFlags" gtk-rc-flags
@@ -566,6 +509,21 @@
   (:bg 2)
   (:text 4)
   (:base 8))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-rc-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-rc-flags atdoc:*external-symbols*)
+ "@version{2013-4-21}
+  @short{ }
+  @begin{pre}
+(define-g-flags \"GtkRcFlags\" gtk-rc-flags
+  (:export t
+   :type-initializer \"gtk_rc_flags_get_type\")
+  (:fg 1)
+  (:bg 2)
+  (:text 4)
+  (:base 8))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkRcTokenType
@@ -614,8 +572,6 @@
   (:color 307)
   (:unbind 308)
   (:last 309))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-rc-token-type atdoc:*symbol-name-alias*) "Enum"
@@ -1194,6 +1150,5 @@
 ;;;    Returns :
 ;;;        the resulting GtkRcStyle
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.resource-files.lisp ------------------------------------

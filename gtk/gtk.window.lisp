@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -1024,21 +1024,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_title ()
-;;;
-;;; void gtk_window_set_title (GtkWindow *window, const gchar *title);
-;;;
-;;; Sets the title of the GtkWindow. The title of a window will be displayed in
-;;; its title bar; on the X Window System, the title bar is rendered by the
-;;; window manager, so exactly how the title appears to users may vary according
-;;; to a user's exact configuration. The title should help a user distinguish
-;;; this window from other windows they may have open. A good title might
-;;; include the application name and current document filename, for example.
-;;;
-;;; window :
-;;;     a GtkWindow
-;;;
-;;; title :
-;;;     title of the window
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-window-set-title))

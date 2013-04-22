@@ -215,15 +215,15 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-2-8}
   @argument[screen]{screen to show the uri on or @code{nil} for the default
-    screen.}
+    screen}
   @argument[uri]{the uri to show}
   @argument[timestamp]{a timestamp to prevent focus stealing}
-  @return{@arg{true} on success, @code{nil} on error}
+  @return{@arg{True} on success, @code{nil} on error.}
   @begin{short}
     This is a convenience function for launching the default application to show
     the uri.
   @end{short}
-  The @arg{uri} must be of a form understood by GIO (i.e. you need to install
+  The @arg{uri} must be of a form understood by GIO (i. e. you need to install
   @code{gvfs} to get support for uri schemes such as @code{http://} or
   @code{ftp://}, as only local files are handled by GIO itself). Typical
   examples are @code{file:///home/gnome/pict.jpg},

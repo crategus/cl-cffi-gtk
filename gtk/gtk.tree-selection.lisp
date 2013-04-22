@@ -104,17 +104,15 @@
   result of programmers calling select_row on an already selected row).
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
+      @begin{pre}
+ lambda (treeselection)   : Run First
+      @end{pre}
       Emitted whenever the selection has (possibly) changed. Please note that
       this signal is mostly a hint. It may only be emitted once when a range of
       rows are selected, and it may occasionally be emitted when nothing has
       happened.
-      @begin{pre}
- void user_function (GtkTreeSelection *treeselection,
-                     gpointer          user_data)          : Run First
-      @end{pre}
       @begin[code]{table}
-        @entry[treeselection]{the object which received the signal.}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[treeselection]{The object which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-tree-selection-mode}")
@@ -233,17 +231,15 @@
 
 (declaim (inline gtk-tree-selection-set-mode))
 
-(defun gtk-tree-selection-set-mode (selection type)
+(defun gtk-tree-selection-set-mode (selection mode)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[type]{The selection mode}
-  @begin{short}
-    Sets the selection mode of the selection. If the previous type was
-    GTK_SELECTION_MULTIPLE, then the anchor is kept selected, if it was
-    previously selected.
-  @end{short}"
-  (setf (gtk-tree-selection-mode selection) type))
+ "@version{2013-4-14}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[mode]{the selection mode}
+  Sets the selection mode of the @arg{selection}. If the previous type was
+  @code{:multiple}, then the anchor is kept selected, if it was previously
+  selected."
+  (setf (gtk-tree-selection-mode selection) mode))
 
 (export 'gtk-tree-selection-set-mode)
 
@@ -364,18 +360,13 @@
 
 (defun gtk-tree-selection-get-selected (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[model]{A pointer to set to the GtkTreeModel, or NULL.}
-  @argument[iter]{The GtkTreeIter, or NULL.}
-  @return{TRUE, if there is a selected node.}
-  @begin{short}
-    Sets iter to the currently selected node if selection is set to
-    GTK_SELECTION_SINGLE or GTK_SELECTION_BROWSE. iter may be NULL if you just
-    want to test if selection has any selected nodes. model is filled with the
-    current model as a convenience. This function will not work if you use
-    selection is GTK_SELECTION_MULTIPLE.
-  @end{short}"
+ "@version{2013-4-14}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @return{The @class{gtk-iter} of the selected node, or @code{nil} if there is
+    no selected node.}
+  Sets iter to the currently selected node if @arg{selection} is set to
+  @code{:single} or @code{:browse}. This function will not work if you use
+  selection is @code{:multiple}."
   (let ((iter (make-instance 'gtk-tree-iter)))
     (when (%gtk-tree-selection-get-selected selection (null-pointer) iter)
       iter)))

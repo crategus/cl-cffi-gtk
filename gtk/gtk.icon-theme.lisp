@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -87,15 +87,13 @@
 
 (defcstruct gtk-icon-info)
 
-(export 'gtk-icon-info)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-info atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'gtk-icon-info atdoc:*external-symbols*)
  "@version{2013-3-15}
   Contains information found when looking up an icon in an icon theme.")
+
+(export 'gtk-icon-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIconTheme
@@ -208,12 +206,10 @@
   (:generic-fallback 8)
   (:force-size 16))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-icon-lookup-flags atdoc:*external-symbols*)
- "@version{2013-3-15}
+ "@version{2013-4-19}
   @short{}
   @begin{pre}
 (define-g-flags \"GtkIconLookupFlags\" gtk-icon-lookup-flags
@@ -228,7 +224,7 @@
   @begin[code]{table}
     @entry[:no-svg]{Never return SVG icons, even if GDK-Pixbuf supports them.
       Cannot be used together with @code{:force-svg}.}
-    @entry[:force-svg]{Return SVG icons, even if GDK-Pixbuf doesn't support
+    @entry[:force-svg]{Return SVG icons, even if GDK-Pixbuf does not support
       them. Cannot be used together with @code{:no-svg}.}
     @entry[:use-builtin]{When passed to @fun{gtk-icon-theme-lookup-icon}
       includes builtin icons as well as files. For a builtin icon,
@@ -254,8 +250,6 @@
    :type-initializer "gtk_icon_theme_error_get_type")
   (:not-found 0)
   (:failed 1))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-theme-error atdoc:*symbol-name-alias*) "Enum"
@@ -284,11 +278,11 @@
 
 (defun gtk-icon-theme-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-15}
+ "@version{2013-4-19}
   @return{The newly created @class{gtk-icon-theme} object.}
   @begin{short}
     Creates a new icon theme object. Icon theme objects are used to lookup up
-    an icon by name in a particular icon theme. Usually, you'll want to use
+    an icon by name in a particular icon theme. Usually, you will want to use
     @fun{gtk-icon-theme-get-default} or @fun{gtk-icon-theme-get-for-screen}
     rather than creating a new icon theme object for scratch.
   @end{short}
@@ -342,9 +336,9 @@
     has not previously been called for the given @arg{screen}, a new icon theme
     object will be created and associated with the @arg{screen}. Icon theme
     objects are fairly expensive to create, so using this function is usually a
-    better choice than calling than @fun{gtk-icon-theme-new} and setting the
-    screen yourself; by using this function a single icon theme object will be
-    shared between users.
+    better choice than calling the function @fun{gtk-icon-theme-new} and setting
+    the screen yourself; by using this function a single icon theme object will
+    be shared between users.
   @end{short}
 
   Since 2.4
@@ -516,13 +510,13 @@
   @argument[flags]{flags modifying the behavior of the icon lookup}
   @begin{return}
     A @symbol{gtk-icon-info} structure containing information about the icon,
-    or @code{nil} if the icon wasn't found. Free with @fun{gtk-icon-info-free}.
+    or @code{nil} if the icon was not found. Free with @fun{gtk-icon-info-free}.
   @end{return}
   @begin{short}
     Looks up a named icon and returns a structure containing information such as
     the filename of the icon. The icon can then be rendered into a pixbuf using
-    @fun{gtk-icon-info-load-icon}. (@fun{gtk-icon-theme-load-icon} combines
-    these two steps if all you need is the pixbuf.)
+    @fun{gtk-icon-info-load-icon}. @fun{gtk-icon-theme-load-icon} combines
+    these two steps if all you need is the pixbuf.
   @end{short}
 
   Since 2.4

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -70,21 +70,21 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-map 'type)
- "@version{2013-1-13}
+ "@version{2013-4-17}
   @begin{short}
     Accelerator maps are used to define runtime configurable accelerators.
   @end{short}
-  Functions for manipulating them are are usually used by higher level
-  convenience mechanisms like @class{gtk-ui-manager} and are thus considered
-  \"low-level\". You'll want to use them if you're manually creating menus that
-  should have user-configurable accelerators.
+  Functions for manipulating them are usually used by higher level convenience
+  mechanisms like @class{gtk-ui-manager} and are thus considered \"low-level\".
+  You will want to use them if you are manually creating menus that should have
+  user-configurable accelerators.
 
-  Accelerator is uniquely defined by:
+  An accelerator is uniquely defined by:
   @begin{itemize}
-    @item{accelerator path}
-    @item{accelerator key}
-    @item{accelerator modifiers}
-  @end{itemize}@br{}
+    @item{an accelerator path,}
+    @item{an accelerator key, and}
+    @item{accelerator modifiers.}
+  @end{itemize}
   The accelerator path must consist of
   @code{\"<WINDOWTYPE>/Category1/Category2/.../Action\"}, where
   @code{WINDOWTYPE} should be a unique application specific identifier that
@@ -97,26 +97,27 @@
   @code{\"Edit/Select All\"}. So a full valid accelerator path may look like:
   @code{\"<Gimp-Toolbox>/File/Dialogs/Tool Options...\"}.
 
-  All accelerators are stored inside one global @sym{gtk-accel-map} that can be
-  obtained using @fun{gtk-accel-map-get}. See Monitoring changes for additional
-  details.
+  All accelerators are stored inside one global @sym{gtk-accel-map} object that
+  can be obtained using the function @fun{gtk-accel-map-get}. See Monitoring
+  changes for additional details.
 
   @subheading{Manipulating accelerators}
-    New accelerators can be added using @fun{gtk-accel-map-add-entry}. To search
-    for a specific accelerator, use @fun{gtk-accel-map-lookup-entry}.
-    Modifications of existing accelerators should be done using
+    New accelerators can be added using the function
+    @fun{gtk-accel-map-add-entry}. To search for a specific accelerator, use
+    the function @fun{gtk-accel-map-lookup-entry}. Modifications of existing
+    accelerators should be done using the function
     @fun{gtk-accel-map-change-entry}.
 
     In order to avoid having some accelerators changed, they can be locked using
-    @fun{gtk-accel-map-lock-path}. Unlocking is done using
-    @fun{gtk-accel-map-unlock-path}.
+    the function @fun{gtk-accel-map-lock-path}. Unlocking is done using
+    the function @fun{gtk-accel-map-unlock-path}.
 
   @subheading{Saving and loading accelerator maps}
     Accelerator maps can be saved to and loaded from some external resource. For
-    simple saving and loading from file, @fun{gtk-accel-map-save} and
-    @fun{gtk-accel-map-load} are provided. Saving and loading can also be done
-    by providing a file descriptor to @fun{gtk-accel-map-save-fd} and
-    @fun{gtk-accel-map-load-fd}.
+    simple saving and loading from file, the functions @fun{gtk-accel-map-save}
+    and @fun{gtk-accel-map-load} are provided. Saving and loading can also be
+    done by providing a file descriptor to the functions
+    @fun{gtk-accel-map-save-fd} and @fun{gtk-accel-map-load-fd}.
 
   @subheading{Monitoring changes}
     A @sym{gtk-accel-map} object is only useful for monitoring changes of
@@ -127,20 +128,20 @@
   Since 2.4
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
-    Notifies of a change in the global accelerator map. The path is also used as
-    the detail for the signal, so it is possible to connect to
-    \"changed::accel_path\".
-    @begin{pre}
- lambda (object accel-path accel-key accel-mods)
-    @end{pre}
+      @begin{pre}
+ lambda (object accel-path accel-key accel-mods)   : Has Details
+      @end{pre}
+      Notifies of a change in the global accelerator map. The path is also used
+      as the detail for the signal, so it is possible to connect to
+      \"changed::accel-path\".
     @begin[arg]{table}
-      @entry[object]{the global @class{gtk-accel-map} object}
-      @entry[accel-path]{the path of the accelerator that changed of type
-        @code{:string}}
-      @entry[accel-key]{the key value of type @code{guint} for the new
-        accelerator}
-      @entry[accel-mods]{the modifier mask of type @symbol{gdk-modifier-type}
-        for the new accelerator}
+      @entry[object]{The global @sym{gtk-accel-map} object.}
+      @entry[accel-path]{The path of the accelerator that changed of type
+        @code{:string}.}
+      @entry[accel-key]{The key value of type @code{:uint} for the new
+        accelerator.}
+      @entry[accel-mods]{The modifier mask of type @symbol{gdk-modifier-type}
+        for the new accelerator.}
     @end{table}
   @end{dictionary}")
 
@@ -371,18 +372,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_map_get ()
-;;;
-;;; GtkAccelMap * gtk_accel_map_get (void);
-;;;
-;;; Gets the singleton global GtkAccelMap object. This object is useful only for
-;;; notification of changes to the accelerator map via the ::changed signal; it
-;;; isn't a parameter to the other accelerator map functions.
-;;;
-;;; Returns :
-;;;     the global GtkAccelMap object
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_get" gtk-accel-map-get) (g-object gtk-accel-map)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-17}
+  @return{The global @class{gtk-accel-map} object.}
+  @begin{short}
+    Gets the singleton global @class{gtk-accel-map} object. This object is
+    useful only for notification of changes to the accelerator map via the
+    \"changed\" signal; it is not a parameter to the other accelerator map
+    functions.
+  @end{short}
+
+  Since 2.4")
+
+(export 'gtk-accel-map-get)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_map_lock_path ()
@@ -424,6 +429,5 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.accel-map.lisp -----------------------------------------

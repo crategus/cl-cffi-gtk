@@ -133,7 +133,7 @@
     Returns the binary age as passed to @code{libtool} when building the GTK+
     library the process is running against.
   @end{short}
-  If @code{libtool} means nothing to you, don't worry about it.
+  If @code{libtool} means nothing to you, do not worry about it.
 
   Since 3.0")
 
@@ -151,7 +151,7 @@
     Returns the interface age as passed to @code{libtool} when building the GTK+
     library the process is running against.
   @end{short}
-  If @code{libtool} means nothing to you, don't worry about it.
+  If @code{libtool} means nothing to you, do not worry about it.
 
   Since 3.0")
 
@@ -169,7 +169,7 @@
   @argument[minor]{the required minor version}
   @argument[micro]{the required micro version}
   @begin{return}
-    @code{nil} if the GTK+ library is compatible with the given version,
+    @code{Nil} if the GTK+ library is compatible with the given version,
     or a string describing the version mismatch.
   @end{return}
   @begin{short}
@@ -186,8 +186,8 @@
   @code{major}.@code{minor}.@code{micro} (same major version.)
 
   This function is primarily for GTK+ modules; the module can call this
-  function to check that it wasn't loaded into an incompatible version of
-  GTK+. However, such a check isn't completely reliable, since the module may
+  function to check that it was not loaded into an incompatible version of
+  GTK+. However, such a check is not completely reliable, since the module may
   be linked against an old version of GTK+ and calling the old version of
   @sym{gtk-check-version}, but still get loaded into an application using a
   newer version of GTK+.

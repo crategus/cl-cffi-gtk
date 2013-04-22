@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -100,6 +100,10 @@
 ;;;     GTK_STYLE_CLASS_RIGHT
 ;;;     GTK_STYLE_CLASS_LINKED
 ;;;     GTK_STYLE_CLASS_ARROW
+;;;     GTK_STYLE_CLASS_OSD
+;;;     GTK_STYLE_CLASS_LEVEL_BAR
+;;;     GTK_STYLE_CLASS_CURSOR_HANDLE
+;;;
 ;;;     GTK_STYLE_REGION_COLUMN
 ;;;     GTK_STYLE_REGION_COLUMN_HEADER
 ;;;     GTK_STYLE_REGION_ROW
@@ -113,7 +117,7 @@
 ;;;     gtk_style_context_get
 ;;;     gtk_style_context_get_direction
 ;;;     gtk_style_context_get_junction_sides
-;;;     gtk_style_context_set_parent
+;;;     gtk_style_context_get_parent
 ;;;     gtk_style_context_get_path
 ;;;     gtk_style_context_get_property
 ;;;     gtk_style_context_get_screen
@@ -147,6 +151,7 @@
 ;;;     gtk_style_context_save
 ;;;     gtk_style_context_set_direction
 ;;;     gtk_style_context_set_junction_sides
+;;;     gtk_style_context_set_parent
 ;;;     gtk_style_context_set_path
 ;;;     gtk_style_context_add_class
 ;;;     gtk_style_context_remove_class
@@ -830,6 +835,34 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_OSD
+;;;
+;;; #define GTK_STYLE_CLASS_OSD "osd"
+;;;
+;;; A CSS class used when rendering an OSD (On Screen Display) element, on top
+;;; of another container.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_LEVEL_BAR
+;;;
+;;; #define GTK_STYLE_CLASS_LEVEL_BAR "level-bar"
+;;;
+;;; A CSS class used when rendering a level indicator, such as a battery charge
+;;; level, or a password strength.
+;;;
+;;; This is used by GtkLevelBar.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_CURSOR_HANDLE
+;;;
+;;; #define GTK_STYLE_CLASS_CURSOR_HANDLE "cursor-handle"
+;;;
+;;; A CSS class used when rendering a drag handle for text selection.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; GTK_STYLE_REGION_COLUMN
 ;;;
 ;;; #define GTK_STYLE_REGION_COLUMN "column"
@@ -893,46 +926,47 @@
   In order to construct the final style information, @sym{gtk-style-context}
   queries information from all attached style providers of type
   @class{gtk-style-provider}. Style providers can be either attached explicitly
-  to the context through @fun{gtk-style-context-add-provider}, or to the screen
-  through @fun{gtk-style-context-add-provider-for-screen}. The resulting style
-  is a combination of all providers' information in priority order.
+  to the context through the function @fun{gtk-style-context-add-provider}, or
+  to the screen through the function
+  @fun{gtk-style-context-add-provider-for-screen}. The resulting style is a
+  combination of all providers' information in priority order.
 
-  For GTK+ widgets, any @sym{gtk-style-context} returned by
+  For GTK+ widgets, any @sym{gtk-style-context} returned by the function
   @fun{gtk-widget-get-style-context} will already have a
-  @class{gtk-widget-path}, a @class{gdk-screen} and a text direction
+  @class{gtk-widget-path}, a @class{gdk-screen} object and a text direction
   @code{RTL/LTR} information set. The style context will be also updated
   automatically if any of these settings change on the widget.
 
   If you are using the theming layer standalone, you will need to set a widget
-  path and a screen yourself to the created style context through
+  path and a screen yourself to the created style context through the functions
   @fun{gtk-style-context-set-path} and @fun{gtk-style-context-set-screen}, as
-  well as updating the context yourself using @fun{gtk-style-context-invalidate}
-  whenever any of the conditions change, such as a change in the
-  @code{\"gtk-theme-name\"} setting or a hierarchy change in the rendered
-  widget.
+  well as updating the context yourself using the function
+  @fun{gtk-style-context-invalidate} whenever any of the conditions change, such
+  as a change in the @code{\"gtk-theme-name\"} setting or a hierarchy change in
+  the rendered widget.
 
   @subheading{Transition animations}
-  @sym{gtk-style-context} has built-in support for state change transitions.
-  Note that these animations respect the @code{\"gtk-enable-animations\"}
-  setting.
+    @sym{gtk-style-context} has built-in support for state change transitions.
+    Note that these animations respect the @code{\"gtk-enable-animations\"}
+    setting.
 
-  For simple widgets where state changes affect the whole widget area, calling
-  @fun{gtk-style-context-notify-state-change} with a @code{nil} region is
-  sufficient to trigger the transition animation. And GTK+ already does that
-  when @fun{gtk-widget-set-state} or @fun{gtk-widget-set-state-flags} are
-  called.
+    For simple widgets where state changes affect the whole widget area, calling
+    the function @fun{gtk-style-context-notify-state-change} with a @code{nil}
+    region is sufficient to trigger the transition animation. And GTK+ already
+    does that when the functions @fun{gtk-widget-set-state} or
+    @fun{gtk-widget-set-state-flags} are called.
 
-  If a widget needs to declare several animatable regions (i. e. not affecting
-  the whole widget area), its \"draw\" signal handler needs to wrap the render
-  operations for the different regions with calls to
-  @fun{gtk-style-context-push-animatable-region} and
-  @fun{gtk-style-context-pop-animatable-region}. These functions take an
-  identifier for the region which must be unique within the style context. For
-  simple widgets with a fixed set of animatable regions, using an enumeration
-  works well.
+    If a widget needs to declare several animatable regions (i. e. not affecting
+    the whole widget area), its \"draw\" signal handler needs to wrap the render
+    operations for the different regions with calls to the functions
+    @fun{gtk-style-context-push-animatable-region} and
+    @fun{gtk-style-context-pop-animatable-region}. These functions take an
+    identifier for the region which must be unique within the style context. For
+    simple widgets with a fixed set of animatable regions, using an enumeration
+    works well.
 
-  @b{Example:} Using an enumeration to identify animatable regions
-  @begin{pre}
+    @b{Example:} Using an enumeration to identify animatable regions
+    @begin{pre}
    enum {
      REGION_ENTRY,
      REGION_BUTTON_UP,
@@ -960,14 +994,14 @@
 
      ...
    @}
-  @end{pre}
-  For complex widgets with an arbitrary number of animatable regions, it is up
-  to the implementation to come up with a way to uniquely identify each
-  animatable region. Using pointers to internal structs is one way to achieve
-  this:
+    @end{pre}
+    For complex widgets with an arbitrary number of animatable regions, it is up
+    to the implementation to come up with a way to uniquely identify each
+    animatable region. Using pointers to internal structs is one way to achieve
+    this:
 
-  @b{Example:} Using struct pointers to identify animatable regions
-  @begin{pre}
+    @b{Example:} Using struct pointers to identify animatable regions
+    @begin{pre}
    void
    notebook_draw_tab (GtkWidget    *widget,
                       NotebookPage *page,
@@ -977,12 +1011,12 @@
      gtk_render_extension (cr, page->x, page->y, page->width, page->height);
      gtk_style_context_pop_animatable_region (context);
    @}
-  @end{pre}
-  The widget also needs to notify the style context about a state change for a
-  given animatable region so the animation is triggered.
+    @end{pre}
+    The widget also needs to notify the style context about a state change for a
+    given animatable region so the animation is triggered.
 
-  @b{Example:} Triggering a state change animation on a region
-  @begin{pre}
+    @b{Example:} Triggering a state change animation on a region
+    @begin{pre}
    gboolean
    notebook_motion_notify (GtkWidget      *widget,
                            GdkEventMotion *event)
@@ -999,17 +1033,17 @@
                                             TRUE);
      ...
    @}
-  @end{pre}
-  @fun{gtk-style-context-notify-state-change} accepts @code{nil} region IDs as a
-  special value, in this case, the whole widget area will be updated by the
-  animation.
+    @end{pre}
+    The function @fun{gtk-style-context-notify-state-change} accepts @code{nil}
+    region IDs as a special value, in this case, the whole widget area will be
+    updated by the animation.
 
   @subheading{Style classes and regions}
-  Widgets can add style classes to their context, which can be used to
-  associate different styles by class (see the section called \"Selectors\").
-  Theme engines can also use style classes to vary their rendering. GTK+ has a
-  number of predefined style classes:
-  @begin{pre}
+    Widgets can add style classes to their context, which can be used to
+    associate different styles by class (see the section called \"Selectors\").
+    Theme engines can also use style classes to vary their rendering. GTK+ has a
+    number of predefined style classes:
+    @begin{pre}
    GTK_STYLE_CLASS_CELL,
    GTK_STYLE_CLASS_ENTRY,
    GTK_STYLE_CLASS_BUTTON,
@@ -1059,10 +1093,10 @@
    GTK_STYLE_CLASS_BOTTOM,
    GTK_STYLE_CLASS_LEFT,
    GTK_STYLE_CLASS_RIGHT
-  @end{pre}
-  Widgets can also add regions with flags to their context. The regions used
-  by GTK+ widgets are:
-  @begin{pre}
+    @end{pre}
+    Widgets can also add regions with flags to their context. The regions used
+    by GTK+ widgets are:
+    @begin{pre}
 Region         Flags          Macro                       Used by
 
 row            even, odd      GTK_STYLE_REGION_ROW        GtkTreeView
@@ -1071,34 +1105,34 @@ column         first, last,   GTK_STYLE_REGION_COLUMN     GtkTreeView
 column-header                 GTK_STYLE_REGION_COLUMN_HEADER
 tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
                first, last 
-  @end{pre}
+    @end{pre}
   @subheading{Custom styling in UI libraries and applications}
-  If you are developing a library with custom @class{gtk-widgets} that render
-  differently than standard components, you may need to add a
-  @class{gtk-style-provider} yourself with the
-  @code{GTK_STYLE_PROVIDER_PRIORITY_FALLBACK} priority, either a
-  @class{gtk-css-provider} or a custom object implementing the
-  @class{gtk-style-provider} interface. This way theming engines may still
-  attempt to style your UI elements in a different way if needed so.
+    If you are developing a library with custom @class{gtk-widget}'s that render
+    differently than standard components, you may need to add a
+    @class{gtk-style-provider} yourself with the
+    @code{GTK_STYLE_PROVIDER_PRIORITY_FALLBACK} priority, either a
+    @class{gtk-css-provider} or a custom object implementing the
+    @class{gtk-style-provider} interface. This way theming engines may still
+    attempt to style your UI elements in a different way if needed so.
 
-  If you are using custom styling on an applications, you probably want then
-  to make your style information prevail to the theme's, so you must use a
-  @class{gtk-style-provider} with the
-  @code{GTK_STYLE_PROVIDER_PRIORITY_APPLICATION} priority, keep in mind that the
-  user settings in @code{XDG_CONFIG_HOME/gtk-3.0/gtk.css} will still take
-  precedence over your changes, as it uses the
-  @code{GTK_STYLE_PROVIDER_PRIORITY_USER} priority.
+    If you are using custom styling on an applications, you probably want then
+    to make your style information prevail to the theme's, so you must use a
+    @class{gtk-style-provider} with the
+    @code{GTK_STYLE_PROVIDER_PRIORITY_APPLICATION} priority, keep in mind that
+    the user settings in @code{XDG_CONFIG_HOME/gtk-3.0/gtk.css} will still take
+    precedence over your changes, as it uses the
+    @code{GTK_STYLE_PROVIDER_PRIORITY_USER} priority.
 
-  If a custom theming engine is needed, you probably want to implement a
-  @class{gtk-style-provider} yourself so it points to your
-  @class{gtk-theming-engine} implementation, as @class{gtk-css-provider} uses
-  @fun{gtk-theming-engine-load} which loads the theming engine module from the
-  standard paths.
+    If a custom theming engine is needed, you probably want to implement a
+    @class{gtk-style-provider} yourself so it points to your
+    @class{gtk-theming-engine} implementation, as @class{gtk-css-provider} uses
+    @fun{gtk-theming-engine-load} which loads the theming engine module from the
+    standard paths.
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
-    @begin{pre}
- lambda (stylecontext)
-    @end{pre}
+      @begin{pre}
+ lambda (stylecontext)   : Run First
+      @end{pre}
   @end{dictionary}
   @see-slot{gtk-style-context-direction}
   @see-slot{gtk-style-context-parent}
@@ -1138,7 +1172,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -1308,22 +1342,18 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_style_context_set_parent ()
+;;; gtk_style_context_get_parent ()
 ;;;
-;;; void gtk_style_context_set_parent (GtkStyleContext *context,
-;;;                                    GtkStyleContext *parent);
+;;; GtkStyleContext * gtk_style_context_get_parent (GtkStyleContext *context);
 ;;;
-;;; Sets the parent style context for context. The parent style context is used
-;;; to implement inheritance of properties.
-;;;
-;;; If you are using a GtkStyleContext returned from
-;;; gtk_widget_get_style_context(), the parent will be set for you.
+;;; Gets the parent context set via gtk_style_context_set_parent(). See that
+;;; function for details.
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
-;;; parent :
-;;;     the new parent or NULL
+;;; Returns :
+;;;     the parent context or NULL
 ;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
@@ -2049,6 +2079,28 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_style_context_set_parent ()
+;;;
+;;; void gtk_style_context_set_parent (GtkStyleContext *context,
+;;;                                    GtkStyleContext *parent);
+;;;
+;;; Sets the parent style context for context. The parent style context is used
+;;; to implement inheritance of properties.
+;;;
+;;; If you are using a GtkStyleContext returned from
+;;; gtk_widget_get_style_context(), the parent will be set for you.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;;
+;;; parent :
+;;;     the new parent or NULL
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_path ()
 ;;;
 ;;; void gtk_style_context_set_path (GtkStyleContext *context,
@@ -2306,15 +2358,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 (glib::at-init () (foreign-funcall "gtk_border_get_type" :int))
 (glib::at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))
 
-(export (boxed-related-symbols 'gtk-border))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-border 'type)
- "@version{2013-2-12}
+(setf (gethash 'gtk-border atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-border 'type)
+ "@version{2013-4-18}
   @begin{short}
-    A struct that specifies a border around a rectangular area that can be of
+    A structure that specifies a border around a rectangular area that can be of
     different width on each side.
   @end{short}
   @begin{pre}
@@ -2329,11 +2378,37 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
     @entry[right]{The width of the right border.}
     @entry[top]{The width of the top border.}
     @entry[bottom]{The width of the bottom border.}
-  @end{table}")
+  @end{table}
+  @see-constructor{make-gtk-border}
+  @see-constructor{copy-gtk-border}
+  @see-slot{gtk-border-left}
+  @see-slot{gtk-border-right}
+  @see-slot{gtk-border-top}
+  @see-slot{gtk-border-bottom}")
+
+(export (boxed-related-symbols 'gtk-border))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Constructors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gtk-border 'function)
+ "@version{2013-4-18}
+  Creates and returns an object of type @class{gtk-border}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gtk-border 'function)
+ "@version{2013-4-18}
+  Copies and returns an object of type @class{gtk-border}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors for the Slots
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -2998,6 +3073,5 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.style-context.lisp -------------------------------------

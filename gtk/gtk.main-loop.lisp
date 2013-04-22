@@ -118,8 +118,8 @@
   Note that this can change over the life of an application. It determines, for
   example, whether GTK+ uses the right-to-left or left-to-right text direction.
 
-  This function is equivalent to @fun{pango-language-get-default}. See that
-  function for details.
+  This function is equivalent to the function @fun{pango-language-get-default}.
+  See that function for details.
   @begin[Example]{dictionary}
     @begin{pre}
  (setq lang (gtk-get-default-language))
@@ -368,10 +368,11 @@
 (defun gtk-main ()
  #+cl-cffi-gtk-documentation
  "@version{2013-3-9}
-  @short{Runs the main loop until @fun{gtk-main-quit} is called.}
+  @short{Runs the main loop until the function @fun{gtk-main-quit} is called.}
 
-  You can nest calls to @sym{gtk-main}. In that case @fun{gtk-main-quit} will
-  make the innermost invocation of the main loop return.
+  You can nest calls to @sym{gtk-main}. In that case the function
+  @fun{gtk-main-quit} will make the innermost invocation of the main loop
+  return.
   @begin[Lisp Implementation]{dictionary}
     In the Lisp binding to GTK+ @sym{gtk-main} is not called directly but
     through the @fun{within-main-loop} macro. The @fun{within-main-loop} macro
@@ -408,8 +409,8 @@
     control.
   @end{short}
   @begin[Lisp Implementation]{dictionary}
-    In the Lisp binding to GTK+ @sym{gtk-main} is not called, but the
-    @fun{leave-gtk-main} function. The @fun{leave-gtk-main} function does some
+    In the Lisp binding to GTK+ @sym{gtk-main-quit} is not called, but the
+    function @fun{leave-gtk-main}. The function @fun{leave-gtk-main} does some
     additional bookkeeping, which is necessary to stop a Lisp program safely.
   @end{dictionary}
   @see-function{leave-gtk-main}
@@ -424,14 +425,14 @@
 (defcfun ("gtk_main_iteration" gtk-main-iteration) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2012-12-20}
-  @return{@em{True} if @fun{gtk-main-quit} has been called for the innermost
-    main loop.}
+  @return{@em{True} if the function @fun{gtk-main-quit} has been called for the
+    innermost main loop.}
   @short{Runs a single iteration of the main loop.}
 
   If no events are waiting to be processed GTK+ will block until the next
-  event is noticed. If you don't want to block look at
+  event is noticed. If you do not want to block look at
   @fun{gtk-main-iteration-do} or check if any events are pending with
-  @fun{gtk-events-pending} first.
+  the function @fun{gtk-events-pending} first.
   @see-function{gtk-main-iteration-do}
   @see-function{gtk-events-pending}
   @see-function{gtk-main-quit}")
@@ -445,10 +446,10 @@
 (defcfun ("gtk_main_iteration_do" gtk-main-iteration-do) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2012-12-20}
-  @argument[blocking]{@em{True} if you want GTK+ to block if no events are
-    pending.}
-  @return{@arg{True} if @fun{gtk-main-quit} has been called for the innermost
-    main loop.}
+  @argument[blocking]{@em{true} if you want GTK+ to block if no events are
+    pending}
+  @return{@arg{True} if the function @fun{gtk-main-quit} has been called for the
+    innermost main loop.}
   Runs a single iteration of the main loop. If no events are available either
   return or block depending on the value of @arg{blocking}.
   @see-function{gtk-main-iteration}
@@ -464,7 +465,7 @@
 (defcfun ("gtk_main_do_event" gtk-main-do-event) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-3-9}
-  @argument[event]{An event to process (normally passed by GDK).}
+  @argument[event]{an event to process normally passed by GDK}
   @short{Processes a single GDK event.}
 
   This is public only to allow filtering of events between GDK and GTK+. You
@@ -476,22 +477,23 @@
   @begin{itemize}
     @begin{item}
       Compress enter/leave notify events. If the event passed build an
-      enter/leave pair together with the next event (peeked from GDK), both
+      enter/leave pair together with the next event peeked from GDK, both
       events are thrown away. This is to avoid a backlog of (de-)highlighting
       widgets crossed by the pointer.
     @end{item}
     @begin{item}
-      Find the widget which got the event. If the widget can't be determined
+      Find the widget which got the event. If the widget cannot be determined
       the event is thrown away unless it belongs to a @code{INCR} transaction.
-      In that case it is passed to @code{gtk_selection_incr_event()}.
+      In that case it is passed to the function
+      @code{gtk_selection_incr_event()}.
     @end{item}
     @begin{item}
       Then the event is pushed onto a stack so you can query the currently
-      handled event with @fun{gtk-get-current-event}.
+      handled event with the function @fun{gtk-get-current-event}.
     @end{item}
     @begin{item}
       The event is sent to a widget. If a grab is active all events for
-      widgets that are not in the contained in the grab widget are sent to the
+      widgets that are not in the contained grab widget are sent to the
       latter with a few exceptions:
       @begin{itemize}
         @begin{item}
@@ -515,7 +517,7 @@
     @begin{item}
       Another point of interest might be that all key events are first passed
       through the key snooper functions if there are any. Read the description
-      of @code{gtk_key_snooper_install()} if you need this feature.
+      of the function @code{gtk_key_snooper_install()} if you need this feature.
     @end{item}
     @begin{item}
       After finishing the delivery the event is popped from the event stack.
@@ -625,7 +627,8 @@
   @arg{widget}.
 
   If @arg{widget} is not sensitive, it is not set as the current grabbed widget
-  and this function does nothing."
+  and this function does nothing.
+  @see-function{gtk-grab-remove}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-grab-add)
@@ -667,8 +670,8 @@
 (defcfun ("gtk_device_grab_add" gtk-device-grab-add) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-3-5}
-  @argument[widget]{a @class{gtk-widget}}
-  @argument[device]{a @class{gdk-device} to grab on}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[device]{a @class{gdk-device} object to grab on}
   @argument[block-others]{@em{true} to prevent other devices to interact with
     @arg{widget}}
   @begin{short}
@@ -676,7 +679,7 @@
     associated pointer or keyboard (if any) are delivered to @arg{widget}.
   @end{short}
   If the @arg{block-others} parameter is @em{true}, any other devices will be
-  unable to interact with widget during the grab.
+  unable to interact with @arg{widget} during the grab.
 
   Since 3.0
   @see-function{gtk-device-grab-remove}"
@@ -693,12 +696,12 @@
 (defcfun ("gtk_device_grab_remove" gtk-device-grab-remove) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-3-11}
-  @argument[widget]{a @class{gtk-widget}}
-  @argument[device]{a @class{gdk-device}}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[device]{a @class{gdk-device} object}
   @begin{short}
-    Removes a device grab from the given @arg{widget}.
+    Removes a @arg{device} grab from the given @arg{widget}.
   @end{short}
-  You have to pair calls to @fun{gtk-device-grab-add} and
+  You have to pair calls to the functions @fun{gtk-device-grab-add} and
   @sym{gtk-device-grab-remove}.
 
   Since 3.0
@@ -797,7 +800,7 @@
   @short{Obtains a copy of the event currently being processed by GTK+.}
 
   For example, if you are handling a \"clicked\" signal, the current event will
-  be the @class{gdk-event-button} that triggered the \"clicked\" signal.
+  be the @class{gdk-event-button} event that triggered the \"clicked\" signal.
   @see-function{gtk-get-current-event-time}
   @see-function{gtk-get-current-event-state}
   @see-function{gtk-get-current-event-device}")
@@ -849,7 +852,7 @@
     (g-object gdk-device)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-11}
-  @return{A @class{gdk-device}, or @code{nil}.}
+  @return{A @class{gdk-device} object, or @code{nil}.}
   If there is a current event and it has a device, return that device,
   otherwise return @code{nil}.
   @see-function{gtk-get-current-event}")
@@ -863,7 +866,7 @@
 (defcfun ("gtk_get_event_widget" gtk-get-event-widget) g-object
  #+cl-cffi-gtk-documentation
  "@version{2013-3-11}
-  @argument[event]{a @class{gdk-event}}
+  @argument[event]{a @class{gdk-event} event}
   @return{The widget that originally received @arg{event}, or @code{nil}.}
   If @arg{event} is @code{nil} or the @arg{event} was not associated with any
   widget, returns @code{nil}, otherwise returns the widget that received the
@@ -879,27 +882,30 @@
 (defcfun ("gtk_propagate_event" gtk-propagate-event) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-3-11}
-  @argument[widget]{a @class{gtk-widget}}
-  @argument[event]{a @class{gdk-event}}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[event]{a @class{gdk-event} event}
   @begin{short}
-    Sends an event to a widget, propagating the event to parent widgets if the
-    event remains unhandled.
+    Sends an @arg{event} to a @arg{widget}, propagating the @arg{event} to
+    parent widgets if the @arg{event} remains unhandled.
   @end{short}
 
-  Events received by GTK+ from GDK normally begin in @fun{gtk-main-do-event}.
-  Depending on the type of event, existence of modal dialogs, grabs, etc.,
-  the event may be propagated; if so, this function is used.
+  Events received by GTK+ from GDK normally begin in the function
+  @fun{gtk-main-do-event}. Depending on the type of event, existence of modal
+  dialogs, grabs, etc., the event may be propagated; if so, this function is
+  used.
 
-  @sym{gtk-propagate-event} calls @fun{gtk-widget-event} on each widget it
-  decides to send the event to. So @fun{gtk-widget-event} is the lowest-level
-  function; it simply emits the \"event\" and possibly an event-specific signal
-  on a widget. @sym{gtk-propagate-event} is a bit higher-level, and
-  @fun{gtk-main-do-event} is the highest level.
+  @sym{gtk-propagate-event} calls the function @fun{gtk-widget-event} on each
+  widget it decides to send the event to. So the function @fun{gtk-widget-event}
+  is the lowest level function; it simply emits the \"event\" and possibly an
+  event specific signal on a widget. The function @sym{gtk-propagate-event} is a
+  bit higher-level, and the function @fun{gtk-main-do-event} is the highest
+  level.
 
-  All that said, you most likely don't want to use any of these functions;
+  All that said, you most likely do not want to use any of these functions;
   synthesizing events is rarely needed. There are almost certainly better ways
-  to achieve your goals. For example, use @fun{gdk-window-invalidate-rect} or
-  @fun{gtk-widget-queue-draw} instead of making up expose events.
+  to achieve your goals. For example, use the functions
+  @fun{gdk-window-invalidate-rect} or @fun{gtk-widget-queue-draw} instead of
+  making up expose events.
   @see-function{gtk-widget-event}
   @see-function{gtk-main-do-event}
   @see-function{gdk-window-invalidate-rect}

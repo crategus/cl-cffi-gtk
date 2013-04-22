@@ -1352,15 +1352,12 @@
 
 (defun gtk-tree-model-get-iter (tree-model path)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model]{a GtkTreeModel}
-  @argument[iter]{the uninitialized GtkTreeIter}
-  @argument[path]{the GtkTreePath}
-  @return{TRUE, if iter was set}
-  @begin{short}
-    Sets iter to a valid iterator pointing to path. If path does not exist, iter
-    is set to an invalid iterator and FALSE is returned.
-  @end{short}"
+ "@version{2013-4-14}
+  @argument[tree-model]{a @class{gtk-tree-model} object}
+  @argument[path]{the @class{gtk-tree-path} object}
+  @return{The @class{gtk-tree-iter} or @code{nil}, if iter is not set.}
+  Returns a valid iterator pointing to @arg{path}. If @arg{path} does not
+  exist,  @code{nil} is returned."
   (let ((iter (make-gtk-tree-iter)))
     (if (%gtk-tree-model-get-iter tree-model iter path)
         iter
@@ -1456,17 +1453,12 @@
 
 (defun gtk-tree-model-get-value (tree-model iter column)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model]{a GtkTreeModel}
-  @argument[iter]{the GtkTreeIter}
+ "@version{2013-4-14}
+  @argument[tree-model]{a @class{gtk-tree-model} object}
+  @argument[iter]{the @class{gtk-tree-iter}}
   @argument[column]{the column to lookup the value at}
-  @argument[value]{an empty GValue to set}
-  @begin{short}
-    Initializes and sets value to that at column.
-  @end{short}
-
-  When done with value, g_value_unset() needs to be called to free any
-  allocated memory."
+  @return{The value at @arg{column}.}
+  Initializes and sets value to that at @arg{column}."
   (with-foreign-object (v 'g-value)
     (g-value-zero v)
     (%gtk-tree-model-get-value tree-model iter column v)

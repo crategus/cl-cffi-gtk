@@ -2,7 +2,7 @@
 ;;; gtk.offscreen-window.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
@@ -52,8 +52,6 @@
     :type-initializer "gtk_offscreen_window_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-offscreen-window 'type)
  "@version{2013-3-30}
@@ -67,7 +65,7 @@
 
   The idea is to take a widget and manually set the state of it, add it to a
   @sym{gtk-offscreen-window} and then retrieve the snapshot as a
-  @symbol{cairo-surface-t} or @class{gdk-pixbuf}.
+  @symbol{cairo-surface-t} or @class{gdk-pixbuf} object.
 
   @sym{gtk-offscreen-window} derives from @class{gtk-window} only as an
   implementation detail. Applications should not use any API specific to
@@ -86,7 +84,7 @@
 (defun gtk-offscreen-window-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-3-30}
-  @return{a @class{gtk-widget} widget}
+  @return{a @class{gtk-offscreen-window} object}
   @begin{short}
     Creates a toplevel container widget that is used to retrieve snapshots of
     widgets without showing them on the screen.
@@ -99,39 +97,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_offscreen_window_get_surface ()
-;;; 
-;;; cairo_surface_t * gtk_offscreen_window_get_surface
-;;;                                             (GtkOffscreenWindow *offscreen);
-;;; 
-;;; Retrieves a snapshot of the contained widget in the form of a
-;;; cairo_surface_t. If you need to keep this around over window resizes then
-;;; you should add a reference to it.
-;;; 
-;;; offscreen :
-;;;     the GtkOffscreenWindow contained widget.
-;;; 
-;;; Returns :
-;;;     A cairo_surface_t pointer to the offscreen surface, or NULL.
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_offscreen_window_get_surface" gtk-offscreen-window-get-surface)
+    cairo-surface-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-21}
+  @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
+  @return{A @symbol{cairo-surface-t} pointer to the @arg{offscreen} surface,
+    or @code{null}-pointer.}
+  @begin{short}
+    Retrieves a snapshot of the contained widget in the form of a
+    @symbol{cairo-surface-t}. If you need to keep this around over window
+    resizes then you should add a reference to it.
+  @end{short}
+
+  Since 2.20"
+  (offscreen (g-object gtk-offscreen-window)))
+
+(export 'gtk-offscreen-window-get-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_offscreen_window_get_pixbuf ()
-;;; 
-;;; GdkPixbuf * gtk_offscreen_window_get_pixbuf (GtkOffscreenWindow *offscreen);
-;;; 
-;;; Retrieves a snapshot of the contained widget in the form of a GdkPixbuf.
-;;; This is a new pixbuf with a reference count of 1, and the application should
-;;; unreference it once it is no longer needed.
-;;; 
-;;; offscreen :
-;;;     the GtkOffscreenWindow contained widget.
-;;; 
-;;; Returns :
-;;;     A GdkPixbuf pointer, or NULL.
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_offscreen_window_get_pixbuf" gtk-offscreen-window-get-pixbuf)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-21}
+  @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
+  @return{A @class{gdk-pixbuf} object, or @code{nil}.}
+  @begin{short}
+    Retrieves a snapshot of the contained widget in the form of a
+    @class{gdk-pixbuf} object. This is a new pixbuf with a reference count of 1,
+    and the application should unreference it once it is no longer needed.
+  @end{short}
+
+  Since 2.20"
+  (offscreen (g-object gtk-offscreen-window)))
+
+(export 'gtk-offscreen-window-get-pixbuf)
 
 ;;; --- End of file gtk.offscreen-window.lisp ----------------------------------

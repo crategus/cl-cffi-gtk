@@ -1057,10 +1057,10 @@
 (defcfun ("gtk_tree_view_get_selection" gtk-tree-view-get-selection)
     (g-object gtk-tree-selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_view]{A GtkTreeView.}
-  @return{A GtkTreeSelection object}
-  Gets the GtkTreeSelection associated with tree_view."
+ "@version{2014-4-14}
+  @argument[tree-view]{a @class{gtk-tree-view} object}
+  @return{A @class{gtk-tree-selection} object.}
+  Gets the @class{gtk-tree-selection} object associated with @arg{tree-view}."
   (tree-view (g-object gtk-tree-view)))
 
 (export 'gtk-tree-view-get-selection)

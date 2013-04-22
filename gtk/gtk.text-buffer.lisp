@@ -144,9 +144,6 @@
    (text
     gtk-text-buffer-text
     "text" "gchararray" t t)))
-;   (:cffi modified
-;          gtk-text-buffer-modified :boolean
-;          "gtk_text_buffer_get_modified" "gtk_text_buffer_set_modified")))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -578,17 +575,14 @@
                                       (interactive nil)
                                       (default-editable t))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[buffer]{a GtkTextBuffer}
-  @argument[iter]{a position in the buffer}
+ "@version{2013-4-14}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[text]{text in UTF-8 format}
-  @argument[len]{length of text in bytes, or -1}
-  Inserts len bytes of text at position iter. If len is -1, text must be
-  nul-terminated and will be inserted in its entirety. Emits the \"insert-text\"
-  signal; insertion actually occurs in the default handler for the signal.
-  iter is invalidated when insertion occurs (because the buffer contents
-  change), but the default signal handler revalidates it to point to the end
-  of the inserted text."
+  Inserts @arg{text} at position iter. Emits the \"insert-text\" signal;
+  insertion actually occurs in the default handler for the signal. iter is
+  invalidated when insertion occurs (because the buffer contents change), but
+  the default signal handler revalidates it to point to the end of the inserted
+  text."
   (assert (typep position '(or gtk-text-iter (member :cursor))))
   (if interactive
       (if (eq position :cursor)
@@ -832,17 +826,17 @@
 (defun gtk-text-buffer-delete (buffer start end &key interactive
                                                      default-editable)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-14}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[start]{a position in buffer}
   @argument[end]{another position in buffer}
-  Deletes text between start and end. The order of start and end is not
-  actually relevant; @fun{gtk-text-buffer-delete} will reorder them. This
-  function actually emits the \"delete-range\" signal, and the default handler
-  of that signal deletes the text. Because the buffer is modified, all
-  outstanding iterators become invalid after calling this function; however,
-  the start and end will be re-initialized to point to the location where text
-  was deleted."
+  Deletes text between @arg{start} and @arg{end}. The order of @arg{start} and
+  @arg{end} is not actually relevant; @sym{gtk-text-buffer-delete} will reorder
+  them. This function actually emits the \"delete-range\" signal, and the
+  default handler of that signal deletes the text. Because the buffer is
+  modified, all outstanding iterators become invalid after calling this
+  function; however, the @arg{start} and @arg{end} will be re-initialized to
+  point to the location where text was deleted."
   (if interactive
       (gtk-text-buffer-delete-interactive buffer
                                           start
@@ -1709,12 +1703,14 @@
 
 (defun gtk-text-buffer-get-bounds (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[buffer]{a GtkTextBuffer}
-  @argument[start]{iterator to initialize with first position in the buffer}
-  @argument[end]{iterator to initialize with the end iterator}
+ "@version{2013-4-14}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @begin{return}
+    @code{start} -- iterator with first position in the buffer@br{}
+    @code{end} -- iterator with the end iterator
+  @end{return}
   Retrieves the first and last iterators in the buffer, i. e. the entire buffer
-  lies within the range [start,end)."
+  lies within the range [@arg{start},@arg{end})."
   (let ((start (make-instance 'gtk-text-iter))
         (end (make-instance 'gtk-text-iter)))
     (%gtk-text-buffer-get-bounds buffer start end)
