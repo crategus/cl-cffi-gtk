@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -52,6 +52,7 @@
 ;;;     gtk_image_new_from_animation
 ;;;     gtk_image_new_from_icon_name
 ;;;     gtk_image_new_from_gicon
+;;;     gtk_image_new_from_resource
 ;;;     gtk_image_set_from_file
 ;;;     gtk_image_set_from_icon_set
 ;;;     gtk_image_set_from_pixbuf
@@ -59,6 +60,7 @@
 ;;;     gtk_image_set_from_animation
 ;;;     gtk_image_set_from_icon_name
 ;;;     gtk_image_set_from_gicon
+;;;     gtk_image_set_from_resource
 ;;;     gtk_image_clear
 ;;;     gtk_image_new
 ;;;     gtk_image_set_pixel_size
@@ -806,6 +808,35 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_image_new_from_resource ()
+;;;
+;;; GtkWidget * gtk_image_new_from_resource (const gchar *resource_path);
+;;;
+;;; Creates a new GtkImage displaying the resource file resource_path. If the
+;;; file isn't found or can't be loaded, the resulting GtkImage will display a
+;;; "broken image" icon. This function never returns NULL, it always returns a
+;;; valid GtkImage widget.
+;;;
+;;; If the file contains an animation, the image will contain an animation.
+;;;
+;;; If you need to detect failures to load the file, use
+;;; gdk_pixbuf_new_from_file() to load the file yourself, then create the
+;;; GtkImage from the pixbuf. (Or for animations, use
+;;; gdk_pixbuf_animation_new_from_file()).
+;;;
+;;; The storage type (gtk_image_get_storage_type()) of the returned image is not
+;;; defined, it will be whatever is appropriate for displaying the file.
+;;;
+;;; resource_path :
+;;;     a resource path
+;;;
+;;; Returns :
+;;;     a new GtkImage
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_file ()
 ;;;
 ;;; void gtk_image_set_from_file (GtkImage *image, const gchar *filename);
@@ -927,6 +958,21 @@
 ;;;     an icon size
 ;;;
 ;;; Since 2.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_image_set_from_resource ()
+;;;
+;;; void gtk_image_set_from_resource (GtkImage *image,
+;;;                                   const gchar *resource_path);
+;;;
+;;; See gtk_image_new_from_resource() for details.
+;;;
+;;; image :
+;;;     a GtkImage
+;;;
+;;; resource_path :
+;;;     a resource path or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

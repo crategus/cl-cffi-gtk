@@ -367,17 +367,17 @@
 
 (defun gtk-main ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
+ "@version{2013-4-22}
   @short{Runs the main loop until the function @fun{gtk-main-quit} is called.}
 
   You can nest calls to @sym{gtk-main}. In that case the function
   @fun{gtk-main-quit} will make the innermost invocation of the main loop
   return.
-  @begin[Lisp Implementation]{dictionary}
+
+  @subheading{Lisp Implementation}
     In the Lisp binding to GTK+ @sym{gtk-main} is not called directly but
     through the @fun{within-main-loop} macro. The @fun{within-main-loop} macro
     does some additional bookkeeping, which is necessary to run a Lisp program.
-  @end{dictionary}
   @see-function{within-main-loop}
   @see-function{gtk-main-quit}"
   (with-gdk-threads-lock (%gtk-main)))
@@ -403,16 +403,16 @@
 
 (defcfun ("gtk_main_quit" gtk-main-quit) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
+ "@version{2013-4-22}
   @begin{short}
     Makes the innermost invocation of the main loop return when it regains
     control.
   @end{short}
-  @begin[Lisp Implementation]{dictionary}
+
+  @subheading{Lisp Implementation}
     In the Lisp binding to GTK+ @sym{gtk-main-quit} is not called, but the
     function @fun{leave-gtk-main}. The function @fun{leave-gtk-main} does some
     additional bookkeeping, which is necessary to stop a Lisp program safely.
-  @end{dictionary}
   @see-function{leave-gtk-main}
   @see-function{gtk-main}")
 
@@ -655,7 +655,8 @@
  "@version{2012-3-11}
   @argument[widget]{the widget which gives up the grab}
   @short{Removes the grab from the given @arg{widget}.}
-  You have to pair calls to @fun{gtk-grab-add} and @sym{gtk-grab-remove}.
+  You have to pair calls to the functions @fun{gtk-grab-add} and
+  @sym{gtk-grab-remove}.
 
   If @arg{widget} does not have the grab, this function does nothing.
   @see-function{gtk-grab-add}"
@@ -695,7 +696,7 @@
 
 (defcfun ("gtk_device_grab_remove" gtk-device-grab-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-4-22}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[device]{a @class{gdk-device} object}
   @begin{short}
@@ -813,10 +814,11 @@
 
 (defcfun ("gtk_get_current_event_time" gtk-get-current-event-time) :uint32
  #+cl-cffi-gtk-documentation
- "@version{2012-3-11}
-  @return{The timestamp from the current event, or @var{+gdk-current-time+}.}
+ "@version{2013-4-22}
+  @return{The timestamp from the current event, or the value
+    @var{+gdk-current-time+}.}
   If there is a current event and it has a timestamp, return that timestamp,
-  otherwise return @var{+gdk-current-time+}.
+  otherwise return the value @var{+gdk-current-time+}.
   @see-function{gtk-get-current-event}
   @see-variable{+gdk-current-time+}")
 
@@ -881,7 +883,7 @@
 
 (defcfun ("gtk_propagate_event" gtk-propagate-event) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-4-22}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[event]{a @class{gdk-event} event}
   @begin{short}
@@ -896,9 +898,9 @@
 
   @sym{gtk-propagate-event} calls the function @fun{gtk-widget-event} on each
   widget it decides to send the event to. So the function @fun{gtk-widget-event}
-  is the lowest level function; it simply emits the \"event\" and possibly an
-  event specific signal on a widget. The function @sym{gtk-propagate-event} is a
-  bit higher-level, and the function @fun{gtk-main-do-event} is the highest
+  is the lowest level function; it simply emits the event and possibly an
+  event specific signal on a widget. The function @sym{gtk-propagate-event} is
+  a bit higher-level, and the function @fun{gtk-main-do-event} is the highest
   level.
 
   All that said, you most likely do not want to use any of these functions;

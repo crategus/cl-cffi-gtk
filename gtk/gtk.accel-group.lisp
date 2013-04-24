@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -87,7 +87,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-group 'type)
- "@version{2013-4-17}
+ "@version{2013-4-22}
   @begin{short}
     A @sym{gtk-accel-group} object represents a group of keyboard accelerators,
     typically attached to a toplevel @class{gtk-window} widget with the function
@@ -101,7 +101,7 @@
   shortcuts for activating a menu item; they appear alongside the menu item
   they are a shortcut for. For example \"Ctrl+Q\" might appear alongside the
   \"Quit\" menu item. Mnemonics are shortcuts for GUI elements such as text
-  entries or buttons; they appear as underlined characters. See the function
+  entries or buttons; they appear as underlined characters, see the function
   @fun{gtk-label-new-with-mnemonic}. Menu items can have both accelerators and
   mnemonics, of course.
   @begin[Signal Details]{dictionary}
@@ -112,7 +112,7 @@
       The \"accel-activate\" signal is an implementation detail of
       @sym{gtk-accel-group} and not meant to be used by applications.
       @begin[arg]{table}
-        @entry[accel-group]{The @sym{gtk-accel-group} which received the
+        @entry[accel-group]{The @sym{gtk-accel-group} object which received the
           signal.}
         @entry[acceleratable]{The @class{g-object} on which the accelerator was
           activated.}
@@ -131,12 +131,13 @@
       accelerator should connect to this signal, and rebuild their visual
       representation if the @arg{accel-closure} is theirs.
       @begin[arg]{table}
-        @entry[accel-group]{The @sym{gtk-accel-group} which received the
+        @entry[accel-group]{The @sym{gtk-accel-group} object which received the
           signal.}
         @entry[keyval]{The accelerator keyval of type @code{:uint}.}
         @entry[modifier]{The modifier combination of type
           @symbol{gdk-modifier-type} of the accelerator.}
-        @entry[accel-closure]{The @symbol{g-closure} of the accelerator.}
+        @entry[accel-closure]{The @symbol{g-closure} callback of the
+          accelerator.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-accel-group-is-locked}
@@ -349,11 +350,11 @@
 
 (defcfun ("gtk_accel_group_activate" gtk-accel-group-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-4-22}
   @argument[accel-group]{a @class{gtk-accel-group} object}
   @argument[accel-quark]{the quark for the accelerator name}
-  @argument[acceleratable]{the @class{g-object}, usually a @class{gkt-window},
-    on which to activate the accelerator}
+  @argument[acceleratable]{the @class{g-object}, usually a @class{gtk-window}
+    widget, on which to activate the accelerator}
   @argument[accel-key]{accelerator keyval from a key event}
   @argument[accel-mods]{keyboard state mask from a key event}
   @return{@em{True} if an accelerator was activated and handled this keypress.}
@@ -546,7 +547,7 @@
 
 (defun gtk-accelerator-parse (accelerator)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2013-4-22}
   @argument[accelerator]{a string representing an accelerator}
   @begin{return}
     @code{accelerator-key} -- an accelerator keyval, or @code{nil} @br{}
@@ -565,7 +566,7 @@
   instead of \"<Ctrl>-\".
 
   If the parse fails, @arg{accelerator-key} and @arg{accelerator-mods} will be
-  set to 0 (zero).
+  set to 0.
   @begin[Examples]{dictionary}
     @begin{pre}
  (gtk-accelerator-parse \"<Control>a\")

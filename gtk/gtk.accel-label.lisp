@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -41,6 +41,7 @@
 ;;;     gtk_accel_label_get_accel_widget
 ;;;     gtk_accel_label_set_accel_widget
 ;;;     gtk_accel_label_get_accel_width
+;;;     gtk_accel_label_set_accel
 ;;;     gtk_accel_label_refetch
 ;;; ----------------------------------------------------------------------------
 
@@ -48,11 +49,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkAccelLabel
-;;;
-;;; struct GtkAccelLabel;
-;;;
-;;; The GtkAccelLabel struct contains private data only, and should be accessed
-;;; using the functions below.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkAccelLabel" gtk-accel-label
@@ -72,37 +68,38 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-label 'type)
- "@version{2013-1-12}
+ "@version{2013-4-22}
   @begin{short}
     The @sym{gtk-accel-label} widget is a subclass of @class{gtk-label} that
-    also displays an accelerator key on the right of the label text, e.g.
-    'Ctl+S'. It is commonly used in menus to show the keyboard short-cuts for
+    also displays an accelerator key on the right of the label text, e. g.
+    \"Ctl+S\". It is commonly used in menus to show the keyboard short-cuts for
     commands.
   @end{short}
 
   The accelerator key to display is not set explicitly. Instead, the
   @sym{gtk-accel-label} displays the accelerators which have been added to a
-  particular widget. This widget is set by calling
+  particular widget. This widget is set by calling the function
   @fun{gtk-accel-label-set-accel-widget}.
 
   For example, a @class{gtk-menu-item} widget may have an accelerator added to
-  emit the \"activate\" signal when the 'Ctl+S' key combination is pressed. A
+  emit the \"activate\" signal when the \"Ctl+S\" key combination is pressed. A
   @sym{gtk-accel-label} is created and added to the @class{gtk-menu-item}, and
-  @fun{gtk-accel-label-set-accel-widget} is called with the
+  the function @fun{gtk-accel-label-set-accel-widget} is called with the
   @class{gtk-menu-item} as the second argument. The @sym{gtk-accel-label} will
-  now display 'Ctl+S' after its label.
+  now display \"Ctl+S\" after its label.
 
-  Note that creating a GtkMenuItem with gtk_menu_item_new_with_label() (or one
-  of the similar functions for GtkCheckMenuItem and GtkRadioMenuItem)
-  automatically adds a GtkAccelLabel to the GtkMenuItem and calls
-  gtk_accel_label_set_accel_widget() to set it up for you.
+  Note that creating a @class{gtk-menu-item} widget with the function
+  @fun{gtk-menu-item-new-with-label} (or one of the similar functions for
+  @class{gtk-check-menu-item} and @class{gtk-radio-menu-item}) automatically
+  adds a @sym{gtk-accel-label} to the @class{gtk-menu-item} and calls the
+  function @fun{gtk-accel-label-set-accel-widget} to set it up for you.
 
-  A GtkAccelLabel will only display accelerators which have GTK_ACCEL_VISIBLE
-  set (see GtkAccelFlags). A GtkAccelLabel can display multiple accelerators
-  and even signal names, though it is almost always used to display just one
-  accelerator key.
+  A @sym{gtk-accel-label} will only display accelerators which have
+  @code{:visible} set, see @symbol{gtk-accel-flags}. A @sym{gtk-accel-label} can
+  display multiple accelerators and even signal names, though it is almost
+  always used to display just one accelerator key.
  
-  Example 49. Creating a simple menu item with an accelerator key.
+  @b{Example:} Creating a simple menu item with an accelerator key.
   @begin{pre}
     GtkWidget *save_item;
     GtkAccelGroup *accel_group;
@@ -136,7 +133,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "accel-closure" 'gtk-accel-label) 't)
+(setf (documentation (atdoc:get-slot-from-name "accel-closure"
+                                               'gtk-accel-label) 't)
  "@version{2013-1-13}
   The @arg{\"accel-closure\"} property of type @symbol{g-closure}
   (Read / Write)@br{}
@@ -145,7 +143,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "accel-widget" 'gtk-accel-label) 't)
+(setf (documentation (atdoc:get-slot-from-name "accel-widget"
+                                               'gtk-accel-label) 't)
  "@version{2013-1-13}
   The @arg{\"accel-widget\"} property of type @class{gtk-widget}
   (Read / Write)@br{}
@@ -153,7 +152,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -163,11 +162,9 @@
 (setf (gethash 'gtk-accel-label-accel-closure atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-closure 'function)
- "@version{2013-1-13}
-  @begin{short}
-    Accessor of the slot @code{\"accel-closure\"} of the @class{gtk-accel-label}
-    class.
-  @end{short}")
+ "@version{2013-4-22}
+  Accessor of the slot @code{\"accel-closure\"} of the @class{gtk-accel-label}
+  class.")
 
 ;;; --- gtk-accel-label-accel-widget -------------------------------------------
 
@@ -175,11 +172,9 @@
 (setf (gethash 'gtk-accel-label-accel-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-widget 'function)
- "@version{2013-1-13}
-  @begin{short}
-    Accessor of the slot @code{\"accel-widget\"} of the @class{gtk-accel-label}
-    class.
-  @end{short}")
+ "@version{2013-4-22}
+  Accessor of the slot @code{\"accel-widget\"} of the @class{gtk-accel-label}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_new ()
@@ -187,14 +182,14 @@
 
 (declaim (inline gtk-accel-label-new))
 
-(defun gtk-accel-label-new (str)
+(defun gtk-accel-label-new (string)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[string]{The label string. Must be @code{nil}.}
+ "@version{2013-4-22}
+  @argument[string]{the label string, must be @code{nil}}
   @return{A new @class{gtk-accel-label} widget.}
-  @short{Creates a new @class{gtk-accel-label} widget.}"
+  Creates a new @class{gtk-accel-label} widget."
   (make-instance 'gtk-accel-label
-                 :label str))
+                 :label string))
 
 (export 'gtk-accel-label-new)
 
@@ -204,18 +199,18 @@
 
 (declaim (inline gtk-accel-label-set-accel-closure))
 
-(defun gtk-accel-label-set-accel-closure (accel-label accel-closure)
+(defun gtk-accel-label-set-accel-closure (label closure)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[accel-label]{a @class{gtk-accel-label} widget}
-  @argument[accel-closure]{the closure to monitor for accelerator changes.}
+ "@version{2013-4-22}
+  @argument[label]{a @class{gtk-accel-label} widget}
+  @argument[closure]{the closure to monitor for accelerator changes}
   @begin{short}
-    Sets the closure to be monitored by this accelerator label.
+    Sets the @arg{closure} to be monitored by this accelerator @arg{label}.
   @end{short}
-  The closure must be connected to an accelerator group;
-  see @fun{gtk-accel-group-connect}.
+  The @arg{closure} must be connected to an accelerator group;
+  see the function @fun{gtk-accel-group-connect}.
   @see-function{gtk-accel-group-connect}"
-  (setf (gtk-accel-label-accel-closure accel-label) accel-closure))
+  (setf (gtk-accel-label-accel-closure label) closure))
 
 (export 'gtk-accel-label-set-accel-closure)
 
@@ -225,17 +220,17 @@
 
 (declaim (inline gtk-accel-label-get-accel-widget))
 
-(defun gtk-accel-label-get-accel-widget (accel-label)
+(defun gtk-accel-label-get-accel-widget (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[accel-label]{a @class{gtk-accel-label} widget}
-  @return{The object monitored by the accelerator label, or @code{nil}.}
+ "@version{2013-4-22}
+  @argument[label]{a @class{gtk-accel-label} widget}
+  @return{The object monitored by the accelerator @arg{label}, or @code{nil}.}
   @begin{short}
-    Fetches the widget monitored by this accelerator label.
+    Fetches the widget monitored by this accelerator @arg{label}.
   @end{short}
-  See @fun{gtk-accel-label-set-accel-widget}.
+  See the function @fun{gtk-accel-label-set-accel-widget}.
   @see-function{gtk-accel-label-set-accel-widget}"
-  (gtk-accel-label-accel-widget accel-label))
+  (gtk-accel-label-accel-widget label))
 
 (export 'gtk-accel-label-get-accel-widget)
 
@@ -245,15 +240,13 @@
 
 (declaim (inline gtk-accel-label-set-accel-widget))
 
-(defun gtk-accel-label-set-accel-widget (accel-label accel-widget)
+(defun gtk-accel-label-set-accel-widget (label widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[accel-label]{a @class{gtk-accel-label} widget}
-  @argument[accel-widget]{the widget to be monitored.}
-  @begin{short}
-    Sets the widget to be monitored by this accelerator label.
-  @end{short}"
-  (setf (gtk-accel-label-accel-widget accel-label) accel-widget))
+ "@version{2013-4-22}
+  @argument[label]{a @class{gtk-accel-label} widget}
+  @argument[widget]{the widget to be monitored}
+  Sets the @arg{widget} to be monitored by this accelerator @arg{label}."
+  (setf (gtk-accel-label-accel-widget label) widget))
 
 (export 'gtk-accel-label-set-accel-widget)
 
@@ -264,17 +257,44 @@
 (defcfun ("gtk_accel_label_get_accel_width" gtk-accel-label-get-accel-width)
     :int
   #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[accel-label]{a @class{gtk-accel-label} widget}
+ "@version{2013-4-22}
+  @argument[label]{a @class{gtk-accel-label} widget}
   @return{The width needed to display the accelerator key(s).}
   @begin{short}
     Returns the width needed to display the accelerator key(s).
   @end{short}
   This is used by menus to align all of the @class{gtk-menu-item} widgets, and
-  shouldn't be needed by applications."
-  (accel-label (g-object gtk-accel-label)))
+  should not be needed by applications."
+  (label (g-object gtk-accel-label)))
 
 (export 'gtk-accel-label-get-accel-width)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_label_set_accel ()
+;;;
+;;; void gtk_accel_label_set_accel (GtkAccelLabel *accel_label,
+;;;                                 guint accelerator_key,
+;;;                                 GdkModifierType accelerator_mods);
+;;;
+;;; Manually sets a keyval and modifier mask as the accelerator rendered by
+;;; accel_label.
+;;;
+;;; If a keyval and modifier are explicitly set then these values are used
+;;; regardless of any associated accel closure or widget.
+;;;
+;;; Providing an accelerator_key of 0 removes the manual setting.
+;;;
+;;; accel_label :
+;;;     a GtkAccelLabel
+;;;
+;;; accelerator_key :
+;;;     a keyval, or 0
+;;;
+;;; accelerator_mods :
+;;;     the modifier mask for the accel
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_refetch ()
@@ -283,15 +303,15 @@
 (defcfun ("gtk_accel_label_refetch" gtk-accel-label-refetch)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[accel-label]{a @class{gtk-accel-label} widget}
+ "@version{2013-4-22}
+  @argument[label]{a @class{gtk-accel-label} widget}
   @return{Always returns @code{nil}.}
   @begin{short}
     Recreates the string representing the accelerator keys.
   @end{short}
   This should not be needed since the string is automatically updated whenever
   accelerators are added or removed from the associated widget."
-  (accel-label (g-object gtk-accel-label)))
+  (label (g-object gtk-accel-label)))
 
 (export 'gtk-accel-label-refetch)
 

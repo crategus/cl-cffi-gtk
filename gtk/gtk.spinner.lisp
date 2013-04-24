@@ -2,9 +2,10 @@
 ;;; gtk.spinner.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,15 +45,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-spinner 'type)
- "@version{2013-2-4}
+ "@version{2013-4-24}
   @begin{short}
     A @sym{gtk-spinner} widget displays an icon size spinning animation. It is
     often used as an alternative to a @class{gtk-progress-bar} widget for
     displaying indefinite activity, instead of actual progress.
   @end{short}
 
-  To start the animation, use @fun{gtk-spinner-start}, to stop it use
-  @fun{gtk-spinner-stop}.
+  To start the animation, use the function @fun{gtk-spinner-start}, to stop it
+  use the function @fun{gtk-spinner-stop}.
   @see-slot{gtk-spinner-active}")
 
 ;;; ----------------------------------------------------------------------------
@@ -61,15 +62,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-spinner) 't)
- "The @code{\"active\"} property of type @code{gboolean} (Read / Write)@br{}
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether the spinner is active.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
-;;; Accessors
+;;; Accessors of Properties
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-spinner-active -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spinner-active atdoc:*function-name-alias*) "Accessor"
@@ -87,9 +86,10 @@
 
 (defun gtk-spinner-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
+ "@version{2013-4-24}
   @return{A new @class{gtk-spinner} widget.}
-  @short{Returns a new spinner widget. Not yet started.}@break{}
+  @short{Returns a new spinner widget. Not yet started.}
+
   Since 2.20"
   (make-instance 'gtk-spinner))
 
@@ -101,9 +101,10 @@
 
 (defcfun ("gtk_spinner_start" gtk-spinner-start) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[spinner]{a @class{gtk-spinner} widget.}
-  @short{Starts the animation of the spinner.}@break{}
+ "@version{2013-4-24}
+  @argument[spinner]{a @class{gtk-spinner} widget}
+  @short{Starts the animation of the spinner.}
+
   Since 2.20"
   (spinner (g-object gtk-spinner)))
 
@@ -115,9 +116,10 @@
 
 (defcfun ("gtk_spinner_stop" gtk-spinner-stop) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[spinner]{a @class{gtk-spinner} widget.}
-  @short{Stops the animation of the spinner.}@break{}
+ "@version{2013-4-24}
+  @argument[spinner]{a @class{gtk-spinner} widget}
+  @short{Stops the animation of the spinner.}
+
   Since 2.20"
   (spinner (g-object gtk-spinner)))
 

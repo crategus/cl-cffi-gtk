@@ -2,10 +2,10 @@
 ;;; gtk.info-bar.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -69,7 +69,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-info-bar 'type)
- "@version{2013-4-30}
+ "@version{2013-4-23}
   @begin{short}
     @sym{gtk-info-bar} is a widget that can be used to show messages to the user
     without showing a dialog. It is often temporarily shown at the top or bottom
@@ -79,16 +79,17 @@
   @end{short}
 
   The API of @sym{gtk-info-bar} is very similar to @class{gtk-dialog}, allowing
-  you to add buttons to the action area with @fun{gtk-info-bar-add-button} or
-  @fun{gtk-info-bar-new-with-buttons}. The sensitivity of action widgets can be
-  controlled with @fun{gtk-info-bar-set-response-sensitive}. To add widgets to
-  the main content area of a @sym{gtk-info-bar}, use
+  you to add buttons to the action area with the functions
+  @fun{gtk-info-bar-add-button} or @fun{gtk-info-bar-new-with-buttons}. The
+  sensitivity of action widgets can be controlled with the function
+  @fun{gtk-info-bar-set-response-sensitive}. To add widgets to the main content
+  area of a @sym{gtk-info-bar}, use the function
   @fun{gtk-info-bar-get-content-area} and add your widgets to the container.
 
   Similar to @class{gtk-message-dialog}, the contents of a @sym{gtk-info-bar}
   can by classified as error message, warning, informational message, etc, by
-  using @fun{gtk-info-bar-set-message-type}. GTK+ uses the message type to
-  determine the background color of the message area.
+  using the function @fun{gtk-info-bar-set-message-type}. GTK+ uses the message
+  type to determine the background color of the message area.
  
   @b{Example:} Simple @sym{gtk-info-bar} usage.
   @begin{pre}
@@ -115,7 +116,8 @@
                                 GTK_MESSAGE_ERROR);
  gtk_widget_show (info_bar);
   @end{pre}
-  @subheading{gtk-info-bar as gtk-buildable}
+
+  @subheading{GtkInfoBar as GtkBuildable}
     The @sym{gtk-info-bar} implementation of the @class{gtk-buildable} interface
     exposes the content area and action area as internal children with the names
     \"content_area\" and \"action_area\".
@@ -165,7 +167,7 @@
       user uses a keybinding to dismiss the info bar.
       The default binding for this signal is the Escape key. @br{}
       @begin[code]{table}
-        @entry[info-bar]{the object on which the signal is emitted}
+        @entry[info-bar]{The object on which the signal is emitted.}
       @end{table}
       Since 2.18
 
@@ -177,8 +179,8 @@
       calls @fun{gtk-dialog-response}. The @arg{response-id} depends on which
       action widget was clicked. @br{}
       @begin[code]{table}
-        @entry[info-bar]{the object on which the signal is emitted}
-        @entry[response-id]{the response ID}
+        @entry[info-bar]{The object on which the signal is emitted.}
+        @entry[response-id]{The response ID.}
       @end{table}
       Since 2.18
   @end{dictionary}
@@ -233,11 +235,12 @@
 
 (defun gtk-info-bar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @return{A new @class{gtk-info-bar} widget.}
   @begin{short}
     Creates a new @class{gtk-info-bar} widget.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.18"
   (make-instance 'gtk-info-bar))
 
@@ -249,7 +252,7 @@
 
 (defun gtk-info-bar-new-with-buttons (&rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[args]{first the stock ID or text and second the response ID for
     each button, then more pairs for each button}
   @return{A new @class{gtk-info-bar} widget.}
@@ -257,11 +260,11 @@
     Creates a new @class{gtk-info-bar} with buttons.
   @end{short}
   Button text/response ID pairs should be listed. Button text can be either a
-  stock ID such as @code{GTK_STOCK_OK}, or some arbitrary text. A response ID
-  can be any positive number, or one of the values in the 
-  @symbol{gtk-response-type} enumeration. If the user clicks one of these dialog
-  buttons, @class{gtk-info-bar} will emit the \"response\" signal with the
-  corresponding response ID."
+  stock ID such as \"gtk-ok\", or some arbitrary text. A response ID can be any
+  positive number, or one of the values in the @symbol{gtk-response-type}
+  enumeration. If the user clicks one of these dialog buttons,
+  @class{gtk-info-bar} will emit the \"response\" signal with the corresponding
+  response ID."
   (let ((info-bar (make-instance 'gtk-info-bar-new)))
     (gtk-info-bar-add-buttons info-bar args)))
 
@@ -273,7 +276,7 @@
 
 (defcfun ("gtk_info_bar_add_action_widget" gtk-info-bar-add-action-widget) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[child]{an activatable widget}
   @argument[response-id]{response ID for @arg{child}}
@@ -282,7 +285,8 @@
     connecting a signal handler that will emit the \"response\" signal on the
     message area when the widget is activated.
   @end{short}
-  The widget is appended to the end of the message areas action area.@break{}
+  The widget is appended to the end of the message areas action area.
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (child (g-object gtk-widget))
@@ -297,7 +301,7 @@
 (defcfun ("gtk_info_bar_add_button" gtk-info-bar-add-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[button-text]{text of button, or stock ID}
   @argument[response-id]{response ID for the button}
@@ -308,7 +312,8 @@
     \"response\" signal with the given @arg{response-id}.
   @end{short}
   The button is appended to the end of the info bars's action area. The button
-  widget is returned, but usually you don't need it.@break{}
+  widget is returned, but usually you don't need it.
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (button-text :string)
@@ -322,15 +327,18 @@
 
 (defun gtk-info-bar-add-buttons (info-bar &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[args]{first a button text or stock ID and second a response ID,
     then more pairs for each button}
   @begin{short}
-    Adds more buttons, same as calling @fun{gtk-info-bar-add-button} repeatedly.
+    Adds more buttons, same as calling the function
+    @fun{gtk-info-bar-add-button} repeatedly.
   @end{short}
-  Each button must have both text and response ID.@break{}
-  Since 2.18"
+  Each button must have both text and response ID.
+
+  Since 2.18
+  @see-function{gtk-info-bar-add-button}"
   (let ((n (/ (length args) 2)))
     (assert (eql n (truncate (length args) 2)))
     (dotimes (i n)
@@ -345,7 +353,7 @@
 (defcfun ("gtk_info_bar_set_response_sensitive"
            gtk-info-bar-set-response-sensitive) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[response-id]{a response ID}
   @argument[setting]{@arg{true} for sensitive}
@@ -353,7 +361,8 @@
     Calls @code{(@fun{gtk-widget-set-sensitive} widget @arg{setting})} for each
     widget in the info bars's action area with the given @arg{response-id}.
   @end{short}
-  A convenient way to sensitize/desensitize dialog buttons.@break{}
+  A convenient way to sensitize/desensitize dialog buttons.
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (response-id :int)
@@ -368,16 +377,18 @@
 (defcfun ("gtk_info_bar_set_default_response" gtk-info-bar-set-default-response)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[response-id]{a response ID}
   @begin{short}
     Sets the last widget in the info bar's action area with the given
     @arg{response-id} as the default widget for the dialog. Pressing \"Enter\"
     normally activates the default widget.
-  @end{short}@break{}
+  @end{short}
+
   Note that this function currently requires @arg{info-bar} to be added to a
-  widget hierarchy.@break{}
+  widget hierarchy.
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (response-id :int))
@@ -390,12 +401,13 @@
 
 (defcfun ("gtk_info_bar_response" gtk-info-bar-response) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[response-id]{a response ID}
   @begin{short}
     Emits the \"response\" signal with the given @arg{response-id}.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar))
   (response-id :int))
@@ -410,13 +422,14 @@
 
 (defun gtk-info-bar-set-message-type (info-bar message-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[message-type]{a @symbol{gtk-message-type}}
   @begin{short}
     Sets the message type of the message area. GTK+ uses this type to determine
     what color to use when drawing the message area.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.18"
   (setf (gtk-info-bar-message-type info-bar) message-type))
 
@@ -430,12 +443,13 @@
 
 (defun gtk-info-bar-get-message-type (info-bar)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @return{The message type of the message area.}
   @begin{short}
     Returns the message type of the message area.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.18"
   (gtk-info-bar-message-type info-bar))
 
@@ -448,12 +462,13 @@
 (defcfun ("gtk_info_bar_get_action_area" gtk-info-bar-get-action-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @return{The action area.}
   @begin{short}
     Returns the action area of @arg{info-bar}.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar)))
 
@@ -466,12 +481,13 @@
 (defcfun ("gtk_info_bar_get_content_area" gtk-info-bar-get-content-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-23}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @return{The content area.}
   @begin{short}
     Returns the content area of @arg{info-bar}.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.18"
   (info-bar (g-object gtk-info-bar)))
 

@@ -84,7 +84,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-clipboard 'type)
- "@version{2013-4-17}
+ "@version{2013-4-22}
   @begin{short}
     The @sym{gtk-clipboard} object represents a clipboard of data shared between
     different processes or between different widgets in the same process. Each
@@ -145,9 +145,9 @@
       @begin{pre}
  lambda (clipboard event)   : Run First
       @end{pre}
-      The \"owner-change\" signal is emitted when GTK+ receives an event that
-      indicates that the ownership of the selection associated with clipboard
-      has changed.
+      The \"owner-change\" signal is emitted when GTK+ receives an @arg{event}
+      that indicates that the ownership of the selection associated with
+      @arg{clipboard} has changed.
       @begin[arg]{table}
         @entry[clipboard]{The @sym{gtk-clipboard} object on which the signal is
           emitted.}

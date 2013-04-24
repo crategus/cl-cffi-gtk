@@ -1055,11 +1055,12 @@
 
       @about-class{gtk-accel-label}
       @about-function{gtk-accel-label-new}
-      @about-function{gtk-accel-label-refetch}
       @about-function{gtk-accel-label-set-accel-closure}
       @about-function{gtk-accel-label-get-accel-widget}
       @about-function{gtk-accel-label-set-accel-widget}
       @about-function{gtk-accel-label-get-accel-width}
+      @about-function{gtk-accel-label-set-accel}
+      @about-function{gtk-accel-label-refetch}
     @end{subsection}
     @begin[GtkImage]{subsection}
       A widget displaying an image.
@@ -1080,6 +1081,7 @@
       @about-function{gtk-image-new-from-animation}
       @about-function{gtk-image-new-from-icon-name}
       @about-function{gtk-image-new-from-gicon}
+      @about-function{gtk-image-new-from-resource}
       @about-function{gtk-image-set-from-file}
       @about-function{gtk-image-set-from-icon-set}
       @about-function{gtk-image-set-from-pixbuf}
@@ -1087,6 +1089,7 @@
       @about-function{gtk-image-set-from-animation}
       @about-function{gtk-image-set-from-icon-name}
       @about-function{gtk-image-set-from-gicon}
+      @about-function{gtk-image-set-from-resource}
       @about-function{gtk-image-clear}
       @about-function{gtk-image-new}
       @about-function{gtk-image-set-pixel-size}
@@ -1239,7 +1242,7 @@
   @end{section}
   @begin[Buttons and Toggles]{section}
     @begin[GtkButton]{subsection}
-      A widget that emits a signal when clicked on
+      A widget that emits a signal when clicked on.
 
       @about-class{gtk-button}
       @about-function{gtk-button-new}
@@ -1288,6 +1291,7 @@
     @end{subsection}
     @begin[GtkLinkButton]{subsection}
       Create buttons bound to a URL.
+
       @about-class{gtk-link-button}
       @about-function{gtk-link-button-new}
       @about-function{gtk-link-button-new-with-label}

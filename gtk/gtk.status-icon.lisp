@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -134,7 +134,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-status-icon 'type)
- "@version{2013-2-3}
+ "@version{2013-4-24}
   @begin{short}
     The \"system tray\" or notification area is normally used for transient
     icons that indicate some special state. For example, a system tray icon
@@ -144,31 +144,31 @@
     dialog.
   @end{short}
 
-  A GtkStatusIcon object can be used to display an icon in a \"system tray\".
-  The icon can have a tooltip, and the user can interact with it by activating
-  it or popping up a context menu. Critical information should not solely be
-  displayed in a GtkStatusIcon, since it may not be visible (e.g. when the
-  user doesn't have a notification area on his panel). This can be checked
-  with gtk_status_icon_is_embedded().
+  A @sym{gtk-status-icon} object can be used to display an icon in a
+  \"system tray\". The icon can have a tooltip, and the user can interact with
+  it by activating it or popping up a context menu. Critical information should
+  not solely be displayed in a @sym{gtk-status-icon}, since it may not be
+  visible (e. g. when the user does not have a notification area on his panel).
+  This can be checked with the function @fun{gtk-status-icon-is-embedded}.
 
   On X11, the implementation follows the freedesktop.org \"System Tray\"
   specification. Implementations of the \"tray\" side of this specification can
-  be found e.g. in the GNOME 2 and KDE panel applications.
+  be found e. g. in the GNOME 2 and KDE panel applications.
 
-  Note that a GtkStatusIcon is not a widget, but just a GObject. Making it a
-  widget would be impractical, since the system tray on Win32 doesn't allow to
-  embed arbitrary widgets.
+  Note that a @sym{gtk-status-icon} is not a widget, but just a
+  @class{g-object}. Making it a widget would be impractical, since the system
+  tray on Win32 does not allow to embed arbitrary widgets.
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
  lambda (status-icon)   : Action
       @end{pre}
       Gets emitted when the user activates the status icon. If and how status
-      icons can activated is platform-dependent. @br{}
-      Unlike most G_SIGNAL_ACTION signals, this signal is meant to be used by
-      applications and should be wrapped by language bindings.
+      icons can activated is platform-dependent.
+      Unlike most @code{G_SIGNAL_ACTION} signals, this signal is meant to be
+      used by applications and should be wrapped by language bindings.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal}
+        @entry[status-icon]{The object which received the signal.}
       @end{table}
       Since 2.10
 
@@ -176,15 +176,15 @@
       @begin{pre}
  lambda (status-icon event)
       @end{pre}
-      The ::button-press-event signal will be emitted when a button (typically
-      from a mouse) is pressed. @br{}
-      Whether this event is emitted is platform-dependent. Use the ::activate
-      and ::popup-menu signals in preference.
+      The \"button-press-event\" signal will be emitted when a button (typically
+      from a mouse) is pressed.
+      Whether this event is emitted is platform-dependent. Use the \"activate\"
+      and \"popup-menu\" signals in preference.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal}
-        @entry[event]{the GdkEventButton which triggered this signal}
-        @entry[Returns]{TRUE to stop other handlers from being invoked for the
-          event. FALSE to propagate the event further.}
+        @entry[status-icon]{The object which received the signal.}
+        @entry[event]{The @class{gdk-event-button} which triggered this signal.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @code{Nil} to propagate the event further.}
       @end{table}
       Since 2.14
 
@@ -192,15 +192,15 @@
       @begin{pre}
  lambda (status-icon event)
       @end{pre}
-      The ::button-release-event signal will be emitted when a button (typically
-      from a mouse) is released. @br{}
-      Whether this event is emitted is platform-dependent. Use the ::activate
-      and ::popup-menu signals in preference.
+      The \"button-release-event\" signal will be emitted when a button
+      (typically from a mouse) is released.
+      Whether this event is emitted is platform-dependent. Use the \"activate\"
+      and \"popup-menu\" signals in preference.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal}
-        @entry[event]{the GdkEventButton which triggered this signal}
-        @entry[Returns]{TRUE to stop other handlers from being invoked for the
-          event. FALSE to propagate the event further.}
+        @entry[status-icon]{The object which received the signal.}
+        @entry[event]{The @class{gdk-event-button} which triggered this signal.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @code{Nil} to propagate the event further.}
       @end{table}
       Since 2.14
 
@@ -210,17 +210,17 @@
       @end{pre}
       Gets emitted when the user brings up the context menu of the status icon.
       Whether status icons can have context menus and how these are activated is
-      platform-dependent. @br{}
-      The button and activate_time parameters should be passed as the last to
-      arguments to gtk_menu_popup(). @br{}
-      Unlike most G_SIGNAL_ACTION signals, this signal is meant to be used by
-      applications and should be wrapped by language bindings.
+      platform-dependent.
+      The button and @arg{activate-time} parameters should be passed as the last
+      to arguments to the function @fun{gtk-menu-popup}.
+      Unlike most @code{G_SIGNAL_ACTION} signals, this signal is meant to be
+      used by applications and should be wrapped by language bindings.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal}
-        @entry{button]{the button that was pressed, or 0 if the signal is not
-          emitted in response to a button press event}
-        @entry[activate-time]{the timestamp of the event that triggered the
-          signal emission}
+        @entry[status-icon]{The object which received the signal.}
+        @entry[button]{The button that was pressed, or 0 if the signal is not
+          emitted in response to a button press event.}
+        @entry[activate-time]{The timestamp of the event that triggered the
+          signal emission.}
       @end{table}
       Since 2.10
 
@@ -229,27 +229,28 @@
  lambda (status-icon x y keyboard-mode tooltip)   : Run Last
       @end{pre}
       Emitted when the \"gtk-tooltip-timeout\" has expired with the cursor
-      hovering above status_icon; or emitted when status_icon got focus in
-      keyboard mode. @br{}
+      hovering above @arg{status-icon}; or emitted when @arg{status-icon} got
+      focus in keyboard mode.
       Using the given coordinates, the signal handler should determine whether a
-      tooltip should be shown for status_icon. If this is the case TRUE should
-      be returned, FALSE otherwise. Note that if keyboard_mode is TRUE, the
-      values of x and y are undefined and should not be used. @br{}
+      tooltip should be shown for @arg{status-icon}. If this is the case
+      @em{true} should be returned, @code{nil} otherwise. Note that if
+      @arg{keyboard-mode} is @em{true}, the values of @arg{x} and @arg{y} are
+      undefined and should not be used.
       The signal handler is free to manipulate tooltip with the therefore
-      destined function calls. @br{}
+      destined function calls.
       Whether this signal is emitted is platform-dependent. For plain text
       tooltips, use \"tooltip-text\" in preference.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal}
-        @entry[x]{the x coordinate of the cursor position where the request has
-          been emitted, relative to status_icon}
-        @entry[y]{the y coordinate of the cursor position where the request has
-          been emitted, relative to status_icon}
-        @entry[keyboard-mode]{TRUE if the tooltip was trigged using the
-          keyboard}
-        @entry[tooltip]{a GtkTooltip}
-        @entry[Returns]{TRUE if tooltip should be shown right now, FALSE
-          otherwise.}
+        @entry[status-icon]{The object which received the signal.}
+        @entry[x]{The x coordinate of the cursor position where the request has
+          been emitted, relative to @arg{status-icon}.}
+        @entry[y]{The y coordinate of the cursor position where the request has
+          been emitted, relative to @arg{status-icon}.}
+        @entry[keyboard-mode]{@em{True} if the tooltip was trigged using the
+          keyboard.}
+        @entry[tooltip]{A @class{gtk-tooltip} object.}
+        @entry[Returns]{@em{True} if tooltip should be shown right now,
+          @code{nil} otherwise.}
       @end{table}
       Since 2.16
 
@@ -257,15 +258,15 @@
       @begin{pre}
  lambda (status-icon event)   : Run Last
       @end{pre}
-      The ::scroll-event signal is emitted when a button in the 4 to 7 range is
-      pressed. Wheel mice are usually configured to generate button press events
-      for buttons 4 and 5 when the wheel is turned. @br{}
+      The \"scroll-event\" signal is emitted when a button in the 4 to 7 range
+      is pressed. Wheel mice are usually configured to generate button press
+      events for buttons 4 and 5 when the wheel is turned.
       Whether this event is emitted is platform-dependent.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal.}
-        @entry[event]{the GdkEventScroll which triggered this signal}
-        @entry[Returns]{TRUE to stop other handlers from being invoked for the
-          event. FALSE to propagate the event further.}
+        @entry[status-icon]{The object which received the signal.}
+        @entry[event]{The @class{gdk-event-scroll} which triggered this signal.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @code{Nil} to propagate the event further.}
       @end{table}
       Since 2.16
 
@@ -276,9 +277,9 @@
       Gets emitted when the size available for the image changes, e. g. because
       the notification area got resized.
       @begin[code]{table}
-        @entry[status-icon]{the object which received the signal}
-        @entry[size]{the new size}
-        @entry[Returns]{TRUE if the icon was updated for the new size.
+        @entry[status-icon]{The object which received the signal.}
+        @entry[size]{The new size.}
+        @entry[Returns]{@em{True} if the icon was updated for the new size.
           Otherwise, GTK+ will scale the icon as necessary.}
       @end{table}
       Since 2.10
@@ -307,8 +308,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "embedded" 'gtk-status-icon) 't)
- "The @code{\"embedded\"} property of type @code{gboolean} (Read)@br{}
-  @arg{true} if the statusicon is embedded in a notification area.@br{}
+ "The @code{\"embedded\"} property of type @code{:boolean} (Read)@br{}
+  @em{True} if the status icon is embedded in a notification area.@br{}
   Default value: @code{nil}@br{}
   Since 2.12")
 
@@ -316,7 +317,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "file" 'gtk-status-icon) 't)
- "The @code{\"file\"} property of type @code{gchar*} (Write)@br{}
+ "The @code{\"file\"} property of type @code{:string} (Write)@br{}
   Filename to load and display.@br{}
   Default value: @code{nil}")
 
@@ -324,7 +325,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-status-icon) 't)
- "The @code{\"gicon\"} property of type @code{GIcon*} (Read / Write)@br{}
+ "The @code{\"gicon\"} property of type @code{GIcon} (Read / Write)@br{}
   The @code{GIcon} displayed in the @sym{gtk-status-icon}. For themed icons, the
   image will be updated automatically if the theme changes.@br{}
   Since 2.14")
@@ -334,18 +335,18 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip"
                                                'gtk-status-icon) 't)
- "The @code{\"has-tooltip\"} property of type @code{gboolean}
+ "The @code{\"has-tooltip\"} property of type @code{:boolean}
   (Read / Write)@br{}
-  Enables or disables the emission of \"query-tooltip\" on status_icon. A value
-  of @arg{true} indicates that status_icon can have a tooltip, in this case the
-  status icon will be queried using \"query-tooltip\" to determine whether it
-  will provide a tooltip or not.
-  Note that setting this property to @arg{true} for the first time will change
-  the event masks of the windows of this status icon to include leave-notify and
-  motion-notify events. This will not be undone when the property is set to
-  @code{nil} again.
+  Enables or disables the emission of \"query-tooltip\" signals on status icon.
+  A value of @em{true} indicates that status icon can have a tooltip, in this
+  case the status icon will be queried using the \"query-tooltip\" signal to
+  determine whether it will provide a tooltip or not.
+  Note that setting this property to @em{true} for the first time will change
+  the event masks of the windows of this status icon to include \"leave-notify\"
+  and \"motion-notify\" events. This will not be undone when the property is set
+  to @code{nil} again.
   Whether this property is respected is platform dependent. For plain text
-  tooltips, use @code{\"tooltip-text\"} in preference.@br{}
+  tooltips, use the @code{\"tooltip-text\"} property in preference.@br{}
   Default value: @code{nil}@br{}
   Since 2.16")
 
@@ -353,7 +354,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-status-icon) 't)
- "The @code{\"icon-name\"} property of type @code{gchar*} (Read / Write)@br{}
+ "The @code{\"icon-name\"} property of type @code{:string} (Read / Write)@br{}
   The name of the icon from the icon theme.@br{}
   Default value: @code{nil}")
 
@@ -373,7 +374,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixbuf" 'gtk-status-icon) 't)
  "The @code{\"pixbuf\"} property of type @class{gdk-pixbuf} (Read / Write)@br{}
-  A @class{gdk-pixbuf} to display.")
+  A @class{gdk-pixbuf} object to display.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -386,16 +387,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "size" 'gtk-status-icon) 't)
- "The @code{\"size\"} property of type @code{gint} (Read)@br{}
+ "The @code{\"size\"} property of type @code{:int} (Read)@br{}
   The size of the icon.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{0}")
+  Allowed values: >= 0@br{}
+  Default value: 0")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "stock" 'gtk-status-icon) 't)
- "The @code{\"stock\"} property of type @code{gchar*} (Read / Write)@br{}
+ "The @code{\"stock\"} property of type @code{:string} (Read / Write)@br{}
   Stock ID for a stock image to display.@br{}
   Default value: @code{nil}")
 
@@ -413,7 +414,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title" 'gtk-status-icon) 't)
- "The @code{\"title\"} property of type @code{gchar*} @code{Read / Write}@br{}
+ "The @code{\"title\"} property of type @code{:string} @code{Read / Write}@br{}
   The title of this tray icon. This should be a short, human-readable,
   localized string describing the tray icon. It may be used by tools like
   screen readers to render the tray icon.@br{}
@@ -425,14 +426,15 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup"
                                                'gtk-status-icon) 't)
- "The @code{\"tooltip-markup\"} property of type @code{gchar*}
+ "The @code{\"tooltip-markup\"} property of type @code{:string}
   (Read / Write)@br{}
   Sets the text of tooltip to be the given string, which is marked up with the
-  Pango text markup language. Also see @fun{gtk-tooltip-set-markup}.
+  Pango text markup language. Also see the function
+  @fun{gtk-tooltip-set-markup}.
   This is a convenience property which will take care of getting the tooltip
-  shown if the given string is not @code{nil}. @code{\"has-tooltip\"} will
-  automatically be set to @arg{true} and the default handler for the
-  \"query-tooltip\" signal will take care of displaying the tooltip.
+  shown if the given string is not @code{nil}. The @code{\"has-tooltip\"}
+  property will automatically be set to @em{true} and the default handler for
+  the \"query-tooltip\" signal will take care of displaying the tooltip.
   On some platforms, embedded markup will be ignored.@br{}
   Default value: @code{nil}@br{}
   Since 2.16")
@@ -442,30 +444,31 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text"
                                                'gtk-status-icon) 't)
- "The @code{\"tooltip-text\"} property of type @code{gchar*} (Read / Write)@br{}
-  Sets the text of tooltip to be the given string.
-  Also see @fun{gtk-tooltip-set-text}.
+ "The @code{\"tooltip-text\"} property of type @code{:string}
+  (Read / Write)@br{}
+  Sets the text of tooltip to be the given string. Also see the function
+  @fun{gtk-tooltip-set-text}.
   This is a convenience property which will take care of getting the tooltip
-  shown if the given string is not @code{nil}. @code{\"has-tooltip\"} will
-  automatically be set to @arg{true} and the default handler for the
-  \"query-tooltip\" signal will take care of displaying the tooltip.
+  shown if the given string is not @code{nil}. The @code{\"has-tooltip\"}
+  property will automatically be set to @em{true} and the default handler for
+  the \"query-tooltip\" signal will take care of displaying the tooltip.
   Note that some platforms have limitations on the length of tooltips that
-  they allow on status icons, e.g. Windows only shows the first 64
+  they allow on status icons, e. g. Windows only shows the first 64
   characters.@br{}
-  Default value: @code{nil}
+  Default value: @code{nil}@br{}
   Since 2.16")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-status-icon) 't)
- "The @code{\"visible\"} property of type @code{gboolean} (Read / Write)@br{}
+ "The @code{\"visible\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether the status icon is visible.@br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -936,14 +939,15 @@
 
 (defun gtk-status-icon-set-screen (status-icon screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-24}
   @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @argument[screen]{a @class{gdk-screen}}
+  @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
-    Sets the @class{gdk-screen} where @arg{status-icon} is displayed; if the
-    icon is already mapped, it will be unmapped, and then remapped on the new
-    screen.
-  @end{short}@break{}
+    Sets the @class{gdk-screen} object where @arg{status-icon} is displayed; if
+    the icon is already mapped, it will be unmapped, and then remapped on the
+    new screen.
+  @end{short}
+
   Since 2.12"
   (setf (gtk-status-icon-screen status-icon) screen))
 
@@ -957,12 +961,13 @@
 
 (defun gtk-status-icon-get-screen (status-icon)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-3}
+ "@version{2013-4-24}
   @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @return{a @class{gdk-screen}}
+  @return{a @class{gdk-screen} object}
   @begin{short}
-    Returns the @class{gdk-screen} associated with @arg{status_icon}.
-  @end{short}@break{}
+    Returns the @class{gdk-screen} object associated with @arg{status-icon}.
+  @end{short}
+
   Since 2.12"
   (gtk-status-icon-screen status-icon))
 
@@ -976,17 +981,18 @@
 
 (defun gtk-status-icon-set-tooltip-text (status-icon text)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[status_icon]{a GtkStatusIcon}
-  @argument[text]{the contents of the tooltip for status_icon}
+ "@version{2013-4-24}
+  @argument[status-icon]{a @class{gtk-status-icon} object}
+  @argument[text]{the contents of the tooltip for @arg{status-icon}}
   @begin{short}
     Sets text as the contents of the tooltip.
   @end{short}
 
-  This function will take care of setting \"has-tooltip\" to TRUE and of the
-  default handler for the \"query-tooltip\" signal.
+  This function will take care of setting the @code{\"has-tooltip\"} property
+  to @em{true} and of the default handler for the \"query-tooltip\" signal.
 
-  See also the \"tooltip-text\" property and gtk_tooltip_set_text().
+  See also the @code{\"tooltip-text\"} property and the function
+  @fun{gtk-tooltip-set-text}.
 
   Since 2.16"
   (setf (gtk-status-icon-tooltip-text status-icon) text))
@@ -1002,13 +1008,12 @@
 (defun gtk-status-icon-get-tooltip-text (status-icon)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-23}
-  @argument[status_icon]{a GtkStatusIcon}
+  @argument[status_icon]{a @class{gtk-status-icon} object}
   @begin{return}
-    The tooltip text, or NULL. You should free the returned string with
-    g_free() when done.
+    The tooltip text, or @code{nil}.
   @end{return}
   @begin{short}
-    Gets the contents of the tooltip for status_icon.
+    Gets the contents of the tooltip for @arg{status-icon}.
   @end{short}
 
   Since 2.16"
@@ -1153,9 +1158,9 @@
 
 (defun gtk-status-icon-set-visible (status-icon visible)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[status_icon]{a GtkStatusIcon}
-  @argument[visible]{TRUE to show the status icon, FALSE to hide it}
+ "@version{2013-4-24}
+  @argument[status-icon]{a @class{gtk-status-icon} object}
+  @argument[visible]{@em{true} to show the status icon, @code{nil} to hide it}
   @begin{short}
     Shows or hides a status icon.
   @end{short}
@@ -1173,13 +1178,13 @@
 
 (defun gtk-status-icon-get-visible (status-icon)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[status_icon]{a GtkStatusIcon}
-  @return{TRUE if the status icon is visible}
+ "@version{2013-4-24}
+  @argument[status_icon]{a @class{gtk-status-icon} object}
+  @return{@em{true} if the status icon is visible}
   @begin{short}
     Returns whether the status icon is visible or not. Note that being visible
-    does not guarantee that the user can actually see the icon, see also
-    gtk_status_icon_is_embedded().
+    does not guarantee that the user can actually see the icon, see also the
+    function @fun{gtk-status-icon-is-embedded}.
   @end{short}
 
   Since 2.10"

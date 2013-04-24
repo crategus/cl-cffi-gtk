@@ -291,7 +291,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-settings 'type)
- "@version{2013-3-12}
+ "@version{2013-4-22}
   @begin{short}
     @sym{gtk-settings} provide a mechanism to share global settings between
     applications.
@@ -306,7 +306,7 @@
   Themes can also provide default values for settings by installing a
   @code{settings.ini} file next to their @code{gtk.css} file.
 
-  Applications can override system-wide settings with
+  Applications can override system-wide settings with the functions
   @fun{gtk-settings-set-string-property}, @fun{gtk-settings-set-long-property},
   etc. This should be restricted to special cases though; @sym{gtk-settings} are
   not meant as an application configuration facility. When doing so, you need to
@@ -411,7 +411,7 @@
 (setf (documentation (atdoc:get-slot-from-name "color-hash" 'gtk-settings) 't)
  "The @code{\"color-hash\"} property of type @code{GHashTable} (Read)@br{}
   Holds a hash table representation of the @code{\"gtk-color-scheme\"} setting,
-  mapping color names to @class{gdk-color}'s.@br{}
+  mapping color names to @class{gdk-color} structures.@br{}
   Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
@@ -550,7 +550,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-cursor-blink"
                                                'gtk-settings) 't)
- "The @code{\"gtk-cursor-blink\"} property of type @code{gboolean}
+ "The @code{\"gtk-cursor-blink\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether the cursor should blink.
   Also see the @code{\"gtk-cursor-blink-timeout\"} setting, which allows more
@@ -761,7 +761,7 @@
   @fun{gdk-window-beep}, the windowing system may offer ways to configure the
   error bell in many ways, such as flashing the window or similar visual
   effects.@br{}
-  Default value: @em{true}
+  Default value: @em{true}@br{}
   Since 2.12")
 
 ;;; ----------------------------------------------------------------------------
@@ -817,10 +817,9 @@
  size-name = width , height
   @end{pre}
   E. g. @code{\"gtk-menu=16,16:gtk-button=20,20:gtk-dialog=48,48\"}. GTK+ itself
-  use the following named icon sizes: @code{gtk-menu}, @code{gtk-button},
-  @code{gtk-small-toolbar}, @code{gtk-large-toolbar}, @code{gtk-dnd},
-  @code{gtk-dialog}. Applications can register their own named icon sizes with
-  @fun{gtk-icon-size-register}.@br{}
+  use the following named icon sizes: gtk-menu, gtk-button, gtk-small-toolbar,
+  gtk-large-toolbar, gtk-dnd, gtk-dialog. Applications can register their own
+  named icon sizes with the function @fun{gtk-icon-size-register}.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -845,8 +844,8 @@
   method from the IM context menu. This also can be a colon-separated list of
   input methods, which GTK+ will try in turn until it finds one available on
   the system.
-  See @class{gtk-im-context} and see the @code{\"gtk-show-input-method-menu\"}
-  property.@br{}
+  See the @class{gtk-im-context} class and the
+  @code{\"gtk-show-input-method-menu\"} property.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -975,7 +974,7 @@
 (setf (documentation (atdoc:get-slot-from-name "gtk-modules"
                                                'gtk-settings) 't)
  "The @code{\"gtk-modules\"} property of type @code{:string} (Read / Write)@br{}
-  List of currently active GTK modules.@br{}
+  List of currently active GTK+ modules.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1030,8 +1029,8 @@
   (Read / Write)@br{}
   The number of recently used files that should be displayed by default by
   @class{gtk-recent-chooser} implementations and by the
-  @class{gtk-file-chooser}. A value of -1 means every recently used file
-  stored.@br{}
+  @class{gtk-file-chooser} interface. A value of -1 means every recently used
+  file stored.@br{}
   Allowed values: >= @code{G_MAXULONG}@br{}
   Default value: 50@br{}
   Since 2.12")
@@ -1082,7 +1081,7 @@
  "The @code{\"gtk-shell-shows-menubar\"} property of type @code{:boolean} 
   (Read / Write)@br{}
   Set to @em{true} if the desktop environment is displaying the menubar,
-  @code{false} if the app should display it itself.@br{}
+  @code{nil} if the app should display it itself.@br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1205,8 +1204,8 @@
   (Read / Write)@br{}
   Amount of time, in milliseconds, after which the browse mode will be
   disabled.
-  See @code{\"gtk-tooltip-browse-timeout\"} for more information about browse
-  mode.@br{}
+  See the @code{\"gtk-tooltip-browse-timeout\"} setting for more information
+  about browse mode.@br{}
   Allowed values: >= 0@br{}
   Default value: 500@br{}
   Since 2.12")
@@ -1222,9 +1221,9 @@
   enabled, in milliseconds.
   Browse mode is enabled when the mouse pointer moves off an object where a
   tooltip was currently being displayed. If the mouse pointer hits another
-  object before the browse mode timeout expires (see
-  @code{\"gtk-tooltip-browse-mode-timeout\"}), it will take the amount of
-  milliseconds specified by this setting to popup the tooltip for the new
+  object before the browse mode timeout expires (see the
+  @code{\"gtk-tooltip-browse-mode-timeout\"} setting), it will take the amount
+  of milliseconds specified by this setting to popup the tooltip for the new
   object.@br{}
   Allowed values: >= 0@br{}
   Default value: 60@br{}
@@ -1250,12 +1249,13 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-touchscreen-mode\"} property of type @code{:boolean}
   (Read / Write)@br{}
-  @b{Warning:} @code{\"gtk-touchscreen-mode\"} is deprecated since GTk+ 3.4 and
+  @b{Warning:} @code{\"gtk-touchscreen-mode\"} is deprecated since GTK+ 3.4 and
   should not be used in newly-written code. Generally the behavior touchscreen
   input should be performed dynamically based on the function
-  @fun{gdk-event-get-source-device}. When @em{true}, there are no motion notify
-  events delivered on this screen, and widgets can't use the pointer hovering
-  them for any essential functionality.@br{}
+  @fun{gdk-event-get-source-device}. @br{}
+  When @em{true}, there are no motion notify events delivered on this screen,
+  and widgets cannot use the pointer hovering them for any essential
+  functionality.@br{}
   Default value: @code{nil}@br{}
   Since 2.10")
 
@@ -1266,7 +1266,7 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-visible-focus\"} property of type @symbol{gtk-policy-type}
   (Read / Write)@br{}
-  Whether 'focus rectangles' should be always visible, never visible, or
+  Whether focus rectangles should be always visible, never visible, or
   hidden until the user starts to use the keyboard.@br{}
   Default value: @code{:always}@br{}
   Since 3.2")
@@ -1278,8 +1278,7 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-xft-antialias\"} property of type @code{:int}
   (Read / Write)@br{}
-  Whether to antialias Xft fonts:
-  @code{0=no}, @code{1=yes}, @code{-1=default}.@br{}
+  Whether to antialias Xft fonts: 0 = no, 1 = yes, -1 = default.@br{}
   Allowed values: [@code{G_MAXULONG},1]@br{}
   Default value: -1")
 
@@ -1287,9 +1286,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-dpi" 'gtk-settings) 't)
- "The @code{\"gtk-xft-dpi\"} property of type @code{gint} (Read / Write)@br{}
-  Resolution for Xft, in @code{1024 * dots/inch}. -1 to use default
-  value.@br{}
+ "The @code{\"gtk-xft-dpi\"} property of type @code{:int} (Read / Write)@br{}
+  Resolution for Xft, in 1024 * dots/inch. -1 to use default value.@br{}
   Allowed values: [@code{G_MAXULONG},1048576]@br{}
   Default value: -1")
 
@@ -1298,9 +1296,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-xft-hinting"
                                                'gtk-settings) 't)
- "The @code{\"gtk-xft-hinting\"} property of type @code{gint}
+ "The @code{\"gtk-xft-hinting\"} property of type @code{:int}
   (Read / Write)@br{}
-  Whether to hint Xft fonts: @code{0=no}, @code{1=yes}, @code{-1=default}.@br{}
+  Whether to hint Xft fonts: 0 = no, 1 = yes, -1 = default.@br{}
   Allowed values: [@code{G_MAXULONG},1]@br{}
   Default value: -1")
 
@@ -2114,13 +2112,14 @@
 (defcfun ("gtk_settings_get_default" gtk-settings-get-default)
     (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-13}
+ "@version{2013-4-22}
   @begin{return}
     A @class{gtk-settings} object. If there is no default screen, then returns
     @code{nil}.
   @end{return}
   Gets the @class{gtk-settings} object for the default GDK screen, creating it
-  if necessary. See @fun{gtk-settings-get-for-screen}.")
+  if necessary. See the function @fun{gtk-settings-get-for-screen}.
+  @see-function{gtk-settings-get-for-screen}")
 
 (export 'gtk-settings-get-default)
 
@@ -2131,8 +2130,8 @@
 (defcfun ("gtk_settings_get_for_screen" gtk-settings-get-for-screen)
     (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-13}
-  @argument[screen]{a @class{gdk-screen}}
+ "@version{2013-4-22}
+  @argument[screen]{a @class{gdk-screen} object}
   @return{A @class{gtk-settings} object.}
   @begin{short}
     Gets the @class{gtk-settings} object for @arg{screen}, creating it if

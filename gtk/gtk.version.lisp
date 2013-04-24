@@ -206,12 +206,10 @@
 
 (defconstant +gtk-major-version+ 3
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @begin{short}
-    Like @fun{gtk-get-major-version}, but from the Lisp sources used at
-    application compile time, rather than from the library loaded at application
-    run time.
-  @end{short}")
+ "@version{2013-4-22}
+  Like the function @fun{gtk-get-major-version}, but from the Lisp sources used
+  at application compile time, rather than from the library loaded at
+  application run time.")
 
 (export '+gtk-major-version+)
 
@@ -221,12 +219,10 @@
 
 (defconstant +gtk-minor-version+ 6
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @begin{short}
-    Like @fun{gtk-get-minor-version}, but from the Lisp sources used at
-    application compile time, rather than from the library loaded at application
-    run time.
-  @end{short}")
+ "@version{2013-4-22}
+  Like the function @fun{gtk-get-minor-version}, but from the Lisp sources used
+  at application compile time, rather than from the library loaded at
+  application run time.")
 
 (export '+gtk-minor-version+)
 
@@ -236,12 +232,10 @@
 
 (defconstant +gtk-micro-version+ 4
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @begin{short}
-    Like @fun{gtk-get-micro-version}, but from the Lisp sources used at
-    application compile time, rather than from the library loaded at application
-    run time.
-  @end{short}")
+ "@version{2013-4-22}
+  Like the function @fun{gtk-get-micro-version}, but from the Lisp sources used
+  at application compile time, rather than from the library loaded at
+  application run time.")
 
 (export '+gtk-micro-version+)
 
@@ -251,12 +245,10 @@
 
 (defconstant +gtk-binary-age+ 604
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @begin{short}
-    Like @fun{gtk-get-binary-age}, but from the Lisp sources used at
-    application compile time, rather than from the library loaded at application
-    run time.
-  @end{short}")
+ "@version{2013-4-22}
+  Like the function @fun{gtk-get-binary-age}, but from the Lisp sources used at
+  application compile time, rather than from the library loaded at application
+  run time.")
 
 (export '+gtk-binary-age+)
 
@@ -266,12 +258,10 @@
 
 (defconstant +gtk-interface-age+ 4
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @begin{short}
-    Like @fun{gtk-get-interface-age}, but from the Lisp sources used at
-    application compile time, rather than from the library loaded at application
-    run time.
-  @end{short}")
+ "@version{2013-4-22}
+  Like the function @fun{gtk-get-interface-age}, but from the Lisp sources used
+  at application compile time, rather than from the library loaded at
+  application run time.")
 
 (export '+gtk-interface-age+)
 
