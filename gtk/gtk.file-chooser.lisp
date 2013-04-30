@@ -1350,26 +1350,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_filename ()
-;;;
-;;; gchar * gtk_file_chooser_get_filename (GtkFileChooser *chooser);
-;;;
-;;; Gets the filename for the currently selected file in the file selector. If
-;;; multiple files are selected, one of the filenames will be returned at
-;;; random.
-;;;
-;;; If the file chooser is in folder mode, this function returns the selected
-;;; folder.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     The currently selected filename, or NULL if no file is selected, or the
-;;;     selected file can't be represented with a local filename. Free with
-;;;     g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_filename" gtk-file-chooser-get-filename)
+    (:string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-30}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    The currently selected filename, or @code{nil} if no file is selected, or
+    the selected file cannot be represented with a local filename.
+  @end{return}
+  @begin{short}
+    Gets the filename for the currently selected file in the file selector. If
+    multiple files are selected, one of the filenames will be returned at
+    random.
+  @end{short}
+
+  If the file chooser is in folder mode, this function returns the selected
+  folder.
+
+  Since 2.4"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_filename ()
