@@ -1,8 +1,9 @@
-cl-cffi-gtk is a Lisp binding to the GTK+ (GIMP Toolkit) which is a library
+cl-cffi-gtk is a Lisp binding to GTK+ 3 (GIMP Toolkit) which is a library
 for creating graphical user interfaces.
 
-It is licensed using the LGPL which has been adopted with a preamble that
-clarifies the terms for use with Lisp programs and is referred as the LLGPL.
+cl-cffi-gtk is licensed using the LGPL which has been adopted with a preamble
+that clarifies the terms for use with Lisp programs and is referred as the
+LLGPL.
 
 This work is based on the cl-gtk2 library which has been developed by
 Kalyanov Dmitry and already is a fairly complete Lisp binding to GTK+.
@@ -10,13 +11,16 @@ Kalyanov Dmitry and already is a fairly complete Lisp binding to GTK+.
 The focus of this work is to document the library more complete and to
 do the implementation as consistent as possible. Most informations about GTK+
 can be gained by reading the C documentation. Therefore, the C documentation
-from www.gtk.org is included into the Lisp files to document the Lisp binding
-to the GTK+ library.
+from http://www.gtk.org is included into the Lisp files to document the Lisp
+binding to the GTK+ library. This documentation is also available online at
+http://www.crategus.com/books/cl-cffi-gtk/
 
-At this time, the library is developed and tested with SBCL 1.0.56 and
-GTK+ 3.4.1 on a Linux system. Furthermore, the following libraries GLIB 2.32.1,
-Pango 1.30.0, and Cairo 1.10.2 are loaded.
+At this time, the library is developed and tested with SBCL 1.0.57 and
+GTK+ 3.6.0 on a Linux system. Furthermore, the following libraries GLIB 2.34.1,
+Pango 1.30.1, and Cairo 1.12.2 are loaded.
 
-Examples of the usage are included in demos and tutorial examples. Start with
-the tutorial to learn how to use the library.
+Examples of the usage are included in a gtk-demo and tutorial examples. Start
+with the tutorial available online at
+http://www.crategus.com/books/cl-gtk/gtk-tutorial.html to learn how to use the
+library.
 
