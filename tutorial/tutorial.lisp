@@ -2302,7 +2302,7 @@
                                                       "gtk-cancel" :cancel)))
              (when (eq (gtk-dialog-run dialog) :accept)
                (format t "Saved to file ~A~%"
-                       (gtk-file-chooser-filename dialog)))
+                       (gtk-file-chooser-get-filename dialog)))
              (gtk-widget-destroy dialog))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
@@ -2364,7 +2364,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "File set: ~A~%"
-                                  (gtk-file-chooser-filename button))))
+                                  (gtk-file-chooser-get-filename button))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 
