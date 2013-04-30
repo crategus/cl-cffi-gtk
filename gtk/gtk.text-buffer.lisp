@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -149,7 +149,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-buffer 'type)
- "@version{2013-3-23}
+ "@version{2013-4-29}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
@@ -161,7 +161,7 @@
  lambda (textbuffer tag start end)   : Run Last
       @end{pre}
       The \"apply-tag\" signal is emitted to apply a tag to a range of text in a
-      @syml{gtk-text-buffer}. Applying actually occurs in the default
+      @sym{gtk-text-buffer} object. Applying actually occurs in the default
       handler.
       Note that if your handler runs before the default handler it must not
       invalidate the start and end iters (or has to revalidate them).
@@ -424,7 +424,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -1972,8 +1972,6 @@
   (:buffer-contents -1)
   (:rich-text -2)
   (:text -3))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-target-info atdoc:*symbol-name-alias*) "Enum"

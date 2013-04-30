@@ -2,7 +2,7 @@
 ;;; gtk.switch.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -48,8 +48,11 @@
 ;;; 
 ;;; GtkSwitch implements AtkImplementorIface, GtkBuildable, GtkActionable and
 ;;; GtkActivatable.
-;;; 
-;;; 
+;;;
+;;; Properties
+;;;
+;;;   "active"                   gboolean              : Read / Write
+;;;
 ;;; Style Properties
 ;;; 
 ;;;   "slider-width"             gint                  : Read
@@ -57,43 +60,7 @@
 ;;; Signals
 ;;; 
 ;;;   "activate"                                       : Action
-;;; 
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "slider-width" style property
-;;; 
-;;;   "slider-width"             gint                  : Read
-;;; 
-;;; The minimum width of the GtkSwitch handle, in pixels.
-;;; 
-;;; Allowed values: >= 36
-;;; 
-;;; Default value: 36
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "activate" signal
-;;; 
-;;; void user_function (GtkSwitch *widget,
-;;;                     gpointer   user_data)      : Action
-;;; 
-;;; The ::activate signal on GtkSwitch is an action signal and emitting it
-;;; causes the switch to animate. Applications should never connect to this
-;;; signal, but use the notify::active signal.
-;;; 
-;;; widget :
-;;;     the object which received the signal.
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
+;;; ---------------------------------------------------------------------------- 
 
 (in-package :gtk)
 
@@ -117,12 +84,31 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-switch 'type)
- "@version{2013-3-23}
+ "@version{2013-4-27}
   @begin{short}
-    GtkSwitch is a widget that has two states: on or off. The user can control
-    which state should be active by clicking the empty area, or by dragging the
-    handle.
+    @sym{gtk-switch} is a widget that has two states: on or off. The user can
+    control which state should be active by clicking the empty area, or by
+    dragging the handle.
   @end{short}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"slider-width\" style property}
+      @code{\"slider-width\"} of type @code{:int} (Read)@br{}
+      The minimum width of the @sym{gtk-switch} handle, in pixels. @br{}
+      Allowed values: >= 36 @br{}
+      Default value: 36
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"activate\" signal}
+      @begin{pre}
+ lambda (widget)   : Action
+      @end{pre}
+      The \"activate\" signal on @sym{gtk-switch} is an action signal and
+      emitting it causes the switch to animate. Applications should never
+      connect to this signal, but use the \"notify::active\" signal.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+      @end{table}
+  @end{dictionary}
   @see-slot{gtk-switch-active}")
 
 ;;; ----------------------------------------------------------------------------
@@ -134,12 +120,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-switch) 't)
  "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether the GtkSwitch widget is in its on or off state. @br{}
+  Whether the @sym{gtk-switch} widget is in its on or off state. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -147,7 +133,7 @@
 (setf (gethash 'gtk-switch-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-switch-active 'function)
- "@version{2013-3-23}
+ "@version{2013-4-27}
   Accessor of the slot @code{\"active\"} of the @class{gtk-switch} class.")
 
 ;;; ----------------------------------------------------------------------------
@@ -158,9 +144,9 @@
 
 (defun gtk-switch-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @return{the newly created GtkSwitch instance}
-  @short{Creates a new GtkSwitch widget.}
+ "@version{2013-4-27}
+  @return{The newly created @class{gtk-switch} widget.}
+  @short{Creates a new @class{gtk-switch} widget.}
 
   Since 3.0"
   (make-instance 'gtk-switch))
@@ -175,7 +161,7 @@
 
 (defun gtk-switch-set-active (switch is-active)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
+ "@version{2013-4-27}
   @argument[switch]{a @class{gtk-switch} widget}
   @argument[is-active]{@em{true} if @arg{switch} should be active,
     and @code{nil} otherwise}
@@ -195,7 +181,7 @@
 (declaim (inline gtk-switch-get-active))
 
 (defun gtk-switch-get-active (switch)
- "@version{2013-3-25}
+ "@version{2013-4-27}
   @argument[switch]{a @class{gtk-switch} widget}
   @begin{return}
     @em{True} if the @class{gtk-switch} is active, and @code{nil} otherwise.

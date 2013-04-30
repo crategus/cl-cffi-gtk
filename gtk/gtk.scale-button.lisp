@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -159,7 +159,7 @@
 (setf (documentation (atdoc:get-slot-from-name "icons" 'gtk-scale-button) 't)
  "The @code{\"icons\"} property of type @type{g-strv} (Read / Write)@br{}
   The names of the icons to be used by the scale button. The first item in
-  the array will be used in the button when the current value is the lowest
+  the list will be used in the button when the current value is the lowest
   value, the second item for the highest value. All the subsequent icons will
   be used for all the other values, spread evenly over the range of values.
   If there is only one icon name in the icons array, it will be used for all
@@ -246,7 +246,7 @@
   @argument[step]{the stepping of value when a scroll-wheel event, or up/down
     arrow event occurs (usually 2)}
   @argument[icons]{a list of icon names, or @code{nil} if you want to set the
-    list later with @fun{gtk-scale-button-set-icons}}
+    list later with the function @fun{gtk-scale-button-set-icons}}
   @return{A new @class{gtk-scale-button} widget.}
   @begin{short}
     Creates a @class{gtk-scale-button} widget, with a range between @arg{min}
@@ -279,7 +279,7 @@
   @begin{short}
     Sets the @class{gtk-adjustment} object to be used as a model for the
     @class{gtk-scale-button}'s scale.
-    See @fun{gtk-range-set-adjustment} for details.
+    See the function @fun{gtk-range-set-adjustment} for details.
   @end{short}
 
   Since 2.12
@@ -345,7 +345,7 @@
   @begin{short}
     Gets the @class{gtk-adjustment} object associated with the
     @class{gtk-scale-button}'s scale.
-    See @fun{gtk-range-get-adjustment} for details.
+    See the function @fun{gtk-range-get-adjustment} for details.
   @end{short}
 
   Since 2.12

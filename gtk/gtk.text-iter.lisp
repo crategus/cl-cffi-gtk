@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -206,6 +206,21 @@
 (define-g-boxed-opaque gtk-text-iter "GtkTextIter"
   :alloc (gtk-text-iter-alloc))
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-iter atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-text-iter 'type)
+ "@version{2013-4-28}
+  Most text manipulation is accomplished with iterators, represented by a
+  @sym{gtk-text-iter}. An iterator represents a position between two
+  characters in the text buffer. @sym{gtk-text-iter} is a structure
+  designed to be allocated on the stack; it is guaranteed to be copiable
+  by value and never contain any heap-allocated data. Iterators are not
+  valid indefinitely; whenever the buffer is modified in a way that affects
+  the number of characters in the buffer, all outstanding iterators become
+  invalid. (Note that deleting 5 characters and then reinserting 5 still
+  invalidates iterators, though you end up with the same number of
+  characters you pass through a state with a different number).")
+
 (export (boxed-related-symbols 'gtk-text-iter))
 
 ;;; ----------------------------------------------------------------------------
@@ -242,10 +257,10 @@
 
 (defun gtk-text-iter-get-buffer (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{the buffer}
-  Returns the GtkTextBuffer this iterator is associated with."
+  @return{The buffer.}
+  Returns the @class{gtk-text-buffer} this iterator is associated with."
   (gtk-text-iter-buffer iter))
 
 (export 'gtk-text-iter-get-buffer)
@@ -260,12 +275,11 @@
 (defcfun ("gtk_text_iter_copy" gtk-text-iter-copy)
     (g-boxed-foreign gtk-text-iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{A copy of the iter, free with gtk_text_iter_free().}
-  Creates a dynamically-allocated copy of an iterator. This function is not
-  useful in applications, because iterators can be copied with a simple
-  assignment (GtkTextIter i = j;). The function is used by language bindings."
+  @return{A copy of the @arg{iter}.}
+  Creates a dynamically-allocated copy of an iterator. The function is used by
+  language bindings."
   (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-copy)
@@ -310,15 +324,19 @@
   :writer "gtk_text_iter_set_offset"
   :type :int)
 
+(declaim (inline gtk-text-iter-get-offset))
+
 (defun gtk-text-iter-get-offset (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{a character offset}
+  @return{A character offset.}
   Returns the character offset of an iterator. Each character in a
-  GtkTextBuffer has an offset, starting with 0 for the first character in the
-  buffer. Use gtk_text_buffer_get_iter_at_offset() to convert an offset back
-  into an iterator."
+  @class{gtk-text-buffer} object has an offset, starting with 0 for the first
+  character in the buffer. Use the function
+  @fun{gtk-text-buffer-get-iter-at-offset} to convert an offset back into an
+  iterator.
+  @see-function{gtk-text-buffer-get-iter-at-offset}"
   (gtk-text-iter-offset iter))
 
 (export 'gtk-text-iter-get-offset)
@@ -336,11 +354,12 @@
 
 (defun gtk-text-iter-get-line (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{a line number}
-  Returns the line number containing the iterator. Lines in a GtkTextBuffer
-  are numbered beginning with 0 for the first line in the buffer."
+  @return{A line number.}
+  Returns the line number containing the iterator. Lines in a
+  @class{gtk-text-buffer} object are numbered beginning with 0 for the first
+  line in the buffer."
   (gtk-text-iter-line iter))
 
 (export 'gtk-text-iter-get-line)
@@ -358,9 +377,9 @@
 
 (defun gtk-text-iter-get-line-offset (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{offset from start of line}
+  @return{Offset from start of line.}
   Returns the character offset of the iterator, counting from the start of a
   newline-terminated line. The first character on the line has offset 0."
   (gtk-text-iter-line-offset iter))
@@ -412,9 +431,9 @@
 
 (defun gtk-text-iter-get-visible-line-offset (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{offset in visible characters from the start of the line}
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} structure}
+  @return{Offset in visible characters from the start of the line.}
   Returns the offset in characters from the start of the line to the given
   iter, not counting characters that are invisible due to tags with the
   \"invisible\" flag toggled on."
@@ -434,9 +453,9 @@
 
 (defun gtk-text-iter-get-char (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{A Unicode character, or 0 if iter is not dereferenceable.}
+  @return{A Unicode character, or 0 if @arg{iter} is not dereferenceable.}
   returns 0."
   (gtk-text-iter-char iter))
 
@@ -449,17 +468,17 @@
 (defcfun ("gtk_text_iter_get_slice" gtk-text-iter-get-slice)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[start]{iterator at start of a range}
   @argument[end]{iterator at end of a range}
-  @return{slice of text from the buffer}
+  @return{Slice of text from the buffer.}
   Returns the text in the given range. A \"slice\" is an array of characters
-  encoded in UTF-8 format, including the Unicode \"unknown\" character 0xFFFC
-  for iterable non-character elements in the buffer, such as images. Because
-  images are encoded in the slice, byte and character offsets in the returned
-  array will correspond to byte offsets in the text buffer. Note that 0xFFFC
-  can occur in normal text as well, so it is not a reliable indicator that a
-  pixbuf or widget is in the buffer."
+  encoded in UTF-8 format, including the Unicode \"unknown\" character
+  @code{0xFFFC} for iterable non-character elements in the buffer, such as
+  images. Because images are encoded in the slice, byte and character offsets
+  in the returned array will correspond to byte offsets in the text buffer. Note
+  that @code{0xFFFC} can occur in normal text as well, so it is not a reliable
+  indicator that a pixbuf or widget is in the buffer."
   (start (g-boxed-foreign gtk-text-iter))
   (end (g-boxed-foreign gtk-text-iter)))
 
@@ -472,14 +491,15 @@
 (defcfun ("gtk_text_iter_get_text" gtk-text-iter-get-text)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[start]{iterator at start of a range}
   @argument[end]{iterator at end of a range}
-  @return{array of characters from the buffer}
+  @return{Array of characters from the buffer.}
   Returns text in the given range. If the range contains non-text elements
   such as images, the character and byte offsets in the returned string will
   not correspond to character and byte offsets in the buffer. If you want
-  offsets to correspond, see gtk_text_iter_get_slice()."
+  offsets to correspond, see the function @fun{gtk-text-iter-get-slice}.
+  @see-function{gtk-text-iter-get-slice}"
   (start (g-boxed-foreign gtk-text-iter))
   (end (g-boxed-foreign gtk-text-iter)))
 
@@ -492,13 +512,14 @@
 (defcfun ("gtk_text_iter_get_visible_slice" gtk-text-iter-get-visible-slice)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[start]{iterator at start of range}
   @argument[end]{iterator at end of range}
-  @return{slice of text from the buffer}
-  Like gtk_text_iter_get_slice(), but invisible text is not included.
-  Invisible text is usually invisible because a GtkTextTag with the
-  \"invisible\" attribute turned on has been applied to it."
+  @return{Slice of text from the buffer.}
+  Like the function @fun{gtk-text-iter-get-slice}, but invisible text is not
+  included. Invisible text is usually invisible because a @class{gtk-text-tag}
+  object with the \"invisible\" attribute turned on has been applied to it.
+  @see-function{gtk-text-iter-get-slice}"
   (start (g-boxed-foreign gtk-text-iter))
   (end (g-boxed-foreign gtk-text-iter)))
 
@@ -511,13 +532,14 @@
 (defcfun ("gtk_text_iter_get_visible_text" gtk-text-iter-get-visible-text)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[start]{iterator at start of range}
   @argument[end]{iterator at end of range}
-  @return{string containing visible text in the range}
-  Like gtk_text_iter_get_text(), but invisible text is not included. Invisible
-  text is usually invisible because a GtkTextTag with the \"invisible\"
-  attribute turned on has been applied to it."
+  @return{String containing visible text in the range.}
+  Like the function @fun{gtk-text-iter-get-text}, but invisible text is not
+  included. Invisible text is usually invisible because a @class{gtk-text-tag}
+  object with the \"invisible\" attribute turned on has been applied to it.
+  @see-function{gtk-text-iter-get-text}"
   (start (g-boxed-foreign gtk-text-iter))
   (end (g-boxed-foreign gtk-text-iter)))
 
@@ -535,11 +557,11 @@
 
 (defun gtk-text-iter-get-pixbuf (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{The pixbuf at iter.}
-  If the element at iter is a pixbuf, the pixbuf is returned (with no new
-  reference count added). Otherwise, NULL is returned."
+  @return{The pixbuf at @arg{iter}.}
+  If the element at @arg{iter} is a pixbuf, the pixbuf is returned (with no new
+  reference count added). Otherwise, @code{nil} is returned."
   (gtk-text-iter-pixbuf iter))
 
 (export 'gtk-text-iter-get-pixbuf)
@@ -556,13 +578,13 @@
 
 (defun gtk-text-iter-get-marks (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{list of GtkTextMark}
-  Returns a list of all GtkTextMark at this location. Because marks are not
-  iterable (they don't take up any \"space\" in the buffer, they are just marks
-  in between iterable locations), multiple marks can exist in the same place.
-  The returned list is not in any meaningful order."
+  @return{List of @class{gtk-text-mark} objects.}
+  Returns a list of all @class{gtk-text-mark} objects at this location. Because
+  marks are not iterable (they do not take up any \"space\" in the buffer, they
+  are just marks in between iterable locations), multiple marks can exist in the
+  same place. The returned list is not in any meaningful order."
   (gtk-text-iter-marks iter))
 
 (export 'gtk-text-iter-get-marks)
@@ -574,15 +596,16 @@
 (defcfun ("gtk_text_iter_get_toggled_tags" gtk-text-iter-get-toggled-tags)
     (g-slist (g-object gtk-text-tag))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @argument[toggled_on]{TRUE to get toggled-on tags}
+  @argument[toggled-on]{@em{true} to get toggled-on tags}
   @return{Tags toggled at this point.}
-  Returns a list of GtkTextTag that are toggled on or off at this point. (If
-  toggled_on is TRUE, the list contains tags that are toggled on.) If a tag is
-  toggled on at iter, then some non-empty range of characters following iter
-  has that tag applied to it. If a tag is toggled off, then some non-empty
-  range following iter does not have the tag applied to it."
+  Returns a list of @class{gtk-text-tag} objects that are toggled on or off at
+  this point. (If @arg{toggled-on} is @em{true}, the list contains tags that are
+  toggled on.) If a tag is toggled on at @arg{iter}, then some non-empty range
+  of characters following @arg{iter} has that tag applied to it. If a tag is
+  toggled off, then some non-empty range following @arg{iter} does not have the
+  tag applied to it."
   (iter (g-boxed-foreign gtk-text-iter))
   (toggled-on :boolean))
 
@@ -600,11 +623,11 @@
 
 (defun gtk-text-iter-get-child-anchor (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @reurn{The anchor at iter.}
-  If the location at iter contains a child anchor, the anchor is returned
-  (with no new reference count added). Otherwise, NULL is returned."
+  @reurn{The anchor at @arg{iter}.}
+  If the location at @arg{iter} contains a child anchor, the anchor is returned
+  (with no new reference count added). Otherwise, @code{nil} is returned."
   (gtk-text-iter-child-anchor iter))
 
 (export 'gtk-text-iter-get-child-anchor)
@@ -615,15 +638,17 @@
 
 (defcfun ("gtk_text_iter_begins_tag" gtk-text-iter-begins-tag) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @argument[tag]{a GtkTextTag, or NULL}
-  @return{Whether iter is the start of a range tagged with tag.}
-  Returns TRUE if tag is toggled on at exactly this point. If tag is NULL,
-  returns TRUE if any tag is toggled on at this point. Note that the
-  gtk_text_iter_begins_tag() returns TRUE if iter is the start of the tagged
-  range; gtk_text_iter_has_tag() tells you whether an iterator is within a
-  tagged range."
+  @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
+  @return{Whether @arg{iter} is the start of a range tagged with @arg{tag}.}
+  Returns @em{true} if @arg{tag} is toggled on at exactly this point. If
+  @arg{tag} is @code{nil}, returns @em{true} if any tag is toggled on at
+  this point. Note that the function @sym{gtk-text-iter-begins-tag} returns
+  @em{true} if @arg{iter} is the start of the tagged range; the function
+  @fun{gtk-text-iter-has-tag} tells you whether an iterator is within a
+  tagged range.
+  @see-function{gtk-text-iter-has-tag}"
   (iter (g-boxed-foreign gtk-text-iter))
   (tag (g-object gtk-text-tag)))
 
@@ -635,15 +660,17 @@
 
 (defcfun ("gtk_text_iter_ends_tag" gtk-text-iter-ends-tag) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @argument[tag]{a GtkTextTag, or NULL}
-  @return{Whether iter is the end of a range tagged with tag.}
-  Returns TRUE if tag is toggled off at exactly this point. If tag is NULL,
-  returns TRUE if any tag is toggled off at this point. Note that the
-  gtk_text_iter_ends_tag() returns TRUE if iter is the end of the tagged
-  range; gtk_text_iter_has_tag() tells you whether an iterator is within a
-  tagged range."
+  @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
+  @return{Whether @arg{iter} is the end of a range tagged with @arg{tag}.}
+  Returns @em{true} if @arg{tag} is toggled off at exactly this point. If
+  @arg{tag} is @code{nil}, returns @em{true} if any tag is toggled off at
+  this point. Note that the function @sym{gtk-text-iter-ends-tag} returns
+  @em{true} if @arg{iter} is the end of the tagged range; the function
+  @fun{gtk-text-iter-has-tag} tells you whether an iterator is within a tagged
+  range.
+  @see-function{gtk-text-iter-has-tag}"
   (iter (g-boxed-foreign gtk-text-iter))
   (tag (g-object gtk-text-tag)))
 
@@ -655,13 +682,13 @@
 
 (defcfun ("gtk_text_iter_toggles_tag" gtk-text-iter-toggles-tag) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
-  @argument[tag]{a GtkTextTag, or NULL}
-  @return{Whether tag is toggled on or off at iter.}
-  This is equivalent to (gtk_text_iter_begins_tag() ||
-  gtk_text_iter_ends_tag()), i.e. it tells you whether a range with tag
-  applied to it begins or ends at iter."
+  @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
+  @return{Whether @arg{tag} is toggled on or off at @arg{iter}.}
+  This is equivalent to @code{(or (gtk-text-iter-begins-tag)
+  (gtk-text-iter-ends-tag))}, i. e. it tells you whether a range with @arg{tag}
+  applied to it begins or ends at @arg{iter}."
   (iter (g-boxed-foreign gtk-text-iter))
   (tag (g-object gtk-text-tag)))
 
@@ -673,11 +700,11 @@
 
 (defcfun ("gtk_text_iter_has_tag" gtk-text-iter-has-tag) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @argument[tag]{a GtkTextTag}
-  @return{Whether iter is tagged with tag.}
-  Returns TRUE if iter is within a range tagged with tag."
+  @argument[tag]{a @class{gtk-text-tag} object}
+  @return{Whether @arg{iter} is tagged with @arg{tag}.}
+  Returns @em{true} if @arg{iter} is within a range tagged with @arg{tag}."
   (iter (g-boxed-foreign gtk-text-iter))
   (tag (g-object gtk-text-tag)))
 
@@ -695,12 +722,12 @@
 
 (defun gtk-text-iter-get-tags (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{list of GtkTextTag}
-  Returns a list of tags that apply to iter, in ascending order of priority
-  (highest-priority tags are last). The GtkTextTag in the list don't have a
-  reference added, but you have to free the list itself."
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{List of @class{gtk-text-tag} objects.}
+  Returns a list of tags that apply to @arg{iter}, in ascending order of
+  priority (highest-priority tags are last). The @class{gtk-text-tag} objects in
+  the list do not have a reference added, but you have to free the list itself."
   (gtk-text-iter-tags iter))
 
 (export 'gtk-text-iter-get-tags)
@@ -711,23 +738,25 @@
 
 (defcfun ("gtk_text_iter_editable" gtk-text-iter-editable) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @argument[default_setting]{TRUE if text is editable by default}
-  @return{whether iter is inside an editable range}
+  @argument[default-setting]{@em{true} if text is editable by default}
+  @return{Whether @arg{iter} is inside an editable range.}
   @begin{short}
-    Returns whether the character at iter is within an editable region of text.
-    Non-editable text is \"locked\" and can't be changed by the user via
-    GtkTextView. This function is simply a convenience wrapper around
-    gtk_text_iter_get_attributes(). If no tags applied to this text affect
-    editability, default_setting will be returned.
+    Returns whether the character at @arg{iter} is within an editable region of
+    text. Non-editable text is \"locked\" and cannot be changed by the user via
+    @class{gtk-text-view}. This function is simply a convenience wrapper around
+    the function @fun{gtk-text-iter-get-attributes}. If no tags applied to this
+    text affect editability, @arg{default-setting} will be returned.
   @end{short}
 
-  You don't want to use this function to decide whether text can be inserted
-  at iter, because for insertion you don't want to know whether the char at
-  iter is inside an editable range, you want to know whether a new character
-  inserted at iter would be inside an editable range. Use
-  gtk_text_iter_can_insert() to handle this case."
+  You do not want to use this function to decide whether text can be inserted
+  at @arg{iter}, because for insertion you do not want to know whether the char
+  at @arg{iter} is inside an editable range, you want to know whether a new
+  character inserted at @arg{iter} would be inside an editable range. Use
+  the function @fun{gtk-text-iter-can-insert} to handle this case.
+  @see-function{gtk-text-iter-get-attributes}
+  @see-function{gtk-text-iter-can-insert}"
   (iter (g-boxed-foreign gtk-text-iter))
   (default :boolean))
 
@@ -739,15 +768,17 @@
 
 (defcfun ("gtk_text_iter_can_insert" gtk-text-iter-can-insert) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @argument[default_editability]{TRUE if text is editable by default}
-  @return{whether text inserted at iter would be editable}
+  @argument[default-editability]{@em{true} if text is editable by default}
+  @return{Whether text inserted at @arg{iter} would be editable.}
   Considering the default editability of the buffer, and tags that affect
-  editability, determines whether text inserted at iter would be editable. If
-  text inserted at iter would be editable then the user should be allowed to
-  insert text at iter. gtk_text_buffer_insert_interactive() uses this function
-  to decide whether insertions are allowed at a given position."
+  editability, determines whether text inserted at @arg{iter} would be editable.
+  If text inserted at @arg{iter} would be editable then the user should be
+  allowed to insert text at @arg{iter}. The function
+  @fun{gtk-text-buffer-insert-interactive} uses this function to decide whether
+  insertions are allowed at a given position.
+  @see-function{gtk-text-buffer-insert-interactive}"
   (iter (g-boxed-foreign gtk-text-iter))
   (default-editable :boolean))
 
@@ -757,18 +788,21 @@
 ;;; gtk_text_iter_starts_word ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-starts-word
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-starts-word
   :reader "gtk_text_iter_starts_word"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-starts-word 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter is at the start of a word}
-  Determines whether iter begins a natural-language word. Word breaks are
+(declaim (inline gtk-text-iter-starts-word))
+
+(defun gtk-text-iter-starts-word (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} is at the start of a word.}
+  Determines whether @arg{iter} begins a natural-language word. Word breaks are
   determined by Pango and should be correct for nearly any language (if not,
-  the correct fix would be to the Pango word break algorithms).")
+  the correct fix would be to the Pango word break algorithms)."
+  (%gtk-text-iter-starts-word iter))
 
 (export 'gtk-text-iter-starts-word)
 
@@ -776,18 +810,21 @@
 ;;; gtk_text_iter_ends_word ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-ends-word
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-ends-word
   :reader "gtk_text_iter_ends_word"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-ends-word 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter is at the end of a word}
-  Determines whether iter ends a natural-language word. Word breaks are
+(declaim (inline gtk-text-iter-ends-word))
+
+(defun gtk-text-iter-ends-word (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} is at the end of a word.}
+  Determines whether @arg{iter} ends a natural-language word. Word breaks are
   determined by Pango and should be correct for nearly any language (if not,
-  the correct fix would be to the Pango word break algorithms).")
+  the correct fix would be to the Pango word break algorithms)."
+  (%gtk-text-iter-ends-word iter))
 
 (export 'gtk-text-iter-ends-word)
 
@@ -795,19 +832,22 @@
 ;;; gtk_text_iter_inside_word ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-inside-word
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-inside-word
   :reader "gtk_text_iter_inside_word"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-inside-word 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter is inside a word}
-  Determines whether iter is inside a natural-language word (as opposed to say
-  inside some whitespace). Word breaks are determined by Pango and should be
+(declaim (inline gtk-text-iter-inside-word))
+
+(defun gtk-text-iter-inside-word (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} is inside a word.}
+  Determines whether @arg{iter} is inside a natural-language word (as opposed to
+  say inside some whitespace). Word breaks are determined by Pango and should be
   correct for nearly any language (if not, the correct fix would be to the
-  Pango word break algorithms).")
+  Pango word break algorithms)."
+  (%gtk-text-iter-inside-word iter))
 
 (export 'gtk-text-iter-inside-word)
 
@@ -815,19 +855,24 @@
 ;;; gtk_text_iter_starts_line ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-starts-line
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-starts-line
   :reader "gtk_text_iter_starts_line"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-starts-line 'function)
- "@version{2013-3-24}
+(declaim (inline gtk-text-iter-starts-line))
+
+(defun gtk-text-iter-starts-line (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{whether iter begins a line}
-  Returns TRUE if iter begins a paragraph, i.e. if
-  gtk_text_iter_get_line_offset() would return 0. However this function is
-  potentially more efficient than gtk_text_iter_get_line_offset() because it
-  doesn't have to compute the offset, it just has to see whether it's 0.")
+  @return{Whether @arg{iter} begins a line.}
+  Returns @em{true} if @arg{iter} begins a paragraph, i. e. if the function
+  @fun{gtk-text-iter-get-line-offset} would return 0. However this function is
+  potentially more efficient than the function
+  @fun{gtk-text-iter-get-line-offset} because it does not have to compute the
+  offset, it just has to see whether it is 0.
+  @see-function{gtk-text-iter-get-line-offset}"
+  (%gtk-text-iter-starts-line iter))
 
 (export 'gtk-text-iter-starts-line)
 
@@ -835,22 +880,25 @@
 ;;; gtk_text_iter_ends_line ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-ends-line
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-ends-line
   :reader "gtk_text_iter_ends_line"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-ends-line 'function)
- "@version{2013-3-24}
+(declaim (inline gtk-text-iter-ends-line))
+
+(defun gtk-text-iter-ends-line (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{whether iter is at the end of a line}
-  Returns TRUE if iter points to the start of the paragraph delimiter
+  @return{Whether @arg{iter} is at the end of a line.}
+  Returns @em{true} if @arg{iter} points to the start of the paragraph delimiter
   characters for a line (delimiters will be either a newline, a carriage
   return, a carriage return followed by a newline, or a Unicode paragraph
   separator character). Note that an iterator pointing to the \n of a \r\n
   pair will not be counted as the end of a line, the line ends before the \r.
   The end iterator is considered to be at the end of a line, even though there
-  are no paragraph delimiter chars there.")
+  are no paragraph delimiter chars there."
+  (%gtk-text-iter-ends-line iter))
 
 (export 'gtk-text-iter-ends-line)
 
@@ -858,18 +906,21 @@
 ;;; gtk_text_iter_starts_sentence ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-starts-sentence
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-starts-sentence
   :reader "gtk_text_iter_starts_sentence"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-starts-sentence 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter is at the start of a sentence.}
-  Determines whether iter begins a sentence. Sentence boundaries are
+(declaim (inline gtk-text-iter-starts-sentence))
+
+(defun gtk-text-iter-starts-sentence (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} is at the start of a sentence.}
+  Determines whether @arg{iter} begins a sentence. Sentence boundaries are
   determined by Pango and should be correct for nearly any language (if not,
-  the correct fix would be to the Pango text boundary algorithms).")
+  the correct fix would be to the Pango text boundary algorithms)."
+  (%gtk-text-iter-starts-sentence iter))
 
 (export 'gtk-text-iter-starts-sentence)
 
@@ -877,18 +928,21 @@
 ;;; gtk_text_iter_ends_sentence ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-ends-sentence
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-ends-sentence
   :reader "gtk_text_iter_ends_sentence"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-ends-sentence 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter is at the end of a sentence.}
-  Determines whether iter ends a sentence. Sentence boundaries are determined
-  by Pango and should be correct for nearly any language (if not, the correct
-  fix would be to the Pango text boundary algorithms).")
+(declaim (inline gtk-text-iter-ends-sentence))
+
+(defun gtk-text-iter-ends-sentence (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} is at the end of a sentence.}
+  Determines whether @arg{iter} ends a sentence. Sentence boundaries are
+  determined by Pango and should be correct for nearly any language (if not, the
+  correct fix would be to the Pango text boundary algorithms)."
+  (%gtk-text-iter-ends-sentence iter))
 
 (export 'gtk-text-iter-ends-sentence)
 
@@ -896,20 +950,23 @@
 ;;; gtk_text_iter_inside_sentence ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-inside-sentence
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-inside-sentence
   :reader "gtk_text_iter_inside_sentence"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-inside-sentence 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter is inside a sentence.}
-  Determines whether iter is inside a sentence (as opposed to in between two
-  sentences, e.g. after a period and before the first letter of the next
+(declaim (inline gtk-text-iter-inside-sentence))
+
+(defun gtk-text-iter-inside-sentence (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} is inside a sentence.}
+  Determines whether @arg{iter} is inside a sentence (as opposed to in between
+  two sentences, e. g. after a period and before the first letter of the next
   sentence). Sentence boundaries are determined by Pango and should be correct
   for nearly any language (if not, the correct fix would be to the Pango text
-  boundary algorithms).")
+  boundary algorithms)."
+  (%gtk-text-iter-inside-sentence iter))
 
 (export 'gtk-text-iter-inside-sentence)
 
@@ -917,17 +974,24 @@
 ;;; gtk_text_iter_is_cursor_position ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-is-cursor-position
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-is-cursor-position
   :reader "gtk_text_iter_is_cursor_position"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-is-cursor-position 'function)
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if the cursor can be placed at iter}
-  See gtk_text_iter_forward_cursor_position() or PangoLogAttr or pango_break()
-  for details on what a cursor position is.")
+(declaim (inline gtk-text-iter-is-cursor-position))
+
+(defun gtk-text-iter-is-cursor-position (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-28}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if the cursor can be placed at @arg{iter}.}
+  See the function @fun{gtk-text-iter-forward-cursor-position}, the
+  @class{pango-log-attr} structure or the function @fun{pango-break} for details
+  on what a cursor position is.
+  @see-function{gtk-text-iter-forward-cursor-position}
+  @see-class{pango-log-attr}
+  @see-function{pango-break}"
+  (%gtk-text-iter-is-cursor-position iter))
 
 (export 'gtk-text-iter-is-cursor-position)
 
@@ -935,7 +999,7 @@
 ;;; gtk_text_iter_get_chars_in_line ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-chars-in-line
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-chars-in-line
   :reader "gtk_text_iter_get_chars_in_line"
   :type :int)
 
@@ -943,12 +1007,12 @@
 
 (defun gtk-text-iter-get-chars-in-line (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-28}
   @argument[iter]{an iterator}
-  @return{number of characters in the line}
-  Returns the number of characters in the line containing iter, including the
-  paragraph delimiters."
-  (gtk-text-iter-chars-in-line iter))
+  @return{Number of characters in the line.}
+  Returns the number of characters in the line containing @arg{iter}, including
+  the paragraph delimiters."
+  (%gtk-text-iter-chars-in-line iter))
 
 (export 'gtk-text-iter-get-chars-in-line)
 
@@ -977,20 +1041,21 @@
 
 (defun gtk-text-iter-get-attributes (iter default-attributes)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
-  @argument[values]{a GtkTextAttributes to be filled in.}
-  @return{TRUE if values was modified}
+  @argument[values]{a @symbol{gtk-text-attributes} to be filled in}
+  @return{@em{True} if values was modified.}
   @begin{short}
     Computes the effect of any tags applied to this spot in the text. The values
     parameter should be initialized to the default settings you wish to use if
-    no tags are in effect. You'd typically obtain the defaults from
-    gtk_text_view_get_default_attributes().
+    no tags are in effect. You would typically obtain the defaults from the
+    function @fun{gtk-text-view-get-default-attributes}.
   @end{short}
 
-  gtk_text_iter_get_attributes() will modify values, applying the effects of
-  any tags present at iter. If any tags affected values, the function returns
-  TRUE."
+  The function @sym{gtk-text-iter-get-attributes} will modify values, applying
+  the effects of any tags present at @arg{iter}. If any tags affected values,
+  the function returns @em{true}.
+  @see-function{gtk-text-view-get-default-attributes}"
   (let ((changed-p (%gtk-text-iter-get-attributes iter default-attributes)))
     (values default-attributes changed-p)))
 
@@ -1008,12 +1073,15 @@
 
 (defun gtk-text-iter-get-language (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
-  @return{language in effect at iter}
-  A convenience wrapper around gtk_text_iter_get_attributes(), which returns
-  the language in effect at iter. If no tags affecting language apply to iter,
-  the return value is identical to that of gtk_get_default_language()."
+  @return{Language in effect at @arg{iter}.}
+  A convenience wrapper around the function @fun{gtk-text-iter-get-attributes},
+  which returns the language in effect at @arg{iter}. If no tags affecting
+  language apply to @arg{iter}, the return value is identical to that of
+  the function @fun{gtk-get-default-language}.
+  @see-function{gtk-text-iter-get-attributes}
+  @see-function{gtk-get-default-language}"
   (gtk-text-iter-language iter))
 
 (export 'gtk-text-iter-get-language)
@@ -1022,18 +1090,22 @@
 ;;; gtk_text_iter_is_end ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-is-end
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-is-end
   :reader "gtk_text_iter_is_end"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-is-end 'function)
- "@version{2013-3-24}
+(declaim (inline gtk-text-iter-is-end))
+
+(defun gtk-text-iter-is-end (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
-  @return{whether iter is the end iterator}
-  Returns TRUE if iter is the end iterator, i.e. one past the last
-  dereferenceable iterator in the buffer. gtk_text_iter_is_end() is the most
-  efficient way to check whether an iterator is the end iterator.")
+  @return{Whether @arg{iter} is the end iterator.}
+  Returns @em{true} if @arg{iter} is the end iterator, i. e. one past the last
+  dereferenceable iterator in the buffer. The function
+  @fun{gtk-text-iter-is-end} is the most efficient way to check whether an
+  iterator is the end iterator."
+  (%gtk-text-iter-is-end iter))
 
 (export 'gtk-text-iter-is-end)
 
@@ -1041,17 +1113,20 @@
 ;;; gtk_text_iter_is_start ()
 ;;; ----------------------------------------------------------------------------
 
-(define-boxed-opaque-accessor gtk-text-iter gtk-text-iter-is-start
+(define-boxed-opaque-accessor gtk-text-iter %gtk-text-iter-is-start
   :reader "gtk_text_iter_is_start"
   :type :boolean)
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-text-iter-is-start 'function)
- "@version{2013-3-24}
+(declaim (inline gtk-text-iter-is-start))
+
+(defun gtk-text-iter-is-start (iter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
-  @return{whether iter is the first in the buffer}
-  Returns TRUE if iter is the first iterator in the buffer, that is if iter
-  has a character offset of 0.")
+  @return{Whether @arg{iter} is the first in the buffer.}
+  Returns @em{true} if @arg{iter} is the first iterator in the buffer, that is
+  if @arg{iter} has a character offset of 0."
+  (%gtk-text-iter-is-start iter))
 
 (export 'gtk-text-iter-is-start)
 
@@ -1061,15 +1136,16 @@
 
 (defcfun ("gtk_text_iter_forward_char" gtk-text-iter-forward-char) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
-  @return{Whether iter moved and is dereferenceable.}
-  Moves iter forward by one character offset. Note that images embedded in the
-  buffer occupy 1 character slot, so gtk_text_iter_forward_char() may actually
-  move onto an image instead of a character, if you have images in your
-  buffer. If iter is the end iterator or one character before it, iter will
-  now point at the end iterator, and gtk_text_iter_forward_char() returns
-  FALSE for convenience when writing loops."
+  @return{Whether @arg{iter} moved and is dereferenceable.}
+  Moves @arg{iter} forward by one character offset. Note that images embedded in
+  the buffer occupy 1 character slot, so the function
+  @sym{gtk-text-iter-forward-char} may actually move onto an image instead of a
+  character, if you have images in your buffer. If @arg{iter} is the end
+  iterator or one character before it, @arg{iter} will now point at the end
+  iterator, and the function @sym{gtk-text-iter-forward-char} returns
+  @code{nil} for convenience when writing loops."
   (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-forward-char)
@@ -1097,16 +1173,16 @@
 
 (defcfun ("gtk_text_iter_forward_chars" gtk-text-iter-forward-chars) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
+ "@version{2013-4-29}
   @argument[iter]{an iterator}
   @argument[count]{number of characters to move, may be negative}
-  @return{Whether iter moved and is dereferenceable.}
-  Moves count characters if possible (if count would move past the start or
-  end of the buffer, moves to the start or end of the buffer). The return
-  value indicates whether the new position of iter is different from its
-  original position, and dereferenceable (the last iterator in the buffer is
-  not dereferenceable). If count is 0, the function does nothing and returns
-  FALSE."
+  @return{Whether @arg{iter} moved and is dereferenceable.}
+  Moves @arg{count} characters if possible (if @arg{count} would move past the
+  start or end of the buffer, moves to the start or end of the buffer). The
+  return value indicates whether the new position of @arg{iter} is different
+  from its original position, and dereferenceable (the last iterator in the
+  buffer is not dereferenceable). If @arg{count} is 0, the function does nothing
+  and returns @code{nil}."
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1177,16 +1253,17 @@
 
 (defcfun ("gtk_text_iter_forward_lines" gtk-text-iter-forward-lines) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of lines to move forward}
-  @return{Whether iter moved and is dereferenceable.}
-  Moves count lines forward, if possible (if count would move past the start
-  or end of the buffer, moves to the start or end of the buffer). The return
-  value indicates whether the iterator moved onto a dereferenceable position;
-  if the iterator didn't move, or moved onto the end iterator, then FALSE is
-  returned. If count is 0, the function does nothing and returns FALSE. If
-  count is negative, moves backward by 0 - count lines."
+  @return{Whether @arg{iter} moved and is dereferenceable.}
+  Moves @arg{count} lines forward, if possible (if @arg{count} would move past
+  the start or end of the buffer, moves to the start or end of the buffer). The
+  return value indicates whether the iterator moved onto a dereferenceable
+  position; if the iterator did not move, or moved onto the end iterator, then
+  @code{nil} is returned. If @arg{count} is 0, the function does nothing and
+  returns @code{nil}. If @arg{count} is negative, moves backward by
+  0 - @arg{count} lines."
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1221,11 +1298,13 @@
 (defcfun ("gtk_text_iter_forward_word_ends" gtk-text-iter-forward-word-ends)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of times to move}
-  @return{TRUE if iter moved and is not the end iterator}
-  Calls gtk_text_iter_forward_word_end() up to count times."
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Calls the function @fun{gtk-text-iter-forward-word-end} up to @arg{count}
+  times.
+  @see-function{gtk-text-iter-forward-word-end}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1238,11 +1317,13 @@
 (defcfun ("gtk_text_iter_backward_word_starts"
           gtk-text-iter-backward-word-starts) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of times to move}
-  @return{TRUE if iter moved and is not the end iterator}
-  Calls gtk_text_iter_backward_word_start() up to count times."
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Calls the function @fun{gtk-text-iter-backward-word-start} up to @arg{count}
+  times.
+  @see-function{gtk-text-iter-backward-word-start}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1325,12 +1406,13 @@
 (defcfun ("gtk_text_iter_forward_cursor_positions"
           gtk-text-iter-forward-cursor-positions) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of positions to move}
-  @return{TRUE if we moved and the new position is dereferenceable}
-  Moves up to count cursor positions. See
-  gtk_text_iter_forward_cursor_position() for details."
+  @return{@em{True} if we moved and the new position is dereferenceable.}
+  Moves up to @arg{count} cursor positions. See the function
+  @fun{gtk-text-iter-forward-cursor-position} for details.
+  @see-function{gtk-text-iter-forward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1376,16 +1458,17 @@
 ;;; gtk_text_iter_backward_sentence_starts ()
 ;;; ----------------------------------------------------------------------------
 
-
 (defcfun ("gtk_text_iter_backward_sentence_starts"
           gtk-text-iter-backward-sentence-starts) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of sentences to move}
-  @return{TRUE if iter moved and is not the end iterator}
-  Calls gtk_text_iter_backward_sentence_start() up to count times, or until it
-  returns FALSE. If count is negative, moves forward instead of backward."
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Calls the function @fun{gtk-text-iter-backward-sentence-start} up to
+  @arg{count} times, or until it returns @code{nil}. If @arg{count} is negative,
+  moves forward instead of backward.
+  @see-function{gtk-text-iter-backward-sentence-start}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1415,13 +1498,14 @@
 (defcfun ("gtk_text_iter_forward_sentence_ends"
           gtk-text-iter-forward-sentence-ends) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of sentences to move}
-  @return{TRUE if iter moved and is not the end iterator}
-  Calls gtk_text_iter_forward_sentence_end() count times (or until
-  gtk_text_iter_forward_sentence_end() returns FALSE). If count is negative,
-  moves backward instead of forward."
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Calls the function @fun{gtk-text-iter-forward-sentence-end} @arg{count} times
+  (or until the function @fun{gtk-text-iter-forward-sentence-end} returns
+  @code{nil}). If @arg{count} is negative, moves backward instead of forward.
+  @see-function{gtk-text-iter-forward-sentence-end}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1434,15 +1518,17 @@
 (defcfun ("gtk_text_iter_forward_visible_word_ends"
           gtk-text-iter-forward-visible-word-ends) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of times to move}
-  @return{TRUE if iter moved and is not the end iterator}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
   @begin{short}
-    Calls gtk_text_iter_forward_visible_word_end() up to count times.
+    Calls the function @fun{gtk-text-iter-forward-visible-word-end} up to
+    @arg{count} times.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-text-iter-forward-visible-word-end}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1455,15 +1541,17 @@
 (defcfun ("gtk_text_iter_backward_visible_word_starts"
           gtk-text-iter-backward-visible-word-starts) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of times to move}
-  @return{TRUE if iter moved and is not the end iterator.}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
   @begin{short}
-    Calls gtk_text_iter_backward_visible_word_start() up to count times.
+    Calls the function @fun{gtk-text-iter-backward-visible-word-start} up to
+    @arg{count} times.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-text-iter-backward-visible-word-start}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1548,16 +1636,17 @@
 (defcfun ("gtk_text_iter_forward_visible_cursor_positions"
           gtk-text-iter-forward-visible-cursor-positions) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of positions to move}
-  @return{TRUE if we moved and the new position is dereferenceable}
+  @return{@em{True} if we moved and the new position is dereferenceable.}
   @begin{short}
-    Moves up to count visible cursor positions. See
-    gtk_text_iter_forward_cursor_position() for details.
+    Moves up to @arg{count} visible cursor positions. See the function
+    @fun{gtk-text-iter-forward-cursor-position} for details.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-text-iter-forward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter))
   (count :int))
 
@@ -1632,17 +1721,18 @@
 (defcfun ("gtk_text_iter_forward_visible_lines"
           gtk-text-iter-forward-visible-lines) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of lines to move forward}
-  @return{Whether iter moved and is dereferenceable.}
+  @return{Whether @arg{iter} moved and is dereferenceable.}
   @begin{short}
-    Moves count visible lines forward, if possible (if count would move past the
-    start or end of the buffer, moves to the start or end of the buffer). The
-    return value indicates whether the iterator moved onto a dereferenceable
-    position; if the iterator didn't move, or moved onto the end iterator, then
-    FALSE is returned. If count is 0, the function does nothing and returns
-    FALSE. If count is negative, moves backward by 0 - count lines.
+    Moves @arg{count} visible lines forward, if possible (if @arg{count} would
+    move past the start or end of the buffer, moves to the start or end of the
+    buffer). The return value indicates whether the iterator moved onto a
+    dereferenceable position; if the iterator did not move, or moved onto the
+    end iterator, then @code{nil} is returned. If @arg{count} is 0, the function
+    does nothing and returns @code{nil}. If @arg{count} is negative, moves
+    backward by 0 - @arg{count} lines.
   @end{short}
 
   Since 2.8"
@@ -1684,11 +1774,11 @@
 
 (defun gtk-text-iter-set-offset (iter char-offset)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[char_offset]{a character number}
-  Sets iter to point to char_offset. char_offset counts from the start of the
-  entire text buffer, starting with 0."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[char-offset]{a character number}
+  Sets @arg{iter} to point to @arg{char-offset}. @arg{char-offset} counts from
+  the start of the entire text buffer, starting with 0."
   (setf (gtk-text-iter-offset iter) char-offset))
 
 (export 'gtk-text-iter-set-offset)
@@ -1701,12 +1791,12 @@
 
 (defun gtk-text-iter-set-line (iter line-number)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[line_number]{line number (counted from 0)}
-  Moves iterator iter to the start of the line line_number. If line_number is
-  negative or larger than the number of lines in the buffer, moves iter to the
-  start of the last line in the buffer."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[line-number]{line number (counted from 0)}
+  Moves iterator @arg{iter} to the start of the line @arg{line-number}. If
+  @arg{line-number} is negative or larger than the number of lines in the
+  buffer, moves @arg{iter} to the start of the last line in the buffer."
   (setf (gtk-text-iter-line iter) line-number))
 
 (export 'gtk-text-iter-set-line)
@@ -1719,15 +1809,16 @@
 
 (defun gtk-text-iter-set-line-offset (iter char-on-line)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[char_on_line]{a character offset relative to the start of iter's
-    current line}
-  Moves iter within a line, to a new character (not byte) offset. The given
-  character offset must be less than or equal to the number of characters in
-  the line; if equal, iter moves to the start of the next line. See
-  gtk_text_iter_set_line_index() if you have a byte index rather than a
-  character offset."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[char-on-line]{a character offset relative to the start of
+    @arg{iter}'s current line}
+  Moves @arg{iter} within a line, to a new character (not byte) offset. The
+  given character offset must be less than or equal to the number of characters
+  in the line; if equal, @arg{iter} moves to the start of the next line. See
+  the function @fun{gtk-text-iter-set-line-index} if you have a byte index
+  rather than a character offset.
+  @see-function{gtk-text-iter-set-line-index}"
   (setf (gtk-text-iter-line-offset iter) char-on-line))
 
 (export 'gtk-text-iter-set-line-offset)
@@ -1772,12 +1863,13 @@
 
 (defun gtk-text-iter-set-visible-line-offset (iter char-on-line)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[char_on_line]{a character offset}
-  Like gtk_text_iter_set_line_offset(), but the offset is in visible
-  characters, i.e. text with a tag making it invisible is not counted in the
-  offset."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[char-on-line]{a character offset}
+  Like the function @fun{gtk-text-iter-set-line-offset}, but the offset is in
+  visible characters, i. e. text with a tag making it invisible is not counted
+  in the offset.
+  @see-function{gtk-text-iter-set-line-offset}"
   (setf (gtk-text-iter-visisble-line-offset iter) char-on-line))
 
 (export 'gtk-text-iter-set-visible-line-offset)
@@ -1788,11 +1880,12 @@
 
 (defcfun ("gtk_text_iter_forward_to_end" gtk-text-iter-forward-to-end) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  Moves iter forward to the \"end iterator\", which points one past the last
-  valid character in the buffer. gtk_text_iter_get_char() called on the end
-  iterator returns 0, which is convenient for writing loops."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  Moves @arg{iter} forward to the \"end iterator\", which points one past the
+  last valid character in the buffer. The function @fun{gtk-text-iter-get-char}
+  called on the end iterator returns 0, which is convenient for writing loops.
+  @see-function{gtk-text-iter-get-char}"
   (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-forward-to-end)
@@ -1804,16 +1897,16 @@
 (defcfun ("gtk_text_iter_forward_to_line_end" gtk-text-iter-forward-to-line-end)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if we moved and the new location is not the end iterator}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if we moved and the new location is not the end iterator.}
   Moves the iterator to point to the paragraph delimiter characters, which
   will be either a newline, a carriage return, a carriage return/newline in
   sequence, or the Unicode paragraph separator character. If the iterator is
   already at the paragraph delimiter characters, moves to the paragraph
-  delimiter characters for the next line. If iter is on the last line in the
-  buffer, which does not end in paragraph delimiters, moves to the end
-  iterator (end of the last line), and returns FALSE."
+  delimiter characters for the next line. If @arg{iter} is on the last line in
+  the buffer, which does not end in paragraph delimiters, moves to the end
+  iterator (end of the last line), and returns @code{nil}."
   (iter (g-boxed-foreign gtk-text-iter)))
 
 (export 'gtk-text-iter-forward-to-line-end)
@@ -1825,15 +1918,16 @@
 (defcfun ("gtk_text_iter_forward_to_tag_toggle"
           gtk-text-iter-forward-to-tag-toggle) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[tag]{a GtkTextTag, or NULL}
-  @return{Whether we found a tag toggle after iter.}
-  Moves forward to the next toggle (on or off) of the GtkTextTag tag, or to
-  the next toggle of any tag if tag is NULL. If no matching tag toggles are
-  found, returns FALSE, otherwise TRUE. Does not return toggles located at
-  iter, only toggles after iter. Sets iter to the location of the toggle, or
-  to the end of the buffer if no toggle is found."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
+  @return{Whether we found a @arg{tag} toggle after @arg{iter}.}
+  Moves forward to the next toggle (on or off) of the @class{gtk-text-tag}
+  @arg{tag}, or to the next toggle of any tag if @arg{tag} is @code{nil}. If no
+  matching tag toggles are found, returns @code{nil}, otherwise @em{true}. Does
+  not return toggles located at @arg{iter}, only toggles after @arg{iter}. Sets
+  @arg{iter} to the location of the toggle, or to the end of the buffer if no
+  toggle is found."
   (iter (g-boxed-foreign gtk-text-iter))
   (tag (g-object gtk-text-tag)))
 
@@ -1846,15 +1940,16 @@
 (defcfun ("gtk_text_iter_backward_to_tag_toggle"
           gtk-text-iter-backward-to-tag-toggle) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[tag]{a GtkTextTag, or NULL}
-  @return{Whether we found a tag toggle before iter.}
-  Moves backward to the next toggle (on or off) of the GtkTextTag tag, or to
-  the next toggle of any tag if tag is NULL. If no matching tag toggles are
-  found, returns FALSE, otherwise TRUE. Does not return toggles located at
-  iter, only toggles before iter. Sets iter to the location of the toggle, or
-  the start of the buffer if no toggle is found."
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[tag]{a @class{gtk-text-tag} object, or @code{nil}}
+  @return{Whether we found a @arg{tag} toggle before @arg{iter}.}
+  Moves backward to the next toggle (on or off) of the @class{gtk-text-tag}
+  @arg{tag}, or to the next toggle of any tag if @arg{tag} is @code{nil}. If no
+  matching tag toggles are found, returns @code{nil}, otherwise @em{true}. Does
+  not return toggles located at @arg{iter}, only toggles before @arg{iter}. Sets
+  @arg{iter} to the location of the toggle, or the start of the buffer if no
+  toggle is found."
   (iter (g-boxed-foreign gtk-text-iter))
   (tag (g-object gtk-text-tag)))
 
@@ -1876,21 +1971,24 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_forward_find_char"
-          gtk-text-iter-forward-find-char) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[pred]{a function to be called on each character}
-  @argument[user_data]{user data for pred}
-  @argument[limit]{search limit, or NULL for none}
-  @return{Whether a match was found.}
-  Advances iter, calling pred on each character. If pred returns TRUE, returns
-  TRUE and stops scanning. If pred never returns TRUE, iter is set to limit if
-  limit is non-NULL, otherwise to the end iterator."
+          %gtk-text-iter-forward-find-char) :boolean
   (iter (g-boxed-foreign gtk-text-iter))
   (pred :pointer)
   (user-data :pointer)
   (limit (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-iter-forward-find-char (iter pred limit)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[pred]{a function to be called on each character}
+  @argument[limit]{search limit, or @code{nil} for none}
+  @return{Whether a match was found.}
+  Advances @arg{iter}, calling @arg{pred} on each character. If @arg{pred}
+  returns @em{true}, returns @em{true} and stops scanning. If @arg{pred} never
+  returns @em{true}, @arg{iter} is set to @arg{limit} if @arg{limit} is
+  non-@code{nil}, otherwise to the end iterator."
+  (gtk-text-iter-find-char iter pred :limit limit :direction :forward))
 
 (export 'gtk-text-iter-forward-find-char)
 
@@ -1900,35 +1998,36 @@
   (assert (typep direction '(member :forward :backward)))
   (with-stable-pointer (ptr predicate)
     (if (eq direction :forward)
-        (gtk-text-iter-forward-find-char iter
-                                         (callback gtk-text-char-predicate)
-                                         ptr
-                                         limit)
-        (gtk-text-iter-backward-find-char iter
+        (%gtk-text-iter-forward-find-char iter
                                           (callback gtk-text-char-predicate)
                                           ptr
-                                          limit))))
-
-(export 'gtk-text-iter-find-char)
+                                          limit)
+        (%gtk-text-iter-backward-find-char iter
+                                           (callback gtk-text-char-predicate)
+                                           ptr
+                                           limit))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_find_char ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_iter_backward_find_char" gtk-text-iter-backward-find-char)
+(defcfun ("gtk_text_iter_backward_find_char" %gtk-text-iter-backward-find-char)
     :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
-  @argument[pred]{function to be called on each character}
-  @argument[user_data]{user data for pred}
-  @argument[limit]{search limit, or NULL for none}
-  @return{Whether a match was found.}
-  Same as gtk_text_iter_forward_find_char(), but goes backward from iter."
   (iter (g-boxed-foreign gtk-text-iter))
   (pred :pointer)
   (user-data :pointer)
   (limit (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-iter-backward-find-char (iter pred limit)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[pred]{function to be called on each character}
+  @argument[limit]{search limit, or @code{nil} for none}
+  @return{Whether a match was found.}
+  Same as the function @fun{gtk-text-iter-forward-find-char}, but goes backward
+  from @arg{iter}."
+  (gtk-text-iter-find-char iter pred :limit limit :direction :backward))
 
 (export 'gtk-text-iter-backward-find-char)
 
@@ -1943,12 +2042,10 @@
   (:text-only 2)
   (:case-insensitive 4))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-search-flags atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-search-flags atdoc:*external-symbols*)
- "@version{2013-3-24}
+ "@version{2013-4-29}
   @short{}
   @begin{pre}
 (define-g-flags \"GtkTextSearchFlags\" gtk-text-search-flags
@@ -1963,39 +2060,44 @@
 ;;; gtk_text_iter_forward_search ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_iter_forward_search" gtk-text-iter-forward-search) :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{start of search}
-  @argument[str]{a search string}
-  @argument[flags]{flags affecting how the search is done}
-  @argument[match_start]{return location for start of match, or NULL}
-  @argument[match_end]{return location for end of match, or NULL}
-  @argument[limit]{bound for the search, or NULL for the end of the buffer}
-  @return{Whether a match was found.}
-  @begin{short}
-    Searches forward for str. Any match is returned by setting match_start to
-    the first character of the match and match_end to the first character after
-    the match. The search will not continue past limit. Note that a search is a
-    linear or O(n) operation, so you may wish to use limit to avoid locking up
-    your UI on large buffers.
-  @end{short}
-
-  If the GTK_TEXT_SEARCH_VISIBLE_ONLY flag is present, the match may have
-  invisible text interspersed in str. i.e. str will be a
-  possibly-noncontiguous subsequence of the matched range. similarly, if you
-  specify GTK_TEXT_SEARCH_TEXT_ONLY, the match may have pixbufs or child
-  widgets mixed inside the matched range. If these flags are not given, the
-  match must be exact; the special 0xFFFC character in str will match embedded
-  pixbufs or child widgets. If you specify the
-  GTK_TEXT_SEARCH_CASE_INSENSITIVE flag, the text will be matched regardless
-  of what case it is in."
+(defcfun ("gtk_text_iter_forward_search" %gtk-text-iter-forward-search) :boolean
   (iter (g-boxed-foreign gtk-text-iter))
   (str (:string :free-to-foreign t))
   (flags gtk-text-search-flags)
   (match-start (g-boxed-foreign gtk-text-iter))
   (match-end (g-boxed-foreign gtk-text-iter))
   (limit (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-iter-forward-search (iter str flags limit)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-29}
+  @argument[iter]{start of search}
+  @argument[str]{a search string}
+  @argument[flags]{flags affecting how the search is done}
+  @argument[limit]{bound for the search, or @code{nil} for the end of the
+    buffer}
+  @begin{return}
+    Whether a match was found. @br{}
+    @code{match-start} -- start of match, or @code{nil} @br{}
+    @code{match-end} -- end of match, or @code{nil}
+  @end{return}
+  @begin{short}
+    Searches forward for @arg{str}. Any match is returned by setting
+    @arg{match-start} to the first character of the match and @arg{match-end}
+    to the first character after the match. The search will not continue past
+    @arg{limit}. Note that a search is a linear or O(n) operation, so you may
+    wish to use @arg{limit} to avoid locking up your UI on large buffers.
+  @end{short}
+
+  If the @code{:visible-only} flag is present, the match may have
+  invisible text interspersed in @arg{str}, i. e. @arg{str} will be a
+  possibly-noncontiguous subsequence of the matched range. Similarly, if you
+  specify @code{:text-only}, the match may have pixbufs or child widgets mixed
+  inside the matched range. If these flags are not given, the match must be
+  exact; the special @code{0xFFFC} character in @arg{str} will match embedded
+  pixbufs or child widgets. If you specify the @code{:case-insensitive} flag,
+  the text will be matched regardless of what case it is in."
+  (gtk-text-iter-search iter str :flags flags :limit limit :direction :forward))
 
 (export 'gtk-text-iter-forward-search)
 
@@ -2007,18 +2109,18 @@
   (let ((i1 (make-instance 'gtk-text-iter))
         (i2 (make-instance 'gtk-text-iter)))
     (if (if (eq direction :forward)
-            (gtk-text-iter-forward-search start-position
-                                          string
-                                          flags
-                                          i1
-                                          i2
-                                          limit)
-            (gtk-text-iter-backward-search start-position
+            (%gtk-text-iter-forward-search start-position
                                            string
                                            flags
                                            i1
                                            i2
-                                           limit))
+                                           limit)
+            (%gtk-text-iter-backward-search start-position
+                                            string
+                                            flags
+                                            i1
+                                            i2
+                                            limit))
         (values t i1 i2)
         (values nil nil nil))))
 
@@ -2028,25 +2130,33 @@
 ;;; gtk_text_iter_backward_search ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_iter_backward_search" gtk-text-iter-backward-search)
+(defcfun ("gtk_text_iter_backward_search" %gtk-text-iter-backward-search)
     :boolean
- #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter where the search begins}
-  @argument[str]{search string}
-  @argument[flags]{bitmask of flags affecting the search}
-  @argument[match_start]{return location for start of match, or NULL}
-  @argument[match_end]{return location for end of match, or NULL}
-  @argument[limit]{location of last possible match_start, or NULL for start of
-    buffer}
-  @return{whether a match was found.}
-  Same as gtk_text_iter_forward_search(), but moves backward."
   (iter (g-boxed-foreign gtk-text-iter))
   (str (:string :free-to-foreign t))
   (flags gtk-text-search-flags)
   (match-start (g-boxed-foreign gtk-text-iter))
   (match-end (g-boxed-foreign gtk-text-iter))
   (limit (g-boxed-foreign gtk-text-iter)))
+
+(defun gtk-text-iter-backward-search (iter str flags limit)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object where the search begins}
+  @argument[str]{search string}
+  @argument[flags]{bitmask of flags affecting the search}
+  @argument[limit]{location of last possible @arg{match-start}, or @code{nil}
+    for start of buffer}
+  @begin{return}
+    Whether a match was found. @br{}
+    @code{match-start} -- start of match, or @code{nil} @br{}
+    @code{match-end} -- end of match, or @code{nil}
+  @end{return}
+  Same as the function @fun{gtk-text-iter-forward-search}, but moves backward.
+  @see-function{gtk-text-iter-forward-search}"
+  (gtk-text-iter-search iter str :flags flags
+                                 :limit limit
+                                 :direction :backward))
 
 (export 'gtk-text-iter-backward-search)
 
@@ -2056,14 +2166,16 @@
 
 (defcfun ("gtk_text_iter_equal" gtk-text-iter-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[lhs]{a GtkTextIter}
-  @argument[rhs]{another GtkTextIter}
-  @return{TRUE if the iterators point to the same place in the buffer.}
+ "@version{2013-4-29}
+  @argument[lhs]{a @class{gtk-text-iter} object}
+  @argument[rhs]{another @class{gtk-text-iter} object}
+  @return{@em{True} if the iterators point to the same place in the buffer.}
   Tests whether two iterators are equal, using the fastest possible mechanism.
-  This function is very fast; you can expect it to perform better than e.g.
+  This function is very fast; you can expect it to perform better than e. g.
   getting the character offset for each iterator and comparing the offsets
-  yourself. Also, it's a bit faster than gtk_text_iter_compare()."
+  yourself. Also, it is a bit faster than the function
+  @fun{gtk-text-iter-compare}.
+  @see-function{gtk-text-iter-compare}"
   (lhs (g-boxed-foreign gtk-text-iter))
   (rhs (g-boxed-foreign gtk-text-iter)))
 
@@ -2075,14 +2187,15 @@
 
 (defcfun ("gtk_text_iter_compare" gtk-text-iter-compare) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[lhs]{a GtkTextIter}
-  @argument[rhs]{another GtkTextIter}
-  @return{-1 if lhs is less than rhs, 1 if lhs is greater, 0 if they are equal}
-  A qsort()-style function that returns negative if lhs is less than rhs,
-  positive if lhs is greater than rhs, and 0 if they're equal. Ordering is in
-  character offset order, i.e. the first character in the buffer is less than
-  the second character in the buffer."
+ "@version{2013-4-29}
+  @argument[lhs]{a @class{gtk-text-iter} object}
+  @argument[rhs]{another @class{gtk-text-iter} object}
+  @return{-1 if @arg{lhs} is less than @arg{rhs}, 1 if @arg{lhs} is greater, 0
+    if they are equal.}
+  A @code{qsort()}-style function that returns negative if @arg{lhs} is less
+  than @arg{rhs}, positive if @arg{lhs} is greater than @arg{rhs}, and 0 if they
+  are equal. Ordering is in character offset order, i. e. the first character in
+  the buffer is less than the second character in the buffer."
   (lhs (g-boxed-foreign gtk-text-iter))
   (rhs (g-boxed-foreign gtk-text-iter)))
 
@@ -2094,13 +2207,13 @@
 
 (defcfun ("gtk_text_iter_in_range" gtk-text-iter-in-range) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-4-29}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[start]{start of range}
   @argument[end]{end of range}
-  @return{TRUE if iter is in the range}
-  Checks whether iter falls in the range [start, end). start and end must be
-  in ascending order."
+  @return{@em{True} if @arg{iter} is in the range.}
+  Checks whether @arg{iter} falls in the range [@arg{start}, @arg{end}).
+  @arg{start} and @arg{end} must be in ascending order."
   (iter (g-boxed-foreign gtk-text-iter))
   (start (g-boxed-foreign gtk-text-iter))
   (end (g-boxed-foreign gtk-text-iter)))
@@ -2113,15 +2226,16 @@
 
 (defcfun ("gtk_text_iter_order" gtk-text-iter-order) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-24}
-  @argument[first]{a GtkTextIter}
-  @argument[second]{another GtkTextIter}
-  Swaps the value of first and second if second comes before first in the
-  buffer. That is, ensures that first and second are in sequence. Most text
-  buffer functions that take a range call this automatically on your behalf,
-  so there's no real reason to call it yourself in those cases. There are some
-  exceptions, such as gtk_text_iter_in_range(), that expect a pre-sorted
-  range."
+ "@version{2013-4-29}
+  @argument[first]{a @class{gtk-text-iter} object}
+  @argument[second]{another @class{gtk-text-iter} object}
+  Swaps the value of @arg{first} and @arg{second} if @arg{second} comes before
+  @arg{first} in the buffer. That is, ensures that @arg{first} and @arg{second}
+  are in sequence. Most text buffer functions that take a range call this
+  automatically on your behalf, so there is no real reason to call it yourself
+  in those cases. There are some exceptions, such as the function
+  @fun{gtk-text-iter-in-range}, that expect a pre-sorted range.
+  @see-function{gtk-text-iter-in-range}"
   (iter-1 (g-boxed-foreign gtk-text-iter))
   (iter-2 (g-boxed-foreign gtk-text-iter)))
 

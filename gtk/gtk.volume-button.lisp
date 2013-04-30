@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.2. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -38,6 +38,17 @@
 ;;;     GtkVolumeButton
 ;;;     
 ;;;     gtk_volume_button_new
+;;;
+;;; Object Hierarchy
+;;;
+;;;   GObject
+;;;    +----GInitiallyUnowned
+;;;          +----GtkWidget
+;;;                +----GtkContainer
+;;;                      +----GtkBin
+;;;                            +----GtkButton
+;;;                                  +----GtkScaleButton
+;;;                                        +----GtkVolumeButton
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -63,11 +74,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-volume-button 'type)
- "@version{2013-3-28}
+ "@version{2013-4-27}
   @begin{short}
-    GtkVolumeButton is a subclass of GtkScaleButton that has been tailored for
-    use as a volume control widget with suitable icons, tooltips and accessible
-    labels.
+    @sym{gtk-volume-button} is a subclass of @class{gtk-scale-button} that has
+    been tailored for use as a volume control widget with suitable icons,
+    tooltips and accessible labels.
   @end{short}
   @see-slot{gtk-volume-button-use-symbolic}")
 
@@ -98,7 +109,7 @@
 (setf (gethash 'gtk-volume-button-use-symbolic atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-volume-button-use-symbolic 'function)
- "@version{2013-3-28}
+ "@version{2013-4-27}
   Accessor of the slot @code{\"use-symbolic\"} of the @class{gtk-volume-button}
   class.")
 
@@ -110,12 +121,12 @@
 
 (defun gtk-volume-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @return{a new GtkVolumeButton}
+ "@version{2013-4-27}
+  @return{A new @class{gtk-volume-button} widget.}
   @begin{short}
-    Creates a GtkVolumeButton, with a range between 0.0 and 1.0, with a stepping
-    of 0.02. Volume values can be obtained and modified using the functions from
-    GtkScaleButton.
+    Creates a @class{gtk-volume-button}, with a range between 0.0 and 1.0, with
+    a stepping of 0.02. Volume values can be obtained and modified using the
+    functions from @class{gtk-scale-button}.
   @end{short}
 
   Since 2.12"

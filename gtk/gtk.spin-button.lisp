@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -75,9 +75,8 @@
 ;;; 
 ;;; Implemented Interfaces
 ;;; 
-;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable, GtkEditable and
-;;; GtkCellEditable.
-;;; 
+;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable, GtkEditable,
+;;; GtkCellEditable, and GtkOrientable.
 ;;; 
 ;;; Style Properties
 ;;; 
@@ -90,116 +89,6 @@
 ;;;   "output"                                           : Run Last
 ;;;   "value-changed"                                    : Run Last
 ;;;   "wrapped"                                          : Run Last
-;;; 
-;;; 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Style Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "shadow-type" style property
-;;; 
-;;;   "shadow-type"              GtkShadowType         : Read
-;;; 
-;;; Style of bevel around the spin button.
-;;; 
-;;; Default value: GTK_SHADOW_IN
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "change-value" signal
-;;; 
-;;; void user_function (GtkSpinButton *spinbutton,
-;;;                     GtkScrollType  arg1,
-;;;                     gpointer       user_data)       : Action
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "input" signal
-;;; 
-;;; gint user_function (GtkSpinButton *spin_button,
-;;;                     gpointer       new_value,
-;;;                     gpointer       user_data)        : Run Last
-;;; 
-;;; The ::input signal can be used to influence the conversion of the users
-;;; input into a double value. The signal handler is expected to use
-;;; gtk_entry_get_text() to retrieve the text of the entry and set new_value to
-;;; the new value.
-;;; 
-;;; The default conversion uses g_strtod().
-;;; 
-;;; spin_button :
-;;;     the object on which the signal was emitted
-;;; 
-;;; new_value :
-;;;     return location for the new value
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Returns :
-;;;     TRUE for a successful conversion, FALSE if the input was not handled,
-;;;     and GTK_INPUT_ERROR if the conversion failed.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "output" signal
-;;; 
-;;; gboolean user_function (GtkSpinButton *spin_button,
-;;;                         gpointer       user_data)        : Run Last
-;;; 
-;;; The ::output signal can be used to change to formatting of the value that is
-;;; displayed in the spin buttons entry.
-;;; 
-;;; /* show leading zeros */
-;;; static gboolean
-;;; on_output (GtkSpinButton *spin,
-;;;            gpointer       data)
-;;; {
-;;;    GtkAdjustment *adjustment;
-;;;    gchar *text;
-;;;    int value;
-;;;    adjustment = gtk_spin_button_get_adjustment (spin);
-;;;    value = (int)gtk_adjustment_get_value (adjustment);
-;;;    text = g_strdup_printf ("%02d", value);
-;;;    gtk_entry_set_text (GTK_ENTRY (spin), text);
-;;;    g_free (text);
-;;; 
-;;;    return TRUE;
-;;; }
-;;; 
-;;; spin_button :
-;;;     the object which received the signal
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Returns :
-;;;     TRUE if the value has been displayed
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "value-changed" signal
-;;; 
-;;; void user_function (GtkSpinButton *spinbutton,
-;;;                     gpointer       user_data)       : Run Last
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "wrapped" signal
-;;; 
-;;; void user_function (GtkSpinButton *spinbutton,
-;;;                     gpointer       user_data)       : Run Last
-;;; 
-;;; The wrapped signal is emitted right after the spinbutton wraps from its
-;;; maximum to minimum value or vice-versa.
-;;; 
-;;; spinbutton :
-;;;     the object which received the signal
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -214,7 +103,8 @@
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
                 "GtkEditable"
-                "GtkCellEditable")
+                "GtkCellEditable"
+                "GtkOrientable")
    :type-initializer "gtk_spin_button_get_type")
   ((adjustment
     gtk-spin-button-adjustment
@@ -245,19 +135,21 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-spin-button 'type)
- "@version{2014-3-23}
+ "@version{2014-4-28}
   @begin{short}
-    A GtkSpinButton is an ideal way to allow the user to set the value of some
-    attribute. Rather than having to directly type a number into a GtkEntry,
-    GtkSpinButton allows the user to click on one of two arrows to increment or
-    decrement the displayed value. A value can still be typed in, with the bonus
-    that it can be checked to ensure it is in a given range.
+    A @sym{gtk-spin-button} is an ideal way to allow the user to set the value
+    of some attribute. Rather than having to directly type a number into a
+    @class{gtk-entry}, @sym{gtk-spin-button} allows the user to click on one of
+    two arrows to increment or decrement the displayed value. A value can still
+    be typed in, with the bonus that it can be checked to ensure it is in a
+    given range.
   @end{short}
 
-  The main properties of a GtkSpinButton are through an adjustment. See the
-  GtkAdjustment section for more details about an adjustment's properties.
+  The main properties of a @sym{gtk-spin-button} are through an adjustment. See
+  the @class{gtk-adjustment} section for more details about an adjustment's
+  properties.
 
-  Example 55. Using a GtkSpinButton to get an integer
+  @b{Example:} Using a @class{gtk-spin-button} to get an integer
   @begin{pre}
  /* Provides a function to retrieve an integer value from a
   * GtkSpinButton and creates a spin button to model percentage
@@ -290,7 +182,7 @@
    gtk_widget_show_all (window);
  @}
   @end{pre}
-  Example 56. Using a GtkSpinButton to get a floating point value
+  @b{Example:} Using a @sym{gtk-spin-button} to get a floating point value
   @begin{pre}
  /* Provides a function to retrieve a floating point value from a
   * GtkSpinButton, and creates a high precision spin button.
@@ -321,7 +213,76 @@
    gtk_widget_show_all (window);
  @}
   @end{pre}
+  @begin[Style Property Details]{dictionary}
+    @subheading{The \"shadow-type\" style property}
+      @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read) @br{}
+      Style of bevel around the spin button. @br{}
+      Default value: @code{:in}
+  @end{dictionary}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"change-value\" signal}
+      @begin{pre}
+ lambda (spinbutton arg)   : Action
+      @end{pre}
+    @subheading{The \"input\" signal}
+      @begin{pre}
+ lambda (spin-button new-value)   : Run Last
+      @end{pre}
+      The \"input\" signal can be used to influence the conversion of the users
+      input into a double value. The signal handler is expected to use the
+      function @fun{gtk-entry-get-text} to retrieve the text of the entry and
+      set new_value to the new value.
+      The default conversion uses @code{g_strtod()}.
+      @begin[code]{table}
+        @entry[spin-button]{The object on which the signal was emitted.}
+        @entry[new-value]{Return location for the new value.}
+        @entry[Returns]{@em{True} for a successful conversion, @code{nil} if the
+          input was not handled, and @code{GTK_INPUT_ERROR} if the conversion
+          failed.}
+      @end{table}
+    @subheading{The \"output\" signal}
+      @begin{pre}
+ lambda (spin-button)   : Run Last
+      @end{pre}
+      The \"output\" signal can be used to change to formatting of the value
+      that is displayed in the spin buttons entry.
+      @begin{pre}
+ /* show leading zeros */
+ static gboolean
+ on_output (GtkSpinButton *spin,
+            gpointer       data)
+ {
+    GtkAdjustment *adjustment;
+    gchar *text;
+    int value;
+    adjustment = gtk_spin_button_get_adjustment (spin);
+    value = (int)gtk_adjustment_get_value (adjustment);
+    text = g_strdup_printf (\"%02d\", value);
+    gtk_entry_set_text (GTK_ENTRY (spin), text);
+    g_free (text);
 
+    return TRUE;
+ @}
+      @end{pre}
+      @begin[code]{table}
+        @entry[spin-button]{The object which received the signal.}
+        @entry[Returns]{@em{True} if the value has been displayed.}
+      @end{table}
+    @subheading{The \"value-changed\" signal}
+      @begin{pre}
+ lambda (spinbutton)   : Run Last
+      @end{pre}
+    @subheading{The \"wrapped\" signal}
+      @begin{pre}
+ lambda (spinbutton)   : Run Last
+      @end{pre}
+      The wrapped signal is emitted right after the spinbutton wraps from its
+      maximum to minimum value or vice-versa.
+      @begin[code]{table}
+        @entry[spinbutton]{The object which received the signal.}
+      @end{table}
+      Since 2.10
+  @end{dictionary}
   @see-slot{gtk-spin-button-adjustment}
   @see-slot{gtk-spin-button-climb-rate}
   @see-slot{gtk-spin-button-digits}
@@ -349,7 +310,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "climb-rate"
                                                'gtk-spin-button) 't)
- "The @code{\"climb-rate\"} property of type @code{gdouble} (Read / Write)@br{}
+ "The @code{\"climb-rate\"} property of type @code{:double} (Read / Write)@br{}
   The acceleration rate when you hold down a button. @br{}
   Allowed values: >= 0@br{}
   Default value: 0")
@@ -358,7 +319,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-spin-button) 't)
- "The @code{\"digits\"} property of type @code{guint} (Read / Write)@br{}
+ "The @code{\"digits\"} property of type @code{:uint} (Read / Write)@br{}
   The number of decimal places to display. @br{}
   Allowed values: <= 20@br{}
   Default value: 0")
@@ -369,7 +330,7 @@
 (setf (documentation (atdoc:get-slot-from-name "numeric" 'gtk-spin-button) 't)
  "The @code{\"numeric\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether non-numeric characters should be ignored. @br{}
-  Default value: FALSE")
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -380,7 +341,7 @@
   (Read / Write)@br{}
   Whether erroneous values are automatically changed to a spin button's
   nearest step increment. @br{}
-  Default value: FALSE")
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -389,18 +350,15 @@
                                                'gtk-spin-button) 't)
  "The @code{\"update-policy\"} property of type
   @symbol{gtk-spin-button-update-policy} (Read / Write)@br{}
-  @begin{short}
-    Whether the spin button should update always, or only when the value is
-    legal.
-  @end{short}
-
-  Default value: GTK_UPDATE_ALWAYS")
+  Whether the spin button should update always, or only when the value is
+  legal. @br{}
+  Default value: @code{:always}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-spin-button) 't)
- "The @code{\"value\"} property of type @code{gdouble} (Read / Write)@br{}
+ "The @code{\"value\"} property of type @code{:double} (Read / Write)@br{}
   Reads the current value, or sets a new value. @br{}
   Default value: 0")
 
@@ -410,11 +368,11 @@
 (setf (documentation (atdoc:get-slot-from-name "wrap" 'gtk-spin-button) 't)
  "The @code{\"wrap\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether a spin button should wrap upon reaching its limits. @br{}
-  Default value: FALSE")
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -511,11 +469,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-update-policy atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-spin-button-update-policy atdoc:*external-symbols*)
- "@version{2013-3-23}
+ "@version{2013-4-28}
   @begin{short}
     The spin button update policy determines whether the spin button displays
-    values even if they are outside the bounds of its adjustment. See
-    gtk_spin_button_set_update_policy().
+    values even if they are outside the bounds of its adjustment. See the
+    function @fun{gtk-spin-button-set-update-policy}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkSpinButtonUpdatePolicy\" gtk-spin-button-update-policy
@@ -525,12 +483,13 @@
   (:if-valid 1))
   @end{pre}
   @begin[code]{table}
-    @entry[:always]{When refreshing your GtkSpinButton, the value is always
-      displayed}
-    @entry[:if-valid]{When refreshing your GtkSpinButton, the value is only
-      displayed if it is valid within the bounds of the spin button's
-      adjustment}
-  @end{table}")
+    @entry[:always]{When refreshing your @class{gtk-spin-button}, the value is
+      always displayed}
+    @entry[:if-valid]{When refreshing your @class{gtk-spin-button}, the value is
+      only displayed if it is valid within the bounds of the spin button's
+      adjustment.}
+  @end{table}
+  @see-function{gtk-spin-button-set-update-policy}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkSpinType
@@ -552,10 +511,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-spin-type atdoc:*external-symbols*)
- "@version{2013-3-23}
+ "@version{2013-4-28}
   @begin{short}
-    The values of the GtkSpinType enumeration are used to specify the change to
-    make in gtk_spin_button_spin().
+    The values of the @sym{gtk-spin-type} enumeration are used to specify the
+    change to make in the function @fun{gtk-spin-button-spin}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkSpinType\" gtk-spin-type
@@ -577,7 +536,8 @@
     @entry[:home]{Go to the adjustments lower bound.}
     @entry[:end]{Go to the adjustments upper bound.}
     @entry[:user-defined]{Change by a specified amount.}
-  @end{table}")
+  @end{table}
+  @see-function{gtk-spin-button-spin}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_configure ()
@@ -693,12 +653,12 @@
 
 (defun gtk-spin-button-set-digits (spin-button digits)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
   @argument[digits]{the number of digits after the decimal point to be displayed
     for the spin button's value}
-  Set the precision to be displayed by spin_button. Up to 20 digit precision
-  is allowed."
+  Set the precision to be displayed by @arg{spin-button}. Up to 20 digit
+  precision is allowed."
   (setf (gtk-spin-button-digits spin-button) digits))
 
 (export 'gtk-spin-button-set-digits)
@@ -751,10 +711,10 @@
 
 (defun gtk-spin-button-get-value-as-int (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
-  @return{The value of spin_button.}
-  Get the value spin_button represented as an integer."
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{The value of @arg{spin-button}.}
+  Get the value @arg{spin-button} represented as an integer."
   (truncate (gtk-spin-button-value spin-button)))
 
 (export 'gtk-spin-button-get-value-as-int)
@@ -797,8 +757,8 @@
 
 (defun gtk-spin-button-set-numeric (spin-button numeric)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
   @argument[numeric]{flag indicating if only numeric entry is allowed}
   Sets the flag that determines if non-numeric text can be typed into the spin
   button."
@@ -812,9 +772,9 @@
 
 (defcfun ("gtk_spin_button_spin" gtk-spin-button-spin) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
-  @argument[direction]{a GtkSpinType indicating the direction to spin}
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[direction]{a @class{gtk-spin-type} indicating the direction to spin}
   @argument[increment]{step increment to apply in the specified direction}
   Increment or decrement a spin button's value in a specified direction by a
   specified amount."
@@ -847,9 +807,9 @@
 
 (defun gtk-spin-button-set-snap-to-ticks (spin-button snap-to-ticks)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
-  @argument[snap_to_ticks]{a flag indicating if invalid values should be
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[snap-to-ticks]{a flag indicating if invalid values should be
     corrected}
   Sets the policy as to whether values are corrected to the nearest step
   increment when a spin button is activated after providing an invalid value."
@@ -863,8 +823,8 @@
 
 (defcfun ("gtk_spin_button_update" gtk-spin-button-update) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
   Manually force an update of the spin button."
   (spin-button (g-object gtk-spin-button)))
 
@@ -912,11 +872,12 @@
 
 (defun gtk-spin-button-get-numeric (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
-  @return{TRUE if only numeric text can be entered}
-  Returns whether non-numeric text can be typed into the spin button. See
-  gtk_spin_button_set_numeric()."
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{@em{True} if only numeric text can be entered.}
+  Returns whether non-numeric text can be typed into the spin button.
+  See the function @fun{gtk-spin-button-set-numeric}.
+  @see-function{gtk-spin-button-set-numeric}"
   (gtk-spin-button-numeric spin-button))
 
 (export 'gtk-spin-button-get-numeric)
@@ -948,11 +909,12 @@
 
 (defun gtk-spin-button-get-snap-to-ticks (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
-  @return{TRUE if values are snapped to the nearest step}
-  Returns whether the values are corrected to the nearest step. See
-  gtk_spin_button_set_snap_to_ticks()."
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{@em{True} if values are snapped to the nearest step.}
+  Returns whether the values are corrected to the nearest step. See the
+  function @fun{gtk-spin-button-set-snap-to-ticks}.
+  @see-function{gtk-spin-button-set-snap-to-ticks}"
   (gtk-spin-button-snap-to-ticks spin-button))
 
 (export 'gtk-spin-button-get-snap-to-ticks)
@@ -981,10 +943,10 @@
 
 (defun gtk-spin-button-get-value (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[spin_button]{a GtkSpinButton}
-  @return{the value of spin_button}
-  Get the value in the spin_button."
+ "@version{2013-4-28}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{The value of @arg{spin-button}.}
+  Get the value in the @arg{spin-button}."
   (gtk-spin-button-value spin-button))
 
 (export 'gtk-spin-button-get-value)

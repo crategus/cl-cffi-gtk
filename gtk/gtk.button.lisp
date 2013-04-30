@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -62,6 +62,8 @@
 ;;;     gtk_button_get_image
 ;;;     gtk_button_set_image_position
 ;;;     gtk_button_get_image_position
+;;;     gtk_button_set_always_show_image
+;;;     gtk_button_get_always_show_image
 ;;;     gtk_button_get_event_window
 ;;; ----------------------------------------------------------------------------
 
@@ -82,7 +84,10 @@
                 "GtkActionable"
                 "GtkActivatable")
    :type-initializer "gtk_button_get_type")
-  ((focus-on-click
+  ((always-show-image
+    gtk-button-always-show-image
+    "always-show-image" "gboolean" t t)
+   (focus-on-click
     gtk-button-focus-on-click
     "focus-on-click" "gboolean" t t)
    (image
@@ -114,7 +119,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button 'type)
- "@version{2013-1-18}
+ "@version{2013-4-25}
   @short{A widget that emits a signal when clicked on.}
 
   The @sym{gtk-button} widget is generally used to trigger a callback function
@@ -126,125 +131,122 @@
   child is the @class{gtk-label}.
   @begin[Style Property Details]{dictionary}
     @subheading{The \"child-displacement-x\" style property}
-    @code{\"child-displacement-x\"} @code{gint} (Read)@br{}
-    How far in the x direction to move the child when the button is
-    depressed.@br{}
-    Default value: @code{0}
+      @code{\"child-displacement-x\"} of type @code{:int} (Read)@br{}
+      How far in the x direction to move the child when the button is
+      depressed.@br{}
+      Default value: 0
 
     @subheading{The \"child-displacement-y\" style property}
-    @code{\"child-displacement-y\"} @code{gint} (Read)@br{}
-    How far in the y direction to move the child when the button is
-    depressed.@br{}
-    Default value: @code{0}
+      @code{\"child-displacement-y\"} of type @code{:int} (Read)@br{}
+      How far in the y direction to move the child when the button is
+      depressed.@br{}
+    Default value: 0
 
     @subheading{The \"default-border\" style property}
-    @code{\"default-border\"} @class{gtk-border} (Read)@br{}
-    The @code{\"default-border\"} style property defines the extra space to add
-    around a button that can become the default widget of its window. For more
-    information about default widgets, see @fun{gtk-widget-grab-default}.
+      @code{\"default-border\"} of type @class{gtk-border} (Read)@br{}
+      The @code{\"default-border\"} style property defines the extra space to
+      add around a button that can become the default widget of its window. For
+      more information about default widgets, see the function
+      @fun{gtk-widget-grab-default}.
 
     @subheading{The \"default-outside-border\" style property}
-    @code{\"default-outside-border\"} @class{gtk-border} (Read)@br{}
-    The @code{\"default-outside-border\"} style property defines the extra
-    outside space to add around a button that can become the default widget of
-    its window. Extra outside space is always drawn outside the button border.
-    For more information about default widgets,
-    see @fun{gtk-widget-grab-default}.
+      @code{\"default-outside-border\"} of type @class{gtk-border} (Read)@br{}
+      The @code{\"default-outside-border\"} style property defines the extra
+      outside space to add around a button that can become the default widget of
+      its window. Extra outside space is always drawn outside the button border.
+      For more information about default widgets, see the function
+      @fun{gtk-widget-grab-default}.
 
     @subheading{The \"displace-focus\" style property}
-    @code{\"displace-focus\"} @code{gboolean} (Read)@br{}
-    Whether the @code{child_displacement_x/child_displacement_y} properties
-    should also affect the focus rectangle.@br{}
-    Default value: @code{nil}@br{}
-    Since 2.6
+      @code{\"displace-focus\"} of type @code{:boolean} (Read)@br{}
+      Whether the @code{child-displacement-x} / @code{child-displacement-y}
+      properties should also affect the focus rectangle.@br{}
+      Default value: @code{nil}@br{}
+      Since 2.6
 
     @subheading{The \"image-spacing\" style property}
-    @code{\"image-spacing\"} @code{gint} (Read)@br{}
-    Spacing in pixels between the image and label.@br{}
-    Allowed values: @code{>= 0}@br{}
-    Default value: @code{2}
+      @code{\"image-spacing\"} of type @code{:int} (Read)@br{}
+      Spacing in pixels between the image and label.@br{}
+      Allowed values: >= 0 @br{}
+      Default value: 2
 
     @subheading{The \"inner-border\" style property}
-    @code{\"inner-border\"} @class{gtk-border} (Read)@br{}
-    @b{Warning:}
-    @code{GtkButton:inner-border} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use the standard border and
-    padding CSS properties; the value of this style property is ignored.@br{}
-    Sets the border between the button edges and child.@br{}
-    Since 2.10
+      @code{\"inner-border\"} of type @class{gtk-border} (Read)@br{}
+      @b{Warning:}
+      The @code{\"inner-border\"} style property has been deprecated since
+      version 3.4 and should not be used in newly written code. Use the standard
+      border and padding CSS properties; the value of this style property is
+      ignored.@br{}
+      Sets the border between the button edges and child.@br{}
+      Since 2.10
   @end{dictionary}
   @begin[Signal Details]{dictionary}
-    @b{The \"activate\" signal}
-    @begin{pre}
- void user_function (GtkButton *widget, gpointer user_data)      : Action
-    @end{pre}
-    The @code{::activate} signal on @sym{gtk-button} is an action signal and
-    emitting it causes the button to animate press then release. Applications
-    should never connect to this signal, but use the \"clicked\" signal.
-    @begin[code]{table}
-      @entry[widget]{the object which received the signal.}
-      @entry[user-data]{user data set when the signal handler was connected.}
-    @end{table}
-    @b{The \"clicked\" signal}
-    @begin{pre}
- void user_function (GtkButton *button, gpointer user_data)      : Action
-    @end{pre}
-    Emitted when the button has been activated (pressed and released).
-    @begin[code]{table}
-      @entry[button]{the object that received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-    @b{The \"enter\" signal}
-    @begin{pre}
- void user_function (GtkButton *button, gpointer user_data)      : Run First
-    @end{pre}
-    @b{Warning:}
-    @code{GtkButton::enter} has been deprecated since version 2.8 and should not
-    be used in newly-written code. Use the \"enter-notify-event\" signal.@br{}
-    Emitted when the pointer enters the button.@br{}
-    @begin[code]{table}
-      @entry[button]{the object that received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-    @b{The \"leave\" signal}
-    @begin{pre}
- void user_function (GtkButton *button, gpointer user_data)      : Run First
-    @end{pre}
-    @b{Warning:}
-    @code{GtkButton::leave} has been deprecated since version 2.8 and should not
-    be used in newly-written code. Use the \"leave-notify-event\" signal.@br{}
-    Emitted when the pointer leaves the button.
-    @begin[code]{table}
-      @entry[button]{the object that received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-    @b{The \"pressed\" signal}
-    @begin{pre}
- void user_function (GtkButton *button, gpointer user_data)      : Run First
-    @end{pre} 
-    @b{Warning:}
-    @code{GtkButton::pressed} has been deprecated since version 2.8 and should
-    not be used in newly-written code. Use the \"button-press-event\"
-    signal.@br{}
-    Emitted when the button is pressed.
-    @begin[code]{table}
-      @entry[button]{the object that received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
-    @b{The \"released\" signal}
-    @begin{pre}
- void user_function (GtkButton *button, gpointer user_data)      : Run First
-    @end{pre} 
-    @b{Warning:}
-    @code{GtkButton::released} has been deprecated since version 2.8 and should
-    not be used in newly-written code. Use the \"button-release-event\"
-    signal.@br{}
-    Emitted when the button is released.
-    @begin[code]{table}
-      @entry[button]{the object that received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
-    @end{table}
+    @subheading{The \"activate\" signal}
+      @begin{pre}
+ lambda (button)   : Action
+      @end{pre}
+      The \"activate\" signal on @sym{gtk-button} is an action signal and
+      emitting it causes the button to animate press then release. Applications
+      should never connect to this signal, but use the \"clicked\" signal.
+      @begin[code]{table}
+        @entry[button]{The object which received the signal.}
+      @end{table}
+    @subheading{The \"clicked\" signal}
+      @begin{pre}
+ lambda (button)   : Action
+      @end{pre}
+      Emitted when the button has been activated (pressed and released).
+      @begin[code]{table}
+        @entry[button]{The object that received the signal.}
+      @end{table}
+    @subheading{The \"enter\" signal}
+      @begin{pre}
+ lambda (button)   : Run First
+      @end{pre}
+      @b{Warning:}
+      The \"enter\" signal has been deprecated since version 2.8 and should not
+      be used in newly written code. Use the \"enter-notify-event\" signal.@br{}
+      Emitted when the pointer enters the button.@br{}
+      @begin[code]{table}
+        @entry[button]{The object that received the signal.}
+      @end{table}
+    @subheading{The \"leave\" signal}
+      @begin{pre}
+ lambda (button)   : Run First
+      @end{pre}
+      @b{Warning:}
+      The \"leave\" signal has been deprecated since version 2.8 and should not
+      be used in newly written code. Use the \"leave-notify-event\" signal.@br{}
+      Emitted when the pointer leaves the button.
+      @begin[code]{table}
+        @entry[button]{The object that received the signal.}
+      @end{table}
+    @subheading{The \"pressed\" signal}
+      @begin{pre}
+ lambda (button)   : Run First
+      @end{pre}
+      @b{Warning:}
+      The \"pressed\" signal has been deprecated since version 2.8 and should
+      not be used in newly-written code. Use the \"button-press-event\"
+      signal.@br{}
+      Emitted when the button is pressed.
+      @begin[code]{table}
+        @entry[button]{The object that received the signal.}
+      @end{table}
+    @subheading{The \"released\" signal}
+      @begin{pre}
+ lambda (button)   : Run First
+      @end{pre}
+      @b{Warning:}
+      The \"released\" has been deprecated since version 2.8 and should
+      not be used in newly written code. Use the \"button-release-event\"
+      signal.@br{}
+      Emitted when the button is released.
+      @begin[code]{table}
+        @entry[button]{The object that received the signal.}
+      @end{table}
   @end{dictionary}
+  @see-slot{gtk-button-always-show-image}
   @see-slot{gtk-button-focus-on-click}
   @see-slot{gtk-button-image}
   @see-slot{gtk-button-image-position}
@@ -262,17 +264,31 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "always-show-image"
+                                               'gtk-button) t)
+ "The @code{\"always-show-image\"} property of type @code{:boolean}
+  (Read / Write / Construct)@br{}
+  If @em{true}, the button will ignore the @code{\"gtk-button-images\"} setting
+  and always show the image, if available.
+  Use this property if the button would be useless or hard to use without the
+  image. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-button) 't)
- "The @arg{\"focus-on-click\"} property of type @code{gboolean}
+ "The @code{\"focus-on-click\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether the button grabs focus when it is clicked with the mouse.@br{}
-  Default value: @arg{true}")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image" 'gtk-button) 't)
- "The @arg{\"image\"} property of type @class{gtk-widget} (Read / Write)@br{}
+ "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write)@br{}
   The child widget to appear next to the button text.@br{}
   Since 2.6")
 
@@ -280,7 +296,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image-position" 'gtk-button) 't)
- "The @arg{\"image-position\"} property of type @symbol{gtk-position-type}
+ "The @code{\"image-position\"} property of type @symbol{gtk-position-type}
   (Read / Write)@br{}
   The position of the image relative to the text inside the button.@br{}
   Default value: @code{:left}@br{}
@@ -290,7 +306,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-button) 't)
- "The @arg{\"label\"} property of type @code{gchar*}
+ "The @code{\"label\"} property of type @code{:string}
   (Read / Write / Construct)@br{}
   Text of the label widget inside the button, if the button contains a
   label widget.@br{}
@@ -300,7 +316,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "relief" 'gtk-button) 't)
- "The @arg{\"relief\"} property of type @symbol{gtk-relief-style}
+ "The @code{\"relief\"} property of type @symbol{gtk-relief-style}
   (Read / Write)@br{}
   The border relief style.@br{}
   Default value: @code{:normal}")
@@ -309,7 +325,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-stock" 'gtk-button) 't)
- "The @arg{\"use-stock\"} property of type @code{gboolean}
+ "The @code{\"use-stock\"} property of type @code{:boolean}
   (Read / Write / Construct)@br{}
   If set, the label is used to pick a stock item instead of being
   displayed.@br{}
@@ -319,36 +335,34 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline" 'gtk-button) 't)
- "The @arg{\"use-underline\"} property of type @code{gboolean}
+ "The @code{\"use-underline\"} property of type @code{:boolean}
   (Read / Write / Construct)@br{}
-  @begin{short}
-    If set, an underline in the text indicates the next character should be used
-    for the mnemonic accelerator key.
-  @end{short}
+  If set, an underline in the text indicates the next character should be used
+  for the mnemonic accelerator key. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-button) 't)
- "The @arg{\"xalign\"} property of type @code{gfloat} (Read / Write)@br{}
+ "The @code{\"xalign\"} property of type @code{:float} (Read / Write)@br{}
   If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
-  this property can be used to control its horizontal alignment. @code{0.0} is
-  left aligned, @code{1.0} is right aligned.@br{}
-  Allowed values: @code{[0,1]}@br{}
-  Default value: @code{0.5}@br{}
+  this property can be used to control its horizontal alignment. The value 0.0
+  is left aligned, 1.0 is right aligned.@br{}
+  Allowed values: [0,1]@br{}
+  Default value: 0.5@br{}
   Since 2.4")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-button) 't)
- "The @arg{\"yalign\"} property of type @code{gfloat} (Read / Write)@br{}
+ "The @code{\"yalign\"} property of type @code{:float} (Read / Write)@br{}
   If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
-  this property can be used to control its vertical alignment. @code{0.0} is top
-  aligned, @code{1.0} is bottom aligned.@br{}
-  Allowed values: @code{[0,1]}@br{}
-  Default value: @code{0.5}@br{}
+  this property can be used to control its vertical alignment. The value 0.0 is
+  top aligned, 1.0 is bottom aligned.@br{}
+  Allowed values: [0,1]@br{}
+  Default value: 0.5@br{}
   Since 2.4")
 
 ;;; ----------------------------------------------------------------------------
@@ -356,6 +370,15 @@
 ;;; Accessors
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-button-focus-on-click 'function)
+ "@version{2013-4-25}
+  Accessor of the slot @arg{\"always-show-image\"} of the @class{gtk-button}
+  class.
+  @see-function{gtk-button-set-always-show-image}
+  @see-function{gtk-button-get-always-show-image}")
 
 ;;; --- gtk-button-focus-on-click ----------------------------------------------
 
@@ -478,12 +501,14 @@
 
 (defun gtk-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
+ "@version{2013-4-26}
   @return{The newly created @class{gtk-button} widget.}
   @begin{short}
     Creates a new @class{gtk-button} widget.
   @end{short}
-  To add a child widget to the button, use @fun{gtk-container-add}."
+  To add a child widget to the button, use the function
+  @fun{gtk-container-add}.
+  @see-function{gtk-container-add}"
   (make-instance 'gtk-button))
 
 (export 'gtk-button-new)
@@ -496,10 +521,10 @@
 
 (defun gtk-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[label]{the text you want the @class{gtk-label} to hold}
+ "@version{2013-4-26}
+  @argument[label]{the text you want the @class{gtk-label} widget to hold}
   @return{The newly created @class{gtk-button} widget.}
-  Creates a @class{gtk-button} widget with a @class{gtk-label} child
+  Creates a @class{gtk-button} widget with a @class{gtk-label} child widget
   containing the given text in @arg{label}."
   (make-instance 'gtk-button :label label))
 
@@ -512,12 +537,12 @@
 (defcfun ("gtk_button_new_with_mnemonic" gtk-button-new-with-mnemonic)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[label]{The text of the button, with an underscore in front of the
+ "@version{2013-4-26}
+  @argument[label]{the text of the button, with an underscore in front of the
     mnemonic character}
-  @return{a new @class{gtk-button}}
+  @return{a new @class{gtk-button} widget}
   @begin{short}
-    Creates a new @class{gtk-button} containing a label.
+    Creates a new @class{gtk-button} widget containing a label.
   @end{short}
   If characters in label are preceded by an underscore, they are underlined. If
   you need a literal underscore character in a label, use '__'
@@ -535,18 +560,17 @@
 (defcfun ("gtk_button_new_from_stock" gtk-button-new-from-stock)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
+ "@version{2013-4-26}
   @argument[stock-id]{the name of the stock item}
-  @return{a new @class{gtk-button}}
+  @return{a new @class{gtk-button} widget}
   @begin{short}
-    Creates a new @class{gtk-button} containing the image and text from a stock
-    item.
+    Creates a new @class{gtk-button} widget containing the image and text from
+    a stock item.
   @end{short}
-  Some stock ids have preprocessor macros like @code{gtk-stock-ok} and
-  @code{gtk-stock-apply}.
 
   If @arg{stock-id} is unknown, then it will be treated as a mnemonic label
-  (as for @fun{gtk-button-new-with-mnemonic})."
+  as for the function @fun{gtk-button-new-with-mnemonic}.
+  @see-function{gtk-button-new-with-mnemonic}"
   (stock-id :string))
 
 (export 'gtk-button-new-from-stock)
@@ -593,9 +617,10 @@
 
 (defcfun ("gtk_button_clicked" gtk-button-clicked) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{The @class{gtk-button} you want to send the signal to.}
-  @short{Emits a \"clicked\" signal to the given @class{gtk-button}.}"
+ "@version{2013-4-26}
+  @argument[button]{the @class{gtk-button} widget you want to send the signal
+    to}
+  Emits a \"clicked\" signal to the given @class{gtk-button} widget."
   (button (g-object gtk-button)))
 
 (export 'gtk-button-clicked)
@@ -644,14 +669,15 @@
 
 (defun gtk-button-set-relief (button newstyle)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{The GtkButton you want to set relief styles of.}
-  @argument[newstyle]{The GtkReliefStyle as described above.}
+ "@version{2013-4-26}
+  @argument[button]{The @class{gtk-button} widget you want to set relief
+    styles of.}
+  @argument[newstyle]{the @symbol{gtk-relief-style} as described above}
   @begin{short}
-    Sets the relief style of the edges of the given GtkButton widget.
+    Sets the relief style of the edges of the given @class{gtk-button} widget.
   @end{short}
-  Three styles exist, GTK_RELIEF_NORMAL, GTK_RELIEF_HALF, GTK_RELIEF_NONE. The
-  default style is, as one can guess, GTK_RELIEF_NORMAL."
+  Three styles exist, @code{:normal}, @code{:half}, @code{:none}. The default
+  style is, as one can guess, @code{:normal}."
   (setf (gtk-button-relief button) newstyle))
 
 (export 'gtk-button-set-relief)
@@ -664,10 +690,11 @@
 
 (defun gtk-button-get-relief (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{The GtkButton you want the GtkReliefStyle from.}
-  @return{The current GtkReliefStyle.}
-  @short{Returns the current relief style of the given GtkButton.}"
+ "@version{2013-4-26}
+  @argument[button]{the @class{gtk-button} widget you want the
+    @symbol{gtk-relief-style} from}
+  @return{The current @symbol{gtk-relief-style}.}
+  Returns the current relief style of the given @class{gtk-button} widget."
   (gtk-button-relief button))
 
 (export 'gtk-button-get-relief)
@@ -680,17 +707,19 @@
 
 (defun gtk-button-get-label (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
+ "@version{2013-4-24}
+  @argument[button]{a @class{gtk-button} widget}
   @return{The text of the label widget. This string is owned by the widget and
     must not be modified or freed.}
   @begin{short}
-    Fetches the text from the label of the button, as set by
+    Fetches the text from the label of the @arg{button}, as set by the function
     @fun{gtk-button-set-label}.
   @end{short}
-  If the label text has not been set the return value will be NULL. This will be
-  the case if you create an empty button with @fun{gtk-button-new} to use as a
-  container."
+  If the label text has not been set the return value will be @code{nil}. This
+  will be the case if you create an empty button with the function
+  @fun{gtk-button-new} to use as a container.
+  @see-function{gtk-button-set-label}
+  @see-function{gtk-button-new}"
   (gtk-button-label button))
 
 (export 'gtk-button-get-label)
@@ -703,16 +732,17 @@
 
 (defun gtk-button-set-label (button label)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
+ "@version{2013-4-24}
+  @argument[button]{a @class{gtk-button} widget}
   @argument[label]{a string}
   @begin{short}
-    Sets the text of the label of the button to str.
+    Sets the text of the label of the @arg{button} to @arg{label}.
   @end{short}
-  This text is also used to select the stock item if
+  This text is also used to select the stock item if the function
   @fun{gtk-button-set-use-stock} is used.
 
-  This will also clear any previously set labels."
+  This will also clear any previously set labels.
+  @see-function{gtk-button-set-use-stock}"
   (setf (gtk-button-label button) label))
 
 (export 'gtk-button-set-label)
@@ -725,11 +755,11 @@
 
 (defun gtk-button-get-use-stock (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{TRUE if the button label is used to select a stock item instead of
-    being used directly as the label text.}
-  @short{Returns whether the button label is a stock item.}"
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{@em{True} if the @arg{button} label is used to select a stock item
+    instead of being used directly as the label text.}
+  Returns whether the @arg{button} label is a stock item."
   (gtk-button-use-stock button))
 
 (export 'gtk-button-get-use-stock)
@@ -742,13 +772,12 @@
 
 (defun gtk-button-set-use-stock (button use-stock)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @argument[use-stock]{TRUE if the button should use a stock item}
-  @begin{short}
-    If TRUE, the label set on the button is used as a stock id to select the
-    stock item for the button.
-  @end{short}"
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[use-stock]{@em{true} if the @argument{button} should use a stock
+    item}
+  If @em{true}, the label set on the @arg{button} is used as a stock id to
+  select the stock item for the @arg{button}."
   (setf (gtk-button-use-stock button) use-stock))
 
 (export 'gtk-button-set-use-stock)
@@ -761,14 +790,12 @@
 
 (defun gtk-button-get-use-underline (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{TRUE if an embedded underline in the button label indicates the
-    mnemonic accelerator keys.}
-  @begin{short}
-    Returns whether an embedded underline in the button label indicates a
-    mnemonic.
-  @end{short}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{@em{True} if an embedded underline in the @arg{button} label indicates
+    the mnemonic accelerator keys.}
+  Returns whether an embedded underline in the @arg{button} label indicates a
+  mnemonic.
   See @fun{gtk-button-set-use-underline}."
   (gtk-button-use-underline button))
 
@@ -782,13 +809,12 @@
 
 (defun gtk-button-set-use-underline (button use-underline)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @argument[use-underline]{TRUE if underlines in the text indicate mnemonics}
-  @begin{short}
-    If true, an underline in the text of the button label indicates the next
-    character should be used for the mnemonic accelerator key.
-  @end{short}"
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[use-underline]{@em{true} if underlines in the text indicate
+    mnemonics}
+  If @em{true}, an underline in the text of the @arg{button} label indicates the
+  next character should be used for the mnemonic accelerator key."
   (setf (gtk-button-use-underline button) use-underline))
 
 (export 'gtk-button-set-use-underline)
@@ -801,15 +827,16 @@
 
 (defun gtk-button-set-focus-on-click (button focus-on-click)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @argument{focus-on-click]{whether the button grabs focus when clicked with the
-    mouse}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[focus-on-click]{whether the @arg{button} grabs focus when clicked
+    with the mouse}
   @begin{short}
-    Sets whether the button will grab focus when it is clicked with the mouse.
+    Sets whether the @arg{button} will grab focus when it is clicked with the
+    mouse.
   @end{short}
   Making mouse clicks not grab focus is useful in places like toolbars where
-  you don't want the keyboard focus removed from the main area of the
+  you do not want the keyboard focus removed from the main area of the
   application.
 
   Since 2.4"
@@ -825,15 +852,18 @@
 
 (defun gtk-button-get-focus-on-click (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{TRUE if the button grabs focus when it is clicked with the mouse.}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{@em{True} if the @arg{button} grabs focus when it is clicked with the
+    mouse.}
   @begin{short}
-    Returns whether the button grabs focus when it is clicked with the mouse.
+    Returns whether the @arg{button} grabs focus when it is clicked with the
+    mouse.
   @end{short}
-  See @fun{gtk-button-set-focus-on-click}.
+  See the function @fun{gtk-button-set-focus-on-click}.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-button-set-focus-on-click}."
   (gtk-button-focus-on-click button))
 
 (export 'gtk-button-get-focus-on-click)
@@ -846,12 +876,12 @@
 
 (defun gtk-button-set-alignment (button xalign yalign)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @argument[xalign]{the horizontal position of the child, @code{0.0} is left
-    aligned, @code{1.0} is right aligned}
-  @argument[yalign]{the vertical position of the child, @code{0.0} is top
-    aligned, @code{1.0} is bottom aligned}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[xalign]{the horizontal position of the child, the value 0.0 is left
+    aligned, 1.0 is right aligned}
+  @argument[yalign]{the vertical position of the child, the value 0.0 is top
+    aligned, 1.0 is bottom aligned}
   @begin{short}
     Sets the alignment of the child.
   @end{short}
@@ -872,9 +902,9 @@
 
 (defun gtk-button-get-alignment (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{return location for horizontal and vertical alignment}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{Return location for horizontal and vertical alignment.}
   @begin{short}
     Gets the alignment of the child in the @arg{button}.
   @end{short}
@@ -893,15 +923,15 @@
 
 (defun gtk-button-set-image (button image)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
   @argument[image]{a widget to set as the image for the button}
   @begin{short}
     Set the image of button to the given widget.
   @end{short}
-  Note that it depends on the \"gtk-button-images\" setting whether the image
-  will be displayed or not, you don't have to call gtk_widget_show() on image
-  yourself.
+  Note that it depends on the @code{\"gtk-button-images\"} setting whether the
+  image will be displayed or not, you do not have to call the function
+  @fun{gtk-widget-show} on image yourself.
 
   Since 2.6"
   (setf (gtk-button-image button) image))
@@ -916,16 +946,18 @@
 
 (defun gtk-button-get-image (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{a @class{gtk-widget} or @code{null}-pointer in case there is no image}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{a @class{gtk-widget} or @code{nil} in case there is no image.}
   @begin{short}
     Gets the widget that is currently set as the image of button.
   @end{short}
- This may have been explicitly set by @fun{gtk-button-set-image} or constructed
- by @fun{gtk-button-new-from-stock}.
+ This may have been explicitly set by the function @fun{gtk-button-set-image}
+ or constructed by the function @fun{gtk-button-new-from-stock}.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-button-set-image}
+  @see-function{gtk-button-new-from-stock}"
   (gtk-button-image button))
 
 (export 'gtk-button-get-image)
@@ -938,11 +970,11 @@
 
 (defun gtk-button-set-image-position (button position)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
   @argument[position]{the position}
   @begin{short}
-    Sets the position of the image relative to the text inside the button.
+    Sets the position of the image relative to the text inside the @arg{button}.
   @end{short}
 
   Since 2.10"
@@ -958,11 +990,11 @@
 
 (defun gtk-button-get-image-position (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{the position}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{The position.}
   @begin{short}
-    Gets the position of the image relative to the text inside the button.
+    Gets the position of the image relative to the text inside the @arg{button}.
   @end{short}
 
   Since 2.10"
@@ -971,17 +1003,63 @@
 (export 'gtk-button-get-image-position)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_button_set_always_show_image ()
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-set-always-show-image))
+
+(defun gtk-button-set-always-show-image (button always-show)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[always-show]{@em{true} if the @arg{button} should always show the
+    image}
+  @begin{short}
+    If @em{true}, the @arg{button} will ignore the \"gtk-button-images\" setting
+    and always show the image, if available.
+  @end{short}
+
+  Use this property if the @arg{button} would be useless or hard to use without
+  the image.
+
+  Since 3.6"
+  (setf (gtk-button-always-show-image button) always-show))
+
+(export 'gtk-button-set-always-show-image)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_button_get_always_show_image ()
+;;; ----------------------------------------------------------------------------
+
+(defun gtk-button-get-always-show-image (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{@em{True} if the @arg{button} will always show the image.}
+  @begin{short}
+    Returns whether the @arg{button} will ignore the
+    @code{\"gtk-button-images\"} setting and always show the image, if
+    available.
+  @end{short}
+
+  Since 3.6"
+  (gtk-button-get-always-show-image button))
+
+(export 'gtk-button-get-always-show-image)
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_event_window ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_button_get_event_window" gtk-button-get-event-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-18}
-  @argument[button]{a @class{gtk-button}}
-  @return{button's event window}
+ "@version{2013-4-26}
+  @argument[button]{a @class{gtk-button} widget}
+  @return{Button's event window.}
   @begin{short}
-    Returns the button's event window if it is realized, @code{nil} otherwise.
+    Returns the @arg{button}'s event window if it is realized, @code{nil}
+    otherwise.
   @end{short}
   This function should be rarely needed.
 

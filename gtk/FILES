@@ -74,35 +74,35 @@ GTK+ Widgets and Objects
     
   Buttons and Toggles
     
-    gtk.button.lisp                  - GtkButton                   - GTK+ 3.4.1*
-    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.4.1*
-    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.4.1*
-    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.4.1*
-    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.4.1*
-    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.4.1*
-    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.4.2*
-    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.4.2*
+    gtk.button.lisp                  - GtkButton                   - GTK+ 3.6.4
+    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.6.4
+    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.6.4
+    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.6.4
+    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.6.4
+    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.6.4
+    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.6.4
+    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.6.4
     
     not implemented                  - GtkLockButton
     not implemented                  - GtkMenuButton
     
   Numeric/Text Data Entry
   
-    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.4.3*
-    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.4.3*
-    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.4.3*
-    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.4.3*
-    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.4.3*
+    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.6.4
+    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.6.4
+    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.6.4
+    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.6.4
+    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.6.4
 
     not implemented                  - GtkSearchEntry
 
-    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.4.3*
+    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.6.4
     
   Multiline Text Editor
     
-    gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.4.3*
-    gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.4.3*
-    gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.4.3*
+    gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.6.4
+    gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.6.4
+    gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.6.4
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.4.3*
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.4.3*
     gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.4.3*

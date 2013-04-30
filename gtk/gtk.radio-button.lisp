@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -27,6 +27,23 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; GtkRadioButton
+;;;
+;;; GtkRadioButton — A choice from multiple check buttons
+;;;
+;;;     GtkRadioButton
+;;;
+;;;     gtk_radio_button_new
+;;;     gtk_radio_button_new_from_widget
+;;;     gtk_radio_button_new_with_label
+;;;     gtk_radio_button_new_with_label_from_widget
+;;;     gtk_radio_button_new_with_mnemonic
+;;;     gtk_radio_button_new_with_mnemonic_from_widget
+;;;     gtk_radio_button_set_group
+;;;     gtk_radio_button_get_group
+;;;     gtk_radio_button_join_group
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -147,17 +164,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-button-group atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-radio-button-group 'function)
- "@version{2013-2-4}
-  @begin{short}
-    Accessor of the slot \"group\" of the @class{gtk-radio-button} class.
-  @end{short}")
+ "@version{2013-4-27}
+  Accessor of the slot \"group\" of the @class{gtk-radio-button} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_button_new ()
@@ -166,12 +181,12 @@
 (defcfun ("gtk_radio_button_new" gtk-radio-button-new)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[group]{an existing radio button group, or NULL if you are creating
-    a new group}
-  @return{a new radio button}
-  Creates a new GtkRadioButton. To be of any practical value, a widget should
-  then be packed into the radio button."
+ "@version{2013-4-27}
+  @argument[group]{an existing radio button group, or @code{nil} if you are
+    creating a new group}
+  @return{A new radio button widget.}
+  Creates a new @class{gtk-radio-button}. To be of any practical value, a widget
+  should then be packed into the radio button."
   (group (g-slist (g-object gtk-radio-button))))
 
 (export 'gtk-radio-button-new)
@@ -183,12 +198,12 @@
 (defcfun ("gtk_radio_button_new_from_widget" gtk-radio-button-new-from-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[radio_group_member]{an existing GtkRadioButton}
-  @return{a new radio button}
-  Creates a new GtkRadioButton, adding it to the same group as
-  radio_group_member. As with gtk_radio_button_new(), a widget should be
-  packed into the radio button."
+ "@version{2013-4-27}
+  @argument[radio-group-member]{an existing @class{gtk-radio-button} widget}
+  @return{A new radio button widget.}
+  Creates a new @class{gtk-radio-button} widget, adding it to the same group as
+  @arg{radio-group-member}. As with the function @fun{gtk-radio-button-new}, a
+  widget should be packed into the radio button."
   (radio-group-member (g-object gtk-radio-button)))
 
 (export 'gtk-radio-button-new-from-widget)
@@ -200,12 +215,12 @@
 (defcfun ("gtk_radio_button_new_with_label" gtk-radio-button-new-with-label)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[group]{an existing radio button group, or NULL if you are creating
-    a new group}
+ "@version{2013-4-27}
+  @argument[group]{an existing radio button group, or @code{nil} if you are
+    creating a new group}
   @argument[label]{the text label to display next to the radio button}
-  @return{a new radio button}
-  Creates a new GtkRadioButton with a text label."
+  @return{A new radio button widget.}
+  Creates a new @class{gtk-radio-button} with a text label."
   (group (g-slist (g-object gtk-radio-button)))
   (label :string))
 
@@ -218,12 +233,12 @@
 (defcfun ("gtk_radio_button_new_with_label_from_widget"
           gtk-radio-button-new-with-label-from-widget) (g-object widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[radio_group_member]{widget to get radio group from or NULL}
+ "@version{2013-4-27}
+  @argument[radio-group-member]{widget to get radio group from or @code{nil}}
   @argument[label]{a text string to display next to the radio button}
-  @return{a new radio button}
-  Creates a new GtkRadioButton with a text label, adding it to the same group
-  as radio_group_member."
+  @return{A new radio button widget.}
+  Creates a new @class{gtk-radio-button} with a text label, adding it to the same
+  group as @arg{radio-group-member}."
   (radio-group-member (g-object gtk-radio-button))
   (label :string))
 
@@ -236,14 +251,16 @@
 (defcfun ("gtk_radio_button_new_with_mnemonic"
           gtk-radio-button-new-with-mnemonic) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
+ "@version{2013-4-27}
   @argument[group]{the radio button group}
   @argument[label]{the text of the button, with an underscore in front of the
     mnemonic character}
-  @return{a new GtkRadioButton}
-  Creates a new GtkRadioButton containing a label, adding it to the same group
-  as group. The label will be created using gtk_label_new_with_mnemonic(), so
-  underscores in label indicate the mnemonic for the button."
+  @return{A new @class{gtk-radio-button} widget.}
+  Creates a new @class{gtk-radio-button} widget containing a label, adding it to
+  the same group as group. The label will be created using the function
+  @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
+  mnemonic for the button.
+  @see-function{gtk-label-new-with-mnemonic}"
   (group (g-slist (g-object gtk-radio-button)))
   (label :string))
 
@@ -256,14 +273,15 @@
 (defcfun ("gtk_radio_button_new_with_mnemonic_from_widget"
           gtk-radio-button-new-with-mnemonic-from-widget) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[radio_group_member]{widget to get radio group from or NULL}
+ "@version{2013-4-27}
+  @argument[radio-group_member]{widget to get radio group from or @code{nil}}
   @argument[label]{the text of the button, with an underscore in front of the
     mnemonic character}
-  @return{a new GtkRadioButton}
-  Creates a new GtkRadioButton containing a label. The label will be created
-  using gtk_label_new_with_mnemonic(), so underscores in label indicate the
-  mnemonic for the button."
+  @return{A new @class{gtk-radio-button} widget.}
+  Creates a new @class{gtk-radio-button} widget containing a label. The label
+  will be created using the function @fun{gtk-label-new-with-mnemonic}, so
+  underscores in label indicate the mnemonic for the button.
+  @see-function{gtk-label-new-with-mnemonic}"
   (radio-group-member (g-object gtk-radio-button))
   (label :string))
 
@@ -277,14 +295,15 @@
 
 (defun gtk-radio-button-set-group (radio-button group)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[radio_button]{a GtkRadioButton}
+ "@version{2013-4-26}
+  @argument[radio-button]{a @class{gtk-radio-button} widget}
   @argument[group]{an existing radio button group, such as one returned from
-    gtk_radio_button_get_group()}
-  Sets a GtkRadioButton's group. It should be noted that this does not change
-  the layout of your interface in any way, so if you are changing the group,
-  it is likely you will need to re-arrange the user interface to reflect these
-  changes."
+    the function @fun{gtk-radio-button-get-group}}
+  Sets a @class{gtk-radio-button}'s group. It should be noted that this does not
+  change the layout of your interface in any way, so if you are changing the
+  group, it is likely you will need to re-arrange the user interface to reflect
+  these changes.
+  @see-function{gtk-radio-button-get-group}"
   (setf (gtk-radio-button-group radio-button) group))
 
 (export 'gtk-radio-button-set-group)
@@ -296,12 +315,12 @@
 (defcfun ("gtk_radio_button_get_group" gtk-radio-button-get-group)
     (g-slist (g-object gtk-radio-button))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[radio_button]{a GtkRadioButton}
+ "@version{2013-4-26}
+  @argument[radio-button]{a @class{gtk-radio-button} widget}
   @begin{return}
-    a linked list containing all the radio buttons in the same group as
-    radio_button. The returned list is owned by the radio button and must
-    not be modified or freed
+    A linked list containing all the radio buttons in the same group as
+    @arg{radio-button}. The returned list is owned by the radio button and must
+    not be modified or freed.
   @end{return}
   Retrieves the group assigned to a radio button."
   (radio-button (g-object gtk-radio-button)))
@@ -314,16 +333,17 @@
 
 (defcfun ("gtk_radio_button_join_group" gtk-radio-button-join-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-17}
-  @argument[radio_button]{the GtkRadioButton object}
-  @argument[group_source]{a radio button object whos group we are joining, or
-    NULL to remove the radio button from its group}
+ "@version{2013-4-26}
+  @argument[radio-button]{the @class{gtk-radio-button} widget}
+  @argument[group-source]{a radio button object whose group we are joining, or
+    @code{nil} to remove the radio button from its group}
   @begin{short}
-    Joins a GtkRadioButton object to the group of another GtkRadioButton object
+    Joins a @class{gtk-radio-button} object to the group of another
+    @class{gtk-radio-button} object.
   @end{short}
 
-  Use this in language bindings instead of the gtk_radio_button_get_group()
-  and gtk_radio_button_set_group() methods
+  Use this in language bindings instead of the the functions
+  @fun{gtk-radio-button-get-group} and @fun{gtk-radio-button-set-group} methods.
 
   A common way to set up a group of radio buttons is the following:
   @begin{pre}
@@ -338,7 +358,9 @@
       last_button = radio_button;
    @}
   @end{pre}
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-radio-button-get-group}
+  @see-function{gtk-radio-button-set-group}"
   (radio-button (g-object radio-button))
   (group-source (g-slist (g-object radio-button))))
 

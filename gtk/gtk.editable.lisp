@@ -1,28 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.editable.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkEditable
-;;; 
+;;;
 ;;; Interface for text-editing widgets
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkEditable
-;;;     
+;;;
 ;;;     gtk_editable_select_region
 ;;;     gtk_editable_get_selection_bounds
 ;;;     gtk_editable_insert_text
@@ -62,32 +62,26 @@
   (:export t
    :type-initializer "gtk_editable_get_type"))
 
-;  (:cffi position
-;         gtk-editable-position :int
-;         "gtk_editable_get_position" "gtk_editable_set_position")
-;  (:cffi editable
-;         gtk-editable-editable :boolean
-;         "gtk_editable_get_editable" "gtk_editable_set_editable"))
-
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-editable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-editable 'type)
- "@version{2013-2-28}
+ "@version{2013-4-28}
   @begin{short}
-    The GtkEditable interface is an interface which should be implemented by
-    text editing widgets, such as GtkEntry and GtkSpinButton. It contains
-    functions for generically manipulating an editable widget, a large number of
-    action signals used for key bindings, and several signals that an
-    application can connect to to modify the behavior of a widget.
+    The @sym{gtk-editable} interface is an interface which should be implemented
+    by text editing widgets, such as @class{gtk-entry} and
+    @class{gtk-spin-button}. It contains functions for generically manipulating
+    an editable widget, a large number of action signals used for key bindings,
+    and several signals that an application can connect to to modify the
+    behavior of a widget.
   @end{short}
 
   As an example of the latter usage, by connecting the following handler to
   \"insert-text\", an application can convert all entry into a widget into
   uppercase.
 
-  Example 57. Forcing entry to uppercase.
+  @b{Example:} Forcing entry to uppercase.
   @begin{pre}
  #include <ctype.h>
 
@@ -99,13 +93,13 @@
                       gpointer     data)
  {
    gchar *result = g_utf8_strup (text, length);
- 
+
    g_signal_handlers_block_by_func (editable,
                                 (gpointer) insert_text_handler, data);
    gtk_editable_insert_text (editable, result, length, position);
    g_signal_handlers_unblock_by_func (editable,
                                       (gpointer) insert_text_handler, data);
- 
+
    g_signal_stop_emission_by_name (editable, \"insert_text\");
 
    g_free (result);
@@ -114,66 +108,53 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- void user_function (GtkEditable *editable,
-                     gpointer     user_data)      : Run Last
+ lambda (editable)   : Run Last
       @end{pre}
-      The ::changed signal is emitted at the end of a single user-visible
-      operation on the contents of the GtkEditable.
+      The \"changed\" signal is emitted at the end of a single user-visible
+      operation on the contents of the @sym{gtk-editable}.
 
-      E.g., a paste operation that replaces the contents of the selection will
+      E. g., a paste operation that replaces the contents of the selection will
       cause only one signal emission (even though it is implemented by first
       deleting the selection, then inserting the new content, and may cause
-      multiple ::notify::text signals to be emitted).
+      multiple \"notify::text\" signals to be emitted).
       @begin[code]{table}
-        @entry[editable]{the object which received the signal}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[editable]{The object which received the signal.}
       @end{table}
-
     @subheading{The \"delete-text\" signal}
       @begin{pre}
- void user_function (GtkEditable *editable,
-                     gint         start_pos,
-                     gint         end_pos,
-                     gpointer     user_data)      : Run Last
+ lambda (editable start-pos end-pos)   : Run Last
       @end{pre}
-      This signal is emitted when text is deleted from the widget by the user. The
-      default handler for this signal will normally be responsible for deleting
-      the text, so by connecting to this signal and then stopping the signal with
-      g_signal_stop_emission(), it is possible to modify the range of deleted
-      text, or prevent it from being deleted entirely. The start_pos and end_pos
-      parameters are interpreted as for gtk_editable_delete_text().
+      This signal is emitted when text is deleted from the widget by the user.
+      The default handler for this signal will normally be responsible for
+      deleting the text, so by connecting to this signal and then stopping the
+      signal with the function @fun{g-signal-stop-emission}, it is possible to
+      modify the range of deleted text, or prevent it from being deleted
+      entirely. The @arg{start-pos} and @arg{end-pos} parameters are interpreted
+      as for the function @fun{gtk-editable-delete-text}.
       @begin[code]{table}
-        @entry[editable]{the object which received the signal}
-        @entry[start_pos]{the starting position}
-        @entry[end_pos]{the end position}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[editable]{The object which received the signal.}
+        @entry[start-pos]{The starting position.}
+        @entry[end-pos]{The end position.}
       @end{table}
-
     @subheading{The \"insert-text\" signal}
       @begin{pre}
- void user_function (GtkEditable *editable,
-                     gchar       *new_text,
-                     gint         new_text_length,
-                     gpointer     position,
-                     gpointer     user_data)            : Run Last
+ lambda (editable new-text new-text-length position)   : Run Last
       @end{pre}
       This signal is emitted when text is inserted into the widget by the user.
       The default handler for this signal will normally be responsible for
       inserting the text, so by connecting to this signal and then stopping the
-      signal with g_signal_stop_emission(), it is possible to modify the inserted
-      text, or prevent it from being inserted entirely.
+      signal with the function @fun{g-signal-stop-emission}, it is possible to
+      modify the inserted text, or prevent it from being inserted entirely.
       @begin[code]{table}
-        @entry[editable]{the object which received the signal}
-        @entry[new_text]{the new text to insert}
-        @entry[new_text_length]{the length of the new text, in bytes, or -1 if
-          new_text is nul-terminated}
-        @entry[position]{the position, in characters, at which to insert the new
-          text. this is an in-out parameter. After the signal emission is
-          finished, it should point after the newly inserted text}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[editable]{The object which received the signal.}
+        @entry[new-text]{The new text to insert.}
+        @entry[new-text-length]{The length of the new text, in bytes, or -1 if
+          @arg{new-text} is nul-terminated.}
+        @entry[position]{The position, in characters, at which to insert the new
+          text. This is an in-out parameter. After the signal emission is
+          finished, it should point after the newly inserted text.}
       @end{table}
-  @end{dictionary}
-")
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_editable_select_region ()
@@ -181,17 +162,17 @@
 
 (defcfun ("gtk_editable_select_region" gtk-editable-select-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
   @argument[start]{start of region}
   @argument[end]{end of region}
   @begin{short}
     Selects a region of text.
   @end{short}
   The characters that are selected are those characters at positions from
-  start_pos up to, but not including end_pos. If end_pos is negative, then the
-  the characters selected are those characters from start_pos to the end of the
-  text.
+  @arg{start} up to, but not including @arg{end}. If @arg{end} is negative, then
+  the the characters selected are those characters from @arg{start} to the end
+  of the text.
 
   Note that positions are specified in characters, not bytes."
   (editable (g-object gtk-editable))
@@ -204,34 +185,37 @@
 ;;; gtk_editable_get_selection_bounds ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_editable_get_selection_bounds" gtk-editable-get-selection-bounds)
+(defcfun ("gtk_editable_get_selection_bounds"
+          %gtk-editable-get-selection-bounds)
     :boolean
   (editable (g-object gtk-editable))
   (start (:pointer :int))
   (end (:pointer :int)))
 
-(defun gtk-editable-selection (editable)
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
+(defun gtk-editable-get-selection-bounds (editable)
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
   @begin{return}
-    @code{selected-p} -- TRUE if an area is selected, FALSE otherwise@br{}
-    @code{start} -- the starting position, or NULL@br{}
-    @code{end} --the end position, or NULL
+    @code{selected-p} -- @em{true} if an area is selected, @code{nil}
+                         otherwise@br{}
+    @code{start} -- the starting position, or @code{nil}@br{}
+    @code{end} --the end position, or @code{nil}
   @end{return}
   @begin{short}
     Retrieves the selection bound of the editable.
   @end{short}
-  start_pos will be filled with the start of the selection and end_pos with end.
-  If no text was selected both will be identical and FALSE will be returned.
+  @arg{start} will be filled with the start of the selection and @arg{end} with
+  end. If no text was selected both will be identical and @code{nil} will be
+  returned.
 
   Note that positions are specified in characters, not bytes."
   (with-foreign-objects ((start :int) (end :int))
-    (let ((selected-p (gtk-editable-get-selection-bounds editable start end)))
+    (let ((selected-p (%gtk-editable-get-selection-bounds editable start end)))
       (values selected-p
               (mem-ref start :int)
               (mem-ref end :int)))))
 
-(export 'gtk-editable-selection)
+(export 'gtk-editable-get-selection-bounds)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_editable_insert_text ()
@@ -245,18 +229,17 @@
 
 (defun gtk-editable-insert-text (editable text position)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @argument[new_text]{the text to append}
-  @argument[new_text_length]{the length of the text in bytes, or -1}
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  @argument[new-text]{the text to append}
   @argument[position]{location of the position text will be inserted at}
   @begin{short}
-    Inserts new_text_length bytes of new_text into the contents of the widget,
-    at position position.
+    Inserts @arg{new-text} into the contents of the widget, at position
+    @arg{position}.
   @end{short}
 
-  Note that the position is in characters, not in bytes. The function updates
-  position to point after the newly inserted text."
+  Note that the @arg{position} is in characters, not in bytes. The function
+  updates position to point after the newly inserted text."
   (with-foreign-object (pos :int)
     (setf (mem-ref pos :int) position)
     (%gtk-editable-insert-text editable text (length text) pos)
@@ -275,16 +258,16 @@
 
 (defun gtk-editable-delete-text (editable &key start-pos end-pos)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @argument[start_pos]{start position}
-  @argument[end_pos]{end position}
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  @argument[start]{start position}
+  @argument[end]{end position}
   @begin{short}
     Deletes a sequence of characters.
   @end{short}
   The characters that are deleted are those characters at positions from
-  start_pos up to, but not including end_pos. If end_pos is negative, then the
-  the characters deleted are those from start_pos to the end of the text.
+  @arg{start} up to, but not including @arg{end}. If @arg{end} is negative, then
+  the characters deleted are those from @arg{start} to the end of the text.
 
   Note that the positions are specified in characters, not bytes."
   (%gtk-editable-delete-text editable (or start-pos -1) (or end-pos -1)))
@@ -302,22 +285,22 @@
 
 (defun gtk-editable-get-chars (editable &key (start 0) (end -1))
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @argument[start_pos]{start of text}
-  @argument[end_pos]{end of text}
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  @argument[start]{start of text}
+  @argument[end]{end of text}
   @begin{return}
-    a pointer to the contents of the widget as a string. This string is
-    allocated by the GtkEditable implementation and should be freed by the
-    caller.
+    A pointer to the contents of the widget as a string. This string is
+    allocated by the @class{gtk-editable} implementation and should be freed by
+    the caller.
   @end{return}
   @begin{short}
     Retrieves a sequence of characters.
   @end{short}
   The characters that are retrieved are those characters at positions from
-  start_pos up to, but not including end_pos. If end_pos is negative, then the
-  the characters retrieved are those characters from start_pos to the end of the
-  text.
+  @arg{start} up to, but not including @arg{end}. If @arg{end} is negative, then
+  the characters retrieved are those characters from @arg{start} to the end of
+  the text.
 
   Note that positions are specified in characters, not bytes."
   (%gtk-editable-get-chars editable start end))
@@ -330,12 +313,10 @@
 
 (defcfun ("gtk_editable_cut_clipboard" gtk-editable-cut-clipboard) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @begin{short}
-    Removes the contents of the currently selected content in the editable and
-    puts it on the clipboard.
-  @end{short}"
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  Removes the contents of the currently selected content in the editable and
+  puts it on the clipboard."
   (editable (g-object gtk-editable)))
 
 (export 'gtk-editable-cut-clipboard)
@@ -346,12 +327,10 @@
 
 (defcfun ("gtk_editable_copy_clipboard" gtk-editable-copy-clipboard) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @begin{short}
-    Copies the contents of the currently selected content in the editable and
-    puts it on the clipboard.
-  @end{short}"
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  Copies the contents of the currently selected content in the editable and
+  puts it on the clipboard."
   (editable (g-object gtk-editable)))
 
 (export 'gtk-editable-copy-clipboard)
@@ -362,12 +341,10 @@
 
 (defcfun ("gtk_editable_paste_clipboard" gtk-editable-paste-clipboard) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @begin{short}
-    Pastes the content of the clipboard to the current position of the cursor in
-    the editable.
-  @end{short}"
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  Pastes the content of the clipboard to the current position of the cursor in
+  the editable."
   (editable (g-object gtk-editable)))
 
 (export 'gtk-editable-paste-clipboard)
@@ -378,12 +355,10 @@
 
 (defcfun ("gtk_editable_delete_selection" gtk-editable-delete-selection) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @begin{short}
-    Deletes the currently selected text of the editable. This call doesn't do
-    anything if there is no selected text.
-  @end{short}"
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  Deletes the currently selected text of the editable. This call does not do
+  anything if there is no selected text."
   (editable (g-object gtk-editable)))
 
 (export 'gtk-editable-delete-selection)
@@ -394,8 +369,8 @@
 
 (defcfun ("gtk_editable_set_position" gtk-editable-set-position) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
   @argument[position]{the position of the cursor}
   @begin{short}
     Sets the cursor position in the editable to the given value.
@@ -417,9 +392,9 @@
 
 (defcfun ("gtk_editable_get_position" gtk-editable-get-position) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @return{the cursor position}
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  @return{The cursor position.}
   @begin{short}
     Retrieves the current position of the cursor relative to the start of the
     content of the editable.
@@ -436,13 +411,11 @@
 
 (defcfun ("gtk_editable_set_editable" gtk-editable-set-editable) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
-  @argument[editable]{a GtkEditable}
-  @argument[is-editable]{TRUE if the user is allowed to edit the text in the
-    widget}
-  @begin{short}
-    Determines if the user can edit the text in the editable widget or not.
-  @end{short}"
+ "@version{2013-4-28}
+  @argument[editable]{a @class{gtk-editable} object}
+  @argument[is-editable]{@em{True} if the user is allowed to edit the text in
+    the widget}
+  Determines if the user can edit the text in the editable widget or not."
   (editable (g-object gtk-editable))
   (is-editable :boolean))
 
@@ -454,12 +427,12 @@
 
 (defcfun ("gtk_editable_get_editable" gtk-editable-get-editable) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
+ "@version{2013-4-28}
   @argument[editable]{a @class{gtk-editable} object}
-  @return{@code{true} if @arg{editable} is editable.}
-  @begin{short}
-    Retrieves whether editable is editable. See @fun{gtk-editable-set-editable}.
-  @end{short}"
+  @return{@em{True} if @arg{editable} is editable.}
+  Retrieves whether @arg{editable} is editable. See the function
+  @fun{gtk-editable-set-editable}.
+  @see-function{gtk-editable-set-editable}"
   (editable (g-object gtk-editable)))
 
 (export 'gtk-editable-get-editable)
