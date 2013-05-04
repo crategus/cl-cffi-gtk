@@ -4077,9 +4077,9 @@
   For @class{gtk-window} classes, setting a @arg{parent-window} effects whether
   the window is a toplevel window or can be embedded into other widgets.
   
-  @subheadin{Note}
+  @subheading{Note}
     For @class{gtk-window} classes, this needs to be called before the window is
-    realized
+    realized.
   @see-function{gtk-widget-get-parent-window}"
   (widget (g-object gtk-window))
   (parent-window (g-object gdk-window)))
