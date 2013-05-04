@@ -65,7 +65,8 @@
   (assert-false (g-type-is-a "GtkBox" "GtkWindow"))
   (assert-equal '("GtkHBox" "GtkVBox" "GtkButtonBox" "GtkStatusbar" "GtkInfoBar"
          "GtkColorChooserWidget" "GtkColorSelection" "GtkFileChooserWidget"
-         "GtkFileChooserButton" "GtkFontSelection" "GtkRecentChooserWidget")
+         "GtkFileChooserButton" "GtkFontChooserWidget" "GtkFontSelection"
+         "GtkRecentChooserWidget")
                 (mapcar #'gtype-name (g-type-children "GtkBox")))
   (assert-equal '("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkBox")))

@@ -55,24 +55,24 @@
 #+sbcl
 (define-test glib-version
   (assert-equal    2 glib-major-version)
-  (assert-equal   34 glib-minor-version)
-  (assert-equal    1 glib-micro-version)
-  (assert-equal 3401 glib-binary-age)
-  (assert-equal    1 glib-interface-age)
+  (assert-equal   36 glib-minor-version)
+  (assert-equal    0 glib-micro-version)
+  (assert-equal 3600 glib-binary-age)
+  (assert-equal    0 glib-interface-age)
   (assert-false (glib-check-version 2 24 0))
   (assert-equal "GLib version too old (micro mismatch)"
-                (glib-check-version 2 36 0)))
+                (glib-check-version 2 37 0)))
 
 #+windows
 (define-test glib-version
   (assert-equal    2 glib-major-version)
-  (assert-equal   32 glib-minor-version)
-  (assert-equal    3 glib-micro-version)
-  (assert-equal 3203 glib-binary-age)
-  (assert-equal    3 glib-interface-age)
+  (assert-equal   36 glib-minor-version)
+  (assert-equal    0 glib-micro-version)
+  (assert-equal 3600 glib-binary-age)
+  (assert-equal    0 glib-interface-age)
   (assert-false (glib-check-version 2 24 0))
   (assert-equal "GLib version too old (micro mismatch)"
-                (glib-check-version 2 36 0)))
+                (glib-check-version 2 37 0)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -196,6 +196,8 @@
   (assert-equal "GTK Program" (g-get-prgname)))
 
 ;;; ----------------------------------------------------------------------------
+
+(load "rtest-glib-g-variant-type.lisp")
 
 (format t "~&-----------------------------------------------------------------")
 (run-all-tests :glib-tests)

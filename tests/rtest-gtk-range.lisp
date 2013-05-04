@@ -162,7 +162,7 @@
     (assert-eq :auto (gtk-range-get-upper-stepper-sensitivity widget))
     (assert-false (gtk-range-get-flippable widget))
     (assert-false (gtk-range-set-flippable widget nil))
-    (assert-eql 1 (gtk-range-get-min-slider-size widget))
+    (assert-eql 31 (gtk-range-get-min-slider-size widget))
     (assert-eq 'gdk-rectangle (type-of (gtk-range-get-range-rect widget)))
     (assert-equal (values 0 1) (gtk-range-get-slider-range widget))
     (assert-false (gtk-range-get-slider-size-fixed widget))

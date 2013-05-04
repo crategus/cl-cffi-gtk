@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; rtest-gtk-application.lisp
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -22,6 +22,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk-tests)
+
+(defvar *verbose* nil)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -121,19 +123,24 @@
                             :inactivity-timeout 10000)))
     (g-signal-connect app "activate"
        (lambda (application)
-         (format t "~&Signal 'activate' called for ~A~%" application)))
+         (when *verbose*
+           (format t "~&Signal 'activate' called for ~A~%" application))))
     (g-signal-connect app "command-line"
        (lambda (application)
-         (format t "~&Signal 'command-line' called for ~A~%" application)))
+         (when *verbose*
+           (format t "~&Signal 'command-line' called for ~A~%" application))))
     (g-signal-connect app "open"
        (lambda (application)
-         (format t "~&Signal 'open' called for ~A~%" application)))
+         (when *verbose*
+           (format t "~&Signal 'open' called for ~A~%" application))))
     (g-signal-connect app "shutdown"
        (lambda (application)
-         (format t "~&Signal 'shutdown' called for ~A~%" application)))
+         (when *verbose*
+           (format t "~&Signal 'shutdown' called for ~A~%" application))))
     (g-signal-connect app "startup"
        (lambda (application)
-         (format t "~&Signal 'startup' called for ~A~%" application)))
+         (when *verbose*
+           (format t "~&Signal 'startup' called for ~A~%" application))))
 
     (g-application-hold app)
     (assert-equal "org.gtk.TestApplication"

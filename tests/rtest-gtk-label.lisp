@@ -140,7 +140,7 @@
     (assert-eql 2 (gtk-widget-style-get-property ptr "separator-height"))
     (assert-eql 2 (gtk-widget-style-get-property ptr "separator-width"))
     (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property ptr "visited-link-color")))
-    (assert-true  (gtk-widget-style-get-property ptr "wide-separators"))
+    (assert-false (gtk-widget-style-get-property ptr "wide-separators"))
     (assert-false (gtk-widget-style-get-property ptr "window-dragging")))
          
   ;; Check the definition of the class gtk-label

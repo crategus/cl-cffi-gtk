@@ -95,7 +95,7 @@
     (assert-eql  68 (foreign-slot-value query 'g-type-query :class-size))
     (assert-eql  28 (foreign-slot-value query 'g-type-query :instance-size)))
   
-  ;; Get the names of the class properties
+  ;; Get the class properties
   (assert-equal
        '("name" "parameter-type" "enabled" "state-type" "state")
      (mapcar #'param-spec-name
@@ -117,7 +117,7 @@
                                 (STATE-TYPE G-SIMPLE-ACTION-STATE-TYPE
                                  "state-type" "GVariantType" T NIL)))
      (get-g-type-definition (gtype "GSimpleAction")))
-
+#|
   ;; Create an instance
   (let* ((action (make-instance 'g-simple-action
                                 :name "simple"
@@ -231,5 +231,6 @@
     (assert-equal "fourth simple" (g-action-get-name action))
     ;; Activate the action
     (g-action-activate action (null-pointer)))
+|#
 )
 
