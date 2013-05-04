@@ -4069,17 +4069,18 @@
 
 (defcfun ("gtk_widget_set_parent_window" gtk-widget-set-parent-window) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance.}
+ "@version{2013-5-4}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[parent-window]{the new parent window}
   @short{Sets a non default parent window for @arg{widget}.}
 
   For @class{gtk-window} classes, setting a @arg{parent-window} effects whether
   the window is a toplevel window or can be embedded into other widgets.
-  @begin[Note]{dictionary}
+  
+  @subheadin{Note}
     For @class{gtk-window} classes, this needs to be called before the window is
-    realized.
-  @end{dictionary}"
+    realized
+  @see-function{gtk-widget-get-parent-window}"
   (widget (g-object gtk-window))
   (parent-window (g-object gdk-window)))
 
@@ -4092,10 +4093,11 @@
 (defcfun ("gtk_widget_get_parent_window" gtk-widget-get-parent-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget}.}
-  @return{the parent window of @arg{widget}}
-  @short{Gets widget's parent window.}"
+ "@version{2013-5-4}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The parent window of @arg{widget}.}
+  @short{Gets @arg{widget}'s parent window.}
+  @see-function{gtk-widget-set-parent-window}"
   (widget (g-object gtk-window)))
 
 (export 'gtk-widget-get-parent-window)
