@@ -655,7 +655,7 @@
   An indefinite type that is a supertype of every dictionary type -- that is,
   any array type that has an element type equal to any dictionary entry type.")
 
-(export '+g-variant-type-dictonary+)
+(export '+g-variant-type-dictionary+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_STRING_ARRAY
@@ -1161,90 +1161,103 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_equal ()
-;;;
-;;; gboolean g_variant_type_equal (gconstpointer type1, gconstpointer type2);
-;;;
-;;; Compares type1 and type2 for equality.
-;;;
-;;; Only returns TRUE if the types are exactly equal. Even if one type is an
-;;; indefinite type and the other is a subtype of it, FALSE will be returned if
-;;; they are not exactly equal. If you want to check for subtypes, use
-;;; g_variant_type_is_subtype_of().
-;;;
-;;; The argument types of type1 and type2 are only gconstpointer to allow use
-;;; with GHashTable without function pointer casting. For both arguments, a
-;;; valid GVariantType must be provided.
-;;;
-;;; type1 :
-;;;     a GVariantType
-;;;
-;;; type2 :
-;;;     a GVariantType
-;;;
-;;; Returns :
-;;;     TRUE if type1 and type2 are exactly equal
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_equal" g-variant-type-equal) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-2}
+  @argument[type1]{a @symbol{g-variant-type} structure}
+  @argument[type2]{a @symbol{g-variant-type} structure}
+  @return{@em{True} if @arg{type1} and @arg{type2} are exactly equal.}
+  @begin{short}
+    Compares @arg{type1} and @arg{type2} for equality.
+  @end{short}
+
+  Only returns @em{true} if the types are exactly equal. Even if one type is an
+  indefinite type and the other is a subtype of it, @code{nil} will be returned
+  if they are not exactly equal. If you want to check for subtypes, use the
+  function @fun{g-variant-type-is-subtype-of}.
+
+  The argument types of @arg{type1} and @arg{type2} are only in the C
+  implementation @code{gconstpointer} to allow use with @code{GHashTable}
+  without function pointer casting. For both arguments, a valid
+  @symbol{g-variant-type} must be provided.
+
+  Since 2.24
+  @see-function{g-variant-type-is-subtype-of}"
+  (type1 (:pointer g-variant-type))
+  (type2 (:pointer g-variant-type)))
+
+(export 'g-variant-type-equal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_is_subtype_of ()
-;;;
-;;; gboolean g_variant_type_is_subtype_of (const GVariantType *type,
-;;;                                        const GVariantType *supertype);
-;;;
-;;; Checks if type is a subtype of supertype.
-;;;
-;;; This function returns TRUE if type is a subtype of supertype. All types are
-;;; considered to be subtypes of themselves. Aside from that, only indefinite
-;;; types can have subtypes.
-;;;
-;;; type :
-;;;     a GVariantType
-;;;
-;;; supertype :
-;;;     a GVariantType
-;;;
-;;; Returns :
-;;;     TRUE if type is a subtype of supertype Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_is_subtype_of" g-variant-type-is-subtype-of) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-2}
+  @argument[type]{a @symbol{g-variant-type} structure}
+  @argument[supertype]{a @symbol{g-variant-type} structure}
+  @return{@em{True} if @arg{type} is a subtype of @arg{supertype}.}
+  @begin{short}
+    Checks if @arg{type} is a subtype of @arg{supertype}.
+  @end{short}
+
+  This function returns @em{true} if @arg{type} is a subtype of @arg{supertype}.
+  All types are considered to be subtypes of themselves. Aside from that, only
+  indefinite types can have subtypes.
+
+  Since 2.24"
+  (type g-variant-type)
+  (supertype g-variant-type))
+
+(export 'g-variant-type-is-subtype-of)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_new_maybe ()
-;;;
-;;; GVariantType * g_variant_type_new_maybe (const GVariantType *element);
-;;;
-;;; Constructs the type corresponding to a maybe instance containing type type
-;;; or Nothing.
-;;;
-;;; It is appropriate to call g_variant_type_free() on the return value.
-;;;
-;;; element :
-;;;     a GVariantType
-;;;
-;;; Returns :
-;;;     a new maybe GVariantType
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_new_maybe" g-variant-type-new-maybe) g-variant-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-2}
+  @argument[element]{a @symbol{g-variant-type} structure}
+  @return{A new maybe @symbol{g-variant-type} structure.}
+  @begin{short}
+    Constructs the type corresponding to a maybe instance containing type
+    @arg{type} or nothing.
+  @end{short}
+
+  It is appropriate to call @fun{g-variant-type-free} on the return value.
+
+  Since 2.24
+  @see-function{g-variant-type-free}"
+  (element g-variant-type))
+
+(export 'g-variant-type-new-maybe)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_new_array ()
-;;;
-;;; GVariantType * g_variant_type_new_array (const GVariantType *element);
-;;;
-;;; Constructs the type corresponding to an array of elements of the type type.
-;;;
-;;; It is appropriate to call g_variant_type_free() on the return value.
-;;;
-;;; element :
-;;;     a GVariantType
-;;;
-;;; Returns :
-;;;     a new array GVariantType
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_new_array" g-variant-type-new-array) g-variant-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-2}
+  @argument[element]{a @symbol{g-variant-type} structure}
+  @return{A new array @symbol{g-variant-type} structure.}
+  @begin{short}
+    Constructs the type corresponding to an array of elements of the type
+    @arg{type}.
+  @end{short}
+
+  It is appropriate to call the function @fun{g-variant-type-free} on the
+  return value.
+
+  Since 2.24
+  @see-function{g-variant-type-free}"
+  (element g-variant-type))
+
+(export 'g-variant-type-new-array)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_new_tuple ()
@@ -1270,6 +1283,23 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_new_tuple" %g-variant-type-new-tuple) g-variant-type
+  (items (:pointer g-variant-type))
+  (length :int))
+
+;; This code is an example for passing an array to a C function.
+
+(defun g-variant-type-new-tuple (items)
+  (let ((n (length items)))
+    (with-foreign-object (array 'g-variant-type (+ n 1))
+      (loop for i from 0 and item in items
+         do (setf (mem-aref array 'g-variant-type i) item))
+      ;; The last element of array is a null-pointer
+      (setf (mem-aref array 'g-variant-type n) (null-pointer))
+      (%g-variant-type-new-tuple array -1))))
+
+(export 'g-variant-type-new-tuple)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_new_dict_entry ()
@@ -1333,6 +1363,11 @@
 ;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_type_n_items" g-variant-type-n-items) g-size
+  (type g-variant-type))
+
+(export 'g-variant-type-n-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_first ()
