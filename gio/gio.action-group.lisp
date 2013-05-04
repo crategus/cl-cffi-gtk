@@ -2,10 +2,12 @@
 ;;; gio.action-group.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.3. The latest version of this documentation can be found
-;;; on-line at http://library.gnome.org/devel/gio/unstable/.
+;;; for GIO 2.36.1. The latest version of this documentation can be found
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -73,159 +75,119 @@
 ;;;   "action-enabled-changed"                         : Has Details
 ;;;   "action-removed"                                 : Has Details
 ;;;   "action-state-changed"                           : Has Details
-;;;
-;;; Description
-;;;
-;;; GActionGroup represents a group of actions. Actions can be used to expose
-;;; functionality in a structured way, either from one part of a program to
-;;; another, or to the outside world. Action groups are often used together
-;;; with a GMenuModel that provides additional representation data for
-;;; displaying the actions to the user, e.g. in a menu.
-;;;
-;;; The main way to interact with the actions in a GActionGroup is to activate
-;;; them with g_action_group_activate_action(). Activating an action may require
-;;; a GVariant parameter. The required type of the parameter can be inquired
-;;; with g_action_group_get_action_parameter_type(). Actions may be disabled,
-;;; see g_action_group_get_action_enabled(). Activating a disabled action has
-;;; no effect.
-;;;
-;;; Actions may optionally have a state in the form of a GVariant. The current
-;;; state of an action can be inquired with g_action_group_get_action_state().
-;;; Activating a stateful action may change its state, but it is also possible
-;;; to set the state by calling g_action_group_change_action_state().
-;;;
-;;; As typical example, consider a text editing application which has an option
-;;; to change the current font to 'bold'. A good way to represent this would be
-;;; a stateful action, with a boolean state. Activating the action would toggle
-;;; the state.
-;;;
-;;; Each action in the group has a unique name (which is a string). All method
-;;; calls, except g_action_group_list_actions() take the name of an action as
-;;; an argument.
-;;;
-;;; The GActionGroup API is meant to be the 'public' API to the action group.
-;;; The calls here are exactly the interaction that 'external forces' (eg: UI,
-;;; incoming D-Bus messages, etc.) are supposed to have with actions. 'Internal'
-;;; APIs (ie: ones meant only to be accessed by the action group implementation)
-;;; are found on subclasses. This is why you will find - for example -
-;;; g_action_group_get_action_enabled() but not an equivalent set() call.
-;;;
-;;; Signals are emitted on the action group in response to state changes on
-;;; individual actions.
-;;;
-;;; Implementations of GActionGroup should provide implementations for the
-;;; virtual functions g_action_group_list_actions() and
-;;; g_action_group_query_action(). The other virtual functions should not be
-;;; implemented - their "wrappers" are actually implemented with calls to
-;;; g_action_group_query_action().
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "action-added" signal
-;;;
-;;; void user_function (GActionGroup *action_group,
-;;;                     gchar        *action_name,
-;;;                     gpointer      user_data)         : Has Details
-;;;
-;;; Signals that a new action was just added to the group. This signal is
-;;; emitted after the action has been added and is now visible.
-;;;
-;;; action_group :
-;;;     the GActionGroup that changed
-;;;
-;;; action_name :
-;;;     the name of the action in action_group
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "action-enabled-changed" signal
-;;;
-;;; void user_function (GActionGroup *action_group,
-;;;                     gchar        *action_name,
-;;;                     gboolean      enabled,
-;;;                     gpointer      user_data)         : Has Details
-;;;
-;;; Signals that the enabled status of the named action has changed.
-;;;
-;;; action_group :
-;;;     the GActionGroup that changed
-;;;
-;;; action_name :
-;;;     the name of the action in action_group
-;;;
-;;; enabled :
-;;;     whether the action is enabled or not
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "action-removed" signal
-;;;
-;;; void user_function (GActionGroup *action_group,
-;;;                     gchar        *action_name,
-;;;                     gpointer      user_data)         : Has Details
-;;;
-;;; Signals that an action is just about to be removed from the group. This
-;;; signal is emitted before the action is removed, so the action is still
-;;; visible and can be queried from the signal handler.
-;;;
-;;; action_group :
-;;;     the GActionGroup that changed
-;;;
-;;; action_name :
-;;;     the name of the action in action_group
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "action-state-changed" signal
-;;;
-;;; void user_function (GActionGroup *action_group,
-;;;                     gchar        *action_name,
-;;;                     GVariant     *value,
-;;;                     gpointer      user_data)         : Has Details
-;;;
-;;; Signals that the state of the named action has changed.
-;;;
-;;; action_group :
-;;;     the GActionGroup that changed
-;;;
-;;; action_name :
-;;;     the name of the action in action_group
-;;;
-;;; value :
-;;;     the new value of the state
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GActionGroup
-;;;
-;;; typedef struct _GActionGroup GActionGroup;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-interface "GActionGroup" g-action-group
   (:export t
    :type-initializer "g_action_group_get_type"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-action-group atdoc:*symbol-name-alias*) "Interface"
+      (documentation 'g-action-group 'type)
+ "@version{2013-5-1}
+  @begin{short}
+    @sym{g-action-group} represents a group of actions. Actions can be used to
+    expose functionality in a structured way, either from one part of a program
+    to another, or to the outside world. Action groups are often used together
+    with a @code{GMenuModel} that provides additional representation data for
+    displaying the actions to the user, e. g. in a menu.
+  @end{short}
+
+  The main way to interact with the actions in a @sym{g-action-group} is to
+  activate them with the function @fun{g-action-group-activate-action}.
+  Activating an action may require a @symbol{g-variant} parameter. The required
+  type of the parameter can be inquired with the function
+  @fun{g-action-group-get-action-parameter-type}. Actions may be disabled,
+  see the function @fun{g-action-group-get-action-enabled}. Activating a
+  disabled action has no effect.
+
+  Actions may optionally have a state in the form of a GVariant. The current
+  state of an action can be inquired with the function
+  @fun{g-action-group-get-action-state}. Activating a stateful action may change
+  its state, but it is also possible to set the state by calling
+  the function @fun{g-action-group-change-action-state}.
+
+  As typical example, consider a text editing application which has an option
+  to change the current font to 'bold'. A good way to represent this would be
+  a stateful action, with a boolean state. Activating the action would toggle
+  the state.
+
+  Each action in the group has a unique name (which is a string). All method
+  calls, except the function @fun{g-action-group-list-actions} take the name
+  of an action as an argument.
+
+  The @sym{g-action-group} API is meant to be the 'public' API to the action
+  group. The calls here are exactly the interaction that 'external forces'
+  (e. g.: UI, incoming D-Bus messages, etc.) are supposed to have with actions.
+  'Internal' APIs (i. e.: ones meant only to be accessed by the action group
+  implementation) are found on subclasses. This is why you will find - for
+  example - the function @fun{g-action-group-get-action-enabled} but not an
+  equivalent @code{set()} call.
+
+  Signals are emitted on the action group in response to state changes on
+  individual actions.
+
+  Implementations of @sym{g-action-group} should provide implementations for the
+  virtual functions @fun{g-action-group-list-actions} and
+  @fun{g-action-group-query-action}. The other virtual functions should not be
+  implemented - their \"wrappers\" are actually implemented with calls to the
+  function @fun{g-action-group-query-action}.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"action-added\" signal}
+      @begin{pre}
+ lambda (action-group action-name)   : Has Details
+      @end{pre}
+      Signals that a new action was just added to the group. This signal is
+      emitted after the action has been added and is now visible.
+      @begin[code]{table}
+        @entry[action-group]{The @sym{g-action-group} that changed.}
+        @entry[action-name]{The name of the action in @arg{action-group}.}
+      @end{table}
+      Since 2.28
+
+    @subheading{The \"action-enabled-changed\" signal}
+      @begin{pre}
+ lambda (action-group action-name enabled)   : Has Details
+      @end{pre}
+      Signals that the enabled status of the named action has changed.
+      @begin[code]{table}
+        @entry[action-group]{The @sym{g-action-group} that changed.}
+        @entry[action-name]{The name of the action in @arg{action-group}.}
+        @entry[enabled]{Whether the action is enabled or not.}
+      @end{table}
+      Since 2.28
+
+    @subheading{The \"action-removed\" signal}
+      @begin{pre}
+ lambda (action-group action-name)   : Has Details
+      @end{pre}
+      Signals that an action is just about to be removed from the group. This
+      signal is emitted before the action is removed, so the action is still
+      visible and can be queried from the signal handler.
+      @begin[code]{table}
+        @entry[action-group]{The @sym{g-action-group} that changed.}
+        @entry[action-name]{The name of the action in @arg{action-group}.}
+      @end{table}
+      Since 2.28
+
+    @subheading{The \"action-state-changed\" signal}
+      @begin{pre}
+ lambda (action-group action-name value)   : Has Details
+      @end{pre}
+      Signals that the state of the named action has changed.
+      @begin[code]{table}
+        @entry[action-group]{The @sym{g-action-group} that changed.}
+        @entry[action-name]{The name of the action in @arg{action-group}.}
+        @entry[value]{The new value of the state.}
+      @end{table}
+      Since 2.28
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GActionGroupInterface
@@ -339,24 +301,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_list_actions ()
-;;;
-;;; gchar ** g_action_group_list_actions (GActionGroup *action_group);
-;;;
-;;; Lists the actions contained within action_group.
-;;;
-;;; The caller is responsible for freeing the list with g_strfreev() when it is
-;;; no longer required.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; Returns :
-;;;     a NULL-terminated array of the names of the actions in the group
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_list_actions" g-action-group-list-actions) g-strv
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @return{A list of the names of the actions in the group.}
+  @begin{short}
+    Lists the actions contained within @arg{action-group}.
+  @end{short}
+
+  Since 2.28"
   (action-group (g-object g-action-group)))
 
 (export 'g-action-group-list-actions)
@@ -432,25 +388,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_has_action ()
-;;;
-;;; gboolean g_action_group_has_action (GActionGroup *action_group,
-;;;                                     const gchar *action_name);
-;;;
-;;; Checks if the named action exists within action_group.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to check for
-;;;
-;;; Returns :
-;;;     whether the named action exists
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_has_action" g-action-group-has-action) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to check for}
+  @return{Whether the named action exists.}
+  @begin{short}
+    Checks if the named action exists within @arg{action-group}.
+  @end{short}
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -458,29 +408,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_enabled ()
-;;;
-;;; gboolean g_action_group_get_action_enabled (GActionGroup *action_group,
-;;;                                             const gchar *action_name);
-;;;
-;;; Checks if the named action within action_group is currently enabled.
-;;;
-;;; An action must be enabled in order to be activated or in order to have its
-;;; state changed from outside callers.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to query
-;;;
-;;; Returns :
-;;;     whether or not the action is currently enabled
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_enabled" g-action-group-get-action-enabled)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to query}
+  @return{Whether or not the action is currently enabled.}
+  @begin{short}
+    Checks if the named action within action_group is currently enabled.
+  @end{short}
+
+  An action must be enabled in order to be activated or in order to have its
+  state changed from outside callers.
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -488,39 +432,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_parameter_type ()
-;;;
-;;; const GVariantType * g_action_group_get_action_parameter_type
-;;;                                                 (GActionGroup *action_group,
-;;;                                                  const gchar *action_name);
-;;;
-;;; Queries the type of the parameter that must be given when activating the
-;;; named action within action_group.
-;;;
-;;; When activating the action using g_action_group_activate_action(), the
-;;; GVariant given to that function must be of the type returned by this
-;;; function.
-;;;
-;;; In the case that this function returns NULL, you must not give any GVariant,
-;;; but NULL instead.
-;;;
-;;; The parameter type of a particular action will never change but it is
-;;; possible for an action to be removed and for a new action to be added with
-;;; the same name but a different parameter type.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to query
-;;;
-;;; Returns :
-;;;     the parameter type
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_parameter_type"
            g-action-group-get-action-parameter-type) g-variant-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to query}
+  @return{The parameter type.}
+  @begin{short}
+    Queries the type of the parameter that must be given when activating the
+    named action within @arg{action-group}.
+  @end{short}
+
+  When activating the action using the function
+  @fun{g-action-group-activate-action}, the @symbol{g-variant} given to that
+  function must be of the type returned by this function.
+
+  In the case that this function returns @code{nil}, you must not give any
+  @symbol{g-variant}, but @code{nil} instead.
+
+  The parameter type of a particular action will never change but it is
+  possible for an action to be removed and for a new action to be added with
+  the same name but a different parameter type.
+
+  Since 2.28
+  @see-function{g-action-group-activate-action}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -528,40 +466,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_state_type ()
-;;;
-;;; const GVariantType * g_action_group_get_action_state_type
-;;;                                                 (GActionGroup *action_group,
-;;;                                                  const gchar *action_name);
-;;;
-;;; Queries the type of the state of the named action within action_group.
-;;;
-;;; If the action is stateful then this function returns the GVariantType of the
-;;; state. All calls to g_action_group_change_action_state() must give a
-;;; GVariant of this type and g_action_group_get_action_state() will return a
-;;; GVariant of the same type.
-;;;
-;;; If the action is not stateful then this function will return NULL. In that
-;;; case, g_action_group_get_action_state() will return NULL and you must not
-;;; call g_action_group_change_action_state().
-;;;
-;;; The state type of a particular action will never change but it is possible
-;;; for an action to be removed and for a new action to be added with the same
-;;; name but a different state type.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to query
-;;;
-;;; Returns :
-;;;     the state type, if the action is stateful
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state_type"
            g-action-group-get-action-state-type) g-variant-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to query}
+  @return{The state type, if the action is stateful.}
+  @begin{short}
+    Queries the type of the state of the named action within @arg{action-group}.
+  @end{short}
+
+  If the action is stateful then this function returns the
+  @symbol{g-variant-type} of the state. All calls to the function
+  @fun{g-action-group-change-action-state} must give a @symbol{g-variant} of
+  this type and the function @fun{g-action-group-get-action-state} will return
+  a @symbol{g-variant} of the same type.
+
+  If the action is not stateful then this function will return @code{nil}. In
+  that case, the function @fun{g-action-group-get-action-state} will return
+  @code{nil} and you must not call the function
+  @fun{g-action-group-change-action-state}.
+
+  The state type of a particular action will never change but it is possible
+  for an action to be removed and for a new action to be added with the same
+  name but a different state type.
+
+  Since 2.28
+  @see-function{g-action-group-change-action-state}
+  @see-function{g-action-group-get-action-state}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -569,43 +504,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_state_hint ()
-;;;
-;;; GVariant * g_action_group_get_action_state_hint (GActionGroup *action_group,
-;;;                                                  const gchar *action_name);
-;;;
-;;; Requests a hint about the valid range of values for the state of the named
-;;; action within action_group.
-;;;
-;;; If NULL is returned it either means that the action is not stateful or that
-;;; there is no hint about the valid range of values for the state of the
-;;; action.
-;;;
-;;; If a GVariant array is returned then each item in the array is a possible
-;;; value for the state. If a GVariant pair (ie: two-tuple) is returned then the
-;;; tuple specifies the inclusive lower and upper bound of valid values for the
-;;; state.
-;;;
-;;; In any case, the information is merely a hint. It may be possible to have a
-;;; state value outside of the hinted range and setting a value within the range
-;;; may fail.
-;;;
-;;; The return value (if non-NULL) should be freed with g_variant_unref() when
-;;; it is no longer required.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to query
-;;;
-;;; Returns :
-;;;     the state range hint
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state_hint"
            g-action-group-get-action-state-hint) (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to query}
+  @return{The state range hint.}
+  @begin{short}
+    Requests a hint about the valid range of values for the state of the named
+    action within @arg{action-group}.
+  @end{short}
+
+  If @code{nil} is returned it either means that the action is not stateful or
+  that there is no hint about the valid range of values for the state of the
+  action.
+
+  If a @symbol{g-variant} array is returned then each item in the array is a
+  possible value for the state. If a @sym{g-variant} pair (i. e.: two-tuple) is
+  returned then the tuple specifies the inclusive lower and upper bound of valid
+  values for the state.
+
+  In any case, the information is merely a hint. It may be possible to have a
+  state value outside of the hinted range and setting a value within the range
+  may fail.
+
+  The return value (if non-@code{null}) should be freed with
+  @code{g_variant_unref()} when it is no longer required.
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -613,33 +542,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_get_action_state ()
-;;;
-;;; GVariant * g_action_group_get_action_state (GActionGroup *action_group,
-;;;                                             const gchar *action_name);
-;;;
-;;; Queries the current state of the named action within action_group.
-;;;
-;;; If the action is not stateful then NULL will be returned. If the action is
-;;; stateful then the type of the return value is the type given by
-;;; g_action_group_get_action_state_type().
-;;;
-;;; The return value (if non-NULL) should be freed with g_variant_unref() when
-;;; it is no longer required.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to query
-;;;
-;;; Returns :
-;;;     the current state of the action
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state" g-action-group-get-action-state)
     (:pointer g-variant)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to query}
+  @return{The current state of the action.}
+  @begin{short}
+    Queries the current state of the named action within @arg{action-group}.
+  @end{short}
+
+  If the action is not stateful then @code{nil} will be returned. If the action
+  is stateful then the type of the return value is the type given by the
+  function @fun{g-action-group-get-action-state-type}.
+
+  The return value (if non-@code{null}) should be freed with
+  @code{g_variant_unref()} when it is no longer required.
+
+  Since 2.28
+  @see-function{g-action-group-get-action-state-type}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -647,37 +571,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_change_action_state ()
-;;;
-;;; void g_action_group_change_action_state (GActionGroup *action_group,
-;;;                                          const gchar *action_name,
-;;;                                          GVariant *value);
-;;;
-;;; Request for the state of the named action within action_group to be changed
-;;; to value.
-;;;
-;;; The action must be stateful and value must be of the correct type.
-;;; See g_action_group_get_action_state_type().
-;;;
-;;; This call merely requests a change. The action may refuse to change its
-;;; state or may change its state to something other than value.
-;;; See g_action_group_get_action_state_hint().
-;;;
-;;; If the value GVariant is floating, it is consumed.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to request the change on
-;;;
-;;; value :
-;;;     the new state
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_change_action_state"
            g-action-group-change-action-state) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to request the change on}
+  @argument[value]{the new state}
+  @begin{short}
+    Request for the state of the named action within @arg{action-group} to be
+    changed to @arg{value}.
+  @end{short}
+
+  The action must be stateful and value must be of the correct type.
+  See the function @fun{g-action-group-get-action-state-type}.
+
+  This call merely requests a change. The action may refuse to change its
+  state or may change its state to something other than value.
+  See the function @fun{g-action-group-get-action-state-hint}.
+
+  If the value @symbol{g-variant} is floating, it is consumed.
+
+  Since 2.28
+  @see-function{g-action-group-get-action-state-type}
+  @see-function{g-action-group-get-action-state-hint}"
   (action-group (g-object g-action-group))
   (action-name :string)
   (value (:pointer g-variant)))
@@ -686,30 +605,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_activate_action ()
-;;;
-;;; void g_action_group_activate_action (GActionGroup *action_group,
-;;;                                      const gchar *action_name,
-;;;                                      GVariant *parameter);
-;;;
-;;; Activate the named action within action_group.
-;;;
-;;; If the action is expecting a parameter, then the correct type of parameter
-;;; must be given as parameter. If the action is expecting no parameters then
-;;; parameter must be NULL. See g_action_group_get_action_parameter_type().
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action to activate
-;;;
-;;; parameter :
-;;;     parameters to the activation
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_activate_action" g-action-group-activate-action) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of the action to activate}
+  @argument[parameter]{parameters to the activation}
+  @begin{short}
+    Activate the named action within @arg{action-group}.
+  @end{short}
+
+  If the action is expecting a parameter, then the correct type of parameter
+  must be given as parameter. If the action is expecting no parameters then
+  parameter must be @code{nil}. See the function
+  @fun{g-action-group-get-action-parameter-type}.
+
+  Since 2.28
+  @see-function{g-action-group-get-action-parameter-type}"
   (action-group (g-object g-action-group))
   (action-name :string)
   (parameter :pointer))
@@ -718,24 +632,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_added ()
-;;;
-;;; void g_action_group_action_added (GActionGroup *action_group,
-;;;                                   const gchar *action_name);
-;;;
-;;; Emits the "action-added" signal on action_group.
-;;;
-;;; This function should only be called by GActionGroup implementations.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of an action in the group
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_action_added" g-action-group-action-added) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of an action in the group}
+  @begin{short}
+    Emits the \"action-added\" signal on @arg{action-group}.
+  @end{short}
+
+  This function should only be called by @class{g-action-group} implementations.
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -743,24 +653,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_removed ()
-;;;
-;;; void g_action_group_action_removed (GActionGroup *action_group,
-;;;                                     const gchar *action_name);
-;;;
-;;; Emits the "action-removed" signal on action_group.
-;;;
-;;; This function should only be called by GActionGroup implementations.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of an action in the group
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_action_removed" g-action-group-action-removed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of an action in the group}
+  @begin{short}
+    Emits the \"action-removed\" signal on @arg{action-group}.
+  @end{short}
+
+  This function should only be called by @class{g-action-group} implementations.
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -768,29 +674,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_enabled_changed ()
-;;;
-;;; void g_action_group_action_enabled_changed (GActionGroup *action_group,
-;;;                                             const gchar *action_name,
-;;;                                             gboolean enabled);
-;;;
-;;; Emits the "action-enabled-changed" signal on action_group.
-;;;
-;;; This function should only be called by GActionGroup implementations.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of an action in the group
-;;;
-;;; enabled :
-;;;     whether or not the action is now enabled
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_action_enabled_changed"
            g-action-group-action-enabled-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of an action in the group}
+  @argument[enabled]{whether or not the action is now enabled}
+  @begin{short}
+    Emits the \"action-enabled-changed\" signal on @arg{action-group}.
+  @end{short}
+
+  This function should only be called by @class{g-action-group}
+  implementations.
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string)
   (enabled :boolean))
@@ -799,29 +699,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_action_group_action_state_changed ()
-;;;
-;;; void g_action_group_action_state_changed (GActionGroup *action_group,
-;;;                                           const gchar *action_name,
-;;;                                           GVariant *state);
-;;;
-;;; Emits the "action-state-changed" signal on action_group.
-;;;
-;;; This function should only be called by GActionGroup implementations.
-;;;
-;;; action_group :
-;;;     a GActionGroup
-;;;
-;;; action_name :
-;;;     the name of an action in the group
-;;;
-;;; state :
-;;;     the new state of the named action
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_action_state_changed"
            g-action-group-action-state-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[action-group]{a @class{g-action-group} object}
+  @argument[action-name]{the name of an action in the group}
+  @argument[state]{the new state of the named action}
+  @begin{short}
+    Emits the \"action-state-changed\" signal on @arg{action-group}.
+  @end{short}
+
+  This function should only be called by @class{g-action-group} implementations.
+
+  Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string)
   (state (:pointer g-variant)))

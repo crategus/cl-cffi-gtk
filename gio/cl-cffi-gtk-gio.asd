@@ -26,7 +26,7 @@
 
 (defsystem :cl-cffi-gtk-gio
   :name :cl-cffi-gtk-gio
-  :version "2.32.4"                  ; Version of GIO
+  :version "2.36.1"                  ; Version of GIO
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t

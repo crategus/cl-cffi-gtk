@@ -2,7 +2,7 @@
 ;;; gio.action.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.3. The latest version of this documentation can be found
+;;; for GIO 2.36.1. The latest version of this documentation can be found
 ;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -77,21 +77,21 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-action 'type)
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @begin{short}
     @sym{g-action} represents a single named action.
   @end{short}
 
-  The main interface to an action is that it can be activated with
+  The main interface to an action is that it can be activated with the function
   @fun{g-action-activate}. This results in the 'activate' signal being emitted.
   An activation has a @symbol{g-variant} parameter (which may be @code{nil}).
   The correct type for the parameter is determined by a static parameter type
   (which is given at construction time).
 
   An action may optionally have a state, in which case the state may be set
-  with @fun{g-action-change-state}. This call takes a @symbol{g-variant}. The
-  correct type for the state is determined by a static state type (which is
-  given at construction time).
+  with the function @fun{g-action-change-state}. This call takes a
+  @symbol{g-variant}. The correct type for the state is determined by a static
+  state type (which is given at construction time).
 
   The state may have a hint associated with it, specifying its valid range.
 
@@ -102,8 +102,9 @@
   In all cases, the implementing class is responsible for storing the name of
   the action, the parameter type, the enabled state, the optional state type
   and the state and emitting the appropriate signals when these change. The
-  implementor responsible for filtering calls to @fun{g-action-activate} and
-  @fun{g-action-change-state} for type safety and for the state being enabled.
+  implementor responsible for filtering calls to the functions
+  @fun{g-action-activate} and @fun{g-action-change-state} for type safety and
+  for the state being enabled.
 
   Probably the only useful thing to do with a @sym{g-action} is to put it inside
   of a @class{g-simple-action-group}.
@@ -111,8 +112,7 @@
   @see-slot{g-action-name}
   @see-slot{g-action-parameter-type}
   @see-slot{g-action-state}
-  @see-slot{g-action-state-type}
-")
+  @see-slot{g-action-state-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -122,20 +122,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enabled" 'g-action) 't)
- "The @code{\"enabled\"} property of type @code{gboolean} (Read)@br{}
+ "The @code{\"enabled\"} property of type @code{:boolean} (Read)@br{}
   If action is currently enabled.
-  If the action is disabled then calls to @fun{g-action-activate} and
-  @fun{g-action-change-state} have no effect.@br{}
-  Default value: @code{true}@br{}
+  If the action is disabled then calls to the functions @fun{g-action-activate}
+  and @fun{g-action-change-state} have no effect.@br{}
+  Default value: @em{true}@br{}
   Since 2.28")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-action) 't)
- "The @code{\"name\"} property of type @code{gchar*} (Read)@br{}
+ "The @code{\"name\"} property of type @code{:string} (Read)@br{}
   The name of the action. This is mostly meaningful for identifying the action
-  once it has been added to a GActionGroup.@br{}
+  once it has been added to a @class{g-action-group}.@br{}
   Default value: @code{nil}@br{}
   Since 2.28")
 
@@ -153,7 +153,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state" 'g-action) 't)
  "The @code{\"state\"} property of type @symbol{g-variant} (Read)@br{}
-  The state of the action, or NULL if the action is stateless.@br{}
+  The state of the action, or @code{nil} if the action is stateless.@br{}
   Allowed values: @code{GVariant<*>}@br{}
   Default value: @code{nil}@br{}
   Since 2.28")
@@ -164,8 +164,7 @@
 (setf (documentation (atdoc:get-slot-from-name "state-type" 'g-action) 't)
  "The @code{\"state-type\"} property of type @symbol{g-variant-type} (Read)@br{}
   The @symbol{g-variant-type} of the state that the action has, or @code{nil} if
-  the action is stateless.
-
+  the action is stateless. @br{}
   Since 2.28")
 
 ;;; ----------------------------------------------------------------------------
@@ -292,9 +291,9 @@
 
 (defun g-action-get-name (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
-  @return{the name of the action}
+  @return{The name of the action.}
   @short{Queries the name of action.}
 
   Since 2.28"
@@ -310,14 +309,14 @@
 
 (defun g-action-get-parameter-type (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
-  @return{the parameter type}
+  @return{The parameter type.}
   @begin{short}
     Queries the type of the parameter that must be given when activating action.
   @end{short}
 
-  When activating the action using @fun{g-action-activate}, the
+  When activating the action using the function @fun{g-action-activate}, the
   @symbol{g-variant} given to that function must be of the type returned by this
   function.
 
@@ -337,26 +336,30 @@
 
 (defun g-action-get-state-type (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
-  @return{the state type, if the action is stateful}
+  @return{The state type, if the action is stateful.}
   @begin{short}
     Queries the type of the state of action.
   @end{short}
 
-  If the action is stateful (e.g. created with
+  If the action is stateful (e. g. created with the function
   @fun{g-simple-action-new-stateful}) then this function returns the
   @symbol{g-variant-type} of the state. This is the type of the initial value
-  given as the state. All calls to @fun{g-action-change-state} must give a
-  @symbol{g-variant} of this type and @fun{g-action-get-state} will return
-  a @symbol{g-variant} of the same type.
+  given as the state. All calls to the function @fun{g-action-change-state} must
+  give a @symbol{g-variant} of this type and the function
+  @fun{g-action-get-state} will return a @symbol{g-variant} of the same type.
 
-  If the action is not stateful (e.g. created with @fun{g-simple-action-new})
-  then this function will return @code{nil}. In that case,
-  @fun{g-action-get-state} will return @code{nil} and you must not call
-  @fun{g-action-change-state}.
+  If the action is not stateful (e. g. created with the function
+  @fun{g-simple-action-new}) then this function will return @code{nil}. In that
+  case, the function @fun{g-action-get-state} will return @code{nil} and you
+  must not call the function @fun{g-action-change-state}.
 
-  Since 2.28"
+  Since 2.28
+  @see-function{g-simple-action-new-stateful}
+  @see-function{g-action-change-state}
+  @see-function{g-action-get-state}
+  @see-function{g-simple-action-new}"
   (g-action-state-type action))
 
 (export 'g-action-get-state-type)
@@ -368,9 +371,9 @@
 (defcfun ("g_action_get_state_hint" g-action-get-state-hint)
     (:pointer g-variant)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
-  @return{the state range hint}
+  @return{The state range hint.}
   @begin{short}
     Requests a hint about the valid range of values for the state of action.
   @end{short}
@@ -380,9 +383,9 @@
   action.
 
   If a @code{g-variant} array is returned then each item in the array is a
-  possible value for the state. If a @symbol{g-variant} pair (ie: two-tuple) is
-  returned then the tuple specifies the inclusive lower and upper bound of valid
-  values for the state.
+  possible value for the state. If a @symbol{g-variant} pair (i. e.: two-tuple)
+  is returned then the tuple specifies the inclusive lower and upper bound of
+  valid values for the state.
 
   In any case, the information is merely a hint. It may be possible to have a
   state value outside of the hinted range and setting a value within the range
@@ -404,9 +407,9 @@
 
 (defun g-action-get-enabled (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
-  @argument[action]{a GAction}
-  @return{whether the action is enabled}
+ "@version{2013-5-1}
+  @argument[action]{a @class{g-action} object}
+  @return{Whether the action is enabled.}
   @begin{short}
     Checks if action is currently enabled.
   @end{short}
@@ -427,9 +430,9 @@
 
 (defun g-action-get-state (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
-  @return{the current state of the action}
+  @return{The current state of the action.}
   @begin{short}
     Queries the current state of action.
   @end{short}
@@ -441,7 +444,8 @@
   The return value (if non-@code{nil}) should be freed with
   @fun{g-variant-unref} when it is no longer required.
 
-  Since 2.28"
+  Since 2.28
+  @see-function{g-action-get-state-type}"
   (g-action-state action))
 
 (export 'g-action-get-state)
@@ -452,23 +456,25 @@
 
 (defcfun ("g_action_change_state" g-action-change-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
   @argument[value]{the new state}
   @begin{short}
-    Request for the state of action to be changed to value.
+    Request for the state of @arg{action} to be changed to @arg{value}.
   @end{short}
 
-  The action must be stateful and value must be of the correct type. See
-  @fun{g-action-get-state-type}.
+  The action must be stateful and value must be of the correct type. See the
+  function @fun{g-action-get-state-type}.
 
   This call merely requests a change. The action may refuse to change its
-  state or may change its state to something other than value. See
+  state or may change its state to something other than value. See the function
   @fun{g-action-get-state-hint}.
 
   If the value @symbol{g-variant} is floating, it is consumed.
 
-  Since 2.30"
+  Since 2.30
+  @see-function{g-action-get-state-type}
+  @see-function{g-action-get-state-hint}"
   (action (g-object g-action))
   (value (:pointer g-variant)))
 
@@ -484,13 +490,13 @@
 
 (defun g-action-activate (action parameter)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-21}
+ "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
   @argument[parameter]{the parameter to the activation}
   @short{Activates the action.}
 
-  @arg{parameter} must be the correct type of parameter for the action (ie: the
-  parameter type given at construction time). If the parameter type was
+  @arg{parameter} must be the correct type of parameter for the action (i. e.:
+  the parameter type given at construction time). If the parameter type was
   @code{nil} then parameter must also be @code{nil}.
 
   Since 2.28"

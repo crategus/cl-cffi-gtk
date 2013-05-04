@@ -2,10 +2,12 @@
 ;;; gio.app-info.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.4. The latest version of this documentation can be found
-;;; on-line at http://library.gnome.org/devel/gio/unstable/.
+;;; for GIO 2.36.1. The latest version of this documentation can be found
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -60,6 +62,7 @@
 ;;;     g_app_info_add_supports_type
 ;;;     g_app_info_can_remove_supports_type
 ;;;     g_app_info_remove_supports_type
+;;;     g_app_info_get_supported_types
 ;;;     g_app_info_get_all
 ;;;     g_app_info_get_all_for_type
 ;;;     g_app_info_get_default_for_type
@@ -309,12 +312,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GAppLaunchContext
-;;;
-;;; typedef struct _GAppLaunchContext GAppLaunchContext;
-;;;
-;;; Integrating the launch with the launching application. This is used to
-;;; handle for instance startup notification and launching the new application
-;;; on the same screen as the launching window.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GAppLaunchContext" g-app-launch-context
@@ -323,6 +320,26 @@
    :interfaces nil
    :type-initializer "g_app_launch_context_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-app-launch-context 'type)
+ "@version{2013-5-1}
+  @begin{short}
+    Integrating the launch with the launching application. This is used to
+    handle for instance startup notification and launching the new application
+    on the same screen as the launching window.
+  @end{short}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"launch-failed\" signal}
+      @begin{pre}
+ lambda (gapplaunchcontext) arg)   : Run Last
+      @end{pre}
+
+    @subheading{The \"launched\" signal}
+      @begin{pre}
+ lambda (gapplaunchcontext arg1 arg2)
+      @end{pre}
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_app_info_create_from_commandline ()
@@ -812,6 +829,26 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_app_info_get_supported_types ()
+;;;
+;;; const char ** g_app_info_get_supported_types (GAppInfo *appinfo);
+;;;
+;;; Retrieves the list of content types that app_info claims to support. If this
+;;; information is not provided by the environment, this function will return
+;;; NULL. This function does not take in consideration associations added with
+;;; g_app_info_add_supports_type(), but only those exported directly by the
+;;; application.
+;;;
+;;; appinfo :
+;;;     a GAppInfo that can handle files
+;;;
+;;; Returns :
+;;;     a list of content types.
+;;;
+;;; Since 2.34
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_app_info_get_all ()
 ;;;
 ;;; GList * g_app_info_get_all (void);
@@ -1078,6 +1115,5 @@
 ;;; Returns :
 ;;;     a GAppLaunchContext.
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gio.app-info.lisp ------------------------------------------

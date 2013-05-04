@@ -2,10 +2,12 @@
 ;;; gio.simple-action-group.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.32.3. The latest version of this documentation can be found
-;;; on-line at http://library.gnome.org/devel/gio/unstable/.
+;;; for GIO 2.36.1. The latest version of this documentation can be found
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -47,77 +49,70 @@
 ;;; Implemented Interfaces
 ;;;
 ;;; GSimpleActionGroup implements GActionGroup and GActionMap.
-;;;
-;;; Description
-;;;
-;;; GSimpleActionGroup is a hash table filled with GAction objects, implementing
-;;; the GActionGroup and GActionMap interfaces.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSimpleActionGroup
-;;;
-;;; typedef struct _GSimpleActionGroup GSimpleActionGroup;
-;;;
-;;; The GSimpleActionGroup structure contains private data and should only be
-;;; accessed using the provided API.
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GSimpleActionGroup" g-simple-action-group
   (:superclass g-object
    :export t
-   :interfaces ("GActionGroup" "GActionMap")
+   :interfaces ("GActionGroup"
+                "GActionMap")
    :type-initializer "g_simple_action_group_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-simple-action-group 'type)
+ "@version{2013-5-1}
+  @begin{short}
+    @sym{g-simple-action-group} is a hash table filled with @class{g-action}
+    objects, implementing the @class{g-action-group} and @class{g-action-map}
+    interfaces.
+  @end{short}
+
+  Since 2.28")
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_group_new ()
-;;;
-;;; GSimpleActionGroup * g_simple_action_group_new (void);
-;;;
-;;; Creates a new, empty, GSimpleActionGroup.
-;;;
-;;; Returns :
-;;;     a new GSimpleActionGroup
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline g-simple-action-group-new))
 
 (defun g-simple-action-group-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @return{A new @class{g-simple-action-group} object.}
+  @begin{short}
+    Creates a new, empty, @class{g-simple-action-group}.
+  @end{short}
+
+  Since 2.28"
   (make-instance 'g-simple-action-group))
 
 (export 'g-simple-action-group-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_group_lookup ()
-;;;
-;;; GAction * g_simple_action_group_lookup (GSimpleActionGroup *simple,
-;;;                                         const gchar *action_name);
-;;;
-;;; Looks up the action with the name action_name in the group.
-;;;
-;;; If no such action exists, returns NULL.
-;;;
-;;; simple :
-;;;     a GSimpleActionGroup
-;;;
-;;; action_name :
-;;;     the name of an action
-;;;
-;;; Returns :
-;;;     a GAction, or NULL
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_lookup" g-simple-action-group-lookup)
     (g-object g-action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[simple]{a @class{g-simple-action-group} object}
+  @argument[action-name]{the name of an action}
+  @return{A @class{g-action}, or @code{nil}.}
+  @begin{short}
+    Looks up the action with the name @arg{action-name} in the group.
+  @end{short}
+
+  If no such action exists, returns @code{nil}.
+
+  Since 2.28"
   (simple (g-object g-simple-action-group))
   (action-name :string))
 
@@ -125,27 +120,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_group_insert ()
-;;;
-;;; void g_simple_action_group_insert (GSimpleActionGroup *simple,
-;;;                                    GAction *action);
-;;;
-;;; Adds an action to the action group.
-;;;
-;;; If the action group already contains an action with the same name as action
-;;; then the old action is dropped from the group.
-;;;
-;;; The action group takes its own reference on action.
-;;;
-;;; simple :
-;;;     a GSimpleActionGroup
-;;;
-;;; action :
-;;;     a GAction
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_insert" g-simple-action-group-insert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[simple]{a @class{g-simple-action-group} object}
+  @argument[action]{a @class{g-action} object}
+  @begin{short}
+    Adds an action to the action group.
+  @end{short}
+
+  If the action group already contains an action with the same name as action
+  then the old action is dropped from the group.
+
+  The action group takes its own reference on action.
+
+  Since 2.28"
   (simple (g-object g-simple-action-group))
   (action (g-object g-action)))
 
@@ -153,24 +144,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_group_remove ()
-;;;
-;;; void g_simple_action_group_remove (GSimpleActionGroup *simple,
-;;;                                    const gchar *action_name);
-;;;
-;;; Removes the named action from the action group.
-;;;
-;;; If no action of this name is in the group then nothing happens.
-;;;
-;;; simple :
-;;;     a GSimpleActionGroup
-;;;
-;;; action_name :
-;;;     the name of the action
-;;;
-;;; Since 2.28
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_remove" g-simple-action-group-remove) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[simple]{a @class{g-simple-action-group} object}
+  @argument[action-name]{the name of the action}
+  @begin{short}
+    Removes the named action from the action group.
+  @end{short}
+
+  If no action of this name is in the group then nothing happens.
+
+  Since 2.28"
   (simple (g-object g-simple-action-group))
   (action-name :string))
 
@@ -178,28 +165,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_group_add_entries ()
-;;;
-;;; void g_simple_action_group_add_entries (GSimpleActionGroup *simple,
-;;;                                         const GActionEntry *entries,
-;;;                                         gint n_entries,
-;;;                                         gpointer user_data);
-;;;
-;;; A convenience function for creating multiple GSimpleAction instances and
-;;; adding them to the action group.
-;;;
-;;; simple :
-;;;     a GSimpleActionGroup
-;;;
-;;; entries :
-;;;     a pointer to the first item in an array of GActionEntry structs
-;;;
-;;; n_entries :
-;;;     the length of entries, or -1
-;;;
-;;; user_data :
-;;;     the user data for signal connections
-;;;
-;;; Since 2.30
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_simple_action_group_add_entries"
@@ -210,6 +175,17 @@
   (user-data :pointer))
 
 (defun g-simple-action-group-add-entries (simple entries)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-1}
+  @argument[simple]{a @class{g-simple-action-group} object}
+  @argument[entries]{a pointer to the first item in an array of
+    @class{g-action-entry} structs}
+  @begin{short}
+    A convenience function for creating multiple @class{g-simple-action}
+    instances and adding them to the action group.
+  @end{short}
+
+  Since 2.30"
   (with-foreign-boxed-array (n-entries entries-ptr g-action-entry entries)
     (%g-simple-action-group-add-entries simple
                                         entries-ptr
