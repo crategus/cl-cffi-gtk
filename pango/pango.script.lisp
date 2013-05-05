@@ -577,10 +577,6 @@
 (define-g-boxed-opaque pango-language "PangoLanguage"
   :alloc (error "PangoLanguage can not be created from Lisp side"))
 
-(export (boxed-related-symbols 'pango-language))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-language atdoc:*class-name-alias*) "CStruct"
       (documentation 'pango-language 'type)
@@ -591,6 +587,8 @@
 
   @sym{pango-language} pointers can be efficiently copied and compared with each
   other.")
+
+(export (boxed-related-symbols 'pango-language))
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_TYPE_LANGUAGE
@@ -781,7 +779,7 @@
   C library (in the @code{setlocale()} function) does not use country and
   language codes, but country and language names spelled out in English.
   However, this function does check the above environment variables, and does
-  return a Unix-style locale string based on either said environment variables 
+  return a Unix-style locale string based on either said environment variables
   or the thread's current locale.
 
   Your application should call @code{setlocale(LC_ALL, \"\");} for the user
