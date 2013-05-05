@@ -435,7 +435,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_parameter_type"
-           g-action-group-get-action-parameter-type) g-variant-type
+           g-action-group-get-action-parameter-type) (g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-1}
   @argument[action-group]{a @class{g-action-group} object}
@@ -469,7 +469,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state_type"
-           g-action-group-get-action-state-type) g-variant-type
+           g-action-group-get-action-state-type) (g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-1}
   @argument[action-group]{a @class{g-action-group} object}

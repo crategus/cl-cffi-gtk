@@ -106,11 +106,12 @@
 ;;; GVariantType
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct g-variant-type)
+(gobject:define-g-boxed-opaque g-variant-type "GVariantType"
+  :alloc (error "GVariantType can not be created from Lisp side"))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-variant-type atdoc:*symbol-name-alias*) "CStruct"
-      (gethash 'g-variant-type atdoc:*external-symbols*)
+(setf (gethash 'g-variant-type atdoc:*class-name-alias*) "CStruct"
+      (documentation 'g-variant-type 'type)
  "@version{2013-4-9}
   @begin{short}
     This section introduces the @symbol{g-variant} type system. It is based, in
@@ -270,7 +271,7 @@
   @see-function{g-variant-type-copy}
   @see-function{g-variant-type-free}")
 
-(export 'g-variant-type)
+(export (gobject:boxed-related-symbols 'g-variant-type))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VARIANT_TYPE_BOOLEAN
@@ -784,7 +785,7 @@
   Since 2.24
   @see-function{g-variant-type-copy}
   @see-function{g-variant-type-new}"
-  (type g-variant-type))
+  (type (gobject::g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-free)
 
@@ -792,7 +793,8 @@
 ;;; g_variant_type_copy ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_copy" g-variant-type-copy) g-variant-type
+(defcfun ("g_variant_type_copy" g-variant-type-copy)
+    (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[type]{a @symbol{g-variant-type}}
@@ -805,7 +807,7 @@
 
   Since 2.24
   @see-function{g-variant-type-free}"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-copy)
 
@@ -813,7 +815,8 @@
 ;;; g_variant_type_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_new" g-variant-type-new) g-variant-type
+(defcfun ("g_variant_type_new" g-variant-type-new)
+    (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[type-string]{a valid @symbol{g-variant} type string}
@@ -908,7 +911,7 @@
 
   Since 2.24
   @see-function{g-variant-type-peek-string}"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-get-string-length)
 
@@ -930,7 +933,7 @@
   To get a nul-terminated string, see @fun{g-variant-type-dup-string}.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-peek-string)
 
@@ -950,7 +953,7 @@
   on the return value.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-dup-string)
 
@@ -977,7 +980,7 @@
   returned.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-definite)
 
@@ -1001,7 +1004,7 @@
   definite subtype is a container -- @var{+g-variant-type-array+}, for example.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-container)
 
@@ -1027,7 +1030,7 @@
   @var{+g-variant-type-basic+}.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-basic)
 
@@ -1049,7 +1052,7 @@
   definite subtype is a maybe type -- @var{+g-variant-type-maybe+}, for example.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-maybe)
 
@@ -1072,7 +1075,7 @@
   example.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-array)
 
@@ -1095,7 +1098,7 @@
   definite subtype is a tuple type -- @var{+g-variant-type-tuple+}, for example.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-tuple)
 
@@ -1118,7 +1121,7 @@
   @var{+g-variant-type-dict-entry+}, for example.
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-dict-entry)
 
@@ -1136,7 +1139,7 @@
   @end{short}
 
   Since 2.24"
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-variant)
 
@@ -1163,6 +1166,7 @@
 ;;; g_variant_type_equal ()
 ;;; ----------------------------------------------------------------------------
 
+
 (defcfun ("g_variant_type_equal" g-variant-type-equal) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-5-2}
@@ -1185,8 +1189,8 @@
 
   Since 2.24
   @see-function{g-variant-type-is-subtype-of}"
-  (type1 (:pointer g-variant-type))
-  (type2 (:pointer g-variant-type)))
+  (type1 (gobject:g-boxed-foreign g-variant-type))
+  (type2 (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-equal)
 
@@ -1209,8 +1213,8 @@
   indefinite types can have subtypes.
 
   Since 2.24"
-  (type g-variant-type)
-  (supertype g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type))
+  (supertype (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-is-subtype-of)
 
@@ -1218,7 +1222,8 @@
 ;;; g_variant_type_new_maybe ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_new_maybe" g-variant-type-new-maybe) g-variant-type
+(defcfun ("g_variant_type_new_maybe" g-variant-type-new-maybe)
+    (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-2}
   @argument[element]{a @symbol{g-variant-type} structure}
@@ -1232,7 +1237,7 @@
 
   Since 2.24
   @see-function{g-variant-type-free}"
-  (element g-variant-type))
+  (element (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-new-maybe)
 
@@ -1240,7 +1245,8 @@
 ;;; g_variant_type_new_array ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_new_array" g-variant-type-new-array) g-variant-type
+(defcfun ("g_variant_type_new_array" g-variant-type-new-array)
+    (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-2}
   @argument[element]{a @symbol{g-variant-type} structure}
@@ -1255,7 +1261,7 @@
 
   Since 2.24
   @see-function{g-variant-type-free}"
-  (element g-variant-type))
+  (element (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-new-array)
 
@@ -1284,6 +1290,7 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+#|
 (defcfun ("g_variant_type_new_tuple" %g-variant-type-new-tuple) g-variant-type
   (items (:pointer g-variant-type))
   (length :int))
@@ -1300,6 +1307,7 @@
       (%g-variant-type-new-tuple array -1))))
 
 (export 'g-variant-type-new-tuple)
+|#
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_new_dict_entry ()
@@ -1365,7 +1373,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_n_items" g-variant-type-n-items) g-size
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-n-items)
 

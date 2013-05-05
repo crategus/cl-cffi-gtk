@@ -483,7 +483,8 @@
 ;;; g_variant_take_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_take_ref" g-variant-takge-ref) g-variant-type
+(defcfun ("g_variant_take_ref" g-variant-takge-ref)
+    (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @symbol{g-variant}}
@@ -528,7 +529,8 @@
 ;;; g_variant_get_type ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_get_type" g-variant-get-type) g-variant-type
+(defcfun ("g_variant_get_type" g-variant-get-type)
+    (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @symbol{g-variant}}
@@ -583,7 +585,7 @@
 
   Since 2.24"
   (value (:pointer g-variant))
-  (type g-variant-type))
+  (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-is-of-type)
 

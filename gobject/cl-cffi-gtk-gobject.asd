@@ -42,8 +42,8 @@
                (:file "gobject.enumeration") ; Enumeration and flag types
                (:file "gobject.boxed-lisp")
                (:file "gobject.boxed")       ; Boxed Types
-;               (:file "glib.variant-type")   ; GVariant type system
-;               (:file "glib.variant")        ; Strongly typed value datatype
+               (:file "../glib/glib.variant-type")   ; GVariant type system
+               (:file "../glib/glib.variant")        ; Strongly typed value datatype
                (:file "gobject.param-spec")  ; GParamSpec
                (:file "gobject.param")       ; Parameters and Values
                (:file "gobject.gobject-class")

@@ -42,8 +42,8 @@
                (:file "glib.quark")          ; Association between string and id
                (:file "glib.error")          ; Error Reporting
                (:file "glib.utils")          ; Miscellaneous Utility Functions
-               (:file "glib.variant-type")   ; GVariant type system
-               (:file "glib.variant")        ; Strongly typed value datatype
+;               (:file "glib.variant-type")   ; GVariant type system
+;               (:file "glib.variant")        ; Strongly typed value datatype
                (:file "glib.option-group")   ; Parses commandline options
               )
   :depends-on (:cffi
