@@ -228,10 +228,10 @@
 
 (defun g-simple-action-new (name parameter-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
+ "@version{2013-5-4}
   @argument[name]{the name of the action}
   @argument[parameter-type]{the type of parameter to the activate function}
-  @return{A new @class{g-simple-action} object}
+  @return{A new @class{g-simple-action} object.}
   @begin{short}
     Creates a new action.
   @end{short}
@@ -255,11 +255,11 @@
 
 (defun g-simple-action-new-stateful (name parameter-type state)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
+ "@version{2013-5-4}
   @argument[name]{the name of the action}
   @argument[parameter-type]{the type of the parameter to the activate function}
   @argument[state]{the initial state of the action}
-  @return{A new @class{g-simple-action} object}
+  @return{A new @class{g-simple-action} object.}
   @begin{short}
     Creates a new stateful action.
   @end{short}
@@ -322,7 +322,8 @@
 
   This should only be called by the implementor of the action. Users of the
   action should not attempt to directly modify the 'state' property. Instead,
-  they should call the function @fun{g-action-change-state} to request the change.
+  they should call the function @fun{g-action-change-state} to request the
+  change.
 
   Since 2.30
   @see-function{g-action-change-state}"
