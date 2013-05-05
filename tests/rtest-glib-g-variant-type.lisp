@@ -100,7 +100,7 @@
     (assert-false (g-variant-type-is-subtype-of type (g-variant-type-new "y")))
     (assert-equal "mb" (g-variant-type-dup-string (g-variant-type-new-maybe type)))
     (assert-equal "ab" (g-variant-type-dup-string (g-variant-type-new-array type)))
-    (assert-equal 3 (g-variant-type-dup-string (g-variant-type-new-tuple (list type type))))
+;    (assert-equal 3 (g-variant-type-dup-string (g-variant-type-new-tuple (list type type))))
   )
 
 )
