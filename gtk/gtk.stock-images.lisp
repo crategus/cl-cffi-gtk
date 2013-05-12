@@ -108,18 +108,17 @@
 (define-g-boxed-opaque gtk-icon-source "GtkIconSource"
   :alloc (gtk-icon-source-new))
 
-(export 'gtk-icon-source)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-icon-source 'type)
- "@version{2013-3-28}
+(setf (gethash 'gtk-icon-source atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-icon-source 'type)
+ "@version{2013-5-6}
   @short{}
   @begin{pre}
 (define-g-boxed-opaque gtk-icon-source \"GtkIconSource\"
   :alloc (gtk-icon-source-new))
   @end{pre}")
+
+(export 'gtk-icon-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIconFactory
@@ -141,28 +140,28 @@
     Browse the available stock icons in the list of stock IDs found here.
   @end{short}
 
-  An icon factory manages a collection of @class{gtk-icon-set}; a
-  @class{gtk-icon-set} manages a set of variants of a particular icon, i. e. a
-  @class{gtk-icon-set} contains variants for different sizes and widget states.
-  Icons in an icon factory are named by a stock ID, which is a simple string
-  identifying the icon. Each @class{gtk-style} has a list of
-  @sym{gtk-icon-factory} derived from the current theme; those icon
+  An icon factory manages a collection of @class{gtk-icon-set} objects; a
+  @class{gtk-icon-set} object manages a set of variants of a particular icon,
+  i. e. a @class{gtk-icon-set} object contains variants for different sizes and
+  widget states. Icons in an icon factory are named by a stock ID, which is a
+  simple string identifying the icon. Each @class{gtk-style} object has a list
+  of @sym{gtk-icon-factory} objects derived from the current theme; those icon
   factories are consulted first when searching for an icon. If the theme
   does not set a particular icon, GTK+ looks for the icon in a list of default
-  icon factories, maintained by @fun{gtk-icon-factory-add-default} and
-  @fun{gtk-icon-factory-remove-default}. Applications with icons should add a
-  default icon factory with their icons, which will allow themes to override
+  icon factories, maintained by the functions @fun{gtk-icon-factory-add-default}
+  and @fun{gtk-icon-factory-remove-default}. Applications with icons should add
+  a default icon factory with their icons, which will allow themes to override
   the icons for the application.
 
-  To display an icon, always use @fun{gtk-style-lookup-icon-set} on the widget
-  that will display the icon, or the convenience function
+  To display an icon, always use the function @fun{gtk-style-lookup-icon-set} on
+  the widget that will display the icon, or the convenience function
   @fun{gtk-widget-render-icon}. These functions take the theme into account when
   looking up the icon to use for a given stock ID.
 
   @subheading{GtkIconFactory as GtkBuildable}
-  @sym{gtk-icon-factory} supports a custom @code{<sources>} element, which can
-  contain multiple @code{<source>} elements. The following attributes are
-  allowed:
+    @sym{gtk-icon-factory} supports a custom @code{<sources>} element, which
+    can contain multiple @code{<source>} elements. The following attributes are
+    allowed:
   @begin[code]{table}
     @entry[stock-id]{The stock id of the source, a string. This attribute is
       mandatory.}
@@ -205,15 +204,14 @@
 (define-g-boxed-opaque gtk-icon-set "GtkIconSet"
   :alloc (%gtk-icon-set-new))
 
-(export 'gtk-icon-set)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-icon-set 'type)
- "@version{2013-3-28}
+(setf (gethash 'gtk-icon-set atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-icon-set 'type)
+ "@version{2013-5-6}
   A @sym{gtk-icon-set} manages a set of variants of a particular icon, i. e. a
   @sym{gtk-icon-set} contains variants for different sizes and widget states.")
+
+(export 'gtk-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconSize
@@ -229,8 +227,6 @@
   (:button 4)
   (:dnd 5)
   (:dialog 6))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-size atdoc:*symbol-name-alias*) "Enum"
@@ -283,8 +279,8 @@
 
 (defcfun ("gtk_icon_factory_add" gtk-icon-factory-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-8}
-  @argument[factory]{a @class{GtkIconFactory} object}
+ "@version{2013-5-6}
+  @argument[factory]{a @class{gtk-icon-factory} object}
   @argument[stock-id]{icon name}
   @argument[icon-set]{icon set}
   @begin{short}
@@ -298,7 +294,7 @@
   widgets such as @class{gtk-image} to display the icon. Themes can provide an
   icon with the same name (such as \"myapp-whatever-icon\") to override your
   application's default icons. If an icon already existed in factory for
-  @arg{stock-id}, it is unreferenced and replaced with the new icon_set.
+  @arg{stock-id}, it is unreferenced and replaced with the new @arg{icon-set}.
   @see-function{gtk-icon-factory-add-default}"
   (factory (g-object gtk-icon-factory))
   (stock-id :string)
@@ -312,14 +308,15 @@
 
 (defcfun ("gtk_icon_factory_add_default" gtk-icon-factory-add-default) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-18}
+ "@version{2013-5-6}
   @argument[factory]{a @class{gtk-icon-factory} object}
   @begin{short}
-    Adds an icon factory to the list of icon factories searched by
-    @fun{gtk-style-lookup-icon-set}. This means that, for example,
-    @fun{gtk-image-new-from-stock} will be able to find icons in factory. There
-    will normally be an icon factory added for each library or application that
-    comes with icons. The default icon factories can be overridden by themes.
+    Adds an icon @arg{factory} to the list of icon factories searched by the
+    function @fun{gtk-style-lookup-icon-set}. This means that, for example, the
+    function @fun{gtk-image-new-from-stock} will be able to find icons in
+    @arg{factory}. There will normally be an icon factory added for each library
+    or application that comes with icons. The default icon factories can be
+    overridden by themes.
   @end{short}
   @see-function{gtk-style-lookup-icon-set}
   @see-function{gtk-image-new-from-stock}"
@@ -334,16 +331,16 @@
 (defcfun ("gtk_icon_factory_lookup" gtk-icon-factory-lookup)
     (g-boxed-foreign gtk-icon-set :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-18}
+ "@version{2013-5-6}
   @argument[factory]{a @class{gtk-icon-factory} object}
   @argument[stock-id]{an icon name}
   @return{The icon set of @arg{stock-id}.}
   @begin{short}
-    Looks up @arg{stock-id} in the icon factory, returning an icon set if found,
-    otherwise @code{nil}. For display to the user, you should use
-    @fun{gtk-style-lookup-icon-set} on the @class{gtk-style} for the widget that
-    will display the icon, instead of using this function directly, so that
-    themes are taken into account.
+    Looks up @arg{stock-id} in the icon @arg{factory}, returning an icon set if
+    found, otherwise @code{nil}. For display to the user, you should use the
+    function @fun{gtk-style-lookup-icon-set} on the @class{gtk-style} object for
+    the widget that will display the icon, instead of using this function
+    directly, so that themes are taken into account.
   @end{short}"
   (factory (g-object gtk-icon-factory))
   (stock-id :string))
@@ -357,14 +354,14 @@
 (defcfun ("gtk_icon_factory_lookup_default" gtk-icon-factory-lookup-default)
     (g-boxed-foreign gtk-icon-set :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-18}
+ "@version{2013-5-6}
   @argument[stock-id]{an icon name}
-  @return{a @class{gtk-icon-set}, or @code{nil}}
+  @return{A @class{gtk-icon-set}, or @code{nil}.}
   @begin{short}
     Looks for an icon in the list of default icon factories. For display to the
-    user, you should use @fun{gtk-style-lookup-icon-set} on the
-    @class{gtk-style} for the widget that will display the icon, instead of
-    using this function directly, so that themes are taken into account.
+    user, you should use the function @fun{gtk-style-lookup-icon-set} on the
+    @class{gtk-style} object for the widget that will display the icon, instead
+    of using this function directly, so that themes are taken into account.
   @end{short}"
   (stock-id :string))
 
@@ -398,10 +395,10 @@
 (defcfun ("gtk_icon_factory_remove_default" gtk-icon-factory-remove-default)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-18}
-  @argument[factory]{a @class{gtk-icon-factory} previously added with
-    @fun{gtk-icon-factory-add-default}}
-  Removes an icon factory from the list of default icon factories. Not
+ "@version{2013-5-6}
+  @argument[factory]{a @class{gtk-icon-factory} object previously added with
+    the function @fun{gtk-icon-factory-add-default}}
+  Removes an icon @arg{factory} from the list of default icon factories. Not
   normally used; you might use it for a library that can be unloaded or shut
   down."
   (factory (g-object gtk-icon-factory)))
@@ -414,21 +411,22 @@
 
 (defcfun ("gtk_icon_set_add_source" gtk-icon-set-add-source) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-8}
+ "@version{2013-5-6}
   @argument[icon-set]{a @class{gtk-icon-set} object}
   @argument[source]{a @class{gtk-icon-source} object}
   @begin{short}
-    Icon sets have a list of @class{gtk-icon-source}, which they use as base
-    icons for rendering icons in different states and sizes. Icons are scaled,
-    made to look insensitive, etc. in @fun{gtk-icon-set-render-icon}, but
-    @class{gtk-icon-set} needs base images to work with. The base images and
-    when to use them are described by a @class{gtk-icon-source}.
+    Icon sets have a list of @class{gtk-icon-source} objects, which they use as
+    base icons for rendering icons in different states and sizes. Icons are
+    scaled, made to look insensitive, etc. in the function
+    @fun{gtk-icon-set-render-icon}, but @class{gtk-icon-set} needs base
+    images to work with. The base images and when to use them are described by
+    a @class{gtk-icon-source} object.
   @end{short}
 
   This function copies source, so you can reuse the same source immediately
   without affecting the icon set.
 
-  An example of when you'd use this function: a web browser's \"Back to
+  An example of when you would use this function: a web browser's \"Back to
   Previous Page\" icon might point in a different direction in Hebrew and in
   English; it might look different when insensitive; and it might change size
   depending on toolbar mode (small/large icons). So a single icon set would
@@ -441,8 +439,10 @@
   more generic icon sources. The order in which you add the sources to the icon
   set does not matter.
 
-  @fun{gtk-icon-set-new-from-pixbuf} creates a new icon set with a default icon
-  source based on the given pixbuf."
+  The function @fun{gtk-icon-set-new-from-pixbuf} creates a new icon set with a
+  default icon source based on the given pixbuf.
+  @see-function{gtk-icon-set-render-icon}
+  @see-function{gtk-icon-set-new-from-pixbuf}"
   (icon-set (g-boxed-foreign gtk-icon-set))
   (source (g-boxed-foreign gtk-icon-source)))
 
@@ -468,19 +468,19 @@
 
 (defcfun ("gtk_icon_set_new" gtk-icon-set-new) (g-boxed-foreign gtk-icon-set)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2013-5-6}
   @return{A new @class{gtk-icon-set} object.}
   @begin{short}
-    Creates a new @class{gtk-icon-set}. A @class{gtk-icon-set} represents a
-    single icon in various sizes and widget states. It can provide a
-    @class{gdk-pixbuf} for a given size and state on request, and automatically
-    caches some of the rendered @class{gdk-pixbuf} objects.
+    Creates a new @class{gtk-icon-set} object. A @class{gtk-icon-set} object
+    represents a single icon in various sizes and widget states. It can provide
+    a @class{gdk-pixbuf} object for a given size and state on request, and
+    automatically caches some of the rendered @class{gdk-pixbuf} objects.
   @end{short}
 
-  Normally you would use @fun{gtk-widget-render-icon-pixbuf} instead of using
-  @class{gtk-icon-set} directly. The one case where you'd use
-  @class{gtk-icon-set} is to create application specific icon sets to place in
-  a @class{gtk-icon-factory}.
+  Normally you would use the function @fun{gtk-widget-render-icon-pixbuf}
+  instead of using @class{gtk-icon-set} directly. The one case where you would
+  use @class{gtk-icon-set} is to create application specific icon sets to place
+  in a @class{gtk-icon-factory} object.
   @see-function{gtk-widget-render-icon-pixbuf}")
 
 (export 'gtk-icon-set-new)
@@ -524,33 +524,35 @@
 (defcfun ("gtk_icon_set_render_icon" gtk-icon-set-render-icon)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-5-6}
   @argument[icon-set]{a @class{gtk-icon-set} object}
   @argument[style]{a @class{gtk-style} object associated with @arg{widget},
     or @code{nil}}
   @argument[direction]{text direction}
-  @argument[state]{widget state}
-  @argument[size]{icon size. A size of @code{(GtkIconSize)-1} means render at
-    the size of the source and don't scale.}
-  @argument[widget]{widget that will display the icon, or @code{nil}. The only
+  @argument[state]{@arg{widget} state}
+  @argument[size]{icon size, a size of @code{(GtkIconSize)-1} means render at
+    the size of the source and do not scale}
+  @argument[widget]{widget that will display the icon, or @code{nil}, the only
     use that is typically made of this is to determine the appropriate
-    @class{gdk-screen} object.}
-  @argument[detail]{detail to pass to the theme engine, or @code{nil}. Note that
-    passing a detail of anything but @code{nil} will disable caching.}
-  @return{A @class{gdk-pixbuf} to be displayed.}
+    @class{gdk-screen} object}
+  @argument[detail]{detail to pass to the theme engine, or @code{nil}, note that
+    passing a detail of anything but @code{nil} will disable caching}
+  @return{A @class{gdk-pixbuf} object to be displayed.}
   @subheading{Warning}
-    @sym{gtk-icon-set-render-icon} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
-    Use @fun{gtk-icon-set-render-icon-pixbuf} instead.
+    The function @sym{gtk-icon-set-render-icon} has been deprecated since
+    version 3.0 and should not be used in newly-written code.
+    Use the function @fun{gtk-icon-set-render-icon-pixbuf} instead.
 
   @begin{short}
-    Renders an icon using @fun{gtk-style-render-icon}. In most cases,
-    @fun{gtk-widget-render-icon} is better, since it automatically provides most
-    of the arguments from the current widget settings. This function never
-    returns @code{nil}; if the icon can't be rendered (perhaps because an image
-    file fails to load), a default \"missing image\" icon will be returned
-    instead.
-  @end{short}"
+    Renders an icon using the function @fun{gtk-style-render-icon}. In most
+    cases, the function @fun{gtk-widget-render-icon} is better, since it
+    automatically provides most of the arguments from the current widget
+    settings. This function never returns @code{nil}; if the icon cannot be
+    rendered (perhaps because an image file fails to load), a default
+    \"missing image\" icon will be returned instead.
+  @end{short}
+  @see-function{gtk-icon-set-render-icon-pixbuf}
+  @see-function{gtk-style-render-icon}"
   (icon-set (g-boxed-foreign gtk-icon-set))
   (style (g-object gtk-style))
   (direction :pointer) ; type gtk-text-direction is not defined at this point
@@ -568,19 +570,19 @@
 (defcfun ("gtk_icon_set_render_icon_pixbuf" gtk-icon-set-render-icon-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-5-6}
   @argument[icon-set]{a @class{gtk-icon-set} object}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[size]{icon size. A size of @code{(GtkIconSize)-1} means render at
-    the size of the source and don't scale.}
+  @argument[size]{icon size, a size of @code{(GtkIconSize)-1} means render at
+    the size of the source and do not scale}
   @return{A @class{gdk-pixbuf} object to be displayed.}
   @begin{short}
-    Renders an icon using @fun{gtk-render-icon-pixbuf}. In most cases,
-    @fun{gtk-widget-render-icon-pixbuf} is better, since it automatically
-    provides most of the arguments from the current widget settings. This
-    function never returns @code{nil}; if the icon can't be rendered (perhaps
-    because an image file fails to load), a default \"missing image\" icon will
-    be returned instead.
+    Renders an icon using the function @fun{gtk-render-icon-pixbuf}. In most
+    cases, the function @fun{gtk-widget-render-icon-pixbuf} is better, since it
+    automatically provides most of the arguments from the current widget
+    settings. This function never returns @code{nil}; if the icon cannot be
+    rendered (perhaps because an image file fails to load), a default
+    \"missing image\" icon will be returned instead.
   @end{short}
 
   Since 3.0
@@ -796,14 +798,10 @@
 
 (defun gtk-icon-source-get-filename (source)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[source]{a GtkIconSource}
-  @begin{return}
-    Image filename. This string must not be modified or freed.
-  @end{return}
-  Retrieves the source filename, or NULL if none is set. The filename is not a
-  copy, and should not be modified or expected to persist beyond the lifetime
-  of the icon source."
+ "@version{2013-5-6}
+  @argument[source]{a @class{gtk-icon-source} object}
+  @return{The image filename.}
+  Retrieves the @arg{source} filename, or @code{nil} if none is set."
   (gtk-icon-source-filename source))
 
 (export 'gtk-icon-source-get-filename)
@@ -839,14 +837,10 @@
 
 (defun gtk-icon-source-get-icon-name (source)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[source]{a GtkIconSource}
-  @begin{return}
-    icon name. This string must not be modified or freed.
-  @end{return}
-  Retrieves the source icon name, or NULL if none is set. The icon_name is not
-  a copy, and should not be modified or expected to persist beyond the
-  lifetime of the icon source."
+ "@version{2013-5-6}
+  @argument[source]{a @class{gtk-icon-source} object}
+  @return{The icon name}
+  Retrieves the @arg{source} icon name, or @code{nil} if none is set."
   (gtk-icon-source-icon-name source))
 
 (export 'gtk-icon-source-get-icon-name)
@@ -915,36 +909,39 @@
 
 (defcfun ("gtk_icon_source_new" gtk-icon-source-new) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-3-18}
+ "@version{2013-5-6}
   @return{A new @class{gtk-icon-source} object.}
   @begin{short}
-    Creates a new @class{gtk-icon-source}. A @class{gtk-icon-source} contains a
-    GDK-Pixbuf (or image filename) that serves as the base image for one or more
-    of the icons in a @class{gtk-icon-set}, along with a specification for which
-    icons in the icon set will be based on that pixbuf or image file. An icon
-    set contains a set of icons that represent \"the same\" logical concept in
-    different states, different global text directions, and different sizes.
+    Creates a new @class{gtk-icon-source} object. A @class{gtk-icon-source}
+    object contains a GDK-Pixbuf (or image filename) that serves as the base
+    image for one or more of the icons in a @class{gtk-icon-set} object, along
+    with a specification for which icons in the icon set will be based on that
+    pixbuf or image file. An icon set contains a set of icons that represent
+    \"the same\" logical concept in different states, different global text
+    directions, and different sizes.
   @end{short}
 
-  So for example a web browser's \"Back to Previous Page\" icon might point in a
-  different direction in Hebrew and in English; it might look different when
+  So for example a web browser's \"Back to Previous Page\" icon might point in
+  a different direction in Hebrew and in English; it might look different when
   insensitive; and it might change size depending on toolbar mode (small/large
   icons). So a single icon set would contain all those variants of the icon.
-  @class{gtk-icon-set} contains a list of @class{gtk-icon-source} from which it
-  can derive specific icon variants in the set.
+  A @class{gtk-icon-set} object contains a list of @class{gtk-icon-source}
+  objects from which it can derive specific icon variants in the set.
 
-  In the simplest case, @class{gtk-icon-set} contains one source pixbuf from
-  which it derives all variants. The convenience function
+  In the simplest case, a @class{gtk-icon-set} object contains one source
+  pixbuf from which it derives all variants. The convenience function
   @fun{gtk-icon-set-new-from-pixbuf} handles this case; if you only have one
   source pixbuf, just use that function.
 
   If you want to use a different base pixbuf for different icon variants, you
-  create multiple icon sources, mark which variants they'll be used to create,
-  and add them to the icon set with @fun{gtk-icon-set-add-source}.
+  create multiple icon sources, mark which variants they will be used to create,
+  and add them to the icon set with the function @fun{gtk-icon-set-add-source}.
 
   By default, the icon source has all parameters wildcarded. That is, the icon
   source will be used as the base icon for any desired text direction, widget
-  state, or icon size.")
+  state, or icon size.
+  @see-function{gtk-icon-set-new-from-pixbuf}
+  @see-function{gtk-icon-set-add-source}")
 
 (export 'gtk-icon-source-new)
 
@@ -998,11 +995,11 @@
 
 (defun gtk-icon-source-set-filename (source filename)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[source]{a GtkIconSource}
+ "@version{2013-5-6}
+  @argument[source]{a @class{gtk-icon-source} object}
   @argument[filename]{image file to use}
   Sets the name of an image file to use as a base image when creating icon
-  variants for GtkIconSet. The filename must be absolute."
+  variants for @class{gtk-icon-set} object. The filename must be absolute."
   (setf (gtk-icon-source-filename source) filename))
 
 (export 'gtk-icon-source-set-filename)
@@ -1030,11 +1027,11 @@
 
 (defun gtk-icon-source-set-icon-name (source icon-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[source]{a GtkIconSource}
+ "@version{2013-5-6}
+  @argument[source]{a @class{gtk-icon-source} object}
   @argument[icon-name]{name of icon to use}
   Sets the name of an icon to look up in the current icon theme to use as a
-  base image when creating icon variants for GtkIconSet."
+  base image when creating icon variants for @class{gtk-icon-set}."
   (setf (gtk-icon-source-icon-name source) icon-name))
 
 (export 'gtk-icon-source-set-icon-name)
@@ -1127,6 +1124,5 @@
 ;;; setting :
 ;;;     TRUE to wildcard the widget state
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.stock-images.lisp --------------------------------------

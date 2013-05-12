@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -106,6 +106,10 @@
 ;;;     gtk_text_view_get_default_attributes
 ;;;     gtk_text_view_im_context_filter_keypress
 ;;;     gtk_text_view_reset_im_context
+;;;     gtk_text_view_set_input_purpose
+;;;     gtk_text_view_get_input_purpose
+;;;     gtk_text_view_set_input_hints
+;;;     gtk_text_view_get_input_hints
 ;;;     GTK_TEXT_VIEW_PRIORITY_VALIDATE
 ;;; ----------------------------------------------------------------------------
 
@@ -140,6 +144,12 @@
    (indent
     gtk-text-view-indent
     "indent" "gint" t t)
+   (input-hints
+    gtk-text-view-input-hints
+    "input-hints" "GtkInputHints" t t)
+   (input-purpose
+    gtk-text-view-input-purpose
+    "input-purpose" "GtkInputPurpose" t t)
    (justification
     gtk-text-view-justification
     "justification" "GtkJustification" t t)
@@ -172,7 +182,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-view 'type)
- "@version{2013-3-25}
+ "@version{2013-5-5}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
@@ -192,7 +202,7 @@
       the user asks for it.
       The default bindings for this signal are Backspace and Shift-Backspace.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
@@ -202,7 +212,7 @@
       copy the selection to the clipboard.
       The default bindings for this signal are Ctrl-c and Ctrl-Insert.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
     @subheading{The \"cut-clipboard\" signal}
       @begin{pre}
@@ -212,7 +222,7 @@
       cut the selection to the clipboard.
       The default bindings for this signal are Ctrl-x and Shift-Delete.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
     @subheading{The \"delete-from-cursor\" signal}
       @begin{pre}
@@ -220,15 +230,15 @@
       @end{pre}
       The \"delete-from-cursor\" signal is a keybinding signal which gets
       emitted when the user initiates a text deletion.
-      If the type is GTK_DELETE_CHARS, GTK+ deletes the selection if there is
-      one, otherwise it deletes the requested number of characters.
-      The default bindings for this signal are Delete for deleting a character,
-      Ctrl-Delete for deleting a word and Ctrl-Backspace for deleting a word
-      backwords.
+      If the type is @code{:chars}, GTK+ deletes the selection if there is one,
+      otherwise it deletes the requested number of characters. The default
+      bindings for this signal are Delete for deleting a character, Ctrl-Delete
+      for deleting a word and Ctrl-Backspace for deleting a word backwords.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
-        @entry[type]{the granularity of the deletion, as a GtkDeleteType}
-        @entry[count]{the number of type units to delete}
+        @entry[text-view]{The object which received the signal.}
+        @entry[type]{The granularity of the deletion, as a
+          @symbol{gtk-delete-type}.}
+        @entry[count]{The number of type units to delete.}
       @end{table}
     @subheading{The \"insert-at-cursor\" signal}
       @begin{pre}
@@ -238,8 +248,8 @@
       when the user initiates the insertion of a fixed string at the cursor.
       This signal has no default bindings.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
-        @entry[string]{the string to insert}
+        @entry[text-view]{The object which received the signal.}
+        @entry[string]{The string to insert.}
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
@@ -247,9 +257,9 @@
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user initiates a cursor movement. If the cursor is not visible in
-      text_view, this signal causes the viewport to be moved instead.
-      Applications should not connect to it, but may emit it with
-      g_signal_emit_by_name() if they need to control the cursor
+      @arg{text-view}, this signal causes the viewport to be moved instead.
+      Applications should not connect to it, but may emit it with the function
+      @fun{g-signal-emit-by-name} if they need to control the cursor
       programmatically.
       The default bindings for this signal come in two variants, the variant
       with the Shift modifier extends the selection, the variant without the
@@ -261,10 +271,12 @@
       PageUp/PageDown keys move vertically by pages
       Ctrl-PageUp/PageDown keys move horizontally by pages
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
-        @entry[step]{the granularity of the move, as a GtkMovementStep}
-        @entry[count]{the number of step units to move}
-        @entry[extend-selection]{TRUE if the move should extend the selection}
+        @entry[text-view]{The object which received the signal.}
+        @entry[step]{The granularity of the move, as a
+          @symbol{gtk-movement-step}.}
+        @entry[count]{The number of step units to move.}
+        @entry[extend-selection]{@em{True} if the move should extend the
+          selection.}
       @end{table}
     @subheading{The \"move-viewport\" signal}
       @begin{pre}
@@ -275,9 +287,10 @@
       part of the text view is visible in a containing scrolled window.
       There are no default bindings for this signal.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
-        @entry[step]{the granularity of the move, as a GtkMovementStep}
-        @entry[count]{the number of step units to move}
+        @entry[text-view]{The object which received the signal.}
+        @entry[step]{The granularity of the move, as a
+          @symbol{gtk-movement-step}.}
+        @entry[count]{The number of step units to move.}
       @end{table}
     @subheading{The \"paste-clipboard\" signal}
       @begin{pre}
@@ -287,7 +300,7 @@
       to paste the contents of the clipboard into the text view.
       The default bindings for this signal are Ctrl-v and Shift-Insert.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
@@ -298,8 +311,8 @@
       If you need to add items to the context menu, connect to this signal and
       append your menuitems to the menu.
       @begin[code]{table}
-        @entry[entry]{The text view on which the signal is emitted}
-        @entry[menu]{the menu that is being populated}
+        @entry[entry]{The text view on which the signal is emitted.}
+        @entry[menu]{The menu that is being populated.}
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
@@ -311,8 +324,8 @@
       This signal is only emitted if the text at the given position is actually
       editable.
       @begin[code]{table}
-        @entry[text_view]{the object which received the signal}
-        @entry[preedit]{the current preedit string}
+        @entry[text-view]{The object which received the signal.}
+        @entry[preedit]{The current preedit string.}
       @end{table}
       Since 2.20
 
@@ -325,8 +338,8 @@
       The default bindings for this signal are Ctrl-a and Ctrl-/ for selecting
       and Shift-Ctrl-a and Ctrl-\ for unselecting.
       @begin[code]{table}
-        @entry[text_view]{the object which received the signal}
-        @entry[select]{TRUE to select, FALSE to unselect}
+        @entry[text-view]{The object which received the signal.}
+        @entry[select]{@em{True} to select, @code{nil} to unselect.}
       @end{table}
     @subheading{The \"set-anchor\" signal}
       @begin{pre}
@@ -337,7 +350,7 @@
       placed at the same position as the \"insert\" mark.
       This signal has no default bindings.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
     @subheading{The \"toggle-cursor-visible\" signal}
       @begin{pre}
@@ -347,7 +360,7 @@
       emitted to toggle the visibility of the cursor.
       The default binding for this signal is F7.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
     @subheading{The \"toggle-overwrite\" signal}
       @begin{pre}
@@ -357,7 +370,7 @@
       to toggle the overwrite mode of the text view.
       The default bindings for this signal is Insert.
       @begin[code]{table}
-        @entry[text-view]{the object which received the signal}
+        @entry[text-view]{The object which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-text-view-accepts-tab}
@@ -366,6 +379,8 @@
   @see-slot{gtk-text-view-editable}
   @see-slot{gtk-text-view-im-module}
   @see-slot{gtk-text-view-indent}
+  @see-slot{gtk-text-view-input-hints}
+  @see-slot{gtk-text-view-input-purpose}
   @see-slot{gtk-text-view-justification}
   @see-slot{gtk-text-view-left-margin}
   @see-slot{gtk-text-view-overwrite}
@@ -387,7 +402,7 @@
  "The @code{\"accepts-tab\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether Tab will result in a tab character being entered. @br{}
-  Default value: TRUE")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -405,7 +420,7 @@
  "The @code{\"cursor-visible\"} property of type @code{:boolean}
   (Read / Write)@br{}
   If the insertion cursor is shown. @br{}
-  Default value: TRUE")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -413,7 +428,7 @@
 (setf (documentation (atdoc:get-slot-from-name "editable" 'gtk-text-view) 't)
  "The @code{\"editable\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether the text can be modified by the user. @br{}
-  Default value: TRUE")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -421,9 +436,9 @@
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-text-view) 't)
  "The @code{\"im-module\"} property of type @code{:string} (Read / Write)@br{}
   Which IM (input method) module should be used for this entry. See
-  GtkIMContext.
-  Setting this to a non-NULL value overrides the system-wide IM module
-  setting. See the GtkSettings \"gtk-im-module\" property. @br{}
+  @class{gtk-im-context}.
+  Setting this to a non-@code{nil} value overrides the system-wide IM module
+  setting. See the @class{gtk-settings} \"gtk-im-module\" property. @br{}
   Default value: @code{nil}@br{}
   Since 2.16")
 
@@ -438,12 +453,35 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-text-view) 't)
+ "The @code{\"input-hints\"} property of type @symbol{gtk-input-hints}
+  (Read / Write) @br{}
+  Additional hints (beyond the \"input-purpose\" signal) that allow input
+  methods to fine-tune their behaviour. @br{}
+  Since 3.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "input-purpose"
+                                               'gtk-text-view) 't)
+ "The @code{\"input-purpose\"} property of type @symbol{gtk-input-purpose}
+  (Read / Write) @br{}
+  The purpose of this text field.
+  This property can be used by on-screen keyboards and other input methods to
+  adjust their behaviour. @br{}
+  Default value: @code{:free-form} @br{}
+  Since 3.6")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justification"
                                                'gtk-text-view) 't)
  "The @code{\"justification\"} property of type @symbol{gtk-justification}
   (Read / Write)@br{}
   Left, right, or center justification. @br{}
-  Default value: GTK_JUSTIFY_LEFT")
+  Default value: @code{:left}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -460,7 +498,7 @@
 (setf (documentation (atdoc:get-slot-from-name "overwrite" 'gtk-text-view) 't)
  "The @code{\"overwrite\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether entered text overwrites existing contents. @br{}
-  Default value: FALSE")
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -521,11 +559,11 @@
   (Read / Write)@br{}
   Whether to wrap lines never, at word boundaries, or at character
   boundaries. @br{}
-  Default value: GTK_WRAP_NONE")
+  Default value: @code{:none}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -583,6 +621,26 @@
       (documentation 'gtk-text-view-indent 'function)
  "@version{2013-3-25}
   Accessor of the slot @code{\"indent\"} of the @class{gtk-text-view} class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-view-input-hints atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-view-input-hints 'function)
+ "@version{2013-5-5}
+  Accessor of the slot @code{\"input-hints\"} of the @class{gtk-text-view}
+  class.")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-text-view-input-purpose atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-text-view-input-purpose 'function)
+ "@version{2013-5-5}
+  Accessor of the slot @code{\"input-purpose\"} of the @class{gtk-text-view}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -688,8 +746,6 @@
   (:top 5)
   (:bottom 6))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-window-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-window-type atdoc:*external-symbols*)
@@ -716,12 +772,16 @@
 
 (defun gtk-text-view-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @return{a new GtkTextView}
-  Creates a new GtkTextView. If you don't call gtk_text_view_set_buffer()
-  before using the text view, an empty default buffer will be created for you.
-  Get the buffer with gtk_text_view_get_buffer(). If you want to specify your
-  own buffer, consider gtk_text_view_new_with_buffer()."
+ "@version{2013-5-5}
+  @return{A new @class{gtk-text-view} object.}
+  Creates a new @class{gtk-text-view} object. If you do not call the function
+  @fun{gtk-text-view-set-buffer} before using the text view, an empty default
+  buffer will be created for you. Get the buffer with the function
+  @fun{gtk-text-view-get-buffer}. If you want to specify your own buffer,
+  consider the function @fun{gtk-text-view-new-with-buffer}.
+  @see-function{gtk-text-view-set-buffer}
+  @see-function{gtk-text-view-get-buffer}
+  @see-function{gtk-text-view-new-with-buffer}"
   (make-instance 'gtk-text-view))
 
 (export 'gtk-text-view-new)
@@ -734,14 +794,15 @@
 
 (defun gtk-text-view-new-with-buffer (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[buffer]{a GtkTextBuffer}
-  @return{a new GtkTextView.}
-  Creates a new GtkTextView widget displaying the buffer buffer. One buffer
-  can be shared among many widgets. buffer may be NULL to create a default
-  buffer, in which case this function is equivalent to gtk_text_view_new().
-  The text view adds its own reference count to the buffer; it does not take
-  over an existing reference."
+ "@version{2013-5-5}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  @return{A new @class{gtk-text-view} object.}
+  Creates a new @class{gtk-text-view} widget displaying the buffer @arg{buffer}.
+  One buffer can be shared among many widgets. @arg{buffer} may be @code{nil} to
+  create a default buffer, in which case this function is equivalent to the
+  function @fun{gtk-text-view-new}. The text view adds its own reference count
+  to the buffer; it does not take over an existing reference.
+  @see-function{gtk-text-view-new}"
   (make-instance 'gtk-text-view
                  :buffer buffer))
 
@@ -755,14 +816,14 @@
 
 (defun gtk-text-view-set-buffer (text-view buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text-view]{a GtkTextView}
-  @argument[buffer]{a GtkTextBuffer}
-  Sets buffer as the buffer being displayed by text_view. The previous buffer
-  displayed by the text view is unreferenced, and a reference is added to
-  buffer. If you owned a reference to buffer before passing it to this
-  function, you must remove that reference yourself; GtkTextView will not
-  \"adopt\" it."
+ "@version{2013-5-5}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[buffer]{a @class{gtk-text-buffer} object}
+  Sets @arg{buffer} as the buffer being displayed by @arg{text-view}. The
+  previous buffer displayed by the text view is unreferenced, and a reference is
+  added to @arg{buffer}. If you owned a reference to @arg{buffer} before passing
+  it to this function, you must remove that reference yourself;
+  @class{gtk-text-view} will not \"adopt\" it."
   (setf (gtk-text-view-buffer text-view) buffer))
 
 (export 'gtk-text-view-set-buffer)
@@ -775,12 +836,12 @@
 
 (defun gtk-text-view-get-buffer (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @return{a GtkTextBuffer}
-  Returns the GtkTextBuffer being displayed by this text view. The reference
-  count on the buffer is not incremented; the caller of this function won't
-  own a new reference."
+ "@version{2013-5-6}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @return{A @class{gtk-text-buffer} object.}
+  Returns the @class{gtk-text-buffer} object being displayed by this text view.
+  The reference count on the buffer is not incremented; the caller of this
+  function will not own a new reference."
   (gtk-text-view-buffer text-view))
 
 (export 'gtk-text-view-get-buffer)
@@ -846,20 +907,20 @@
                                                (x-align 0.0 x-align-supplied)
                                                (y-align 0.0 y-align-supplied))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[mark]{a GtkTextMark}
-  @argument[within_margin]{margin as a [0.0,0.5) fraction of screen size}
-  @argument[use_align]{whether to use alignment arguments (if FALSE, just get
-    the mark onscreen)}
+ "@version{2013-5-7}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[mark]{a @class{gtk-text-mark} object}
+  @argument[within-margin]{margin as a [0.0, 0.5) fraction of screen size}
+  @argument[use-align]{whether to use alignment arguments (if @code{nil}, just
+    get the mark onscreen)}
   @argument[xalign]{horizontal alignment of mark within visible area}
   @argument[yalign]{vertical alignment of mark within visible area}
-  Scrolls text_view so that mark is on the screen in the position indicated by
-  xalign and yalign. An alignment of 0.0 indicates left or top, 1.0 indicates
-  right or bottom, 0.5 means center. If use_align is FALSE, the text scrolls
-  the minimal distance to get the mark onscreen, possibly not scrolling at
-  all. The effective screen for purposes of this function is reduced by a
-  margin of size within_margin."
+  Scrolls @arg{text-view} so that mark is on the screen in the position
+  indicated by @arg{xalign} and @arg{yalign}. An alignment of 0.0 indicates left
+  or top, 1.0 indicates right or bottom, 0.5 means center. If @arg{use-align} is
+  @code{nil}, the text scrolls the minimal distance to get the mark onscreen,
+  possibly not scrolling at all. The effective screen for purposes of this
+  function is reduced by a margin of size @arg{within-margin}."
   (%gtk-text-view-scroll-to-mark text-view
                                  mark
                                  (coerce within-margin 'double-float)
@@ -886,30 +947,32 @@
                                            (x-align 0.0 x-align-supplied)
                                            (y-align 0.0 y-align-supplied))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @argument[within_margin]{margin as a [0.0,0.5) fraction of screen size}
-  @argument[use_align]{whether to use alignment arguments (if FALSE, just get
-    the mark onscreen)}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[within-margin]{margin as a [0.0, 0.5) fraction of screen size}
+  @argument[use-align]{whether to use alignment arguments (if @code{nil}, just
+    get the mark onscreen)}
   @argument[xalign]{horizontal alignment of mark within visible area}
   @argument[yalign]{vertical alignment of mark within visible area}
-  @return{TRUE if scrolling occurred}
+  @return{@em{True} if scrolling occurred.}
   @begin{short}
-    Scrolls text_view so that iter is on the screen in the position indicated by
-    xalign and yalign. An alignment of 0.0 indicates left or top, 1.0 indicates
-    right or bottom, 0.5 means center. If use_align is FALSE, the text scrolls
-    the minimal distance to get the mark onscreen, possibly not scrolling at
-    all. The effective screen for purposes of this function is reduced by a
-    margin of size within_margin.
+    Scrolls @arg{text-view} so that @arg{iter} is on the screen in the position
+    indicated by @arg{xalign} and @arg{yalign}. An alignment of 0.0 indicates
+    left or top, 1.0 indicates right or bottom, 0.5 means center. If
+    @arg{use-align} is @code{nil}, the text scrolls the minimal distance to get
+    the mark onscreen, possibly not scrolling at all. The effective screen for
+    purposes of this function is reduced by a margin of size
+    @arg{within-margin}.
   @end{short}
 
   Note that this function uses the currently-computed height of the lines in
   the text buffer. Line heights are computed in an idle handler; so this
-  function may not have the desired effect if it's called before the height
-  computations. To avoid oddness, consider using
-  gtk_text_view_scroll_to_mark() which saves a point to be scrolled to after
-  line validation."
+  function may not have the desired effect if it is called before the height
+  computations. To avoid oddness, consider using the function
+  @fun{gtk-text-view-scroll-to-mark} which saves a point to be scrolled to after
+  line validation.
+  @see-function{gtk-text-view-scroll-to-mark}"
   (%gtk-text-view-scroll-to-iter text-view
                                  iter
                                  (coerce within-margin 'double-float)
@@ -926,11 +989,11 @@
 (defcfun ("gtk_text_view_scroll_mark_onscreen"
           gtk-text-view-scroll-mark-onscreen) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[mark]{a mark in the buffer for text_view}
-  Scrolls text_view the minimum distance such that mark is contained within
-  the visible area of the widget."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[mark]{a mark in the buffer for @arg{text-view} object}
+  Scrolls @arg{text-view} the minimum distance such that mark is contained
+  within the visible area of the widget."
   (text-view (g-object gtk-text-view))
   (mark (g-object gtk-text-mark)))
 
@@ -943,11 +1006,11 @@
 (defcfun ("gtk_text_view_move_mark_onscreen"
           gtk-text-view-move-mark-onscreen) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text-view]{a GtkTextView}
-  @argument[mark]{a GtkTextMark}
-  @return{TRUE if the mark moved (wasn't already onscreen)}
-  Moves a mark within the buffer so that it's located within the
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[mark]{a @class{gtk-text-mark} object}
+  @return{@em{True} if the mark moved (was not already onscreen).}
+  Moves a @arg{mark} within the buffer so that it it located within the
   currently-visible text area."
   (text-view (g-object gtk-text-view))
   (mark (g-object gtk-text-mark)))
@@ -961,10 +1024,10 @@
 (defcfun ("gtk_text_view_place_cursor_onscreen"
           gtk-text-view-place-cursor-onscreen) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @return{TRUE if the cursor had to be moved.}
-  Moves the cursor to the currently visible region of the buffer, it it isn't
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @return{@em{True} if the cursor had to be moved.}
+  Moves the cursor to the currently visible region of the buffer, it it is not
   there already."
   (text-view (g-object gtk-text-view)))
 
@@ -981,12 +1044,12 @@
 
 (defun gtk-text-view-visible-rect (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[visible_rect]{rectangle to fill}
-  Fills visible_rect with the currently-visible region of the buffer, in
-  buffer coordinates. Convert to window coordinates with
-  gtk_text_view_buffer_to_window_coords()."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @return{The current visible region.}
+  The currently-visible region of the buffer, in buffer coordinates. Convert to
+  window coordinates with  @fun{gtk-text-view-buffer-to-window-coords}.
+  @see-function{gtk-text-view-buffer-to-window-coords}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-text-view-get-visible-rect text-view rect)
     rect))
@@ -1005,14 +1068,15 @@
 
 (defun gtk-text-view-iter-location (text-view iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @argument[location]{bounds of the character at iter}
-  Gets a rectangle which roughly contains the character at iter. The rectangle
-  position is in buffer coordinates; use
-  gtk_text_view_buffer_to_window_coords() to convert these coordinates to
-  coordinates for one of the windows in the text view."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{Bounds of the character at @arg{iter}.}
+  Gets a rectangle which roughly contains the character at @arg{iter}. The
+  rectangle position is in buffer coordinates; use the function
+  @fun{gtk-text-view-buffer-to-window-coords} to convert these coordinates to
+  coordinates for one of the windows in the text view.
+  @see-function{gtk-text-view-buffer-to-window-coords}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-text-view-get-iter-location text-view iter rect)
     rect))
@@ -1073,15 +1137,19 @@
 
 (defun gtk-text-view-get-line-at-y (text-view y)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[target_iter]{a GtkTextIter}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[y]{a y coordinate}
-  @argument[line_top]{return location for top coordinate of the line}
-  Gets the GtkTextIter at the start of the line containing the coordinate y.
-  y is in buffer coordinates, convert from window coordinates with
-  gtk_text_view_window_to_buffer_coords(). If non-NULL, line_top will be
-  filled with the coordinate of the top edge of the line."
+  @begin{return}
+    @code{target-iter} -- a @class{gtk-text-iter} object @br{}
+    @code{line-top} -- top coordinate of the line
+  @end{return}
+  Gets the @class{gtk-text-iter} at the start of the line containing the
+  coordinate @arg{y}. @arg{y} is in buffer coordinates, convert from window
+  coordinates with the function @fun{gtk-text-view-window-to-buffer-coords}. If
+  non-@code{nil}, @arg{line-top} will be filled with the coordinate of the top
+  edge of the line.
+  @see-function{gtk-text-view-window-to-buffer-coords}"
   (let ((iter (make-instance 'gtk-text-iter)))
     (with-foreign-object (line-top :int)
       (%gtk-text-view-get-line-at-y text-view iter y line-top)
@@ -1101,17 +1169,22 @@
 
 (defun gtk-text-view-get-line-yrange (text-view iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @argument[y]{return location for a y coordinate}
-  @argument[height]{return location for a height}
-  Gets the y coordinate of the top of the line containing iter, and the height
-  of the line. The coordinate is a buffer coordinate; convert to window
-  coordinates with gtk_text_view_buffer_to_window_coords()."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @begin{return}
+    @code{y} -- y coordinate @br{}
+    @code{height} -- height
+  @end{return}
+  Gets the @arg{y} coordinate of the top of the line containing @arg{iter}, and
+  the @arg{height} of the line. The coordinate is a buffer coordinate; convert
+  to window coordinates with the function
+  @fun{gtk-text-view-buffer-to-window-coords}.
+  @see-function{gtk-text-view-buffer-to-window-coords}"
   (with-foreign-objects ((y :int) (height :int))
     (%gtk-text-view-get-line-yrange text-view iter y height)
-    (values (mem-ref y :int) (mem-ref height :int))))
+    (values (mem-ref y :int)
+            (mem-ref height :int))))
 
 (export 'gtk-text-view-get-line-yrange)
 
@@ -1128,15 +1201,17 @@
 
 (defun gtk-text-view-get-iter-at-location (view x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[x]{x position, in buffer coordinates}
   @argument[y]{y position, in buffer coordinates}
-  Retrieves the iterator at buffer coordinates x and y. Buffer coordinates are
-  coordinates for the entire buffer, not just the currently-displayed portion.
-  If you have coordinates from an event, you have to convert those to buffer
-  coordinates with gtk_text_view_window_to_buffer_coords()."
+  Retrieves the iterator at buffer coordinates @arg{x} and @arg{y}. Buffer
+  coordinates are coordinates for the entire buffer, not just the
+  currently-displayed portion. If you have coordinates from an event, you have
+  to convert those to buffer coordinates with the function
+  @fun{gtk-text-view-window-to-buffer-coords}.
+  @see-function{gtk-text-view-window-to-buffer-coords}"
   (let ((iter (make-instance 'gtk-text-iter)))
     (%gtk-text-view-get-iter-at-location view iter x y)
     iter))
@@ -1157,26 +1232,31 @@
 
 (defun gtk-text-view-get-iter-at-position (text-view x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @argument[trailing]{if non-NULL, location to store an integer indicating where
-    in the grapheme the user clicked. It will either be zero, or the number of
-    characters in the grapheme. 0 represents the trailing edge of the grapheme}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[x]{x position, in buffer coordinates}
   @argument[y]{y position, in buffer coordinates}
+  @begin{return}
+    @code{iter} -- a @class{gtk-text-iter} object @br{}
+    @code{trailing} -- if non-@code{nil}, an integer indicating where in the
+    grapheme the user clicked. It will either be zero, or the number of
+    characters in the grapheme. 0 represents the trailing edge of the grapheme
+  @end{return}
   @begin{short}
-    Retrieves the iterator pointing to the character at buffer coordinates x and
-    y. Buffer coordinates are coordinates for the entire buffer, not just the
-    currently-displayed portion. If you have coordinates from an event, you have
-    to convert those to buffer coordinates with
-    gtk_text_view_window_to_buffer_coords().
+    Retrieves the iterator pointing to the character at buffer coordinates
+    @arg{x} and @arg{y}. Buffer coordinates are coordinates for the entire
+    buffer, not just the currently-displayed portion. If you have coordinates
+    from an event, you have to convert those to buffer coordinates with the
+    function @fun{gtk-text-view-window-to-buffer-coords}.
   @end{short}
 
-  Note that this is different from gtk_text_view_get_iter_at_location(), which
-  returns cursor locations, i.e. positions between characters.
+  Note that this is different from the function
+  @fun{gtk-text-view-get-iter-at-location}, which returns cursor locations,
+  i. e. positions between characters.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-text-view-window-to-buffer-coords}
+  @see-function{gtk-text-view-get-iter-at-location}"
   (with-foreign-object (trailing :int)
     (let ((iter (make-instance 'gtk-text-iter)))
       (%gtk-text-view-get-iter-at-position text-view iter trailing x y)
@@ -1200,20 +1280,23 @@
 (defun gtk-text-view-buffer-to-window-coords (text-view window-type
                                                         buffer-x buffer-y)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[win]{a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE}
-  @argument[buffer_x]{buffer x coordinate}
-  @argument[buffer_y]{buffer y coordinate}
-  @argument[window_x]{window x coordinate return location or NULL}
-  @argument[window_y]{window y coordinate return location or NULL}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[win]{a @class{gtk-text-window-type} except @code{:private}}
+  @argument[buffer-x]{buffer x coordinate}
+  @argument[buffer-y]{buffer y coordinate}
+  @begin{return}
+    @code{window-x} -- window x coordinate or @code{nil} @br{}
+    @code{window-y} -- window y coordinate or @code{nil}
+  @end{return}
   @begin{short}
-    Converts coordinate (buffer_x, buffer_y) to coordinates for the window win,
-   and stores the result in (window_x, window_y).
+    Converts coordinate (@arg{buffer-x}, @arg{buffer-y}) to coordinates for the
+    window win (@arg{window-x}, @arg{window-y}).
   @end{short}
 
-  Note that you can't convert coordinates for a nonexisting window (see
-  gtk_text_view_set_border_window_size())."
+  Note that you cannot convert coordinates for a nonexisting window (see the
+  function @fun{gtk-text-view-set-border-window-size}).
+  @see-function{gtk-text-view-set-border-window-size}"
   (with-foreign-objects ((window-x :int) (window-y :int))
     (%gtk-text-view-buffer-to-window-coords text-view
                                             window-type
@@ -1238,20 +1321,23 @@
 
 (defun gtk-text-view-window-to-buffer-coords (text-view win window-x window-y)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[win]{a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE}
-  @argument[window_x]{window x coordinate}
-  @argument[window_y]{window y coordinate}
-  @argument[buffer_x]{buffer x coordinate return location or NULL}
-  @argument[buffer_y]{buffer y coordinate return location or NULL}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[win]{a @class{gtk-text-window-type} except @code{:private}}
+  @argument[window-x]{window x coordinate}
+  @argument[window-y]{window y coordinate}
+  @begin{return}
+    @code{buffer-x} -- buffer x coordinate or @code{nil} @br{}
+    @code{buffer-y} -- buffer y coordinate or @code{nil}
+  @end{return}
   @begin{short}
     Converts coordinates on the window identified by win to buffer coordinates,
-    storing the result in (buffer_x,buffer_y).
+    storing the result in (@arg{buffer-x} ,@arg{buffer-y}).
   @end{short}
 
-  Note that you can't convert coordinates for a nonexisting window (see
-  gtk_text_view_set_border_window_size())."
+  Note that you cannot convert coordinates for a nonexisting window (see the
+  function @fun{gtk-text-view-set-border-window-size}).
+  @see-function{gtk-text-view-set-border-window-size}"
   (with-foreign-objects ((buffer-x :int) (buffer-y :int))
     (%gtk-text-view-window-to-buffer-coords text-view
                                             win
@@ -1269,15 +1355,15 @@
 (defcfun ("gtk_text_view_get_window" gtk-text-view-get-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[win]{window to get}
-  @return{a GdkWindow, or NULL}
-  Retrieves the GdkWindow corresponding to an area of the text view; possible
-  windows include the overall widget window, child windows on the left, right,
-  top, bottom, and the window that displays the text buffer. Windows are NULL
-  and nonexistent if their width or height is 0, and are nonexistent before
-  the widget has been realized."
+  @return{a @class{gdk-window,} or @code{nil}}
+  Retrieves the @class{gdk-window} object corresponding to an area of the text
+  view; possible windows include the overall widget window, child windows on the
+  left, right, top, bottom, and the window that displays the text buffer.
+  Windows are @code{nil} and nonexistent if their width or height is 0, and are
+  nonexistent before the widget has been realized."
   (text-view (g-object gtk-text-view))
   (win gtk-text-window-type))
 
@@ -1290,13 +1376,13 @@
 (defcfun ("gtk_text_view_get_window_type" gtk-text-view-get-window-type)
     gtk-text-window-type
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[window]{a window type}
-  @return{the window type.}
+  @return{The window type.}
   Usually used to find out which window an event corresponds to. If you
-  connect to an event signal on text_view, this function should be called on
-  event->window to see which window it was."
+  connect to an event signal on @arg{text-view}, this function should be called
+  on @code{event->window} to see which window it was."
   (text-view (g-object gtk-text-view))
   (window (g-object gdk-window)))
 
@@ -1309,16 +1395,15 @@
 (defcfun ("gtk_text_view_set_border_window_size"
           gtk-text-view-set-border-window-size) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[type]{window to affect}
   @argument[size]{width or height of the window}
-  Sets the width of GTK_TEXT_WINDOW_LEFT or GTK_TEXT_WINDOW_RIGHT, or the
-  height of GTK_TEXT_WINDOW_TOP or GTK_TEXT_WINDOW_BOTTOM. Automatically
-  destroys the corresponding window if the size is set to 0, and creates the
-  window if the size is set to non-zero. This function can only be used for
-  the \"border windows\", it doesn't work with GTK_TEXT_WINDOW_WIDGET,
-  GTK_TEXT_WINDOW_TEXT, or GTK_TEXT_WINDOW_PRIVATE."
+  Sets the width of @code{:left} or @code{:right}, or the height of @code{:top}
+  or @code{:bottom}. Automatically destroys the corresponding window if the size
+  is set to 0, and creates the window if the size is set to non-zero. This
+  function can only be used for the \"border windows\", it does not work with
+  @code{:widget}, @code{:text}, or @code{:private}."
   (view (g-object gtk-text-view))
   (type gtk-text-window-type)
   (size :int))
@@ -1336,12 +1421,13 @@
 (defcfun ("gtk_text_view_get_border_window_size"
           gtk-text-view-get-border-window-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[type]{window to return size from}
-  @return{width of window}
-  Gets the width of the specified border window. See
-  gtk_text_view_set_border_window_size()."
+  @return{Width of window.}
+  Gets the width of the specified border window. See the function
+  @fun{gtk-text-view-set-border-window-size}.
+  @see-function{gtk-text-view-set-border-window-size}"
   (view (g-object gtk-text-view))
   (type gtk-text-window-type))
 
@@ -1359,17 +1445,17 @@
 (defcfun ("gtk_text_view_forward_display_line"
           gtk-text-view-forward-display-line) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter was moved and is not on the end iterator}
-  Moves the given iter forward by one display (wrapped) line. A display line
-  is different from a paragraph. Paragraphs are separated by newlines or other
-  paragraph separator characters. Display lines are created by line-wrapping a
-  paragraph. If wrapping is turned off, display lines and paragraphs will be
-  the same. Display lines are divided differently for each view, since they
-  depend on the view's width; paragraphs are the same in all views, since they
-  depend on the contents of the GtkTextBuffer."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
+  Moves the given @arg{iter} forward by one display (wrapped) line. A display
+  line is different from a paragraph. Paragraphs are separated by newlines or
+  other paragraph separator characters. Display lines are created by
+  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  paragraphs will be the same. Display lines are divided differently for each
+  view, since they depend on the view's width; paragraphs are the same in all
+  views, since they depend on the contents of the @class{gtk-text-buffer}."
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1382,17 +1468,17 @@
 (defcfun ("gtk_text_view_backward_display_line"
           gtk-text-view-backward-display-line) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter was moved and is not on the end iterator}
-  Moves the given iter backward by one display (wrapped) line. A display line
-  is different from a paragraph. Paragraphs are separated by newlines or other
-  paragraph separator characters. Display lines are created by line-wrapping a
-  paragraph. If wrapping is turned off, display lines and paragraphs will be
-  the same. Display lines are divided differently for each view, since they
-  depend on the view's width; paragraphs are the same in all views, since they
-  depend on the contents of the GtkTextBuffer."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
+  Moves the given @arg{iter} backward by one display (wrapped) line. A display
+  line is different from a paragraph. Paragraphs are separated by newlines or
+  other paragraph separator characters. Display lines are created by
+  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  paragraphs will be the same. Display lines are divided differently for each
+  view, since they depend on the view's width; paragraphs are the same in all
+  views, since they depend on the contents of the @class{gtk-text-buffer}."
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1405,17 +1491,17 @@
 (defcfun ("gtk_text_view_forward_display_line_end"
           gtk-text-view-forward-display-line-end) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter was moved and is not on the end iterator}
-  Moves the given iter forward to the next display line end. A display line is
-  different from a paragraph. Paragraphs are separated by newlines or other
-  paragraph separator characters. Display lines are created by line-wrapping a
-  paragraph. If wrapping is turned off, display lines and paragraphs will be
-  the same. Display lines are divided differently for each view, since they
-  depend on the view's width; paragraphs are the same in all views, since they
-  depend on the contents of the GtkTextBuffer."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
+  Moves the given @arg{iter} forward to the next display line end. A display
+  line is different from a paragraph. Paragraphs are separated by newlines or
+  other paragraph separator characters. Display lines are created by
+  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  paragraphs will be the same. Display lines are divided differently for each
+  view, since they depend on the view's width; paragraphs are the same in all
+  views, since they depend on the contents of the @class{gtk-text-buffer}."
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1428,17 +1514,17 @@
 (defcfun ("gtk_text_view_backward_display_line_start"
           gtk-text-view-backward-display-line-start) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter was moved and is not on the end iterator}
-  Moves the given iter backward to the next display line start. A display line
-  is different from a paragraph. Paragraphs are separated by newlines or other
-  paragraph separator characters. Display lines are created by line-wrapping a
-  paragraph. If wrapping is turned off, display lines and paragraphs will be
-  the same. Display lines are divided differently for each view, since they
-  depend on the view's width; paragraphs are the same in all views, since they
-  depend on the contents of the GtkTextBuffer."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} was moved and is not on the end iterator.}
+  Moves the given @arg{iter} backward to the next display line start. A display
+  line is different from a paragraph. Paragraphs are separated by newlines or
+  other paragraph separator characters. Display lines are created by
+  line-wrapping a paragraph. If wrapping is turned off, display lines and
+  paragraphs will be the same. Display lines are divided differently for each
+  view, since they depend on the view's width; paragraphs are the same in all
+  views, since they depend on the contents of the @class{gtk-text-buffer}."
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1451,13 +1537,14 @@
 (defcfun ("gtk_text_view_starts_display_line"
           gtk-text-view-starts-display-line) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
-  @return{TRUE if iter begins a wrapped line}
-  Determines whether iter is at the start of a display line. See
-  gtk_text_view_forward_display_line() for an explanation of display lines vs.
-  paragraphs."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} begins a wrapped line.}
+  Determines whether @arg{iter} is at the start of a display line. See the
+  function @fun{gtk-text-view-forward-display-line} for an explanation of
+  display lines vs. paragraphs.
+  @see-function{gtk-text-view-forward-display-line}"
   (view (g-object gtk-text-view))
   (iter (g-boxed-foreign gtk-text-iter)))
 
@@ -1469,18 +1556,18 @@
 
 (defcfun ("gtk_text_view_move_visually" gtk-text-view-move-visually) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[iter]{a GtkTextIter}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[iter]{a @class{gtk-text-iter} object}
   @argument[count]{number of characters to move (negative moves left, positive
     moves right)}
-  @return{TRUE if iter moved and is not on the end iterator}
+  @return{@em{True} if @arg{iter} moved and is not on the end iterator.}
   @begin{short}
     Move the iterator a given number of characters visually, treating it as the
-    strong cursor position. If count is positive, then the new strong cursor
-    position will be count positions to the right of the old cursor position. If
-    count is negative then the new strong cursor position will be count
-    positions to the left of the old cursor position.
+    strong cursor position. If @arg{count} is positive, then the new strong
+    cursor position will be @arg{count} positions to the right of the old cursor
+    position. If @arg{count} is negative then the new strong cursor position
+    will be @arg{count} positions to the left of the old cursor position.
   @end{short}
 
   In the presence of bi-directional text, the correspondence between logical
@@ -1499,10 +1586,11 @@
 (defcfun ("gtk_text_view_add_child_at_anchor" gtk-text-view-add-child-at-anchor)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[child]{a GtkWidget}
-  @argument[anchor]{a GtkTextChildAnchor in the GtkTextBuffer for text_view}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[child]{a @class{gtk-widget} object}
+  @argument[anchor]{a @class{gtk-text-child-anchor} in the
+    @class{gtk-text-buffer} for @arg{text-view}}
   Adds a child widget in the text buffer, at the given anchor."
   (view g-object)
   (child g-object)
@@ -1520,17 +1608,14 @@
     :interfaces nil
     :type-initializer "gtk_text_child_anchor_get_type")
   nil)
-;  ((:cffi deleted-p
-;          gtk-text-child-anchor-deleted-p :boolean
-;          "gtk_text_child_anchor_get_deleted" nil)))
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-child-anchor 'type)
- "@version{2013-3-25}
-  A GtkTextChildAnchor is a spot in the buffer where child widgets can be
-  \"anchored\" (inserted inline, as if they were characters). The anchor can
+ "@version{2013-5-10}
+  A @sym{gtk-text-child-anchor} is a spot in the buffer where child widgets can
+  be \"anchored\" (inserted inline, as if they were characters). The anchor can
   have multiple widgets anchored, to allow for multiple views.")
 
 ;;; ----------------------------------------------------------------------------
@@ -1554,11 +1639,10 @@
 (defcfun ("gtk_text_child_anchor_get_widgets" gtk-text-child-anchor-get-widgets)
     (g-list (g-object gtk-widget) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[anchor]{a GtkTextChildAnchor}
-  @return{list of widgets anchored at anchor}
-  Gets a list of all widgets anchored at this child anchor. The returned list
-  should be freed with g_list_free()."
+ "@version{2013-5-10}
+  @argument[anchor]{a @class{gtk-text-child-anchor} object}
+  @return{List of widgets anchored at @arg{anchor}.}
+  Gets a list of all widgets anchored at this child @arg{anchor}."
   (anchor (g-object gtk-text-child-anchor)))
 
 (export 'gtk-text-child-anchor-get-widgets)
@@ -1588,26 +1672,28 @@
 (defcfun ("gtk_text_view_add_child_in_window" gtk-text-view-add-child-in-window)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[child]{a GtkWidget}
-  @argument[which_window]{which window the child should appear in}
-  @argument[xpos]{X position of child in window coordinates}
-  @argument[ypos]{Y position of child in window coordinates}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[child]{a @class{gtk-widget} object}
+  @argument[which-window]{which window the child should appear in}
+  @argument[xpos]{x position of child in window coordinates}
+  @argument[ypos]{y position of child in window coordinates}
   @begin{short}
     Adds a child at fixed coordinates in one of the text widget's windows.
   @end{short}
 
-  The window must have nonzero size (see
-  gtk_text_view_set_border_window_size()). Note that the child coordinates are
-  given relative to the GdkWindow in question, and that these coordinates have
-  no sane relationship to scrolling. When placing a child in
-  GTK_TEXT_WINDOW_WIDGET, scrolling is irrelevant, the child floats above all
+  The window must have nonzero size (see the function
+  @fun{gtk-text-view-set-border-window-size}). Note that the child coordinates
+  are given relative to the @class{gdk-window} object in question, and that
+  these coordinates have no sane relationship to scrolling. When placing a child
+  in @code{:widget}, scrolling is irrelevant, the child floats above all
   scrollable areas. But when placing a child in one of the scrollable windows
-  (border windows or text window), you'll need to compute the child's correct
+  (border windows or text window), you will need to compute the child's correct
   position in buffer coordinates any time scrolling occurs or buffer changes
-  occur, and then call gtk_text_view_move_child() to update the child's
-  position."
+  occur, and then call the function @fun{gtk-text-view-move-child} to update the
+  child's position.
+  @see-function{gtk-text-view-set-border-window-size}
+  @see-function{gtk-text-view-move-child}"
   (view (g-object gtk-text-view))
   (child (g-object gtk-widget))
   (which-window gtk-text-window-type)
@@ -1622,12 +1708,14 @@
 
 (defcfun ("gtk_text_view_move_child" gtk-text-view-move-child) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[child]{child widget already added to the text view}
   @argument[xpos]{new X position in window coordinates}
   @argument[ypos]{new Y position in window coordinates}
-  Updates the position of a child, as for gtk_text_view_add_child_in_window()."
+  Updates the position of a child, as for the function
+  @fun{gtk-text-view-add-child-in-window}.
+  @see-function{gtk-text-view-add-child-in-window}"
   (view (g-object gtk-text-view))
   (child (g-object gtk-widget))
   (x-pos :int)
@@ -1858,10 +1946,10 @@
 
 (defun gtk-text-view-set-justification (text-view justification)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @argument[justification]{justification}
-  Sets the default justification of text in text_view. Tags in the view's
+  Sets the default justification of text in @arg{text-view}. Tags in the view's
   buffer may override the default."
   (setf (gtk-text-view-justification text-view) justification))
 
@@ -1875,10 +1963,10 @@
 
 (defun gtk-text-view-get-justification (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @return{default justification}
-  Gets the default justification of paragraphs in text_view. Tags in the
+  Gets the default justification of paragraphs in @arg{text-view}. Tags in the
   buffer may override the default."
   (gtk-text-view-justification text-view))
 
@@ -1892,11 +1980,11 @@
 
 (defun gtk-text-view-set-left-margin (text-view left-margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[left_margin]{left margin in pixels}
-  Sets the default left margin for text in text_view. Tags in the buffer may
-  override the default."
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[left-margin]{left margin in pixels}
+  Sets the default left margin for text in @arg{text-view}. Tags in the buffer
+  may override the default."
   (setf (gtk-text-view-left-margin text-view) left-margin))
 
 (export 'gtk-text-view-set-left-margin)
@@ -1909,11 +1997,11 @@
 
 (defun gtk-text-view-get-left-margin (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @return{left margin in pixels}
-  Gets the default left margin size of paragraphs in the text_view. Tags in
-  the buffer may override the default."
+  Gets the default left margin size of paragraphs in the @arg{text-view}. Tags
+  in the buffer may override the default."
   (gtk-text-view-left-margin text-view))
 
 (export 'gtk-text-view-get-left-margin)
@@ -1926,10 +2014,10 @@
 
 (defun gtk-text-view-set-right-margin (text-view right-margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
-  @argument[right_margin]{right margin in pixels}
-  Sets the default right margin for text in the text view. Tags in the buffer
+ "@version{2013-5-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
+  @argument[right-margin]{right margin in pixels}
+  Sets the default right margin for text in @arg{text-view}. Tags in the buffer
   may override the default."
   (setf (gtk-text-view-right-margin text-view) right-margin))
 
@@ -1943,11 +2031,11 @@
 
 (defun gtk-text-view-get-right-margin (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[text_view]{a GtkTextView}
+ "@version{2013-4-10}
+  @argument[text-view]{a @class{gtk-text-view} object}
   @return{right margin in pixels}
-  Gets the default right margin for text in text_view. Tags in the buffer may
-  override the default."
+  Gets the default right margin for text in @arg{text-view}. Tags in the buffer
+  may override the default."
   (gtk-text-view-right-margin text-view))
 
 (export 'gtk-text-view-get-right-margin)
@@ -2131,6 +2219,68 @@
 ;;;     a GtkTextView
 ;;;
 ;;; Since 2.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_text_view_set_input_purpose ()
+;;;
+;;; void gtk_text_view_set_input_purpose (GtkTextView *text_view,
+;;;                                       GtkInputPurpose purpose);
+;;;
+;;; Sets the "input-purpose" property which can be used by on-screen keyboards
+;;;  and other input methods to adjust their behaviour.
+;;;
+;;; text_view :
+;;;     a GtkTextView
+;;;
+;;; purpose :
+;;;     the purpose
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_text_view_get_input_purpose ()
+;;;
+;;; GtkInputPurpose gtk_text_view_get_input_purpose (GtkTextView *text_view);
+;;;
+;;; Gets the value of the "input-purpose" property.
+;;;
+;;; text_view :
+;;;     a GtkTextView
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_text_view_set_input_hints ()
+;;;
+;;; void gtk_text_view_set_input_hints (GtkTextView *text_view,
+;;;                                     GtkInputHints hints);
+;;;
+;;; Sets the "input-hints" property, which allows input methods to fine-tune
+;;; their behaviour.
+;;;
+;;; text_view :
+;;;     a GtkTextView
+;;;
+;;; hints :
+;;;     the hints
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_text_view_get_input_hints ()
+;;;
+;;; GtkInputHints gtk_text_view_get_input_hints (GtkTextView *text_view);
+;;;
+;;; Gets the value of the "input-hints" property.
+;;;
+;;; text_view :
+;;;     a GtkTextView
+;;;
+;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

@@ -1101,10 +1101,10 @@ Region         Flags          Macro                       Used by
 
 row            even, odd      GTK_STYLE_REGION_ROW        GtkTreeView
 column         first, last,   GTK_STYLE_REGION_COLUMN     GtkTreeView
-               sorted                 
+               sorted
 column-header                 GTK_STYLE_REGION_COLUMN_HEADER
 tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
-               first, last 
+               first, last
     @end{pre}
   @subheading{Custom styling in UI libraries and applications}
     If you are developing a library with custom @class{gtk-widget}'s that render
@@ -1159,7 +1159,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
  "The @code{\"parent\"} property of type @class{gtk-style-context}
   (Read / Write)@br{}
   Sets or gets the style context's parent.
-  See @fun{gtk-style-context-set-parent} for details.@br{}
+  See the function @fun{gtk-style-context-set-parent} for details.@br{}
   Since 3.4")
 
 ;;; ----------------------------------------------------------------------------
@@ -1811,7 +1811,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;   GtkButton {
 ;;;       background-color: #f00
 ;;;   }
-;;;   
+;;;
 ;;;   GtkButton:hover {
 ;;;       background-color: #fff;
 ;;;       transition: 200ms linear
@@ -2024,7 +2024,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;
 ;;; Saves the context state, so all modifications done through
 ;;; gtk_style_context_add_class(), gtk_style_context_remove_class(),
-;;; gtk_style_context_add_region(), gtk_style_context_remove_region() or 
+;;; gtk_style_context_add_region(), gtk_style_context_remove_region() or
 ;;; gtk_style_context_set_junction_sides() can be reverted in one go through
 ;;; gtk_style_context_restore().
 ;;;

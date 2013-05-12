@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -207,27 +207,6 @@
    (tooltip-column
     gtk-tree-view-tooltip-column
     "tooltip-column" "gint" t t)))
-;   (:cffi selection
-;          gtk-tree-view-selection g-object
-;          "gtk_tree_view_get_selection" nil)
-;   (:cffi column-drag-function
-;          gtk-tree-view-column-drag-function nil
-;          nil gtk-tree-view-set-column-drag-function)
-;   (:cffi bin-window
-;          gtk-tree-view-bin-window g-object
-;          "gtk_tree_view_get_bin_window" nil)
-;   (:cffi search-equal-func
-;          gtk-tree-view-search-equal-func nil
-;          nil gtk-tree-view-set-search-equal-func)
-;   (:cffi search-entry
-;          gtk-tree-view-search-entry g-object
-;          "gtk_tree_view_get_search_entry" "gtk_tree_view_set_search_entry")
-;   (:cffi search-position-func
-;          gtk-tree-view-search-position-func nil
-;          nil gtk-tree-view-set-search-position-func)
-;   (:cffi row-separator-func
-;          gtk-tree-view-row-separator-func nil
-;          nil gtk-tree-view-set-row-separartor-func)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -662,7 +641,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 

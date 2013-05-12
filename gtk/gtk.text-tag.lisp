@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -85,12 +85,6 @@
    (background-set
     gtk-text-tag-background-set
     "background-set" "gboolean" t t)
-;   (background-stipple
-;    gtk-text-tag-background-stipple
-;    "background-stipple" "GdkPixmap" t t)
-;   (background-stipple-set
-;    gtk-text-tag-background-stipple-set
-;    "background-stipple-set" "gboolean" t t)
    (direction
     gtk-text-tag-direction
     "direction" "GtkTextDirection" t t)
@@ -124,12 +118,6 @@
    (foreground-set
     gtk-text-tag-foreground-set
     "foreground-set" "gboolean" t t)
-;   (foreground-stipple
-;    gtk-text-tag-foreground-stipple
-;    "foreground-stipple" "GdkPixmap" t t)
-;   (foreground-stipple-set
-;    gtk-text-tag-foreground-stipple-set
-;    "foreground-stipple-set" "gboolean" t t)
    (indent
     gtk-text-tag-indent
     "indent" "gint" t t)
@@ -268,26 +256,23 @@
    (wrap-mode-set
     gtk-text-tag-wrap-mode-set
     "wrap-mode-set" "gboolean" t t)))
-;   (:cffi priority
-;          gtk-text-tag-priority :int
-;          "gtk_text_tag_get_priority" "gtk_text_tag_set_priority")))
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag 'type)
- "@version{2013-3-24}
+ "@version{2013-5-5}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
     widget and how they work together.
   @end{short}
 
-  Tags should be in the GtkTextTagTable for a given GtkTextBuffer before using
-  them with that buffer.
+  Tags should be in the @class{gtk-text-tag-table} object for a given
+  @class{gtk-text-buffer} object before using them with that buffer.
 
-  gtk_text_buffer_create_tag() is the best way to create tags. See gtk3-demo
-  for numerous examples.
+  The function @fun{gtk-text-buffer-create-tag} is the best way to create tags.
+  See gtk3-demo for numerous examples.
   @begin[Signal Details]{dictionary}
     @subheading{The \"event\" signal}
       @begin{pre}
@@ -296,13 +281,15 @@
       The \"event\" signal is emitted when an event occurs on a region of the
       buffer marked with this tag.
       @begin[code]{table}
-        @entry[tag]{the GtkTextTag on which the signal is emitted}
-        @entry[object]{the object the event was fired from (typically a
-          GtkTextView)}
-        @entry[event]{the event which triggered the signal}
-        @entry[iter]{a GtkTextIter pointing at the location the event occured}
-        @entry[Returns]{TRUE to stop other handlers from being invoked for the
-          event. FALSE to propagate the event further.}
+        @entry[tag]{The @class{gtk-text-tag} object on which the signal is
+          emitted.}
+        @entry[object]{The object the event was fired from (typically a
+          @class{gtk-text-view} object).}
+        @entry[event]{The event which triggered the signal.}
+        @entry[iter]{A @class{gtk-text-iter} pointing at the location the event
+          occured.}
+        @entry[Returns]{@em{True} to stop other handlers from being invoked for
+          the event. @code{Nil} to propagate the event further.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-text-tag-accumulative-margin}
@@ -382,8 +369,8 @@
  "The @code{\"accumulative-margin\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether the margins accumulate or override each other.
-  When set to TRUE the margins of this tag are added to the margins of any
-  other non-accumulative margins present. When set to FALSE the margins
+  When set to @em{true} the margins of this tag are added to the margins of any
+  other non-accumulative margins present. When set to @code{nil} the margins
   override one another (the default). @br{}
   Default value: @code{nil}@br{}
   Since 2.12")
@@ -405,7 +392,7 @@
   (Read / Write) @br{}
   Whether the background color fills the entire line height or only the height
   of the tagged characters. @br{}
-  Default value: FALSE")
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -415,7 +402,7 @@
  "The @code{\"background-full-height-set\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether this tag affects background height. @br{}
-  Default value: FALSE")
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -456,7 +443,7 @@
 (setf (documentation (atdoc:get-slot-from-name "direction" 'gtk-text-tag) 't)
  "The @code{\"direction\"} property of type @symbol{gtk-text-direction}
   (Read / Write)@br{}
-  Text direction, e.g. right-to-left or left-to-right. @br{}
+  Text direction, e. g. right-to-left or left-to-right. @br{}
   Default value: @code{:none}")
 
 ;;; ----------------------------------------------------------------------------
@@ -481,7 +468,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "family" 'gtk-text-tag) 't)
  "The @code{\"family\"} property of type @code{:string} (Read / Write)@br{}
-  Name of the font family, e.g. Sans, Helvetica, Times, Monospace. @br{}
+  Name of the font family, e. g. Sans, Helvetica, Times, Monospace. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -499,7 +486,7 @@
  "The @code{\"font\"} property of type @code{:string} (Read / Write)@br{}
   Font description as string, e. g. \"Sans Italic 12\".
   Note that the initial value of this property depends on the internals of
-  PangoFontDescription. @br{}
+  @class{pango-font-description} structure. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -508,7 +495,7 @@
 (setf (documentation (atdoc:get-slot-from-name "font-desc" 'gtk-text-tag) 't)
  "The @code{\"font-desc\"} property of type @class{pango-font-description}
   (Read / Write)@br{}
-  Font description as a PangoFontDescription struct.")
+  Font description as a @class{pango-font-description} structure.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -616,7 +603,7 @@
   The language this text is in, as an ISO code. Pango can use this as a hint
   when rendering the text. If not set, an appropriate default will be used.
   Note that the initial value of this property depends on the current locale,
-  see also gtk_get_default_language(). @br{}
+  see also the function @fun{gtk-get-default-language}. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -653,7 +640,7 @@
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-text-tag) 't)
  "The @code{\"name\"} property of type @code{:string}
   (Read / Write / Construct)@br{}
-  Name used to refer to the text tag. @code{nil} for anonymous tags. @br{}
+  Name used to refer to the text tag. @code{Nil} for anonymous tags. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -804,10 +791,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "scale" 'gtk-text-tag) 't)
- "The @code{\"scale\"} property of type @code{gdouble} (Read / Write)@br{}
+ "The @code{\"scale\"} property of type @code{:double} (Read / Write)@br{}
   Font size as a scale factor relative to the default font size. This properly
   adapts to theme changes etc. so is recommended. Pango predefines some scales
-  such as PANGO_SCALE_X_LARGE. @br{}
+  such as @code{PANGO_SCALE_X_LARGE}. @br{}
   Allowed values: >= 0@br{}
   Default value: 1")
 
@@ -832,7 +819,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "size-points" 'gtk-text-tag) 't)
- "The @code{\"size-points\"} property of type @code{gdouble} (Read / Write)@br{}
+ "The @code{\"size-points\"} property of type @code{:double} (Read / Write)@br{}
   Font size in points. @br{}
   Allowed values: >= 0@br{}
   Default value: 0")
@@ -851,8 +838,9 @@
 (setf (documentation (atdoc:get-slot-from-name "stretch" 'gtk-text-tag) 't)
  "The @code{\"stretch\"} property of type @code{PangoStretch}
   (Read / Write)@br{}
-  Font stretch as a PangoStretch, e.g. PANGO_STRETCH_CONDENSED. @br{}
-  Default value: PANGO_STRETCH_NORMAL")
+  Font stretch as a @code{PangoStretch}, e. g.
+  @code{PANGO_STRETCH_CONDENSED}. @br{}
+  Default value: @code{PANGO_STRETCH_NORMAL}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -888,8 +876,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-text-tag) 't)
  "The @code{\"style\"} property of type @code{PangoStyle} (Read / Write)@br{}
-  Font style as a PangoStyle, e.g. PANGO_STYLE_ITALIC. @br{}
-  Default value: PANGO_STYLE_NORMAL @br{}")
+  Font style as a @code{PangoStyle}, e. g. @code{PANGO_STYLE_ITALIC}. @br{}
+  Default value: @code{PANGO_STYLE_NORMAL} @br{}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -921,7 +909,7 @@
  "The @code{\"underline\"} property of type @code{PangoUnderline}
   (Read / Write)@br{}
   Style of underline for this text. @br{}
-  Default value: PANGO_UNDERLINE_NONE")
+  Default value: @code{PANGO_UNDERLINE_NONE}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -939,8 +927,9 @@
 (setf (documentation (atdoc:get-slot-from-name "variant" 'gtk-text-tag) 't)
  "The @code{\"variant\"} property of type @code{PangoVariant}
   (Read / Write)@br{}
-  Font variant as a PangoVariant, e.g. PANGO_VARIANT_SMALL_CAPS. @br{}
-  Default value: PANGO_VARIANT_NORMAL")
+  Font variant as a @code{PangoVariant}, e. g.
+  @code{PANGO_VARIANT_SMALL_CAPS}. @br{}
+  Default value: @code{PANGO_VARIANT_NORMAL}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -956,8 +945,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "weight" 'gtk-text-tag) 't)
  "The @code{\"weight\"} property of type @code{:int} (Read / Write)@br{}
-  Font weight as an integer, see predefined values in PangoWeight; for
-  example, PANGO_WEIGHT_BOLD. @br{}
+  Font weight as an integer, see predefined values in @code{PangoWeight}; for
+  example, @code{PANGO_WEIGHT_BOLD}. @br{}
   Allowed values: >= 0@br{}
   Default value: 400")
 
@@ -991,7 +980,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -1651,13 +1640,13 @@
   (:word-char 3))
   @end{pre}
   @begin[code]{table}
-    @entry[:none]{do not wrap lines; just make the text area wider}
-    @entry[:char]{wrap text, breaking lines anywhere the cursor can appear
+    @entry[:none]{Do not wrap lines; just make the text area wider.}
+    @entry[:char]{Wrap text, breaking lines anywhere the cursor can appear
       (between characters, usually - if you want to be technical, between
-      graphemes, see pango_get_log_attrs())}
-    @entry[:word]{wrap text, breaking lines in between words}
-    @entry[:word-char]{wrap text, breaking lines in between words, or if that is
-      not enough, also between graphemes}
+      graphemes, see the function @fun{pango-get-log-attrs}).}
+    @entry[:word]{Wrap text, breaking lines in between words.}
+    @entry[:word-char]{Wrap text, breaking lines in between words, or if that is
+      not enough, also between graphemes.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------

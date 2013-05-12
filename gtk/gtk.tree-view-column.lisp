@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -106,16 +106,14 @@
   (:autosize 1)
   (:fixed 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-sizing atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-tree-view-column-sizing atdoc:*external-symbols*)
- "@version{2013-3-27}
+ "@version{2013-5-12}
   @begin{short}
     The sizing method the column uses to determine its width. Please note that
-    GTK_TREE_VIEW_COLUMN_AUTOSIZE are inefficient for large views, and can make
-    columns appear choppy.
+    @code{:autosize} are inefficient for large views, and can make columns
+    appear choppy.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkTreeViewColumnSizing\" gtk-tree-view-column-sizing
@@ -127,7 +125,7 @@
   @end{pre}
   @begin[code]{table}
     @entry[:grow-only]{Columns only get bigger in reaction to changes in the
-      model}
+      model.}
     @entry[:autosize]{Columns resize to be the optimal size everytime the model
       changes.}
     @entry[:fixed]{Columns are a fixed numbers of pixels wide.}
@@ -437,7 +435,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 

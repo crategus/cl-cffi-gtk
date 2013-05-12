@@ -1901,10 +1901,109 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-unregister-serialize-format}
     @end{subsection}
     @begin[GtkTextTag]{subsection}
+      A tag that can be applied to text in a @class{gkt-text-buffer}.
+
+      @about-class{gtk-text-tag}
+      @about-symbol{gtk-wrap-mode}
+      @about-symbol{gtk-text-attributes}
+      @about-function{gtk-text-tag-new}
+      @about-function{gtk-text-tag-get-priority}
+      @about-function{gtk-text-tag-set-priority}
+      @about-function{gtk-text-tag-event}
+      @about-symbol{gtk-text-appearance}
+      @about-function{gtk-text-attributes-new}
+      @about-function{gtk-text-attributes-copy}
+      @about-function{gtk-text-attributes-copy-values}
+      @about-function{gtk-text-attributes-unref}
+      @about-function{gtk-text-attributes-ref}
     @end{subsection}
     @begin[GtkTextTagTable]{subsection}
+      Collection of tags that can be used together.
+
+      @about-class{gtk-text-tag-table}
+      @about-function{gtk-text-tag-table-new}
+      @about-function{gtk-text-tag-table-add}
+      @about-function{gtk-text-tag-table-remove}
+      @about-function{gtk-text-tag-table-lookup}
+      @about-function{gtk-text-tag-table-foreach}
+      @about-function{gtk-text-tag-table-get-size}
     @end{subsection}
     @begin[GtkTextView]{subsection}
+      Widget that displays a @class{gtk-text-buffer} object.
+
+      @about-class{gtk-text-view}
+      @about-symbol{gtk-text-window-type}
+      @about-function{gtk-text-view-new}
+      @about-function{gtk-text-view-new-with-buffer}
+      @about-function{gtk-text-view-set-buffer}
+      @about-function{gtk-text-view-get-buffer}
+      @about-function{gtk-text-view-get-hadjustment}
+      @about-function{gtk-text-view-get-vadjustment}
+      @about-function{gtk-text-view-scroll-to-mark}
+      @about-function{gtk-text-view-scroll-to-iter}
+      @about-function{gtk-text-view-scroll-mark-onscreen}
+      @about-function{gtk-text-view-move-mark-onscreen}
+      @about-function{gtk-text-view-place-cursor-onscreen}
+      @about-function{gtk-text-view-get-visible-rect}
+      @about-function{gtk-text-view-get-iter-location}
+      @about-function{gtk-text-view-get-cursor-locations}
+      @about-function{gtk-text-view-get-line-at-y}
+      @about-function{gtk-text-view-get-line-yrange}
+      @about-function{gtk-text-view-get-iter-at-location}
+      @about-function{gtk-text-view-get-iter-at-position}
+      @about-function{gtk-text-view-buffer-to-window-coords}
+      @about-function{gtk-text-view-window-to-buffer-coords}
+      @about-function{gtk-text-view-get-window}
+      @about-function{gtk-text-view-get-window-type}
+      @about-function{gtk-text-view-set-border-window-size}
+      @about-function{gtk-text-view-get-border-window-size}
+      @about-function{gtk-text-view-forward-display-line}
+      @about-function{gtk-text-view-backward-display-line}
+      @about-function{gtk-text-view-forward-display-line-end}
+      @about-function{gtk-text-view-backward-display-line-start}
+      @about-function{gtk-text-view-starts-display-line}
+      @about-function{gtk-text-view-move-visually}
+      @about-function{gtk-text-view-add-child-at-anchor}
+      @about-class{gtk-text-child-anchor}
+      @about-function{gtk-text-child-anchor-new}
+      @about-function{gtk-text-child-anchor-get-widgets}
+      @about-function{gtk-text-child-anchor-get-deleted}
+      @about-function{gtk-text-view-add-child-in-window}
+      @about-function{gtk-text-view-move-child}
+      @about-function{gtk-text-view-set-wrap-mode}
+      @about-function{gtk-text-view-get-wrap-mode}
+      @about-function{gtk-text-view-set-editable}
+      @about-function{gtk-text-view-get-editable}
+      @about-function{gtk-text-view-set-cursor-visible}
+      @about-function{gtk-text-view-get-cursor-visible}
+      @about-function{gtk-text-view-set-overwrite}
+      @about-function{gtk-text-view-get-overwrite}
+      @about-function{gtk-text-view-set-pixels-above-lines}
+      @about-function{gtk-text-view-get-pixels-above-lines}
+      @about-function{gtk-text-view-set-pixels-below-lines}
+      @about-function{gtk-text-view-get-pixels-below-lines}
+      @about-function{gtk-text-view-set-pixels-inside-wrap}
+      @about-function{gtk-text-view-get-pixels-inside-wrap}
+      @about-function{gtk-text-view-set-justification}
+      @about-function{gtk-text-view-get-justification}
+      @about-function{gtk-text-view-set-left-margin}
+      @about-function{gtk-text-view-get-left-margin}
+      @about-function{gtk-text-view-set-right-margin}
+      @about-function{gtk-text-view-get-right-margin}
+      @about-function{gtk-text-view-set-indent}
+      @about-function{gtk-text-view-get-indent}
+      @about-function{gtk-text-view-set-tabs}
+      @about-function{gtk-text-view-get-tabs}
+      @about-function{gtk-text-view-set-accepts-tab}
+      @about-function{gtk-text-view-get-accepts-tab}
+      @about-function{gtk-text-view-get-default-attributes}
+      @about-function{gtk-text-view-im-context-filter-keypress}
+      @about-function{gtk-text-view-reset-im-context}
+      @about-function{gtk-text-view-set-input-purpose}
+      @about-function{gtk-text-view-get-input-purpose}
+      @about-function{gtk-text-view-set-input-hints}
+      @about-function{gtk-text-view-get-input-hints}
+      @about-function{GTK-TEXT-VIEW-PRIORITY_VALIDATE}
     @end{subsection}
   @end{section}
   @begin[Tree, List and Icon Grid Widgets]{section}
@@ -2175,14 +2274,277 @@ setup_tree (void)
 @}
       @end{pre}
     @begin[GtkTreeModel]{subsection}
+      The tree interface used by @class{gtk-tree-view}.
+
+      @about-class{gtk-tree-model}
+      @about-struct{gtk-tree-iter}
+      @about-class{gtk-tree-path}
+      @about-class{gtk-tree-row-reference}
+      @about-symbol{gtk-tree-model-iface}
+      @about-symbol{gtk-tree-model-flags}
+      @about-function{gtk-tree-path-new}
+      @about-function{gtk-tree-path-new-from-string}
+      @about-function{gtk-tree-path-new-from-indices}
+      @about-function{gtk-tree-path-to-string}
+      @about-function{gtk-tree-path-new-first}
+      @about-function{gtk-tree-path-append-index}
+      @about-function{gtk-tree-path-prepend-index}
+      @about-function{gtk-tree-path-get-depth}
+      @about-function{gtk-tree-path-get-indices}
+      @about-function{gtk-tree-path-get-indices-with-depth}
+      @about-function{gtk-tree-path-free}
+      @about-function{gtk-tree-path-copy}
+      @about-function{gtk-tree-path-compare}
+      @about-function{gtk-tree-path-next}
+      @about-function{gtk-tree-path-prev}
+      @about-function{gtk-tree-path-up}
+      @about-function{gtk-tree-path-down}
+      @about-function{gtk-tree-path-is-ancestor}
+      @about-function{gtk-tree-path-is-descendant}
+      @about-function{gtk-tree-row-reference-new}
+      @about-function{gtk-tree-row-reference-new-proxy}
+      @about-function{gtk-tree-row-reference-get-model}
+      @about-function{gtk-tree-row-reference-get-path}
+      @about-function{gtk-tree-row-reference-valid}
+      @about-function{gtk-tree-row-reference-free}
+      @about-function{gtk-tree-row-reference-copy}
+      @about-function{gtk-tree-row-reference-inserted}
+      @about-function{gtk-tree-row-reference-deleted}
+      @about-function{gtk-tree-row-reference-reordered}
+      @about-function{gtk-tree-iter-copy}
+      @about-function{gtk-tree-iter-free}
+      @about-function{gtk-tree-model-get-flags}
+      @about-function{gtk-tree-model-get-n-columns}
+      @about-function{gtk-tree-model-get-column-type}
+      @about-function{gtk-tree-model-get-iter}
+      @about-function{gtk-tree-model-get-iter-from-string}
+      @about-function{gtk-tree-model-get-iter-first}
+      @about-function{gtk-tree-model-get-path}
+      @about-function{gtk-tree-model-get-value}
+      @about-function{gtk-tree-model-iter-next}
+      @about-function{gtk-tree-model-iter-previous}
+      @about-function{gtk-tree-model-iter-children}
+      @about-function{gtk-tree-model-iter-has-child}
+      @about-function{gtk-tree-model-iter-n-children}
+      @about-function{gtk-tree-model-iter-nth-child}
+      @about-function{gtk-tree-model-iter-parent}
+      @about-function{gtk-tree-model-get-string-from-iter}
+      @about-function{gtk-tree-model-ref-node}
+      @about-function{gtk-tree-model-unref-node}
+      @about-function{gtk-tree-model-get}
+      @about-function{gtk-tree-model-get-valist}
+      @about-function{gtk-tree-model-foreach}
+      @about-function{gtk-tree-model-row-changed}
+      @about-function{gtk-tree-model-row-inserted}
+      @about-function{gtk-tree-model-row-has-child-toggled}
+      @about-function{gtk-tree-model-row-deleted}
+      @about-function{gtk-tree-model-rows-reordered}
     @end{subsection}
     @begin[GtkTreeSelection]{subsection}
+      The selection object for @class{gtk-tree-view}.
+
+      @about-class{gtk-tree-selection}
+      @about-function{gtk-tree-selection-set-mode}
+      @about-function{gtk-tree-selection-get-mode}
+      @about-function{gtk-tree-selection-set-select-function}
+      @about-function{gtk-tree-selection-get-select-function}
+      @about-function{gtk-tree-selection-get-user-data}
+      @about-function{gtk-tree-selection-get-tree-view}
+      @about-function{gtk-tree-selection-get-selected}
+      @about-function{gtk-tree-selection-selected-foreach}
+      @about-function{gtk-tree-selection-get-selected-rows}
+      @about-function{gtk-tree-selection-count-selected-rows}
+      @about-function{gtk-tree-selection-select-path}
+      @about-function{gtk-tree-selection-unselect-path}
+      @about-function{gtk-tree-selection-path-is-selected}
+      @about-function{gtk-tree-selection-select-iter}
+      @about-function{gtk-tree-selection-unselect-iter}
+      @about-function{gtk-tree-selection-iter-is-selected}
+      @about-function{gtk-tree-selection-select-all}
+      @about-function{gtk-tree-selection-unselect-all}
+      @about-function{gtk-tree-selection-select-range}
+      @about-function{gtk-tree-selection-unselect-range}
     @end{subsection}
     @begin[GtkTreeViewColumn]{subsection}
+      A visible column in a @class{gtk-tree-view} widget.
+
+      @about-symbol{gtk-tree-view-column-sizing}
+      @about-class{gtk-tree-view-column}
+      @about-function{gtk-tree-view-column-new}
+      @about-function{gtk-tree-view-column-new-with-area}
+      @about-function{gtk-tree-view-column-new-with-attributes}
+      @about-function{gtk-tree-view-column-pack-start}
+      @about-function{gtk-tree-view-column-pack-end}
+      @about-function{gtk-tree-view-column-clear}
+      @about-function{gtk-tree-view-column-add-attribute}
+      @about-function{gtk-tree-view-column-set-attributes}
+      @about-function{gtk-tree-view-column-set-cell-data-func}
+      @about-function{gtk-tree-view-column-clear-attributes}
+      @about-function{gtk-tree-view-column-set-spacing}
+      @about-function{gtk-tree-view-column-get-spacing}
+      @about-function{gtk-tree-view-column-set-visible}
+      @about-function{gtk-tree-view-column-get-visible}
+      @about-function{gtk-tree-view-column-set-resizable}
+      @about-function{gtk-tree-view-column-get-resizable}
+      @about-function{gtk-tree-view-column-set-sizing}
+      @about-function{gtk-tree-view-column-get-sizing}
+      @about-function{gtk-tree-view-column-get-width}
+      @about-function{gtk-tree-view-column-get-fixed-width}
+      @about-function{gtk-tree-view-column-set-fixed-width}
+      @about-function{gtk-tree-view-column-set-min-width}
+      @about-function{gtk-tree-view-column-get-min-width}
+      @about-function{gtk-tree-view-column-set-max-width}
+      @about-function{gtk-tree-view-column-get-max-width}
+      @about-function{gtk-tree-view-column-clicked}
+      @about-function{gtk-tree-view-column-set-title}
+      @about-function{gtk-tree-view-column-get-title}
+      @about-function{gtk-tree-view-column-set-expand}
+      @about-function{gtk-tree-view-column-get-expand}
+      @about-function{gtk-tree-view-column-set-clickable}
+      @about-function{gtk-tree-view-column-get-clickable}
+      @about-function{gtk-tree-view-column-set-widget}
+      @about-function{gtk-tree-view-column-get-widget}
+      @about-function{gtk-tree-view-column-get-button}
+      @about-function{gtk-tree-view-column-set-alignment}
+      @about-function{gtk-tree-view-column-get-alignment}
+      @about-function{gtk-tree-view-column-set-reorderable}
+      @about-function{gtk-tree-view-column-get-reorderable}
+      @about-function{gtk-tree-view-column-set-sort-column-id}
+      @about-function{gtk-tree-view-column-get-sort-column-id}
+      @about-function{gtk-tree-view-column-set-sort-indicator}
+      @about-function{gtk-tree-view-column-get-sort-indicator}
+      @about-function{gtk-tree-view-column-set-sort-order}
+      @about-function{gtk-tree-view-column-get-sort-order}
+      @about-function{gtk-tree-view-column-cell-set-cell-data}
+      @about-function{gtk-tree-view-column-cell-get-size}
+      @about-function{gtk-tree-view-column-cell-get-position}
+      @about-function{gtk-tree-view-column-cell-is-visible}
+      @about-function{gtk-tree-view-column-focus-cell}
+      @about-function{gtk-tree-view-column-queue-resize}
+      @about-function{gtk-tree-view-column-get-tree-view}
+      @about-function{gtk-tree-view-column-get-x-offset}
     @end{subsection}
     @begin[GtkTreeView]{subsection}
+      A widget for displaying both trees and lists.
+
+      @about-class{gtk-tree-view}
+      @about-symbol{gtk-tree-view-drop-position}
+      @about-symbol{gtk-tree-view-private}
+      @about-function{gtk-tree-view-new}
+      @about-function{gtk-tree-view-get-level-indentation}
+      @about-function{gtk-tree-view-get-show-expanders}
+      @about-function{gtk-tree-view-set-level-indentation}
+      @about-function{gtk-tree-view-set-show-expanders}
+      @about-function{gtk-tree-view-new-with-model}
+      @about-function{gtk-tree-view-get-model}
+      @about-function{gtk-tree-view-set-model}
+      @about-function{gtk-tree-view-get-selection}
+      @about-function{gtk-tree-view-get-hadjustment}
+      @about-function{gtk-tree-view-set-hadjustment}
+      @about-function{gtk-tree-view-get-vadjustment}
+      @about-function{gtk-tree-view-set-vadjustment}
+      @about-function{gtk-tree-view-get-headers-visible}
+      @about-function{gtk-tree-view-set-headers-visible}
+      @about-function{gtk-tree-view-columns-autosize}
+      @about-function{gtk-tree-view-get-headers-clickable}
+      @about-function{gtk-tree-view-set-headers-clickable}
+      @about-function{gtk-tree-view-set-rules-hint}
+      @about-function{gtk-tree-view-get-rules-hint}
+      @about-function{gtk-tree-view-append-column}
+      @about-function{gtk-tree-view-remove-column}
+      @about-function{gtk-tree-view-insert-column}
+      @about-function{gtk-tree-view-insert-column-with-attributes}
+      @about-function{gtk-tree-view-insert-column-with-data-func}
+      @about-function{gtk-tree-view-get-n-columns}
+      @about-function{gtk-tree-view-get-column}
+      @about-function{gtk-tree-view-get-columns}
+      @about-function{gtk-tree-view-move-column-after}
+      @about-function{gtk-tree-view-set-expander-column}
+      @about-function{gtk-tree-view-get-expander-column}
+      @about-function{gtk-tree-view-set-column-drag-function}
+      @about-function{gtk-tree-view-scroll-to-point}
+      @about-function{gtk-tree-view-scroll-to-cell}
+      @about-function{gtk-tree-view-set-cursor}
+      @about-function{gtk-tree-view-set-cursor-on-cell}
+      @about-function{gtk-tree-view-get-cursor}
+      @about-function{gtk-tree-view-row-activated}
+      @about-function{gtk-tree-view-expand-all}
+      @about-function{gtk-tree-view-collapse-all}
+      @about-function{gtk-tree-view-expand-to-path}
+      @about-function{gtk-tree-view-expand-row}
+      @about-function{gtk-tree-view-collapse-row}
+      @about-function{gtk-tree-view-map-expanded-rows}
+      @about-function{gtk-tree-view-row-expanded}
+      @about-function{gtk-tree-view-set-reorderable}
+      @about-function{gtk-tree-view-get-reorderable}
+      @about-function{gtk-tree-view-get-path-at-pos}
+      @about-function{gtk-tree-view-is-blank-at-pos}
+      @about-function{gtk-tree-view-get-cell-area}
+      @about-function{gtk-tree-view-get-background-area}
+      @about-function{gtk-tree-view-get-visible-rect}
+      @about-function{gtk-tree-view-get-visible-range}
+      @about-function{gtk-tree-view-get-bin-window}
+      @about-function{gtk-tree-view-convert-bin-window-to-tree-coords}
+      @about-function{gtk-tree-view-convert-bin-window-to-widget-coords}
+      @about-function{gtk-tree-view-convert-tree-to-bin-window-coords}
+      @about-function{gtk-tree-view-convert-tree-to-widget-coords}
+      @about-function{gtk-tree-view-convert-widget-to-bin-window-coords}
+      @about-function{gtk-tree-view-convert-widget-to-tree-coords}
+      @about-function{gtk-tree-view-enable-model-drag-dest}
+      @about-function{gtk-tree-view-enable-model-drag-source}
+      @about-function{gtk-tree-view-unset-rows-drag-source}
+      @about-function{gtk-tree-view-unset-rows-drag-dest}
+      @about-function{gtk-tree-view-set-drag-dest-row}
+      @about-function{gtk-tree-view-get-drag-dest-row}
+      @about-function{gtk-tree-view-get-dest-row-at-pos}
+      @about-function{gtk-tree-view-create-row-drag-icon}
+      @about-function{gtk-tree-view-set-enable-search}
+      @about-function{gtk-tree-view-get-enable-search}
+      @about-function{gtk-tree-view-get-search-column}
+      @about-function{gtk-tree-view-set-search-column}
+      @about-function{gtk-tree-view-get-search-equal-func}
+      @about-function{gtk-tree-view-set-search-equal-func}
+      @about-function{gtk-tree-view-get-search-entry}
+      @about-function{gtk-tree-view-set-search-entry}
+      @about-function{gtk-tree-view-get-search-position-func}
+      @about-function{gtk-tree-view-set-search-position-func}
+      @about-function{gtk-tree-view-get-fixed-height-mode}
+      @about-function{gtk-tree-view-set-fixed-height-mode}
+      @about-function{gtk-tree-view-get-hover-selection}
+      @about-function{gtk-tree-view-set-hover-selection}
+      @about-function{gtk-tree-view-get-hover-expand}
+      @about-function{gtk-tree-view-set-hover-expand}
+      @about-function{gtk-tree-view-set-destroy-count-func}
+      @about-function{gtk-tree-view-get-row-separator-func}
+      @about-function{gtk-tree-view-set-row-separator-func}
+      @about-function{gtk-tree-view-get-rubber-banding}
+      @about-function{gtk-tree-view-set-rubber-banding}
+      @about-function{gtk-tree-view-is-rubber-banding-active}
+      @about-function{gtk-tree-view-get-enable-tree-lines}
+      @about-function{gtk-tree-view-set-enable-tree-lines}
+      @about-symbol{gtk-tree-view-grid-lines}
+      @about-function{gtk-tree-view-get-grid-lines}
+      @about-function{gtk-tree-view-set-grid-lines}
+      @about-function{gtk-tree-view-set-tooltip-row}
+      @about-function{gtk-tree-view-set-tooltip-cell}
+      @about-function{gtk-tree-view-get-tooltip-context}
+      @about-function{gtk-tree-view-get-tooltip-column}
+      @about-function{gtk-tree-view-set-tooltip-column}
     @end{subsection}
     @begin[GtkTreeView drag and drop]{subsection}
+      Interfaces for drag-and-drop support in @class{gtk-tree-view}.
+
+      @about-class{gtk-tree-drag-source}
+      @about-class{gtk-tree-drag-source-iface}
+      @about-function{gtk-tree-drag-source-drag-data-delete}
+      @about-function{gtk-tree-drag-source-drag-data-get}
+      @about-function{gtk-tree-drag-source-drag-row-draggable}
+      @about-class{gtk-tree-drag-dest}
+      @about-class{gtk-tree-drag-dest-iface}
+      @about-function{gtk-tree-drag-dest-drag-data-received}
+      @about-function{gtk-tree-drag-dest-row-drop-possible}
+      @about-function{gtk-tree-set-row-drag-data}
+      @about-function{gtk-tree-get-row-drag-data}
     @end{subsection}
     @begin[GtkCellView]{subsection}
     @end{subsection}

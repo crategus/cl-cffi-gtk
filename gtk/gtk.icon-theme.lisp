@@ -128,15 +128,15 @@
   @begin{itemize}
     @begin{item}
       Stock images usually are used in conjunction with Stock Items(3), such
-      as @code{GTK_STOCK_OK} or @code{GTK_STOCK_OPEN}. Named icons are easier to
+      as @code{\"gtk-ok\"} or @code{\"gtk-open\"}. Named icons are easier to
       set up and therefore are more useful for new icons that an application
       wants to add, such as application icons or window icons.
     @end{item}
     @begin{item}
       Stock images can only be loaded at the symbolic sizes defined by the
-      @symbol{gtk-icon-size} enumeration, or by custom sizes defined by
-      @fun{gtk-icon-size-register}, while named icons are more flexible and any
-      pixel size can be specified.
+      @symbol{gtk-icon-size} enumeration, or by custom sizes defined by the
+      function @fun{gtk-icon-size-register}, while named icons are more flexible
+      and any pixel size can be specified.
     @end{item}
     @begin{item}
       Because stock images are closely tied to stock items, and thus to
@@ -148,7 +148,7 @@
   use, use it, otherwise use a named icon. It turns out that internally stock
   images are generally defined in terms of one or more named icons. An
   example of the more than one case is icons that depend on writing direction;
-  @code{GTK_STOCK_GO_FORWARD} uses the two themed icons
+  @code{\"gtk-go-forward\"} uses the two themed icons
   @code{\"gtk-stock-go-forward-ltr\"} and @code{\"gtk-stock-go-forward-rtl\"}.
 
   In many cases, named themes are used indirectly, via @class{gtk-image} or
@@ -303,12 +303,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-15}
   @begin{return}
-    A unique @class{gtk-icon-theme} associated with the default screen. This
-    icon theme is associated with the screen and can be used as long as the
-    screen is open. Do not ref or unref it.
+    A unique @class{gtk-icon-theme} object associated with the default screen.
+    This icon theme is associated with the screen and can be used as long as
+    the screen is open. Do not ref or unref it.
   @end{return}
   @begin{short}
-    Gets the icon theme for the default screen. See
+    Gets the icon theme for the default screen. See the function
     @fun{gtk-icon-theme-get-for-screen}.
   @end{short}
 
@@ -327,9 +327,9 @@
  "@version{2014-3-15}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{return}
-    A unique @class{gtk-icon-theme} associated with the given @arg{screen}. This
-    icon theme is associated with the @arg{screen} and can be used as long as
-    the @arg{screen} is open. Do not ref or unref it.
+    A unique @class{gtk-icon-theme} object associated with the given
+    @arg{screen}. This icon theme is associated with the @arg{screen} and can
+    be used as long as the @arg{screen} is open. Do not ref or unref it.
   @end{return}
   @begin{short}
     Gets the icon theme object associated with @arg{screen}; if this function
@@ -342,7 +342,8 @@
   @end{short}
 
   Since 2.4
-  @see-function{gtk-icon-theme-new}"
+  @see-function{gtk-icon-theme-new}
+  @see-function{gtk-icon-theme-get-default}"
   (screen (g-object gdk-screen)))
 
 (export 'gtk-icon-theme-get-for-screen)
@@ -510,13 +511,15 @@
   @argument[flags]{flags modifying the behavior of the icon lookup}
   @begin{return}
     A @symbol{gtk-icon-info} structure containing information about the icon,
-    or @code{nil} if the icon was not found. Free with @fun{gtk-icon-info-free}.
+    or @code{nil} if the icon was not found. Free with the function
+    @fun{gtk-icon-info-free}.
   @end{return}
   @begin{short}
     Looks up a named icon and returns a structure containing information such as
     the filename of the icon. The icon can then be rendered into a pixbuf using
-    @fun{gtk-icon-info-load-icon}. @fun{gtk-icon-theme-load-icon} combines
-    these two steps if all you need is the pixbuf.
+    the function @fun{gtk-icon-info-load-icon}. The function
+    @fun{gtk-icon-theme-load-icon} combines these two steps if all you need is
+    the pixbuf.
   @end{short}
 
   Since 2.4
@@ -651,7 +654,7 @@
  "@version{2014-3-15}
   @argument[icon-theme]{a @class{gtk-icon-theme} object}
   @begin{return}
-    A @type{g-list} list holding the names of all the contexts in the theme.
+    A list holding the names of all the contexts in the theme.
   @end{return}
   @begin{short}
     Gets the list of contexts available within the current hierarchy of icon
@@ -686,8 +689,7 @@
   @argument[context]{a string identifying a particular type of icon, or
     @code{nil} to list all icons}
   @begin{return}
-    A list of type @type{g-list} holding the names of all the icons in the
-    theme.
+    A list holding the names of all the icons in the theme.
   @end{return}
   @begin{short}
     Lists the icons in the current icon theme. Only a subset of the icons can
@@ -695,7 +697,7 @@
     string is system dependent, but will typically include such values as
     \"Applications\" and \"MimeTypes\".
   @end{short}
-  
+
   Since 2.4"
   (let ((context (if context context (null-pointer))))
     (%gtk-icon-theme-list-icons icon-theme context)))
@@ -1176,6 +1178,5 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.icon-theme.lisp ----------------------------------------

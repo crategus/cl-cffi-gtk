@@ -103,17 +103,17 @@ GTK+ Widgets and Objects
     gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.6.4
     gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.6.4
     gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.6.4
-    gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.4.3*
-    gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.4.3*
-    gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.4.3*
+    gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.6.4
+    gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.6.4
+    gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.6.4
   
   Tree, List and Icon Grid Widgets
     
-    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.4.3*
-    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.4.3*
-    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.4.3*
-    gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.4.3*
-    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.4.3*
+    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.6.4
+    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.6.4
+    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.6.4
+    gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.6.4
+    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.6.4
     
     gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.4.3*
     gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.4.3*

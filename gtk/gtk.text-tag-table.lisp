@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -62,7 +62,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag-table 'type)
- "@version{2013-3-25}
+ "@version{2013-5-5}
   @begin{short}
     You may wish to begin by reading the text widget conceptual overview which
     gives an overview of all the objects and data types related to the text
@@ -70,11 +70,11 @@
   @end{short}
 
   @subheading{GtkTextTagTables as GtkBuildable}
-  The GtkTextTagTable implementation of the GtkBuildable interface supports
-  adding tags by specifying \"tag\" as the \"type\" attribute of a <child>
-  element.
+    The @sym{gtk-text-tag-table} implementation of the @class{gtk-buildable}
+    interface supports adding tags by specifying \"tag\" as the \"type\"
+    attribute of a <child> element.
 
-  Example 58. A UI definition fragment specifying tags
+  @b{Example:} A UI definition fragment specifying tags.
   @begin{pre}
  <object class=\"GtkTextTagTable\">
   <child type=\"tag\">
@@ -88,25 +88,25 @@
  lambda (texttagtable tag)
       @end{pre}
       @begin[code]{table}
-        @entry[texttagtable]{the object which received the signal.}
-        @entry[tag]{the added tag.}
+        @entry[texttagtable]{The object which received the signal.}
+        @entry[tag]{The added tag.}
       @end{table}
     @subheading{The \"tag-changed\" signal}
       @begin{pre}
  lambda (texttagtable tag size-changed)   : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[texttagtable]{the object which received the signal.}
-        @entry[tag]{the changed tag.}
-        @entry[size-changed]{whether the size has been changed.}
+        @entry[texttagtable]{The object which received the signal.}
+        @entry[tag]{The changed tag.}
+        @entry[size-changed]{Whether the size has been changed.}
       @end{table}
     @subheading{The \"tag-removed\" signal}
       @begin{pre}
  lambda (texttagtable tag)   : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[texttagtable]{the object which received the signal.}
-        @entry[tag]{the removed tag.}
+        @entry[texttagtable]{The object which received the signal.}
+        @entry[tag]{The removed tag.}
       @end{table}
   @end{dictionary}")
 
@@ -126,9 +126,10 @@
 
 (defun gtk-text-tag-table-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @return{A new GtkTextTagTable.}
-  Creates a new GtkTextTagTable. The table contains no tags by default."
+ "@version{2013-5-5}
+  @return{A new @class{gtk-text-tag-table} object.}
+  Creates a new @class{gtk-text-tag-table} object. The table contains no tags
+  by default."
   (make-instance 'gtk-text-tag-table-new))
 
 (export 'gtk-text-tag-table-new)
@@ -139,16 +140,16 @@
 
 (defcfun ("gtk_text_tag_table_add" gtk-text-tag-table-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[table]{a GtkTextTagTable}
-  @argument[tag]{a GtkTextTag}
+ "@version{2013-5-5}
+  @argument[table]{a @class{gtk-text-tag-table} object}
+  @argument[tag]{a @class{gtk-text-tag} object}
   @begin{short}
-    Add a tag to the table. The tag is assigned the highest priority in the
-    table.
+    Add a @arg{tag} to the @arg{table}. The @arg{tag} is assigned the highest
+    priority in the @arg{table}.
   @end{short}
 
-  tag must not be in a tag table already, and may not have the same name as an
-  already-added tag."
+  @arg{tag} must not be in a tag table already, and may not have the same name
+  as an already-added tag."
   (table (g-object gtk-text-tag-table))
   (tag (g-object gtk-text-tag)))
 
@@ -160,12 +161,12 @@
 
 (defcfun ("gtk_text_tag_table_remove" gtk-text-tag-table-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[table]{a GtkTextTagTable}
-  @argument[tag]{a GtkTextTag}
-  Remove a tag from the table. This will remove the table's reference to the
-  tag, so be careful - the tag will end up destroyed if you don't have a
-  reference to it."
+ "@version{2013-5-5}
+  @argument[table]{a @class{gtk-text-tag-table} object}
+  @argument[tag]{a @class{gtk-text-tag} object}
+  Remove a @arg{tag} from the @arg{table}. This will remove the @arg{table}'s
+  reference to the @arg{tag}, so be careful - the @arg{tag} will end up
+  destroyed if you do not have a reference to it."
   (table (g-object gtk-text-tag-table))
   (tag (g-object gtk-text-tag)))
 
@@ -178,10 +179,11 @@
 (defcfun ("gtk_text_tag_table_lookup" gtk-text-tag-table-lookup)
     (g-object gtk-text-tag)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[table]{a GtkTextTagTable}
+ "@version{2013-5-5}
+  @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[name]{name of a tag}
-  @return{The tag, or NULL if none by that name is in the table.}
+  @return{The tag, or @code{nil} if none by that @arg{name} is in the
+    @arg{table}.}
   Look up a named tag."
   (table (g-object gtk-text-tag-table))
   (name (:string :free-to-foreign t)))
@@ -199,12 +201,11 @@
 
 (defun gtk-text-tag-table-foreach (table function)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[table]{a GtkTextTagTable}
+ "@version{2013-5-5}
+  @argument[table]{a @class{gtk-text-tag-table} object}
   @argument[func]{a function to call on each tag}
-  @argument[data]{user data}
-  Calls func on each tag in table, with user data data. Note that the table
-  may not be modified while iterating over it (you can't add/remove tags)."
+  Calls @arg{func} on each tag in @arg{table}. Note that the @arg{table}
+  may not be modified while iterating over it (you cannot add/remove tags)."
   (with-stable-pointer (ptr function)
     (%gtk-text-tag-table-foreach table
                                  (callback gtk-text-tag-table-foreach-function)
@@ -218,10 +219,10 @@
 
 (defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-25}
-  @argument[table]{a GtkTextTagTable}
-  @return{number of tags in table}
-  Returns the size of the table (number of tags)"
+ "@version{2013-5-5}
+  @argument[table]{a @class{gtk-text-tag-table} object}
+  @return{Number of tags in @arg{table}.}
+  Returns the size of the @arg{table} (number of tags)."
   (table (g-object gtk-text-tag-table)))
 
 (export 'gtk-text-tag-table-size)

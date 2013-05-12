@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -78,30 +78,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-selection 'type)
- "@version{2013-3-10}
+ "@version{2013-5-12}
   @begin{short}
-    The GtkTreeSelection object is a helper object to manage the selection for a
-    GtkTreeView widget. The GtkTreeSelection object is automatically created
-    when a new GtkTreeView widget is created, and cannot exist independentally
-    of this widget. The primary reason the GtkTreeSelection objects exists is
-    for cleanliness of code and API. That is, there is no conceptual reason all
-    these functions could not be methods on the GtkTreeView widget instead of a
-    separate function.
+    The @sym{gtk-tree-selection} object is a helper object to manage the
+    selection for a @class{gtk-tree-view} widget. The @sym{gtk-tree-selection}
+    object is automatically created when a new @class{gtk-tree-view} widget is
+    created, and cannot exist independentally of this widget. The primary reason
+    the @sym{gtk-tree-selection} objects exists is for cleanliness of code and
+    API. That is, there is no conceptual reason all these functions could not be
+    methods on the @class{gtk-tree-view} widget instead of a separate function.
   @end{short}
 
-  The GtkTreeSelection object is gotten from a GtkTreeView by calling
-  gtk_tree_view_get_selection(). It can be manipulated to check the selection
-  status of the tree, as well as select and deselect individual rows. 
-  Selection is done completely view side. As a result, multiple views of the
-  same model can have completely different selections. Additionally, you
-  cannot change the selection of a row on the model that is not currently
-  displayed by the view without expanding its parents first.
+  The @sym{gtk-tree-selection} object is gotten from a @class{gtk-tree-view} by
+  calling the function @fun{gtk-tree-view-get-selection}. It can be manipulated
+  to check the selection status of the tree, as well as select and deselect
+  individual rows. Selection is done completely view side. As a result, multiple
+  views of the same model can have completely different selections.
+  Additionally, you cannot change the selection of a row on the model that is
+  not currently displayed by the view without expanding its parents first.
 
   One of the important things to remember when monitoring the selection of a
-  view is that the \"changed\" signal is mostly a hint. That is,it may only emit
-  one signal when a range of rows is selected. Additionally, it may on
+  view is that the \"changed\" signal is mostly a hint. That is, it may only
+  emit one signal when a range of rows is selected. Additionally, it may on
   occasion emit a \"changed\" signal when nothing has happened (mostly as a
-  result of programmers calling select_row on an already selected row).
+  result of programmers calling @code{select_row} on an already selected row).
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
@@ -127,14 +127,14 @@
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-tree-selection) 't)
  "The @code{\"mode\"} property of type @symbol{gtk-selection-mode}
   (Read / Write)@br{}
-  Selection mode. See gtk_tree_selection_set_mode() for more information on
-  this property.@br{}
-  Default value: GTK_SELECTION_SINGLE@br{}
+  Selection mode. See the function @fun{gtk-tree-selection-set-mode} for more
+  information on this property.@br{}
+  Default value: @code{:single}@br{}
   Since 3.2")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -142,11 +142,9 @@
 (setf (gethash 'gtk-tree-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-selection-mode 'function)
- "@version{2013-3-10}
-  @begin{short}
-    Accessor of the slot @code{\"mode\"} of the @class{gtk-tree-selection}
-    class.
-  @end{short}")
+ "@version{2013-5-12}
+  Accessor of the slot @code{\"mode\"} of the @class{gtk-tree-selection}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeSelectionFunc ()
@@ -233,7 +231,7 @@
 
 (defun gtk-tree-selection-set-mode (selection mode)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
+ "@version{2013-5-12}
   @argument[selection]{a @class{gtk-tree-selection} object}
   @argument[mode]{the selection mode}
   Sets the selection mode of the @arg{selection}. If the previous type was
@@ -251,11 +249,12 @@
 
 (defun gtk-tree-selection-get-mode (selection type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{a GtkTreeSelection}
-  @return{the current selection mode}
-  @short{Gets the selection mode for selection.}
-  See gtk_tree_selection_set_mode()."
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @return{The current selection mode.}
+  @short{Gets the selection mode for @arg{selection}.}
+  See the function @fun{gtk-tree-selection-set-mode}.
+  @see-function{gtk-tree-selection-set-mode}"
   (gtk-tree-selection-mode selection))
 
 (export 'gtk-tree-selection-get-mode)
@@ -273,22 +272,20 @@
 
 (defun gtk-tree-selection-set-select-function (selection fn)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[func]{The selection function. May be NULL}
-  @argument[data]{The selection function's data. May be NULL}
-  @argument[destroy]{The destroy function for user data. May be NULL}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[func]{the selection function, may be @code{nil}}
   @short{Sets the selection function.}
 
   If set, this function is called before any node is selected or unselected,
   giving some control over which nodes are selected. The select function
-  should return TRUE if the state of the node may be toggled, and FALSE if the
-  state of the node should be left unchanged."
+  should return @em{true} if the state of the node may be toggled, and
+  @code{nil} if the state of the node should be left unchanged."
   (%gtk-tree-selection-set-select-function
-                                selection
-                                (callback gtk-tree-selection-select-function-cb)
-                                (glib::allocate-stable-pointer fn)
-                                (callback glib::stable-pointer-destroy-notify-cb)))
+                             selection
+                             (callback gtk-tree-selection-select-function-cb)
+                             (glib::allocate-stable-pointer fn)
+                             (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-selection-set-select-function)
 
@@ -300,8 +297,8 @@
 
 (defun gtk-tree-selection-get-select-function (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
   @return{The function.}
   @short{Returns the current selection function.}
 
@@ -340,10 +337,10 @@
 (defcfun ("gtk_tree_selection_get_tree_view" gtk-tree-selection-get-tree-view)
     (g-object gtk-tree-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection}
-  @return{A GtkTreeView}
-  @short{Returns the tree view associated with selection.}"
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @return{A @class{gtk-tree-view} object.}
+  Returns the tree view associated with @arg{selection}."
   (selection (g-object gtk-tree-selection)))
 
 (export 'gtk-tree-selection-get-tree-view)
@@ -360,10 +357,10 @@
 
 (defun gtk-tree-selection-get-selected (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
+ "@version{2013-5-12}
   @argument[selection]{a @class{gtk-tree-selection} object}
-  @return{The @class{gtk-iter} of the selected node, or @code{nil} if there is
-    no selected node.}
+  @return{The @class{gtk-iter} object of the selected node, or @code{nil} if
+    there is no selected node.}
   Sets iter to the currently selected node if @arg{selection} is set to
   @code{:single} or @code{:browse}. This function will not work if you use
   selection is @code{:multiple}."
@@ -385,15 +382,16 @@
 
 (defun gtk-tree-selection-selected-foreach (selection fn)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[func]{The function to call for each selected node.}
-  @argument[data]{user data to pass to the function.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[func]{the function to call for each selected node}
   @begin{short}
-    Calls a function for each selected node. Note that you cannot modify the
-    tree or selection from within this function. As a result,
-    gtk_tree_selection_get_selected_rows() might be more useful.
-  @end{short}"
+    Calls a function for each selected node.
+  @end{short}
+  Note that you cannot modify the tree or selection from within this function.
+  As a result, the function @fun{gtk-tree-selection-get-selected-rows} might be
+  more useful.
+  @see-function{gtk-tree-selection-get-selected-rows}"
   (with-stable-pointer (ptr fn)
     (%gtk-tree-selection-selected-foreach
                                         selection
@@ -414,21 +412,23 @@
 
 (defun gtk-tree-selection-get-selected-rows (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[model]{A pointer to set to the GtkTreeModel, or NULL.}
-  @return{A GList containing a GtkTreePath for each selected row.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[model]{a pointer to set to the @class{gtk-tree-model} object,
+    or @code{nil}}
+  @return{A list containing a @class{gtk-tree-path} for each selected row.}
   @begin{short}
     Creates a list of path of all selected rows. Additionally, if you are
     planning on modifying the model after calling this function, you may want to
-    convert the returned list into a list of GtkTreeRowReferences. To do this,
-    you can use gtk_tree_row_reference_new().
+    convert the returned list into a list of @class{gtk-tree-row-reference}'s.
+    To do this, you can use the function @fun{gtk-tree-row-reference-new}.
   @end{short}
 
   To free the return value, use:
   @code{g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);}
 
-  Since 2.2"
+  Since 2.2
+  @see-function{gtk-tree-row-reference-new}"
   (%gtk-tree-selection-get-selected-rows selection (null-pointer)))
 
 (export 'gtk-tree-selection-get-selected-rows)
@@ -440,8 +440,8 @@
 (defcfun ("gtk_tree_selection_count_selected_rows"
            gtk-tree-selection-count-selected-rows) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
   @return{The number of rows selected.}
   @short{Returns the number of rows that have been selected in tree.}
 
@@ -457,10 +457,10 @@
 (defcfun ("gtk_tree_selection_select_path" gtk-tree-selection-select-path)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[path]{The GtkTreePath to be selected.}
-  @short{Select the row at path.}"
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[path]{the @class{gtk-tree-path} to be selected}
+  Select the row at @arg{path}."
   (selection g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -473,10 +473,10 @@
 (defcfun ("gtk_tree_selection_unselect_path" gtk-tree-selection-unselect-path)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[path]{The GtkTreePath to be unselected.}
-  @short{Unselects the row at path.}"
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[path]{the @class{gtk-tree-path} to be unselected}
+  Unselects the row at @arg{path}."
   (selection g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -489,13 +489,13 @@
 (defcfun ("gtk_tree_selection_path_is_selected"
            gtk-tree-selection-path-is-selected) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[path]{A GtkTreePath to check selection on.}
-  @return{TRUE if path is selected.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[path]{a @class{gtk-tree-path} object to check selection on}
+  @return{@em{True} if path is selected.}
   @begin{short}
-    Returns TRUE if the row pointed to by path is currently selected. If path
-    does not point to a valid location, FALSE is returned
+    Returns @em{true} if the row pointed to by @arg{path} is currently selected.
+    If @arg{path} does not point to a valid location, @code{nil} is returned.
   @end{short}"
   (selection g-object)
   (path (g-boxed-foreign gtk-tree-path)))
@@ -508,10 +508,10 @@
 
 (defcfun ("gtk_tree_selection_select_iter" gtk-tree-selection-select-iter) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[iter]{The GtkTreeIter to be selected.}
-  @short{Selects the specified iterator.}"
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[iter]{the @class{gtk-tree-iter} object to be selected}
+  Selects the specified iterator."
   (selection g-object)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -524,10 +524,10 @@
 (defcfun ("gtk_tree_selection_unselect_iter" gtk-tree-selection-unselect-iter)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[iter]{The GtkTreeIter to be unselected.}
-  @short{Unselects the specified iterator.}"
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[iter]{the @class{gtk-tree-iter} object to be unselected}
+  Unselects the specified iterator."
   (selection g-object)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -540,11 +540,11 @@
 (defcfun ("gtk_tree_selection_iter_is_selected"
            gtk-tree-selection-iter-is-selected) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection}
-  @argument[iter]{A valid GtkTreeIter}
-  @return{TRUE, if iter is selected}
-  @short{Returns TRUE if the row at iter is currently selected.}"
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[iter]{a valid @class{gtk-tree-iter} object}
+  @return{@em{True}, if @arg{iter} is selected.}
+  Returns @em{true} if the row at @arg{iter} is currently selected."
   (selection g-object)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -556,10 +556,10 @@
 
 (defcfun ("gtk_tree_selection_select_all" gtk-tree-selection-select-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
   @begin{short}
-    Selects all the nodes. selection must be set to GTK_SELECTION_MULTIPLE mode.
+    Selects all the nodes. @arg{selection} must be set to @code{:multiple} mode.
   @end{short}"
   (selection g-object))
 
@@ -572,8 +572,8 @@
 (defcfun ("gtk_tree_selection_unselect_all" gtk-tree-selection-unselect-all)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
   @short{Unselects all the nodes.}"
   (selection g-object))
 
@@ -586,13 +586,13 @@
 (defcfun ("gtk_tree_selection_select_range" gtk-tree-selection-select-range)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[start_path]{The initial node of the range.}
-  @argument[end_path]{The final node of the range.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[start-path]{the initial node of the range}
+  @argument[end-path]{the final node of the range}
   @begin{short}
-    Selects a range of nodes, determined by start_path and end_path inclusive.
-    selection must be set to GTK_SELECTION_MULTIPLE mode.
+    Selects a range of nodes, determined by @arg{start-path} and @arg{end-path}
+    inclusive. @arg{selection} must be set to @code{:multiple} mode.
   @end{short}"
   (selection g-object)
   (start-path (g-boxed-foreign gtk-tree-path))
@@ -607,12 +607,13 @@
 (defcfun ("gtk_tree_selection_unselect_range" gtk-tree-selection-unselect-range)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[selection]{A GtkTreeSelection.}
-  @argument[start_path]{The initial node of the range.}
-  @argument[end_path]{The initial node of the range.}
+ "@version{2013-5-12}
+  @argument[selection]{a @class{gtk-tree-selection} object}
+  @argument[start-path]{the initial node of the range}
+  @argument[end-path]{the initial node of the range}
   @begin{short}
-    Unselects a range of nodes, determined by start_path and end_path inclusive.
+    Unselects a range of nodes, determined by @arg{start-path} and
+    @arg{end-path} inclusive.
   @end{short}
 
   Since 2.2"

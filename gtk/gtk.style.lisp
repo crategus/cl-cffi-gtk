@@ -35,53 +35,48 @@
 ;;;
 ;;; Synopsis
 ;;;
-;;; struct              GtkStyle
+;;;     GtkStyle
 ;;;
-;;; GtkStyle *          gtk_style_new
-;;; GtkStyle *          gtk_style_copy
-;;; GtkStyle *          gtk_style_attach
-;;; void                gtk_style_detach
-
+;;;     gtk_style_new
+;;;     gtk_style_copy
+;;;     gtk_style_attach
+;;;     gtk_style_detach
 ;;;     gtk_style_has_context
-
-;;; void                gtk_style_set_background
-;;; void                gtk_style_apply_default_background
+;;;     gtk_style_set_background
+;;;     gtk_style_apply_default_background
+;;;     gtk_style_lookup_color
+;;;     gtk_style_lookup_icon_set          * deprecated *
+;;;     gtk_style_render_icon
 ;;;
+;;;     gtk_style_get_style_property
+;;;     gtk_style_get_valist
+;;;     gtk_style_get
 ;;;
-;;; gboolean            gtk_style_lookup_color
-;;; GtkIconSet *        gtk_style_lookup_icon_set          * deprecated *
-;;; GdkPixbuf *         gtk_style_render_icon
-
-
-;;; void                gtk_style_get_style_property
-;;; void                gtk_style_get_valist
-;;; void                gtk_style_get
+;;;     gtk_paint_arrow
+;;;     gtk_paint_box
+;;;     gtk_paint_box_gap
+;;;     gtk_paint_check
+;;;     gtk_paint_diamond
+;;;     gtk_paint_extension
+;;;     gtk_paint_flat_box
+;;;     gtk_paint_focus
+;;;     gtk_paint_handle
+;;;     gtk_paint_hline
+;;;     gtk_paint_option
+;;;     gtk_paint_polygon
+;;;     gtk_paint_shadow
+;;;     gtk_paint_shadow_gap
+;;;     gtk_paint_slider
+;;;     gtk_paint_spinner
+;;;     gtk_paint_string
+;;;     gtk_paint_tab
+;;;     gtk_paint_vline
+;;;     gtk_paint_expander
+;;;     gtk_paint_layout
+;;;     gtk_paint_resize_grip
+;;;     gtk_draw_insertion_cursor
 ;;;
-;;; void                gtk_paint_arrow
-;;; void                gtk_paint_box
-;;; void                gtk_paint_box_gap
-;;; void                gtk_paint_check
-;;; void                gtk_paint_diamond
-;;; void                gtk_paint_extension
-;;; void                gtk_paint_flat_box
-;;; void                gtk_paint_focus
-;;; void                gtk_paint_handle
-;;; void                gtk_paint_hline
-;;; void                gtk_paint_option
-;;; void                gtk_paint_polygon
-;;; void                gtk_paint_shadow
-;;; void                gtk_paint_shadow_gap
-;;; void                gtk_paint_slider
-;;; void                gtk_paint_spinner
-;;; void                gtk_paint_string
-;;; void                gtk_paint_tab
-;;; void                gtk_paint_vline
-;;; void                gtk_paint_expander
-;;; void                gtk_paint_layout
-;;; void                gtk_paint_resize_grip
-;;; void                gtk_draw_insertion_cursor
-;;;
-;;;                     GtkRcProperty
+;;;     GtkRcProperty
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -145,55 +140,51 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-style 'type)
- "@version{2013-1-13}
+ "@version{2013-5-6}
+  @subheading{Warning}
+    In GTK+ 3.0, @sym{gtk-style} has been deprecated and replaced by
+    @class{gtk-style-context}.
+
   @begin{short}
     A @sym{gtk-style} object encapsulates the information that provides the look
     and feel for a widget.
   @end{short}
 
   Each @class{gtk-widget} has an associated @sym{gtk-style} object that is used
-  when rendering that widget. Also, a @sym{gtk-style} holds information for the
-  five possible widget states though not every widget supports all five states;
-  see @symbol{gtk-state-type}.
+  when rendering that widget. Also, a @sym{gtk-style} object holds information
+  for the five possible widget states though not every widget supports all five
+  states; see the function @symbol{gtk-state-type}.
 
   Usually the @sym{gtk-style} for a widget is the same as the default style that
   is set by GTK+ and modified the theme engine.
 
   Usually applications should not need to use or modify the @sym{gtk-style} of
   their widgets.
-  @begin[Warning]{dictionary}
-    In GTK+ 3.0, @sym{gtk-style} has been deprecated and replaced by
-    @class{gtk-style-context}.
-  @end{dictionary}
   @begin[Signal Details]{dictionary}
-    @b{The \"realize\" signal}
-    @begin{pre}
- void user_function (GtkStyle *style,
-                     gpointer  user_data)   : Run First
-    @end{pre}
-    Emitted when the @arg{style} has been initialized for a particular colormap
-    and depth. Connecting to this signal is probably seldom useful since most of
-    the time applications and widgets only deal with styles that have been
-    already realized.
+    @subheading{The \"realize\" signal}
+      @begin{pre}
+ lambda (style)   : Run First
+      @end{pre}
+      Emitted when the @arg{style} has been initialized for a particular
+      colormap and depth. Connecting to this signal is probably seldom useful
+      since most of the time applications and widgets only deal with styles that
+      have been already realized.
     @begin[code]{table}
-      @entry[style]{the object which received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[style]{The object which received the signal.}
     @end{table}
     Since 2.4
 
-    @b{The \"unrealize\" signal}
-    @begin{pre}
- void user_function (GtkStyle *style,
-                     gpointer  user_data)   : Run First
-    @end{pre}
-    Emitted when the aspects of the @arg{style} specific to a particular
-    colormap and depth are being cleaned up. A connection to this signal can be
-    useful if a widget wants to cache objects like a GdkGC as object data on
-    @sym{gtk-style}. This signal provides a convenient place to free such cached
-    objects.
+    @subheading{The \"unrealize\" signal}
+      @begin{pre}
+ lambda (style)   : Run First
+      @end{pre}
+      Emitted when the aspects of the @arg{style} specific to a particular
+      colormap and depth are being cleaned up. A connection to this signal can
+      be useful if a widget wants to cache objects like a @code{GdkGC} as object
+      data on @sym{gtk-style}. This signal provides a convenient place to free
+      such cached objects.
     @begin[code]{table}
-      @entry[style]{the object which received the signal}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[style]{The object which received the signal.}
     @end{table}
     Since 2.4
   @end{dictionary}
@@ -209,7 +200,7 @@
 (setf (documentation (atdoc:get-slot-from-name "context" 'gtk-style) 't)
  "The @arg{\"context\"} property of type @class{gtk-style-context}
   (Read / Write / Construct Only).@br{}
-  @class{gtk-style-context} class to get style from.")
+  @class{gtk-style-context} object to get style from.")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -399,7 +390,7 @@
 (defcfun ("gtk_style_lookup_icon_set" gtk-style-lookup-icon-set)
     (g-boxed-foreign gtk-icon-set)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-5-6}
   @argument[style]{a @class{gtk-style} object}
   @argument[stock-id]{an icon name}
   @return{A icon set of @arg{stock-id}.}
