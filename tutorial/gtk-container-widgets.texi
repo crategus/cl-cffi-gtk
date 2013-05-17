@@ -4,9 +4,9 @@
 @c Language : German
 @c Author   : Dieter Kaiser
 @c Date     : 09.02.2012
-@c Revision : 20.05.2012
+@c Revision : 17.05.2013
 @c 
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -44,27 +44,30 @@
 @end float
 @end ifnotinfo
 
-The alignment widget @code{GtkAlignment} allows to place a widget within its
-window at a position and size relative to the size of the @code{GtkAlignment}
-widget itself.  For example, it can be very useful for centering a widget within
-the window.
+The alignment container @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} allows
+to place a widget within its window at a position and size relative to the size
+of the @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container itself. For
+example, it can be very useful for centering a widget within the window.
 
-The @code{GtkAlignment} widget has the four properties @code{xalign},
-@code{yalign}, @code{xscale}, and @code{yscale}.  The properties are floating
-point numbers.  The align settings are used to place the child widget within the
-available area.  The values range from @code{0.0} (top or left) to @code{1.0}
-(bottom or right).  Of course, if the scale settings are both set to @code{1.0},
-the alignment settings have no effect.  The scale settings are used to specify
-how much the child widget should expand to fill the space allocated to the
-@code{GtkAlignment}. The values can range from @code{0.0} (meaning the child
-doesn't expand at all) to @code{1.0} (meaning the child expands to fill all of
-the available space).
+The @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container has the four
+properties @code{xalign}, @code{yalign}, @code{xscale}, and @code{yscale}.  The
+properties are floating point numbers.  The align settings are used to place the
+child widget within the available area.  The values range from @code{0.0} (top
+or left) to @code{1.0} (bottom or right).  Of course, if the scale settings are
+both set to @code{1.0}, the alignment settings have no effect.  The scale
+settings are used to specify how much the child widget should expand to fill
+the space allocated to the @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}}.
+The values can range from @code{0.0} (meaning the child doesn't expand at all)
+to @code{1.0} (meaning the child expands to fill all of the available space).
 
-The properties are set when creating the @code{GtkAlignment} widget with the
-function @code{gtk-alignment-new}.  For an existing @code{GtkAlignment} widget
-the properties can be set with the function @code{gtk-alignment-set}.  A child
-widget can be added to the @code{GtkAlignment} widget using the function
-@code{gtk-container-add}.
+The properties are set when creating the @url{@value{GTK-ALIGNMENT},
+@code{gtk-alignment}} container with the function
+@url{@value{GTK-ALIGNMENT-NEW}, @code{gtk-alignment-new}}.  For an existing
+@url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container the properties can
+be set with the function @url{@value{GTK-ALIGNMENT-SET},
+@code{gtk-alignment-set}}.  A child widget can be added to the
+@url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container using the function
+@url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}}.
 
 @findex gtk-alignment-set-padding
 @findex gtk-alignment-get-padding
@@ -72,11 +75,12 @@ widget can be added to the @code{GtkAlignment} widget using the function
 @findex alignment-set-padding, gtk-alignment-set-padding
 @findex alignment-get-padding, gtk-alignment-get-padding
 
-In addition, the @code{GtkAlignment} widget has the properties
-@code{top-padding}, @code{bottom-padding}, @code{left-padding}, and
-@code{right-padding}.  These properties control how many space is added to the
-sides of the widget.  The functions @code{gtk-alignment-set-padding} and
-@code{gtk-alignment-get-padding} are used to set or to retrieve the values of
+In addition, the @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container has
+the properties @code{top-padding}, @code{bottom-padding}, @code{left-padding},
+and @code{right-padding}. These properties control how many space is added to
+the sides of the widget. The functions @url{@value{GTK-ALIGNMENT-SET-PADDING},
+@code{gtk-alignment-set-padding}} and @url{@value{GTK-ALIGNMENT-GET-PADDING},
+@code{gtk-alignment-get-padding}} are used to set or to retrieve the values of
 the padding properties.
 
 @noindent
@@ -84,7 +88,8 @@ the padding properties.
 
 Note that the desired effect can in most cases be achieved by using the
 "halign", "valign" and "margin" properties on the child widget, so
-@code{GtkAlignment} should not be used in new code.
+@url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} should not be used in new
+code.
 
 @float Example, example-alignment
 @caption{Alignment Widget}
@@ -106,7 +111,7 @@ Note that the desired effect can in most cases be achieved by using the
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (let ((frame (make-instance 'gtk-frame
                                   :label "xalign: 0, yalign: 0"))
             (button (make-instance 'gtk-button
@@ -267,7 +272,7 @@ the fixed widget are then get with the functions @code{gdk-rectangle-width} and
       (g-signal-connect window "destroy"
                         (lambda (window)
                           (declare (ignore window))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window fixed)
       (dotimes (i 3)
         (let ((button (gtk-button-new-with-label "Press me")))
@@ -398,7 +403,7 @@ example is shown in @ref{example-frame}.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window frame)
       (gtk-widget-show window))))
 @end verbatim
@@ -416,33 +421,35 @@ example is shown in @ref{example-frame}.
 
 @ifnotinfo
 @float Figure, figure-aspect-frame
-@caption{Aspect Frame Widget}
+@caption{Aspect Frame Container}
 @center @image{figures/aspect-frame302x279, 201pt}
 @end float
 @end ifnotinfo
 
-The aspect frame widget is like a frame widget, except that it also enforces
-the aspect ratio (that is, the ratio of the width to the height) of the child
-widget to have a certain value, adding extra space if necessary.  This is useful,
-for instance, if you want to preview a larger image.  The size of the preview
-should vary when the user resizes the window, but the aspect ratio needs to
-always match the original image.
+The @url{@value{GTK-ASPECT-FRAME}, @code{gtk-aspect-frame}} aspect frame
+container is like a frame container, except that it also enforces the aspect
+ratio (that is, the ratio of the width to the height) of the child widget to
+have a certain value, adding extra space if necessary.  This is useful, for
+instance, if you want to preview a larger image. The size of the preview should
+vary when the user resizes the window, but the aspect ratio needs to always
+match the original image.
 
 To create a new aspect frame use @code{(make-instance 'gtk-aspect-frame)} or the
-function @code{gtk-aspect-frame-new}.  The arguments @code{xalign} and
-@code{yalign} specify alignment as with alignment widgets.  If the property
-@code{obey-child} is @code{T}, the aspect ratio of a child widget will match the
-aspect ratio of the ideal size it requests.  Otherwise, it is given by ratio.
+function @url{@value{GTK-ASPECT-FRAME}, @code{gtk-aspect-frame-new}}. The
+arguments @code{xalign} and @code{yalign} specify alignment as with alignment
+containers.  If the property @code{obey-child} is @emph{true}, the aspect ratio
+of a child widget will match the aspect ratio of the ideal size it requests.
+Otherwise, it is given by @code{ratio}.
 
 The options of an existing aspect frame can be changed with the function
-@code{gtk-aspect-frame-set}.
+@url{@value{GTK-ASPECT-FRAME-SET}, @code{gtk-aspect-frame-set}}.
 
 As an example, the following program uses an aspect frame widget to present a
 drawing area whose aspect ratio will always be 2:1, no matter how the user
 resizes the top-level window.
 
 @float Example, example-aspect-frame
-@caption{Aspect Frame Widget}
+@caption{Aspect Frame Container}
 @end float
 @verbatim
 (defun example-aspect-frame ()
@@ -465,7 +472,7 @@ resizes the top-level window.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window frame)
       (gtk-container-add frame area)
       (gtk-widget-show window))))
@@ -557,7 +564,7 @@ shown in @ref{example-paned-window}
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-set-size-request window 300 250)
       (gtk-container-add window paned)
       (gtk-paned-add1 paned frame1)
@@ -730,7 +737,7 @@ other widgets.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start (gtk-dialog-get-content-area window) scrolled)
       (gtk-scrolled-window-add-with-viewport scrolled table)
       (dotimes (i 10)
@@ -833,7 +840,7 @@ layout settings for button boxes.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create Horizontal Button Boxes
       (gtk-box-pack-start vbox1
                           (make-instance 'gtk-label
@@ -969,7 +976,7 @@ allowing the users to switch pages (see @code{gtk-notebook-popup-enable},
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (dotimes (i 5)
         (let ((page (make-instance 'gtk-label
                                    :label

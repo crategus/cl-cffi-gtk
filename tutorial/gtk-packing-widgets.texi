@@ -275,7 +275,7 @@ horizontal line and @code{:vertical} for a vertical line.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-box-pack-start vbox
                           (make-instance 'gtk-label
                                          :label
@@ -530,7 +530,7 @@ shown in @ref{example-table-packing}.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect quit "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -579,7 +579,7 @@ described in @ref{Toggle Buttons} later in this tutorial.  The code of
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button1 "toggled"
          (lambda (widget)
            (if (gtk-toggle-button-get-active widget)
@@ -616,21 +616,24 @@ described in @ref{Toggle Buttons} later in this tutorial.  The code of
 @findex GtkGrid
 @findex gtk-grid
 
-@code{GtkGrid} is an attempt to write a comprehensive, legacy-free, box-layout
-container that is flexible enough to replace @code{GtkBox}, @code{GtkTable} and
-the like.
+@url{@value{GTK-GRID}, @code{gtk-grid}} is an attempt to write a comprehensive,
+legacy-free, box-layout container that is flexible enough to replace
+@url{@value{GTK-BOX}, @code{gtk-box}}, @url{@value{GTK-TABLE}, @code{gtk-table}}
+and the like.
 
-The layout model of @code{GtkGrid} is to arrange its children in rows and
-columns.  This is done by assigning positions on a two-dimensions grid that
-stretches arbitrarily far in all directions.  Children can span multiple rows
-or columns.
+The layout model of @url{@value{GTK-GRID}, @code{gtk-grid}} is to arrange its
+children in rows and columns. This is done by assigning positions on a
+two-dimensions grid that stretches arbitrarily far in all directions. Children
+can span multiple rows or columns.
 
 @c -----------------------------------------------------------------------------
 @subsection GtkBox versus GtkGrid - packing
 
-@code{GtkBox} works by arranging child widgets in a single line, either
-horizontally or vertically.  It allows packing children from the beginning or
-end, using @code{gtk-box-pack-start} and @code{gtk-box-pack-end}.
+@url{@value{GTK-BOX}, @code{gtk-box}} works by arranging child widgets in a
+single line, either horizontally or vertically. It allows packing children from
+the beginning or end, using @url{@value{GTK-BOX-PACK-START},
+@code{gtk-box-pack-start}} and @url{@value{GTK-BOX-PACK-END},
+@code{gtk-box-pack-end}}.
 
 The following code creates a simple box with two labels:
 @verbatim
@@ -640,8 +643,8 @@ The following code creates a simple box with two labels:
     [...] )
 @end verbatim
 
-This can be done with @code{GtkGrid} as follows:
-@verbatim  
+This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
+@verbatim
   (let ((grid (gtk-grid-new))
         (child1 (gtk-label-new "ONE"))
         (child2 (gtk-label-new "TWO")))
@@ -650,56 +653,61 @@ This can be done with @code{GtkGrid} as follows:
     [...]  )
 @end verbatim
 
-And similarly for @code{gtk-box-pack-end}.  In that case, you would use
-@code{:left} to place the grid children from left to right.
+And similarly for @url{@value{GTK-BOX-PACK-END}, @code{gtk-box-pack-end}}. In
+that case, you would use @code{:left} to place the grid children from left to
+right.
 
 If you only need to pack children from the start, using
-@code{gtk-container-add} is an even simpler alternative.  @code{GtkGrid} places
-children added with @code{gtk-container-add} in a single row or column according
-to its "orientation".
+@url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} is an even simpler
+alternative. @url{@value{GTK-GRID}, @code{gtk-grid}} places children added with
+@url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} in a single row or
+column according to its "orientation".
 
-One difference to keep in mind is that the @code{gtk-box-pack-start} and
-@code{gtk-box-pack-end} functions allow you to place an arbitrary number of
+One difference to keep in mind is that the @url{@value{GTK-BOX-PACK-START},
+@code{gtk-box-pack-start}} and @url{@value{GTK-BOX-PACK-END},
+@code{gtk-box-pack-end}} functions allow you to place an arbitrary number of
 children from either end without ever 'colliding in the middle'.  With
-@code{GtkGrid}, you have to leave enough space between the two ends, if you
-want to combine packing from both ends towards the middle.  In practice, this
-should be easy to avoid; and @code{GtkGrid} simply ignores entirely empty rows
-or columns for layout and spacing.
+@url{@value{GTK-GRID}, @code{gtk-grid}}, you have to leave enough space between
+the two ends, if you want to combine packing from both ends towards the middle.
+In practice, this should be easy to avoid; and @url{@value{GTK-GRID},
+@code{gtk-grid}} simply ignores entirely empty rows or columns for layout and
+spacing.
 
-On the other hand, @code{GtkGrid} is more flexible in that its grid extends
-indefinitively in both directions — there is no problem with using negative
-numbers for the grid positions.  So, if you discover that you need to place a
-widget before your existing arrangement, you always can.
+On the other hand, @url{@value{GTK-GRID}, @code{gtk-grid}} is more flexible in
+that its grid extends indefinitively in both directions - there is no problem
+with using negative numbers for the grid positions. So, if you discover that
+you need to place a widget before your existing arrangement, you always can.
 
 @c -----------------------------------------------------------------------------
 @subsection GtkBox versus GtkGrid: sizing
 
-When adding a child to a @code{GtkBox}, there are two hard-to-remember
-parameters (child properties, more exactly) named @code{expand} and @code{fill}
-that determine how the child size behaves in the main direction of the box.  If
-expand is set, the box allows the position occupied by the child to grow when
-extra space is available.  If fill is also set, the extra space is allocated to
-the child widget itself.  Otherwise it is left 'free'.  There is no control
-about the 'minor' direction; children are always given the full size in the
-minor direction.
+When adding a child to a @url{@value{GTK-BOX}, @code{gtk-box}}, there are two
+hard-to-remember parameters (child properties, more exactly) named @code{expand}
+and @code{fill} that determine how the child size behaves in the main direction
+of the box. If @code{expand} is set, the box allows the position occupied by the
+child to grow when extra space is available. If @code{fill} is also set, the
+extra space is allocated to the child widget itself. Otherwise it is left
+'free'.  There is no control about the 'minor' direction; children are always
+given the full size in the minor direction.
 
-@code{GtkGrid} does not have any custom child properties for controlling size
-allocation to children.  Instead, it fully supports the newly introduced
-@code{hexpand}, @code{vexpand}, @code{halign} and @code{valign} properties for
-widgets.
+@url{@value{GTK-GRID}, @code{gtk-grid}} does not have any custom child
+properties for controlling size allocation to children. Instead, it fully
+supports the newly introduced @code{hexpand}, @code{vexpand}, @code{halign} and
+@code{valign} properties for widgets.
 
 The @code{hexpand} and @code{vexpand} properties operate in a similar way to
-the expand child properties of @code{GtkBox}.  As soon as a column contains a
-hexpanding child, @code{GtkGrid} allows the column to grow when extra space is
-available (similar for rows and vexpand). In contrast to @code{GtkBox}, all the
+the expand child properties of @url{@value{GTK-BOX}, @code{gtk-box}}.  As soon
+as a column contains a hexpanding child, @url{@value{GTK-GRID}, @code{gtk-grid}}
+allows the column to grow when extra space is available (similar for rows and
+@code{vexpand}). In contrast to @url{@value{GTK-BOX}, @code{gtk-box}}, all the
 extra space is always allocated to the child widget, there are no 'free' areas.
 
-To replace the functionality of the fill child properties, you can set the
+To replace the functionality of the @code{fill} child properties, you can set the
 @code{halign} and @code{valign} properties.  An align value of @code{:fill} has
-the same effect as setting fill to @code{T}, a value of @code{:center}
-has the same effect as setting fill to FALSE.
+the same effect as setting @code{fill} to @i{true}, a value of @code{:center}
+has the same effect as setting @code{fill} to @code{nil}.
 
-Expansion and alignment with @code{GtkBox}:
+Expansion and alignment with @url{@value{GTK-BOX}, @code{gtk-box}}:
 @verbatim  
   (let ((box (gtk-box-new :horizontal 0)))
     (gtk-box-pack-start box (gtk-label-new "ONE") t nil 0)
@@ -707,7 +715,7 @@ Expansion and alignment with @code{GtkBox}:
     [...] )
 @end verbatim
 
-This can be done with @code{GtkGrid} as follows:
+This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
 @verbatim
   (let ((grid (gtk-grid-new))
         (child1 (make-instance 'gtk-label
@@ -723,47 +731,52 @@ This can be done with @code{GtkGrid} as follows:
     [...] )
 @end verbatim
 
-One difference between the new @code{GtkWidget} expand properties and the
-@code{GtkBox} child property of the same name is that widget expandability is
-'inherited' from children.  What this means is that a container will become
-itself expanding as soon as it has an expanding child.  This is typically what
-you want, it lets you e.g. mark the content pane of your application window as
-expanding, and all the intermediate containers between the content pane and the
-toplevel window will automatically do the right thing.  This automatism can be
-overridden at any point by setting the expand flags on a container explicitly.
+One difference between the new @url{@value{GTK-WIDGET}, @code{gtk-widget}}
+expand properties and the @url{@value{GTK-BOX}, @code{gtk-box}} child property
+of the same name is that widget expandability is 'inherited' from children. What
+this means is that a container will become itself expanding as soon as it has an
+expanding child.  This is typically what you want, it lets you e. g. mark the
+content pane of your application window as expanding, and all the intermediate
+containers between the content pane and the toplevel window will automatically
+do the right thing.  This automatism can be overridden at any point by setting
+the expand flags on a container explicitly.
 
-Another difference between @code{GtkBox} and @code{GtkGrid} with respect to
-expandability is when there are no expanding children at all.  In this case,
-@code{GtkBox} will forcibly expand all children whereas @code{GtkGrid} will not.
-In practice, the effect of this is typically that a grid will 'stick to the
-corner' when the toplevel containing it is grown, instead of spreading out its
-children over the entire area.  The problem can be fixed by setting some or all
-of the children to expand.
+Another difference between @url{@value{GTK-BOX}, @code{gtk-box}} and
+@url{@value{GTK-GRID}, @code{gtk-grid}} with respect to expandability is when
+there are no expanding children at all.  In this case, @url{@value{GTK-BOX},
+@code{gtk-box}} will forcibly expand all children whereas @url{@value{GTK-GRID},
+@code{gtk-grid}} will not. In practice, the effect of this is typically that a
+grid will 'stick to the corner' when the toplevel containing it is grown,
+instead of spreading out its children over the entire area.  The problem can be
+fixed by setting some or all of the children to expand.
 
-When you set the @code{homogeneous} property on a @code{GtkBox}, it reserves
-the same space for all its children.  @code{GtkGrid} does this in a very similar
-way, with @code{row-homogeneous} and @code{column-homogeneous} properties which
-control whether all rows have the same height and whether all columns have the
-same width.
+When you set the @code{homogeneous} property on a @url{@value{GTK-BOX},
+@code{gtk-box}}, it reserves the same space for all its children.
+@url{@value{GTK-GRID}, @code{gtk-grid}} does this in a very similar way, with
+@code{row-homogeneous} and @code{column-homogeneous} properties which control
+whether all rows have the same height and whether all columns have the same
+width.
 
 @c -----------------------------------------------------------------------------
 @subsection GtkBox versus GtkGrid - spacing
 
-With @code{GtkBox}, you have to specify the "spacing" when you construct it.
-This property specifies the space that separates the children from each other.
-Additionally, you can specify extra space to put around each child individually,
-using the @code{padding} child property.
+With @url{@value{GTK-BOX}, @code{gtk-box}}, you have to specify the "spacing"
+when you construct it. This property specifies the space that separates the
+children from each other. Additionally, you can specify extra space to put
+around each child individually, using the @code{padding} child property.
 
-@code{GtkGrid} is very similar when it comes to spacing between the children,
-except that it has two separate properties, @code{row-spacing} and
-@code{column-spacing}, for the space to leave between rows and columns.  Note
-that row-spacing is the space between rows, not inside a row.  So, if you doing
-a horizontal layout, you need to set @code{column-spacing}.
+@url{@value{GTK-GRID}, @code{gtk-grid}} is very similar when it comes to spacing
+between the children, except that it has two separate properties,
+@code{row-spacing} and @code{column-spacing}, for the space to leave between
+rows and columns.  Note that row-spacing is the space between rows, not inside a
+row.  So, if you doing a horizontal layout, you need to set
+@code{column-spacing}.
 
-@code{GtkGrid} does not have any custom child properties to specify per-child
-padding; instead you can use the @code{margin} property.  You can also set
-different padding on each side with the @code{margin-left}, @code{margin-right},
-@code{margin-top} and @code{margin-bottom} properties.
+@url{@value{GTK-GRID}, @code{gtk-grid}} does not have any custom child
+properties to specify per-child padding; instead you can use the @code{margin}
+property. You can also set different padding on each side with the
+@code{margin-left}, @code{margin-right}, @code{margin-top} and
+@code{margin-bottom} properties.
 
 Example with spacing in boxes:
 @verbatim
@@ -773,7 +786,7 @@ Example with spacing in boxes:
     [...] )
 @end verbatim
 
-This can be done with @code{GtkGrid} as follows:
+This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
 @verbatim
   (let ((grid (gtk-grid-new))
         (child (make-instance 'gtk-label
@@ -789,14 +802,16 @@ This can be done with @code{GtkGrid} as follows:
 
 We repeat the implementation of @ref{example-box-packing} and
 @ref{example-table-packing} using @code{GtkGrid}.  The first
-@ref{example-grid-packing} shows how to replace @code{GtkBox} wit
-@code{GtkGrid} to create vertical and horizontal boxes.  In the second
-@ref{example-grid-packing-2} @code{GtkTable} is replaced with @code{GtkGrid}.
-See @ref{figure-box-packing} and @ref{figure-table-packing} for the output
-of the example programs.
+@ref{example-grid-packing} shows how to replace @url{@value{GTK-BOX},
+@code{gtk-box}} with @url{@value{GTK-GRID}, @code{gtk-grid}} to create vertical
+and horizontal boxes.  In the second @ref{example-grid-packing-2}
+@url{@value{GTK-TABLE}, @code{gtk-table}} is replaced with
+@url{@value{GTK-GRID}, @code{gtk-grid}}. See @ref{figure-box-packing} and
+@ref{figure-table-packing} for the output of the example programs.
 
 @float Example, example-grid-packing
-@caption{@ref{example-box-packing} using @code{GtkGrid}}
+@caption{@ref{example-box-packing} using @url{@value{GTK-GRID},
+@code{gtk-grid}}}
 @end float
 @verbatim
 (defun make-grid (homogeneous spacing expand align margin)
@@ -864,7 +879,7 @@ of the example programs.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add vbox
                          (make-instance 'gtk-label
                                         :label
@@ -902,7 +917,8 @@ of the example programs.
 @end verbatim
 
 @float Example, example-grid-packing-2
-@caption{@ref{example-table-packing} using @code{GtkGrid}}
+@caption{@ref{example-table-packing} using @url{@value{GTK-GRID},
+@code{gtk-grid}}}
 @end float
 @verbatim
 (defun example-grid-packing-2 ()
@@ -924,7 +940,7 @@ of the example programs.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect quit "clicked"
                         (lambda (widget)
                           (declare (ignore widget))

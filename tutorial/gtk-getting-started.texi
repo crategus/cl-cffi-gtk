@@ -903,8 +903,6 @@ int main( int argc, char *argv[] )
 @findex box-new, gtk-box-new
 @findex :horizontal
 
-@set GTK-BOX-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-new.html
-
 The Lisp implementation in @ref{example-upgraded-hello-world} tries to be close
 to the C program.  Therefore, the window and the box are created with the
 functions @url{@value{GTK-WINDOW-NEW}, @code{gtk-window-new}} and
@@ -956,9 +954,6 @@ in @ref{Packing Widgets}.
       (gtk-container-add window box)
       (gtk-widget-show-all window))))
 @end verbatim
-
-@set GTK-BOX http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-box.html
-@set GTK-BOX-PACK-START http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-start.html
 
 The second implementation in @ref{example-upgraded-hello-world-2} makes
 more use of a Lisp style.  The window is created with the Lisp function

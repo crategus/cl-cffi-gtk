@@ -1,4 +1,25 @@
 
+@c GtkAlignment
+
+@set GTK-ALIGNMENT      http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-alignment.html
+@set GTK-ALIGNMENT-NEW  http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-new.html
+@set GTK-ALIGNMENT-SET  http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-set.html
+@set GTK-ALIGNMENT-SET-PADDING  http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-set-padding.html
+@set GTK-ALIGNMENT-GET-PADDING  http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-get-padding.html
+
+@c GtkAspectFrame
+
+@set GTK-ASPECT-FRAME     http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-aspect-frame.html
+@set GTK-ASPECT-FRAME-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-aspect-frame-new.html
+@set GTK-ASPECT-FRAME-SET http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-aspect-frame-set.html
+
+@c GtkBox
+
+@set GTK-BOX            http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-box.html
+@set GTK-BOX-NEW        http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-new.html
+@set GTK-BOX-PACK-START http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-start.html
+@set GTK-BOX-PACK-END   http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-end.html
+
 @c GtkBuildable
 
 @set GTK-BUILDABLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-buildable.html
@@ -22,6 +43,10 @@
 @c GtkJustification
 
 @set GTK-JUSTIFICATION http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-justification.html
+
+@c GtkGrid
+
+@set GTK-GRID http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-grid.html
 
 @c GtkLabel
 
@@ -53,6 +78,9 @@
 
 @set GTK-OPTION-MENU http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-option-menu.html
 
+@c GtkTable
+
+@set GTK-TABLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-table.html
 
 @c PangoAttrList
 
