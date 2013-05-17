@@ -930,8 +930,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint16} value}
-  @return{A floating reference to a new int16 @symbol{g-variant} instance.}
-  @short{Creates a new int16 @symbol{g-variant} instance.}
+  @return{A floating reference to a new @code{int16} @symbol{g-variant}
+    instance.}
+  @short{Creates a new @code{int16} @symbol{g-variant} instance.}
 
   Since 2.24"
   (value :int16))
@@ -946,8 +947,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint16} value}
-  @return{A floating reference to a new uint16 @symbol{g-variant} instance.}
-  @short{Creates a new uint16 @symbol{g-variant} instance.}
+  @return{A floating reference to a new @code{uint16} @symbol{g-variant}
+    instance.}
+  @short{Creates a new @code{uint16} @symbol{g-variant} instance.}
   Since 2.24"
   (value :uint16))
 
@@ -978,8 +980,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint32} value}
-  @return{A floating reference to a new uint32 @symbol{g-variant} instance.}
-  @short{Creates a new uint32 @symbol{g-variant} instance.}
+  @return{A floating reference to a new @code{uint32} @symbol{g-variant}
+    instance.}
+  @short{Creates a new @code{uint32} @symbol{g-variant} instance.}
 
   Since 2.24"
   (value :uint32))
@@ -994,8 +997,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint64} value}
-  @return{A floating reference to a new int64 @symbol{g-variant} instance.}
-  @short{Creates a new int64 @symbol{g-variant} instance.}
+  @return{A floating reference to a new @code{int64} @symbol{g-variant}
+    instance.}
+  @short{Creates a new @code{int64} @symbol{g-variant} instance.}
 
   Since 2.24"
   (value :int64))
@@ -1010,13 +1014,14 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint64} value}
-  @return{A floating reference to a new uint64 @symbol{g-variant} instance.}
-  @short{Creates a new uint64 @symbol{g-variant} instance.}
+  @return{A floating reference to a new @code{uint64} @symbol{g-variant}
+    instance.}
+  @short{Creates a new @code{uint64} @symbol{g-variant} instance.}
 
   Since 2.24"
   (value :uint64))
 
-(export 'g-variant-new-int64)
+(export 'g-variant-new-uint64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_new_handle ()
@@ -1451,7 +1456,7 @@
   Since 2.24"
   (value (:pointer g-variant)))
 
-(export 'g-variant-get-int64)
+(export 'g-variant-get-handle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get_double ()
