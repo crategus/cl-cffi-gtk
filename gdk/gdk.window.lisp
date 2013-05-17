@@ -3740,18 +3740,19 @@
 (defcfun ("gdk_window_set_skip_taskbar_hint" gdk-window-set-skip-taskbar-hint)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @argument[skips_taskbar]{TRUE to skip the taskbar}
+ "@version{2013-5-13}
+  @argument[window]{a toplevel @class{gdk-window} object}
+  @argument[skips-taskbar]{@em{true} to skip the taskbar}
   @begin{short}
-    Toggles whether a window should appear in a task list or window list. If a
-    window's semantic type as specified with gdk_window_set_type_hint() already
-    fully describes the window, this function should not be called in addition,
-    instead you should allow the window to be treated according to standard
-    policy for its semantic type.
+    Toggles whether a @arg{window} should appear in a task list or window list.
+    If a window's semantic type as specified with the function
+    @fun{gdk-window-set-type-hint} already fully describes the window, this
+    function should not be called in addition, instead you should allow the
+    window to be treated according to standard policy for its semantic type.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-function{gdk-window-set-type-hint}"
   (window (g-object gdk-window))
   (skips-taskbar :boolean))
 
