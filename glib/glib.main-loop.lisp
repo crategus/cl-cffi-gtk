@@ -2538,18 +2538,19 @@
 
 (defcfun ("g_source_add_poll" g-source-add-poll) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
+ "@version{2013-5-13}
   @argument[source]{a @symbol{g-source} structure}
-  @argument[fd]{a @symbol{g-poll-fd} structure holding information about a file
+  @argument[fd]{a @type{g-poll-fd} structure holding information about a file
     descriptor to watch}
   @begin{short}
     Adds a file descriptor to the set of file descriptors polled for this
     source.
   @end{short}
-  This is usually combined with @fun{g-source-new} to add an event source.
-  The event source's check function will typically test the revents field in
-  the @symbol{g-poll-fd} structure and return @em{true} if events need to be
-  processed."
+  This is usually combined with the function @fun{g-source-new} to add an event
+  source. The event source's check function will typically test the revents
+  field in the @type{g-poll-fd} structure and return @em{true} if events need
+  to be processed.
+  @see-function{g-source-new}"
   (source (:pointer g-source))
   (fd (:pointer g-poll-fd)))
 
@@ -2561,10 +2562,10 @@
 
 (defcfun ("g_source_remove_poll" g-source-remove-poll) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
+ "@version{2013-5-13}
   @argument[source]{a @symbol{g-source} structure}
-  @argument[fd]{a @symbol{g-poll-fd} structure previously passed to
-    @fun{g-source-add-poll}.}
+  @argument[fd]{a @type{g-poll-fd} structure previously passed to the function
+    @fun{g-source-add-poll}}
   Removes a file descriptor from the set of file descriptors polled for this
   source."
   (source (:pointer g-source))
@@ -2654,7 +2655,7 @@
     @sym{g-source-get-current-time} has been deprecated since version 2.28 and
     should not be used in newly written code. Use @fun{g-source-get-time}
     instead.
-  
+
   @begin{short}
     This function ignores source and is otherwise the same as
     @fun{g-get-current-time}.
