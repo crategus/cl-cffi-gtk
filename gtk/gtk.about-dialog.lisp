@@ -844,18 +844,18 @@
 
 (defun gtk-about-dialog-set-license (about license)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-5-13}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[license]{the license information or @code{nil}}
   @begin{short}
     Sets the license information to be displayed in the secondary license
-   dialog. If license is @code{nil}, the license button is hidden.
+   dialog. If @arg{license} is @code{nil}, the license button is hidden.
   @end{short}
 
   Since 2.6."
   (setf (gtk-about-dialog-license about) license))
 
-(export 'gtk-about-dialog-set-licencse)
+(export 'gtk-about-dialog-set-license)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_get_wrap_license ()

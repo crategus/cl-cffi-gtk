@@ -2984,29 +2984,28 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_render_icon_pixbuf ()
-;;;
-;;; GdkPixbuf * gtk_render_icon_pixbuf (GtkStyleContext *context,
-;;;                                     const GtkIconSource *source,
-;;;                                     GtkIconSize size);
-;;;
-;;; Renders the icon specified by source at the given size, returning the result
-;;; in a pixbuf.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; source :
-;;;     the GtkIconSource specifying the icon to render
-;;;
-;;; size :
-;;;     the size to render the icon at. A size of (GtkIconSize) -1 means render
-;;;     at the size of the source and don't scale
-;;;
-;;; Returns :
-;;;     a newly-created GdkPixbuf containing the rendered icon
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_render_icon_pixbuf" gtk-render-icon-pixbuf) (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-14}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[source]{the @class{gtk-icon-source} specifying the icon to render}
+  @argument[size]{the size to render the icon at, a @arg{size} of#
+    @code{(GtkIconSize) -1} means render at the @arg{size} of the source and
+    do not scale}
+  @return{A newly-created @class{gdk-pixbuf} containing the rendered icon.}
+  @begin{short}
+    Renders the icon specified by @arg{source} at the given @arg{size},
+    returning the result in a pixbuf.
+  @end{short}
+
+  Since 3.0"
+  (context (g-object gtk-style-context))
+  (source (g-boxed-foreign gtk-icon-source))
+  (size gtk-icon-size))
+
+(export 'gtk-render-icon-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_render_icon ()

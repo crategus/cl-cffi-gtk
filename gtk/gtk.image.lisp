@@ -594,24 +594,26 @@
 
 (defun gtk-image-get-gicon (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-5-13}
   @argument[image]{a @class{gtk-image} object}
   @begin{return}
-    @code{gicon} -- a @class{g-icon}, or @code{nil} @br{}
+    @code{gicon} -- a @class{g-icon} object, or @code{nil} @br{}
     @code{size} -- an icon size, or @code{nil}
   @end{return}
   @begin{short}
-    Gets the @class{g-icon} and size being displayed by the @class{gtk-image}
-    object. The storage type of the image must be @code{:empty} or @code{:gicon}
-    (see the function @fun{gtk-image-get-storage-type}). The caller of this
-    function does not own a reference to the returned @class{g-icon}.
+    Gets the @class{g-icon} object and @arg{size} being displayed by the
+    @class{gtk-image} object. The storage type of the image must be
+    @code{:empty} or @code{:gicon} (see the function
+    @fun{gtk-image-get-storage-type}). The caller of this function does not own
+    a reference to the returned @class{g-icon} object.
   @end{short}
 
-  Since 2.14"
+  Since 2.14
+  @see-function{gtk-image-get-storage-type}"
   (values (gtk-image-gicon image)
           (gtk-image-icon-size image)))
 
-(export 'gtk-image-get-icon)
+(export 'gtk-image-get-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_get_storage_type ()

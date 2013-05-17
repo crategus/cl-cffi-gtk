@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkComboBox
-;;; 
+;;;
 ;;; A widget used to choose from a list of items
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkComboBox
-;;;     
+;;;
 ;;;     gtk_combo_box_new
 ;;;     gtk_combo_box_new_with_entry
 ;;;     gtk_combo_box_new_with_model
@@ -78,9 +78,9 @@
 ;;;     gtk_combo_box_get_entry_text_column
 ;;;     gtk_combo_box_set_popup_fixed_width
 ;;;     gtk_combo_box_get_popup_fixed_width
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
@@ -89,72 +89,72 @@
 ;;;                            +----GtkComboBox
 ;;;                                  +----GtkAppChooserButton
 ;;;                                  +----GtkComboBoxText
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkComboBox implements AtkImplementorIface, GtkBuildable, GtkCellLayout and
 ;;; GtkCellEditable.
-;;; 
-;;; 
+;;;
+;;;
 ;;; Style Properties
-;;; 
+;;;
 ;;;   "appears-as-list"          gboolean             : Read
 ;;;   "arrow-scaling"            gfloat               : Read
 ;;;   "arrow-size"               gint                 : Read
 ;;;   "shadow-type"              GtkShadowType        : Read
-;;; 
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "changed"                                       : Run Last
 ;;;   "format-entry-text"                             : Run Last
 ;;;   "move-active"                                   : Action
 ;;;   "popdown"                                       : Action
 ;;;   "popup"                                         : Action
-;;; 
-;;; 
+;;;
+;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Signal Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "changed" signal
-;;; 
+;;;
 ;;; void user_function (GtkComboBox *widget,
 ;;;                     gpointer     user_data)      : Run Last
-;;; 
+;;;
 ;;; The changed signal is emitted when the active item is changed. The can be
 ;;; due to the user selecting a different item from the list, or due to a call
 ;;; to gtk_combo_box_set_active_iter(). It will also be emitted while typing
 ;;; into the entry of a combo box with an entry.
-;;; 
+;;;
 ;;; widget :
 ;;;     the object which received the signal
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "format-entry-text" signal
-;;; 
+;;;
 ;;; gchar* user_function (GtkComboBox *combo,
 ;;;                       gchar       *path,
 ;;;                       gpointer     user_data)      : Run Last
-;;; 
+;;;
 ;;; For combo boxes that are created with an entry (See GtkComboBox:has-entry).
-;;; 
+;;;
 ;;; A signal which allows you to change how the text displayed in a combo box's
 ;;; entry is displayed.
-;;; 
+;;;
 ;;; Connect a signal handler which returns an allocated string representing
 ;;; path. That string will then be used to set the text in the combo box's
 ;;; entry. The default signal handler uses the text from the
 ;;; GtkComboBox::entry-text-column model column.
-;;; 
+;;;
 ;;; Here's an example signal handler which fetches data from the model and
-;;; displays it in the entry.    
-;;; 
+;;; displays it in the entry.
+;;;
 ;;; static gchar*
 ;;; format_entry_text_callback (GtkComboBox *combo,
 ;;;                             const gchar *path,
@@ -163,90 +163,90 @@
 ;;;   GtkTreeIter iter;
 ;;;   GtkTreeModel model;
 ;;;   gdouble      value;
-;;;   
+;;;
 ;;;   model = gtk_combo_box_get_model (combo);
-;;; 
+;;;
 ;;;   gtk_tree_model_get_iter_from_string (model, &iter, path);
-;;;   gtk_tree_model_get (model, &iter, 
+;;;   gtk_tree_model_get (model, &iter,
 ;;;                       THE_DOUBLE_VALUE_COLUMN, &value,
 ;;;                       -1);
-;;; 
+;;;
 ;;;   return g_strdup_printf ("%g", value);
 ;;; }
-;;; 
+;;;
 ;;; combo :
 ;;;     the object which received the signal
-;;; 
+;;;
 ;;; path :
 ;;;     the GtkTreePath string from the combo box's current model to format text
 ;;;     for
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly allocated string representing path for the current GtkComboBox
 ;;;     model
-;;; 
+;;;
 ;;; Since 3.4
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "move-active" signal
-;;; 
+;;;
 ;;; void user_function (GtkComboBox  *widget,
 ;;;                     GtkScrollType scroll_type,
 ;;;                     gpointer      user_data)        : Action
-;;; 
+;;;
 ;;; The ::move-active signal is a keybinding signal which gets emitted to move
 ;;; the active selection.
-;;; 
+;;;
 ;;; widget :
 ;;;     the object that received the signal
-;;; 
+;;;
 ;;; scroll_type :
 ;;;     a GtkScrollType
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.12
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "popdown" signal
-;;; 
+;;;
 ;;; gboolean user_function (GtkComboBox *button,
 ;;;                         gpointer     user_data)      : Action
-;;; 
+;;;
 ;;; The ::popdown signal is a keybinding signal which gets emitted to popdown
 ;;; the combo box list.
-;;; 
+;;;
 ;;; The default bindings for this signal are Alt+Up and Escape.
-;;; 
+;;;
 ;;; button :
 ;;;     the object which received the signal
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.12
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "popup" signal
-;;; 
+;;;
 ;;; void user_function (GtkComboBox *widget,
 ;;;                     gpointer     user_data)      : Action
-;;; 
+;;;
 ;;; The ::popup signal is a keybinding signal which gets emitted to popup the
 ;;; combo box list.
-;;; 
+;;;
 ;;; The default binding for this signal is Alt+Down.
-;;; 
+;;;
 ;;; widget :
 ;;;     the object that received the signal
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
-;;; 
+;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
@@ -284,7 +284,7 @@
     "column-span-column" "gint" t t)
    (entry-text-column
     gtk-combo-box-entry-text-column
-    "entry-text-column" "gint" t t)    
+    "entry-text-column" "gint" t t)
    (focus-on-click
     gtk-combo-box-focus-on-click
     "focus-on-click" "gboolean" t t)
@@ -772,192 +772,192 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_combo_box_new (void);
-;;; 
+;;;
 ;;; Creates a new empty GtkComboBox.
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkComboBox.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_entry ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_combo_box_new_with_entry (void);
-;;; 
+;;;
 ;;; Creates a new empty GtkComboBox with an entry.
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_model ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_combo_box_new_with_model (GtkTreeModel *model);
-;;; 
+;;;
 ;;; Creates a new GtkComboBox with the model initialized to model.
-;;; 
+;;;
 ;;; model :
 ;;;     A GtkTreeModel.
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkComboBox.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_model_and_entry ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
-;;; 
+;;;
 ;;; Creates a new empty GtkComboBox with an entry and with the model initialized
 ;;; to model.
-;;; 
+;;;
 ;;; model :
 ;;;     A GtkTreeModel
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkComboBox
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_area ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_combo_box_new_with_area (GtkCellArea *area);
-;;; 
+;;;
 ;;; Creates a new empty GtkComboBox using area to layout cells.
-;;; 
+;;;
 ;;; area :
 ;;;     the GtkCellArea to use to layout cell renderers
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_area_and_entry ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_combo_box_new_with_area_and_entry (GtkCellArea *area);
-;;; 
+;;;
 ;;; Creates a new empty GtkComboBox with an entry.
-;;; 
+;;;
 ;;; The new combo box will use area to layout cells.
-;;; 
+;;;
 ;;; area :
 ;;;     the GtkCellArea to use to layout cell renderers
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_wrap_width ()
-;;; 
+;;;
 ;;; gint gtk_combo_box_get_wrap_width (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the wrap width which is used to determine the number of columns for
 ;;; the popup menu. If the wrap width is larger than 1, the combo box is in
 ;;; table mode.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the wrap width.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_wrap_width ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_wrap_width (GtkComboBox *combo_box, gint width);
-;;; 
+;;;
 ;;; Sets the wrap width of combo_box to be width. The wrap width is basically
 ;;; the preferred number of columns when you want the popup to be layed out in a
 ;;; table.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; width :
 ;;;     Preferred number of columns
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_row_span_column ()
-;;; 
+;;;
 ;;; gint gtk_combo_box_get_row_span_column (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the column with row span information for combo_box.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the row span column.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_row_span_column ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_row_span_column (GtkComboBox *combo_box,
 ;;;                                         gint row_span);
-;;; 
+;;;
 ;;; Sets the column with row span information for combo_box to be row_span. The
 ;;; row span column contains integers which indicate how many rows an item
 ;;; should span.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox.
-;;; 
+;;;
 ;;; row_span :
 ;;;     A column in the model passed during construction.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_column_span_column ()
-;;; 
+;;;
 ;;; gint gtk_combo_box_get_column_span_column (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the column with column span information for combo_box.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the column span column.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_column_span_column ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_column_span_column (GtkComboBox *combo_box,
 ;;;                                            gint column_span);
-;;; 
+;;;
 ;;; Sets the column with column span information for combo_box to be
 ;;; column_span. The column span column contains integers which indicate how
 ;;; many columns an item should span.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; column_span :
 ;;;     A column in the model passed during construction
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1035,161 +1035,161 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_active_iter ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_active_iter (GtkComboBox *combo_box,
 ;;;                                     GtkTreeIter *iter);
-;;; 
+;;;
 ;;; Sets the current active item to be the one referenced by iter, or unsets the
 ;;; active item if iter is NULL.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; iter :
 ;;;     The GtkTreeIter, or NULL.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_id_column ()
-;;; 
+;;;
 ;;; gint gtk_combo_box_get_id_column (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the column which combo_box is using to get string IDs for values
 ;;; from.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     A column in the data source model of combo_box.
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_id_column ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_id_column (GtkComboBox *combo_box, gint id_column);
-;;; 
+;;;
 ;;; Sets the model column which combo_box should use to get string IDs for
 ;;; values from. The column id_column in the model of combo_box must be of type
 ;;; G_TYPE_STRING.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; id_column :
 ;;;     A column in model to get string IDs for values from
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_active_id ()
-;;; 
+;;;
 ;;; const gchar * gtk_combo_box_get_active_id (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the ID of the active row of combo_box. This value is taken from the
 ;;; active row and the column specified by the "id-column" property of combo_box
 ;;; (see gtk_combo_box_set_id_column()).
-;;; 
+;;;
 ;;; The returned value is an interned string which means that you can compare
 ;;; the pointer by value to other interned strings and that you must not free
 ;;; it.
-;;; 
+;;;
 ;;; If the "id-column" property of combo_box is not set, or if no row is active,
 ;;; or if the active row has a NULL ID value, then NULL is returned.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the ID of the active row, or NULL
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_active_id ()
-;;; 
+;;;
 ;;; gboolean gtk_combo_box_set_active_id (GtkComboBox *combo_box,
 ;;;                                       const gchar *active_id);
-;;; 
+;;;
 ;;; Changes the active row of combo_box to the one that has an ID equal to
 ;;; active_id, or unsets the active row if active_id is NULL. Rows having a NULL
 ;;; ID string cannot be made active by this function.
-;;; 
+;;;
 ;;; If the "id-column" property of combo_box is unset or if no row has the given
 ;;; ID then the function does nothing and returns FALSE.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; active_id :
 ;;;     the ID of the row to select, or NULL.
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if a row with a matching ID was found. If a NULL active_id was
 ;;;     given to unset the active row, the function always returns TRUE.
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_model ()
-;;; 
+;;;
 ;;; GtkTreeModel * gtk_combo_box_get_model (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the GtkTreeModel which is acting as data source for combo_box.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     A GtkTreeModel which was passed during construction.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_model ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_model (GtkComboBox *combo_box, GtkTreeModel *model);
-;;; 
+;;;
 ;;; Sets the model used by combo_box to be model. Will unset a previously set
 ;;; model (if applicable). If model is NULL, then it will unset the model.
-;;; 
+;;;
 ;;; Note that this function does not clear the cell renderers, you have to call
 ;;; gtk_cell_layout_clear() yourself if you need to set up different cell
 ;;; renderers for the new model.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; model :
 ;;;     A GtkTreeModel.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_popup_for_device ()
-;;; 
+;;;
 ;;; void gtk_combo_box_popup_for_device (GtkComboBox *combo_box,
 ;;;                                      GdkDevice *device);
-;;; 
+;;;
 ;;; Pops up the menu or dropdown list of combo_box, the popup window will be
 ;;; grabbed so only device and its associated pointer/keyboard are the only
 ;;; GdkDevices able to send events to it.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; device :
 ;;;     a GdkDevice
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -1257,18 +1257,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_row_separator_func ()
-;;; 
+;;;
 ;;; GtkTreeViewRowSeparatorFunc gtk_combo_box_get_row_separator_func
 ;;;                                                    (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the current row separator function.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the current row separator function.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
@@ -1306,233 +1306,233 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_add_tearoffs ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_add_tearoffs (GtkComboBox *combo_box,
 ;;;                                      gboolean add_tearoffs);
-;;; 
+;;;
 ;;; Sets whether the popup menu should have a tearoff menu item.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; add_tearoffs :
 ;;;     TRUE to add tearoff menu items
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_add_tearoffs ()
-;;; 
+;;;
 ;;; gboolean gtk_combo_box_get_add_tearoffs (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Gets the current value of the :add-tearoffs property.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the current value of the :add-tearoffs property.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_title ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_title (GtkComboBox *combo_box, const gchar *title);
-;;; 
+;;;
 ;;; Sets the menu's title in tearoff mode.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; title :
 ;;;     a title for the menu in tearoff mode
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_title ()
-;;; 
+;;;
 ;;; const gchar * gtk_combo_box_get_title (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Gets the current title of the menu in tearoff mode. See
 ;;; gtk_combo_box_set_add_tearoffs().
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the menu's title in tearoff mode. This is an internal copy of the string
 ;;;     which must not be freed.
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_focus_on_click ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_focus_on_click (GtkComboBox *combo,
 ;;;                                        gboolean focus_on_click);
-;;; 
+;;;
 ;;; Sets whether the combo box will grab focus when it is clicked with the
 ;;; mouse. Making mouse clicks not grab focus is useful in places like toolbars
 ;;; where you don't want the keyboard focus removed from the main area of the
 ;;; application.
-;;; 
+;;;
 ;;; combo :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; focus_on_click :
 ;;;     whether the combo box grabs focus when clicked with the mouse
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_focus_on_click ()
-;;; 
+;;;
 ;;; gboolean gtk_combo_box_get_focus_on_click (GtkComboBox *combo);
-;;; 
+;;;
 ;;; Returns whether the combo box grabs focus when it is clicked with the mouse.
 ;;; See gtk_combo_box_set_focus_on_click().
-;;; 
+;;;
 ;;; combo :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the combo box grabs focus when it is clicked with the mouse.
-;;; 
+;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_button_sensitivity ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_button_sensitivity (GtkComboBox *combo_box,
 ;;;                                            GtkSensitivityType sensitivity);
-;;; 
+;;;
 ;;; Sets whether the dropdown button of the combo box should be always sensitive
 ;;; (GTK_SENSITIVITY_ON), never sensitive (GTK_SENSITIVITY_OFF) or only if there
 ;;; is at least one item to display (GTK_SENSITIVITY_AUTO).
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; sensitivity :
 ;;;     specify the sensitivity of the dropdown button
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_button_sensitivity ()
-;;; 
+;;;
 ;;; GtkSensitivityType gtk_combo_box_get_button_sensitivity
 ;;;                                                    (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns whether the combo box sets the dropdown button sensitive or not when
 ;;; there are no items in the model.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     GTK_SENSITIVITY_ON if the dropdown button is sensitive when the model is
 ;;;     empty, GTK_SENSITIVITY_OFF if the button is always insensitive or
 ;;;     GTK_SENSITIVITY_AUTO if it is only sensitive as long as the model has
 ;;;     one item to be selected.
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_has_entry ()
-;;; 
+;;;
 ;;; gboolean gtk_combo_box_get_has_entry (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns whether the combo box has an entry.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether there is an entry in combo_box.
-;;; 
+;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_entry_text_column ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_entry_text_column (GtkComboBox *combo_box,
 ;;;                                           gint text_column);
-;;; 
+;;;
 ;;; Sets the model column which combo_box should use to get strings from to be
 ;;; text_column. The column text_column in the model of combo_box must be of
 ;;; type G_TYPE_STRING.
-;;; 
+;;;
 ;;; This is only relevant if combo_box has been created with "has-entry" as
 ;;; TRUE.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox
-;;; 
+;;;
 ;;; text_column :
 ;;;     A column in model to get the strings from for the internal entry
-;;; 
+;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_entry_text_column ()
-;;; 
+;;;
 ;;; gint gtk_combo_box_get_entry_text_column (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Returns the column which combo_box is using to get the strings from to
 ;;; display in the internal entry.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     A GtkComboBox.
-;;; 
+;;;
 ;;; Returns :
 ;;;     A column in the data source model of combo_box.
-;;; 
+;;;
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_popup_fixed_width ()
-;;; 
+;;;
 ;;; void gtk_combo_box_set_popup_fixed_width (GtkComboBox *combo_box,
 ;;;                                           gboolean fixed);
-;;; 
+;;;
 ;;; Specifies whether the popup's width should be a fixed width matching the
 ;;; allocated width of the combo box.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; fixed :
 ;;;     whether to use a fixed popup width
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_popup_fixed_width ()
-;;; 
+;;;
 ;;; gboolean gtk_combo_box_get_popup_fixed_width (GtkComboBox *combo_box);
-;;; 
+;;;
 ;;; Gets whether the popup uses a fixed width matching the allocated width of
 ;;; the combo box.
-;;; 
+;;;
 ;;; combo_box :
 ;;;     a GtkComboBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the popup uses a fixed width
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 

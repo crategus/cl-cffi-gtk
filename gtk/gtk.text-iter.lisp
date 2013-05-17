@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTextIter
-;;; 
+;;;
 ;;; Text buffer iterator
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTextIter
-;;;     
+;;;
 ;;;     gtk_text_iter_get_buffer
 ;;;     gtk_text_iter_copy
 ;;;     gtk_text_iter_assign
@@ -122,23 +122,23 @@
 ;;;     gtk_text_iter_backward_to_tag_toggle
 ;;;     gtk_text_iter_forward_find_char
 ;;;     gtk_text_iter_backward_find_char
-;;;     
+;;;
 ;;;     GtkTextSearchFlags
-;;;     
+;;;
 ;;;     gtk_text_iter_forward_search
 ;;;     gtk_text_iter_backward_search
 ;;;     gtk_text_iter_equal
 ;;;     gtk_text_iter_compare
 ;;;     gtk_text_iter_in_range
 ;;;     gtk_text_iter_order
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GBoxed
 ;;;    +----GtkTextIter
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; You may wish to begin by reading the text widget conceptual overview which
 ;;; gives an overview of all the objects and data types related to the text
 ;;; widget and how they work together.
@@ -193,14 +193,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTextIter
-;;; 
+;;;
 ;;; typedef struct {
 ;;;   /* GtkTextIter is an opaque datatype; ignore all these fields.
 ;;;    * Initialize the iter with gtk_text_buffer_get_iter_*
 ;;;    * functions
 ;;;    */
 ;;; } GtkTextIter;
-;;; 
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque gtk-text-iter "GtkTextIter"
@@ -271,7 +271,7 @@
 
 (defcfun ("gtk_text_iter_copy" %gtk-text-iter-copy) :pointer
   (iter :pointer))
-  
+
 (defcfun ("gtk_text_iter_copy" gtk-text-iter-copy)
     (g-boxed-foreign gtk-text-iter)
  #+cl-cffi-gtk-documentation
@@ -286,31 +286,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_assign ()
-;;; 
+;;;
 ;;; void gtk_text_iter_assign (GtkTextIter *iter, const GtkTextIter *other);
-;;; 
+;;;
 ;;; Assigns the value of other to iter. This function is not useful in
 ;;; applications, because iterators can be assigned with GtkTextIter i = j;. The
 ;;; function is used by language bindings.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; other :
 ;;;     another GtkTextIter
-;;; 
+;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_free ()
-;;; 
+;;;
 ;;; void gtk_text_iter_free (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Free an iterator allocated on the heap. This function is intended for use in
 ;;; language bindings, and is not especially useful for applications, because
 ;;; iterators can simply be allocated on the stack.
-;;; 
+;;;
 ;;; iter :
 ;;;     a dynamically-allocated iterator
 ;;; ----------------------------------------------------------------------------
@@ -388,32 +388,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_line_index ()
-;;; 
+;;;
 ;;; gint gtk_text_iter_get_line_index (const GtkTextIter *iter);
-;;; 
+;;;
 ;;; Returns the byte index of the iterator, counting from the start of a
 ;;; newline-terminated line. Remember that GtkTextBuffer encodes text in UTF-8,
 ;;; and that characters can require a variable number of bytes to represent.
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     distance from start of line, in bytes
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_visible_line_index ()
-;;; 
+;;;
 ;;; gint gtk_text_iter_get_visible_line_index (const GtkTextIter *iter);
-;;; 
+;;;
 ;;; Returns the number of bytes from the start of the line to the given iter,
 ;;; not counting bytes that are invisible due to tags with the "invisible" flag
 ;;; toggled on.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     byte index of iter with respect to the start of the line
 ;;; ----------------------------------------------------------------------------
@@ -1018,15 +1018,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_get_bytes_in_line ()
-;;; 
+;;;
 ;;; gint gtk_text_iter_get_bytes_in_line (const GtkTextIter *iter);
-;;; 
+;;;
 ;;; Returns the number of bytes in the line containing iter, including the
 ;;; paragraph delimiters.
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     number of bytes in the line
 ;;; ----------------------------------------------------------------------------
@@ -1152,17 +1152,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_char ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_char (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves backward by one character offset. Returns TRUE if movement was
 ;;; possible; if iter was the first in the buffer (character offset 0),
 ;;; gtk_text_iter_backward_char() returns FALSE for convenience when writing
 ;;; loops.
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether movement was possible
 ;;; ----------------------------------------------------------------------------
@@ -1190,48 +1190,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_chars ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_chars (GtkTextIter *iter, gint count);
-;;; 
+;;;
 ;;; Moves count characters backward, if possible (if count would move past the
 ;;; start or end of the buffer, moves to the start or end of the buffer). The
 ;;; return value indicates whether the iterator moved onto a dereferenceable
 ;;; position; if the iterator didn't move, or moved onto the end iterator, then
 ;;; FALSE is returned. If count is 0, the function does nothing and returns
 ;;; FALSE.
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; count :
 ;;;     number of characters to move
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter moved and is dereferenceable
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_line ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_line (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter to the start of the next line. If the iter is already on the last
 ;;; line of the buffer, moves the iter to the end of the current line. If after
 ;;; the operation, the iter is at the end of the buffer and not dereferencable,
 ;;; returns FALSE. Otherwise, returns TRUE.
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter can be dereferenced
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_line ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_line (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter to the start of the previous line. Returns TRUE if iter could be
 ;;; moved; i.e. if iter was at character offset 0, this function returns FALSE.
 ;;; Therefore if iter was already on line 0, but not at the start of the line,
@@ -1239,10 +1239,10 @@
 ;;; (Note that this implies that in a loop calling this function, the line
 ;;; number may not change on every iteration, if your first iteration is on
 ;;; line 0.)
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter moved
 ;;; ----------------------------------------------------------------------------
@@ -1271,22 +1271,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_lines ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_lines (GtkTextIter *iter, gint count);
-;;; 
+;;;
 ;;; Moves count lines backward, if possible (if count would move past the start
 ;;; or end of the buffer, moves to the start or end of the buffer). The return
 ;;; value indicates whether the iterator moved onto a dereferenceable position;
 ;;; if the iterator didn't move, or moved onto the end iterator, then FALSE is
 ;;; returned. If count is 0, the function does nothing and returns FALSE. If
 ;;; count is negative, moves forward by 0 - count lines.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; count :
 ;;;     number of lines to move backward
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter moved and is dereferenceable
 ;;; ----------------------------------------------------------------------------
@@ -1331,43 +1331,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_word_end ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_word_end (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves forward to the next word end. (If iter is currently on a word end,
 ;;; moves forward to the next one after that.) Word breaks are determined by
 ;;; Pango and should be correct for nearly any language (if not, the correct fix
 ;;; would be to the Pango word break algorithms).
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_word_start ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_word_start (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves backward to the previous word start. (If iter is currently on a word
 ;;; start, moves backward to the next one after that.) Word breaks are
 ;;; determined by Pango and should be correct for nearly any language (if not,
 ;;; the correct fix would be to the Pango word break algorithms).
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_cursor_position ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_cursor_position (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter forward by a single cursor position. Cursor positions are
 ;;; (unsurprisingly) positions where the cursor can appear. Perhaps
 ;;; surprisingly, there may not be a cursor position between all characters.
@@ -1377,24 +1377,24 @@
 ;;; first the letter then a "combining mark" that causes the accent to be
 ;;; rendered; so the cursor can't go between those two characters. See also the
 ;;; PangoLogAttr structure and pango_break() function.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if we moved and the new position is dereferenceable
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_cursor_position ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_cursor_position (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Like gtk_text_iter_forward_cursor_position(), but moves backward.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if we moved
 ;;; ----------------------------------------------------------------------------
@@ -1420,36 +1420,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_cursor_positions ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_cursor_positions (GtkTextIter *iter,
 ;;;                                                   gint count);
-;;; 
+;;;
 ;;; Moves up to count cursor positions. See
 ;;; gtk_text_iter_forward_cursor_position() for details.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; count :
 ;;;     number of positions to move
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if we moved and the new position is dereferenceable
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_sentence_start ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_sentence_start (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves backward to the previous sentence start; if iter is already at the
 ;;; start of a sentence, moves backward to the next one. Sentence boundaries are
 ;;; determined by Pango and should be correct for nearly any language (if not,
 ;;; the correct fix would be to the Pango text boundary algorithms).
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
@@ -1476,17 +1476,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_sentence_end ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_sentence_end (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves forward to the next sentence end. (If iter is at the end of a
 ;;; sentence, moves to the next end of sentence.) Sentence boundaries are
 ;;; determined by Pango and should be correct for nearly any language (if not,
 ;;; the correct fix would be to the Pango text boundary algorithms).
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
@@ -1559,73 +1559,73 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_visible_word_end ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_visible_word_end (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves forward to the next visible word end. (If iter is currently on a word
 ;;; end, moves forward to the next one after that.) Word breaks are determined
 ;;; by Pango and should be correct for nearly any language (if not, the correct
 ;;; fix would be to the Pango word break algorithms).
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter moved and is not the end iterator
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_visible_word_start ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_visible_word_start (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves backward to the previous visible word start. (If iter is currently on
 ;;; a word start, moves backward to the next one after that.) Word breaks are
 ;;; determined by Pango and should be correct for nearly any language (if not,
 ;;; the correct fix would be to the Pango word break algorithms).
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if iter moved and is not the end iterator
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_visible_cursor_position ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_visible_cursor_position (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter forward to the next visible cursor position. See
 ;;; gtk_text_iter_forward_cursor_position() for details.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if we moved and the new position is dereferenceable
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_visible_cursor_position ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_visible_cursor_position (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter forward to the previous visible cursor position. See
 ;;; gtk_text_iter_backward_cursor_position() for details.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if we moved and the new position is dereferenceable
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
@@ -1654,49 +1654,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_visible_cursor_positions ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_visible_cursor_positions (GtkTextIter *iter,
 ;;;                                                           gint count);
-;;; 
+;;;
 ;;; Moves up to count visible cursor positions. See
 ;;; gtk_text_iter_backward_cursor_position() for details.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; count :
 ;;;     number of positions to move
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if we moved and the new position is dereferenceable
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_visible_line ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_forward_visible_line (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter to the start of the next visible line. Returns TRUE if there was
 ;;; a next line to move to, and FALSE if iter was simply moved to the end of the
 ;;; buffer and is now not dereferenceable, or if iter was already at the end of
 ;;; the buffer.
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter can be dereferenced
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_visible_line ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_visible_line (GtkTextIter *iter);
-;;; 
+;;;
 ;;; Moves iter to the start of the previous visible line. Returns TRUE if iter
 ;;; could be moved; i.e. if iter was at character offset 0, this function
 ;;; returns FALSE. Therefore if iter was already on line 0, but not at the start
@@ -1704,13 +1704,13 @@
 ;;; returns TRUE. (Note that this implies that in a loop calling this function,
 ;;; the line number may not change on every iteration, if your first iteration
 ;;; is on line 0.)
-;;; 
+;;;
 ;;; iter :
 ;;;     an iterator
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter moved
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -1743,26 +1743,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_visible_lines ()
-;;; 
+;;;
 ;;; gboolean gtk_text_iter_backward_visible_lines (GtkTextIter *iter,
 ;;;                                                gint count);
-;;; 
+;;;
 ;;; Moves count visible lines backward, if possible (if count would move past
 ;;; the start or end of the buffer, moves to the start or end of the buffer).
 ;;; The return value indicates whether the iterator moved onto a dereferenceable
 ;;; position; if the iterator didn't move, or moved onto the end iterator, then
 ;;; FALSE is returned. If count is 0, the function does nothing and returns
 ;;; FALSE. If count is negative, moves forward by 0 - count lines.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; count :
 ;;;     number of lines to move backward
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether iter moved and is dereferenceable
-;;; 
+;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
@@ -1825,32 +1825,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_set_line_index ()
-;;; 
+;;;
 ;;; void gtk_text_iter_set_line_index (GtkTextIter *iter, gint byte_on_line);
-;;; 
+;;;
 ;;; Same as gtk_text_iter_set_line_offset(), but works with a byte index. The
 ;;; given byte index must be at the start of a character, it can't be in the
 ;;; middle of a UTF-8 encoded character.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; byte_on_line :
 ;;;     a byte index relative to the start of iter's current line
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_set_visible_line_index ()
-;;; 
+;;;
 ;;; void gtk_text_iter_set_visible_line_index (GtkTextIter *iter,
 ;;;                                            gint byte_on_line);
-;;; 
+;;;
 ;;; Like gtk_text_iter_set_line_index(), but the index is in visible bytes, i.e.
 ;;; text with a tag making it invisible is not counted in the index.
-;;; 
+;;;
 ;;; iter :
 ;;;     a GtkTextIter
-;;; 
+;;;
 ;;; byte_on_line :
 ;;;     a byte index
 ;;; ----------------------------------------------------------------------------
@@ -1957,7 +1957,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTextCharPredicate ()
-;;; 
+;;;
 ;;; gboolean (*GtkTextCharPredicate) (gunichar ch, gpointer user_data);
 ;;; ----------------------------------------------------------------------------
 
@@ -1966,7 +1966,7 @@
   (let ((function (glib::get-stable-pointer-value user-data)))
     (funcall function char)))
 
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_find_char ()
 ;;; ----------------------------------------------------------------------------
 

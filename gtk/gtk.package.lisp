@@ -2847,6 +2847,14 @@ setup_tree (void)
       @about-function{gtk-grid-insert-row}
       @about-function{gtk-grid-insert-column}
       @about-function{gtk-grid-insert-next-to}
+      @about-function{gtk-grid-set-row-homogeneous}
+      @about-function{gtk-grid-get-row-homogeneous}
+      @about-function{gtk-grid-set-row-spacing}
+      @about-function{gtk-grid-get-row-spacing}
+      @about-function{gtk-grid-set-column-homogeneous}
+      @about-function{gtk-grid-get-column-homogeneous}
+      @about-function{gtk-grid-set-column-spacing}
+      @about-function{gtk-grid-get-column-spacing}
     @end{subsection}
     @begin[GtkAlignment]{subsection}
       A widget which controls the alignment and size of its child.

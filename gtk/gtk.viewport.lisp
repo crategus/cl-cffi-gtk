@@ -38,10 +38,10 @@
 ;;;     GtkViewport
 ;;;     
 ;;;     gtk_viewport_new
-;;;     gtk_viewport_get_hadjustment
-;;;     gtk_viewport_get_vadjustment
-;;;     gtk_viewport_set_hadjustment
-;;;     gtk_viewport_set_vadjustment
+;;;     gtk_viewport_get_hadjustment             * deprecated *
+;;;     gtk_viewport_get_vadjustment             * deprecated *
+;;;     gtk_viewport_set_hadjustment             * deprecated *
+;;;     gtk_viewport_set_vadjustment             * deprecated *
 ;;;     gtk_viewport_set_shadow_type
 ;;;     gtk_viewport_get_shadow_type
 ;;;     gtk_viewport_get_bin_window
@@ -69,22 +69,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-viewport 'type)
- "@version{2013-3-28}
+ "@version{2013-5-15}
   @begin{short}
-    The GtkViewport widget acts as an adaptor class, implementing scrollability
-    for child widgets that lack their own scrolling capabilities. Use
-    GtkViewport to scroll child widgets such as GtkGrid, GtkBox, and so on.
+    The @sym{gkt-viewport} widget acts as an adaptor class, implementing
+    scrollability for child widgets that lack their own scrolling capabilities.
+    Use @sym{gtk-viewport} to scroll child widgets such as @class{gtk-grid},
+    @class{gtk-box}, and so on.
   @end{short}
 
-  If a widget has native scrolling abilities, such as GtkTextView, GtkTreeView
-  or GtkIconview, it can be added to a GtkScrolledWindow with
-  gtk_container_add(). If a widget does not, you must first add the widget to
-  a GtkViewport, then add the viewport to the scrolled window. The convenience
-  function gtk_scrolled_window_add_with_viewport() does exactly this, so you
+  If a widget has native scrolling abilities, such as @class{gtk-text-view},
+  @class{gtk-tree-view} or @class{gtk-icon-view}, it can be added to a
+  @class{gtk-scrolled-window} with the function @fun{gtk-container-add}. If a
+  widget does not, you must first add the widget to a @sym{gtk-viewport}, then
+  add the viewport to the scrolled window. The convenience function
+  @fun{gtk-scrolled-window-add-with-viewport} does exactly this, so you
   can ignore the presence of the viewport.
 
-  The GtkViewport will start scrolling content only if allocated less than the
-  child widget's minimum size in a given orientation.
+  The @sym{gtk-viewport} will start scrolling content only if allocated less
+  than the child widget's minimum size in a given orientation.
   @see-slot{gtk-viewport-shadow-type}")
 
 ;;; ----------------------------------------------------------------------------
@@ -122,7 +124,7 @@
 
 (defun gtk-viewport-new (&optional (hadjustment nil) (vadjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
+ "@version{2013-5-15}
   @argument[hadjustment]{horizontal adjustment}
   @argument[vadjustment]{vertical adjustment}
   @return{A new @class{gtk-viewport} widget.}
@@ -223,10 +225,10 @@
 
 (defun gtk-viewport-set-shadow-type (viewport type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[viewport]{a GtkViewport}
+ "@version{2013-5-15}
+  @argument[viewport]{a @class{gtk-viewport} widget}
   @argument[type]{the new shadow type}
-  Sets the shadow type of the viewport."
+  Sets the shadow type of the @arg{viewport}."
   (setf (gtk-viewport-shadow-type viewport) type))
 
 (export 'gtk-viewport-set-shadow-type)
@@ -239,10 +241,12 @@
 
 (defun gtk-viewport-get-shadow-type (viewport)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[viewport]{a GtkViewport}
+ "@version{2013-5-15}
+  @argument[viewport]{a @class{gtk-viewport} widget}
   @return{The shadow type.}
-  Gets the shadow type of the GtkViewport. See gtk_viewport_set_shadow_type()."
+  Gets the shadow type of the @class{gtk-viewport}. See
+  the function @fun{gtk-viewport-set-shadow-type}.
+  @see-function{gtk-viewport-set-shadow-type}"
   (gtk-viewport-shadow-type viewport))
 
 (export 'gtk-viewport-get-shadow-type)
@@ -254,10 +258,10 @@
 (defcfun ("gtk_viewport_get_bin_window" gtk-viewport-get-bin-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[viewport]{a GtkViewport}
-  @return{a GdkWindow}
-  @short{Gets the bin window of the GtkViewport.}
+ "@version{2013-5-15}
+  @argument[viewport]{a @class{gtk-viewport} widget}
+  @return{A @class{gdk-window} object.}
+  @short{Gets the bin window of the @class{gtk-viewport} widget.}
 
   Since 2.20"
   (viewport (g-object gtk-viewport)))
@@ -271,10 +275,10 @@
 (defcfun ("gtk_viewport_get_view_window" gtk-viewport-get-view-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[viewport]{a GtkViewport}
-  @return{a GdkWindow}
-  @short{Gets the view window of the GtkViewport.}
+ "@version{2013-5-15}
+  @argument[viewport]{a @class{gtk-viewport} widget}
+  @return{A @class{gdk-window} object.}
+  @short{Gets the view window of the @class{gtk-viewport} widget.}
 
   Since 2.22"
   (viewport (g-object gtk-viewport)))

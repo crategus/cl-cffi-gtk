@@ -1,6 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.radio-tool-button.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
@@ -10,19 +10,19 @@
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkRadioToolButton
-;;; 
+;;;
 ;;; A toolbar item that contains a radio button
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkRadioToolButton
 ;;;
 ;;;     gtk_radio_tool_button_new
@@ -138,11 +138,11 @@
 (defcfun ("gtk_radio_tool_button_new_from_stock"
            gtk-radio-tool-button-new-from-stock) (g-object gtk-tool-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
+ "@version{2013-5-14}
   @argument[group]{an existing radio button group, or @code{nil} if you are
     creating a new group}
   @argument[stock-id]{the name of a stock item}
-  @return{The new @class{gtk-radio-tool-item}.}
+  @return{The new @class{gtk-radio-tool-button}.}
   @begin{short}
     Creates a new @class{gtk-radio-tool-button}, adding it to @arg{group}. The
     new @class{gtk-radio-tool-button} will contain an icon and label from the

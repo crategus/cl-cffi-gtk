@@ -86,8 +86,8 @@
    (:file "gtk.recent-chooser")        ; Displaying recently used files
 
    ;; Theming in Gtk+
-   (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.stock-images")          ; Manipulating stock icons
+   (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.icon-theme")            ; Looking up icons by name
    (:file "gtk.style")                 ; Functions for drawing widget parts
 

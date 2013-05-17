@@ -703,15 +703,15 @@
 
 (defcfun ("gtk_tree_store_move_after" gtk-tree-store-move-after) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore.}
-  @argument[iter]{A GtkTreeIter.}
-  @argument[position]{A GtkTreeIter.}
+ "@version{2013-5-13}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a @class{gtk-tree-iter} object}
+  @argument[position]{a @class{gtk-tree-iter} object}
   @begin{short}
-    Moves iter in tree_store to the position after position. iter and position
-    should be in the same level. Note that this function only works with
-    unsorted stores. If position is NULL, iter will be moved to the start of the
-    level.
+    Moves @arg{iter} in @arg{tree-store} to the position after @arg{position}.
+    @arg{iter} and @arg{position} should be in the same level. Note that this
+    function only works with unsorted stores. If @arg{position} is @code{nil},
+    @arg{iter} will be moved to the start of the level.
   @end{short}
 
   Since 2.2"
@@ -719,6 +719,6 @@
   (iter (g-boxed-foreign gtk-tree-iter))
   (position (g-boxed-foreign gtk-tree-iter)))
 
-(export 'tree-store-move-after)
+(export 'gtk-tree-store-move-after)
 
 ;;; --- End of file gtk.tree-store.lisp ----------------------------------------

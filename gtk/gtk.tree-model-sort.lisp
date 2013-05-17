@@ -345,13 +345,13 @@
           gtk-tree-model-sort-reset-default-sort-func)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort}
+ "@version{2013-5-13}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
   @begin{short}
     This resets the default sort function to be in the 'unsorted' state. That
-    is, it is in the same order as the child model. It will re-sort the model to
-    be in the same order as the child model only if the GtkTreeModelSort is in
-    'unsorted' state.
+    is, it is in the same order as the child model. It will re-sort the model
+    to be in the same order as the child model only if the
+    @class{gtk-tree-model-sort} is in 'unsorted' state.
   @end{short}"
   (tree-model-sort (g-object gtk-tree-model-sort)))
 
@@ -364,16 +364,17 @@
 (defcfun ("gtk_tree_model_sort_clear_cache" gtk-tree-model-sort-clear-cache)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort}
+ "@version{2013-5-13}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
   @begin{short}
-    This function should almost never be called. It clears the tree_model_sort
-    of any cached iterators that haven't been reffed with
-    gtk_tree_model_ref_node(). This might be useful if the child model being
-    sorted is static (and doesn't change often) and there has been a lot of
-    unreffed access to nodes. As a side effect of this function, all unreffed
-    iters will be invalid.
-  @end{short}"
+    This function should almost never be called. It clears the
+    @arg{tree-model-sort} of any cached iterators that have not been reffed with
+    the function @fun{gtk-tree-model-ref-node}. This might be useful if the
+    child model being sorted is static (and does not change often) and there has
+    been a lot of unreffed access to nodes. As a side effect of this function,
+    all unreffed iters will be invalid.
+  @end{short}
+  @see-function{gtk-tree-model-ref-node}"
   (tree-model-sort (g-object gtk-tree-model-sort)))
 
 (export 'gtk-tree-model-sort-clear-cache)
@@ -385,15 +386,17 @@
 (defcfun ("gtk_tree_model_sort_iter_is_valid" gtk-tree-model-sort-iter-is-valid)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort.}
-  @argument[iter]{A GtkTreeIter.}
-  @return{TRUE if the iter is valid, FALSE if the iter is invalid.}
+ "@version{2013-5-13}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
+  @argument[iter]{a @class{gtk-tree-iter} object}
+  @return{@em{True} if the @arg{iter} is valid, @code{nil} if the @arg{iter} is
+    invalid.}
   @subheading{Warning}
     This function is slow. Only use it for debugging and/or testing purposes.
 
   @begin{short}
-    Checks if the given iter is a valid iter for this GtkTreeModelSort.
+    Checks if the given @arg{iter} is a valid iter for this
+    @class{gtk-tree-model-sort} object.
   @end{short}
 
   Since 2.2"

@@ -5431,36 +5431,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_render_icon_pixbuf ()
-;;;
-;;; GdkPixbuf * gtk_widget_render_icon_pixbuf (GtkWidget *widget,
-;;;                                            const gchar *stock_id,
-;;;                                            GtkIconSize size);
-;;;
-;;; A convenience function that uses the theme engine and style settings for
-;;; widget to look up stock_id and render it to a pixbuf. stock_id should be a
-;;; stock icon ID such as GTK_STOCK_OPEN or GTK_STOCK_OK. size should be a size
-;;; such as GTK_ICON_SIZE_MENU.
-;;;
-;;; The pixels in the returned GdkPixbuf are shared with the rest of the
-;;; application and should not be modified. The pixbuf should be freed after use
-;;; with g_object_unref().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; stock_id :
-;;;     a stock ID
-;;;
-;;; size :
-;;;     a stock size. A size of (GtkIconSize)-1 means render at the size of the
-;;;     source and don't scale (if there are multiple source sizes, GTK+ picks
-;;;     one of the available sizes)
-;;;
-;;; Returns :
-;;;     a new pixbuf, or NULL if the stock ID wasn't known
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_render_icon_pixbuf" gtk-widget-render-icon-pixbuf)
+    (g-object gkd-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-14}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[stock-id]{a stock ID}
+  @argument[size]{a stock size, a size of @code{(GtkIconSize)-1} means render at
+    the size of the source and do not scale (if there are multiple source sizes,
+    GTK+ picks one of the available sizes)}
+  @return{A new pixbuf, or @code{nil} if the stock ID was not known.}
+  @begin{short}
+    A convenience function that uses the theme engine and style settings for
+    widget to look up @arg{stock-id} and render it to a pixbuf. @arg{stock-id}
+    should be a stock icon ID such as @code{\"gtk-open\"} or @code{\"gtk-ok\"}.
+    @arg{size} should be a size such as @code{:menu}.
+  @end{short}
+
+  The pixels in the returned @class{gdk-pixbuf} object are shared with the rest
+  of the application and should not be modified. The pixbuf should be freed
+  after use with the function @fun{g-object-unref}.
+
+  Since 3.0"
+  (widget (g-object gtk-widget))
+  (stock-id :string)
+  (size gtk-icon-size))
+
+(export 'gtk-widget-render-icon-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_pop_composite_child ()
