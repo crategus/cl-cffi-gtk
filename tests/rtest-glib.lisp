@@ -198,6 +198,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (load "rtest-glib-g-variant-type.lisp")
+(load "rtest-glib-g-option-group.lisp")
 
 (format t "~&-----------------------------------------------------------------")
 (run-all-tests :glib-tests)
