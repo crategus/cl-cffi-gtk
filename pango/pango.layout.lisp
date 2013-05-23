@@ -189,8 +189,8 @@
   @end{short}
 
   There are also a number of parameters to adjust the formatting of a
-  @sym{pango-layout}, which are illustrated in Figure 1, “Adjustable parameters
-  for a PangoLayout”. It is possible, as well, to ignore the 2-D setup, and
+  @sym{pango-layout}, which are illustrated in Figure 1, \"Adjustable parameters
+  for a PangoLayout\". It is possible, as well, to ignore the 2-D setup, and
   simply treat the results of a @sym{pango-layout} as a list of lines.
 
   The @sym{pango-layout} structure is opaque, and has no user-visible fields.")
