@@ -13,12 +13,19 @@
 @set GTK-ASPECT-FRAME-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-aspect-frame-new.html
 @set GTK-ASPECT-FRAME-SET http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-aspect-frame-set.html
 
+@c GtkAttachOptions
+
+@set GTK-ATTACH-OPTIONS http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-attach-options.html
+
 @c GtkBox
 
 @set GTK-BOX            http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-box.html
 @set GTK-BOX-NEW        http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-new.html
 @set GTK-BOX-PACK-START http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-start.html
 @set GTK-BOX-PACK-END   http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-end.html
+
+@set GTK-HBOX           http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-hbox.html
+@set GTK-VBOX           http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-vbox.html
 
 @c GtkBuildable
 
@@ -78,9 +85,29 @@
 
 @set GTK-OPTION-MENU http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-option-menu.html
 
+@c GtkOrientable
+
+@set GTK-ORIENTABLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-orientable.html
+
+@c GtkOrientation
+
+@set GTK-ORIENTATION http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-orientation.html
+
+@c GtkSeparator
+
+@set GTK-SEPARATOR http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-separator.html
+@set GTK-SEPARATOR-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-separator-new.html
+
 @c GtkTable
 
 @set GTK-TABLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-table.html
+@set GTK-TABLE-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-new.html
+@set GTK-TABLE-ATTACH http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-attach.html
+@set GTK-TABLE-ATTACH-DEFAULTS http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-attach-defaults.html
+@set GTK-TABLE-SET-ROW-SPACING http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-set-row-spacing.html
+@set GTK-TABLE-SET-COL-SPACING http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-set-col-spacing.html
+@set GTK-TABLE-SET-ROW-SPACINGS http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-set-row-spacings.html
+@set GTK-TABLE-SET-COL-SPACINGS http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-set-col-spacings.html
 
 @c PangoAttrList
 
