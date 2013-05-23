@@ -247,15 +247,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GOptionContext
-;;;
-;;; typedef struct _GOptionContext GOptionContext;
-;;;
-;;; A GOptionContext struct defines which options are accepted by the
-;;; commandline option parser. The struct has only private fields and should not
-;;; be directly accessed.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-option-context)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-option-context atdoc:*type-name-alias*) "CStruct"
+      (documentation 'g-option-context 'type)
+ "@version{2013-5-19}
+  A @sym{g-option-context} structure defines which options are accepted by the
+  commandline option parser. The structure has only private fields and should
+  not be directly accessed.")
 
 (export 'g-option-context)
 
@@ -263,8 +265,10 @@
 ;;; g_option_context_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_option_context_new" g-option-context-new)
-    (:pointer g-option-context)
+(defcfun ("g_option_context_new" %g-option-context-new) g-option-context
+  (parameter-string :string))
+
+(defun g-option-context-new (&optional (parameter-string (null-pointer)))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-7}
   @argument[parameter-string]{a string which is displayed in the first line of
@@ -294,96 +298,107 @@
   untranslated.
 
   Since 2.6"
-  (parameter-string :string))
+  (%g-option-context-new parameter-string))
 
 (export 'g-option-context-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_summary ()
-;;;
-;;; void g_option_context_set_summary (GOptionContext *context,
-;;;                                    const gchar *summary);
-;;;
-;;; Adds a string to be displayed in --help output before the list of options.
-;;; This is typically a summary of the program functionality.
-;;;
-;;; Note that the summary is translated (see
-;;; g_option_context_set_translate_func() and
-;;; g_option_context_set_translation_domain()).
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; summary :
-;;;     a string to be shown in --help output before the list of options,
-;;;     or NULL
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-option-context-set-summary atdoc:*symbol-name-alias*)
-      "Function"
-      (gethash 'g-option-context-set-summary atdoc:*external-symbols*)
- "@version{2013-4-20}
-  At the current time this function is not implemented in the Lisp binding to
-  GTK+.")
+(defcfun ("g_option_context_set_summary" %g-option-context-set-summary) :void
+  (context g-option-context)
+  (summary :string))
 
-#+cl-cffi-gtk-documentation
+(defun g-option-context-set-summary (context summary)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-19}
+  @argument[context]{a @type{g-option-context}}
+  @argument[summary]{a string to be shown in --help output before the list of
+    options, or @code{nil}}
+  @begin{short}
+    Adds a string to be displayed in --help output before the list of options.
+    This is typically a summary of the program functionality.
+  @end{short}
+
+  Note that the summary is translated. See the functions
+  @fun{g-option-context-set-translate-func} and
+  @fun{g-option-context-set-translation-domain}.
+
+  Since 2.12
+  @see-function{g-option-context-set-translate-func}
+  @see-function{g-option-context-set-translation-domain}"
+  (let ((summary (if summary summary (null-pointer))))
+    (%g-option-context-set-summary context summary)))
+
 (export 'g-option-context-set-summary)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_get_summary ()
-;;;
-;;; const gchar * g_option_context_get_summary (GOptionContext *context);
-;;;
-;;; Returns the summary. See g_option_context_set_summary().
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; Returns :
-;;;     the summary
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_get_summary" g-option-context-get-summary) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-19}
+  @argument[context]{a @type{g-option-context}}
+  @return{The summary.}
+  @short{Returns the summary.}
+  See the function @fun{g-option-context-set-summary}.
+
+  Since 2.12
+  @see-function{g-option-context-set-summary}"
+  (context g-option-context))
+
+(export 'g-option-context-get-summary)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_description ()
-;;;
-;;; void g_option_context_set_description (GOptionContext *context,
-;;;                                        const gchar *description);
-;;;
-;;; Adds a string to be displayed in --help output after the list of options.
-;;; This text often includes a bug reporting address.
-;;;
-;;; Note that the summary is translated (see
-;;; g_option_context_set_translate_func()).
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; description :
-;;;     a string to be shown in --help output after the list of options, or NULL
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_set_description" %g-option-context-set-description)
+    :void
+  (context g-option-context)
+  (description :string))
+
+(defun g-option-context-set-description (context description)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-19}
+  @argument[context]{a @type{g-option-context}}
+  @argument[description]{a string to be shown in --help output after the list of
+    options, or @code{nil}}
+  @begin{short}
+    Adds a string to be displayed in --help output after the list of options.
+    This text often includes a bug reporting address.
+  @end{short}
+
+  Note that the summary is translated. See the function
+  @fun{g-option-context-set-translate-func}.
+
+  Since 2.12
+  @see-function{g-option-context-set-translate-func}"
+  (let ((description (if description description (null-pointer))))
+    (%g-option-context-set-description context description)))
+
+(export 'g-option-context-set-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_get_description ()
-;;;
-;;; const gchar * g_option_context_get_description (GOptionContext *context);
-;;;
-;;; Returns the description. See g_option_context_set_description().
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; Returns :
-;;;     the description
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_get_description" g-option-context-get-description)
+    :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-19}
+  @argument[context]{a @type{g-option-context}}
+  @return{The description.}
+  @short{Returns the description.}
+  See the function @fun{g-option-context-set-description}.
+
+  Since 2.12
+  @see-function{g-option-context-set-description}"
+  (context g-option-context))
+
+(export 'g-option-context-get-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTranslateFunc ()
@@ -404,6 +419,14 @@
 ;;;     a translation of the string for the current locale. The returned string
 ;;;     is owned by GLib and must not be freed.
 ;;; ----------------------------------------------------------------------------
+
+(defcallback g-translate-func-cb (:string :free-from-foreign nil)
+    ((str :string)
+     (data :pointer))
+  (let ((fn (glib::get-stable-pointer-value data)))
+    (restart-case
+        (funcall fn str)
+      (return-from-g-translate-func-cb () nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_translate_func ()
@@ -439,15 +462,20 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-option-context-set-translate-func atdoc:*symbol-name-alias*)
-      "Function"
-      (gethash 'g-option-context-set-translate-func atdoc:*external-symbols*)
- "@version{2013-4-20}
-  At the current time this function is not implemented in the Lisp binding to
-  GTK+.")
+(defcfun ("g_option_context_set_translate_func"
+          %g-option-context-set-translate-func) :void
+  (context g-option-context)
+  (func :pointer)
+  (func-data :pointer)
+  (destroy-notify :pointer))
 
-#+cl-cffi-gtk-documentation
+(defun g-option-context-set-translate-func (context func)
+  (%g-option-context-set-translate-func
+                           context
+                           (callback g-translate-func-cb)
+                           (glib::allocate-stable-pointer func)
+                           (callback glib::stable-pointer-destroy-notify-cb)))
+
 (export 'g-option-context-set-translate-func)
 
 ;;; ----------------------------------------------------------------------------
@@ -537,6 +565,30 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_parse" %g-option-context-parse) :boolean
+  (context g-option-context)
+  (argc (:pointer :int))
+  (argv (:pointer (:pointer :string)))
+  (err :pointer))
+
+(defun g-option-context-parse (context argc argv)
+  (with-g-error (err)
+    (with-foreign-objects ((argc-ptr :int)
+                           (argv-ptr '(:pointer :string)))
+      (setf (mem-ref argc-ptr :int)
+            argc
+            (mem-ref argv-ptr '(:pointer :string))
+            (convert-to-foreign argv 'g-strv))
+
+    (when (%g-option-context-parse context argc-ptr argv-ptr err)
+      (values (mem-ref argc-ptr :int)
+              (convert-from-foreign argv-ptr '(g-strv :free-from-foreign nil)))
+    )
+;    (convert-from-foreign argv-ptr 'g-strv)
+)))
+
+(export 'g-option-context-parse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_help_enabled ()
@@ -643,6 +695,16 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_get_help" %g-option-context-get-help) :string
+  (context g-option-context)
+  (main-help :boolean)
+  (group :pointer))
+
+(defun g-option-context-get-help (context main-help &optional (group (null-pointer)))
+  (%g-option-context-get-help context main-help group))
+
+(export 'g-option-context-get-help)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GOptionArg
@@ -854,10 +916,6 @@
 (export 'g-option-entry)
 
 ;;; ----------------------------------------------------------------------------
-
-
-
-;;; ----------------------------------------------------------------------------
 ;;; g_option_context_add_main_entries ()
 ;;;
 ;;; void g_option_context_add_main_entries (GOptionContext *context,
@@ -884,14 +942,14 @@
 
 (defcfun ("g_option_context_add_main_entries" 
           %g-option-context-add-main-entries) :void
-  (context (:pointer g-option-context))
+  (context g-option-context)
   (entries (:pointer g-option-entry))
   (translation-domain :string))
 
 (defun g-option-context-add-main-entries (context entries translation-domain)
   (let ((count (length entries))
         (i -1))
-    (with-foreign-object (array :pointer (+ 1 count))
+    (with-foreign-object (array :pointer (+ count 1))
       (dolist (entry entries)
         (setf i (+ i 1))
         (with-foreign-object (ptr 'g-option-entry)
@@ -904,16 +962,30 @@
                 (third entry)
                 (foreign-slot-value ptr 'g-option-entry 'arg)
                 (fourth entry)
-;                (foreign-slot-value ptr 'g-option-entry 'arg-data)
+                (foreign-slot-value ptr 'g-option-entry 'arg-data)
+                (null-pointer)
 ;                (fifth entry)
                 (foreign-slot-value ptr 'g-option-entry 'description)
                 (sixth entry)
                 (foreign-slot-value ptr 'g-option-entry 'arg-description)
                 (seventh entry))
-          (setf (mem-aref array :pointer i) ptr)))
-      (setf (mem-aref array :pointer (+ i 1)) (null-pointer))
+          (setf (mem-aref array :pointer i) ptr))
+      )
+      (setf i (+ i 1))
+      (with-foreign-object (ptr 'g-option-entry)
+        (setf (foreign-slot-value ptr 'g-option-entry 'long-name)
+              (null-pointer))
+        (setf (mem-aref array :pointer i) ptr)
+        (format t "i=~A: is set to null-pointer: ~A~%" i
+                  (foreign-slot-value ptr 'g-option-entry 'long-name))
+)
+
+
+      (format t "call the C function~%")
       (%g-option-context-add-main-entries context array translation-domain)
 )))
+
+(export 'g-option-context-add-main-entries)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GOptionGroup
