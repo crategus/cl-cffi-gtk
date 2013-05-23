@@ -104,6 +104,16 @@
     @about-function{gdk-pixbuf-save-to-bufferv}
     @about-function{gdk-pixbuf-save-to-stream}
   @end{section}
+  @begin[Image Data in Memory]{section}
+    Creating a pixbuf from image data that is already in memory.
+
+    @about-function{gdk-pixbuf-new}
+    @about-function{gdk-pixbuf-from-data}
+    @about-function{gdk-pixbuf-new-from-xpm-data}
+    @about-function{gdk-pixbuf-new-from-inline}
+    @about-function{gdk-pixbuf-new-subpixbuf}
+    @about-function{gdk-pixbuf-copy}
+  @end{section}
   @begin[Utilities]{section}
     Utility and miscellaneous convenience functions.
 
