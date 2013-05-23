@@ -593,27 +593,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_values_cmp ()
-;;;
-;;; gint g_param_values_cmp (GParamSpec *pspec,
-;;;                          const GValue *value1,
-;;;                          const GValue *value2);
-;;;
-;;; Compares value1 with value2 according to pspec, and return -1, 0 or +1, if
-;;; value1 is found to be less than, equal to or greater than value2,
-;;; respectively.
-;;;
-;;; pspec :
-;;;     a valid GParamSpec
-;;;
-;;; value1 :
-;;;     a GValue of correct type for pspec
-;;;
-;;; value2 :
-;;;     a GValue of correct type for pspec
-;;;
-;;; Returns :
-;;;     -1, 0 or +1, for a less than, equal to or greater than result
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_param_values_cmp" g-param-values-cmp) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-21}
+  @argument[pspec]{a valid @symbol{g-param-spec}}
+  @argument[value1]{a @symbol{g-value} of correct type for @arg{pspec}}
+  @argument[value2]{a @symbol{g-value} of correct type for @arg{pspec}}
+  @return{-1, 0 or +1, for a less than, equal to or greater than result}
+  Compares @arg{value1} with @arg{value2} according to pspec, and return -1, 0
+  or +1, if @arg{value1} is found to be less than, equal to or greater than
+  value2, respectively."
+  (pspec (:pointer g-param-spec))
+  (value1 (:pointer g-value))
+  (value2 (:pointer g-value)))
+
+(export 'g-param-values-cmp)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_get_name ()
