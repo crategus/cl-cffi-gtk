@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.2. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -79,7 +79,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-box 'type)
- "@version{2013-1-20}
+ "@version{2013-5-18}
   @begin{short}
     The @sym{gtk-box} widget organizes child widgets into a rectangular area.
   @end{short}
@@ -120,47 +120,46 @@
   Use @fun{gtk-box-set-child-packing} to reset the @arg{\"expand\"}, 
   @arg{\"fill\"} and @arg{\"padding\"} child properties. Use
   @fun{gtk-box-query-child-packing} to query these fields.
-  @begin[Note]{dictionary}
+  @subheading{Note]}
     Note that a single-row or single-column @class{gtk-grid} provides exactly
     the same functionality as @sym{gtk-box}.
-  @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"expand\" child property}
-    @code{gboolean} (Read / Write)@br{}
-    Whether the child should receive extra space when the parent grows.@br{}
-    Note that the default value for this property is @code{nil} for
-    @sym{gtk-box}, but @class{gtk-hbox}, @class{gtk-vbox} and other subclasses
-    use the old default of @arg{true}.@br{}
-    Note that the @arg{\"halign\"}, @arg{\"valign\"}, @arg{\"hexpand\"} and
-    @arg{\"vexpand\"} properties are the preferred way to influence child size
-    allocation in containers.@br{}
-    Default value: @code{nil}
+      @code{\"expand\"} of type @code{:boolean} (Read / Write)@br{}
+      Whether the child should receive extra space when the parent grows.
+      Note that the default value for this property is @code{nil} for
+      @sym{gtk-box}, but @class{gtk-hbox}, @class{gtk-vbox} and other subclasses
+      use the old default of @arg{true}.
+      Note that the @code{\"halign\"}, @code{\"valign\"}, @code{\"hexpand\"} and
+      @code{\"vexpand\"} properties are the preferred way to influence child size
+      allocation in containers.@br{}
+      Default value: @code{nil}
 
     @subheading{The \"fill\" child property}
-    @code{gboolean} (Read / Write)@br{}
-    Whether the child should receive extra space when the parent grows.@br{}
-    Note that the @arg{\"halign\"}, @arg{\"valign\"}, @arg{\"hexpand\"} and
-    @arg{\"vexpand\"} properties are the preferred way to influence child size
-    allocation in containers.@br{}
-    Default value: @arg{true}
+      @code{\"fill\"} of type @code{gboolean} (Read / Write)@br{}
+      Whether the child should receive extra space when the parent grows.
+      Note that the @code{\"halign\"}, @code{\"valign\"}, @code{\"hexpand\"} and
+      @code{\"vexpand\"} properties are the preferred way to influence child
+      size allocation in containers.@br{}
+      Default value: @em{true}
   
     @subheading{The \"pack-type\" child property}
-    @symbol{gtk-pack-type} (Read / Write)@br{}
-    A @symbol{gtk-pack-type} indicating whether the child is packed with
-    reference to the start or end of the parent.@br{}
-    Default value: @code{:start}
+      @code{\"pack-type\"} of type @symbol{gtk-pack-type} (Read / Write)@br{}
+      A @symbol{gtk-pack-type} indicating whether the child is packed with
+      reference to the start or end of the parent.@br{}
+      Default value: @code{:start}
 
     @subheading{The \"padding\" child property}
-    @code{guint} (Read / Write)@br{}
-    Extra space to put between the child and its neighbors, in pixels.@br{}
-    Allowed values: @code{<= G_MAXINT}@br{}
-    Default value: @code{0}
+      @code{\"padding\"} of type @code{:uint} (Read / Write)@br{}
+      Extra space to put between the child and its neighbors, in pixels.@br{}
+      Allowed values: <= @code{G_MAXINT}@br{}
+      Default value: 0
 
     @subheading{The \"position\" child property}
-    @code{gint} (Read / Write)@br{}
-    The index of the child in the parent.@br{}
-    Allowed values: @code{>= G_MAXULONG}@br{}
-    Default value: @code{0}
+      @code{\"position\"} of type @code{:int} (Read / Write)@br{}
+      The index of the child in the parent.@br{}
+      Allowed values: >= @code{G_MAXULONG}@br{}
+      Default value: 0
   @end{dictionary}
   @see-slot{gtk-box-homogeneous}
   @see-slot{gtk-box-spacing}")
@@ -173,7 +172,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "homogeneous" 'gtk-box) 't)
- "The @arg{\"homogeneous\"} property of type @code{gboolean} (Read / Write)@br{}
+ "The @code{\"homogeneous\"} property of type @code{:boolean}
+  (Read / Write)@br{}
   Whether the children should all be the same size.@br{}
   Default value: @code{nil}")
 
@@ -181,10 +181,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-box) 't)
- "The @arg{\"spacing\"} property of type @code{gint} (Read / Write)@br{}
+ "The @code{\"spacing\"} property of type @code{:int} (Read / Write)@br{}
   The amount of space between children.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{0}")
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -292,11 +292,11 @@
 
 (defun gtk-box-new (orientation spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[orientation]{the box's orientation.}
+ "@version{2013-5-18}
+  @argument[orientation]{the box's orientation}
   @argument[spacing]{the number of pixels to place by default between children}
-  @return{a new @class{gtk-box} instance}
-  @short{Creates a new @class{gtk-box}.}
+  @return{A new @class{gtk-box} container}
+  @short{Creates a new @class{gtk-box} container.}
 
   Since 3.0
   @see-class{gtk-box}"
@@ -319,8 +319,8 @@
 
 (defun gtk-box-pack-start (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
   @argument[expand]{@arg{true} if the new @arg{child} is to be given extra space
     allocated to @arg{box}. The extra space will be divided evenly between all
@@ -360,8 +360,8 @@
 
 (defun gtk-box-pack-end (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
   @argument[expand]{@arg{true} if the new @arg{child} is to be given extra space
     allocated to @arg{box}. The extra space will be divided evenly between all
@@ -370,8 +370,8 @@
     option is actually allocated to @arg{child}, rather than just padding it.
     This parameter has no effect if @arg{expand} is set to @code{nil}. A child
     is always allocated the full height of a horizontal @class{gtk-box} and the
-    full width of a vertical @class{gtk-box}. This option affects the other
-    dimension.}
+    full width of a vertical @class{gtk-box} container. This option affects the
+    other dimension.}
   @argument[padding]{extra space in pixels to put between this @arg{child} and
     its neighbors, over and above the global amount specified by
     @arg{\"spacing\"} property. If @arg{child} is a widget at one of the
@@ -396,14 +396,14 @@
 
 (defun gtk-box-get-homogeneous (box)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @return{@arg{true} if the @arg{box} is homogeneous}
   @begin{short}
     Returns whether the @arg{box} is homogeneous (all children are the same
     size).
   @end{short}
-  See @fun{gtk-box-set-homogeneous}.
+  See the function @fun{gtk-box-set-homogeneous}.
   @see-function{gtk-box-set-homogeneous}"
   (gtk-box-homogeneous box))
 
@@ -417,14 +417,15 @@
 
 (defun gtk-box-set-homogeneous (box homogeneous)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[homogeneous]{a boolean value, @arg{true} to create equal allotments,
     @code{nil} for variable allotments}
   @begin{short}
-    Sets the @arg{\"homogeneous\"} property of @arg{box}, controlling whether or
-    not all children of @arg{box} are given equal space in the @arg{box}.
-  @end{short}"
+    Sets the @code{\"homogeneous\"} property of @arg{box}, controlling whether
+    or not all children of @arg{box} are given equal space in the @arg{box}.
+  @end{short}
+  @see-function{gtk-box-get-homogeneous}"
   (setf (gtk-box-homogeneous box) homogeneous))
 
 (export 'gtk-box-set-homogeneous)
@@ -437,8 +438,8 @@
 
 (defun gtk-box-get-spacing (box)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @return{spacing between children}
   @short{Gets the value set by @fun{gtk-box-set-spacing}.}
   @see-function{gtk-box-set-spacing}"
@@ -454,13 +455,14 @@
 
 (defun gtk-box-set-spacing (box spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[spacing]{the number of pixels to put between children}
   @begin{short}
     Sets the @arg{\"spacing\"} property of @arg{box}, which is the number of
     pixels to place between children of @arg{box}.
-  @end{short}"
+  @end{short}
+  @see-function{gtk-box-get-spacing}"
   (setf (gtk-box-spacing box) spacing))
 
 (export 'gtk-box-set-spacing)
@@ -471,11 +473,11 @@
 
 (defcfun ("gtk_box_reorder_child" gtk-box-reorder-child) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to move}
   @argument[position]{the new position for @arg{child} in the list of children
-    of @arg{box}, starting from @code{0}. If negative, indicates the end of the
+    of @arg{box}, starting from 0. If negative, indicates the end of the
     list}
   @begin{short}
     Moves @arg{child} to a new position in the list of @arg{box} children.
@@ -502,13 +504,13 @@
 
 (defun gtk-box-query-child-packing (box child)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} of the @arg{child} to query}
-  @return{@code{expand} -- @arg{\"expand\"} child property@br{}
-          @code{fill} -- @arg{\"fill\"} child property@br{}
-          @code{padding} -- @arg{\"padding\"} child property@br{}
-          @code{pack-type} -- @arg{\"pack-type\"} child property}
+  @return{@code{expand} -- @code{\"expand\"} child property@br{}
+          @code{fill} -- @code{\"fill\"} child property@br{}
+          @code{padding} -- @code{\"padding\"} child property@br{}
+          @code{pack-type} -- @code{\"pack-type\"} child property}
   @begin{short}
     Obtains information about how @arg{child} is packed into @arg{box}.
   @end{short}
@@ -528,21 +530,21 @@
 
 (defun gtk-box-set-child-packing (box child expand fill padding pack-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
-  @argument[box]{a @class{gtk-box} instance}
+ "@version{2013-5-18}
+  @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} of the @arg{child} to set}
-  @argument[expand]{the new value of the @arg{\"expand\"} child property}
-  @argument[fill]{the new value of the @arg{\"fill\"} child property}
-  @argument[padding]{the new value of the @arg{\"padding\"} child property}
-  @argument[pack-type]{the new value of the @arg{\"pack-type\"} child property}
+  @argument[expand]{the new value of the @code{\"expand\"} child property}
+  @argument[fill]{the new value of the @code{\"fill\"} child property}
+  @argument[padding]{the new value of the @code{\"padding\"} child property}
+  @argument[pack-type]{the new value of the @code{\"pack-type\"} child property}
   @begin{short}
     Sets the way @arg{child} is packed into @arg{box}.
   @end{short}
   @see-function{gtk-box-query-child-packing}"
-  (setf (gtk-box-child-expand box child) expand)
-  (setf (gtk-box-child-fill box child) fill)
-  (setf (gtk-box-child-padding box child) padding)
-  (setf (gtk-box-child-pack-type box child) pack-type))
+  (setf (gtk-box-child-expand box child) expand
+        (gtk-box-child-fill box child) fill
+        (gtk-box-child-padding box child) padding
+        (gtk-box-child-pack-type box child) pack-type))
 
 (export 'gtk-box-set-child-packing)
 
@@ -580,7 +582,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hbox 'type)
- "@version{2013-1-20}
+ "@version{2013-5-18}
   @begin{short}
     @sym{gtk-hbox} is a container that organizes child widgets into a single
     row.
@@ -595,8 +597,8 @@
   is a very quick and easy change. If you have derived your own classes from
   @sym{gtk-hbox}, you can simply change the inheritance to derive directly from
   @class{gtk-box}. No further changes are needed, since the default value of the
-  @arg{\"orientation\"} property is @code{:horizontal}. If you want your code to
-  be future-proof, the recommendation is to switch to @class{gtk-grid}, since
+  @code{\"orientation\"} property is @code{:horizontal}. If you want your code
+  to be future-proof, the recommendation is to switch to @class{gtk-grid}, since
   @class{gtk-box} is going to be deprecated in favor of the more flexible grid
   widget eventually. For more information about migrating to @class{gtk-grid},
   see Migrating from other containers to @class{gtk-grid}.")
@@ -688,20 +690,20 @@
 
 (defun gtk-hbox-new (homogeneous spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
+ "@version{2013-5-18}
   @argument[homogeneous]{@arg{true} if all children are to be given equal space
-    allotments.}
-  @argument[spacing]{The number of pixels to place by default between children.}
-  @return{A new @class{gtk-hbox} instance.}
-  @short{Creates a new @class{gtk-hbox} instance.}
+    allotments}
+  @argument[spacing]{the number of pixels to place by default between children}
+  @return{A new @class{gtk-hbox} container.}
+  @short{Creates a new @class{gtk-hbox} container.}
 
-  @b{Warning}
-
-  @sym{gtk-hbox-new} has been deprecated since version 3.2 and should not be
-  used in newly-written code. You can use @fun{gtk-box-new} with
-  @code{:horizontal} instead, which is a quick and easy change. But the
-  recommendation is to switch to @class{gtk-grid}, since @class{gtk-box} is
-  going to go away eventually. See Migrating from other containers to
+  @subheading{Warning}
+    The function @sym{gtk-hbox-new} has been deprecated since version 3.2 and
+    should not be used in newly-written code. You can use the function
+    @fun{gtk-box-new} with @code{:horizontal} instead, which is a quick and easy
+    change. But the recommendation is to switch to @class{gtk-grid}, since
+    @class{gtk-box} is going to go away eventually. See Migrating from other
+    containers to.
   @class{gtk-grid}.
   @see-function{gtk-box-new}
   @see-class{gtk-grid}
@@ -747,7 +749,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vbox 'type)
- "@version{2013-1-20}
+ "@version{2013-5-18}
   @begin{short}
     A @sym{gtk-vbox} is a container that organizes child widgets into a single
     column.
@@ -761,7 +763,7 @@
   @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead, which
   is a very quick and easy change. If you have derived your own classes from
   @sym{gtk-vbox}, you can simply change the inheritance to derive directly from
-  @class{gtk-box}, and set the @arg{\"orientation\"} property to
+  @class{gtk-box}, and set the @code{\"orientation\"} property to
   @code{:vertical} in your instance init function, with a call like:
   @begin{pre}
  (@fun{gtk-orientable-set-orientation} object :vertical)
@@ -861,7 +863,7 @@
 
 (defun gtk-vbox-new (homogeneous spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-20}
+ "@version{2013-5-18}
   @begin{short}
     A @sym{gtk-vbox} is a container that organizes child widgets into a single
     column.
@@ -875,7 +877,7 @@
   @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead, which
   is a very quick and easy change. If you have derived your own classes from
   @sym{gtk-vbox}, you can simply change the inheritance to derive directly from
-  @class{gtk-box}, and set the @arg{\"orientation\"} property to
+  @class{gtk-box}, and set the @code{\"orientation\"} property to
   @code{:vertical} in your instance init function, with a call like:
   @begin{pre}
  (@fun{gtk-orientable-set-orientation} object :vertical)

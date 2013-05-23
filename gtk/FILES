@@ -205,27 +205,27 @@ GTK+ Widgets and Objects
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.6.4
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.6.4
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.4.2*
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.4.3*
-    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.4.3*
-    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.4.3*
-    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.4.3*
-    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.4.3*
-    gtk.table.lisp                   - GtkTable                    - GTK+ 3.4.2*
-    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.4.3*
-    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.4.3*
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.4.3*
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.6.4
+    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.6.4
+    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.6.4
+    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.6.4
+    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4
+    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4
+    gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4
+    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4
+    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.6.4
+    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.6.4
   
   Ornaments
   
     gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.6.4
-    gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.4.3*
+    gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.6.4
   
   Scrolling
   
-    gtk.scrollbar.lisp               - GtkScrollbar, ...           - GTK+ 3.4.3*
-    gtk.scrolled-window.lisp         - GtkScrolledWindow           - GTK+ 3.4.3*    
-    gtk.scrollable.lisp              - GtkScrollable               - GTK+ 3.4.3*
+    gtk.scrollbar.lisp               - GtkScrollbar, ...           - GTK+ 3.6.4
+    gtk.scrolled-window.lisp         - GtkScrolledWindow           - GTK+ 3.6.4
+    gtk.scrollable.lisp              - GtkScrollable               - GTK+ 3.6.4
 
   Printing
 
@@ -243,17 +243,17 @@ GTK+ Widgets and Objects
   
   Miscellaneous
   
-    gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.4.2*
-    gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.4.3*
-    gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.4.3*
-    gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.4.3*
-    gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.4.3*
-    gtk.handle-box.lisp              - GtkHandleBox (**)           - GTK+ 3.4.3*
-    gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.4.3*
-    gtk.im-multicontext.lisp         - GtkIMMulticontext           - GTK+ 3.4.3*
-    gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.4.3*
-    gtk.tooltip.lisp                 - GtkTooltip                  - GTK+ 3.4.3*
-    gtk.viewport.lisp                - GtkViewport                 - GTK+ 3.4.3*
+    gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.6.4
+    gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.6.4
+    gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.6.4
+    gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.6.4
+    gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.6.4
+    gtk.handle-box.lisp              - GtkHandleBox (**)           - GTK+ 3.6.4
+    gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.6.4
+    gtk.im-multicontext.lisp         - GtkIMMulticontext           - GTK+ 3.6.4
+    gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.6.4
+    gtk.tooltip.lisp                 - GtkTooltip                  - GTK+ 3.6.4
+    gtk.viewport.lisp                - GtkViewport                 - GTK+ 3.6.4
     
     not implemented                  - GtkAccessible
   

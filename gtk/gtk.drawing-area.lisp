@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -58,16 +58,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-drawing-area 'type)
- "@version{2013-2-27}
+ "@version{2013-5-23}
   @begin{short}
-    The GtkDrawingArea widget is used for creating custom user interface
-    elements. It's essentially a blank widget; you can draw on it.
+    The @sym{gtk-drawing-area} widget is used for creating custom user interface
+    elements. It is essentially a blank widget; you can draw on it.
   @end{short}
   After creating a drawing area, the application may want to connect to:
   @begin{itemize}
     @begin{item}
       Mouse and button press signals to respond to input from the user. (Use
-      gtk_widget_add_events() to enable events you wish to receive.)
+      @fun{gtk-widget-add-events} to enable events you wish to receive.)
     @end{item}
     @begin{item}
       The \"realize\" signal to take any necessary actions when the widget is
@@ -81,16 +81,15 @@
     @begin{item}
       The \"draw\" signal to handle redrawing the contents of the widget.
     @end{item}
-    @begin{item}
-      The following code portion demonstrates using a drawing area to display a
-      circle in the normal widget foreground color.
-    @end{item}
   @end{itemize}
+  The following code portion demonstrates using a drawing area to display a
+  circle in the normal widget foreground color.
+
   Note that GDK automatically clears the exposed area to the background color
   before sending the expose event, and that drawing is implicitly clipped to
   the exposed area.
 
-  Example 99. Simple GtkDrawingArea usage
+  @b{Example:} Simple @sym{gtk-drawing-area} usage
   @begin{pre}
  gboolean
  draw_callback (GtkWidget *widget, cairo_t *cr, gpointer data)
@@ -121,21 +120,22 @@
                      G_CALLBACK (draw_callback), NULL);
   @end{pre}
   Draw signals are normally delivered when a drawing area first comes
-  onscreen, or when it's covered by another window and then uncovered. You can
+  onscreen, or when it is covered by another window and then uncovered. You can
   also force an expose event by adding to the \"damage region\" of the drawing
-  area's window; gtk_widget_queue_draw_area() and gdk_window_invalidate_rect()
-  are equally good ways to do this. You'll then get a draw signal for the
-  invalid region.
+  area's window; the functions @fun{gtk-widget-queue-draw-area} and
+  @fun{gdk-window-invalidate-rect} are equally good ways to do this. You will
+  then get a draw signal for the invalid region.
 
   The available routines for drawing are documented on the GDK Drawing
   Primitives page and the cairo documentation.
 
   To receive mouse events on a drawing area, you will need to enable them with
-  gtk_widget_add_events(). To receive keyboard events, you will need to set
-  the \"can-focus\" property on the drawing area, and you should probably draw
-  some user-visible indication that the drawing area is focused. Use
-  gtk_widget_has_focus() in your expose event handler to decide whether to
-  draw the focus indicator. See gtk_render_focus() for one way to draw focus.")
+  the function @fun{gtk-widget-add-events}. To receive keyboard events, you will
+  need to set the \"can-focus\" property on the drawing area, and you should
+  probably draw some user-visible indication that the drawing area is focused.
+  Use the function @fun{gtk-widget-has-focus} in your expose event handler to
+  decide whether to draw the focus indicator. See the function
+  @fun{gtk-render-focus} for one way to draw focus.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drawing_area_new ()
@@ -145,8 +145,8 @@
 
 (defun gtk-drawing-area-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-27}
-  @return{a new GtkDrawingArea}
+ "@version{2013-5-23}
+  @return{A new @class{gk-drawing-area} widget.}
   @short{Creates a new drawing area.}"
   (make-instance 'gtk-drawing-area))
 

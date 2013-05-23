@@ -109,8 +109,9 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "editing-canceled" 'gtk-cell-editable) 't)
- "The @code{\"editing-canceled\"} property of type @code{gboolean}
+(setf (documentation (atdoc:get-slot-from-name "editing-canceled"
+                                               'gtk-cell-editable) 't)
+ "The @code{\"editing-canceled\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Indicates whether editing on the cell has been canceled.@br{}
   Default value: @code{nil}@br{}
@@ -118,21 +119,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-cell-editable-editing-canceld --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-editable-editing-canceled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-editable-editing-canceled 'function)
- "@version{2013-2-15}
-  @begin{short}
-    Accessor of the slot @code{\"editing-canceled\"} of the
-    @class{gtk-cell-editable-editing-canceled} class.
-  @end{short}")
+ "@version{2013-5-22}
+  Accessor of the slot @code{\"editing-canceled\"} of the
+  @class{gtk-cell-editable} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellEditableIface

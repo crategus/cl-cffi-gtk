@@ -277,7 +277,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-tree-model-filter-visible-func-callback :boolean
-  ((tree-model g-object) (iter (g-boxed-foreign gtk-tree-iter)) (data :pointer))
+    ((tree-model g-object)
+     (iter (g-boxed-foreign gtk-tree-iter))
+     (data :pointer))
   (let ((fn (glib::get-stable-pointer-value data)))
     (restart-case
         (funcall fn tree-model iter)
@@ -457,7 +459,7 @@
 ;;; gtk_tree_model_filter_convert_iter_to_child_iter ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_model_filter_convert_iter_to_child_iter" 
+(defcfun ("gtk_tree_model_filter_convert_iter_to_child_iter"
           %gtk-tree-model-filter-convert-iter-to-child-iter) :void
   (filter (g-object gtk-tree-model-filter))
   (child-iter (g-boxed-foreign gtk-tree-iter))

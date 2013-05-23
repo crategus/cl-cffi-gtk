@@ -1801,7 +1801,6 @@
         and should not be used in newly-written code. Use the
         \"state-flags-changed\" signal instead.
       The \"state-changed\" signal is emitted when the widget state changes.
-      See @fun{gtk-widget-get-state}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[state]{The previous state.}
@@ -4076,7 +4075,7 @@
 
   For @class{gtk-window} classes, setting a @arg{parent-window} effects whether
   the window is a toplevel window or can be embedded into other widgets.
-  
+
   @subheading{Note}
     For @class{gtk-window} classes, this needs to be called before the window is
     realized.
@@ -5129,7 +5128,6 @@
   @short{Sets the foreground color for a @arg{widget} in a particular state.}
 
   All other style values are left untouched.
-  See also @fun{gtk-widget-modify-style}.
   @begin[Warning]{dictionary}
     @sym{gtk-widget-modify-fg} has been deprecated since version 3.0 and should
     not be used in newly-written code. Use @fun{gtk-widget-override-color}
@@ -5157,7 +5155,6 @@
   @short{Sets the background color for a @arg{widget} in a particular state.}
 
   All other style values are left untouched.
-  See also @fun{gtk-widget-modify-style}.
   @begin[Warning]{dictionary}
     @sym{gtk-widget-modify-bg} has been deprecated since version 3.0 and should
     not be used in newly-written code. Use
@@ -5173,7 +5170,6 @@
     area around a label, try placing the label in a @class{gtk-event-box} widget
     and setting the background color on that.
   @end{dictionary}
-  @see-function{gtk-widget-modify-style}
   @see-function{gtk-widget-override-background-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-type)
@@ -5198,7 +5194,6 @@
   All other style values are left untouched. The text color is the foreground
   color used along with the base color (see @fun{gtk-widget-modify-base}) for
   widgets such as @class{gtk-entry} and @class{gtk-text-view}.
-  See also @fun{gtk-widget-modify-style}.
   @begin[Warning]{dictionary}
     @sym{gtk-widget-modify-text} has been deprecated since version 3.0 and
     should not be used in newly-written code. Use
@@ -5228,8 +5223,7 @@
   @end{short}
   All other style values are left untouched. The base color is the background
   color used along with the text color (see @fun{gtk-widget-modify-text}) for
-  widgets such as @class{gtk-entry} and @class{gtk-text-view}. See
-  also @fun{gtk-widget-modify-style}.
+  widgets such as @class{gtk-entry} and @class{gtk-text-view}.
   @begin[Warning]{dictionary}
     @sym{gtk-widget-modify-base} has been deprecated since version 3.0 and
     should not be used in newly-written code. Use
@@ -5246,7 +5240,6 @@
     the base color on that.
   @end{dictionary}
   @see-function{gtk-widget-modify-text}
-  @see-function{gtk-widget-modify-style}
   @see-function{gtk-widget-override-background-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-type)
@@ -5298,7 +5291,6 @@
   @end{short}
 
   All other style values are left untouched.
-  See also @fun{gtk-widget-modify-style}.
 
   Since 2.12
   @begin[Warning]{dictionary}
@@ -5306,7 +5298,6 @@
     not be used in newly-written code. Use @fun{gtk-widget-override-cursor}
     instead.
   @end{dictionary}
-  @see-function{gtk-widget-modify-style}
   @see-function{gtk-widget-override-cursor}"
   (widget (g-object gtk-widget))
   (primary (g-boxed-foreign gdk-color))

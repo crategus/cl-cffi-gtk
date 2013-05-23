@@ -2,7 +2,7 @@
 ;;; gtk.scrollable.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
@@ -73,10 +73,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scrollable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-scrollable 'type)
- "@version{2013-3-22}
+ "@version{2013-5-22}
   @begin{short}
-    GtkScrollable is an interface that is implemented by widgets with native
-    scrolling ability.
+    @sym{gtk-scrollable} is an interface that is implemented by widgets with
+    native scrolling ability.
   @end{short}
 
   To implement this interface you should override the @code{\"hadjustment\"} and
@@ -96,8 +96,8 @@
     @begin{item}
       Because its preferred size is the size for a fully expanded widget, the
       scrollable widget must be able to cope with underallocations. This means
-      that it must accept any value passed to its
-      GtkWidgetClass.size_allocate() function.
+      that it must accept any value passed to its @code{size_allocate()}
+      function.
     @end{item}
     @begin{item}
       When the parent allocates space to the scrollable child widget, the
@@ -123,9 +123,9 @@
 (setf (documentation (atdoc:get-slot-from-name "hadjustment"
                                                'gtk-scrollable) 't)
  "The @code{\"hadjustment\"} property of type @class{gtk-adjustment}
-  (Read / Write / Construct)@br{}
-  Horizontal GtkAdjustment of the scrollable widget. This adjustment is shared
-  between the scrollable widget and its parent. @br{}
+  (Read / Write / Construct) @br{}
+  Horizontal @class{gtk-adjustment} of the scrollable widget. This adjustment
+  is shared between the scrollable widget and its parent. @br{}
   Since 3.0")
 
 ;;; ----------------------------------------------------------------------------
@@ -134,11 +134,11 @@
 (setf (documentation (atdoc:get-slot-from-name "hscroll-policy"
                                                'gtk-scrollable) 't)
  "The @code{\"hscroll-policy\"} property of type @symbol{gtk-scrollable-policy}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Determines whether horizontal scrolling should start once the scrollable
   widget is allocated less than its minimum width or less than its natural
   width. @br{}
-  Default value: GTK_SCROLL_MINIMUM @br{}
+  Default value: @code{:minimum} @br{}
   Since 3.0")
 
 ;;; ----------------------------------------------------------------------------
@@ -147,9 +147,9 @@
 (setf (documentation (atdoc:get-slot-from-name "vadjustment"
                                                'gtk-scrollable) 't)
  "The @code{\"vadjustment\"} property of type @class{gtk-adjustment}
-  (Read / Write / Construct)@br{}
-  Verical GtkAdjustment of the scrollable widget. This adjustment is shared
-  between the scrollable widget and its parent. @br{}
+  (Read / Write / Construct) @br{}
+  Verical @class{gtk-adjustment} of the scrollable widget. This adjustment is
+  shared between the scrollable widget and its parent. @br{}
   Since 3.0")
 
 ;;; ----------------------------------------------------------------------------
@@ -158,11 +158,11 @@
 (setf (documentation (atdoc:get-slot-from-name "vscroll-policy"
                                                'gtk-scrollable) 't)
  "The @code{\"vscroll-policy\"} property of type @symbol{gtk-scrollable-policy}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Determines whether vertical scrolling should start once the scrollable
   widget is allocated less than its minimum height or less than its natural
   height. @br{}
-  Default value: GTK_SCROLL_MINIMUM @br{}
+  Default value: @code{:minimum} @br{}
   Since 3.0")
 
 ;;; ----------------------------------------------------------------------------
@@ -217,10 +217,12 @@
 
 (defun gtk-scrollable-get-hadjustment (scrollable)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @return{horizontal GtkAdjustment}
-  @short{Retrieves the GtkAdjustment used for horizontal scrolling.}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @return{Horizontal @class{gtk-adjustment} object.}
+  @begin{short}
+    Retrieves the @class{gtk-adjustment} object used for horizontal scrolling.
+  @end{short}
 
   Since 3.0"
   (gtk-scrollable-hadjustment scrollable))
@@ -235,10 +237,10 @@
 
 (defun gtk-scrollable-set-hadjustment (scrollable hadjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @argument[hadjustment]{a GtkAdjustment}
-  @return{Sets the horizontal adjustment of the GtkScrollable.}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @argument[hadjustment]{a @class{gtk-adjustment} object}
+  @return{Sets the horizontal adjustment of the @class{gtk-scrollable}.}
 
   Since 3.0"
   (setf (gtk-scrollable-hadjustment scrollable) hadjustment))
@@ -253,10 +255,12 @@
 
 (defun gtk-scrollable-get-vadjustment (scrollable)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @return{vertical GtkAdjustment}
-  @short{Retrieves the GtkAdjustment used for vertical scrolling.}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @return{Vertical @class{gtk-adjustment} object.}
+  @begin{short}
+    Retrieves the @class{gtk-adjustment} object used for vertical scrolling.
+  @end{short}
 
   Since 3.0"
   (gtk-scrollable-vadjustment scrollable))
@@ -271,10 +275,10 @@
 
 (defun gtk-scrollable-set-vadjustment (scrollable vadjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @argument[vadjustment]{a GtkAdjustment}
-  @short{Sets the vertical adjustment of the GtkScrollable.}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @argument[vadjustment]{a @class{gtk-adjustment} object}
+  @short{Sets the vertical adjustment of the @class{gtk-scrollable}.}
 
   Since 3.0"
   (setf (gtk-scrollable-vadjustment scrollable) vadjustment))
@@ -296,7 +300,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scrollable-policy atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-scrollable-policy atdoc:*external-symbols*)
- "@version{2013-3-22}
+ "@version{2013-5-22}
   @begin{short}
     Defines the policy to be used in a scrollable widget when updating the
     scrolled window adjustments in a given orientation.
@@ -309,8 +313,8 @@
   (:natural 1))
   @end{pre}
   @begin[code]{table}
-    @entry[:minimum]{Scrollable adjustments are based on the minimum size}
-    @entry[:natural]{Scrollable adjustments are based on the natural size}
+    @entry[:minimum]{Scrollable adjustments are based on the minimum size.}
+    @entry[:natural]{Scrollable adjustments are based on the natural size.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -321,10 +325,10 @@
 
 (defun gtk-scrollable-get-hscroll-policy (scrollable)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @return{The horizontal GtkScrollablePolicy.}
-  @short{Gets the horizontal GtkScrollablePolicy.}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @return{The horizontal @symbol{gtk-scrollable-policy}.}
+  @short{Gets the horizontal @symbol{gtk-scrollable-policy}.}
 
   Since 3.0"
   (gtk-scrollable-hscroll-policy scrollable))
@@ -339,12 +343,12 @@
 
 (defun gtk-scrollable-set-hscroll-policy (scrollable policy)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @argument[policy]{the horizontal GtkScrollablePolicy}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @argument[policy]{the horizontal @symbol{gtk-scrollable-policy}}
   @begin{short}
-    Sets the GtkScrollablePolicy to determine whether horizontal scrolling
-    should start below the minimum width or below the natural width.
+    Sets the @symbol{gtk-scrollable-policy} to determine whether horizontal
+    scrolling should start below the minimum width or below the natural width.
   @end{short}
 
   Since 3.0"
@@ -360,10 +364,10 @@
 
 (defun gtk-scrollable-get-vscroll-policy (scrollable)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @return{The vertical GtkScrollablePolicy.}
-  @short{Gets the vertical GtkScrollablePolicy.}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @return{The vertical @symbol{gtk-scrollable-policy}.}
+  @short{Gets the vertical @symbol{gtk-scrollable-policy}.}
 
   Since 3.0"
   (gtk-scrollable-vscroll-policy scrollable))
@@ -378,12 +382,12 @@
 
 (defun gtk-scrollable-set-vscroll-policy (scrollable policy)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[scrollable]{a GtkScrollable}
-  @argument[policy]{the vertical GtkScrollablePolicy}
+ "@version{2013-5-22}
+  @argument[scrollable]{a @class{gtk-scrollable} object}
+  @argument[policy]{the vertical @symbol{gtk-scrollable-policy}}
   @begin{short}
-    Sets the GtkScrollablePolicy to determine whether vertical scrolling should
-    start below the minimum height or below the natural height.
+    Sets the @symbol{gtk-scrollable-policy} to determine whether vertical
+    scrolling should start below the minimum height or below the natural height.
   @end{short}
 
   Since 3.0"

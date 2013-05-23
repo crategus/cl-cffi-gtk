@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.2. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -89,29 +89,31 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-table 'type)
- "@version{2013-3-30}
+ "@version{2013-5-20}
   @begin{short}
     The @sym{gtk-table} functions allow the programmer to arrange widgets in
     rows and columns, making it easy to align many widgets next to each other,
     horizontally and vertically.
   @end{short}
 
-  Tables are created with a call to @fun{gtk-table-new}, the size of which can
-  later be changed with @fun{gtk-table-resize}.
+  Tables are created with a call to the function @fun{gtk-table-new}, the size
+  of which can later be changed with the function @fun{gtk-table-resize}.
 
-  Widgets can be added to a table using @fun{gtk-table-attach} or the more
-  convenient (but slightly less flexible) @fun{gtk-table-attach-defaults}.
+  Widgets can be added to a table using the function @fun{gtk-table-attach} or
+  the more convenient (but slightly less flexible) function
+  @fun{gtk-table-attach-defaults}.
 
-  To alter the space next to a specific row, use
-  @fun{gtk-table-set-row-spacing}, and for a column,
-  @fun{gtk-table-set-col-spacing}. The gaps between all rows or
-  columns can be changed by calling @fun{gtk-table-set-row-spacings} or
+  To alter the space next to a specific row, use the function
+  @fun{gtk-table-set-row-spacing}, and for a column the function
+  @fun{gtk-table-set-col-spacing}. The gaps between all rows or columns can be
+  changed by calling the functions @fun{gtk-table-set-row-spacings} or
   @fun{gtk-table-set-col-spacings} respectively. Note that spacing is added
-  between the children, while padding added by @fun{gtk-table-attach} is added
-  on either side of the widget it belongs to.
+  between the children, while padding added by the function
+  @fun{gtk-table-attach} is added on either side of the widget it belongs to.
 
-  @fun{gtk-table-set-homogeneous}, can be used to set whether all cells in the
-  table will resize themselves to the size of the largest widget in the table.
+  The function @fun{gtk-table-set-homogeneous}, can be used to set whether all
+  cells in the table will resize themselves to the size of the largest widget in
+  the table.
 
   @subheading{Note}
     @sym{gtk-table} has been deprecated. Use @class{gtk-grid} instead. It
@@ -227,7 +229,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -444,7 +446,8 @@
 (defun gtk-table-resize (table rows columns)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-30}
-  @argument[table]{the @class{gtk-table} you wish to change the size of}
+  @argument[table]{the @class{gtk-table} container you wish to change the size
+    of}
   @argument[rows]{the new number of rows}
   @argument[columns]{the new number of columns}
   @begin{short}

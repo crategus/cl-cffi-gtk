@@ -164,7 +164,7 @@
   @begin{short}
     The @sym{gtk-label} widget displays a small amount of text. As the name
     implies, most labels are used to label another widget such as a
-    @class{gtk-button}, a @class{gtk-menu-item}, or a @class{gtk-option-menu}.
+    @class{gtk-button}, a @class{gtk-menu-item}, or a @class{gtk-combo-box}.
   @end{short}
 
   @subheading{GtkLabel as GtkBuildable}
@@ -1381,7 +1381,7 @@
 
 (defun gtk-label-get-ellipsize (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14} 
+ "@version{2013-4-14}
   @argument[label]{a @class{gtk-label} widget}
   @return{The @symbol{pango-ellipsize-mode}.}
   @begin{short}

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -59,19 +59,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrollbar 'type)
- "@version{2013-3-22}
+ "@version{2013-5-20}
   @begin{short}
-    The GtkScrollbar widget is a horizontal or vertical scrollbar, depending on
-    the value of the \"orientation\" property.
+    The @sym{gtk-scrollbar} widget is a horizontal or vertical scrollbar,
+    depending on the value of the @code{\"orientation\"} property.
   @end{short}
 
   The position of the thumb in a scrollbar is controlled by the scroll
-  adjustments. See GtkAdjustment for the fields in an adjustment - for
-  GtkScrollbar, the GtkAdjustment.value field represents the position of the
-  scrollbar, which must be between the GtkAdjustment.lower field and
-  GtkAdjustment.upper - GtkAdjustment.page_size. The GtkAdjustment.page_size
-  field represents the size of the visible scrollable area. The
-  GtkAdjustment.step_increment and GtkAdjustment.page_increment fields are
+  adjustments. See @class{gtk-adjustment} for the properties in an adjustment -
+  for @sym{gtk-scrollbar}, the @code{\"value\"} property represents the position
+  of the scrollbar, which must be between the @code{\"lower\"} property and
+  @code{\"upper\"} - @code{\"page-size\"}. The @code{\"page-size\"} property
+  represents the size of the visible scrollable area. The
+  @code{\"step-increment\"} and @code{\"page-increment\"} properties are
   used when the user asks to step down (using the small stepper arrows) or
   page down (using for example the PageDown key).
   @begin[Style Property Details]{dictionary}
@@ -119,12 +119,12 @@
 
 (defun gtk-scrollbar-new (orientation adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[orientation]{the scrollbar's orientation.}
-  @argument[adjustment]{the GtkAdjustment to use, or NULL to create a new
-    adjustment}
-  @return{the new GtkScrollbar}
-  @short{Creates a new scrollbar with the given orientation.}
+ "@version{2013-5-20}
+  @argument[orientation]{the scrollbar's orientation}
+  @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
+    create a new adjustment}
+  @return{The new @class{gtk-scrollbar} widget.}
+  @short{Creates a new scrollbar with the given @arg{orientation}.}
 
   Since 3.0"
   (make-instance 'gtk-scrollbar
@@ -157,7 +157,9 @@
 (define-g-object-class "GtkHScrollbar" gtk-hscrollbar
   (:superclass gtk-scrollbar
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_hscrollbar_get_type")
   nil)
 
@@ -165,7 +167,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hscrollbar 'type)
- "@version{2013-3-8}
+ "@version{2013-5-20}
   @begin{short}
     The @sym{gtk-hscrollbar} widget is a widget arranged horizontally creating
     a scrollbar. See @class{gtk-scrollbar} for details on scrollbars.
@@ -175,7 +177,9 @@
   you. See @class{gtk-scrollbar} for a description of what the fields in an
   adjustment represent for a scrollbar.
 
-  @sym{gtk-hscrollbar} has been deprecated, use @class{gtk-scrollbar} instead.")
+  @subheading{Warning}
+    @sym{gtk-hscrollbar} has been deprecated, use @class{gtk-scrollbar}
+    instead.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hscrollbar_new ()
@@ -185,16 +189,17 @@
 
 (defun gtk-hscrollbar-new (adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-8}
-  @argument[adjustment]{The @class{gtk-adjustment} to use, or @code{nil} to
+ "@version{2013-5-20}
+  @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
     create a new adjustment}
   @return{The new @class{gtk-hscrollbar} widget.}
   @subheading{Warning}
-  @sym{gtk-hscrollbar-new} has been deprecated since version 3.2 and should not
-  be used in newly-written code. Use @fun{gtk-scrollbar-new} with
-  @code{:horizontal} instead.
+    @sym{gtk-hscrollbar-new} has been deprecated since version 3.2 and should
+    not be used in newly-written code. Use @fun{gtk-scrollbar-new} with
+    @code{:horizontal} instead.
 
-  @short{Creates a new horizontal scrollbar.}"
+  @short{Creates a new horizontal scrollbar.}
+  @see-function{gtk-scrollbar-new}"
   (make-instance 'gtk-scrollbar
                  :orientation :horizontal
                  :adjustment adjustment))
@@ -225,7 +230,9 @@
 (define-g-object-class "GtkVScrollbar" gtk-vscrollbar
   (:superclass gtk-scrollbar
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable" "GtkOrientable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable"
+                "GtkOrientable")
    :type-initializer "gtk_vscrollbar_get_type")
   nil)
 
@@ -233,16 +240,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vscrollbar 'type)
- "@version{2013-3-23}
+ "@version{2013-5-20}
   @begin{short}
-    The GtkVScrollbar widget is a widget arranged vertically creating a
-    scrollbar. See GtkScrollbar for details on scrollbars. GtkAdjustment
-    pointers may be added to handle the adjustment of the scrollbar or it may be
-    left NULL in which case one will be created for you. See GtkScrollbar for a
-    description of what the fields in an adjustment represent for a scrollbar.
+    The @sym{gtk-vscrollbar} widget is a widget arranged vertically creating a
+    scrollbar. See @class{gtk-scrollbar} for details on scrollbars.
+    @class{gtk-adjustment} pointers may be added to handle the adjustment of the
+    scrollbar or it may be left @code{nil} in which case one will be created
+    for you. See @class{gtk-scrollbar} for a description of what the fields in
+    an adjustment represent for a scrollbar.
   @end{short}
 
-  GtkVScrollbar has been deprecated, use GtkScrollbar instead.")
+  @subheading{Warning}
+    @sym{gtk-vscrollbar} has been deprecated, use @class{gtk-scrollbar}
+    instead.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscrollbar_new ()
@@ -252,17 +262,17 @@
 
 (defun gtk-vscrollbar-new (adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @argument[adjustment]{the GtkAdjustment to use, or NULL to create a new
-    adjustment}
-  @return{the new GtkVScrollbar}
-  Warning
+ "@version{2013-5-20}
+  @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
+    create a new adjustment}
+  @return{The new @class{gtk-vscrollbar} widget.}
+  @subheading{Warning}
+    @sym{gtk-vscrollbar-new} has been deprecated since version 3.2 and should
+    not be used in newly-written code. Use the function @fun{gtk-scrollbar-new}
+    with @code{;vertical} instead.
 
-  gtk_vscrollbar_new has been deprecated since version 3.2 and should not be
-  used in newly-written code. Use gtk_scrollbar_new() with
-  GTK_ORIENTATION_VERTICAL instead
-
-  Creates a new vertical scrollbar."
+  @short{Creates a new vertical scrollbar.}
+  @see-function{gtk-scrollbar-new}"
   (make-instance 'gtk-scrollbar
                  :orientation :vertical
                  :adjustment adjustment))

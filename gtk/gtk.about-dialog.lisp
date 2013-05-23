@@ -1259,9 +1259,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-21}
   @argument[about]{a @class{gtk-about-dialog} widget}
-  @return{The icon name displayed as logo. The string is owned by the dialog. If
-    you want to keep a reference to it, you have to call the function
-    @fun{g-strdup} on it.}
+  @return{The icon name displayed as logo.}
   @short{Returns the icon name displayed as logo in the about dialog.}
 
   Since 2.6"

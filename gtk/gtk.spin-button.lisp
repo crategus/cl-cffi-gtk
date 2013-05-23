@@ -735,19 +735,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_update_policy ()
-;;; 
-;;; void gtk_spin_button_set_update_policy (GtkSpinButton *spin_button,
-;;;                                         GtkSpinButtonUpdatePolicy policy);
-;;; 
-;;; Sets the update behavior of a spin button. This determines wether the spin
-;;; button is always updated or only when a valid value is set.
-;;; 
-;;; spin_button :
-;;;     a GtkSpinButton
-;;; 
-;;; policy :
-;;;     a GtkSpinButtonUpdatePolicy value
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-set-update-policy))
+
+(defun gtk-spin-button-set-update-policy (spin-button policy)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-20}
+  @argument[spin-button]{a @class{gtk-spin-button} object}
+  @argument[policy]{a @symbol{gtk-spin-button-update-policy} value}
+  Sets the update behavior of a spin button. This determines wether the spin
+  button is always updated or only when a valid value is set."
+  (setf (gtk-spin-button-update-policy spin-button) policy))
+
+(export 'gtk-spin-button-set-update-policy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_numeric ()
@@ -921,19 +922,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_update_policy ()
-;;; 
-;;; GtkSpinButtonUpdatePolicy gtk_spin_button_get_update_policy
-;;;                                                (GtkSpinButton *spin_button);
-;;; 
-;;; Gets the update behavior of a spin button. See
-;;; gtk_spin_button_set_update_policy().
-;;; 
-;;; spin_button :
-;;;     a GtkSpinButton
-;;; 
-;;; Returns :
-;;;     the current update policy
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-update-policy))
+
+(defun gtk-spin-button-get-update-policy (spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-20}
+  @argument[spin-button]{a @class{gtk-spin-button} object}
+  @return{The current update policy.}
+  Gets the update behavior of a spin button. See the function
+  @fun{gtk-spin-button-set-update-policy}.
+  @see-function{gtk-spin-button-set-update-policy}"
+  (gtk-spin-button-update-policy spin-button))
+
+(export 'gtk-spin-button-get-update-policy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_value ()

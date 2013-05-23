@@ -2735,7 +2735,8 @@
   ((model g-object)
    (column :int)
    (key (:string :free-from-foreign nil))
-   (iter (g-boxed-foreign gtk-tree-iter)) (data :pointer))
+   (iter (g-boxed-foreign gtk-tree-iter))
+   (data :pointer))
   (restart-case
       (funcall (glib::get-stable-pointer-value data)
                model column key iter)

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -68,8 +68,7 @@
     on the value of the @code{\"orientation\"} property of the interface
     @class{gtk-orientable}, used to group the widgets within a window.
   @end{short}
-  It displays a line with a shadow to make it appear sunken into the interface.
-")
+  It displays a line with a shadow to make it appear sunken into the interface.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_new ()
@@ -128,6 +127,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hseparator 'type)
  "@version{2013-1-29}
   @begin{short}
@@ -137,14 +137,14 @@
   @end{short}
 
   @subheading{Note}
-  The @sym{gtk-hseparator} widget is not used as a separator within menus. To
-  create a separator in a menu create an empty @class{gtk-separator-menu-item}
-  widget using @fun{gtk-separator-menu-item-new} and add it to the menu with
-  @fun{gtk-menu-shell-append}.
+    The @sym{gtk-hseparator} widget is not used as a separator within menus. To
+    create a separator in a menu create an empty @class{gtk-separator-menu-item}
+    widget using @fun{gtk-separator-menu-item-new} and add it to the menu with
+    @fun{gtk-menu-shell-append}.
 
   @subheading{Warning}
-  @sym{gtk-hseparator} has been deprecated, use @class{gtk-separator}
-  with an orientation @code{:horizontal} instead.")
+    @sym{gtk-hseparator} has been deprecated, use @class{gtk-separator}
+    with an orientation @code{:horizontal} instead.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hseparator_new ()
@@ -161,9 +161,9 @@
   @end{short}
 
   @subheading{Warning}
-  @sym{gtk-hseparator-new} has been deprecated since version 3.2 and should not
-  be used in newly-written code. Use @fun{gtk-separator-new} with an orientation
-  @code{:horizontal} instead.
+    @sym{gtk-hseparator-new} has been deprecated since version 3.2 and should not
+    be used in newly-written code. Use @fun{gtk-separator-new} with an orientation
+    @code{:horizontal} instead.
   @see-function{gtk-separator-new}"
   (make-instance 'gtk-hseparator))
 
@@ -211,8 +211,8 @@
   @end{short}
 
   @subheading{Warning}
-  @sym{gtk-vseparator} has been deprecated, use @class{gtk-separator} with
-  orientation @code{:vertical} instead.
+    @sym{gtk-vseparator} has been deprecated, use @class{gtk-separator} with
+    orientation @code{:vertical} instead.
   @see-class{gtk-separator}")
 
 ;;; ----------------------------------------------------------------------------
@@ -230,9 +230,9 @@
   @end{short}
 
   @subheading{Warning}
-  @sym{gtk-vseparator-new} has been deprecated since version 3.2 and should not
-  be used in newly-written code. Use @fun{gtk-separator-new} with the
-  orientation @code{:vertical} instead.
+    @sym{gtk-vseparator-new} has been deprecated since version 3.2 and should not
+    be used in newly-written code. Use @fun{gtk-separator-new} with the
+    orientation @code{:vertical} instead.
   @see-function{gtk-separator-new}"
   (make-instance 'gtk-vseparator))
 

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -79,7 +79,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-handle-box 'type)
- "@version{2013-3-26}
+ "@version{2013-5-23}
   @begin{short}
     The @sym{gtk-handle-box} widget allows a portion of a window to be
     \"torn off\". It is a bin widget which displays its child and a handle that
@@ -202,7 +202,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 

@@ -371,10 +371,13 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-button-always-show-image -------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-button-focus-on-click 'function)
- "@version{2013-4-25}
+(setf (gethash 'gtk-button-always-show-image atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-button-always-show-image 'function)
+ "@version{2013-5-23}
   Accessor of the slot @arg{\"always-show-image\"} of the @class{gtk-button}
   class.
   @see-function{gtk-button-set-always-show-image}
@@ -383,7 +386,8 @@
 ;;; --- gtk-button-focus-on-click ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-button-focus-on-click 'function)
  "@version{2013-1-18}
   @begin{short}
@@ -408,7 +412,8 @@
 ;;; --- gtk-button-image-position ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-image-position atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-button-image-position atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-button-image-position 'function)
  "@version{2013-1-18}
   @begin{short}

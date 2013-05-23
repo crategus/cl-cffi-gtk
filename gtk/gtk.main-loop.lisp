@@ -83,7 +83,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2012-12-23}
   @begin{short}
-    Prevents @fun{gtk-init}, @fun{gtk-init-check},
+    Prevents @code{gtk-init}, @fun{gtk-init-check},
     @code{gtk_init_with_args()} and @code{gtk_parse_args()} from automatically
     calling @code{setlocale (LC_ALL, \"\")}.
   @end{short}
@@ -97,7 +97,6 @@
     automatically when loading the library @code{cl-cffi-gtk}. Therefore
     @sym{gtk-disable-setlocale} does not have any effect.
   @end{dictionary}
-  @see-function{gtk-init}
   @see-function{gtk-init-check}")
 
 ;(export 'gtk-disable-setlocale)
@@ -203,14 +202,14 @@
     Since 2.18, GTK+ calls signal @code{(SIGPIPE, SIG_IGN)} during
     initialization, to ignore @code{SIGPIPE} signals, since these are almost
     never wanted in graphical applications. If you do need to handle
-    @code{SIGPIPE} for some reason, reset the handler after @fun{gtk-init}, but
+    @code{SIGPIPE} for some reason, reset the handler after @code{gtk-init}, but
     notice that other libraries (e.g. @code{libdbus} or @code{gvfs}) might do
     similar things.
   @end{dictionary}
   @begin[Lisp Implemention]{dictionary}
-    In the Lisp implementation @sym{gtk-init} calls the C function
+    In the Lisp implementation @code{gtk-init} calls the C function
     @code{gtk_init_check()} which is implemented through @fun{gtk-init-check}.
-    Both functions are never called directly. The function @sym{gtk-init} is
+    Both functions are never called directly. The function @code{gtk-init} is
     called automatically when loading the library @code{cl-cffi-gtk}.
   @end{dictionary}
   @see-function{gtk-init-check}"
@@ -256,11 +255,10 @@
   with the user - for example a curses or command line interface.
   @begin[Lisp Implemention]{dictionary}
     In the Lisp implementation @sym{gtk-init-check} is called from the
-    function @fun{gtk-init}. Both functions are never called directly. The
-    function @fun{gtk-init} is called automatically when loading the library
+    function @code{gtk-init}. Both functions are never called directly. The
+    function @code{gtk-init} is called automatically when loading the library
     @code{cl-cffi-gtk}.
-  @end{dictionary}
-  @see-function{gtk-init}"
+  @end{dictionary}"
   (argc (:pointer :int))
   (argv (:pointer (:pointer :string))))
 

@@ -604,6 +604,8 @@
                                             (null-pointer)
                                             (null-pointer))))
 
+(export 'gtk-entry-completion-set-match-func)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_set_minimum_key_length ()
 ;;;
@@ -721,7 +723,7 @@
   Since 2.6"
   (completion (g-object gtk-entry-completion)))
 
-(export 'gtk-entry-completion-completion-prefix)
+(export 'gtk-entry-completion-insert-prefix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_insert_action_text ()

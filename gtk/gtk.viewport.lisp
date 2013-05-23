@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -87,7 +87,9 @@
 
   The @sym{gtk-viewport} will start scrolling content only if allocated less
   than the child widget's minimum size in a given orientation.
-  @see-slot{gtk-viewport-shadow-type}")
+  @see-slot{gtk-viewport-shadow-type}
+  @see-class{gtk-scrolled-window}
+  @see-class{gtk-adjustment}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -98,7 +100,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-viewport) 't)
  "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Determines how the shadowed box around the viewport is drawn. @br{}
   Default value: @code{:in}")
 

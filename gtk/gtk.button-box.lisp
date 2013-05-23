@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -70,7 +70,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button-box 'type)
- "@version{2013-2-15}
+ "@version{2013-5-18}
   @begin{short}
     A button box should be used to provide a consistent layout of buttons
     throughout your application. The layout/spacing can be altered by the
@@ -78,45 +78,44 @@
     small degree.
   @end{short}
 
-  gtk_button_box_get_layout() and gtk_button_box_set_layout() retrieve and
-  alter the method used to spread the buttons in a button box across the
-  container, respectively.
+  The functions @fun{gtk-button-box-get-layout} and
+  @fun{gtk-button-box-set-layout} retrieve and alter the method used to spread
+  the buttons in a button box across the container, respectively.
 
-  The main purpose of GtkButtonBox is to make sure the children have all the
-  same size. GtkButtonBox gives all children the same size, but it does allow
-  'outliers' to keep their own larger size. To force all children to be
-  strictly the same size without exceptions, you can set the \"homogeneous\"
-  property to TRUE.
+  The main purpose of @class{gtk-button-box} is to make sure the children have
+  all the same size. @class{gkt-button-box} gives all children the same size,
+  but it does allow 'outliers' to keep their own larger size. To force all
+  children to be strictly the same size without exceptions, you can set the
+  @code{\"homogeneous\"} property to @em{true}.
 
   To excempt individual children from homogeneous sizing regardless of their
-  'outlier' status, you can set the \"non-homogeneous\" child property.
+  'outlier' status, you can set the @code{\"non-homogeneous\"} child property.
   @begin[Style Property Details]{dictionary}
     @subheading{The \"child-internal-pad-x\" style property}
-      @code{\"child-internal-pad-x\"} of type @code{gint} (Read)@br{}
+      @code{\"child-internal-pad-x\"} of type @code{:int} (Read)@br{}
       Amount to increase child's size on either side.@br{}
-      Allowed values: @code{>= 0}@br{}
-      Default value: @code{4}
+      Allowed values: >= 0@br{}
+      Default value: 4
 
     @subheading{The \"child-internal-pad-y\" style property}
-      @code{\"child-internal-pad-y\"} of type @code{gint} (Read)@br{}
+      @code{\"child-internal-pad-y\"} of type @code{:int} (Read)@br{}
       Amount to increase child's size on the top and bottom.@br{}
-      Allowed values: @code{>= 0}@br{}
-      Default value: @code{0}
+      Allowed values: >= 0@br{}
+      Default value: 0
 
     @subheading{The \"child-min-height\" style property}
-      @code{\"child-min-height\"} of type @code{gint} (Read)@br{}
+      @code{\"child-min-height\"} of type @code{:int} (Read)@br{}
       Minimum height of buttons inside the box.@br{}
-      Allowed values: @code{>= 0}@br{}
-      Default value: @code{27}
+      Allowed values: >= 0@br{}
+      Default value: 27
 
     @subheading{The \"child-min-width\" style property}
-      @code{\"child-min-width\"} of type @code{gint} (Read)@br{}
+      @code{\"child-min-width\"} of type @code{:int} (Read)@br{}
       Minimum width of buttons inside the box.@br{}
-      Allowed values: @code{>= 0}@br{}
-      Default value: @code{85}
+      Allowed values: >= 0@br{}
+      Default value: 85
   @end{dictionary}
-  @see-slot{gtk-button-box-layout-style}
-")
+  @see-slot{gtk-button-box-layout-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -126,7 +125,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "layout-style" 'gtk-button-box) 't)
- "The \"layout-style\" property of type @symbol{gtk-button-box-style}
+ "The @code{\"layout-style\"} property of type @symbol{gtk-button-box-style}
   (Read / Write)@br{}
   How to lay out the buttons in the box. Possible values are: spread, edge,
   start and end.@br{}
@@ -166,11 +165,11 @@
 (setf (gethash 'gtk-button-box-child-non-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-child-non-homogeneous 'function)
- "@version{2013-2-15}
-  The @code{\"non-homogeneous\"} child property of type @code{gboolean}
+ "@version{2013-5-18}
+  The @code{\"non-homogeneous\"} child property of type @code{:boolean}
   (Read / Write)@br{}
-  If TRUE, the child will not be subject to homogeneous sizing.@br{}
-  Default value: FALSE")
+  If @em{true}, the child will not be subject to homogeneous sizing.@br{}
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -178,12 +177,12 @@
 (setf (gethash 'gtk-button-box-child-secondary atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-child-secondary 'function)
- "@version{2013-2-15}
-  The @codee{\"secondary\"} child property of type @code{gboolean}
+ "@version{2013-5-18}
+  The @codee{\"secondary\"} child property of type @code{:boolean}
   (Read / Write)@br{}
-  If TRUE, the child appears in a secondary group of children, suitable for,
-  e.g., help buttons.@br{}
-  Default value: FALSE")
+  If @em{true}, the child appears in a secondary group of children, suitable
+  for, e. g., help buttons.@br{}
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_box_new ()
@@ -193,10 +192,10 @@
 
 (defun gtk-button-box-new (orientation)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @argument[orientation]{the box' orientation.}
-  @return{A new GtkButtonBox.}
-  @short{Creates a new GtkButtonBox.}
+ "@version{2013-5-18}
+  @argument[orientation]{the box' orientation}
+  @return{A new @class{gtk-button-box} container}
+  @short{Creates a new @class{gtk-button-box} container.}
 
   Since 3.0"
   (make-instance 'gtk-button-box
@@ -211,9 +210,9 @@
 (declaim (inline gtk-button-get-layout))
 
 (defun gtk-button-box-get-layout (widget)
- "@version{2013-2-15}
-  @argument[widget]{a GtkButtonBox}
-  @return{the method used to lay out buttons in widget.}
+ "@version{2013-5-18}
+  @argument[widget]{a @class{gtk-button-box} container}
+  @return{The method used to lay out buttons in @arg{widget}.}
   @begin{short}
     Retrieves the method being used to arrange the buttons in a button box.
   @end{short}"
@@ -229,10 +228,10 @@
 
 (defun gtk-button-box-get-child-secondary (widget child)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @argument[widget]{a GtkButtonBox}
-  @argument[child]{a child of widget}
-  @return{whether child should appear in a secondary group of children.}
+ "@version{2013-5-18}
+  @argument[widget]{a @class{gtk-button-box} object}
+  @argument[child]{a child of @arg{widget}}
+  @return{Whether child should appear in a secondary group of children.}
   @begin{short}
     Returns whether child should appear in a secondary group of children.
   @end{short}
@@ -250,10 +249,10 @@
 
 (defun gtk-button-box-get-child-non-homogeneous (widget child)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @argument[widget]{a GtkButtonBox}
-  @argument[child]{a child of widget}
-  @return{TRUE if the child is not subject to homogeneous sizing}
+ "@version{2013-5-18}
+  @argument[widget]{a @class{gtk-button-box} container}
+  @argument[child]{a child of @arg{widget}}
+  @return{@em{True} if the child is not subject to homogeneous sizing.}
   @begin{short}
     Returns whether the child is exempted from homogeneous sizing.
   @end{short}
@@ -271,9 +270,9 @@
 
 (defun gtk-button-box-set-layout (widget layout-style)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @argument[widget]{a GtkButtonBox}
-  @argument[layout_style]{the new layout style}
+ "@version{2013-5-18}
+  @argument[widget]{a @class{gtk-button-box} container}
+  @argument[layout-style]{the new layout style}
   @short{Changes the way buttons are arranged in their container.}"
   (setf (gtk-button-box-layout-style widget) layout-style))
 
@@ -287,24 +286,24 @@
 
 (defun gtk-button-box-set-child-secondary (widget child is-secondary)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @argument[widget]{a GtkButtonBox}
-  @argument[child]{a child of widget}
-  @argument[is_secondary]{if TRUE, the child appears in a secondary group of the
-    button box.}
+ "@version{2013-5-18}
+  @argument[widget]{a @class{gtk-button-box} container}
+  @argument[child]{a child of @arg{widget}}
+  @argument[is-secondary]{if @em{true}, the child appears in a secondary group
+    of the button box}
   @begin{short}
-    Sets whether child should appear in a secondary group of children. A
+    Sets whether @arg{child} should appear in a secondary group of children. A
     typical use of a secondary child is the help button in a dialog.
   @end{short}
 
   This group appears after the other children if the style is
-  GTK_BUTTONBOX_START, GTK_BUTTONBOX_SPREAD or GTK_BUTTONBOX_EDGE, and before
-  the other children if the style is GTK_BUTTONBOX_END. For horizontal button
-  boxes, the definition of before/after depends on direction of the widget
-  (see gtk_widget_set_direction()). If the style is GTK_BUTTONBOX_START or
-  GTK_BUTTONBOX_END, then the secondary children are aligned at the other end
-  of the button box from the main children. For the other styles, they appear
-  immediately next to the main children."
+  @code{:start}, @code{:spread} or @code{:edge}, and before the other children
+  if the style is @code{:end}. For horizontal button boxes, the definition of
+  before/after depends on direction of the widget (see the function
+  @fun{gtk-widget-set-direction}). If the style is @code{:start} or @code{:end},
+  then the secondary children are aligned at the other end of the button box
+  from the main children. For the other styles, they appear immediately next to
+  the main children."
   (setf (gtk-button-box-child-secondary widget child) is-secondary))
 
 (export 'gtk-button-box-set-child-secondary)
@@ -317,12 +316,12 @@
 
 (defun gtk-button-box-set-child-non-homogeneous (widget child non-homogeneous)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @argument[widget]{a GtkButtonBox}
-  @argument[child]{a child of widget}
-  @argument[non_homogeneous]{the new value}
+ "@version{2013-5-18}
+  @argument[widget]{a @class{gtk-button-box} container}
+  @argument[child]{a child of @arg{widget}}
+  @argument[non-homogeneous]{the new value}
   @begin{short}
-    Sets whether the child is exempted from homogeous sizing.
+    Sets whether the @arg{child} is exempted from homogeous sizing.
   @end{short}
 
   Since 3.2"
@@ -362,7 +361,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hbutton-box 'type)
- "@version{2013-2-15}
+ "@version{2013-5-18}
   @begin{short}
     A button box should be used to provide a consistent layout of buttons
     throughout your application. The layout/spacing can be altered by the
@@ -370,20 +369,22 @@
     small degree.
   @end{short}
 
-  A GtkHButtonBox is created with gtk_hbutton_box_new(). Buttons are packed
-  into a button box the same way widgets are added to any other container,
-  using gtk_container_add(). You can also use gtk_box_pack_start() or
-  gtk_box_pack_end(), but for button boxes both these functions work just like
-  gtk_container_add(), ie., they pack the button in a way that depends on the
-  current layout style and on whether the button has had
-  gtk_button_box_set_child_secondary() called on it.
+  A @class{gtk-hbutton-box} is created with the function
+  @fun{gtk-hbutton-box-new}. Buttons are packed into a button box the same way
+  widgets are added to any other container, using the function
+  @fun{gtk-container-add}. You can also use the functions
+  @fun{gtk-box-pack-start} or @fun{gtk-box-pack-end}, but for button boxes both
+  these functions work just like the function @fun{gtk-container-add}, i. e.,
+  they pack the button in a way that depends on the current layout style and on
+  whether the button has had the function
+  @fun{gtk-button-box-set-child-secondary} called on it.
 
-  The spacing between buttons can be set with gtk_box_set_spacing(). The
-  arrangement and layout of the buttons can be changed with
-  gtk_button_box_set_layout().
+  The spacing between buttons can be set with the function
+  @fun{gtk-box-set-spacing}. The arrangement and layout of the buttons can be
+  changed with the function @fun{gtk-button-box-set-layout}.
 
-  GtkHButtonBox has been deprecated, use GtkButtonBox instead.
-")
+  @class{gtk-hbutton-box} has been deprecated, use @class{gtk-button-box}
+  instead.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -495,13 +496,12 @@
 
 (defun gtk-hbutton-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-15}
-  @return{A new button box GtkWidget.}
-  @b{Warning}
-
-  gtk_hbutton_box_new has been deprecated since version 3.2 and should not be
-  used in newly-written code. Use gtk_button_box_new() with
-  GTK_ORIENTATION_HORIZONTAL instead
+ "@version{2013-5-18}
+  @return{A new button box container.}
+  @subheading{Warning}
+    The function @fun{gtk-hbutton-box-new} has been deprecated since version 3.2
+    and should not be used in newly-written code. Use the function
+    @fun{gtk-button-box-new} with @code{:horizontal} instead.
   @short{Creates a new horizontal button box.}"
   (make-instance 'gtk-button-box
                  :orientation :horizontal))
@@ -540,7 +540,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vbutton-box 'type)
- "@version{2013-2-15}
+ "@version{2013-5-18}
   @begin{short}
     A button box should be used to provide a consistent layout of buttons
     throughout your application. The layout/spacing can be altered by the
@@ -548,19 +548,22 @@
     small degree.
   @end{short}
 
-  A GtkVButtonBox is created with gtk_vbutton_box_new(). Buttons are packed
-  into a button box the same way widgets are added to any other container,
-  using gtk_container_add(). You can also use gtk_box_pack_start() or
-  gtk_box_pack_end(), but for button boxes both these functions work just like
-  gtk_container_add(), ie., they pack the button in a way that depends on the
-  current layout style and on whether the button has had
-  gtk_button_box_set_child_secondary() called on it.
+  A @class{gtk-vbutton-box} is created with the function
+  @fun{gtk-vbutton-box-new}. Buttons are packed into a button box the same way
+  widgets are added to any other container, using the function
+  @fun{gtk-container-add}. You can also use the functions
+  @fun{gtk-box-pack-start} or @fun{gtk-box-pack-end}, but for button boxes both
+  these functions work just like the function @fun{gtk-container-add}, i. e.,
+  they pack the button in a way that depends on the current layout style and on
+  whether the button has had the function
+  @fun{gtk-button-box-set-child-secondary} called on it.
 
-  The spacing between buttons can be set with gtk_box_set_spacing(). The
-  arrangement and layout of the buttons can be changed with
-  gtk_button_box_set_layout().
+  The spacing between buttons can be set with the function
+  @fun{gtk-box-set-spacing}. The arrangement and layout of the buttons can be
+  changed with the function @fun{gtk-button-box-set-layout}.
 
-  GtkVButtonBox has been deprecated, use GtkButtonBox instead.")
+  @class{gtk-vbutton-box} has been deprecated, use @class{gtk-button-box}
+  instead.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -668,14 +671,14 @@
 
 (defun gtk-vbutton-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @return{A new button box widget.}
+ "@version{2013-5-18}
+  @return{A new button box container.}
   @subeading{Warning}
     @sym{gtk-vbutton-box-new} has been deprecated since version 3.2 and should
-    not be used in newly-written code. Use @fun{gtk-button-box-new} with
-    @code{:vertical} instead.
+    not be used in newly-written code. Use the function @fun{gtk-button-box-new}
+    with @code{:vertical} instead.
 
-  @short{Creates a new vertical button box.}
+  @short{Creates a new vertical button box container.}
   @see-function{gtk-button-box-new}"
   (make-instance 'gtk-button-box
                  :orientation :vertical))

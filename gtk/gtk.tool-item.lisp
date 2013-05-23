@@ -89,25 +89,6 @@
    (visible-vertical
     gtk-tool-item-visible-vertical
     "visible-vertical" "gboolean" t t)))
-;   (:cffi expand
-;          gtk-tool-item-expand :boolean
-;          "gtk_tool_item_get_expand" "gtk_tool_item_set_expand")
-;   (:cffi use-drag-window
-;          gtk-tool-item-use-drag-window :boolean
-;          "gtk_tool_item_get_use_drag_window"
-;          "gtk_tool_item_set_use_drag_window")
-;   (:cffi icon-size
-;          gtk-tool-item-icon-size gtk-icon-size
-;          "gtk_tool_item_get_icon_size" nil)
-;   (:cffi orientation
-;          gtk-tool-item-orientation gtk-orientation
-;          "gtk_tool_item_get_orientation" nil)
-;   (:cffi toolbar-style
-;          gtk-tool-item-toolbar-style gtk-toolbar-style
-;          "gtk_tool_item_get_toolbar_style" nil)
-;   (:cffi relief-style
-;          gtk-tool-item-relief-style gtk-relief-style
-;          "gtk_tool_item_get_relief_style" nil)))
 
 ;;; ----------------------------------------------------------------------------
 

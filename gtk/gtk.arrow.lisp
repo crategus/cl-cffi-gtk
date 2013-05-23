@@ -2,10 +2,11 @@
 ;;; gtk.arrow.lisp
 ;;; 
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -63,27 +64,28 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-arrow 'type)
- "@version{2013-2-12}
+ "@version{2013-5-23}
   @begin{short}
-    GtkArrow should be used to draw simple arrows that need to point in one of
-    the four cardinal directions (up, down, left, or right). The style of the
-    arrow can be one of shadow in, shadow out, etched in, or etched out. Note
-    that these directions and style types may be ammended in versions of GTK+ to
-    come.
+    @sym{gtk-arrow} should be used to draw simple arrows that need to point in
+    one of the four cardinal directions (up, down, left, or right). The style of
+    the arrow can be one of shadow in, shadow out, etched in, or etched out.
+    Note that these directions and style types may be ammended in versions of
+    GTK+ to come.
   @end{short}
 
-  GtkArrow will fill any space alloted to it, but since it is inherited from
-  GtkMisc, it can be padded and/or aligned, to fill exactly the space the
-  programmer desires.
+  @sym{gtk-arrow} will fill any space alloted to it, but since it is inherited
+  from @class{gtk-misc}, it can be padded and/or aligned, to fill exactly the
+  space the programmer desires.
 
-  Arrows are created with a call to gtk_arrow_new(). The direction or style of
-  an arrow can be changed after creation by using gtk_arrow_set().
+  Arrows are created with a call to the function @fun{gtk-arrow-new}. The
+  direction or style of an arrow can be changed after creation by using the
+  function @fun{gtk-arrow-set}.
   @begin[Style Property Details]{dictionary}
     @subheading{The \"arrow-scaling\" style property}
-      @code{\"arrow-scaling\"} of type @code{gfloat} (Read)@br{}
-      Amount of space used up by arrow.@br{}
-      Allowed values: @code{[0,1]}@br{}
-      Default value: @code{0.7}
+      @code{\"arrow-scaling\"} of type @code{:float} (Read) @br{}
+      Amount of space used up by arrow. @br{}
+      Allowed values: [0,1] @br{}
+      Default value: 0.7
   @end{dictionary}
   @see-slot{gtk-arrow-arrow-type}
   @see-slot{gtk-arrow-shadow-type}")
@@ -97,8 +99,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "arrow-type" 'gtk-arrow) 't)
  "The @code{\"arrow-type\"} property of type @symbol{gtk-arrow-type}
-  (Read / Write)@br{}
-  The direction the arrow should point.@br{}
+  (Read / Write) @br{}
+  The direction the arrow should point. @br{}
   Default value: @code{:right}")
 
 ;;; ----------------------------------------------------------------------------
@@ -106,13 +108,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-arrow) 't)
  "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
-  (Read / Write)@br{}
-  Appearance of the shadow surrounding the arrow.@br{}
+  (Read / Write) @br{}
+  Appearance of the shadow surrounding the arrow. @br{}
   Default value: @code{:out}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -146,11 +148,11 @@
 
 (defun gtk-arrow-new (arrow-type shadow-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-12}
-  @argument[arrow_type]{a valid GtkArrowType.}
-  @argument[shadow_type]{a valid GtkShadowType.}
-  @return{the new GtkArrow widget.}
-  @short{Creates a new GtkArrow widget.}"
+ "@version{2013-5-23}
+  @argument[arrow-type]{a valid @symbol{gtk-arrow-type}}
+  @argument[shadow-type]{a valid @symbol{gtk-shadow-type}}
+  @return{The new @class{gtk-arrow} widget.}
+  @short{Creates a new @class{gtk-arrow} widget.}"
   (make-instance 'gtk-arrow
                  :arrow-type arrow-type
                  :shadow-type shadow-type))
@@ -165,11 +167,11 @@
 
 (defun gtk-arrow-set (arrow arrow-type shadow-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-12}
-  @argument[arrow]{a widget of type GtkArrow.}
-  @argument[arrow_type]{a valid GtkArrowType.}
-  @argument[shadow_type]{a valid GtkShadowType.}
-  @short{Sets the direction and style of the GtkArrow, arrow.}"
+ "@version{2013-5-23}
+  @argument[arrow]{a widget of type @class{gtk-arrow}}
+  @argument[arrow-type]{a valid @symbol{gtk-arrow-type}}
+  @argument[shadow-type]{a valid @symbol{gtk-shadow-type}}
+  @short{Sets the direction and style of the @class{gtk-arrow} widget.}"
   (setf (gtk-arrow-arrow-type arrow) arrow-type
         (gtk-arrow-shadow-type arrow) shadow-type))
 

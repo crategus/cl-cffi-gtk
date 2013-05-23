@@ -1331,37 +1331,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_word_end ()
-;;;
-;;; gboolean gtk_text_iter_forward_word_end (GtkTextIter *iter);
-;;;
-;;; Moves forward to the next word end. (If iter is currently on a word end,
-;;; moves forward to the next one after that.) Word breaks are determined by
-;;; Pango and should be correct for nearly any language (if not, the correct fix
-;;; would be to the Pango word break algorithms).
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_forward_word_end" gtk-text-iter-forward-word-end)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-20}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Moves forward to the next word end. (If @arg{iter} is currently on a word end,
+  moves forward to the next one after that.) Word breaks are determined by
+  Pango and should be correct for nearly any language (if not, the correct fix
+  would be to the Pango word break algorithms)."
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-forward-word-end)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_word_start ()
-;;;
-;;; gboolean gtk_text_iter_backward_word_start (GtkTextIter *iter);
-;;;
-;;; Moves backward to the previous word start. (If iter is currently on a word
-;;; start, moves backward to the next one after that.) Word breaks are
-;;; determined by Pango and should be correct for nearly any language (if not,
-;;; the correct fix would be to the Pango word break algorithms).
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_backward_word_start" gtk-text-iter-backward-word-start)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-20}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Moves backward to the previous word start. (If @arg{iter} is currently on a#
+  word start, moves backward to the next one after that.) Word breaks are
+  determined by Pango and should be correct for nearly any language (if not,
+  the correct fix would be to the Pango word break algorithms)."
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-backward-word-start)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_cursor_position ()
@@ -1476,20 +1478,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_sentence_end ()
-;;;
-;;; gboolean gtk_text_iter_forward_sentence_end (GtkTextIter *iter);
-;;;
-;;; Moves forward to the next sentence end. (If iter is at the end of a
-;;; sentence, moves to the next end of sentence.) Sentence boundaries are
-;;; determined by Pango and should be correct for nearly any language (if not,
-;;; the correct fix would be to the Pango text boundary algorithms).
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_forward_sentence_end"
+           gtk-text-iter-forward-sentence-end) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-20}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  Moves forward to the next sentence end. (If @arg{iter} is at the end of a
+  sentence, moves to the next end of sentence.) Sentence boundaries are
+  determined by Pango and should be correct for nearly any language (if not,
+  the correct fix would be to the Pango text boundary algorithms)."
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-forward-sentence-end)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_sentence_ends ()

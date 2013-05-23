@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -67,11 +67,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-box 'type)
- "@version{2013-3-2}
+ "@version{2013-5-23}
   @begin{short}
-    The GtkEventBox widget is a subclass of GtkBin which also has its own
-    window. It is useful since it allows you to catch events for widgets which
-    do not have their own window.
+    The @sym{gtk-event-box} widget is a subclass of @class{gtk-bin} which also
+    has its own window. It is useful since it allows you to catch events for
+    widgets which do not have their own window.
   @end{short}
   @see-slot{gtk-event-box-above-child}
   @see-slot{gtk-event-box-visible-window}")
@@ -84,25 +84,25 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "above-child" 'gtk-event-box) 't)
- "The @code{\"above-child\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+ "The @code{\"above-child\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether the event-trapping window of the eventbox is above the window of the
-  child widget as opposed to below it.@br{}
-  Default value: FALSE")
+  child widget as opposed to below it. @br{}
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-window" 'gtk-event-box) 't)
- "The @code{\"visible-window\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+ "The @code{\"visible-window\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether the event box is visible, as opposed to invisible and only used to
-  trap events.@br{}
-  Default value: TRUE")
+  trap events. @br{}
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -136,9 +136,9 @@
 
 (defun gtk-event-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @return{a new GtkEventBox}
-  @short{Creates a new GtkEventBox.}"
+ "@version{2013-5-23}
+  @return{A new @class{gtk-event-box} widget.}
+  @short{Creates a new @class{gtk-event-box} widget.}"
   (make-instance 'gtk-event-box))
 
 (export 'gtk-event-box-new)
@@ -151,9 +151,9 @@
 
 (defun gtk-event-box-set-above-child (event-box above-child)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @argument[event_box]{a GtkEventBox}
-  @argument[above_child]{TRUE if the event box window is above its child}
+ "@version{2013-5-23}
+  @argument[event-box]{a @class{gtk-event-box} widget}
+  @argument[above-child]{@em{true} if the event box window is above its child}
   @begin{short}
     Set whether the event box window is positioned above the windows of its
     child, as opposed to below it.
@@ -177,16 +177,17 @@
 
 (defun gtk-event-box-get-above-child (event-box)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @argument[event_box]{a GtkEventBox}
-  @return{TRUE if the event box window is above the window of its child}
+ "@version{2013-5-23}
+  @argument[event-box]{a @class{gtk-event-box} object}
+  @return{@em{True} if the event box window is above the window of its child.}
   @begin{short}
     Returns whether the event box window is above or below the windows of its
     child.
   @end{short}
-  See gtk_event_box_set_above_child() for details.
+  See the function @fun{gtk-event-box-set-above-child} for details.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-event-box-set-above-child}"
   (gtk-event-box-above-child event-box))
 
 (export 'gtk-event-box-get-above-child)
@@ -199,19 +200,20 @@
 
 (defun gtk-event-box-set-visible-window (event-box visible-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @argument[event_box]{a GtkEventBox}
-  @argument[visible_window]{TRUE to make the event box have a visible window}
+ "@version{2013-5-23}
+  @argument[event-box]{a @class{gtk-event-box} widget}
+  @argument[visible-window]{@em{true} to make the event box have a visible
+    window}
   @begin{short}
     Set whether the event box uses a visible or invisible child window. The
     default is to use visible windows.
   @end{short}
 
   In an invisible window event box, the window that the event box creates is a
-  GDK_INPUT_ONLY window, which means that it is invisible and only serves to
+  @code{:input-only} window, which means that it is invisible and only serves to
   receive events.
 
-  A visible window event box creates a visible (GDK_INPUT_OUTPUT) window that
+  A visible window event box creates a visible @code{:input-output} window that
   acts as the parent window for all the widgets contained in the event box.
 
   You should generally make your event box invisible if you just want to trap
@@ -221,21 +223,23 @@
   The main reason to create a non input-only event box is if you want to set
   the background to a different color or draw on it.
 
-  @b{Note}
+  @subheading{Note}
+    There is one unexpected issue for an invisible event box that has its window
+    below the child. See the function @fun{gtk-event-box-set-above-child}. Since
+    the input-only window is not an ancestor window of any windows that
+    descendent widgets of the event box create, events on these windows are not
+    propagated up by the windowing system, but only by GTK+. The practical
+    effect of this is if an event is not in the event mask for the descendant
+    window (see the function @fun{gtk-widget-add-events}), it will not be
+    received by the event box.
 
-  There is one unexpected issue for an invisible event box that has its window
-  below the child. (See gtk_event_box_set_above_child().) Since the input-only
-  window is not an ancestor window of any windows that descendent widgets of
-  the event box create, events on these windows aren't propagated up by the
-  windowing system, but only by GTK+. The practical effect of this is if an
-  event isn't in the event mask for the descendant window (see
-  gtk_widget_add_events()), it won't be received by the event box.
+    This problem does not occur for visible event boxes, because in that case,
+    the event box window is actually the ancestor of the descendant windows, not
+    just at the same place on the screen.
 
-  This problem doesn't occur for visible event boxes, because in that case,
-  the event box window is actually the ancestor of the descendant windows, not
-  just at the same place on the screen.
-
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-event-box-set-above-child}
+  @see-function{gtk-widget-add-events}"
   (setf (gtk-event-box-visible-window event-box) visible-window))
 
 (export 'gtk-event-box-set-visible-window)
@@ -248,15 +252,16 @@
 
 (defun gtk-event-box-get-visible-window (event-box)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @argument[event_box]{a GtkEventBox}
-  @return{TRUE if the event box window is visible}
+ "@version{2013-5-23}
+  @argument[event-box]{a @class{gtk-event-box} widget}
+  @return{@em{True} if the event box window is visible.}
   @begin{short}
     Returns whether the event box has a visible window.
   @end{short}
-  See gtk_event_box_set_visible_window() for details.
+  See the function @fun{gtk-event-box-set-visible-window} for details.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-event-box-set-visible-window}"
   (gtk-event-box-visible-window event-box))
 
 (export 'gtk-event-box-get-visible-window)

@@ -62,9 +62,6 @@
    :interfaces nil
    :type-initializer "gtk_file_filter_get_type")
   nil)
-;  ((:cffi name
-;          gtk-file-filter-name :string
-;          "gtk_file_filter_get_name" "gtk_file_filter_set_name")))
 
 ;;; ----------------------------------------------------------------------------
 

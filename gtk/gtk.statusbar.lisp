@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkStatusbar
-;;; 
+;;;
 ;;; Report messages of minor importance to the user
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkStatusbar
 ;;;
 ;;;     gtk_statusbar_new
@@ -86,10 +86,10 @@
   the messages they produced (via context ids).
 
   Status bars are created using the function @fun{gtk-statusbar-new}.
- 
+
   Messages are added to the bar's stack with the function
   @fun{gtk-statusbar-push}.
- 
+
   The message at the top of the stack can be removed using the function
   @fun{gtk-statusbar-pop}. A message can be removed from anywhere in the stack
   if its message id was recorded at the time it was added. This is done using
@@ -107,7 +107,7 @@
       @end{pre}
       Is emitted whenever a new message is popped off a statusbar's stack.
       @begin[code]{table}
-        @entry[statusbar{The object which received the signal.}
+        @entry[statusbar]{The object which received the signal.}
         @entry[context-id]{The context id of the relevant message/statusbar.}
         @entry[text]{The message that was just popped.}
       @end{table}
@@ -204,11 +204,11 @@
   @argument[statusbar]{a @class{gtk-statusbar} widget}
   @argument[context-id]{a context identifier}
   @begin{short}
-    Removes the first message in the @class{gtk-status-bar}'s stack with the
+    Removes the first message in the @class{gtk-statusbar}'s stack with the
     given context id.
   @end{short}
 
-  Note that this may not change the displayed message, if the message at the 
+  Note that this may not change the displayed message, if the message at the
   top of the stack has a different context id."
   (%gtk-statusbar-pop statusbar
                       (gtk-statusbar-get-context-id statusbar context)))

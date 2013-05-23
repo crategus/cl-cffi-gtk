@@ -2879,6 +2879,10 @@ setup_tree (void)
       @about-function{gtk-box-new}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
+      @about-function{gtk-box-get-homogeneous}
+      @about-function{gtk-box-set-homogeneous}
+      @about-function{gtk-box-get-spacing}
+      @about-function{gtk-box-set-spacing}
       @about-function{gtk-box-reorder-child}
       @about-function{gtk-box-query-child-packing}
       @about-function{gtk-box-set-child-packing}
@@ -2902,14 +2906,12 @@ setup_tree (void)
       @about-function{gtk-button-box-set-layout}
       @about-function{gtk-button-box-set-child-secondary}
       @about-function{gtk-button-box-set-child-non-homogeneous}
-
       @b{GtkHButtonBox}
 
       A container for arranging buttons horizontally
 
       @about-class{gtk-hbutton-box}
       @about-function{gtk-hbutton-box-new}
-
       @b{GtkVButtonBox}
 
       A container for arranging buttons vertically
@@ -2918,10 +2920,53 @@ setup_tree (void)
       @about-function{gtk-vbutton-box-new}
     @end{subsection}
     @begin[GtkFixed]{subsection}
+      A container which allows you to position widgets at fixed coordinates.
+
+      @about-class{gtk-fixed}
+      @about-function{gtk-fixed-new}
+      @about-function{gtk-fixed-put}
+      @about-function{gtk-fixed-move}
     @end{subsection}
     @begin[GtkPaned]{subsection}
+      A widget with two adjustable panes.
+
+      @about-class{gtk-paned}
+      @about-function{gtk-paned-new}
+      @about-function{gtk-paned-add1}
+      @about-function{gtk-paned-add2}
+      @about-function{gtk-paned-pack1}
+      @about-function{gtk-paned-pack2}
+      @about-function{gtk-paned-get-child1}
+      @about-function{gtk-paned-get-child2}
+      @about-function{gtk-paned-set-position}
+      @about-function{gtk-paned-get-position}
+      @about-function{gtk-paned-get-handle-window}
+      @b{GtkHPaned}
+
+      A container with two panes arranged horizontally.
+
+      @about-class{gtk-hpaned}
+      @about-function{gtk-hpaned-new}
+      @b{GtkVPaned}
+
+      A container with two panes arranged vertically.
+      @about-class{gtk-vpaned}
+      @about-function{gtk-vpaned-new}
     @end{subsection}
     @begin[GtkLayout]{subsection}
+      Infinite scrollable area containing child widgets and/or custom drawing.
+
+      @about-class{gtk-layout}
+      @about-function{gtk-layout-new}
+      @about-function{gtk-layout-put}
+      @about-function{gtk-layout-move}
+      @about-function{gtk-layout-set-size}
+      @about-function{gtk-layout-get-size}
+      @about-function{gtk-layout-get-hadjustment}
+      @about-function{gtk-layout-get-vadjustment}
+      @about-function{gtk-layout-set-hadjustment}
+      @about-function{gtk-layout-set-vadjustment}
+      @about-function{gtk-layout-get-bin-window}
     @end{subsection}
     @begin[GtkNotebook]{subsection}
       A tabbed notebook container.
@@ -2973,7 +3018,7 @@ setup_tree (void)
       @about-function{gtk-notebook-get-action-widget}
     @end{subsection}
     @begin[GtkTable]{subsection}
-      Pack widgets in regular patterns
+      Pack widgets in regular patterns.
 
       @about-class{gtk-table}
       @about-function{gtk-table-new}
@@ -2993,13 +3038,41 @@ setup_tree (void)
       @about-function{gtk-table-get-default-col-spacing}
     @end{subsection}
     @begin[GtkExpander]{subsection}
+      A container which can hide its child.
+
+      @about-class{gtk-expander}
+      @about-function{gtk-expander-new}
+      @about-function{gtk-expander-new-with-mnemonic}
+      @about-function{gtk-expander-set-expanded}
+      @about-function{gtk-expander-get-expanded}
+      @about-function{gtk-expander-set-spacing}
+      @about-function{gtk-expander-get-spacing}
+      @about-function{gtk-expander-set-label}
+      @about-function{gtk-expander-get-label}
+      @about-function{gtk-expander-set-use-underline}
+      @about-function{gtk-expander-get-use-underline}
+      @about-function{gtk-expander-set-use-markup}
+      @about-function{gtk-expander-get-use-markup}
+      @about-function{gtk-expander-set-label-widget}
+      @about-function{gtk-expander-get-label-widget}
+      @about-function{gtk-expander-set-label-fill}
+      @about-function{gtk-expander-get-label-fill}
+      @about-function{gtk-expander-set-resize-toplevel}
+      @about-function{gtk-expander-get-resize-toplevel}
     @end{subsection}
     @begin[GtkOverlay]{subsection}
+      A container which overlays widgets on top of each other.
+
+      @about-class{gtk-overlay}
+      @about-function{gtk-overlay-new}
+      @about-function{gtk-overlay-add-overlay}
     @end{subsection}
     @begin[GtkOrientable]{subsection}
       An interface for flippable widgets.
 
       @about-class{gtk-orientable}
+      @about-function{gtk-orientable-get-orientation}
+      @about-function{gtk-orientable-set-orientation}
     @end{subsection}
   @end{section}
   @begin[Ornaments]{section}
@@ -3030,10 +3103,56 @@ setup_tree (void)
   @end{section}
   @begin[Scrolling]{section}
     @begin[GtkScrollbar]{subsection}
+      A Scrollbar.
+
+      @about-class{gtk-scrollbar}
+      @about-function{gtk-scrollbar-new}
+      @about-class{gtk-hscrollbar}
+      @about-function{gtk-hscrollbar-new}
+      @about-class{gtk-vscrollbar}
+      @about-function{gtk-vscrollbar-new}
     @end{subsection}
     @begin[GtkScrolledWindow]{subsection}
+      Adds scrollbars to its child widget.
+
+      @about-class{gtk-scrolled-window}
+      @about-function{gtk-scrolled-window-new}
+      @about-function{gtk-scrolled-window-get-hadjustment}
+      @about-function{gtk-scrolled-window-get-vadjustment}
+      @about-function{gtk-scrolled-window-get-hscrollbar}
+      @about-function{gtk-scrolled-window-get-vscrollbar}
+      @about-function{gtk-scrolled-window-set-policy}
+      @about-function{gtk-scrolled-window-add-with-viewport}
+      @about-function{gtk-scrolled-window-set-placement}
+      @about-function{gtk-scrolled-window-unset-placement}
+      @about-function{gtk-scrolled-window-set-shadow-type}
+      @about-function{gtk-scrolled-window-set-hadjustment}
+      @about-function{gtk-scrolled-window-set-vadjustment}
+      @about-function{gtk-scrolled-window-get-placement}
+      @about-function{gtk-scrolled-window-get-policy}
+      @about-function{gtk-scrolled-window-get-shadow-type}
+      @about-function{gtk-scrolled-window-get-min-content-width}
+      @about-function{gtk-scrolled-window-set-min-content-width}
+      @about-function{gtk-scrolled-window-get-min-content-height}
+      @about-function{gtk-scrolled-window-set-min-content-height}
+      @about-function{gtk-scrolled-window-set-kinetic-scrolling}
+      @about-function{gtk-scrolled-window-get-kinetic-scrolling}
+      @about-function{gtk-scrolled-window-set-capture-button-press}
+      @about-function{gtk-scrolled-window-get-capture-button-press}
     @end{subsection}
     @begin[GtkScrollable]{subsection}
+      An interface for scrollable widgets.
+
+      @about-class{gtk-scrollable}
+      @about-function{gtk-scrollable-get-hadjustment}
+      @about-function{gtk-scrollable-set-hadjustment}
+      @about-function{gtk-scrollable-get-vadjustment}
+      @about-function{gtk-scrollable-set-vadjustment}
+      @about-symbol{gtk-scrollable-policy}
+      @about-function{gtk-scrollable-get-hscroll-policy}
+      @about-function{gtk-scrollable-set-hscroll-policy}
+      @about-function{gtk-scrollable-get-vscroll-policy}
+      @about-function{gtk-scrollable-set-vscroll-policy}
     @end{subsection}
   @end{section}
   @begin[Printing]{section}
@@ -3065,11 +3184,23 @@ setup_tree (void)
 
       @about-class{gtk-adjustment}
       @about-function{gtk-adjustment-new}
+      @about-function{gtk-adjustment-get-value}
+      @about-function{gtk-adjustment-set-value}
       @about-function{gtk-adjustment-clamp-page}
       @about-function{gtk-adjustment-changed}
       @about-function{gtk-adjustment-value-changed}
       @about-function{gtk-adjustment-configure}
+      @about-function{gtk-adjustment-get-lower}
+      @about-function{gtk-adjustment-get-page-increment}
+      @about-function{gtk-adjustment-get-page-size}
+      @about-function{gtk-adjustment-get-step-increment}
       @about-function{gtk-adjustment-get-minimum-increment}
+      @about-function{gtk-adjustment-get-upper}
+      @about-function{gtk-adjustment-set-lower}
+      @about-function{gtk-adjustment-set-page-increment}
+      @about-function{gtk-adjustment-set-page-size}
+      @about-function{gtk-adjustment-set-step-increment}
+      @about-function{gtk-adjustment-set-upper}
     @end{subsection}
     @begin[GtkArrow]{subsection}
       Displays an arrow.
@@ -3094,18 +3225,70 @@ setup_tree (void)
       @about-function{gtk-calendar-set-display-options}
       @about-function{gtk-calendar-get-date}
       @about-function{gtk-calendar-set-detail-func}
+      @about-function{gtk-calendar-get-detail-width-chars}
+      @about-function{gtk-calendar-set-detail-width-chars}
+      @about-function{gtk-calendar-get-detail-height-rows}
+      @about-function{gtk-calendar-set-detail-height-rows}
     @end{subsection}
     @begin[GtkDrawingArea]{subsection}
+      A widget for custom user interface elements.
+
+      @about-class{gtk-drawing-area}
+      @about-function{gtk-drawing-area-new}
     @end{subsection}
     @begin[GtkEventBox]{subsection}
+      A widget used to catch events for widgets which do not have their own
+      window.
+
+      @about-class{gtk-event-box}
+      @about-function{gtk-event-box-new}
+      @about-function{gtk-event-box-set-above-child}
+      @about-function{gtk-event-box-get-above-child}
+      @about-function{gtk-event-box-set-visible-window}
+      @about-function{gtk-event-box-get-visible-window}
     @end{subsection}
     @begin[GtkHandleBox]{subsection}
+      A widget for detachable window portions.
+
+      @about-class{gtk-handle-box}
+      @about-function{gtk-handle-box-new}
+      @about-function{gtk-handle-box-set-shadow-type}
+      @about-function{gtk-handle-box-set-handle-position}
+      @about-function{gtk-handle-box-set-snap-edge}
+      @about-function{gtk-handle-box-get-handle-position}
+      @about-function{gtk-handle-box-get-shadow-type}
+      @about-function{gtk-handle-box-get-snap-edge}
+      @about-function{gtk-handle-box-get-child-detached}
     @end{subsection}
     @begin[GtkIMContexSimple]{subsection}
+      An input method context supporting table-based input methods.
+
+      @about-class{gtk-im-context-simple}
+      @about-function{gtk-im-context-simple-new}
+      @about-function{gtk-im-context-simple-add-table}
     @end{subsection}
     @begin[GtkIMMulticontex]{subsection}
+      An input method context supporting multiple, loadable input methods.
+
+      @about-class{gtk-im-multicontext}
+      @about-function{gtk-im-multicontext-new}
+      @about-function{gtk-im-multicontext-append-menuitems}
+      @about-function{gtk-im-multicontext-get-context-id}
+      @about-function{gtk-im-multicontext-set-context-id}
     @end{subsection}
     @begin[GtkSizeGroup]{subsection}
+      Grouping widgets so they request the same size.
+
+      @about-class{gtk-size-group}
+      @about-symbol{gtk-size-group-mode}
+      @about-function{gtk-size-group-new}
+      @about-function{gtk-size-group-set-mode}
+      @about-function{gtk-size-group-get-mode}
+      @about-function{gtk-size-group-set-ignore-hidden}
+      @about-function{gtk-size-group-get-ignore-hidden}
+      @about-function{gtk-size-group-add-widget}
+      @about-function{gtk-size-group-remove-widget}
+      @about-function{gtk-size-group-get-widgets}
     @end{subsection}
     @begin[GtkTooltip]{subsection}
       Add tips to your widgets.
@@ -3122,6 +3305,18 @@ setup_tree (void)
       @about-function{gtk-tooltip-set-tip-area}
     @end{subsection}
     @begin[GtkViewport]{subsection}
+      An adapter which makes widgets scrollable.
+
+      @about-class{gtk-viewport}
+      @about-function{gtk-viewport-new}
+      @about-function{gtk-viewport-get-hadjustment}
+      @about-function{gtk-viewport-get-vadjustment}
+      @about-function{gtk-viewport-set-hadjustment}
+      @about-function{gtk-viewport-set-vadjustment}
+      @about-function{gtk-viewport-set-shadow-type}
+      @about-function{gtk-viewport-get-shadow-type}
+      @about-function{gtk-viewport-get-bin-window}
+      @about-function{gtk-viewport-get-view-window}
     @end{subsection}
     @begin[GtkAccessible]{subsection}
       not implemented
