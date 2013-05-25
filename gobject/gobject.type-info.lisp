@@ -531,7 +531,7 @@
 
   Note that callbacks in closures, and signal handlers for signals of return
   type @code{G_TYPE_VARIANT}, must never return floating variants.
- 
+
   Note: GLib 2.24 did include a boxed type with this name. It was replaced
   with this fundamental type in 2.26.
 
@@ -2538,7 +2538,7 @@
     (cond ((null data)
            (when (not (null-pointer-p ptr))
              (%g-type-set-qdata type quark (null-pointer))
-             (glib::free-stable-pointer ptr)))           
+             (glib::free-stable-pointer ptr)))
           ((null-pointer-p ptr)
            (setq ptr (glib::allocate-stable-pointer data))
            (%g-type-set-qdata type quark ptr))

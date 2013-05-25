@@ -102,7 +102,7 @@
     in via a @symbol{g-type-info} structure. Dynamic types are created with
     @code{g_type_register_dynamic()} which takes a @code{GTypePlugin} structure
     instead. The remaining type information (the @symbol{g-type-info} structure)
-    is retrieved during runtime through @code{GTypePlugin} and the 
+    is retrieved during runtime through @code{GTypePlugin} and the
     @code{g_type_plugin_*()} API. These registration functions are usually
     called only once from a function whose only purpose is to return the type
     identifier for a specific class. Once the type (or class or interface) is

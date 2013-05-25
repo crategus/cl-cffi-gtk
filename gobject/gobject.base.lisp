@@ -314,7 +314,7 @@
       (documentation 'pointer 'function)
  "@version{2012-12-26}
   @short{Accessor of the slot @code{pointer} of the @class{g-object} class.}
-  
+
   The accessor @sym{pointer} gets the foreign C pointer of an instance which is
   stored in a slot of the Lisp @class{g-object} class.
   @begin[Example]{dictionary}
@@ -335,7 +335,7 @@
   @begin{short}
     Accessor of the slot @code{has-reference} of the @class{g-object} class.
   @end{short}
-  
+
   Note: The slot is set to @em{true} when registering an object during creation.
   The slot is not in use at any place in the code.
   @see-class{g-object}")
@@ -1618,7 +1618,7 @@
     properties.
   @end{short}
 
-  Construction parameters (see @code{:construct} and @code{:construct-only} of 
+  Construction parameters (see @code{:construct} and @code{:construct-only} of
   type @symbol{g-param-spec-flags}) which are not explicitly specified are set
   to their default values."
   (object-type g-type)
@@ -1746,7 +1746,7 @@
   @begin{pre}
  container = create_container ();
  container_add_child (container, create_child());
-  @end{pre} 
+  @end{pre}
   If container_add_child() will g_object_ref_sink() the passed in child, no
   reference of the newly created child is leaked. Without floating references,
   container_add_child() can only g_object_ref() the new child, so to implement

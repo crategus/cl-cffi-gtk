@@ -466,7 +466,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-2-7}
   @argument[pspec]{a valid @symbol{g-param-spec}}
-  @short{Decrements the reference count of a pspec.}" 
+  @short{Decrements the reference count of a pspec.}"
   (pspec (:pointer g-param-spec)))
 
 (export 'g-param-spec-unref)
