@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkButton
-;;; 
+;;;
 ;;; A widget that emits a signal when clicked on
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkButton
 ;;;
 ;;;     gtk_button_new
@@ -582,16 +582,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_pressed ()
-;;; 
+;;;
 ;;; void gtk_button_pressed (GtkButton *button);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_button_pressed has been deprecated since version 2.20 and should not be
 ;;; used in newly-written code. Use the "button-press-event" signal.
-;;; 
+;;;
 ;;; Emits a "pressed" signal to the given GtkButton.
-;;; 
+;;;
 ;;; button :
 ;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
@@ -600,16 +600,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_released ()
-;;; 
+;;;
 ;;; void gtk_button_released (GtkButton *button);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_button_released has been deprecated since version 2.20 and should not
 ;;; be used in newly-written code. Use the "button-release-event" signal.
-;;; 
+;;;
 ;;; Emits a "released" signal to the given GtkButton.
-;;; 
+;;;
 ;;; button :
 ;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
@@ -632,16 +632,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_enter ()
-;;; 
+;;;
 ;;; void gtk_button_enter (GtkButton *button);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_button_enter has been deprecated since version 2.20 and should not be
 ;;; used in newly-written code. Use the "enter-notify-event" signal.
-;;; 
+;;;
 ;;; Emits a "enter" signal to the given GtkButton.
-;;; 
+;;;
 ;;; button :
 ;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------
@@ -650,16 +650,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_leave ()
-;;; 
+;;;
 ;;; void gtk_button_leave (GtkButton *button);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_button_leave has been deprecated since version 2.20 and should not be
 ;;; used in newly-written code. Use the "leave-notify-event" signal.
-;;; 
+;;;
 ;;; Emits a "leave" signal to the given GtkButton.
-;;; 
+;;;
 ;;; button :
 ;;;     The GtkButton you want to send the signal to.
 ;;; ----------------------------------------------------------------------------

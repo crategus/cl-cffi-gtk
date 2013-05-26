@@ -511,7 +511,7 @@
   @begin{short}
     These flags indicate various properties of a @class{gtk-tree-model}.
   @end{short}
- 
+
   They are returned by the function @fun{gtk-tree-model-get-flags}, and must be
   static for the lifetime of the object. A more complete description of
   @code{:iters-persist} can be found in the overview of this section.

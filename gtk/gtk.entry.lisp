@@ -926,7 +926,7 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "secondary-icon-activatable" 
+(setf (documentation (atdoc:get-slot-from-name "secondary-icon-activatable"
                                                'gtk-entry) 't)
  "The @code{\"secondary-icon-activatable\"} property of type @code{:boolean}
   (Read / Write)@br{}
