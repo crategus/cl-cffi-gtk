@@ -39,14 +39,17 @@
 
 (in-package :gtk-tests)
 
+(defvar *verbose* nil)
+
 (load "rtest-gtk-adjustment.lisp")
-(load "rtest-gtk-application.lisp")
+;(load "rtest-gtk-application.lisp")
 (load "rtest-gtk-border.lisp")
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")
 (load "rtest-gtk-button-box.lisp")
 (load "rtest-gtk-cell-renderer-progress.lisp")
 (load "rtest-gtk-check-button.lisp")
+(load "rtest-gtk-container.lisp")
 (load "rtest-gtk-grid.lisp")
 (load "rtest-gtk-label.lisp")
 (load "rtest-gtk-progress-bar.lisp")

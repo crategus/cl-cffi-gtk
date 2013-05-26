@@ -45,7 +45,7 @@
   (assert-eq 'gtk-application
              (registered-object-type-by-name "GtkApplication"))
   
-  ;; Check infos about the class
+  ;; Check infos about the C class implementation
   (let ((class (g-type-class-ref (gtype "GtkApplication"))))
     (assert-equal (gtype "GtkApplication")  (g-type-from-class class))
     (assert-equal (gtype "GtkApplication") (g-object-class-type class))
@@ -56,6 +56,7 @@
                   (g-type-from-class (g-type-class-peek-static "GtkApplication")))
     (g-type-class-unref class))
   
+  ;; Check infos about the Lisp class implementation
   (let ((class (find-class 'gtk-application)))
     ;; Check the class name and type of the class
     (assert-eq 'gtk-application (class-name class))
@@ -68,6 +69,7 @@
                   (gobject-class-g-type-initializer class))
     (assert-false (gobject-class-interface-p class)))
   
+  ;; Check some more GType information
   (assert-equal (gtype "GApplication") (g-type-parent "GtkApplication"))
   (assert-eql 3 (g-type-depth "GtkApplication"))
   (assert-eql   (gtype "GApplication")
@@ -75,8 +77,10 @@
   (assert-true  (g-type-is-a "GtkApplication" "GObject"))
   (assert-false (g-type-is-a "GtkApplication" "gboolean"))
   (assert-false (g-type-is-a "GtkApplication" "GtkWindow"))
+  ;; Check the children
   (assert-equal '()
                 (mapcar #'gtype-name (g-type-children "GtkApplication")))
+  ;; Check the interfaces
   (assert-equal '("GActionGroup" "GActionMap")
                 (mapcar #'gtype-name (g-type-interfaces "GtkApplication")))
   
@@ -97,6 +101,12 @@
          "menubar" "active-window")
      (mapcar #'param-spec-name
              (g-object-class-list-properties (gtype "GtkApplication"))))
+
+  ;; Get the names of the style properties
+  (assert-equal
+      '()
+      (mapcar #'param-spec-name
+                (gtk-widget-class-list-style-properties (gtype "GtkApplication"))))
 
   ;; Get the class definition
   (assert-equal

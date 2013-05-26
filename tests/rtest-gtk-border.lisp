@@ -24,26 +24,35 @@
 (in-package :gtk-tests)
 
 (define-test gtk-border
-    (let* ((border (make-gtk-border :left 1 :right 2 :top 3 :bottom 4))
-           ;; entry has the property inner-border of type gtk-border.
-           (entry (make-instance 'gtk-entry :inner-border border)))
+  (let* ((border (make-gtk-border :left 1 :right 2 :top 3 :bottom 4))
+         ;; button has the style property default-border of type gtk-border.
+         (button (make-instance 'gtk-button)))
+
       (assert-eql 1 (gtk-border-left border))
       (assert-eql 2 (gtk-border-right border))
       (assert-eql 3 (gtk-border-top border))
       (assert-eql 4 (gtk-border-bottom border))
-      
-      (assert-eql 1 (gtk-border-left (gtk-entry-get-inner-border entry)))
-      (assert-eql 2 (gtk-border-right (gtk-entry-get-inner-border entry)))
-      (assert-eql 3 (gtk-border-top (gtk-entry-get-inner-border entry)))
-      (assert-eql 4 (gtk-border-bottom (gtk-entry-get-inner-border entry)))
-      
-      (setq border (make-gtk-border :left 10 :right 20 :top 30 :bottom 40))
-      (gtk-entry-set-inner-border entry border)
-      
-      (assert-eql 10 (gtk-border-left (gtk-entry-get-inner-border entry)))
-      (assert-eql 20 (gtk-border-right (gtk-entry-get-inner-border entry)))
-      (assert-eql 30 (gtk-border-top (gtk-entry-get-inner-border entry)))
-      (assert-eql 40 (gtk-border-bottom (gtk-entry-get-inner-border entry)))
-      ))
+
+      (let ((copy (gtk-border-copy border)))
+        (assert-eql 1 (gtk-border-left copy))
+        (assert-eql 2 (gtk-border-right copy))
+        (assert-eql 3 (gtk-border-top copy))
+        (assert-eql 4 (gtk-border-bottom copy)))
+
+      (setf border (gtk-border-new))
+
+      (assert-eql 0 (gtk-border-left border))
+      (assert-eql 0 (gtk-border-right border))
+      (assert-eql 0 (gtk-border-top border))
+      (assert-eql 0 (gtk-border-bottom border))
+
+      ;; The "default-border" style property is of type gtk-border
+      (setf border (gtk-widget-style-get-property button "default-border"))
+      (assert-eq 'gtk-border (type-of border))
+
+      (assert-eql 0 (gtk-border-left border))
+      (assert-eql 0 (gtk-border-right border))
+      (assert-eql 0 (gtk-border-top border))
+      (assert-eql 0 (gtk-border-bottom border))))
 
 ;;; --- End of file rtest-gtk-border.lisp --------------------------------------

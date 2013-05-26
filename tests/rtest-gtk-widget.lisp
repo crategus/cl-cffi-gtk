@@ -24,6 +24,7 @@
 (in-package :gtk-tests)
 
 (define-test gtk-widget
+  ;; Type checks
   (assert-true  (g-type-is-object "GtkWidget"))
   (assert-true  (g-type-is-abstract "GtkWidget"))
   (assert-true  (g-type-is-derived "GtkWidget"))
@@ -40,6 +41,7 @@
   (assert-eq 'gtk-widget
              (registered-object-type-by-name "GtkWidget"))
   
+  ;; Check infos about the C class implementation
   (let ((class (g-type-class-ref (gtype "GtkWidget"))))
     (assert-equal (gtype "GtkWidget") (g-type-from-class class))
     (assert-equal (gtype "GtkWidget") (g-object-class-type class))
@@ -50,6 +52,7 @@
                   (g-type-from-class  (g-type-class-peek-static "GtkWidget")))
     (g-type-class-unref class))
   
+  ;; Check infos about the Lisp class implementation
   (let ((class (find-class 'gtk-widget)))
     ;; Check the class name and type of the class
     (assert-eq 'gtk-widget (class-name class))
@@ -62,6 +65,7 @@
                   (gobject-class-g-type-initializer class))
     (assert-false (gobject-class-interface-p class)))
   
+  ;; Check some more GType information
   (assert-equal (gtype "GInitiallyUnowned") (g-type-parent "GtkWidget"))
   (assert-eql 3 (g-type-depth "GtkWidget"))
   (assert-eql   (gtype "GInitiallyUnowned")
@@ -69,10 +73,13 @@
   (assert-true  (g-type-is-a "GtkWidget" "GInitiallyUnowned"))
   (assert-false (g-type-is-a "GtkWidget" "gboolean"))
   (assert-false (g-type-is-a "GtkWidget" "GtkWindow"))
+
+  ;; Check the children
   (assert-equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
          "GtkProgressBar" "GtkSpinner" "GtkSwitch" "GtkCellView" "GtkEntry"
          "GtkHSV" "GtkCalendar" "GtkDrawingArea")
                 (mapcar #'gtype-name (g-type-children "GtkWidget")))
+  ;; Check the interfaces
   (assert-equal '("AtkImplementorIface" "GtkBuildable")
                 (mapcar #'gtype-name (g-type-interfaces "GtkWidget")))
   
@@ -108,14 +115,87 @@
          "window-dragging")
       (mapcar #'param-spec-name
                 (gtk-widget-class-list-style-properties (gtype "GtkWidget"))))
+
+  ;; Get the class definition
+  (assert-equal
+     '(DEFINE-G-OBJECT-CLASS "GtkWidget" GTK-WIDGET
+                               (:SUPERCLASS G-INITIALLY-UNOWNED :EXPORT T
+                                :INTERFACES
+                                ("AtkImplementorIface" "GtkBuildable")
+                                :TYPE-INITIALIZER "gtk_widget_get_type")
+                               ((APP-PAINTABLE GTK-WIDGET-APP-PAINTABLE
+                                 "app-paintable" "gboolean" T T)
+                                (CAN-DEFAULT GTK-WIDGET-CAN-DEFAULT
+                                 "can-default" "gboolean" T T)
+                                (CAN-FOCUS GTK-WIDGET-CAN-FOCUS "can-focus"
+                                 "gboolean" T T)
+                                (COMPOSITE-CHILD GTK-WIDGET-COMPOSITE-CHILD
+                                 "composite-child" "gboolean" T NIL)
+                                (DOUBLE-BUFFERED GTK-WIDGET-DOUBLE-BUFFERED
+                                 "double-buffered" "gboolean" T T)
+                                (EVENTS GTK-WIDGET-EVENTS "events"
+                                 "GdkEventMask" T T)
+                                (EXPAND GTK-WIDGET-EXPAND "expand" "gboolean" T
+                                 T)
+                                (HALIGN GTK-WIDGET-HALIGN "halign" "GtkAlign" T
+                                 T)
+                                (HAS-DEFAULT GTK-WIDGET-HAS-DEFAULT
+                                 "has-default" "gboolean" T T)
+                                (HAS-FOCUS GTK-WIDGET-HAS-FOCUS "has-focus"
+                                 "gboolean" T T)
+                                (HAS-TOOLTIP GTK-WIDGET-HAS-TOOLTIP
+                                 "has-tooltip" "gboolean" T T)
+                                (HEIGHT-REQUEST GTK-WIDGET-HEIGHT-REQUEST
+                                 "height-request" "gint" T T)
+                                (HEXPAND GTK-WIDGET-HEXPAND "hexpand"
+                                 "gboolean" T T)
+                                (HEXPAND-SET GTK-WIDGET-HEXPAND-SET
+                                 "hexpand-set" "gboolean" T T)
+                                (IS-FOCUS GTK-WIDGET-IS-FOCUS "is-focus"
+                                 "gboolean" T T)
+                                (MARGIN GTK-WIDGET-MARGIN "margin" "gint" T T)
+                                (MARGIN-BOTTOM GTK-WIDGET-MARGIN-BOTTOM
+                                 "margin-bottom" "gint" T T)
+                                (MARGIN-LEFT GTK-WIDGET-MARGIN-LEFT
+                                 "margin-left" "gint" T T)
+                                (MARGIN-RIGHT GTK-WIDGET-MARGIN-RIGHT
+                                 "margin-right" "gint" T T)
+                                (MARGIN-TOP GTK-WIDGET-MARGIN-TOP "margin-top"
+                                 "gint" T T)
+                                (NAME GTK-WIDGET-NAME "name" "gchararray" T T)
+                                (NO-SHOW-ALL GTK-WIDGET-NO-SHOW-ALL
+                                 "no-show-all" "gboolean" T T)
+                                (PARENT GTK-WIDGET-PARENT "parent"
+                                 "GtkContainer" T T)
+                                (RECEIVES-DEFAULT GTK-WIDGET-RECEIVES-DEFAULT
+                                 "receives-default" "gboolean" T T)
+                                (SENSITIVE GTK-WIDGET-SENSITIVE "sensitive"
+                                 "gboolean" T T)
+                                (STYLE GTK-WIDGET-STYLE "style" "GtkStyle" T T)
+                                (TOOLTIP-MARKUP GTK-WIDGET-TOOLTIP-MARKUP
+                                 "tooltip-markup" "gchararray" T T)
+                                (TOOLTIP-TEXT GTK-WIDGET-TOOLTIP-TEXT
+                                 "tooltip-text" "gchararray" T T)
+                                (VALIGN GTK-WIDGET-VALIGN "valign" "GtkAlign" T
+                                 T)
+                                (VEXPAND GTK-WIDGET-VEXPAND "vexpand"
+                                 "gboolean" T T)
+                                (VEXPAND-SET GTK-WIDGET-VEXPAND-SET
+                                 "vexpand-set" "gboolean" T T)
+                                (VISIBLE GTK-WIDGET-VISIBLE "visible"
+                                 "gboolean" T T)
+                                (WIDTH-REQUEST GTK-WIDGET-WIDTH-REQUEST
+                                 "width-request" "gint" T T)
+                                (WINDOW GTK-WIDGET-WINDOW "window" "GdkWindow"
+                                 T NIL)))
+     (get-g-type-definition (gtype "GtkWidget")))
   
   ;; Because GtkWidget is abstract, we create a GtkSeparator
-  (let* ((widget (gtk-separator-new :horizontal))
-         (ptr (pointer widget)))
+  (let ((widget (gtk-separator-new :horizontal)))
     ;; Some general checks of the instance
     (assert-equal (gtype "GtkSeparator") (g-object-type widget))
     (assert-equal "GtkSeparator" (g-object-type-name widget))
-    (assert-true (g-type-is-a "GtkSeparator" (g-type-from-instance ptr)))
+    (assert-true (g-type-is-a "GtkSeparator" (g-type-from-instance widget)))
 
     ;; Access the properties
     (assert-false    (gtk-widget-app-paintable widget))
@@ -157,21 +237,23 @@
     (assert-false    (gtk-widget-window widget))
 
     ;; Get the values of style properties
-    (assert-eql 0.04 (gtk-widget-style-get-property ptr "cursor-aspect-ratio"))
-    (assert-false (gtk-widget-style-get-property ptr "cursor-color"))
-    (assert-equal "" (gtk-widget-style-get-property ptr "focus-line-pattern"))
-    (assert-eql 1 (gtk-widget-style-get-property ptr "focus-line-width"))
-    (assert-eql 0 (gtk-widget-style-get-property ptr "focus-padding"))
-    (assert-true (gtk-widget-style-get-property ptr "interior-focus"))
-    (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property ptr "link-color")))
-    (assert-eql 16 (gtk-widget-style-get-property ptr "scroll-arrow-hlength"))
-    (assert-eql 16 (gtk-widget-style-get-property ptr "scroll-arrow-vlength"))
-    (assert-false (gtk-widget-style-get-property ptr "secondary-cursor-color"))
-    (assert-eql 2 (gtk-widget-style-get-property ptr "separator-height"))
-    (assert-eql 2 (gtk-widget-style-get-property ptr "separator-width"))
-    (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property ptr "visited-link-color")))
-    (assert-false  (gtk-widget-style-get-property ptr "wide-separators"))
-    (assert-false (gtk-widget-style-get-property ptr "window-dragging"))
+    (assert-eql 0.04 (gtk-widget-style-get-property widget "cursor-aspect-ratio"))
+    (assert-false (gtk-widget-style-get-property widget "cursor-color"))
+    (assert-equal "" (gtk-widget-style-get-property widget "focus-line-pattern"))
+    (assert-eql 1 (gtk-widget-style-get-property widget "focus-line-width"))
+    (assert-eql 0 (gtk-widget-style-get-property widget "focus-padding"))
+    (assert-true (gtk-widget-style-get-property widget "interior-focus"))
+    (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property widget "link-color")))
+    (assert-eql 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength"))
+    (assert-eql 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength"))
+    (assert-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
+    (assert-eql  2 (gtk-widget-style-get-property widget "separator-height"))
+    (assert-eql  2 (gtk-widget-style-get-property widget "separator-width"))
+    (assert-eql 20 (gtk-widget-style-get-property widget "text-handle-height"))
+    (assert-eql 16 (gtk-widget-style-get-property widget "text-handle-width"))
+    (assert-eq 'gdk-color (type-of (gtk-widget-style-get-property widget "visited-link-color")))
+    (assert-false  (gtk-widget-style-get-property widget "wide-separators"))
+    (assert-false (gtk-widget-style-get-property widget "window-dragging"))
 
     ;; Call functions
     ;; gtk_widget_new                            not implemented
