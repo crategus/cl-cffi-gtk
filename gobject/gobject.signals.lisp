@@ -992,30 +992,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_emit ()
-;;;
-;;; void g_signal_emit (gpointer instance, guint signal_id, GQuark detail, ...);
-;;;
-;;; Emits a signal.
-;;;
-;;; Note that g_signal_emit() resets the return value to the default if no
-;;; handlers are connected, in contrast to g_signal_emitv().
-;;;
-;;; instance :
-;;;     the instance the signal is being emitted on.
-;;;
-;;; signal_id :
-;;;     the signal id
-;;;
-;;; detail :
-;;;     the detail
-;;;
-;;; ... :
-;;;     parameters to be passed to the signal, followed by a location for the
-;;;     return value. If the return type of the signal is G_TYPE_NONE, the
-;;;     return value location can be omitted.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-signal-emit (object signal-name &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-25}
+  @argument[instance]{the instance the signal is being emitted on}
+  @argument[signal-name]{the signal name}
+  @argument[args]{parameters to be passed to the signal}
+  @return{The return value of the signal.}
+  @short{Emits a signal.}
+
+  Note that the function @sym{g-signal-emit} resets the return value to the
+  default if no handlers are connected, in contrast to the function
+  @fun{g-signal-emitv}.
+  @see-function{g-signal-emitv}"
   (let* ((object-type (g-type-from-instance (pointer object)))
          (signal-info (g-signal-parse-name object-type signal-name)))
     (unless signal-info
@@ -1036,10 +1027,12 @@
         (prog1
           (if (eq (signal-info-return-type signal-info)
                   (gtype +g-type-none+))
+              ;; Emit a signal which has no return value
               (g-signal-emitv params
                               (signal-info-id signal-info)
                               signal-name
                               (null-pointer))
+              ;; Emit a signal which has a return value
               (with-foreign-object (return-value 'g-value)
                 (g-value-zero return-value)
                 (g-value-init return-value
@@ -1049,6 +1042,7 @@
                                 signal-name
                                 return-value)
                 (prog1
+                  ;; Return value of the signal
                   (parse-g-value return-value)
                   (g-value-unset return-value))))
           (iter (for i from 0 below (1+ params-count))
