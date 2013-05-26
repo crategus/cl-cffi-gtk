@@ -2397,14 +2397,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-border 'function)
  "@version{2013-4-18}
-  Creates and returns an object of type @class{gtk-border}")
-
-;;; ----------------------------------------------------------------------------
+  Creates and returns an structure of type @class{gtk-border}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-border 'function)
  "@version{2013-4-18}
-  Copies and returns an object of type @class{gtk-border}")
+  Copies and returns an structure of type @class{gtk-border}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -2412,68 +2410,65 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-border-left --------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-left atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-left 'function)
- "@version{2013-2-12}
-  Accessor of the slot @code{\"left\"} of the @class{gtk-border} struct.")
-
-;;; --- gtk-border-right -------------------------------------------------------
+ "@version{2013-5-25}
+  Accessor of the slot @code{\"left\"} of the @class{gtk-border} structure.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-right atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-right 'function)
- "@version{2013-2-12}
-  Accessor of the slot @code{\"right\"} of the @class{gtk-border} struct.")
-
-;;; --- gtk-border-top ---------------------------------------------------------
+ "@version{2013-5-25}
+  Accessor of the slot @code{\"right\"} of the @class{gtk-border} structure.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-top atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-top 'function)
- "@version{2013-2-12}
-  Accessor of the slot @code{\"top\"} of the @class{gtk-border} struct.")
-
-;;; --- gtk-border-bottom ------------------------------------------------------
+ "@version{2013-5-25}
+  Accessor of the slot @code{\"top\"} of the @class{gtk-border} structure.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-bottom atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-bottom 'function)
- "@version{2013-2-12}
-  Accessor of the slot @code{\"bottom\"} of the @class{gtk-border} struct.")
+ "@version{2013-5-25}
+  Accessor of the slot @code{\"bottom\"} of the @class{gtk-border} structure.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_border_new ()
-;;;
-;;; GtkBorder * gtk_border_new (void);
-;;;
-;;; Allocates a new GtkBorder structure and initializes its elements to zero.
-;;;
-;;; Returns :
-;;;     a newly allocated GtkBorder. Free with gtk_border_free()
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-border-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-25}
+  @return{A newly allocated @class{gtk-border} structure.}
+  @begin{short}
+    Allocates a new @class{gtk-border} structure and initializes its elements
+    to zero.
+  @end{short}
+
+  Since 2.14"
+  (make-gtk-border :left 0 :right 0 :top 0 :bottom 0))
+
+(export 'gtk-border-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_border_copy ()
-;;;
-;;; GtkBorder * gtk_border_copy (const GtkBorder *border_);
-;;;
-;;; Copies a GtkBorder structure.
-;;;
-;;; border_ :
-;;;     a GtkBorder
-;;;
-;;; Returns :
-;;;     a copy of border_.
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-border-copy (border)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-25}
+  @argument[border]{a @class{gtk-border} structure}
+  @return{A copy of @arg{border}.}
+  Copies a @class{gtk-border} structure."
+  (copy-gtk-border border))
+
+(export 'gtk-border-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_border_free ()
