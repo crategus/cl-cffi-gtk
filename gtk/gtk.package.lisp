@@ -615,7 +615,43 @@
       not implemented
     @end{subsection}
     @begin[GtkWidgetPath]{subsection}
-      not implemented
+      Widget path abstraction.
+
+      @about-class{gtk-widget-path}
+      @about-function{gtk-widget-path-append-type}
+      @about-function{gtk-widget-path-append-with-siblings}
+      @about-function{gtk-widget-path-append-for-widget}
+      @about-function{gtk-widget-path-copy}
+      @about-function{gtk-widget-path-ref}
+      @about-function{gtk-widget-path-unref}
+      @about-function{gtk-widget-path-free}
+      @about-function{gtk-widget-path-get-object-type}
+      @about-function{gtk-widget-path-has-parent}
+      @about-function{gtk-widget-path-is-type}
+      @about-function{gtk-widget-path-iter-add-class}
+      @about-function{gtk-widget-path-iter-add-region}
+      @about-function{gtk-widget-path-iter-clear-classes}
+      @about-function{gtk-widget-path-iter-clear-regions}
+      @about-function{gtk-widget-path-iter-get-name}
+      @about-function{gtk-widget-path-iter-get-object-type}
+      @about-function{gtk-widget-path-iter-get-siblings}
+      @about-function{gtk-widget-path-iter-get-sibling-index}
+      @about-function{gtk-widget-path-iter-has-class}
+      @about-function{gtk-widget-path-iter-has-name}
+      @about-function{gtk-widget-path-iter-has-qclass}
+      @about-function{gtk-widget-path-iter-has-qname}
+      @about-function{gtk-widget-path-iter-has-qregion}
+      @about-function{gtk-widget-path-iter-has-region}
+      @about-function{gtk-widget-path-iter-list-classes}
+      @about-function{gtk-widget-path-iter-list-regions}
+      @about-function{gtk-widget-path-iter-remove-class}
+      @about-function{gtk-widget-path-iter-remove-region}
+      @about-function{gtk-widget-path-iter-set-name}
+      @about-function{gtk-widget-path-iter-set-object-type}
+      @about-function{gtk-widget-path-length}
+      @about-function{gtk-widget-path-new}
+      @about-function{gtk-widget-path-prepend-type}
+      @about-function{gtk-widget-path-to-string}
     @end{subsection}
     @begin[GtkSymbolicColor]{subsection}
       not implemented
@@ -3565,6 +3601,8 @@ setup_tree (void)
       @about-function{gtk-container-add}
       @about-function{gtk-container-remove}
       @about-function{gtk-container-add-with-properties}
+      @about-function{gtk-container-get-resize-mode}
+      @about-function{gtk-container-set-resize-mode}
       @about-function{gtk-container-check-resize}
       @about-function{gtk-container-foreach}
       @about-function{gtk-container-get-children}
@@ -3586,6 +3624,8 @@ setup_tree (void)
       @about-function{gtk-container-child-set-valist}
       @about-function{gtk-container-child-notify}
       @about-function{gtk-container-forall}
+      @about-function{gtk-container-get-border-width}
+      @about-function{gtk-container-set-border-width}
       @about-function{gtk-container-propagate-draw}
       @about-function{gtk-container-get-focus-chain}
       @about-function{gtk-container-set-focus-chain}

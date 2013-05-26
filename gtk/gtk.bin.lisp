@@ -2,10 +2,11 @@
 ;;; gtk.bin.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -48,7 +49,8 @@
 (define-g-object-class "GtkBin" gtk-bin
   (:superclass gtk-container
    :export t
-   :interfaces ("AtkImplementorIface" "GtkBuildable")
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
    :type-initializer "gtk_bin_get_type")
   nil)
 
@@ -56,7 +58,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-bin 'type)
- "@version{2013-2-12}
+ "@version{2013-5-25}
   @short{The @class{gtk-bin} widget is a container with just one child.}
   It is not very useful itself, but it is useful for deriving subclasses, since
   it provides common code needed for handling a single child widget.
@@ -71,12 +73,12 @@
 
 (defcfun ("gtk_bin_get_child" gtk-bin-get-child) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-12}
+ "@version{2013-5-25}
   @argument[bin]{a @class{gtk-bin} widget}
-  @return{pointer to child of the @class{gtk-bin}}
+  @return{Pointer to child of the @class{gtk-bin}.}
   @begin{short}
-    Gets the child of the @class{gtk-bin}, or @code{nil} if the bin contains no
-    child widget.
+    Gets the child of the @class{gtk-bin}, or @code{nil} if the @arg{bin}
+    contains no child widget.
   @end{short}
   The returned widget does not have a reference added, so you do not need to
   unref it."

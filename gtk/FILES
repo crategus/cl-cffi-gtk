@@ -33,7 +33,9 @@ Theming in GTK+
     not implemented                  - GtkStyleProvider
     not implemented                  - GtkStyleProperties
     not implemented                  - GtkThemingEngine
-    not implemented                  - GtkWidgetPath
+
+    gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.6.4
+
     not implemented                  - GtkSymbolicColor
     not implemented                  - GtkGradient
 
@@ -260,8 +262,8 @@ GTK+ Widgets and Objects
   Abstract Base Classes
   
     gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.6.4
-    gtk.container.lisp               - GtkContainer                - GTK+ 3.4.1*
-    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.4.1*
+    gtk.container.lisp               - GtkContainer                - GTK+ 3.6.4
+    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.4.3*
     gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.4.1*
     gtk.range.lisp                   - GtkRange                    - GTK+ 3.4.1*

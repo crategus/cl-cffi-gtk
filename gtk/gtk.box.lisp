@@ -292,10 +292,10 @@
 
 (defun gtk-box-new (orientation spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2013-5-24}
   @argument[orientation]{the box's orientation}
   @argument[spacing]{the number of pixels to place by default between children}
-  @return{A new @class{gtk-box} container}
+  @return{A new @class{gtk-box} container.}
   @short{Creates a new @class{gtk-box} container.}
 
   Since 3.0
