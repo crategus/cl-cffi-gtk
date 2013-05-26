@@ -1,0 +1,44 @@
+Basic Pango Interfaces
+
+    Rendering — Functions to run the rendering pipeline
+    Glyph Storage — Structures for storing information about glyphs
+    Fonts — Structures representing abstract fonts
+    Text Attributes — Font and other attributes for annotating text
+    Tab Stops — Structures for storing tab stops
+    Text Attribute Markup — Simple markup language to encode text with attributes
+    Layout Objects — High-level layout driver objects
+    
+  pango.script.lisp - Scripts and Languages — Pango 1.29.5
+    
+    Bidirectional Text — Types and functions to help with handling bidirectional text
+    Vertical Text — Laying text out in vertical directions 
+
+Rendering with Pango
+
+    Win32 Fonts and Rendering — Functions for shape engines to manipulate Win32 fonts
+    FreeType Fonts and Rendering — Functions for shape engines to manipulate FreeType fonts
+    Xft Fonts and Rendering — Font handling and rendering with the Xft backend
+    Cairo Rendering — Rendering with the Cairo backend
+    ATSUI Fonts — Font handling with ATSUI fonts
+    CoreText Fonts — Font handling with CoreText fonts
+    Deprecated X font backend — Font handling and rendering with the deprecated X font backend 
+
+Low Level Functionality
+
+    PangoRenderer — Rendering driver base class
+    PangoFcFontMap — Base fontmap class for Fontconfig-based backends
+    PangoFcFont — Base font class for Fontconfig-based backends
+    PangoFcDecoder — Custom font encoding handling
+    OpenType Font Handling — Obtaining information from OpenType tables
+    Coverage Maps — Unicode character range coverage storage
+    Engines — Language-specific and rendering-system-specific processing
+    PangoEngineLang — Rendering-system independent script engines
+    PangoEngineShape — Rendering-system dependent script engines
+    Modules — Support for loadable modules
+    Miscellaneous Utilities — Various convenience and utility functions
+    Version Checking — Tools for checking Pango version at compile- and run-time. 
+
+Pango Tools
+
+    pango-querymodules — Module registration utility 
+
