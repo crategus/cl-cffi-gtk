@@ -2,13 +2,14 @@
 ;;; gtk.buildable.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,31 +60,23 @@
   (:export t
    :type-initializer "gtk_buildable_get_type"))
 
-;;; --- gtk-buildable ----------------------------------------------------------
-
 (setf (documentation 'gtk-buildable 'type)
- "@short{Interface for objects that can be built by GtkBuilder.}
+ "@short{Interface for objects that can be built by @class{gtk-builder}.}
 
-  GtkBuildable allows objects to extend and customize thier deserialization
-  from GtkBuilder UI descriptions. The interface includes methods for setting
-  names and properties of objects, parsing custom tags and constructing child
-  objects.
+  @sym{gtk-buildable} allows objects to extend and customize their
+  deserialization from @class{gtk-builder} UI descriptions. The interface
+  includes methods for setting names and properties of objects, parsing custom
+  tags and constructing child objects.
  
-  The GtkBuildable interface is implemented by all widgets and many of the
-  non-widget objects that are provided by GTK+. The main user of this
-  interface is GtkBuilder. There should be very little need for applications
-  to call any gtk_buildable_... functions.
-  @begin[Note]{dictionary}
+  The @sym{gtk-buildable} interface is implemented by all widgets and many of
+  the non-widget objects that are provided by GTK+. The main user of this
+  interface is @class{gtk-builder}. There should be very little need for
+  applications to call any @code{gtk-buildable-...} functions.
+
+  @subheading{Note}
     An object only needs to implement this interface if it needs to extend the
-    GtkBuilder format or run any extra routines at deserialization time
-  @end{dictionary}
-  @begin[Lisp Implemenation]{dictionary}
-    @begin{pre}
-(define-g-interface \"GtkBuildable\" gtk-buildable
-  (:export t
-   :type-initializer \"gtk_buildable_get_type\"))
-    @end{pre}
-  @end{dictionary}")
+    @class{gtk-builder} format or run any extra routines at deserialization
+    time.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBuildableIface

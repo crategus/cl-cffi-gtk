@@ -2,13 +2,14 @@
 ;;; gtk.plug.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -66,77 +67,12 @@
 ;;; Signals
 ;;;
 ;;;   "embedded"                                       : Run Last
-;;;
-;;; Description
-;;;
-;;; Together with GtkSocket, GtkPlug provides the ability to embed widgets from
-;;; one process into another process in a fashion that is transparent to the
-;;; user. One process creates a GtkSocket widget and passes the ID of that
-;;; widget's window to the other process, which then creates a GtkPlug with that
-;;; window ID. Any widgets contained in the GtkPlug then will appear inside the
-;;; first application's window.
-;;;
-;;; The communication between a GtkSocket and a GtkPlug follows the XEmbed
-;;; protocol. This protocol has also been implemented in other toolkits, e.g.
-;;; Qt, allowing the same level of integration when embedding a Qt widget in
-;;; GTK+ or vice versa.
-;;;
-;;; Note
-;;;
-;;; The GtkPlug and GtkSocket widgets are only available when GTK+ is compiled
-;;; for the X11 platform and GDK_WINDOWING_X11 is defined. They can only be used
-;;; on a GdkX11Display. To use GtkPlug and GtkSocket, you need to include the
-;;; gtk/gtkx.h header.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "embedded" property
-;;;
-;;;   "embedded"                 gboolean              : Read
-;;;
-;;; TRUE if the plug is embedded in a socket.
-;;;
-;;; Default value: FALSE
-;;;
-;;; Since 2.12
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "socket-window" property
-;;;
-;;;   "socket-window"            GdkWindow*            : Read
-;;;
-;;; The window of the socket the plug is embedded in.
-;;;
-;;; Since 2.14
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "embedded" signal
-;;;
-;;; void user_function (GtkPlug *plug,
-;;;                     gpointer user_data)      : Run Last
-;;;
-;;; Gets emitted when the plug becomes embedded in a socket.
-;;;
-;;; plug :
-;;;     the object on which the signal was emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPlug
-;;;
-;;; struct GtkPlug;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkPlug" gtk-plug
@@ -152,8 +88,82 @@
     gtk-plug-socket-window
     "socket-window" "GdkWindow" t nil)))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-plug 'type)
+ "@version{2013-5-26}
+  @begin{short}
+    Together with @class{gtk-socket}, @sym{gtk-plug} provides the ability to
+    embed widgets from one process into another process in a fashion that is
+    transparent to the user. One process creates a @class{gtk-socket} widget and
+    passes the ID of that widget's window to the other process, which then
+    creates a @sym{gtk-plug} with that window ID. Any widgets contained in the
+    @sym{gtk-plug} then will appear inside the first application's window.
+  @end{short}
+
+  The communication between a @class{gtk-socket} and a @sym{gtk-plug} follows
+  the XEmbed protocol. This protocol has also been implemented in other
+  toolkits, e. g. Qt, allowing the same level of integration when embedding a Qt
+  widget in GTK+ or vice versa.
+
+  @subheading{Note}
+    The @sym{gtk-plug} and @class{gtksocket} widgets are only available when
+    GTK+ is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is
+    defined. They can only be used on a @class{gdk-x11-display}. To use
+    @sym{gtk-plug} and @class{gtk-socket}, you need to include the
+    @code{gtk/gtkx.h} header.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"embedded\" signal}
+      @begin{pre}
+ lambda (plug)   : Run Last
+      @end{pre}
+      Gets emitted when the plug becomes embedded in a socket.
+      @begin[code]{table}
+        @entry[plug]{The object on which the signal was emitted.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-plug-embedded}
+  @see-slot{gtk-plug-socket-window}")
+
 ;;; ----------------------------------------------------------------------------
 ;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "embedded" 'gtk-plug) 't)
+ "The @code{\"embedded\"} property of type @code{:boolean} (Read) @br{}
+  @em{True} if the plug is embedded in a socket. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.12")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "socket-window" 'gtk-plug) 't)
+ "The @code{\"socket-window\"} property of type @class{gdk-window} (Read) @br{}
+  The window of the socket the plug is embedded in. @br{}
+  Since 2.14")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-plug-embedded atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-plug-embedded 'function)
+ "@version{2013-5-26}
+  Accessor of the slot @code{\"embedded\"} of the @class{gtk-plug} class.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-plug-socket-window atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-plug-socket-window 'function)
+ "@version{2013-5-26}
+  Accessor of the slot @code{\"socket-window\"} of the @class{gtk-plug} class.")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_construct ()
 ;;;
 ;;; void gtk_plug_construct (GtkPlug *plug, Window socket_id);
@@ -273,6 +283,5 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.plug.lisp ----------------------------------------------

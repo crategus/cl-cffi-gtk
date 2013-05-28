@@ -264,24 +264,24 @@ GTK+ Widgets and Objects
     gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.6.4
     gtk.container.lisp               - GtkContainer                - GTK+ 3.6.4
     gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4
-    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.4.3*
-    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.4.1*
-    gtk.range.lisp                   - GtkRange                    - GTK+ 3.4.1*
-    gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.4.3*
+    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.6.4
+    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4
+    gtk.range.lisp                   - GtkRange                    - GTK+ 3.6.4
+    gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.6.4
     
   Cross-process Embedding
     
-    gtk.plug.lisp                    - GtkPlug                     - GTK+ 3.4.3*
-    gtk.socket.lisp                  - GtkSocket                   - GTK+ 3.4.3*
+    gtk.plug.lisp                    - GtkPlug                     - GTK+ 3.6.4
+    gtk.socket.lisp                  - GtkSocket                   - GTK+ 3.6.4
     
   Recently Used Documents
     
-    gtk.recent-manager-lisp          - GtkRecentManager            - GTK+ 3.4.3*
-    gtk.recent-chooser.lisp          - GtkRecentChooser            - GTK+ 3.4.3*
-    gtk.recent-chooser-dialog.lisp   - GtkRecentChooserDialog      - GTK+ 3.4.3*
-    gtk.recent-chooser-menu.lisp     - GtkRecentChooserMenu        - GTK+ 3.4.3*
-    gtk.recent-chooser-widget.lisp   - GtkRecentChooserWidget      - GTK+ 3.4.3*
-    gtk.recent-filter.lisp           - GtkRecentFilter             - GTK+ 3.4.3*
+    gtk.recent-manager-lisp          - GtkRecentManager            - GTK+ 3.6.4
+    gtk.recent-chooser.lisp          - GtkRecentChooser            - GTK+ 3.6.4
+    gtk.recent-chooser-dialog.lisp   - GtkRecentChooserDialog      - GTK+ 3.6.4
+    gtk.recent-chooser-menu.lisp     - GtkRecentChooserMenu        - GTK+ 3.6.4
+    gtk.recent-chooser-widget.lisp   - GtkRecentChooserWidget      - GTK+ 3.6.4
+    gtk.recent-filter.lisp           - GtkRecentFilter             - GTK+ 3.6.4
     
   Choosing from installed applications
     
@@ -292,8 +292,8 @@ GTK+ Widgets and Objects
   
   Interface builder
     
-    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.4.3*
-    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.4.3*
+    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.6.4
+    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.6.4
     
   Application support
   

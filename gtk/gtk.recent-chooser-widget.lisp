@@ -5,10 +5,11 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -52,26 +53,12 @@
 ;;; 
 ;;; GtkRecentChooserWidget implements AtkImplementorIface, GtkBuildable,
 ;;; GtkOrientable and GtkRecentChooser.
-;;;
-;;; Description
-;;; 
-;;; GtkRecentChooserWidget is a widget suitable for selecting recently used
-;;; files. It is the main building block of a GtkRecentChooserDialog. Most
-;;; applications will only need to use the latter; you can use
-;;; GtkRecentChooserWidget as part of a larger window if you have special needs.
-;;; 
-;;; Note that GtkRecentChooserWidget does not have any methods of its own.
-;;; Instead, you should use the functions that work on a GtkRecentChooser.
-;;; 
-;;; Recently used files are supported since GTK+ 2.10.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentChooserWidget
-;;; 
-;;; struct GtkRecentChooserWidget;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -90,11 +77,29 @@
    :type-initializer "gtk_recent_chooser_widget_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-chooser-widget 'type)
+ "@version{2013-5-28}
+  @begin{short}
+    @sym{gtk-recent-chooser-widget} is a widget suitable for selecting recently
+    used files. It is the main building block of a
+    @class{gtk-recent-chooser-dialog}. Most applications will only need to use
+    the latter; you can use @sym{gtk-recent-chooser-widget} as part of a larger
+    window if you have special needs.
+  @end{short}
+
+  Note that @sym{gtk-recent-chooser-widget} does not have any methods of its
+  own. Instead, you should use the functions that work on a
+  @class{gtk-recent-chooser}.
+
+  Recently used files are supported since GTK+ 2.10.")
+
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Check the implementation of the child properties. 
 ;;       GtkRecentChooserWidget has no documented child properties.
 
+#|
 (define-child-property "GtkRecentChooserWidget"
                        gtk-recent-chooser-widget-child-expand
                        "expand" "gboolean" t t t)
@@ -114,6 +119,7 @@
 (define-child-property "GtkRecentChooserWidget"
                        gtk-recent-chooser-widget-child-position
                        "position" "gint" t t t)
+|#
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_widget_new ()

@@ -2,13 +2,14 @@
 ;;; gtk.recent-manager.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -92,131 +93,12 @@
 ;;; Signals
 ;;; 
 ;;;   "changed"                                       : Run First
-;;; 
-;;; Description
-;;; 
-;;; GtkRecentManager provides a facility for adding, removing and looking up
-;;; recently used files. Each recently used file is identified by its URI, and
-;;; has meta-data associated to it, like the names and command lines of the
-;;; applications that have registered it, the number of time each application
-;;; has registered the same file, the mime type of the file and whether the file
-;;; should be displayed only by the applications that have registered it.
-;;; 
-;;; Note
-;;; 
-;;; The recently used files list is per user.
-;;; 
-;;; The GtkRecentManager acts like a database of all the recently used files.
-;;; You can create new GtkRecentManager objects, but it is more efficient to use
-;;; the default manager created by GTK+.
-;;; 
-;;; Adding a new recently used file is as simple as:
-;;; 
-;;; GtkRecentManager *manager;
-;;; 
-;;; manager = gtk_recent_manager_get_default ();
-;;; gtk_recent_manager_add_item (manager, file_uri);
-;;; 
-;;; The GtkRecentManager will try to gather all the needed information from the
-;;; file itself through GIO.
-;;; 
-;;; Looking up the meta-data associated with a recently used file given its URI
-;;; requires calling gtk_recent_manager_lookup_item():
-;;; 
-;;; GtkRecentManager *manager;
-;;; GtkRecentInfo *info;
-;;; GError *error = NULL;
-;;; 
-;;; manager = gtk_recent_manager_get_default ();
-;;; info = gtk_recent_manager_lookup_item (manager, file_uri, &error);
-;;; if (error)
-;;;   {
-;;;     g_warning ("Could not find the file: %s", error->message);
-;;;     g_error_free (error);
-;;;   }
-;;; else
-;;;  {
-;;;    /* Use the info object */
-;;;    gtk_recent_info_unref (info);
-;;;  }
-;;; 
-;;; In order to retrieve the list of recently used files, you can use
-;;; gtk_recent_manager_get_items(), which returns a list of GtkRecentInfo
-;;; structures.
-;;; 
-;;; A GtkRecentManager is the model used to populate the contents of one, or
-;;; more GtkRecentChooser implementations.
-;;; 
-;;; Note
-;;; 
-;;; The maximum age of the recently used files list is controllable through the
-;;; "gtk-recent-files-max-age" property.
-;;; 
-;;; Recently used files are supported since GTK+ 2.10.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "filename" property
-;;; 
-;;;   "filename"                 gchar*               : Read / Write / Construct
-;;; 
-;;; The full path to the file to be used to store and read the recently used
-;;; resources list
-;;; 
-;;; Default value: NULL
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size" property
-;;; 
-;;;   "size"                     gint                  : Read
-;;; 
-;;; The size of the recently used resources list.
-;;; 
-;;; Allowed values: >= G_MAXULONG
-;;; 
-;;; Default value: 0
-;;; 
-;;; Since 2.10
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "changed" signal
-;;; 
-;;; void user_function (GtkRecentManager *recent_manager,
-;;;                     gpointer          user_data)           : Run First
-;;; 
-;;; Emitted when the current recently used resources manager changes its
-;;; contents, either by calling gtk_recent_manager_add_item() or by another
-;;; application.
-;;; 
-;;; recent_manager :
-;;;     the recent manager
-;;; 
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentManager
-;;; 
-;;; struct GtkRecentManager;
-;;; 
-;;; GtkRecentManager contains only private data and should be accessed using the
-;;; provided API.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRecentManager" gtk-recent-manager
@@ -230,6 +112,130 @@
    (size
     gtk-recent-manager-size
     "size" "gint" t nil)))
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-manager 'type)
+ "@version{2013-5-26}
+  @begin{short}
+    @sym{gtk-recent-manager} provides a facility for adding, removing and
+    looking up recently used files. Each recently used file is identified by its
+    URI, and has meta-data associated to it, like the names and command lines of
+    the applications that have registered it, the number of time each
+    application has registered the same file, the mime type of the file and
+    whether the file should be displayed only by the applications that have
+    registered it.
+  @end{short}
+
+  @subheading{Note}
+    The recently used files list is per user.
+
+  The @sysm{gtk-recent-nanager} acts like a database of all the recently used
+  files. You can create new @sym{gtk-recent-manager} objects, but it is more
+  efficient to use the default manager created by GTK+.
+
+  Adding a new recently used file is as simple as:
+  @begin{pre}
+ GtkRecentManager *manager;
+
+ manager = gtk_recent_manager_get_default ();
+ gtk_recent_manager_add_item (manager, file_uri);
+  @end{pre}
+  The @sym{gtk-recent-manager} will try to gather all the needed information
+  from the file itself through GIO.
+
+  Looking up the meta-data associated with a recently used file given its URI
+  requires calling the function @fun{gtk-recent-manager-lookup-item}:
+  @begin{pre}
+ GtkRecentManager *manager;
+ GtkRecentInfo *info;
+ GError *error = NULL;
+
+ manager = gtk_recent_manager_get_default ();
+ info = gtk_recent_manager_lookup_item (manager, file_uri, &error);
+ if (error)
+   {
+     g_warning (\"Could not find the file: %s\", error->message);
+     g_error_free (error);
+   @}
+ else
+  {
+    /* Use the info object */
+    gtk_recent_info_unref (info);
+  @}
+  @end{pre}
+  In order to retrieve the list of recently used files, you can use the function
+  @fun{gtk-recent-manager-get-items}, which returns a list of
+  @class{gtk-recent-info} structures.
+
+  A @class{gtk-recent-manager} is the model used to populate the contents of
+  one, or more @class{gtk-recent-chooser} implementations.
+
+  @subheading{Note}
+    The maximum age of the recently used files list is controllable through the
+    \"gtk-recent-files-max-age\" property.
+
+  Recently used files are supported since GTK+ 2.10.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"changed\" signal}
+      @begin{pre}
+ lambda (recent-manager)   : Run First
+      @end{pre}
+      Emitted when the current recently used resources manager changes its
+      contents, either by calling the function @fun{gtk-recent-manager-add-item}
+      or by another application.
+      @begin[code]{table}
+        @entry[recent-manager]{The recent manager.}
+      @end{table}
+  @end{dictionary}
+  Since 2.10
+  @see-slot{gtk-recent-manager-filename}
+  @see-slot{gtk-recent-manager-size}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "filename"
+                                               'gtk-recent-manager) 't)
+ "The @code{\"filename\"} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  The full path to the file to be used to store and read the recently used
+  resources list. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.10")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-recent-manager) 't)
+ "The @code{\"size\"} property of type @code{:int} (Read) @br{}
+  The size of the recently used resources list. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: 0 @br{}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-manager-filename atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-recent-manager-filename 'function)
+ "@version{2013-5-26}
+  Accessor of the slot @code{\"filename\"} of the @class{gtk-recent-manager}
+  class.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-manager-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-recent-manager-size 'function)
+ "@version{2013-5-26}
+  Accessor of the slot @code{\"size\"} of the @class{gtk-recent-manager}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRecentInfo
@@ -305,41 +311,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkRecentManagerError
-;;; 
-;;; typedef enum {
-;;;   GTK_RECENT_MANAGER_ERROR_NOT_FOUND,
-;;;   GTK_RECENT_MANAGER_ERROR_INVALID_URI,
-;;;   GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING,
-;;;   GTK_RECENT_MANAGER_ERROR_NOT_REGISTERED,
-;;;   GTK_RECENT_MANAGER_ERROR_READ,
-;;;   GTK_RECENT_MANAGER_ERROR_WRITE,
-;;;   GTK_RECENT_MANAGER_ERROR_UNKNOWN
-;;; } GtkRecentManagerError;
-;;; 
-;;; Error codes for GtkRecentManager operations
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_NOT_FOUND
-;;;     the URI specified does not exists in the recently used resources list.
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_INVALID_URI
-;;;     the URI specified is not valid.
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING
-;;;     the supplied string is not UTF-8 encoded.
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_NOT_REGISTERED
-;;;     no application has registered the specified item.
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_READ
-;;;     failure while reading the recently used resources file.
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_WRITE
-;;;     failure while writing the recently used resources file.
-;;; 
-;;; GTK_RECENT_MANAGER_ERROR_UNKNOWN
-;;;     unspecified error.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkRecentManagerError" gtk-recent-manager-error
@@ -352,6 +323,35 @@
   (:read 4)
   (:write 5)
   (:unknown 6))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-manager-error atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-recent-manager-error atdoc:*external-symbols*)
+ "@version{2013-5-26}
+  @short{Error codes for @class{gtk-recent-manager} operations.}
+  Since 2.10
+  @begin{pre}
+(define-g-enum \"GtkRecentManagerError\" gtk-recent-manager-error
+  (:export t
+   :type-initializer \"gtk_recent_manager_error_get_type\")
+  (:not-found 0)
+  (:invalid-uri 1)
+  (:invalid-encoding 2)
+  (:not-registered 3)
+  (:read 4)
+  (:write 5)
+  (:unknown 6))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:not-found]{The URI specified does not exists in the recently used
+      resources list.}
+    @entry[:invalid-uri]{The URI specified is not valid.}
+    @entry[:invalid-encoding]{The supplied string is not UTF-8 encoded.}
+    @entry[:not-registered]{No application has registered the specified item.}
+    @entry[:read]{Failure while reading the recently used resources file.}
+    @entry[:write]{Failure while writing the recently used resources file.}
+    @entry[:unknown]{Unspecified error.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_new ()
@@ -1082,6 +1082,5 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.recent-manager.lisp ------------------------------------

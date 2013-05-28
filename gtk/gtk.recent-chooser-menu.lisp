@@ -2,13 +2,14 @@
 ;;; gtk.recent-chooser-menu.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,52 +60,12 @@
 ;;; Properties
 ;;; 
 ;;;   "show-numbers"             gboolean              : Read / Write
-;;; 
-;;; Description
-;;; 
-;;; GtkRecentChooserMenu is a widget suitable for displaying recently used files
-;;; inside a menu. It can be used to set a sub-menu of a GtkMenuItem using
-;;; gtk_menu_item_set_submenu(), or as the menu of a GtkMenuToolButton.
-;;; 
-;;; Note that GtkRecentChooserMenu does not have any methods of its own.
-;;; Instead, you should use the functions that work on a GtkRecentChooser.
-;;; 
-;;; Note also that GtkRecentChooserMenu does not support multiple filters, as it
-;;; has no way to let the user choose between them as the GtkRecentChooserWidget
-;;; and GtkRecentChooserDialog widgets do. Thus using
-;;; gtk_recent_chooser_add_filter() on a GtkRecentChooserMenu widget will yield
-;;; the same effects as using gtk_recent_chooser_set_filter(), replacing any
-;;; currently set filter with the supplied filter;
-;;; gtk_recent_chooser_remove_filter() will remove any currently set
-;;; GtkRecentFilter object and will unset the current filter;
-;;; gtk_recent_chooser_list_filters() will return a list containing a single
-;;; GtkRecentFilter object.
-;;; 
-;;; Recently used files are supported since GTK+ 2.10.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "show-numbers" property
-;;; 
-;;;   "show-numbers"             gboolean              : Read / Write
-;;; 
-;;; Whether the first ten items in the menu should be prepended by a number
-;;; acting as a unique mnemonic.
-;;; 
-;;; Default value: FALSE
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentChooserMenu
-;;; 
-;;; struct GtkRecentChooserMenu;
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -122,11 +83,70 @@
     gtk-recent-chooser-menu-show-numbers
     "show-numbers" "gboolean" t t)))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-chooser-menu 'type)
+ "@version{2013-5-28}
+  @begin{short}
+    @sym{gtk-recent-chooser-menu} is a widget suitable for displaying recently
+    used files inside a menu. It can be used to set a sub-menu of a
+    @class{gtk-menu-item} using the function @fun{gtk-menu-item-set-submenu},
+    or as the menu of a @class{gtk-menu-tool-button}.
+  @end{short}
+
+  Note that @sym{gtk-recent-chooser-menu} does not have any methods of its own.
+  Instead, you should use the functions that work on a
+  @class{gtk-recent-chooser}.
+
+  Note also that @sym{gtk-recent-chooser-menu} does not support multiple
+  filters, as it has no way to let the user choose between them as the
+  @class{gtk-recent-chooser-widget} and @class{gtk-recent-chooser-dialog}
+  widgets do. Thus using the function @fun{gtk-recent-chooser-add-filter} on a
+  @sym{gtk-recent-chooser-menu} widget will yield the same effects as using the
+  function @fun{gtk-recent-chooser-set-filter}, replacing any currently set
+  filter with the supplied filter; the function
+  @fun{gtk-recent-chooser-remove-filter} will remove any currently set
+  @class{gtk-recent-filter} object and will unset the current filter; the
+  function @fun{gtk-recent-chooser-list-filters} will return a list containing
+  a single @class{gtk-recent-filter} object.
+
+  Recently used files are supported since GTK+ 2.10.")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-numbers"
+                                               'gtk-recent-chooser-menu) 't)
+ "The @code{\"show-numbers\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the first ten items in the menu should be prepended by a number
+  acting as a unique mnemonic. @br{}
+  Default value: @code{nil}
+  Since 2.10")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-choose-menu-show-numbers atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-recent-chooser-menu-show-numbers 'function)
+ "@version{2013-5-28}
+  Accessor of the slot @code{\"show-numbers\"} of the
+  @class{gtk-recent-chooser-menu} class.")
+
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: Check the implementation of the child properties. 
 ;;       GtkRecentChooserMenu has no documented child properties.
 
+#|
 (define-child-property "GtkRecentChooserMenu"
                        gtk-recent-chooser-menu-child-left-attach
                        "left-attach" "gint" t t t)
@@ -142,6 +162,7 @@
 (define-child-property "GtkRecentChooserMenu"
                        gtk-recent-chooser-menu-child-bottom-attach
                        "bottom-attach" "gint" t t t)
+|#
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_new ()
@@ -224,6 +245,5 @@
 ;;; 
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.recent-chooser-menu.lisp -------------------------------

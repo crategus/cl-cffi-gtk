@@ -3642,11 +3642,33 @@ setup_tree (void)
       @about-function{gtk-bin-get-child}
     @end{subsection}
     @begin[GtkMenuShell]{subsection}
+      A base class for menu objects.
+
+      @about-class{gtk-menu-shell}
+      @about-function{gtk-menu-shell-append}
+      @about-function{gtk-menu-shell-prepend}
+      @about-function{gtk-menu-shell-insert}
+      @about-function{gtk-menu-shell-deactivate}
+      @about-function{gtk-menu-shell-select-item}
+      @about-function{gtk-menu-shell-select-first}
+      @about-function{gtk-menu-shell-deselect}
+      @about-function{gtk-menu-shell-activate-item}
+      @about-function{gtk-menu-shell-cancel}
+      @about-function{gtk-menu-shell-set-take-focus}
+      @about-function{gtk-menu-shell-get-take-focus}
+      @about-function{gtk-menu-shell-get-selected-item}
+      @about-function{gtk-menu-shell-get-parent-shell}
+      @about-function{gtk-menu-shell-bind-model}
+      @about-symbol{gtk-menu-direction-type}
     @end{subsection}
     @begin[GtkMisc]{subsection}
       Base class for widgets with alignments and padding.
 
       @about-class{gtk-misc}
+      @about-function{gtk-misc-set-alignment}
+      @about-function{gtk-misc-set-padding}
+      @about-function{gtk-misc-get-alignment}
+      @about-function{gtk-misc-get-padding}
     @end{subsection}
     @begin[GtkRange]{subsection}
       Base class for widgets which visualize an adjustment
@@ -3683,26 +3705,173 @@ setup_tree (void)
       @about-function{gtk-range-set-slider-size-fixed}
     @end{subsection}
     @begin[GtkIMContext]{subsection}
+      Base class for input method contexts.
+
+      @about-class{gtk-im-context}
+      @about-class{gtk-im-context-class}
+      @about-symbol{gtk-im-contextInfo}
+      @about-function{gtk-im-context-set-client-window}
+      @about-function{gtk-im-context-get-preedit-string}
+      @about-function{gtk-im-context-filter-keypress}
+      @about-function{gtk-im-context-focus-in}
+      @about-function{gtk-im-context-focus-out}
+      @about-function{gtk-im-context-reset}
+      @about-function{gtk-im-context-set-cursor-location}
+      @about-function{gtk-im-context-set-use-preedit}
+      @about-function{gtk-im-context-set-surrounding}
+      @about-function{gtk-im-context-get-surrounding}
+      @about-function{gtk-im-context-delete-surrounding}
     @end{subsection}
   @end{section}
   @begin[Cross-process Embedding]{section}
     @begin[GtkPlug]{subsection}
+      Toplevel for embedding into other processes.
+
+      @about-class{gtk-plug}
+      @about-function{gtk-plug-construct}
+      @about-function{gtk-plug-construct-for-display}
+      @about-function{gtk-plug-new}
+      @about-function{gtk-plug-new-for-display}
+      @about-function{gtk-plug-get-id}
+      @about-function{gtk-plug-get-embedded}
+      @about-function{gtk-plug-get-socket-window}
     @end{subsection}
     @begin[GtkSocket]{subsection}
+      Container for widgets from other processes.
+
+      @about-class{gtk-socket}
+      @about-function{gtk-socket-new}
+      @about-function{gtk-socket-add-id}
+      @about-function{gtk-socket-get-id}
+      @about-function{gtk-socket-get-plug-window}
     @end{subsection}
   @end{section}
   @begin[Recently Used Documents]{section}
     @begin[GtkRecentManager]{subsection}
+      Managing recently used files.
+
+      @about-class{gtk-recent-manager}
+      @about-class{gtk-recent-info}
+      @about-class{gtk-recent-data}
+      @about-symbol{GTK_RECENT_MANAGER_ERROR}
+      @about-symbol{gtk-recent-manager-error}
+      @about-function{gtk-recent-manager-new}
+      @about-function{gtk-recent-manager-get-default}
+      @about-function{gtk-recent-manager-add-item}
+      @about-function{gtk-recent-manager-add-full}
+      @about-function{gtk-recent-manager-remove-item}
+      @about-function{gtk-recent-manager-lookup-item}
+      @about-function{gtk-recent-manager-has-item}
+      @about-function{gtk-recent-manager-move-item}
+      @about-function{gtk-recent-manager-get-items}
+      @about-function{gtk-recent-manager-purge-items}
+      @about-function{gtk-recent-info-ref}
+      @about-function{gtk-recent-info-unref}
+      @about-function{gtk-recent-info-get-uri}
+      @about-function{gtk-recent-info-get-display-name}
+      @about-function{gtk-recent-info-get-description}
+      @about-function{gtk-recent-info-get-mime-type}
+      @about-function{gtk-recent-info-get-added}
+      @about-function{gtk-recent-info-get-modified}
+      @about-function{gtk-recent-info-get-visited}
+      @about-function{gtk-recent-info-get-private-hint}
+      @about-function{gtk-recent-info-get-application-info}
+      @about-function{gtk-recent-info-get-applications}
+      @about-function{gtk-recent-info-last-application}
+      @about-function{gtk-recent-info-has-application}
+      @about-function{gtk-recent-info-create-app-info}
+      @about-function{gtk-recent-info-get-groups}
+      @about-function{gtk-recent-info-has-group}
+      @about-function{gtk-recent-info-get-icon}
+      @about-function{gtk-recent-info-get-gicon}
+      @about-function{gtk-recent-info-get-short-name}
+      @about-function{gtk-recent-info-get-uri-display}
+      @about-function{gtk-recent-info-get-age}
+      @about-function{gtk-recent-info-is-local}
+      @about-function{gtk-recent-info-exists}
+      @about-function{gtk-recent-info-match}
     @end{subsection}
     @begin[GtkRecentChooser]{subsection}
+      Interface implemented by widgets displaying recently used files.
+
+      @about-class{gtk-recent-chooser}
+      @about-class{gtk-recent-chooser-iface}
+      @about-symbol{GTK_RECENT_CHOOSER_ERROR}
+      @about-symbol{gtk-recent-chooser-error}
+      @about-function{gtk-recent-chooser-set-show-private}
+      @about-function{gtk-recent-chooser-get-show-private}
+      @about-function{gtk-recent-chooser-set-show-not-found}
+      @about-function{gtk-recent-chooser-get-show-not-found}
+      @about-function{gtk-recent-chooser-set-show-icons}
+      @about-function{gtk-recent-chooser-get-show-icons}
+      @about-function{gtk-recent-chooser-set-select-multiple}
+      @about-function{gtk-recent-chooser-get-select-multiple}
+      @about-function{gtk-recent-chooser-set-local-only}
+      @about-function{gtk-recent-chooser-get-local-only}
+      @about-function{gtk-recent-chooser-set-limit}
+      @about-function{gtk-recent-chooser-get-limit}
+      @about-function{gtk-recent-chooser-set-show-tips}
+      @about-function{gtk-recent-chooser-get-show-tips}
+      @about-symbol{gtk-recent-sort-type}
+      @about-function{gtk-recent-chooser-set-sort-type}
+      @about-function{gtk-recent-chooser-get-sort-type}
+      @about-function{gtk-recent-chooser-set-sort-func}
+      @about-function{gtk-recent-chooser-set-current-uri}
+      @about-function{gtk-recent-chooser-get-current-uri}
+      @about-function{gtk-recent-chooser-get-current-item}
+      @about-function{gtk-recent-chooser-select-uri}
+      @about-function{gtk-recent-chooser-unselect-uri}
+      @about-function{gtk-recent-chooser-select-all}
+      @about-function{gtk-recent-chooser-unselect-all}
+      @about-function{gtk-recent-chooser-get-items}
+      @about-function{gtk-recent-chooser-get-uris}
+      @about-function{gtk-recent-chooser-add-filter}
+      @about-function{gtk-recent-chooser-remove-filter}
+      @about-function{gtk-recent-chooser-list-filters}
+      @about-function{gtk-recent-chooser-set-filter}
+      @about-function{gtk-recent-chooser-get-filter}
     @end{subsection}
     @begin[GtkRecentChooserDialog]{subsection}
+      Displays recently used files in a dialog.
+
+      @about-class{gtk-recent-chooser-dialog}
+      @about-function{gtk-recent-chooser-dialog-new}
+      @about-function{gtk-recent-chooser-dialog-new-for-manager}
     @end{subsection}
     @begin[GtkRecentChooserMenu]{subsection}
+      Displays recently used files in a menu.
+
+      @about-class{gtk-recent-chooser-menu}
+      @about-function{gtk-recent-chooser-menu-new}
+      @about-function{gtk-recent-chooser-menu-new-for-manager}
+      @about-function{gtk-recent-chooser-menu-get-show-numbers}
+      @about-function{gtk-recent-chooser-menu-set-show-numbers}
     @end{subsection}
     @begin[GtkRecentChooserWidget]{subsection}
+      Displays recently used files.
+
+      @about-class{gtk-recent-chooser-widget}
+      @about-function{gtk-recent-chooser-widget-new}
+      @about-function{gtk-recent-chooser-widget-for-manager}
     @end{subsection}
     @begin[GtkRecentFilter]{subsection}
+      A filter for selecting a subset of recently used files.
+
+      @about-class{gtk-recent-filter}
+      @about-class{gtk-recent-filter-info}
+      @about-symbol{gtk-recent-filter-flags}
+      @about-function{gtk-recent-filter-new}
+      @about-function{gtk-recent-filter-get-name}
+      @about-function{gtk-recent-filter-set-name}
+      @about-function{gtk-recent-filter-add-mime-type}
+      @about-function{gtk-recent-filter-add-pattern}
+      @about-function{gtk-recent-filter-add-pixbuf-formats}
+      @about-function{gtk-recent-filter-add-application}
+      @about-function{gtk-recent-filter-add-group}
+      @about-function{gtk-recent-filter-add-age}
+      @about-function{gtk-recent-filter-add-custom}
+      @about-function{gtk-recent-filter-get-needed}
+      @about-function{gtk-recent-filter-filter}
     @end{subsection}
   @end{section}
   @begin[Choosing from installed applications]{section}
@@ -3721,8 +3890,44 @@ setup_tree (void)
   @end{section}
   @begin[Interface builder]{section}
     @begin[GtkBuildable]{subsection}
+      Interface for objects that can be built by GtkBuilder.
+
+      @about-class{gtk-buildable}
+      @about-class{gtk-buildable-iface}
+      @about-function{gtk-buildable-set-name}
+      @about-function{gtk-buildable-get-name}
+      @about-function{gtk-buildable-add-child}
+      @about-function{gtk-buildable-set-buildable-property}
+      @about-function{gtk-buildable-construct-child}
+      @about-function{gtk-buildable-custom-tag-start}
+      @about-function{gtk-buildable-custom-tag-end}
+      @about-function{gtk-buildable-custom-finished}
+      @about-function{gtk-buildable-parser-finished}
+      @about-function{gtk-buildable-get-internal-child}
     @end{subsection}
     @begin[GtkBuilder]{subsection}
+      Build an interface from an XML UI definition.
+
+      @about-class{gtk-builder}
+      @about-symbol{gtk-builder-error}
+      @about-function{gtk-builder-new}
+      @about-function{gtk-builder-add-from-file}
+      @about-function{gtk-builder-add-from-resource}
+      @about-function{gtk-builder-add-from-string}
+      @about-function{gtk-builder-add-objects-from-file}
+      @about-function{gtk-builder-add-objects-from-string}
+      @about-function{gtk-builder-add-objects-from-resource}
+      @about-function{gtk-builder-get-object}
+      @about-function{gtk-builder-get-objects}
+      @about-function{gtk-builder-connect-signals}
+      @about-function{gtk-builder-connect-signals-full}
+      @about-function{gtk-builder-set-translation-domain}
+      @about-function{gtk-builder-get-translation-domain}
+      @about-function{gtk-builder-get-type-from-name}
+      @about-function{gtk-builder-value-from-string}
+      @about-function{gtk-builder-value-from-string-type}
+      @about-symbol{GTK_BUILDER_WARN_INVALID_CHILD_TYPE}
+      @about-symbol{GTK_BUILDER_ERROR}
     @end{subsection}
   @end{section}
   @begin[Application support]{section}

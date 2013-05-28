@@ -2,13 +2,14 @@
 ;;; gtk.recent-filter.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -60,62 +61,12 @@
 ;;; Implemented Interfaces
 ;;; 
 ;;; GtkRecentFilter implements GtkBuildable.
-;;;
-;;; Description
-;;; 
-;;; A GtkRecentFilter can be used to restrict the files being shown in a
-;;; GtkRecentChooser. Files can be filtered based on their name (with
-;;; gtk_recent_filter_add_pattern()), on their mime type (with
-;;; gtk_file_filter_add_mime_type()), on the application that has registered
-;;; them (with gtk_recent_filter_add_application()), or by a custom filter
-;;; function (with gtk_recent_filter_add_custom()).
-;;; 
-;;; Filtering by mime type handles aliasing and subclassing of mime types; e.g.
-;;; a filter for text/plain also matches a file with mime type application/rtf,
-;;; since application/rtf is a subclass of text/plain. Note that GtkRecentFilter
-;;; allows wildcards for the subtype of a mime type, so you can e.g. filter for
-;;; image/*.
-;;; 
-;;; Normally, filters are used by adding them to a GtkRecentChooser, see
-;;; gtk_recent_chooser_add_filter(), but it is also possible to manually use a
-;;; filter on a file with gtk_recent_filter_filter().
-;;; 
-;;; Recently used files are supported since GTK+ 2.10.
-;;; 
-;;; GtkRecentFilter as GtkBuildable
-;;; 
-;;; The GtkRecentFilter implementation of the GtkBuildable interface supports
-;;; adding rules using the <mime-types>, <patterns> and <applications> elements
-;;; and listing the rules within. Specifying a <mime-type>, <pattern> or
-;;; <application> is the same as calling gtk_recent_filter_add_mime_type(),
-;;; gtk_recent_filter_add_pattern() or gtk_recent_filter_add_application().
-;;; 
-;;; Example 108. A UI definition fragment specifying GtkRecentFilter rules
-;;; 
-;;; <object class="GtkRecentFilter">
-;;;   <mime-types>
-;;;     <mime-type>text/plain</mime-type>
-;;;     <mime-type>image/png</mime-type>
-;;;   </mime-types>
-;;;   <patterns>
-;;;     <pattern>*.txt</pattern>
-;;;     <pattern>*.png</pattern>
-;;;   </patterns>
-;;;   <applications>
-;;;     <application>gimp</application>
-;;;     <application>gedit</application>
-;;;     <application>glade</application>
-;;;   </applications>
-;;; </object>
-;;; 
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRecentFilter
-;;; 
-;;; typedef struct _GtkRecentFilter GtkRecentFilter;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRecentFilter" gtk-recent-filter
@@ -124,6 +75,60 @@
    :interfaces ("GtkBuildable")
    :type-initializer "gtk_recent_filter_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-filer 'type)
+ "@version{2013-5-28}
+  @begin{short}
+    A @sym{gtk-recent-filter} can be used to restrict the files being shown in a
+    @class{gtk-recent-chooser}. Files can be filtered based on their name (with
+    the function @fun{gtk-recent-filter-add-pattern}), on their mime type (with
+    the function @fun{gtk-file-filter-add-mime-type}), on the application that
+    has registered them (with the function
+    @fun{gtk-recent-filter-add-application}), or by a custom filter function
+    (with the function @fun{gtk-recent-filter-add-custom}).
+  @end{short}
+
+  Filtering by mime type handles aliasing and subclassing of mime types; e. g.
+  a filter for text/plain also matches a file with mime type application/rtf,
+  since application/rtf is a subclass of text/plain. Note that
+  @sym{gtk-recent-filter} allows wildcards for the subtype of a mime type, so
+  you can e. g. filter for image/*.
+
+  Normally, filters are used by adding them to a @class{gtk-recent-chooser}, see
+  the function @fun{gtk-recent-chooser-add-filter}, but it is also possible to
+  manually use a filter on a file with the function
+  @fun{gtk-recent-filter-filter}.
+
+  Recently used files are supported since GTK+ 2.10.
+
+  @subheading{@sym{gtk-recent-filter} as @class{gtk-buildable}}
+    The @sym{gtk-recent-filter} implementation of the @class{gtk-buildable}
+    interface supports adding rules using the <mime-types>, <patterns> and
+    <applications> elements and listing the rules within. Specifying a
+    <mime-type>, <pattern> or <application> is the same as calling the functions
+    @fun{gtk-recent-filter-add-mime-type}, @fun{gtk-recent-filter-add-pattern}
+    or @fun{gtk-recent-filter-add-application}.
+
+    @b{Example:} A UI definition fragment specifying @sym{gtk-recent-filter}
+    rules
+    @begin{pre}
+ <object class=\"GtkRecentFilter\">
+   <mime-types>
+     <mime-type>text/plain</mime-type>
+     <mime-type>image/png</mime-type>
+   </mime-types>
+   <patterns>
+     <pattern>*.txt</pattern>
+     <pattern>*.png</pattern>
+   </patterns>
+   <applications>
+     <application>gimp</application>
+     <application>gedit</application>
+     <application>glade</application>
+   </applications>
+ </object>
+    @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentFilterInfo
@@ -146,36 +151,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkRecentFilterFlags
-;;; 
-;;; typedef enum {
-;;;   GTK_RECENT_FILTER_URI          = 1 << 0,
-;;;   GTK_RECENT_FILTER_DISPLAY_NAME = 1 << 1,
-;;;   GTK_RECENT_FILTER_MIME_TYPE    = 1 << 2,
-;;;   GTK_RECENT_FILTER_APPLICATION  = 1 << 3,
-;;;   GTK_RECENT_FILTER_GROUP        = 1 << 4,
-;;;   GTK_RECENT_FILTER_AGE          = 1 << 5
-;;; } GtkRecentFilterFlags;
-;;; 
-;;; These flags indicate what parts of a GtkRecentFilterInfo struct are filled
-;;; or need to be filled.
-;;; 
-;;; GTK_RECENT_FILTER_URI
-;;;     the URI of the file being tested
-;;; 
-;;; GTK_RECENT_FILTER_DISPLAY_NAME
-;;;     the string that will be used to display the file in the recent chooser
-;;; 
-;;; GTK_RECENT_FILTER_MIME_TYPE
-;;;     the mime type of the file
-;;; 
-;;; GTK_RECENT_FILTER_APPLICATION
-;;;     the list of applications that have registered the file
-;;; 
-;;; GTK_RECENT_FILTER_GROUP
-;;;     the groups to which the file belongs to
-;;; 
-;;; GTK_RECENT_FILTER_AGE
-;;;     the number of days elapsed since the file has been registered
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GtkRecentFilterFlags" gtk-recent-filter-flags
@@ -187,6 +162,36 @@
   (:application 8)
   (:group 16)
   (:age 32))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-filter-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-recent-filter-flags atdoc:*external-symbols*)
+ "@version{2013-5-28}
+  @begin{short}
+    These flags indicate what parts of a @class{gtk-recent-filter-info}
+    structure are filled or need to be filled.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkRecentFilterFlags\" gtk-recent-filter-flags
+  (:export t
+   :type-initializer \"gtk_recent_filter_flags_get_type\")
+  (:uri 1)
+  (:display-name 2)
+  (:mime-type 4)
+  (:application 8)
+  (:group 16)
+  (:age 32))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:uri]{The URI of the file being tested.}
+    @entry[:display-name]{The string that will be used to display the file in
+      the recent chooser.}
+    @entry[:mime-type]{The mime type of the file.}
+    @entry[:application]{The list of applications that have registered the
+      file.}
+    @entry[:group]{The groups to which the file belongs to.}
+    @entry[:age]{The number of days elapsed since the file has been registered,}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRecentFilterFunc ()

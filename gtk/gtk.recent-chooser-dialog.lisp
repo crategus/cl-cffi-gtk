@@ -2,13 +2,14 @@
 ;;; gtk.recent-chooser-dialog.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,52 +55,12 @@
 ;;; 
 ;;; GtkRecentChooserDialog implements AtkImplementorIface, GtkBuildable and
 ;;; GtkRecentChooser.
-;;;
-;;; Description
-;;; 
-;;; GtkRecentChooserDialog is a dialog box suitable for displaying the recently
-;;; used documents. This widgets works by putting a GtkRecentChooserWidget
-;;; inside a GtkDialog. It exposes the GtkRecentChooserIface interface, so you
-;;; can use all the GtkRecentChooser functions on the recent chooser dialog as
-;;; well as those for GtkDialog.
-;;; 
-;;; Note that GtkRecentChooserDialog does not have any methods of its own.
-;;; Instead, you should use the functions that work on a GtkRecentChooser.
-;;; 
-;;; Example 107. Typical usage
-;;; In the simplest of cases, you can use the following code to use a
-;;; GtkRecentChooserDialog to select a recently used file:
-;;; 
-;;; GtkWidget *dialog;
-;;; 
-;;; dialog = gtk_recent_chooser_dialog_new
-;;;                                      ("Recent Documents",
-;;;                                       parent_window,
-;;;                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-;;;                                       GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-;;;                                       NULL);
-;;; 
-;;; if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
-;;;   {
-;;;     GtkRecentInfo *info;
-;;; 
-;;;     info= gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER (dialog));
-;;;     open_file (gtk_recent_info_get_uri (info));
-;;;     gtk_recent_info_unref (info);
-;;;   }
-;;; 
-;;; gtk_widget_destroy (dialog);
-;;; 
-;;; 
-;;; Recently used files are supported since GTK+ 2.10.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentChooserDialog
-;;; 
-;;; struct GtkRecentChooserDialog;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRecentChooserDialog" gtk-recent-chooser-dialog
@@ -110,6 +71,49 @@
                 "GtkRecentChooser")
    :type-initializer "gtk_recent_chooser_dialog_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-chooser-dialog 'type)
+ "@version{2013-5-26}
+  @begin{short}
+    @sym{gtk-recent-chooser-dialog} is a dialog box suitable for displaying the
+    recently used documents. This widgets works by putting a
+    @class{gtk-recent-chooser-widget} inside a @class{gtk-dialog}. It exposes
+    the @class{gtk-recent-chooser-iface} interface, so you can use all the
+    @class{gtk-recent-chooser} functions on the recent chooser dialog as
+    well as those for @class{gtk-dialog}.
+  @end{short}
+  Note that @sym{gtk-recent-chooser-dialog} does not have any methods of its
+  own. Instead, you should use the functions that work on a
+  @class{gtk-recent-chooser}.
+
+  @b{Example:} Typical usage.
+  In the simplest of cases, you can use the following code to use a
+  @sym{gtk-recent-chooser-dialog} to select a recently used file:
+  @begin{pre}
+ GtkWidget *dialog;
+
+ dialog = gtk_recent_chooser_dialog_new
+                                      (\"Recent Documents\",
+                                       parent_window,
+                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                       GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+                                       NULL);
+
+ if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+   {
+     GtkRecentInfo *info;
+
+     info= gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER (dialog));
+     open_file (gtk_recent_info_get_uri (info));
+     gtk_recent_info_unref (info);
+   @}
+
+ gtk_widget_destroy (dialog);
+  @end{pre}
+  Recently used files are supported since GTK+ 2.10.
+  @see-class{gtk-recent-chooser}
+  @see-class{gtk-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_dialog_new ()
