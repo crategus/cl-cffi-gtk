@@ -42,7 +42,7 @@
 (defvar *verbose* nil)
 
 (load "rtest-gtk-adjustment.lisp")
-;(load "rtest-gtk-application.lisp")
+(load "rtest-gtk-application.lisp")
 (load "rtest-gtk-border.lisp")
 (load "rtest-gtk-box.lisp")
 (load "rtest-gtk-button.lisp")
