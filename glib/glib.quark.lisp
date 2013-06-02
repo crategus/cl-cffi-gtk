@@ -29,11 +29,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Quarks
-;;; 
+;;;
 ;;; A 2-way association between a string and a unique integer identifier
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GQuark
 ;;;
 ;;;     g_quark_from_string
@@ -42,44 +42,15 @@
 ;;;     g_quark_try_string
 ;;;     g_intern_string
 ;;;     g_intern_static_string
-;;; 
-;;; Description
-;;; 
-;;; Quarks are associations between strings and integer identifiers. Given
-;;; either the string or the GQuark identifier it is possible to retrieve the
-;;; other.
-;;; 
-;;; Quarks are used for both Datasets and Keyed Data Lists.
-;;; 
-;;; To create a new quark from a string, use g_quark_from_string() or
-;;; g_quark_from_static_string().
-;;; 
-;;; To find the string corresponding to a given GQuark, use g_quark_to_string().
-;;; 
-;;; To find the GQuark corresponding to a given string, use
-;;; g_quark_try_string().
-;;; 
-;;; Another use for the string pool maintained for the quark functions is string
-;;; interning, using g_intern_string() or g_intern_static_string(). An interned
-;;; string is a canonical representation for a string. One important advantage
-;;; of interned strings is that they can be compared for equality by a simple
-;;; pointer comparison, rather than using strcmp().
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GQuark
-;;; 
-;;; typedef guint32 GQuark;
-;;; 
-;;; A GQuark is a non-zero integer which uniquely identifies a particular
-;;; string. A GQuark value of zero is associated to NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defctype %g-quark :uint32)
-
-;;; ----------------------------------------------------------------------------
 
 (define-foreign-type g-quark-type ()
   ()
@@ -92,38 +63,74 @@
 (defmethod translate-from-foreign (value (type g-quark-type))
   (g-quark-to-string value))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-quark 'type)
+ "@version{2013-6-1}
+  @begin{short}
+    A @sym{g-quark} is a non-zero integer which uniquely identifies a particular
+    string. A @sym{g-quark} value of zero is associated to @code{nil}.
+  @end{short}
+
+  Quarks are associations between strings and integer identifiers. Given
+  either the string or the @sym{g-quark} identifier it is possible to retrieve
+  the other.
+
+  Quarks are used for both Datasets and Keyed Data Lists.
+
+  To create a new quark from a string, use the functions
+  @fun{g-quark-from-string} or @fun{g-quark-from-static-string}.
+
+  To find the string corresponding to a given @sym{g-quark}, use the
+  @fun{g-quark-to-string} function.
+
+  To find the @sym{g-quark} corresponding to a given string, use the
+  @fun{g-quark-try-string} function.
+
+  Another use for the string pool maintained for the quark functions is string
+  interning, using the functions @fun{g-intern-string} or
+  @fun{g-intern-static-string}. An interned string is a canonical representation
+  for a string. One important advantage of interned strings is that they can be
+  compared for equality by a simple pointer comparison, rather than using
+  @code{strcmp()}.
+  @see-function{g-quark-from-string}
+  @see-function{g-quark-from-static-string}
+  @see-function{g-quark-to-string}
+  @see-function{g-quark-try-string}
+  @see-function{g-intern-string}
+  @see-function{g-intern-static-string}")
+
 (export 'g-quark)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_from_string ()
-;;; 
-;;; GQuark g_quark_from_string (const gchar *string);
-;;; 
-;;; Gets the GQuark identifying the given string. If the string does not
-;;; currently have an associated GQuark, a new GQuark is created, using a copy
-;;; of the string.
-;;; 
-;;; string :
-;;;     a string
-;;; 
-;;; Returns :
-;;;     the GQuark identifying the string, or 0 if string is NULL.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_quark_from_string" g-quark-from-string) %g-quark
   (string :string))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'g-quark-from-string 'function)
+ "@version{2013-6-1}
+  @argument[string]{a string}
+  @return{The @type{g-quark} identifying the @arg{string}, or 0 if @arg{string}
+    is @code{nil}.}
+  @begin{short}
+    Gets the @type{g-quark} identifying the given @arg{string}.
+  @end{short}
+  If the @arg{string} does not currently have an associated @type{g-quark}, a
+  new @type{g-quark} is created, using a copy of the @arg{string}.")
+
 (export 'g-quark-from-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_from_static_string ()
-;;; 
+;;;
 ;;; GQuark g_quark_from_static_string (const gchar *string);
-;;; 
+;;;
 ;;; Gets the GQuark identifying the given (static) string. If the string does
 ;;; not currently have an associated GQuark, a new GQuark is created, linked to
 ;;; the given string.
-;;; 
+;;;
 ;;; Note that this function is identical to g_quark_from_string() except that if
 ;;; a new GQuark is created the string itself is used rather than a copy. This
 ;;; saves memory, but can only be used if the string will always exist. It can
@@ -131,47 +138,41 @@
 ;;; statically allocated memory in dynamically loaded modules, if you expect to
 ;;; ever unload the module again (e.g. do not use this function in GTK+ theme
 ;;; engines).
-;;; 
+;;;
 ;;; string :
 ;;;     a string
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GQuark identifying the string, or 0 if string is NULL.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_to_string ()
-;;; 
-;;; const gchar * g_quark_to_string (GQuark quark);
-;;; 
-;;; Gets the string associated with the given GQuark.
-;;; 
-;;; quark :
-;;;     a GQuark.
-;;; 
-;;; Returns :
-;;;     the string associated with the GQuark.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_quark_to_string" g-quark-to-string) :string
+ "@version{2013-6-1}
+  @argument[quark]{a @type{g-quark}}
+  @return{The string associated with the @type{g-quark}.}
+  Gets the string associated with the given @type{g-quark}."
   (quark %g-quark))
 
 (export 'g-quark-to-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_try_string ()
-;;; 
+;;;
 ;;; GQuark g_quark_try_string (const gchar *string);
-;;; 
+;;;
 ;;; Gets the GQuark associated with the given string, or 0 if string is NULL or
 ;;; it has no associated GQuark.
-;;; 
+;;;
 ;;; If you want the GQuark to be created if it doesn't already exist, use
 ;;; g_quark_from_string() or g_quark_from_static_string().
-;;; 
+;;;
 ;;; string :
 ;;;     a string
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GQuark associated with the string, or 0 if string is NULL or there
 ;;;     is no GQuark associated with it.
@@ -179,37 +180,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_intern_string ()
-;;; 
+;;;
 ;;; const gchar * g_intern_string (const gchar *string);
-;;; 
+;;;
 ;;; Returns a canonical representation for string. Interned strings can be
 ;;; compared for equality by comparing the pointers, instead of using strcmp().
-;;; 
+;;;
 ;;; string :
 ;;;     a string
-;;; 
+;;;
 ;;; Returns :
 ;;;     a canonical representation for the string
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_intern_static_string ()
-;;; 
+;;;
 ;;; const gchar * g_intern_static_string (const gchar *string);
-;;; 
+;;;
 ;;; Returns a canonical representation for string. Interned strings can be
 ;;; compared for equality by comparing the pointers, instead of using strcmp().
 ;;; g_intern_static_string() does not copy the string, therefore string must not
 ;;; be freed or modified.
-;;; 
+;;;
 ;;; string :
 ;;;     a static string
-;;; 
+;;;
 ;;; Returns :
 ;;;     a canonical representation for the string
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 

@@ -34,7 +34,6 @@
 
 (load "../glib/atdoc/src/atdoc-glib.threads.lisp")
 (load "../glib/atdoc/src/atdoc-glib.utils.lisp")
-(load "../glib/atdoc/src/atdoc-glib.quark.lisp")
 (load "../glib/atdoc/src/atdoc-glib.error.lisp")
 
 ;;; --- End of file atdoc-gtk.lisp ---------------------------------------------
