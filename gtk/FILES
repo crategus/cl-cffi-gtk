@@ -124,7 +124,7 @@ GTK+ Widgets and Objects
     gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.4.3*
     gtk.tree-model-filter.lisp       - GtkTreeModelFilter          - GTK+ 3.4.3*
     
-    gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.4.3
+    gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.4.3*
     
     gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.4.3*
     gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.4.3*
@@ -146,27 +146,27 @@ GTK+ Widgets and Objects
 
   Menus, Combo Box, Toolbar
     
-    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.4.3*
-    gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.4.3*
+    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4
+    gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.6.4
     
-    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.4.3*
-    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.4.3*
-    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.4.3*
-    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.4.3*
-    gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.4.3*
-    gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.4.3*
-    gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.4.3*
-    gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.4.3*
+    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.6.4
+    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.6.4
+    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.6.4
+    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.6.4
+    gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.6.4
+    gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.6.4
+    gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4
+    gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4
     
-    gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.4.3*
-    gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.4.3*
-    gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.4.3*
-    gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.4.3*
-    gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.4.3*
-    gtk.separator-tool-item.lisp     - GtkSeparatorToolItem        - GTK+ 3.4.3*
-    gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.4.3*
-    gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.4.3*
-    gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.4.3*
+    gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4
+    gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4
+    gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.6.4
+    gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.6.4
+    gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.6.4
+    gtk.separator-tool-item.lisp     - GtkSeparatorToolItem        - GTK+ 3.6.4
+    gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.6.4
+    gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.6.4
+    gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.6.4
     gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.6.4
     
   Action-based menus and toolbars
@@ -231,17 +231,17 @@ GTK+ Widgets and Objects
 
   Printing
 
-    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.4.3*
-    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.4.3*
-    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.4.3*
-    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.4.3*
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.6.4
+    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.6.4
+    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.6.4
+    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.6.4
 
     not implemented                  - GtkPaperSize
     not implemented                  - GtkPrinter
     not implemented                  - GtkPrintJob
 
-    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.4.3*
-    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.4.3*
+    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.6.4
+    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.6.4
   
   Miscellaneous
   
@@ -297,7 +297,7 @@ GTK+ Widgets and Objects
     
   Application support
   
-    gtk.application.lisp             - GtkApplication              - GTK+ 3.4.3*
-    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.4.3*
-    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.4.1*
+    gtk.application.lisp             - GtkApplication              - GTK+ 3.6.4
+    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.6.4
+    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.6.4
 

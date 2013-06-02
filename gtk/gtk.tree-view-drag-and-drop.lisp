@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -61,29 +61,29 @@
   (:export t
    :type-initializer "gtk_tree_drag_source_get_type"))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-drag-source atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tree-drag-source 'type)
- "@version{2013-3-10}
+ "@version{2013-5-31}
   @begin{short}
     GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
     API.
   @end{short}
 
   The low-level API consists of the GTK+ DND API, augmented by some treeview
-  utility functions: gtk_tree_view_set_drag_dest_row(),
-  gtk_tree_view_get_drag_dest_row(), gtk_tree_view_get_dest_row_at_pos(),
-  gtk_tree_view_create_row_drag_icon(), gtk_tree_set_row_drag_data() and
-  gtk_tree_get_row_drag_data(). This API leaves a lot of flexibility, but
-  nothing is done automatically, and implementing advanced features like
-  hover-to-open-rows or autoscrolling on top of this API is a lot of work.
+  utility functions: @fun{gtk-tree-view-set-drag-dest-row},
+  @fun{gtk-tree-view-get-drag-dest-row},
+  @fun{gtk-tree-view-get-dest-row-at-pos},
+  @fun{gtk-tree-view-create-row-drag-icon},
+  @fun{gtk-tree-set-row-drag-data} and @fun{gtk-tree-get-row-drag-data}. This
+  API leaves a lot of flexibility, but nothing is done automatically, and
+  implementing advanced features like hover-to-open-rows or autoscrolling on
+  top of this API is a lot of work.
 
   On the other hand, if you write to the high-level API, then all the
   bookkeeping of rows is done for you, as well as things like hover-to-open
-  and auto-scroll, but your models have to implement the GtkTreeDragSource and
-  GtkTreeDragDest interfaces.")
+  and auto-scroll, but your models have to implement the
+  @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeDragSourceIface
@@ -194,29 +194,29 @@
   (:export t
    :type-initializer "gtk_tree_drag_dest_get_type"))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-drag-dest atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tree-drag-dest 'type)
- "@version{2013-3-10}
+ "@version{2013-5-31}
   @begin{short}
     GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
     API.
   @end{short}
 
   The low-level API consists of the GTK+ DND API, augmented by some treeview
-  utility functions: gtk_tree_view_set_drag_dest_row(),
-  gtk_tree_view_get_drag_dest_row(), gtk_tree_view_get_dest_row_at_pos(),
-  gtk_tree_view_create_row_drag_icon(), gtk_tree_set_row_drag_data() and
-  gtk_tree_get_row_drag_data(). This API leaves a lot of flexibility, but
-  nothing is done automatically, and implementing advanced features like
-  hover-to-open-rows or autoscrolling on top of this API is a lot of work.
+  utility functions: @fun{gtk-tree-view-set-drag-dest-row},
+  @fun{gtk-tree-view-get-drag-dest-row},
+  @fun{gtk-tree-view-get-dest-row-at-pos},
+  @fun{gtk-tree-view-create-row-drag-icon},
+  @fun{gtk-tree-set-row-drag-data} and @fun{gtk-tree-get-row-drag-data}. This
+  API leaves a lot of flexibility, but nothing is done automatically, and
+  implementing advanced features like hover-to-open-rows or autoscrolling on
+  top of this API is a lot of work.
 
   On the other hand, if you write to the high-level API, then all the
   bookkeeping of rows is done for you, as well as things like hover-to-open
-  and auto-scroll, but your models have to implement the GtkTreeDragSource and
-  GtkTreeDragDest interfaces.")
+  and auto-scroll, but your models have to implement the
+  @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeDragDestIface

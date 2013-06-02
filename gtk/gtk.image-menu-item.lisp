@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.1. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -76,13 +76,12 @@
     gtk-image-menu-item-use-stock
     "use-stock" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-image-menu-item 'type)
- "@version{2013-3-27}
+ "@version{2013-6-1}
   @begin{short}
-    A GtkImageMenuItem is a menu item which has an icon next to the text label.
+    A @sym{gtk-image-menu-item} is a menu item which has an icon next to the
+    text label.
   @end{short}
 
   Note that the user can disable display of menu icons, so make sure to still
@@ -102,47 +101,41 @@
 (setf (documentation (atdoc:get-slot-from-name "accel-group"
                                                'gtk-image-menu-item) 't)
  "The @code{\"accel-group\"} property of type @class{gtk-accel-group}
-  (Write)@br{}
-  The Accel Group to use for stock accelerator keys @br{}
+  (Write) @br{}
+  The Accel Group to use for stock accelerator keys. @br{}
   Since 2.16")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "always-show-image"
                                                'gtk-image-menu-item) 't)
  "The @code{\"always-show-image\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
-  If TRUE, the menu item will ignore the @code{\"gtk-menu-images\"} setting and
-  always show the image, if available.
+  (Read / Write / Construct) @br{}
+  If @em{true}, the menu item will ignore the @code{\"gtk-menu-images\"} setting
+  and always show the image, if available.
   Use this property if the menuitem would be useless or hard to use without
   the image. @br{}
-  Default value: @code{nil}@br{}
+  Default value: @code{nil} @br{}
   Since 2.16")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image"
                                                'gtk-image-menu-item) 't)
- "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write)@br{}
+ "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write) @br{}
   Child widget to appear next to the menu text.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-stock"
                                                'gtk-image-menu-item) 't)
  "The @code{\"use-stock\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
-  If TRUE, the label set in the menuitem is used as a stock id to select the
-  stock item for the item. @br{}
-  Default value: @code{nilö}@br{}
+  (Read / Write / Construct) @br{}
+  If @em{true}, the label set in the menuitem is used as a stock id to select
+  the stock item for the item. @br{}
+  Default value: @code{nil} @br{}
   Since 2.16")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -154,8 +147,6 @@
   Accessor of the slot @code{\"accel-group\"} of the
   @class{gtk-image-menu-item-accel-group} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-always-show-image atdoc:*function-name-alias*)
       "Accessor"
@@ -164,8 +155,6 @@
   Accessor of the slot @code{\"always-show-image\"} of the
   @class{gtk-image-menu-item-accel-group} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-image atdoc:*function-name-alias*)
       "Accessor"
@@ -173,8 +162,6 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"image\"} of the
   @class{gtk-image-menu-item-accel-group} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-use-stock atdoc:*function-name-alias*)
@@ -383,6 +370,5 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.image-menu-item.lisp -----------------------------------

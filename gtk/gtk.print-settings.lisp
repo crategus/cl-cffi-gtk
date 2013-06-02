@@ -2,13 +2,14 @@
 ;;; gtk.print-settings.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -59,7 +60,7 @@
 ;;;     gtk_print_settings_set_printer
 ;;;
 ;;;     GtkPageOrientation
-
+;;;
 ;;;     GTK_PRINT_SETTINGS_ORIENTATION
 ;;;     gtk_print_settings_get_orientation
 ;;;     gtk_print_settings_set_orientation
@@ -187,29 +188,12 @@
 ;;;
 ;;;   GObject
 ;;;    +----GtkPrintSettings
-;;;
-;;; Description
-;;;
-;;; A GtkPrintSettings object represents the settings of a print dialog in a
-;;; system-independent way. The main use for this object is that once you've
-;;; printed you can get a settings object that represents the settings the user
-;;; chose, and the next time you print you can pass that object in so that the
-;;; user doesn't have to re-set all his settings.
-;;;
-;;; Its also possible to enumerate the settings so that you can easily save the
-;;; settings for the next time your app runs, or even store them in a document.
-;;; The predefined keys try to use shared values as much as possible so that
-;;; moving such a document between systems still works.
-;;;
-;;; Printing support was added in GTK+ 2.10.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPrintSettings
-;;;
-;;; typedef struct _GtkPrintSettings GtkPrintSettings;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkPrintSettings" gtk-print-settings
@@ -218,6 +202,24 @@
    :interfaces nil
    :type-initializer "gtk_print_settings_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-print-settings 'type)
+ "@version{2013-5-30}
+  @begin{short}
+    A @sym{gtk-print-settings} object represents the settings of a print dialog
+    in a system-independent way. The main use for this object is that once you
+    have printed you can get a settings object that represents the settings the
+    user chose, and the next time you print you can pass that object in so that
+    the user does not have to re-set all his settings.
+  @end{short}
+
+  Its also possible to enumerate the settings so that you can easily save the
+  settings for the next time your app runs, or even store them in a document.
+  The predefined keys try to use shared values as much as possible so that
+  moving such a document between systems still works.
+
+  Printing support was added in GTK+ 2.10.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPrintSettingsFunc ()
@@ -1914,6 +1916,5 @@
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.print-settings.lisp ------------------------------------

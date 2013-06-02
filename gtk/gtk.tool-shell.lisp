@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -58,28 +58,14 @@
 (define-g-interface "GtkToolShell" gtk-tool-shell
   (:export t
    :type-initializer "gtk_tool_shell_get_type"))
-;  (:cffi icon-size
-;         gtk-tool-shell-icon-size gtk-icon-size
-;         "gtk_tool_shell_get_icon_size" nil)
-;  (:cffi orientation
-;         gtk-tool-shell-orientation gtk-orientation
-;         "gtk_tool_shell_get_orientation" nil)
-;  (:cffi relief-style
-;         gtk-tool-shell-relief-style gtk-relief-style
-;         "gtk_tool_shell_get_relief_style" nil)
-;  (:cffi style
-;         gtk-tool-shell-style gtk-toolbar-style
-;         "gtk_tool_shell_get_style" nil))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-shell atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tool-shell 'type)
- "@version{2013-3-27}
+ "@version{2013-6-1}
   @begin{short}
-    The GtkToolShell interface allows container widgets to provide additional
-    information when embedding GtkToolItem widgets.
+    The @sym{gtk-tool-shell} interface allows container widgets to provide
+    additional information when embedding @class{gtk-tool-item} widgets.
   @end{short}")
 
 ;;; ----------------------------------------------------------------------------
@@ -257,18 +243,19 @@
 
 (defcfun ("gtk_tool_shell_rebuild_menu" gtk-tool-shell-rebuild-menu) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[shell]{a GtkToolShell}
+ "@version{2013-6-1}
+  @argument[shell]{a @class{gtk-tool-shell} widget}
   @begin{short}
     Calling this function signals the tool shell that the overflow menu item for
     tool items have changed. If there is an overflow menu and if it is visible
     when this function it called, the menu will be rebuilt.
   @end{short}
 
-  Tool items must not call this function directly, but rely on
-  gtk_tool_item_rebuild_menu() instead.
+  Tool items must not call this function directly, but rely on the
+  @fun{gtk-tool-item-rebuild-menu} function instead.
 
-  Since 2.14"
+  Since 2.14
+  @see-function{gtk-tool-item-rebuild-menu}"
   (shell (g-object gtk-tool-shell)))
 
 (export 'gtk-tool-shell-rebuild-menu)

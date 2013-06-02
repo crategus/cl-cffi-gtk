@@ -5,7 +5,7 @@
 ;;; <See http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -64,11 +64,9 @@
     gtk-radio-menu-item-group
     "group" "GtkRadioMenuItem" nil t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-radio-menu-item 'type)
- "@version{2013-3-18}
+ "@version{2013-6-1}
   @begin{short}
     A radio menu item is a check menu item that belongs to a group. At each
     instant exactly one of the radio menu items from a group is selected.
@@ -100,8 +98,7 @@
  lambda (radiomenuitem)   : Run First
       @end{pre}
   @end{dictionary}
-  @see-slot{gtk-radio-menu-item-group}
-")
+  @see-slot{gtk-radio-menu-item-group}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -111,13 +108,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-menu-item) 't)
- "The @code{\"group\"} property of type @class{gtk-radio-menu-item} (Write)@br{}
+ "The @code{\"group\"} property of type @class{gtk-radio-menu-item}
+  (Write) @br{}
   The radio menu item whose group this widget belongs to. @br{}
   Since 2.8")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -125,7 +123,7 @@
 (setf (gethash 'gtk-radio-menu-item-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-menu-item-group 'function)
- "@version{2013-3-18}
+ "@version{2013-6-1}
   Accessor of the slot @code{\"group\"} of the @class{gtk-radio-menu-item}
   class.")
 
@@ -275,6 +273,5 @@
 ;;; Returns :
 ;;;     the group of radio_menu_item
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.radio-menu-item.lisp -----------------------------------

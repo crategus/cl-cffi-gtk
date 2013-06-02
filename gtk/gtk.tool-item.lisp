@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -90,69 +90,68 @@
     gtk-tool-item-visible-vertical
     "visible-vertical" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-item 'type)
- "@version{2013-3-27}
+ "@version{2013-6-1}
   @begin{short}
-    GtkToolItems are widgets that can appear on a toolbar. To create a toolbar
-    item that contain something else than a button, use gtk_tool_item_new(). Use
-    gtk_container_add() to add a child widget to the tool item.
+    @sym{gtk-tool-item}'s are widgets that can appear on a toolbar. To create a
+    toolbar item that contain something else than a button, use the
+    @fun{gtk-tool-item-new} function. Use the @fun{gtk-container-add} function
+    to add a child widget to the tool item.
   @end{short}
 
-  For toolbar items that contain buttons, see the GtkToolButton,
-  GtkToggleToolButton and GtkRadioToolButton classes.
+  For toolbar items that contain buttons, see the @class{gtk-tool-button},
+  @class{gtk-toggle-tool-button} and @class{gtk-radio-tool-button} classes.
 
-  See the GtkToolbar class for a description of the toolbar widget, and
-  GtkToolShell for a description of the tool shell interface.
+  See the @class{gtk-toolbar} class for a description of the toolbar widget,
+  and @class{gtk-tool-shell} for a description of the tool shell interface.
   @begin[Signal Details]{dictionary}
     @subheading{The \"create-menu-proxy\" signal}
       @begin{pre}
  lambda (tool-item)   : Run Last
       @end{pre}
-      This signal is emitted when the toolbar needs information from tool_item
-      about whether the item should appear in the toolbar overflow menu. In
-      response the tool item should either
+      This signal is emitted when the toolbar needs information from
+      @arg{tool-item} about whether the item should appear in the toolbar
+      overflow menu. In response the tool item should either.
       @begin{itemize}
         @begin{item}
-          call gtk_tool_item_set_proxy_menu_item() with a NULL pointer and
-          return TRUE to indicate that the item should not appear in the
-          overflow menu
+          Call the @fun{gtk-tool-item-set-proxy-menu-item} with a @code{NULL}
+          pointer and return @em{true} to indicate that the item should not
+          appear in the overflow menu,
         @end{item}
         @begin{item}
-          call gtk_tool_item_set_proxy_menu_item() with a new menu item and
-          return TRUE, or
+          call the @fun{gtk-tool-item-set-proxy-menu-item} function with a new
+          menu item and return @em{true}, or
         @end{item}
         @begin{item}
-          return FALSE to indicate that the signal was not handled by the item.
-          This means that the item will not appear in the overflow menu unless a
-          later handler installs a menu item.
+          return @code{nil} to indicate that the signal was not handled by the
+          item. This means that the item will not appear in the overflow menu
+          unless a later handler installs a menu item.
         @end{item}
       @end{itemize}
       The toolbar may cache the result of this signal. When the tool item
-      changes how it will respond to this signal it must call
-      gtk_tool_item_rebuild_menu() to invalidate the cache and ensure that the
-      toolbar rebuilds its overflow menu.
+      changes how it will respond to this signal it must call the
+      @fun{gtk-tool-item-rebuild-menu} function to invalidate the cache and
+      ensure that the toolbar rebuilds its overflow menu.
       @begin[code]{table}
-        @entry[tool_item]{the object the signal was emitted on}
-        @entry[Returns]{TRUE if the signal was handled, FALSE if not}
+        @entry[tool-item]{The object the signal was emitted on.}
+        @entry[Returns]{@em{True} if the signal was handled, @code{nil} if not.}
       @end{table}
     @subheading{The \"toolbar-reconfigured\" signal}
       @begin{pre}
  lambda (tool-item)   : Run Last
       @end{pre}
       This signal is emitted when some property of the toolbar that the item is
-      a child of changes. For custom subclasses of GtkToolItem, the default
-      handler of this signal use the functions
-      @code{gtk_tool_shell_get_orientation()},
-      @code{gtk_tool_shell_get_style()},
-      @code{gtk_tool_shell_get_icon_size()}, or
-      @code{gtk_tool_shell_get_relief_style()}
+      a child of changes. For custom subclasses of @sym{gtk-tool-item}, the
+      default handler of this signal use the functions
+      @fun{gtk-tool-shell-get-orientation},
+      @fun{gtk-tool-shell-get-style},
+      @fun{gtk-tool-shell-get-icon-size}, or
+      @fun{gtk-tool-shell-get-relief-style}
       to find out what the toolbar should look like and change themselves
       accordingly.
       @begin[code]{table}
-        @entry[tool_item]{the object the signal was emitted on}
+        @entry[tool-item]{The object the signal was emitted on.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-tool-item-is-important}
@@ -169,36 +168,32 @@
 (setf (documentation (atdoc:get-slot-from-name "is-important"
                                                'gtk-tool-item) 't)
  "The @code{\"is-important\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Whether the toolbar item is considered important. When TRUE, toolbar buttons
-  show text in GTK_TOOLBAR_BOTH_HORIZ mode. @br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+  (Read / Write) @br{}
+  Whether the toolbar item is considered important. When @em{true}, toolbar
+  buttons show text in @code{:both-horiz} mode. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-horizontal"
                                                'gtk-tool-item) 't)
  "The @code{\"visible-horizontal\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether the toolbar item is visible when the toolbar is in a horizontal
   orientation. @br{}
-  Default value: TRUE")
-
-;;; ----------------------------------------------------------------------------
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-vertical"
                                                'gtk-tool-item) 't)
  "The @code{\"visible-vertical\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether the toolbar item is visible when the toolbar is in a vertical
   orientation. @br{}
-  Default value: TRUE")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -210,8 +205,6 @@
   Accessor of the slot @code{\"is-important\"} of the @class{gtk-tool-item}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
@@ -219,8 +212,6 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"visible-horizontal\"} of the
   @class{gtk-tool-item} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-visible-vertical atdoc:*function-name-alias*)
@@ -238,9 +229,9 @@
 
 (defun gtk-tool-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @return{The new GtkToolItem.}
-  @short{Creates a new GtkToolItem}
+ "@version{2013-6-1}
+  @return{The new @class{gtk-tool-item} widget.}
+  @short{Creates a new @class{gtk-tool-item} widget.}
 
   Since 2.4"
   (make-instance 'gtk-tool-item-new))
@@ -289,13 +280,13 @@
 
 (defcfun ("gtk_tool_item_set_expand" gtk-tool-item-set-expand) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tool_item]{a GtkToolItem}
-  @argument[expand]{Whether tool_item is allocated extra space.}
+ "@version{2013-6-1}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @argument[expand]{whether @arg{tool-item} is allocated extra space}
   @begin{short}
-    Sets whether tool_item is allocated extra space when there is more room on
-    the toolbar then needed for the items. The effect is that the item gets
-    bigger when the toolbar gets bigger and smaller when the toolbar gets
+    Sets whether @arg{tool-item} is allocated extra space when there is more
+    room on the toolbar then needed for the items. The effect is that the item
+    gets bigger when the toolbar gets bigger and smaller when the toolbar gets
     smaller.
   @end{short}
 
@@ -311,15 +302,16 @@
 
 (defcfun ("gtk_tool_item_get_expand" gtk-tool-item-get-expand) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tool_item]{a GtkToolItem}
-  @return{TRUE if tool_item is allocated extra space.}
+ "@version{2013-6-1}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @return{@em{True} if @arg{tool-item} is allocated extra space.}
   @begin{short}
-    Returns whether tool_item is allocated extra space. See
-    gtk_tool_item_set_expand().
+    Returns whether @arg{tool-item} is allocated extra space.
   @end{short}
+  See the @fun{gtk-tool-item-set-expand} function.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-tool-item-set-expand}"
   (tool-item (g-object gtk-tool-item)))
 
 (export 'gtk-tool-item-get-expand)
@@ -650,16 +642,16 @@
 (defcfun ("gtk_tool_item_retrieve_proxy_menu_item"
           gtk-tool-item-retrieve-proxy-menu-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tool_item]{a GtkToolItem}
+ "@version{2013-6-1}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
   @begin{return}
-    The GtkMenuItem that is going to appear in the overflow menu for
-    tool_item.
+    The @class{gtk-menu-item} that is going to appear in the overflow menu for
+    @arg{tool-item}.
   @end{return}
   @begin{short}
-    Returns the GtkMenuItem that was last set by
-    gtk_tool_item_set_proxy_menu_item(), ie. the GtkMenuItem that is going to
-    appear in the overflow menu.
+    Returns the @class{gtk-menu-item} widget that was last set by the
+    @fun{gtk-tool-item-set-proxy-menu-item} function, i. e. the
+    @class{gtk-menu-item} that is going to appear in the overflow menu.
   @end{short}
 
   Since 2.4"
@@ -723,12 +715,12 @@
 
 (defcfun ("gtk_tool_item_rebuild_menu" gtk-tool-item-rebuild-menu) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tool_item]{a GtkToolItem}
+ "@version{2013-6-1}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
   @begin{short}
     Calling this function signals to the toolbar that the overflow menu item for
-    tool_item has changed. If the overflow menu is visible when this function it
-    called, the menu will be rebuilt.
+    @arg{tool-item} has changed. If the overflow menu is visible when this
+    function it called, the menu will be rebuilt.
   @end{short}
 
   The function must be called when the tool item changes what it will do in

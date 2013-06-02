@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -86,83 +86,84 @@
     gtk-toolbar-toolbar-style
     "toolbar-style" "GtkToolbarStyle" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toolbar 'type)
- "@version{2013-3-25}
+ "@version{2013-6-1}
   @begin{short}
-    A toolbar is created with a call to gtk_toolbar_new().
+    A toolbar is created with a call to the @fun{gtk-toolbar-new} function.
   @end{short}
 
-  A toolbar can contain instances of a subclass of GtkToolItem. To add a
-  GtkToolItem to the a toolbar, use gtk_toolbar_insert(). To remove an item
-  from the toolbar use gtk_container_remove(). To add a button to the toolbar,
-  add an instance of GtkToolButton.
+  A toolbar can contain instances of a subclass of @class{gtk-tool-item}. To add
+  a @class{gtk-tool-item} to the a toolbar, use the @fun{gtk-toolbar-insert}
+  function. To remove an item from the toolbar use the
+  @fun{gtk-container-remove} function. To add a button to the toolbar, add an
+  instance of @class{gtk-tool-button}.
 
   Toolbar items can be visually grouped by adding instances of
-  GtkSeparatorToolItem to the toolbar. If the GtkToolbar child property
-  \"expand\" is TRUE and the property \"draw\" is set to FALSE, the effect is to
-  force all following items to the end of the toolbar.
+  @class{gtk-separator-tool-item} to the toolbar. If the @sym{gtk-toolbar} child
+  property @code{\"expand\"} is @em{true} and the property @code{\"draw\"} is
+  set to @code{nil}, the effect is to force all following items to the end of
+  the toolbar.
 
   Creating a context menu for the toolbar can be done by connecting to the
   \"popup-context-menu\" signal.
   @begin[Child Property Details]{dictionary}
     @subheading{The \"expand\" child property}
-      @code{\"expand\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"expand\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the item should receive extra space when the toolbar grows. @br{}
       Default value: @code{nil}
 
     @subheading{The \"homogeneous\" child property}
-      @code{\"homogeneous\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"homogeneous\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the item should be the same size as other homogeneous items. @br{}
       Default value: @code{nil}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"button-relief\" style property}
-      @code{\"button-relief\"} of type @code{GtkReliefStyle} (Read)@br{}
+      @code{\"button-relief\"} of type @symbol{gtk-relief-style} (Read) @br{}
       Type of bevel around toolbar buttons. @br{}
-      Default value: GTK_RELIEF_NONE
+      Default value: @code{:none}
 
     @subheading{The \"internal-padding\" style property}
-      @code{\"internal-padding\"} of type @code{:int} (Read)@br{}
+      @code{\"internal-padding\"} of type @code{:int} (Read) @br{}
       Amount of border space between the toolbar shadow and the buttons. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 0
 
     @subheading{The \"max-child-expand\" style property}
-      @code{\"max-child-expand\"} of type @code{:int} (Read)@br{}
+      @code{\"max-child-expand\"} of type @code{:int} (Read) @br{}
       Maximum amount of space an expandable item will be given. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 2147483647
 
     @subheading{The \"shadow-type\" style property}
-      @code{\"shadow-type\"} of type @code{GtkShadowType} (Read)@br{}
+      @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read) @br{}
       Style of bevel around the toolbar. @br{}
-      Default value: GTK_SHADOW_OUT
+      Default value: @code{:out}
 
     @subheading{The \"space-size\" style property}
-      @code{\"space-size\"} of type @code{:int} (Read)@br{}
+      @code{\"space-size\"} of type @code{:int} (Read) @br{}
       Size of spacers. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 12
 
     @subheading{The \"space-style\" style property}
-      @code{\"space-style\"} of type @code{GtkToolbarSpaceStyle} (Read)@br{}
+      @code{\"space-style\"} of type @symbol{gtk-toolbar-space-style}
+      (Read) @br{}
       Whether spacers are vertical lines or just blank. @br{}
-      Default value: GTK_TOOLBAR_SPACE_LINE
+      Default value: @code{:line}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"focus-home-or-end\" signal}
       @begin{pre}
  lambda (toolbar focus-home)   : Action
       @end{pre}
-      A keybinding signal used internally by GTK+. This signal can't be used in
-      application code
+      A keybinding signal used internally by GTK+. This signal cannot be used in
+      application code.
       @begin[code]{table}
-        @entry[toolbar]{the GtkToolbar which emitted the signal}
-        @entry[focus-home]{TRUE if the first item should be focused}
-        @entry[Returns]{TRUE if the signal was handled, FALSE if not}
+        @entry[toolbar]{The @sym{gtk-toolbar} which emitted the signal.}
+        @entry[focus-home]{@em{True} if the first item should be focused.}
+        @entry[Returns]{@em{True} if the signal was handled, @code{nil} if not.}
       @end{table}
     @subheading{The \"orientation-changed\" signal}
       @begin{pre}
@@ -170,8 +171,8 @@
       @end{pre}
       Emitted when the orientation of the toolbar changes.
       @begin[code]{table}
-        @entry[toolbar]{the object which emitted the signal}
-        @entry[orientation]{the new GtkOrientation of the toolbar}
+        @entry[toolbar]{The object which emitted the signal.}
+        @entry[orientation]{The new @class{gtk-orientation} of the toolbar.}
       @end{table}
     @subheading{The \"popup-context-menu\" signal}
       @begin{pre}
@@ -185,11 +186,12 @@
        button parameter. If the menu was popped up using the keybaord, button
        is -1.
        @begin[code]{table}
-         @entry[toolbar]{the GtkToolbar which emitted the signal}
-         @entry[x]{the x coordinate of the point where the menu should appear}
-         @entry[y]{the y coordinate of the point where the menu should appear}
-         @entry[button]{the mouse button the user pressed, or -1}
-         @entry[Returns]{return TRUE if the signal was handled, FALSE if not}
+         @entry[toolbar]{The @class{gtk-toolbar} which emitted the signal.}
+         @entry[x]{The x coordinate of the point where the menu should appear.}
+         @entry[y]{The y coordinate of the point where the menu should appear.}
+         @entry[button]{The mouse button the user pressed, or -1.}
+         @entry[Returns]{Return @em{true} if the signal was handled,
+           @code{nil} if not.}
       @end{table}
     @subheading{The \"style-changed\" signal}
       @begin{pre}
@@ -197,8 +199,8 @@
       @end{pre}
       Emitted when the style of the toolbar changes.
       @begin[code]{table}
-        @entry[toolbar]{The GtkToolbar which emitted the signal}
-        @entry[style]{the new GtkToolbarStyle of the toolbar}
+        @entry[toolbar]{The @class{gtk-toolbar} which emitted the signal.}
+        @entry[style]{The new @symbol{gtk-toolbar-style} of the toolbar.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-toolbar-icon-size}
@@ -214,46 +216,41 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-size" 'gtk-toolbar) 't)
- "The @code{\"icon-size\"} property of type @code{:int} (Read / Write)@br{}
+ "The @code{\"icon-size\"} property of type @code{:int} (Read / Write) @br{}
   The size of the icons in a toolbar is normally determined by the
-  toolbar-icon-size setting. When this property is set, it overrides the
-  setting.
+  @code{\"toolbar-icon-size\"} setting. When this property is set, it overrides
+  the setting.
   This should only be used for special-purpose toolbars, normal application
   toolbars should respect the user preferences for the size of icons. @br{}
-  Allowed values: >= 0@br{}
-  Default value: 3@br{}
+  Allowed values: >= 0 @br{}
+  Default value: 3 @br{}
   Since 2.10")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-size-set" 'gtk-toolbar) 't)
  "The @code{\"icon-size-set\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Is TRUE if the icon-size property has been set. @br{}
-  Default value: @code{nil}@br{}
+  (Read / Write) @br{}
+  Is @em{true} if the @code{\"icon-size\"} property has been set. @br{}
+  Default value: @code{nil} @br{}
   Since 2.10")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-arrow" 'gtk-toolbar) 't)
- "The @code{\"show-arrow\"} property of type @code{:boolean} (Read / Write)@br{}
-  If an arrow should be shown if the toolbar doesn't fit. @br{}
+ "The @code{\"show-arrow\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If an arrow should be shown if the toolbar does not fit. @br{}
   Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "toolbar-style" 'gtk-toolbar) 't)
- "The @code{\"toolbar-style\"} property of type @code{GtkToolbarStyle}
- (Read / Write)@br{}
+ "The @code{\"toolbar-style\"} property of type @symbol{gtk-toolbar-style}
+ (Read / Write) @br{}
   How to draw the toolbar. @br{}
-  Default value: GTK_TOOLBAR_BOTH")
+  Default value: @code{:both}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -264,16 +261,12 @@
  "@version{2013-3-26}
   Accessor of the slot \"icon-size\" of the @class{gtk-toolbar} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-icon-size-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-icon-size-set 'function)
  "@version{2013-3-26}
   Accessor of the slot \"icon-size-set\" of the @class{gtk-toolbar} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-show-arrow atdoc:*function-name-alias*)
@@ -282,8 +275,6 @@
  "@version{2013-3-26}
   Accessor of the slot \"show-arrow\" of the @class{gtk-toolbar} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-toolbar-style atdoc:*function-name-alias*)
       "Accessor"
@@ -291,6 +282,10 @@
  "@version{2013-3-26}
   Accessor of the slot \"toolbar-style\" of the @class{gtk-toolbar} class.")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkToolbar"
@@ -302,10 +297,6 @@
                        "homogeneous" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-child-expand atdoc:*function-name-alias*)
@@ -314,8 +305,6 @@
  "@version{2013-3-26}
   Accessor of the child property @code{\"expand\"} of the @class{gtk-toolbar}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-child-homogeneous atdoc:*function-name-alias*)
@@ -335,12 +324,10 @@
   (:empty 0)
   (:line 1))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-space-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-toolbar-space-style atdoc:*external-symbols*)
- "@version{2013-3-26}
+ "@version{2013-6-1}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkToolbarSpaceStyle\" gtk-toolbar-space-style
@@ -358,7 +345,7 @@
 
 (defun gtk-toolbar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
+ "@version{2013-6-1}
   @return{The newly-created toolbar.}
   Creates a new toolbar."
   (make-instance 'gtk-toolbar))
@@ -371,15 +358,15 @@
 
 (defcfun ("gtk_toolbar_insert" gtk-toolbar-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  @argument[item]{a GtkToolItem}
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[item]{a @class{gtk-tool-item} widget}
   @argument[pos]{the position of the new item}
   @begin{short}
-    Insert a GtkToolItem into the toolbar at position pos. If pos is 0 the item
-    is prepended to the start of the toolbar. If pos is negative, the item is
-    appended to the end of the toolbar.
-  @end{short} 
+    Insert a @class{gtk-tool-item} into the toolbar at position pos. If pos is
+    0 the item is prepended to the start of the toolbar. If pos is negative,
+    the item is appended to the end of the toolbar.
+  @end{short}
   Since 2.4"
   (toolbar g-object)
   (item g-object)
@@ -393,10 +380,10 @@
 
 (defcfun ("gtk_toolbar_get_item_index" gtk-toolbar-item-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  @argument[item]{a GtkToolItem that is a child of toolbar}
-  @return{the position of item on the toolbar.}
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[item]{a @class{gtk-tool-item} that is a child of toolbar}
+  @return{The position of item on the toolbar.}
   @begin{short}
     Returns the position of item on the toolbar, starting from 0. It is an error
     if item is not a child of the toolbar.
@@ -414,9 +401,9 @@
 
 (defcfun ("gtk_toolbar_get_n_items" gtk-toolbar-get-n-items) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  @return{the number of items on the toolbar}
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @return{The number of items on the toolbar.}
   @short{Returns the number of items on the toolbar.}
 
   Since 2.4"
@@ -430,13 +417,14 @@
 
 (defcfun ("gtk_toolbar_get_nth_item" gtk-toolbar-nth-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  @argument[n]{A position on the toolbar}
-  @return{The n'th GtkToolItem on toolbar, or NULL if there isn't an n'th item.}
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[n]{a position on the @argt{toolbar}}
+  @return{The n'th @class{gtk-tool-item} on @arg{toolbar}, or @code{nil} if
+    there is not an n'th item.}
   @begin{short}
-    Returns the n'th item on toolbar, or NULL if the toolbar does not contain an
-    n'th item.
+    Returns the n'th item on @arg{toolbar}, or @code{nil} if the @arg{toolbar}
+    does not contain an n'th item.
   @end{short}
 
   Since 2.4"
@@ -451,15 +439,15 @@
 
 (defcfun ("gtk_toolbar_get_drop_index" gtk-toolbar-get-drop-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  @argument[x]{x coordinate of a point on the toolbar}
-  @argument[y]{y coordinate of a point on the toolbar}
-  @return{The position corresponding to the point (x, y) on the toolbar.}
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[x]{x coordinate of a point on the @arg{toolbar}}
+  @argument[y]{y coordinate of a point on the @arg{toolbar}}
+  @return{The position corresponding to the point (x, y) on the @arg{toolbar}.}
   @begin{short}
-    Returns the position corresponding to the indicated point on toolbar. This
-    is useful when dragging items to the toolbar: this function returns the
-    position a new item should be inserted.
+    Returns the position corresponding to the indicated point on @arg{toolbar}.
+    This is useful when dragging items to the @arg{toolbar}: this function
+    returns the position a new item should be inserted.
   @end{short}
 
   x and y are in toolbar coordinates.
@@ -478,17 +466,19 @@
 (defcfun ("gtk_toolbar_set_drop_highlight_item"
           gtk-toolbar-set-drop-highlight-item) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  @argument[tool_item]{a GtkToolItem, or NULL to turn of highlighting}
-  @argument[index]{a position on toolbar}
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[tool-item]{a @class{gtk-tool-item}, or @code{nil} to turn of
+    highlighting}
+  @argument[index]{a position on @arg{toolbar}}
   @begin{short}
-    Highlights toolbar to give an idea of what it would look like if item was
-    added to toolbar at the position indicated by index_. If item is NULL,
-    highlighting is turned off. In that case index_ is ignored.
+    Highlights @arg{toolbar} to give an idea of what it would look like if item
+    was added to @arg{toolbar} at the position indicated by @arg{index}. If item
+    is @code{nil}, highlighting is turned off. In that case @arg{index} is
+    ignored.
   @end{short}
 
-  The tool_item passed to this function must not be part of any widget
+  The @arg{tool-item} passed to this function must not be part of any widget
   hierarchy. When an item is set as drop highlight item it can not added to
   any widget hierarchy or used as highlight item for another toolbar.
 
@@ -630,10 +620,11 @@
 
 (defcfun ("gtk_toolbar_unset_style" gtk-toolbar-unset-style) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-26}
-  @argument[toolbar]{a GtkToolbar}
-  Unsets a toolbar style set with gtk_toolbar_set_style(), so that user
-  preferences will be used to determine the toolbar style."
+ "@version{2013-6-1}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  Unsets a toolbar style set with the @fun{gtk-toolbar-set-style} function, so
+  that user preferences will be used to determine the toolbar style.
+  @see-function{gtk-toolbar-set-style}"
   (toolbar g-object))
 
 (export 'gtk-toolbar-unset-style)

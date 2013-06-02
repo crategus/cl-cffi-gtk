@@ -2654,8 +2654,66 @@ setup_tree (void)
   @end{section}
   @begin[Menus, Combo Box, Toolbar]{section}
     @begin[GtkComboBox]{subsection}
+      A widget used to choose from a list of items.
+
+      @about-class{gtk-combo-box}
+      @about-function{gtk-combo-box-new}
+      @about-function{gtk-combo-box-new-with-entry}
+      @about-function{gtk-combo-box-new-with-model}
+      @about-function{gtk-combo-box-new-with-model-and-entry}
+      @about-function{gtk-combo-box-new-with-area}
+      @about-function{gtk-combo-box-new-with-area-and-entry}
+      @about-function{gtk-combo-box-get-wrap-width}
+      @about-function{gtk-combo-box-set-wrap-width}
+      @about-function{gtk-combo-box-get-row-span-column}
+      @about-function{gtk-combo-box-set-row-span-column}
+      @about-function{gtk-combo-box-get-column-span-column}
+      @about-function{gtk-combo-box-set-column-span-column}
+      @about-function{gtk-combo-box-get-active}
+      @about-function{gtk-combo-box-set-active}
+      @about-function{gtk-combo-box-get-active-iter}
+      @about-function{gtk-combo-box-set-active-iter}
+      @about-function{gtk-combo-box-get-id-column}
+      @about-function{gtk-combo-box-set-id-column}
+      @about-function{gtk-combo-box-get-active-id}
+      @about-function{gtk-combo-box-set-active-id}
+      @about-function{gtk-combo-box-get-model}
+      @about-function{gtk-combo-box-set-model}
+      @about-function{gtk-combo-box-popup-for-device}
+      @about-function{gtk-combo-box-popup}
+      @about-function{gtk-combo-box-popdown}
+      @about-function{gtk-combo-box-get-popup-accessible}
+      @about-function{gtk-combo-box-get-row-separator-func}
+      @about-function{gtk-combo-box-set-row-separator-func}
+      @about-function{gtk-combo-box-set-add-tearoffs}
+      @about-function{gtk-combo-box-get-add-tearoffs}
+      @about-function{gtk-combo-box-set-title}
+      @about-function{gtk-combo-box-get-title}
+      @about-function{gtk-combo-box-set-focus-on-click}
+      @about-function{gtk-combo-box-get-focus-on-click}
+      @about-function{gtk-combo-box-set-button-sensitivity}
+      @about-function{gtk-combo-box-get-button-sensitivity}
+      @about-function{gtk-combo-box-get-has-entry}
+      @about-function{gtk-combo-box-set-entry-text-column}
+      @about-function{gtk-combo-box-get-entry-text-column}
+      @about-function{gtk-combo-box-set-popup-fixed-width}
+      @about-function{gtk-combo-box-get-popup-fixed-width}
     @end{subsection}
     @begin[GtkComboBoxText]{subsection}
+      A simple, text-only combo box.
+
+      @about-class{gtk-combo-box-text}
+      @about-function{gtk-combo-box-text-new}
+      @about-function{gtk-combo-box-text-new-with-entry}
+      @about-function{gtk-combo-box-text-append}
+      @about-function{gtk-combo-box-text-prepend}
+      @about-function{gtk-combo-box-text-insert}
+      @about-function{gtk-combo-box-text-append-text}
+      @about-function{gtk-combo-box-text-prepend-text}
+      @about-function{gtk-combo-box-text-insert-text}
+      @about-function{gtk-combo-box-text-remove}
+      @about-function{gtk-combo-box-text-remove-all}
+      @about-function{gtk-combo-box-text-get-active-text}
     @end{subsection}
     @begin[GtkMenu]{subsection}
       A menu widget
@@ -2703,8 +2761,45 @@ setup_tree (void)
       @about-function{gtk-menu-bar-get-child-pack-direction}
     @end{subsection}
     @begin[GtkMenuItem]{subsection}
+      The widget used for item in menus.
+
+      @about-class{gtk-menu-item}
+      @about-function{gtk-menu-item-new}
+      @about-function{gtk-menu-item-new-with-label}
+      @about-function{gtk-menu-item-new-with-mnemonic}
+      @about-function{gtk-menu-item-set-right-justified}
+      @about-function{gtk-menu-item-get-right-justified}
+      @about-function{gtk-menu-item-get-label}
+      @about-function{gtk-menu-item-set-label}
+      @about-function{gtk-menu-item-get-use-underline}
+      @about-function{gtk-menu-item-set-use-underline}
+      @about-function{gtk-menu-item-set-submenu}
+      @about-function{gtk-menu-item-get-submenu}
+      @about-function{gtk-menu-item-set-accel-path}
+      @about-function{gtk-menu-item-get-accel-path}
+      @about-function{gtk-menu-item-select}
+      @about-function{gtk-menu-item-deselect}
+      @about-function{gtk-menu-item-activate}
+      @about-function{gtk-menu-item-toggle-size-request}
+      @about-function{gtk-menu-item-toggle-size-allocate}
+      @about-function{gtk-menu-item-get-reserve-indicator}
+      @about-function{gtk-menu-item-set-reserve-indicator}
     @end{subsection}
     @begin[GtkImageMenuItem]{subsection}
+      A menu item with an icon.
+
+      @about-class{gtk-image-menu-item}
+      @about-function{gtk-image-menu-item-set-image}
+      @about-function{gtk-image-menu-item-get-image}
+      @about-function{gtk-image-menu-item-new}
+      @about-function{gtk-image-menu-item-new-from-stock}
+      @about-function{gtk-image-menu-item-new-with-label}
+      @about-function{gtk-image-menu-item-new-with-mnemonic}
+      @about-function{gtk-image-menu-item-get-use-stock}
+      @about-function{gtk-image-menu-item-set-use-stock}
+      @about-function{gtk-image-menu-item-get-always-show-image}
+      @about-function{gtk-image-menu-item-set-always-show-image}
+      @about-function{gtk-image-menu-item-set-accel-group}
     @end{subsection}
     @begin[GtkRadioMenuItem]{subsection}
       A choice from multiple check menu items
@@ -2720,28 +2815,199 @@ setup_tree (void)
       @about-function{gtk-radio-menu-item-get-group}
     @end{subsection}
     @begin[GtkCheckMenuItem]{subsection}
+      A menu item with a check box.
+
+      @about-class{gtk-check-menu-item}
+      @about-function{gtk-check-menu-item-new}
+      @about-function{gtk-check-menu-item-new-with-label}
+      @about-function{gtk-check-menu-item-new-with-mnemonic}
+      @about-function{gtk-check-menu-item-get-active}
+      @about-function{gtk-check-menu-item-set-active}
+      @about-function{gtk-check-menu-item-toggled}
+      @about-function{gtk-check-menu-item-get-inconsistent}
+      @about-function{gtk-check-menu-item-set-inconsistent}
+      @about-function{gtk-check-menu-item-set-draw-as-radio}
+      @about-function{gtk-check-menu-item-get-draw-as-radio}
     @end{subsection}
     @begin[GtkSeparatorMenuItem]{subsection}
+      A separator used in menus.
+
+      @about-class{gtk-separator-menu-item}
+      @about-function{gtk-separator-menu-item-new}
     @end{subsection}
     @begin[GtkTearoffMenuItem]{subsection}
+      A menu item used to tear off and reattach its menu.
+
+      @about-class{gtk-tearoff-menu-item}
+      @about-function{gtk-tearoff-menu-item-new}
     @end{subsection}
     @begin[GtkToolShell]{subsection}
+      Interface for containers containing GtkToolItem widgets.
+
+      @about-class{gtk-tool-shell}
+      @about-class{gtk-tool-shell-iface}
+      @about-function{gtk-tool-shell-get-ellipsize-mode}
+      @about-function{gtk-tool-shell-get-icon-size}
+      @about-function{gtk-tool-shell-get-orientation}
+      @about-function{gtk-tool-shell-get-relief-style}
+      @about-function{gtk-tool-shell-get-style}
+      @about-function{gtk-tool-shell-get-text-alignment}
+      @about-function{gtk-tool-shell-get-text-orientation}
+      @about-function{gtk-tool-shell-rebuild-menu}
+      @about-function{gtk-tool-shell-get-text-size-group}
     @end{subsection}
     @begin[GtkTollbar]{subsection}
+      Create bars of buttons and other widgets.
+
+      @about-class{gtk-toolbar}
+      @about-class{gtk-toolbar-space-style}
+      @about-function{gtk-toolbar-new}
+      @about-function{gtk-toolbar-insert}
+      @about-function{gtk-toolbar-get-item-index}
+      @about-function{gtk-toolbar-get-n-items}
+      @about-function{gtk-toolbar-get-nth-item}
+      @about-function{gtk-toolbar-get-drop-index}
+      @about-function{gtk-toolbar-set-drop-highlight-item}
+      @about-function{gtk-toolbar-set-show-arrow}
+      @about-function{gtk-toolbar-unset-icon-size}
+      @about-function{gtk-toolbar-get-show-arrow}
+      @about-function{gtk-toolbar-get-style}
+      @about-function{gtk-toolbar-get-icon-size}
+      @about-function{gtk-toolbar-get-relief-style}
+      @about-function{gtk-toolbar-set-style}
+      @about-function{gtk-toolbar-set-icon-size}
+      @about-function{gtk-toolbar-unset-style}
     @end{subsection}
     @begin[GtkToolItem]{subsection}
+      The base class of widgets that can be added to @class{gtk-tool-shell}.
+
+      @about-class{gtk-tool-item}
+      @about-function{gtk-tool-item-new}
+      @about-function{gtk-tool-item-set-homogeneous}
+      @about-function{gtk-tool-item-get-homogeneous}
+      @about-function{gtk-tool-item-set-expand}
+      @about-function{gtk-tool-item-get-expand}
+      @about-function{gtk-tool-item-set-tooltip-text}
+      @about-function{gtk-tool-item-set-tooltip-markup}
+      @about-function{gtk-tool-item-set-use-drag-window}
+      @about-function{gtk-tool-item-get-use-drag-window}
+      @about-function{gtk-tool-item-set-visible-horizontal}
+      @about-function{gtk-tool-item-get-visible-horizontal}
+      @about-function{gtk-tool-item-set-visible-vertical}
+      @about-function{gtk-tool-item-get-visible-vertical}
+      @about-function{gtk-tool-item-set-is-important}
+      @about-function{gtk-tool-item-get-is-important}
+      @about-function{gtk-tool-item-get-ellipsize-mode}
+      @about-function{gtk-tool-item-get-icon-size}
+      @about-function{gtk-tool-item-get-orientation}
+      @about-function{gtk-tool-item-get-toolbar-style}
+      @about-function{gtk-tool-item-get-relief-style}
+      @about-function{gtk-tool-item-get-text-alignment}
+      @about-function{gtk-tool-item-get-text-orientation}
+      @about-function{gtk-tool-item-retrieve-proxy-menu-item}
+      @about-function{gtk-tool-item-get-proxy-menu-item}
+      @about-function{gtk-tool-item-set-proxy-menu-item}
+      @about-function{gtk-tool-item-rebuild-menu}
+      @about-function{gtk-tool-item-toolbar-reconfigured}
+      @about-function{gtk-tool-item-get-text-size-group}
     @end{subsection}
     @begin[GtkToolPalette]{subsection}
+      A tool palette with categories.
+
+      @about-class{gtk-tool-palette}
+      @about-function{gtk-tool-palette-new}
+      @about-function{gtk-tool-palette-get-exclusive}
+      @about-function{gtk-tool-palette-set-exclusive}
+      @about-function{gtk-tool-palette-get-expand}
+      @about-function{gtk-tool-palette-set-expand}
+      @about-function{gtk-tool-palette-get-group-position}
+      @about-function{gtk-tool-palette-set-group-position}
+      @about-function{gtk-tool-palette-get-icon-size}
+      @about-function{gtk-tool-palette-set-icon-size}
+      @about-function{gtk-tool-palette-unset-icon-size}
+      @about-function{gtk-tool-palette-get-style}
+      @about-function{gtk-tool-palette-set-style}
+      @about-function{gtk-tool-palette-unset-style}
+      @about-function{gtk-tool-palette-add-drag-dest}
+      @about-function{gtk-tool-palette-get-drag-item}
+      @about-function{gtk-tool-palette-get-drag-target-group}
+      @about-function{gtk-tool-palette-get-drag-target-item}
+      @about-function{gtk-tool-palette-get-drop-group}
+      @about-function{gtk-tool-palette-get-drop-item}
+      @about-symbol{gtk-tool-palette-drag-targets}
+      @about-function{gtk-tool-palette-set-drag-source}
+      @about-function{gtk-tool-palette-get-hadjustment}
+      @about-function{gtk-tool-palette-get-vadjustment}
     @end{subsection}
     @begin[GtkToolItemGroup]{subsection}
+      A sub container used in a tool palette.
+
+      @about-class{gtk-tool-item-group}
+      @about-function{gtk-tool-item-group-get-collapsed}
+      @about-function{gtk-tool-item-group-get-drop-item}
+      @about-function{gtk-tool-item-group-get-ellipsize}
+      @about-function{gtk-tool-item-group-get-item-position}
+      @about-function{gtk-tool-item-group-get-n-items}
+      @about-function{gtk-tool-item-group-get-label}
+      @about-function{gtk-tool-item-group-get-label-widget}
+      @about-function{gtk-tool-item-group-get-nth-item}
+      @about-function{gtk-tool-item-group-get-header-relief}
+      @about-function{gtk-tool-item-group-insert}
+      @about-function{gtk-tool-item-group-new}
+      @about-function{gtk-tool-item-group-set-collapsed}
+      @about-function{gtk-tool-item-group-set-ellipsize}
+      @about-function{gtk-tool-item-group-set-item-position}
+      @about-function{gtk-tool-item-group-set-label}
+      @about-function{gtk-tool-item-group-set-label-widget}
+      @about-function{gtk-tool-item-group-set-header-relief}
     @end{subsection}
     @begin[GtkSeparatorToolItem]{subsection}
+      A toolbar item that separates groups of other toolbar items.
+
+      @about-class{gtk-separator-tool-item}
+      @about-function{gtk-separator-tool-item-new}
+      @about-function{gtk-separator-tool-item-set-draw}
+      @about-function{gtk-separator-tool-item-get-draw}
     @end{subsection}
     @begin[GtkToolButton]{subsection}
+      A @class{gtk-tool-item} subclass that displays buttons.
+
+      @about-class{gtk-tool-button}
+      @about-function{gtk-tool-button-new}
+      @about-function{gtk-tool-button-new-from-stock}
+      @about-function{gtk-tool-button-set-label}
+      @about-function{gtk-tool-button-get-label}
+      @about-function{gtk-tool-button-set-use-underline}
+      @about-function{gtk-tool-button-get-use-underline}
+      @about-function{gtk-tool-button-set-stock-id}
+      @about-function{gtk-tool-button-get-stock-id}
+      @about-function{gtk-tool-button-set-icon-name}
+      @about-function{gtk-tool-button-get-icon-name}
+      @about-function{gtk-tool-button-set-icon-widget}
+      @about-function{gtk-tool-button-get-icon-widget}
+      @about-function{gtk-tool-button-set-label-widget}
+      @about-function{gtk-tool-button-get-label-widget}
     @end{subsection}
     @begin[GtkMenuToolButton]{subsection}
+      A @class{gtk-tool-item} containing a button with an additional dropdown
+      menu.
+
+      @about-class{gtk-menu-tool-button}
+      @about-function{gtk-menu-tool-button-new}
+      @about-function{gtk-menu-tool-button-new-from-stock}
+      @about-function{gtk-menu-tool-button-set-menu}
+      @about-function{gtk-menu-tool-button-get-menu}
+      @about-function{gtk-menu-tool-button-set-arrow-tooltip-text}
+      @about-function{gtk-menu-tool-button-set-arrow-tooltip-markup}
     @end{subsection}
     @begin[GtkToogleToolButton]{subsection}
+      A @class{gtk-tool-item} containing a toggle button.
+
+      @about-class{gtk-toggle-tool-button}
+      @about-function{gtk-toggle-tool-button-new}
+      @about-function{gtk-toggle-tool-button-new-from-stock}
+      @about-function{gtk-toggle-tool-button-set-active}
+      @about-function{gtk-toggle-tool-button-get-active}
     @end{subsection}
     @begin[GtkRadioToolButton]{subsection}
       A toolbar item that contains a radio button.
@@ -3193,12 +3459,212 @@ setup_tree (void)
   @end{section}
   @begin[Printing]{section}
     @begin[GtkPrintOperation]{subsection}
+      High-level Printing API.
+
+      @about-class{gtk-print-operation}
+      @about-symbol{gtk-print-status}
+      @about-symbol{gtk-print-operation-action}
+      @about-symbol{gtk-print-operation-result}
+      @about-symbol{gtk-print-error}
+      @about-symbol{GTK_PRINT_ERROR}
+      @about-function{gtk-print-operation-new}
+      @about-function{gtk-print-operation-set-allow-async}
+      @about-function{gtk-print-operation-get-error}
+      @about-function{gtk-print-operation-set-default-page-setup}
+      @about-function{gtk-print-operation-get-default-page-setup}
+      @about-function{gtk-print-operation-set-print-settings}
+      @about-function{gtk-print-operation-get-print-settings}
+      @about-function{gtk-print-operation-set-job-name}
+      @about-function{gtk-print-operation-set-n-pages}
+      @about-function{gtk-print-operation-get-n-pages-to-print}
+      @about-function{gtk-print-operation-set-current-page}
+      @about-function{gtk-print-operation-set-use-full-page}
+      @about-function{gtk-print-operation-set-unit}
+      @about-function{gtk-print-operation-set-export-filename}
+      @about-function{gtk-print-operation-set-show-progress}
+      @about-function{gtk-print-operation-set-track-print-status}
+      @about-function{gtk-print-operation-set-custom-tab-label}
+      @about-function{gtk-print-operation-run}
+      @about-function{gtk-print-operation-cancel}
+      @about-function{gtk-print-operation-draw-page-finish}
+      @about-function{gtk-print-operation-set-defer-drawing}
+      @about-function{gtk-print-operation-get-status}
+      @about-function{gtk-print-operation-get-status-string}
+      @about-function{gtk-print-operation-is-finished}
+      @about-function{gtk-print-operation-set-support-selection}
+      @about-function{gtk-print-operation-get-support-selection}
+      @about-function{gtk-print-operation-set-has-selection}
+      @about-function{gtk-print-operation-get-has-selection}
+      @about-function{gtk-print-operation-set-embed-page-setup}
+      @about-function{gtk-print-operation-get-embed-page-setup}
+      @about-function{gtk-print-run-page-setup-dialog}
+      @about-function{gtk-print-run-page-setup-dialog-async}
+      @about-class{gtk-print-operation-preview}
+      @about-function{gtk-print-operation-preview-end-preview}
+      @about-function{gtk-print-operation-preview-is-selected}
+      @about-function{gtk-print-operation-preview-render-page}
     @end{subsection}
     @begin[GtkPrintContext]{subsection}
+      Encapsulates context for drawing pages.
+
+      @about-class{gtk-print-context}
+      @about-function{gtk-print-context-get-cairo-context}
+      @about-function{gtk-print-context-set-cairo-context}
+      @about-function{gtk-print-context-get-page-setup}
+      @about-function{gtk-print-context-get-width}
+      @about-function{gtk-print-context-get-height}
+      @about-function{gtk-print-context-get-dpi-x}
+      @about-function{gtk-print-context-get-dpi-y}
+      @about-function{gtk-print-context-get-pango-fontmap}
+      @about-function{gtk-print-context-create-pango-context}
+      @about-function{gtk-print-context-create-pango-layout}
+      @about-function{gtk-print-context-get-hard-margins}
     @end{subsection}
     @begin[GtkPrintSettings]{subsection}
+      Stores print settings.
+
+      @about-class{gtk-print-settings}
+      @about-function{gtk-print-settings-new}
+      @about-function{gtk-print-settings-copy}
+      @about-function{gtk-print-settings-has-key}
+      @about-function{gtk-print-settings-get}
+      @about-function{gtk-print-settings-set}
+      @about-function{gtk-print-settings-unset}
+      @about-function{gtk-print-settings-foreach}
+      @about-function{gtk-print-settings-get-bool}
+      @about-function{gtk-print-settings-set-bool}
+      @about-function{gtk-print-settings-get-double}
+      @about-function{gtk-print-settings-get-double-with-default}
+      @about-function{gtk-print-settings-set-double}
+      @about-function{gtk-print-settings-get-length}
+      @about-function{gtk-print-settings-set-length}
+      @about-function{gtk-print-settings-get-int}
+      @about-function{gtk-print-settings-get-int-with-default}
+      @about-function{gtk-print-settings-set-int}
+      @about-function{GTK_PRINT_SETTINGS_PRINTER}
+      @about-function{gtk-print-settings-get-printer}
+      @about-function{gtk-print-settings-set-printer}
+      @about-symbol{gtk-page-orientation}
+      @about-function{GTK_PRINT_SETTINGS_ORIENTATION}
+      @about-function{gtk-print-settings-get-orientation}
+      @about-function{gtk-print-settings-set-orientation}
+      @about-function{GTK_PRINT_SETTINGS_PAPER_FORMAT}
+      @about-function{gtk-print-settings-get-paper-size}
+      @about-function{gtk-print-settings-set-paper-size}
+      @about-function{GTK_PRINT_SETTINGS_PAPER_WIDTH}
+      @about-function{gtk-print-settings-get-paper-width}
+      @about-function{gtk-print-settings-set-paper-width}
+      @about-function{GTK_PRINT_SETTINGS_PAPER_HEIGHT}
+      @about-function{gtk-print-settings-get-paper-height}
+      @about-function{gtk-print-settings-set-paper-height}
+      @about-function{GTK_PRINT_SETTINGS_USE_COLOR}
+      @about-function{gtk-print-settings-get-use-color}
+      @about-function{gtk-print-settings-set-use-color}
+      @about-function{GTK_PRINT_SETTINGS_COLLATE}
+      @about-function{gtk-print-settings-get-collate}
+      @about-function{gtk-print-settings-set-collate}
+      @about-function{GTK_PRINT_SETTINGS_REVERSE}
+      @about-function{gtk-print-settings-get-reverse}
+      @about-function{gtk-print-settings-set-reverse}
+      @about-symbol{gtk-print-duplex}
+      @about-function{GTK_PRINT_SETTINGS_DUPLEX}
+      @about-function{gtk-print-settings-get-duplex}
+      @about-function{gtk-print-settings-set-duplex}
+      @about-symbol{gtk-print-quality}
+      @about-function{GTK_PRINT_SETTINGS_QUALITY}
+      @about-function{gtk-print-settings-get-quality}
+      @about-function{gtk-print-settings-set-quality}
+      @about-function{GTK_PRINT_SETTINGS_N_COPIES}
+      @about-function{gtk-print-settings-get-n-copies}
+      @about-function{gtk-print-settings-set-n-copies}
+      @about-function{GTK_PRINT_SETTINGS_NUMBER_UP}
+      @about-function{gtk-print-settings-get-number-up}
+      @about-function{gtk-print-settings-set-number-up}
+      @about-function{gtk-number-up-layout}
+      @about-function{GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT}
+      @about-function{gtk-print-settings-get-number-up-layout}
+      @about-function{gtk-print-settings-set-number-up-layout}
+      @about-function{GTK_PRINT_SETTINGS_RESOLUTION}
+      @about-function{gtk-print-settings-get-resolution}
+      @about-function{gtk-print-settings-set-resolution}
+      @about-function{gtk-print-settings-set-resolution-xy}
+      @about-function{GTK_PRINT_SETTINGS_RESOLUTION_X}
+      @about-function{gtk-print-settings-get-resolution-x}
+      @about-function{GTK_PRINT_SETTINGS_RESOLUTION_Y}
+      @about-function{gtk-print-settings-get-resolution-y}
+      @about-function{GTK_PRINT_SETTINGS_PRINTER_LPI}
+      @about-function{gtk-print-settings-get-printer-lpi}
+      @about-function{gtk-print-settings-set-printer-lpi}
+      @about-function{GTK_PRINT_SETTINGS_SCALE}
+      @about-function{gtk-print-settings-get-scale}
+      @about-function{gtk-print-settings-set-scale}
+      @about-function{gtk-print-pages}
+      @about-function{GTK_PRINT_SETTINGS_PRINT_PAGES}
+      @about-function{gtk-print-settings-get-print-pages}
+      @about-function{gtk-print-settings-set-print-pages}
+      @about-function{gtk-page-range}
+      @about-function{GTK_PRINT_SETTINGS_PAGE_RANGES}
+      @about-function{gtk-print-settings-get-page-ranges}
+      @about-function{gtk-print-settings-set-page-ranges}
+      @about-function{gtk-page-set}
+      @about-function{GTK_PRINT_SETTINGS_PAGE_SET}
+      @about-function{gtk-print-settings-get-page-set}
+      @about-function{gtk-print-settings-set-page-set}
+      @about-function{GTK_PRINT_SETTINGS_DEFAULT_SOURCE}
+      @about-function{gtk-print-settings-get-default-source}
+      @about-function{gtk-print-settings-set-default-source}
+      @about-function{GTK_PRINT_SETTINGS_MEDIA_TYPE}
+      @about-function{gtk-print-settings-get-media-type}
+      @about-function{gtk-print-settings-set-media-type}
+      @about-function{GTK_PRINT_SETTINGS_DITHER}
+      @about-function{gtk-print-settings-get-dither}
+      @about-function{gtk-print-settings-set-dither}
+      @about-function{GTK_PRINT_SETTINGS_FINISHINGS}
+      @about-function{gtk-print-settings-get-finishings}
+      @about-function{gtk-print-settings-set-finishings}
+      @about-function{GTK_PRINT_SETTINGS_OUTPUT_BIN}
+      @about-function{gtk-print-settings-get-output-bin}
+      @about-function{gtk-print-settings-set-output-bin}
+      @about-function{GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT}
+      @about-function{GTK_PRINT_SETTINGS_OUTPUT_URI}
+      @about-function{GTK_PRINT_SETTINGS_WIN32_DRIVER_EXTRA}
+      @about-function{GTK_PRINT_SETTINGS_WIN32_DRIVER_VERSION}
+      @about-function{gtk-print-settings-new-from-file}
+      @about-function{gtk-print-settings-new-from-key-file}
+      @about-function{gtk-print-settings-load-file}
+      @about-function{gtk-print-settings-load-key-file}
+      @about-function{gtk-print-settings-to-file}
+      @about-function{gtk-print-settings-to-key-file}
     @end{subsection}
     @begin[GtkPageSetup]{subsection}
+      Stores page setup information.
+
+      @about-class{gtk-page-setup}
+      @about-function{gtk-page-setup-new}
+      @about-function{gtk-page-setup-copy}
+      @about-function{gtk-page-setup-get-orientation}
+      @about-function{gtk-page-setup-set-orientation}
+      @about-function{gtk-page-setup-get-paper-size}
+      @about-function{gtk-page-setup-set-paper-size}
+      @about-function{gtk-page-setup-get-top-margin}
+      @about-function{gtk-page-setup-set-top-margin}
+      @about-function{gtk-page-setup-get-bottom-margin}
+      @about-function{gtk-page-setup-set-bottom-margin}
+      @about-function{gtk-page-setup-get-left-margin}
+      @about-function{gtk-page-setup-set-left-margin}
+      @about-function{gtk-page-setup-get-right-margin}
+      @about-function{gtk-page-setup-set-right-margin}
+      @about-function{gtk-page-setup-set-paper-size-and-default-margins}
+      @about-function{gtk-page-setup-get-paper-width}
+      @about-function{gtk-page-setup-get-paper-height}
+      @about-function{gtk-page-setup-get-page-width}
+      @about-function{gtk-page-setup-get-page-height}
+      @about-function{gtk-page-setup-new-from-file}
+      @about-function{gtk-page-setup-new-from-key-file}
+      @about-function{gtk-page-setup-load-file}
+      @about-function{gtk-page-setup-load-key-file}
+      @about-function{gtk-page-setup-to-file}
+      @about-function{gtk-page-setup-to-key-file}
     @end{subsection}
     @begin[GtkPaperSize]{subsection}
       not implemented
@@ -3210,8 +3676,38 @@ setup_tree (void)
       not implemented
     @end{subsection}
     @begin[GtkPrintUnixDialog]{subsection}
+      A print dialog.
+
+      @about-class{gtk-print-unix-dialog}
+      @about-function{gtk-print-unix-dialog-new}
+      @about-function{gtk-print-unix-dialog-set-page-setup}
+      @about-function{gtk-print-unix-dialog-get-page-setup}
+      @about-function{gtk-print-unix-dialog-set-current-page}
+      @about-function{gtk-print-unix-dialog-get-current-page}
+      @about-function{gtk-print-unix-dialog-set-settings}
+      @about-function{gtk-print-unix-dialog-get-settings}
+      @about-function{gtk-print-unix-dialog-get-selected-printer}
+      @about-function{gtk-print-unix-dialog-add-custom-tab}
+      @about-function{gtk-print-unix-dialog-set-support-selection}
+      @about-function{gtk-print-unix-dialog-get-support-selection}
+      @about-function{gtk-print-unix-dialog-set-has-selection}
+      @about-function{gtk-print-unix-dialog-get-has-selection}
+      @about-function{gtk-print-unix-dialog-set-embed-page-setup}
+      @about-function{gtk-print-unix-dialog-get-embed-page-setup}
+      @about-function{gtk-print-unix-dialog-get-page-setup-set}
+      @about-symbol{gtk-print-capabilities}
+      @about-function{gtk-print-unix-dialog-set-manual-capabilities}
+      @about-function{gtk-print-unix-dialog-get-manual-capabilities}
     @end{subsection}
     @begin[GtkPageSetupUnixDialog]{subsection}
+      A page setup dialog.
+
+      @about-class{gtk-page-setup-unix-dialog}
+      @about-function{gtk-page-setup-unix-dialog-new}
+      @about-function{gtk-page-setup-unix-dialog-set-page-setup}
+      @about-function{gtk-page-setup-unix-dialog-get-page-setup}
+      @about-function{gtk-page-setup-unix-dialog-set-print-settings}
+      @about-function{gtk-page-setup-unix-dialog-get-print-settings}
     @end{subsection}
   @end{section}
   @begin[Miscellaneous]{section}
@@ -3940,6 +4436,8 @@ setup_tree (void)
       @about-function{gtk-application-add-window}
       @about-function{gtk-application-remove-window}
       @about-function{gtk-application-get-windows}
+      @about-function{gtk-application-get-window-by-id}
+      @about-function{gtk-application-active-window}
       @about-function{gtk-application-inhibit}
       @about-function{gtk-application-uninhibit}
       @about-function{gtk-application-is-inhibited}
@@ -3947,23 +4445,30 @@ setup_tree (void)
       @about-function{gtk-application-set-app-menu}
       @about-function{gtk-application-get-menubar}
       @about-function{gtk-application-set-menubar}
+      @about-function{gtk-application-add-accelerator}
+      @about-function{gtk-application-remove-accelerator}
     @end{subsection}
     @begin[GtkApplicationWindow]{subsection}
-      GtkWindow subclass with GtkApplication support
+      GtkWindow subclass with GtkApplication support.
 
       @about-class{gtk-application-window}
       @about-function{gtk-application-window-new}
+      @about-function{gtk-application-window-set-show-menubar}
+      @about-function{gtk-application-window-get-show-menubar}
+      @about-function{gtk-application-window-get-id}
     @end{subsection}
     @begin[GtkActionable]{subsection}
       An interface for widgets that can be associated with actions.
 
       @about-class{gtk-actionable}
       @about-class{gtk-actionable-interface}
+      @about-function{gtk-actionable-get-action-name}
+      @about-function{gtk-actionable-set-action-name}
       @about-function{gtk-actionable-get-action-target-value}
       @about-function{gtk-actionable-set-action-target-value}
+      @about-function{gtk-actionable-set-action-target}
       @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
-  @end{section}
-")
+  @end{section}")
 
 ;;; --- End of file gtk.package.lisp -------------------------------------------

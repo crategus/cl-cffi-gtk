@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See http://www.gtk.org.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2012 Dieter Kaiser
@@ -52,33 +52,12 @@
 ;;;
 ;;; GtkTearoffMenuItem implements AtkImplementorIface, GtkBuildable and
 ;;; GtkActivatable.
-;;;
-;;; Description
-;;;
-;;; A GtkTearoffMenuItem is a special GtkMenuItem which is used to tear off and
-;;; reattach its menu.
-;;;
-;;; When its menu is shown normally, the GtkTearoffMenuItem is drawn as a dotted
-;;; line indicating that the menu can be torn off. Activating it causes its menu
-;;; to be torn off and displayed in its own window as a tearoff menu.
-;;;
-;;; When its menu is shown as a tearoff menu, the GtkTearoffMenuItem is drawn as
-;;; a dotted line which has a left pointing arrow graphic indicating that the
-;;; tearoff menu can be reattached. Activating it will erase the tearoff menu
-;;; window.
-;;;
-;;; Note
-;;;
-;;; GtkTearoffMenuItem is deprecated and should not be used in newly written
-;;; code. Menus are not meant to be torn around.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTearoffMenuItem
-;;;
-;;; struct GtkTearoffMenuItem;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkTearoffMenuItem" gtk-tearoff-menu-item
@@ -90,26 +69,43 @@
    :type-initializer "gtk_tearoff_menu_item_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-tearoff-menu-item 'type)
+ "@version{2013-6-1}
+  @begin{short}
+    A @sym{gtk-tearoff-menu-item} is a special @class{gtk-menu-item} which is
+    used to tear off and reattach its menu.
+  @end{short}
+
+  When its menu is shown normally, the @class{gtk-tearoff-menu-item} is drawn as
+  a dotted line indicating that the menu can be torn off. Activating it causes
+  its menu to be torn off and displayed in its own window as a tearoff menu.
+
+  When its menu is shown as a tearoff menu, the @class{gtk-tearoff-menu-item}
+  is drawn as a dotted line which has a left pointing arrow graphic indicating
+  that the tearoff menu can be reattached. Activating it will erase the tearoff
+  menu window.
+
+  @subheading{Note}
+    @sym{gtk-tearoff-menu-item} is deprecated and should not be used in newly
+    written code. Menus are not meant to be torn around.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tearoff_menu_item_new ()
-;;;
-;;; GtkWidget * gtk_tearoff_menu_item_new (void);
-;;;
-;;; Warning
-;;;
-;;; gtk_tearoff_menu_item_new has been deprecated since version 3.4 and should
-;;; not be used in newly-written code. GtkTearoffMenuItem is deprecated and
-;;; should not be used in newly written code.
-;;;
-;;; Creates a new GtkTearoffMenuItem.
-;;;
-;;; Returns :
-;;;     a new GtkTearoffMenuItem.
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-tearoff-menu-item-new))
 
 (defun gtk-tearoff-menu-item-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-1}
+  @return{A new @class{gtk-tearoff-menu-item} widget.}
+  @subheading{Warning}
+    @sym{gtk-tearoff-menu-item-new} has been deprecated since version 3.4 and
+    should not be used in newly-written code. @class{gtk-tearoff-menu-item} is
+    deprecated and should not be used in newly written code.
+
+  @short{Creates a new @class{gtk-tearoff-menu-item} widget.}"
   (make-instance 'gtk-tearoff-menu-item))
 
 (export 'gtk-tearoff-menu-item-new)

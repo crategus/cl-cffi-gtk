@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -67,30 +67,27 @@
     gtk-menu-bar-pack-direction
     "pack-direction" "GtkPackDirection" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-bar 'type)
- "@version{2013-4-3}
+ "@version{2013-6-1}
   @begin{short}
-    The @class{gtk-menu-bar} is a subclass of @class{gtk-menu-shell} which
+    The @sym{gtk-menu-bar} is a subclass of @class{gtk-menu-shell} which
     contains one or more items of type @class{gtk-menu-item}. The result is a
     standard menu bar which can hold many menu items.
   @end{short}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"internal-padding\" style property}
-      @code{\"internal-padding\"} of type @code{:int} (Read)@br{}
+      @code{\"internal-padding\"} of type @code{:int} (Read) @br{}
       Amount of border space between the menubar shadow and the menu items.
       @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"shadow-type\" style property}
-      @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read)@br{}
+      @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read) @br{}
       Style of bevel around the menubar. @br{}
       Default value: @code{:out}
   @end{dictionary}
-
   @see-slot{gtk-menu-bar-child-pack-direction}
   @see-slot{gtk-menu-bar-pack-direction}")
 
@@ -104,27 +101,25 @@
 (setf (documentation (atdoc:get-slot-from-name "child-pack-direction"
                                                'gtk-menu-bar) 't)
  "The @code{\"child-pack-direction\"} property of type
-  @symbol{gtk-pack-direction} (Read / Write)@br{}
+  @symbol{gtk-pack-direction} (Read / Write) @br{}
   The child pack direction of the menubar. It determines how the widgets
   contained in child menuitems are arranged. @br{}
-  Default value: @code{:ltr}@br{}
+  Default value: @code{:ltr} @br{}
   Since 2.8")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pack-direction"
                                                'gtk-menu-bar) 't)
  "The @code{\"pack-direction\"} property of type @symbol{gtk-pack-direction}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The pack direction of the menubar. It determines how menuitems are arranged
   in the menubar. @br{}
-  Default value: @code{:ltr}@br{}
+  Default value: @code{:ltr} @br{}
   Since 2.8")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -135,8 +130,6 @@
  "@version{2013-3-16}
   Accessor of the slot @code{\"child-pack-direction\"} of the
   @class{gtk-menu-bar} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-bar-pack-direction atdoc:*function-name-alias*)
@@ -154,7 +147,7 @@
 
 (defun gtk-menu-bar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-16}
+ "@version{2013-6-1}
   @return{The new menu bar, as a @class{gtk-widget} widget.}
   Creates a new @class{gtk-menu-bar} widget."
   (make-instance 'gtk-menu-bar))
@@ -194,12 +187,10 @@
   (:ttb 2)
   (:btt 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-pack-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-pack-direction atdoc:*external-symbols*)
- "@version{2013-3-16}
+ "@version{2013-6-1}
   @begin{short}
     Determines how widgets should be packed insided menubars and menuitems
     contained in menubars.
@@ -228,10 +219,10 @@
 
 (defun gtk-menu-bar-set-pack-direction (menubar pack-dir)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-16}
+ "@version{2013-6-1}
   @argument[menubar]{a @class{gtk-menu-bar} widget}
   @argument[pack-dir]{a new @symbol{gtk-pack-direction}}
-  @short{Sets how items should be packed inside a menubar.}
+  @short{Sets how items should be packed inside a @arg{menubar}.}
 
   Since 2.8"
   (setf (gtk-menu-bar-pack-direction menubar) pack-dir))
@@ -246,15 +237,16 @@
 
 (defun gtk-menu-bar-get-pack-direction (menubar)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-16}
+ "@version{2013-6-1}
   @argument[menubar]{a @class{gtk-menu-bar} widget}
   @return{The pack direction.}
   @begin{short}
-    Retrieves the current pack direction of the menubar. See
-    gtk_menu_bar_set_pack_direction().
+    Retrieves the current pack direction of the menubar.
   @end{short}
+  See the @fun{gtk-menu-bar-set-pack-direction} function.
 
-  Since 2.8"
+  Since 2.8
+  @see-function{gtk-menu-bar-set-pack-direction}"
   (gtk-menu-bar-pack-direction menubar))
 
 (export 'gtk-menu-bar-get-pack-direction)
@@ -267,10 +259,12 @@
 
 (defun gtk-menu-bar-set-child-pack-direction (menubar child-pack-dir)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-16}
+ "@version{2013-6-1}
   @argument[menubar]{a @class{gtk-menu-bar} widget}
-  @argument[child_pack_dir]{a new GtkPackDirection}
-  @short{Sets how widgets should be packed inside the children of a menubar.}
+  @argument[child-pack_dir]{a new @symbol{gtk-pack-direction}}
+  @begin{short}
+    Sets how widgets should be packed inside the children of a @arg{menubar}.
+  @end{short}
 
   Since 2.8"
   (setf (gtk-menu-bar-child-pack-direction menubar) child-pack-dir))
@@ -285,15 +279,16 @@
 
 (defun gtk-menu-bar-get-child-pack-direction (menubar)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-16}
+ "@version{2013-6-1}
   @argument[menubar]{a @class{gtk-menu-bar} widget}
   @retrun{The child pack direction.}
   @begin{short}
-    Retrieves the current child pack direction of the menubar. See
-    gtk_menu_bar_set_child_pack_direction().
+    Retrieves the current child pack direction of the menubar.
   @end{short}
+  See the @fun{gtk-menu-bar-set-child-pack-direction} function.
 
-  Since 2.8"
+  Since 2.8
+  @see-function{gtk-menu-bar-set-child-pack-direction}"
   (gtk-menu-bar-child-pack-direction menubar))
 
 (export 'gtk-menu-bar-get-child-pack-direction)

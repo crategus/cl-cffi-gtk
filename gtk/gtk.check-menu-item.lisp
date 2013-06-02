@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -72,45 +72,40 @@
     gtk-check-menu-item-inconsistent
     "inconsistent" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-check-menu-item 'type)
- "@version{2013-2-24}
+ "@version{2013-6-1}
   @begin{short}
-    A GtkCheckMenuItem is a menu item that maintains the state of a boolean
-    value in addition to a GtkMenuItem usual role in activating application
-    code.
+    A @sym{gtk-check-menu-item} is a menu item that maintains the state of a
+    boolean value in addition to a @class{gtk-menu-item} usual role in
+    activating application code.
   @end{short}
 
   A check box indicating the state of the boolean value is displayed at the
-  left side of the GtkMenuItem. Activating the GtkMenuItem toggles the value.
+  left side of the @class{gtk-menu-item}. Activating the @class{gtk-menu-item}
+  toggles the value.
   @begin[Style Property Details]{dictionary}
     @subheading{The \"indicator-size\" style property}
-      @code{\"indicator-size\"} of type @code{gint} (Read)@br{}
-      Size of check or radio indicator.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"indicator-size\"} of type @code{:int} (Read) @br{}
+      Size of check or radio indicator. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 16
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
-      This signal is emitted when the state of the check box is changed.
-
-      A signal handler can use gtk_check_menu_item_get_active() to discover the
-      new state.
       @begin{pre}
- void user_function (GtkCheckMenuItem *checkmenuitem,
-                     gpointer          user_data)          : Run First
+ lambda (checkmenuitm)   : Run First
       @end{pre}
+      This signal is emitted when the state of the check box is changed.
+      A signal handler can use the @fun{gtk-check-menu-item-get-active}
+      function to discover the new state.
       @begin[code]{table}
-        @entry[checkmenuitem]{the object which received the signal.}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[checkmenuitem]{The object which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-check-menu-item-active}
   @see-slot{gtk-check-menu-item-draw-as-radio}
-  @see-slot{gtk-check-menu-item-inconsistent}
-")
+  @see-slot{gtk-check-menu-item-inconsistent}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -119,36 +114,33 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-check-menu-item) 't)
- "The @code{\"active\"} property of type @code{gboolean} (Read / Write)@br{}
-  Whether the menu item is checked.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-as-radio" 'gtk-check-menu-item) 't)
- "The @code{\"draw-as-radio\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether the menu item looks like a radio menu item.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+(setf (documentation (atdoc:get-slot-from-name "active"
+                                               'gtk-check-menu-item) 't)
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the menu item is checked. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inconsistent" 'gtk-check-menu-item) 't)
- "The @code{\"inconsistent\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether to display an \"inconsistent\" state.@br{}
-  Default value: FALSE")
+(setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
+                                               'gtk-check-menu-item) 't)
+ "The @code{\"draw-as-radio\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the menu item looks like a radio menu item. @br{}
+  Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "inconsistent"
+                                               'gtk-check-menu-item) 't)
+ "The @code{\"inconsistent\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to display an \"inconsistent\" state. @br{}
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-check-menu-item-active ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-check-menu-item-active atdoc:*function-name-alias*)
@@ -160,8 +152,6 @@
     class.
   @end{short}")
 
-;;; --- gtk-check-menu-item-draw-as-radio --------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-check-menu-item-draw-as-radio atdoc:*function-name-alias*)
       "Accessor"
@@ -171,8 +161,6 @@
     Accessor of the slot @code{\"draw-as-radio\"} of the
     @class{gtk-check-menu-item} class.
   @end{short}")
-
-;;; --- gtk-check-menu-item-inconsistent ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-check-menu-item-inconsistent atdoc:*function-name-alias*)
@@ -192,9 +180,9 @@
 
 (defun gtk-check-menu-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @return{a new GtkCheckMenuItem.}
-  @short{Creates a new GtkCheckMenuItem.}"
+ "@version{2013-6-1}
+  @return{A new @class{gtk-check-menu-item} widget.}
+  Creates a new @class{gtk-check-menu-item} widget."
   (make-instance 'gtk-check-menu-item))
 
 (export 'gtk-check-menu-item-new)
@@ -207,10 +195,10 @@
 
 (defun gtk-check-menu-item-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[label]{the string to use for the label.}
-  @return{a new GtkCheckMenuItem.}
-  @short{Creates a new GtkCheckMenuItem with a label.}"
+ "@version{2013-6-1}
+  @argument[label]{the string to use for the label}
+  @return{A new @class{gtk-check-menu-item} widget.}
+  Creates a new @class{gtk-check-menu-item} widget with a label."
   (make-instance 'gtk-check-menu-item
                  :label label))
 
@@ -225,14 +213,14 @@
 (defun gtk-check-menu-item-new-with-mnemonic (label)
  #+cl-cffi-gtk-documentation
  "@version{2013-2-24}
-  @argument[label]{The text of the button, with an underscore in front of the
+  @argument[label]{the text of the button, with an underscore in front of the
     character}
-  @return{a new GtkCheckMenuItem}
+  @return{A new @class{gtk-check-menu-item} widget.}
   @begin{short}
-    Creates a new GtkCheckMenuItem containing a label.
+    Creates a new @class{gtk-check-menu-item} widget containing a label.
   @end{short}
-  The label will be created using gtk_label_new_with_mnemonic(), so underscores
-  in label indicate the mnemonic for the menu item."
+  The label will be created using the @fun{gtk-label-new-with-mnemonic}
+  function, so underscores in label indicate the mnemonic for the menu item."
   (make-instance 'gtk-check-menu-item
                  :label label
                  :use-underline t))
@@ -247,13 +235,14 @@
 
 (defun gtk-check-menu-item-get-active (check-menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check_menu_item]{a GtkCheckMenuItem}
-  @return{TRUE if the menu item is checked.}
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @return{@em{True} if the menu item is checked.}
   @begin{short}
     Returns whether the check menu item is active.
   @end{short}
-  See gtk_check_menu_item_set_active()."
+  See the @fun{gtk-check-menu-item-set-active} function.
+  @see-function{gtk-check-menu-item-set-active}"
   (gtk-check-menu-item-active check-menu-item))
 
 (export 'gtk-check-menu-item-get-active)
@@ -266,13 +255,11 @@
 
 (defun gtk-check-menu-item-set-active (check-menu-item is-active)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check-menu-item]{a GtkCheckMenuItem.}
-  @argument[is_active]{boolean value indicating whether the check box is
-    active.}
-  @begin{short}
-    Sets the active state of the menu item's check box.
-  @end{short}"
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @argument[is-active]{boolean value indicating whether the check box is
+    active}
+  Sets the active state of the menu item's check box."
   (setf (gtk-check-menu-item-active check-menu-item) is-active))
 
 (export 'gtk-check-menu-item-set-active)
@@ -283,9 +270,9 @@
 
 (defcfun ("gtk_check_menu_item_toggled" gtk-check-menu-item-toggled) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check_menu_item]{a GtkCheckMenuItem.}
-  @short{Emits the \"toggled\" signal.}"
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  Emits the \"toggled\" signal."
   (check-menu-item (g-object gtk-check-menu-item)))
 
 (export 'gtk-check-menu-item-toggled)
@@ -298,12 +285,12 @@
 
 (defun gtk-check-menu-item-get-inconsistent (check-menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check_menu_item]{a GtkCheckMenuItem}
-  @return{TRUE if inconsistent}
-  @begin{short}
-    Retrieves the value set by gtk_check_menu_item_set_inconsistent().
-  @end{short}"
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @return{@em{True} if inconsistent.}
+  Retrieves the value set by the @fun{gtk-check-menu-item-set-inconsistent}
+  function.
+  @see-function{gtk-check-menu-item-set-inconsistent}"
   (gtk-check-menu-item-inconsistent check-menu-item))
 
 (export 'gtk-check-menu-item-get-inconsistent)
@@ -316,9 +303,9 @@
 
 (defun gtk-check-menu-item-set-inconsistent (check-menu-item setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check_menu_item]{a GtkCheckMenuItem}
-  @argument[setting]{TRUE to display an \"inconsistent\" third state check}
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @argument[setting]{@em{true} to display an \"inconsistent\" third state check}
   @begin{short}
     If the user has selected a range of elements (such as some text or
     spreadsheet cells) that are affected by a boolean setting, and the current
@@ -327,8 +314,10 @@
   @end{short}
   This function turns on \"in between\" display. Normally you would turn off the
   inconsistent state again if the user explicitly selects a setting. This has to
-  be done manually, gtk_check_menu_item_set_inconsistent() only affects visual
-  appearance, it doesn't affect the semantics of the widget."
+  be done manually, the @fun{gtk-check-menu-item-set-inconsistent} function
+  only affects visual appearance, it does not affect the semantics of the
+  widget.
+  @see-function{gtk-check-menu-item-set-inconsistent}"
   (setf (gtk-check-menu-item-inconsistent check-menu-item) setting))
 
 (export 'gtk-check-menu-item-set-inconsistent)
@@ -341,11 +330,13 @@
 
 (defun gtk-check-menu-item-set-draw-as-radio (check-menu-item setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check_menu_item]{a GtkCheckMenuItem}
-  @argument[setting]{whether check_menu_item is drawn like a GtkRadioMenuItem}
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @argument[setting]{whether @arg{check-menu-item} is drawn like a
+    @class{gtk-radio-menu-item}}
   @begin{short}
-    Sets whether check_menu_item is drawn like a GtkRadioMenuItem
+    Sets whether @arg{check-menu-item} is drawn like a
+    @class{gtk-radio-menu-item}.
   @end{short}
 
   Since 2.4"
@@ -361,11 +352,14 @@
 
 (defun gtk-check-menu-item-get-draw-as-radio (check-menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
-  @argument[check_menu_item]{a GtkCheckMenuItem}
-  @return{Whether check_menu_item looks like a GtkRadioMenuItem}
+ "@version{2013-6-1}
+  @argument[check-menu-item]{a @class{gtk-check-menu-item} widget}
+  @begin{return}
+    Whether @artg{check-menu-item} looks like a @class{gtk-radio-menu-item}.
+  @end{return}
   @begin{short}
-    Returns whether check_menu_item looks like a GtkRadioMenuItem
+    Returns whether @arg{check-menu-item} looks like a
+    @class{gtk-radio-menu-item}.
   @end{short}
 
   Since 2.4"

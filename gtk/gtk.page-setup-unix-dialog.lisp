@@ -2,13 +2,14 @@
 ;;; gtk.page-setup-unix-dialog.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -56,23 +57,12 @@
 ;;; Implemented Interfaces
 ;;;
 ;;; GtkPageSetupUnixDialog implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Description
-;;;
-;;; GtkPageSetupUnixDialog implements a page setup dialog for platforms which
-;;; don't provide a native page setup dialog, like Unix. It can be used very
-;;; much like any other GTK+ dialog, at the cost of the portability offered by
-;;; the high-level printing API
-;;;
-;;; Printing support was added in GTK+ 2.10.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPageSetupUnixDialog
-;;;
-;;; struct GtkPageSetupUnixDialog;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkPageSetupUnixDialog" gtk-page-setup-unix-dialog
@@ -83,29 +73,35 @@
    :type-initializer "gtk_page_setup_unix_dialog_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-page-setup-unix-dialog 'type)
+ "@version{2013-5-30}
+  @begin{short}
+    @sym{gtk-page-setup-unix-dialog} implements a page setup dialog for
+    platforms which do not provide a native page setup dialog, like Unix. It
+    can be used very much like any other GTK+ dialog, at the cost of the
+    portability offered by the high-level printing API.
+  @end{short}
+
+  Printing support was added in GTK+ 2.10.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_new ()
-;;;
-;;; GtkWidget * gtk_page_setup_unix_dialog_new (const gchar *title,
-;;;                                             GtkWindow *parent);
-;;;
-;;; Creates a new page setup dialog.
-;;;
-;;; title :
-;;;     the title of the dialog, or NULL
-;;;
-;;; parent :
-;;;     transient parent of the dialog, or NULL
-;;;
-;;; Returns :
-;;;     the new GtkPageSetupUnixDialog
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-page-setup-unix-dialog-new))
 
 (defun gtk-page-setup-unix-dialog-new (title parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-30}
+  @argument[title]{the title of the dialog, or @code{nil}}
+  @argument[parent]{transient parent of the dialog, or @code{nil}}
+  @return{The new @class{gtk-page-setup-unix-dialog} widget.}
+  @begin{short}
+    Creates a new page setup dialog.
+  @end{short}
+
+  Since 2.10"
   (make-instance 'gtk-page-setup-unix-dialog
                  :title title
                  :parent parent))
@@ -114,24 +110,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_set_page_setup ()
-;;;
-;;; void gtk_page_setup_unix_dialog_set_page_setup
-;;;                                             (GtkPageSetupUnixDialog *dialog,
-;;;                                              GtkPageSetup *page_setup);
-;;;
-;;; Sets the GtkPageSetup from which the page setup dialog takes its values.
-;;;
-;;; dialog :
-;;;     a GtkPageSetupUnixDialog
-;;;
-;;; page_setup :
-;;;     a GtkPageSetup
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_page_setup_unix_dialog_set_page_setup"
            gtk-page-setup-unix-dialog-set-page-setup) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-30}
+  @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
+  @argument[page-setup]{a @class{gtk-page-setup} object}
+  @begin{short}
+    Sets the @class{gtk-page-setup} object from which the page setup dialog
+    takes its values.
+  @end{short}
+
+  Since 2.10"
   (dialog (g-object gtk-page-setup-unix-dialog))
   (page-setup (g-object gkt-page-setup)))
 
@@ -139,47 +131,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_get_page_setup ()
-;;;
-;;; GtkPageSetup * gtk_page_setup_unix_dialog_get_page_setup
-;;;                                            (GtkPageSetupUnixDialog *dialog);
-;;;
-;;; Gets the currently selected page setup from the dialog.
-;;;
-;;; dialog :
-;;;     a GtkPageSetupUnixDialog
-;;;
-;;; Returns :
-;;;     the current page setup
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_page_setup_unix_dialog_get_page_setup"
            gtk-page-setup-unix-dialog-get-page-setup) (g-object gtk-page-setup)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-30}
+  @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
+  @return{The current page setup.}
+  @begin{short}
+    Gets the currently selected page setup from the dialog.
+  @end{short}
+
+  Since 2.10"
   (dialog (g-object gtk-page-setup-unix-dialog)))
 
 (export 'gtk-page-setup-unix-dialog-get-page-setpup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_set_print_settings ()
-;;;
-;;; void gtk_page_setup_unix_dialog_set_print_settings
-;;;                                          (GtkPageSetupUnixDialog *dialog,
-;;;                                           GtkPrintSettings *print_settings);
-;;;
-;;; Sets the GtkPrintSettings from which the page setup dialog takes its values.
-;;;
-;;; dialog :
-;;;     a GtkPageSetupUnixDialog
-;;;
-;;; print_settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_page_setup_unix_dialog_set_print_settings"
            gtk-page-setup-unix-dialog-set-print-settings) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-30}
+  @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
+  @argument[print-settings]{a @class{gtk-print-settings} object}
+  @begin{short}
+    Sets the @class{gtk-print-settings} from which the page setup dialog takes
+    its values.
+  @end{short}
+
+  Since 2.10"
   (dialog (g-object gkt-page-setup-unix-dialog))
   (print-settings (g-object gtk-print-settings)))
 
@@ -187,23 +171,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_get_print_settings ()
-;;;
-;;; GtkPrintSettings * gtk_page_setup_unix_dialog_get_print_settings
-;;;                                            (GtkPageSetupUnixDialog *dialog);
-;;;
-;;; Gets the current print settings from the dialog.
-;;;
-;;; dialog :
-;;;     a GtkPageSetupUnixDialog
-;;;
-;;; Returns :
-;;;     the current print settings
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_page_setup_unix_dialog_get_print_settings"
            gtk-page-setup-unix-dialog-get-print-settings) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-30}
+  @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
+  @return{The current print settings.}
+  @begin{short}
+    Gets the current print settings from the dialog.
+  @end{short}
+
+  Since 2.10"
   (dialog (g-object gkt-page-setup-unix-dialog))
   (print-settings (g-object gtk-print-settings)))
 

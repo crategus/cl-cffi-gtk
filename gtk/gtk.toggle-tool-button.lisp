@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -61,18 +61,18 @@
     gtk-toggle-tool-button-active
     "active" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-tool-button 'type)
- "@version{2013-3-25}
+ "@version{2013-6-1}
   @begin{short}
-    A GtkToggleToolButton is a GtkToolItem that contains a toggle button.
+    A @sym{gtk-toggle-tool-button} is a @class{gtk-tool-item} that contains a
+    toggle button.
   @end{short}
 
-  Use gtk_toggle_tool_button_new() to create a new GtkToggleToolButton. Use
-  gtk_toggle_tool_button_new_from_stock() to create a new GtkToggleToolButton
-  containing a stock item.
+  Use the @fun{gtk-toggle-tool-button-new} function to create a new
+  @sym{gtk-toggle-tool-button}. Use the
+  @fun{gtk-toggle-tool-button-new-from-stock} to create a new
+  @sym{gtk-toggle-tool-button} containing a stock item.
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
@@ -80,7 +80,7 @@
       @end{pre}
       Emitted whenever the toggle tool button changes state.
       @begin[code]{table}
-        @entry[toggle-tool-button]{the object that emitted the signal}
+        @entry[toggle-tool-button]{The object that emitted the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-toggle-tool-button-active}")
@@ -94,14 +94,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active"
                                                'gtk-toggle-tool-button) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
   If the toggle tool button should be pressed in. @br{}
-  Default value: @code{nil}@br{}
+  Default value: @code{nil} @br{}
   Since 2.8")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 

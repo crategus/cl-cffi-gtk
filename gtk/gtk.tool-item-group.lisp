@@ -2,7 +2,7 @@
 ;;; gtk.tool-item-group.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
@@ -84,54 +84,52 @@
     gtk-tool-item-group-label-widget
     "label-widget" "GtkWidget" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-item-group 'type)
- "@version{2013-3-27}
+ "@version{2013-6-1}
   @begin{short}
-    A GtkToolItemGroup is used together with GtkToolPalette to add GtkToolItems
-    to a palette like container with different categories and drag and drop
-    support.
+    A @sym{gtk-tool-item-group} is used together with @class{gtk-tool-palette}
+    to add @class{gtk-tool-item}'s to a palette like container with different
+    categories and drag and drop support.
   @end{short}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"expand\" child property}
-      @code{\"expand\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"expand\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the item should receive extra space when the group grows. @br{}
       Default value: @code{nil}
 
     @subheading{The \"fill\" child property}
-      @code{\"fill\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"fill\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the item should fill the available space. @br{}
       Default value: @em{true}
 
     @subheading{The \"homogeneous\" child property}
-      @code{\"homogeneous\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"homogeneous\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the item should be the same size as other homogeneous items. @br{}
       Default value: @em{true}
 
     @subheading{The \"new-row\" child property}
-      @code{\"new-row\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"new-row\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the item should start a new row. @br{}
       Default value: @code{nil}
 
     @subheading{The \"position\" child property}
-      @code{\"position\"} of type @code{:int} (Read / Write)@br{}
+      @code{\"position\"} of type @code{:int} (Read / Write) @br{}
       Position of the item within this group. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 0
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"expander-size\" style property}
-      @code{\"expander-size\"} of type @code{:int} (Read)@br{}
+      @code{\"expander-size\"} of type @code{:int} (Read) @br{}
       Size of the expander arrow. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 16
 
     @subheading{The \"header-spacing\" style property}
-      @code{\"header-spacing\"} of type @code{:int} (Read)@br{}
+      @code{\"header-spacing\"} of type @code{:int} (Read) @br{}
       Spacing between expander arrow and caption. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 2
   @end{dictionary}
   @see-slot{gtk-tool-item-group-collapsed}
@@ -153,8 +151,6 @@
   Whether the group has been collapsed and items are hidden. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize"
                                                'gtk-tool-item-group) 't)
@@ -162,8 +158,6 @@
   (Read / Write)@br{}
   Ellipsize for item group headers. @br{}
   Default value: @code{:none}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "header-relief"
@@ -173,16 +167,12 @@
   Relief of the group header button. @br{}
   Default value: @code{:normal}@br{}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label"
                                                'gtk-tool-item-group) 't)
  "The @code{\"label\"} property of type @code{:string} (Read / Write)@br{}
   The human-readable title of this item group. @br{}
   Default value: \"\"")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-widget"
@@ -193,7 +183,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -205,8 +195,6 @@
   Accessor of the slot @code{\"collapsed\"} of the @class{gtk-tool-item-group}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-ellipsize atdoc:*function-name-alias*)
       "Accessor"
@@ -214,8 +202,6 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"ellipsize\"} of the @class{gtk-tool-item-group}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-header-relief atdoc:*function-name-alias*)
@@ -225,8 +211,6 @@
   Accessor of the slot @code{\"header-relief\"} of the
   @class{gtk-tool-item-group} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-label atdoc:*function-name-alias*)
       "Accessor"
@@ -234,8 +218,6 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"label\"} of the @class{gtk-tool-item-group}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-label-widget atdoc:*function-name-alias*)
@@ -245,6 +227,10 @@
   Accessor of the slot @code{\"label-widget\"} of the
   @class{gtk-tool-item-group} class.")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkToolItemGroup"
@@ -268,10 +254,6 @@
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-expand atdoc:*function-name-alias*)
@@ -281,8 +263,6 @@
   Accessor of the child property @code{\"expand\"} of the
   @class{gtk-tool-item-group} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-fill atdoc:*function-name-alias*)
       "Accessor"
@@ -290,8 +270,6 @@
  "@version{2013-3-27}
   Accessor of the child property @code{\"fill\"} of the
   @class{gtk-tool-item-group} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-homogeneous atdoc:*function-name-alias*)
@@ -301,8 +279,6 @@
   Accessor of the child property @code{\"homogeneous\"} of the
   @class{gtk-tool-item-group} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-new-row atdoc:*function-name-alias*)
       "Accessor"
@@ -310,8 +286,6 @@
  "@version{2013-3-27}
   Accessor of the child property @code{\"new-row\"} of the
   @class{gtk-tool-item-group} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-position atdoc:*function-name-alias*)

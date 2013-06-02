@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -55,16 +55,12 @@
    :type-initializer "gtk_separator_menu_item_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-separator-menu-item 'type)
- "@version{2013-3-23}
-  @begin{short}
-    The GtkSeparatorMenuItem is a separator used to group items within a menu.
-    It displays a horizontal line with a shadow to make it appear sunken into
-    the interface.
-  @end{short}")
+ "@version{2013-6-1}
+  The @sym{gtk-separator-menu-item} is a separator used to group items within a
+  menu. It displays a horizontal line with a shadow to make it appear sunken
+  into the interface.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_menu_item_new ()
@@ -74,9 +70,9 @@
 
 (defun gtk-separator-menu-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-23}
-  @return{A new GtkSeparatorMenuItem.}
-  Creates a new GtkSeparatorMenuItem."
+ "@version{2013-6-1}
+  @return{A new @class{gtk-separator-menu-item} widget.}
+  Creates a new @class{gtk-separator-menu-item} widget."
   (make-instance 'gtk-separator-menu-item))
 
 (export 'gtk-separator-menu-item-new)

@@ -1,14 +1,15 @@
 ;;; ----------------------------------------------------------------------------
-;;; gtk.print-operation.lisp
+;;; gtk.print-context.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -52,82 +53,12 @@
 ;;;
 ;;;   GObject
 ;;;    +----GtkPrintContext
-;;;
-;;; Description
-;;;
-;;; A GtkPrintContext encapsulates context information that is required when
-;;; drawing pages for printing, such as the cairo context and important
-;;; parameters like page size and resolution. It also lets you easily create
-;;; PangoLayout and PangoContext objects that match the font metrics of the
-;;; cairo surface.
-;;;
-;;; GtkPrintContext objects gets passed to the "begin-print", "end-print",
-;;; "request-page-setup" and "draw-page" signals on the GtkPrintOperation.
-;;;
-;;; Example 96. Using GtkPrintContext in a "draw-page" callback
-;;;
-;;;   static void
-;;;   draw_page (GtkPrintOperation *operation,
-;;;          GtkPrintContext   *context,
-;;;          int                page_nr)
-;;;   {
-;;;     cairo_t *cr;
-;;;     PangoLayout *layout;
-;;;     PangoFontDescription *desc;
-;;;
-;;;     cr = gtk_print_context_get_cairo_context (context);
-;;;
-;;;     // Draw a red rectangle, as wide as the paper (inside the margins)
-;;;     cairo_set_source_rgb (cr, 1.0, 0, 0);
-;;;     cairo_rectangle (cr, 0, 0, gtk_print_context_get_width (context), 50);
-;;;
-;;;     cairo_fill (cr);
-;;;
-;;;     // Draw some lines
-;;;     cairo_move_to (cr, 20, 10);
-;;;     cairo_line_to (cr, 40, 20);
-;;;     cairo_arc (cr, 60, 60, 20, 0, M_PI);
-;;;     cairo_line_to (cr, 80, 20);
-;;;
-;;;     cairo_set_source_rgb (cr, 0, 0, 0);
-;;;     cairo_set_line_width (cr, 5);
-;;;     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
-;;;     cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-;;;
-;;;     cairo_stroke (cr);
-;;;
-;;;     // Draw some text
-;;;     layout = gtk_print_context_create_layout (context);
-;;;     pango_layout_set_text (layout, "Hello World! Printing is easy", -1);
-;;;     desc = pango_font_description_from_string ("sans 28");
-;;;     pango_layout_set_font_description (layout, desc);
-;;;     pango_font_description_free (desc);
-;;;
-;;;     cairo_move_to (cr, 30, 20);
-;;;     pango_cairo_layout_path (cr, layout);
-;;;
-;;;     // Font Outline
-;;;     cairo_set_source_rgb (cr, 0.93, 1.0, 0.47);
-;;;     cairo_set_line_width (cr, 0.5);
-;;;     cairo_stroke_preserve (cr);
-;;;
-;;;     // Font Fill
-;;;     cairo_set_source_rgb (cr, 0, 0.0, 1.0);
-;;;     cairo_fill (cr);
-;;;
-;;;     g_object_unref (layout);
-;;;   }
-;;;
-;;;
-;;; Printing support was added in GTK+ 2.10.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPrintContext
-;;;
-;;; typedef struct _GtkPrintContext GtkPrintContext;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkPrintContext" gtk-print-context
@@ -136,6 +67,77 @@
    :interfaces nil
    :type-initializer "gtk_print_context_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-print-context 'type)
+ "@version{2013-5-30}
+  @begin{short}
+    A @sym{gtk-print-context} encapsulates context information that is required
+    when drawing pages for printing, such as the cairo context and important
+    parameters like page size and resolution. It also lets you easily create
+    @class{pango-layout} and @class{pango-context} objects that match the font
+    metrics of the cairo surface.
+  @end{short}
+
+  @sym{gtk-print-context} objects gets passed to the \"begin-print\",
+  \"end-print\", \"request-page-setup\" and \"draw-page\" signals on the
+  @class{gtk-print-operation}.
+
+  @b{Example:} Using @sym{gtk-print-context} in a \"draw-page\" callback
+  @begin{pre}
+   static void
+   draw_page (GtkPrintOperation *operation,
+              GtkPrintContext   *context,
+              int                page_nr)
+   {
+     cairo_t *cr;
+     PangoLayout *layout;
+     PangoFontDescription *desc;
+
+     cr = gtk_print_context_get_cairo_context (context);
+
+     // Draw a red rectangle, as wide as the paper (inside the margins)
+     cairo_set_source_rgb (cr, 1.0, 0, 0);
+     cairo_rectangle (cr, 0, 0, gtk_print_context_get_width (context), 50);
+
+     cairo_fill (cr);
+
+     // Draw some lines
+     cairo_move_to (cr, 20, 10);
+     cairo_line_to (cr, 40, 20);
+     cairo_arc (cr, 60, 60, 20, 0, M_PI);
+     cairo_line_to (cr, 80, 20);
+
+     cairo_set_source_rgb (cr, 0, 0, 0);
+     cairo_set_line_width (cr, 5);
+     cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
+     cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
+
+     cairo_stroke (cr);
+
+     // Draw some text
+     layout = gtk_print_context_create_layout (context);
+     pango_layout_set_text (layout, \"Hello World! Printing is easy\", -1);
+     desc = pango_font_description_from_string (\"sans 28\");
+     pango_layout_set_font_description (layout, desc);
+     pango_font_description_free (desc);
+
+     cairo_move_to (cr, 30, 20);
+     pango_cairo_layout_path (cr, layout);
+
+     // Font Outline
+     cairo_set_source_rgb (cr, 0.93, 1.0, 0.47);
+     cairo_set_line_width (cr, 0.5);
+     cairo_stroke_preserve (cr);
+
+     // Font Fill
+     cairo_set_source_rgb (cr, 0, 0.0, 1.0);
+     cairo_fill (cr);
+
+     g_object_unref (layout);
+   @}
+  @end{pre}
+  Printing support was added in GTK+ 2.10.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_cairo_context ()

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -78,17 +78,16 @@
    :type-initializer "gtk_page_setup_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-page-setup 'type)
  "@version{2013-3-28}
   @begin{short}
-    A GtkPageSetup object stores the page size, orientation and margins. The
-    idea is that you can get one of these from the page setup dialog and then
-    pass it to the GtkPrintOperation when printing. The benefit of splitting
-    this out of the GtkPrintSettings is that these affect the actual layout of
-    the page, and thus need to be set long before user prints.
+    A @sym{gtk-page-setup} object stores the page size, orientation and margins.
+    The idea is that you can get one of these from the page setup dialog and
+    then pass it to the @class{gtk-print-operation} when printing. The benefit
+    of splitting this out of the @class{gtk-print-settings} is that these affect
+    the actual layout of the page, and thus need to be set long before user
+    prints.
   @end{short}
 
   The margins specified in this object are the \"print margins\", i. e. the
@@ -96,9 +95,9 @@
   the layout margins that a word processor uses; they are typically used to
   determine the minimal size for the layout margins.
 
-  To obtain a GtkPageSetup use gtk_page_setup_new() to get the defaults, or
-  use gtk_print_run_page_setup_dialog() to show the page setup dialog and
-  receive the resulting page setup.
+  To obtain a @sym{gtk-page-setup} use the @fun{gtk-page-setup-new} function
+  to get the defaults, or use the @fun{gtk-print-run-page-setup-dialog} function
+  to show the page setup dialog and receive the resulting page setup.
 
   @b{Example:} A page setup dialog
   @begin{pre}

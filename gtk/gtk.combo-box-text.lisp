@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -66,40 +66,39 @@
    :type-initializer "gtk_combo_box_text_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-combo-box-text 'type)
- "@version{2013-2-26}
+ "@version{2013-6-1}
   @begin{short}
-    A GtkComboBoxText is a simple variant of GtkComboBox that hides the
-    model-view complexity for simple text-only use cases.
+    A @sym{gtk-combo-box-text} is a simple variant of GtkComboBox that hides
+    the model-view complexity for simple text-only use cases.
   @end{short}
 
-  To create a GtkComboBoxText, use gtk_combo_box_text_new() or
-  gtk_combo_box_text_new_with_entry().
+  To create a @sym{gtk-combo-box-text}, use the functions
+  @fun{gtk-combo-box-text-new} or @fun{gtk-combo-box-text-new-with-entry}.
 
-  You can add items to a GtkComboBoxText with
-  gtk_combo_box_text_append_text(), gtk_combo_box_text_insert_text() or
-  gtk_combo_box_text_prepend_text() and remove options with
-  gtk_combo_box_text_remove().
+  You can add items to a @sym{gtk-combo-box-text} with the functions
+  @fun{gtk-combo-box-text-append-text}, @fun{gtk-combo-box-text-insert-text} or
+  @fun{gtk-combo-box-text-prepend-text} and remove options with the function
+  @fun{gtk-combo-box-text-remove}.
 
-  If the GtkComboBoxText contains an entry (via the 'has-entry' property), its
-  contents can be retrieved using gtk_combo_box_text_get_active_text(). The
-  entry itself can be accessed by calling gtk_bin_get_child() on the combo
-  box.
+  If the @sym{gtk-combo-box-text} contains an entry (via the
+  @code{\"has-entry\"} property), its contents can be retrieved using
+  the @fun{gtk-combo-box-text-get-active-text} function. The entry itself can be
+  accessed by calling the @fun{gtk-bin-get-child} on the combo box.
 
-  You should not call gtk_combo_box_set_model() or attempt to pack more cells
-  into this combo box via its GtkCellLayout interface.
+  You should not call the @fun{gtk-combo-box-set-model} or attempt to pack more
+  cells into this combo box via its @class{gtk-cell-layout} interface.
  
-  GtkComboBoxText as GtkBuildable
+  @subheading{GtkComboBoxText as GtkBuildable}
+    The @sym{gtk-combo-box-text} implementation of the @class{gtk-buildable}
+    interface supports adding items directly using the <items> element and
+    specifying <item> elements for each item. Each <item> element supports the
+    regular translation attributes \"translatable\", \"context\" and
+    \"comments\".
 
-  The GtkComboBoxText implementation of the GtkBuildable interface supports
-  adding items directly using the <items> element and specifying <item>
-  elements for each item. Each <item> element supports the regular translation
-  attributes \"translatable\", \"context\" and \"comments\".
-
-  Example 74. A UI definition fragment specifying GtkComboBoxText items
+    @b{Example:} A UI definition fragment specifying @sym{gtk-combo-box-text}
+    items
   @begin{pre}
  <object class=\"GtkComboBoxText\">
    <items>
@@ -118,11 +117,11 @@
 
 (defun gtk-combo-box-text-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @return{A new GtkComboBoxText}
+ "@version{2013-6-1}
+  @return{A new @class{gtk-combo-box-text} widget.}
   @begin{short}
-    Creates a new GtkComboBoxText, which is a GtkComboBox just displaying
-    strings.
+    Creates a new @class{gtk-combo-box-text} widget, which is a
+    @class{gtk-combo-box} just displaying strings.
   @end{short}
 
   Since 2.24"
@@ -138,11 +137,12 @@
 
 (defun gtk-combo-box-text-with-entry ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @return{a new GtkComboBoxText}
+ "@version{2013-6-1}
+  @return{A new @class{gtk-combo-box-text} widget.}
   @begin{short}
-    Creates a new GtkComboBoxText, which is a GtkComboBox just displaying
-    strings. The combo box created by this function has an entry.
+    Creates a new @class{gtk-combo-box-text} widget, which is a
+    @class{gtk-combo-box} just displaying strings. The combo box created by
+    this function has an entry.
   @end{short}
 
   Since 2.24"
@@ -157,17 +157,17 @@
 
 (defcfun ("gtk_combo_box_text_append" gtk-combo-box-text-append) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBoxText}
-  @argument[id]{a string ID for this value, or NULL}
+ "@version{2013-6-1}
+  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+  @argument[id]{a string ID for this value, or @code{nil}}
   @argument[text]{A string}
   @begin{short}
-    Appends text to the list of strings stored in combo_box. If id is non-NULL
-    then it is used as the ID of the row.
+    Appends text to the list of strings stored in @arg{combo-box}. If id is
+    non-@code{nil} then it is used as the ID of the row.
   @end{short}
 
-  This is the same as calling gtk_combo_box_text_insert() with a position of
-  -1.
+  This is the same as calling the @fun{gtk-combo-box-text-insert} function with
+  a position of -1.
 
   Since 2.24"
   (combo-box (g-object gtk-combo-box-text))
@@ -182,16 +182,17 @@
 
 (defcfun ("gtk_combo_box_text_prepend" gtk-combo-box-text-prepend) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBox}
-  @argument[id]{a string ID for this value, or NULL}
+ "@version{2013-6-1}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[id]{a string ID for this value, or @code{nil}}
   @argument[text]{a string}
   @begin{short}
-    Prepends text to the list of strings stored in combo_box. If id is non-NULL
-    then it is used as the ID of the row.
+    Prepends text to the list of strings stored in @arg{combo-box}. If id is
+    non-@code{nil} then it is used as the ID of the row.
   @end{short}
 
-  This is the same as calling gtk_combo_box_text_insert() with a position of 0.
+  This is the same as calling the @fun{gtk-combo-box-text-insert} function with
+  a position of 0.
 
   Since 2.24"
   (combo-box (g-object gtk-combo-box-text))
@@ -234,15 +235,15 @@
 
 (defcfun ("gtk_combo_box_text_append_text" gtk-combo-box-text-append-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBoxText}
-  @argument[text]{A string}
+ "@version{2013-5-1}
+  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+  @argument[text]{a string}
   @begin{short}
-    Appends text to the list of strings stored in combo_box.
+    Appends text to the list of strings stored in @arg{combo-box}.
   @end{short}
 
-  This is the same as calling gtk_combo_box_text_insert_text() with a position
-  of -1.
+  This is the same as calling the @fun{gtk-combo-box-text-insert-text} function
+  with a position of -1.
 
   Since 2.24"
   (combo-box (g-object gtk-combo-box-text))
@@ -257,15 +258,15 @@
 (defcfun ("gtk_combo_box_text_prepend_text" gtk-combo-box-text-prepend-text)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBox}
-  @argument[text]{A string}
+ "@version{2013-6-1}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[text]{a string}
   @begin{short}
-    Prepends text to the list of strings stored in combo_box.
+    Prepends text to the list of strings stored in @arg{combo-box}.
   @end{short}
 
-  This is the same as calling gtk_combo_box_text_insert_text() with a position
-  of 0.
+  This is the same as calling the @fun{gtk-combo-box-text-insert-text} function
+  with a position of 0.
 
   Since 2.24"
   (combo-box (g-object gtk-combo-box-text))
@@ -279,18 +280,18 @@
 
 (defcfun ("gtk_combo_box_text_insert_text" gtk-combo-box-text-insert-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBoxText}
-  @argument[position]{An index to insert text}
-  @argument[text]{A string}
+ "@version{2013-6-1}
+  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
+  @argument[position]{an index to insert text}
+  @argument[text]{a string}
   @begin{short}
-    Inserts text at position in the list of strings stored in combo_box.
+    Inserts text at position in the list of strings stored in @arg{combo-box}.
   @end{short}
 
   If position is negative then text is appended.
 
-  This is the same as calling gtk_combo_box_text_insert() with a NULL ID
-  string.
+  This is the same as calling the @fun{gtk-combo-box-text-insert} function with
+  a @code{nil} ID string.
 
   Since 2.24"
   (combo-box (g-object gtk-combo-box-text))
@@ -305,11 +306,11 @@
 
 (defcfun ("gtk_combo_box_text_remove" gtk-combo-box-text-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBox}
-  @argument[position]{Index of the item to remove}
+ "@version{2013-6-1}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[position]{index of the item to remove}
   @begin{short}
-    Removes the string at position from combo_box.
+    Removes the string at position from @arg{combo-box}.
   @end{short}
 
   Since 2.24"
@@ -338,17 +339,16 @@
 (defcfun ("gtk_combo_box_text_get_active_text"
            gtk-combo-box-text-get-active-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-2-26}
-  @argument[combo-box]{A GtkComboBoxText}
+ "@version{2013-6-1}
+  @argument[combo-box]{A @class{gtk-combo-box-text} widget}
   @begin{return}
-    a newly allocated string containing the currently active text. Must be
-    freed with g_free().
+    A string containing the currently active text.
   @end{return}
   @begin{short}
-    Returns the currently active string in combo_box, or NULL if none is
-    selected.
+    Returns the currently active string in @arg{combo-box}, or @code{nil} if
+    none is selected.
   @end{short}
-  If combo_box contains an entry, this function will return its
+  If @arg{combo-box} contains an entry, this function will return its
   contents (which will not necessarily be an item from the list).
 
   Since 2.24"
