@@ -228,26 +228,26 @@
 ;;;-----------------------------------------------------------------------------
 
 (setf (documentation 'gdk-window 'type)
- "@version{2013-1-13}
+ "@version{2013-6-5}
   @begin{short}
     Onscreen display areas in the target window system.
 
-    A @sym{gdk-window} window is a (usually) rectangular region on the screen.
+    A @sym{gdk-window} object is a (usually) rectangular region on the screen.
     It is a low-level object, used to implement high-level objects such as
     @class{gtk-widget} and @class{gtk-window} widgets on the GTK+ level. A
-    @class{gtk-window} window is a toplevel window, the thing a user might think
+    @class{gtk-window} widget is a toplevel window, the thing a user might think
     of as a \"window\" with a titlebar and so on; a @class{gtk-window} widget
-    may contain many @sym{gdk-window} windows. For example, each
-    @class{gtk-button} button instance has a @sym{gdk-window} window associated
+    may contain many @sym{gdk-window} objects. For example, each
+    @class{gtk-button} widget instance has a @sym{gdk-window} object associated
     with it.
   @end{short}
 
   @subheading{Composited Windows}
     Normally, the windowing system takes care of rendering the contents of a
     child window onto its parent window. This mechanism can be intercepted by
-    calling @fun{gdk-window-set-composited} on the child window. For a
-    composited window it is the responsibility of the application to render the
-    window contents at the right spot.
+    calling the @fun{gdk-window-set-composited} function on the child window.
+    For a composited window it is the responsibility of the application to
+    render the window contents at the right spot.
 
     @b{Example:} Composited windows
 
@@ -263,7 +263,7 @@
     responsible for emerging the changes back on the screen in the way that it
     wishes.
 
-    In our case, we merge the contents with a 50% transparency. We also set the
+    In our case, we merge the contents with a 50 % transparency. We also set the
     background colour of the window to red. The effect is that the background
     shows through the button.
 
@@ -273,10 +273,10 @@
     also to apply coordinate transformations.
 
     To integrate an offscreen window into a window hierarchy, one has to call
-    @fun{gdk-offscreen-window-set-embedder} and handle a number of signals. The
-    \"pick-embedded-child\" signal on the embedder window is used to select
-    an offscreen child at given coordinates, and the \"to-embedder\" and
-    \"from-embedder\" signals on the offscreen window are used to translate
+    the @fun{gdk-offscreen-window-set-embedder} function and handle a number of
+    signals. The \"pick-embedded-child\" signal on the embedder window is used
+    to select an offscreen child at given coordinates, and the \"to-embedder\"
+    and \"from-embedder\" signals on the offscreen window are used to translate
     coordinates between the embedder and the offscreen window.
 
     For rendering an offscreen window onto its embedder, the contents of the
@@ -299,8 +299,8 @@
         @entry[window]{The offscreen window on which the signal is emitted.}
         @entry[width]{The width of the offscreen surface to create.}
         @entry[height]{The height of the offscreen surface to create.}
-        @entry[Returns]{The newly created cairo_surface_t for the offscreen
-          window.}
+        @entry[Returns]{The newly created @symbol{cairo-surface-t} for the
+          offscreen window.}
       @end{table}
       Since 3.0
 
@@ -310,15 +310,15 @@
       @end{pre}
       The \"from-embedder\" signal is emitted to translate coordinates in the
       embedder of an offscreen window to the offscreen window.
-      See also \"to-embedder\".
+      See also the \"to-embedder\" signal.
       @begin[code]{table}
-        @entry[window]{the offscreen window on which the signal is emitted}
-        @entry[embedder-x]{x coordinate in the embedder window}
-        @entry[embedder-y]{y coordinate in the embedder window}
-        @entry[offscreen-x]{return location for the x coordinate in the
-          offscreen window}
-        @entry[offscreen-y]{return location for the y coordinate in the
-          offscreen window}
+        @entry[window]{The offscreen window on which the signal is emitted.}
+        @entry[embedder-x]{x coordinate in the embedder window.}
+        @entry[embedder-y]{y coordinate in the embedder window.}
+        @entry[offscreen-x]{Return location for the x coordinate in the
+          offscreen window.}
+        @entry[offscreen-y]{Return location for the y coordinate in the
+          offscreen window.}
       @end{table}
       Since 2.18
 
@@ -329,10 +329,11 @@
       The \"pick-embedded-child\" signal is emitted to find an embedded child
       at the given position.
       @begin[code]{table}
-        @entry[window]{the window on which the signal is emitted}
-        @entry[x]{x coordinate in the window}
-        @entry[y]{y coordinate in the window}
-        @entry[Returns]{the GdkWindow of the embedded child at x, y, or NULL}
+        @entry[window]{The window on which the signal is emitted.}
+        @entry[x]{x coordinate in the window.}
+        @entry[y]{y coordinate in the window.}
+        @entry[Returns]{The @class{gdk-window} of the embedded child at x, y,
+          or @code{nil}.}
       @end{table}
       Since 2.18
 
@@ -342,15 +343,15 @@
       @end{pre}
       The \"to-embedder\" signal is emitted to translate coordinates in an
       offscreen window to its embedder.
-      See also \"from-embedder\".
+      See also the \"from-embedder\" signal.
       @begin[code]{table}
-        @entry[window]{the offscreen window on which the signal is emitted}
-        @entry[offscreen-x]{x coordinate in the offscreen window}
-        @entry[offscreen-y]{y coordinate in the offscreen window}
-        @entry[embedder-x]{return location for the x coordinate in the embedder
-          window}
-        @entry[embedder-y]{return location for the y coordinate in the embedder
-          window}
+        @entry[window]{The offscreen window on which the signal is emitted.}
+        @entry[offscreen-x]{x coordinate in the offscreen window.}
+        @entry[offscreen-y]{y coordinate in the offscreen window.}
+        @entry[embedder-x]{Return location for the x coordinate in the embedder
+          window.}
+        @entry[embedder-y]{Return location for the y coordinate in the embedder
+          window.}
       @end{table}
       Since 2.18
   @end{dictionary}
@@ -364,9 +365,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor" 'gdk-window) 't)
- "The @code{cursor} property of type @class{gdk-cursor} (Read / Write).@br{}
-  The mouse pointer for a @sym{gdk-window}. See @fun{gdk-window-set-cursor}
-  and @fun{gdk-window-get-cursor} for details.@br{}
+ "The @code{cursor} property of type @class{gdk-cursor} (Read / Write) @br{}
+  The mouse pointer for a @sym{gdk-window}. See the functions
+  @fun{gdk-window-set-cursor} and @fun{gdk-window-get-cursor} for details. @br{}
   Since 2.18")
 
 ;;; ----------------------------------------------------------------------------
@@ -396,12 +397,10 @@
   (:foreign 4)
   (:offscreen 5))
 
-;;; --- gdk-window-type --------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-type atdoc:*external-symbols*)
- "@version{2013-1-21}
+ "@version{2013-6-5}
   @short{Describes the kind of window.}
   @begin{pre}
 (define-g-enum \"GdkWindowType\" gdk-window-type
@@ -415,14 +414,14 @@
   (:offscreen 5))
   @end{pre}
   @begin[code]{table}
-    @entry[:root]{root window; this window has no parent, covers the entire
-      screen, and is created by the window system}
-    @entry[:toplevel]{toplevel window (used to implement @class{gtk-window})}
-    @entry[:child]{child window (used to implement e.g. @class{gtk-entry})}
-    @entry[:temp]{override redirect temporary window (used to implement
-      @class{gtk-menu})}
-    @entry[:foreign]{foreign window (see @code{gdk_window_foreign_new()})}
-    @entry[:offscreen]{offscreen window (see the section called
+    @entry[:root]{Root window; this window has no parent, covers the entire
+      screen, and is created by the window system.}
+    @entry[:toplevel]{Toplevel window (used to implement @class{gtk-window}).}
+    @entry[:child]{Child window (used to implement e. g. @class{gtk-entry}).}
+    @entry[:temp]{Override redirect temporary window (used to implement
+      @class{gtk-menu}).}
+    @entry[:foreign]{Foreign window (see the @fun{gdk-window-foreign-new}).}
+    @entry[:offscreen]{Offscreen window (see the section called
       \"Offscreen Windows\"). Since 2.18.}
   @end{table}")
 
@@ -436,17 +435,15 @@
   (:input-output 0)
   (:input-only 1))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-window-class atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-window-class atdoc:*external-symbols*)
- "@version{2013-4-4}
+ "@version{2013-6-5}
   @begin{short}
     @code{:input-output} windows are the standard kind of window you might
     expect. Such windows receive events and are also displayed on screen.
     @code{:input-only} windows are invisible; they are usually placed above
-    other windows in order to trap or filter the events. You can't draw on
+    other windows in order to trap or filter the events. You cannot draw on
     @code{:input-only} windows.
   @end{short}
   @begin{pre}
@@ -457,8 +454,8 @@
   (:input-only 1))
   @end{pre}
   @begin[code]{table}
-    @entry[:input-output]{window for graphics and events}
-    @entry[:input-only]{window for events only}
+    @entry[:input-output]{Window for graphics and events.}
+    @entry[:input-only]{Window for events only.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -478,8 +475,6 @@
   (:user-pos 128)
   (:user-size 256))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-hints atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-hints atdoc:*external-symbols*)
@@ -491,7 +486,7 @@
     directly refer to @class{gdk-geometry} fields. @code{:user-pos} will be set
     automatically by @class{gtk-window} if you call @fun{gtk-window-move}.
     @code{:user-pos} and @code{:user-size} should be set if the user specified
-    a size/position using a --geometry command-line argument;
+    a size/position using a - geometry command-line argument;
     @fun{gtk-window-parse-geometry} automatically sets these flags.
   @end{short}
   @begin{pre}
@@ -1894,39 +1889,41 @@
   (window (g-object gdk-window))
   (opacity :double))
 
-(export 'gdk-window-set-opacity)
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_composited ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_set_composited" gdk-window-set-composited) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
+ "@version{2013-6-5}
+  @argument[window]{a @class{gdk-window} object}
   @argument[composited]{TRUE to set the window as composited}
   @begin{short}
-    Sets a GdkWindow as composited, or unsets it. Composited windows do not
-    automatically have their contents drawn to the screen. Drawing is redirected
-    to an offscreen buffer and an expose event is emitted on the parent of the
-    composited window. It is the responsibility of the parent's expose handler
-    to manually merge the off-screen content onto the screen in whatever way it
-    sees fit. See Example 4, “Composited windows” for an example.
+    Sets a @class{gdk-window} as composited, or unsets it. Composited windows do
+    not automatically have their contents drawn to the screen. Drawing is
+    redirected to an offscreen buffer and an expose event is emitted on the
+    parent of the composited window. It is the responsibility of the parent's
+    expose handler to manually merge the off-screen content onto the screen in
+    whatever way it sees fit. See Example 4, \"Composited windows\"?for an
+    example.
   @end{short}
 
-  It only makes sense for child windows to be composited; see
-  gdk_window_set_opacity() if you need translucent toplevel windows.
+  It only makes sense for child windows to be composited; see the
+  @fun{gdk-window-set-opacity} function if you need translucent toplevel
+  windows.
 
   An additional effect of this call is that the area of this window is no
   longer clipped from regions marked for invalidation on its parent. Draws
   done on the parent window are also no longer clipped by the child.
 
   This call is only supported on some systems (currently, only X11 with new
-  enough Xcomposite and Xdamage extensions). You must call
-  gdk_display_supports_composite() to check if setting a window as composited
-  is supported before attempting to do so.
+  enough Xcomposite and Xdamage extensions). You must call the
+  @fun{gdk-display-supports-composite} function to check if setting a window as
+  composited is supported before attempting to do so.
 
-  Since 2.12"
+  Since 2.12
+  @see-function{gdk-window-set-opacity}
+  @see-function{gdk-display-supports-composite}"
   (window (g-object gdk-window))
   (composited :boolean))
 

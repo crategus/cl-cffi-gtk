@@ -55,30 +55,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkColor
-;;;
-;;; typedef struct {
-;;;   guint32 pixel;
-;;;   guint16 red;
-;;;   guint16 green;
-;;;   guint16 blue;
-;;; } GdkColor;
-;;;
-;;; The GdkColor structure is used to describe a color, similar to the XColor
-;;; struct used in the X11 drawing API.
-;;;
-;;; guint32 pixel;
-;;;     For allocated colors, the pixel value used to draw this color on the
-;;;     screen. Not used anymore.
-;;;
-;;; guint16 red;
-;;;     The red component of the color. This is a value between 0 and 65535,
-;;;     with 65535 indicating full intensity
-;;;
-;;; guint16 green;
-;;;     The green component of the color
-;;;
-;;; guint16 blue;
-;;;     The blue component of the color
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-color "GdkColor"
@@ -87,17 +63,13 @@
   (green :uint16 :initform 0)
   (blue :uint16 :initform 0))
 
-(export (boxed-related-symbols 'gdk-color))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-color 'type)
- "@version{2013-1-17}
+ "@version{2013-6-4}
   @short{A @sym{gdk-color} represents a color.}
 
   The @sym{gdk-color} structure is used to describe a color, similar to the
-  XColor struct used in the X11 drawing API.
+  XColor structure used in the X11 drawing API.
   When working with cairo, it is often more convenient to use a @class{gdk-rgba}
   instead.
   @begin{pre}
@@ -119,6 +91,8 @@
   @see-slot{gdk-color-red}
   @see-slot{gdk-color-green}
   @see-slot{gdk-color-blue}")
+
+(export (boxed-related-symbols 'gdk-color))
 
 ;;; --- gdk-color-pixel --------------------------------------------------------
 
