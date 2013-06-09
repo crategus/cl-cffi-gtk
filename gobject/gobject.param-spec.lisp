@@ -163,17 +163,13 @@
   (:value-type g-type)
   (:owner-type g-type))
 
-(export 'g-param-spec)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec atdoc:*external-symbols*)
- "@version{2013-2-7}
+ "@version{2013-6-5}
   @begin{short}
     @sym{g-param-spec} is an object structure that encapsulates the metadata
-    required to specify parameters, such as e.g. @class{g-object} properties.
+    required to specify parameters, such as e. g. @class{g-object} properties.
   @end{short}
 
   Parameter names need to start with a letter (a-z or A-Z). Subsequent
@@ -189,13 +185,19 @@
   (:owner-type g-type))
   @end{pre}
   @begin[code]{table}
-    @entry[:type-instance]{private @symbol{g-type-instance} portion}
-    @entry[:name]{name of this parameter: always an interned string}
-    @entry[:flags]{@symbol{g-param-flags} flags for this parameter}
-    @entry[:value-type]{the @symbol{g-value} type for this parameter}
-    @entry[:owner-type]{@class{g-type} type that uses (introduces) this
-      parameter}
-  @end{table}")
+    @entry[:type-instance]{Private @symbol{g-type-instance} portion.}
+    @entry[:name]{Name of this parameter: always an interned string.}
+    @entry[:flags]{The @symbol{g-param-flags} flags for this parameter.}
+    @entry[:value-type]{The @symbol{g-value} type for this parameter.}
+    @entry[:owner-type]{The @class{g-type} that uses (introduces) this
+      parameter.}
+  @end{table}
+  @see-symbol{g-type-instance}
+  @see-symbol{g-param-flags}
+  @see-symbol{g-value}
+  @see-class{g-type}")
+
+(export 'g-param-spec)
 
 ;;; ----------------------------------------------------------------------------
 

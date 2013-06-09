@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-gobject
   :name :cl-cffi-gtk-gobject
-  :version "0.0.0"
+  :version "2.36.0"          ; The version the library is developed for.
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t

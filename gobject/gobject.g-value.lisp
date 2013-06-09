@@ -269,14 +269,10 @@
   (:type g-type)
   (:data g-value-data :count 2))
 
-(export 'g-value)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-value atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-value atdoc:*external-symbols*)
- "@version{2013-4-2}
+ "@version{2013-6-5}
   @begin{short}
     The @sym{g-value} structure is basically a variable container that consists
     of a type identifier and a specific value of that type. The type identifier
@@ -358,7 +354,13 @@
   implement new fundamental types. @sym{g-value} users cannot make any
   assumptions about how data is stored within the 2 element data union, and the
   @class{g-type} member should only be accessed through the @fun{g-value-type}
-  function.")
+  function.
+  @see-function{g-value-init}
+  @see-symbol{g-type-value-table}
+  @see-class{g-type}
+  @see-function{g-value-type}")
+
+(export 'g-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_VALUE_INIT

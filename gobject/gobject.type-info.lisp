@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -161,6 +161,7 @@
 ;;;     g_type_remove_interface_check            * not implemented *
 ;;;     g_type_value_table_peek
 ;;;     g_type_ensure
+;;;     g_type_get_type_registration_serial
 ;;;
 ;;;     G_DEFINE_TYPE                            * not implemented *
 ;;;     G_DEFINE_TYPE_WITH_CODE                  * not implemented *
@@ -174,42 +175,6 @@
 ;;;     G_DEFINE_BOXED_TYPE_WITH_CODE            * not implemented *
 ;;;     G_DEFINE_POINTER_TYPE                    * not implemented *
 ;;;     G_DEFINE_POINTER_TYPE_WITH_CODE          * not implemented *
-;;;
-;;;
-;;; Description
-;;;
-;;; The GType API is the foundation of the GObject system. It provides the
-;;; facilities for registering and managing all fundamental data types,
-;;; user-defined object and interface types. Before using any GType or GObject
-;;; functions, g_type_init() must be called to initialize the type system.
-;;;
-;;; For type creation and registration purposes, all types fall into one of two
-;;; categories: static or dynamic. Static types are never loaded or unloaded at
-;;; run-time as dynamic types may be. Static types are created with
-;;; g_type_register_static() that gets type specific information passed in via a
-;;; GTypeInfo structure. Dynamic types are created with
-;;; g_type_register_dynamic() which takes a GTypePlugin structure instead. The
-;;; remaining type information (the GTypeInfo structure) is retrieved during
-;;; runtime through GTypePlugin and the g_type_plugin_*() API. These
-;;; registration functions are usually called only once from a function whose
-;;; only purpose is to return the type identifier for a specific class. Once the
-;;; type (or class or interface) is registered, it may be instantiated,
-;;; inherited, or implemented depending on exactly what sort of type it is.
-;;; There is also a third registration function for registering fundamental
-;;; types called g_type_register_fundamental() which requires both a GTypeInfo
-;;; structure and a GTypeFundamentalInfo structure but it is seldom used since
-;;; most fundamental types are predefined rather than user-defined.
-;;;
-;;; Type instance and class structs are limited to a total of 64 KiB, including
-;;; all parent types. Similarly, type instances' private data (as created by
-;;; g_type_class_add_private()) are limited to a total of 64 KiB. If a type
-;;; instance needs a large static buffer, allocate it separately (typically by
-;;; using GArray or GPtrArray) and put a pointer to the buffer in the structure.
-;;;
-;;; A final word about type names. Such an identifier needs to be at least three
-;;; characters long. There is no upper length limit. The first character needs
-;;; to be a letter (a-z or A-Z) or an underscore '_'. Subsequent characters can
-;;; be letters, numbers or any of '-_+'.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gobject)
@@ -548,7 +513,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-31}
   @variable-value{22}
-  First fundamental type number to create a new fundamental type id with
+  First fundamental type number to create a new fundamental type ID with
   @fun{g-type-make-fundamental} reserved for GLib.")
 
 (export '+g-type-reserved-glib-first+)
@@ -573,7 +538,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-31}
   @variable-value{32}
-  First fundamental type number to create a new fundamental type id with
+  First fundamental type number to create a new fundamental type ID with
   @fun{g-type-make-fundamental} reserved for BSE.")
 
 (export '+g-type-reserved-bse-first+)
@@ -598,7 +563,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-31}
   @variable-value{49}
-  First available fundamental type number to create new fundamental type id
+  First available fundamental type number to create new fundamental type ID
   with @fun{g-type-make-fundamental}.
   @see-function{g-type-make-fundamental}")
 
@@ -611,10 +576,6 @@
 (defbitfield g-type-flags
   (:abstract #.(ash 1 4))
   (:value-abstract #.(ash 1 5)))
-
-(export 'g-type-flags)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-flags atdoc:*symbol-name-alias*) "Bitfield"
@@ -633,6 +594,8 @@
       introduces a value table, but can not be used for @fun{g-value-init}.}
   @end{table}")
 
+(export 'g-type-flags)
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeFundamentalFlags
 ;;; ----------------------------------------------------------------------------
@@ -642,10 +605,6 @@
   :instantiatable
   :derivable
   :deep-derivable)
-
-(export 'g-type-fundamental-flags)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-fundamental-flags atdoc:*symbol-name-alias*) "Bitfield"
@@ -669,6 +628,8 @@
     @entry[:deep-derivable]{Indicates a deep derivable type (implies
       derivable).}
   @end{table}")
+
+(export 'g-type-fundamental-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GType
@@ -884,13 +845,13 @@
 
 (defun g-type-make-fundamental (x)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[x]{a fundamental type number}
   @return{The type ID of the @class{g-type}.}
   @begin{short}
-    Get the type ID for the fundamental type number @arg{x}. Use
-    @fun{g-type-fundamental-next} instead of this function to create new
-    fundamental types.
+    Get the type ID for the fundamental type number @arg{x}. Use the
+    @fun{g-type-fundamental-next} function instead of this function to create
+    new fundamental types.
   @end{short}
   @subheading{Note}
     @sym{g-type-make-fundamental} does not return a Lisp @code{gtype} value,
@@ -918,7 +879,7 @@
 
 (defun g-type-is-abstract (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} is an abstract type.}
   @begin{short}
@@ -944,7 +905,7 @@
 
 (defun g-type-is-derived (type)
  #+cl-cffi-gtk-documentation
- "@version{2014-3-31}
+ "@version{2014-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} is a dervied type.}
   @begin{short}
@@ -972,7 +933,7 @@
 
 (defun g-type-is-fundamental (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} is a fundamental type.}
   @begin{short}
@@ -1002,7 +963,7 @@
 
 (defun g-type-is-value-type (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@arg{True} if @arg{type} is a value type.}
   @begin{short}
@@ -1020,10 +981,11 @@
 
 (defun g-type-has-value-table (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} has a @symbol{g-type-value-table}.}
-  Checks if @arg{type} has a @symbol{g-type-value-table}."
+  Checks if @arg{type} has a @symbol{g-type-value-table}.
+  @see-symbol{g-type-value-table}"
   (not (null-pointer-p (g-type-value-table-peek type))))
 
 (export 'g-type-has-value-table)
@@ -1042,7 +1004,7 @@
 
 (defun g-type-is-classed (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@arg{True} if @arg{type} is a classed type.}
   Checks if @arg{type} is a classed type."
@@ -1056,7 +1018,7 @@
 
 (defun g-type-is-instantiatable (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} can be instantiated.}
   Checks if @arg{type} can be instantiated. Instantiation is the process of
@@ -1071,7 +1033,7 @@
 
 (defun g-type-is-derivable (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} is a derivable type.}
   Checks if @arg{type} is a derivable type. A derivable type can be used as the
@@ -1087,7 +1049,7 @@
 
 (defun g-type-is-deep-derivable (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} is a deep derivable type.}
   Checks if @arg{type} is a deep derivable type. A deep derivable type can be
@@ -1103,7 +1065,7 @@
 
 (defun g-type-is-interface (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-31}
+ "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} is an interface type.}
   @begin{short}
@@ -1114,7 +1076,8 @@
   interfaces are somewhat analogous to Java interfaces and C++ classes
   containing only pure virtual functions, with the difference that GType
   interfaces are not derivable (but see @fun{g-type-interface-add-prerequisite}
-  for an alternative)."
+  for an alternative).
+  @see-function{g-type-interface-add-prerequisite}"
   (eql +g-type-interface+ (gtype-id (g-type-fundamental type))))
 
 (export 'g-type-is-interface)
@@ -1127,10 +1090,6 @@
   (:type g-type)
   (:instance-type g-type))
 
-(export 'g-type-interface)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-interface atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-type-interface atdoc:*external-symbols*)
@@ -1142,16 +1101,14 @@
   (:instance-type g-type))
   @end{pre}")
 
+(export 'g-type-interface)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeClass
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-class
   (:type g-type))
-
-(export 'g-type-class)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-class atdoc:*symbol-name-alias*) "CStruct"
@@ -1163,16 +1120,14 @@
   (:type g-type))
   @end{pre}")
 
+(export 'g-type-class)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeInstance
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-instance
   (:class (:pointer g-type-class)))
-
-(export 'g-type-instance)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-instance atdoc:*symbol-name-alias*) "CStruct"
@@ -1183,6 +1138,8 @@
 (defcstruct g-type-instance
   (:class (:pointer g-type-class)))
   @end{pre}")
+
+(export 'g-type-instance)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeInfo
@@ -1199,10 +1156,6 @@
   (:n-preallocs :uint16)
   (:instance-init-fn :pointer)
   (:value-table :pointer))
-
-(export 'g-type-info)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-info atdoc:*symbol-name-alias*) "CStruct"
@@ -1278,16 +1231,14 @@
   @end{table}
   @see-function{g-type-register-static}")
 
+(export 'g-type-info)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeFundamentalInfo
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-fundamental-info
   (:type-flags g-type-fundamental-flags))
-
-(export 'g-type-fundamental-info)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-fundamental-info atdoc:*symbol-name-alias*) "CStruct"
@@ -1304,7 +1255,10 @@
   @begin[code]{table}
     @entry[type-flags]{@symbol{g-type-fundamental-flags} describing
       the characteristics of the fundamental type.}
-  @end{table}")
+  @end{table}
+  @see-symbol{g-type-fundamental-flags}")
+
+(export 'g-type-fundamental-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GInterfaceInfo
@@ -1314,10 +1268,6 @@
   (:interface-init :pointer)
   (:interface-finalize :pointer)
   (:interface-data :pointer))
-
-(export 'g-interface-info)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-interface-info atdoc:*symbol-name-alias*) "CStruct"
@@ -1341,6 +1291,8 @@
       init/finalize functions.}
   @end{table}")
 
+(export 'g-interface-info)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GTypeValueTable
 ;;; ----------------------------------------------------------------------------
@@ -1354,10 +1306,6 @@
   (:collect-value :pointer)
   (:lcopy-format (:string :free-from-foreign nil :free-to-foreign nil))
   (:lcopy-value :pointer))
-
-(export 'g-type-value-table)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-value-table atdoc:*symbol-name-alias*) "CStruct"
@@ -1545,6 +1493,8 @@
     @end{entry}
   @end{table}")
 
+(export 'g-type-value-table)
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_FROM_INSTANCE()
 ;;; ----------------------------------------------------------------------------
@@ -1639,6 +1589,12 @@
 ;;; Returns :
 ;;;     a pointer to the class structure
 ;;; ----------------------------------------------------------------------------
+
+(defun g-type-instance-get-class (instance)
+  (let ((ptr (if (pointerp instance) instance (pointer instance))))
+    (foreign-slot-value ptr 'g-type-instance :class)))
+
+(export 'g-type-instance-get-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INSTANCE_GET_INTERFACE()
@@ -2479,7 +2435,7 @@
  "@version{2013-4-1}
   @argument[interface-type]{an interface type}
   @return{A list of @class{g-type} containing the prerequisites of
-    @arg{interface-type}}
+    @arg{interface-type}.}
   @begin{short}
     Returns the prerequisites of an interfaces type.
   @end{short}
@@ -2589,10 +2545,6 @@
   (:class-size :uint)
   (:instance-size :uint))
 
-(export 'g-type-query)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-query atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-type-query atdoc:*external-symbols*)
@@ -2615,6 +2567,8 @@
     @entry[instance-size]{The size of the instance structure.}
   @end{table}
   @see-function{g-type-query}")
+
+(export 'g-type-query)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_query ()
@@ -3115,7 +3069,7 @@
     The nextmost fundamental type ID to be registered, or 0 if the type
     system ran out of fundamental type IDs.
   @end{return}
-  Returns the next free fundamental type id which can be used to register a
+  Returns the next free fundamental type ID which can be used to register a
   new fundamental type with @fun{g-type-register-fundamental}. The returned type
   ID represents the highest currently registered fundamental type identifier.")
 
@@ -3343,6 +3297,23 @@
   (type g-type))
 
 (export 'g-type-ensure)
+
+;;; ----------------------------------------------------------------------------
+;;; g_type_get_type_registration_serial ()
+;;;
+;;; guint g_type_get_type_registration_serial (void);
+;;;
+;;; Returns an opaque serial number that represents the state of the set of
+;;; registered types. Any time a type is registred this serial changes, which
+;;; means you can cache information based on type lookups (such as
+;;; g_type_from_name) and know if the cache is still valid at a later time by
+;;; comparing the current serial with the one at the type lookup.
+;;;
+;;; Returns :
+;;;     An unsigned int, representing the state of type registrations.
+;;;
+;;; Since 2.36
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_DEFINE_TYPE()

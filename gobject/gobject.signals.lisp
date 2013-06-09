@@ -1144,12 +1144,14 @@
 
 (defun g-signal-connect (instance detailed-signal handler &key after)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-19}
-  @argument[instance]{the instance to connect to.}
-  @argument[detailed-signal]{a string of the form \"signal-name::detail\".}
-  @argument[handler]{the GCallback to connect.}
-  @return{the handler id}
-  @short{Connects a GCallback function to a signal for a particular object.}
+ "@version{2013-6-5}
+  @argument[instance]{the instance to connect to}
+  @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
+  @argument[handler]{the @code{GCallback} to connect}
+  @return{The handler ID.}
+  @begin{short}
+    Connects a @code{GCallback} function to a signal for a particular object.
+  @end{short}
 
   The handler will be called before the default handler of the signal."
   (g-signal-connect-closure (pointer instance)

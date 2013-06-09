@@ -214,6 +214,7 @@
     @about-function{g-type-remove-interface-check}
     @about-function{g-type-value-table-peek}
     @about-function{g-type-ensure}
+    @about-function{g-type-get-type-registration-serial}
     @about-function{G-DEFINE-TYPE}
     @about-function{G-DEFINE-TYPE-WITH-CODE}
     @about-function{G-DEFINE-ABSTRACT-TYPE}
@@ -241,9 +242,9 @@
     @about-symbol{g-object-construct-param}
     @about-function{g-type-is-object}
     @about-function{G_OBJECT}
-    @about-function{G_IS_OBJECT}
+    @about-function{g-is-object}
     @about-function{G_OBJECT_CLASS}
-    @about-function{G_IS_OBJECT_CLASS}
+    @about-function{g-is-object-class}
     @about-function{G_OBJECT_GET_CLASS}
     @about-function{g-object-type}
     @about-function{g-object-type-name}
@@ -259,7 +260,7 @@
     @about-function{g-object-interface-list-properties}
     @about-function{g-object-new}
     @about-function{g-object-newv}
-    @about-class{g-parameter}
+    @about-symbol{g-parameter}
     @about-function{g-object-ref}
     @about-function{g-object-unref}
     @about-function{g-object-ref-sink}

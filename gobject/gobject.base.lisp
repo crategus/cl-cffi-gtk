@@ -153,18 +153,14 @@
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:value g-value))
 
-(export 'g-parameter)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'g-parameter atdoc:*external-symbols*)
- "@version{2013-2-16}
+ "@version{2013-6-5}
   @begin{short}
     The @sym{g-parameter} struct is an auxiliary structure used to hand
-    parameter name/value pairs to @fun{g-object-newv}.
+    parameter name/value pairs to the @fun{g-object-newv} function.
   @end{short}
   @begin{pre}
 (defcstruct g-parameter
@@ -172,9 +168,12 @@
   (:value g-value))
   @end{pre}
   @begin[code]{table}
-    @entry[:name]{the parameter name}
-    @entry[:value]{the parameter value}
-  @end{table}")
+    @entry[:name]{The parameter name.}
+    @entry[:value]{The parameter value.}
+  @end{table}
+  @see-function{g-object-newv}")
+
+(export 'g-parameter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObject
@@ -233,7 +232,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-object 'type)
- "@version{2013-3-3}
+ "@version{2013-6-5}
   @begin{short}
     @sym{g-object} is the fundamental type providing the common attributes and
     methods for all object types in GTK+, Pango and other libraries based on
@@ -242,9 +241,6 @@
   The @sym{g-object} class provides methods for object construction and
   destruction, property access methods, and signal support. Signals are
   described in detail in Signals(3).
-
-  All the fields in the GObject structure are private to the GObject
-  implementation and should never be accessed directly.
   @begin[Lisp Implementation]{dictionary}
     In the Lisp implementation three slots are added. The slot @code{pointer}
     holds the pointer to the C instance of the object. The slot
@@ -255,10 +251,13 @@
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"notify\" signal}
+    @begin{pre}
+ lambda (gobject pspec)   : No Hooks
+    @end{pre}
     The \"notify\" signal is emitted on an object when one of its properties has
-    been changed. Note that getting this signal doesn't guarantee that the value
-    of the property has actually changed, it may also be emitted when the setter
-    for the property is called to reinstate the previous value.@br{}
+    been changed. Note that getting this signal does not guarantee that the
+    value of the property has actually changed, it may also be emitted when the
+    setter for the property is called to reinstate the previous value.
     This signal is typically used to obtain change notification for a single
     property, by specifying the property name as a detail in the
     @fun{g-signal-connect} call, like this:
@@ -272,17 +271,16 @@
     @end{pre}
     It is important to note that you must use canonical parameter names as
     detail strings for the notify signal.
-    @begin{pre}
- lambda (gobject pspec)
-    @end{pre}
     @begin[code]{table}
-      @entry[gobject]{the @sym{g-object} which received the signal.}
-      @entry[pspec]{the @symbol{g-param-spec} of the property which changed.}
+      @entry[gobject]{The @sym{g-object} which received the signal.}
+      @entry[pspec]{The @symbol{g-param-spec} of the property which changed.}
     @end{table}
   @end{dictionary}
   @see-slot{pointer}
   @see-slot{g-object-has-reference}
-  @see-slot{g-object-signal-handlers}")
+  @see-slot{g-object-signal-handlers}
+  @see-function{g-signal-connect}
+  @see-symbol{g-param-spec}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -304,7 +302,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -737,113 +735,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObjectClass
-;;;
-;;; struct GObjectClass {
-;;;   GTypeClass   g_type_class;
-;;;
-;;;   /* seldom overidden */
-;;;   GObject* (*constructor)  (GType                  type,
-;;;                             guint                  n_construct_properties,
-;;;                             GObjectConstructParam *construct_properties);
-;;;   /* overridable methods */
-;;;   void     (*set_property) (GObject        *object,
-;;;                             guint           property_id,
-;;;                             const GValue   *value,
-;;;                             GParamSpec     *pspec);
-;;;   void     (*get_property) (GObject        *object,
-;;;                             guint           property_id,
-;;;                             GValue         *value,
-;;;                             GParamSpec     *pspec);
-;;;   void     (*dispose)      (GObject        *object);
-;;;   void     (*finalize)     (GObject        *object);
-;;;   /* seldom overidden */
-;;;   void     (*dispatch_properties_changed)
-;;;                            (GObject      *object,
-;;;                             guint       n_pspecs,
-;;;                             GParamSpec  **pspecs);
-;;;   /* signals */
-;;;   void     (*notify)       (GObject *object,
-;;;                             GParamSpec *pspec);
-;;;
-;;;   /* called when done constructing */
-;;;   void     (*constructed)   (GObject *object);
-;;; };
-;;;
-;;; The class structure for the GObject type.
-;;;
-;;; Example 1. Implementing singletons using a constructor
-;;;
-;;;   static MySingleton *the_singleton = NULL;
-;;;
-;;;   static GObject*
-;;;   my_singleton_constructor (GType                  type,
-;;;                             guint                  n_construct_params,
-;;;                             GObjectConstructParam *construct_params)
-;;;   {
-;;;     GObject *object;
-;;;
-;;;     if (!the_singleton)
-;;;       {
-;;;         object = G_OBJECT_CLASS (parent_class)->constructor
-;;;                                                         (type,
-;;;                                                          n_construct_params,
-;;;                                                          construct_params);
-;;;         the_singleton = MY_SINGLETON (object);
-;;;       }
-;;;     else
-;;;       object = g_object_ref (G_OBJECT (the_singleton));
-;;;
-;;;     return object;
-;;;   }
-;;;
-;;;
-;;; GTypeClass g_type_class;
-;;;     the parent class
-;;;
-;;; constructor ()
-;;;     the constructor function is called by g_object_new() to complete the
-;;;     object initialization after all the construction properties are set. The
-;;;     first thing a constructor implementation must do is chain up to the
-;;;     constructor of the parent class. Overriding constructor should be rarely
-;;;     needed, e.g. to handle construct properties, or to implement singletons.
-;;;
-;;; set_property ()
-;;;     the generic setter for all properties of this type. Should be overridden
-;;;     for every type with properties. Implementations of set_property don't
-;;;     need to emit property change notification explicitly, this is handled by
-;;;     the type system.
-;;;
-;;; get_property ()
-;;;     the generic getter for all properties of this type. Should be overridden
-;;;     for every type with properties.
-;;;
-;;; dispose ()
-;;;     the dispose function is supposed to drop all references to other
-;;;     objects, but keep the instance otherwise intact, so that client method
-;;;     invocations still work. It may be run multiple times (due to reference
-;;;     loops). Before returning, dispose should chain up to the dispose method
-;;;     of the parent class.
-;;;
-;;; finalize ()
-;;;     instance finalization function, should finish the finalization of the
-;;;     instance begun in dispose and chain up to the finalize method of the
-;;;     parent class.
-;;;
-;;; dispatch_properties_changed ()
-;;;     emits property change notification for a bunch of properties. Overriding
-;;;     dispatch_properties_changed should be rarely needed.
-;;;
-;;; notify ()
-;;;     the class closure for the notify signal
-;;;
-;;; constructed ()
-;;;     the constructed function is called by g_object_new() as the final step
-;;;     of the object creation process. At the point of the call, all
-;;;     construction properties have been set on the object. The purpose of this
-;;;     call is to allow for object initialisation steps that can only be
-;;;     performed after construction properties have been set. constructed
-;;;     implementors should chain up to the constructed call of their parent
-;;;     class to allow it to complete its initialisation.
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-object-class
@@ -859,17 +750,13 @@
   (:constructed :pointer)
   (:pdummy :pointer :count 7))
 
-(export 'g-object-class)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-object-class atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-object-class atdoc:*external-symbols*)
- "@version{2012-12-26}
-  @short{The class structure for the GObject type.}
+ "@version{2013-6-5}
+  @short{The class structure for the @class{g-object} type.}
 
-  Example 1. Implementing singletons using a constructor
+  @b{Example:} Implementing singletons using a constructor
   @begin{pre}
  static MySingleton *the_singleton = NULL;
 
@@ -909,57 +796,63 @@
   (:constructed :pointer)
   (:pdummy :pointer :count 7))
     @end{pre}
-    @begin{table}
+    @begin[code]{table}
       @begin[:type-class]{entry}
-        the parent class
+        The parent class.
       @end{entry}
       @begin[:constructor]{entry}
-        the constructor function is called by g_object_new() to complete the
-        object initialization after all the construction properties are set. The
-        first thing a constructor implementation must do is chain up to the
-        constructor of the parent class. Overriding constructor should be rarely
-        needed, e.g. to handle construct properties, or to implement singletons.
+        The @code{constructor} function is called by the @fun{g-object-new}
+        function to complete the object initialization after all the
+        construction properties are set. The first thing a @code{constructor}
+        implementation must do is chain up to the @code{constructor} of the
+        parent class. Overriding @code{constructor} should be rarely needed,
+        e. g. to handle construct properties, or to implement singletons.
       @end{entry}
       @begin[:set-property]{entry}
-        the generic setter for all properties of this type. Should be overridden
-        for every type with properties. Implementations of set_property don't
-        need to emit property change notification explicitly, this is handled by
-        the type system.
+        The generic setter for all properties of this type. Should be overridden
+        for every type with properties. Implementations of @code{set-property}
+        do not need to emit property change notification explicitly, this is
+        handled by the type system.
       @end{entry}
       @begin[:get-property]{entry}
-        the generic getter for all properties of this type. Should be overridden
+        The generic getter for all properties of this type. Should be overridden
         for every type with properties.
       @end{entry}
       @begin[:dispose]{entry}
-        the dispose function is supposed to drop all references to other
+        The @code{dispose} function is supposed to drop all references to other
         objects, but keep the instance otherwise intact, so that client method
         invocations still work. It may be run multiple times (due to reference
-        loops). Before returning, dispose should chain up to the dispose method
-        of the parent class.
+        loops). Before returning, @code{dispose} should chain up to the
+        @code{dispose} method of the parent class.
       @end{entry}
       @begin[:finalize]{entry}
-        instance finalization function, should finish the finalization of the
-        instance begun in dispose and chain up to the finalize method of the
-        parent class.
+        Instance finalization function, should finish the finalization of the
+        instance begun in @code{dispose} and chain up to the @code{finalize}
+        method of the parent class.
       @end{entry}
       @begin[:dispatch-properties-changed]{entry}
-        emits property change notification for a bunch of properties. Overriding
-        dispatch_properties_changed should be rarely needed.
+        Emits property change notification for a bunch of properties. Overriding
+        @code{dispatch-properties-changed} should be rarely needed.
       @end{entry}
       @begin[:notify]{entry}
-        the class closure for the notify signal
+        The class closure for the notify signal.
       @end{entry}
       @begin[:constructed]{entry}
-        the constructed function is called by g_object_new() as the final step
-        of the object creation process. At the point of the call, all
-        construction properties have been set on the object. The purpose of this
-        call is to allow for object initialisation steps that can only be
-        performed after construction properties have been set. constructed
-        implementors should chain up to the constructed call of their parent
-        class to allow it to complete its initialisation.
+        The @code{constructed} function is called by the @fun{g-object-new}
+        function as the final step of the object creation process. At the point
+        of the call, all construction properties have been set on the object.
+        The purpose of this call is to allow for object initialisation steps
+        that can only be performed after construction properties have been set.
+        @code{constructed} implementors should chain up to the
+        @code{constructed} call of their parent class to allow it to complete
+        its initialisation.
       @end{entry}
     @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{g-object}
+  @see-function{g-object-new}")
+
+(export 'g-object-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObjectConstructParam
@@ -969,29 +862,28 @@
   (:pspec (:pointer g-param-spec))
   (:value (:pointer g-value)))
 
-(export 'g-object-construct-param)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-object-construct-param atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-object-construct-param atdoc:*external-symbols*)
- "@version{2012-12-26}
+ "@version{2013-6-5}
   @begin{short}
-    The GObjectConstructParam struct is an auxiliary structure used to hand
-    GParamSpec/GValue pairs to the constructor of a GObjectClass.
+    The @sym{g-object-construct-param} struct is an auxiliary structure used to
+    hand @symbol{g-param-spec}/@symbol{g-value} pairs to the constructor of a
+    @symbol{g-object-class}.
   @end{short}
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
+  @begin{pre}
 (defcstruct g-object-construct-param
   (:pspec (:pointer g-param-spec))
   (:value (:pointer g-value)))
-    @end{pre}
-    @begin{table}
-      @entry[:pspec]{the GParamSpec of the construct parameter}
-      @entry[:value]{the value to set the parameter to}
-    @end{table}
-  @end{dictionary}")
+  @end{pre}
+  @begin[code]{table}
+    @entry[:pspec]{The @symbol{g-param-spec} of the construct parameter.}
+    @entry[:value]{The value to set the parameter to.}
+  @end{table}
+  @see-symbol{g-param-spec}
+  @see-symbol{g-value}")
+
+(export 'g-object-construct-param)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GObjectGetPropertyFunc ()
@@ -1058,12 +950,12 @@
 
 (defun g-type-is-object (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[type]{Type id to check}
-  @return{@code{nil} or @em{true}, indicating whether @arg{type} is a
+ "@version{2013-6-5}
+  @argument[type]{type ID to check}
+  @return{@code{Nil} or @em{true}, indicating whether @arg{type} is a
     @var{+g-type-object+}.}
   @begin{short}
-    Check if the passed in @arg{type} id is a @var{+g-type-object+} or derived
+    Check if the passed in @arg{type} ID is a @var{+g-type-object+} or derived
     from it.
   @end{short}
   @begin[Examples]{dictionary}
@@ -1093,15 +985,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_IS_OBJECT()
-;;;
-;;; #define G_IS_OBJECT(object)
-;;;         (G_TYPE_CHECK_INSTANCE_TYPE ((object), G_TYPE_OBJECT))
-;;;
-;;; Checks whether a valid GTypeInstance pointer is of type G_TYPE_OBJECT.
-;;;
-;;; object :
-;;;     Instance to check for being a G_TYPE_OBJECT.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-is-object (object)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-5}
+  @argument[object]{instance to check for being a @var{+g-type-object+}}
+  @begin{short}
+    Checks whether @arg{object} is of type @var{+g-type-object+}.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-is-object (make-instance 'gtk-button)) => T
+    @end{pre}
+  @end{dictionary}
+  @see-variable{+g-type-object+}"
+  (g-type-check-instance-type object +g-type-object+))
+
+(export 'g-is-object)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_CLASS()
@@ -1117,18 +1018,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_IS_OBJECT_CLASS()
-;;;
-;;; #define G_IS_OBJECT_CLASS(class)
-;;;         (G_TYPE_CHECK_CLASS_TYPE ((class), G_TYPE_OBJECT))
-;;;
-;;; Checks whether class "is a" valid GObjectClass structure of type
-;;; G_TYPE_OBJECT or derived.
-;;;
-;;; class :
-;;;     a GObjectClass
 ;;; ----------------------------------------------------------------------------
 
 (defun g-is-object-class (class)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-5}
+  @argument[class]{a foreign pointer to a @symbol{g-object-class}}
+  Checks whether class \"is a\" valid @symbol{g-object-class} structure of
+  type @var{+g-type-object+} or derived.
+  @see-symbol{g-object-class}
+  @see-variable{+g-type-object+}"
   (g-type-check-class-type class +g-type-object+))
 
 (export 'g-is-object-class)
@@ -1154,10 +1053,10 @@
 
 (defun g-object-type (object)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[object]{Object to return the type id for.}
-  @return{Type id of object.}
-  @short{Get the type id of an object.}
+ "@version{2013-6-5}
+  @argument[object]{object to return the type ID for}
+  @return{Type ID of @arg{object}}
+  @short{Get the type ID of an object.}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-object-type (make-instance 'gtk-label))
@@ -1170,26 +1069,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_TYPE_NAME()
-;;;
-;;; #define G_OBJECT_TYPE_NAME(object)  (g_type_name (G_OBJECT_TYPE (object)))
-;;;
-;;; Get the name of an object's type.
-;;;
-;;; object :
-;;;     Object to return the type name for.
-;;;
-;;; Returns :
-;;;     Type name of object. The string is owned by the type system and should
-;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defun g-object-type-name (object)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[object]{Object to return the type name for.}
-  @return{Type name of object. The string is owned by the type system and should
-    not be freed.}
-  @short{Get the name of an object's type.}
+ "@version{2013-6-5}
+  @argument[object]{object to return the type name for}
+  @return{Type name of @arg{object}.}
+  @short{Get the name of an @arg{object}'s type.}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-object-type-name (make-instance 'gtk-label))
@@ -1206,16 +1093,17 @@
 
 (defun g-object-class-type (class)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[class]{a valid GObjectClass}
-  @return{Type id of class.}
-  @short{Get the type id of a class structure.}
+ "@version{2013-6-5}
+  @argument[class]{a valid @symbol{g-object-class}}
+  @return{Type ID of class.}
+  @short{Get the type ID of a @arg{class} structure.}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-object-class-type (g-type-class-ref (gtype \"GtkLabel\")))
 => #S(GTYPE :NAME \"GtkLabel\" :%ID 134905144)
     @end{pre}
-  @end{dictionary}"
+  @end{dictionary}
+  @see-symbol{g-object-class}"
   (g-type-from-class class))
 
 (export 'g-object-class-type)
@@ -1226,17 +1114,17 @@
 
 (defun g-object-class-name (class)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[class]{a valid GObjectClass}
-  @return{Type name of class. The string is owned by the type system and should
-    not be freed.}
-  @short{Return the name of a class structure's type.}
+ "@version{2013-6-5}
+  @argument[class]{a valid @symbol{g-object-class}}
+  @return{Type name of @arg{class}.}
+  @short{Return the name of a @arg{class} structure's type.}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-object-class-name (g-type-class-ref (gtype \"GtkLabel\")))
 => \"GtkLabel\"
     @end{pre}
-  @end{dictionary}"
+  @end{dictionary}
+  @see-symbol{g-object-class}"
   (g-type-name (g-type-from-class class)))
 
 (export 'g-object-class-name)
@@ -1459,7 +1347,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-1-10}
   @argument[g-iface]{any interface vtable for the interface, or the default
-    vtable for theinterface.}
+    vtable for the interface.}
   @argument[pspec]{the @symbol{g-param-spec} CStruct for the new property}
   @begin{short}
     Add a property to an interface; this is only useful for interfaces that are
@@ -1521,7 +1409,6 @@
   (n-properties (:pointer :uint)))
 
 (defun g-object-interface-list-properties (type)
-
  #+cl-cffi-gtk-documentation
  "@version{2013-1-10}
   @argument[type]{a type id of an interface}
@@ -1554,61 +1441,52 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_new ()
-;;;
-;;; gpointer g_object_new (GType object_type,
-;;;                        const gchar *first_property_name,
-;;;                        ...);
-;;;
-;;; Creates a new instance of a GObject subtype and sets its properties.
-;;;
-;;; Construction parameters (see G_PARAM_CONSTRUCT, G_PARAM_CONSTRUCT_ONLY)
-;;; which are not explicitly specified are set to their default values.
-;;;
-;;; object_type :
-;;;     the type id of the GObject subtype to instantiate
-;;;
-;;; first_property_name :
-;;;     the name of the first property
-;;;
-;;; ... :
-;;;     the value of the first property, followed optionally by more name/value
-;;;     pairs, followed by NULL
-;;;
-;;; Returns :
-;;;     a new instance of object_type
 ;;; ----------------------------------------------------------------------------
+
+(defun g-object-new (object-type &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-5}
+  @argument[object-type]{the type ID of the @class{g-object} subtype to
+    instantiate}
+  @argument[args]{pairs of the property name and value}
+  @begin{short}
+    Creates a new instance of a @class{g-object} subtype and sets its
+    properties.
+  @end{short}
+
+  Construction parameters, see @code{:construct} and @code{:construct-only} of
+  the type @symbol{g-param-flags}, which are not explicitly specified are set to
+  their default values.
+
+  @subheading{Note}
+    In the Lisp implementation the method @code{make-instance} is called
+    which calls the function @fun{g-object-newv} for creating a new instance.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (g-object-new \"GtkButton\" :label \"text\" :margin 6)
+=> #<GTK-BUTTON {D941381@}>
+    @end{pre}
+    The above is equivalent to:
+    @begin{pre}
+ (make-instance 'gtk-button :label \"text\" :margin 6)
+=> #<GTK-BUTTON {D947381@}>
+    @end{pre}
+  @end{dictionary}
+  @see-symbol{g-param-flags}
+  @see-function{g-object-newv}"
+  (let ((lisp-type (gethash object-type *registered-object-types*)))
+    (apply 'make-instance (cons lisp-type args))))
+
+(export 'g-object-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_newv ()
-;;;
-;;; gpointer g_object_newv (GType object_type,
-;;;                         guint n_parameters,
-;;;                         GParameter *parameters);
-;;;
-;;; Creates a new instance of a GObject subtype and sets its properties.
-;;;
-;;; Construction parameters (see G_PARAM_CONSTRUCT, G_PARAM_CONSTRUCT_ONLY)
-;;; which are not explicitly specified are set to their default values.
-;;;
-;;; Rename to: g_object_new
-;;;
-;;; object_type :
-;;;     the type id of the GObject subtype to instantiate
-;;;
-;;; n_parameters :
-;;;     the length of the parameters array
-;;;
-;;; parameters :
-;;;     an array of GParameter
-;;;
-;;; Returns :
-;;;     a new instance of object_type
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_newv" g-object-newv) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-2-16}
-  @argument[object-type]{the type id of the @class{g-object} subtype to
+ "@version{2013-6-5}
+  @argument[object-type]{the type ID of the @class{g-object} subtype to
     instantiate}
   @argument[n-parameters]{the length of the parameters array}
   @argument[parameters]{an array of @symbol{g-parameter}}
@@ -1728,10 +1606,6 @@
   (:g-type-initializer . "g_initially_unowned_get_type")
   (:documentation "Base class that has initial 'floating' reference."))
 
-(export 'g-initially-unowned)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-initially-unowned 'type)
  "@version{2012-12-29}
@@ -1791,6 +1665,8 @@
   (:g-type-initializer . \"g_initially_unowned_get_type\"))
     @end{pre}
   @end{dictionary}")
+
+(export 'g-initially-unowned)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GInitiallyUnownedClass
